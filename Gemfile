@@ -7,6 +7,7 @@ gem 'rails', '3.1.4'
 
 gem 'pg'
 gem 'spree'
+gem 'unicorn'
 
 
 # Gems used only for assets and not required
