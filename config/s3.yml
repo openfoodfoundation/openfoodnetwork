@@ -1,0 +1,4 @@
+production:
+  bucket: fool-man-chew_production
+  access_key_id: your_access_key
+  secret_access_key: secret_access_key
