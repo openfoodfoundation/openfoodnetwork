@@ -8,7 +8,7 @@ gem 'rails', '3.1.4'
 gem 'pg'
 gem 'spree'
 gem 'unicorn'
-gem 'spree_heroku'
+# gem 'spree_heroku'
 
 
 # Gems used only for assets and not required
