@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/spree/spree_i18n.git
+  revision: 1aef1d10a65027db7c28119da38213ba3dab9a03
+  specs:
+    spree_i18n (1.0.0)
+      spree_core (>= 0.30.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -233,6 +240,7 @@ DEPENDENCIES
   rails (= 3.1.4)
   sass-rails (~> 3.1.5)
   spree
+  spree_i18n!
   spree_skrill
   spree_usa_epay
   turn (~> 0.8.3)

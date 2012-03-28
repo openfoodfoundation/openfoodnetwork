@@ -7,6 +7,11 @@ gem 'rails', '3.1.4'
 
 gem 'pg'
 gem 'spree'
+gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
+
+gem 'spree_usa_epay'
+gem 'spree_skrill'
+
 gem 'unicorn'
 # gem 'spree_heroku'
 
@@ -41,5 +46,4 @@ group :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
 end
-gem 'spree_usa_epay'
-gem 'spree_skrill'
+
