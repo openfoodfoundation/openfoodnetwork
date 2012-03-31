@@ -1,0 +1,31 @@
+
+<div class="toolbar" data-hook="toolbar">
+  <ul class="actions">
+    <li>
+      <%= link_to "New Distributor", "new", :icon => 'add', :id => 'admin_new_distributor_link' %>
+    </li>
+  </ul>
+  <br class="clear" />
+</div>
+
+<table class="index" id='listing_distributors'>
+  <thead>
+    <tr data-hook="distributors_header">
+      <th>Name</th>
+      <th>
+        Description
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @distributors.each do |distributor| %>
+      <tr >
+        <td><%=distributor.name %></td>
+        <td><%=distributor.description %></td>
+      </tr>
+    <% end %>
+    <% if @distributors.empty? %>
+      <tr><td colspan="2"><%= t(:none) %></td></tr>
+    <% end %>
+  </tbody>
+</table>

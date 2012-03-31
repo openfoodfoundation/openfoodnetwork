@@ -1,6 +1,9 @@
 Openfoodweb::Application.routes.draw do
+  resources :distributors
+
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

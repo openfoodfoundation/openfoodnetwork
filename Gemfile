@@ -11,6 +11,7 @@ gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 
 gem 'spree_usa_epay'
 gem 'spree_skrill'
+gem 'simple_form'
 
 gem 'unicorn'
 # gem 'spree_heroku'
@@ -48,5 +49,6 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'machinist'
+  gem "capybara"
 end
 
