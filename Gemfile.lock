@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/spree/spree_i18n.git
-  revision: 1aef1d10a65027db7c28119da38213ba3dab9a03
+  revision: 757d0ee7b76a74f86fb9f8474b8fdd7d17fb946e
   specs:
     spree_i18n (1.0.0)
       spree_core (>= 0.30.0)
@@ -72,6 +72,7 @@ GEM
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
+    diff-lcs (1.1.3)
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
@@ -92,6 +93,7 @@ GEM
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
     kgio (2.7.4)
+    machinist (2.0)
     mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -148,6 +150,19 @@ GEM
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
+    rspec (2.9.0)
+      rspec-core (~> 2.9.0)
+      rspec-expectations (~> 2.9.0)
+      rspec-mocks (~> 2.9.0)
+    rspec-core (2.9.0)
+    rspec-expectations (2.9.0)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.9.0)
+    rspec-rails (2.9.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.9.0)
     sass (3.1.15)
     sass-rails (3.1.6)
       actionpack (~> 3.1.0)
@@ -162,6 +177,7 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1)
       wasabi (~> 2.1)
+    shoulda-matchers (1.0.0)
     spree (1.0.2)
       spree_api (= 1.0.2)
       spree_auth (= 1.0.2)
@@ -236,9 +252,12 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.1.1)
   jquery-rails
+  machinist
   pg
   rails (= 3.1.4)
+  rspec-rails
   sass-rails (~> 3.1.5)
+  shoulda-matchers
   spree
   spree_i18n!
   spree_skrill
