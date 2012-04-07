@@ -2,7 +2,7 @@
 <div class="toolbar" data-hook="toolbar">
   <ul class="actions">
     <li>
-      <%= link_to "New Distributor", "new", :icon => 'add', :id => 'admin_new_distributor_link' %>
+      <%= button_link_to "New Distributor", spree.new_admin_distributor_path, :icon => 'add', :id => 'admin_new_distributor_link' %>
     </li>
   </ul>
   <br class="clear" />
@@ -20,7 +20,7 @@
   <tbody>
     <% @distributors.each do |distributor| %>
       <tr >
-        <td><%=distributor.name %></td>
+        <td><%= link_to distributor.name, spree.admin_distributor_path(distributor) %></td>
         <td><%=distributor.description %></td>
       </tr>
     <% end %>

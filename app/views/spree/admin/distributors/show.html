@@ -67,6 +67,6 @@
 </table>
 
 <p>
-  <%= link_to :Edit, edit_distributor_path(@distributor), :class => 'edit_distributor' %> <%= t(:or) %>
-  <%= link_to t(:back), distributors_path %>
+  <%= link_to :Edit, spree.edit_admin_distributor_path(@distributor), :class => 'edit_distributor' %> <%= t(:or) %>
+  <%= link_to t(:back), spree.admin_distributors_path %>
 </p>

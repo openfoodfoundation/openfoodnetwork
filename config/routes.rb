@@ -1,5 +1,5 @@
 Openfoodweb::Application.routes.draw do
-  resources :distributors
+  # resources :distributors
 
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
@@ -60,4 +60,10 @@ Openfoodweb::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+end
+
+Spree::Core::Engine.routes.prepend do
+  namespace :admin do
+    resources :distributors
+  end
 end
