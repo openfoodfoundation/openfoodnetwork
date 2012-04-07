@@ -1,0 +1,4 @@
+.columns.omega.six
+  %fieldset{:id => 'shipping'}
+    %legend Collection Point
+    =select("distributor", "distributor_id", Spree::Distributor.all.collect {|p| [ p.name , p.id] },)

@@ -1,4 +1,4 @@
-Deface::Override.new(:virtual_path  => "spree/checkout/_delivery",
-            :insert_before => "[data-hook='buttons']",
-            :text          => "<p>TODO: Select a drop off point.... </p>",
+Deface::Override.new(:virtual_path  => "spree/checkout/_address",
+            :replace       => "[data-hook='shipping_fieldset_wrapper']",
+            :partial       => "spree/checkout/distributor",
             :name          => "drop_off_point")

@@ -15,6 +15,7 @@ gem 'simple_form'
 
 gem 'unicorn'
 # gem 'spree_heroku'
+gem 'haml'
 
 
 # Gems used only for assets and not required

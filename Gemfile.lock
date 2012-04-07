@@ -89,6 +89,7 @@ GEM
     ffi (1.0.11)
     gyoku (0.4.4)
       builder (>= 2.1.2)
+    haml (3.1.4)
     highline (1.6.8)
     hike (1.2.1)
     httpi (0.9.6)
@@ -273,6 +274,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   coffee-rails (~> 3.1.1)
+  haml
   jquery-rails
   machinist
   pg
