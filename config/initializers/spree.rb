@@ -10,6 +10,7 @@ Spree.config do |config|
   # Uncomment to override the default site name.
   # config.site_name = "Spree Demo Site"
 
-  config.shipping_instructions = true
+  # config.shipping_instructions = true
   config.checkout_zone = 'Australia'
+  config.address_requires_state = true
 end

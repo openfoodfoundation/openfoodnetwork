@@ -1,4 +1,5 @@
 .columns.omega.six
   %fieldset{:id => 'shipping'}
     %legend Collection Point
-    =select("distributor", "distributor_id", Spree::Distributor.all.collect {|p| [ p.name , p.id] },)
+    =form.collection_select("distributor_id", Spree::Distributor.all, :id, :name, {}, {:class => 'required'})
+
