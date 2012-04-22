@@ -10,7 +10,7 @@ module Spree
     after_initialize :initialize_country
 
     def initialize_country
-      # self.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
+      self.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
     end
   end
 end
