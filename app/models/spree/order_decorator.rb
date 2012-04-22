@@ -15,6 +15,7 @@ Spree::Order.class_eval do
       ship_address.address1 = distributor.pickup_address
       ship_address.city = distributor.city
       ship_address.zipcode = distributor.post_code
+      ship_address.state = distributor.state
       ship_address.country_id = distributor.country_id
     end
   end

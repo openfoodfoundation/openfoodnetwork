@@ -40,6 +40,10 @@
     <td>Country: </td>
     <td><%= f.collection_select(:country_id, @countries, :id, :name, :include_blank => true) %></td>
   </tr>
+  <tr data-hook="pickup_state">
+    <td>State: </td>
+    <td><%= f.collection_select(:state_id, @distributor.country.states, :id, :name, :include_blank => true) %></td>
+  </tr>
 
   <tr data-hook="pickup_times">
     <td>Pickup times:</td>
