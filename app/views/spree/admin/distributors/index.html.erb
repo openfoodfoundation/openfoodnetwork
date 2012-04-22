@@ -15,6 +15,8 @@
       <th>
         Description
       </th>
+      <th>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,10 @@
       <tr >
         <td><%= link_to distributor.name, spree.admin_distributor_path(distributor) %></td>
         <td><%=distributor.description %></td>
+        <td data-hook="admin_users_index_row_actions">
+          <%= link_to_edit distributor, :class => 'edit' %> &nbsp;
+          <%= link_to_delete distributor %>
+        </td>
       </tr>
     <% end %>
     <% if @distributors.empty? %>
