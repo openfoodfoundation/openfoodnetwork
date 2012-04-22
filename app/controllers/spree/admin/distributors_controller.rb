@@ -7,6 +7,10 @@ module Spree
       def load_data
           @countries = Country.order(:name)
       end
+
+      def collection
+          super.order(:name)
+      end
     end
   end
 end
