@@ -5,6 +5,21 @@
   %tr{'data-hook' => "description"}
     %td Description:
     %td= f.text_field :description
+  %tr{'data-hook' => "address"}
+    %td Address:
+    %td= f.text_field :address
+  %tr{'data-hook' => "city"}
+    %td City:
+    %td= f.text_field :city
+  %tr{'data-hook' => "post_code"}
+    %td Post Code:
+    %td= f.text_field :postcode
+  %tr{'data-hook' => "country"}
+    %td Country:
+    %td= f.collection_select(:country_id, @countries, :id, :name, :include_blank => true)
+  %tr{'data-hook' => "state"}
+    %td State:
+    %td= f.collection_select(:state_id, @supplier.country.states, :id, :name, :include_blank => true)
   %tr{'data-hook' => "email"}
     %td Email:
     %td= f.text_field :email

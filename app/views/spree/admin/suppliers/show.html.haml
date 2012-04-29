@@ -7,6 +7,21 @@
     %th Description
     %td= @supplier.description
   %tr
+    %th Address
+    %td= @supplier.address
+  %tr
+    %th City:
+    %td= @supplier.city
+  %tr
+    %th Post Code:
+    %td= @supplier.postcode
+  %tr
+    %th Country:
+    %td= @supplier.country.name if @supplier.country
+  %tr
+    %th State:
+    %td= @supplier.state.name if @supplier.state
+  %tr
     %th Email
     %td= @supplier.email
   %tr
