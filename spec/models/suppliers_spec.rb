@@ -15,7 +15,12 @@ describe Spree::Supplier do
   end
 
   describe 'validations' do
-    # it{ should validate_presence_of(:comment) }
+    it{ should validate_presence_of(:name) }
+    it{ should validate_presence_of(:address) }
+    it{ should validate_presence_of(:country_id) }
+    it{ should validate_presence_of(:state_id) }
+    it{ should validate_presence_of(:city) }
+    it{ should validate_presence_of(:postcode) }
   end
 
 end

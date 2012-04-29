@@ -5,7 +5,7 @@ module Spree
     belongs_to :country
     belongs_to :state
 
-    # validates :name, :pickup_address, :country_id, :state_id, :city, :post_code, :presence => true
+    validates :name, :address, :country_id, :state_id, :city, :postcode, :presence => true
 
     after_initialize :initialize_country
 
