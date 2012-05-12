@@ -1,4 +1,8 @@
+developement:
+  bucket: openfoodweb_test
+  access_key_id: AKIAJ3EE2EKGP36D4PUA
+  secret_access_key: GUvfWLC5G5bpcjqRYOa9/IyxofIPjKQjgJonJuTW
 production:
-  bucket: fool-man-chew_production
-  access_key_id: your_access_key
-  secret_access_key: secret_access_key
+  bucket: openfoodweb
+  access_key_id: AKIAJ3EE2EKGP36D4PUA
+  secret_access_key: GUvfWLC5G5bpcjqRYOa9/IyxofIPjKQjgJonJuTW
