@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature %q{
     As a supplier
-    I want to myself as the supplier of a product
+    I want set a supplier for a product
 } do
   # include AuthenticationWorkflow
   # include WebHelper
@@ -17,8 +17,8 @@ feature %q{
       # user = Factory(:admin_user, :email => "c@example.com")
       # sign_in_as!(user)
 
-      visit spree.admin_path
-      click_link 'New Product'
+      # visit spree.admin_path
+      # click_link 'New Product'
       # page.should have_content 'Notes'
       # fill_in 'booking_note_comment', :with => 'A new note !!!'
       # click_button 'Add note'

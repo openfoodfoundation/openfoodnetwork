@@ -1,6 +1,6 @@
 module Spree
   class Supplier < ActiveRecord::Base
-    set_table_name 'suppliers'
+    self.table_name = 'suppliers'
     has_many :products
     belongs_to :country
     belongs_to :state

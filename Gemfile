@@ -52,5 +52,6 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'machinist'
   gem "capybara"
+  gem 'database_cleaner', '0.7.1', :require => false
 end
 

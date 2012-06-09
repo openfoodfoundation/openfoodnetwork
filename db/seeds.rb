@@ -9,3 +9,5 @@
 
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+default_path = File.join(File.dirname(__FILE__), 'default')
+ActiveRecord::Fixtures.create_fixtures(default_path, ['spree/states'])
