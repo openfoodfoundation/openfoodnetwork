@@ -5,6 +5,7 @@ feature %q{
     I want manage the distributors of products
 } do
   include AuthenticationWorkflow
+  include WebHelper
 
   background do
   end
@@ -33,7 +34,7 @@ feature %q{
 
       click_button 'Create'
 
-      find('.flash').text.strip.should == 'Distributor "Eaterprises" has been successfully created!'
+      flash_message.should == 'Distributor "Eaterprises" has been successfully created!'
     end
   end
 end

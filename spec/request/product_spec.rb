@@ -4,33 +4,30 @@ feature %q{
     As a supplier
     I want set a supplier for a product
 } do
-  # include AuthenticationWorkflow
-  # include WebHelper
+  include AuthenticationWorkflow
+  include WebHelper
 
   background do
-    # @booking = Booking.make_booking
-    # @product_manager = User.make(:product_manager)
+    @supplier = Spree::Supplier.make!(:name => 'New supplier')
   end
 
-  context "Given I am editing a booking" do
-    scenario "I should be able to add a new note", :js =>true do
-      # user = Factory(:admin_user, :email => "c@example.com")
-      # sign_in_as!(user)
+  context "Given I am creating a Product" do
+    scenario "I should be able to assign a supplier to the Product" do
+      login_to_admin_section
 
-      # visit spree.admin_path
-      # click_link 'New Product'
-      # page.should have_content 'Notes'
-      # fill_in 'booking_note_comment', :with => 'A new note !!!'
-      # click_button 'Add note'
+      click_link 'Products'
+      click_link 'New Product'
 
-      # #flash_message.should == 'Booking Note successfully created.'
+      fill_in 'product_name', :with => 'A new product !!!'
+      fill_in 'product_price', :with => '19.99'
+      select('New supplier', :from => 'product_supplier_id')
 
-      # within('.notes-list') do
-      #   page.should have_content('A new note !!!')
-      #   page.should have_content(@product_manager.name)
-      # end
-      # click_link 'Back to Dashboard'
-      # page.should have_content 'Booking details'
+      click_button 'Create'
+
+      flash_message.should == 'Product "A new product !!!" has been successfully created!'
+      Spree::Product.find_by_name('A new product !!!').supplier.should == @supplier
     end
   end
+
+  context "Given I am cloning a Product"
 end
