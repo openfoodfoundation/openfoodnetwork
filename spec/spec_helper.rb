@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_zones', 'spree_zone_members', 'spree_states', 'spree_roles'] }
+    DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
   end
 
   config.before(:each) do
