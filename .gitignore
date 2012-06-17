@@ -24,7 +24,6 @@ merged_coverage
 upstream_coverage
 true/
 reports
-db/schema.rb
 *.tmproj
 *tags
 dump.rdb
