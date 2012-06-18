@@ -51,7 +51,8 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'machinist'
-  gem "capybara"
+  gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
+  gem 'pry'
 end
 

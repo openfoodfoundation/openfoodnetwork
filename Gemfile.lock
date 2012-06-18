@@ -86,6 +86,7 @@ GEM
     childprocess (0.3.2)
       ffi (~> 1.0.6)
     cocaine (0.2.1)
+    coderay (1.0.6)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -137,6 +138,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.7.1)
     mime-types (1.18)
     money (3.7.1)
       i18n (~> 0.4)
@@ -157,6 +159,10 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
+    pry (0.9.9.6)
+      coderay (~> 1.0.5)
+      method_source (~> 0.7.1)
+      slop (>= 2.4.4, < 3)
     rabl (0.6.5)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
@@ -228,6 +234,7 @@ GEM
     simple_form (2.0.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+    slop (2.4.4)
     spree (1.1.1)
       spree_api (= 1.1.1)
       spree_auth (= 1.1.1)
@@ -319,6 +326,7 @@ DEPENDENCIES
   jquery-rails
   machinist
   pg
+  pry
   rails (= 3.2.3)
   rspec-rails
   sass-rails (~> 3.2.3)
