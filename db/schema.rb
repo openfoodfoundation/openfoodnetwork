@@ -32,6 +32,11 @@ ActiveRecord::Schema.define(:version => 20120618061537) do
     t.integer  "state_id"
   end
 
+  create_table "distributors_products", :id => false, :force => true do |t|
+    t.integer "product_id"
+    t.integer "distributor_id"
+  end
+
   create_table "spree_activators", :force => true do |t|
     t.string   "description"
     t.datetime "expires_at"
@@ -353,7 +358,6 @@ ActiveRecord::Schema.define(:version => 20120618061537) do
     t.datetime "updated_at"
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
-    t.integer  "distributor_id"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"

@@ -3,6 +3,7 @@ module Spree
     self.table_name = 'distributors'
     belongs_to :country
     belongs_to :state
+    has_and_belongs_to_many :products
 
     validates :name, :pickup_address, :country_id, :state_id, :city, :post_code, :presence => true
 
