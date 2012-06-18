@@ -7,4 +7,16 @@ describe Spree::Product do
     it { should have_and_belong_to_many(:distributors) }
   end
 
+  describe "validations" do
+    it "is valid when created from factory" do
+      Spree::Product.make.should be_valid
+    end
+
+    it "requires at least one distributor" do
+      product = Spree::Product.make
+      product.distributors.clear
+      product.should_not be_valid
+    end
+  end
+
 end

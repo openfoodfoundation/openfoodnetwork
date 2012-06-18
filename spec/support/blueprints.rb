@@ -35,6 +35,7 @@ Spree::Product.blueprint do
   available_on{ Date.today - 2.days }
   count_on_hand { 5 }
   price       { 10.99 }
+  distributors{[Spree::Distributor.first || Spree::Distributor.make]}
 end
 
 Spree::Variant.blueprint do
