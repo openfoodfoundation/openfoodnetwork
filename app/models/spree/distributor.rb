@@ -1,7 +1,6 @@
 module Spree
   class Distributor < ActiveRecord::Base
     self.table_name = 'distributors'
-    has_many :orders
     belongs_to :country
     belongs_to :state
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520062061) do
+ActiveRecord::Schema.define(:version => 20120618061537) do
 
   create_table "distributors", :force => true do |t|
     t.string   "name"
@@ -248,7 +248,6 @@ ActiveRecord::Schema.define(:version => 20120520062061) do
     t.string   "payment_state"
     t.string   "email"
     t.text     "special_instructions"
-    t.integer  "distributor_id"
   end
 
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
@@ -354,6 +353,7 @@ ActiveRecord::Schema.define(:version => 20120520062061) do
     t.datetime "updated_at"
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
+    t.integer  "distributor_id"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"

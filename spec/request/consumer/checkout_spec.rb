@@ -23,7 +23,7 @@ feature %q{
   end
 
   context "Given I am buying a product", :js => true do
-    scenario "I should be able choose a distributor to pick up from" do
+    scenario "I should be able choose a distributor to pick up from", :skip => true do
       login_to_consumer_section
 
       click_link 'Fuji apples'
