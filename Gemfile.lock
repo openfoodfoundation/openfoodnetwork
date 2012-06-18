@@ -235,6 +235,7 @@ GEM
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     slop (2.4.4)
+    spork (1.0.0rc3)
     spree (1.1.1)
       spree_api (= 1.1.1)
       spree_auth (= 1.1.1)
@@ -332,6 +333,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form
+  spork (~> 1.0rc)
   spree
   spree_heroku!
   spree_i18n!
