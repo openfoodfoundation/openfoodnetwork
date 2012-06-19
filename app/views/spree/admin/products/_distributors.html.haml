@@ -1,0 +1,5 @@
+= f.field_container :distributors do
+  = f.label :distributors
+  %br
+  = f.collection_check_boxes(:distributor_ids, Spree::Distributor.all, :id, :name)
+  = f.error_message_on :distributors
