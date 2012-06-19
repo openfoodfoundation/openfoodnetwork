@@ -10,7 +10,7 @@ feature %q{
 
   background do
     # Given some distributors
-    3.times { Spree::Distributor.make! }
+    3.times { create(:distributor) }
   end
 
   scenario "viewing list of distributors" do

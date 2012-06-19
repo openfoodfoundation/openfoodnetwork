@@ -50,7 +50,8 @@ group :test, :development do
   gem 'turn', '~> 0.8.3', :require => false
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'machinist'
+  gem 'factory_girl_rails'
+  gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'spork', '~> 1.0rc'

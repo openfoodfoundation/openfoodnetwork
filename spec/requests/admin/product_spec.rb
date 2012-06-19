@@ -8,8 +8,8 @@ feature %q{
   include WebHelper
 
   background do
-    @supplier = Spree::Supplier.make!(:name => 'New supplier')
-    @distributors = (1..3).map { |i| Spree::Distributor.make!(:name => "Distributor #{i}") }
+    @supplier = create(:supplier, :name => 'New supplier')
+    @distributors = (1..3).map { create(:distributor) }
   end
 
   context "creating a product" do

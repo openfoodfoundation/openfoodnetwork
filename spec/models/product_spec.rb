@@ -9,11 +9,11 @@ describe Spree::Product do
 
   describe "validations" do
     it "is valid when created from factory" do
-      Spree::Product.make.should be_valid
+      build(:product).should be_valid
     end
 
     it "requires at least one distributor" do
-      product = Spree::Product.make
+      product = build(:product)
       product.distributors.clear
       product.should_not be_valid
     end

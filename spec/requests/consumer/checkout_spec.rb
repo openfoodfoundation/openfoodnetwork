@@ -9,17 +9,17 @@ feature %q{
   include WebHelper
 
   background do
-    @distributor1 = Spree::Distributor.make!(:name => 'Eaterprises')
-    @distributor2 = Spree::Distributor.make!(:name => 'Edible garden',
-      :pickup_address => '12 Bungee Rd',
-      :city => 'Carion',
-      :pickup_times => 'Tuesday, 4 PM')
-    @product = Spree::Product.make!(:name => 'Fuji apples')
+    @distributor1 = create(:distributor, :name => 'Eaterprises')
+    @distributor2 = create(:distributor, :name => 'Edible garden',
+                           :pickup_address => '12 Bungee Rd',
+                           :city => 'Carion',
+                           :pickup_times => 'Tuesday, 4 PM')
+    @product = create(:product, :name => 'Fuji apples')
 
-    @zone = Spree::Zone.make!
-    Spree::ZoneMember.create(zone: @zone, zoneable: Spree::Country.find_by_name('Australia'))
-    Spree::ShippingMethod.make!(zone: @zone)
-    Spree::PaymentMethod.make!
+    @zone = create(:zone)
+    create(:zone_member, zone: @zone, zoneable: Spree::Country.find_by_name('Australia'))
+    create(:shipping_method, zone: @zone)
+    create(:payment_method)
   end
 
   context "Given I am buying a product", :js => true do

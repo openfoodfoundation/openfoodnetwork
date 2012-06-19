@@ -60,6 +60,7 @@ Spork.prefork do
     end
 
     config.include Spree::UrlHelpers
+    config.include FactoryGirl::Syntax::Methods
   end
 end
 
