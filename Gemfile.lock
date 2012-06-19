@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/RohanM/simple_form.git
+  revision: 45f08a213b40f3d4bda5f5398db841137587160a
+  specs:
+    simple_form (2.0.2)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+
+GIT
   remote: git://github.com/joneslee85/spree-heroku.git
   revision: 63f0cfa47089cae50365e226ec7dd1eccde0ac05
   specs:
@@ -120,7 +128,7 @@ GEM
     httpi (1.0.0)
       rack
     i18n (0.6.0)
-    journey (1.0.3)
+    journey (1.0.4)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
@@ -231,9 +239,6 @@ GEM
       rubyzip
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
-    simple_form (2.0.2)
-      actionpack (~> 3.0)
-      activemodel (~> 3.0)
     slop (2.4.4)
     spork (1.0.0rc3)
     spree (1.1.1)
@@ -332,7 +337,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   shoulda-matchers
-  simple_form
+  simple_form!
   spork (~> 1.0rc)
   spree
   spree_heroku!

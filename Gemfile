@@ -2,16 +2,16 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 gem 'spree'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 
 gem 'spree_usa_epay'
 gem 'spree_skrill'
-gem 'simple_form'
+
+# Fix bug in simple_form preventing collection_check_boxes usage within form_for block
+# When merged, revert to upstream gem
+gem 'simple_form', :git => 'git://github.com/RohanM/simple_form.git'
 
 gem 'unicorn'
 gem 'spree_heroku', :git => 'git://github.com/joneslee85/spree-heroku.git'
