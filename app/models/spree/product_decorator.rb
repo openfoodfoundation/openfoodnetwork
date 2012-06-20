@@ -7,5 +7,5 @@ Spree::Product.class_eval do
   validates_presence_of :distributors
 
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
-  scope :in_distributor, lambda { |distributor| joins(:distributors).where('distributors.id = ?', distributor) }
+  scope :in_distributor, lambda { |distributor_id| joins(:distributors).where('distributors.id = ?', distributor_id.to_i) }
 end

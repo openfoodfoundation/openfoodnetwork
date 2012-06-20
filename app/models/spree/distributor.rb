@@ -12,5 +12,9 @@ module Spree
     def initialize_country
       self.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
     end
+
+    def to_param
+      "#{id}-#{name.parameterize}"
+    end
   end
 end

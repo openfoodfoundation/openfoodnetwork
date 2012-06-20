@@ -2,9 +2,9 @@
   %h6.filter_name Shop by Supplier
   %ul.filter_choices
     - @suppliers.each do |supplier|
-      %li.nowrap= link_to supplier.name, "#"
+      %li.nowrap= link_to supplier.name, supplier
 
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
     - @distributors.each do |distributor|
-      %li.nowrap= link_to distributor.name, "#"
+      %li.nowrap= link_to distributor.name, distributor
