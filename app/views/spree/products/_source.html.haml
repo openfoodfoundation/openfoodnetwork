@@ -1,0 +1,14 @@
+%div{:data-hook => "product_source"}
+  %h6.product-section-title Source
+  %table#product-source.table-display{:width => "100%"}
+    %tbody
+      - if @product.supplier
+        %tr.odd
+          %td
+            %strong Supplier
+          %td= @product.supplier.name
+      - @product.distributors.each do |distributor|
+        %tr.even
+          %td
+            %strong Distributor
+          %td= distributor.name

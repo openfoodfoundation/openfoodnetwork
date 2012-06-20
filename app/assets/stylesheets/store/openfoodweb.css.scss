@@ -22,3 +22,13 @@ nav#filters {
     }
   }
 }
+
+/* Style the product source on the product details page in the
+ * same manner as the product properties table above it.
+ */
+#product-source {
+  @extend #product-properties;
+}
+#product-properties td, #product-source td {
+  width: 50%;
+}
