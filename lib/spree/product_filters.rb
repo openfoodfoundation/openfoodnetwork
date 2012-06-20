@@ -10,7 +10,7 @@ module Spree
       def ProductFilters.distributor_filter
         distributors = Spree::Distributor.all.map(&:name).compact.uniq
         conds  = Hash[*distributors.map { |d| [d, "#{Spree::Distributor.table_name}.name = '#{d}'"] }.flatten]
-        { :name   => "Distributor",
+        { :name   => "Group",
           :scope  => :distributor_any,
           :conds  => conds,
           :labels => (distributors.sort).map { |k| [k, k] }

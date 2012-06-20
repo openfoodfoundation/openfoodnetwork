@@ -1,0 +1,24 @@
+@import "screen";
+
+/* Based on Spree's nav#taxonomies style. Copied instead of
+ * extended with SASS because SASS does not allow extending
+ * nested selectors.
+ */
+nav#filters {
+  .filter_name {
+    text-transform: uppercase;
+    border-bottom: 1px solid lighten($body_text_color, 60);
+    margin-bottom: 5px;
+    font-size: $main_navigation_header_font_size;
+  }
+
+  .filter_choices {
+    padding-left: 20px;
+    margin-bottom: 20px;
+    list-style: disc outside;
+
+    li a {
+      font-size: $main_navigation_font_size;
+    }
+  }
+}
