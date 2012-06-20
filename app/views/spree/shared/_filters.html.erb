@@ -1,4 +1,4 @@
-<% filters = @taxon ? @taxon.applicable_filters : [Spree::ProductFilters.distributor_filter] %>
+<% filters = @taxon ? @taxon.applicable_filters : [] %>
 <% unless filters.empty? %>
   <nav id="filters">
     <% params[:search] ||= {} %>
