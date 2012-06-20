@@ -23,6 +23,21 @@ feature %q{
     end
   end
 
-  scenario "browsing products by distributor"
+  scenario "browsing products by distributor" do
+    # Given a product at each of two distributors
+    d1 = create(:distributor)
+    d2 = create(:distributor)
+    p1 = create(:product, :distributors => [d1])
+    p2 = create(:product, :distributors => [d2])
 
+    # When I go to the home page, I should see both products
+    visit spree.root_path
+    page.should have_content p1.name
+    page.should have_content p2.name
+
+    # When I filter by one distributor, I should see only the product from that distributor
+    click_link d1.name
+    page.should have_content p1.name
+    page.should_not have_content p2.name
+  end
 end

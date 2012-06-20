@@ -10,7 +10,7 @@
         <% labels.each do |nm,val| %>
           <li class="nowrap">
             <% active = params[:search][filter[:scope]] && params[:search][filter[:scope]].include?(val.to_s) %>
-            <%= link_to nm, "?search[#{filter[:scope].to_s}][]=#{val}" %>
+            <%= link_to nm, "?search[#{filter[:scope].to_s}][]=#{CGI.escape(val)}" %>
           </li>
         <% end %>
       </ul>
