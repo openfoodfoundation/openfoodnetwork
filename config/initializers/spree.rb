@@ -8,15 +8,15 @@
 
 
 require 'spree/product_filters'
-
+require 'open_food_web/searcher'
 
 Spree.config do |config|
-  # Example:
-  # Uncomment to override the default site name.
-  # config.site_name = "Spree Demo Site"
+  config.site_name = "Open Food Web"
 
   # config.shipping_instructions = true
   config.checkout_zone = 'Australia'
   config.address_requires_state = true
   config.default_country_id  = 12 # This should be Australia, see:spree/core/db/default/spree/countries.yml
+
+  config.searcher_class = OpenFoodWeb::Searcher
 end
