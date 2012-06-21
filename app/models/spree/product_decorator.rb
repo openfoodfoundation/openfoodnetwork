@@ -4,7 +4,7 @@ Spree::Product.class_eval do
 
   attr_accessible :supplier_id, :distributor_ids
 
-  validates_presence_of :distributors
+  validates_presence_of :supplier, :distributors
 
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
   scope :in_distributor, lambda { |distributor_id| joins(:distributors).where('distributors.id = ?', distributor_id.to_i) }

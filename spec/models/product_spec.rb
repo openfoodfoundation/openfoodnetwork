@@ -12,6 +12,12 @@ describe Spree::Product do
       build(:product).should be_valid
     end
 
+    it "requires a supplier" do
+      product = build(:product)
+      product.supplier = nil
+      product.should_not be_valid
+    end
+
     it "requires at least one distributor" do
       product = build(:product)
       product.distributors.clear

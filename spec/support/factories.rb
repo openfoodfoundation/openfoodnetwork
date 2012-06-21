@@ -31,6 +31,7 @@ end
 
 FactoryGirl.modify do
   factory :simple_product do
+    supplier { Spree::Supplier.first || FactoryGirl.create(:supplier) }
     distributors { [Spree::Distributor.first || FactoryGirl.create(:distributor)] }
   end
 end
