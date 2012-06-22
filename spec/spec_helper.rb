@@ -15,6 +15,7 @@ Spork.prefork do
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  require 'spree/core/testing_support/controller_requests'
 
   require 'active_record/fixtures'
   fixtures_dir = File.expand_path('../../db/default', __FILE__)
@@ -60,6 +61,8 @@ Spork.prefork do
     end
 
     config.include Spree::UrlHelpers
+    config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
+    config.include Devise::TestHelpers, :type => :controller
     config.include FactoryGirl::Syntax::Methods
   end
 end
