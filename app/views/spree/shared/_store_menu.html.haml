@@ -4,7 +4,6 @@
 %li#link-to-cart{'data-hook' => ''}
   = link_to_cart
 
-- order = current_order(false)
-- if order.andand.distributor
+- if current_distributor
   %li#current-distributor{'data-hook' => ''}
-    = "You are shopping at #{order.distributor.name}"
+    = "You are shopping at #{current_distributor.name}"
