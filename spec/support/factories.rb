@@ -9,8 +9,8 @@ FactoryGirl.define do
     address     '4 McDougal Rd'
     city        'Austinvale'
     postcode    '2312'
-    state       Spree::State.find_by_name('Victoria')
-    country     Spree::Country.find_by_name('Australia')
+    state       { Spree::State.find_by_name('Victoria') }
+    country     { Spree::Country.find_by_name('Australia') }
   end
 
   factory :distributor, :class => Spree::Distributor do
@@ -23,8 +23,8 @@ FactoryGirl.define do
     pickup_times   "Whenever you're free"
     city           'Cheshire'
     post_code      '2312'
-    state          Spree::State.find_by_name('Victoria')
-    country        Spree::Country.find_by_name('Australia')
+    state          { Spree::State.find_by_name('Victoria') }
+    country        { Spree::Country.find_by_name('Australia') }
   end
 end
 

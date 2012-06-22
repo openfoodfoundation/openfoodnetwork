@@ -1,13 +1,81 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require File.expand_path('../../spec/support/factories', __FILE__)
 
 
-Spree::Core::Engine.load_seed if defined?(Spree::Core)
-Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-default_path = File.join(File.dirname(__FILE__), 'default')
-ActiveRecord::Fixtures.create_fixtures(default_path, ['spree/states'])
+# -- Spree
+unless Spree::Country.find_by_name 'Australia'
+  puts "[db:seed] Seeding Spree"
+  Spree::Core::Engine.load_seed if defined?(Spree::Core)
+  Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+end
+
+
+# -- States
+# States are created from factories instead of fixtures because models loaded from fixtures
+# are not available to the app in the remainder of the seeding process (probably because of
+# activerecord caching).
+unless Spree::State.find_by_name 'Victoria'
+  puts "[db:seed] Seeding states"
+
+  [
+   ['ACT', 'ACT'],
+   ['New South Wales', 'NSW'],
+   ['Northern Territory', 'NT'],
+   ['Queensland', 'QLD'],
+   ['South Australia', 'SA'],
+   ['Tasmania', 'Tas'],
+   ['Victoria', 'Vic'],
+   ['Western Australia', 'WA']
+  ].each do |state|
+
+    # country_id 12 == Australia. See db/default/spree/countries.yaml
+    FactoryGirl.create(:state, :name => state[0], :abbr => state[1], :country_id => 12)
+  end
+end
+
+
+# -- Taxonomies
+unless Spree::Taxonomy.find_by_name 'Products'
+  puts "[db:seed] Seeding taxonomies"
+  taxonomy = Spree::Taxonomy.find_by_name('Products') || FactoryGirl.create(:taxonomy, :name => 'Products')
+  taxonomy_root = taxonomy.root
+
+  ['Vegetables', 'Fruit', 'Oils', 'Preserves and Sauces', 'Dairy', 'Meat and Fish'].each do |taxon_name|
+    FactoryGirl.create(:taxon, :name => taxon_name, :parent_id => taxonomy_root.id)
+  end
+end
+
+
+# -- Suppliers and distributors
+unless Spree::Supplier.count > 0
+  puts "[db:seed] Seeding suppliers and distributors"
+
+  3.times { FactoryGirl.create(:supplier) }
+  3.times { FactoryGirl.create(:distributor) }
+end
+
+
+# -- Products
+unless Spree::Product.count > 0
+  puts "[db:seed] Seeding products"
+
+  FactoryGirl.create(:product,
+                     :name => 'Garlic', :price => 20.00,
+                     :supplier => Spree::Supplier.all[0],
+                     :distributors => [Spree::Distributor.all[0]],
+                     :taxons => [Spree::Taxon.find_by_name('Vegetables')])
+
+  FactoryGirl.create(:product,
+                     :name => 'Fuji Apple', :price => 5.00,
+                     :supplier => Spree::Supplier.all[1],
+                     :distributors => Spree::Distributor.all,
+                     :taxons => [Spree::Taxon.find_by_name('Fruit')])
+
+  FactoryGirl.create(:product,
+                     :name => 'Beef - 5kg Trays', :price => 50.00,
+                     :supplier => Spree::Supplier.all[2],
+                     :distributors => [Spree::Distributor.all[2]],
+                     :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+end
