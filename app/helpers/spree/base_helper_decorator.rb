@@ -5,7 +5,11 @@ module Spree
       content_tag :ul, :class => 'taxons-list' do
         root_taxon.children.map do |taxon|
           css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'current' : nil
-          num_products = Product.in_taxon(taxon).count
+
+          products = Product.in_taxon(taxon)
+          products = products.in_distributor(current_distributor) if current_distributor
+          num_products = products.count
+
           content_tag :li, :class => css_class do
            link_to(taxon.name, seo_url(taxon)) +
               " (#{num_products})" +
