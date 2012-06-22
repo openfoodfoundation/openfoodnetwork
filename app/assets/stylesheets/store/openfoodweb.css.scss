@@ -1,5 +1,16 @@
 @import "screen";
 
+/* Style current distributor in main nav bar */
+nav #main-nav-bar {
+  li {
+    &#current-distributor {
+      float: right;
+      margin-right: 24px;
+    }
+  }
+}
+
+
 /* Based on Spree's nav#taxonomies style. Copied instead of
  * extended with SASS because SASS does not allow extending
  * nested selectors.

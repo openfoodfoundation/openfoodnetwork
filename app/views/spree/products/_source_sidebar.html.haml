@@ -7,4 +7,4 @@
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
     - @distributors.each do |distributor|
-      %li.nowrap= link_to distributor.name, distributor
+      %li.nowrap= link_to distributor.name, select_distributor_path(distributor)

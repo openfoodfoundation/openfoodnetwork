@@ -34,10 +34,12 @@ feature %q{
       click_link d.name
 
       # Then I should see the name of the distributor that I've selected
-      page.should have_selector '.current-distributor', :text => 'You are shopping at Melb Uni Co-op'
+      page.should have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
     end
 
     it "splits the product listing by local/remote distributor"
+
+    it "allows the user to leave the distributor"
 
     context "viewing a product" do
       it "provides a choice of distributor when adding to cart" # Test product at remote distributor

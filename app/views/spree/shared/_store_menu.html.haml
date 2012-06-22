@@ -1,0 +1,10 @@
+%li#home-link{'data-hook' => ''}
+  = link_to t(:home), root_path
+
+%li#link-to-cart{'data-hook' => ''}
+  = link_to_cart
+
+- order = current_order(false)
+- if order.andand.distributor
+  %li#current-distributor{'data-hook' => ''}
+    = "You are shopping at #{order.distributor.name}"

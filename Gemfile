@@ -17,7 +17,7 @@ gem 'unicorn'
 gem 'spree_heroku', :git => 'git://github.com/joneslee85/spree-heroku.git'
 gem 'haml'
 gem 'aws-s3'
-
+gem 'andand'
 
 # Gems used only for assets and not required
 # in production environments by default.
