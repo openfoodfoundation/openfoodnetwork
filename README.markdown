@@ -29,8 +29,23 @@ You can download the source with the command:
 
 ## Get it running
 
-First, you will need, at the very least, Ruby 1.9.2 installed.
-http://guides.rubyonrails.org/getting_started.html
+For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html .
+
+First, check your dependencies: Ensure that you have Ruby 1.9.x installed:
+
+  ruby --version
+
+Install the project's gem dependencies:
+
+  bundle install
+
+Create the development and test databases, using the settings specified in `config/database.yml`. You can then load the schema and some seed data with the following command:
+
+  rake db:schema:load db:seed
+
+At long last, your dreams of spinning up a development server can be realised:
+
+  rails server
 
 
 ## Testing
@@ -43,8 +58,10 @@ Then the tests can be run with:
 
   bundle exec rspec spec
 
-The site is configured to use [Spork] to reduce the pre-test startup
-time while Rails loads. To use it, first start up a spork instance:
+The site is configured to use
+[Spork](https://github.com/sporkrb/spork) to reduce the pre-test
+startup time while Rails loads. To use it, first start up a spork
+instance:
 
   bundle exec spork
 
@@ -55,8 +72,8 @@ When that's ready, you can run RSpec with the --drb flag:
 
 ## Deployment
 
-Deployment with heroku
-Ask Andrew Spinks for access.
+Deployment is achieved using [Heroku](http://heroku.com). For access,
+speak to Andrew Spinks.
 
 
 ## Credits
