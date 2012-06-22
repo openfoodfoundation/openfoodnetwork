@@ -1,4 +1,6 @@
 Spree::Order.class_eval do
+  belongs_to :distributor
+
   # before_validation :shipping_address_from_distributor
 
   private

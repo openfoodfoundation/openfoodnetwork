@@ -8,5 +8,15 @@ module Spree
       @products = @searcher.retrieve_products
       render :template => 'spree/products/index'
     end
+
+    def select
+      distributor = Distributor.find params[:id]
+
+      order = current_order(true)
+      order.distributor = distributor
+      order.save!
+
+      redirect_back_or_default(root_path)
+    end
   end
 end

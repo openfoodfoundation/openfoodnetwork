@@ -6,7 +6,9 @@ end
 
 Spree::Core::Engine.routes.prepend do
   resources :suppliers
-  resources :distributors
+  resources :distributors do
+    get :select, :on => :member
+  end
 
   namespace :admin do
     resources :distributors
