@@ -16,7 +16,7 @@ Spree.config do |config|
   # config.shipping_instructions = true
   config.checkout_zone = 'Australia'
   config.address_requires_state = true
-  config.default_country_id  = 12 # This should be Australia, see:spree/core/db/default/spree/countries.yml
+  config.default_country_id  = 12 # This should be Australia, see: spree/core/db/default/spree/countries.yml
 
   config.searcher_class = OpenFoodWeb::Searcher
 end
