@@ -36,23 +36,32 @@ feature %q{
     end
 
     it "splits the product listing by local/remote distributor" do
-      # Given two distributors, with a product under each
+      # Given two distributors, with a product under each, and each product under a taxon
+      taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
+      taxonomy_root = taxonomy.root
+      taxon = create(:taxon, :name => 'Taxon one', :parent_id => taxonomy_root.id)
       d1 = create(:distributor)
       d2 = create(:distributor)
-      p1 = create(:product, :distributors => [d1])
-      p2 = create(:product, :distributors => [d2])
+      p1 = create(:product, :distributors => [d1], :taxons => [taxon])
+      p2 = create(:product, :distributors => [d2], :taxons => [taxon])
 
       # When I select the first distributor
       visit spree.root_path
       click_link d1.name
 
       # Then I should see products split by local/remote distributor
-      page.should_not have_selector '#products'
-      page.should have_selector '#products-local', :text => p1.name
-      page.should have_selector '#products-remote', :text => p2.name
+      # on the home page, the products page, the search results page and the taxon page
+      [spree.root_path,
+       spree.products_path,
+       spree.products_path(:keywords => 'Product'),
+       spree.nested_taxons_path(taxon.permalink)
+      ].each do |path|
 
-      # TODO: Also see on products page and taxon page
-
+        visit path
+        page.should_not have_selector '#products'
+        page.should have_selector '#products-local', :text => p1.name
+        page.should have_selector '#products-remote', :text => p2.name
+      end
     end
 
     it "allows the user to leave the distributor" do
