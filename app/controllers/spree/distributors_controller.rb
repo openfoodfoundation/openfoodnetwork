@@ -18,5 +18,13 @@ module Spree
 
       redirect_back_or_default(root_path)
     end
+
+    def deselect
+      order = current_order(true)
+      order.distributor = nil
+      order.save!
+
+      redirect_back_or_default(root_path)
+    end
   end
 end

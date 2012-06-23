@@ -39,7 +39,18 @@ feature %q{
 
     it "splits the product listing by local/remote distributor"
 
-    it "allows the user to leave the distributor"
+    it "allows the user to leave the distributor" do
+      # Given a distributor
+      d = create(:distributor, :name => 'Melb Uni Co-op')
+
+      # When I select the distributor and then leave it
+      visit spree.root_path
+      click_link d.name
+      click_link 'Leave distributor'
+
+      # Then I should have left the distributor
+      page.should_not have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
+    end
 
     context "viewing a product" do
       it "provides a choice of distributor when adding to cart" # Test product at remote distributor
