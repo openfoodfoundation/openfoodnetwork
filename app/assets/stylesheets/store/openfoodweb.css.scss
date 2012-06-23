@@ -98,3 +98,12 @@ ul.product-listing {
     }
   }
 }
+
+
+/* Highlight local products in distributor-split product listings */
+#products-local ul {
+  margin-bottom: 1em;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #def;
+}
