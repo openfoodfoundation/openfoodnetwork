@@ -1,0 +1,5 @@
+- if @products
+  #products= render 'spree/shared/products', :products => @products
+- else
+  #products-local= render 'spree/shared/products', :products => @products_local
+  #products-remote= render 'spree/shared/products', :products => @products_remote
