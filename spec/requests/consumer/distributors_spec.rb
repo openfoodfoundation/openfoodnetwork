@@ -8,12 +8,10 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  background do
+  scenario "viewing a list of distributors" do
     # Given some distributors
     3.times { create(:distributor) }
-  end
 
-  scenario "viewing a list of distributors" do
     # When I go to the home page
     visit spree.root_path
 
@@ -37,7 +35,25 @@ feature %q{
       page.should have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
     end
 
-    it "splits the product listing by local/remote distributor"
+    it "splits the product listing by local/remote distributor" do
+      # Given two distributors, with a product under each
+      d1 = create(:distributor)
+      d2 = create(:distributor)
+      p1 = create(:product, :distributors => [d1])
+      p2 = create(:product, :distributors => [d2])
+
+      # When I select the first distributor
+      visit spree.root_path
+      click_link d1.name
+
+      # Then I should see products split by local/remote distributor
+      page.should_not have_selector '#products'
+      page.should have_selector '#products-local', :text => p1.name
+      page.should have_selector '#products-remote', :text => p2.name
+
+      # TODO: Also see on products page and taxon page
+
+    end
 
     it "allows the user to leave the distributor" do
       # Given a distributor
@@ -52,9 +68,9 @@ feature %q{
       page.should_not have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
     end
 
-    context "viewing a product" do
-      it "provides a choice of distributor when adding to cart" # Test product at remote distributor
+    context "viewing a product, it provides a choice of distributor when adding to cart" do
       it "displays the local distributor as the default choice when available for the current product"
+      it "functions with remote distributors"
     end
   end
 
