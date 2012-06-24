@@ -46,6 +46,7 @@ feature %q{
     visit spree.root_path
     page.should_not have_selector 'a', :text => d1.name
     page.should_not have_selector 'a', :text => d2.name
+    page.should_not have_selector 'a', :text => 'Leave distributor'
   end
 
   context "adding a subsequent product to the cart" do

@@ -1,6 +1,11 @@
 Spree::Order.class_eval do
   belongs_to :distributor
 
+  def can_change_distributor?
+    # Distributor may not be changed once an item has been added to the cart/order
+    line_items.empty?
+  end
+
   # before_validation :shipping_address_from_distributor
 
   private

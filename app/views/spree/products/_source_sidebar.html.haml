@@ -6,7 +6,10 @@
 
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
+    - order = current_order(false)
     - @distributors.each do |distributor|
-      %li.nowrap= link_to distributor.name, select_distributor_path(distributor)
-    - if current_distributor
+      %li.nowrap
+        - if order.nil? || order.can_change_distributor?
+          = link_to distributor.name, select_distributor_path(distributor)
+    - if current_distributor && order.can_change_distributor?
       %li.nowrap= link_to 'Leave distributor', deselect_distributors_path

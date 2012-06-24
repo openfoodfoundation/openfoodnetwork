@@ -14,7 +14,7 @@ module Spree
 
       order = current_order(true)
 
-      if order.line_items.empty?
+      if order.can_change_distributor?
         order.distributor = distributor
         order.save!
       end
@@ -25,7 +25,7 @@ module Spree
     def deselect
       order = current_order(true)
 
-      if order.line_items.empty?
+      if order.can_change_distributor?
         order.distributor = nil
         order.save!
       end
