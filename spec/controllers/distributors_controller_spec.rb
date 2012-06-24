@@ -52,6 +52,21 @@ describe Spree::DistributorsController do
       o.distributor.should == d1
     end
 
-    it "does not allow deselecting distributors"
+    it "does not allow deselecting distributors" do
+      # Given a distributor and an order with a product
+      d = create(:distributor)
+      p = create(:product, :distributors => [d])
+      o = current_order(true)
+      o.add_variant(p.master, 1)
+      o.distributor = d
+      o.save!
+
+      # When I attempt to deselect the distributor
+      spree_get :deselect
+
+      # Then my distributor should remain unchanged
+      o.reload
+      o.distributor.should == d
+    end
   end
 end

@@ -24,8 +24,11 @@ module Spree
 
     def deselect
       order = current_order(true)
-      order.distributor = nil
-      order.save!
+
+      if order.line_items.empty?
+        order.distributor = nil
+        order.save!
+      end
 
       redirect_back_or_default(root_path)
     end
