@@ -8,13 +8,27 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  context "adding the first product to the cart" do
-    it "requires the user choose a distributor" do
-      # Tested in orders_controller_spec.rb
-    end
+  scenario "adding the first product to the cart" do
+    # Given a product and some distributors
+    d1 = create(:distributor)
+    d2 = create(:distributor)
+    p = create(:product, :distributors => [d1])
 
-    it "sets the order's distributor"
-    it "sets the user's distributor when adding a product at a remote distributor"
+    # When I choose a distributor
+    visit spree.root_path
+    click_link d2.name
+
+    # When I add an item to my cart from a different distributor
+    visit spree.product_path p
+    select d1.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then the item should be in my cart
+    order = Spree::Order.last
+    order.line_items.first.product.should == p
+
+    # And my order should have its distributor set to the chosen distributor
+    order.distributor.should == d1
   end
 
   it "does not allow the user to change distributor after a product has been added to the cart"

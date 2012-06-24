@@ -4,7 +4,14 @@ Spree::OrdersController.class_eval do
   def populate_order_distributor
     @distributor = Spree::Distributor.find params[:distributor_id]
 
-    redirect_to cart_path unless populate_valid? @distributor
+    if populate_valid? @distributor
+      order = current_order(true)
+      order.distributor = @distributor
+      order.save!
+
+    else
+      redirect_to cart_path
+    end
   end
 
   private
