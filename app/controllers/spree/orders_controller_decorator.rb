@@ -3,9 +3,26 @@ Spree::OrdersController.class_eval do
 
   def populate_order_distributor
     @distributor = Spree::Distributor.find params[:distributor_id]
-    if @distributor.nil?
-      return false
-    end
 
+    redirect_to cart_path unless populate_valid? @distributor
+  end
+
+  private
+  def populate_valid? distributor
+    # -- Distributor must be specified
+    return false if distributor.nil?
+
+    # -- All products must be available under that distributor
+    params[:products].each do |product_id, variant_id|
+      product = Spree::Product.find product_id
+      return false unless product.distributors.include? distributor
+    end if params[:products]
+
+    params[:variants].each do |variant_id, quantity|
+      variant = Spree::Variant.find variant_id
+      return false unless variant.product.distributors.include? distributor
+    end if params[:variants]
+
+    true
   end
 end
