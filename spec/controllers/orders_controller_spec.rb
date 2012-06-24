@@ -4,6 +4,11 @@ require 'spree/core/current_order'
 describe Spree::OrdersController do
   include Spree::Core::CurrentOrder
 
+  def current_user
+    controller.current_user
+  end
+
+
   context "adding the first product to the cart" do
     it "does not add the product if the user does not specify a distributor" do
       create(:distributor)
@@ -22,6 +27,22 @@ describe Spree::OrdersController do
       expect do
         spree_put :populate, :variants => {p.id => 1}, :distributor_id => distributor_no_product.id
       end.to change(Spree::LineItem, :count).by(0)
+    end
+
+    it "adds the product and sets the distributor even if the order has a different distributor set" do
+      distributor_product = create(:distributor)
+      distributor_no_product = create(:distributor)
+      p = create(:product, :distributors => [distributor_product])
+
+      order = current_order(true)
+      order.distributor = distributor_no_product
+      order.save!
+
+      expect do
+        spree_put :populate, :variants => {p.id => 1}, :distributor_id => distributor_product.id
+      end.to change(Spree::LineItem, :count).by(1)
+
+      order.reload.distributor.should == distributor_product
     end
 
     it "sets the order's distributor" do

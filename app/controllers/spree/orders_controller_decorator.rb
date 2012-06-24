@@ -32,7 +32,7 @@ Spree::OrdersController.class_eval do
 
     # -- If products in cart, distributor can't be changed
     order = current_order(false)
-    if !order.nil? && order.distributor != distributor
+    if !order.nil? && !order.can_change_distributor? && order.distributor != distributor
       return false
     end
 
