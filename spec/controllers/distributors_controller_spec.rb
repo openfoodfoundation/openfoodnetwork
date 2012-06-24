@@ -40,8 +40,8 @@ describe Spree::DistributorsController do
       d2 = create(:distributor)
       p = create(:product, :distributors => [d1])
       o = current_order(true)
-      o.add_variant(p.master, 1)
       o.distributor = d1
+      o.add_variant(p.master, 1)
       o.save!
 
       # When I attempt to select a distributor
@@ -57,8 +57,8 @@ describe Spree::DistributorsController do
       d = create(:distributor)
       p = create(:product, :distributors => [d])
       o = current_order(true)
-      o.add_variant(p.master, 1)
       o.distributor = d
+      o.add_variant(p.master, 1)
       o.save!
 
       # When I attempt to deselect the distributor
