@@ -2,7 +2,7 @@ Spree::OrdersController.class_eval do
   before_filter :populate_order_distributor, :only => :populate
 
   def populate_order_distributor
-    @distributor = Spree::Distributor.find params[:distributor_id]
+    @distributor = params.key?(:distributor_id) ? Spree::Distributor.find(params[:distributor_id]) : nil
 
     if populate_valid? @distributor
       order = current_order(true)

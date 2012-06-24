@@ -45,8 +45,8 @@ describe Spree::OrdersController do
 
       # And the product is in the cart
       spree_put :populate, :variants => {@product.id => 1}, :distributor_id => @distributor.id
-      current_order(false).line_items.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.should == @distributor
+      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.reload.should == @distributor
     end
 
     it "does not add the product if the product is not available at the order's distributor" do
@@ -58,8 +58,8 @@ describe Spree::OrdersController do
       spree_put :populate, :variants => {p2.id => 1}, :distributor_id => d2.id
 
       # Then the product should not be added to the cart
-      current_order(false).line_items.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.should == @distributor
+      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.reload.should == @distributor
     end
 
     it "does not add the product if the product is not available at the given distributor" do
@@ -71,10 +71,21 @@ describe Spree::OrdersController do
       spree_put :populate, :variants => {p2.id => 1}, :distributor_id => @distributor.id
 
       # Then the product should not be added to the cart
-      current_order(false).line_items.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.should == @distributor
+      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.reload.should == @distributor
     end
 
-    it "does not add the product if the chosen distributor is different from the order's distributor"
+    it "does not add the product if the chosen distributor is different from the order's distributor" do
+      # Given a product that's available at the chosen distributor and another distributor
+      d2 = create(:distributor)
+      p2 = create(:product, :distributors => [@distributor, d2])
+
+      # When I attempt to add the product to the cart with the alternate distributor
+      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => d2
+
+      # Then the product should not be added to the cart
+      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.reload.should == @distributor
+    end
   end
 end
