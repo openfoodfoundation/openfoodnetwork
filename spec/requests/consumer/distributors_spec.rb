@@ -78,28 +78,21 @@ feature %q{
     end
 
     context "viewing a product, it provides a choice of distributor when adding to cart" do
-      it "displays the local distributor as the default choice when available for the current product"
-      it "functions with remote distributors"
+      it "displays the local distributor as the default choice when available for the current product" do
+        # Given a distributor and a product under it
+        distributor = create(:distributor)
+        product = create(:product, :distributors => [distributor])
+
+        # When we select the distributor and view the product
+        visit spree.root_path
+        click_link distributor.name
+        visit spree.product_path(product)
+
+        # Then we should see our distributor as the default option when adding the item to our cart
+        page.should have_selector "select#distributor_id option[value='#{distributor.id}'][selected='selected']"
+      end
+
+      it "functions with remote distributors also"
     end
   end
-
-
-
-  # scenario "browsing products by distributor" do
-  #   # Given a product at each of two distributors
-  #   d1 = create(:distributor)
-  #   d2 = create(:distributor)
-  #   p1 = create(:product, :distributors => [d1])
-  #   p2 = create(:product, :distributors => [d2])
-
-  #   # When I go to the home page, I should see both products
-  #   visit spree.root_path
-  #   page.should have_content p1.name
-  #   page.should have_content p2.name
-
-  #   # When I filter by one distributor, I should see only the product from that distributor
-  #   click_link d1.name
-  #   page.should have_content p1.name
-  #   page.should_not have_content p2.name
-  # end
 end
