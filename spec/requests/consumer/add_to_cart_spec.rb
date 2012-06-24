@@ -62,7 +62,7 @@ feature %q{
       # When I go to add it again, I should not have a choice of distributor
       visit spree.product_path p
       page.should_not have_selector 'select#distributor_id'
-      page.should     have_selector 'p', :text => "Your distributor for this order is #{d.name}"
+      page.should     have_selector '.distributor-fixed', :text => "Your distributor for this order is #{d.name}"
     end
 
     it "does not allow the user to add a product from another distributor" do
