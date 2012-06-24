@@ -30,6 +30,12 @@ Spree::OrdersController.class_eval do
       return false unless variant.product.distributors.include? distributor
     end if params[:variants]
 
+    # -- If products in cart, distributor can't be changed
+    order = current_order(false)
+    if !order.nil? && order.distributor != distributor
+      return false
+    end
+
     true
   end
 end

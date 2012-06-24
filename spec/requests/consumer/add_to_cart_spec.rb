@@ -51,8 +51,18 @@ feature %q{
 
   context "adding a subsequent product to the cart" do
     it "does not allow the user to choose a distributor" do
-      # Instead, they see "Your distributor for this order is XYZ"
-      pending
+      # Given a product under a distributor
+      d = create(:distributor)
+      p = create(:product, :distributors => [d])
+
+      # And a product in my cart
+      visit spree.product_path p
+      click_button 'Add To Cart'
+
+      # When I go to add it again, I should not have a choice of distributor
+      visit spree.product_path p
+      page.should_not have_selector 'select#distributor_id'
+      page.should     have_selector 'p', :text => "Your distributor for this order is #{d.name}"
     end
 
     it "does not allow the user to add a product from another distributor" do

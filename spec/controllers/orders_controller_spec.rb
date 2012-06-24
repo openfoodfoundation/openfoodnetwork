@@ -35,6 +35,46 @@ describe Spree::OrdersController do
       # Then our order should have its distributor set to the chosen distributor
       current_order(false).distributor.should == d
     end
+  end
 
+  context "adding a subsequent product to the cart" do
+    before(:each) do
+      # Given a product and a distributor
+      @distributor = create(:distributor)
+      @product = create(:product, :distributors => [@distributor])
+
+      # And the product is in the cart
+      spree_put :populate, :variants => {@product.id => 1}, :distributor_id => @distributor.id
+      current_order(false).line_items.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.should == @distributor
+    end
+
+    it "does not add the product if the product is not available at the order's distributor" do
+      # Given a product at another distributor
+      d2 = create(:distributor)
+      p2 = create(:product, :distributors => [d2])
+
+      # When I attempt to add the product to the cart
+      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => d2.id
+
+      # Then the product should not be added to the cart
+      current_order(false).line_items.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.should == @distributor
+    end
+
+    it "does not add the product if the product is not available at the given distributor" do
+      # Given a product at another distributor
+      d2 = create(:distributor)
+      p2 = create(:product, :distributors => [d2])
+
+      # When I attempt to add the product to the cart with a fake distributor_id
+      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => @distributor.id
+
+      # Then the product should not be added to the cart
+      current_order(false).line_items.map { |li| li.product }.should == [@product]
+      current_order(false).distributor.should == @distributor
+    end
+
+    it "does not add the product if the chosen distributor is different from the order's distributor"
   end
 end
