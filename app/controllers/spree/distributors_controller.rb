@@ -13,8 +13,11 @@ module Spree
       distributor = Distributor.find params[:id]
 
       order = current_order(true)
-      order.distributor = distributor
-      order.save!
+
+      if order.line_items.empty?
+        order.distributor = distributor
+        order.save!
+      end
 
       redirect_back_or_default(root_path)
     end

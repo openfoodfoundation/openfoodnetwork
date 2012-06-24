@@ -32,4 +32,26 @@ describe Spree::DistributorsController do
     order.reload
     order.distributor.should be_nil
   end
+
+  context "when a product has been added to the cart" do
+    it "does not allow selecting another distributor" do
+      # Given some distributors and an order with a product
+      d1 = create(:distributor)
+      d2 = create(:distributor)
+      p = create(:product, :distributors => [d1])
+      o = current_order(true)
+      o.add_variant(p.master, 1)
+      o.distributor = d1
+      o.save!
+
+      # When I attempt to select a distributor
+      spree_get :select, :id => d2.id
+
+      # Then my distributor should remain unchanged
+      o.reload
+      o.distributor.should == d1
+    end
+
+    it "does not allow deselecting distributors"
+  end
 end

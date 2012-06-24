@@ -31,7 +31,22 @@ feature %q{
     order.distributor.should == d1
   end
 
-  it "does not allow the user to change distributor after a product has been added to the cart"
+  it "does not allow the user to change distributor after a product has been added to the cart" do
+    # Given a product and some distributors
+    d1 = create(:distributor)
+    d2 = create(:distributor)
+    p = create(:product, :distributors => [d1])
+
+    # When I add a product to my cart (which sets my distributor)
+    visit spree.product_path p
+    click_button 'Add To Cart'
+    page.should have_content "You are shopping at #{d1.name}"
+
+    # Then I should not be able to change distributor
+    visit spree.root_path
+    page.should_not have_selector 'a', :text => d1.name
+    page.should_not have_selector 'a', :text => d2.name
+  end
 
   context "adding a subsequent product to the cart" do
     it "does not allow the user to choose a distributor" do
