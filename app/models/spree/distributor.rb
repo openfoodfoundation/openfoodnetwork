@@ -8,6 +8,8 @@ module Spree
 
     validates :name, :pickup_address, :country_id, :state_id, :city, :post_code, :presence => true
 
+    scope :by_name, order('name')
+
     after_initialize :initialize_country
 
     def initialize_country

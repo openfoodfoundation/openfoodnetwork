@@ -1,0 +1,23 @@
+- paginated_products = @searcher.retrieve_products if params.key?(:keywords)
+- paginated_products ||= products
+
+- if products.empty?
+  = t(:no_products_found)
+- elsif params.key?(:keywords)
+  %h6.search-results-title= t(:search_results, :keywords => h(params[:keywords]))
+
+- if products.any?
+  %ul.inline.product-listing{"data-hook" => ""}
+    - reset_cycle('default')
+    - products.each do |product|
+      - if Spree::Config[:show_zero_stock_products] || product.has_stock?
+        %li{:class => "columns three #{cycle("alpha", "secondary", "", "omega secondary")}", "data-hook" => "products_list_item", :id => "product_#{product.id}", :itemscope => "", :itemtype => "http://schema.org/Product"}
+          .product-image
+            = link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url'
+          = link_to truncate(product.name, :length => 50), product, :class => 'info', :itemprop => "name", :title => product.name
+          %span.price.selling{:itemprop => "price"}= number_to_currency product.price
+
+- if paginated_products.respond_to?(:num_pages)
+  - params.delete(:search)
+  - params.delete(:taxon)
+  = paginate paginated_products

@@ -7,6 +7,9 @@
           %td
             %strong Supplier
           %td= @product.supplier.name
+  %br/
+  %table#product-source.table-display{:width => "100%"}
+    %tbody
       - @product.distributors.each do |distributor|
         %tr.even
           %td

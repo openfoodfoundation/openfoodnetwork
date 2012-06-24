@@ -13,8 +13,22 @@ module Spree
       distributor = Distributor.find params[:id]
 
       order = current_order(true)
-      order.distributor = distributor
-      order.save!
+
+      if order.can_change_distributor?
+        order.distributor = distributor
+        order.save!
+      end
+
+      redirect_back_or_default(root_path)
+    end
+
+    def deselect
+      order = current_order(true)
+
+      if order.can_change_distributor?
+        order.distributor = nil
+        order.save!
+      end
 
       redirect_back_or_default(root_path)
     end
