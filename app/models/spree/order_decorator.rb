@@ -11,6 +11,12 @@ Spree::Order.class_eval do
     super(distributor)
   end
 
+  def can_add_product_to_cart?(product)
+    can_change_distributor? || product.distributors.include?(distributor)
+  end
+
+
+
   # before_validation :shipping_address_from_distributor
 
   private

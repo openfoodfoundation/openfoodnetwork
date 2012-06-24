@@ -66,9 +66,22 @@ feature %q{
     end
 
     it "does not allow the user to add a product from another distributor" do
-      # No add to cart button
-      # They see "Please complete your order at XYZ before shopping with another distributor."
-      pending
+      # Given two products, each at a different distributor
+      d1 = create(:distributor)
+      d2 = create(:distributor)
+      p1 = create(:product, :distributors => [d1])
+      p2 = create(:product, :distributors => [d2])
+
+      # When I add one of them to my cart
+      visit spree.product_path p1
+      click_button 'Add To Cart'
+
+      # And I attempt to add the other
+      visit spree.product_path p2
+
+      # Then I should not be allowed to add the product
+      page.should_not have_selector "button#add-to-cart-button"
+      page.should have_content "Please complete your order at #{d1.name} before shopping with another distributor."
     end
   end
 end
