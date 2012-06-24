@@ -107,3 +107,16 @@ ul.product-listing {
   border-radius: 10px;
   background-color: #def;
 }
+
+
+/* Add to cart form on product details page */
+#cart-form {
+  .error-distributor {
+    font-size: 120%;
+    font-weight: bold;
+    color: #f00;
+  }
+
+  .distributor-fixed {
+  }
+}
