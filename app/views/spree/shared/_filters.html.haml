@@ -1,0 +1,15 @@
+- filters = @taxon ? @taxon.applicable_filters : []
+- unless filters.empty?
+  %nav#filters
+    - params[:search] ||= {}
+    - filters.each do |filter|
+      - labels = filter[:labels] || filter[:conds].map {|m,c| [m,m]}
+      - next if labels.empty?
+
+      %h6.filter_name= "Shop by #{filter[:name]}"
+
+      %ul.filter_choices
+        - labels.each do |nm,val|
+          %li.nowrap
+            - active = params[:search][filter[:scope]] && params[:search][filter[:scope]].include?(val.to_s)
+            = link_to nm, "?search[#{filter[:scope].to_s}][]=#{CGI.escape(val)}"
