@@ -78,6 +78,19 @@ feature %q{
     end
 
     context "viewing a product, it provides a choice of distributor when adding to cart" do
+      it "works when no distributor is chosen" do
+        # Given a distributor and a product under it
+        distributor = create(:distributor)
+        product = create(:product, :distributors => [distributor])
+
+        # When we view the product
+        visit spree.product_path(product)
+
+        # Then we should see a choice of distributor, with no default
+        page.should have_selector "select#distributor_id option", :text => distributor.name
+        page.should_not have_selector "select#distributor_id option[selected='selected']"
+      end
+
       it "displays the local distributor as the default choice when available for the current product" do
         # Given a distributor and a product under it
         distributor = create(:distributor)
@@ -92,7 +105,23 @@ feature %q{
         page.should have_selector "select#distributor_id option[value='#{distributor.id}'][selected='selected']"
       end
 
-      it "functions with remote distributors also"
+      it "works when viewing a product from a remote distributor" do
+        # Given two distributors and a product under one
+        distributor_product = create(:distributor)
+        distributor_no_product = create(:distributor)
+        product = create(:product, :distributors => [distributor_product])
+
+        # When we select the distributor without the product and then view the product
+        visit spree.root_path
+        click_link distributor_no_product.name
+        visit spree.product_path(product)
+
+        # Then we should see a choice of distributor,
+        # with no default and no option for the distributor that the product does not belong to
+        page.should     have_selector "select#distributor_id option", :text => distributor_product.name
+        page.should_not have_selector "select#distributor_id option", :text => distributor_no_product.name
+        page.should_not have_selector "select#distributor_id option[selected='selected']"
+      end
     end
   end
 end
