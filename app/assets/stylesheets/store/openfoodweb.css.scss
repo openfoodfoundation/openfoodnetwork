@@ -6,6 +6,11 @@ nav #main-nav-bar {
     &#current-distributor {
       float: right;
       margin-right: 24px;
+
+      a {
+        font-size: 12px;
+        padding: 0;
+      }
     }
   }
 }
@@ -115,6 +120,11 @@ ul.product-listing {
     font-size: 120%;
     font-weight: bold;
     color: #f00;
+
+    a {
+      color: #f00;
+      text-decoration: underline;
+    }
   }
 
   .distributor-fixed {

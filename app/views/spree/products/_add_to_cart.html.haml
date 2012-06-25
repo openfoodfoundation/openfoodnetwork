@@ -3,7 +3,10 @@
     = content_tag('strong', t(:out_of_stock))
 
   - elsif current_order(false) && !current_order(false).can_add_product_to_cart?(@product)
-    .error-distributor= "Please complete your order at #{current_distributor.name} before shopping with another distributor."
+    .error-distributor
+      Please complete your order at
+      = link_to current_distributor.name, root_path
+      before shopping with another distributor.
 
   - else
     %p Quantity

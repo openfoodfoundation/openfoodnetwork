@@ -51,7 +51,7 @@ feature %q{
     # When I visit the home page and select my distributor
     visit spree.root_path
     click_link my_distributor.name
-    page.should have_selector '#current-distributor', :text => 'You are shopping at My Distributor'
+    page.should have_content 'You are shopping at My Distributor'
 
     # Then I should see distributor-scoped product counts next to the taxons
     page.should have_selector 'nav#taxonomies li', :text => 'Taxon one (0)'

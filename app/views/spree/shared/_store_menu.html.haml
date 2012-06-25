@@ -6,4 +6,5 @@
 
 - if current_distributor
   %li#current-distributor{'data-hook' => ''}
-    = "You are shopping at #{current_distributor.name}"
+    You are shopping at
+    = link_to current_distributor.name, root_path
