@@ -33,8 +33,13 @@ nav#filters {
     margin-bottom: 20px;
     list-style: disc outside;
 
-    li a {
-      font-size: $main_navigation_font_size;
+    li {
+      a {
+        font-size: $main_navigation_font_size;
+      }
+      span.inactive {
+        color: #999;
+      }
     }
   }
 }

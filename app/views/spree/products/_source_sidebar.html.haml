@@ -14,6 +14,6 @@
         - elsif order.distributor == distributor
           = link_to distributor.name, root_path
         - else
-          = distributor.name
+          %span.inactive= distributor.name
     - if current_distributor && order.can_change_distributor?
       %li.nowrap= link_to 'Leave distributor', deselect_distributors_path
