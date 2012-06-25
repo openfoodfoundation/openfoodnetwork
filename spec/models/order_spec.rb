@@ -10,7 +10,9 @@ describe Spree::Order do
   end
 
   it "raises an exception if distributor is changed without permission" do
-    p = build(:product)
+    d = build(:distributor)
+    p = build(:product, :distributors => [d])
+    subject.distributor = d
     subject.add_variant(p.master, 1)
     subject.can_change_distributor?.should be_false
 

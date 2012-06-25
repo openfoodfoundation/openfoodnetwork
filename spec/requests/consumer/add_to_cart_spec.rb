@@ -83,5 +83,25 @@ feature %q{
       page.should_not have_selector "button#add-to-cart-button"
       page.should have_content "Please complete your order at #{d1.name} before shopping with another distributor."
     end
+
+    it "adds products with valid distributors" do
+      # Given two products, each at the same distributor
+      d = create(:distributor)
+      p1 = create(:product, :distributors => [d])
+      p2 = create(:product, :distributors => [d])
+
+      # When I add the first to my cart
+      visit spree.product_path p1
+      click_button 'Add To Cart'
+
+      # And I add the second
+      visit spree.product_path p2
+      click_button 'Add To Cart'
+
+      # Then both should be in my cart
+      visit spree.cart_path
+      page.should have_selector 'h4 a', :text => p1.name
+      page.should have_selector 'h4 a', :text => p2.name
+    end
   end
 end

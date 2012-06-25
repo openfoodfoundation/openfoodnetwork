@@ -7,7 +7,7 @@ Spree::Order.class_eval do
   end
 
   def distributor=(distributor)
-    raise "You cannot change the distributor of an order with products" unless can_change_distributor?
+    raise "You cannot change the distributor of an order with products" unless distributor == self.distributor || can_change_distributor?
     super(distributor)
   end
 

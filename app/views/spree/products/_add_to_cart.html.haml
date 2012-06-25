@@ -13,6 +13,7 @@
       %p Distributor
       = select_tag "distributor_id", options_from_collection_for_select(@product.distributors, "id", "name", current_distributor.andand.id)
     - else
+      = hidden_field_tag "distributor_id", order.distributor.id
       .distributor-fixed= "Your distributor for this order is #{order.distributor.name}"
     %br/
     = button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do
