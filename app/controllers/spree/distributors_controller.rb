@@ -19,7 +19,7 @@ module Spree
         order.save!
       end
 
-      redirect_back_or_default(root_path)
+      redirect_to root_path
     end
 
     def deselect
@@ -30,7 +30,7 @@ module Spree
         order.save!
       end
 
-      redirect_back_or_default(root_path)
+      redirect_to root_path
     end
   end
 end
