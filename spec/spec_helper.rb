@@ -48,20 +48,13 @@ Spork.prefork do
     #
     config.filter_run_excluding :skip => true
 
-    config.before(:suite) do
-      DatabaseCleaner.strategy = :transaction
-    end
-
     config.before(:each) do
+      if example.metadata[:js]
+        DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
+      else
+        DatabaseCleaner.strategy = :transaction
+      end
       DatabaseCleaner.start
-    end
-
-    config.before(type: :request, js: true) do
-      DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
-    end
-
-    config.before(js: false) do
-      DatabaseCleaner.strategy = :transaction
     end
 
     config.after(:each) do
