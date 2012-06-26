@@ -66,10 +66,6 @@ feature %q{
     #display delivery details?
 
     click_button 'Save and Continue'
-    fill_in 'card_number', :with => '4111111111111111'
-    select('1', :from => 'payment_source_1_month')
-    select("#{DateTime.now.year + 1}", :from => 'payment_source_1_year')
-    fill_in 'card_code', :with => '234'
 
     click_button 'Save and Continue'
 
