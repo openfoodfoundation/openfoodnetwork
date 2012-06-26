@@ -1,0 +1,33 @@
+%table{"data-hook" => "distributors"}
+  %tr{"data-hook" => "name"}
+    %td Name:
+    %td= f.text_field :name
+  %tr{"data-hook" => "description"}
+    %td Description:
+    %td= f.text_field :description
+  %tr{"data-hook" => "contact"}
+    %td Contact:
+    %td= f.text_field :contact
+  %tr{"data-hook" => "phone"}
+    %td Phone:
+    %td= f.text_field :phone
+  %tr{"data-hook" => "email"}
+    %td Email:
+    %td= f.text_field :email
+  %tr{"data-hook" => "url"}
+    %td URL:
+    %td= f.text_field :url
+  %tr{"data-hook" => "abn"}
+    %td ABN:
+    %td= f.text_field :abn
+  %tr{"data-hook" => "acn"}
+    %td ACN:
+    %td= f.text_field :acn
+%fieldset
+  %legend Pickup details
+  %table{"data-hook" => "distributors_pickup_details"}
+    %tr{"data-hook" => "pickup_times"}
+      %td Pickup times:
+      %td= f.text_field :pickup_times
+    = f.fields_for :pickup_address do |pickup_address_form|
+      = render 'spree/admin/shared/address_form', :form => pickup_address_form

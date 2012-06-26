@@ -1,34 +1,22 @@
 %h1 Supplier
 %table
   %tr
-    %th Name
+    %th Name:
     %td= @supplier.name
   %tr
-    %th Description
+    %th Description:
     %td= @supplier.description
   %tr
-    %th Address
-    %td= @supplier.address
+    %th Address:
+    %td= render 'spree/admin/shared/address', :address => @supplier.address
   %tr
-    %th City:
-    %td= @supplier.city
-  %tr
-    %th Post Code:
-    %td= @supplier.postcode
-  %tr
-    %th Country:
-    %td= @supplier.country.name if @supplier.country
-  %tr
-    %th State:
-    %td= @supplier.state.name if @supplier.state
-  %tr
-    %th Email
+    %th Email:
     %td= @supplier.email
   %tr
-    %th Website
+    %th Website:
     %td= @supplier.website
   %tr
-    %th Twitter
+    %th Twitter:
     %td= @supplier.twitter
 %p
   = link_to :Edit, spree.edit_admin_supplier_path(@supplier), :class => 'edit_supplier'

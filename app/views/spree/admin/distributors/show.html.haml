@@ -1,0 +1,36 @@
+%h1 Distributor
+%table
+  %tr
+    %th Name:
+    %td= @distributor.name
+  %tr
+    %th Description:
+    %td= @distributor.description
+  %tr
+    %th Contact person:
+    %td= @distributor.contact
+  %tr
+    %th Phone number:
+    %td= @distributor.phone
+  %tr
+    %th Email:
+    %td= @distributor.email
+  %tr
+    %th Pickup address:
+    %td= render 'spree/admin/shared/address', :address => @distributor.pickup_address
+  %tr
+    %th Pickup times:
+    %td= @distributor.pickup_times
+  %tr
+    %th ABN:
+    %td= @distributor.abn
+  %tr
+    %th ACN:
+    %td= @distributor.acn
+  %tr
+    %th URL:
+    %td= @distributor.url
+%p
+  = link_to :Edit, spree.edit_admin_distributor_path(@distributor), :class => 'edit_distributor'
+  = t(:or)
+  = link_to t(:back), spree.admin_distributors_path

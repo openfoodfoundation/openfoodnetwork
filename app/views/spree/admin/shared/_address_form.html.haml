@@ -1,0 +1,18 @@
+%tr{"data-hook" => "address1"}
+  %td Address:
+  %td= form.text_field :address1
+%tr{"data-hook" => "address2"}
+  %td Address (cont.):
+  %td= form.text_field :address2
+%tr{"data-hook" => "city"}
+  %td City:
+  %td= form.text_field :city
+%tr{"data-hook" => "zipcode"}
+  %td Postcode:
+  %td= form.text_field :zipcode
+%tr{"data-hook" => "country"}
+  %td Country:
+  %td= form.collection_select(:country_id, available_countries, :id, :name)
+%tr{"data-hook" => "state"}
+  %td State:
+  %td= form.collection_select(:state_id, form.object.country.states, :id, :name)

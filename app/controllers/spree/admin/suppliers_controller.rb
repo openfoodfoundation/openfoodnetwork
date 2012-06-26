@@ -5,11 +5,11 @@ module Spree
 
       private
       def load_data
-          @countries = Country.order(:name)
+        @countries = Country.order(:name)
       end
 
       def collection
-          super.order(:name)
+        super.order(:name)
       end
     end
   end

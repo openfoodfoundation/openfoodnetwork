@@ -1,0 +1,4 @@
+= address.address1
+= ", #{address.address2}" unless address.address2.blank?
+%br/
+= [address.city, address.state_text, address.zipcode, address.country.name].compact.join ', '
