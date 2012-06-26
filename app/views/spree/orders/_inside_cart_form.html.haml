@@ -1,0 +1,14 @@
+%div{'data-hook' => "inside_cart_form"}
+  %div{'data-hook' => "cart_items"}
+    = render :partial => 'form', :locals => { :order_form => order_form }
+
+  #subtotal{'data-hook' => ""}
+    %h5
+      = t(:subtotal)
+      \:
+      %span.order-total= order_subtotal(@order)
+
+  .links{'data-hook' => "cart_buttons"}
+    = button_tag :class => 'primary', :id => 'update-button' do
+      = t(:update)
+    = link_to t(:checkout), checkout_path, :class => 'button checkout primary', :id => 'checkout-link'

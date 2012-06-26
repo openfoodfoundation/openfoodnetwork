@@ -135,3 +135,20 @@ ul.product-listing {
   .distributor-fixed {
   }
 }
+
+
+/* View cart form */
+#subtotal {
+  width: 100%;
+}
+.links {
+  float: right;
+  text-align: right;
+}
+#empty-cart {
+  float: left;
+
+  p {
+    padding: 0;
+  }
+}
