@@ -17,20 +17,18 @@ Spree::Order.class_eval do
 
 
 
-  # before_validation :shipping_address_from_distributor
+  before_validation :shipping_address_from_distributor
 
   private
-  # def shipping_address_from_distributor
-  #   if distributor
-  #     ship_address.firstname = bill_address.firstname
-  #     ship_address.lastname = bill_address.lastname
-  #     ship_address.phone = bill_address.phone
+  def shipping_address_from_distributor
+    if distributor
+      self.ship_address = distributor.pickup_address.clone
 
-  #     ship_address.address1 = distributor.pickup_address
-  #     ship_address.city = distributor.city
-  #     ship_address.zipcode = distributor.post_code
-  #     ship_address.state = distributor.state
-  #     ship_address.country_id = distributor.country_id
-  #   end
-  # end
+      if bill_address
+        self.ship_address.firstname = bill_address.firstname
+        self.ship_address.lastname = bill_address.lastname
+        self.ship_address.phone = bill_address.phone
+      end
+    end
+  end
 end

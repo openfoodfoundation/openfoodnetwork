@@ -10,11 +10,18 @@ feature %q{
 
   background do
     @distributor = create(:distributor, :name => 'Edible garden',
-                           :pickup_address => create(:address, :address1 => '12 Bungee Rd', :city => 'Carion'),
-                           :pickup_times => 'Tuesday, 4 PM')
+                          :pickup_address => create(:address,
+                                                    :address1 => '12 Bungee Rd',
+                                                    :city => 'Carion',
+                                                    :zipcode => 3056,
+                                                    :state => Spree::State.find_by_name('Victoria'),
+                                                    :country => Spree::Country.find_by_name('Australia')),
+                          :pickup_times => 'Tuesday, 4 PM')
     @product = create(:product, :name => 'Fuji apples', :distributors => [@distributor])
 
     @zone = create(:zone)
+    c = Spree::Country.find_by_name('Australia')
+    Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
     create(:shipping_method, zone: @zone)
     create(:payment_method)
   end
