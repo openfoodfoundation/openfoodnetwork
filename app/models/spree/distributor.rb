@@ -7,7 +7,7 @@ module Spree
 
     accepts_nested_attributes_for :pickup_address
 
-    validates_presence_of :name
+    validates_presence_of :name, :pickup_address
     validates_associated :pickup_address
 
     scope :by_name, order('name')
