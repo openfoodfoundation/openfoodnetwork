@@ -17,7 +17,7 @@ module Spree
 
     def initialize_country
       self.pickup_address ||= Address.new
-      self.pickup_address.country = Country.find_by_id(Spree::Config[:default_country_id])
+      self.pickup_address.country = Country.find_by_id(Spree::Config[:default_country_id]) if self.pickup_address.new_record?
     end
 
     def set_unused_address_fields

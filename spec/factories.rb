@@ -15,6 +15,7 @@ FactoryGirl.define do
     phone          "1000100100"
     description    'The creator'
     email          'alan@somewhere.com'
+    url            'http://example.com'
     pickup_times   "Whenever you're free"
     pickup_address { Spree::Address.first || FactoryGirl.create(:address) }
   end

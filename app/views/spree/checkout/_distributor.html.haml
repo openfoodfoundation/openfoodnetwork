@@ -1,5 +1,23 @@
 .columns.omega.six
-  %fieldset{:id => 'shipping'}
-    %legend Collection Point
-    =form.collection_select("distributor_id", Spree::Distributor.all, :id, :name, {}, {:class => 'required'})
+  %fieldset#shipping
+    %legend Distributor
+    %h2= @order.distributor.name
+    %p
+      %strong Address:
+      %br/
+      = render 'spree/shared/address', :address => @order.distributor.pickup_address
+    %p
+      %strong Pickup times:
+      %br/
+      = @order.distributor.pickup_times
+    %p
+      %strong Contact:
+      %br/
+      = @order.distributor.contact
+      %br/
+      = "Phone: #{@order.distributor.phone}"
+      %br/
+      = "Email: #{@order.distributor.email}"
+    %p= @order.distributor.description
+    %p= link_to @order.distributor.url, @order.distributor.url if @order.distributor.url
 
