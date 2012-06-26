@@ -1,7 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-require File.expand_path('../../spec/support/factories', __FILE__)
+require File.expand_path('../../spec/factories', __FILE__)
 
 
 # -- Spree
@@ -33,6 +33,17 @@ unless Spree::State.find_by_name 'Victoria'
     # country_id 12 == Australia. See db/default/spree/countries.yaml
     FactoryGirl.create(:state, :name => state[0], :abbr => state[1], :country_id => 12)
   end
+end
+
+
+# -- Shipping / payment information
+unless Spree::Zone.count > 0
+  puts "[db:seed] Seeding shipping / payment information"
+  zone = FactoryGirl.create(:zone)
+  country = Spree::Country.find_by_name('Australia')
+  Spree::ZoneMember.create(:zoneable => country, :zone => zone)
+  FactoryGirl.create(:shipping_method, :zone => zone)
+  FactoryGirl.create(:payment_method)
 end
 
 
