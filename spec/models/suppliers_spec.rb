@@ -1,26 +1,21 @@
 require 'spec_helper'
 
-describe Spree::Supplier do
+module Spree
+  describe Supplier do
 
-  describe "associations" do
-    it { should have_many(:products) }
+    describe "associations" do
+      it { should have_many(:products) }
+      it { should belong_to(:address) }
+    end
+
+    it "should default country to system country" do
+      supplier = Supplier.new
+      supplier.address.country.should == Country.find_by_id(Config[:default_country_id])
+    end
+
+    describe "validations" do
+      it { should validate_presence_of(:name) }
+    end
+
   end
-
-  it "should have an address"
-
-  it "should default country to system country" do
-    supplier = Spree::Supplier.new
-
-    supplier.country.should == Spree::Country.find_by_id(Spree::Config[:default_country_id])
-  end
-
-  describe 'validations' do
-    it{ should validate_presence_of(:name) }
-    it{ should validate_presence_of(:address) }
-    it{ should validate_presence_of(:country_id) }
-    it{ should validate_presence_of(:state_id) }
-    it{ should validate_presence_of(:city) }
-    it{ should validate_presence_of(:postcode) }
-  end
-
 end

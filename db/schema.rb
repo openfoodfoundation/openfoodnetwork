@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120621064227) do
+ActiveRecord::Schema.define(:version => 20120626013846) do
 
   create_table "distributors", :force => true do |t|
     t.string   "name"
     t.string   "contact"
     t.string   "phone"
     t.string   "email"
-    t.string   "pickup_address"
     t.string   "pickup_times"
     t.string   "url"
     t.string   "abn"
@@ -26,10 +25,7 @@ ActiveRecord::Schema.define(:version => 20120621064227) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "city"
-    t.string   "post_code"
-    t.integer  "country_id"
-    t.integer  "state_id"
+    t.integer  "pickup_address_id"
   end
 
   create_table "distributors_products", :id => false, :force => true do |t|
@@ -648,11 +644,7 @@ ActiveRecord::Schema.define(:version => 20120621064227) do
     t.string   "website"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "address"
-    t.string   "city"
-    t.string   "postcode"
-    t.integer  "state_id"
-    t.integer  "country_id"
+    t.integer  "address_id"
   end
 
 end
