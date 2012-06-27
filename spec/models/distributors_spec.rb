@@ -5,7 +5,7 @@ module Spree
 
     describe "associations" do
       it { should belong_to(:pickup_address) }
-      it { should have_and_belong_to_many(:products) }
+      it { should have_many(:product_distributions) }
       it { should have_many(:orders) }
     end
 

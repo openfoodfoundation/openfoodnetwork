@@ -19,12 +19,21 @@ FactoryGirl.define do
     pickup_times   "Whenever you're free"
     pickup_address { Spree::Address.first || FactoryGirl.create(:address) }
   end
+
+  factory :product_distribution, :class => Spree::ProductDistribution do
+    product         { |pd| Spree::Product.first        || FactoryGirl.create(:product) }
+    distributor     { |pd| Spree::Distributor.first    || FactoryGirl.create(:distributor) }
+    shipping_method { |pd| Spree::ShippingMethod.first || FactoryGirl.create(:shipping_method) }
+  end
 end
 
 
 FactoryGirl.modify do
   factory :simple_product do
     supplier { Spree::Supplier.first || FactoryGirl.create(:supplier) }
-    distributors { [Spree::Distributor.first || FactoryGirl.create(:distributor)] }
+
+    # before(:create) do |product, evaluator|
+    #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
+    # end
   end
 end
