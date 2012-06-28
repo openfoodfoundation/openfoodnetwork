@@ -24,6 +24,12 @@ module Openfoodweb
       end
     end
 
+    # Register Spree calculators
+    initializer "spree.register.calculators" do |app|
+      app.config.spree.calculators.shipping_methods << OpenFoodWeb::Calculator::Itemwise
+    end
+
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
