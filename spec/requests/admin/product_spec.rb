@@ -10,10 +10,11 @@ feature %q{
   background do
     @supplier = create(:supplier, :name => 'New supplier')
     @distributors = (1..3).map { create(:distributor) }
+    @shipping_method = create(:shipping_method, :name => 'My shipping method')
   end
 
   context "creating a product" do
-    scenario "I should be able to assign a supplier to the product" do
+    scenario "assigning a supplier and distributors to the product" do
       login_to_admin_section
 
       click_link 'Products'
@@ -22,8 +23,11 @@ feature %q{
       fill_in 'product_name', :with => 'A new product !!!'
       fill_in 'product_price', :with => '19.99'
       select 'New supplier', :from => 'product_supplier_id'
+
       check @distributors[0].name
+      select 'My shipping method', :from => 'product_product_distributions_attributes_0_shipping_method_id'
       check @distributors[2].name
+      select 'My shipping method', :from => 'product_product_distributions_attributes_2_shipping_method_id'
 
       click_button 'Create'
 
@@ -31,8 +35,7 @@ feature %q{
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
       product.distributors.should == [@distributors[0], @distributors[2]]
+      product.product_distributions.map { |pd| pd.shipping_method }.should == [@shipping_method, @shipping_method]
     end
   end
-
-  context "Given I am cloning a Product"
 end

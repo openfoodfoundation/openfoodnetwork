@@ -1,8 +1,10 @@
 Spree::Product.class_eval do
   belongs_to :supplier
 
-  has_many :product_distributions
+  has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
+
+  accepts_nested_attributes_for :product_distributions, :allow_destroy => true
 
   attr_accessible :supplier_id, :distributor_ids
 

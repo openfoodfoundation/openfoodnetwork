@@ -4,7 +4,7 @@ module Spree
     belongs_to :pickup_address, :foreign_key => 'pickup_address_id', :class_name => 'Spree::Address'
     has_many :orders
 
-    has_many :product_distributions
+    has_many :product_distributions, :dependent => :destroy
     has_many :products, :through => :product_distributions
 
     accepts_nested_attributes_for :pickup_address

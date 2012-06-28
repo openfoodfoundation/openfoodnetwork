@@ -1,5 +1,15 @@
-= f.field_container :distributors do
-  = f.label :distributors
-  %br
-  = f.collection_check_boxes(:distributor_ids, Spree::Distributor.all, :id, :name)
-  = f.error_message_on :distributors
+%h2 Distributors
+= f.field_container :product_distributions do
+  - Spree::Distributor.all.each do |d|
+    - f.object.product_distributions.build(:distributor => d) unless f.object.product_distributions.find_by_distributor_id d.id
+  %table
+    = f.fields_for :product_distributions do |pd_form|
+      %tr
+        %td
+          = hidden_field_tag "#{pd_form.object_name}[_destroy]", 1
+          = check_box_tag "#{pd_form.object_name}[_destroy]", 0
+        %td
+          = pd_form.object.distributor.name
+          = pd_form.hidden_field :distributor_id
+        %td
+          = pd_form.collection_select :shipping_method_id, Spree::ShippingMethod.all, :id, :name
