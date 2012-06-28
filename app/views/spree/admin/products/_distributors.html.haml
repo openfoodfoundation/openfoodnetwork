@@ -1,15 +1,14 @@
 %h2 Distributors
 = f.field_container :product_distributions do
-  - Spree::Distributor.all.each do |d|
-    - f.object.product_distributions.build(:distributor => d) unless f.object.product_distributions.find_by_distributor_id d.id
+  - f.object.build_product_distributions
   %table
     = f.fields_for :product_distributions do |pd_form|
       %tr
         %td
-          = hidden_field_tag "#{pd_form.object_name}[_destroy]", 1
-          = check_box_tag "#{pd_form.object_name}[_destroy]", 0
+          = hidden_field_tag "#{pd_form.object_name}[_destroy]", 1, :id => nil
+          = check_box_tag "#{pd_form.object_name}[_destroy]", 0, !pd_form.object.new_record?
         %td
-          = pd_form.object.distributor.name
+          = label_tag "#{pd_form.object_name}[_destroy]", pd_form.object.distributor.name
           = pd_form.hidden_field :distributor_id
         %td
           = pd_form.collection_select :shipping_method_id, Spree::ShippingMethod.all, :id, :name
