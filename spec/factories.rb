@@ -25,6 +25,14 @@ FactoryGirl.define do
     distributor     { |pd| Spree::Distributor.first    || FactoryGirl.create(:distributor) }
     shipping_method { |pd| Spree::ShippingMethod.first || FactoryGirl.create(:shipping_method) }
   end
+
+  factory :itemwise_shipping_method, :parent => :shipping_method do
+    name 'Delivery'
+    calculator { FactoryGirl.build(:itemwise_calculator) }
+  end
+
+  factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
+  end
 end
 
 

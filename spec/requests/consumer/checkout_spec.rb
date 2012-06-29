@@ -17,12 +17,25 @@ feature %q{
                                                     :state => Spree::State.find_by_name('Victoria'),
                                                     :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
-    @product = create(:product, :name => 'Fuji apples', :distributors => [@distributor])
+
+    @shipping_method_1 = create(:shipping_method)
+    @shipping_method_1.calculator.set_preference :amount, 1
+    @shipping_method_1.calculator.save!
+
+    @shipping_method_2 = create(:shipping_method)
+    @shipping_method_2.calculator.set_preference :amount, 2
+    @shipping_method_2.calculator.save!
+
+    @product_1 = create(:product, :name => 'Fuji apples')
+    @product_1.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_1)
+
+    @product_2 = create(:product, :name => 'Garlic')
+    @product_2.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_2)
 
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
-    create(:shipping_method, zone: @zone)
+    create(:itemwise_shipping_method, zone: @zone)
     create(:payment_method)
   end
 
@@ -32,8 +45,13 @@ feature %q{
 
     click_link 'Fuji apples'
     click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Garlic'
+    click_button 'Add To Cart'
     click_link 'Checkout'
 
+    # -- Checkout: Address
     fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
                    'order_bill_address_attributes_lastname' => 'Luck',
                    'order_bill_address_attributes_address1' => '19 Sycamore Lane',
@@ -44,6 +62,7 @@ feature %q{
     select('Australia', :from => 'order_bill_address_attributes_country_id')
     select('Victoria', :from => 'order_bill_address_attributes_state_id')
 
+    # Distributor details should be displayed
     within('fieldset#shipping') do
       [@distributor.name,
        @distributor.pickup_address.address1,
@@ -63,10 +82,12 @@ feature %q{
     end
 
     click_button 'Save and Continue'
-    #display delivery details?
 
+    # -- Checkout: Delivery
+    page.should have_selector 'label', :text => "Delivery $3.00"
     click_button 'Save and Continue'
 
+    # -- Checkout: Payment
     click_button 'Save and Continue'
 
     page.should have_content('Your order has been processed successfully')
