@@ -37,13 +37,13 @@ end
 
 
 # -- Shipping / payment information
-unless Spree::Zone.count > 0
+unless Spree::Zone.find_by_name 'Australia'
   puts "[db:seed] Seeding shipping / payment information"
-  zone = FactoryGirl.create(:zone)
+  zone = FactoryGirl.create(:zone, :name => 'Australia', :zone_members => [])
   country = Spree::Country.find_by_name('Australia')
-  Spree::ZoneMember.create(:zoneable => country, :zone => zone)
+  Spree::ZoneMember.create(:zone => zone, :zoneable => country)
   FactoryGirl.create(:shipping_method, :zone => zone)
-  FactoryGirl.create(:payment_method)
+  FactoryGirl.create(:payment_method, :environment => 'development')
 end
 
 

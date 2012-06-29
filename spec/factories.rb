@@ -44,4 +44,9 @@ FactoryGirl.modify do
     #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
     # end
   end
+
+  factory :address do
+    state { Spree::State.find_by_name 'Victoria' }
+    country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
+  end
 end
