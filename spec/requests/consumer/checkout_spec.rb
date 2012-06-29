@@ -36,7 +36,7 @@ feature %q{
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
     create(:itemwise_shipping_method, zone: @zone)
-    create(:payment_method)
+    create(:payment_method, :description => 'Cheque payment method')
   end
 
 
@@ -90,7 +90,11 @@ feature %q{
     # -- Checkout: Payment
     click_button 'Save and Continue'
 
+    # -- Checkout: Order complete
     page.should have_content('Your order has been processed successfully')
+    page.should have_content('Cheque payment method')
+
+
     # page.should have_content('Your order will be available on:')
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
