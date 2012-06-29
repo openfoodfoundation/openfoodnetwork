@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626233350) do
+ActiveRecord::Schema.define(:version => 20120629043045) do
 
   create_table "distributors", :force => true do |t|
     t.string   "name"
@@ -524,7 +524,7 @@ ActiveRecord::Schema.define(:version => 20120626233350) do
   end
 
   create_table "spree_tax_rates", :force => true do |t|
-    t.decimal  "amount",            :precision => 8, :scale => 4
+    t.decimal  "amount",            :precision => 8, :scale => 5
     t.integer  "zone_id"
     t.integer  "tax_category_id"
     t.datetime "created_at"
@@ -585,8 +585,8 @@ ActiveRecord::Schema.define(:version => 20120626233350) do
     t.string   "persistence_token"
     t.string   "reset_password_token"
     t.string   "perishable_token"
-    t.integer  "sign_in_count",                      :default => 0, :null => false
-    t.integer  "failed_attempts",                    :default => 0, :null => false
+    t.integer  "sign_in_count",                        :default => 0, :null => false
+    t.integer  "failed_attempts",                      :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -601,7 +601,8 @@ ActiveRecord::Schema.define(:version => 20120626233350) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "remember_created_at"
-    t.string   "api_key",              :limit => 40
+    t.string   "api_key",                :limit => 48
+    t.datetime "reset_password_sent_at"
   end
 
   add_index "spree_users", ["persistence_token"], :name => "index_users_on_persistence_token"
