@@ -19,4 +19,21 @@ describe Spree::Product do
     end
   end
 
+  context "finders" do
+    it "finds the shipping method for a particular distributor" do
+      shipping_method = create(:shipping_method)
+      distributor = create(:distributor)
+      product = create(:product)
+      product_distribution = create(:product_distribution, :product => product, :distributor => distributor, :shipping_method => shipping_method)
+      product.shipping_method_for_distributor(distributor).should == shipping_method
+    end
+
+    it "raises an error if distributor is not found" do
+      distributor = create(:distributor)
+      product = create(:product)
+      expect do
+        product.shipping_method_for_distributor(distributor)
+      end.to raise_error "This product is not available through that distributor"
+    end
+  end
 end

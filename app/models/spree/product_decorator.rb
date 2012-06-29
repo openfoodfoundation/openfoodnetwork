@@ -14,6 +14,13 @@ Spree::Product.class_eval do
   scope :in_distributor, lambda { |distributor| joins(:product_distributions).where('product_distributions.distributor_id = ?', (distributor.respond_to?(:id) ? distributor.id : distributor.to_i)) }
 
 
+  def shipping_method_for_distributor(distributor)
+    distribution = self.product_distributions.find_by_distributor_id(distributor)
+    raise ArgumentError, "This product is not available through that distributor" unless distribution
+    distribution.shipping_method
+  end
+
+
   # Build a product distribution for each distributor
   def build_product_distributions
     Spree::Distributor.all.each do |distributor|
