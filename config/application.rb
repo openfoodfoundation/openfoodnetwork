@@ -27,6 +27,7 @@ module Openfoodweb
     # Register Spree calculators
     initializer "spree.register.calculators" do |app|
       app.config.spree.calculators.shipping_methods << OpenFoodWeb::Calculator::Itemwise
+      app.config.spree.calculators.shipping_methods << OpenFoodWeb::Calculator::Weight
     end
 
 
