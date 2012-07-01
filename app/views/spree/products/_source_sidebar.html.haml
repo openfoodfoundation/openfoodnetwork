@@ -15,5 +15,5 @@
           = link_to distributor.name, root_path
         - else
           %span.inactive= distributor.name
-    - if current_distributor && order.can_change_distributor?
-      %li.nowrap= link_to 'Leave distributor', deselect_distributors_path
+  - if current_distributor && order.can_change_distributor?
+    = button_to 'Browse All Distributors', deselect_distributors_path, :method => :get

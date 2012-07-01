@@ -71,7 +71,7 @@ feature %q{
       # When I select the distributor and then leave it
       visit spree.root_path
       click_link d.name
-      click_link 'Leave distributor'
+      click_button 'Browse All Distributors'
 
       # Then I should have left the distributor
       page.should_not have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
