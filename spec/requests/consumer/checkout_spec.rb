@@ -18,11 +18,11 @@ feature %q{
                                                     :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
 
-    @shipping_method_1 = create(:shipping_method)
+    @shipping_method_1 = create(:shipping_method, :name => 'Shipping Method One')
     @shipping_method_1.calculator.set_preference :amount, 1
     @shipping_method_1.calculator.save!
 
-    @shipping_method_2 = create(:shipping_method)
+    @shipping_method_2 = create(:shipping_method, :name => 'Shipping Method Two')
     @shipping_method_2.calculator.set_preference :amount, 2
     @shipping_method_2.calculator.save!
 
@@ -37,6 +37,30 @@ feature %q{
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
     create(:itemwise_shipping_method, zone: @zone)
     create(:payment_method, :description => 'Cheque payment method')
+  end
+
+
+  scenario "viewing delivery fees" do
+    # Given I am logged in
+    login_to_consumer_section
+
+    # When I add some apples and some garlic to my cart
+    click_link 'Fuji apples'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Garlic'
+    click_button 'Add To Cart'
+
+    # Then I should see a breakdown of my delivery fees:
+    # Item        | Shipping Method     | Delivery Fee
+    # Garlic      | Shipping Method Two | $2.00
+    # Fuji apples | Shipping Method One | $1.00
+    table = page.find 'table#delivery'
+    rows = table.all('tr')
+    rows[0].all('th').map { |cell| cell.text.strip }.should == ['Item',        'Shipping Method',     'Delivery Fee']
+    rows[1].all('td').map { |cell| cell.text.strip }.should == ['Garlic',      'Shipping Method Two', '$2.00']
+    rows[2].all('td').map { |cell| cell.text.strip }.should == ['Fuji apples', 'Shipping Method One', '$1.00']
   end
 
 

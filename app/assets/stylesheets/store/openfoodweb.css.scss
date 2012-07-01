@@ -152,3 +152,26 @@ ul.product-listing {
     padding: 0;
   }
 }
+
+
+/* Delivery fees table on checkout page */
+#delivery-fees {
+  clear: both;
+  padding-top: 6em;
+
+  table#delivery {
+    width: 100%;
+
+    tbody {
+      tr {
+        td.item-shipping-cost, td.item-shipping-method {
+          text-align: center;
+        }
+        td.item-shipping-cost {
+          @extend span.price;
+          @extend span.price.selling;
+        }
+      }
+    }
+  }
+}
