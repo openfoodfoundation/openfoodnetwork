@@ -11,7 +11,7 @@ module Spree
 
     it "displays variant price differences as absolute, not relative values" do
       variant = make_variant_stub(10.00, 10.00)
-      subject.variant_price_diff(variant).should be_nil
+      subject.variant_price_diff(variant).should == "($10.00)"
 
       variant = make_variant_stub(10.00, 15.55)
       subject.variant_price_diff(variant).should == "($15.55)"
