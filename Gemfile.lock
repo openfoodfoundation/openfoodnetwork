@@ -7,6 +7,13 @@ GIT
       activemodel (~> 3.0)
 
 GIT
+  remote: git://github.com/dancinglightning/spree-last-address.git
+  revision: f5ed71a5482fbc16da559737903bb46fe032c150
+  specs:
+    spree_last_address (1.1.0)
+      spree_core (>= 1.1)
+
+GIT
   remote: git://github.com/joneslee85/spree-heroku.git
   revision: 63f0cfa47089cae50365e226ec7dd1eccde0ac05
   specs:
@@ -334,6 +341,7 @@ DEPENDENCIES
   spree
   spree_heroku!
   spree_i18n!
+  spree_last_address!
   spree_paypal_express!
   therubyracer
   turn (~> 0.8.3)

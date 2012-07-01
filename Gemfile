@@ -5,7 +5,8 @@ gem 'rails', '3.2.3'
 gem 'pg'
 gem 'spree'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
-gem "spree_paypal_express", :git => "git://github.com/spree/spree_paypal_express.git"
+gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git'
+gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-address.git'
 
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
