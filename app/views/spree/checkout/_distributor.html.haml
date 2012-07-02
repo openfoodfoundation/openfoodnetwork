@@ -7,7 +7,11 @@
       %br/
       = render 'spree/shared/address', :address => @order.distributor.pickup_address
     %p
-      %strong Pickup times:
+      %strong Next collection time:
+      %br/
+      = @order.distributor.next_collection_at
+    %p
+      %strong Regular collection times:
       %br/
       = @order.distributor.pickup_times
     %p

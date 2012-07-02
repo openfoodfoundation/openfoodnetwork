@@ -59,8 +59,8 @@ feature %q{
     table = page.find 'table#delivery'
     rows = table.all('tr')
     rows[0].all('th').map { |cell| cell.text.strip }.should == ['Item',        'Shipping Method',     'Delivery Fee']
-    rows[1].all('td').map { |cell| cell.text.strip }.should == ['Garlic',      'Shipping Method Two', '$2.00']
-    rows[2].all('td').map { |cell| cell.text.strip }.should == ['Fuji apples', 'Shipping Method One', '$1.00']
+    rows[1].all('td').map { |cell| cell.text.strip }.should == ['Fuji apples', 'Shipping Method One', '$1.00']
+    rows[2].all('td').map { |cell| cell.text.strip }.should == ['Garlic',      'Shipping Method Two', '$2.00']
   end
 
 
@@ -95,6 +95,7 @@ feature %q{
        @distributor.pickup_address.state_text,
        @distributor.pickup_address.country.name,
        @distributor.pickup_times,
+       @distributor.next_collection_at,
        @distributor.contact,
        @distributor.phone,
        @distributor.email,
