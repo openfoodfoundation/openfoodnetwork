@@ -174,4 +174,15 @@ ul.product-listing {
       }
     }
   }
+
+  .subtotal {
+    width: 100%;
+    text-align: right;
+    text-transform: uppercase;
+    margin-top: 15px;
+
+    span.order-total {
+      @extend span.price;
+    }
+  }
 }

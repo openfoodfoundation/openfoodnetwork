@@ -56,11 +56,14 @@ feature %q{
     # Item        | Shipping Method     | Delivery Fee
     # Garlic      | Shipping Method Two | $2.00
     # Fuji apples | Shipping Method One | $1.00
+    #
+    # Subtotal: $3.00
     table = page.find 'table#delivery'
     rows = table.all('tr')
     rows[0].all('th').map { |cell| cell.text.strip }.should == ['Item',        'Shipping Method',     'Delivery Fee']
     rows[1].all('td').map { |cell| cell.text.strip }.should == ['Fuji apples', 'Shipping Method One', '$1.00']
     rows[2].all('td').map { |cell| cell.text.strip }.should == ['Garlic',      'Shipping Method Two', '$2.00']
+    page.should have_selector '#delivery-fees span.order-total', :text => '$3.00'
   end
 
 

@@ -15,3 +15,9 @@
             %h4= link_to line_item.product.name, product_path(line_item.product)
           %td.item-shipping-method= line_item.shipping_method.name
           %td.item-shipping-cost= number_to_currency line_item.itemwise_shipping_cost
+
+  .subtotal{'data-hook' => 'delivery_fees_subtotal'}
+    %h5
+      = t(:subtotal)
+      \:
+      %span.order-total= order_delivery_fee_subtotal(@order)
