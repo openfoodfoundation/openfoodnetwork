@@ -1,4 +1,3 @@
-
 <div class="toolbar" data-hook="toolbar">
   <ul class="actions">
     <li>
@@ -8,30 +7,34 @@
   <br class="clear" />
 </div>
 
-<table class="index" id='listing_distributors'>
-  <thead>
-    <tr data-hook="distributors_header">
-      <th>Name</th>
-      <th>
-        Description
-      </th>
-      <th>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @distributors.each do |distributor| %>
-      <tr >
-        <td><%= link_to distributor.name, spree.admin_distributor_path(distributor) %></td>
-        <td><%=distributor.description %></td>
-        <td data-hook="admin_users_index_row_actions">
-          <%= link_to_edit distributor, :class => 'edit' %> &nbsp;
-          <%= link_to_delete distributor %>
-        </td>
+<%= form_for @distributor_set, :url => bulk_update_admin_distributors_path do |f| %>
+  <table class="index" id="listing_distributors">
+    <thead>
+      <tr data-hook="distributors_header">
+        <th>Name</th>
+        <th>Next Collection Date/Time</th>
+        <th>Description</th>
+        <th></th>
       </tr>
-    <% end %>
-    <% if @distributors.empty? %>
-      <tr><td colspan="2"><%= t(:none) %></td></tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <%= f.fields_for :distributors do |distributor_form| %>
+        <% distributor = distributor_form.object %>
+        <tr>
+          <td><%= link_to distributor.name, spree.admin_distributor_path(distributor) %></td>
+          <td><%= distributor_form.text_field :next_collection_at %></td>
+          <td><%= distributor.description %></td>
+          <td data-hook="admin_users_index_row_actions">
+            <%= link_to_edit distributor, :class => 'edit' %> &nbsp;
+            <%= link_to_delete distributor %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @distributors.empty? %>
+        <tr><td colspan="4"><%= t(:none) %></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.submit 'Update' %>
+<% end %>

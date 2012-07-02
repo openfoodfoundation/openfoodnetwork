@@ -12,7 +12,9 @@ Spree::Core::Engine.routes.prepend do
   end
 
   namespace :admin do
-    resources :distributors
+    resources :distributors do
+      post :bulk_update, :on => :collection, :as => :bulk_update
+    end
     resources :suppliers
   end
 end
