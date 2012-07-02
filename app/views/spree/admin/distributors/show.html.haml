@@ -19,7 +19,10 @@
     %th Pickup address:
     %td= render 'spree/shared/address', :address => @distributor.pickup_address
   %tr
-    %th Pickup times:
+    %th Next collection date/time:
+    %td= @distributor.next_collection_at
+  %tr
+    %th Regular pickup times:
     %td= @distributor.pickup_times
   %tr
     %th ABN:

@@ -26,8 +26,11 @@
 %fieldset
   %legend Pickup details
   %table{"data-hook" => "distributors_pickup_details"}
+    %tr{"data-hook" => "next_collection_at"}
+      %td Next collection date/time:
+      %td= f.text_field :next_collection_at
     %tr{"data-hook" => "pickup_times"}
-      %td Pickup times:
+      %td Regular pickup times:
       %td= f.text_field :pickup_times
     = f.fields_for :pickup_address do |pickup_address_form|
       = render 'spree/admin/shared/address_form', :form => pickup_address_form

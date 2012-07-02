@@ -25,6 +25,7 @@ feature %q{
     select('Australia', :from => 'distributor_pickup_address_attributes_country_id')
     select('Victoria', :from => 'distributor_pickup_address_attributes_state_id')
 
+    fill_in 'distributor_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
     fill_in 'distributor_pickup_times', :with => 'Thursday, 22nd Feb, 6 - 9 PM. Friday, 23nd Feb, 6 - 9 PM'
     fill_in 'distributor_email', :with => 'info@eaterprises.com.au'
     fill_in 'distributor_url', :with => 'http://eaterprises.com.au'
