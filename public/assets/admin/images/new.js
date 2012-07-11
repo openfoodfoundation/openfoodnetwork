@@ -1,0 +1,1 @@
+$("#cancel_link").click(function(a){a.preventDefault(),$("#new_image_link").show(),$("#images").html("")});
