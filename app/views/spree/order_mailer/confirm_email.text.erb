@@ -15,5 +15,21 @@ Subtotal: <%= number_to_currency @order.item_total %>
 <% end %>
 Order Total: <%= number_to_currency(@order.total) %>
 
+============================================================
+Delivery Details
+============================================================
+Address:
+<% address = @order.distributor.pickup_address %>
+<%= address.address1 %>
+<%= ", #{address.address2}" unless address.address2.blank? %>
+<%= [address.city, address.state_text, address.zipcode, address.country.name].compact.join ', ' %>
+
+Colection time:
+<%= @order.distributor.next_collection_at %>
+
+Contact:
+<%= @order.distributor.contact %>
+<%= "Phone: #{@order.distributor.phone}" %>
+<%= "Email: #{@order.distributor.email}" %>
 
 Thank you for your business.
