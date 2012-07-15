@@ -1,0 +1,57 @@
+
+%table#listing_orders.index
+  %thead
+    %tr{'data-hook' => "orders_header"}
+      %th Order Date
+      %th Order Id
+      %th Name
+      %th Email
+      %th SKU
+      %th Item name
+      %th Item cost
+      %th Quantity
+      %th Shipping cost
+      %th Distributor
+      %th Distributor address
+      %th Distributor city
+      %th Distributor postcode
+  %tbody
+    - @orders.each do |order|
+      - order.line_items.each do |line_item|
+        %tr
+          %td= order.created_at
+          %td= order.id
+          %td= order.bill_address.full_name
+          %td= order.user.email
+          %td= line_item.product.sku
+          %td= line_item.product.name
+          %td= line_item.quantity
+          %td= line_item.price * line_item.quantity
+          %td= line_item.itemwise_shipping_cost
+          %td= order.distributor.pickup_address.full_name
+          %td= order.distributor.pickup_address.address1
+          %td= order.distributor.pickup_address.city
+          %td= order.distributor.pickup_address.zipcode
+    - if @orders.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)
+
+
+
+- content_for :sidebar do
+  = form_for @search, :url => spree.orders_admin_reports_path  do |s|
+    = label_tag nil, t(:date_range)
+    %br
+    .date-range-filter
+      %div{"class" => "left sub-field"}
+        = s.text_field :created_at_gt, :class => 'datepicker'
+        %br
+        = label_tag nil, t(:start), :class => 'sub'
+      %div{"class" => "right sub-field"}
+        = s.text_field :created_at_lt, :class => 'datepicker'
+        %br
+        = label_tag nil, t(:stop)
+    = check_box_tag :csv
+    = label_tag :csv, "Download as csv"
+    %br
+    = button t(:search)
