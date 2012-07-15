@@ -28,15 +28,13 @@
           %td= line_item.quantity
           %td= line_item.price * line_item.quantity
           %td= line_item.itemwise_shipping_cost
-          %td= order.distributor.pickup_address.full_name
+          %td= order.distributor.name
           %td= order.distributor.pickup_address.address1
           %td= order.distributor.pickup_address.city
           %td= order.distributor.pickup_address.zipcode
     - if @orders.empty?
       %tr
         %td{:colspan => "2"}= t(:none)
-
-
 
 - content_for :sidebar do
   = form_for @search, :url => spree.orders_admin_reports_path  do |s|
