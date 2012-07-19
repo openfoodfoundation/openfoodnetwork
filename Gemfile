@@ -56,5 +56,6 @@ group :test, :development do
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'spork', '~> 1.0rc'
   gem 'pry'
+  gem 'awesome_print'
 end
 

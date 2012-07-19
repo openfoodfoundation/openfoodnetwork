@@ -82,6 +82,7 @@ GEM
     andand (1.3.3)
     ansi (1.4.2)
     arel (3.0.2)
+    awesome_print (1.0.2)
     aws-s3 (0.6.3)
       builder
       mime-types
@@ -322,6 +323,7 @@ PLATFORMS
 
 DEPENDENCIES
   andand
+  awesome_print
   aws-s3
   capybara
   coffee-rails (~> 3.2.1)

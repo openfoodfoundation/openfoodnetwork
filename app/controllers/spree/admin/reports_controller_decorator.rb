@@ -1,10 +1,11 @@
 require 'csv'
+require 'open_food_web/order_and_distributor_report'
 
 Spree::Admin::ReportsController.class_eval do
 
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders => {:name => "Orders", :description => "Orders with distributor details"}})
+  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"}})
 
-  def orders
+  def orders_and_distributors
     params[:q] = {} unless params[:q]
 
     if params[:q][:created_at_gt].blank?
@@ -19,20 +20,15 @@ Spree::Admin::ReportsController.class_eval do
     params[:q][:meta_sort] ||= "created_at.desc"
 
     @search = Spree::Order.complete.search(params[:q])
-    @orders = @search.result
+    orders = @search.result
 
+    @report = OpenFoodWeb::OrderAndDistributorReport.new orders
     if(!params[:csv])
-      render :html => @orders
+      render :html => @report
     else
       csv_string = CSV.generate do |csv|
-        csv << ["Order date", "Order Id", "Name","Email", "SKU", "Item cost", "Quantity", "Cost", "Shipping cost", "Distributor", "Distributor address", "Distributor city", "Distributor postcode"]
-        @orders.each do |order|
-          order.line_items.each do |line_item|
-            csv << [order.created_at, order.id, order.bill_address.full_name, order.user.email,
-              line_item.product.sku, line_item.product.name, line_item.quantity, line_item.price * line_item.quantity, line_item.itemwise_shipping_cost,
-              order.distributor.name, order.distributor.pickup_address.address1, order.distributor.pickup_address.city, order.distributor.pickup_address.zipcode ]
-          end
-        end
+        csv << @report.header
+        @report.table.each { |row| csv << row }
       end
       send_data csv_string
     end

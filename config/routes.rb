@@ -18,5 +18,5 @@ Spree::Core::Engine.routes.prepend do
     resources :suppliers
   end
 
-  match '/admin/reports/orders' => 'admin/reports#orders', :as => "orders_admin_reports",  :via  => [:get, :post]
+  match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
 end
