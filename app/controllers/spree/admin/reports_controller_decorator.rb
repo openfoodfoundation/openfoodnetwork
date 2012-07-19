@@ -30,7 +30,7 @@ Spree::Admin::ReportsController.class_eval do
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string
+      send_data csv_string, :filename => "orders_and_distributors.csv"
     end
   end
 
