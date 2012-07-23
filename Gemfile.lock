@@ -340,7 +340,7 @@ DEPENDENCIES
   shoulda-matchers
   simple_form!
   spork (~> 1.0rc)
-  spree
+  spree (= 1.1.1)
   spree_heroku!
   spree_i18n!
   spree_last_address!

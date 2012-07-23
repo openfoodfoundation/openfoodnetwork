@@ -15,7 +15,7 @@ describe Spree::OrdersController do
       p = create(:product)
 
       expect do
-        spree_put :populate, :variants => {p.id => 1}
+        spree_post :populate, :variants => {p.master.id => 1}
       end.to change(Spree::LineItem, :count).by(0)
     end
 
@@ -25,7 +25,7 @@ describe Spree::OrdersController do
       p = create(:product, :distributors => [distributor_product])
 
       expect do
-        spree_put :populate, :variants => {p.id => 1}, :distributor_id => distributor_no_product.id
+        spree_post :populate, :variants => {p.master.id => 1}, :distributor_id => distributor_no_product.id
       end.to change(Spree::LineItem, :count).by(0)
     end
 
@@ -39,7 +39,7 @@ describe Spree::OrdersController do
       order.save!
 
       expect do
-        spree_put :populate, :variants => {p.id => 1}, :distributor_id => distributor_product.id
+        spree_post :populate, :variants => {p.master.id => 1}, :distributor_id => distributor_product.id
       end.to change(Spree::LineItem, :count).by(1)
 
       order.reload.distributor.should == distributor_product
@@ -51,7 +51,7 @@ describe Spree::OrdersController do
       p = create(:product, :distributors => [d])
 
       # When we add the product to our cart
-      spree_put :populate, :variants => {p.id => 1}, :distributor_id => d.id
+      spree_post :populate, :variants => {p.master.id => 1}, :distributor_id => d.id
 
       # Then our order should have its distributor set to the chosen distributor
       current_order(false).distributor.should == d
@@ -65,7 +65,7 @@ describe Spree::OrdersController do
       @product = create(:product, :distributors => [@distributor])
 
       # And the product is in the cart
-      spree_put :populate, :variants => {@product.id => 1}, :distributor_id => @distributor.id
+      spree_post :populate, :variants => {@product.master.id => 1}, :distributor_id => @distributor.id
       current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
       current_order(false).distributor.reload.should == @distributor
     end
@@ -76,7 +76,7 @@ describe Spree::OrdersController do
       p2 = create(:product, :distributors => [d2])
 
       # When I attempt to add the product to the cart
-      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => d2.id
+      spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => d2.id
 
       # Then the product should not be added to the cart
       current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
@@ -89,7 +89,7 @@ describe Spree::OrdersController do
       p2 = create(:product, :distributors => [d2])
 
       # When I attempt to add the product to the cart with a fake distributor_id
-      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => @distributor.id
+      spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => @distributor.id
 
       # Then the product should not be added to the cart
       current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
@@ -102,7 +102,7 @@ describe Spree::OrdersController do
       p2 = create(:product, :distributors => [@distributor, d2])
 
       # When I attempt to add the product to the cart with the alternate distributor
-      spree_put :populate, :variants => {p2.id => 1}, :distributor_id => d2
+      spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => d2
 
       # Then the product should not be added to the cart
       current_order(false).line_items.reload.map { |li| li.product }.should == [@product]

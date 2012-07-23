@@ -4,7 +4,7 @@ ruby "1.9.3"
 gem 'rails', '3.2.3'
 
 gem 'pg'
-gem 'spree'
+gem 'spree', '1.1.1'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git'
 gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-address.git'
