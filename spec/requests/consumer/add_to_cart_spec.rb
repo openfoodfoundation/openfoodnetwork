@@ -13,6 +13,7 @@ feature %q{
     d1 = create(:distributor)
     d2 = create(:distributor)
     p = create(:product, :distributors => [d1])
+    create(:product, :distributors => [d2])
 
     # When I choose a distributor
     visit spree.root_path

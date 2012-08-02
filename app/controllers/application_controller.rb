@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
   def load_data_for_sidebar
     @suppliers = Spree::Supplier.all
-    @distributors = Spree::Distributor.all
+    @distributors = Spree::Distributor.with_products
   end
 
 end

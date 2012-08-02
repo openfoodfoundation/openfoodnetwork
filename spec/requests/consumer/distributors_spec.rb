@@ -10,22 +10,28 @@ feature %q{
 
   scenario "viewing a list of distributors" do
     # Given some distributors
-    3.times { create(:distributor) }
+    d1 = create(:distributor)
+    d2 = create(:distributor)
+    d3 = create(:distributor)
+
+    # And some of those distributors have a product
+    create(:product, :distributors => [d1, d2])
 
     # When I go to the home page
     visit spree.root_path
 
-    # Then I should see a list containing all distributors
-    Spree::Distributor.all.each do |distributor|
-      page.should have_selector 'a', :text => distributor.name
-    end
+    # Then I should see a list containing the distributors that have products
+    page.should have_selector 'a', :text => d1.name
+    page.should have_selector 'a', :text => d2.name
+    page.should_not have_selector 'a', :text => d3.name
   end
 
 
   context "when a distributor is selected" do
     it "displays the distributor's name" do
-      # Given a distributor
+      # Given a distributor with a product
       d = create(:distributor, :name => 'Melb Uni Co-op')
+      create(:product, :distributors => [d])
 
       # When I select the distributor
       visit spree.root_path
@@ -65,8 +71,9 @@ feature %q{
     end
 
     it "allows the user to leave the distributor" do
-      # Given a distributor
+      # Given a distributor with a product
       d = create(:distributor, :name => 'Melb Uni Co-op')
+      create(:product, :distributors => [d])
 
       # When I select the distributor and then leave it
       visit spree.root_path
@@ -106,10 +113,11 @@ feature %q{
       end
 
       it "works when viewing a product from a remote distributor" do
-        # Given two distributors and a product under one
+        # Given two distributors and our product under one
         distributor_product = create(:distributor)
         distributor_no_product = create(:distributor)
         product = create(:product, :distributors => [distributor_product])
+        create(:product, :distributors => [distributor_no_product])
 
         # When we select the distributor without the product and then view the product
         visit spree.root_path

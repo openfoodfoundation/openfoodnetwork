@@ -9,13 +9,26 @@ module Spree
       it { should have_many(:orders) }
     end
 
+    describe "validations" do
+      it { should validate_presence_of(:name) }
+    end
+
     it "should default country to system country" do
       distributor = Distributor.new
       distributor.pickup_address.country.should == Country.find_by_id(Config[:default_country_id])
     end
 
-    describe "validations" do
-      it { should validate_presence_of(:name) }
+    describe "scopes" do
+      it "returns distributors with products" do
+        d1 = create(:distributor)
+        d2 = create(:distributor)
+        d3 = create(:distributor)
+        create(:product, :distributors => [d1, d2])
+        create(:product, :distributors => [d1])
+
+        Distributor.with_products.sort.should == [d1, d2]
+      end
     end
+
   end
 end
