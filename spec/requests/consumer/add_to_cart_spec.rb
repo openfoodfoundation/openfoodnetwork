@@ -124,4 +124,17 @@ feature %q{
     li.quantity.should == 2
     li.max_quantity.should == 3
   end
+
+  scenario "adding a product to cart that is not a group buy does not show max quantity field" do
+    # Given a group buy product and a distributor
+    d = create(:distributor)
+    p = create(:product, :distributors => [d], :group_buy => false)
+
+    # When I view the add to cart form, there should not be a max quantity field
+    visit spree.product_path p
+
+    page.should_not have_selector "#variant_attributes_#{p.master.id}_max_quantity"
+  end
+
+
 end

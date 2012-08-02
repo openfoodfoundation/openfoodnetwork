@@ -11,8 +11,9 @@
   - else
     %p Quantity
     = number_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"), 1, :class => 'title', :in => 1..@product.on_hand
-    %p Max quantity
-    = number_field_tag (@product.has_variants? ? :max_quantity : "variant_attributes[#{@product.master.id}][max_quantity]"), 1, :class => 'title', :in => 1..@product.on_hand
+    - if @product.group_buy
+      %p Max quantity
+      = number_field_tag (@product.has_variants? ? :max_quantity : "variant_attributes[#{@product.master.id}][max_quantity]"), 1, :class => 'title', :in => 1..@product.on_hand
     - order = current_order(false)
     - if order.nil? || order.can_change_distributor?
       %p Distributor
