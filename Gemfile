@@ -15,6 +15,7 @@ gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-
 gem 'simple_form', :git => 'git://github.com/RohanM/simple_form.git'
 
 gem 'unicorn'
+gem 'bugsnag'
 gem 'spree_heroku', :git => 'git://github.com/joneslee85/spree-heroku.git'
 gem 'haml'
 gem 'aws-s3'
@@ -34,17 +35,6 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test, :development do
   # Pretty printed test output

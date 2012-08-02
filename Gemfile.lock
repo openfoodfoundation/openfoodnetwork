@@ -95,6 +95,9 @@ GEM
     bcrypt-ruby (3.0.1)
     braintree (2.16.0)
       builder (>= 2.0.0)
+    bugsnag (1.1.2)
+      httparty (~> 0.8.3)
+      multi_json (~> 1.3.4)
     builder (3.0.0)
     cancan (1.6.7)
     capybara (1.1.2)
@@ -325,6 +328,7 @@ DEPENDENCIES
   andand
   awesome_print
   aws-s3
+  bugsnag
   capybara
   coffee-rails (~> 3.2.1)
   database_cleaner (= 0.7.1)
