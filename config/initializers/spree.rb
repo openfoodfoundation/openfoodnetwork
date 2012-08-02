@@ -19,4 +19,8 @@ Spree.config do |config|
   config.default_country_id  = 12 # This should be Australia, see: spree/core/db/default/spree/countries.yml
 
   config.searcher_class = OpenFoodWeb::Searcher
+
+  # -- spree_paypal_express
+  # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
+  config.auto_capture = true
 end
