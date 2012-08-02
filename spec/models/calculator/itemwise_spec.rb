@@ -10,4 +10,11 @@ describe OpenFoodWeb::Calculator::Itemwise do
 
     subject.compute(order).should == 30
   end
+
+  it "returns zero for an order with no items" do
+    order = double(:order)
+    order.stub(:line_items).and_return([])
+
+    subject.compute(order).should == 0
+  end
 end
