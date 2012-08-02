@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702020402) do
+ActiveRecord::Schema.define(:version => 20120802031147) do
 
   create_table "distributors", :force => true do |t|
     t.string   "name"
@@ -180,10 +180,11 @@ ActiveRecord::Schema.define(:version => 20120702020402) do
   create_table "spree_line_items", :force => true do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                 :null => false
-    t.decimal  "price",      :precision => 8, :scale => 2, :null => false
+    t.integer  "quantity",                                   :null => false
+    t.decimal  "price",        :precision => 8, :scale => 2, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "max_quantity"
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"
@@ -366,6 +367,7 @@ ActiveRecord::Schema.define(:version => 20120702020402) do
     t.datetime "updated_at"
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
+    t.boolean  "group_buy"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
