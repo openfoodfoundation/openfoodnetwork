@@ -40,6 +40,7 @@ end
 FactoryGirl.modify do
   factory :simple_product do
     supplier { Spree::Supplier.first || FactoryGirl.create(:supplier) }
+    on_hand 3
 
     # before(:create) do |product, evaluator|
     #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]

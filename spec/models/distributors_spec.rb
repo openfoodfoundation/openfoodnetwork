@@ -19,14 +19,16 @@ module Spree
     end
 
     describe "scopes" do
-      it "returns distributors with products" do
+      it "returns distributors with products in stock" do
         d1 = create(:distributor)
         d2 = create(:distributor)
         d3 = create(:distributor)
-        create(:product, :distributors => [d1, d2])
-        create(:product, :distributors => [d1])
+        d4 = create(:distributor)
+        create(:product, :distributors => [d1, d2], :on_hand => 5)
+        create(:product, :distributors => [d1], :on_hand => 5)
+        create(:product, :distributors => [d3], :on_hand => 0)
 
-        Distributor.with_products.sort.should == [d1, d2]
+        Distributor.with_products_on_hand.sort.should == [d1, d2]
       end
     end
 
