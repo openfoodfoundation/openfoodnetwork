@@ -27,7 +27,7 @@ module OpenFoodWeb
         header = subject.header
         header.should == ["Order date", "Order Id",
           "Customer Name","Customer Email", "Customer Phone", "Customer City",
-          "SKU", "Item name", "Variant", "Quantity", "Cost", "Shipping cost",
+          "SKU", "Item name", "Variant", "Quantity", "Max Quantity", "Cost", "Shipping cost",
           "Payment method",
           "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"]
       end
@@ -39,7 +39,7 @@ module OpenFoodWeb
 
         table[0].should == [@order.created_at, @order.id,
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
-          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.price * @line_item.quantity, @line_item.itemwise_shipping_cost,
+          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.itemwise_shipping_cost,
           @payment_method.name,
           @distributor.name, @distributor.pickup_address.address1, @distributor.pickup_address.city, @distributor.pickup_address.zipcode, @shipping_instructions ]
       end
