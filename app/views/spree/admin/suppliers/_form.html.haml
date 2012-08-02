@@ -6,7 +6,7 @@
     %td Description:
     %td= f.text_field :description
   = f.fields_for :address do |address_form|
-    = render 'spree/admin/shared/address_form', :form => address_form
+    = render 'spree/admin/shared/address_form', :f => address_form
   %tr{'data-hook' => "email"}
     %td Email:
     %td= f.text_field :email
