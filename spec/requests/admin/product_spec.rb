@@ -36,6 +36,26 @@ feature %q{
       product.supplier.should == @supplier
       product.distributors.should == [@distributors[0], @distributors[2]]
       product.product_distributions.map { |pd| pd.shipping_method }.should == [@shipping_method, @shipping_method]
+      product.group_buy.should be_false
     end
+
+    scenario "making a group buy product" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      fill_in 'product_name', :with => 'A new product !!!'
+      fill_in 'product_price', :with => '19.99'
+      select 'New supplier', :from => 'product_supplier_id'
+      choose 'product_group_buy_1'
+
+      click_button 'Create'
+
+      flash_message.should == 'Product "A new product !!!" has been successfully created!'
+      product = Spree::Product.find_by_name('A new product !!!')
+      product.group_buy.should be_true
+    end
+
   end
 end
