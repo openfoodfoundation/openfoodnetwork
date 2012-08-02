@@ -13,7 +13,7 @@ module Spree
     validates_associated :pickup_address
 
     scope :by_name, order('name')
-    scope :with_products_on_hand, joins(:products).where('spree_products.count_on_hand > 0').group('distributors.id')
+    scope :with_products_on_hand, joins(:products).where('spree_products.count_on_hand > 0').select('distinct(distributors.*)')
 
     after_initialize :initialize_country
     before_validation :set_unused_address_fields
