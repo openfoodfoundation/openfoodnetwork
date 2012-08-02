@@ -105,4 +105,23 @@ feature %q{
       page.should have_selector 'h4 a', :text => p2.name
     end
   end
+
+  scenario "adding a product to the cart for a group buy" do
+    # Given a group buy product and a distributor
+    d = create(:distributor)
+    p = create(:product, :distributors => [d], :group_buy => true)
+
+    # When I add the item to my cart
+    visit spree.product_path p
+    fill_in "variants_#{p.master.id}", :with => 2
+    fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 3
+    click_button 'Add To Cart'
+
+    # Then the item should be in my cart with correct quantities
+    order = Spree::Order.last
+    li = order.line_items.first
+    li.product.should == p
+    li.quantity.should == 2
+    li.max_quantity.should == 3
+  end
 end
