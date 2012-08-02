@@ -109,4 +109,19 @@ describe Spree::OrdersController do
       current_order(false).distributor.reload.should == @distributor
     end
   end
+
+  context "adding a group buy product to the cart" do
+    it "sets a variant attribute for the max quantity" do
+      distributor_product = create(:distributor)
+      p = create(:product, :distributors => [distributor_product], :group_buy => true)
+
+      order = current_order(true)
+      order.should_receive(:set_variant_attribute).with(p.master, 'max_quantity', '3')
+      controller.stub(:current_order).and_return(order)
+
+      expect do
+        spree_post :populate, :variants => {p.master.id => 1}, :variant_attributes => {p.master.id => {:max_quantity => 3}}, :distributor_id => distributor_product.id
+      end.to change(Spree::LineItem, :count).by(1)
+    end
+  end
 end

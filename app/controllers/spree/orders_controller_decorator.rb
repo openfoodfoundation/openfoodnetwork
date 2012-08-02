@@ -1,5 +1,6 @@
 Spree::OrdersController.class_eval do
   before_filter :populate_order_distributor, :only => :populate
+  after_filter :populate_variant_attributes, :only => :populate
 
   def populate_order_distributor
     @distributor = params.key?(:distributor_id) ? Spree::Distributor.find(params[:distributor_id]) : nil
@@ -13,6 +14,17 @@ Spree::OrdersController.class_eval do
       redirect_to cart_path
     end
   end
+
+  def populate_variant_attributes
+    if params.key? :variant_attributes
+      params[:variant_attributes].each do |variant_id, attributes|
+        attributes.each do |k, v|
+          @order.set_variant_attribute(Spree::Variant.find(variant_id), k, v)
+        end
+      end
+    end
+  end
+
 
   private
   def populate_valid? distributor
