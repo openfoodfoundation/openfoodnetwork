@@ -44,8 +44,10 @@ Spree::Order.class_eval do
   # which is a method using the itemwise shipping calculator.
   def set_default_shipping_method
     self.shipping_method = Spree::ShippingMethod.where("display_on != 'back_end'").first
-    self.save!
-    self.create_shipment!
+    if self.shipping_method
+      self.save!
+      self.create_shipment!
+    end
   end
 
   def shipping_address_from_distributor
