@@ -15,6 +15,13 @@ Spree::Order.class_eval do
     can_change_distributor? || product.distributors.include?(distributor)
   end
 
+  def set_variant_attributes(variant, attributes)
+    line_item = contains?(variant)
+
+    line_item.assign_attributes(attributes)
+    line_item.save!
+  end
+
 
 
   before_validation :shipping_address_from_distributor

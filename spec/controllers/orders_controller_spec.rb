@@ -116,7 +116,7 @@ describe Spree::OrdersController do
       p = create(:product, :distributors => [distributor_product], :group_buy => true)
 
       order = current_order(true)
-      order.should_receive(:set_variant_attribute).with(p.master, 'max_quantity', '3')
+      order.should_receive(:set_variant_attributes).with(p.master, {'max_quantity' => '3'})
       controller.stub(:current_order).and_return(order)
 
       expect do

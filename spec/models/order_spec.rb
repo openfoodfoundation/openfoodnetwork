@@ -46,4 +46,17 @@ describe Spree::Order do
     # And cannot be added if it does not match
     subject.can_add_product_to_cart?(p_subsequent_other_dist).should be_false
   end
+
+  it "sets attributes on line items for variants" do
+    subject.save!
+    d = create(:distributor)
+    p = create(:product, :distributors => [d])
+
+    subject.distributor = d
+    subject.add_variant(p.master, 1)
+    subject.set_variant_attributes(p.master, {'max_quantity' => '3'})
+
+    li = Spree::LineItem.last
+    li.max_quantity.should == 3
+  end
 end
