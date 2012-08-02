@@ -18,6 +18,10 @@ Spree::Order.class_eval do
   def set_variant_attributes(variant, attributes)
     line_item = contains?(variant)
 
+    if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
+      attributes[:max_quantity] = line_item.quantity
+    end
+
     line_item.assign_attributes(attributes)
     line_item.save!
   end
