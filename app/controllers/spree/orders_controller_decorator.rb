@@ -16,8 +16,11 @@ Spree::OrdersController.class_eval do
   end
 
   def populate_variant_attributes
+    puts "params: #{params.inspect}"
+    puts "Has key variant_attributes? #{params.key?(:variant_attributes)}"
     if params.key? :variant_attributes
       params[:variant_attributes].each do |variant_id, attributes|
+        puts "Setting variant attributes for variant #{variant_id}, attributes: #{attributes.inspect}"
         @order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
       end
     end
