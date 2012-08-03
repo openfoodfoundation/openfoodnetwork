@@ -9,7 +9,7 @@ $(document).ready(function() {
   $("#quantity").change();
 
   // Product page with master price only
-  $(".add-to-cart input.title:not(#quantity)").change(products_update_price_without_variant).change();
+  $(".add-to-cart input.title:not(#quantity):not(#max_quantity)").change(products_update_price_without_variant).change();
 });
 
 
