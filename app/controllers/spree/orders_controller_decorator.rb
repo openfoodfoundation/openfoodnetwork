@@ -16,12 +16,16 @@ Spree::OrdersController.class_eval do
   end
 
   def populate_variant_attributes
-    puts "params: #{params.inspect}"
-    puts "Has key variant_attributes? #{params.key?(:variant_attributes)}"
     if params.key? :variant_attributes
       params[:variant_attributes].each do |variant_id, attributes|
-        puts "Setting variant attributes for variant #{variant_id}, attributes: #{attributes.inspect}"
         @order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
+      end
+    end
+
+    if params.key? :quantity
+      params[:products].each do |product_id, variant_id|
+        max_quantity = params[:max_quantity].to_i
+        @order.set_variant_attributes(Spree::Variant.find(variant_id), {:max_quantity => max_quantity})
       end
     end
   end

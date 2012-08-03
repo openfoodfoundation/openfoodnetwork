@@ -125,6 +125,26 @@ feature %q{
     li.max_quantity.should == 3
   end
 
+  scenario "adding a product with variants to the cart for a group buy" do
+    # Given a group buy product with variants and a distributor
+    d = create(:distributor)
+    p = create(:product, :distributors => [d], :group_buy => true)
+    create(:variant, :product => p)
+
+    # When I add the item to my cart
+    visit spree.product_path p
+    fill_in "quantity", :with => 2
+    fill_in "max_quantity", :with => 3
+    click_button 'Add To Cart'
+
+    # Then the item should be in my cart with correct quantities
+    order = Spree::Order.last
+    li = order.line_items.first
+    li.product.should == p
+    li.quantity.should == 2
+    li.max_quantity.should == 3
+  end
+
   scenario "adding a product to cart that is not a group buy does not show max quantity field" do
     # Given a group buy product and a distributor
     d = create(:distributor)
