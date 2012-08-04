@@ -28,7 +28,7 @@ module Spree
         create(:product, :distributors => [d1], :on_hand => 5)
         create(:product, :distributors => [d3], :on_hand => 0)
 
-        Distributor.with_products_on_hand.sort.should == [d1, d2]
+        Distributor.with_active_products_on_hand.sort.should == [d1, d2]
       end
     end
 
