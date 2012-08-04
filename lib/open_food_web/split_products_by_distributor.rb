@@ -8,6 +8,8 @@ module OpenFoodWeb
       products_local = products_remote = nil
 
       if distributor
+        local_match_ids = products.map { |p| p.distributors.include? distributor }
+        puts "In split_products_by_distributor. Products include our distributor #{distributor.id}? #{local_match_ids.inspect}"
         products_local = products.select { |p| p.distributors.include? distributor }
         products_remote = products.reject { |p| p.distributors.include? distributor }
         products = nil
