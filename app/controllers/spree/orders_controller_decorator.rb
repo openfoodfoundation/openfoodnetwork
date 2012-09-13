@@ -3,7 +3,7 @@ Spree::OrdersController.class_eval do
   after_filter :populate_variant_attributes, :only => :populate
 
   def populate_order_distributor
-    @distributor = params.key?(:distributor_id) ? Spree::Distributor.find(params[:distributor_id]) : nil
+    @distributor = params[:distributor_id].present? ? Spree::Distributor.find(params[:distributor_id]) : nil
 
     if populate_valid? @distributor
       order = current_order(true)
@@ -11,7 +11,8 @@ Spree::OrdersController.class_eval do
       order.save!
 
     else
-      redirect_to cart_path
+      flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
+      redirect_populate_to_first_product
     end
   end
 
@@ -32,6 +33,7 @@ Spree::OrdersController.class_eval do
 
 
   private
+
   def populate_valid? distributor
     # -- Distributor must be specified
     return false if distributor.nil?
@@ -54,5 +56,15 @@ Spree::OrdersController.class_eval do
     end
 
     true
+  end
+
+  def redirect_populate_to_first_product
+    product = if params[:products].present?
+                Spree::Product.find(params[:products].keys.first)
+              else
+                Spree::Variant.find(params[:variants].keys.first).product
+              end
+
+    redirect_to product
   end
 end

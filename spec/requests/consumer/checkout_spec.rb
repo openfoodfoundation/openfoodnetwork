@@ -46,6 +46,7 @@ feature %q{
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
+    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -71,6 +72,7 @@ feature %q{
     login_to_consumer_section
 
     click_link 'Fuji apples'
+    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 

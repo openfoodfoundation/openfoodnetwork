@@ -8,6 +8,26 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
+  scenario "adding a product to the cart with no distributor chosen" do
+    # Given a product and some distributors
+    d1 = create(:distributor)
+    d2 = create(:distributor)
+    p = create(:product, :distributors => [d1])
+    create(:product, :distributors => [d2])
+
+    # When I add an item to my cart without choosing a distributor
+    visit spree.product_path p
+    click_button 'Add To Cart'
+
+    # Then I should see an error message
+    page.should have_content "Please choose a distributor for this order."
+
+    # And the product should not have been added to my cart
+    Spree::Order.last.should be_nil
+    #order.line_items.should be_empty
+  end
+
+
   scenario "adding the first product to the cart" do
     # Given a product and some distributors
     d1 = create(:distributor)
@@ -40,6 +60,7 @@ feature %q{
 
     # When I add a product to my cart (which sets my distributor)
     visit spree.product_path p
+    select d1.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     page.should have_content "You are shopping at #{d1.name}"
 
@@ -58,6 +79,7 @@ feature %q{
 
       # And a product in my cart
       visit spree.product_path p
+      select d.name, :from => 'distributor_id'
       click_button 'Add To Cart'
 
       # When I go to add it again, I should not have a choice of distributor
@@ -75,6 +97,7 @@ feature %q{
 
       # When I add one of them to my cart
       visit spree.product_path p1
+      select d1.name, :from => 'distributor_id'
       click_button 'Add To Cart'
 
       # And I attempt to add the other
@@ -93,6 +116,7 @@ feature %q{
 
       # When I add the first to my cart
       visit spree.product_path p1
+      select d.name, :from => 'distributor_id'
       click_button 'Add To Cart'
 
       # And I add the second
@@ -113,6 +137,7 @@ feature %q{
 
     # When I add the item to my cart
     visit spree.product_path p
+    select d.name, :from => 'distributor_id'
     fill_in "variants_#{p.master.id}", :with => 2
     fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 3
     click_button 'Add To Cart'
@@ -133,6 +158,7 @@ feature %q{
 
     # When I add the item to my cart
     visit spree.product_path p
+    select d.name, :from => 'distributor_id'
     fill_in "quantity", :with => 2
     fill_in "max_quantity", :with => 3
     click_button 'Add To Cart'
@@ -163,6 +189,7 @@ feature %q{
 
     # When I add the item to my cart
     visit spree.product_path p
+    select d.name, :from => 'distributor_id'
     fill_in "variants_#{p.master.id}", :with => 2
     fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 1
     click_button 'Add To Cart'
