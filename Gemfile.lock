@@ -304,6 +304,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    truncate_html (0.5.5)
     turn (0.8.3)
       ansi
     tzinfo (0.3.33)
@@ -350,6 +351,7 @@ DEPENDENCIES
   spree_last_address!
   spree_paypal_express!
   therubyracer
+  truncate_html
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn

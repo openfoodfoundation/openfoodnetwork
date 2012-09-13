@@ -1,0 +1,8 @@
+%td{'data-hook' => "cart_item_description"}
+  %h4= link_to variant.product.name, product_path(variant.product)
+  = variant.options_text
+  - if @order.insufficient_stock_lines.include? line_item
+    %span.out-of-stock
+      = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
+      %br/
+  = truncate_html(variant.product.description, :length => 100, :omission => "...")
