@@ -12,6 +12,8 @@ require 'open_food_web/searcher'
 
 Spree.config do |config|
   config.site_name = "Open Food Web"
+  config.logo = 'logo.jpg'
+  config.admin_interface_logo = 'logo.jpg'
 
   config.shipping_instructions = true
   config.checkout_zone = 'Australia'

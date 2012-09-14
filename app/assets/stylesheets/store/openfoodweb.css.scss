@@ -1,5 +1,23 @@
 @import "screen";
 
+a:hover {
+  color: lighten($link_text_color, 20) !important;
+}
+
+table {
+  tbody, tfoot {
+    tr {
+      &.alt, &.odd {
+        background-color: lighten($link_text_color, 75) !important;
+      }
+    }
+  }
+}
+
+#header #logo {
+  padding-top: 10px;
+}
+
 /* Style current distributor in main nav bar */
 nav #main-nav-bar {
   li {
