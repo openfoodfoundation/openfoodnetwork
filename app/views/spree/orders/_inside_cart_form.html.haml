@@ -4,9 +4,17 @@
 
   #subtotal{'data-hook' => ""}
     %h5
-      = t(:subtotal)
+      Item total
       \:
       %span.order-total= order_subtotal(@order)
+    %h5
+      Shipping total
+      \:
+      %span.order-total= order_delivery_fee_subtotal(@order)
+    %h4
+      Total
+      \:
+      %span.order-total= number_to_currency(order_subtotal(@order, :format_as_currency => false) + order_delivery_fee_subtotal(@order, :format_as_currency => false))
 
   .links{'data-hook' => "cart_buttons"}
     = button_tag :class => 'primary', :id => 'update-button' do
