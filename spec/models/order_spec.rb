@@ -15,7 +15,8 @@ describe Spree::Order do
   end
 
   it "reveals permission for changing distributor" do
-    p = build(:product)
+    subject.save!
+    p = create(:product)
 
     subject.can_change_distributor?.should be_true
     subject.add_variant(p.master, 1)
@@ -23,9 +24,11 @@ describe Spree::Order do
   end
 
   it "raises an exception if distributor is changed without permission" do
-    d = build(:distributor)
-    p = build(:product, :distributors => [d])
+    d = create(:distributor)
+    p = create(:product, :distributors => [d])
     subject.distributor = d
+    subject.save!
+
     subject.add_variant(p.master, 1)
     subject.can_change_distributor?.should be_false
 
