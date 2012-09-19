@@ -7,12 +7,9 @@ module Spree
       shipping_method = create(:shipping_method)
       shipping_method.calculator.set_preference :amount, 10
 
-      product = double(:product)
-      product.should_receive(:shipping_method_for_distributor).and_return(shipping_method)
-
       order = double(:order, :distributor => nil)
 
-      subject.stub(:product).and_return(product)
+      subject.stub(:shipping_method).and_return(shipping_method)
       subject.stub(:order).and_return(order)
 
       subject.itemwise_shipping_cost.should == 10

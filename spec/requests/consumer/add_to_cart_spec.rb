@@ -27,7 +27,6 @@ feature %q{
     #order.line_items.should be_empty
   end
 
-
   scenario "adding the first product to the cart" do
     # Given a product and some distributors
     d1 = create(:distributor)
@@ -44,9 +43,11 @@ feature %q{
     select d1.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
-    # Then the item should be in my cart
+    # Then the item should be in my cart, with shipping method set for the line item
     order = Spree::Order.last
-    order.line_items.first.product.should == p
+    line_item = order.line_items.first
+    line_item.product.should == p
+    line_item.shipping_method.should == p.product_distributions.first.shipping_method
 
     # And my order should have its distributor set to the chosen distributor
     order.distributor.should == d1
@@ -130,76 +131,77 @@ feature %q{
     end
   end
 
-  scenario "adding a product to the cart for a group buy" do
-    # Given a group buy product and a distributor
-    d = create(:distributor)
-    p = create(:product, :distributors => [d], :group_buy => true)
+  context "group buys" do
+    scenario "adding a product to the cart for a group buy" do
+      # Given a group buy product and a distributor
+      d = create(:distributor)
+      p = create(:product, :distributors => [d], :group_buy => true)
 
-    # When I add the item to my cart
-    visit spree.product_path p
-    select d.name, :from => 'distributor_id'
-    fill_in "variants_#{p.master.id}", :with => 2
-    fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 3
-    click_button 'Add To Cart'
+      # When I add the item to my cart
+      visit spree.product_path p
+      select d.name, :from => 'distributor_id'
+      fill_in "variants_#{p.master.id}", :with => 2
+      fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 3
+      click_button 'Add To Cart'
 
-    # Then the item should be in my cart with correct quantities
-    order = Spree::Order.last
-    li = order.line_items.first
-    li.product.should == p
-    li.quantity.should == 2
-    li.max_quantity.should == 3
+      # Then the item should be in my cart with correct quantities
+      order = Spree::Order.last
+      li = order.line_items.first
+      li.product.should == p
+      li.quantity.should == 2
+      li.max_quantity.should == 3
+    end
+
+    scenario "adding a product with variants to the cart for a group buy" do
+      # Given a group buy product with variants and a distributor
+      d = create(:distributor)
+      p = create(:product, :distributors => [d], :group_buy => true)
+      create(:variant, :product => p)
+
+      # When I add the item to my cart
+      visit spree.product_path p
+      select d.name, :from => 'distributor_id'
+      fill_in "quantity", :with => 2
+      fill_in "max_quantity", :with => 3
+      click_button 'Add To Cart'
+
+      # Then the item should be in my cart with correct quantities
+      order = Spree::Order.last
+      li = order.line_items.first
+      li.product.should == p
+      li.quantity.should == 2
+      li.max_quantity.should == 3
+    end
+
+    scenario "adding a product to cart that is not a group buy does not show max quantity field" do
+      # Given a group buy product and a distributor
+      d = create(:distributor)
+      p = create(:product, :distributors => [d], :group_buy => false)
+
+      # When I view the add to cart form, there should not be a max quantity field
+      visit spree.product_path p
+
+      page.should_not have_selector "#variant_attributes_#{p.master.id}_max_quantity"
+    end
+
+    scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
+      # Given a group buy product and a distributor
+      d = create(:distributor)
+      p = create(:product, :distributors => [d], :group_buy => true)
+
+      # When I add the item to my cart
+      visit spree.product_path p
+      select d.name, :from => 'distributor_id'
+      fill_in "variants_#{p.master.id}", :with => 2
+      fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 1
+      click_button 'Add To Cart'
+
+      # Then the item should be in my cart with correct quantities
+      order = Spree::Order.last
+      li = order.line_items.first
+      li.product.should == p
+      li.quantity.should == 2
+      li.max_quantity.should == 2
+    end
   end
-
-  scenario "adding a product with variants to the cart for a group buy" do
-    # Given a group buy product with variants and a distributor
-    d = create(:distributor)
-    p = create(:product, :distributors => [d], :group_buy => true)
-    create(:variant, :product => p)
-
-    # When I add the item to my cart
-    visit spree.product_path p
-    select d.name, :from => 'distributor_id'
-    fill_in "quantity", :with => 2
-    fill_in "max_quantity", :with => 3
-    click_button 'Add To Cart'
-
-    # Then the item should be in my cart with correct quantities
-    order = Spree::Order.last
-    li = order.line_items.first
-    li.product.should == p
-    li.quantity.should == 2
-    li.max_quantity.should == 3
-  end
-
-  scenario "adding a product to cart that is not a group buy does not show max quantity field" do
-    # Given a group buy product and a distributor
-    d = create(:distributor)
-    p = create(:product, :distributors => [d], :group_buy => false)
-
-    # When I view the add to cart form, there should not be a max quantity field
-    visit spree.product_path p
-
-    page.should_not have_selector "#variant_attributes_#{p.master.id}_max_quantity"
-  end
-
-  scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
-    # Given a group buy product and a distributor
-    d = create(:distributor)
-    p = create(:product, :distributors => [d], :group_buy => true)
-
-    # When I add the item to my cart
-    visit spree.product_path p
-    select d.name, :from => 'distributor_id'
-    fill_in "variants_#{p.master.id}", :with => 2
-    fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 1
-    click_button 'Add To Cart'
-
-    # Then the item should be in my cart with correct quantities
-    order = Spree::Order.last
-    li = order.line_items.first
-    li.product.should == p
-    li.quantity.should == 2
-    li.max_quantity.should == 2
-  end
-
 end

@@ -52,6 +52,10 @@ FactoryGirl.modify do
     # end
   end
 
+  factory :line_item do
+    shipping_method { |li| li.product.shipping_method_for_distributor(li.order.distributor) }
+  end
+
   factory :address do
     state { Spree::State.find_by_name 'Victoria' }
     country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
