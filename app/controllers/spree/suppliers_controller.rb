@@ -1,5 +1,7 @@
 module Spree
   class SuppliersController < BaseController
+    helper 'spree/products'
+
     def show
       options = {:supplier_id => params[:id]}
       options.merge(params.reject { |k,v| k == :id })
