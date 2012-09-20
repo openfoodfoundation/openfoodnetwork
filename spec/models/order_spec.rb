@@ -15,8 +15,11 @@ describe Spree::Order do
   end
 
   it "reveals permission for changing distributor" do
+    d = create(:distributor)
+    p = create(:product, :distributors => [d])
+
+    subject.distributor = d
     subject.save!
-    p = create(:product)
 
     subject.can_change_distributor?.should be_true
     subject.add_variant(p.master, 1)
@@ -64,11 +67,12 @@ describe Spree::Order do
   end
 
   it "sets attributes on line items for variants" do
-    subject.save!
     d = create(:distributor)
     p = create(:product, :distributors => [d])
 
     subject.distributor = d
+    subject.save!
+
     subject.add_variant(p.master, 1)
     subject.set_variant_attributes(p.master, {'max_quantity' => '3'})
 

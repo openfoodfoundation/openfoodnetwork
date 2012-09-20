@@ -1,7 +1,6 @@
 Spree::OrdersController.class_eval do
   before_filter :populate_order_distributor,         :only => :populate
   after_filter  :populate_variant_attributes,        :only => :populate
-  after_filter  :populate_line_item_shipping_method, :only => :populate
 
   def populate_order_distributor
     @distributor = params[:distributor_id].present? ? Spree::Distributor.find(params[:distributor_id]) : nil
@@ -14,13 +13,6 @@ Spree::OrdersController.class_eval do
     else
       flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
       redirect_populate_to_first_product
-    end
-  end
-
-  def populate_line_item_shipping_method
-    @order.line_items.where(:shipping_method_id => nil).each do |line_item|
-      line_item.shipping_method = line_item.product.shipping_method_for_distributor(line_item.order.distributor)
-      line_item.save!
     end
   end
 
