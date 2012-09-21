@@ -47,7 +47,7 @@ group :test, :development do
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'spork', '~> 1.0rc'
-  gem 'pry'
+  gem 'pry-debugger'
   gem 'awesome_print'
 end
 
