@@ -6,7 +6,7 @@ gem 'rails', '3.2.8'
 gem 'pg'
 gem 'spree', '1.1.3'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
-gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git'
+gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-1-stable'
 gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-address.git'
 
 
