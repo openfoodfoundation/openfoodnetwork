@@ -5,6 +5,8 @@
 // the compiled file.
 //
 
+//= require jquery
+//= require jquery_ujs
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo
