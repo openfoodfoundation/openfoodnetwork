@@ -4,9 +4,11 @@ require 'spree/core/current_order'
 describe Spree::DistributorsController do
   include Spree::Core::CurrentOrder
 
-  before do
+  before :each do
     stub!(:before_save_new_order)
     stub!(:after_save_new_order)
+
+    create(:itemwise_shipping_method)
   end
 
 

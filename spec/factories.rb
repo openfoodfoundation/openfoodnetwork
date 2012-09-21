@@ -24,7 +24,7 @@ FactoryGirl.define do
   factory :product_distribution, :class => Spree::ProductDistribution do
     product         { |pd| Spree::Product.first        || FactoryGirl.create(:product) }
     distributor     { |pd| Spree::Distributor.first    || FactoryGirl.create(:distributor) }
-    shipping_method { |pd| Spree::ShippingMethod.first || FactoryGirl.create(:shipping_method) }
+    shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
   end
 
   factory :itemwise_shipping_method, :parent => :shipping_method do
@@ -50,10 +50,23 @@ FactoryGirl.modify do
     # before(:create) do |product, evaluator|
     #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
     # end
+
+    # Do not create products distributed via the 'Delivery' shipping method
+    after(:create) do |product, evaluator|
+      pd = product.product_distributions.first
+      if pd.andand.shipping_method.andand.name == 'Delivery'
+        pd.shipping_method = Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method)
+        pd.save!
+      end
+    end
   end
 
   factory :line_item do
     shipping_method { |li| li.product.shipping_method_for_distributor(li.order.distributor) }
+  end
+
+  factory :shipping_method do
+    display_on ''
   end
 
   factory :address do

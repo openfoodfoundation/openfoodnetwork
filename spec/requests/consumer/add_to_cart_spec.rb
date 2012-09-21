@@ -24,26 +24,38 @@ feature %q{
 
     # And the product should not have been added to my cart
     Spree::Order.last.should be_nil
-    #order.line_items.should be_empty
   end
 
   scenario "adding the first product to the cart" do
-    # Given a product and some distributors
+    create(:itemwise_shipping_method)
+
+    # Given a product, some distributors and a defined shipping cost
     d1 = create(:distributor)
     d2 = create(:distributor)
-    p = create(:product, :distributors => [d1])
     create(:product, :distributors => [d2])
+    p = create(:product, :price => 12.34)
+    create(:product_distribution, :product => p, :distributor => d1, :shipping_method => create(:shipping_method))
+
+    # ... with a flat rate shipping method of cost $1.23
+    sm = p.product_distributions.first.shipping_method
+    sm.calculator.preferred_amount = 1.23
+    sm.calculator.save!
 
     # When I choose a distributor
     visit spree.root_path
     click_link d2.name
 
-    # When I add an item to my cart from a different distributor
+    # And I add an item to my cart from a different distributor
     visit spree.product_path p
     select d1.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
-    # Then the item should be in my cart, with shipping method set for the line item
+    # Then the correct totals should be displayed
+    page.should have_selector 'span.item-total', :text => '$12.34'
+    page.should have_selector 'span.shipping-total', :text => '$1.23'
+    page.should have_selector 'span.grand-total', :text => '$13.57'
+
+    # And the item should be in my cart, with shipping method set for the line item
     order = Spree::Order.last
     line_item = order.line_items.first
     line_item.product.should == p
