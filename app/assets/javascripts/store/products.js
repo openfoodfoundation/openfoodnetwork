@@ -28,7 +28,7 @@ function products_update_price_without_variant() {
   if(master_price == null) {
     // Store off the master price
     master_price = $("#product-price span.price").html();
-    master_price = master_price.substr(1, master_price.length-2);
+    master_price = master_price.substring(1);
     $("#product-price span.price").data('master-price', master_price);
   }
 
