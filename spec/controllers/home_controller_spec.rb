@@ -25,4 +25,22 @@ describe Spree::HomeController do
     assigns(:products_local).should == [p1]
     assigns(:products_remote).should == [p2]
   end
+
+  context "BaseController: merging incomplete orders" do
+    it "does not attempt to merge incomplete and current orders when they have differing distributors" do
+      incomplete_order = double(:order, distributor: 1)
+      current_order = double(:order, distributor: 2)
+
+      user = double(:user, last_incomplete_order: incomplete_order)
+      controller.stub(:current_user).and_return(user)
+      controller.stub(:current_order).and_return(current_order)
+
+      incomplete_order.should_receive(:merge!).never
+      current_order.should_receive(:merge!).never
+
+      session[:order_id] = 123
+
+      spree_get :index
+    end
+  end
 end
