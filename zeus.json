@@ -1,5 +1,5 @@
 {
-  "command": "ruby -rzeus/rails -eZeus.go",
+  "command": "ruby -rubygems -rzeus/rails -eZeus.go",
 
   "plan": {
     "boot": {
@@ -9,12 +9,12 @@
           "runner": ["r"],
           "console": ["c"],
           "server": ["s"],
-          "generate": ["g"]
+          "generate": ["g"],
+          "dbconsole": []
         },
         "test_environment": {
-          "testtask": [],
-          "test_helper": {"testrb": []},
-          "spec_helper": {"rspec": []}
+          "cucumber_environment": {"cucumber": []},
+          "test_helper": {"test": ["rspec", "testrb"]}
         }
       }
     }
