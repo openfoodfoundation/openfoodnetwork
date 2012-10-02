@@ -36,5 +36,23 @@ feature 'shipping methods' do
     Spree::ShippingMethod.find(@sm.id).should_not be_nil
   end
 
-  scenario "deleting a shipping method referenced by a line item"
+  scenario "deleting a shipping method referenced by a line item" do
+    sm2 = create(:shipping_method)
+    d = create(:distributor)
+
+    p = create(:product)
+    create(:product_distribution, product: p, distributor: d, shipping_method: sm2)
+
+    o = create(:order, distributor: d)
+    o.shipping_method = sm2
+    o.save!
+    li = create(:line_item, order: o, product: p)
+    li.shipping_method = @sm
+    li.save!
+
+    visit_delete spree.admin_shipping_method_path(@sm)
+
+    page.should have_content "That shipping method cannot be deleted as it is referenced by a line item in order: #{o.number}."
+    Spree::ShippingMethod.find(@sm.id).should_not be_nil
+  end
 end
