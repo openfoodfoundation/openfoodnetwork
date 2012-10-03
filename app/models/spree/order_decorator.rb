@@ -47,6 +47,8 @@ Spree::Order.class_eval do
     if self.shipping_method
       self.save!
       self.create_shipment!
+    else
+      raise 'No default shipping method found'
     end
   end
 

@@ -76,6 +76,11 @@ module WebHelper
     page.find(:xpath, "//div[@class=\"ui-dialog-buttonset\"]//span[contains(text(),\"#{button_content}\")]").click
   end
 
+  def visit_delete(url)
+    response = Capybara.current_session.driver.delete url
+    click_link 'redirected' if response.status == 302
+  end
+
   def trigger_manual_event(field_selector, event = 'change')
     page.execute_script("$('#{field_selector}').trigger('#{event}');")
   end
