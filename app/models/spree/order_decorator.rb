@@ -1,6 +1,7 @@
 Spree::Order.class_eval do
   belongs_to :distributor
 
+  before_validation :shipping_address_from_distributor
   after_create :set_default_shipping_method
 
 
@@ -29,9 +30,6 @@ Spree::Order.class_eval do
     line_item.save!
   end
 
-
-
-  before_validation :shipping_address_from_distributor
 
   private
 

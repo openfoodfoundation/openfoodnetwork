@@ -35,6 +35,7 @@ describe Spree::HomeController do
       controller.stub(:current_user).and_return(user)
       controller.stub(:current_order).and_return(current_order)
 
+      incomplete_order.should_receive(:destroy)
       incomplete_order.should_receive(:merge!).never
       current_order.should_receive(:merge!).never
 
