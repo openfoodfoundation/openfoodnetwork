@@ -4,7 +4,6 @@ Spree::Order.class_eval do
   before_validation :shipping_address_from_distributor
   after_create :set_default_shipping_method
 
-
   def can_change_distributor?
     # Distributor may not be changed once an item has been added to the cart/order
     line_items.empty?
@@ -14,6 +13,12 @@ Spree::Order.class_eval do
     raise "You cannot change the distributor of an order with products" unless distributor == self.distributor || can_change_distributor?
     super(distributor)
   end
+
+  def set_distributor!(distributor)
+    self.distributor = distributor
+    save!
+  end
+
 
   def can_add_product_to_cart?(product)
     can_change_distributor? || product.distributors.include?(distributor)

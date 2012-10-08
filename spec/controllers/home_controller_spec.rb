@@ -43,5 +43,21 @@ describe Spree::HomeController do
 
       spree_get :index
     end
+
+    it "sets the distributor when the target order has no distributor" do
+      incomplete_order = double(:order, distributor: 1)
+      current_order = double(:order, distributor: nil)
+
+      user = double(:user, last_incomplete_order: incomplete_order)
+      controller.stub(:current_user).and_return(user)
+      controller.stub(:current_order).and_return(current_order)
+
+      current_order.should_receive(:set_distributor!).with(1)
+      current_order.should_receive(:merge!)
+
+      session[:order_id] = 123
+
+      spree_get :index
+    end
   end
 end

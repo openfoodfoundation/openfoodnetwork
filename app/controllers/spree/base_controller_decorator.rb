@@ -12,6 +12,7 @@ module Spree
             session[:order_id] = last_incomplete_order.id
           elsif current_order && last_incomplete_order && current_order != last_incomplete_order
             if current_order.distributor.nil? || current_order.distributor == last_incomplete_order.distributor
+              current_order.set_distributor! last_incomplete_order.distributor if current_order.distributor.nil?
               current_order.merge!(last_incomplete_order)
             else
               last_incomplete_order.destroy
