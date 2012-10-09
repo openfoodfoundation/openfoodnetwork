@@ -9,6 +9,7 @@ gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-1-stable'
 gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-address.git'
 
+gem 'comfortable_mexican_sofa'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
