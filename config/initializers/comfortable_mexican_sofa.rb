@@ -6,7 +6,7 @@ ComfortableMexicanSofa.configure do |config|
   
   # Module responsible for authentication. You can replace it with your own.
   # It simply needs to have #authenticate method. See http_auth.rb for reference.
-  #   config.admin_auth = 'ComfortableMexicanSofa::HttpAuth'
+  config.admin_auth = 'CmsSpreeAuth'
   
   # Module responsible for public authentication. Similar to the above. You also
   # will have access to @cms_site, @cms_layout, @cms_page so you can use them in
@@ -97,6 +97,14 @@ ComfortableMexicanSofa.configure do |config|
   # Default is nil (not used)
   #   config.hostname_aliases = nil
   
+end
+
+module CmsSpreeAuth
+  def authenticate
+    unless current_user && current_user.has_role?('admin')
+      redirect_to spree.login_path
+    end
+  end
 end
 
 # Default credentials for ComfortableMexicanSofa::HttpAuth
