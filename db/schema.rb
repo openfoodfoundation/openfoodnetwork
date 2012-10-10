@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121009232513) do
+ActiveRecord::Schema.define(:version => 20121010004400) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20121009232513) do
     t.datetime "updated_at"
     t.integer  "pickup_address_id"
     t.string   "next_collection_at"
+    t.text     "long_description"
   end
 
   create_table "product_distributions", :force => true do |t|
@@ -780,6 +781,7 @@ ActiveRecord::Schema.define(:version => 20121009232513) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "address_id"
+    t.text     "long_description"
   end
 
 end
