@@ -5,3 +5,10 @@
 #header h1 {
   left: 275px;
 }
+
+
+/* Fix conflict between Spree and elRTE's styles */
+.el-rte .toolbar {
+  float: none;
+  margin-bottom: 0;
+}

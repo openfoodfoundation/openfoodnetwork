@@ -23,7 +23,7 @@ feature %q{
 
   scenario "viewing products provided by a supplier" do
     # Given a supplier with a product
-    s = create(:supplier, :name => 'Murrnong')
+    s = create(:supplier, :name => 'Murrnong', :long_description => "<p>Hello, world!</p>")
     p = create(:product, :supplier => s)
 
     # When I select the supplier
@@ -32,7 +32,7 @@ feature %q{
 
     # Then I should see the supplier details
     page.should have_selector 'h2', :text => s.name
-    page.should have_selector 'div.supplier-description', :text => s.long_description
+    page.should have_selector 'div.supplier-description', :text => 'Hello, world!'
 
     # And I should see the product
     page.should have_content p.name

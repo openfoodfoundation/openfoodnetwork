@@ -5,6 +5,7 @@ FactoryGirl.define do
   factory :supplier, :class => Spree::Supplier do
     sequence(:name) { |n| "Supplier #{n}" }
     description 'supplier'
+    long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email       'supplier@example.com'
     address { Spree::Address.first || FactoryGirl.create(:address) }
   end

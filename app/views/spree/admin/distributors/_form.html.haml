@@ -1,3 +1,5 @@
+= cms_elrte_include_tags
+
 %table{"data-hook" => "distributors"}
   %tr{"data-hook" => "name"}
     %td Name:
@@ -7,7 +9,7 @@
     %td= f.text_field :description
   %tr{'data-hook' => "long_description"}
     %td Extended Description:
-    %td= f.text_area :long_description
+    %td= f.text_area :long_description, :class => 'rich_text'
   %tr{"data-hook" => "contact"}
     %td Contact:
     %td= f.text_field :contact
