@@ -8,7 +8,7 @@
     %td= @supplier.description
   %tr
     %th Extended Description:
-    %td= @supplier.long_description.html_safe
+    %td= @supplier.long_description.andand.html_safe
   %tr
     %th Address:
     %td= render 'spree/shared/address', :address => @supplier.address
