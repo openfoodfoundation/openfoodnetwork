@@ -25,7 +25,7 @@ Spree::Admin::ReportsController.class_eval do
     orders = @search.result
 
     @report = OpenFoodWeb::OrderAndDistributorReport.new orders
-    if(!params[:csv])
+    unless params[:csv]
       render :html => @report
     else
       csv_string = CSV.generate do |csv|
@@ -52,9 +52,11 @@ Spree::Admin::ReportsController.class_eval do
 
     @search = Spree::Order.complete.search(params[:q])
     orders = @search.result
+    
+    @distributors = Spree::Distributor.all
 
     @report = OpenFoodWeb::GroupBuyReport.new orders
-    if(!params[:csv])
+    unless params[:csv]
       render :html => @report
     else
       csv_string = CSV.generate do |csv|

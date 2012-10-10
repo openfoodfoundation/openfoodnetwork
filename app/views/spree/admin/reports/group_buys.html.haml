@@ -1,18 +1,18 @@
-= form_for @search, :url => spree.group_buys_admin_reports_path  do |s|
+= form_for @search, :url => spree.group_buys_admin_reports_path  do |f|
   = label_tag nil, t(:date_range)
   %br
   .date-range-filter
     %div{"class" => "left sub-field"}
-      = s.text_field :created_at_gt, :class => 'datepicker'
+      = f.text_field :created_at_gt, :class => 'datepicker'
       %br
       = label_tag nil, t(:start), :class => 'sub'
     %div{"class" => "right sub-field"}
-      = s.text_field :created_at_lt, :class => 'datepicker'
+      = f.text_field :created_at_lt, :class => 'datepicker'
       %br
       = label_tag nil, t(:stop)
     %br
   = label_tag nil, "Distributor: "
-  = collection_select(:q, :distributor_id_eq, Spree::Distributor.all, :id, :name)
+  = f.collection_select(:distributor_id_eq, @distributors, :id, :name)
   %br
   %br
   = check_box_tag :csv

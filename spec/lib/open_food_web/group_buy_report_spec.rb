@@ -58,10 +58,10 @@ module OpenFoodWeb
 
       table = subject.table
 
-      line_items = @orders.map{|o| o.line_items}.flatten.select{|li| li.product.supplier == @supplier1 && li.variant == @variant1}
+      line_items = @orders.map{ |o| o.line_items }.flatten.select{ |li| li.product.supplier == @supplier1 && li.variant == @variant1 }
 
-      sum_quantities = line_items.map {|li| li.quantity}.sum
-      sum_max_quantities = line_items.map {|li| li.max_quantity || 0}.sum
+      sum_quantities = line_items.map { |li| li.quantity }.sum
+      sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.sum
 
       table[0].should == [@variant1.product.supplier.name,@variant1.product.name,"UNITSIZE",@variant1.options_text,@variant1.weight,sum_quantities,sum_max_quantities]
     end
@@ -82,12 +82,12 @@ module OpenFoodWeb
 
       table_row_objects = subject.variants_and_quantities
 
-      variant_rows = table_row_objects.select{|r| r.class == OpenFoodWeb::GroupBuyVariantRow}
-      product_rows = table_row_objects.select{|r| r.class == OpenFoodWeb::GroupBuyProductRow}
+      variant_rows = table_row_objects.select{ |r| r.class == OpenFoodWeb::GroupBuyVariantRow }
+      product_rows = table_row_objects.select{ |r| r.class == OpenFoodWeb::GroupBuyProductRow }
 
-      supplier_groups = variant_rows.group_by {|r| r.variant.product.supplier}
-      variant_groups = variant_rows.group_by{|r| r.variant}
-      product_groups = product_rows.group_by{|r| r.product}
+      supplier_groups = variant_rows.group_by { |r| r.variant.product.supplier }
+      variant_groups = variant_rows.group_by{ |r| r.variant }
+      product_groups = product_rows.group_by{ |r| r.product }
 
       supplier_groups.length.should == 2
       variant_groups.length.should == 3
