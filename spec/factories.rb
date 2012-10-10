@@ -15,6 +15,7 @@ FactoryGirl.define do
     contact            'Mr Turing'
     phone              '1000100100'
     description        'The creator'
+    long_description   '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email              'alan@somewhere.com'
     url                'http://example.com'
     pickup_times       "Whenever you're free"

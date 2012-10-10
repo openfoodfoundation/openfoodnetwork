@@ -12,7 +12,7 @@
         - if order.nil? || order.can_change_distributor?
           = link_to distributor.name, select_distributor_path(distributor)
         - elsif order.distributor == distributor
-          = link_to distributor.name, root_path
+          = link_to distributor.name, distributor
         - else
           %span.inactive= distributor.name
   - if current_distributor && order.can_change_distributor?

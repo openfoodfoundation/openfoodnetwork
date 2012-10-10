@@ -1,12 +1,15 @@
 module Spree
   class DistributorsController < BaseController
+    helper 'spree/products'
+
     def show
       options = {:distributor_id => params[:id]}
       options.merge(params.reject { |k,v| k == :id })
 
+      @distributor = Distributor.find params[:id]
+
       @searcher = Config.searcher_class.new(options)
       @products = @searcher.retrieve_products
-      render :template => 'spree/products/index'
     end
 
     def select
@@ -19,7 +22,7 @@ module Spree
         order.save!
       end
 
-      redirect_to root_path
+      redirect_to distributor
     end
 
     def deselect

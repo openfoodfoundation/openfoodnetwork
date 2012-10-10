@@ -26,11 +26,10 @@ feature %q{
     page.should_not have_selector 'a', :text => d3.name
   end
 
-
   context "when a distributor is selected" do
-    it "displays the distributor's name" do
+    it "displays the distributor's details" do
       # Given a distributor with a product
-      d = create(:distributor, :name => 'Melb Uni Co-op')
+      d = create(:distributor, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       create(:product, :distributors => [d])
 
       # When I select the distributor
@@ -38,7 +37,25 @@ feature %q{
       click_link d.name
 
       # Then I should see the name of the distributor that I've selected
+      page.should have_selector 'h2', :text => 'Melb Uni Co-op'
+
+      # And I should see the distributor's long description
+      page.should have_selector 'div.distributor-description', :text => 'Hello, world!'
+    end
+
+    it "displays the distributor's name on the home page" do
+      # Given a distributor with a product
+      d = create(:distributor, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
+      create(:product, :distributors => [d])
+
+      # When I select the distributor
+      visit spree.root_path
+      click_link d.name
+      visit spree.root_path
+
+      # Then I should see the name of the distributor that I've selected
       page.should have_content 'You are shopping at Melb Uni Co-op'
+      page.should_not have_selector 'div.distributor-description'
     end
 
     it "splits the product listing by local/remote distributor" do
@@ -54,6 +71,7 @@ feature %q{
       # When I select the first distributor
       visit spree.root_path
       click_link d1.name
+      visit spree.root_path
 
       # Then I should see products split by local/remote distributor
       # on the home page, the products page, the search results page and the taxon page
