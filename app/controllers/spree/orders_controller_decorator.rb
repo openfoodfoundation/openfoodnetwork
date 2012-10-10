@@ -7,8 +7,7 @@ Spree::OrdersController.class_eval do
 
     if populate_valid? @distributor
       order = current_order(true)
-      order.distributor = @distributor
-      order.save!
+      order.set_distributor! @distributor
 
     else
       flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
