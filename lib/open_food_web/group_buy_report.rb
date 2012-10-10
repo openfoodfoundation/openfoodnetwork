@@ -1,12 +1,12 @@
 module OpenFoodWeb
 
-  class GroupBuyVariantRow < Struct.new :variant, :sum_quantities, :sum_max_quantities
+  GroupBuyVariantRow = Struct.new(:variant, :sum_quantities, :sum_max_quantities) do
     def to_row
       [variant.product.supplier.name,variant.product.name,"UNITSIZE",variant.options_text,variant.weight,sum_quantities,sum_max_quantities]
     end
   end
-
-  class GroupBuyProductRow < Struct.new :product, :sum_quantities, :sum_max_quantities
+# class Blah < Struct.new :foo
+  GroupBuyProductRow = Struct.new(:product, :sum_quantities, :sum_max_quantities) do
     def to_row
       [product.supplier.name,product.name,"UNITSIZE","TOTAL","",sum_quantities,sum_max_quantities]
     end
