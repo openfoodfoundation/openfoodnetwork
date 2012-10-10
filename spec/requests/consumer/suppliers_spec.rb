@@ -30,7 +30,11 @@ feature %q{
     visit spree.root_path
     click_link s.name
 
-    # Then I should see the product
+    # Then I should see the supplier details
+    page.should have_selector 'h2', :text => s.name
+    page.should have_selector 'div.supplier-description', :text => s.long_description
+
+    # And I should see the product
     page.should have_content p.name
   end
 end

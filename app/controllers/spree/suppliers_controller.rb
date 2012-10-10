@@ -6,9 +6,10 @@ module Spree
       options = {:supplier_id => params[:id]}
       options.merge(params.reject { |k,v| k == :id })
 
+      @supplier = Supplier.find params[:id]
+
       @searcher = Config.searcher_class.new(options)
       @products = @searcher.retrieve_products
-      render :template => 'spree/products/index'
     end
   end
 end
