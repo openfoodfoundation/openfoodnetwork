@@ -43,9 +43,6 @@ module OpenFoodWeb
           @payment_method.name,
           @distributor.name, @distributor.pickup_address.address1, @distributor.pickup_address.city, @distributor.pickup_address.zipcode, @shipping_instructions ]
       end
-
-      it "should include breakdown an order into each line item"
-
     end
   end
 end

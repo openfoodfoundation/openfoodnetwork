@@ -251,7 +251,7 @@ ActiveRecord::Schema.define(:version => 20121010004400) do
     t.integer "numcode"
   end
 
-  create_table "spree_credit_cards", :force => true do |t|
+  create_table "spree_creditcards", :force => true do |t|
     t.string   "month"
     t.string   "year"
     t.string   "cc_type"
