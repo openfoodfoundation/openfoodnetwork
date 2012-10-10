@@ -10,29 +10,47 @@ feature %q{
   background do
   end
 
-  context "setting up suppliers" do
-    scenario "creating a new supplier" do
-      login_to_admin_section
+  scenario "listing suppliers" do
+    s = create(:supplier)
 
-      click_link 'Suppliers'
-      click_link 'New Supplier'
+    login_to_admin_section
+    click_link 'Suppliers'
 
-      fill_in 'supplier_name', :with => 'David Arnold'
-      fill_in 'supplier_description', :with => 'A farmer with a difference'
+    page.should have_content s.name
+  end
 
-      fill_in 'supplier_address_attributes_address1', :with => '35 Byron Ave'
-      fill_in 'supplier_address_attributes_city', :with => 'Ararat'
-      fill_in 'supplier_address_attributes_zipcode', :with => '1112'
-      select('Australia', :from => 'supplier_address_attributes_country_id')
-      select('Victoria', :from => 'supplier_address_attributes_state_id')
+  scenario "viewing a supplier" do
+    s = create(:supplier)
 
-      fill_in 'supplier_email', :with => 'david@here.com'
-      fill_in 'supplier_website', :with => 'http://somewhere.com'
-      fill_in 'supplier_twitter', :with => 'davida'
+    login_to_admin_section
+    click_link 'Suppliers'
+    click_link s.name
 
-      click_button 'Create'
+    page.should have_content s.name
+  end
 
-      flash_message.should == 'Supplier "David Arnold" has been successfully created!'
-    end
+  scenario "creating a new supplier" do
+    login_to_admin_section
+
+    click_link 'Suppliers'
+    click_link 'New Supplier'
+
+    fill_in 'supplier_name', :with => 'David Arnold'
+    fill_in 'supplier_description', :with => 'A farmer with a difference'
+    fill_in 'supplier_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+
+    fill_in 'supplier_address_attributes_address1', :with => '35 Byron Ave'
+    fill_in 'supplier_address_attributes_city', :with => 'Ararat'
+    fill_in 'supplier_address_attributes_zipcode', :with => '1112'
+    select('Australia', :from => 'supplier_address_attributes_country_id')
+    select('Victoria', :from => 'supplier_address_attributes_state_id')
+
+    fill_in 'supplier_email', :with => 'david@here.com'
+    fill_in 'supplier_website', :with => 'http://somewhere.com'
+    fill_in 'supplier_twitter', :with => 'davida'
+
+    click_button 'Create'
+
+    flash_message.should == 'Supplier "David Arnold" has been successfully created!'
   end
 end

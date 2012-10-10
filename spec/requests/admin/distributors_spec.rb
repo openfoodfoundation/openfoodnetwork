@@ -8,6 +8,25 @@ feature %q{
   include WebHelper
 
 
+  scenario "listing distributors" do
+    d = create(:distributor)
+
+    login_to_admin_section
+    click_link 'Distributors'
+
+    page.should have_content d.name
+  end
+
+  scenario "viewing a distributor" do
+    d = create(:distributor)
+
+    login_to_admin_section
+    click_link 'Distributors'
+    click_link d.name
+
+    page.should have_content d.name
+  end
+
   scenario "creating a new distributor" do
     login_to_admin_section
 
@@ -16,6 +35,7 @@ feature %q{
 
     fill_in 'distributor_name', :with => 'Eaterprises'
     fill_in 'distributor_description', :with => 'Connecting farmers and eaters'
+    fill_in 'distributor_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
     fill_in 'distributor_contact', :with => 'Kirsten or Ren'
     fill_in 'distributor_phone', :with => '0413 897 321'
 

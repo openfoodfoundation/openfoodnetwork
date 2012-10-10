@@ -5,6 +5,9 @@
   %tr{"data-hook" => "description"}
     %td Description:
     %td= f.text_field :description
+  %tr{'data-hook' => "long_description"}
+    %td Extended Description:
+    %td= f.text_area :long_description
   %tr{"data-hook" => "contact"}
     %td Contact:
     %td= f.text_field :contact

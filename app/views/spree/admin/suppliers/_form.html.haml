@@ -5,6 +5,9 @@
   %tr{'data-hook' => "description"}
     %td Description:
     %td= f.text_field :description
+  %tr{'data-hook' => "long_description"}
+    %td Extended Description:
+    %td= f.text_area :long_description
   = f.fields_for :address do |address_form|
     = render 'spree/admin/shared/address_form', :f => address_form
   %tr{'data-hook' => "email"}
