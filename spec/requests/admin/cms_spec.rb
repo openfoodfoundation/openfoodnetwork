@@ -18,4 +18,17 @@ feature %q{
     page.should have_selector 'h1', :text => 'Administration'
   end
 
+  scenario "anonymous user can't access CMS admin" do
+    visit cms_admin_path
+    page.should_not have_content "ComfortableMexicanSofa"
+    page.should have_content "Login"
+  end
+
+  scenario "non-admin user can't access CMS admin" do
+    login_to_consumer_section
+    visit cms_admin_path
+    page.should_not have_content "ComfortableMexicanSofa"
+    page.should have_content "Open Food Web"
+  end
+
 end

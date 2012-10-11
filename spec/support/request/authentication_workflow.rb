@@ -17,6 +17,9 @@ module AuthenticationWorkflow
   end
 
   def login_to_consumer_section
+    # The first user is given the admin role by Spree, so create a dummy user if this is the first
+    create(:user) if Spree::User.admin.empty?
+
     user_role = Spree::Role.create(:name => 'user')
     user = Spree::User.create({
       :email => 'someone@ofw.org',
