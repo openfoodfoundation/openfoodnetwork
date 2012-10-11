@@ -11,13 +11,29 @@ feature %q{
 
   scenario "viewing the home page" do
     # Given a CMS home page
-    cms_page = create(:cms_page, content: 'Home page content')
+    create(:cms_page, content: 'Home page content')
 
     # When I visit the home page
     visit spree.root_path
 
     # Then I should see my content
     page.should have_content 'Home page content'
+  end
+
+  scenario "viewing the menu of CMS pages" do
+    # Given some CMS pages
+    home_page = create(:cms_page, content: 'Home')
+    create(:cms_page, parent: home_page, label: 'One')
+    create(:cms_page, parent: home_page, label: 'Two')
+    create(:cms_page, parent: home_page, label: 'Three')
+
+    # When I visit the home page
+    visit spree.root_path
+
+    # Then I should see a menu with these pages
+    page.should have_selector 'ul#main-nav-bar li', :text => 'One'
+    page.should have_selector 'ul#main-nav-bar li', :text => 'Two'
+    page.should have_selector 'ul#main-nav-bar li', :text => 'Three'
   end
 
 end

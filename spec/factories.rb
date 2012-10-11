@@ -81,8 +81,8 @@ end
 # -- CMS
 FactoryGirl.define do
   factory :cms_site, :class => Cms::Site do
-    identifier 'site'
-    label      'site'
+    identifier 'open-food-web'
+    label      'Open Food Web'
     hostname   'localhost'
   end
 
@@ -96,7 +96,7 @@ FactoryGirl.define do
   factory :cms_page, :class => Cms::Page do
     site { Cms::Site.first || create(:cms_site) }
     label 'page'
-    slug 'page'
+    sequence(:slug) { |n| "page-#{n}" }
     layout { Cms::Layout.first || create(:cms_layout) }
 
     # Pass content through to block, where it is stored
