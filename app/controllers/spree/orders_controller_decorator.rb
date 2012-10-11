@@ -1,6 +1,6 @@
 Spree::OrdersController.class_eval do
-  before_filter :populate_order_distributor,         :only => :populate
-  after_filter  :populate_variant_attributes,        :only => :populate
+  before_filter :populate_order_distributor,  :only => :populate
+  after_filter  :populate_variant_attributes, :only => :populate
 
   def populate_order_distributor
     @distributor = params[:distributor_id].present? ? Spree::Distributor.find(params[:distributor_id]) : nil
