@@ -118,3 +118,10 @@ ComfortableMexicanSofa::HttpAuth.password = 'password'
 #   ComfortableMexicanSofa::ViewHooks.add(:html_head, '/layouts/admin/html_head')
 #   ComfortableMexicanSofa::ViewHooks.add(:page_form, '/layouts/admin/page_form')
 ComfortableMexicanSofa::ViewHooks.add(:navigation, 'layouts/cms_nav_spree')
+
+# Provide some Spree helpers to the CMS controller so it can render Spree's layout
+ComfortableMexicanSofa::CmsContentController.class_eval do
+  helper 'spree/base'
+  include Spree::Core::ControllerHelpers
+  include Spree::Core::Engine.routes.url_helpers
+end
