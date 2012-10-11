@@ -20,6 +20,18 @@ feature %q{
     page.should have_content 'Home page content'
   end
 
+  scenario "viewing another products listing page does not display home page content" do
+    # Given a CMS home page
+    create(:cms_page, content: 'Home page content')
+
+    # When I visit a products listing page
+    visit spree.products_path
+
+    # Then I should not see the home page content
+    page.should_not have_content 'Home page content'
+  end
+
+
   scenario "viewing the menu of CMS pages" do
     # Given some CMS pages
     home_page = create(:cms_page, content: 'Home')
