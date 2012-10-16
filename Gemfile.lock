@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/RohanM/spree_paypal_express.git
-  revision: ca5723c0e268e74adcb9b8ec04d082d86888f313
+  revision: ab580fde06d6b2b607db74a7eb4e5ef52a313862
   branch: 1-1-stable
   specs:
     spree_paypal_express (1.1.0)
@@ -144,10 +144,10 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
-    bugsnag (1.1.2)
-      httparty (~> 0.8.3)
-      multi_json (~> 1.3.4)
-    builder (3.0.3)
+    bugsnag (1.2.4)
+      httparty (>= 0.5, < 1.0)
+      multi_json (~> 1.0)
+    builder (3.0.4)
     cancan (1.6.7)
     capybara (1.1.2)
       mime-types (>= 1.16)
