@@ -8,7 +8,7 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing a list of suppliers" do
+  scenario "viewing a list of suppliers in the sidebar" do
     # Given some suppliers
     s1 = create(:supplier)
     s2 = create(:supplier)
@@ -25,6 +25,26 @@ feature %q{
     page.should have_selector 'a', :text => s1.name
     page.should have_selector 'a', :text => s3.name
     page.should_not have_selector 'a', :text => s2.name
+  end
+
+  scenario "viewing a list of all suppliers" do
+    # Given some suppliers
+    s1 = create(:supplier)
+    s2 = create(:supplier)
+    s3 = create(:supplier)
+
+    # And some of those suppliers have a product
+    create(:product, :supplier => s1)
+    create(:product, :supplier => s3)
+
+    # When I go to the suppliers listing page
+    visit spree.root_path
+    click_button 'Browse All Suppliers'
+
+    # Then I should see a list containing all the suppliers
+    page.should have_selector '#content a', :text => s1.name
+    page.should have_selector '#content a', :text => s2.name
+    page.should have_selector '#content a', :text => s3.name
   end
 
   scenario "viewing products provided by a supplier" do

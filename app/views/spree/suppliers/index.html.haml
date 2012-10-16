@@ -1,0 +1,10 @@
+- content_for :sidebar do
+  %div{'data-hook' => "homepage_sidebar_navigation"}
+    = render 'spree/sidebar'
+
+
+%h1 Suppliers
+
+%ul.suppliers
+  - @suppliers.each do |supplier|
+    %li= link_to supplier.name, supplier

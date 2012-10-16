@@ -4,6 +4,7 @@
     - @suppliers.each do |supplier|
       - if supplier.has_products_on_hand?
         %li.nowrap= link_to supplier.name, supplier
+    = button_to 'Browse All Suppliers', suppliers_path, :method => :get
 
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
