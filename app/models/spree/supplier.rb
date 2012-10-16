@@ -12,6 +12,17 @@ module Spree
     after_initialize :initialize_country
     before_validation :set_unused_address_fields
 
+    def has_products_on_hand?
+      self.products.where('count_on_hand > 0').present?
+    end
+
+    def to_param
+      "#{id}-#{name.parameterize}"
+    end
+
+
+    private
+
     def initialize_country
       self.address ||= Address.new
       self.address.country = Country.find_by_id(Spree::Config[:default_country_id]) if self.address.new_record?
@@ -21,8 +32,5 @@ module Spree
       address.firstname = address.lastname = address.phone = 'unused' if address.present?
     end
 
-    def to_param
-      "#{id}-#{name.parameterize}"
-    end
   end
 end

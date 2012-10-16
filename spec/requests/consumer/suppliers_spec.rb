@@ -14,11 +14,17 @@ feature %q{
     s2 = create(:supplier)
     s3 = create(:supplier)
 
+    # And some of those suppliers have a product
+    create(:product, :supplier => s1)
+    create(:product, :supplier => s3)
+
     # When I go to the home page
     visit spree.root_path
 
-    # Then I should see a list containing all the suppliers
-    [s1, s2, s3].each { |s| page.should have_selector 'a', :text => s.name }
+    # Then I should see a list containing all the suppliers that have products in stock
+    page.should have_selector 'a', :text => s1.name
+    page.should have_selector 'a', :text => s3.name
+    page.should_not have_selector 'a', :text => s2.name
   end
 
   scenario "viewing products provided by a supplier" do
