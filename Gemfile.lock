@@ -14,6 +14,15 @@ GIT
       spree_core (>= 1.1)
 
 GIT
+  remote: git://github.com/eaterprises/spree_paypal_express.git
+  revision: 63963fd3377a41debbf0f12a4cc78122145b0387
+  branch: 1-1-stable
+  specs:
+    spree_paypal_express (1.1.0)
+      spree_auth (>= 1.0.0)
+      spree_core (>= 1.0.0)
+
+GIT
   remote: git://github.com/joneslee85/spree-heroku.git
   revision: 63f0cfa47089cae50365e226ec7dd1eccde0ac05
   specs:
@@ -76,15 +85,6 @@ GIT
     spree_i18n (1.0.0)
       i18n (~> 0.5)
       spree (~> 1.1)
-
-GIT
-  remote: git://github.com/spree/spree_paypal_express.git
-  revision: 267be504e4affd7866a5e31e80565126f9db7cc3
-  branch: 1-1-stable
-  specs:
-    spree_paypal_express (1.1.0)
-      spree_auth (>= 1.0.0)
-      spree_core (>= 1.0.0)
 
 GEM
   remote: http://rubygems.org/
