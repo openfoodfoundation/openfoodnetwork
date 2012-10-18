@@ -2,7 +2,7 @@ require 'faker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
-  factory :supplier, :class => Spree::Supplier do
+  factory :supplier, :class => Supplier do
     sequence(:name) { |n| "Supplier #{n}" }
     description 'supplier'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
@@ -10,7 +10,7 @@ FactoryGirl.define do
     address { Spree::Address.first || FactoryGirl.create(:address) }
   end
 
-  factory :distributor, :class => Spree::Distributor do
+  factory :distributor, :class => Distributor do
     sequence(:name)    { |n| "Distributor #{n}" }
     contact            'Mr Turing'
     phone              '1000100100'
@@ -23,9 +23,9 @@ FactoryGirl.define do
     pickup_address     { Spree::Address.first || FactoryGirl.create(:address) }
   end
 
-  factory :product_distribution, :class => Spree::ProductDistribution do
-    product         { |pd| Spree::Product.first        || FactoryGirl.create(:product) }
-    distributor     { |pd| Spree::Distributor.first    || FactoryGirl.create(:distributor) }
+  factory :product_distribution, :class => ProductDistribution do
+    product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
+    distributor     { |pd| Distributor.first    || FactoryGirl.create(:distributor) }
     shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
   end
 
@@ -46,7 +46,7 @@ FactoryGirl.modify do
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier { Spree::Supplier.first || FactoryGirl.create(:supplier) }
+    supplier { Supplier.first || FactoryGirl.create(:supplier) }
     on_hand 3
 
     # before(:create) do |product, evaluator|

@@ -74,7 +74,7 @@ feature %q{
 
     # Then my times should have been saved
     flash_message.should == 'Distributor collection times updated.'
-    Spree::Distributor.all.map { |d| d.next_collection_at }.should == %w(One Two Three)
+    Distributor.all.map { |d| d.next_collection_at }.should == %w(One Two Three)
   end
 
 end

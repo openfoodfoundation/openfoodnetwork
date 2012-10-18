@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
 
 
   def load_data_for_sidebar
-    @suppliers = Spree::Supplier.all
-    @distributors = Spree::Distributor.with_active_products_on_hand.by_name
+    @suppliers = Supplier.all
+    @distributors = Distributor.with_active_products_on_hand.by_name
   end
 
 end

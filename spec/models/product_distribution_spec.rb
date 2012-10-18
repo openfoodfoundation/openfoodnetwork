@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ProductDistribution do
+describe ProductDistribution do
   it "is unique for scope [product, distributor]" do
     pd1 = create(:product_distribution)
     pd1.should be_valid

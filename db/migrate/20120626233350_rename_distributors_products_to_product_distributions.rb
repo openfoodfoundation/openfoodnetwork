@@ -10,7 +10,7 @@ class RenameDistributorsProductsToProductDistributions < ActiveRecord::Migration
 
     # Set default shipping method on all product distributions
     sm = Spree::ShippingMethod.first
-    Spree::ProductDistribution.update_all(:shipping_method_id => sm.id) if sm
+    ProductDistribution.update_all(:shipping_method_id => sm.id) if sm
   end
 
   def down

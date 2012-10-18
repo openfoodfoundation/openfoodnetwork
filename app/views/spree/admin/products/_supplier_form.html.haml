@@ -1,5 +1,5 @@
 = f.field_container :supplier do
   = f.label :supplier
   %br
-  = f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, :include_blank => true)
+  = f.collection_select(:supplier_id, Supplier.all, :id, :name, :include_blank => true)
   = f.error_message_on :supplier

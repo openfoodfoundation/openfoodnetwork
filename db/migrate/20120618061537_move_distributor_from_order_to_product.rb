@@ -8,7 +8,7 @@ class MoveDistributorFromOrderToProduct < ActiveRecord::Migration
     end
 
     # Associate all products with the first distributor
-    distributor = Spree::Distributor.first
+    distributor = Distributor.first
     if distributor
       Spree::Product.all.each do |product|
         product.distributors << distributor

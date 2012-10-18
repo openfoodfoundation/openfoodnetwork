@@ -2,9 +2,9 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
   def up
     # -- Distributors
     add_column :distributors, :pickup_address_id, :integer
-    Spree::Distributor.reset_column_information
+    Distributor.reset_column_information
 
-    Spree::Distributor.all.each do |distributor|
+    Distributor.all.each do |distributor|
       pickup_address = Spree::Address.create!(:firstname => 'unused',
                                               :lastname => 'unused',
                                               :phone => 'unused',
@@ -24,9 +24,9 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
 
     # -- Suppliers
     add_column :suppliers, :address_id, :integer
-    Spree::Supplier.reset_column_information
+    Supplier.reset_column_information
 
-    Spree::Supplier.all.each do |supplier|
+    Supplier.all.each do |supplier|
       address = Spree::Address.create!(:firstname => 'unused',
                                        :lastname => 'unused',
                                        :phone => 'unused',
@@ -51,9 +51,9 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     add_column :distributors, :post_code, :string
     add_column :distributors, :state_id, :integer
     add_column :distributors, :country_id, :integer
-    Spree::Distributor.reset_column_information
+    Distributor.reset_column_information
 
-    Spree::Distributor.all.each do |distributor|
+    Distributor.all.each do |distributor|
       distributor[:pickup_address] = distributor.pickup_address.address1
       distributor.city = distributor.pickup_address.city
       distributor.post_code = distributor.pickup_address.zipcode
@@ -71,9 +71,9 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     add_column :suppliers, :postcode, :string
     add_column :suppliers, :state_id, :integer
     add_column :suppliers, :country_id, :integer
-    Spree::Supplier.reset_column_information
+    Supplier.reset_column_information
 
-    Spree::Supplier.all.each do |supplier|
+    Supplier.all.each do |supplier|
       supplier[:address] = supplier.address.address1
       supplier.city = supplier.address.city
       supplier.post_code = supplier.address.zipcode

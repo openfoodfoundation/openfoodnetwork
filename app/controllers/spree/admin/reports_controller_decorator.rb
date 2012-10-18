@@ -53,7 +53,7 @@ Spree::Admin::ReportsController.class_eval do
     @search = Spree::Order.complete.search(params[:q])
     orders = @search.result
     
-    @distributors = Spree::Distributor.all
+    @distributors = Distributor.all
 
     @report = OpenFoodWeb::GroupBuyReport.new orders
     unless params[:csv]

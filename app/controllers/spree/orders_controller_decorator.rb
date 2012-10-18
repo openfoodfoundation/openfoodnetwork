@@ -3,7 +3,7 @@ Spree::OrdersController.class_eval do
   after_filter  :populate_variant_attributes, :only => :populate
 
   def populate_order_distributor
-    @distributor = params[:distributor_id].present? ? Spree::Distributor.find(params[:distributor_id]) : nil
+    @distributor = params[:distributor_id].present? ? Distributor.find(params[:distributor_id]) : nil
 
     if populate_valid? @distributor
       order = current_order(true)

@@ -17,7 +17,7 @@
     - order = current_order(false)
     - if order.nil? || order.can_change_distributor?
       %p Distributor
-      = select_tag "distributor_id", options_from_collection_for_select([Spree::Distributor.new]+@product.distributors, "id", "name", current_distributor.andand.id)
+      = select_tag "distributor_id", options_from_collection_for_select([Distributor.new]+@product.distributors, "id", "name", current_distributor.andand.id)
     - else
       = hidden_field_tag "distributor_id", order.distributor.id
       .distributor-fixed= "Your distributor for this order is #{order.distributor.name}"

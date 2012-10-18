@@ -60,7 +60,7 @@ end
 
 
 # -- Suppliers and distributors
-unless Spree::Supplier.count > 0
+unless Supplier.count > 0
   puts "[db:seed] Seeding suppliers and distributors"
 
   3.times { FactoryGirl.create(:supplier) }
@@ -74,19 +74,19 @@ unless Spree::Product.count > 0
 
   FactoryGirl.create(:product,
                      :name => 'Garlic', :price => 20.00,
-                     :supplier => Spree::Supplier.all[0],
-                     :distributors => [Spree::Distributor.all[0]],
+                     :supplier => Supplier.all[0],
+                     :distributors => [Distributor.all[0]],
                      :taxons => [Spree::Taxon.find_by_name('Vegetables')])
 
   FactoryGirl.create(:product,
                      :name => 'Fuji Apple', :price => 5.00,
-                     :supplier => Spree::Supplier.all[1],
-                     :distributors => Spree::Distributor.all,
+                     :supplier => Supplier.all[1],
+                     :distributors => Distributor.all,
                      :taxons => [Spree::Taxon.find_by_name('Fruit')])
 
   FactoryGirl.create(:product,
                      :name => 'Beef - 5kg Trays', :price => 50.00,
-                     :supplier => Spree::Supplier.all[2],
-                     :distributors => [Spree::Distributor.all[2]],
+                     :supplier => Supplier.all[2],
+                     :distributors => [Distributor.all[2]],
                      :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
 end

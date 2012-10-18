@@ -15,7 +15,7 @@ module Spree
 
       private
       def load_distributor_set
-        @distributor_set = Spree::DistributorSet.new :distributors => collection
+        @distributor_set = DistributorSet.new :distributors => collection
       end
 
       def load_countries
