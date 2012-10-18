@@ -19,7 +19,7 @@ gem 'unicorn'
 gem 'bugsnag'
 gem 'spree_heroku', :git => 'git://github.com/joneslee85/spree-heroku.git'
 gem 'haml'
-gem 'aws-s3'
+gem 'aws-sdk'
 gem 'andand'
 gem 'truncate_html'
 
