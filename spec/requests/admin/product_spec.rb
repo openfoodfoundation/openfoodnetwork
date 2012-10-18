@@ -49,6 +49,7 @@ feature %q{
       fill_in 'product_price', :with => '19.99'
       select 'New supplier', :from => 'product_supplier_id'
       choose 'product_group_buy_1'
+      fill_in 'Group buy unit size', :with => '10 kg'
 
       click_button 'Create'
 
