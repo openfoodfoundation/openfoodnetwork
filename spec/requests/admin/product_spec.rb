@@ -56,6 +56,7 @@ feature %q{
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.group_buy.should be_true
+      product.group_buy_unit_size.should == '10 kg'
     end
 
   end
