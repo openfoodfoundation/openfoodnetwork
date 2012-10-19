@@ -20,11 +20,11 @@ hosted at GitHub.
 
 You can view the code at:
 
-    https://github.com/andrewspinks/openfoodweb
+    https://github.com/eaterprises/openfoodweb
 
 You can download the source with the command:
 
-    git clone git@github.com:andrewspinks/openfoodweb
+    git clone git@github.com:eaterprises/openfoodweb
 
 
 ## Get it running
@@ -80,6 +80,7 @@ speak to Andrew Spinks.
 
 * Andrew Spinks (http://github.com/andrewspinks)
 * Rohan Mitchell (http://github.com/rohanm)
+* Rob Harrington (http://github.com/oeoeaio)
 
 
 ## Licence
