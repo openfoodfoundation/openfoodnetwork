@@ -27,4 +27,5 @@ public/stylesheets
 public/images
 public/spree
 config/abr.yml
+config/heroku_env.rb
 NERD_tree*
