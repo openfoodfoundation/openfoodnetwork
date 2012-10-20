@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'spree/core/current_order'
 
-describe Spree::DistributorsController do
+describe DistributorsController do
   include Spree::Core::CurrentOrder
 
   before :each do

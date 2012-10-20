@@ -3,8 +3,8 @@
   %ul.filter_choices
     - @suppliers.each do |supplier|
       - if supplier.has_products_on_hand?
-        %li.nowrap= link_to supplier.name, supplier
-    = button_to 'Browse All Suppliers', suppliers_path, :method => :get
+        %li.nowrap= link_to supplier.name, [main_app, supplier]
+    = button_to 'Browse All Suppliers', main_app.suppliers_path, :method => :get
 
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
@@ -12,10 +12,10 @@
     - @distributors.each do |distributor|
       %li.nowrap
         - if order.nil? || order.can_change_distributor?
-          = link_to distributor.name, select_distributor_path(distributor)
+          = link_to distributor.name, main_app.select_distributor_path(distributor)
         - elsif order.distributor == distributor
-          = link_to distributor.name, distributor
+          = link_to distributor.name, [main_app, distributor]
         - else
           %span.inactive= distributor.name
   - if current_distributor && order.can_change_distributor?
-    = button_to 'Browse All Distributors', deselect_distributors_path, :method => :get
+    = button_to 'Browse All Distributors', main_app.deselect_distributors_path, :method => :get
