@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010004400) do
+ActiveRecord::Schema.define(:version => 20121018002907) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -487,6 +487,7 @@ ActiveRecord::Schema.define(:version => 20121010004400) do
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
     t.boolean  "group_buy"
+    t.string   "group_buy_unit_size"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
