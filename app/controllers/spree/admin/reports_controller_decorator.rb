@@ -299,7 +299,7 @@ Spree::Admin::ReportsController.class_eval do
 
   end
   
-  def generate_report (header, table, create_csv, csv_file_name)
+  def render_report (header, table, create_csv, csv_file_name)
     unless create_csv
       render :html => table
     else
