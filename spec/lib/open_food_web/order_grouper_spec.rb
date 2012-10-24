@@ -38,53 +38,42 @@ module OpenFoodWeb
     end
 
     context "grouping items with rules" do
-      it "builds branches by removing a rule from 'rules' and running group_and_sort" do
-        rule1 = double(:rule1)
+      
+      before(:each) do
+        @rule1 = double(:rule1)
         rule2 = double(:rule2)
-        rules = [rule1, rule2]
+        @rules = [@rule1, rule2]
+        @remaining_rules = [rule2]
         column1 = double(:col1)
         column2 = double(:col2)
-        columns = [column1, column2]
+        @columns = [column1, column2]
+      end
+      
+      it "builds branches by removing a rule from 'rules' and running group_and_sort" do
+        subject = OrderGrouper.new @rules, @columns
 
-        subject = OrderGrouper.new rules, columns
-
-        rules.should_receive(:clone).and_return(rules)
-        rules.should_receive(:delete_at).with(0)
+        @rules.should_receive(:clone).and_return(@rules)
+        @rules.should_receive(:delete_at).with(0)
         grouped_tree = double(:grouped_tree)
         subject.should_receive(:group_and_sort).and_return(grouped_tree)
 
-        subject.build_tree(@items, rules).should == grouped_tree
+        subject.build_tree(@items, @rules).should == grouped_tree
       end
 
       it "separates the first rule from rules before sending to group_and_sort" do
-        rule1 = double(:rule1)
-        rule2 = double(:rule2)
-        rules = [rule1, rule2]
-        column1 = double(:col1)
-        column2 = double(:col2)
-        columns = [column1, column2]
-
-        subject = OrderGrouper.new rules, columns
+        subject = OrderGrouper.new @rules, @columns
 
         grouped_tree = double(:grouped_tree)
-        subject.should_receive(:group_and_sort).with(rule1, rules[1..-1], @items).and_return(grouped_tree)
+        subject.should_receive(:group_and_sort).with(@rule1, @rules[1..-1], @items).and_return(grouped_tree)
 
-        subject.build_tree(@items, rules).should == grouped_tree
+        subject.build_tree(@items, @rules).should == grouped_tree
       end
 
       it "should group, then sort, send each group to build_tree, and return a branch" do
-        rule1 = double(:rule1)
-        rule2 = double(:rule2)
-        rules = [rule1, rule2]
-        remaining_rules = [rule2]
-        column1 = double(:col1)
-        column2 = double(:col2)
-        columns = [column1, column2]
-
         summary_columns_object = double(:summary_columns)
-        rule1.stub(:[]).with(:summary_columns) { summary_columns_object }
+        @rule1.stub(:[]).with(:summary_columns) { summary_columns_object }
 
-        subject = OrderGrouper.new rules, columns
+        subject = OrderGrouper.new @rules, @columns
 
         number_of_categories = 3
         groups = double(:groups)
@@ -98,7 +87,7 @@ module OpenFoodWeb
         group_tree = {}
         1.upto(number_of_categories) { |i| group_tree[i] = group }
         1.upto(number_of_categories) { |i| group_tree[i][:summary_row] = summary_columns_object }
-        subject.group_and_sort(rule1, remaining_rules, @items).should == group_tree
+        subject.group_and_sort(@rule1, @remaining_rules, @items).should == group_tree
       end
     end
 
