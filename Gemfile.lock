@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/eaterprises/spree_paypal_express.git
-  revision: 63963fd3377a41debbf0f12a4cc78122145b0387
+  revision: ec7fd298f117fe6c598070dc0e7a38887b9bcbc4
   branch: 1-1-stable
   specs:
     spree_paypal_express (1.1.0)
