@@ -17,7 +17,7 @@ gem 'simple_form', :git => 'git://github.com/RohanM/simple_form.git'
 
 gem 'unicorn'
 gem 'bugsnag'
-gem 'spree_heroku', :git => 'git://github.com/joneslee85/spree-heroku.git'
+gem 'spree_heroku', :git => 'git://github.com/eaterprises/spree-heroku.git'
 gem 'haml'
 gem 'aws-sdk'
 gem 'andand'
