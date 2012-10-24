@@ -1,6 +1,6 @@
 .toolbar{'data-hook' => "suppliers"}
   %ul.actions
-    %li= button_link_to "New Supplier", spree.new_admin_supplier_path, :icon => 'add', :id => 'admin_new_supplier_link'
+    %li= button_link_to "New Supplier", main_app.new_admin_supplier_path, :icon => 'add', :id => 'admin_new_supplier_link'
   %br.clear
 %table#listing_suppliers.index
   %thead
@@ -11,7 +11,7 @@
   %tbody
     - @suppliers.each do |supplier|
       %tr
-        %td= link_to supplier.name, spree.admin_supplier_path(supplier)
+        %td= link_to supplier.name, main_app.admin_supplier_path(supplier)
         %td= supplier.description
         %td{'data-hook' => "admin_supplier_index_row_actions"}
           = link_to_edit supplier, :class => 'edit'

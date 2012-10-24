@@ -37,6 +37,6 @@
     %th URL:
     %td= @distributor.url
 %p
-  = link_to :Edit, spree.edit_admin_distributor_path(@distributor), :class => 'edit_distributor'
+  = link_to :Edit, main_app.edit_admin_distributor_path(@distributor), :class => 'edit_distributor'
   = t(:or)
-  = link_to t(:back), spree.admin_distributors_path
+  = link_to t(:back), main_app.admin_distributors_path

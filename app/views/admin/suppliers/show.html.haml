@@ -22,6 +22,6 @@
     %th Twitter:
     %td= @supplier.twitter
 %p
-  = link_to :Edit, spree.edit_admin_supplier_path(@supplier), :class => 'edit_supplier'
+  = link_to :Edit, main_app.edit_admin_supplier_path(@supplier), :class => 'edit_supplier'
   = t(:or)
-  = link_to t(:back), spree.admin_suppliers_path
+  = link_to t(:back), main_app.admin_suppliers_path

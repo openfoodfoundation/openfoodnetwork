@@ -1,6 +1,5 @@
-
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @supplier }
 
-= form_for [:admin, @supplier] do |f|
+= form_for [main_app, :admin, @supplier] do |f|
   = render :partial => 'form', :locals => { :f => f }
   = render :partial => 'spree/admin/shared/new_resource_links'
