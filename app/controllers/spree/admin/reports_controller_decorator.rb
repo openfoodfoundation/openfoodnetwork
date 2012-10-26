@@ -100,7 +100,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.product.name },
         proc { |lis| "UNIT SIZE" },
         proc { |lis| lis.first.variant.options_text },
-        proc { |lis| lis.first.variant.weight },
+        proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis|  lis.sum { |li| li.quantity } },
         proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
 
@@ -111,8 +111,8 @@ Spree::Admin::ReportsController.class_eval do
         summary_columns: [ proc { |lis| lis.first.variant.product.supplier.name },
           proc { |lis| lis.first.variant.product.name }, proc { |lis| "UNIT SIZE" },
           proc { |lis| "" }, proc { |lis| "" },
-          proc { |lis|  lis.sum { |li| li.quantity * li.variant.weight } },
-          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight } } ] },
+          proc { |lis|  lis.sum { |li| li.quantity * li.variant.weight || 0 } },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } } ]
 
@@ -124,7 +124,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.product.name },
         proc { |lis| "UNIT SIZE" },
         proc { |lis| lis.first.variant.options_text },
-        proc { |lis| lis.first.variant.weight },
+        proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis|  lis.sum { |li| li.quantity } },
         proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
 
@@ -174,7 +174,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.product.name },
         proc { |lis| "UNIT SIZE" },
         proc { |lis| lis.first.variant.options_text },
-        proc { |lis| lis.first.variant.weight },
+        proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis|  lis.sum { |li| li.quantity } },
         proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
 
