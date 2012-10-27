@@ -61,10 +61,23 @@ feature %q{
       end
     end
 
-    context "with Javascript" do
-      it "changes distributor details when the distributor is changed"
+    context "with Javascript", js: true do
+      it "changes distributor details when the distributor is changed" do
+        d1 = create(:distributor)
+        d2 = create(:distributor)
+        d3 = create(:distributor)
+        p = create(:product, :distributors => [d1, d2, d3])
+
+        visit spree.product_path p
+
+        [d1, d2, d3].each do |d|
+          select d.name, :from => 'distributor_id'
+
+          within '#product-distributor-details' do
+            page.should have_selector 'h2', :text => d.name
+          end
+        end
+      end
     end
   end
-
-
 end
