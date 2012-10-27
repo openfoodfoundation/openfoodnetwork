@@ -32,7 +32,33 @@ feature %q{
         page.should have_selector '#product-distributor-details', :text => 'When you select a distributor for your order, their address and pickup times will be displayed here.'
       end
 
-      it "displays distributor details when one is selected"
+      it "displays distributor details when one is selected" do
+        d = create(:distributor)
+        p = create(:product, :distributors => [d])
+
+        visit spree.root_path
+        click_link d.name
+        visit spree.product_path p
+
+        within '#product-distributor-details' do
+          [d.name,
+           d.pickup_address.address1,
+           d.pickup_address.city,
+           d.pickup_address.zipcode,
+           d.pickup_address.state_text,
+           d.pickup_address.country.name,
+           d.pickup_times,
+           d.next_collection_at,
+           d.contact,
+           d.phone,
+           d.email,
+           d.description,
+           d.url].each do |value|
+
+            page.should have_content value
+          end
+        end
+      end
     end
 
     context "with Javascript" do

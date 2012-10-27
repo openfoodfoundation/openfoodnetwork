@@ -1,0 +1,7 @@
+%fieldset#product-distributor-details.columns.five.omega
+  %legend Distributor
+  - order = current_order(false)
+  - if order.andand.distributor.present?
+    = render 'distributors/details', :distributor => order.distributor
+  - else
+    When you select a distributor for your order, their address and pickup times will be displayed here.

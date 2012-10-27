@@ -145,8 +145,11 @@ ul.product-listing {
 
 
 /* Distributor details on product details page */
-#product-distributor-details {
+fieldset#product-distributor-details {
   float: right;
+  margin-top: 0;
+  width: 250px;
+  @extend #shipping;
 }
 
 #product-variants {

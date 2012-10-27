@@ -1,2 +1,23 @@
-#product-distributor-details.columns.five.omega
-  When you select a distributor for your order, their address and pickup times will be displayed here.
+%h2= distributor.name
+%p
+  %strong Address:
+  %br/
+  = render 'spree/shared/address', :address => distributor.pickup_address
+%p
+  %strong Next collection time:
+  %br/
+  = distributor.next_collection_at
+%p
+  %strong Regular collection times:
+  %br/
+  = distributor.pickup_times
+%p
+  %strong Contact:
+  %br/
+  = distributor.contact
+  %br/
+  = "Phone: #{distributor.phone}"
+  %br/
+  = "Email: #{distributor.email}"
+%p= distributor.description
+%p= link_to distributor.url, distributor.url if distributor.url
