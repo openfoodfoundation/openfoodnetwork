@@ -144,6 +144,16 @@ ul.product-listing {
 }
 
 
+/* Distributor details on product details page */
+#product-distributor-details {
+  float: right;
+}
+
+#product-variants {
+  float: none;
+}
+
+
 /* Add to cart form on product details page */
 #cart-form {
   .error-distributor {

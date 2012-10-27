@@ -22,4 +22,23 @@ feature %q{
     page.should have_selector 'td', :text => d.name
   end
 
+  describe "viewing distributor details" do
+    context "without Javascript" do
+      it "displays a holding message when no distributor is selected" do
+        p = create(:product)
+
+        visit spree.product_path p
+
+        page.should have_selector '#product-distributor-details', :text => 'When you select a distributor for your order, their address and pickup times will be displayed here.'
+      end
+
+      it "displays distributor details when one is selected"
+    end
+
+    context "with Javascript" do
+      it "changes distributor details when the distributor is changed"
+    end
+  end
+
+
 end
