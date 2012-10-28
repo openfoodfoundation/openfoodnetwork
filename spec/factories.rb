@@ -2,6 +2,19 @@ require 'faker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
+  factory :enterprise, :class => Enterprise do
+    sequence(:name) { |n| "Enterprise #{n}" }
+    description 'enterprise'
+    long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
+    email 'enterprise@example.com'
+    address { Spree::Address.first || FactoryGirl.create(:address) }
+  end
+
+  factory :supplier_enterprise, :parent => :enterprise do
+    is_primary_producer true
+    is_distributor false
+  end
+
   factory :supplier, :class => Supplier do
     sequence(:name) { |n| "Supplier #{n}" }
     description 'supplier'

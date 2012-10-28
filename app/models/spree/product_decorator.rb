@@ -1,5 +1,5 @@
 Spree::Product.class_eval do
-  belongs_to :supplier
+  belongs_to :supplier, :class_name => 'Enterprise'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
