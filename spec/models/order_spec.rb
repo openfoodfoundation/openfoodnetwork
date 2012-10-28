@@ -15,7 +15,7 @@ describe Spree::Order do
   end
 
   it "reveals permission for changing distributor" do
-    d = create(:distributor)
+    d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
 
     subject.distributor = d
@@ -27,7 +27,7 @@ describe Spree::Order do
   end
 
   it "raises an exception if distributor is changed without permission" do
-    d = create(:distributor)
+    d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
     subject.distributor = d
     subject.save!
@@ -41,8 +41,8 @@ describe Spree::Order do
   end
 
   it "reveals permission for adding products to the cart" do
-    d1 = create(:distributor)
-    d2 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
 
     p_first = create(:product, :distributors => [d1])
     p_subsequent_same_dist = create(:product, :distributors => [d1])
@@ -67,7 +67,7 @@ describe Spree::Order do
   end
 
   it "sets attributes on line items for variants" do
-    d = create(:distributor)
+    d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
 
     subject.distributor = d

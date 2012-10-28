@@ -22,7 +22,7 @@ describe Spree::Product do
   context "finders" do
     it "finds the shipping method for a particular distributor" do
       shipping_method = create(:shipping_method)
-      distributor = create(:distributor)
+      distributor = create(:distributor_enterprise)
       product = create(:product)
       product_distribution = create(:product_distribution, :product => product, :distributor => distributor, :shipping_method => shipping_method)
       product.shipping_method_for_distributor(distributor).should == shipping_method

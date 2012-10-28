@@ -43,7 +43,7 @@ FactoryGirl.define do
 
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
-    distributor     { |pd| Distributor.first    || FactoryGirl.create(:distributor) }
+    distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
   end
 
