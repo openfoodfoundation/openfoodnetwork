@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018002907) do
+ActiveRecord::Schema.define(:version => 20121025012233) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -145,6 +145,27 @@ ActiveRecord::Schema.define(:version => 20121018002907) do
     t.integer  "pickup_address_id"
     t.string   "next_collection_at"
     t.text     "long_description"
+  end
+
+  create_table "enterprises", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.text     "long_description"
+    t.boolean  "is_primary_producer"
+    t.boolean  "is_distributor"
+    t.string   "contact"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "website"
+    t.string   "twitter"
+    t.string   "abn"
+    t.string   "acn"
+    t.integer  "address_id"
+    t.string   "pickup_times"
+    t.integer  "pickup_address_id"
+    t.string   "next_collection_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "product_distributions", :force => true do |t|
@@ -779,10 +800,10 @@ ActiveRecord::Schema.define(:version => 20121018002907) do
     t.string   "email"
     t.string   "twitter"
     t.string   "website"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "address_id"
     t.text     "long_description"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
 end
