@@ -1,6 +1,6 @@
 module Spree
   module ProductFilters
-    if Distributor.table_exists?
+    if Enterprise.table_exists?
       Spree::Product.scope :distributor_any,
         lambda {|*opts|
           conds = opts.map {|o| ProductFilters.distributor_filter[:conds][o]}.reject {|c| c.nil?}
@@ -8,8 +8,8 @@ module Spree
         }
 
       def ProductFilters.distributor_filter
-        distributors = Distributor.all.map(&:name).compact.uniq
-        conds  = Hash[*distributors.map { |d| [d, "#{Distributor.table_name}.name = '#{d}'"] }.flatten]
+        distributors = Enterprise.is_distributor.map(&:name).compact.uniq
+        conds  = Hash[*distributors.map { |d| [d, "#{Enterprise.table_name}.name = '#{d}'"] }.flatten]
         { :name   => "Group",
           :scope  => :distributor_any,
           :conds  => conds,

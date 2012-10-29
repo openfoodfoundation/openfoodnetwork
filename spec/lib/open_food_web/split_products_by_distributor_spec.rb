@@ -16,8 +16,8 @@ describe OpenFoodWeb::SplitProductsByDistributor do
   end
 
   it "splits products when a distributor is selected" do
-    d1 = build(:distributor)
-    d2 = build(:distributor)
+    d1 = build(:distributor_enterprise)
+    d2 = build(:distributor_enterprise)
     orig_products = [build(:product, :distributors => [d1]),
                      build(:product, :distributors => [d2])]
 

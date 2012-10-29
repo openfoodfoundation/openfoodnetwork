@@ -3,13 +3,13 @@ require 'spec_helper'
 module OpenFoodWeb
   describe GroupBuyReport do
 
-    before(:each) do
+    before(:all) do
       @orders = []
       bill_address = create(:address)
       distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
-      distributor = create(:distributor, :pickup_address => distributor_address)
+      distributor = create(:distributor_enterprise, :address => distributor_address)
 
-      @supplier1 = create(:supplier)
+      @supplier1 = create(:supplier_enterprise)
       @variant1 = create(:variant)
       @variant1.product.supplier = @supplier1
       @variant1.product.save!
@@ -35,7 +35,7 @@ module OpenFoodWeb
       order2.line_items << line_item22
       @orders << order2
 
-      @supplier2 = create(:supplier)
+      @supplier2 = create(:supplier_enterprise)
       @variant3 = create(:variant)
       @variant3.product.supplier = @supplier2
       @variant3.product.save!

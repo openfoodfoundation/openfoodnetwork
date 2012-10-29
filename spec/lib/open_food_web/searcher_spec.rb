@@ -5,8 +5,8 @@ module OpenFoodWeb
   describe Searcher do
     it "searches by supplier" do
       # Given products under two suppliers
-      s1 = create(:supplier)
-      s2 = create(:supplier)
+      s1 = create(:supplier_enterprise)
+      s2 = create(:supplier_enterprise)
       p1 = create(:product, :supplier => s1)
       p2 = create(:product, :supplier => s2)
 
@@ -18,8 +18,8 @@ module OpenFoodWeb
 
     it "searches by distributor" do
       # Given products under two distributors
-      d1 = create(:distributor)
-      d2 = create(:distributor)
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
       p1 = create(:product, :distributors => [d1])
       p2 = create(:product, :distributors => [d2])
 
