@@ -38,8 +38,8 @@ module OpenFoodWeb
           end
 
           # Sum quantities for each product (Total line)
-          sum_quantities = line_items_by_product.sum { |li| li.variant.weight * li.quantity }
-          sum_max_quantities = line_items_by_product.sum { |li| li.variant.weight * (li.max_quantity || 0) } 
+          sum_quantities = line_items_by_product.sum { |li| (li.variant.weight || 0) * li.quantity }
+          sum_max_quantities = line_items_by_product.sum { |li| (li.variant.weight || 0) * (li.max_quantity || 0) }
           variants_and_quantities << GroupBuyProductRow.new(product, sum_quantities, sum_max_quantities)
         end
       end
