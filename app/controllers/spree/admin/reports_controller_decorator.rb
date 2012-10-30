@@ -9,6 +9,7 @@ Spree::Admin::ReportsController.class_eval do
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:group_buys => {:name => "Group Buys", :description => "Orders by supplier and variant"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
+  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:order_cycles => {:name => "Order Cycle Reports", :description => "Reports for Order Cycles"}})
 
   def orders_and_distributors
     params[:q] = {} unless params[:q]
@@ -109,9 +110,11 @@ Spree::Admin::ReportsController.class_eval do
         { group_by: proc { |li| li.variant.product },
         sort_by: proc { |product| product.name },
         summary_columns: [ proc { |lis| lis.first.variant.product.supplier.name },
-          proc { |lis| lis.first.variant.product.name }, proc { |lis| "UNIT SIZE" },
-          proc { |lis| "" }, proc { |lis| "" },
-          proc { |lis|  lis.sum { |li| li.quantity * li.variant.weight || 0 } },
+          proc { |lis| lis.first.variant.product.name },
+          proc { |lis| "UNIT SIZE" },
+          proc { |lis| "" },
+          proc { |lis| "" },
+          proc { |lis| lis.sum { |li| li.quantity * li.variant.weight || 0 } },
           proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } } ]
@@ -125,7 +128,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| "UNIT SIZE" },
         proc { |lis| lis.first.variant.options_text },
         proc { |lis| lis.first.variant.weight || 0 },
-        proc { |lis|  lis.sum { |li| li.quantity } },
+        proc { |lis| lis.sum { |li| li.quantity } },
         proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
 
       rules = [ { group_by: proc { |li| li.variant.product },
@@ -294,6 +297,184 @@ Spree::Admin::ReportsController.class_eval do
     @header = header
     @table = order_grouper.table(table_items)
     csv_file_name = "payments.csv"
+
+    render_report(@header, @table, params[:csv], csv_file_name)
+
+  end
+
+  def order_cycles
+    params[:q] = {} unless params[:q]
+
+    if params[:q][:created_at_gt].blank?
+      params[:q][:created_at_gt] = Time.zone.now.beginning_of_month
+    else
+      params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
+    end
+
+    if params[:q] && !params[:q][:created_at_lt].blank?
+      params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
+    end
+    params[:q][:meta_sort] ||= "created_at.desc"
+
+    @search = Spree::Order.complete.search(params[:q])
+    orders = @search.result
+    line_items = orders.map { |o| o.line_items }.flatten
+    #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
+
+    @distributors = Spree::Distributor.all
+    @report_type = params[:report_type]
+
+    case params[:report_type]
+    when "order_cycle_supplier_totals"
+      table_items = line_items
+      @include_blank = 'All'
+
+      header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+
+      columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
+        proc { |line_items| line_items.first.variant.product.name },
+        proc { |line_items| line_items.first.variant.options_text },
+        proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.first.variant.price },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "status" },
+        proc { |line_items| "incoming transport" } ]
+
+        rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
+          sort_by: proc { |supplier| supplier.name } },
+          { group_by: proc { |line_item| line_item.variant.product },
+          sort_by: proc { |product| product.name } },
+          { group_by: proc { |line_item| line_item.variant },
+          sort_by: proc { |variant| variant.options_text } } ]
+
+    when "order_cycle_supplier_totals_by_distributor"
+      table_items = line_items
+      @include_blank = 'All'
+
+      header = ["Supplier", "Product", "Variant", "To Distributor", "Amount", "Cost per Unit", "Total Cost", "Shipping Method"]
+
+      columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
+        proc { |line_items| line_items.first.variant.product.name },
+        proc { |line_items| line_items.first.variant.options_text },
+        proc { |line_items| line_items.first.order.distributor.name },
+        proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.first.variant.price },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "shipping method" } ]
+
+      rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
+        sort_by: proc { |supplier| supplier.name } },
+        { group_by: proc { |line_item| line_item.variant.product },
+        sort_by: proc { |product| product.name } },
+        { group_by: proc { |line_item| line_item.variant },
+        sort_by: proc { |variant| variant.options_text },
+        summary_columns: [ proc { |line_items| line_items.first.variant.product.supplier.name },
+          proc { |line_items| line_items.first.variant.product.name },
+          proc { |line_items| line_items.first.variant.options_text },
+          proc { |line_items| "TOTAL" },
+          proc { |line_items| line_items.sum { |li| li.quantity } },
+          proc { |line_items| line_items.first.variant.price },
+          proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+          proc { |line_items| "" } ] },
+        { group_by: proc { |line_item| line_item.order.distributor },
+        sort_by: proc { |distributor| distributor.name } } ]
+
+    when "order_cycle_distributor_totals_by_supplier"
+      table_items = line_items
+      @include_blank = 'All'
+
+      header = ["Distributor", "Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
+
+      columns = [ proc { |line_items| line_items.first.order.distributor.name },
+        proc { |line_items| line_items.first.variant.product.supplier.name },
+        proc { |line_items| line_items.first.variant.product.name },
+        proc { |line_items| line_items.first.variant.options_text },
+        proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.first.variant.price },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "" },
+        proc { |line_items| "shipping method" } ]
+
+      rules = [ { group_by: proc { |line_item| line_item.order.distributor },
+        sort_by: proc { |distributor| distributor.name },
+        summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
+          proc { |line_items| "TOTAL" },
+          proc { |line_items| "" },
+          proc { |line_items| "" },
+          proc { |line_items| "" },
+          proc { |line_items| "" },
+          proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+          proc { |line_items| "total shipping cost" },
+          proc { |line_items| "" } ] },
+        { group_by: proc { |line_item| line_item.variant.product.supplier },
+        sort_by: proc { |supplier| supplier.name } },
+        { group_by: proc { |line_item| line_item.variant.product },
+        sort_by: proc { |product| product.name } },
+        { group_by: proc { |line_item| line_item.variant },
+        sort_by: proc { |variant| variant.options_text } } ]
+
+    when "order_cycle_customer_totals"
+      table_items = line_items
+      @include_blank = false
+
+      header = ["Customer", "Email", "Phone", "Product", "Variant", "Amount", "Total Cost", "Paid?", "Packed?", "Shipped?"]
+
+      columns = [ proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
+        proc { |line_items| line_items.first.order.email },
+        proc { |line_items| line_items.first.order.bill_address.phone },
+        proc { |line_items| line_items.first.variant.product.name },
+        proc { |line_items| line_items.first.variant.options_text },
+        proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" } ]
+
+    rules = [ { group_by: proc { |line_item| line_item.order.user },
+      sort_by: proc { |user| user.to_s },
+      summary_columns: [ proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
+        proc { |line_items| line_items.first.order.email },
+        proc { |line_items| line_items.first.order.bill_address.phone },
+        proc { |line_items| "TOTAL" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "work out whether paid or not" },
+        proc { |line_items| "" },
+        proc { |line_items| "" } ] },
+      { group_by: proc { |line_item| line_item.variant.product },
+      sort_by: proc { |product| product.name } },
+      { group_by: proc { |line_item| line_item.variant },
+       sort_by: proc { |variant| variant.options_text } } ]
+
+    else
+      table_items = line_items
+
+      header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+
+      columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
+        proc { |line_items| line_items.first.variant.product.name },
+        proc { |line_items| line_items.first.variant.options_text },
+        proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.first.variant.price },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| "status" },
+        proc { |line_items| "incoming transport" } ]
+
+      rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
+        sort_by: proc { |supplier| supplier.name } },
+        { group_by: proc { |line_item| line_item.variant.product },
+        sort_by: proc { |product| product.name } },
+        { group_by: proc { |line_item| line_item.variant },
+        sort_by: proc { |variant| variant.options_text } } ]
+
+    end
+
+    order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
+
+    @header = header
+    @table = order_grouper.table(table_items)
+    csv_file_name = "order_cycles.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
