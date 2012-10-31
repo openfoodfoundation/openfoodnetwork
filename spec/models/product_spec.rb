@@ -29,7 +29,7 @@ describe Spree::Product do
     end
 
     it "raises an error if distributor is not found" do
-      distributor = create(:distributor)
+      distributor = create(:distributor_enterprise)
       product = create(:product)
       expect do
         product.shipping_method_for_distributor(distributor)
