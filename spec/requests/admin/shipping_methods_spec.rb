@@ -27,7 +27,7 @@ feature 'shipping methods' do
 
   scenario "deleting a shipping method referenced by a product distribution" do
     p = create(:product)
-    d = create(:distributor)
+    d = create(:distributor_enterprise)
     create(:product_distribution, product: p, distributor: d, shipping_method: @sm)
 
     visit_delete spree.admin_shipping_method_path(@sm)
@@ -38,7 +38,7 @@ feature 'shipping methods' do
 
   scenario "deleting a shipping method referenced by a line item" do
     sm2 = create(:shipping_method)
-    d = create(:distributor)
+    d = create(:distributor_enterprise)
 
     p = create(:product)
     create(:product_distribution, product: p, distributor: d, shipping_method: sm2)

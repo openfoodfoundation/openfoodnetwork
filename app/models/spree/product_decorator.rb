@@ -23,7 +23,7 @@ Spree::Product.class_eval do
 
   # Build a product distribution for each distributor
   def build_product_distributions
-    Distributor.all.each do |distributor|
+    Enterprise.is_distributor.each do |distributor|
       unless self.product_distributions.find_by_distributor_id distributor.id
         self.product_distributions.build(:distributor => distributor)
       end

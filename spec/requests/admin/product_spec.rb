@@ -8,8 +8,8 @@ feature %q{
   include WebHelper
 
   background do
-    @supplier = create(:supplier, :name => 'New supplier')
-    @distributors = (1..3).map { create(:distributor) }
+    @supplier = create(:supplier_enterprise, :name => 'New supplier')
+    @distributors = (1..3).map { create(:distributor_enterprise) }
     @shipping_method = create(:shipping_method, :name => 'My shipping method')
   end
 
