@@ -1,0 +1,40 @@
+<div class="toolbar" data-hook="toolbar">
+  <ul class="actions">
+    <li>
+      <%= button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'add', :id => 'admin_new_enterprise_link' %>
+    </li>
+  </ul>
+  <br class="clear" />
+</div>
+
+<%= form_for @enterprise_set, :url => main_app.bulk_update_admin_enterprises_path do |f| %>
+  <table class="index" id="listing_enterprises">
+    <thead>
+      <tr data-hook="enterprises_header">
+        <th>Name</th>
+        <th>Next Collection Date/Time</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :enterprises do |enterprise_form| %>
+        <% enterprise = enterprise_form.object %>
+        <tr>
+          <td><%= link_to enterprise.name, main_app.admin_enterprise_path(enterprise) %></td>
+          <td><%= enterprise_form.text_field :next_collection_at %></td>
+          <td><%= enterprise.description %></td>
+          <td data-hook="admin_users_index_row_actions">
+            <%= link_to_edit enterprise, :class => 'edit' %> &nbsp;
+            <%= link_to_delete enterprise %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @enterprises.empty? %>
+        <tr><td colspan="4"><%= t(:none) %></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.submit 'Update' %>
+<% end %>

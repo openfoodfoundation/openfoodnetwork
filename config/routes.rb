@@ -8,6 +8,9 @@ Openfoodweb::Application.routes.draw do
   end
 
   namespace :admin do
+    resources :enterprises do
+      post :bulk_update, :on => :collection, :as => :bulk_update
+    end
     resources :distributors do
       post :bulk_update, :on => :collection, :as => :bulk_update
     end

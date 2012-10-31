@@ -1,30 +1,30 @@
-# Tableless model to handle updating multiple distributors at once from a
+# Tableless model to handle updating multiple enterprises at once from a
 # single form. Used to update next_collection_at field for all distributors in
 # admin backend.
-class DistributorSet
+class EnterpriseSet
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :distributors
+  attr_accessor :enterprises
 
   def initialize(attributes={})
-    @distributors = Distributor.all
+    @enterprises = Enterprise.all
 
     attributes.each do |name, value|
       send("#{name}=", value)
     end
   end
 
-  def distributors_attributes=(attributes)
+  def enterprises_attributes=(attributes)
     attributes.each do |k, attributes|
       # attributes == {:id => 123, :next_collection_at => '...'}
-      d = @distributors.detect { |d| d.id.to_s == attributes[:id].to_s }
-      d.assign_attributes(attributes.except(:id))
+      e = @enterprises.detect { |e| e.id.to_s == attributes[:id].to_s }
+      e.assign_attributes(attributes.except(:id))
     end
   end
 
   def save
-    distributors.all?(&:save)
+    enterprises.all?(&:save)
   end
 
   def persisted?

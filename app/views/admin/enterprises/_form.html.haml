@@ -1,0 +1,54 @@
+- content_for :head do
+  = render 'shared/cms_elrte_head'
+
+%table{"data-hook" => "distributors"}
+  %tr{"data-hook" => "name"}
+    %td Name:
+    %td= f.text_field :name
+  %tr{"data-hook" => "description"}
+    %td Description:
+    %td= f.text_field :description
+  %tr{'data-hook' => "long_description"}
+    %td Extended Description:
+    %td= f.text_area :long_description, :class => 'rich_text'
+  %tr{'data-hook' => "is_primary_producer"}
+    %td Primary Producer?
+    %td= f.check_box :is_primary_producer
+  %tr{'data-hook' => "is_distributor"}
+    %td Distributor?
+    %td= f.check_box :is_distributor
+  %tr{"data-hook" => "contact"}
+    %td Contact Person:
+    %td= f.text_field :contact
+  %tr{"data-hook" => "phone"}
+    %td Phone:
+    %td= f.text_field :phone
+  %tr{"data-hook" => "email"}
+    %td Email:
+    %td= f.text_field :email
+  %tr{"data-hook" => "website"}
+    %td Website:
+    %td= f.text_field :website
+  %tr{"data-hook" => "twitter"}
+    %td Twitter:
+    %td= f.text_field :twitter
+  %tr{"data-hook" => "abn"}
+    %td ABN:
+    %td= f.text_field :abn
+  %tr{"data-hook" => "acn"}
+    %td ACN:
+    %td= f.text_field :acn
+%fieldset
+  %legend Address
+  %table
+    = f.fields_for :address do |address_form|
+      = render 'spree/admin/shared/address_form', :f => address_form
+%fieldset
+  %legend Pickup details
+  %table{"data-hook" => "distributors_pickup_details"}
+    %tr{"data-hook" => "next_collection_at"}
+      %td Next collection date/time:
+      %td= f.text_field :next_collection_at
+    %tr{"data-hook" => "pickup_times"}
+      %td Regular pickup times:
+      %td= f.text_field :pickup_times

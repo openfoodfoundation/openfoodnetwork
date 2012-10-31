@@ -282,8 +282,8 @@ ActiveRecord::Schema.define(:version => 20121028070200) do
     t.string   "start_year"
     t.string   "issue_number"
     t.integer  "address_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "gateway_customer_profile_id"
     t.string   "gateway_payment_profile_id"
   end
@@ -799,10 +799,10 @@ ActiveRecord::Schema.define(:version => 20121028070200) do
     t.string   "email"
     t.string   "twitter"
     t.string   "website"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "address_id"
     t.text     "long_description"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
   end
 
 end
