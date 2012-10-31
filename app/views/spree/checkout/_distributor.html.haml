@@ -5,7 +5,7 @@
     %p
       %strong Address:
       %br/
-      = render 'spree/shared/address', :address => @order.distributor.pickup_address
+      = render 'spree/shared/address', :address => @order.distributor.address
     %p
       %strong Next collection time:
       %br/
@@ -23,5 +23,4 @@
       %br/
       = "Email: #{@order.distributor.email}"
     %p= @order.distributor.description
-    %p= link_to @order.distributor.url, @order.distributor.url if @order.distributor.url
-
+    %p= link_to @order.distributor.website, @order.distributor.website if @order.distributor.website

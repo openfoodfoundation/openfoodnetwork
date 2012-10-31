@@ -9,13 +9,13 @@ feature %q{
   include WebHelper
 
   background do
-    @distributor = create(:distributor, :name => 'Edible garden',
-                          :pickup_address => create(:address,
-                                                    :address1 => '12 Bungee Rd',
-                                                    :city => 'Carion',
-                                                    :zipcode => 3056,
-                                                    :state => Spree::State.find_by_name('Victoria'),
-                                                    :country => Spree::Country.find_by_name('Australia')),
+    @distributor = create(:distributor_enterprise, :name => 'Edible garden',
+                          :address => create(:address,
+                                             :address1 => '12 Bungee Rd',
+                                             :city => 'Carion',
+                                             :zipcode => 3056,
+                                             :state => Spree::State.find_by_name('Victoria'),
+                                             :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
 
     @shipping_method_1 = create(:shipping_method, :name => 'Shipping Method One')
@@ -94,18 +94,18 @@ feature %q{
     # Distributor details should be displayed
     within('fieldset#shipping') do
       [@distributor.name,
-       @distributor.pickup_address.address1,
-       @distributor.pickup_address.city,
-       @distributor.pickup_address.zipcode,
-       @distributor.pickup_address.state_text,
-       @distributor.pickup_address.country.name,
+       @distributor.address.address1,
+       @distributor.address.city,
+       @distributor.address.zipcode,
+       @distributor.address.state_text,
+       @distributor.address.country.name,
        @distributor.pickup_times,
        @distributor.next_collection_at,
        @distributor.contact,
        @distributor.phone,
        @distributor.email,
        @distributor.description,
-       @distributor.url].each do |value|
+       @distributor.website].each do |value|
 
         page.should have_content value
       end
