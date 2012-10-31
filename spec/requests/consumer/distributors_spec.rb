@@ -10,9 +10,9 @@ feature %q{
 
   scenario "viewing a list of distributors" do
     # Given some distributors
-    d1 = create(:distributor)
-    d2 = create(:distributor)
-    d3 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    d3 = create(:distributor_enterprise)
 
     # And some of those distributors have a product
     create(:product, :distributors => [d1, d2])
@@ -29,7 +29,7 @@ feature %q{
   context "when a distributor is selected" do
     it "displays the distributor's details" do
       # Given a distributor with a product
-      d = create(:distributor, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
+      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       create(:product, :distributors => [d])
 
       # When I select the distributor
@@ -40,12 +40,12 @@ feature %q{
       page.should have_selector 'h2', :text => 'Melb Uni Co-op'
 
       # And I should see the distributor's long description
-      page.should have_selector 'div.distributor-description', :text => 'Hello, world!'
+      page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'
     end
 
     it "displays the distributor's name on the home page" do
       # Given a distributor with a product
-      d = create(:distributor, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
+      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       create(:product, :distributors => [d])
 
       # When I select the distributor
@@ -63,8 +63,8 @@ feature %q{
       taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
       taxonomy_root = taxonomy.root
       taxon = create(:taxon, :name => 'Taxon one', :parent_id => taxonomy_root.id)
-      d1 = create(:distributor)
-      d2 = create(:distributor)
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
       p1 = create(:product, :distributors => [d1], :taxons => [taxon])
       p2 = create(:product, :distributors => [d2], :taxons => [taxon])
 
@@ -90,7 +90,7 @@ feature %q{
 
     it "allows the user to leave the distributor" do
       # Given a distributor with a product
-      d = create(:distributor, :name => 'Melb Uni Co-op')
+      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
       create(:product, :distributors => [d])
 
       # When I select the distributor and then leave it
@@ -105,7 +105,7 @@ feature %q{
     context "viewing a product, it provides a choice of distributor when adding to cart" do
       it "works when no distributor is chosen" do
         # Given a distributor and a product under it
-        distributor = create(:distributor)
+        distributor = create(:distributor_enterprise)
         product = create(:product, :distributors => [distributor])
 
         # When we view the product
@@ -118,7 +118,7 @@ feature %q{
 
       it "displays the local distributor as the default choice when available for the current product" do
         # Given a distributor and a product under it
-        distributor = create(:distributor)
+        distributor = create(:distributor_enterprise)
         product = create(:product, :distributors => [distributor])
 
         # When we select the distributor and view the product
@@ -132,8 +132,8 @@ feature %q{
 
       it "works when viewing a product from a remote distributor" do
         # Given two distributors and our product under one
-        distributor_product = create(:distributor)
-        distributor_no_product = create(:distributor)
+        distributor_product = create(:distributor_enterprise)
+        distributor_no_product = create(:distributor_enterprise)
         product = create(:product, :distributors => [distributor_product])
         create(:product, :distributors => [distributor_no_product])
 

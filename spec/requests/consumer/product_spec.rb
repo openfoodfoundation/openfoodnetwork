@@ -10,8 +10,8 @@ feature %q{
 
   scenario "viewing a product shows its supplier and distributor" do
     # Given a product with a supplier and distributor
-    s = create(:supplier)
-    d = create(:distributor)
+    s = create(:supplier_enterprise)
+    d = create(:distributor_enterprise)
     p = create(:product, :supplier => s, :distributors => [d])
 
     # When I view the product
