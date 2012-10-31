@@ -89,7 +89,7 @@ Spree::Admin::ReportsController.class_eval do
     orders = @search.result
     line_items = orders.map { |o| o.line_items }.flatten
 
-    @distributors = Spree::Distributor.all
+    @distributors = Distributor.all
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -216,7 +216,7 @@ Spree::Admin::ReportsController.class_eval do
     orders = @search.result
     payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
-    @distributors = Spree::Distributor.all
+    @distributors = Distributor.all
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -321,7 +321,7 @@ Spree::Admin::ReportsController.class_eval do
     line_items = orders.map { |o| o.line_items }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
-    @distributors = Spree::Distributor.all
+    @distributors = Distributor.all
     @report_type = params[:report_type]
 
     case params[:report_type]
