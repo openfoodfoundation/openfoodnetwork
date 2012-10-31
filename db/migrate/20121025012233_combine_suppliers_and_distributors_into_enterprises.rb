@@ -2,6 +2,10 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
   class Supplier < ActiveRecord::Base; end
   class Distributor < ActiveRecord::Base; end
   class Enterprise < ActiveRecord::Base; end
+  class ProductDistribution < ActiveRecord::Base; end
+  class Spree::Product < ActiveRecord::Base; end
+  class Spree::Order < ActiveRecord::Base; end
+
 
   def up
     # Create enterprises table
@@ -30,7 +34,10 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       attrs = s.attributes
       attrs.reject! { |k| k == 'id' }
       attrs.merge! is_primary_producer: true, is_distributor: false
-      Enterprise.create! attrs
+      e = Enterprise.create! attrs
+
+      # Update supplier_id on product to point at the new enterprise
+      Spree::Product.update_all("supplier_id=#{e.id}", "supplier_id=#{s.id}")
     end
 
     # Copy distributors to enterprises table with distributor flag set
@@ -39,7 +46,11 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       attrs['website'] = attrs['url']
       attrs.reject! { |k| ['id', 'url'].include? k }
       attrs.merge! is_primary_producer: false, is_distributor: true
-      Enterprise.create! attrs
+      e = Enterprise.create! attrs
+
+      # Update distributor_id on product distribution and order to point at the new enterprise
+      ProductDistribution.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id}")
+      Spree::Order.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id}")
     end
   end
 
