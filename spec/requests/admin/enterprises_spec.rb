@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature %q{
-    As an administration
+    As an administrator
     I want manage enterprises
 } do
   include AuthenticationWorkflow
