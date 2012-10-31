@@ -10,8 +10,8 @@ feature %q{
 
   scenario "adding a product to the cart with no distributor chosen" do
     # Given a product and some distributors
-    d1 = create(:distributor)
-    d2 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
     p = create(:product, :distributors => [d1])
     create(:product, :distributors => [d2])
 
@@ -30,8 +30,8 @@ feature %q{
     create(:itemwise_shipping_method)
 
     # Given a product, some distributors and a defined shipping cost
-    d1 = create(:distributor)
-    d2 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
     create(:product, :distributors => [d2])
     p = create(:product, :price => 12.34)
     create(:product_distribution, :product => p, :distributor => d1, :shipping_method => create(:shipping_method))
@@ -67,8 +67,8 @@ feature %q{
 
   it "does not allow the user to change distributor after a product has been added to the cart" do
     # Given a product and some distributors
-    d1 = create(:distributor)
-    d2 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
     p = create(:product, :distributors => [d1])
 
     # When I add a product to my cart (which sets my distributor)
@@ -87,7 +87,7 @@ feature %q{
   context "adding a subsequent product to the cart" do
     it "does not allow the user to choose a distributor" do
       # Given a product under a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d])
 
       # And a product in my cart
@@ -103,8 +103,8 @@ feature %q{
 
     it "does not allow the user to add a product from another distributor" do
       # Given two products, each at a different distributor
-      d1 = create(:distributor)
-      d2 = create(:distributor)
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
       p1 = create(:product, :distributors => [d1])
       p2 = create(:product, :distributors => [d2])
 
@@ -123,7 +123,7 @@ feature %q{
 
     it "adds products with valid distributors" do
       # Given two products, each at the same distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p1 = create(:product, :distributors => [d])
       p2 = create(:product, :distributors => [d])
 
@@ -146,7 +146,7 @@ feature %q{
   context "group buys" do
     scenario "adding a product to the cart for a group buy" do
       # Given a group buy product and a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d], :group_buy => true)
 
       # When I add the item to my cart
@@ -166,7 +166,7 @@ feature %q{
 
     scenario "adding a product with variants to the cart for a group buy" do
       # Given a group buy product with variants and a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d], :group_buy => true)
       create(:variant, :product => p)
 
@@ -187,7 +187,7 @@ feature %q{
 
     scenario "adding a product to cart that is not a group buy does not show max quantity field" do
       # Given a group buy product and a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d], :group_buy => false)
 
       # When I view the add to cart form, there should not be a max quantity field
@@ -198,7 +198,7 @@ feature %q{
 
     scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
       # Given a group buy product and a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d], :group_buy => true)
 
       # When I add the item to my cart
