@@ -7,25 +7,10 @@ Openfoodweb::Application.routes.draw do
     get :deselect_distributor, :on => :collection
   end
 
-  # Deprecated
-  resources :suppliers
-  # Deprecated
-  resources :distributors do
-    get :select, :on => :member
-    get :deselect, :on => :collection
-  end
-
   namespace :admin do
     resources :enterprises do
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
-
-    # Deprecated
-    resources :distributors do
-      post :bulk_update, :on => :collection, :as => :bulk_update
-    end
-    # Deprecated
-    resources :suppliers
   end
 
   # Mount Spree's routes
