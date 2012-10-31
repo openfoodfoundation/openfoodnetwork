@@ -3,7 +3,7 @@ require 'spec_helper'
 module OpenFoodWeb
   describe GroupBuyReport do
 
-    before(:all) do
+    before(:each) do
       @orders = []
       bill_address = create(:address)
       distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
