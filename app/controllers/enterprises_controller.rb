@@ -4,7 +4,7 @@ class EnterprisesController < BaseController
   end
 
   def suppliers
-    @suppliers = Enterprise.is_supplier
+    @suppliers = Enterprise.is_primary_producer
   end
 
   def distributors

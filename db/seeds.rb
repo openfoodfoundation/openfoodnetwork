@@ -74,19 +74,19 @@ unless Spree::Product.count > 0
 
   FactoryGirl.create(:product,
                      :name => 'Garlic', :price => 20.00,
-                     :supplier => Enterprise.is_supplier[0],
+                     :supplier => Enterprise.is_primary_producer[0],
                      :distributors => [Enterprise.is_distributor[0]],
                      :taxons => [Spree::Taxon.find_by_name('Vegetables')])
 
   FactoryGirl.create(:product,
                      :name => 'Fuji Apple', :price => 5.00,
-                     :supplier => Enterprise.is_supplier[1],
+                     :supplier => Enterprise.is_primary_producer[1],
                      :distributors => Enterprise.is_distributor,
                      :taxons => [Spree::Taxon.find_by_name('Fruit')])
 
   FactoryGirl.create(:product,
                      :name => 'Beef - 5kg Trays', :price => 50.00,
-                     :supplier => Enterprise.is_supplier[2],
+                     :supplier => Enterprise.is_primary_producer[2],
                      :distributors => [Enterprise.is_distributor[2]],
                      :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
 end

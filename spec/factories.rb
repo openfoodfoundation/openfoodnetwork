@@ -43,7 +43,7 @@ FactoryGirl.modify do
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier { Enterprise.is_supplier.first || FactoryGirl.create(:supplier_enterprise) }
+    supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     on_hand 3
 
     # before(:create) do |product, evaluator|
