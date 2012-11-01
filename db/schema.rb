@@ -490,7 +490,7 @@ ActiveRecord::Schema.define(:version => 20121031222403) do
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
     t.boolean  "group_buy"
-    t.string   "group_buy_unit_size"
+    t.float    "group_buy_unit_size"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"

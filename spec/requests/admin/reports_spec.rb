@@ -24,4 +24,28 @@ feature %q{
     page.should have_content 'Supplier'
   end
 
+  scenario "bulk co-op report" do
+    login_to_admin_section
+    click_link 'Reports'
+    click_link 'Bulk Co-Op'
+
+    page.should have_content 'Supplier'
+  end
+
+  scenario "payments reports" do
+    login_to_admin_section
+    click_link 'Reports'
+    click_link 'Payment Reports'
+
+    page.should have_content 'Payment State'
+  end
+
+  scenario "order cycle reports" do
+    login_to_admin_section
+    click_link 'Reports'
+    click_link 'Order Cycle Reports'
+
+    page.should have_content 'Supplier'
+  end
+
 end

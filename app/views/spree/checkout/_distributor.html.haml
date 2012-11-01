@@ -1,26 +1,4 @@
 .columns.omega.six
   %fieldset#shipping
     %legend Distributor
-    %h2= @order.distributor.name
-    %p
-      %strong Address:
-      %br/
-      = render 'spree/shared/address', :address => @order.distributor.address
-    %p
-      %strong Next collection time:
-      %br/
-      = @order.distributor.next_collection_at
-    %p
-      %strong Regular collection times:
-      %br/
-      = @order.distributor.pickup_times
-    %p
-      %strong Contact:
-      %br/
-      = @order.distributor.contact
-      %br/
-      = "Phone: #{@order.distributor.phone}"
-      %br/
-      = "Email: #{@order.distributor.email}"
-    %p= @order.distributor.description
-    %p= link_to @order.distributor.website, @order.distributor.website if @order.distributor.website
+    = render 'enterprises/distributor_details', :distributor => @order.distributor

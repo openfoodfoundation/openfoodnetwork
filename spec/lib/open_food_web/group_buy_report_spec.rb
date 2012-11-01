@@ -36,7 +36,7 @@ module OpenFoodWeb
       @orders << order2
 
       @supplier2 = create(:supplier_enterprise)
-      @variant3 = create(:variant)
+      @variant3 = create(:variant, :weight => nil)
       @variant3.product.supplier = @supplier2
       @variant3.product.save!
       product_distribution = create(:product_distribution, :product => @variant3.product, :distributor => distributor, :shipping_method => create(:shipping_method))
@@ -82,12 +82,12 @@ module OpenFoodWeb
 
       table_row_objects = subject.variants_and_quantities
 
-      variant_rows = table_row_objects.select{ |r| r.class == OpenFoodWeb::GroupBuyVariantRow }
-      product_rows = table_row_objects.select{ |r| r.class == OpenFoodWeb::GroupBuyProductRow }
+      variant_rows = table_row_objects.select { |r| r.class == OpenFoodWeb::GroupBuyVariantRow }
+      product_rows = table_row_objects.select { |r| r.class == OpenFoodWeb::GroupBuyProductRow }
 
       supplier_groups = variant_rows.group_by { |r| r.variant.product.supplier }
-      variant_groups = variant_rows.group_by{ |r| r.variant }
-      product_groups = product_rows.group_by{ |r| r.product }
+      variant_groups = variant_rows.group_by { |r| r.variant }
+      product_groups = product_rows.group_by { |r| r.product }
 
       supplier_groups.length.should == 2
       variant_groups.length.should == 3

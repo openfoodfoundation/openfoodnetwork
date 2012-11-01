@@ -10,6 +10,15 @@ $(document).ready(function() {
 
   // Product page with master price only
   $(".add-to-cart input.title:not(#quantity):not(.max_quantity)").change(products_update_price_without_variant).change();
+
+  // Product page other
+  $("#distributor_id").change(function() {
+    var distributor_html = distributors[$(this).val()];
+    if(!distributor_html) {
+      distributor_html = 'When you select a distributor for your order, their address and pickup times will be displayed here.';
+    }
+    $("#product-distributor-details .distributor-details").html(distributor_html);
+  });
 });
 
 

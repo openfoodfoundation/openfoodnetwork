@@ -7,6 +7,16 @@ class EnterprisesController < BaseController
     @suppliers = Enterprise.is_supplier
   end
 
+  def distributors
+    @distributors = Enterprise.is_distributor
+
+    respond_to do |format|
+      format.js do
+        @distributor_details = Hash[@distributors.map { |d| [d.id, render_to_string(:partial => 'enterprises/distributor_details', :locals => {:distributor => d})] }]
+      end
+    end
+  end
+
   def show
     options = {:enterprise_id => params[:id]}
     options.merge(params.reject { |k,v| k == :id })
