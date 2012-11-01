@@ -24,7 +24,7 @@ module Admin
     end
 
     def collection
-      super.order(:name)
+      super.order('is_primary_producer DESC, is_distributor ASC, name')
     end
   end
 end
