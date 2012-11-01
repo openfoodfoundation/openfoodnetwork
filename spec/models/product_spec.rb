@@ -19,7 +19,38 @@ describe Spree::Product do
     end
   end
 
-  context "finders" do
+  describe "scopes" do
+    describe "in_supplier_or_distributor" do
+      it "finds supplied products" do
+        s0 = create(:supplier_enterprise)
+        s1 = create(:supplier_enterprise)
+        p0 = create(:product, :supplier => s0)
+        p1 = create(:product, :supplier => s1)
+
+        Spree::Product.in_supplier_or_distributor(s1).should == [p1]
+      end
+
+      it "finds distributed products" do
+        d0 = create(:distributor_enterprise)
+        d1 = create(:distributor_enterprise)
+        p0 = create(:product, :distributors => [d0])
+        p1 = create(:product, :distributors => [d1])
+
+        Spree::Product.in_supplier_or_distributor(d1).should == [p1]
+      end
+
+      it "finds products supplied and distributed by the same enterprise" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product, :supplier => s, :distributors => [d])
+
+        Spree::Product.in_supplier_or_distributor(s).should == [p]
+        Spree::Product.in_supplier_or_distributor(d).should == [p]
+      end
+    end
+  end
+
+  describe "finders" do
     it "finds the shipping method for a particular distributor" do
       shipping_method = create(:shipping_method)
       distributor = create(:distributor_enterprise)

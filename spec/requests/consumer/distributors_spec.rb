@@ -26,6 +26,27 @@ feature %q{
     page.should_not have_selector 'a', :text => d3.name
   end
 
+  scenario "viewing a distributor" do
+    # Given some distributors with products
+    d1 = create(:distributor_enterprise, :long_description => "<p>Hello, world!</p>")
+    d2 = create(:distributor_enterprise)
+    p1 = create(:product, :distributors => [d1])
+    p2 = create(:product, :distributors => [d2])
+
+    # When I go to the first distributor page
+    visit spree.root_path
+    click_link d1.name
+
+    # Then I should see the distributor details
+    page.should have_selector 'h2', :text => d1.name
+    page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'
+
+    # And I should see the first, but not the second product
+    page.should have_content p1.name
+    page.should_not have_content p2.name
+  end
+
+
   context "when a distributor is selected" do
     it "displays the distributor's details" do
       # Given a distributor with a product

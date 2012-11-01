@@ -28,5 +28,25 @@ module OpenFoodWeb
       products = searcher.retrieve_products
       products.should == [p1]
     end
+
+    it "searches by supplier or distributor" do
+      # Given products under some suppliers and distributors
+      s0 = create(:supplier_enterprise)
+      s1 = create(:supplier_enterprise)
+      d1 = create(:distributor_enterprise)
+      p1 = create(:product, :supplier => s1)
+      p2 = create(:product, :distributors => [d1])
+      p3 = create(:product)
+
+      # When we search by the supplier enterprise, we should see the supplied products
+      searcher = Searcher.new(:enterprise_id => s1.id.to_s)
+      products = searcher.retrieve_products
+      products.should == [p1]
+
+      # When we search by the distributor enterprise, we should see the distributed products
+      searcher = Searcher.new(:enterprise_id => d1.id.to_s)
+      products = searcher.retrieve_products
+      products.should == [p2]
+    end
   end
 end
