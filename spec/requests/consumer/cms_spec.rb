@@ -31,7 +31,6 @@ feature %q{
     page.should_not have_content 'Home page content'
   end
 
-
   scenario "viewing the menu of CMS pages" do
     # Given some CMS pages
     home_page = create(:cms_page, content: 'Home')
@@ -46,6 +45,21 @@ feature %q{
     page.should have_selector 'ul#main-nav-bar li', :text => 'One'
     page.should have_selector 'ul#main-nav-bar li', :text => 'Two'
     page.should have_selector 'ul#main-nav-bar li', :text => 'Three'
+  end
+
+  scenario "viewing a page from the CMS menu" do
+    # Given some CMS pages
+    home_page = create(:cms_page, content: 'Home')
+    create(:cms_page, parent: home_page, label: 'One')
+    create(:cms_page, parent: home_page, label: 'Two', content: 'This is the page')
+    create(:cms_page, parent: home_page, label: 'Three')
+
+    # When I go to one of the pages
+    visit spree.root_path
+    click_link 'Two'
+
+    # Then I should see the page
+    page.should have_content 'This is the page'
   end
 
 end
