@@ -30,6 +30,7 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
     end
 
     # Copy suppliers to enterprises table with primary producer flag set
+    updated_product_ids = [-1]
     Supplier.all.each do |s|
       attrs = s.attributes
       attrs.reject! { |k| k == 'id' }
@@ -37,10 +38,14 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       e = Enterprise.create! attrs
 
       # Update supplier_id on product to point at the new enterprise
-      Spree::Product.update_all("supplier_id=#{e.id}", "supplier_id=#{s.id}")
+      product_ids = Spree::Product.where(:supplier_id => s.id).pluck(:id)
+      Spree::Product.update_all("supplier_id=#{e.id}", "supplier_id=#{s.id} AND id NOT IN (#{updated_product_ids.join(', ')})")
+      updated_product_ids += product_ids
     end
 
     # Copy distributors to enterprises table with distributor flag set
+    updated_product_distribution_ids = [-1]
+    updated_order_ids = [-1]
     Distributor.all.each do |d|
       attrs = d.attributes
       attrs['website'] = attrs['url']
@@ -49,8 +54,12 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       e = Enterprise.create! attrs
 
       # Update distributor_id on product distribution and order to point at the new enterprise
-      ProductDistribution.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id}")
-      Spree::Order.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id}")
+      product_distribution_ids = ProductDistribution.where(:distributor_id => d.id).pluck(:id)
+      order_ids = Spree::Order.where(:distributor_id => d.id).pluck(:id)
+      ProductDistribution.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id} AND id NOT IN (#{updated_product_distribution_ids.join(', ')})")
+      Spree::Order.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id} AND id NOT IN (#{updated_order_ids.join(', ')})")
+      updated_product_distribution_ids += product_distribution_ids
+      updated_order_ids += order_ids
     end
   end
 
