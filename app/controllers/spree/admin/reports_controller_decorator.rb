@@ -95,7 +95,7 @@ Spree::Admin::ReportsController.class_eval do
     case params[:report_type]
     when "bulk_coop_supplier_report"
 
-      header = ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total"]
+      header = ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
 
       columns = [ proc { |lis| lis.first.variant.product.supplier.name },
         proc { |lis| lis.first.variant.product.name },
@@ -103,7 +103,9 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.options_text },
         proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis|  lis.sum { |li| li.quantity } },
-        proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
+        proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
+        proc { |lis| "" },
+        proc { |lis| "" } ]
 
       rules = [ { group_by: proc { |li| li.variant.product.supplier },
         sort_by: proc { |supplier| supplier.name } },
@@ -115,13 +117,15 @@ Spree::Admin::ReportsController.class_eval do
           proc { |lis| "" },
           proc { |lis| "" },
           proc { |lis| lis.sum { |li| li.quantity * li.variant.weight || 0 } },
-          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } } ] },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } },
+          proc { |lis| ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor },
+          proc { |lis| lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } - ( ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor * lis.first.variant.product.group_buy_unit_size ) } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } } ]
 
     when "bulk_coop_allocation"
 
-      header = ["Customer", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total"]
+      header = ["Customer", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Total Allocated", "Remainder"]
 
       columns = [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
         proc { |lis| lis.first.variant.product.name },
@@ -129,10 +133,21 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.options_text },
         proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis| lis.sum { |li| li.quantity } },
-        proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
+        proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
+        proc { |lis| "" },
+        proc { |lis| "" } ]
 
       rules = [ { group_by: proc { |li| li.variant.product },
-        sort_by: proc { |product| product.name } },
+        sort_by: proc { |product| product.name },
+        summary_columns: [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
+          proc { |lis| lis.first.variant.product.name },
+          proc { |lis| lis.first.variant.product.group_buy_unit_size },
+          proc { |lis| "" },
+          proc { |lis| "" },
+          proc { |lis| lis.sum { |li| li.quantity * li.variant.weight || 0 } },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } },
+          proc { |lis| ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor * lis.first.variant.product.group_buy_unit_size },
+          proc { |lis| lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } - ( ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor * lis.first.variant.product.group_buy_unit_size ) } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } },
         { group_by: proc { |li| li.order },
@@ -169,7 +184,7 @@ Spree::Admin::ReportsController.class_eval do
 
     else # List all line items
 
-      header = ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total"]
+      header = ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
 
       columns = [ proc { |lis| lis.first.variant.product.supplier.name },
         proc { |lis| lis.first.variant.product.name },
@@ -177,14 +192,26 @@ Spree::Admin::ReportsController.class_eval do
         proc { |lis| lis.first.variant.options_text },
         proc { |lis| lis.first.variant.weight || 0 },
         proc { |lis|  lis.sum { |li| li.quantity } },
-        proc { |lis| lis.sum { |li| li.max_quantity || 0 } } ]
+        proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
+        proc { |lis| "" },
+        proc { |lis| "" } ]
 
       rules = [ { group_by: proc { |li| li.variant.product.supplier },
         sort_by: proc { |supplier| supplier.name } },
         { group_by: proc { |li| li.variant.product },
-        sort_by: proc { |product| product.name } },
+        sort_by: proc { |product| product.name },
+        summary_columns: [ proc { |lis| lis.first.variant.product.supplier.name },
+          proc { |lis| lis.first.variant.product.name },
+          proc { |lis| lis.first.variant.product.group_buy_unit_size },
+          proc { |lis| "" },
+          proc { |lis| "" },
+          proc { |lis| lis.sum { |li| li.quantity * li.variant.weight || 0 } },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } },
+          proc { |lis| ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor },
+          proc { |lis| lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } - ( ( lis.first.variant.product.group_buy_unit_size.zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity, li.quantity].max || 0 ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor * lis.first.variant.product.group_buy_unit_size ) } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } } ]
+
     end
 
     order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
@@ -335,7 +362,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
         proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
-        proc { |line_items| "status" },
+        proc { |line_items| "" },
         proc { |line_items| "incoming transport" } ]
 
         rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
@@ -402,7 +429,7 @@ Spree::Admin::ReportsController.class_eval do
           proc { |line_items| "" },
           proc { |line_items| "" },
           proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
-          proc { |line_items| "total shipping cost" },
+          proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
           proc { |line_items| "" } ] },
         { group_by: proc { |line_item| line_item.variant.product.supplier },
         sort_by: proc { |supplier| supplier.name } },
@@ -415,7 +442,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = line_items
       @include_blank = 'All'
 
-      header = ["Distributor", "Customer", "Email", "Phone", "Product", "Variant", "Amount", "Total Cost", "Paid?", "Packed?", "Shipped?"]
+      header = ["Distributor", "Customer", "Email", "Phone", "Product", "Variant", "Amount", "Item ($)", "Ship ($)", "Total ($)", "Paid?", "Packed?", "Shipped?"]
 
       columns = [ proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
@@ -427,12 +454,14 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
         proc { |line_items| "" },
         proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
         proc { |line_items| "" } ]
 
     rules = [ { group_by: proc { |line_item| line_item.order.distributor },
       sort_by: proc { |distributor| distributor.name } },
       { group_by: proc { |line_item| line_item.order },
-      sort_by: proc { |order| order.completed_at },
+      sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
       summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| line_items.first.order.email },
@@ -441,6 +470,8 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
+        proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
         proc { |line_items| line_items.map { |li| li.order.paid? }.all? { |paid| paid == true } ? "Yes" : "No" },
         proc { |line_items| "" },
         proc { |line_items| "" } ] },
@@ -461,7 +492,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
         proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
-        proc { |line_items| "status" },
+        proc { |line_items| "" },
         proc { |line_items| "incoming transport" } ]
 
       rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
