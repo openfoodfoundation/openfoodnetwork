@@ -3,11 +3,11 @@
   %br
   .date-range-filter
     %div{"class" => "left sub-field"}
-      = f.text_field :created_at_gt, :class => 'datepicker'
+      = f.text_field :completed_at_gt, :class => 'datepicker'
       %br
       = label_tag nil, t(:start), :class => 'sub'
     %div{"class" => "right sub-field"}
-      = f.text_field :created_at_lt, :class => 'datepicker'
+      = f.text_field :completed_at_lt, :class => 'datepicker'
       %br
       = label_tag nil, t(:stop)
   %br
