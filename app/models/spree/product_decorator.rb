@@ -12,7 +12,8 @@ Spree::Product.class_eval do
 
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
   scope :in_distributor, lambda { |distributor| joins(:product_distributions).where('product_distributions.distributor_id = ?', (distributor.respond_to?(:id) ? distributor.id : distributor.to_i)) }
-  scope :in_supplier_or_distributor, lambda { |enterprise| joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id=spree_products.id').
+  scope :in_supplier_or_distributor, lambda { |enterprise| select('distinct spree_products.*').
+                                                           joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id=spree_products.id').
                                                            where('supplier_id=? OR product_distributions.distributor_id=?',
                                                                  enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i,
                                                                  enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i) }

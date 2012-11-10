@@ -47,6 +47,18 @@ describe Spree::Product do
         Spree::Product.in_supplier_or_distributor(s).should == [p]
         Spree::Product.in_supplier_or_distributor(d).should == [p]
       end
+
+      it "shows each product once when it is distributed by many distributors" do
+        s = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        d3 = create(:distributor_enterprise)
+        p = create(:product, :supplier => s, :distributors => [d1, d2, d3])
+
+        [s, d1, d2, d3].each do |enterprise|
+          Spree::Product.in_supplier_or_distributor(enterprise).should == [p]
+        end
+      end
     end
   end
 
