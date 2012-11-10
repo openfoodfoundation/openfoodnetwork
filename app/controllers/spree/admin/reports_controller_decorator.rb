@@ -205,10 +205,10 @@ Spree::Admin::ReportsController.class_eval do
           proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
           proc { |lis| "" },
           proc { |lis| "" },
-          proc { |lis| lis.sum { |li| li.quantity * li.variant.weight || 0 } },
-          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * li.variant.weight || 0 } },
-          proc { |lis| ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor },
-          proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * li.variant.weight || 0 } - ( ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * li.variant.weight || 0 } / lis.first.variant.product.group_buy_unit_size ) ).floor * (lis.first.variant.product.group_buy_unit_size || 0) ) } ] },
+          proc { |lis| lis.sum { |li| li.quantity * (li.variant.weight || 0) } },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.variant.weight || 0) } },
+          proc { |lis| ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor },
+          proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } - ( ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor * (lis.first.variant.product.group_buy_unit_size || 0) ) } ] },
         { group_by: proc { |li| li.variant },
         sort_by: proc { |variant| variant.options_text } } ]
 
