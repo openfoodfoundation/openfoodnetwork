@@ -1,0 +1,20 @@
+= form_for @enterprise_fees_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fees_set_form|
+  %table.index#listing_enterprise_fees
+    %thead
+      %tr
+        %th Enterprise
+        %th Fee Type
+        %th Name
+        %th Calculator
+        %th Calculator values
+        %th
+    %tbody
+      = enterprise_fees_set_form.fields_for :collection do |f|
+        - enterprise_fee = f.object
+        %tr
+          %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name
+          %td= f.select :fee_type, enterprise_fee_options
+          %td= f.text_field :name
+          %td TODO
+          %td TODO
+          %td TODO

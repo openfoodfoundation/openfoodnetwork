@@ -21,6 +21,9 @@ FactoryGirl.define do
   end
 
   factory :enterprise_fee, :class => EnterpriseFee do
+    enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
+    fee_type 'packing'
+    name '$0.50 / kg'
   end
 
   factory :product_distribution, :class => ProductDistribution do

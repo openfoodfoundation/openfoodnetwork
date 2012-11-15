@@ -12,7 +12,9 @@ Openfoodweb::Application.routes.draw do
     resources :enterprises do
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
-    resources :enterprise_fees
+    resources :enterprise_fees do
+      post :bulk_update, :on => :collection, :as => :bulk_update
+    end
   end
 
   # Mount Spree's routes
