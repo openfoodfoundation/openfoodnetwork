@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= f.fields_for :enterprises do |enterprise_form| %>
+      <%= f.fields_for :collection do |enterprise_form| %>
         <% enterprise = enterprise_form.object %>
         <tr>
           <td><%= link_to enterprise.name, main_app.admin_enterprise_path(enterprise) %></td>
