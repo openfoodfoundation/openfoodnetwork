@@ -20,6 +20,9 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_fee, :class => EnterpriseFee do
+  end
+
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
