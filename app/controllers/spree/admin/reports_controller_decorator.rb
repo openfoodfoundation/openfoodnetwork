@@ -139,7 +139,7 @@ Spree::Admin::ReportsController.class_eval do
 
       rules = [ { group_by: proc { |li| li.variant.product },
         sort_by: proc { |product| product.name },
-        summary_columns: [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
+        summary_columns: [ proc { |lis| "TOTAL" },
           proc { |lis| lis.first.variant.product.name },
           proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
           proc { |lis| "" },
