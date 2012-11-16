@@ -40,8 +40,8 @@ feature %q{
     taxon_two = create(:taxon, :name => 'Taxon two', :parent_id => taxonomy_root.id)
     taxon_three = create(:taxon, :name => 'Taxon three', :parent_id => taxonomy_root.id)
 
-    my_distributor = create(:distributor, :name => 'My Distributor')
-    other_distributor = create(:distributor, :name => 'Other Distributor')
+    my_distributor = create(:distributor_enterprise, :name => 'My Distributor')
+    other_distributor = create(:distributor_enterprise, :name => 'Other Distributor')
 
     1.times { create(:product, :taxons => [taxon_one], :distributors => [other_distributor]) }
     2.times { create(:product, :taxons => [taxon_two], :distributors => [other_distributor]) }

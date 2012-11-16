@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018002907) do
+ActiveRecord::Schema.define(:version => 20121031222403) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -130,21 +130,24 @@ ActiveRecord::Schema.define(:version => 20121018002907) do
   add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
   add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
-  create_table "distributors", :force => true do |t|
+  create_table "enterprises", :force => true do |t|
     t.string   "name"
+    t.string   "description"
+    t.text     "long_description"
+    t.boolean  "is_primary_producer"
+    t.boolean  "is_distributor"
     t.string   "contact"
     t.string   "phone"
     t.string   "email"
-    t.string   "pickup_times"
-    t.string   "url"
+    t.string   "website"
+    t.string   "twitter"
     t.string   "abn"
     t.string   "acn"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "pickup_address_id"
+    t.integer  "address_id"
+    t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.text     "long_description"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "product_distributions", :force => true do |t|
@@ -487,7 +490,7 @@ ActiveRecord::Schema.define(:version => 20121018002907) do
     t.integer  "count_on_hand",        :default => 0,  :null => false
     t.integer  "supplier_id"
     t.boolean  "group_buy"
-    t.string   "group_buy_unit_size"
+    t.float    "group_buy_unit_size"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
@@ -771,18 +774,6 @@ ActiveRecord::Schema.define(:version => 20121018002907) do
     t.datetime "updated_at"
     t.boolean  "default_tax",        :default => false
     t.integer  "zone_members_count", :default => 0
-  end
-
-  create_table "suppliers", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "email"
-    t.string   "twitter"
-    t.string   "website"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "address_id"
-    t.text     "long_description"
   end
 
 end

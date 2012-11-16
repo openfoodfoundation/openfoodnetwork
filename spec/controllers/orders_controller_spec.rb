@@ -11,7 +11,7 @@ describe Spree::OrdersController do
 
   context "adding the first product to the cart" do
     it "does not add the product if the user does not specify a distributor" do
-      create(:distributor)
+      create(:distributor_enterprise)
       p = create(:product)
 
       expect do
@@ -20,8 +20,8 @@ describe Spree::OrdersController do
     end
 
     it "does not add the product if the user specifies a distributor that the product is not available at" do
-      distributor_product = create(:distributor)
-      distributor_no_product = create(:distributor)
+      distributor_product = create(:distributor_enterprise)
+      distributor_no_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product])
 
       expect do
@@ -30,8 +30,8 @@ describe Spree::OrdersController do
     end
 
     it "adds the product and sets the distributor even if the order has a different distributor set" do
-      distributor_product = create(:distributor)
-      distributor_no_product = create(:distributor)
+      distributor_product = create(:distributor_enterprise)
+      distributor_no_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product])
 
       order = current_order(true)
@@ -47,7 +47,7 @@ describe Spree::OrdersController do
 
     it "sets the order's distributor" do
       # Given a product in a distributor
-      d = create(:distributor)
+      d = create(:distributor_enterprise)
       p = create(:product, :distributors => [d])
 
       # When we add the product to our cart
@@ -61,7 +61,7 @@ describe Spree::OrdersController do
   context "adding a subsequent product to the cart" do
     before(:each) do
       # Given a product and a distributor
-      @distributor = create(:distributor)
+      @distributor = create(:distributor_enterprise)
       @product = create(:product, :distributors => [@distributor])
 
       # And the product is in the cart
@@ -72,7 +72,7 @@ describe Spree::OrdersController do
 
     it "does not add the product if the product is not available at the order's distributor" do
       # Given a product at another distributor
-      d2 = create(:distributor)
+      d2 = create(:distributor_enterprise)
       p2 = create(:product, :distributors => [d2])
 
       # When I attempt to add the product to the cart
@@ -85,7 +85,7 @@ describe Spree::OrdersController do
 
     it "does not add the product if the product is not available at the given distributor" do
       # Given a product at another distributor
-      d2 = create(:distributor)
+      d2 = create(:distributor_enterprise)
       p2 = create(:product, :distributors => [d2])
 
       # When I attempt to add the product to the cart with a fake distributor_id
@@ -98,7 +98,7 @@ describe Spree::OrdersController do
 
     it "does not add the product if the chosen distributor is different from the order's distributor" do
       # Given a product that's available at the chosen distributor and another distributor
-      d2 = create(:distributor)
+      d2 = create(:distributor_enterprise)
       p2 = create(:product, :distributors => [@distributor, d2])
 
       # When I attempt to add the product to the cart with the alternate distributor
@@ -112,7 +112,7 @@ describe Spree::OrdersController do
 
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
-      distributor_product = create(:distributor)
+      distributor_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product], :group_buy => true)
 
       order = current_order(true)

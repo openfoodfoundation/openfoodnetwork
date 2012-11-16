@@ -1,0 +1,7 @@
+%h2= @enterprise.name
+
+.enterprise-description= @enterprise.long_description.andand.html_safe
+
+%h3 Available Now
+
+= render :template => 'spree/products/index'

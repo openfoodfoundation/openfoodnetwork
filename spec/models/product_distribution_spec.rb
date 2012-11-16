@@ -6,7 +6,7 @@ describe ProductDistribution do
     pd1.should be_valid
 
     new_product = create(:product)
-    new_distributor = create(:distributor)
+    new_distributor = create(:distributor_enterprise)
 
     pd2 = build(:product_distribution, :product => pd1.product, :distributor => pd1.distributor)
     pd2.should_not be_valid

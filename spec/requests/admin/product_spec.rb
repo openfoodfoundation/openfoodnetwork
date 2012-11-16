@@ -8,8 +8,8 @@ feature %q{
   include WebHelper
 
   background do
-    @supplier = create(:supplier, :name => 'New supplier')
-    @distributors = (1..3).map { create(:distributor) }
+    @supplier = create(:supplier_enterprise, :name => 'New supplier')
+    @distributors = (1..3).map { create(:distributor_enterprise) }
     @shipping_method = create(:shipping_method, :name => 'My shipping method')
   end
 
@@ -49,14 +49,14 @@ feature %q{
       fill_in 'product_price', :with => '19.99'
       select 'New supplier', :from => 'product_supplier_id'
       choose 'product_group_buy_1'
-      fill_in 'Group buy unit size', :with => '10 kg'
+      fill_in 'Group buy unit size', :with => '10'
 
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.group_buy.should be_true
-      product.group_buy_unit_size.should == '10 kg'
+      product.group_buy_unit_size.should == 10.0
     end
 
   end

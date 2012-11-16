@@ -1,5 +1,5 @@
 Spree::Product.class_eval do
-  belongs_to :supplier
+  belongs_to :supplier, :class_name => 'Enterprise'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
@@ -12,6 +12,11 @@ Spree::Product.class_eval do
 
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
   scope :in_distributor, lambda { |distributor| joins(:product_distributions).where('product_distributions.distributor_id = ?', (distributor.respond_to?(:id) ? distributor.id : distributor.to_i)) }
+  scope :in_supplier_or_distributor, lambda { |enterprise| select('distinct spree_products.*').
+                                                           joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id=spree_products.id').
+                                                           where('supplier_id=? OR product_distributions.distributor_id=?',
+                                                                 enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i,
+                                                                 enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i) }
 
 
   def shipping_method_for_distributor(distributor)
@@ -23,7 +28,7 @@ Spree::Product.class_eval do
 
   # Build a product distribution for each distributor
   def build_product_distributions
-    Distributor.all.each do |distributor|
+    Enterprise.is_distributor.each do |distributor|
       unless self.product_distributions.find_by_distributor_id distributor.id
         self.product_distributions.build(:distributor => distributor)
       end

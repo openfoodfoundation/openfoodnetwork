@@ -1,5 +1,5 @@
 Spree::Order.class_eval do
-  belongs_to :distributor
+  belongs_to :distributor, :class_name => 'Enterprise'
 
   before_validation :shipping_address_from_distributor
   after_create :set_default_shipping_method
@@ -57,7 +57,7 @@ Spree::Order.class_eval do
 
   def shipping_address_from_distributor
     if distributor
-      self.ship_address = distributor.pickup_address.clone
+      self.ship_address = distributor.address.clone
 
       if bill_address
         self.ship_address.firstname = bill_address.firstname

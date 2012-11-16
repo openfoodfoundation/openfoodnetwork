@@ -128,8 +128,8 @@ ul.product-listing {
 }
 
 
-/* Supplier and distributor description */
-.supplier-description, .distributor-description {
+/* Enterprise description */
+.enterprise-description {
   margin-bottom: 2em;
 }
 
@@ -141,6 +141,19 @@ ul.product-listing {
   padding: 10px;
   border-radius: 10px;
   background-color: #def;
+}
+
+
+/* Distributor details on product details page */
+fieldset#product-distributor-details {
+  float: right;
+  margin-top: 0;
+  width: 250px;
+  @extend #shipping;
+}
+
+#product-variants {
+  float: none;
 }
 
 

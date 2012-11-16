@@ -1,0 +1,51 @@
+%h1 Enterprise
+%table
+  %tr
+    %th Name:
+    %td= @enterprise.name
+  %tr
+    %th Description:
+    %td= @enterprise.description
+  %tr
+    %th Extended Description:
+    %td= @enterprise.long_description.andand.html_safe
+  %tr
+    %th Primary producer?
+    %td= @enterprise.is_primary_producer ? 'Yes' : 'No'
+  %tr
+    %th Distributor?
+    %td= @enterprise.is_distributor ? 'Yes' : 'No'
+  %tr
+    %th Contact person:
+    %td= @enterprise.contact
+  %tr
+    %th Phone number:
+    %td= @enterprise.phone
+  %tr
+    %th Email:
+    %td= @enterprise.email
+  %tr
+    %th Website:
+    %td= @enterprise.website
+  %tr
+    %th Twitter:
+    %td= @enterprise.twitter
+  %tr
+    %th ABN:
+    %td= @enterprise.abn
+  %tr
+    %th ACN:
+    %td= @enterprise.acn
+  %tr
+    %th Address:
+    %td= render 'spree/shared/address', :address => @enterprise.address
+  %tr
+    %th Regular pickup times:
+    %td= @enterprise.pickup_times
+  %tr
+    %th Next collection date/time:
+    %td= @enterprise.next_collection_at
+%p
+  = link_to :Edit, main_app.edit_admin_enterprise_path(@enterprise), :class => 'edit_enterprise'
+  = t(:or)
+  = link_to t(:back), main_app.admin_enterprises_path

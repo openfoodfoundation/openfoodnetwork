@@ -11,8 +11,8 @@ describe Spree::HomeController do
 
   it "splits products by local/remote distributor when distributor is selected" do
     # Given two distributors with a product under each
-    d1 = create(:distributor)
-    d2 = create(:distributor)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
     p1 = create(:product, :distributors => [d1])
     p2 = create(:product, :distributors => [d2])
 

@@ -14,6 +14,7 @@ module OpenFoodWeb
     def get_base_scope
       base_scope = super
 
+      base_scope = base_scope.in_supplier_or_distributor(enterprise_id) if enterprise_id
       base_scope = base_scope.in_supplier(supplier_id) if supplier_id
       base_scope = base_scope.in_distributor(distributor_id) if distributor_id
 
@@ -23,6 +24,7 @@ module OpenFoodWeb
 
     def prepare(params)
       super(params)
+      @properties[:enterprise_id] = params[:enterprise_id]
       @properties[:supplier_id] = params[:supplier_id]
       @properties[:distributor_id] = params[:distributor_id]
     end

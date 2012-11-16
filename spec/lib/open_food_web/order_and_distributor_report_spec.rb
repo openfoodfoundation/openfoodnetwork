@@ -9,7 +9,7 @@ module OpenFoodWeb
       before(:each) do
         @bill_address = create(:address)
         @distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
-        @distributor = create(:distributor, :pickup_address => @distributor_address)
+        @distributor = create(:distributor_enterprise, :address => @distributor_address)
         product = create(:product)
         product_distribution = create(:product_distribution, :product => product, :distributor => @distributor, :shipping_method => create(:shipping_method))
         @shipping_instructions = "pick up on thursday please!"
@@ -41,7 +41,7 @@ module OpenFoodWeb
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
           @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.itemwise_shipping_cost,
           @payment_method.name,
-          @distributor.name, @distributor.pickup_address.address1, @distributor.pickup_address.city, @distributor.pickup_address.zipcode, @shipping_instructions ]
+          @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
       end
     end
   end
