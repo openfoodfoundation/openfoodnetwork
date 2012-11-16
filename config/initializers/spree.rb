@@ -26,3 +26,17 @@ Spree.config do |config|
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
 end
+
+
+# Add calculators category for enterprise fees
+module Spree
+  module Core
+    class Environment
+      class Calculators
+        include EnvironmentExtension
+
+        attr_accessor :enterprise_fees
+      end
+    end
+  end
+end
