@@ -1,4 +1,9 @@
-= form_for @enterprise_fees_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fees_set_form|
+= form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fee_set_form|
+  - if @enterprise_fee_set.errors.present?
+    %h2 Errors
+    %ul
+      - @enterprise_fee_set.errors.each do |error|
+        %li= error
   %table.index#listing_enterprise_fees
     %thead
       %tr
@@ -9,10 +14,10 @@
         %th Calculator values
         %th
     %tbody
-      = enterprise_fees_set_form.fields_for :collection do |f|
+      = enterprise_fee_set_form.fields_for :collection do |f|
         - enterprise_fee = f.object
         %tr
-          %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name
+          %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
           %td= f.select :fee_type, enterprise_fee_options
           %td= f.text_field :name
           %td= f.collection_select :calculator_type, @calculators, :name, :description
@@ -21,3 +26,4 @@
               = f.fields_for :calculator do |calculator_form|
                 = preference_fields(enterprise_fee.calculator, calculator_form)
           %td TODO
+  = enterprise_fee_set_form.submit 'Update'

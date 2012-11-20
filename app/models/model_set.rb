@@ -5,8 +5,9 @@ class ModelSet
 
   attr_accessor :collection
 
-  def initialize(collection, attributes={})
-    @collection = collection
+
+  def initialize(klass, collection, reject_if, attributes={})
+    @klass, @collection, @reject_if = klass, collection, reject_if
 
     attributes.each do |name, value|
       send("#{name}=", value)
@@ -16,9 +17,17 @@ class ModelSet
   def collection_attributes=(attributes)
     attributes.each do |k, attributes|
       # attributes == {:id => 123, :next_collection_at => '...'}
-      e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s }
-      e.assign_attributes(attributes.except(:id))
+      e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
+      if e.nil?
+        @collection << @klass.new(attributes) unless @reject_if.andand.call(attributes)
+      else
+        e.assign_attributes(attributes.except(:id))
+      end
     end
+  end
+
+  def errors
+    @collection.map { |ef| ef.errors.full_messages }.flatten
   end
 
   def save
