@@ -6,7 +6,7 @@ module Admin
     helper 'spree/products'
 
     def bulk_update
-      @enterprise_set = ModelSet.new(Enterprise.all, params[:model_set])
+      @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
       if @enterprise_set.save
         redirect_to main_app.admin_enterprises_path, :notice => 'Distributor collection times updated.'
       else
@@ -16,7 +16,7 @@ module Admin
 
     private
     def load_enterprise_set
-      @enterprise_set = ModelSet.new Enterprise.all, :collection => collection
+      @enterprise_set = EnterpriseSet.new :collection => collection
     end
 
     def load_countries

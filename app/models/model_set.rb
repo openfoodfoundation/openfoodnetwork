@@ -1,6 +1,4 @@
-# Tableless model to handle updating multiple models at once from a
-# single form. For example, it is used to update the enterprise next_collection_at
-# field for all distributors in the admin backend.
+# Tableless model to handle updating multiple models at once from a single form
 class ModelSet
   include ActiveModel::Conversion
   extend ActiveModel::Naming

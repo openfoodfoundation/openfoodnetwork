@@ -109,9 +109,9 @@ feature %q{
     click_link 'Enterprises'
 
     # And I fill in some new collection times and save them
-    fill_in 'model_set_collection_attributes_0_next_collection_at', :with => 'One'
-    fill_in 'model_set_collection_attributes_1_next_collection_at', :with => 'Two'
-    fill_in 'model_set_collection_attributes_2_next_collection_at', :with => 'Three'
+    fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
+    fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
+    fill_in 'enterprise_set_collection_attributes_2_next_collection_at', :with => 'Three'
     click_button 'Update'
 
     # Then my times should have been saved
