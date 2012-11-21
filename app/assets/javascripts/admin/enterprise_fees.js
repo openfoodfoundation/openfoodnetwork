@@ -1,3 +1,18 @@
+function AdminEnterpriseFeesCtrl($scope, $http) {
+  $http.get('/admin/enterprise_fees.json').success(function(data) {
+    $scope.enterprise_fees = data;
+  });
+}
+
+
+
+
+
+
+
+
+
+/*
 // Hide calculator preference fields when calculator type changed
 // Fixes 'Enterprise fee is not found' error when changing calculator type
 // See spree/core/app/assets/javascripts/admin/calculator.js
@@ -24,3 +39,4 @@ $(document).ready(function() {
     }
   });
 });
+*/
