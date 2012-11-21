@@ -58,14 +58,12 @@ feature %q{
     login_to_admin_section
     click_link 'Configuration'
     click_link 'Enterprise Fees'
-    binding.pry
 
     # And I update the fields for the enterprise fee and click update
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
     select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
     fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
     select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
-    binding.pry
     click_button 'Update'
 
     # Then I should see the updated fields for my fee
@@ -75,5 +73,22 @@ feature %q{
     page.should have_selector "option[selected]", text: 'Flat Percent'
   end
 
+  scenario "deleting an enterprise fee", js: true do
+    # Given an enterprise fee
+    fee = create(:enterprise_fee)
+
+    # When I go to the enterprise fees page
+    login_to_admin_section
+    click_link 'Configuration'
+    click_link 'Enterprise Fees'
+
+    # And I click delete
+    click_link 'Delete'
+    page.driver.wait_until(page.driver.browser.switch_to.alert.accept)
+
+    # Then my enterprise fee should have been deleted
+    visit admin_enterprise_fees_path
+    page.should_not have_selector "input[value='#{fee.name}']"
+  end
 
 end

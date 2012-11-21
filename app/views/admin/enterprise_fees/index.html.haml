@@ -26,5 +26,5 @@
               .calculator-settings
                 = f.fields_for :calculator do |calculator_form|
                   = preference_fields(enterprise_fee.calculator, calculator_form)
-          %td TODO
+          %td= link_to_delete enterprise_fee unless enterprise_fee.new_record?
   = enterprise_fee_set_form.submit 'Update'
