@@ -1,0 +1,6 @@
+r.list_of :enterprise_fees, @collection do
+  r.element :id
+  r.element :enterprise_id
+  r.element :fee_type
+  r.element :name
+end

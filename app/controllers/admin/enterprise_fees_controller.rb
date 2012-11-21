@@ -3,6 +3,13 @@ module Admin
     before_filter :load_enterprise_fee_set, :only => :index
     before_filter :load_data
 
+    def index
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    end
+
     def bulk_update
       @enterprise_fee_set = EnterpriseFeeSet.new(params[:enterprise_fee_set])
       if @enterprise_fee_set.save
