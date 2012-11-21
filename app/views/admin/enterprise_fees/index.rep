@@ -3,4 +3,5 @@ r.list_of :enterprise_fees, @collection do
   r.element :enterprise_id
   r.element :fee_type
   r.element :name
+  r.element :calculator_type
 end

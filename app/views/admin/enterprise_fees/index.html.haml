@@ -18,7 +18,16 @@
         %th
     %tbody
       %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
-        %td {{ enterprise_fee.id }}
+        %td
+          %select{:id => 'enterprise_fee_set_collection_attributes_{{ $index }}_enterprise_id', :name => "enterprise_fee_set[collection_attributes][{{ $index }}][enterprise_id]", 'ng-model' => 'enterprise_fee'}
+            %option{:value => ""}
+            - Enterprise.all.each do |enterprise|
+              %option{:value => enterprise.id, 'ng-selected' => "enterprise_fee.enterprise_id == #{enterprise.id}"}= enterprise.name
+        %td {{ enterprise_fee.fee_type }}
+        %td= text_field_tag 'enterprise_fee_set[collection_attributes][{{ $index }}][name]', '{{ enterprise_fee.name }}', :id => 'enterprise_fee_set_collection_attributes_{{ $index }}_name'
+        %td {{ enterprise_fee.calculator_type }}
+
+
       = enterprise_fee_set_form.fields_for :collection do |f|
         - enterprise_fee = f.object
         %tr
