@@ -118,7 +118,7 @@ feature %q{
     click_button 'Save and Continue'
 
     # -- Checkout: Payment
-    click_button 'Save and Continue'
+    click_button 'Process My Order'
 
     # -- Checkout: Order complete
     page.should have_content('Your order has been processed successfully')
