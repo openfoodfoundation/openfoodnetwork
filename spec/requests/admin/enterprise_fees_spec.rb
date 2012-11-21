@@ -14,10 +14,10 @@ feature %q{
     click_link 'Configuration'
     click_link 'Enterprise Fees'
 
-    page.should have_selector 'option', text: fee.enterprise.name
-    page.should have_selector 'option', text: 'Packing'
+    page.should have_selector "option[selected]", text: fee.enterprise.name
+    page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
-    page.should have_selector 'option', text: 'Weight (per kg)'
+    page.should have_selector "option[selected]", text: 'Weight (per kg)'
     page.should have_selector "input[value='0.5']"
   end
 
@@ -48,5 +48,32 @@ feature %q{
     # Then I should see the correct values in my calculator fields
     page.should have_selector "#enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
   end
+
+  scenario "editing an enterprise fee", js: true do
+    # Given an enterprise fee
+    fee = create(:enterprise_fee)
+    create(:enterprise, name: 'Foo')
+
+    # When I go to the enterprise fees page
+    login_to_admin_section
+    click_link 'Configuration'
+    click_link 'Enterprise Fees'
+    binding.pry
+
+    # And I update the fields for the enterprise fee and click update
+    select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
+    select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
+    fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
+    select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
+    binding.pry
+    click_button 'Update'
+
+    # Then I should see the updated fields for my fee
+    page.should have_selector "option[selected]", text: 'Foo'
+    page.should have_selector "option[selected]", text: 'Admin'
+    page.should have_selector "input[value='Greetings!']"
+    page.should have_selector "option[selected]", text: 'Flat Percent'
+  end
+
 
 end

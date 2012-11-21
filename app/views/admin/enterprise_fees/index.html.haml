@@ -20,10 +20,11 @@
           %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
           %td= f.select :fee_type, enterprise_fee_options
           %td= f.text_field :name
-          %td= f.collection_select :calculator_type, @calculators, :name, :description
+          %td= f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
           %td
             - if !enterprise_fee.new_record?
-              = f.fields_for :calculator do |calculator_form|
-                = preference_fields(enterprise_fee.calculator, calculator_form)
+              .calculator-settings
+                = f.fields_for :calculator do |calculator_form|
+                  = preference_fields(enterprise_fee.calculator, calculator_form)
           %td TODO
   = enterprise_fee_set_form.submit 'Update'
