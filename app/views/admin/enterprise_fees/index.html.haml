@@ -1,7 +1,7 @@
 - content_for :head do
   = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"
 
-= form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fee_set_form|
+= angular_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fee_set_form|
   - if @enterprise_fee_set.errors.present?
     %h2 Errors
     %ul
@@ -17,6 +17,14 @@
         %th Calculator values
         %th
     %tbody
+      = enterprise_fee_set_form.angular_fields_for :collection do |f|
+        %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
+          %td=# f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
+          %td=# f.select :fee_type, enterprise_fee_options
+          %td= f.angular_text_field :name
+          %td=# f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
+
+
       %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
         %td
           %select{:id => 'enterprise_fee_set_collection_attributes_{{ $index }}_enterprise_id', :name => "enterprise_fee_set[collection_attributes][{{ $index }}][enterprise_id]", 'ng-model' => 'enterprise_fee'}
