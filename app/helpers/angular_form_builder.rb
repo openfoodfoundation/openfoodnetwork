@@ -21,11 +21,11 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def angular_select(method, choices, angular_field, options = {})
-    @template.select_tag method, @template.angular_options_for_select(choices, angular_field), options
+    @template.select_tag method, @template.angular_options_for_select(choices, angular_field), options.reverse_merge!({'ng-model' => angular_field})
   end
 
   def angular_collection_select(method, collection, value_method, text_method, angular_field, options = {})
-    @template.select_tag method, @template.angular_options_from_collection_for_select(collection, value_method, text_method, angular_field), options
+    @template.select_tag method, @template.angular_options_from_collection_for_select(collection, value_method, text_method, angular_field), options.reverse_merge!({'ng-model' => angular_field})
   end
 
 end

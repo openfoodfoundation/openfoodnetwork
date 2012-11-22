@@ -1,13 +1,16 @@
 - content_for :head do
   = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"
 
-= angular_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path do |enterprise_fee_set_form|
+= angular_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => '', 'ng-controller' => 'AdminEnterpriseFeesCtrl'} do |enterprise_fee_set_form|
   - if @enterprise_fee_set.errors.present?
     %h2 Errors
     %ul
       - @enterprise_fee_set.errors.each do |error|
         %li= error
-  %table.index#listing_enterprise_fees{'ng-app' => '', 'ng-controller' => 'AdminEnterpriseFeesCtrl'}
+
+  %input.search{'ng-model' => 'query', 'placeholder' => 'Search'}
+
+  %table.index#listing_enterprise_fees
     %thead
       %tr
         %th Enterprise
@@ -19,11 +22,16 @@
     %tbody
       / -- Finished product
       = enterprise_fee_set_form.angular_fields_for :collection do |f|
-        %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
+        %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees | filter:query'}
           %td= f.angular_collection_select :enterprise_id, Enterprise.all, :id, :name, 'enterprise_fee.enterprise_id', :include_blank => true
           %td= f.angular_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.angular_text_field :name
           %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
+          %td {{ enterprise_fee.calculator_settings }}
+          %td Delete
+
+      %tr
+        %td ---
 
       / -- Manual HTML / form_tag
       %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
