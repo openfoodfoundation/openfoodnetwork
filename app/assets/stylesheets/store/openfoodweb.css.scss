@@ -225,3 +225,8 @@ fieldset#product-distributor-details {
     }
   }
 }
+
+/* Alert for EFT Payment during checkout process */
+div#eft-payment-alert {
+  border: 2px solid red;
+}

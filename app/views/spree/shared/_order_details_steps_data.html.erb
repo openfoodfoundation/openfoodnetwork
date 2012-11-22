@@ -9,7 +9,7 @@
   </div>
 
   <div class="columns alpha six">
-    <h6><%= "Distributor Details" %> <%=# link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
+    <h6><%= "Distributor Details" %> <%# link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
     <div class="address">
       Distributor: <%= order.distributor.name %><br />
 	  Address: <%= order.distributor.address.address1 + ", " + order.distributor.address.city %>
@@ -24,16 +24,13 @@
   </div> -->
 </div>
 <div class="row steps-data">
-  <div class="columns alpha six">
+  <div class="columns alpha six" <% if order.payment_method.name.include? "EFT" %>id="eft-payment-alert"<% end %>>
     <h6><%= t(:payment_information) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h6>
     <div class="payment-info">
       <% if order.payment_method.name.include? "PayPal" %>
-	    <div class="flash notice">Your payment via Paypal has been processed successfully.</div>
+	    <div class="flash notice">Your payment via PayPal has been processed successfully.</div>
 	  <% elsif order.payment_method.name.include? "EFT" %>
-        <span style="font-weight: bold">Please pay by direct debit:</span><br /><br />
-	    Eaterprises Australia<br />
-	    BSB: XXX-XXX<br />
-	    Acct: XXXXXXX
+        <span><%= order.payment_method.description.html_safe %></span>
       <% elsif order.creditcards.empty? == false %>
         <span class="cc-type">
           <%= image_tag "creditcards/icons/#{order.creditcards.first.cc_type}.png" %>
