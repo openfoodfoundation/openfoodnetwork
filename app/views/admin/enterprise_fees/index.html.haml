@@ -1,7 +1,4 @@
-- content_for :head do
-  = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"
-
-= angular_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => '', 'ng-controller' => 'AdminEnterpriseFeesCtrl'} do |enterprise_fee_set_form|
+= angular_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'enterprise_fees', 'ng-controller' => 'AdminEnterpriseFeesCtrl'} do |enterprise_fee_set_form|
   - if @enterprise_fee_set.errors.present?
     %h2 Errors
     %ul
@@ -28,21 +25,10 @@
           %td= f.angular_text_field :name
           %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
           %td{'ng-bind-html-unsafe' => 'enterprise_fee.calculator_settings'}
-          %td Delete
+          %td{'spree-delete-resource' => "1"}
 
       %tr
         %td ---
-
-      / -- Manual HTML / form_tag
-      %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
-        %td
-          %select{:id => 'enterprise_fee_set_collection_attributes_{{ $index }}_enterprise_id', :name => "enterprise_fee_set[collection_attributes][{{ $index }}][enterprise_id]", 'ng-model' => 'enterprise_fee'}
-            %option{:value => ""}
-            - Enterprise.all.each do |enterprise|
-              %option{:value => enterprise.id, 'ng-selected' => "enterprise_fee.enterprise_id == #{enterprise.id}"}= enterprise.name
-        %td= select_tag :fee_type, angular_options_for_select(enterprise_fee_type_options, 'enterprise_fee.fee_type')
-        %td= text_field_tag 'enterprise_fee_set[collection_attributes][{{ $index }}][name]', '{{ enterprise_fee.name }}', :id => 'enterprise_fee_set_collection_attributes_{{ $index }}_name'
-        %td {{ enterprise_fee.calculator_type }}
 
       / -- Plain old Rails
       = enterprise_fee_set_form.fields_for :collection do |f|

@@ -5,9 +5,16 @@ function AdminEnterpriseFeesCtrl($scope, $http) {
 }
 
 
-
-
-
+angular.module('enterprise_fees', [])
+  .directive('spreeDeleteResource', function() {
+    return function(scope, element, attrs) {
+      if(scope.enterprise_fee.id) {
+	var url = "/admin/enterprise_fees/" + scope.enterprise_fee.id
+	var html = '<a href="'+url+'" class="delete-resource" data-confirm="Are you sure?"><img alt="Delete" src="/assets/admin/icons/delete.png" /> Delete</a>';
+	element.append(html);
+      }
+    }
+  });
 
 
 
