@@ -1,0 +1,9 @@
+-# Render only the calculator settings and not the surrounding form
+- form = nil
+- form_for enterprise_fee, :url => '' do |f|
+  - form = capture do
+    - if !enterprise_fee.new_record?
+      .calculator-settings
+        = f.fields_for :calculator do |calculator_form|
+          = preference_fields(enterprise_fee.calculator, calculator_form)
+= form

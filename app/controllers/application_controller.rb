@@ -14,4 +14,16 @@ class ApplicationController < ActionController::Base
     @distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name
   end
 
+  # All render calls within the block will be performed with the specified format
+  # Useful for rendering html within a JSON response, particularly if the specified
+  # template or partial then goes on to render further partials without specifying
+  # their format.
+  def with_format(format, &block)
+    old_formats = formats
+    self.formats = [format]
+    block.call
+    self.formats = old_formats
+    nil
+  end
+
 end

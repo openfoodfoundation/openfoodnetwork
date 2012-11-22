@@ -10,14 +10,4 @@ class EnterpriseFee < ActiveRecord::Base
 
   validates_inclusion_of :fee_type, :in => FEE_TYPES
   validates_presence_of :name
-
-
-  def enterprise_name
-    enterprise.andand.name
-  end
-
-  def calculator_description
-    calculator.andand.description
-  end
-
 end

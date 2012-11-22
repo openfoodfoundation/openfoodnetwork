@@ -6,7 +6,7 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json
+        format.json { @presented_collection = @collection.map { |ef| EnterpriseFeePresenter.new(self, ef) } }
       end
     end
 
