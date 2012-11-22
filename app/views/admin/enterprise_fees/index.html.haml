@@ -20,28 +20,13 @@
       / -- Finished product
       = enterprise_fee_set_form.angular_fields_for :collection do |f|
         %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees | filter:query'}
-          %td= f.angular_collection_select :enterprise_id, Enterprise.all, :id, :name, 'enterprise_fee.enterprise_id', :include_blank => true
+          %td
+            = f.angular_hidden_field :id
+            = f.angular_collection_select :enterprise_id, Enterprise.all, :id, :name, 'enterprise_fee.enterprise_id', :include_blank => true
           %td= f.angular_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.angular_text_field :name
           %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
           %td{'ng-bind-html-unsafe' => 'enterprise_fee.calculator_settings'}
           %td{'spree-delete-resource' => "1"}
 
-      %tr
-        %td ---
-
-      / -- Plain old Rails
-      = enterprise_fee_set_form.fields_for :collection do |f|
-        - enterprise_fee = f.object
-        %tr
-          %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
-          %td= f.select :fee_type, enterprise_fee_type_options
-          %td= f.text_field :name
-          %td= f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
-          %td
-            - if !enterprise_fee.new_record?
-              .calculator-settings
-                = f.fields_for :calculator do |calculator_form|
-                  = preference_fields(enterprise_fee.calculator, calculator_form)
-          %td= link_to_delete enterprise_fee unless enterprise_fee.new_record?
   = enterprise_fee_set_form.submit 'Update'
