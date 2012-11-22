@@ -20,7 +20,7 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
     @template.text_field_tag name, value, :id => id
   end
 
-  def angular_select(method, choices, options = {}, html_options = {})
-    # ...
+  def angular_select(method, choices, angular_field, options = {}, html_options = {})
+    @template.select_tag method, @template.angular_options_for_select(choices, angular_field)
   end
 end
