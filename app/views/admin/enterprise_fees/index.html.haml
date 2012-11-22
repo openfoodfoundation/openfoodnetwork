@@ -20,10 +20,10 @@
       / -- Finished product
       = enterprise_fee_set_form.angular_fields_for :collection do |f|
         %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
-          %td=# f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
+          %td= f.angular_collection_select :enterprise_id, Enterprise.all, :id, :name, 'enterprise_fee.enterprise_id', :include_blank => true
           %td= f.angular_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.angular_text_field :name
-          %td=# f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
+          %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
 
       / -- Manual HTML / form_tag
       %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}

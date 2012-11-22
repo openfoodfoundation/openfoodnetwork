@@ -9,7 +9,16 @@ module AngularFormHelper
       %(<option value="#{ERB::Util.html_escape(value)}"#{selected_attribute}#{html_attributes}>#{ERB::Util.html_escape(text)}</option>)
     end.join("\n").html_safe
   end
+
+  def angular_options_from_collection_for_select(collection, value_method, text_method, angular_field)
+    options = collection.map do |element|
+      [element.send(text_method), element.send(value_method)]
+    end
+
+    angular_options_for_select(options, angular_field)
+  end
 end
+
 
 class ActionView::Helpers::InstanceTag
   include AngularFormHelper
