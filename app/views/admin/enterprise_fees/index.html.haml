@@ -17,32 +17,31 @@
         %th Calculator values
         %th
     %tbody
-      -# -- Finished product
-      = enterprise_fee_set_form.angular_fields_for :collection do |f|  # regular fields_for collection.first ??
+      / -- Finished product
+      = enterprise_fee_set_form.angular_fields_for :collection do |f|
         %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
           %td=# f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
           %td=# f.angular_select :fee_type, enterprise_fee_options
           %td= f.angular_text_field :name
           %td=# f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
 
-      -# -- Manual HTML / form_tag
+      / -- Manual HTML / form_tag
       %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees'}
         %td
           %select{:id => 'enterprise_fee_set_collection_attributes_{{ $index }}_enterprise_id', :name => "enterprise_fee_set[collection_attributes][{{ $index }}][enterprise_id]", 'ng-model' => 'enterprise_fee'}
             %option{:value => ""}
             - Enterprise.all.each do |enterprise|
               %option{:value => enterprise.id, 'ng-selected' => "enterprise_fee.enterprise_id == #{enterprise.id}"}= enterprise.name
-        %td
-          {{ enterprise_fee.fee_type }}
+        %td= select_tag :fee_type, angular_options_for_select(enterprise_fee_type_options, 'enterprise_fee.fee_type')
         %td= text_field_tag 'enterprise_fee_set[collection_attributes][{{ $index }}][name]', '{{ enterprise_fee.name }}', :id => 'enterprise_fee_set_collection_attributes_{{ $index }}_name'
         %td {{ enterprise_fee.calculator_type }}
 
-      -# -- Plain old Rails
+      / -- Plain old Rails
       = enterprise_fee_set_form.fields_for :collection do |f|
         - enterprise_fee = f.object
         %tr
           %td= f.collection_select :enterprise_id, Enterprise.all, :id, :name, :include_blank => true
-          %td= f.select :fee_type, enterprise_fee_options
+          %td= f.select :fee_type, enterprise_fee_type_options
           %td= f.text_field :name
           %td= f.collection_select :calculator_type, @calculators, :name, :description, {}, {:class => 'calculator_type'}
           %td
