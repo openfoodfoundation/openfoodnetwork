@@ -30,7 +30,7 @@ module Admin
     end
 
     def collection
-      super + (1..3).map { EnterpriseFee.new }
+      super.order('enterprise_id', 'fee_type', 'name') + (1..3).map { EnterpriseFee.new }
     end
 
   end
