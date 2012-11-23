@@ -1,10 +1,11 @@
-Dear Customer,
+Dear <%= @order.bill_address.firstname %>,
 
 Please review and retain the following order information for your records.
 
 ============================================================
 Order Summary
 ============================================================
+Order for: <%= @order.bill_address.full_name %> 
 <% @order.line_items.each do |item| %>
   <%= item.variant.sku %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= number_to_currency item.price %> = <%= number_to_currency(item.price * item.quantity) %>
 <% end %>
@@ -15,15 +16,22 @@ Subtotal: <%= number_to_currency @order.item_total %>
 <% end %>
 Order Total: <%= number_to_currency(@order.total) %>
 
+<% if @order.payment_method.include? "EFT" %>
 ============================================================
-Delivery Details
+Payment Details
+============================================================
+<%= @order.payment_method.description.html_safe %>
+
+<% end %>
+============================================================
+Collection / Delivery Details
 ============================================================
 Address:
     <%= @order.distributor.name %>
     <% address = @order.distributor.address %>
     <%= address.address1 %> <%= ",\n    #{address.address2}" unless address.address2.blank? %>
     <%= [address.city, address.state_text, address.zipcode, address.country.name].compact.join ', ' %>
-Colection time:
+Collection time:
     <%= @order.distributor.next_collection_at %>
 Contact:
     <%= @order.distributor.contact %>
