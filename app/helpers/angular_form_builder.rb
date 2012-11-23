@@ -2,7 +2,7 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   # TODO: Use ng_ prefix, like ng_fields_for
 
   def angular_fields_for(record_name, *args, &block)
-    # TODO: Handle nested angular_fields_for
+    raise "Nested angular_fields_for is not yet supported" if @fields_for_record_name.present
     @fields_for_record_name = record_name
     block.call self
     @fields_for_record_name = nil
