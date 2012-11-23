@@ -17,7 +17,6 @@
         %th Calculator values
         %th
     %tbody
-      / -- Finished product
       = enterprise_fee_set_form.angular_fields_for :collection do |f|
         %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees | filter:query'}
           %td
@@ -26,7 +25,7 @@
           %td= f.angular_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.angular_text_field :name
           %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
-          %td{'ng-bind-html-unsafe' => 'enterprise_fee.calculator_settings'}
+          %td{'ng-bind-html-unsafe-compiled' => 'enterprise_fee.calculator_settings'}
           %td{'spree-delete-resource' => "1"}
 
   = enterprise_fee_set_form.submit 'Update'

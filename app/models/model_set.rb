@@ -5,8 +5,7 @@ class ModelSet
 
   attr_accessor :collection
 
-
-  def initialize(klass, collection, reject_if, attributes={})
+  def initialize(klass, collection, reject_if=nil, attributes={})
     @klass, @collection, @reject_if = klass, collection, reject_if
 
     attributes.each do |name, value|

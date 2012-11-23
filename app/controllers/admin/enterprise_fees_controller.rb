@@ -6,7 +6,7 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json { @presented_collection = @collection.map { |ef| EnterpriseFeePresenter.new(self, ef) } }
+        format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
       end
     end
 

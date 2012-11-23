@@ -4,8 +4,14 @@ function AdminEnterpriseFeesCtrl($scope, $http) {
   });
 }
 
-
 angular.module('enterprise_fees', [])
+  .directive('ngBindHtmlUnsafeCompiled', function($compile) {
+    return function(scope, element, attrs) {
+      scope.$watch(attrs.ngBindHtmlUnsafeCompiled, function(value) {
+	element.html($compile(value)(scope));
+      });
+    }
+  })
   .directive('spreeDeleteResource', function() {
     return function(scope, element, attrs) {
       if(scope.enterprise_fee.id) {
