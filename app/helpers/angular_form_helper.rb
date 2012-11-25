@@ -1,5 +1,5 @@
 module AngularFormHelper
-  def angular_options_for_select(container, angular_field=nil)
+  def ng_options_for_select(container, angular_field=nil)
     return container if String === container
 
     container.map do |element|
@@ -10,12 +10,12 @@ module AngularFormHelper
     end.join("\n").html_safe
   end
 
-  def angular_options_from_collection_for_select(collection, value_method, text_method, angular_field)
+  def ng_options_from_collection_for_select(collection, value_method, text_method, angular_field)
     options = collection.map do |element|
       [element.send(text_method), element.send(value_method)]
     end
 
-    angular_options_for_select(options, angular_field)
+    ng_options_for_select(options, angular_field)
   end
 end
 

@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
 
-  def angular_form_for(name, *args, &block)
+  def ng_form_for(name, *args, &block)
     options = args.extract_options!
 
     form_for(name, *(args << options.merge(:builder => AngularFormBuilder)), &block)
