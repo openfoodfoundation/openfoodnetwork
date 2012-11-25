@@ -7,6 +7,7 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require angular
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo

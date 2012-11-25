@@ -20,6 +20,15 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_fee, :class => EnterpriseFee do
+    enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
+    fee_type 'packing'
+    name '$0.50 / kg'
+    calculator { FactoryGirl.build(:weight_calculator) }
+
+    after_create { |ef| ef.calculator.save! }
+  end
+
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
@@ -33,6 +42,12 @@ FactoryGirl.define do
 
   factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
   end
+
+  factory :weight_calculator, :class => OpenFoodWeb::Calculator::Weight do
+    after_build  { |c| c.set_preference(:per_kg, 0.5) }
+    after_create { |c| c.set_preference(:per_kg, 0.5); c.save! }
+  end
+
 end
 
 

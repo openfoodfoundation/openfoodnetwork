@@ -282,6 +282,14 @@ GEM
       polyamorous (~> 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
+    representative (1.0.5)
+      activesupport (>= 2.2.2)
+      builder (>= 2.1.2)
+      i18n (>= 0.4.1)
+      nokogiri (>= 1.4.2)
+    representative_view (1.2.2)
+      actionpack (> 2.3.0, < 4.0.0)
+      representative (~> 1.0.2)
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -359,6 +367,7 @@ DEPENDENCIES
   pg
   pry-debugger
   rails (= 3.2.8)
+  representative_view
   rspec-rails
   sass-rails (~> 3.2.3)
   shoulda-matchers

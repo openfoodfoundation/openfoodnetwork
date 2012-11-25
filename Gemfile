@@ -22,6 +22,7 @@ gem 'haml'
 gem 'aws-sdk'
 gem 'andand'
 gem 'truncate_html'
+gem 'representative_view'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -16,7 +16,7 @@ module Admin
 
     private
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new :enterprises => collection
+      @enterprise_set = EnterpriseSet.new :collection => collection
     end
 
     def load_countries

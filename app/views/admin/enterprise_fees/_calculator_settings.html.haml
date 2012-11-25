@@ -1,0 +1,12 @@
+-# Render only the calculator settings and not the surrounding form
+- enterprise_fee_set = ModelSet.new(EnterpriseFee, EnterpriseFee.where(:id => enterprise_fee.id))
+- calculator_form_string = nil
+- form_for enterprise_fee_set, :as => :enterprise_fee_set, :url => '' do |form|
+  - form.fields_for :collection do |f|
+    - calculator_form_string = capture do
+      - if !enterprise_fee.new_record?
+        .calculator-settings
+          = f.fields_for :calculator do |calculator_form|
+            = preference_fields(enterprise_fee.calculator, calculator_form)
+
+= calculator_form_string
