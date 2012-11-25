@@ -24,7 +24,7 @@
             = f.angular_collection_select :enterprise_id, Enterprise.all, :id, :name, 'enterprise_fee.enterprise_id', :include_blank => true
           %td= f.angular_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.angular_text_field :name
-          %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {:class => 'calculator_type'}
+          %td= f.angular_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {'class' => 'calculator_type', 'ng-model' => 'calculatorType', 'spree-ensure-calculator-preferences-match-type' => "1"}
           %td{'ng-bind-html-unsafe-compiled' => 'enterprise_fee.calculator_settings'}
           %td{'spree-delete-resource' => "1"}
 

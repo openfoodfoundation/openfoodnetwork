@@ -3,7 +3,7 @@ require 'spec_helper'
 feature %q{
     As an administrator
     I want to manage enterprise fees
-} do
+}, js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -49,7 +49,7 @@ feature %q{
     page.should have_selector "#enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
   end
 
-  scenario "editing an enterprise fee", js: true do
+  scenario "editing an enterprise fee" do
     # Given an enterprise fee
     fee = create(:enterprise_fee)
     create(:enterprise, name: 'Foo')
@@ -73,7 +73,7 @@ feature %q{
     page.should have_selector "option[selected]", text: 'Flat Percent'
   end
 
-  scenario "deleting an enterprise fee", js: true do
+  scenario "deleting an enterprise fee" do
     # Given an enterprise fee
     fee = create(:enterprise_fee)
 
