@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115010717) do
+ActiveRecord::Schema.define(:version => 20121125232613) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -156,6 +156,42 @@ ActiveRecord::Schema.define(:version => 20121115010717) do
     t.string   "next_collection_at"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "exchange_fees", :force => true do |t|
+    t.integer  "exchange_id"
+    t.integer  "enterprise_fee_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "exchange_variants", :force => true do |t|
+    t.integer  "exchange_id"
+    t.integer  "variant_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "exchanges", :force => true do |t|
+    t.integer  "order_cycle_id"
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.integer  "payment_enterprise_id"
+    t.datetime "pickup_time"
+    t.string   "pickup_instructions"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  create_table "order_cycles", :force => true do |t|
+    t.string   "name"
+    t.datetime "orders_open_at"
+    t.datetime "orders_close_at"
+    t.integer  "coordinator_id"
+    t.integer  "coordinator_admin_fee_id"
+    t.integer  "coordinator_sales_fee_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "product_distributions", :force => true do |t|

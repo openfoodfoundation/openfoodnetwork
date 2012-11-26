@@ -2,6 +2,16 @@ require 'faker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
+  factory :order_cycle, :class => OrderCycle do
+    sequence(:name) { |n| "Order Cycle #{n}" }
+  end
+
+  factory :exchange, :class => Exchange do
+    order_cycle { OrderCycle.first || FactoryGirl.create(:order_cycle) }
+    sender      { Enterprise.first || FactoryGirl.create(:enterprise) }
+    receiver    { Enterprise.first || FactoryGirl.create(:enterprise) }
+  end
+
   factory :enterprise, :class => Enterprise do
     sequence(:name) { |n| "Enterprise #{n}" }
     description 'enterprise'
