@@ -1,0 +1,7 @@
+r.element :order_cycle, @order_cycle do
+  r.element :id
+  r.element :name
+  r.element :orders_open_at
+  r.element :orders_close_at
+  r.element :coordinator_id
+end
