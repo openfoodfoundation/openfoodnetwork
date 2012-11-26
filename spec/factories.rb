@@ -2,8 +2,36 @@ require 'faker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
-  factory :order_cycle, :class => OrderCycle do
+  factory :order_cycle, :parent => :simple_order_cycle do
+    after(:create) do |oc|
+      # Suppliers
+      create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+
+      # Distributors
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
+
+      # Products with images
+      ex = oc.exchanges.first
+
+      2.times do
+        product = create(:product)
+        image = File.open(File.expand_path('../../app/assets/images/logo.jpg', __FILE__))
+        Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+
+        ex.variants << product.master
+      end
+    end
+  end
+
+  factory :simple_order_cycle, :class => OrderCycle do
     sequence(:name) { |n| "Order Cycle #{n}" }
+
+    orders_open_at  { Time.zone.now - 1.day }
+    orders_close_at { Time.zone.now + 1.week }
+
+    coordinator { Enterprise.first || FactoryGirl.create(:enterprise) }
   end
 
   factory :exchange, :class => Exchange do
@@ -36,7 +64,7 @@ FactoryGirl.define do
     name '$0.50 / kg'
     calculator { FactoryGirl.build(:weight_calculator) }
 
-    after_create { |ef| ef.calculator.save! }
+    after(:create) { |ef| ef.calculator.save! }
   end
 
   factory :product_distribution, :class => ProductDistribution do
@@ -54,8 +82,8 @@ FactoryGirl.define do
   end
 
   factory :weight_calculator, :class => OpenFoodWeb::Calculator::Weight do
-    after_build  { |c| c.set_preference(:per_kg, 0.5) }
-    after_create { |c| c.set_preference(:per_kg, 0.5); c.save! }
+    after(:build)  { |c| c.set_preference(:per_kg, 0.5) }
+    after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
 end
