@@ -2,6 +2,8 @@ Spree::Order.class_eval do
   belongs_to :distributor, :class_name => 'Enterprise'
 
   before_validation :shipping_address_from_distributor
+  validate :can_change_distributor?, :if => :distributor_id_changed?
+
   after_create :set_default_shipping_method
 
   def can_change_distributor?
