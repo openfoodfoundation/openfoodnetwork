@@ -12,10 +12,10 @@
     - @distributors.each do |distributor|
       %li.nowrap
         - if order.nil? || order.can_change_distributor?
-          = link_to distributor.name, main_app.select_distributor_enterprise_path(distributor)
+          = link_to distributor.name, select_distributor_order_path(distributor)
         - elsif order.distributor == distributor
           = link_to distributor.name, [main_app, distributor]
         - else
           %span.inactive= distributor.name
   - if current_distributor && order.can_change_distributor?
-    = button_to 'Browse All Distributors', main_app.deselect_distributor_enterprises_path, :method => :get
+    = button_to 'Browse All Distributors', deselect_distributor_orders_path, :method => :get
