@@ -7,7 +7,9 @@
 
 //= require jquery
 //= require jquery_ujs
-//= require angular
+//= require jquery-ui
+//= require shared/jquery-ui-timepicker-addon
+//= require shared/angular
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo

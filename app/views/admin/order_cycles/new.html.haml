@@ -6,9 +6,9 @@
   %br/
 
   = f.label :orders_open_at, 'Orders open'
-  = f.text_field :orders_open_at, 'ng-model' => 'order_cycle.orders_open_at'
+  = f.text_field :orders_open_at, 'class' => 'datetimepicker', 'ng-model' => 'order_cycle.orders_open_at'
   = f.label :orders_close_at, 'Orders close'
-  = f.text_field :orders_close_at, 'ng-model' => 'order_cycle.orders_close_at'
+  = f.text_field :orders_close_at, 'class' => 'datetimepicker', 'ng-model' => 'order_cycle.orders_close_at'
   %br/
 
   %h2 Incoming
