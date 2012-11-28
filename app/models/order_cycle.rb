@@ -5,7 +5,7 @@ class OrderCycle < ActiveRecord::Base
 
   has_many :exchanges, :dependent => :destroy
 
-  validates_presence_of :name
+  validates_presence_of :name, :coordinator_id
 
 
   def suppliers

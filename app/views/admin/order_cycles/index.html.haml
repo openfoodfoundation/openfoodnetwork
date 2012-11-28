@@ -1,3 +1,9 @@
+.toolbar{'data-hook' => "toolbar"}
+  %ul.actions
+    %li
+      = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'add', :id => 'admin_new_order_cycle_link'
+  %br.clear/
+
 %h1 Order Cycles
 
 = form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|

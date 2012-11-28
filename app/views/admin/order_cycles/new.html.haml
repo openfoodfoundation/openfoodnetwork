@@ -1,0 +1,28 @@
+%h1 New Order Cycle
+
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {'ng-app' => 'order_cycle', 'ng-controller' => 'AdminOrderCycleCtrl', 'ng-submit' => 'submit()'} do |f|
+  = f.label :name
+  = f.text_field :name, 'ng-model' => 'order_cycle.name'
+  %br/
+
+  = f.label :orders_open_at, 'Orders open'
+  = f.text_field :orders_open_at, 'ng-model' => 'order_cycle.orders_open_at'
+  = f.label :orders_close_at, 'Orders close'
+  = f.text_field :orders_close_at, 'ng-model' => 'order_cycle.orders_close_at'
+  %br/
+
+  %h2 Incoming
+  %p TODO
+
+  %h2 Coordinator
+  = f.label :coordinator_id, 'Coordinator'
+  = f.collection_select :coordinator_id, Enterprise.all, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id'}
+
+  %h2 Outgoing
+  %p TODO
+
+  = f.submit 'Create'
+  or
+  = link_to 'Cancel', main_app.admin_order_cycles_path
+
+  %pre {{ order_cycle | json }}

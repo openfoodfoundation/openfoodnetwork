@@ -9,6 +9,21 @@ module Admin
       end
     end
 
+    def create
+      @order_cycle = OrderCycle.new(params[:order_cycle])
+      respond_to do |format|
+        if @order_cycle.save
+          flash[:notice] = 'Your order cycle has been created.'
+          format.html { redirect_to admin_order_cycles_path }
+          format.json { render :json => {:success => true} }
+        else
+          format.html
+          format.json { render :json => {:success => false} }
+        end
+      end
+    end
+
+
 
     private
     def load_order_cycle_set
