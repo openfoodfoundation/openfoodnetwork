@@ -1,8 +1,8 @@
 %h1 New Order Cycle
 
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {'ng-app' => 'order_cycle', 'ng-controller' => 'AdminOrderCycleCtrl', 'ng-submit' => 'submit()'} do |f|
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng', 'ng-app' => 'order_cycle', 'ng-controller' => 'AdminOrderCycleCtrl', 'ng-submit' => 'submit()'} do |f|
   = f.label :name
-  = f.text_field :name, 'ng-model' => 'order_cycle.name'
+  = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
   %br/
 
   = f.label :orders_open_at, 'Orders open'
@@ -16,7 +16,7 @@
 
   %h2 Coordinator
   = f.label :coordinator_id, 'Coordinator'
-  = f.collection_select :coordinator_id, Enterprise.all, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id'}
+  = f.collection_select :coordinator_id, Enterprise.all, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
 
   %h2 Outgoing
   %p TODO
