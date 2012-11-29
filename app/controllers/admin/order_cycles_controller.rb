@@ -17,7 +17,6 @@ module Admin
       respond_to do |format|
         if @order_cycle.save
           OpenFoodWeb::OrderCycleFormApplicator.new(@order_cycle).go!
-          @order_cycle.save!
 
           flash[:notice] = 'Your order cycle has been created.'
           format.html { redirect_to admin_order_cycles_path }
