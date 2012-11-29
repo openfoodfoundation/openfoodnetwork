@@ -12,7 +12,13 @@
   %br/
 
   %h2 Incoming
-  %p TODO
+  %table
+    %tr{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+      %td {{ enterprises[exchange.enterprise_id].name }}
+
+  = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
+  = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
+
 
   %h2 Coordinator
   = f.label :coordinator_id, 'Coordinator'
@@ -26,3 +32,4 @@
   = link_to 'Cancel', main_app.admin_order_cycles_path
 
   %pre {{ order_cycle | json }}
+  %pre {{ enterprises | json }}

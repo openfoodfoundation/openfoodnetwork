@@ -1,0 +1,4 @@
+r.list_of :enterprises, @collection do
+  r.element :id
+  r.element :name
+end
