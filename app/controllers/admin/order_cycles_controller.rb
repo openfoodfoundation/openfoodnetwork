@@ -1,3 +1,5 @@
+require 'open_food_web/order_cycle_form_applicator'
+
 module Admin
   class OrderCyclesController < ResourceController
     before_filter :load_order_cycle_set, :only => :index
@@ -11,8 +13,12 @@ module Admin
 
     def create
       @order_cycle = OrderCycle.new(params[:order_cycle])
+
       respond_to do |format|
         if @order_cycle.save
+          OpenFoodWeb::OrderCycleFormApplicator.new(@order_cycle).go!
+          @order_cycle.save!
+
           flash[:notice] = 'Your order cycle has been created.'
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }

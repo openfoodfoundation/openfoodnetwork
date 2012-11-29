@@ -14,5 +14,7 @@ module OpenFoodWeb
 
       applicator.go!
     end
+
+    it "updates existing exchanges for incoming_exchanges"
   end
 end

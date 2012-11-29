@@ -5,6 +5,8 @@ class OrderCycle < ActiveRecord::Base
 
   has_many :exchanges, :dependent => :destroy
 
+  attr_accessor :incoming_exchanges, :outgoing_exchanges
+
   validates_presence_of :name, :coordinator_id
 
 
