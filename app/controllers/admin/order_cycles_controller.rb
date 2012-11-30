@@ -4,6 +4,13 @@ module Admin
   class OrderCyclesController < ResourceController
     before_filter :load_order_cycle_set, :only => :index
 
+    def show
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    end
+
     def new
       respond_to do |format|
         format.html

@@ -4,4 +4,8 @@ r.element :order_cycle, @order_cycle do
   r.element :orders_open_at
   r.element :orders_close_at
   r.element :coordinator_id
+  r.list_of :exchanges do
+    r.element :sender_id
+    r.element :receiver_id
+  end
 end
