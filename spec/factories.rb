@@ -35,9 +35,9 @@ FactoryGirl.define do
   end
 
   factory :exchange, :class => Exchange do
-    order_cycle { OrderCycle.first || FactoryGirl.create(:order_cycle) }
-    sender      { Enterprise.first || FactoryGirl.create(:enterprise) }
-    receiver    { Enterprise.first || FactoryGirl.create(:enterprise) }
+    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
+    sender      { FactoryGirl.create(:enterprise) }
+    receiver    { FactoryGirl.create(:enterprise) }
   end
 
   factory :enterprise, :class => Enterprise do

@@ -11,4 +11,5 @@ class Exchange < ActiveRecord::Base
   has_many :enterprise_fees, :through => :exchange_fees
 
   validates_presence_of :order_cycle, :sender, :receiver
+  validates_uniqueness_of :sender_id,   :scope => [:order_cycle_id, :receiver_id]
 end
