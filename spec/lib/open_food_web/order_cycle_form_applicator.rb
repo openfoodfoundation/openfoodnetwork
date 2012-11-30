@@ -10,11 +10,29 @@ module OpenFoodWeb
 
       applicator = OrderCycleFormApplicator.new(oc)
 
+      applicator.should_receive(:exchange_exists?).and_return(false)
       applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id)
 
       applicator.go!
     end
 
-    it "updates existing exchanges for incoming_exchanges"
+    it "updates existing exchanges for incoming_exchanges" do
+      coordinator_id = 123
+      supplier_id = 456
+
+      oc = double(:order_cycle,
+                  :coordinator_id => coordinator_id,
+                  :exchanges => [double(:exchange, :sender_id => supplier_id, :receiver_id => coordinator_id)],
+                  :incoming_exchanges => [{:enterprise_id => supplier_id}])
+
+      applicator = OrderCycleFormApplicator.new(oc)
+
+      applicator.should_receive(:exchange_exists?).and_return(true)
+      applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id)
+
+      applicator.go!
+    end
+
+    it "removes exchanges that are no longer present in incoming_exchanges"
   end
 end
