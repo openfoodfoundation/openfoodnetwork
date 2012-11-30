@@ -28,9 +28,15 @@ function AdminCreateOrderCycleCtrl($scope, $http, Enterprise) {
 
 
 function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
+  $scope.enterprises = {};
+  Enterprise.index(function(data) {
+    for(i in data) {
+      $scope.enterprises[data[i]['id']] = data[i];
+    }
+  });
+
   // TODO: Research how to do route param parsing from regular url.
   //       Does Angular have a way to do this?
-
   OrderCycle.get({order_cycle_id: 24}, function(order_cycle) {
     $scope.order_cycle = order_cycle;
     $scope.order_cycle.incoming_exchanges = [];
@@ -51,6 +57,11 @@ function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
     // TODO: Check if this is the best way
     delete($scope.order_cycle.exchanges);
   });
+
+  $scope.addSupplier = function($event) {
+    $event.preventDefault();
+    $scope.order_cycle.incoming_exchanges.push({'enterprise_id': $scope.new_supplier_id});
+  };
 }
 
 
