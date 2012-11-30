@@ -1,13 +1,10 @@
-function AdminOrderCycleCtrl($scope, $http) {
-  $http.get('/admin/order_cycles/new.json').success(function(data) {
-    $scope.order_cycle = data;
-    $scope.order_cycle.incoming_exchanges = [];
-    $scope.order_cycle.outgoing_exchanges = [];
-  });
+function AdminCreateOrderCycleCtrl($scope, $http, Enterprise) {
+  $scope.order_cycle = {};
+  $scope.order_cycle.incoming_exchanges = [];
+  $scope.order_cycle.outgoing_exchanges = [];
 
-  $http.get('/admin/enterprises.json').success(function(data) {
-    $scope.enterprises = {};
-
+  $scope.enterprises = {};
+  Enterprise.index(function(data) {
     for(i in data) {
       $scope.enterprises[data[i]['id']] = data[i];
     }
@@ -29,7 +26,11 @@ function AdminOrderCycleCtrl($scope, $http) {
   };
 }
 
-angular.module('order_cycle', []).
+angular.module('order_cycle', ['ngResource']).
   config(function($httpProvider) {
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  }).
+  factory('Enterprise', function($resource) {
+    return $resource('/admin/enterprises/:enterprise_id.json', {},
+		     {'index': { method: 'GET', isArray: true}});
   });
