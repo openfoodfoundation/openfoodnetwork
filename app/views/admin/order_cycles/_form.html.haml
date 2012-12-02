@@ -12,6 +12,7 @@
 %h2 Incoming
 %table
   %tr{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+    %td= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
     %td {{ enterprises[exchange.enterprise_id].name }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
