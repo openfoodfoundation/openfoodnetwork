@@ -10,9 +10,9 @@
 
 
 %h2 Incoming
-%table
+%table.exchanges
   %tr{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %td= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
+    %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
     %td {{ enterprises[exchange.enterprise_id].name }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
@@ -30,5 +30,8 @@
 or
 = link_to 'Cancel', main_app.admin_order_cycles_path
 
-%pre {{ order_cycle | json }}
-%pre {{ enterprises | json }}
+
+<h2>Debug information</h2>
+
+%pre order_cycle = {{ order_cycle | json }}
+%pre enterprises = {{ enterprises | json }}

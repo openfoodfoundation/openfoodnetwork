@@ -22,3 +22,15 @@
 .ng .ng-invalid.ng-dirty {
   background-color: #fa787e;
 }
+
+
+form.order_cycle {
+  h2 {
+    margin-top: 2em;
+  }
+  table.exchanges {
+    tr td.active {
+      width: 20px;
+    }
+  }
+}
