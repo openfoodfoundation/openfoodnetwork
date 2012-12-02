@@ -25,7 +25,7 @@
 %h2 Outgoing
 %p TODO
 
-= f.submit 'Create'
+= f.submit @order_cycle.new_record? ? 'Create' : 'Update'
 or
 = link_to 'Cancel', main_app.admin_order_cycles_path
 
