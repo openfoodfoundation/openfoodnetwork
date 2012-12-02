@@ -35,9 +35,8 @@ function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
     }
   });
 
-  // TODO: Research how to do route param parsing from regular url.
-  //       Does Angular have a way to do this?
-  OrderCycle.get({order_cycle_id: 24}, function(order_cycle) {
+  var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
+  OrderCycle.get({order_cycle_id: order_cycle_id}, function(order_cycle) {
     $scope.order_cycle = order_cycle;
     $scope.order_cycle.incoming_exchanges = [];
     $scope.order_cycle.outgoing_exchanges = [];
@@ -61,6 +60,17 @@ function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
   $scope.addSupplier = function($event) {
     $event.preventDefault();
     $scope.order_cycle.incoming_exchanges.push({'enterprise_id': $scope.new_supplier_id});
+  };
+
+  $scope.submit = function() {
+    var path = '/admin/order_cycles/' + $scope.order_cycle.id
+    $http.put(path, {order_cycle: $scope.order_cycle}).success(function(data) {
+      if(data['success']) {
+	window.location = '/admin/order_cycles';
+      } else {
+	console.log('fail');
+      }
+    });
   };
 }
 
