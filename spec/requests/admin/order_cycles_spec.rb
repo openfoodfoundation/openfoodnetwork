@@ -55,4 +55,28 @@ feature %q{
     page.should have_selector "input[value='2012-11-13 17:00:00 UTC']"
     page.should have_content 'My coordinator'
   end
+
+  scenario "updating many order cycle opening/closing times at once" do
+    # Given three order cycles
+    3.times { create(:order_cycle) }
+
+    # When I go to the order cycles page
+    login_to_admin_section
+    click_link 'Order Cycles'
+
+    # And I fill in some new opening/closing times and save them
+    fill_in 'order_cycle_set_collection_attributes_0_orders_open_at', :with => '2012-12-01 12:00:00'
+    fill_in 'order_cycle_set_collection_attributes_0_orders_close_at', :with => '2012-12-01 12:00:01'
+    fill_in 'order_cycle_set_collection_attributes_1_orders_open_at', :with => '2012-12-01 12:00:02'
+    fill_in 'order_cycle_set_collection_attributes_1_orders_close_at', :with => '2012-12-01 12:00:03'
+    fill_in 'order_cycle_set_collection_attributes_2_orders_open_at', :with => '2012-12-01 12:00:04'
+    fill_in 'order_cycle_set_collection_attributes_2_orders_close_at', :with => '2012-12-01 12:00:05'
+    click_button 'Update'
+
+    # Then my times should have been saved
+    flash_message.should == 'Order cycles have been updated.'
+    OrderCycle.all.map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
+    OrderCycle.all.map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
+  end
+
 end

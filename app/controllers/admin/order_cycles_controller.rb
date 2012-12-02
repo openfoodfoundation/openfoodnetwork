@@ -52,6 +52,14 @@ module Admin
       end
     end
 
+    def bulk_update
+      @order_cycle_set = OrderCycleSet.new(params[:order_cycle_set])
+      if @order_cycle_set.save
+        redirect_to main_app.admin_order_cycles_path, :notice => 'Order cycles have been updated.'
+      else
+        render :index
+      end
+    end
 
 
     private

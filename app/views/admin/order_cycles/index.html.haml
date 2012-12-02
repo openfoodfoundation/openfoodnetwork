@@ -23,8 +23,8 @@
         - order_cycle = order_cycle_form.object
         %tr
           %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
-          %td= order_cycle_form.text_field :orders_open_at, :class => 'datepicker', :value => order_cycle.orders_open_at
-          %td= order_cycle_form.text_field :orders_close_at, :class => 'datepicker', :value => order_cycle.orders_close_at
+          %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
+          %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
           %td= order_cycle.coordinator.name
           %td
             - order_cycle.suppliers.each do |s|
@@ -38,3 +38,4 @@
             - order_cycle.variants.each do |v|
               = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
           %td
+  = f.submit 'Update'
