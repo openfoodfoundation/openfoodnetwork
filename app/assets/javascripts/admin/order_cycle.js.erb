@@ -1,12 +1,7 @@
 function AdminCreateOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
-  $scope.order_cycle = OrderCycle.order_cycle;
+  $scope.enterprises = Enterprise.index();
 
-  $scope.enterprises = {};
-  Enterprise.index(function(data) {
-    for(i in data) {
-      $scope.enterprises[data[i]['id']] = data[i];
-    }
-  });
+  $scope.order_cycle = OrderCycle.order_cycle;
 
   $scope.addSupplier = function($event) {
     OrderCycle.addSupplier($event, $scope.new_supplier_id);
@@ -19,12 +14,7 @@ function AdminCreateOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
 
 
 function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
-  $scope.enterprises = {};
-  Enterprise.index(function(data) {
-    for(i in data) {
-      $scope.enterprises[data[i]['id']] = data[i];
-    }
-  });
+  $scope.enterprises = Enterprise.index();
 
   var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
@@ -53,18 +43,9 @@ angular.module('order_cycle', ['ngResource']).
       order_cycle: {incoming_exchanges: [],
 		    outgoing_exchanges: []},
 
-      addSupplier: function($event, new_supplier_id) {
-	$event.preventDefault();
+      addSupplier: function(event, new_supplier_id) {
+	event.preventDefault();
 	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true});
-      },
-
-      removeInactiveExchanges: function() {
-	for(var i=0; i < this.order_cycle.incoming_exchanges.length; i++) {
-	  if(!this.order_cycle.incoming_exchanges[i].active) {
-	    this.order_cycle.incoming_exchanges.splice(i, 1);
-	    i--;
-	  }
-	}
       },
 
       load: function(order_cycle_id) {
@@ -116,12 +97,37 @@ angular.module('order_cycle', ['ngResource']).
 	    console.log('fail');
 	  }
 	});
+      },
+
+      removeInactiveExchanges: function() {
+	for(var i=0; i < this.order_cycle.incoming_exchanges.length; i++) {
+	  if(!this.order_cycle.incoming_exchanges[i].active) {
+	    this.order_cycle.incoming_exchanges.splice(i, 1);
+	    i--;
+	  }
+	}
       }
     };
   }).
   factory('Enterprise', function($resource) {
-    return $resource('/admin/enterprises/:enterprise_id.json', {},
-		     {'index': { method: 'GET', isArray: true}});
+    var Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {},
+			       {'index': { method: 'GET', isArray: true}});
+
+    return {
+      enterprises: {},
+
+      index: function() {
+	var service = this;
+
+	Enterprise.index(function(data) {
+	  for(i in data) {
+	    service.enterprises[data[i]['id']] = data[i];
+	  }
+	});
+
+	return this.enterprises;
+      }
+    };
   }).
   directive('datetimepicker', ['$parse', function($parse) {
     return function(scope, element, attrs) {
