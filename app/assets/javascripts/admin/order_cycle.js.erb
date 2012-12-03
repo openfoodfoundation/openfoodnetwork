@@ -27,51 +27,14 @@ function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
   });
 
   var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
-  OrderCycle.get({order_cycle_id: order_cycle_id}, function(order_cycle) {
-    $scope.order_cycle = order_cycle;
-    $scope.order_cycle.incoming_exchanges = [];
-    $scope.order_cycle.outgoing_exchanges = [];
-    for(i in order_cycle.exchanges) {
-      var exchange = order_cycle.exchanges[i];
-      if(exchange.sender_id == order_cycle.coordinator_id) {
-	$scope.order_cycle.outgoing_exchanges.push({enterprise_id: exchange.receiver_id, active: true});
-
-      } else if(exchange.receiver_id == order_cycle.coordinator_id) {
-	$scope.order_cycle.incoming_exchanges.push({enterprise_id: exchange.sender_id, active: true});
-
-      } else {
-	console.log('Exchange between two enterprises, neither of which is coordinator!');
-      }
-    }
-
-    delete($scope.order_cycle.exchanges);
-  });
+  $scope.order_cycle = OrderCycle.load(order_cycle_id);
 
   $scope.addSupplier = function($event) {
-    $event.preventDefault();
-    $scope.order_cycle.incoming_exchanges.push({enterprise_id: $scope.new_supplier_id, active: true});
+    OrderCycle.addSupplier($event, $scope.new_supplier_id);
   };
 
   $scope.submit = function() {
-    $scope.removeInactiveExchanges();
-
-    var path = '/admin/order_cycles/' + $scope.order_cycle.id
-    $http.put(path, {order_cycle: $scope.order_cycle}).success(function(data) {
-      if(data['success']) {
-	window.location = '/admin/order_cycles';
-      } else {
-	console.log('fail');
-      }
-    });
-  };
-
-  $scope.removeInactiveExchanges = function() {
-    for(var i=0; i < $scope.order_cycle.incoming_exchanges.length; i++) {
-      if(!$scope.order_cycle.incoming_exchanges[i].active) {
-	$scope.order_cycle.incoming_exchanges.splice(i, 1)
-	i--;
-      }
-    }
+    OrderCycle.update();
   };
 }
 
@@ -104,27 +67,30 @@ angular.module('order_cycle', ['ngResource']).
 	}
       },
 
-      load: function() {
-	var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
-	OrderCycle.get({order_cycle_id: order_cycle_id}, function(oc) {
-	  this.order_cycle = oc;
-	  this.order_cycle.incoming_exchanges = [];
-	  this.order_cycle.outgoing_exchanges = [];
-	  for(i in this.order_cycle.exchanges) {
-	    var exchange = this.order_cycle.exchanges[i];
-	    if(exchange.sender_id == this.order_cycle.coordinator_id) {
-	      this.order_cycle.outgoing_exchanges.push({enterprise_id: exchange.receiver_id, active: true});
+      load: function(order_cycle_id) {
+	var service = this;
 
-	    } else if(exchange.receiver_id == this.order_cycle.coordinator_id) {
-	      this.order_cycle.incoming_exchanges.push({enterprise_id: exchange.sender_id, active: true});
+	OrderCycle.get({order_cycle_id: order_cycle_id}, function(oc) {
+	  $.extend(service.order_cycle, oc);
+	  service.order_cycle.incoming_exchanges = [];
+	  service.order_cycle.outgoing_exchanges = [];
+	  for(i in service.order_cycle.exchanges) {
+	    var exchange = service.order_cycle.exchanges[i];
+	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
+	      service.order_cycle.outgoing_exchanges.push({enterprise_id: exchange.receiver_id, active: true});
+
+	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
+	      service.order_cycle.incoming_exchanges.push({enterprise_id: exchange.sender_id, active: true});
 
 	    } else {
 	      console.log('Exchange between two enterprises, neither of which is coordinator!');
 	    }
 	  }
 
-	  delete(this.order_cycle.exchanges);
+	  delete(service.order_cycle.exchanges);
 	});
+
+	return this.order_cycle;
       },
 
       create: function() {
