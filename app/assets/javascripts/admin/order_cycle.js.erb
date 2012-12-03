@@ -108,4 +108,23 @@ angular.module('order_cycle', ['ngResource']).
   factory('Enterprise', function($resource) {
     return $resource('/admin/enterprises/:enterprise_id.json', {},
 		     {'index': { method: 'GET', isArray: true}});
-  });
+  }).
+  directive('datetimepicker', ['$parse', function($parse) {
+    return function(scope, element, attrs) {
+      // using $parse instead of scope[attrs.datetimepicker] for cases
+      // where attrs.datetimepicker is 'foo.bar.lol'
+      $(element).datetimepicker({
+	dateFormat: Spree.translations.date_picker,
+	showOn: "button",
+	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
+	buttonImageOnly: true,
+	stepMinute: 15,
+	onSelect: function(dateText, inst) {
+	  scope.$apply(function() {
+	    parsed = $parse(attrs.datetimepicker);
+	    parsed.assign(scope, dateText);
+	  });
+	}
+      });
+    };
+  }]);
