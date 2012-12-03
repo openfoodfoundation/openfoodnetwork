@@ -114,7 +114,8 @@ angular.module('order_cycle', ['ngResource']).
       // using $parse instead of scope[attrs.datetimepicker] for cases
       // where attrs.datetimepicker is 'foo.bar.lol'
       $(element).datetimepicker({
-	dateFormat: Spree.translations.date_picker,
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'HH:mm:ss',
 	showOn: "button",
 	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
 	buttonImageOnly: true,
