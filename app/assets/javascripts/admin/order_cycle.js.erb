@@ -1,4 +1,4 @@
-function AdminCreateOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
+function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
   $scope.enterprises = Enterprise.index();
 
   $scope.order_cycle = OrderCycle.order_cycle;
@@ -13,7 +13,7 @@ function AdminCreateOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
 }
 
 
-function AdminEditOrderCycleCtrl($scope, $http, OrderCycle, Enterprise) {
+function AdminEditOrderCycleCtrl($scope, OrderCycle, Enterprise) {
   $scope.enterprises = Enterprise.index();
 
   var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
@@ -33,10 +33,11 @@ angular.module('order_cycle', ['ngResource']).
   config(function($httpProvider) {
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
   }).
-  factory('OrderCycle', function($http, $resource) {
+  factory('OrderCycle', function($resource) {
     var OrderCycle = $resource('/admin/order_cycles/:order_cycle_id.json', {},
-			       {'index': { method: 'GET', isArray: true},
-				'show': { method: 'GET', isArray: false}});
+			       {'index':  { method: 'GET', isArray: true},
+				'create': { method: 'POST'},
+				'update': { method: 'PUT'}});
 
 
     return {
@@ -77,7 +78,8 @@ angular.module('order_cycle', ['ngResource']).
       create: function() {
 	this.removeInactiveExchanges();
 
-	$http.post('/admin/order_cycles', {order_cycle: this.order_cycle}).success(function(data) {
+	var oc = new OrderCycle({order_cycle: this.order_cycle});
+	oc.$create(function(data) {
 	  if(data['success']) {
 	    window.location = '/admin/order_cycles';
 	  } else {
@@ -89,8 +91,8 @@ angular.module('order_cycle', ['ngResource']).
       update: function() {
 	this.removeInactiveExchanges();
 
-	var path = '/admin/order_cycles/' + this.order_cycle.id
-	$http.put(path, {order_cycle: this.order_cycle}).success(function(data) {
+	var oc = new OrderCycle({order_cycle: this.order_cycle});
+	oc.$update({order_cycle_id: this.order_cycle.id}, function(data) {
 	  if(data['success']) {
 	    window.location = '/admin/order_cycles';
 	  } else {
