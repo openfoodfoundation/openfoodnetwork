@@ -24,7 +24,9 @@
       %td {{ enterprises[exchange.enterprise_id].name }}
       %td= f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
     %tr.products{'ng-show' => 'exchange.showProducts'}
-      %td{:colspan => 3} Hello, products
+      %td{:colspan => 3}
+        .exchange-product{'ng-repeat' => 'product in exchange.exchange_products'}
+          {{ product.name }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
