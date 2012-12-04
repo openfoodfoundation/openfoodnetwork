@@ -1,0 +1,41 @@
+.toolbar{'data-hook' => "toolbar"}
+  %ul.actions
+    %li
+      = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'add', :id => 'admin_new_order_cycle_link'
+  %br.clear/
+
+%h1 Order Cycles
+
+= form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|
+  %table.index#listing_order_cycles
+    %thead
+      %tr
+        %th Name
+        %th Open
+        %th Close
+        %th Coordinator
+        %th Suppliers
+        %th Distributors
+        %th Products
+        %th
+    %tbody
+      = f.fields_for :collection do |order_cycle_form|
+        - order_cycle = order_cycle_form.object
+        %tr
+          %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
+          %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
+          %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
+          %td= order_cycle.coordinator.name
+          %td
+            - order_cycle.suppliers.each do |s|
+              = s.name
+              %br/
+          %td
+            - order_cycle.distributors.each do |d|
+              = d.name
+              %br/
+          %td.products
+            - order_cycle.variants.each do |v|
+              = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
+          %td
+  = f.submit 'Update'

@@ -8,6 +8,8 @@
  *= require admin/spree_auth
  *= require admin/spree_promo
 
+ *= require shared/jquery-ui-timepicker-addon
+
  *= require_self
  *= require_tree .
 */

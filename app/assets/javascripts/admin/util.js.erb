@@ -1,0 +1,14 @@
+$(document).ready(function() {
+  $('.datetimepicker').datetimepicker({
+    dateFormat: Spree.translations.date_picker,
+    dayNames: Spree.translations.abbr_day_names,
+    dayNamesMin: Spree.translations.abbr_day_names,
+    monthNames: Spree.translations.month_names,
+    prevText: Spree.translations.previous,
+    nextText: Spree.translations.next,
+    showOn: "button",
+    buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
+    buttonImageOnly: true,
+    stepMinute: 15
+  });
+});

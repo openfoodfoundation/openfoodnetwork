@@ -1,0 +1,153 @@
+function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
+  $scope.enterprises = Enterprise.index();
+
+  $scope.order_cycle = OrderCycle.order_cycle;
+
+  $scope.addSupplier = function($event) {
+    OrderCycle.addSupplier($event, $scope.new_supplier_id);
+  };
+
+  $scope.submit = function() {
+    OrderCycle.create();
+  };
+}
+
+
+function AdminEditOrderCycleCtrl($scope, OrderCycle, Enterprise) {
+  $scope.enterprises = Enterprise.index();
+
+  var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
+  $scope.order_cycle = OrderCycle.load(order_cycle_id);
+
+  $scope.addSupplier = function($event) {
+    OrderCycle.addSupplier($event, $scope.new_supplier_id);
+  };
+
+  $scope.submit = function() {
+    OrderCycle.update();
+  };
+}
+
+
+angular.module('order_cycle', ['ngResource']).
+  config(function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  }).
+  factory('OrderCycle', function($resource) {
+    var OrderCycle = $resource('/admin/order_cycles/:order_cycle_id.json', {},
+			       {'index':  { method: 'GET', isArray: true},
+				'create': { method: 'POST'},
+				'update': { method: 'PUT'}});
+
+
+    return {
+      order_cycle: {incoming_exchanges: [],
+		    outgoing_exchanges: []},
+
+      addSupplier: function(event, new_supplier_id) {
+	event.preventDefault();
+	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true});
+      },
+
+      load: function(order_cycle_id) {
+	var service = this;
+
+	OrderCycle.get({order_cycle_id: order_cycle_id}, function(oc) {
+	  $.extend(service.order_cycle, oc);
+	  service.order_cycle.incoming_exchanges = [];
+	  service.order_cycle.outgoing_exchanges = [];
+	  for(i in service.order_cycle.exchanges) {
+	    var exchange = service.order_cycle.exchanges[i];
+	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
+	      service.order_cycle.outgoing_exchanges.push({enterprise_id: exchange.receiver_id, active: true});
+
+	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
+	      service.order_cycle.incoming_exchanges.push({enterprise_id: exchange.sender_id, active: true});
+
+	    } else {
+	      console.log('Exchange between two enterprises, neither of which is coordinator!');
+	    }
+	  }
+
+	  delete(service.order_cycle.exchanges);
+	});
+
+	return this.order_cycle;
+      },
+
+      create: function() {
+	this.removeInactiveExchanges();
+
+	var oc = new OrderCycle({order_cycle: this.order_cycle});
+	oc.$create(function(data) {
+	  if(data['success']) {
+	    window.location = '/admin/order_cycles';
+	  } else {
+	    console.log('fail');
+	  }
+	});
+      },
+
+      update: function() {
+	this.removeInactiveExchanges();
+
+	var oc = new OrderCycle({order_cycle: this.order_cycle});
+	oc.$update({order_cycle_id: this.order_cycle.id}, function(data) {
+	  if(data['success']) {
+	    window.location = '/admin/order_cycles';
+	  } else {
+	    console.log('fail');
+	  }
+	});
+      },
+
+      removeInactiveExchanges: function() {
+	for(var i=0; i < this.order_cycle.incoming_exchanges.length; i++) {
+	  if(!this.order_cycle.incoming_exchanges[i].active) {
+	    this.order_cycle.incoming_exchanges.splice(i, 1);
+	    i--;
+	  }
+	}
+      }
+    };
+  }).
+  factory('Enterprise', function($resource) {
+    var Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {},
+			       {'index': { method: 'GET', isArray: true}});
+
+    return {
+      enterprises: {},
+
+      index: function() {
+	var service = this;
+
+	Enterprise.index(function(data) {
+	  for(i in data) {
+	    service.enterprises[data[i]['id']] = data[i];
+	  }
+	});
+
+	return this.enterprises;
+      }
+    };
+  }).
+  directive('datetimepicker', ['$parse', function($parse) {
+    return function(scope, element, attrs) {
+      // using $parse instead of scope[attrs.datetimepicker] for cases
+      // where attrs.datetimepicker is 'foo.bar.lol'
+      $(element).datetimepicker({
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'HH:mm:ss',
+	showOn: "button",
+	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
+	buttonImageOnly: true,
+	stepMinute: 15,
+	onSelect: function(dateText, inst) {
+	  scope.$apply(function() {
+	    parsed = $parse(attrs.datetimepicker);
+	    parsed.assign(scope, dateText);
+	  });
+	}
+      });
+    };
+  }]);
