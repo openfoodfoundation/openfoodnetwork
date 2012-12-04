@@ -7,5 +7,10 @@ r.element :order_cycle, @order_cycle do
   r.list_of :exchanges do
     r.element :sender_id
     r.element :receiver_id
+    r.list_of :exchange_variants do
+      r.element :variant do
+        r.element :id
+      end
+    end
   end
 end

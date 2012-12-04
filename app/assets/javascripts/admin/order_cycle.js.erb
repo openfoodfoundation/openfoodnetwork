@@ -59,10 +59,14 @@ angular.module('order_cycle', ['ngResource']).
 	  for(i in service.order_cycle.exchanges) {
 	    var exchange = service.order_cycle.exchanges[i];
 	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
-	      service.order_cycle.outgoing_exchanges.push({enterprise_id: exchange.receiver_id, active: true});
+	      $.extend(exchange, {enterprise_id: exchange.receiver_id, active: true});
+	      delete(exchange.sender_id);
+	      service.order_cycle.outgoing_exchanges.push(exchange);
 
 	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
-	      service.order_cycle.incoming_exchanges.push({enterprise_id: exchange.sender_id, active: true});
+	      $.extend(exchange, {enterprise_id: exchange.sender_id, active: true});
+	      delete(exchange.receiver_id);
+	      service.order_cycle.incoming_exchanges.push(exchange)
 
 	    } else {
 	      console.log('Exchange between two enterprises, neither of which is coordinator!');
