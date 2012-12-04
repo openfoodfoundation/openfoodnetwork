@@ -38,8 +38,6 @@ describe OrderCycle do
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
     e2 = create(:exchange,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
-    e3 = create(:exchange,
-                order_cycle: oc, receiver: oc.coordinator, sender: e2.sender)
 
     oc.suppliers.sort.should == [e1.sender, e2.sender].sort
   end
@@ -51,8 +49,6 @@ describe OrderCycle do
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
     e2 = create(:exchange,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
-    e3 = create(:exchange,
-                order_cycle: oc, sender: oc.coordinator, receiver: e2.receiver)
 
     oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
   end
