@@ -3,6 +3,10 @@ function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
 
   $scope.order_cycle = OrderCycle.order_cycle;
 
+  $scope.toggleProducts = function($event, exchange) {
+    OrderCycle.toggleProducts($event, exchange);
+  };
+
   $scope.addSupplier = function($event) {
     OrderCycle.addSupplier($event, $scope.new_supplier_id);
   };
@@ -18,6 +22,10 @@ function AdminEditOrderCycleCtrl($scope, OrderCycle, Enterprise) {
 
   var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
+
+  $scope.toggleProducts = function($event, exchange) {
+    OrderCycle.toggleProducts($event, exchange);
+  };
 
   $scope.addSupplier = function($event) {
     OrderCycle.addSupplier($event, $scope.new_supplier_id);
@@ -43,6 +51,11 @@ angular.module('order_cycle', ['ngResource']).
     return {
       order_cycle: {incoming_exchanges: [],
 		    outgoing_exchanges: []},
+
+      toggleProducts: function(event, exchange) {
+	event.preventDefault();
+	exchange.showProducts = !exchange.showProducts
+      },
 
       addSupplier: function(event, new_supplier_id) {
 	event.preventDefault();

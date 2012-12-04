@@ -13,9 +13,18 @@
 
 %h2 Incoming
 %table.exchanges
-  %tr{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
-    %td {{ enterprises[exchange.enterprise_id].name }}
+  %thead
+    %tr
+      %th
+      %th Supplier
+      %th Products
+  %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+    %tr
+      %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
+      %td {{ enterprises[exchange.enterprise_id].name }}
+      %td= f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
+    %tr.products{'ng-show' => 'exchange.showProducts'}
+      %td{:colspan => 3} Hello, products
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
