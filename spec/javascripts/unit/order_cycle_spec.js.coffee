@@ -80,6 +80,63 @@ describe 'OrderCycle controllers', ->
 
 
 describe 'OrderCycle services', ->
+  describe 'OrderCycle service', ->
+    OrderCycle = null
+
+    beforeEach ->
+      module('order_cycle')
+      inject ($injector)->
+        OrderCycle = $injector.get('OrderCycle');
+
+    it 'initialises order cycle', ->
+      expect(OrderCycle.order_cycle).toEqual
+        incoming_exchanges: []
+        outgoing_exchanges: []
+
+    describe 'toggling products', ->
+      event = null
+      exchange = null
+
+      beforeEach ->
+        event =
+          preventDefault: jasmine.createSpy('preventDefault')
+        exchange = {}
+
+      it 'prevents the default action', ->
+        OrderCycle.toggleProducts(event, exchange)
+        expect(event.preventDefault).toHaveBeenCalled()
+
+      it 'sets a blank value to true', ->
+        OrderCycle.toggleProducts(event, exchange)
+        expect(exchange.showProducts).toEqual(true)
+
+      it 'sets a true value to false', ->
+        exchange.showProducts = true
+        OrderCycle.toggleProducts(event, exchange)
+        expect(exchange.showProducts).toEqual(false)
+
+      it 'sets a false value to true', ->
+        exchange.showProducts = false
+        OrderCycle.toggleProducts(event, exchange)
+        expect(exchange.showProducts).toEqual(true)
+
+    describe 'adding suppliers', ->
+      event = null
+      exchange = null
+
+      beforeEach ->
+        event =
+          preventDefault: jasmine.createSpy('preventDefault')
+
+      it 'prevents the default action', ->
+        OrderCycle.addSupplier(event, '123')
+        expect(event.preventDefault).toHaveBeenCalled()
+
+      it 'adds the supplier to incoming exchanges', ->
+        OrderCycle.addSupplier(event, '123')
+        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+          {enterprise_id: '123', exchange_variants: {}, active: true}
+        ]
 
 
 describe 'OrderCycle directives', ->
