@@ -16,7 +16,7 @@ Subtotal: <%= number_to_currency @order.item_total %>
 <% end %>
 Order Total: <%= number_to_currency(@order.total) %>
 
-<% if @order.payment_method.include? "EFT" %>
+<% if @order.payment_method.name.include? "EFT" %>
 ============================================================
 Payment Details
 ============================================================
