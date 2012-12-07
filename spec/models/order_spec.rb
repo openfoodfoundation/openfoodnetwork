@@ -26,7 +26,7 @@ describe Spree::Order do
     subject.can_change_distributor?.should be_false
   end
 
-  it "raises an exception if distributor is changed without permission" do
+  it "checks that distributor is available when changing, and raises an exception if distributor is changed without permission" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
     subject.distributor = d
@@ -34,6 +34,7 @@ describe Spree::Order do
 
     subject.add_variant(p.master, 1)
     subject.can_change_distributor?.should be_false
+    subject.should_receive(:available_distributors)
 
     expect do
       subject.distributor = nil
@@ -78,5 +79,64 @@ describe Spree::Order do
 
     li = Spree::LineItem.last
     li.max_quantity.should == 3
+  end
+
+  context "finding alternative distributors" do
+    it "checks that variants are available" do
+      distributors_with_all_variants = double(:distributors_with_all_variants)
+      subject.should_receive(:get_distributors_with_all_variants).with(Enterprise.all)
+      subject.available_distributors
+    end
+
+    context "finding distributors which have the same variants" do
+      before(:each) do
+        @enterprise1 = FactoryGirl.create(:enterprise, id: 1)
+        subject.distributor = @enterprise1
+        @product1 = FactoryGirl.create(:product)
+        @product2 = FactoryGirl.create(:product)
+        @product3 = FactoryGirl.create(:product)
+        variant11 = FactoryGirl.create(:variant, product: @product1)
+        variant12 = FactoryGirl.create(:variant, product: @product1)
+        variant21 = FactoryGirl.create(:variant, product: @product2)
+        variant31 = FactoryGirl.create(:variant, product: @product3)
+        variant32 = FactoryGirl.create(:variant, product: @product3)
+
+        # Product Distributions
+        # Enterprise 1 sells product 1 and product 3
+        FactoryGirl.create(:product_distribution, product: @product1, distributor: @enterprise1)
+        FactoryGirl.create(:product_distribution, product: @product3, distributor: @enterprise1)
+
+        # Build the current order
+        line_item1 = FactoryGirl.create(:line_item, order: subject, variant: variant11)
+        line_item2 = FactoryGirl.create(:line_item, order: subject, variant: variant12)
+        line_item3 = FactoryGirl.create(:line_item, order: subject, variant: variant31)
+        subject.line_items = [line_item1,line_item2,line_item3]
+      end
+
+      it "matches the distributor enterprise of the current order" do
+        subject.get_distributors_with_all_variants([@enterprise1]).should == [@enterprise1]
+      end
+
+      it "does not match enterprises with no products available" do
+        test_enterprise = FactoryGirl.create(:enterprise, id: 2)
+        subject.get_distributors_with_all_variants([@enterprise1, test_enterprise]).should_not include test_enterprise
+      end
+
+      it "does not match enterprises with only some of the same variants in the current order available" do
+        test_enterprise = FactoryGirl.create(:enterprise, id: 2)
+        # Test Enterprise sells only product 1
+        FactoryGirl.create(:product_distribution, product: @product1, distributor: test_enterprise)
+        subject.get_distributors_with_all_variants([@enterprise1, test_enterprise]).should_not include test_enterprise
+      end
+
+      it "matches enteprises which offer all products in the current order" do
+        test_enterprise = FactoryGirl.create(:enterprise, id: 2)
+        # Enterprise 3 Sells Products 1, 2 and 3
+        FactoryGirl.create(:product_distribution, product: @product1, distributor: test_enterprise)
+        FactoryGirl.create(:product_distribution, product: @product2, distributor: test_enterprise)
+        FactoryGirl.create(:product_distribution, product: @product3, distributor: test_enterprise)
+        subject.get_distributors_with_all_variants([@enterprise1, test_enterprise]).should include test_enterprise
+     end
+    end
   end
 end

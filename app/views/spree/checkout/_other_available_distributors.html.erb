@@ -1,0 +1,16 @@
+<div class="columns omega four" style="padding-top: 30px">
+  <%
+    other_available_distributors = @order.available_distributors
+	other_available_distributors.delete(@order.distributor)
+    unless other_available_distributors.empty?
+  %>
+    <%= form_for(@order) do |f| %>
+      <%= f.label :distributor_label, "Alternative distributors for this order:" %>
+	  <% available_distributors_array = other_available_distributors.map { |distributor| [distributor.name + ": " + distributor.address.address1 + ", " + distributor.address.city, distributor.id.to_i] } %>
+	  <%= f.select :distributor_id, options_for_select( available_distributors_array ) %>
+	  <%= f.submit "Change Distributor" %>
+	<% end %>
+  <% else %>
+	No alternative distributors available.
+  <% end %>
+</div>

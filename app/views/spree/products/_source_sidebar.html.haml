@@ -11,7 +11,7 @@
     - order = current_order(false)
     - @distributors.each do |distributor|
       %li.nowrap
-        - if order.nil? || order.can_change_distributor?
+        - if order.nil? || order.can_change_to_distributor?(distributor)
           = link_to distributor.name, select_distributor_order_path(distributor)
         - elsif order.distributor == distributor
           = link_to distributor.name, [main_app, distributor]

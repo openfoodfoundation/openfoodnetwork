@@ -35,7 +35,7 @@ Spree::OrdersController.class_eval do
 
     order = current_order(true)
 
-    if order.can_change_distributor?
+    if order.can_change_to_distributor?(distributor)
       order.distributor = distributor
       order.save!
     end
