@@ -1,3 +1,4 @@
+<% unless @order.state != 'address' %>
 <div class="columns omega four" style="padding-top: 30px">
   <%
     other_available_distributors = @order.available_distributors
@@ -14,3 +15,4 @@
 	No alternative distributors available.
   <% end %>
 </div>
+<% end %>
