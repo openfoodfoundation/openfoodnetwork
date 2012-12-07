@@ -17,10 +17,10 @@ function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
 }
 
 
-function AdminEditOrderCycleCtrl($scope, OrderCycle, Enterprise) {
+function AdminEditOrderCycleCtrl($scope, $location, OrderCycle, Enterprise) {
   $scope.enterprises = Enterprise.index();
 
-  var order_cycle_id = window.location.pathname.match(/\/admin\/order_cycles\/(\d+)/)[1];
+  var order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1];
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
 
   $scope.toggleProducts = function($event, exchange) {
