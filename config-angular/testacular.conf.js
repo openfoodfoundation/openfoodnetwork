@@ -3,9 +3,9 @@ basePath = '../';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
+  'app/assets/javascripts/shared/jquery-1.8.0.js', // TODO: Can we link to Rails' jquery?
   'app/assets/javascripts/shared/angular.js',
   'app/assets/javascripts/shared/angular-*.js',
-  //'test/lib/angular/angular-mocks.js',
 
   'app/assets/javascripts/admin/order_cycle.js.erb',
 

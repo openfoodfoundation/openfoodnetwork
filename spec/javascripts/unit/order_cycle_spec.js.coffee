@@ -82,11 +82,28 @@ describe 'OrderCycle controllers', ->
 describe 'OrderCycle services', ->
   describe 'OrderCycle service', ->
     OrderCycle = null
+    $httpBackend = null
 
     beforeEach ->
       module('order_cycle')
-      inject ($injector)->
-        OrderCycle = $injector.get('OrderCycle');
+      inject ($injector, _$httpBackend_)->
+        OrderCycle = $injector.get('OrderCycle')
+        $httpBackend = _$httpBackend_
+        $httpBackend.expectGET('/admin/order_cycles/123.json').respond
+          id: 123
+          name: 'Test Order Cycle'
+          coordinator_id: 456
+          exchanges: [
+            {sender_id: 1, receiver_id: 456}
+            {sender_id: 456, receiver_id: 2}
+            ]
+        # $httpBackend.expectGET('/admin/order_cycles/987.json').respond
+        #   id: 987
+        #   name: 'Erroring order cycle'
+        #   coordinator_id: 456
+        #   exchanges: [
+        #     {sender_id: 234, receiver_id: 123}
+        #     ]
 
     it 'initialises order cycle', ->
       expect(OrderCycle.order_cycle).toEqual
@@ -135,8 +152,34 @@ describe 'OrderCycle services', ->
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier(event, '123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
-          {enterprise_id: '123', exchange_variants: {}, active: true}
+          {enterprise_id: '123', active: true}
         ]
+
+    describe 'loading an order cycle', ->
+      beforeEach ->
+        OrderCycle.load('123')
+        $httpBackend.flush()
+
+      it 'loads basic fields', ->
+        expect(OrderCycle.order_cycle.id).toEqual(123)
+        expect(OrderCycle.order_cycle.name).toEqual('Test Order Cycle')
+        expect(OrderCycle.order_cycle.coordinator_id).toEqual(456)
+
+      it 'splits exchanges into incoming and outgoing', ->
+        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+          sender_id: 1
+          enterprise_id: 1
+          active: true
+          ]
+
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+          receiver_id: 2
+          enterprise_id: 2
+          active: true
+          ]
+
+      it 'removes original exchanges array', ->
+        expect(OrderCycle.order_cycle.exchanges).toEqual(undefined)
 
 
 describe 'OrderCycle directives', ->
