@@ -80,6 +80,30 @@ describe 'OrderCycle controllers', ->
 
 
 describe 'OrderCycle services', ->
+  describe 'Enterprise service', ->
+    $httpBackend = null
+    Enterprise = null
+
+    beforeEach ->
+      module 'order_cycle'
+      inject ($injector, _$httpBackend_)->
+        Enterprise = $injector.get('Enterprise')
+        $httpBackend = _$httpBackend_
+        $httpBackend.whenGET('/admin/enterprises.json').respond [
+          {id: 1, name: 'One'}
+          {id: 2, name: 'Two'}
+          {id: 3, name: 'Three'}
+          ]
+
+    it 'loads enterprises as a hash', ->
+      enterprises = Enterprise.index()
+      $httpBackend.flush()
+      expect(enterprises).toEqual
+        1: new Enterprise.Enterprise({id: 1, name: 'One'})
+        2: new Enterprise.Enterprise({id: 2, name: 'Two'})
+        3: new Enterprise.Enterprise({id: 3, name: 'Three'})
+
+
   describe 'OrderCycle service', ->
     OrderCycle = null
     $httpBackend = null
