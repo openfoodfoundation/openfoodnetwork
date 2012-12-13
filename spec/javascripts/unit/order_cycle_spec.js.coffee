@@ -83,13 +83,19 @@ describe 'OrderCycle services', ->
   describe 'OrderCycle service', ->
     OrderCycle = null
     $httpBackend = null
+    $window = null
 
     beforeEach ->
-      module('order_cycle')
+      $window = {navigator: {userAgent: 'foo'}}
+
+      module 'order_cycle', ($provide)->
+        $provide.value('$window', $window)
+        null
+
       inject ($injector, _$httpBackend_)->
         OrderCycle = $injector.get('OrderCycle')
         $httpBackend = _$httpBackend_
-        $httpBackend.expectGET('/admin/order_cycles/123.json').respond
+        $httpBackend.whenGET('/admin/order_cycles/123.json').respond
           id: 123
           name: 'Test Order Cycle'
           coordinator_id: 456
@@ -97,13 +103,6 @@ describe 'OrderCycle services', ->
             {sender_id: 1, receiver_id: 456}
             {sender_id: 456, receiver_id: 2}
             ]
-        # $httpBackend.expectGET('/admin/order_cycles/987.json').respond
-        #   id: 987
-        #   name: 'Erroring order cycle'
-        #   coordinator_id: 456
-        #   exchanges: [
-        #     {sender_id: 234, receiver_id: 123}
-        #     ]
 
     it 'initialises order cycle', ->
       expect(OrderCycle.order_cycle).toEqual
@@ -180,6 +179,48 @@ describe 'OrderCycle services', ->
 
       it 'removes original exchanges array', ->
         expect(OrderCycle.order_cycle.exchanges).toEqual(undefined)
+
+    describe 'creating an order cycle', ->
+      it 'redirects to the order cycles page on success', ->
+        OrderCycle.order_cycle =
+          incoming_exchanges: [
+            {enterprise_id: "2", active: true}
+            {enterprise_id: "7", active: true}
+            {enterprise_id: "9", active: false}
+            ]
+          outgoing_exchanges: []
+          name: "name"
+          orders_open_at: "2012-12-14 07:30:00"
+          orders_close_at: "2012-12-22 04:15:00"
+          coordinator_id: "7"
+
+        $httpBackend.expectPOST('/admin/order_cycles.json', {
+          order_cycle:
+            incoming_exchanges: [
+              {enterprise_id:"2",active:true}
+              {enterprise_id:"7",active:true}
+              ]
+            outgoing_exchanges:[]
+            name:"name"
+            orders_open_at:"2012-12-14 07:30:00"
+            orders_close_at:"2012-12-22 04:15:00"
+            coordinator_id:"7"
+          }).respond {success: true}
+
+        OrderCycle.create()
+        $httpBackend.flush()
+        expect($window.location).toEqual('/admin/order_cycles')
+
+      it 'does not redirect on error', ->
+        $httpBackend.expectPOST('/admin/order_cycles.json', {
+          order_cycle:
+            incoming_exchanges: []
+            outgoing_exchanges:[]
+          }).respond {success: false}
+
+        OrderCycle.create()
+        $httpBackend.flush()
+        expect($window.location).toEqual(undefined)
 
 
 describe 'OrderCycle directives', ->

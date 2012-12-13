@@ -41,7 +41,7 @@ angular.module('order_cycle', ['ngResource']).
   config(function($httpProvider) {
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
   }).
-  factory('OrderCycle', function($resource) {
+  factory('OrderCycle', function($resource, $window) {
     var OrderCycle = $resource('/admin/order_cycles/:order_cycle_id.json', {},
 			       {'index':  { method: 'GET', isArray: true},
 				'create': { method: 'POST'},
@@ -98,7 +98,7 @@ angular.module('order_cycle', ['ngResource']).
 	var oc = new OrderCycle({order_cycle: this.order_cycle});
 	oc.$create(function(data) {
 	  if(data['success']) {
-	    window.location = '/admin/order_cycles';
+	    $window.location = '/admin/order_cycles';
 	  } else {
 	    console.log('fail');
 	  }
@@ -111,7 +111,7 @@ angular.module('order_cycle', ['ngResource']).
 	var oc = new OrderCycle({order_cycle: this.order_cycle});
 	oc.$update({order_cycle_id: this.order_cycle.id}, function(data) {
 	  if(data['success']) {
-	    window.location = '/admin/order_cycles';
+	    $window.location = '/admin/order_cycles';
 	  } else {
 	    console.log('fail');
 	  }
