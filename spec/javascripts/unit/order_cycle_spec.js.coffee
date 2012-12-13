@@ -205,5 +205,26 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual(undefined)
 
+      it 'removes inactive exchanges', ->
+        OrderCycle.order_cycle =
+          incoming_exchanges: [
+            {enterprise_id: "1", active: false}
+            {enterprise_id: "2", active: true}
+            {enterprise_id: "3", active: false}
+            ]
+          outgoing_exchanges: [
+            {enterprise_id: "4", active: true}
+            {enterprise_id: "5", active: false}
+            {enterprise_id: "6", active: true}
+            ]
+        OrderCycle.removeInactiveExchanges()
+        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+          {enterprise_id: "2", active: true}
+          ]
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+          {enterprise_id: "4", active: true}
+          {enterprise_id: "6", active: true}
+          ]
+
 
 describe 'OrderCycle directives', ->

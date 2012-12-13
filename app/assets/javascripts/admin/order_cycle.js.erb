@@ -119,12 +119,16 @@ angular.module('order_cycle', ['ngResource']).
       },
 
       removeInactiveExchanges: function() {
-	for(var i=0; i < this.order_cycle.incoming_exchanges.length; i++) {
-	  if(!this.order_cycle.incoming_exchanges[i].active) {
-	    this.order_cycle.incoming_exchanges.splice(i, 1);
-	    i--;
-	  }
-	}
+	angular.forEach([this.order_cycle.incoming_exchanges,
+			 this.order_cycle.outgoing_exchanges],
+		function(exchanges) {
+		  for(var i=0; i < exchanges.length; i++) {
+		    if(!exchanges[i].active) {
+		      exchanges.splice(i, 1);
+		      i--;
+		    }
+		  }
+		});
       }
     };
   }).
