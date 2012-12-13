@@ -182,44 +182,27 @@ describe 'OrderCycle services', ->
 
     describe 'creating an order cycle', ->
       it 'redirects to the order cycles page on success', ->
-        OrderCycle.order_cycle =
-          incoming_exchanges: [
-            {enterprise_id: "2", active: true}
-            {enterprise_id: "7", active: true}
-            {enterprise_id: "9", active: false}
-            ]
-          outgoing_exchanges: []
-          name: "name"
-          orders_open_at: "2012-12-14 07:30:00"
-          orders_close_at: "2012-12-22 04:15:00"
-          coordinator_id: "7"
-
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'removeInactiveExchanges')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle:
-            incoming_exchanges: [
-              {enterprise_id:"2",active:true}
-              {enterprise_id:"7",active:true}
-              ]
-            outgoing_exchanges:[]
-            name:"name"
-            orders_open_at:"2012-12-14 07:30:00"
-            orders_close_at:"2012-12-22 04:15:00"
-            coordinator_id:"7"
+          order_cycle: 'this is the order cycle'
           }).respond {success: true}
 
         OrderCycle.create()
         $httpBackend.flush()
+        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual('/admin/order_cycles')
 
       it 'does not redirect on error', ->
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'removeInactiveExchanges')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle:
-            incoming_exchanges: []
-            outgoing_exchanges:[]
+          order_cycle: 'this is the order cycle'
           }).respond {success: false}
 
         OrderCycle.create()
         $httpBackend.flush()
+        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual(undefined)
 
 
