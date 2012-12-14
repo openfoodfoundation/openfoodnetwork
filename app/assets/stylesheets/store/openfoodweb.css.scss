@@ -230,3 +230,8 @@ fieldset#product-distributor-details {
 div#eft-payment-alert {
   border: 2px solid red;
 }
+
+/* Cleared div for clearing previous floating elements */
+div.cleared {
+  clear: both;
+}
