@@ -9,13 +9,14 @@
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
     - order = current_order(false)
+    - validator = DistributorChangeValidator.new(order)
     - @distributors.each do |distributor|
       %li.nowrap
-        - if order.nil? || order.can_change_to_distributor?(distributor)
+        - if order.nil? || validator.can_change_to_distributor?(distributor)
           = link_to distributor.name, select_distributor_order_path(distributor)
         - elsif order.distributor == distributor
           = link_to distributor.name, [main_app, distributor]
         - else
           %span.inactive= distributor.name
-  - if current_distributor && order.can_change_distributor?
+  - if current_distributor && validator.can_change_distributor?
     = button_to 'Browse All Distributors', deselect_distributor_orders_path, :method => :get

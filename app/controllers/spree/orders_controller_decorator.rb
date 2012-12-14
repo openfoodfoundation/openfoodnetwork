@@ -34,11 +34,8 @@ Spree::OrdersController.class_eval do
     distributor = Enterprise.is_distributor.find params[:id]
 
     order = current_order(true)
-
-    if order.can_change_to_distributor?(distributor)
-      order.distributor = distributor
-      order.save!
-    end
+    order.distributor = distributor
+    order.save!
 
     redirect_to main_app.enterprise_path(distributor)
   end
@@ -46,10 +43,8 @@ Spree::OrdersController.class_eval do
   def deselect_distributor
     order = current_order(true)
 
-    if order.can_change_distributor?
-      order.distributor = nil
-      order.save!
-    end
+    order.distributor = nil
+    order.save!
 
     redirect_to root_path
   end
@@ -73,7 +68,7 @@ Spree::OrdersController.class_eval do
 
     # -- If products in cart, distributor can't be changed
     order = current_order(false)
-    if !order.nil? && !order.can_change_distributor? && order.distributor != distributor
+    if !order.nil? && !DistributorChangeValidator.new(order).can_change_to_distributor?(distributor) 
       return false
     end
 

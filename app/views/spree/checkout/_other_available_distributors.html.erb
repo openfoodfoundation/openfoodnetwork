@@ -1,7 +1,7 @@
 <% unless @order.state != 'address' %>
 <div class="columns omega four" style="padding-top: 30px">
   <%
-    other_available_distributors = @order.available_distributors
+    other_available_distributors = DistributorChangeValidator.new(@order).available_distributors(Enterprise.all)
 	other_available_distributors.delete(@order.distributor)
     unless other_available_distributors.empty?
   %>

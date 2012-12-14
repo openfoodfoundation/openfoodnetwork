@@ -27,6 +27,10 @@ class Enterprise < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
+  
+  def available_variants
+    ProductDistribution.find_all_by_distributor_id( self.id ).map{ |pd| pd.product.variants }.flatten
+  end
 
 
   private

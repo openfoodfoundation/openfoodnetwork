@@ -1,8 +1,9 @@
 .add-to-cart
+  - order = current_order(false)
   - if !@product.has_stock? && !Spree::Config[:allow_backorders]
     = content_tag('strong', t(:out_of_stock))
 
-  - elsif current_order(false) && !current_order(false).can_add_product_to_cart?(@product)
+  - elsif current_order(false) && !order.can_add_product_to_cart?(@product)
     .error-distributor
       Please complete your order at
       = link_to current_distributor.name, root_path
@@ -14,8 +15,7 @@
     - if @product.group_buy
       %p Max quantity
       = number_field_tag (@product.has_variants? ? :max_quantity : "variant_attributes[#{@product.master.id}][max_quantity]"), 1, :class => 'title max_quantity', :in => 1..@product.on_hand
-    - order = current_order(false)
-    - if order.nil? || order.can_change_distributor?
+    - if order.nil? || DistributorChangeValidator.new(order).can_change_distributor?
       %p Distributor
       = select_tag "distributor_id", options_from_collection_for_select([Enterprise.new]+@product.distributors, "id", "name", current_distributor.andand.id)
     - else
