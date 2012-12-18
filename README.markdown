@@ -85,4 +85,4 @@ speak to Andrew Spinks.
 
 ## Licence
 
-TODO
+Copyright (c) 2012 Eaterprises, released under the AGPL licence.
