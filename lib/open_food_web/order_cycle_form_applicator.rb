@@ -20,6 +20,11 @@ module OpenFoodWeb
       destroy_untouched_exchanges
     end
 
+
+    private
+
+    attr_accessor :touched_exchanges
+
     def exchange_exists?(sender_id, receiver_id)
       @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id).present?
     end
@@ -44,8 +49,6 @@ module OpenFoodWeb
       @order_cycle.exchanges - @touched_exchanges
     end
 
-
-    private
 
     def exchange_variant_ids(exchange)
       exchange[:exchange_variants].select { |k, v| v }.keys.map { |k| k.to_i }

@@ -12,14 +12,31 @@ module OpenFoodWeb
         exchange = FactoryGirl.create(:exchange, order_cycle: oc)
         applicator = OrderCycleFormApplicator.new(oc)
 
-        applicator.exchange_exists?(exchange.sender_id, exchange.receiver_id).should be_true
-        applicator.exchange_exists?(exchange.receiver_id, exchange.sender_id).should be_false
-        applicator.exchange_exists?(exchange.sender_id, 999).should be_false
-        applicator.exchange_exists?(999, exchange.receiver_id).should be_false
-        applicator.exchange_exists?(999, 888).should be_false
+        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id).should be_true
+        applicator.send(:exchange_exists?, exchange.receiver_id, exchange.sender_id).should be_false
+        applicator.send(:exchange_exists?, exchange.sender_id, 999).should be_false
+        applicator.send(:exchange_exists?, 999, exchange.receiver_id).should be_false
+        applicator.send(:exchange_exists?, 999, 888).should be_false
       end
 
-      it "adds exchanges"
+      it "adds exchanges" do
+        oc = FactoryGirl.create(:simple_order_cycle)
+        applicator = OrderCycleFormApplicator.new(oc)
+        sender = FactoryGirl.create(:enterprise)
+        receiver = FactoryGirl.create(:enterprise)
+        variant1 = FactoryGirl.create(:variant)
+        variant2 = FactoryGirl.create(:variant)
+
+        applicator.send(:touched_exchanges=, [])
+        applicator.send(:add_exchange, sender.id, receiver.id, [variant1.id, variant2.id])
+
+        exchange = Exchange.last
+        exchange.sender.should == sender
+        exchange.receiver.should == receiver
+        exchange.variants.sort.should == [variant1, variant2].sort
+
+        applicator.send(:touched_exchanges).should == [exchange]
+      end
 
       it "updates exchanges"
     end
@@ -79,7 +96,7 @@ module OpenFoodWeb
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
-        applicator.untouched_exchanges.should == [exchange]
+        applicator.send(:untouched_exchanges).should == [exchange]
       end
 
       it "converts exchange variant ids hash to an array of ids" do
