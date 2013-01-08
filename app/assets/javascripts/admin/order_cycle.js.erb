@@ -4,11 +4,13 @@ function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
   $scope.order_cycle = OrderCycle.order_cycle;
 
   $scope.toggleProducts = function($event, exchange) {
-    OrderCycle.toggleProducts($event, exchange);
+    $event.preventDefault();
+    OrderCycle.toggleProducts(exchange);
   };
 
   $scope.addSupplier = function($event) {
-    OrderCycle.addSupplier($event, $scope.new_supplier_id);
+    $event.preventDefault();
+    OrderCycle.addSupplier($scope.new_supplier_id);
   };
 
   $scope.submit = function() {
@@ -24,11 +26,13 @@ function AdminEditOrderCycleCtrl($scope, $location, OrderCycle, Enterprise) {
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
 
   $scope.toggleProducts = function($event, exchange) {
-    OrderCycle.toggleProducts($event, exchange);
+    $event.preventDefault();
+    OrderCycle.toggleProducts(exchange);
   };
 
   $scope.addSupplier = function($event) {
-    OrderCycle.addSupplier($event, $scope.new_supplier_id);
+    $event.preventDefault();
+    OrderCycle.addSupplier($scope.new_supplier_id);
   };
 
   $scope.submit = function() {
@@ -52,13 +56,11 @@ angular.module('order_cycle', ['ngResource']).
       order_cycle: {incoming_exchanges: [],
 		    outgoing_exchanges: []},
 
-      toggleProducts: function(event, exchange) {
-	event.preventDefault();
+      toggleProducts: function(exchange) {
 	exchange.showProducts = !exchange.showProducts
       },
 
-      addSupplier: function(event, new_supplier_id) {
-	event.preventDefault();
+      addSupplier: function(new_supplier_id) {
 	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, exchange_variants: {}});
       },
 
