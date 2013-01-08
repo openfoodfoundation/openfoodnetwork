@@ -38,7 +38,24 @@ module OpenFoodWeb
         applicator.send(:touched_exchanges).should == [exchange]
       end
 
-      it "updates exchanges"
+      it "updates exchanges" do
+        oc = FactoryGirl.create(:simple_order_cycle)
+        applicator = OrderCycleFormApplicator.new(oc)
+        sender = FactoryGirl.create(:enterprise)
+        receiver = FactoryGirl.create(:enterprise)
+        variant1 = FactoryGirl.create(:variant)
+        variant2 = FactoryGirl.create(:variant)
+        variant3 = FactoryGirl.create(:variant)
+
+        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1, variant2])
+
+        applicator.send(:touched_exchanges=, [])
+        applicator.send(:update_exchange, sender.id, receiver.id, [variant1.id, variant3.id])
+
+        exchange.reload
+        exchange.variant_ids.should == [variant1.id, variant3.id]
+        applicator.send(:touched_exchanges).should == [exchange]
+      end
     end
 
     context "unit specs" do
