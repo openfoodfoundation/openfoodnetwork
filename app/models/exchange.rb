@@ -12,4 +12,6 @@ class Exchange < ActiveRecord::Base
 
   validates_presence_of :order_cycle, :sender, :receiver
   validates_uniqueness_of :sender_id,   :scope => [:order_cycle_id, :receiver_id]
+
+  accepts_nested_attributes_for :variants
 end

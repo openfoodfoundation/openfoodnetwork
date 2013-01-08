@@ -31,9 +31,12 @@ feature %q{
   end
 
   scenario "creating an order cycle" do
-    # Given a coordinating enterprise and a supplying enterprise
+    # Given a coordinating enterprise and a supplying enterprise with some products with variants
     create(:enterprise, name: 'My coordinator')
-    create(:supplier_enterprise, name: 'My supplier')
+    supplier = create(:supplier_enterprise, name: 'My supplier')
+    product = create(:product, supplier: supplier)
+    create(:variant, product: product)
+    create(:variant, product: product)
 
     # When I go to the new order cycle page
     login_to_admin_section
@@ -46,9 +49,14 @@ feature %q{
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
     select 'My coordinator', from: 'order_cycle_coordinator_id'
 
-    # And I add a supplier and click Create
+    # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
+    click_button 'Products'
+    check 'order_cycle_exchange_0_exchange_variants_1'
+    check 'order_cycle_exchange_0_exchange_variants_3'
+
+    # And I click Create
     click_button 'Create'
 
     # Then my order cycle should have been created
@@ -61,6 +69,9 @@ feature %q{
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
+
+    # And it should have some variants selected
+    OrderCycle.last.exchanges.first.variants.count.should == 2
   end
 
   scenario "updating many order cycle opening/closing times at once" do
