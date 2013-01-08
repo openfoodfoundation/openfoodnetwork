@@ -26,7 +26,7 @@
           %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
           %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
           %td= order_cycle.coordinator.name
-          %td
+          %td.suppliers
             - order_cycle.suppliers.each do |s|
               = s.name
               %br/

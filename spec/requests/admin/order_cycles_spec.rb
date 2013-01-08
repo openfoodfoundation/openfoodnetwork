@@ -31,19 +31,24 @@ feature %q{
   end
 
   scenario "creating an order cycle" do
-    # Given a coordinating enterprise
+    # Given a coordinating enterprise and a supplying enterprise
     create(:enterprise, name: 'My coordinator')
+    create(:supplier_enterprise, name: 'My supplier')
 
     # When I go to the new order cycle page
     login_to_admin_section
     click_link 'Order Cycles'
     click_link 'New Order Cycle'
 
-    # And I fill in the basic fields and click Create
+    # And I fill in the basic fields
     fill_in 'order_cycle_name', with: 'Plums & Avos'
     fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
     select 'My coordinator', from: 'order_cycle_coordinator_id'
+
+    # And I add a supplier and click Create
+    select 'My supplier', from: 'new_supplier_id'
+    click_button 'Add supplier'
     click_button 'Create'
 
     # Then my order cycle should have been created
@@ -54,6 +59,8 @@ feature %q{
     page.should have_selector "input[value='2012-11-06 06:00:00 UTC']"
     page.should have_selector "input[value='2012-11-13 17:00:00 UTC']"
     page.should have_content 'My coordinator'
+
+    page.should have_selector 'td.suppliers', text: 'My supplier'
   end
 
   scenario "updating many order cycle opening/closing times at once" do
