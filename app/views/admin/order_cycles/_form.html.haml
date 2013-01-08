@@ -28,6 +28,8 @@
         .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}
           %img{'ng-src' => '{{ product.image_url }}'}
           {{ product.name }}
+          .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
+            {{ variant.label }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'

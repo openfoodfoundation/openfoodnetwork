@@ -5,5 +5,9 @@ r.list_of :enterprises, @collection do
   r.list_of :supplied_products do |product|
     r.element :name
     r.element :image_url, product.images.present? ? product.images.first.attachment.url(:mini) : nil
+    r.list_of :variants do |variant|
+      r.element :id
+      r.element :label, variant.options_text
+    end
   end
 end
