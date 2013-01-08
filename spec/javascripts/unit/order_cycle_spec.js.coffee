@@ -249,6 +249,3 @@ describe 'OrderCycle services', ->
           {enterprise_id: "4", active: true}
           {enterprise_id: "6", active: true}
           ]
-
-
-describe 'OrderCycle directives', ->
