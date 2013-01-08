@@ -59,7 +59,7 @@ angular.module('order_cycle', ['ngResource']).
 
       addSupplier: function(event, new_supplier_id) {
 	event.preventDefault();
-	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true});
+	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, exchange_variants: {}});
       },
 
       load: function(order_cycle_id) {
@@ -72,12 +72,12 @@ angular.module('order_cycle', ['ngResource']).
 	  for(i in service.order_cycle.exchanges) {
 	    var exchange = service.order_cycle.exchanges[i];
 	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
-	      $.extend(exchange, {enterprise_id: exchange.receiver_id, active: true});
+	      $.extend(exchange, {enterprise_id: exchange.receiver_id, active: true, exchange_variants: {}});
 	      delete(exchange.sender_id);
 	      service.order_cycle.outgoing_exchanges.push(exchange);
 
 	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
-	      $.extend(exchange, {enterprise_id: exchange.sender_id, active: true});
+	      $.extend(exchange, {enterprise_id: exchange.sender_id, active: true, exchange_variants: {}});
 	      delete(exchange.receiver_id);
 	      service.order_cycle.incoming_exchanges.push(exchange)
 
