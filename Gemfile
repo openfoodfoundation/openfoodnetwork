@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.11'
 
 gem 'pg'
 gem 'spree', :git => 'git://github.com/spree/spree.git', :branch => '1-1-stable'
