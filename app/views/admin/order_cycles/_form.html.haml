@@ -27,11 +27,11 @@
       %td{:colspan => 3}
         .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}
 
-          = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ product.master_id }}', 1, 1, 'ng-model' => 'exchange.exchange_variants[product.master_id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ product.master_id }}'
+          = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ product.master_id }}', 1, 1, 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ product.master_id }}'
           %img{'ng-src' => '{{ product.image_url }}'}
           {{ product.name }}
           .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
-            = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.exchange_variants[variant.id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}'
+            = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}'
             {{ variant.label }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}

@@ -4,17 +4,10 @@ r.element :order_cycle, @order_cycle do
   r.element :orders_open_at
   r.element :orders_close_at
   r.element :coordinator_id
-  r.list_of :exchanges, @order_cycle.exchanges.map { |e| ExchangePresenter.new(e) } do
+  r.list_of :exchanges do |exchange|
     r.element :sender_id
     r.element :receiver_id
-    r.list_of :exchange_products do |product, exchange_variants|
-      r.element :id, product.id
-      r.element :name, product.name
-      r.element :image_url, product.images.first.attachment.url(:mini)
-      r.list_of :variants, exchange_variants.map { |ev| VariantPresenter.new(ev.variant) } do
-        r.element :id
-        r.element :image_url
-      end
-    end
+
+    r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
   end
 end
