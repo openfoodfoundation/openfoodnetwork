@@ -3,6 +3,14 @@ function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
 
   $scope.order_cycle = OrderCycle.order_cycle;
 
+  $scope.exchangeVariantsSelected = function(exchange) {
+    return OrderCycle.exchangeVariantsSelected(exchange);
+  };
+
+  $scope.enterpriseVariantsTotal = function(enterprise) {
+    return OrderCycle.enterpriseVariantsTotal(enterprise);
+  };
+
   $scope.toggleProducts = function($event, exchange) {
     $event.preventDefault();
     OrderCycle.toggleProducts(exchange);
@@ -24,6 +32,14 @@ function AdminEditOrderCycleCtrl($scope, $location, OrderCycle, Enterprise) {
 
   var order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1];
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
+
+  $scope.exchangeVariantsSelected = function(exchange) {
+    return OrderCycle.exchangeVariantsSelected(exchange);
+  };
+
+  $scope.enterpriseVariantsTotal = function(enterprise) {
+    return OrderCycle.enterpriseVariantsTotal(enterprise);
+  };
 
   $scope.toggleProducts = function($event, exchange) {
     $event.preventDefault();
@@ -55,6 +71,28 @@ angular.module('order_cycle', ['ngResource']).
     return {
       order_cycle: {incoming_exchanges: [],
 		    outgoing_exchanges: []},
+
+      exchangeVariantsSelected: function(exchange) {
+	var numActiveVariants = 0;
+
+	angular.forEach(exchange.variants, function(active, id) {
+	  if(active) {
+	    numActiveVariants++;
+	  }
+	});
+
+	return numActiveVariants;
+      },
+
+      enterpriseVariantsTotal: function(enterprise) {
+	var numVariants = 0;
+
+	angular.forEach(enterprise.supplied_products, function(product) {
+	  numVariants += product.variants.length == 0 ? 1 : product.variants.length;
+	});
+
+	return numVariants;
+      },
 
       toggleProducts: function(exchange) {
 	exchange.showProducts = !exchange.showProducts

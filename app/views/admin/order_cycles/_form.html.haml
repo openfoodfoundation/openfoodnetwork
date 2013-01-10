@@ -22,18 +22,12 @@
     %tr.supplier
       %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
       %td.supplier_name {{ enterprises[exchange.enterprise_id].name }}
-      %td.products= f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
+      %td.products
+        = f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
+        {{ exchangeVariantsSelected(exchange) }} / {{ enterpriseVariantsTotal(enterprises[exchange.enterprise_id]) }} selected
     %tr.products{'ng-show' => 'exchange.showProducts'}
       %td{:colspan => 3}
-        .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}
-
-          .exchange-product-details
-            = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
-            %img{'ng-src' => '{{ product.image_url }}'}
-            {{ product.name }}
-          .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
-            = check_box_tag 'order_cycle_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}'
-            {{ variant.label }}
+        = render 'exchange_product_form'
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
