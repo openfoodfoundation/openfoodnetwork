@@ -19,10 +19,10 @@
       %th Supplier
       %th Products
   %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %tr
+    %tr.supplier
       %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
-      %td {{ enterprises[exchange.enterprise_id].name }}
-      %td= f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
+      %td.supplier_name {{ enterprises[exchange.enterprise_id].name }}
+      %td.products= f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       %td{:colspan => 3}
         .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}

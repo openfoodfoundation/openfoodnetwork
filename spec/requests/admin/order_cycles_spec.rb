@@ -74,6 +74,54 @@ feature %q{
     OrderCycle.last.exchanges.first.variants.count.should == 2
   end
 
+
+  scenario "editing an order cycle" do
+    # Given an order cycle with all the settings
+    oc = create(:order_cycle)
+
+    # When I edit it
+    login_to_admin_section
+    click_link 'Order Cycles'
+    click_link oc.name
+
+    # Then I should see the basic settings
+    sleep(1)
+    page.find('#order_cycle_name').value.should == oc.name
+    page.find('#order_cycle_orders_open_at').value.should == oc.orders_open_at.to_s
+    page.find('#order_cycle_orders_close_at').value.should == oc.orders_close_at.to_s
+    page.find('#order_cycle_coordinator_id').value.to_i.should == oc.coordinator_id
+
+    # And I should see the suppliers with products
+    page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
+    page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
+
+    page.all('table.exchanges tbody tr.supplier').each do |row|
+      row.find('td.products input').click
+
+      products_row = page.find('table.exchanges tr.products')
+      products_row.should have_selector "input[type='checkbox'][checked='checked']"
+
+      row.find('td.products input').click
+    end
+  end
+
+
+  scenario "updating an order cycle" do
+    # Given an order cycle with all the settings
+    oc = create(:order_cycle)
+
+    # When I go to its edit page
+    login_to_admin_section
+    click_link 'Order Cycles'
+    click_link oc.name
+
+    # And I update it
+    pending
+
+    # Then my updates should have been applied
+  end
+
+
   scenario "updating many order cycle opening/closing times at once" do
     # Given three order cycles
     3.times { create(:order_cycle) }

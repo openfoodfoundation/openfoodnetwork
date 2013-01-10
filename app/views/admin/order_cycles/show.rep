@@ -1,8 +1,8 @@
 r.element :order_cycle, @order_cycle do
   r.element :id
   r.element :name
-  r.element :orders_open_at
-  r.element :orders_close_at
+  r.element :orders_open_at, @order_cycle.orders_open_at.to_s
+  r.element :orders_close_at, @order_cycle.orders_close_at.to_s
   r.element :coordinator_id
   r.list_of :exchanges do |exchange|
     r.element :sender_id
