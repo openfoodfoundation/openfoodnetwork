@@ -53,8 +53,8 @@ feature %q{
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
     click_button 'Products'
-    check 'order_cycle_exchange_0_exchange_variants_1'
-    check 'order_cycle_exchange_0_exchange_variants_3'
+    check 'order_cycle_exchange_0_variants_1'
+    check 'order_cycle_exchange_0_variants_3'
 
     # And I click Create
     click_button 'Create'
@@ -133,9 +133,9 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_exchange_1_exchange_variants_2"
-    check "order_cycle_exchange_2_exchange_variants_#{v1.id}"
-    check "order_cycle_exchange_2_exchange_variants_#{v2.id}"
+    uncheck "order_cycle_exchange_1_variants_2"
+    check "order_cycle_exchange_2_variants_#{v1.id}"
+    check "order_cycle_exchange_2_variants_#{v2.id}"
 
     # And I click Update
     click_button 'Update'

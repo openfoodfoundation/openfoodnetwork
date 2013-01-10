@@ -63,7 +63,7 @@ module OpenFoodWeb
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :exchange_variants => {'1' => true, '2' => false, '3' => true}}
+        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange])
 
@@ -81,7 +81,7 @@ module OpenFoodWeb
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :exchange_variants => {'1' => true, '2' => false, '3' => true}}
+        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
