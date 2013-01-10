@@ -110,15 +110,49 @@ feature %q{
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
 
+    # And a coordinating enterprise and a supplying enterprise with some products with variants
+    create(:enterprise, name: 'My coordinator')
+    supplier = create(:supplier_enterprise, name: 'My supplier')
+    product = create(:product, supplier: supplier)
+    v1 = create(:variant, product: product)
+    v2 = create(:variant, product: product)
+
     # When I go to its edit page
     login_to_admin_section
     click_link 'Order Cycles'
     click_link oc.name
 
     # And I update it
-    pending
+    fill_in 'order_cycle_name', with: 'Plums & Avos'
+    fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
+    fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+    select 'My coordinator', from: 'order_cycle_coordinator_id'
 
-    # Then my updates should have been applied
+    # And I add a supplier and some products
+    select 'My supplier', from: 'new_supplier_id'
+    click_button 'Add supplier'
+    page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
+
+    uncheck "order_cycle_exchange_1_exchange_variants_2"
+    check "order_cycle_exchange_2_exchange_variants_#{v1.id}"
+    check "order_cycle_exchange_2_exchange_variants_#{v2.id}"
+
+    # And I click Update
+    click_button 'Update'
+
+    # Then my order cycle should have been updated
+    page.should have_content 'Your order cycle has been updated.'
+
+    page.should have_selector 'a', text: 'Plums & Avos'
+
+    page.should have_selector "input[value='2012-11-06 06:00:00 UTC']"
+    page.should have_selector "input[value='2012-11-13 17:00:00 UTC']"
+    page.should have_content 'My coordinator'
+
+    page.should have_selector 'td.suppliers', text: 'My supplier'
+
+    # And it should have some variants selected
+    OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort
   end
 
 

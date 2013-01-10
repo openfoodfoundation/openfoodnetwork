@@ -31,7 +31,7 @@
           %img{'ng-src' => '{{ product.image_url }}'}
           {{ product.name }}
           .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
-            = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_exchange_variants_{{ variant.id }}'
+            = check_box_tag 'order_cycle_exchange_{{ $parent.$parent.$index }}_exchange_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_exchange_{{ $parent.$parent.$index }}_exchange_variants_{{ variant.id }}'
             {{ variant.label }}
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
