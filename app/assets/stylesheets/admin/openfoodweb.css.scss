@@ -36,5 +36,29 @@ form.order_cycle {
     tr td.active {
       width: 20px;
     }
+
+    tr.supplier td {
+      border-bottom: 2px solid #C3D9FF;
+    }
+
+    .exchange-product {
+      float: left;
+      overflow: auto;
+      width: 18%;
+      min-height: 7.5em;
+      margin: 0 1% 1% 0;
+      border: 1px solid #DAE7FF;
+      padding: 5px;
+
+      .exchange-product-details {
+        clear: both;
+        margin-bottom: 1em;
+      }
+
+      .exchange-product-variant {
+        float: left;
+        margin-right: 2em;
+      }
+    }
   }
 }
