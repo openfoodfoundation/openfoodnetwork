@@ -61,7 +61,7 @@ angular.module('order_cycle', ['ngResource']).
       },
 
       addSupplier: function(new_supplier_id) {
-	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true});
+	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}});
       },
 
       load: function(order_cycle_id) {

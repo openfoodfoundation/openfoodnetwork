@@ -119,7 +119,7 @@ module OpenFoodWeb
       it "converts exchange variant ids hash to an array of ids" do
         applicator = OrderCycleFormApplicator.new(nil)
 
-        applicator.send(:exchange_variant_ids, {:enterprise_id => 123, :exchange_variants => {'1' => true, '2' => false, '3' => true}}).should == [1, 3]
+        applicator.send(:exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}}).should == [1, 3]
       end
     end
   end

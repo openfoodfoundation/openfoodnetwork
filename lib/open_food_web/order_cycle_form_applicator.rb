@@ -51,7 +51,7 @@ module OpenFoodWeb
 
 
     def exchange_variant_ids(exchange)
-      exchange[:exchange_variants].select { |k, v| v }.keys.map { |k| k.to_i }
+      exchange[:variants].select { |k, v| v }.keys.map { |k| k.to_i }
     end
   end
 end
