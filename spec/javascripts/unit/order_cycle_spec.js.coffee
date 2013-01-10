@@ -13,8 +13,8 @@ describe 'OrderCycle controllers', ->
         preventDefault: jasmine.createSpy('preventDefault')
       OrderCycle =
         order_cycle: 'my order cycle'
-        exchangeVariantsSelected: jasmine.createSpy('exchangeVariantsSelected').andReturn('variants selected')
-        enterpriseVariantsTotal: jasmine.createSpy('enterpriseVariantsTotal').andReturn('variants total')
+        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
+        enterpriseTotalVariants: jasmine.createSpy('enterpriseTotalVariants').andReturn('variants total')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         create: jasmine.createSpy('create')
@@ -29,11 +29,11 @@ describe 'OrderCycle controllers', ->
     it 'Loads order cycles', ->
       expect(scope.order_cycle).toEqual('my order cycle')
 
-    it 'Delegates exchangeVariantsSelected and enterpriseVariantsTotal to OrderCycle', ->
-      expect(scope.exchangeVariantsSelected('exchange')).toEqual('variants selected')
-      expect(OrderCycle.exchangeVariantsSelected).toHaveBeenCalledWith('exchange')
-      expect(scope.enterpriseVariantsTotal('enterprise')).toEqual('variants total')
-      expect(OrderCycle.enterpriseVariantsTotal).toHaveBeenCalledWith('enterprise')
+    it 'Delegates exchangeSelectedVariants and enterpriseTotalVariants to OrderCycle', ->
+      expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
+      expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+      expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
+      expect(OrderCycle.enterpriseTotalVariants).toHaveBeenCalledWith('enterprise')
 
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
@@ -67,8 +67,8 @@ describe 'OrderCycle controllers', ->
           'example.com/admin/order_cycles/27/edit'
       OrderCycle =
         load: jasmine.createSpy('load')
-        exchangeVariantsSelected: jasmine.createSpy('exchangeVariantsSelected').andReturn('variants selected')
-        enterpriseVariantsTotal: jasmine.createSpy('enterpriseVariantsTotal').andReturn('variants total')
+        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
+        enterpriseTotalVariants: jasmine.createSpy('enterpriseTotalVariants').andReturn('variants total')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         update: jasmine.createSpy('update')
@@ -83,11 +83,11 @@ describe 'OrderCycle controllers', ->
     it 'Loads order cycles', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
 
-    it 'Delegates exchangeVariantsSelected and enterpriseVariantsTotal to OrderCycle', ->
-      expect(scope.exchangeVariantsSelected('exchange')).toEqual('variants selected')
-      expect(OrderCycle.exchangeVariantsSelected).toHaveBeenCalledWith('exchange')
-      expect(scope.enterpriseVariantsTotal('enterprise')).toEqual('variants total')
-      expect(OrderCycle.enterpriseVariantsTotal).toHaveBeenCalledWith('enterprise')
+    it 'Delegates exchangeSelectedVariants and enterpriseTotalVariants to OrderCycle', ->
+      expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
+      expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+      expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
+      expect(OrderCycle.enterpriseTotalVariants).toHaveBeenCalledWith('enterprise')
 
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
@@ -161,7 +161,7 @@ describe 'OrderCycle services', ->
 
     describe 'counting variants', ->
       it 'counts selected variants in an exchange', ->
-        result = OrderCycle.exchangeVariantsSelected({variants: {1: true, 2: false, 3: true}})
+        result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
         expect(result).toEqual(2)
 
       it 'counts total variants supplied by an enterprise', ->
@@ -172,7 +172,7 @@ describe 'OrderCycle services', ->
             {variants: [{}, {}, {}]}
             ]
 
-        expect(OrderCycle.enterpriseVariantsTotal(enterprise)).toEqual(5)
+        expect(OrderCycle.enterpriseTotalVariants(enterprise)).toEqual(5)
 
     describe 'toggling products', ->
       exchange = null

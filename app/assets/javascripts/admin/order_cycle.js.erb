@@ -3,12 +3,12 @@ function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
 
   $scope.order_cycle = OrderCycle.order_cycle;
 
-  $scope.exchangeVariantsSelected = function(exchange) {
-    return OrderCycle.exchangeVariantsSelected(exchange);
+  $scope.exchangeSelectedVariants = function(exchange) {
+    return OrderCycle.exchangeSelectedVariants(exchange);
   };
 
-  $scope.enterpriseVariantsTotal = function(enterprise) {
-    return OrderCycle.enterpriseVariantsTotal(enterprise);
+  $scope.enterpriseTotalVariants = function(enterprise) {
+    return OrderCycle.enterpriseTotalVariants(enterprise);
   };
 
   $scope.toggleProducts = function($event, exchange) {
@@ -33,12 +33,12 @@ function AdminEditOrderCycleCtrl($scope, $location, OrderCycle, Enterprise) {
   var order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1];
   $scope.order_cycle = OrderCycle.load(order_cycle_id);
 
-  $scope.exchangeVariantsSelected = function(exchange) {
-    return OrderCycle.exchangeVariantsSelected(exchange);
+  $scope.exchangeSelectedVariants = function(exchange) {
+    return OrderCycle.exchangeSelectedVariants(exchange);
   };
 
-  $scope.enterpriseVariantsTotal = function(enterprise) {
-    return OrderCycle.enterpriseVariantsTotal(enterprise);
+  $scope.enterpriseTotalVariants = function(enterprise) {
+    return OrderCycle.enterpriseTotalVariants(enterprise);
   };
 
   $scope.toggleProducts = function($event, exchange) {
@@ -72,7 +72,7 @@ angular.module('order_cycle', ['ngResource']).
       order_cycle: {incoming_exchanges: [],
 		    outgoing_exchanges: []},
 
-      exchangeVariantsSelected: function(exchange) {
+      exchangeSelectedVariants: function(exchange) {
 	var numActiveVariants = 0;
 
 	angular.forEach(exchange.variants, function(active, id) {
@@ -84,7 +84,7 @@ angular.module('order_cycle', ['ngResource']).
 	return numActiveVariants;
       },
 
-      enterpriseVariantsTotal: function(enterprise) {
+      enterpriseTotalVariants: function(enterprise) {
 	var numVariants = 0;
 
 	angular.forEach(enterprise.supplied_products, function(product) {

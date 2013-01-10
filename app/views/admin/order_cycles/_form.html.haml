@@ -24,7 +24,7 @@
       %td.supplier_name {{ enterprises[exchange.enterprise_id].name }}
       %td.products
         = f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
-        {{ exchangeVariantsSelected(exchange) }} / {{ enterpriseVariantsTotal(enterprises[exchange.enterprise_id]) }} selected
+        {{ exchangeSelectedVariants(exchange) }} / {{ enterpriseTotalVariants(enterprises[exchange.enterprise_id]) }} selected
     %tr.products{'ng-show' => 'exchange.showProducts'}
       %td{:colspan => 3}
         = render 'exchange_product_form'
