@@ -96,18 +96,18 @@ angular.module('order_cycle', ['ngResource']).
 	var service = this;
 
 	OrderCycle.get({order_cycle_id: order_cycle_id}, function(oc) {
-	  $.extend(service.order_cycle, oc);
+	  angular.extend(service.order_cycle, oc);
 	  service.order_cycle.incoming_exchanges = [];
 	  service.order_cycle.outgoing_exchanges = [];
 	  for(i in service.order_cycle.exchanges) {
 	    var exchange = service.order_cycle.exchanges[i];
 	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
-	      $.extend(exchange, {enterprise_id: exchange.receiver_id, active: true});
+	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true});
 	      delete(exchange.sender_id);
 	      service.order_cycle.outgoing_exchanges.push(exchange);
 
 	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
-	      $.extend(exchange, {enterprise_id: exchange.sender_id, active: true});
+	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true});
 	      delete(exchange.receiver_id);
 	      service.order_cycle.incoming_exchanges.push(exchange)
 
