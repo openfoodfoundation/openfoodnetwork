@@ -1,215 +1,173 @@
-function AdminCreateOrderCycleCtrl($scope, OrderCycle, Enterprise) {
-  $scope.enterprises = Enterprise.index();
+app = angular.module('order_cycle', ['ngResource'])
 
-  $scope.order_cycle = OrderCycle.order_cycle;
+AdminCreateOrderCycleCtrl = ($scope, OrderCycle, Enterprise) ->
+  $scope.enterprises = Enterprise.index()
 
-  $scope.exchangeSelectedVariants = function(exchange) {
-    return OrderCycle.exchangeSelectedVariants(exchange);
-  };
+  $scope.order_cycle = OrderCycle.order_cycle
 
-  $scope.enterpriseTotalVariants = function(enterprise) {
-    return Enterprise.totalVariants(enterprise);
-  };
+  $scope.exchangeSelectedVariants = (exchange) ->
+    OrderCycle.exchangeSelectedVariants(exchange)
 
-  $scope.toggleProducts = function($event, exchange) {
-    $event.preventDefault();
-    OrderCycle.toggleProducts(exchange);
-  };
+  $scope.enterpriseTotalVariants = (enterprise) ->
+    Enterprise.totalVariants(enterprise)
 
-  $scope.addSupplier = function($event) {
-    $event.preventDefault();
-    OrderCycle.addSupplier($scope.new_supplier_id);
-  };
+  $scope.toggleProducts = ($event, exchange) ->
+    $event.preventDefault()
+    OrderCycle.toggleProducts(exchange)
 
-  $scope.submit = function() {
-    OrderCycle.create();
-  };
-}
+  $scope.addSupplier = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addSupplier($scope.new_supplier_id)
+
+  $scope.submit = ->
+    OrderCycle.create()
 
 
-function AdminEditOrderCycleCtrl($scope, $location, OrderCycle, Enterprise) {
-  $scope.enterprises = Enterprise.index();
+AdminEditOrderCycleCtrl = ($scope, $location, OrderCycle, Enterprise) ->
+  $scope.enterprises = Enterprise.index()
 
-  var order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1];
-  $scope.order_cycle = OrderCycle.load(order_cycle_id);
+  order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
+  $scope.order_cycle = OrderCycle.load(order_cycle_id)
 
-  $scope.exchangeSelectedVariants = function(exchange) {
-    return OrderCycle.exchangeSelectedVariants(exchange);
-  };
+  $scope.exchangeSelectedVariants = (exchange) ->
+    OrderCycle.exchangeSelectedVariants(exchange)
 
-  $scope.enterpriseTotalVariants = function(enterprise) {
-    return Enterprise.totalVariants(enterprise);
-  };
+  $scope.enterpriseTotalVariants = (enterprise) ->
+    Enterprise.totalVariants(enterprise)
 
-  $scope.toggleProducts = function($event, exchange) {
-    $event.preventDefault();
-    OrderCycle.toggleProducts(exchange);
-  };
+  $scope.toggleProducts = ($event, exchange) ->
+    $event.preventDefault()
+    OrderCycle.toggleProducts(exchange)
 
-  $scope.addSupplier = function($event) {
-    $event.preventDefault();
-    OrderCycle.addSupplier($scope.new_supplier_id);
-  };
+  $scope.addSupplier = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addSupplier($scope.new_supplier_id)
 
-  $scope.submit = function() {
-    OrderCycle.update();
-  };
-}
+  $scope.submit = ->
+    OrderCycle.update()
 
 
-angular.module('order_cycle', ['ngResource']).
-  config(function($httpProvider) {
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
-  }).
-  factory('OrderCycle', function($resource, $window) {
-    var OrderCycle = $resource('/admin/order_cycles/:order_cycle_id.json', {},
-			       {'index':  { method: 'GET', isArray: true},
-				'create': { method: 'POST'},
-				'update': { method: 'PUT'}});
+app.config ($httpProvider) ->
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+
+app.factory 'OrderCycle', ($resource, $window) ->
+  OrderCycle = $resource '/admin/order_cycles/:order_cycle_id.json', {}, {
+    'index':  { method: 'GET', isArray: true}
+		'create': { method: 'POST'}
+		'update': { method: 'PUT'}}
+
+  {
+    order_cycle:
+      incoming_exchanges: []
+ 	    outgoing_exchanges: []
+
+    exchangeSelectedVariants: (exchange) ->
+    	numActiveVariants = 0;
+
+      # TODO: Functionalise
+    	angular.forEach exchange.variants, (active, id) ->
+    	  if(active)
+    	    numActiveVariants++
+
+    	numActiveVariants
+
+    toggleProducts: (exchange) ->
+    	exchange.showProducts = !exchange.showProducts
+
+    addSupplier: (new_supplier_id) ->
+    	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}})
+
+    load: (order_cycle_id) ->
+    	service = this
+
+    	OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
+    	  angular.extend(service.order_cycle, oc)
+    	  service.order_cycle.incoming_exchanges = []
+    	  service.order_cycle.outgoing_exchanges = []
+    	  for exchange in service.order_cycle.exchanges
+    	    if exchange.sender_id == service.order_cycle.coordinator_id
+    	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
+    	      delete(exchange.sender_id)
+    	      service.order_cycle.outgoing_exchanges.push(exchange)
+    
+    	    else if exchange.receiver_id == service.order_cycle.coordinator_id
+    	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true})
+    	      delete(exchange.receiver_id)
+    	      service.order_cycle.incoming_exchanges.push(exchange)
+    
+    	    else
+    	      console.log('Exchange between two enterprises, neither of which is coordinator!')
+    
+    	  delete(service.order_cycle.exchanges)
+
+      this.order_cycle;
+
+    create: ->
+    	this.removeInactiveExchanges()
+
+    	oc = new OrderCycle({order_cycle: this.order_cycle})
+    	oc.$create (data) ->
+    	  if data['success']
+    	    $window.location = '/admin/order_cycles'
+    	  else
+    	    console.log('fail')
+
+    update: ->
+    	this.removeInactiveExchanges()
+
+    	oc = new OrderCycle({order_cycle: this.order_cycle})
+    	oc.$update {order_cycle_id: this.order_cycle.id}, (data) ->
+    	  if data['success']
+    	    $window.location = '/admin/order_cycles'
+    	  else
+    	    console.log('fail')
+
+    removeInactiveExchanges: ->
+      this.order_cycle.incoming_exchanges =
+        (exchange for exchange in this.order_cycle.incoming_exchanges when exchange.active)
+      this.order_cycle.outgoing_exchanges =
+        (exchange for exchange in this.order_cycle.outgoing_exchanges when exchange.active)
+  }
+
+app.factory 'Enterprise', ($resource) ->
+  Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {}, {'index': {method: 'GET', isArray: true}})
+
+  {
+    Enterprise: Enterprise
+    enterprises: {}
+
+    index: ->
+    	service = this
+
+    	Enterprise.index (data) ->
+        for enterprise in data
+          service.enterprises[enterprise.id] = enterprise
+
+    	this.enterprises
+
+    totalVariants: (enterprise) ->
+      numVariants = 0
+
+      counts = for product in enterprise.supplied_products
+        numVariants += if product.variants.length == 0 then 1 else product.variants.length
+
+      numVariants
+  }
 
 
-    return {
-      order_cycle: {incoming_exchanges: [],
-		    outgoing_exchanges: []},
-
-      exchangeSelectedVariants: function(exchange) {
-	var numActiveVariants = 0;
-
-	angular.forEach(exchange.variants, function(active, id) {
-	  if(active) {
-	    numActiveVariants++;
-	  }
-	});
-
-	return numActiveVariants;
-      },
-
-      toggleProducts: function(exchange) {
-	exchange.showProducts = !exchange.showProducts
-      },
-
-      addSupplier: function(new_supplier_id) {
-	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}});
-      },
-
-      load: function(order_cycle_id) {
-	var service = this;
-
-	OrderCycle.get({order_cycle_id: order_cycle_id}, function(oc) {
-	  angular.extend(service.order_cycle, oc);
-	  service.order_cycle.incoming_exchanges = [];
-	  service.order_cycle.outgoing_exchanges = [];
-	  for(i in service.order_cycle.exchanges) {
-	    var exchange = service.order_cycle.exchanges[i];
-	    if(exchange.sender_id == service.order_cycle.coordinator_id) {
-	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true});
-	      delete(exchange.sender_id);
-	      service.order_cycle.outgoing_exchanges.push(exchange);
-
-	    } else if(exchange.receiver_id == service.order_cycle.coordinator_id) {
-	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true});
-	      delete(exchange.receiver_id);
-	      service.order_cycle.incoming_exchanges.push(exchange)
-
-	    } else {
-	      console.log('Exchange between two enterprises, neither of which is coordinator!');
-	    }
-	  }
-
-	  delete(service.order_cycle.exchanges);
-	});
-
-	return this.order_cycle;
-      },
-
-      create: function() {
-	this.removeInactiveExchanges();
-
-	var oc = new OrderCycle({order_cycle: this.order_cycle});
-	oc.$create(function(data) {
-	  if(data['success']) {
-	    $window.location = '/admin/order_cycles';
-	  } else {
-	    console.log('fail');
-	  }
-	});
-      },
-
-      update: function() {
-	this.removeInactiveExchanges();
-
-	var oc = new OrderCycle({order_cycle: this.order_cycle});
-	oc.$update({order_cycle_id: this.order_cycle.id}, function(data) {
-	  if(data['success']) {
-	    $window.location = '/admin/order_cycles';
-	  } else {
-	    console.log('fail');
-	  }
-	});
-      },
-
-      removeInactiveExchanges: function() {
-	angular.forEach([this.order_cycle.incoming_exchanges,
-			 this.order_cycle.outgoing_exchanges],
-		function(exchanges) {
-		  for(var i=0; i < exchanges.length; i++) {
-		    if(!exchanges[i].active) {
-		      exchanges.splice(i, 1);
-		      i--;
-		    }
-		  }
-		});
-      }
-    };
-  }).
-  factory('Enterprise', function($resource) {
-    var Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {},
-			       {'index': { method: 'GET', isArray: true}});
-
-    return {
-      Enterprise: Enterprise,
-      enterprises: {},
-
-      index: function() {
-	var service = this;
-
-	Enterprise.index(function(data) {
-	  for(i in data) {
-	    service.enterprises[data[i]['id']] = data[i];
-	  }
-	});
-
-	return this.enterprises;
-      },
-
-      totalVariants: function(enterprise) {
-	var numVariants = 0;
-
-	angular.forEach(enterprise.supplied_products, function(product) {
-	  numVariants += product.variants.length == 0 ? 1 : product.variants.length;
-	});
-
-	return numVariants;
-      }
-    };
-  }).
-  directive('datetimepicker', ['$parse', function($parse) {
-    return function(scope, element, attrs) {
-      // using $parse instead of scope[attrs.datetimepicker] for cases
-      // where attrs.datetimepicker is 'foo.bar.lol'
-      $(element).datetimepicker({
-	dateFormat: 'yy-mm-dd',
-	timeFormat: 'HH:mm:ss',
-	showOn: "button",
-	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>",
-	buttonImageOnly: true,
-	stepMinute: 15,
-	onSelect: function(dateText, inst) {
-	  scope.$apply(function() {
-	    parsed = $parse(attrs.datetimepicker);
-	    parsed.assign(scope, dateText);
-	  });
-	}
-      });
-    };
-  }]);
+app.directive 'datetimepicker', ['$parse', ($parse) ->
+  (scope, element, attrs) ->
+    # using $parse instead of scope[attrs.datetimepicker] for cases
+    # where attrs.datetimepicker is 'foo.bar.lol'
+    $(element).datetimepicker
+    	dateFormat: 'yy-mm-dd'
+    	timeFormat: 'HH:mm:ss'
+    	showOn: "button"
+    	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>"
+    	buttonImageOnly: true
+    	stepMinute: 15
+    	onSelect: (dateText, inst) ->
+    	  scope.$apply ->
+    	    parsed = $parse(attrs.datetimepicker)
+    	    parsed.assign(scope, dateText)
+  ]
