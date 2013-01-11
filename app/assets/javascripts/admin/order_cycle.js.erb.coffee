@@ -62,14 +62,9 @@ app.factory 'OrderCycle', ($resource, $window) ->
  	    outgoing_exchanges: []
 
     exchangeSelectedVariants: (exchange) ->
-    	numActiveVariants = 0;
-
-      # TODO: Functionalise
-    	angular.forEach exchange.variants, (active, id) ->
-    	  if(active)
-    	    numActiveVariants++
-
-    	numActiveVariants
+      numActiveVariants = 0
+      numActiveVariants++ for id, active of exchange.variants when active
+      numActiveVariants
 
     toggleProducts: (exchange) ->
     	exchange.showProducts = !exchange.showProducts
@@ -100,7 +95,7 @@ app.factory 'OrderCycle', ($resource, $window) ->
     
     	  delete(service.order_cycle.exchanges)
 
-      this.order_cycle;
+      this.order_cycle
 
     create: ->
     	this.removeInactiveExchanges()
