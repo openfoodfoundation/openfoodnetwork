@@ -7,7 +7,7 @@ files = [
   'app/assets/javascripts/shared/angular.js',
   'app/assets/javascripts/shared/angular-*.js',
 
-  'app/assets/javascripts/admin/order_cycle.js.erb',
+  'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
 
   'spec/javascripts/unit/**/*.js*'
 ];

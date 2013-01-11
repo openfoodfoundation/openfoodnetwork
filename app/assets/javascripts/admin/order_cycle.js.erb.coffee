@@ -1,6 +1,6 @@
 app = angular.module('order_cycle', ['ngResource'])
 
-AdminCreateOrderCycleCtrl = ($scope, OrderCycle, Enterprise) ->
+app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
 
   $scope.order_cycle = OrderCycle.order_cycle
@@ -23,7 +23,7 @@ AdminCreateOrderCycleCtrl = ($scope, OrderCycle, Enterprise) ->
     OrderCycle.create()
 
 
-AdminEditOrderCycleCtrl = ($scope, $location, OrderCycle, Enterprise) ->
+app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
 
   order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]

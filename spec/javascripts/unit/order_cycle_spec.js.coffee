@@ -20,7 +20,11 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
-      ctrl = new AdminCreateOrderCycleCtrl(scope, OrderCycle, Enterprise)
+
+      module('order_cycle')
+      inject ($controller) ->
+        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise}
+
 
     it 'Loads enterprises', ->
       expect(Enterprise.index).toHaveBeenCalled()
@@ -76,7 +80,10 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
-      ctrl = new AdminEditOrderCycleCtrl(scope, location, OrderCycle, Enterprise)
+
+      module('order_cycle')
+      inject ($controller) ->
+        ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise}
 
     it 'Loads enterprises', ->
       expect(Enterprise.index).toHaveBeenCalled()
