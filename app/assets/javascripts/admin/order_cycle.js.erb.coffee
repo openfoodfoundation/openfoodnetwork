@@ -19,6 +19,10 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
     $event.preventDefault()
     OrderCycle.addSupplier($scope.new_supplier_id)
 
+  $scope.addDistributor = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addDistributor($scope.new_distributor_id)
+
   $scope.submit = ->
     OrderCycle.create()
 
@@ -42,6 +46,10 @@ app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterp
   $scope.addSupplier = ($event) ->
     $event.preventDefault()
     OrderCycle.addSupplier($scope.new_supplier_id)
+
+  $scope.addDistributor = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addDistributor($scope.new_distributor_id)
 
   $scope.submit = ->
     OrderCycle.update()
@@ -71,6 +79,9 @@ app.factory 'OrderCycle', ($resource, $window) ->
 
     addSupplier: (new_supplier_id) ->
     	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}})
+
+    addDistributor: (new_distributor_id) ->
+    	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}})
 
     load: (order_cycle_id) ->
     	service = this

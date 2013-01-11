@@ -5,6 +5,7 @@ r.element :order_cycle, @order_cycle do
   r.element :orders_close_at, @order_cycle.orders_close_at.to_s
   r.element :coordinator_id
   r.list_of :exchanges do |exchange|
+    r.element :id
     r.element :sender_id
     r.element :receiver_id
 

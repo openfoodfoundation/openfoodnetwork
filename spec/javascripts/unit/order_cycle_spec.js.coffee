@@ -16,6 +16,7 @@ describe 'OrderCycle controllers', ->
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
+        addDistributor: jasmine.createSpy('addDistributor')
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -52,6 +53,12 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id')
 
+    it 'Adds order cycle distributors', ->
+      scope.new_distributor_id = 'new distributor id'
+      scope.addDistributor(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
+
     it 'Submits the order cycle via OrderCycle create', ->
       scope.submit()
       expect(OrderCycle.create).toHaveBeenCalled()
@@ -76,6 +83,7 @@ describe 'OrderCycle controllers', ->
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
+        addDistributor: jasmine.createSpy('addDistributor')
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -110,6 +118,12 @@ describe 'OrderCycle controllers', ->
       scope.addSupplier(event)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id')
+
+    it 'Adds order cycle distributors', ->
+      scope.new_distributor_id = 'new distributor id'
+      scope.addDistributor(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
 
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit()
@@ -210,6 +224,15 @@ describe 'OrderCycle services', ->
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+          {enterprise_id: '123', active: true, variants: {}}
+        ]
+
+    describe 'adding distributors', ->
+      exchange = null
+
+      it 'adds the distributor to outgoing exchanges', ->
+        OrderCycle.addDistributor('123')
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
           {enterprise_id: '123', active: true, variants: {}}
         ]
 
