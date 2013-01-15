@@ -1,4 +1,4 @@
-%td.active= check_box_tag 'order_cycle_exchange_{{ exchange.id }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ exchange.id }}_active'
+%td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
 %td.supplier_name {{ enterprises[exchange.enterprise_id].name }}
 %td.products
   = f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'

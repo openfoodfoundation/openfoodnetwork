@@ -40,7 +40,7 @@
       %th Distributor
       %th Products
   %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
-    %tr.supplier
+    %tr.distributor
       = render 'exchange_form', :f => f
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_product_form'
