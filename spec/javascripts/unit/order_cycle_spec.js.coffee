@@ -20,6 +20,7 @@ describe 'OrderCycle controllers', ->
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
+        supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
 
       module('order_cycle')
@@ -27,9 +28,10 @@ describe 'OrderCycle controllers', ->
         ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise}
 
 
-    it 'Loads enterprises', ->
+    it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
+      expect(scope.supplied_products).toEqual('supplied products')
 
     it 'Loads order cycles', ->
       expect(scope.order_cycle).toEqual('my order cycle')
@@ -87,15 +89,17 @@ describe 'OrderCycle controllers', ->
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
+        supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
 
       module('order_cycle')
       inject ($controller) ->
         ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise}
 
-    it 'Loads enterprises', ->
+    it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
+      expect(scope.supplied_products).toEqual('supplied products')
 
     it 'Loads order cycles', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
@@ -141,18 +145,23 @@ describe 'OrderCycle services', ->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
         $httpBackend.whenGET('/admin/enterprises.json').respond [
-          {id: 1, name: 'One'}
-          {id: 2, name: 'Two'}
-          {id: 3, name: 'Three'}
+          {id: 1, name: 'One', supplied_products: [1, 2]}
+          {id: 2, name: 'Two', supplied_products: [3, 4]}
+          {id: 3, name: 'Three', supplied_products: [5, 6]}
           ]
 
     it 'loads enterprises as a hash', ->
       enterprises = Enterprise.index()
       $httpBackend.flush()
       expect(enterprises).toEqual
-        1: new Enterprise.Enterprise({id: 1, name: 'One'})
-        2: new Enterprise.Enterprise({id: 2, name: 'Two'})
-        3: new Enterprise.Enterprise({id: 3, name: 'Three'})
+        1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2]})
+        2: new Enterprise.Enterprise({id: 2, name: 'Two', supplied_products: [3, 4]})
+        3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6]})
+
+    it 'collates all supplied products', ->
+      enterprises = Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.supplied_products).toEqual [1, 2, 3, 4, 5, 6]
 
     it 'counts total variants supplied by an enterprise', ->
       enterprise =

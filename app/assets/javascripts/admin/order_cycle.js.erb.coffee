@@ -2,6 +2,7 @@ app = angular.module('order_cycle', ['ngResource'])
 
 app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
+  $scope.supplied_products = Enterprise.supplied_products
 
   $scope.order_cycle = OrderCycle.order_cycle
 
@@ -29,6 +30,7 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
 
 app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
+  $scope.supplied_products = Enterprise.supplied_products
 
   order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
   $scope.order_cycle = OrderCycle.load(order_cycle_id)
@@ -141,6 +143,7 @@ app.factory 'Enterprise', ($resource) ->
   {
     Enterprise: Enterprise
     enterprises: {}
+    supplied_products: []
 
     index: ->
     	service = this
@@ -148,6 +151,9 @@ app.factory 'Enterprise', ($resource) ->
     	Enterprise.index (data) ->
         for enterprise in data
           service.enterprises[enterprise.id] = enterprise
+
+          for product in enterprise.supplied_products
+            service.supplied_products.push(product)
 
     	this.enterprises
 
