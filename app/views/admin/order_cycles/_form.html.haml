@@ -22,7 +22,7 @@
     %tr.supplier
       = render 'exchange_form', :f => f
     %tr.products{'ng-show' => 'exchange.showProducts'}
-      = render 'exchange_product_form'
+      = render 'exchange_supplied_products_form'
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
@@ -43,7 +43,7 @@
     %tr.distributor
       = render 'exchange_form', :f => f
     %tr.products{'ng-show' => 'exchange.showProducts'}
-      = render 'exchange_product_form'
+      = render 'exchange_distributed_products_form'
 
 = select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor, :id, :name), {'ng-model' => 'new_distributor_id'}
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
