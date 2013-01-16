@@ -1,5 +1,5 @@
 %td{:colspan => 3}
-  .exchange-product{'ng-repeat' => 'product in supplied_products'}
+  .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle'}
     .exchange-product-details
       = check_box_tag 'order_cycle_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
       %img{'ng-src' => '{{ product.image_url }}'}

@@ -12,6 +12,9 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
   $scope.enterpriseTotalVariants = (enterprise) ->
     Enterprise.totalVariants(enterprise)
 
+  $scope.productSuppliedToOrderCycle = (product) ->
+    OrderCycle.productSuppliedToOrderCycle(product)
+
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
     OrderCycle.toggleProducts(exchange)
@@ -40,6 +43,9 @@ app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterp
 
   $scope.enterpriseTotalVariants = (enterprise) ->
     Enterprise.totalVariants(enterprise)
+
+  $scope.productSuppliedToOrderCycle = (product) ->
+    OrderCycle.productSuppliedToOrderCycle(product)
 
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
@@ -84,6 +90,27 @@ app.factory 'OrderCycle', ($resource, $window) ->
 
     addDistributor: (new_distributor_id) ->
     	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}})
+
+    productSuppliedToOrderCycle: (product) ->
+      product_variant_ids = (variant.id for variant in product.variants)
+      variant_ids = [product.master_id].concat(product_variant_ids)
+      incomingExchangesVariants = this.incomingExchangesVariants()
+
+      # TODO: This would be much nicer functional (set intersection)
+      found = false
+      for variant_id in variant_ids
+        if incomingExchangesVariants.indexOf(variant_id) != -1
+          found = true
+          break
+
+      found
+
+    incomingExchangesVariants: ->
+      variant_ids = []
+
+      for exchange in this.order_cycle.incoming_exchanges
+        variant_ids.push(parseInt(id)) for id, active of exchange.variants when active
+      variant_ids
 
     load: (order_cycle_id) ->
     	service = this
