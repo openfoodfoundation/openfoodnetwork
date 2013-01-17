@@ -96,14 +96,12 @@ app.factory 'OrderCycle', ($resource, $window) ->
       variant_ids = [product.master_id].concat(product_variant_ids)
       incomingExchangesVariants = this.incomingExchangesVariants()
 
-      # TODO: This would be much nicer functional (set intersection)
-      found = false
-      for variant_id in variant_ids
-        if incomingExchangesVariants.indexOf(variant_id) != -1
-          found = true
-          break
-
-      found
+      # TODO: This is an O(n^2) implementation of set intersection and thus is slooow.
+      # Use a better algorithm if needed.
+      # Also, incomingExchangesVariants is called every time, when it only needs to be
+      # called once per change to incoming variants. Some sort of caching?
+      ids = (variant_id for variant_id in variant_ids when incomingExchangesVariants.indexOf(variant_id) != -1)
+      ids.length > 0
 
     incomingExchangesVariants: ->
       variant_ids = []
