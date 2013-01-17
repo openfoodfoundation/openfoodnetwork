@@ -27,6 +27,9 @@ Openfoodweb::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Show emails using Letter Opener
+  config.action_mailer.delivery_method = :letter_opener
 end
 
 

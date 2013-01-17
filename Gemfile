@@ -39,6 +39,7 @@ end
 gem 'jquery-rails'
 
 
+
 group :test, :development do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
@@ -51,5 +52,6 @@ group :test, :development do
   gem 'spork', '~> 1.0rc'
   gem 'pry-debugger'
   gem 'awesome_print'
+  gem "letter_opener"
 end
 
