@@ -196,7 +196,7 @@ GEM
     faker (1.0.1)
       i18n (~> 0.4)
     ffaker (1.12.1)
-    ffi (1.1.5)
+    ffi (1.3.1)
     haml (3.1.6)
     highline (1.6.11)
     hike (1.2.1)
@@ -219,8 +219,9 @@ GEM
     letter_opener (1.0.0)
       launchy (>= 2.0.4)
     libv8 (3.3.10.4)
-    libwebsocket (0.1.5)
+    libwebsocket (0.1.7.1)
       addressable
+      websocket
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -313,7 +314,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.25.0)
+    selenium-webdriver (2.27.2)
       childprocess (>= 0.2.5)
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
@@ -350,6 +351,7 @@ GEM
     uuidtools (2.1.3)
     warden (1.1.1)
       rack (>= 1.0)
+    websocket (1.0.6)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
