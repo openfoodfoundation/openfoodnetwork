@@ -53,6 +53,10 @@ form.order_cycle {
       .exchange-product-details {
         clear: both;
         margin-bottom: 1em;
+
+        .supplier {
+          font-weight: bold;
+        }
       }
 
       .exchange-product-variant {
