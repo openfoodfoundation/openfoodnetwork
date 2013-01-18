@@ -133,9 +133,10 @@ feature %q{
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
 
-    # And a coordinating enterprise and a supplying enterprise with some products with variants
+    # And a coordinating, supplying and distributing enterprise with some products with variants
     create(:enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
+    distributor = create(:distributor_enterprise, name: 'My distributor')
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
@@ -144,6 +145,7 @@ feature %q{
     login_to_admin_section
     click_link 'Order Cycles'
     click_link oc.name
+    sleep 1
 
     # And I update it
     fill_in 'order_cycle_name', with: 'Plums & Avos'
@@ -156,9 +158,17 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_exchange_1_variants_2"
-    check "order_cycle_exchange_2_variants_#{v1.id}"
-    check "order_cycle_exchange_2_variants_#{v2.id}"
+    uncheck "order_cycle_incoming_exchange_1_variants_2"
+    check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
+    check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
+
+    # And I add a distributor and some products
+    select 'My distributor', from: 'new_distributor_id'
+    click_button 'Add distributor'
+    page.all("table.exchanges tr.distributor td.products input").each { |e| e.click }
+
+    uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
+    check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
 
     # And I click Update
     click_button 'Update'
@@ -173,6 +183,7 @@ feature %q{
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
+    page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some variants selected
     OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort
