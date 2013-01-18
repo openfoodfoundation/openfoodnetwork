@@ -15,6 +15,7 @@ describe 'OrderCycle controllers', ->
         order_cycle: 'my order cycle'
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
+        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
@@ -48,6 +49,10 @@ describe 'OrderCycle controllers', ->
     it 'Delegates productSuppliedToOrderCycle to OrderCycle', ->
       expect(scope.productSuppliedToOrderCycle('product')).toEqual('product supplied')
       expect(OrderCycle.productSuppliedToOrderCycle).toHaveBeenCalledWith('product')
+
+    it 'Delegates variantSuppliedToOrderCycle to OrderCycle', ->
+      expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
+      expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
 
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
@@ -89,6 +94,7 @@ describe 'OrderCycle controllers', ->
         load: jasmine.createSpy('load')
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
+        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
@@ -121,6 +127,10 @@ describe 'OrderCycle controllers', ->
     it 'Delegates productSuppliedToOrderCycle to OrderCycle', ->
       expect(scope.productSuppliedToOrderCycle('product')).toEqual('product supplied')
       expect(OrderCycle.productSuppliedToOrderCycle).toHaveBeenCalledWith('product')
+
+    it 'Delegates variantSuppliedToOrderCycle to OrderCycle', ->
+      expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
+      expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
 
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
@@ -298,6 +308,17 @@ describe 'OrderCycle services', ->
 
       it 'returns false for products whose variants are not supplied', ->
         expect(OrderCycle.productSuppliedToOrderCycle(product_variant_absent)).toBeFalsy()
+
+
+    describe 'checking whether a variant is supplied to the order cycle', ->
+      beforeEach ->
+        spyOn(OrderCycle, 'incomingExchangesVariants').andReturn([1, 3])
+
+      it 'returns true for variants that are supplied', ->
+        expect(OrderCycle.variantSuppliedToOrderCycle({id: 1})).toBeTruthy()
+
+      it 'returns false for variants that are not supplied', ->
+        expect(OrderCycle.variantSuppliedToOrderCycle({id: 999})).toBeFalsy()
 
 
     describe 'loading an order cycle', ->

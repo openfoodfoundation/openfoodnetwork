@@ -4,6 +4,6 @@
       = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
       %img{'ng-src' => '{{ product.image_url }}'}
       {{ product.name }}
-    .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
+    .exchange-product-variant{'ng-repeat' => 'variant in product.variants | filter:variantSuppliedToOrderCycle'}
       = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}'
       {{ variant.label }}

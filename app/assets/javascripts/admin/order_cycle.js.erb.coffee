@@ -15,6 +15,9 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
   $scope.productSuppliedToOrderCycle = (product) ->
     OrderCycle.productSuppliedToOrderCycle(product)
 
+  $scope.variantSuppliedToOrderCycle = (variant) ->
+    OrderCycle.variantSuppliedToOrderCycle(variant)
+
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
     OrderCycle.toggleProducts(exchange)
@@ -46,6 +49,9 @@ app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterp
 
   $scope.productSuppliedToOrderCycle = (product) ->
     OrderCycle.productSuppliedToOrderCycle(product)
+
+  $scope.variantSuppliedToOrderCycle = (variant) ->
+    OrderCycle.variantSuppliedToOrderCycle(variant)
 
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
@@ -102,6 +108,9 @@ app.factory 'OrderCycle', ($resource, $window) ->
       # called once per change to incoming variants. Some sort of caching?
       ids = (variant_id for variant_id in variant_ids when incomingExchangesVariants.indexOf(variant_id) != -1)
       ids.length > 0
+
+    variantSuppliedToOrderCycle: (variant) ->
+      this.incomingExchangesVariants().indexOf(variant.id) != -1
 
     incomingExchangesVariants: ->
       variant_ids = []
