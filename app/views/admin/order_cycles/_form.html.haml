@@ -39,6 +39,7 @@
       %th
       %th Distributor
       %th Products
+      %th Collection details
   %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
     %tr.distributor
       = render 'exchange_form', :f => f, :type => 'distributor'

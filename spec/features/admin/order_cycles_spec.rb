@@ -60,6 +60,10 @@ feature %q{
     # And I add a distributor with the same products
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
+
+    fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+    fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
     page.find('table.exchanges tr.distributor td.products input').click
     check 'order_cycle_outgoing_exchange_0_variants_2'
     check 'order_cycle_outgoing_exchange_0_variants_3'
@@ -82,6 +86,12 @@ feature %q{
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
     OrderCycle.last.exchanges.last.variants.count.should == 2
+
+    # And my pickup time and instructions should have been saved
+    oc = OrderCycle.last
+    exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
+    exchange.pickup_time.should == 'pickup time'
+    exchange.pickup_instructions.should == 'pickup instructions'
   end
 
 
