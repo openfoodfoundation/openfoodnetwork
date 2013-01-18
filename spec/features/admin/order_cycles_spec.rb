@@ -31,12 +31,13 @@ feature %q{
   end
 
   scenario "creating an order cycle" do
-    # Given a coordinating enterprise and a supplying enterprise with some products with variants
+    # Given coordinating, supplying and distributing enterprises with some products with variants
     create(:enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     product = create(:product, supplier: supplier)
     create(:variant, product: product)
     create(:variant, product: product)
+    distributor = create(:distributor_enterprise, name: 'My distributor')
 
     # When I go to the new order cycle page
     login_to_admin_section
@@ -52,9 +53,16 @@ feature %q{
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
-    click_button 'Products'
-    check 'order_cycle_exchange_0_variants_1'
-    check 'order_cycle_exchange_0_variants_3'
+    page.find('table.exchanges tr.supplier td.products input').click
+    check 'order_cycle_incoming_exchange_0_variants_2'
+    check 'order_cycle_incoming_exchange_0_variants_3'
+
+    # And I add a distributor with the same products
+    select 'My distributor', from: 'new_distributor_id'
+    click_button 'Add distributor'
+    page.find('table.exchanges tr.distributor td.products input').click
+    check 'order_cycle_outgoing_exchange_0_variants_2'
+    check 'order_cycle_outgoing_exchange_0_variants_3'
 
     # And I click Create
     click_button 'Create'
@@ -69,9 +77,11 @@ feature %q{
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
+    page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
+    OrderCycle.last.exchanges.last.variants.count.should == 2
   end
 
 
