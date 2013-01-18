@@ -144,7 +144,6 @@ feature %q{
         # When we select the distributor and view the product
         visit spree.select_distributor_order_path(distributor1)
         visit spree.product_path(product)
-        binding.pry
 
         # Then we should see our distributor as the default option when adding the item to our cart
         page.should have_selector "select#distributor_id option[value='#{distributor1.id}'][selected='selected']"

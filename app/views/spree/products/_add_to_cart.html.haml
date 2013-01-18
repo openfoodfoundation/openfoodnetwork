@@ -3,7 +3,7 @@
   - if !@product.has_stock? && !Spree::Config[:allow_backorders]
     = content_tag('strong', t(:out_of_stock))
 
-  - elsif !order.nil? && !order.can_add_product_to_cart?(@product)
+  - elsif !order.nil? && !DistributorChangeValidator.new(order).can_change_distributor? && !@product.distributors.include?(order.distributor)
     .error-distributor
       Please complete your order at
       = link_to current_distributor.name, root_path

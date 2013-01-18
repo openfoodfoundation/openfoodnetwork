@@ -15,11 +15,6 @@ Spree::Order.class_eval do
     errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
   end
 
-  def distributor=(distributor)
-    #raise "You cannot change the distributor of an order with products" unless distributor == self.distributor || DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
-    super(distributor)
-  end
-
   def set_distributor!(distributor)
     self.distributor = distributor
     save!
@@ -34,10 +29,6 @@ Spree::Order.class_eval do
 
     line_item.assign_attributes(attributes)
     line_item.save!
-  end
-  
-  def can_add_product_to_cart? product
-    DistributorChangeValidator.new(self).can_change_distributor? || product.distributors.include?(distributor)
   end
   
   def line_item_variants

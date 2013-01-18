@@ -28,38 +28,6 @@ describe Spree::Order do
     li.max_quantity.should == 3
   end
 
-  context "permissions for adding products to the cart" do
-    it "allows products to be added to cart when cart is empty" do
-      p_first = double(:product)
-      p_first.stub(:distributors) { [d1] }
-      subject.stub(:line_items) { [] }
-      subject.can_add_product_to_cart?(p_first).should be_true
-    end
-
-    it "allows products to be added to cart when they are available from the current distributor" do
-      d1 = double(:distributor)
-      p_first = double(:product)
-      p_first.stub(:distributors) { [d1] }
-      p_subsequent_same_dist = double(:product)
-      p_subsequent_same_dist.stub(:distributors) { [d1] }
-      subject.stub(:line_items) { [1, 2, 3] }
-      subject.stub(:distributor) { d1 }
-      subject.can_add_product_to_cart?(p_subsequent_same_dist).should be_true
-    end
-
-    it "does not allow products to be added to cart when they are not available from the current distributor" do
-      d1 = double(:distributor)
-      d2 = double(:distributor)
-      p_first = double(:product)
-      p_first.stub(:distributors) { [d1] }
-      p_subsequent_other_dist = double(:product)
-      p_subsequent_other_dist.stub(:distributors) { [d2] }
-      subject.stub(:line_items) { [1, 2, 3] }
-      subject.stub(:distributor) { d1 }
-      subject.can_add_product_to_cart?(p_subsequent_other_dist).should be_false
-    end
-  end
-
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
       order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")

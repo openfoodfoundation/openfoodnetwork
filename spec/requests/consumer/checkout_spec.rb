@@ -17,6 +17,16 @@ feature %q{
                                              :state => Spree::State.find_by_name('Victoria'),
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
+    
+    
+    @distributor_alternative = create(:distributor_enterprise, :name => 'Alternative Distributor',
+                          :address => create(:address,
+                                             :address1 => '1600 Rathdowne St',
+                                             :city => 'Carlton North',
+                                             :zipcode => 3054,
+                                             :state => Spree::State.find_by_name('Victoria'),
+                                             :country => Spree::Country.find_by_name('Australia')),
+                          :pickup_times => 'Tuesday, 4 PM')    
 
     @shipping_method_1 = create(:shipping_method, :name => 'Shipping Method One')
     @shipping_method_1.calculator.set_preference :amount, 1
@@ -28,9 +38,11 @@ feature %q{
 
     @product_1 = create(:product, :name => 'Fuji apples')
     @product_1.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_1)
+    @product_1.product_distributions.create(:distributor => @distributor_alternative, :shipping_method => @shipping_method_1)
 
     @product_2 = create(:product, :name => 'Garlic')
     @product_2.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_2)
+    @product_2.product_distributions.create(:distributor => @distributor_alternative, :shipping_method => @shipping_method_2)
 
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
@@ -110,7 +122,9 @@ feature %q{
         page.should have_content value
       end
     end
-
+    
+    page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
+    
     click_button 'Save and Continue'
 
     # -- Checkout: Delivery
