@@ -20,7 +20,7 @@
       %th Products
   %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
     %tr.supplier
-      = render 'exchange_form', :f => f
+      = render 'exchange_form', :f => f, :type => 'supplier'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
 
@@ -41,7 +41,7 @@
       %th Products
   %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
     %tr.distributor
-      = render 'exchange_form', :f => f
+      = render 'exchange_form', :f => f, :type => 'distributor'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 

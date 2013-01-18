@@ -108,7 +108,20 @@ feature %q{
     page.all('table.exchanges tbody tr.supplier').each do |row|
       row.find('td.products input').click
 
-      products_row = page.find('table.exchanges tr.products')
+      products_row = page.all('table.exchanges tr.products').select { |r| r.visible? }.first
+      products_row.should have_selector "input[type='checkbox'][checked='checked']"
+
+      row.find('td.products input').click
+    end
+
+    # And I should see the distributors with products
+    page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
+    page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
+
+    page.all('table.exchanges tbody tr.distributor').each do |row|
+      row.find('td.products input').click
+
+      products_row = page.all('table.exchanges tr.products').select { |r| r.visible? }.first
       products_row.should have_selector "input[type='checkbox'][checked='checked']"
 
       row.find('td.products input').click
