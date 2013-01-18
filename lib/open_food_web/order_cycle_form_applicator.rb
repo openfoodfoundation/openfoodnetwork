@@ -11,9 +11,9 @@ module OpenFoodWeb
         variant_ids = exchange_variant_ids(exchange)
 
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id)
-          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, variant_ids)
+          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, {variant_ids: variant_ids})
         else
-          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, variant_ids)
+          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, {variant_ids: variant_ids})
         end
       end
 
@@ -21,9 +21,9 @@ module OpenFoodWeb
         variant_ids = exchange_variant_ids(exchange)
 
         if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id])
-          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], variant_ids)
+          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], {variant_ids: variant_ids, pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         else
-          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], variant_ids)
+          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], {variant_ids: variant_ids, pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         end
       end
 
@@ -39,14 +39,15 @@ module OpenFoodWeb
       @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id).present?
     end
 
-    def add_exchange(sender_id, receiver_id, variant_ids)
-      exchange = @order_cycle.exchanges.create! :sender_id => sender_id, :receiver_id => receiver_id, :variant_ids => variant_ids
+    def add_exchange(sender_id, receiver_id, attrs={})
+      attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id)
+      exchange = @order_cycle.exchanges.create! attrs
       @touched_exchanges << exchange
     end
 
-    def update_exchange(sender_id, receiver_id, variant_ids)
+    def update_exchange(sender_id, receiver_id, attrs={})
       exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id).first
-      exchange.update_attributes!(:variant_ids => variant_ids)
+      exchange.update_attributes!(attrs)
 
       @touched_exchanges << exchange
     end

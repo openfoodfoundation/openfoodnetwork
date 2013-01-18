@@ -15,7 +15,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(false)
-        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, [1, 3])
+        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3]})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -25,7 +25,7 @@ module OpenFoodWeb
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}}
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [], :outgoing_exchanges => [outgoing_exchange])
 
@@ -33,7 +33,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(false)
-        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, [1, 3])
+        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -55,7 +55,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(true)
-        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, [1, 3])
+        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3]})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -65,7 +65,7 @@ module OpenFoodWeb
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}}
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
@@ -77,7 +77,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(true)
-        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, [1, 3])
+        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -135,7 +135,7 @@ module OpenFoodWeb
         variant2 = FactoryGirl.create(:variant)
 
         applicator.send(:touched_exchanges=, [])
-        applicator.send(:add_exchange, sender.id, receiver.id, [variant1.id, variant2.id])
+        applicator.send(:add_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant2.id]})
 
         exchange = Exchange.last
         exchange.sender.should == sender
@@ -157,7 +157,7 @@ module OpenFoodWeb
         exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1, variant2])
 
         applicator.send(:touched_exchanges=, [])
-        applicator.send(:update_exchange, sender.id, receiver.id, [variant1.id, variant3.id])
+        applicator.send(:update_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant3.id]})
 
         exchange.reload
         exchange.variant_ids.should == [variant1.id, variant3.id]
