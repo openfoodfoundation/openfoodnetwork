@@ -9,13 +9,31 @@ module OpenFoodWeb
 
         incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}}
 
-        oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange])
+        oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange], :outgoing_exchanges => [])
 
         applicator = OrderCycleFormApplicator.new(oc)
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).and_return(false)
+        applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(false)
         applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, [1, 3])
+        applicator.should_receive(:destroy_untouched_exchanges)
+
+        applicator.go!
+      end
+
+      it "creates new exchanges for outgoing_exchanges" do
+        coordinator_id = 123
+        distributor_id = 456
+
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}}
+
+        oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [], :outgoing_exchanges => [outgoing_exchange])
+
+        applicator = OrderCycleFormApplicator.new(oc)
+
+        applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
+        applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(false)
+        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, [1, 3])
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -30,19 +48,42 @@ module OpenFoodWeb
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
                     :exchanges => [double(:exchange, :sender_id => supplier_id, :receiver_id => coordinator_id)],
-                    :incoming_exchanges => [incoming_exchange])
+                    :incoming_exchanges => [incoming_exchange],
+                    :outgoing_exchanges => [])
 
         applicator = OrderCycleFormApplicator.new(oc)
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).and_return(true)
+        applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(true)
         applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, [1, 3])
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
       end
 
-      it "removes exchanges that are no longer present in incoming_exchanges" do
+      it "updates existing exchanges for outgoing_exchanges" do
+        coordinator_id = 123
+        distributor_id = 456
+
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}}
+
+        oc = double(:order_cycle,
+                    :coordinator_id => coordinator_id,
+                    :exchanges => [double(:exchange, :sender_id => coordinator_id, :receiver_id => distributor_id)],
+                    :incoming_exchanges => [],
+                    :outgoing_exchanges => [outgoing_exchange])
+
+        applicator = OrderCycleFormApplicator.new(oc)
+
+        applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
+        applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(true)
+        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, [1, 3])
+        applicator.should_receive(:destroy_untouched_exchanges)
+
+        applicator.go!
+      end
+
+      it "removes exchanges that are no longer present" do
         coordinator_id = 123
         supplier_id = 456
         exchange = double(:exchange, :sender_id => supplier_id, :receiver_id => coordinator_id)
@@ -50,7 +91,8 @@ module OpenFoodWeb
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
                     :exchanges => [exchange],
-                    :incoming_exchanges => [])
+                    :incoming_exchanges => [],
+                    :outgoing_exchanges => [])
 
         applicator = OrderCycleFormApplicator.new(oc)
 

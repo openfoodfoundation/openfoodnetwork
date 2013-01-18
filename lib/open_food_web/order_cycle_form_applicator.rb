@@ -17,6 +17,16 @@ module OpenFoodWeb
         end
       end
 
+      @order_cycle.outgoing_exchanges.each do |exchange|
+        variant_ids = exchange_variant_ids(exchange)
+
+        if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id])
+          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], variant_ids)
+        else
+          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], variant_ids)
+        end
+      end
+
       destroy_untouched_exchanges
     end
 
