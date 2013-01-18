@@ -2,4 +2,9 @@
 %td{:class => "#{type}_name"} {{ enterprises[exchange.enterprise_id].name }}
 %td.products
   = f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
-  {{ exchangeSelectedVariants(exchange) }} / {{ enterpriseTotalVariants(enterprises[exchange.enterprise_id]) }} selected
+  {{ exchangeSelectedVariants(exchange) }} /
+  - if type == 'supplier'
+    {{ enterpriseTotalVariants(enterprises[exchange.enterprise_id]) }}
+  - else
+    {{ incomingExchangesVariants().length }}
+  selected

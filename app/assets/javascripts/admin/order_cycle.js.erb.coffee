@@ -18,6 +18,9 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
   $scope.variantSuppliedToOrderCycle = (variant) ->
     OrderCycle.variantSuppliedToOrderCycle(variant)
 
+  $scope.incomingExchangesVariants = ->
+    OrderCycle.incomingExchangesVariants()
+
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
     OrderCycle.toggleProducts(exchange)
@@ -52,6 +55,9 @@ app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterp
 
   $scope.variantSuppliedToOrderCycle = (variant) ->
     OrderCycle.variantSuppliedToOrderCycle(variant)
+
+  $scope.incomingExchangesVariants = ->
+    OrderCycle.incomingExchangesVariants()
 
   $scope.toggleProducts = ($event, exchange) ->
     $event.preventDefault()
