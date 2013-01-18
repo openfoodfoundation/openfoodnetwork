@@ -30,7 +30,7 @@
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, Enterprise.all, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
+= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
 
 %h2 Outgoing
 %table.exchanges
