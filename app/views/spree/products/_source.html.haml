@@ -12,7 +12,7 @@
       - order = current_order(false)
       - validator = DistributorChangeValidator.new(order)
       - @product.distributors.each do |distributor|
-        - if distributor == order.distributor
+        - if !order.nil? && distributor == order.distributor
           %tr.odd
             %td
               %b= link_to(distributor.name, [main_app, distributor])
@@ -21,10 +21,10 @@
         - elsif order.nil? || validator.can_change_to_distributor?(distributor)
           %tr.even
             %td= link_to distributor.name, [main_app, distributor]
-            %td= link_to "Change to distributor", select_distributor_order_path(distributor)
+            %td Available
+            -#%td= link_to "Change to distributor", select_distributor_order_path(distributor)
         - else
           %tr.even
             %td= link_to distributor.name, [main_app, distributor]
-            %td
-              %abbr(title="One or more of the products in your cart is not available from this distributor") Unavailable
+            %td 
             

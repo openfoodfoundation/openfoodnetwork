@@ -36,8 +36,7 @@ feature %q{
         d = create(:distributor_enterprise)
         p = create(:product, :distributors => [d])
 
-        visit spree.root_path
-        click_link d.name
+        visit spree.select_distributor_order_path(d)
         visit spree.product_path p
 
         within '#product-distributor-details' do

@@ -29,7 +29,7 @@ class Enterprise < ActiveRecord::Base
   end
   
   def available_variants
-    ProductDistribution.find_all_by_distributor_id( self.id ).map{ |pd| pd.product.variants }.flatten
+    ProductDistribution.find_all_by_distributor_id( self.id ).map{ |pd| pd.product.variants + [pd.product.master] }.flatten
   end
 
 

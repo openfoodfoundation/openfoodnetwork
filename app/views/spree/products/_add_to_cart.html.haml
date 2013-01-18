@@ -3,12 +3,11 @@
   - if !@product.has_stock? && !Spree::Config[:allow_backorders]
     = content_tag('strong', t(:out_of_stock))
 
-  - elsif current_order(false) && !order.can_add_product_to_cart?(@product)
+  - elsif !order.nil? && !order.can_add_product_to_cart?(@product)
     .error-distributor
       Please complete your order at
       = link_to current_distributor.name, root_path
       before shopping with another distributor.
-
   - else
     %div(class = "columns alpha two")
       %div Quantity
@@ -19,12 +18,12 @@
         = number_field_tag (@product.has_variants? ? :max_quantity : "variant_attributes[#{@product.master.id}][max_quantity]"), 1, :class => 'title max_quantity', :in => 1..@product.on_hand
     %div.cleared
       %br
-      - if order.nil?
+      - if order.nil? || order.distributor.nil?
         %div Distributor for your order:
-        = select_tag "distributor_id", options_from_collection_for_select([Enterprise.new]+@product.distributors, "id", "name", current_distributor.andand.id)
+        = select_tag "distributor_id", options_from_collection_for_select([Enterprise.new]+@product.distributors, "id", "name", :include_blank => '')
       - else
         - available_distributors = DistributorChangeValidator.new(order).available_distributors(@product.distributors)
-        - if available_distributors.length > 0
+        - if available_distributors.length > 1
           %div Distributor for your order:
           = select_tag "distributor_id", options_from_collection_for_select(available_distributors, "id", "name", current_distributor.andand.id)
         - else
