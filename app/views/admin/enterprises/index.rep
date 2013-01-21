@@ -1,4 +1,15 @@
 r.list_of :enterprises, @collection do
   r.element :id
   r.element :name
+
+  r.list_of :supplied_products do |product|
+    r.element :name
+    r.element :supplier_name, product.supplier.andand.name
+    r.element :image_url, product.images.present? ? product.images.first.attachment.url(:mini) : nil
+    r.element :master_id, product.master.id
+    r.list_of :variants do |variant|
+      r.element :id
+      r.element :label, variant.options_text
+    end
+  end
 end
