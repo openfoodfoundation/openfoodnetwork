@@ -14,58 +14,6 @@ describe Spree::Order do
     subject.adjustments.where(:label => "Shipping").should be_present
   end
 
-  it "reveals permission for changing distributor" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-
-    subject.distributor = d
-    subject.save!
-
-    subject.can_change_distributor?.should be_true
-    subject.add_variant(p.master, 1)
-    subject.can_change_distributor?.should be_false
-  end
-
-  it "raises an exception if distributor is changed without permission" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-    subject.distributor = d
-    subject.save!
-
-    subject.add_variant(p.master, 1)
-    subject.can_change_distributor?.should be_false
-
-    expect do
-      subject.distributor = nil
-    end.to raise_error "You cannot change the distributor of an order with products"
-  end
-
-  it "reveals permission for adding products to the cart" do
-    d1 = create(:distributor_enterprise)
-    d2 = create(:distributor_enterprise)
-
-    p_first = create(:product, :distributors => [d1])
-    p_subsequent_same_dist = create(:product, :distributors => [d1])
-    p_subsequent_other_dist = create(:product, :distributors => [d2])
-
-    # We need to set distributor, since order.add_variant does not, and
-    # we also need to save the order so that line items can be added to
-    # the association.
-    subject.distributor = d1
-    subject.save!
-
-    # The first product in the cart can be added
-    subject.can_add_product_to_cart?(p_first).should be_true
-    subject.add_variant(p_first.master, 1)
-
-    # A subsequent product can be added if the distributor matches
-    subject.can_add_product_to_cart?(p_subsequent_same_dist).should be_true
-    subject.add_variant(p_subsequent_same_dist.master, 1)
-
-    # And cannot be added if it does not match
-    subject.can_add_product_to_cart?(p_subsequent_other_dist).should be_false
-  end
-
   it "sets attributes on line items for variants" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
@@ -78,5 +26,39 @@ describe Spree::Order do
 
     li = Spree::LineItem.last
     li.max_quantity.should == 3
+  end
+
+  context "validating distributor changes" do
+    it "checks that a distributor is available when changing" do
+      order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
+      subject.distributor = order_enterprise
+      product1 = FactoryGirl.create(:product)
+      product2 = FactoryGirl.create(:product)
+      product3 = FactoryGirl.create(:product)
+      variant11 = FactoryGirl.create(:variant, product: product1)
+      variant12 = FactoryGirl.create(:variant, product: product1)
+      variant21 = FactoryGirl.create(:variant, product: product2)
+      variant31 = FactoryGirl.create(:variant, product: product3)
+      variant32 = FactoryGirl.create(:variant, product: product3)
+
+      # Product Distributions
+      # Order Enterprise sells product 1 and product 3
+      FactoryGirl.create(:product_distribution, product: product1, distributor: order_enterprise)
+      FactoryGirl.create(:product_distribution, product: product3, distributor: order_enterprise)
+
+      # Build the current order
+      line_item1 = FactoryGirl.create(:line_item, order: subject, variant: variant11)
+      line_item2 = FactoryGirl.create(:line_item, order: subject, variant: variant12)
+      line_item3 = FactoryGirl.create(:line_item, order: subject, variant: variant31)
+      subject.line_items = [line_item1,line_item2,line_item3]
+
+      test_enterprise = FactoryGirl.create(:enterprise, id: 2, :name => "Test Enterprise")
+      # Test Enterprise sells only product 1
+      FactoryGirl.create(:product_distribution, product: product1, distributor: test_enterprise)
+
+      subject.distributor = test_enterprise
+      subject.should_not be_valid
+      subject.errors.should include :distributor_id
+    end
   end
 end

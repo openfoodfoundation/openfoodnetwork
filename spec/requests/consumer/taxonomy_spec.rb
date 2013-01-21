@@ -49,7 +49,7 @@ feature %q{
     2.times { create(:product, :taxons => [taxon_three], :distributors => [my_distributor]) }
 
     # When I visit the home page and select my distributor
-    visit spree.root_path
+    visit spree.select_distributor_order_path(my_distributor)
     click_link my_distributor.name
     page.should have_content 'You are shopping at My Distributor'
 

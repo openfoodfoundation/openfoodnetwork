@@ -4,8 +4,6 @@ Openfoodweb::Application.routes.draw do
   resources :enterprises do
     get :suppliers, :on => :collection
     get :distributors, :on => :collection
-    get :select_distributor, :on => :member
-    get :deselect_distributor, :on => :collection
   end
 
   namespace :admin do
@@ -33,4 +31,9 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/order_cycles' => 'admin/reports#order_cycles', :as => "order_cycles_admin_reports",  :via  => [:get, :post]
+
+  resources :orders do
+    get :select_distributor, :on => :member
+    get :deselect_distributor, :on => :collection
+  end
 end
