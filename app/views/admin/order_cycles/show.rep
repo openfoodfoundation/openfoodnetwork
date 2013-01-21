@@ -10,5 +10,8 @@ r.element :order_cycle, @order_cycle do
     r.element :receiver_id
 
     r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
+
+    r.element :pickup_time
+    r.element :pickup_instructions
   end
 end

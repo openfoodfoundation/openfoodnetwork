@@ -32,7 +32,7 @@ feature %q{
 
   scenario "creating an order cycle" do
     # Given coordinating, supplying and distributing enterprises with some products with variants
-    create(:enterprise, name: 'My coordinator')
+    create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     product = create(:product, supplier: supplier)
     create(:variant, product: product)
@@ -128,6 +128,11 @@ feature %q{
     page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
     page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
 
+    page.find('#order_cycle_outgoing_exchange_0_pickup_time').value.should == 'time 0'
+    page.find('#order_cycle_outgoing_exchange_0_pickup_instructions').value.should == 'instructions 0'
+    page.find('#order_cycle_outgoing_exchange_1_pickup_time').value.should == 'time 1'
+    page.find('#order_cycle_outgoing_exchange_1_pickup_instructions').value.should == 'instructions 1'
+
     page.all('table.exchanges tbody tr.distributor').each do |row|
       row.find('td.products input').click
 
@@ -144,7 +149,7 @@ feature %q{
     oc = create(:order_cycle)
 
     # And a coordinating, supplying and distributing enterprise with some products with variants
-    create(:enterprise, name: 'My coordinator')
+    create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     distributor = create(:distributor_enterprise, name: 'My distributor')
     product = create(:product, supplier: supplier)

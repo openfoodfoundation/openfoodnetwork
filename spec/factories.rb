@@ -9,8 +9,8 @@ FactoryGirl.define do
       ex2 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
 
       # Distributors
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
 
       # Products with images
       [ex1, ex2].each do |exchange|
@@ -29,7 +29,7 @@ FactoryGirl.define do
     orders_open_at  { Time.zone.now - 1.day }
     orders_close_at { Time.zone.now + 1.week }
 
-    coordinator { Enterprise.first || FactoryGirl.create(:enterprise) }
+    coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
   end
 
   factory :exchange, :class => Exchange do
