@@ -180,6 +180,12 @@ feature %q{
     # And I add a distributor and some products
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
+
+    fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'New time 0'
+    fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
+    fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
+    fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
+
     page.all("table.exchanges tr.distributor td.products input").each { |e| e.click }
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
@@ -202,6 +208,10 @@ feature %q{
 
     # And it should have some variants selected
     OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort
+
+    # And the collection details should have been updated
+    OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
+    OrderCycle.last.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
   end
 
 
