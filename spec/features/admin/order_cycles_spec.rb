@@ -103,9 +103,9 @@ feature %q{
     login_to_admin_section
     click_link 'Order Cycles'
     click_link oc.name
+    wait_until { page.find('#order_cycle_name').value.present? }
 
     # Then I should see the basic settings
-    sleep(1)
     page.find('#order_cycle_name').value.should == oc.name
     page.find('#order_cycle_orders_open_at').value.should == oc.orders_open_at.to_s
     page.find('#order_cycle_orders_close_at').value.should == oc.orders_close_at.to_s
@@ -160,7 +160,7 @@ feature %q{
     login_to_admin_section
     click_link 'Order Cycles'
     click_link oc.name
-    sleep 1
+    wait_until { page.find('#order_cycle_name').value.present? }
 
     # And I update it
     fill_in 'order_cycle_name', with: 'Plums & Avos'
