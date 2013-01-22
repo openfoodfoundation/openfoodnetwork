@@ -61,6 +61,7 @@ Spork.prefork do
       DatabaseCleaner.clean
     end
 
+    config.include Rails.application.routes.url_helpers
     config.include Spree::UrlHelpers
     config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
     config.include Devise::TestHelpers, :type => :controller

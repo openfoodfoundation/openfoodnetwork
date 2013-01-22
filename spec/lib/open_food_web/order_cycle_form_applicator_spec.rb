@@ -154,7 +154,7 @@ module OpenFoodWeb
         variant2 = FactoryGirl.create(:variant)
         variant3 = FactoryGirl.create(:variant)
 
-        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1, variant2])
+        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1.id, variant2.id])
 
         applicator.send(:touched_exchanges=, [])
         applicator.send(:update_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant3.id]})

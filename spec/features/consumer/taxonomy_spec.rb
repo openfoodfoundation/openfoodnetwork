@@ -50,7 +50,7 @@ feature %q{
 
     # When I visit the home page and select my distributor
     visit spree.select_distributor_order_path(my_distributor)
-    click_link my_distributor.name
+    within('nav#filters') { click_link my_distributor.name }
     page.should have_content 'You are shopping at My Distributor'
 
     # Then I should see distributor-scoped product counts next to the taxons
