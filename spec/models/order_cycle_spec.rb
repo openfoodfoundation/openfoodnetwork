@@ -31,6 +31,15 @@ describe OrderCycle do
     oc.exchanges.count.should == 3
   end
 
+  it "finds active and inactive order cycles" do
+    oc_active = create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.week.from_now)
+    oc_not_yet_open = create(:simple_order_cycle, orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
+    oc_already_closed = create(:simple_order_cycle, orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
+
+    OrderCycle.active.should == [oc_active]
+    OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
+  end
+
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 

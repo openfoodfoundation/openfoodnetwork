@@ -9,6 +9,9 @@ class OrderCycle < ActiveRecord::Base
 
   validates_presence_of :name, :coordinator_id
 
+  scope :active, lambda { where('orders_open_at <= ? AND orders_close_at >= ?', Time.now, Time.now) }
+  scope :inactive, lambda { where('orders_open_at > ? OR orders_close_at < ?', Time.now, Time.now) }
+
 
   def suppliers
     self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
