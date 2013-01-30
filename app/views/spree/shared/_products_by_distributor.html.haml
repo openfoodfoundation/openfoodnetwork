@@ -1,11 +1,12 @@
-= home_page_cms_content
+%div(data-hook='homepage_products')
+  = home_page_cms_content
 
-- if @products
-  #products= render 'spree/shared/products', :products => @products, :taxon => @taxon
-- else
-  #products-local
-    %h2= "Products at #{current_distributor.name}"
-    = render 'spree/shared/products', :products => @products_local, :taxon => @taxon
-  #products-remote
-    %h2 Products found elsewhere
-    = render 'spree/shared/products', :products => @products_remote, :taxon => @taxon
+  - if @products
+    #products= render 'spree/shared/products', :products => @products, :taxon => @taxon
+  - else
+    #products-local
+      %h2= "Products at #{current_distributor.name}"
+      = render 'spree/shared/products', :products => @products_local, :taxon => @taxon
+    #products-remote
+      %h2 Products found elsewhere
+      = render 'spree/shared/products', :products => @products_remote, :taxon => @taxon
