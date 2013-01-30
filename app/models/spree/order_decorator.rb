@@ -1,11 +1,12 @@
 require 'open_food_web/distributor_change_validator'
 
 Spree::Order.class_eval do
+  belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
 
   before_validation :shipping_address_from_distributor
   validate :products_available_from_new_distributor, :if => :distributor_id_changed?
-  attr_accessible :distributor_id
+  attr_accessible :order_cycle_id, :distributor_id
 
   after_create :set_default_shipping_method
 
