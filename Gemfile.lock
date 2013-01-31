@@ -162,6 +162,7 @@ GEM
       xpath (~> 1.0.0)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    chunky_png (1.2.7)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -179,6 +180,12 @@ GEM
       active_link_to (~> 1.0.0)
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
     database_cleaner (0.7.1)
     debugger (1.1.4)
       columnize (>= 0.3.1)
@@ -210,6 +217,7 @@ GEM
       i18n (~> 0.4)
     ffaker (1.12.1)
     ffi (1.3.1)
+    fssm (0.2.10)
     haml (3.1.6)
     highline (1.6.11)
     hike (1.2.1)
@@ -383,6 +391,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
+  compass-rails
   database_cleaner (= 0.7.1)
   debugger-linecache
   factory_girl_rails

@@ -1,4 +1,5 @@
-@import 'screen';
+@import "screen";
+@import "compass/css3/border-radius";
 
 a:hover {
   color: lighten($link_text_color, 20) !important;
@@ -23,7 +24,8 @@ nav #main-nav-bar {
   li {
     &#current-distributor {
       float: right;
-      margin-right: 24px;
+      clear: right;
+      margin: 0.5em 5px 0 0;
 
       a {
         font-size: 12px;
@@ -59,6 +61,25 @@ nav#filters {
         color: #999;
       }
     }
+  }
+}
+
+
+/* Distributor / order cycle selection */
+#distribution-choice {
+  overflow: auto;
+  margin-bottom: 2em;
+  padding: 5px;
+  border: 2px solid #ccc;
+  @include border-radius(10px);
+
+  .distributors {
+    float: left;
+    margin-right: 4em;
+  }
+
+  .order-cycles {
+    float: left;
   }
 }
 
@@ -139,7 +160,7 @@ ul.product-listing {
 #products-local ul {
   margin-bottom: 1em;
   padding: 10px;
-  border-radius: 10px;
+  @include border-radius(10px);
   background-color: #def;
 }
 
