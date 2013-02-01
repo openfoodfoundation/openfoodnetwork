@@ -7,8 +7,9 @@ describe OrderCyclesHelper do
   end
 
   describe "generating local/remote classes for order cycle selection" do
-    it "returns blank when no distributor selected" do
+    it "returns blank when no distributor or order cycle is selected" do
       subject.order_cycle_local_remote_class(nil, double(:order_cycle)).should == ''
+      subject.order_cycle_local_remote_class(double(:distributor), nil).should == ''
     end
 
     it "returns local when the order cycle includes the current distributor" do

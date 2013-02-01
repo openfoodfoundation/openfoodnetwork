@@ -76,6 +76,13 @@ nav#filters {
   .distributors {
     float: left;
     margin-right: 4em;
+
+    option.local {
+      background-color: #cfc;
+    }
+    option.remote {
+      background-color: #fcc;
+    }
   }
 
   .order-cycles {

@@ -68,7 +68,34 @@ feature %q{
       end
     end
 
-    scenario "selecting an order cycle highlights valid distributor choices"
+    scenario "selecting an order cycle highlights valid distributor choices" do
+      # When I go to the product listing page
+      visit spree.products_path
+
+      # And I choose an order cycle
+      choose @oc1.name
+      click_button 'Choose Order Cycle'
+
+      # Then the associated distributor should be highlighted
+      page.should have_content "Your order cycle has been selected."
+      within '#distribution-choice' do
+        page.should have_selector "option.local[value='#{@d1.id}']"
+        page.should have_selector "option.remote[value='#{@d2.id}']"
+      end
+
+      # When I choose the other order cycle
+      choose @oc2.name
+      click_button 'Choose Order Cycle'
+
+      # Then the associated distributor should be highlighted
+      page.should have_content "Your order cycle has been selected."
+      within '#distribution-choice' do
+        page.should have_selector "option.remote[value='#{@d1.id}']"
+        page.should have_selector "option.local[value='#{@d2.id}']"
+      end
+    end
+
+
     scenario "selecing an invalid distributor clears the order cycle"
     scenario "selecing an invalid order cycle clears the distributor"
   end
