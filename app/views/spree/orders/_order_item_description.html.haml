@@ -1,0 +1,3 @@
+%td(data-hook = "order_item_description")
+  %h4= item.variant.product.name
+  = "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?

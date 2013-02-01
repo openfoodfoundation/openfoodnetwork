@@ -1,27 +1,23 @@
+require 'open_food_web/distributor_change_validator'
+
 Spree::Order.class_eval do
   belongs_to :distributor, :class_name => 'Enterprise'
 
   before_validation :shipping_address_from_distributor
+  validate :products_available_from_new_distributor, :if => :distributor_id_changed?
+  attr_accessible :distributor_id
+
   after_create :set_default_shipping_method
 
-  def can_change_distributor?
-    # Distributor may not be changed once an item has been added to the cart/order
-    line_items.empty?
-  end
-
-  def distributor=(distributor)
-    raise "You cannot change the distributor of an order with products" unless distributor == self.distributor || can_change_distributor?
-    super(distributor)
+  
+  def products_available_from_new_distributor
+    # Check that the line_items in the current order are available from a newly selected distributor
+    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
   end
 
   def set_distributor!(distributor)
     self.distributor = distributor
     save!
-  end
-
-
-  def can_add_product_to_cart?(product)
-    can_change_distributor? || product.distributors.include?(distributor)
   end
 
   def set_variant_attributes(variant, attributes)
@@ -33,6 +29,10 @@ Spree::Order.class_eval do
 
     line_item.assign_attributes(attributes)
     line_item.save!
+  end
+  
+  def line_item_variants
+    line_items.map{ |li| li.variant }
   end
 
 

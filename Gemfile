@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.11'
 
 gem 'pg'
 gem 'spree', :git => 'git://github.com/spree/spree.git', :branch => '1-1-stable'
@@ -39,6 +39,7 @@ end
 gem 'jquery-rails'
 
 
+
 group :test, :development do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
@@ -51,5 +52,6 @@ group :test, :development do
   gem 'spork', '~> 1.0rc'
   gem 'pry-debugger'
   gem 'awesome_print'
+  gem "letter_opener"
 end
 

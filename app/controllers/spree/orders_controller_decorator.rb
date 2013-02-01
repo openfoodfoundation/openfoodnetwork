@@ -1,5 +1,6 @@
 Spree::OrdersController.class_eval do
   before_filter :populate_order_distributor,  :only => :populate
+  before_filter :populate_order_count_on_hand,  :only => :populate
   after_filter  :populate_variant_attributes, :only => :populate
 
   def populate_order_distributor
@@ -13,6 +14,24 @@ Spree::OrdersController.class_eval do
       flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
       redirect_populate_to_first_product
     end
+  end
+
+  def populate_order_count_on_hand
+    params[:products].each do |product_id, variant_id|
+      product = Spree::Product.find product_id
+      if product.count_on_hand < params[:quantity].to_i
+        flash[:error] = "Unfortunately " + (product.count_on_hand == 0 ? "no" : "only" + product.count_on_hand.to_s ) + " units of the selected item remain."
+        redirect_populate_to_first_product
+      end
+    end if params[:products]
+
+    params[:variants].each do |variant_id, quantity|
+      variant = Spree::Variant.find variant_id
+      if variant.count_on_hand < params[:quantity].to_i
+        flash[:error] = "Unfortunately " + (variant.count_on_hand == 0 ? "no" : "only" + variant.count_on_hand.to_s ) + " units of the selected item remain."
+        redirect_populate_to_first_product
+      end
+    end if params[:variants]
   end
 
   def populate_variant_attributes
@@ -30,6 +49,24 @@ Spree::OrdersController.class_eval do
     end
   end
 
+  def select_distributor
+    distributor = Enterprise.is_distributor.find params[:id]
+
+    order = current_order(true)
+    order.distributor = distributor
+    order.save!
+
+    redirect_to main_app.enterprise_path(distributor)
+  end
+
+  def deselect_distributor
+    order = current_order(true)
+
+    order.distributor = nil
+    order.save!
+
+    redirect_to root_path
+  end
 
   private
 
@@ -50,7 +87,7 @@ Spree::OrdersController.class_eval do
 
     # -- If products in cart, distributor can't be changed
     order = current_order(false)
-    if !order.nil? && !order.can_change_distributor? && order.distributor != distributor
+    if !order.nil? && !DistributorChangeValidator.new(order).can_change_to_distributor?(distributor) 
       return false
     end
 

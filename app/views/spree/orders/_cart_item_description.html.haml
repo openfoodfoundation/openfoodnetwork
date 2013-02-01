@@ -5,4 +5,3 @@
     %span.out-of-stock
       = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
       %br/
-  = truncate_html(variant.product.description, :length => 100, :omission => "...")

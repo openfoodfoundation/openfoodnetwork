@@ -89,6 +89,16 @@ module WebHelper
     DirtyFormDialog.new(page)
   end
 
+  # http://www.elabs.se/blog/53-why-wait_until-was-removed-from-capybara
+  # Do not use this without good reason. Capybara's built-in waiting is very effective.
+  def wait_until
+    require "timeout"
+    Timeout.timeout(Capybara.default_wait_time) do
+      sleep(0.1) until value = yield
+      value
+    end
+  end
+
   private
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }

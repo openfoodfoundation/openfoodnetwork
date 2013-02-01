@@ -1,17 +1,30 @@
 %div{:data-hook => "product_source"}
-  %h6.product-section-title Source
+  %h6.product-section-title SUPPLIER
   %table#product-source.table-display{:width => "100%"}
     %tbody
       - if @product.supplier
         %tr.odd
-          %td
-            %strong Supplier
-          %td= @product.supplier.name
+          %td= link_to @product.supplier.name, [main_app, @product.supplier]
   %br/
+  %h6.product-section-title DISTRIBUTORS
   %table#product-source.table-display{:width => "100%"}
     %tbody
+      - order = current_order(false)
+      - validator = DistributorChangeValidator.new(order)
       - @product.distributors.each do |distributor|
-        %tr.even
-          %td
-            %strong Distributor
-          %td= distributor.name
+        - if !order.nil? && distributor == order.distributor
+          %tr.odd
+            %td
+              %b= link_to(distributor.name, [main_app, distributor])
+            %td
+              %b Current
+        - elsif order.nil? || validator.can_change_to_distributor?(distributor)
+          %tr.even
+            %td= link_to distributor.name, [main_app, distributor]
+            %td Available
+            -#%td= link_to "Change to distributor", select_distributor_order_path(distributor)
+        - else
+          %tr.even
+            %td= link_to distributor.name, [main_app, distributor]
+            %td 
+            

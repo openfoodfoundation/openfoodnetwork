@@ -42,7 +42,7 @@ module Admin
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodWeb::OrderCycleFormApplicator.new(@order_cycle).go!
 
-          flash[:notice] = 'Your order cycle has been saved.'
+          flash[:notice] = 'Your order cycle has been updated.'
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
         else

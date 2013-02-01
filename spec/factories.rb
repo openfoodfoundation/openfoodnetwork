@@ -5,22 +5,20 @@ FactoryGirl.define do
   factory :order_cycle, :parent => :simple_order_cycle do
     after(:create) do |oc|
       # Suppliers
-      create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
-      create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      ex1 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      ex2 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
 
       # Distributors
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator)
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
+      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
 
       # Products with images
-      ex = oc.exchanges.first
-
-      2.times do
-        product = create(:product)
+      [ex1, ex2].each do |exchange|
+        product = create(:product, supplier: exchange.sender)
         image = File.open(File.expand_path('../../app/assets/images/logo.jpg', __FILE__))
         Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
-        ex.variants << product.master
+        exchange.variants << product.master
       end
     end
   end
@@ -31,7 +29,7 @@ FactoryGirl.define do
     orders_open_at  { Time.zone.now - 1.day }
     orders_close_at { Time.zone.now + 1.week }
 
-    coordinator { Enterprise.first || FactoryGirl.create(:enterprise) }
+    coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
   end
 
   factory :exchange, :class => Exchange do

@@ -13,9 +13,16 @@
 
 %h2 Incoming
 %table.exchanges
-  %tr{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
-    %td {{ enterprises[exchange.enterprise_id].name }}
+  %thead
+    %tr
+      %th
+      %th Supplier
+      %th Products
+  %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+    %tr.supplier
+      = render 'exchange_form', :f => f, :type => 'supplier'
+    %tr.products{'ng-show' => 'exchange.showProducts'}
+      = render 'exchange_supplied_products_form'
 
 = select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
@@ -23,17 +30,33 @@
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, Enterprise.all, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
+= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
 
 %h2 Outgoing
-%p TODO
+%table.exchanges
+  %thead
+    %tr
+      %th
+      %th Distributor
+      %th Products
+      %th Collection details
+  %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
+    %tr.distributor
+      = render 'exchange_form', :f => f, :type => 'distributor'
+    %tr.products{'ng-show' => 'exchange.showProducts'}
+      = render 'exchange_distributed_products_form'
 
-= f.submit @order_cycle.new_record? ? 'Create' : 'Update'
-or
-= link_to 'Cancel', main_app.admin_order_cycles_path
+= select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor, :id, :name), {'ng-model' => 'new_distributor_id'}
+= f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
+
+.actions
+  = f.submit @order_cycle.new_record? ? 'Create' : 'Update'
+  or
+  = link_to 'Cancel', main_app.admin_order_cycles_path
 
 
-<h2>Debug information</h2>
+%h2 Debug information
 
 %pre order_cycle = {{ order_cycle | json }}
 %pre enterprises = {{ enterprises | json }}
+%pre supplied_products = {{ supplied_products | json }}

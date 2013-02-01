@@ -7,7 +7,32 @@ describe Spree::OrdersController do
   def current_user
     controller.current_user
   end
+  
+  it "selects distributors" do
+    d = create(:distributor_enterprise)
+    p = create(:product, :distributors => [d])
 
+    spree_get :select_distributor, :id => d.id
+    response.should be_redirect
+
+    order = current_order(false)
+    order.distributor.should == d
+  end
+
+  it "deselects distributors" do
+    d = create(:distributor_enterprise)
+    p = create(:product, :distributors => [d])
+    
+    order = current_order(true)
+    order.distributor = d
+    order.save!
+
+    spree_get :deselect_distributor
+    response.should be_redirect
+
+    order.reload
+    order.distributor.should be_nil
+  end
 
   context "adding the first product to the cart" do
     it "does not add the product if the user does not specify a distributor" do

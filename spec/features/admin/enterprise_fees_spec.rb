@@ -84,7 +84,7 @@ feature %q{
 
     # And I click delete
     click_link 'Delete'
-    page.driver.wait_until(page.driver.browser.switch_to.alert.accept)
+    page.driver.browser.switch_to.alert.accept
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path

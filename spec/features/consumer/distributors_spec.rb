@@ -67,11 +67,10 @@ feature %q{
     it "displays the distributor's name on the home page" do
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
-      create(:product, :distributors => [d])
+      p1 = create(:product, :distributors => [d])
 
       # When I select the distributor
-      visit spree.root_path
-      click_link d.name
+      visit spree.select_distributor_order_path(d)
       visit spree.root_path
 
       # Then I should see the name of the distributor that I've selected
@@ -90,8 +89,7 @@ feature %q{
       p2 = create(:product, :distributors => [d2], :taxons => [taxon])
 
       # When I select the first distributor
-      visit spree.root_path
-      click_link d1.name
+      visit spree.select_distributor_order_path(d1)
       visit spree.root_path
 
       # Then I should see products split by local/remote distributor
@@ -112,11 +110,11 @@ feature %q{
     it "allows the user to leave the distributor" do
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
-      create(:product, :distributors => [d])
+      p1 = create(:product, :distributors => [d])
 
       # When I select the distributor and then leave it
+      visit spree.select_distributor_order_path(d)
       visit spree.root_path
-      click_link d.name
       click_button 'Browse All Distributors'
 
       # Then I should have left the distributor
@@ -139,16 +137,16 @@ feature %q{
 
       it "displays the local distributor as the default choice when available for the current product" do
         # Given a distributor and a product under it
-        distributor = create(:distributor_enterprise)
-        product = create(:product, :distributors => [distributor])
+        distributor1 = create(:distributor_enterprise)
+        distributor2 = create(:distributor_enterprise)
+        product = create(:product, :distributors => [distributor1,distributor2])
 
         # When we select the distributor and view the product
-        visit spree.root_path
-        click_link distributor.name
+        visit spree.select_distributor_order_path(distributor1)
         visit spree.product_path(product)
 
         # Then we should see our distributor as the default option when adding the item to our cart
-        page.should have_selector "select#distributor_id option[value='#{distributor.id}'][selected='selected']"
+        page.should have_selector "select#distributor_id option[value='#{distributor1.id}'][selected='selected']"
       end
 
       it "works when viewing a product from a remote distributor" do
