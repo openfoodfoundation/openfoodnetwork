@@ -80,6 +80,13 @@ nav#filters {
 
   .order-cycles {
     float: left;
+
+    tr.local {
+      background-color: #cfc;
+    }
+    tr.remote {
+      background-color: #fcc;
+    }
   }
 }
 

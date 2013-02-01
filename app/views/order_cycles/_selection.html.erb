@@ -6,13 +6,15 @@
     <div class="distributors">
       <h2>Active Hubs</h2>
       <%= f.collection_select :distributor_id, @distributors, :id, :name %>
+      <br />
+      <%= f.submit 'Choose Hub' %>
     </div>
 
     <div class="order-cycles">
       <h2>Closing Soon</h2>
       <table>
         <% @order_cycles.each do |order_cycle| %>
-          <tr class="order-cycle-<%= order_cycle.id %>">
+          <tr class="order-cycle-<%= order_cycle.id %><%= order_cycle_local_remote_class(current_distributor, order_cycle) %>">
             <td><%= f.radio_button :order_cycle_id, order_cycle.id %></td>
             <td>
               <label for="order_order_cycle_id_<%= order_cycle.id %>"><%= order_cycle.name %></label>
@@ -23,6 +25,7 @@
           </tr>
         <% end %>
       </table>
+      <%= f.submit 'Choose Order Cycle' %>
     </div>
   <% end %>
 </div>

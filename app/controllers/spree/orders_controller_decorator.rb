@@ -3,6 +3,27 @@ Spree::OrdersController.class_eval do
   before_filter :populate_order_count_on_hand,  :only => :populate
   after_filter  :populate_variant_attributes, :only => :populate
 
+  before_filter :update_distribution, :only => :update
+
+
+  def update_distribution
+    @order = current_order(true)
+
+    if params[:commit] == 'Choose Hub'
+      distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
+      @order.distributor = distributor
+      @order.save!
+
+      flash[:notice] = 'Your hub has been selected.'
+      redirect_to request.referer
+
+    elsif params[:commit] == 'Choose Order Cycle'
+      # TODO
+      redirect_to request.referer
+    end
+  end
+
+
   def populate_order_distributor
     @distributor = params[:distributor_id].present? ? Enterprise.is_distributor.find(params[:distributor_id]) : nil
 

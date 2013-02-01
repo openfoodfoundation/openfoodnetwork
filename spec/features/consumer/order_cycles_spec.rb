@@ -8,29 +8,32 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing order cycle and distributor choices", js: true do
+  background do
     create(:itemwise_shipping_method)
 
     # Given some hubs and order cycles
-    coord = create(:distributor_enterprise)
-    d1 = create(:distributor_enterprise)
-    d2 = create(:distributor_enterprise)
-    create(:product, distributors: [d1, d2])
+    create(:distributor_enterprise)
+    @d1 = create(:distributor_enterprise)
+    @d2 = create(:distributor_enterprise)
+    create(:product, distributors: [@d1, @d2])
 
-    oc1 = create(:simple_order_cycle, orders_close_at: Time.zone.now + 1.week)
-    oc2 = create(:simple_order_cycle, orders_close_at: Time.zone.now + 2.days)
-    create(:exchange, order_cycle: oc1, sender: oc1.coordinator, receiver: d1)
-    create(:exchange, order_cycle: oc2, sender: oc2.coordinator, receiver: d2)
+    @oc1 = create(:simple_order_cycle, orders_close_at: Time.zone.now + 1.week)
+    @oc2 = create(:simple_order_cycle, orders_close_at: Time.zone.now + 2.days)
+    create(:exchange, order_cycle: @oc1, sender: @oc1.coordinator, receiver: @d1)
+    create(:exchange, order_cycle: @oc2, sender: @oc2.coordinator, receiver: @d2)
+  end
 
+  scenario "viewing order cycle and distributor choices" do
     # When I go to the product listing page
     visit spree.products_path
 
     # Then I should see a choice of hubs
-    page.should have_selector "#distribution-choice option[value='#{d1.id}']", text: d1.name
-    page.should have_selector "#distribution-choice option[value='#{d2.id}']", text: d2.name
+    page.should have_selector "#distribution-choice option[value='#{@d1.id}']", text: @d1.name
+    page.should have_selector "#distribution-choice option[value='#{@d2.id}']", text: @d2.name
+    fail "Distributors need to use new scope for order cycle activity (not with_distributed_active_products_on_hand). See application controller."
 
     # And I should see a choice of order cycles with closing times
-    [{oc: oc1, closing: '7 days'}, {oc: oc2, closing: '2 days'}].each do |data|
+    [{oc: @oc1, closing: '7 days'}, {oc: @oc2, closing: '2 days'}].each do |data|
       within "tr.order-cycle-#{data[:oc].id}" do
         page.should have_content data[:oc].name
         page.should have_content data[:closing]
@@ -38,13 +41,57 @@ feature %q{
     end
   end
 
-  scenario "making an order cycle or distributor choice filters the remaining choices to valid options" do
-    # When I select a hub
-    # Then my choice of order cycles should be limited to that hub
-    # When I select an order cycle
-    # Then my choice of hubs should be limited to that order cycle
-    pending
+  context "without javascript" do
+    scenario "selecting a distributor highlights valid order cycle choices" do
+      # When I go to the product listing page
+      visit spree.products_path
+
+      # And I choose a distributor
+      select @d1.name, from: 'order_distributor_id'
+      click_button 'Choose Hub'
+
+      # Then associated order cycles should be highlighted
+      page.should have_content "Your hub has been selected."
+      within '#distribution-choice' do
+        page.should have_selector "tr.order-cycle-#{@oc1.id}.local"
+        page.should have_selector "tr.order-cycle-#{@oc2.id}.remote"
+      end
+
+      # When I choose the other distributor
+      select @d2.name, from: 'order_distributor_id'
+      click_button 'Choose Hub'
+
+      # Then associated order cycles should be highlighted
+      within '#distribution-choice' do
+        page.should have_selector "tr.order-cycle-#{@oc1.id}.remote"
+        page.should have_selector "tr.order-cycle-#{@oc2.id}.local"
+      end
+    end
+
+    scenario "selecting an order cycle highlights valid distributor choices"
+    scenario "selecing an invalid distributor clears the order cycle"
+    scenario "selecing an invalid order cycle clears the distributor"
   end
+
+  # scenario "making an order cycle or distributor choice filters the remaining choices to valid options", js: true do
+  #   # When I go to the product listing page
+  #   visit spree.products_path
+
+  #   # And I select a hub
+  #   select @d1.name, from: 'order_distributor_id'
+
+  #   # Then my choice of order cycles should be limited to that hub
+  #   page.should     have_selector "input#order_order_cycle_id_#{@oc1.id}"
+  #   page.should_not have_selector "input#order_order_cycle_id_#{@oc1.id}"
+
+  #   # When I select an order cycle
+  #   select '', from: 'order_distributor_id'
+  #   choose "order_distributor_id_#{@d2.id}"
+
+  #   # Then my choice of hubs should be limited to that order cycle
+  #   page.should_not have_selector "option[value='#{@d1.id}']", text: @d1.name
+  #   page.should     have_selector "option[value='#{@d2.id}']", text: @d2.name
+  # end
 
   scenario "selecting an order cycle and distributor" do
     # When I select a hub and an order cycle and click "Select"
