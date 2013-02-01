@@ -62,6 +62,16 @@ describe OrderCycle do
     oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
   end
 
+  it "checks for existance of distributors" do
+    oc = create(:simple_order_cycle)
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1)
+
+    oc.should have_distributor(d1)
+    oc.should_not have_distributor(d2)
+  end
+
   describe "product exchanges" do
     before(:each) do
       @oc = create(:simple_order_cycle)

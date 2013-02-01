@@ -11,16 +11,14 @@ Spree::OrdersController.class_eval do
 
     if params[:commit] == 'Choose Hub'
       distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
-      @order.distributor = distributor
-      @order.save!
+      @order.set_distributor! distributor
 
       flash[:notice] = 'Your hub has been selected.'
       redirect_to request.referer
 
     elsif params[:commit] == 'Choose Order Cycle'
       order_cycle = OrderCycle.active.find params[:order][:order_cycle_id]
-      @order.order_cycle = order_cycle
-      @order.save!
+      @order.set_order_cycle! order_cycle
 
       flash[:notice] = 'Your order cycle has been selected.'
       redirect_to request.referer

@@ -16,8 +16,15 @@ Spree::Order.class_eval do
     errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
   end
 
+  def set_order_cycle!(order_cycle)
+    self.order_cycle = order_cycle
+    self.distributor = nil unless self.order_cycle.has_distributor? distributor
+    save!
+  end
+
   def set_distributor!(distributor)
     self.distributor = distributor
+    self.order_cycle = nil unless self.order_cycle.andand.has_distributor? distributor
     save!
   end
 

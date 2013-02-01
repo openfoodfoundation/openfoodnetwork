@@ -29,4 +29,9 @@ class OrderCycle < ActiveRecord::Base
     self.variants.map(&:product).uniq
   end
 
+  def has_distributor?(distributor)
+    self.distributors.include? distributor
+  end
+
+
 end

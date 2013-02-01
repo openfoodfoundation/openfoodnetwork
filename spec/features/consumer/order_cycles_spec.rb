@@ -95,9 +95,37 @@ feature %q{
       end
     end
 
+    scenario "selecing a remote order cycle clears the distributor" do
+      # When I go to the products listing page
+      visit spree.products_path
 
-    scenario "selecing an invalid distributor clears the order cycle"
-    scenario "selecing an invalid order cycle clears the distributor"
+      # And I choose a distributor
+      select @d1.name, from: 'order_distributor_id'
+      click_button 'Choose Hub'
+
+      # And I choose a remote order cycle
+      choose @oc2.name
+      click_button 'Choose Order Cycle'
+
+      # Then my distributor should be cleared
+      page.should_not have_selector "option[value='#{@d1.id}'][selected='selected']"
+    end
+
+    scenario "selecing a remote distributor clears the order cycle" do
+      # When I go to the products listing page
+      visit spree.products_path
+
+      # And I choose an order cycle
+      choose @oc1.name
+      click_button 'Choose Order Cycle'
+
+      # And I choose a remote distributor
+      select @d2.name, from: 'order_distributor_id'
+      click_button 'Choose Hub'
+
+      # Then my order cycle should be cleared
+      page.should_not have_selector "input[value='#{@oc1.id}'][checked='checked']"
+    end
   end
 
   # scenario "making an order cycle or distributor choice filters the remaining choices to valid options", js: true do

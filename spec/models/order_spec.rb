@@ -28,6 +28,76 @@ describe Spree::Order do
     li.max_quantity.should == 3
   end
 
+  describe "setting the distributor" do
+    before(:each) do
+      create(:itemwise_shipping_method)
+    end
+
+    it "sets the distributor when no order cycle is set" do
+      d = create(:distributor_enterprise)
+      subject.set_distributor! d
+      subject.distributor.should == d
+    end
+
+    it "keeps the order cycle when it is available at the new distributor" do
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+
+      subject.order_cycle = oc
+      subject.set_distributor! d
+
+      subject.distributor.should == d
+      subject.order_cycle.should == oc
+    end
+
+    it "clears the order cycle if it is not available at that distributor" do
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle)
+
+      subject.order_cycle = oc
+      subject.set_distributor! d
+
+      subject.distributor.should == d
+      subject.order_cycle.should be_nil
+    end
+  end
+
+  describe "setting the order cycle" do
+    before(:each) do
+      create(:itemwise_shipping_method)
+    end
+
+    it "sets the order cycle when no distributor is set" do
+      oc = create(:simple_order_cycle)
+      subject.set_order_cycle! oc
+      subject.order_cycle.should == oc
+    end
+
+    it "keeps the distributor when it is available in the new order cycle" do
+      oc = create(:simple_order_cycle)
+      d = create(:distributor_enterprise)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+
+      subject.distributor = d
+      subject.set_order_cycle! oc
+
+      subject.order_cycle.should == oc
+      subject.distributor.should == d
+    end
+
+    it "clears the order cycle if it is not available at that distributor" do
+      oc = create(:simple_order_cycle)
+      d = create(:distributor_enterprise)
+
+      subject.distributor = d
+      subject.set_order_cycle! oc
+
+      subject.order_cycle.should == oc
+      subject.distributor.should be_nil
+    end
+  end
+
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
       order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
