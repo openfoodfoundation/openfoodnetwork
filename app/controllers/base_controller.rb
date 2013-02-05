@@ -1,6 +1,6 @@
 class BaseController < ApplicationController
   include Spree::Core::ControllerHelpers
-  include Spree::Core::RespondWith
+  include Spree::Core::ControllerHelpers::RespondWith
 
   helper 'spree/base'
 

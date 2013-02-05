@@ -1,3 +1,4 @@
+include Spree::ProductsHelper
 class EnterprisesController < BaseController
   def index
     @enterprises = Enterprise.all

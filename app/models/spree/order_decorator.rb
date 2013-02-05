@@ -21,7 +21,7 @@ Spree::Order.class_eval do
   end
 
   def set_variant_attributes(variant, attributes)
-    line_item = contains?(variant)
+    line_item = find_line_item_by_variant(variant)
 
     if attributes.key?(:max_quantity) && attributes[:max_quantity].to_i < line_item.quantity
       attributes[:max_quantity] = line_item.quantity
