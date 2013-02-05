@@ -29,10 +29,6 @@ describe Spree::Order do
   end
 
   describe "setting the distributor" do
-    before(:each) do
-      create(:itemwise_shipping_method)
-    end
-
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
       subject.set_distributor! d
@@ -64,10 +60,6 @@ describe Spree::Order do
   end
 
   describe "setting the order cycle" do
-    before(:each) do
-      create(:itemwise_shipping_method)
-    end
-
     it "sets the order cycle when no distributor is set" do
       oc = create(:simple_order_cycle)
       subject.set_order_cycle! oc

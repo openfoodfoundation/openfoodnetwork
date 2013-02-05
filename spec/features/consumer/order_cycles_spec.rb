@@ -9,8 +9,6 @@ feature %q{
   include WebHelper
 
   background do
-    create(:itemwise_shipping_method)
-
     # Given some hubs and order cycles
     create(:distributor_enterprise)
     @d1 = create(:distributor_enterprise)

@@ -27,8 +27,6 @@ feature %q{
   end
 
   scenario "adding the first product to the cart" do
-    create(:itemwise_shipping_method)
-
     # Given a product, some distributors and a defined shipping cost
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)

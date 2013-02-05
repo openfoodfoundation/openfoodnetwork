@@ -1,3 +1,5 @@
+require 'factory_girl_rails'
+
 # Initialise shipping method when created without one, like this:
 # create(:product, :distributors => [...])
 # In this case, we don't care what the shipping method is, but we need one for validations to pass.
