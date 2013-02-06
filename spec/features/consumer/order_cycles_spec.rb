@@ -28,7 +28,6 @@ feature %q{
     # Then I should see a choice of hubs
     page.should have_selector "#distribution-choice option[value='#{@d1.id}']", text: @d1.name
     page.should have_selector "#distribution-choice option[value='#{@d2.id}']", text: @d2.name
-    fail "Distributors need to use new scope for order cycle activity (not with_distributed_active_products_on_hand). See application controller."
 
     # And I should see a choice of order cycles with closing times
     [{oc: @oc1, closing: '7 days'}, {oc: @oc2, closing: '2 days'}].each do |data|

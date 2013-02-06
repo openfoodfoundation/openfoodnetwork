@@ -33,6 +33,7 @@ feature %q{
     create(:product, :distributors => [d2])
     p = create(:product, :price => 12.34)
     create(:product_distribution, :product => p, :distributor => d1, :shipping_method => create(:shipping_method))
+    create(:simple_order_cycle, :distributors => [d1, d2])
 
     # ... with a flat rate shipping method of cost $1.23
     sm = p.product_distributions.first.shipping_method

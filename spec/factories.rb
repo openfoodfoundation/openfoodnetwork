@@ -30,6 +30,21 @@ FactoryGirl.define do
     orders_close_at { Time.zone.now + 1.week }
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+
+    ignore do
+      suppliers []
+      distributors []
+    end
+
+    after(:create) do |oc, proxy|
+      proxy.suppliers.each do |supplier|
+        create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+      end
+
+      proxy.distributors.each do |distributor|
+        create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+      end
+    end
   end
 
   factory :exchange, :class => Exchange do

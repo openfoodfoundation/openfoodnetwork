@@ -14,13 +14,13 @@ feature %q{
     d2 = create(:distributor_enterprise)
     d3 = create(:distributor_enterprise)
 
-    # And some of those distributors have a product
-    create(:product, :distributors => [d1, d2])
+    # And some of those distributors are in an order cycle
+    create(:simple_order_cycle, :distributors => [d1, d2])
 
     # When I go to the home page
     visit spree.root_path
 
-    # Then I should see a list containing the distributors that have products
+    # Then I should see a list containing the distributors that are in the order cycle
     page.should have_selector 'a', :text => d1.name
     page.should have_selector 'a', :text => d2.name
     page.should_not have_selector 'a', :text => d3.name
@@ -32,6 +32,7 @@ feature %q{
     d2 = create(:distributor_enterprise)
     p1 = create(:product, :distributors => [d1])
     p2 = create(:product, :distributors => [d2])
+    create(:simple_order_cycle, :distributors => [d1, d2])
 
     # When I go to the first distributor page
     visit spree.root_path
@@ -52,6 +53,7 @@ feature %q{
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       create(:product, :distributors => [d])
+      create(:simple_order_cycle, :distributors => [d])
 
       # When I select the distributor
       visit spree.root_path
@@ -68,6 +70,7 @@ feature %q{
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       p1 = create(:product, :distributors => [d])
+      create(:simple_order_cycle, :distributors => [d])
 
       # When I select the distributor
       visit spree.select_distributor_order_path(d)
@@ -87,6 +90,7 @@ feature %q{
       d2 = create(:distributor_enterprise)
       p1 = create(:product, :distributors => [d1], :taxons => [taxon])
       p2 = create(:product, :distributors => [d2], :taxons => [taxon])
+      create(:simple_order_cycle, :distributors => [d1, d2])
 
       # When I select the first distributor
       visit spree.select_distributor_order_path(d1)
@@ -111,6 +115,7 @@ feature %q{
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
       p1 = create(:product, :distributors => [d])
+      create(:simple_order_cycle, :distributors => [d])
 
       # When I select the distributor and then leave it
       visit spree.select_distributor_order_path(d)
@@ -155,6 +160,7 @@ feature %q{
         distributor_no_product = create(:distributor_enterprise)
         product = create(:product, :distributors => [distributor_product])
         create(:product, :distributors => [distributor_no_product])
+        create(:simple_order_cycle, :distributors => [distributor_product, distributor_no_product])
 
         # When we select the distributor without the product and then view the product
         visit spree.root_path
