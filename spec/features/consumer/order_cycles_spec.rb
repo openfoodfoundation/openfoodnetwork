@@ -123,33 +123,22 @@ feature %q{
       # Then my order cycle should be cleared
       page.should_not have_selector "input[value='#{@oc1.id}'][checked='checked']"
     end
+
+    scenario "selecting both an order cycle and distributor" do
+      # When I go to the products listing page
+      visit spree.products_path
+
+      # And I choose an order cycle
+      choose @oc1.name
+      click_button 'Choose Order Cycle'
+
+      # And I choose a distributor
+      select @d1.name, from: 'order_distributor_id'
+      click_button 'Choose Hub'
+
+      # Then my order cycle and distributor should be set
+      page.should have_selector "input[value='#{@oc1.id}'][checked='checked']"
+      page.should have_selector "option[value='#{@d1.id}'][selected='selected']"
+    end
   end
-
-  # scenario "making an order cycle or distributor choice filters the remaining choices to valid options", js: true do
-  #   # When I go to the product listing page
-  #   visit spree.products_path
-
-  #   # And I select a hub
-  #   select @d1.name, from: 'order_distributor_id'
-
-  #   # Then my choice of order cycles should be limited to that hub
-  #   page.should     have_selector "input#order_order_cycle_id_#{@oc1.id}"
-  #   page.should_not have_selector "input#order_order_cycle_id_#{@oc1.id}"
-
-  #   # When I select an order cycle
-  #   select '', from: 'order_distributor_id'
-  #   choose "order_distributor_id_#{@d2.id}"
-
-  #   # Then my choice of hubs should be limited to that order cycle
-  #   page.should_not have_selector "option[value='#{@d1.id}']", text: @d1.name
-  #   page.should     have_selector "option[value='#{@d2.id}']", text: @d2.name
-  # end
-
-  scenario "selecting an order cycle and distributor" do
-    # When I select a hub and an order cycle and click "Select"
-    # Then my distribution info should be set
-    # And I should see my distribution info
-    pending
-  end
-
 end
