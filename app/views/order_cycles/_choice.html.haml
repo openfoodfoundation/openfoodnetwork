@@ -1,1 +1,13 @@
-#distribution-choice You have not yet picked where you will get your order from.
+#distribution-choice
+  - if current_distributor.present?
+    %p
+      %strong Hub:
+      = current_distributor.name
+
+  - if current_order_cycle.present?
+    %p
+      %strong Order Cycle:
+      = current_order_cycle.name
+
+  - if current_distributor.nil? && current_order_cycle.nil?
+    %p You have not yet picked where you will get your order from.
