@@ -34,15 +34,18 @@ FactoryGirl.define do
     ignore do
       suppliers []
       distributors []
+      variants []
     end
 
     after(:create) do |oc, proxy|
       proxy.suppliers.each do |supplier|
-        create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
       end
 
       proxy.distributors.each do |distributor|
-        create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
       end
     end
   end

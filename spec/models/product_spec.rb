@@ -20,6 +20,45 @@ describe Spree::Product do
   end
 
   describe "scopes" do
+    describe "in_distributor" do
+      it "finds products listed by master" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
+        Spree::Product.in_distributor(d).should == [p]
+      end
+
+      it "finds products listed by variant" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        v = create(:variant, :product => p)
+        create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [v])
+        Spree::Product.in_distributor(d).should == [p]
+      end
+
+      it "doesn't show products listed in the incoming exchange only" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        oc = create(:simple_order_cycle, :coordinator => d, :suppliers => [s], :distributors => [d])
+        ex = oc.exchanges.where(:receiver_id => oc.coordinator_id).first
+        ex.variants << p.master
+
+        Spree::Product.in_distributor(d).should be_empty
+      end
+
+      it "doesn't show products for a different distributor" do
+        s = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p.master])
+        Spree::Product.in_distributor(d2).should be_empty
+      end
+    end
+
     describe "in_supplier_or_distributor" do
       it "finds supplied products" do
         s0 = create(:supplier_enterprise)
