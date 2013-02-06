@@ -26,8 +26,8 @@ feature %q{
     visit spree.products_path
 
     # Then I should see a choice of hubs
-    page.should have_selector "#distribution-choice option[value='#{@d1.id}']", text: @d1.name
-    page.should have_selector "#distribution-choice option[value='#{@d2.id}']", text: @d2.name
+    page.should have_selector "#distribution-selection option[value='#{@d1.id}']", text: @d1.name
+    page.should have_selector "#distribution-selection option[value='#{@d2.id}']", text: @d2.name
 
     # And I should see a choice of order cycles with closing times
     [{oc: @oc1, closing: '7 days'}, {oc: @oc2, closing: '2 days'}].each do |data|
@@ -36,6 +36,9 @@ feature %q{
         page.should have_content data[:closing]
       end
     end
+
+    # And I should see an indication of my current choices
+    page.should have_selector "#distribution-choice", text: 'You have not yet picked where you will get your order from.'
   end
 
   context "without javascript" do
@@ -49,7 +52,8 @@ feature %q{
 
       # Then associated order cycles should be highlighted
       page.should have_content "Your hub has been selected."
-      within '#distribution-choice' do
+      page.should have_selector '#distribution-choice', text: "Hub: #{@d1.name}"
+      within "#distribution-selection" do
         page.should have_selector "tr.order-cycle-#{@oc1.id}.local"
         page.should have_selector "tr.order-cycle-#{@oc2.id}.remote"
       end
@@ -59,7 +63,9 @@ feature %q{
       click_button 'Choose Hub'
 
       # Then associated order cycles should be highlighted
-      within '#distribution-choice' do
+      page.should have_content "Your hub has been selected."
+      page.should have_selector '#distribution-choice', text: "Hub: #{@d2.name}"
+      within '#distribution-selection' do
         page.should have_selector "tr.order-cycle-#{@oc1.id}.remote"
         page.should have_selector "tr.order-cycle-#{@oc2.id}.local"
       end
@@ -75,7 +81,8 @@ feature %q{
 
       # Then the associated distributor should be highlighted
       page.should have_content "Your order cycle has been selected."
-      within '#distribution-choice' do
+      page.should have_selector '#distribution-choice', text: "Order Cycle: #{@oc1.name}"
+      within '#distribution-selection' do
         page.should have_selector "option.local[value='#{@d1.id}']"
         page.should have_selector "option.remote[value='#{@d2.id}']"
       end
@@ -86,7 +93,8 @@ feature %q{
 
       # Then the associated distributor should be highlighted
       page.should have_content "Your order cycle has been selected."
-      within '#distribution-choice' do
+      page.should have_selector '#distribution-choice', text: "Order Cycle: #{@oc2.name}"
+      within '#distribution-selection' do
         page.should have_selector "option.remote[value='#{@d1.id}']"
         page.should have_selector "option.local[value='#{@d2.id}']"
       end
@@ -137,6 +145,11 @@ feature %q{
       click_button 'Choose Hub'
 
       # Then my order cycle and distributor should be set
+      within '#distribution-choice' do
+        page.should have_content "Hub: #{@d1.name}"
+        page.should have_content "Order Cycle: #{@oc1.name}"
+      end
+
       page.should have_selector "input[value='#{@oc1.id}'][checked='checked']"
       page.should have_selector "option[value='#{@d1.id}'][selected='selected']"
     end

@@ -65,8 +65,15 @@ nav#filters {
 }
 
 
-/* Distributor / order cycle selection */
+/* Distributor and order cycle selection and display */
 #distribution-choice {
+  margin-bottom: 2em;
+  padding: 5px;
+  border: 2px solid #ccc;
+  @include border-radius(10px);
+}
+
+#distribution-selection {
   overflow: auto;
   margin-bottom: 2em;
   padding: 5px;
