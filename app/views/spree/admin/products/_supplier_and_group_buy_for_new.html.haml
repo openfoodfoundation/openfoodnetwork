@@ -1,0 +1,20 @@
+.row
+  .alpha.six.columns
+    = f.field_container :supplier do
+      = f.label :supplier
+      = f.collection_select(:supplier_id, Enterprise.is_primary_producer, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+      = f.error_message_on :supplier
+  .four.columns
+    = f.field_container :group_buy do
+      = f.label :group_buy, 'Group buy?'
+      %br
+      .alpha.two.columns
+        = f.radio_button :group_buy, '1', :checked => f.object.group_buy
+        = f.label :group_buy_1, 'Yes'
+      .omega.two.columns
+        = f.radio_button :group_buy, '0', :checked => !f.object.group_buy
+        = f.label :group_buy_0, 'No'
+  .omega.six.columns
+    = f.field_container :group_buy_unit_size do
+      = f.label :group_buy_unit_size
+      = f.text_field :group_buy_unit_size, :class => "fullwidth"
