@@ -23,47 +23,47 @@ GIT
 
 GIT
   remote: git://github.com/spree/spree.git
-  revision: 42a98e2299e54b8d5ff73a047926612c816a6934
-  branch: 1-2-stable
+  revision: 36a59eb311470a2c24b9aa826ecad114c518c01f
+  branch: 1-3-stable
   specs:
-    spree (1.2.4)
-      spree_api (= 1.2.4)
-      spree_cmd (= 1.2.4)
-      spree_core (= 1.2.4)
-      spree_dash (= 1.2.4)
-      spree_promo (= 1.2.4)
-      spree_sample (= 1.2.4)
-    spree_api (1.2.4)
-      spree_core (= 1.2.4)
-    spree_cmd (1.2.4)
+    spree (1.3.3.beta)
+      spree_api (= 1.3.3.beta)
+      spree_cmd (= 1.3.3.beta)
+      spree_core (= 1.3.3.beta)
+      spree_dash (= 1.3.3.beta)
+      spree_promo (= 1.3.3.beta)
+      spree_sample (= 1.3.3.beta)
+    spree_api (1.3.3.beta)
+      spree_core (= 1.3.3.beta)
+      versioncake (= 0.4.0)
+    spree_cmd (1.3.3.beta)
       thor (>= 0.14.6)
-    spree_core (1.2.4)
+    spree_core (1.3.3.beta)
       activemerchant (~> 1.29.3)
       acts_as_list (= 0.1.4)
       awesome_nested_set (= 2.1.5)
       aws-sdk (~> 1.3.4)
-      cancan (= 1.6.7)
+      cancan (= 1.6.8)
       deface (>= 0.9.0)
       ffaker (~> 1.12.0)
       highline (= 1.6.11)
-      jquery-rails (~> 2.1.4)
+      jquery-rails (~> 2.2.0)
       kaminari (= 0.13.0)
       money (= 5.0.0)
       paperclip (~> 2.8)
       rabl (= 0.7.2)
       rails (~> 3.2.11)
       ransack (~> 0.7.2)
-      select2-rails (~> 3.0)
       select2-rails (~> 3.2)
       state_machine (= 1.1.2)
       stringex (~> 1.3.2)
-    spree_dash (1.2.4)
+    spree_dash (1.3.3.beta)
       httparty (~> 0.8.1)
-      spree_core (= 1.2.4)
-    spree_promo (1.2.4)
-      spree_core (= 1.2.4)
-    spree_sample (1.2.4)
-      spree_core (= 1.2.4)
+      spree_core (= 1.3.3.beta)
+    spree_promo (1.3.3.beta)
+      spree_core (= 1.3.3.beta)
+    spree_sample (1.3.3.beta)
+      spree_core (= 1.3.3.beta)
 
 GIT
   remote: git://github.com/spree/spree_i18n.git
@@ -75,18 +75,18 @@ GIT
 
 GIT
   remote: git://github.com/spree/spree_paypal_express.git
-  revision: 524009008727ef2a4ad8f00baa2499ee47460a3b
-  branch: 1-2-stable
+  revision: 483f6ababa9c8a1c574aad0a948c96cc21a591db
+  branch: 1-3-stable
   specs:
     spree_paypal_express (1.2.0)
-      spree_core (~> 1.2)
+      spree_core (~> 1.3.0)
 
 GIT
   remote: https://github.com/spree/spree_auth_devise.git
-  revision: 077029cedd48570e4423ba2d99f0fa38300f70ea
-  branch: 1-2-stable
+  revision: ab03a7a22740b52f96bf0311a1e9f18a99ee02f2
+  branch: 1-3-stable
   specs:
-    spree_auth_devise (1.2.0)
+    spree_auth_devise (1.0.0)
       cancan (~> 1.6.7)
       devise (~> 2.2.3)
       devise-encryptable (= 0.1.1)
@@ -152,7 +152,7 @@ GEM
       httparty (>= 0.5, < 1.0)
       multi_json (~> 1.0)
     builder (3.0.4)
-    cancan (1.6.7)
+    cancan (1.6.8)
     capybara (2.0.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -218,7 +218,7 @@ GEM
       multi_xml
     i18n (0.6.1)
     journey (1.0.4)
-    jquery-rails (2.1.4)
+    jquery-rails (2.2.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.6)
@@ -361,6 +361,10 @@ GEM
       rack
       raindrops (~> 0.7)
     uuidtools (2.1.3)
+    versioncake (0.4.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
     warden (1.2.1)
       rack (>= 1.0)
     websocket (1.0.6)
