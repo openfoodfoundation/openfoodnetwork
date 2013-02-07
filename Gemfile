@@ -4,11 +4,11 @@ ruby "1.9.3"
 gem 'rails', '3.2.11'
 
 gem 'pg'
-gem 'spree', :git => 'git://github.com/spree/spree.git', :branch => '1-3-stable'
+gem 'spree', :git => 'git://github.com/spree/spree.git', :branch => '1-2-stable'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
-gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-3-stable'
+gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-2-stable'
 gem 'spree_last_address', :git => 'git://github.com/dancinglightning/spree-last-address.git'
-gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', :branch => '1-3-stable'
+gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', :branch => '1-2-stable'
 
 gem 'comfortable_mexican_sofa'
 
