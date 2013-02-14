@@ -6,6 +6,15 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
+  
+  before :all do
+     @default_wait_time = Capybara.default_wait_time
+     Capybara.default_wait_time = 5
+   end
+
+   after :all do
+     Capybara.default_wait_time = @default_wait_time
+   end
 
   scenario "listing order cycles" do
     # Given an order cycle
