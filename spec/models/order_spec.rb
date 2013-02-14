@@ -50,6 +50,7 @@ describe Spree::Order do
       line_item1 = FactoryGirl.create(:line_item, order: subject, variant: variant11)
       line_item2 = FactoryGirl.create(:line_item, order: subject, variant: variant12)
       line_item3 = FactoryGirl.create(:line_item, order: subject, variant: variant31)
+      subject.reload
       subject.line_items = [line_item1,line_item2,line_item3]
 
       test_enterprise = FactoryGirl.create(:enterprise, id: 2, :name => "Test Enterprise")
