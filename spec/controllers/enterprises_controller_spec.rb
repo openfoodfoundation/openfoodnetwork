@@ -1,9 +1,6 @@
 require 'spec_helper'
-require 'spree/core/current_order'
 
 describe EnterprisesController do
-  include Spree::Core::CurrentOrder
-
   before :each do
     stub!(:before_save_new_order)
     stub!(:after_save_new_order)
