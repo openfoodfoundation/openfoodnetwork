@@ -1,0 +1,3 @@
+- if @cms_site
+  - @cms_site.pages.root.children.published.each do |page|
+    %li= link_to page.label, page.full_path
