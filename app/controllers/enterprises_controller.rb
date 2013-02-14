@@ -1,5 +1,7 @@
 include Spree::ProductsHelper
 class EnterprisesController < BaseController
+  helper Spree::AnalyticsHelper
+  
   def index
     @enterprises = Enterprise.all
   end
