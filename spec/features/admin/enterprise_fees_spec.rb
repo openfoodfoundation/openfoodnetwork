@@ -83,7 +83,7 @@ feature %q{
     click_link 'Enterprise Fees'
 
     # And I click delete
-    click_link 'Delete'
+    find("a.delete-resource").click
     page.driver.browser.switch_to.alert.accept
 
     # Then my enterprise fee should have been deleted
