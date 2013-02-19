@@ -20,13 +20,13 @@ describe Spree::Product do
   end
 
   describe "scopes" do
-    describe "in_distributor" do
+    describe "in_order_cycle_distributor" do
       it "finds products listed by master" do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
         p = create(:product)
         create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
-        Spree::Product.in_distributor(d).should == [p]
+        Spree::Product.in_order_cycle_distributor(d).should == [p]
       end
 
       it "finds products listed by variant" do
@@ -35,7 +35,7 @@ describe Spree::Product do
         p = create(:product)
         v = create(:variant, :product => p)
         create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [v])
-        Spree::Product.in_distributor(d).should == [p]
+        Spree::Product.in_order_cycle_distributor(d).should == [p]
       end
 
       it "doesn't show products listed in the incoming exchange only" do
@@ -46,7 +46,7 @@ describe Spree::Product do
         ex = oc.exchanges.where(:receiver_id => oc.coordinator_id).first
         ex.variants << p.master
 
-        Spree::Product.in_distributor(d).should be_empty
+        Spree::Product.in_order_cycle_distributor(d).should be_empty
       end
 
       it "doesn't show products for a different distributor" do
@@ -55,11 +55,11 @@ describe Spree::Product do
         d2 = create(:distributor_enterprise)
         p = create(:product)
         create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p.master])
-        Spree::Product.in_distributor(d2).should be_empty
+        Spree::Product.in_order_cycle_distributor(d2).should be_empty
       end
     end
 
-    describe "in_supplier_or_distributor" do
+   describe "in_supplier_or_distributor" do
       it "finds supplied products" do
         s0 = create(:supplier_enterprise)
         s1 = create(:supplier_enterprise)
@@ -96,6 +96,54 @@ describe Spree::Product do
 
         [s, d1, d2, d3].each do |enterprise|
           Spree::Product.in_supplier_or_distributor(enterprise).should == [p]
+        end
+      end
+    end
+
+    describe "in_supplier_or_order_cycle_distributor" do
+      it "finds supplied products" do
+        s0 = create(:supplier_enterprise)
+        s1 = create(:supplier_enterprise)
+        p0 = create(:product, :supplier => s0)
+        p1 = create(:product, :supplier => s1)
+
+        Spree::Product.in_supplier_or_order_cycle_distributor(s1).should == [p1]
+      end
+
+      it "finds distributed products" do
+        d0 = create(:distributor_enterprise)
+        d1 = create(:distributor_enterprise)
+        p0 = create(:product)
+        p1 = create(:product)
+
+        create(:simple_order_cycle, :distributors => [d0], :variants => [p0.master])
+        create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+
+        Spree::Product.in_supplier_or_order_cycle_distributor(d1).should == [p1]
+      end
+
+      it "finds products supplied and distributed by the same enterprise" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product, :supplier => s)
+        create(:simple_order_cycle, :distributors => [d], :variants => [p.master])
+
+        Spree::Product.in_supplier_or_order_cycle_distributor(s).should == [p]
+        Spree::Product.in_supplier_or_order_cycle_distributor(d).should == [p]
+      end
+
+      it "shows each product once when it is distributed by many distributors" do
+        s = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        d3 = create(:distributor_enterprise)
+        p = create(:product, :supplier => s)
+
+        create(:simple_order_cycle, :distributors => [d1, d2, d3], :variants => [p.master])
+        create(:simple_order_cycle, :distributors => [d1], :variants => [p.master])
+
+        [s, d1, d2, d3].each do |enterprise|
+          Spree::Product.in_supplier_or_order_cycle_distributor(enterprise).should == [p]
         end
       end
     end
