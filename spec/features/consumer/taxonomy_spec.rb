@@ -43,8 +43,6 @@ feature %q{
     my_distributor = create(:distributor_enterprise, :name => 'My Distributor')
     other_distributor = create(:distributor_enterprise, :name => 'Other Distributor')
 
-    oc = create(:simple_order_cycle, distributors: [my_distributor, other_distributor])
-
     1.times { create(:product, :taxons => [taxon_one], :distributors => [other_distributor]) }
     2.times { create(:product, :taxons => [taxon_two], :distributors => [other_distributor]) }
     2.times { create(:product, :taxons => [taxon_three], :distributors => [other_distributor]) }
