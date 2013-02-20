@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def load_data_for_sidebar
     @suppliers = Enterprise.is_primary_producer
     @order_cycles = OrderCycle.active
-    @distributors = @order_cycles.map { |oc| oc.distributors }.flatten.uniq
+    @distributors = QueriesProductDistribution.active_distributors
   end
 
   # All render calls within the block will be performed with the specified format
