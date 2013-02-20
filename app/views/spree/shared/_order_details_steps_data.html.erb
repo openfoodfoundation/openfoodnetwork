@@ -31,15 +31,15 @@
 	    <div class="flash notice">Your payment via PayPal has been processed successfully.</div>
 	  <% elsif order.payment_method.name.include? "EFT" %>
         <span><%= order.payment_method.description.html_safe %></span>
-      <% elsif order.creditcards.empty? == false %>
+      <% elsif order.credit_cards.empty? == false %>
         <span class="cc-type">
-          <%= image_tag "creditcards/icons/#{order.creditcards.first.cc_type}.png" %>
-          <%= t(:ending_in)%> <%= order.creditcards.first.last_digits %>
+          <%= image_tag "credit_cards/icons/#{order.credit_cards.first.cc_type}.png" %>
+          <%= t(:ending_in)%> <%= order.credit_cards.first.last_digits %>
         </span>
 	    <br />
         <span class="full-name">
-          <%= order.creditcards.first.first_name %>
-          <%= order.creditcards.first.last_name %>
+          <%= order.credit_cards.first.first_name %>
+          <%= order.credit_cards.first.last_name %>
         </span>
 	  <% elsif order.payment_method.type == "Spree::PaymentMethod::Check" %>
 	    <span><%= order.payment_method.description %></span>

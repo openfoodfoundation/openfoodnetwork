@@ -1,9 +1,6 @@
 require 'spec_helper'
-require 'spree/core/current_order'
 
 describe Spree::OrdersController do
-  include Spree::Core::CurrentOrder
-
   def current_user
     controller.current_user
   end
@@ -15,7 +12,7 @@ describe Spree::OrdersController do
     spree_get :select_distributor, :id => d.id
     response.should be_redirect
 
-    order = current_order(false)
+    order = subject.current_order(false)
     order.distributor.should == d
   end
 
@@ -23,7 +20,7 @@ describe Spree::OrdersController do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
     
-    order = current_order(true)
+    order = subject.current_order(true)
     order.distributor = d
     order.save!
 
@@ -59,7 +56,7 @@ describe Spree::OrdersController do
       distributor_no_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product])
 
-      order = current_order(true)
+      order = subject.current_order(true)
       order.distributor = distributor_no_product
       order.save!
 
@@ -79,7 +76,7 @@ describe Spree::OrdersController do
       spree_post :populate, :variants => {p.master.id => 1}, :distributor_id => d.id
 
       # Then our order should have its distributor set to the chosen distributor
-      current_order(false).distributor.should == d
+      subject.current_order(false).distributor.should == d
     end
   end
 
@@ -91,8 +88,8 @@ describe Spree::OrdersController do
 
       # And the product is in the cart
       spree_post :populate, :variants => {@product.master.id => 1}, :distributor_id => @distributor.id
-      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.reload.should == @distributor
+      subject.current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      subject.current_order(false).distributor.reload.should == @distributor
     end
 
     it "does not add the product if the product is not available at the order's distributor" do
@@ -104,8 +101,8 @@ describe Spree::OrdersController do
       spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => d2.id
 
       # Then the product should not be added to the cart
-      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.reload.should == @distributor
+      subject.current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      subject.current_order(false).distributor.reload.should == @distributor
     end
 
     it "does not add the product if the product is not available at the given distributor" do
@@ -117,8 +114,8 @@ describe Spree::OrdersController do
       spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => @distributor.id
 
       # Then the product should not be added to the cart
-      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.reload.should == @distributor
+      subject.current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      subject.current_order(false).distributor.reload.should == @distributor
     end
 
     it "does not add the product if the chosen distributor is different from the order's distributor" do
@@ -130,8 +127,8 @@ describe Spree::OrdersController do
       spree_post :populate, :variants => {p2.master.id => 1}, :distributor_id => d2
 
       # Then the product should not be added to the cart
-      current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
-      current_order(false).distributor.reload.should == @distributor
+      subject.current_order(false).line_items.reload.map { |li| li.product }.should == [@product]
+      subject.current_order(false).distributor.reload.should == @distributor
     end
   end
 
@@ -140,7 +137,7 @@ describe Spree::OrdersController do
       distributor_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product], :group_buy => true)
 
-      order = current_order(true)
+      order = subject.current_order(true)
       order.should_receive(:set_variant_attributes).with(p.master, {'max_quantity' => '3'})
       controller.stub(:current_order).and_return(order)
 

@@ -108,7 +108,7 @@ end
 
 module CmsSpreeAuth
   def authenticate
-    unless current_user && current_user.has_role?('admin')
+    unless current_user && current_user.has_spree_role?('admin')
       redirect_to spree.login_path
     end
   end

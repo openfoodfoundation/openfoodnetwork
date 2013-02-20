@@ -19,7 +19,7 @@ Spree::OrdersController.class_eval do
   def populate_order_count_on_hand
     params[:products].each do |product_id, variant_id|
       product = Spree::Product.find product_id
-      if product.count_on_hand < params[:quantity].to_i
+      if product.count_on_hand < params[:quantity].to_i && product.has_variants? == false
         flash[:error] = "Unfortunately " + (product.count_on_hand == 0 ? "no" : "only" + product.count_on_hand.to_s ) + " units of the selected item remain."
         redirect_populate_to_first_product
       end
@@ -37,14 +37,14 @@ Spree::OrdersController.class_eval do
   def populate_variant_attributes
     if params.key? :variant_attributes
       params[:variant_attributes].each do |variant_id, attributes|
-        @order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
+        current_order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
       end
     end
 
     if params.key? :quantity
       params[:products].each do |product_id, variant_id|
         max_quantity = params[:max_quantity].to_i
-        @order.set_variant_attributes(Spree::Variant.find(variant_id), {:max_quantity => max_quantity})
+        current_order.set_variant_attributes(Spree::Variant.find(variant_id), {:max_quantity => max_quantity})
       end
     end
   end

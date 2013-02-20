@@ -6,6 +6,15 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
+  
+  before :all do
+    @default_wait_time = Capybara.default_wait_time
+    Capybara.default_wait_time = 5
+  end
+  
+  after :all do
+    Capybara.default_wait_time = @default_wait_time
+  end
 
   scenario "listing enterprise fees" do
     fee = create(:enterprise_fee)
@@ -14,7 +23,7 @@ feature %q{
     click_link 'Configuration'
     click_link 'Enterprise Fees'
 
-    page.should have_selector "option[selected]", text: fee.enterprise.name
+    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id", :text => fee.enterprise.name
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
     page.should have_selector "option[selected]", text: 'Weight (per kg)'
@@ -83,7 +92,7 @@ feature %q{
     click_link 'Enterprise Fees'
 
     # And I click delete
-    click_link 'Delete'
+    find("a.delete-resource").click
     page.driver.browser.switch_to.alert.accept
 
     # Then my enterprise fee should have been deleted

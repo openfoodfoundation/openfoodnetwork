@@ -31,8 +31,8 @@ describe Spree::HomeController do
       incomplete_order = double(:order, distributor: 1)
       current_order = double(:order, distributor: 2)
 
-      user = double(:user, last_incomplete_order: incomplete_order)
-      controller.stub(:current_user).and_return(user)
+      user = double(:user, last_incomplete_spree_order: incomplete_order)
+      controller.stub(:try_spree_current_user).and_return(user)
       controller.stub(:current_order).and_return(current_order)
 
       incomplete_order.should_receive(:destroy)
@@ -48,8 +48,8 @@ describe Spree::HomeController do
       incomplete_order = double(:order, distributor: 1)
       current_order = double(:order, distributor: nil)
 
-      user = double(:user, last_incomplete_order: incomplete_order)
-      controller.stub(:current_user).and_return(user)
+      user = double(:user, last_incomplete_spree_order: incomplete_order)
+      controller.stub(:try_spree_current_user).and_return(user)
       controller.stub(:current_order).and_return(current_order)
 
       current_order.should_receive(:set_distributor!).with(1)

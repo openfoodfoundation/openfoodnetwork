@@ -11,11 +11,12 @@ feature %q{
 
   scenario "admin can access CMS admin and return to Spree admin" do
     login_to_admin_section
+    click_link 'Configuration'
     click_link 'CMS Admin'
     page.should have_content "ComfortableMexicanSofa"
 
     click_link 'Spree Admin'
-    page.should have_selector 'h1', :text => 'Administration'
+    current_path.should == spree.admin_path
   end
 
   scenario "anonymous user can't access CMS admin" do

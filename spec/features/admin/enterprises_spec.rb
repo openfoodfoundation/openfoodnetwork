@@ -6,7 +6,15 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
-
+  
+  before :all do
+    @default_wait_time = Capybara.default_wait_time
+    Capybara.default_wait_time = 5
+  end
+  
+  after :all do
+    Capybara.default_wait_time = @default_wait_time
+  end
 
   scenario "listing enterprises" do
     e = create(:enterprise)

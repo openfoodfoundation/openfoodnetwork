@@ -14,7 +14,7 @@
     %h4
       Total
       \:
-      %span.order-total.grand-total= order_subtotal(@order)
+      %span.order-total.grand-total= @order.display_total
 
   .links{'data-hook' => "cart_buttons"}
     = button_tag :class => 'primary', :id => 'update-button' do
