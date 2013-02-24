@@ -1,4 +1,9 @@
 class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migration
+  class Supplier < ActiveRecord::Base; end
+  class Distributor < ActiveRecord::Base; end
+  class Spree::Address < ActiveRecord::Base; end
+
+
   def up
     # -- Distributors
     add_column :distributors, :pickup_address_id, :integer

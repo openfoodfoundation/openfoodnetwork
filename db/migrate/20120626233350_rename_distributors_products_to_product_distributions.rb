@@ -1,4 +1,7 @@
 class RenameDistributorsProductsToProductDistributions < ActiveRecord::Migration
+  class Spree::ShippingMethod < ActiveRecord::Base; end
+  class ProductDistribution < ActiveRecord::Base; end
+
   def up
     # Convert m2m join table into explicit join model, and add a shipping method relation and timestamps
     rename_table :distributors_products, :product_distributions
@@ -9,7 +12,7 @@ class RenameDistributorsProductsToProductDistributions < ActiveRecord::Migration
     end
 
     # Set default shipping method on all product distributions
-    sm = Spree::ShippingMethod.first
+    sm = Spree::ShippingMethod.unscoped.first
     ProductDistribution.update_all(:shipping_method_id => sm.id) if sm
   end
 
