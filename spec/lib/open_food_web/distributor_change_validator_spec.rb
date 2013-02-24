@@ -77,8 +77,4 @@ describe DistributorChangeValidator do
       subject.available_distributors([]).should == []
     end
   end
-
-  it "can fail" do
-    fail
-  end
 end
