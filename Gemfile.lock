@@ -384,6 +384,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   database_cleaner (= 0.7.1)
+  debugger-linecache
   factory_girl_rails
   faker
   haml

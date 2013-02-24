@@ -51,7 +51,11 @@ group :test, :development do
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'spork', '~> 1.0rc'
-  gem 'pry-debugger', :group => :debug
   gem 'awesome_print'
   gem "letter_opener"
+end
+
+group :development do
+  gem 'pry-debugger'
+  gem 'debugger-linecache'
 end
