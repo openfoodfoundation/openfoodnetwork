@@ -2,5 +2,11 @@ language: ruby
 bundler_args: --without development
 rvm:
   - "1.9.3"
-# uncomment this line if your project needs to run something other than `rake`:
-script: bundle exec rspec spec
+services: postgresql
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database open_food_web_test;' -U postgres
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec
