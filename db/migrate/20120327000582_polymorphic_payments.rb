@@ -1,5 +1,6 @@
 # Legacy table support
 class Checkout < ActiveRecord::Base; end;
+class Spree::Creditcard < ActiveRecord::Base; end;
 
 class PolymorphicPayments < ActiveRecord::Migration
   def up

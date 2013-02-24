@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: open_food_web_test
+  username: postgres

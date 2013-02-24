@@ -1,4 +1,7 @@
 class MoveDistributorFromOrderToProduct < ActiveRecord::Migration
+  class Distributor < ActiveRecord::Base; end
+  class Spree::Product < ActiveRecord::Base; end
+
   def up
     remove_column :spree_orders, :distributor_id
 

@@ -371,8 +371,11 @@ GEM
       websocket (~> 1.0.4)
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     slop (3.3.3)
-    spork (1.0.0rc3)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -389,6 +392,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     truncate_html (0.5.5)
+    turbo-sprockets-rails3 (0.3.6)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
     tzinfo (0.3.37)
@@ -420,6 +426,7 @@ DEPENDENCIES
   comfortable_mexican_sofa
   database_cleaner (= 0.7.1)
   db2fog
+  debugger-linecache
   deface!
   eaterprises_feature!
   enterprises_distributor_info_rich_text_feature!
@@ -438,7 +445,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
-  spork (~> 1.0rc)
+  simplecov
   spree!
   spree_i18n!
   spree_last_address!
@@ -446,6 +453,7 @@ DEPENDENCIES
   therubyracer
   timecop
   truncate_html
+  turbo-sprockets-rails3
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn

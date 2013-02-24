@@ -37,6 +37,8 @@ group :assets do
   gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'turbo-sprockets-rails3'
 end
 
 gem 'jquery-rails'
@@ -52,8 +54,7 @@ group :test, :development do
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
-  gem 'spork', '~> 1.0rc'
-  gem 'pry-debugger'
+  gem 'simplecov', :require => false
   gem 'awesome_print'
   gem 'letter_opener'
   gem 'timecop'
@@ -63,4 +64,9 @@ group :chili do
   gem 'enterprises_distributor_info_rich_text_feature', path: 'lib/chili/enterprises_distributor_info_rich_text_feature'
   gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
   gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
+end
+
+group :development do
+  gem 'pry-debugger'
+  gem 'debugger-linecache'
 end
