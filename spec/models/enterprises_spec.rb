@@ -37,7 +37,11 @@ describe Enterprise do
         Enterprise.active_distributors.should be_empty
       end
 
-      it "doesn't show distributors of out of stock products"
+      it "doesn't show distributors of out of stock products" do
+        d = create(:distributor_enterprise)
+        create(:product, :distributors => [d], :on_hand => 0)
+        Enterprise.active_distributors.should be_empty
+      end
 
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
