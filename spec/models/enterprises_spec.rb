@@ -25,7 +25,14 @@ describe Enterprise do
         Enterprise.active_distributors.should == [d]
       end
 
-      it "finds active distributors by order cycles"
+      it "finds active distributors by order cycles" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+        Enterprise.active_distributors.should == [d]
+      end
+
       it "doesn't show distributors of deleted products"
       it "doesn't show distributors of unavailable products"
       it "doesn't show distributors of out of stock products"

@@ -27,8 +27,13 @@ class Enterprise < ActiveRecord::Base
     select('DISTINCT enterprises.*')
 
   scope :with_distributed_products_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id')
+  scope :with_order_cycles_outer,
+    joins('LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id)').
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
-  scope :active_distributors, with_distributed_products_outer.where('product_distributions.product_id IS NOT NULL')
+  scope :active_distributors, with_distributed_products_outer.with_order_cycles_outer.
+    where('product_distributions.product_id IS NOT NULL OR order_cycles.id IS NOT NULL').
+    select('DISTINCT enterprises.*')
 
 
   def has_supplied_products_on_hand?
