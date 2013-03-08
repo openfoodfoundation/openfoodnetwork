@@ -21,10 +21,6 @@ module Spree
     end
 
     describe "scopes" do
-      # in_order_cycle
-      # - shows products in order cycle distribution
-      # - doesn't show products not in order cycle distribution
-
       # Other things to test:
       # - no duplicates
 
@@ -85,6 +81,19 @@ module Spree
           create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
           create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
           Product.in_supplier_or_distributor(d1).should == [p1]
+        end
+      end
+
+      describe "in_order_cycle" do
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          oc1 = create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
+          oc2 = create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
+          Product.in_order_cycle(oc1).should == [p1]
         end
       end
 
