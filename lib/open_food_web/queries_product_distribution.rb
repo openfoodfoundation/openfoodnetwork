@@ -4,12 +4,6 @@ module OpenFoodWeb
       (active_distributors_for_product_distributions + active_distributors_for_order_cycles).sort_by { |d| d.name }.uniq
     end
 
-    def self.products_available_for(products, distributor=nil, order_cycle=nil)
-      products = products.in_distributor(distributor) if distributor
-      products = products.in_order_cycle(order_cycle) if order_cycle
-      products
-    end
-
 
     private
 
