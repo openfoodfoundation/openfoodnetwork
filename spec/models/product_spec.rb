@@ -60,10 +60,32 @@ module Spree
       end
 
       describe "in_supplier_or_distributor" do
-        it "shows products in supplier"
-        it "shows products in product distribution"
-        it "shows products in order cycle distribution"
-        it "doesn't show products not in these"
+        it "shows products in supplier" do
+          s1 = create(:supplier_enterprise)
+          s2 = create(:supplier_enterprise)
+          p1 = create(:product, supplier: s1)
+          p2 = create(:product, supplier: s2)
+          Product.in_supplier_or_distributor(s1).should == [p1]
+        end
+
+        it "shows products in product distribution" do
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product, :distributors => [d1])
+          p2 = create(:product, :distributors => [d2])
+          Product.in_supplier_or_distributor(d1).should == [p1]
+        end
+
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
+          Product.in_supplier_or_distributor(d1).should == [p1]
+        end
       end
 
 
