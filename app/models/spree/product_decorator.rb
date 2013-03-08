@@ -14,8 +14,8 @@ Spree::Product.class_eval do
   # -- Joins
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
 
-  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants ON (spree_variants.product_id = spree_products.id)').
-                                  joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.variant_id = spree_variants.id)').
+  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS pd_woco_spree_variants ON (pd_woco_spree_variants.product_id = spree_products.id)').
+                                  joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.variant_id = pd_woco_spree_variants.id)').
                                   joins('LEFT OUTER JOIN exchanges ON (exchanges.id = exchange_variants.exchange_id)').
                                   joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
