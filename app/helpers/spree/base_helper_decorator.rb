@@ -7,7 +7,12 @@ module Spree
           css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'current' : nil
 
           products = Product.in_taxon(taxon)
-          products = products.in_distributor(current_distributor) if current_distributor
+
+          #products = products.in_distributor(current_distributor) if current_distributor
+          #products = products.in_order_cycle(current_order_cycle) if current_order_cycle
+
+          products = OpenFoodWeb::QueriesProductDistribution.products_available_for(products, current_distributor, current_order_cycle)
+
           num_products = products.count
 
           content_tag :li, :class => css_class do
