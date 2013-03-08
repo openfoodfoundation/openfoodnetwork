@@ -38,8 +38,8 @@ module Spree
         it "shows products in product distribution" do
           d1 = create(:distributor_enterprise)
           d2 = create(:distributor_enterprise)
-          p1 = create(:product, :distributors => [d1])
-          p2 = create(:product, :distributors => [d2])
+          p1 = create(:product, distributors: [d1])
+          p2 = create(:product, distributors: [d2])
           Product.in_distributor(d1).should == [p1]
         end
 
@@ -49,8 +49,8 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
           Product.in_distributor(d1).should == [p1]
         end
 
@@ -59,11 +59,11 @@ module Spree
           d1 = create(:distributor_enterprise)
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
-          v1 = create(:variant, :product => p1)
+          v1 = create(:variant, product: p1)
           p2 = create(:product)
-          v2 = create(:variant, :product => p2)
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [v1])
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [v2])
+          v2 = create(:variant, product: p2)
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [v1])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [v2])
           Product.in_distributor(d1).should == [p1]
         end
 
@@ -71,8 +71,8 @@ module Spree
           s = create(:supplier_enterprise)
           d = create(:distributor_enterprise)
           p = create(:product)
-          oc = create(:simple_order_cycle, :coordinator => d, :suppliers => [s], :distributors => [d])
-          ex = oc.exchanges.where(:receiver_id => oc.coordinator_id).first
+          oc = create(:simple_order_cycle, coordinator: d, suppliers: [s], distributors: [d])
+          ex = oc.exchanges.where(receiver_id: oc.coordinator_id).first
           ex.variants << p.master
 
           Product.in_distributor(d).should be_empty
@@ -81,8 +81,8 @@ module Spree
         it "shows products in both without duplicates" do
           s = create(:supplier_enterprise)
           d = create(:distributor_enterprise)
-          p = create(:product, :distributors => [d])
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
+          p = create(:product, distributors: [d])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
           Product.in_distributor(d).should == [p]
         end
       end
@@ -99,8 +99,8 @@ module Spree
         it "shows products in product distribution" do
           d1 = create(:distributor_enterprise)
           d2 = create(:distributor_enterprise)
-          p1 = create(:product, :distributors => [d1])
-          p2 = create(:product, :distributors => [d2])
+          p1 = create(:product, distributors: [d1])
+          p2 = create(:product, distributors: [d2])
           Product.in_supplier_or_distributor(d1).should == [p1]
         end
 
@@ -110,8 +110,8 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
           Product.in_supplier_or_distributor(d1).should == [p1]
         end
 
@@ -119,7 +119,7 @@ module Spree
           s = create(:supplier_enterprise)
           d = create(:distributor_enterprise)
           p = create(:product, supplier: s, distributors: [d])
-          create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
           [s, d].each { |e| Product.in_supplier_or_distributor(e).should == [p] }
         end
       end
@@ -131,8 +131,8 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          oc1 = create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
-          oc2 = create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
+          oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
           Product.in_order_cycle(oc1).should == [p1]
         end
       end
@@ -143,7 +143,7 @@ module Spree
         shipping_method = create(:shipping_method)
         distributor = create(:distributor_enterprise)
         product = create(:product)
-        product_distribution = create(:product_distribution, :product => product, :distributor => distributor, :shipping_method => shipping_method)
+        product_distribution = create(:product_distribution, product: product, distributor: distributor, shipping_method: shipping_method)
         product.shipping_method_for_distributor(distributor).should == shipping_method
       end
 
