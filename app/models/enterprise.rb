@@ -26,13 +26,15 @@ class Enterprise < ActiveRecord::Base
     merge(OrderCycle.active).
     select('DISTINCT enterprises.*')
 
-  scope :with_distributed_products_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id')
+  scope :with_distributed_products_outer,
+    joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
+    joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
   scope :with_order_cycles_outer,
     joins('LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id)').
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
   scope :active_distributors, with_distributed_products_outer.with_order_cycles_outer.
-    where('product_distributions.product_id IS NOT NULL OR order_cycles.id IS NOT NULL').
+    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL) OR order_cycles.id IS NOT NULL').
     select('DISTINCT enterprises.*')
 
 

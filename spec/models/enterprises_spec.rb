@@ -25,6 +25,15 @@ describe Enterprise do
         Enterprise.active_distributors.should == [d]
       end
 
+      it "doesn't show distributors of deleted products" do
+        d = create(:distributor_enterprise)
+        create(:product, :distributors => [d], :deleted_at => Time.now)
+        Enterprise.active_distributors.should be_empty
+      end
+
+      it "doesn't show distributors of unavailable products"
+      it "doesn't show distributors of out of stock products"
+
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
@@ -33,9 +42,6 @@ describe Enterprise do
         Enterprise.active_distributors.should == [d]
       end
 
-      it "doesn't show distributors of deleted products"
-      it "doesn't show distributors of unavailable products"
-      it "doesn't show distributors of out of stock products"
       it "doesn't show distributors from inactive order cycles"
     end
 
