@@ -1,5 +1,3 @@
-require 'open_food_web/queries_product_distribution'
-
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
