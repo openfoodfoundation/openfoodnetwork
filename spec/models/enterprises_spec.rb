@@ -31,7 +31,12 @@ describe Enterprise do
         Enterprise.active_distributors.should be_empty
       end
 
-      it "doesn't show distributors of unavailable products"
+      it "doesn't show distributors of unavailable products" do
+        d = create(:distributor_enterprise)
+        create(:product, :distributors => [d], :available_on => 1.week.from_now)
+        Enterprise.active_distributors.should be_empty
+      end
+
       it "doesn't show distributors of out of stock products"
 
       it "finds active distributors by order cycles" do
