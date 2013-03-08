@@ -21,11 +21,6 @@ module Spree
     end
 
     describe "scopes" do
-      # in_distributor
-      # - shows products in product distribution
-      # - shows products in order cycle distribution
-      # - doesn't show products not in either
-      #
       # in_supplier_or_distributor
       # - shows products in supplier
       # - shows products in product distribution
@@ -35,6 +30,9 @@ module Spree
       # in_order_cycle
       # - shows products in order cycle distribution
       # - doesn't show products not in order cycle distribution
+
+      # Other things to test:
+      # - no duplicates
 
       describe "in_supplier" do
         it "shows products in supplier" do
@@ -51,6 +49,37 @@ module Spree
         end
       end
 
+      describe "in_distributor" do
+        it "shows products in product distribution" do
+          d = create(:distributor_enterprise)
+          p = create(:product, :distributors => [d])
+          Product.in_distributor(d).should == [p]
+        end
+
+        it "doesn't show products in another product distribution" do
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p = create(:product, :distributors => [d1])
+          Product.in_distributor(d2).should be_empty
+        end
+
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d = create(:distributor_enterprise)
+          p = create(:product)
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
+          Product.in_distributor(d).should == [p]
+        end
+
+        it "doesn't show products in another order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p = create(:product)
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p.master])
+          Product.in_distributor(d2).should be_empty
+        end
+      end
 
       #  describe "in_order_cycle_distributor" do
       #    it "finds products listed by master" do
