@@ -51,7 +51,13 @@ describe Enterprise do
         Enterprise.active_distributors.should == [d]
       end
 
-      it "doesn't show distributors from inactive order cycles"
+      it "doesn't show distributors from inactive order cycles" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master], orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
+        Enterprise.active_distributors.should be_empty
+      end
     end
 
 

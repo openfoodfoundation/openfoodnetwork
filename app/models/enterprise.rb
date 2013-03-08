@@ -35,7 +35,7 @@ class Enterprise < ActiveRecord::Base
 
   scope :active_distributors, lambda {
     with_distributed_products_outer.with_order_cycles_outer.
-    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR order_cycles.id IS NOT NULL', Time.now).
+    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.now, Time.now, Time.now).
     select('DISTINCT enterprises.*')
   }
 
