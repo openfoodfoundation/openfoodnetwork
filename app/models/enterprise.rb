@@ -19,13 +19,6 @@ class Enterprise < ActiveRecord::Base
   scope :is_distributor, where(:is_distributor => true)
   scope :with_distributed_active_products_on_hand, lambda { joins(:distributed_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
 
-  scope :active_distributors_for_product_distributions, is_distributor.with_distributed_active_products_on_hand.by_name
-  scope :active_distributors_for_order_cycles,
-    joins('LEFT INNER JOIN exchanges ON (exchanges.receiver_id = enterprises.id)').
-    joins('LEFT INNER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle.id)').
-    merge(OrderCycle.active).
-    select('DISTINCT enterprises.*')
-
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
