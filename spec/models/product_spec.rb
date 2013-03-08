@@ -22,7 +22,6 @@ module Spree
 
     describe "scopes" do
       # Other things to test:
-      # - no duplicates
       # - use 1.9 hash syntax
 
       describe "in_supplier" do
@@ -53,6 +52,30 @@ module Spree
           create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [p1.master])
           create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [p2.master])
           Product.in_distributor(d1).should == [p1]
+        end
+
+        it "shows products in order cycle distribution by variant" do
+          s = create(:supplier_enterprise)
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product)
+          v1 = create(:variant, :product => p1)
+          p2 = create(:product)
+          v2 = create(:variant, :product => p2)
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d1], :variants => [v1])
+          create(:simple_order_cycle, :suppliers => [s], :distributors => [d2], :variants => [v2])
+          Product.in_distributor(d1).should == [p1]
+        end
+
+        it "doesn't show products listed in the incoming exchange only" do
+          s = create(:supplier_enterprise)
+          d = create(:distributor_enterprise)
+          p = create(:product)
+          oc = create(:simple_order_cycle, :coordinator => d, :suppliers => [s], :distributors => [d])
+          ex = oc.exchanges.where(:receiver_id => oc.coordinator_id).first
+          ex.variants << p.master
+
+          Product.in_distributor(d).should be_empty
         end
 
         it "shows products in both without duplicates" do
@@ -97,7 +120,7 @@ module Spree
           d = create(:distributor_enterprise)
           p = create(:product, supplier: s, distributors: [d])
           create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [p.master])
-          Product.in_supplier_or_distributor(d).should == [p]
+          [s, d].each { |e| Product.in_supplier_or_distributor(e).should == [p] }
         end
       end
 
@@ -113,60 +136,6 @@ module Spree
           Product.in_order_cycle(oc1).should == [p1]
         end
       end
-
-
-      #  describe "in_order_cycle_distributor" do
-      #    it "finds products listed by variant" do
-      #      s = create(:supplier_enterprise)
-      #      d = create(:distributor_enterprise)
-      #      p = create(:product)
-      #      v = create(:variant, :product => p)
-      #      create(:simple_order_cycle, :suppliers => [s], :distributors => [d], :variants => [v])
-      #      Product.in_order_cycle_distributor(d).should == [p]
-      #    end
-
-      #    it "doesn't show products listed in the incoming exchange only" do
-      #      s = create(:supplier_enterprise)
-      #      d = create(:distributor_enterprise)
-      #      p = create(:product)
-      #      oc = create(:simple_order_cycle, :coordinator => d, :suppliers => [s], :distributors => [d])
-      #      ex = oc.exchanges.where(:receiver_id => oc.coordinator_id).first
-      #      ex.variants << p.master
-
-      #      Product.in_order_cycle_distributor(d).should be_empty
-      #    end
-      #  end
-
-      # describe "in_supplier_or_distributor" do
-      #    it "shows each product once when it is distributed by many distributors" do
-      #      s = create(:supplier_enterprise)
-      #      d1 = create(:distributor_enterprise)
-      #      d2 = create(:distributor_enterprise)
-      #      d3 = create(:distributor_enterprise)
-      #      p = create(:product, :supplier => s, :distributors => [d1, d2, d3])
-
-      #      [s, d1, d2, d3].each do |enterprise|
-      #        Product.in_supplier_or_distributor(enterprise).should == [p]
-      #      end
-      #    end
-      #  end
-
-      #  describe "in_supplier_or_order_cycle_distributor" do
-      #    it "shows each product once when it is distributed by many distributors" do
-      #      s = create(:supplier_enterprise)
-      #      d1 = create(:distributor_enterprise)
-      #      d2 = create(:distributor_enterprise)
-      #      d3 = create(:distributor_enterprise)
-      #      p = create(:product, :supplier => s)
-
-      #      create(:simple_order_cycle, :distributors => [d1, d2, d3], :variants => [p.master])
-      #      create(:simple_order_cycle, :distributors => [d1], :variants => [p.master])
-
-      #      [s, d1, d2, d3].each do |enterprise|
-      #        Product.in_supplier_or_order_cycle_distributor(enterprise).should == [p]
-      #      end
-      #    end
-      #  end
     end
 
     describe "finders" do
