@@ -18,6 +18,21 @@ describe Enterprise do
   end
 
   describe "scopes" do
+    describe "active_distributors" do
+      it "finds active distributors by product distributions" do
+        d = create(:distributor_enterprise)
+        create(:product, :distributors => [d])
+        Enterprise.active_distributors.should == [d]
+      end
+
+      it "finds active distributors by order cycles"
+      it "doesn't show distributors of deleted products"
+      it "doesn't show distributors of unavailable products"
+      it "doesn't show distributors of out of stock products"
+      it "doesn't show distributors from inactive order cycles"
+    end
+
+
     it "returns distributors with products in stock" do
       d1 = create(:distributor_enterprise)
       d2 = create(:distributor_enterprise)
