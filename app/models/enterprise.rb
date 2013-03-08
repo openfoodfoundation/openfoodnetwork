@@ -26,7 +26,9 @@ class Enterprise < ActiveRecord::Base
     merge(OrderCycle.active).
     select('DISTINCT enterprises.*')
 
-  scope :active_distributors, joins(:distributed_products)
+  scope :with_distributed_products_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id')
+
+  scope :active_distributors, with_distributed_products_outer.where('product_distributions.product_id IS NOT NULL')
 
 
   def has_supplied_products_on_hand?
