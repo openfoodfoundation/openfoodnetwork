@@ -50,6 +50,7 @@ group :test, :development do
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
+  gem 'simplecov', :require => false
   gem 'spork', '~> 1.0rc'
   gem 'awesome_print'
   gem "letter_opener"
