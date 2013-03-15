@@ -82,11 +82,11 @@ feature %q{
     supplier = create(:supplier_enterprise, :name => 'My Supplier')
     distributor = create(:distributor_enterprise, :name => 'My Distributor')
 
-    t1p1 = create(:product, :taxons => [taxon_one])
-    t2p1 = create(:product, :taxons => [taxon_two])
-    t2p2 = create(:product, :taxons => [taxon_two])
-    t3p1 = create(:product, :taxons => [taxon_three])
-    t3p2 = create(:product, :taxons => [taxon_three])
+    t1p1 = create(:product, :taxons => [taxon_one], :distributors => [distributor])
+    t2p1 = create(:product, :taxons => [taxon_two], :distributors => [distributor])
+    t2p2 = create(:product, :taxons => [taxon_two], :distributors => [distributor])
+    t3p1 = create(:product, :taxons => [taxon_three], :distributors => [distributor])
+    t3p2 = create(:product, :taxons => [taxon_three], :distributors => [distributor])
 
     oc1 = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [t1p1.master, t2p1.master, t2p2.master])
     oc2 = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [t3p1.master, t3p2.master])
@@ -96,8 +96,6 @@ feature %q{
     choose oc2.name
     click_button 'Choose Order Cycle'
     page.should have_content 'Your order cycle has been selected.'
-
-    pending "TODO: Test that products by ProductDistribution are not shown"
 
     # Then I should see order cycle-scoped product counts next to the taxons
     page.should have_selector 'nav#taxonomies li', :text => 'Taxon one (0)'
