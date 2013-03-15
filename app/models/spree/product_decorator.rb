@@ -14,10 +14,10 @@ Spree::Product.class_eval do
   # -- Joins
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
 
-  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS pd_woco_spree_variants ON (pd_woco_spree_variants.product_id = spree_products.id)').
-                                  joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.variant_id = pd_woco_spree_variants.id)').
-                                  joins('LEFT OUTER JOIN exchanges ON (exchanges.id = exchange_variants.exchange_id)').
-                                  joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
+                                  joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
+                                  joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
+                                  joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
   scope :with_order_cycles_inner, joins('INNER JOIN spree_variants ON (spree_variants.product_id = spree_products.id)').
                                   joins('INNER JOIN exchange_variants ON (exchange_variants.variant_id = spree_variants.id)').
@@ -32,7 +32,7 @@ Spree::Product.class_eval do
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('product_distributions.distributor_id = ? OR (exchanges.sender_id = order_cycles.coordinator_id AND exchanges.receiver_id = ?)', distributor, distributor).
+    where('product_distributions.distributor_id = ? OR (o_exchanges.sender_id = o_order_cycles.coordinator_id AND o_exchanges.receiver_id = ?)', distributor, distributor).
     select('distinct spree_products.*')
   }
 
@@ -41,7 +41,7 @@ Spree::Product.class_eval do
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (exchanges.sender_id = order_cycles.coordinator_id AND exchanges.receiver_id = ?)', enterprise, enterprise, enterprise).
+    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.sender_id = o_order_cycles.coordinator_id AND o_exchanges.receiver_id = ?)', enterprise, enterprise, enterprise).
     select('distinct spree_products.*')
   }
 
