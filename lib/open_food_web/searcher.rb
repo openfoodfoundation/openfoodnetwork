@@ -14,6 +14,10 @@ module OpenFoodWeb
     def get_base_scope
       base_scope = super
 
+      # The concern of separating products by distributor and order cycle is dealt with in
+      # a few other places: OpenFoodWeb::SplitProductsByDistributor (for splitting the main
+      # product display) and Spree::BaseHelper decorator (for taxon counts).
+
       base_scope = base_scope.in_supplier_or_distributor(enterprise_id) if enterprise_id
       base_scope = base_scope.in_supplier(supplier_id) if supplier_id
       base_scope = base_scope.in_distributor(distributor_id) if distributor_id

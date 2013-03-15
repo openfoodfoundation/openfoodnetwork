@@ -1,6 +1,10 @@
 module OpenFoodWeb
-  module SplitProductsByDistributor
 
+  # The concern of separating products by distributor and order cycle is dealt with in a few
+  # other places: OpenFoodWeb::Searcher (for searching over products) and in
+  # Spree::BaseHelper decorator (for taxon counts).
+
+  module SplitProductsByDistributor
     # If a distributor is provided, split the list of products into local (at that
     # distributor) and remote (at another distributor). If a distributor is not
     # provided, perform no split.
