@@ -352,6 +352,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     truncate_html (0.5.5)
+    turbo-sprockets-rails3 (0.3.6)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
     tzinfo (0.3.35)
@@ -409,6 +412,7 @@ DEPENDENCIES
   spree_paypal_express!
   therubyracer
   truncate_html
+  turbo-sprockets-rails3
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn
