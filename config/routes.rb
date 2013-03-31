@@ -32,6 +32,12 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/order_cycles' => 'admin/reports#order_cycles', :as => "order_cycles_admin_reports",  :via  => [:get, :post]
 
+  namespace :admin do
+    resources :products do
+      get :bulk_index, :on => :collection, :as => :bulk_index
+    end
+  end
+
   resources :orders do
     get :select_distributor, :on => :member
     get :deselect_distributor, :on => :collection

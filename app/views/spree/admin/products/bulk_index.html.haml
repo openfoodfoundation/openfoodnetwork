@@ -1,0 +1,22 @@
+- content_for :page_title do
+  = "Bulk Edit Products"
+
+- content_for :page_actions do
+  %div{ :class => "toolbar", 'data-hook' => "toolbar" }
+    %ul{ :class => "actions header-action-links inline-menu" }
+      %li#new_product_link
+        = button_link_to t(:new_product), new_object_url, { :remote => true, :icon => 'icon-plus', :id => 'admin_new_product' }
+
+= render :partial => 'spree/admin/shared/product_sub_menu'
+
+%div#new_product(data-hook)
+
+%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminProductsBulkCtrl' }
+  %table.index#listing_products
+    %thead
+      %tr
+        %th Name
+    %tbody{ 'ng-repeat' => 'product in products | filter:query' }
+      %tr
+        %td
+          %input{ 'ng-model' => "product.name", :type => 'text' }
