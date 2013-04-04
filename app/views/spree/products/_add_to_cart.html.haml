@@ -26,6 +26,9 @@
         - if available_distributors.length > 1
           %div Distributor for your order:
           = select_tag "distributor_id", options_from_collection_for_select(available_distributors, "id", "name", current_distributor.andand.id)
+        - elsif !@product.distributors.include? order.distributor
+          = hidden_field_tag "distributor_id", available_distributors.first.id
+          .distributor-fixed= "Your distributor for this order will be changed to #{available_distributors.first.name} if you add this product to your cart."
         - else
           = hidden_field_tag "distributor_id", order.distributor.id
           .distributor-fixed= "Your distributor for this order is #{order.distributor.name}"

@@ -8,15 +8,14 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  context "when a distributor is selected" do
+  describe "selecting a distributor" do
     it "displays the distributor's details" do
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
       create(:product, :distributors => [d])
 
       # When I select the distributor
-      visit spree.root_path
-      click_link d.name
+      visit spree.select_distributor_order_path(d)
 
       # Then I should see the name of the distributor that I've selected
       page.should have_selector 'h2', :text => 'Melb Uni Co-op'
@@ -118,15 +117,13 @@ feature %q{
         create(:product, :distributors => [distributor_no_product])
 
         # When we select the distributor without the product and then view the product
+        visit spree.select_distributor_order_path(distributor_no_product)
         visit spree.root_path
-        click_link distributor_no_product.name
         visit spree.product_path(product)
 
-        # Then we should see a choice of distributor,
-        # with no default and no option for the distributor that the product does not belong to
-        page.should     have_selector "select#distributor_id option", :text => distributor_product.name
-        page.should_not have_selector "select#distributor_id option", :text => distributor_no_product.name
-        page.should_not have_selector "select#distributor_id option[selected='selected']"
+        # Then we should be told that our distributor will be set to the one with the product
+        page.should_not have_selector "select#distributor_id"
+        page.should have_content "our distributor for this order will be changed to #{distributor_product.name} if you add this product to your cart."
       end
     end
   end
