@@ -3,6 +3,8 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+# Require pry when we're not inside Travis-CI
+require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
 
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
