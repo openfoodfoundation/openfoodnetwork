@@ -54,11 +54,11 @@ Spree::Product.class_eval do
   # -- Methods
 
   def in_distributor?(distributor)
-    Spree::Product.in_distributor(distributor).include? self
+    self.class.in_distributor(distributor).include? self
   end
 
   def in_order_cycle?(order_cycle)
-    Spree::Product::in_order_cycle(order_cycle).include? self
+    self.class.in_order_cycle(order_cycle).include? self
   end
 
   def shipping_method_for_distributor(distributor)
