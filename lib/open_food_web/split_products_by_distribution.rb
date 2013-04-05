@@ -5,15 +5,28 @@ module OpenFoodWeb
   # Spree::BaseHelper decorator (for taxon counts).
 
   module SplitProductsByDistribution
-    # If a distributor is provided, split the list of products into local (at that
-    # distributor) and remote (at another distributor). If a distributor is not
+    # If a distributor or order cycle is provided, split the list of products into local (at that
+    # distributor/order cycle) and remote (available elsewhere). If a distributor is not
     # provided, perform no split.
     def split_products_by_distribution(products, distributor, order_cycle)
       products_local = products_remote = nil
 
-      if distributor
-        products_local = products.select { |p| p.distributors.include? distributor }
-        products_remote = products.reject { |p| p.distributors.include? distributor }
+      if distributor || order_cycle
+        selector = proc do |product|
+          # This should do the right thing, but is a little more mind-bending
+          # (!distributor || p.in_distributor?(distributor)) && (!order_cycle || p.in_order_cycle?(order_cycle))
+
+          if distributor && order_cycle
+            product.in_distributor?(distributor) && product.in_order_cycle?(order_cycle)
+          elsif distributor
+            product.in_distributor?(distributor)
+          else
+            product.in_order_cycle?(order_cycle)
+          end
+        end
+
+        products_local = products.select &selector
+        products_remote = products.reject &selector
         products = nil
       end
 
