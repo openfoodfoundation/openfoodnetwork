@@ -127,4 +127,38 @@ feature %q{
       end
     end
   end
+
+  describe "selecting an order cycle" do
+    it "splits the product listing by local/remote order cycle" do
+      # Given two order cycles, with a product under each, and each product under a taxon
+      taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
+      taxonomy_root = taxonomy.root
+      taxon = create(:taxon, :name => 'Taxon one', :parent_id => taxonomy_root.id)
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
+      p1 = create(:product, :taxons => [taxon])
+      p2 = create(:product, :taxons => [taxon])
+      oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
+      oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.master])
+
+      # When I select the first order cycle
+      visit spree.root_path
+      choose oc1.name
+      click_button 'Choose Order Cycle'
+
+      # Then I should see the products split by local/remote order cycle
+      # on the home page, the products page, the search results page and the taxon page
+      [spree.root_path,
+       spree.products_path,
+       spree.products_path(:keywords => 'Product'),
+       spree.nested_taxons_path(taxon.permalink)
+      ].each do |path|
+
+        visit path
+        page.should_not have_selector '#products'
+        page.should have_selector '#products-local', :text => p1.name
+        page.should have_selector '#products-remote', :text => p2.name
+      end
+    end
+  end
 end
