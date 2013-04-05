@@ -21,9 +21,6 @@ module Spree
     end
 
     describe "scopes" do
-      # Other things to test:
-      # - use 1.9 hash syntax
-
       describe "in_supplier" do
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
@@ -153,6 +150,41 @@ module Spree
         expect do
           product.shipping_method_for_distributor(distributor)
         end.to raise_error "This product is not available through that distributor"
+      end
+    end
+
+    describe "membership" do
+      it "queries its membership of a particular product distribution" do
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p = create(:product, distributors: [d1])
+
+        p.should be_in_distributor d1
+        p.should_not be_in_distributor d2
+      end
+
+      it "queries its membership of a particular order cycle distribution" do
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+
+        p1.should be_in_distributor d1
+        p1.should_not be_in_distributor d2
+      end
+
+      it "queries its membership of a particular order cycle" do
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+
+        p1.should be_in_order_cycle oc1
+        p1.should_not be_in_order_cycle oc2
       end
     end
   end

@@ -53,6 +53,14 @@ Spree::Product.class_eval do
 
   # -- Methods
 
+  def in_distributor?(distributor)
+    Spree::Product.in_distributor(distributor).include? self
+  end
+
+  def in_order_cycle?(order_cycle)
+    Spree::Product::in_order_cycle(order_cycle).include? self
+  end
+
   def shipping_method_for_distributor(distributor)
     distribution = self.product_distributions.find_by_distributor_id(distributor)
     raise ArgumentError, "This product is not available through that distributor" unless distribution
