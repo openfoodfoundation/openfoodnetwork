@@ -59,15 +59,9 @@ Then the tests can be run with:
     bundle exec rspec spec
 
 The site is configured to use
-[Spork](https://github.com/sporkrb/spork) to reduce the pre-test
-startup time while Rails loads. To use it, first start up a spork
-instance:
-
-    bundle exec spork
-
-When that's ready, you can run RSpec with the --drb flag:
-
-    bundle exec rspec --drb spec
+[Zeus](https://github.com/burke/zeus) to reduce the pre-test
+startup time while Rails loads. See the Zeus github page for
+usage instructions.
 
 
 ## Deployment

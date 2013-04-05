@@ -339,7 +339,6 @@ GEM
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
     slop (3.4.4)
-    spork (1.0.0rc3)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -403,7 +402,6 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
-  spork (~> 1.0rc)
   spree!
   spree_auth_devise!
   spree_heroku!
