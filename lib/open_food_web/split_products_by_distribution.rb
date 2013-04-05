@@ -13,16 +13,7 @@ module OpenFoodWeb
 
       if distributor || order_cycle
         selector = proc do |product|
-          # This should do the right thing, but is a little more mind-bending
-          # (!distributor || p.in_distributor?(distributor)) && (!order_cycle || p.in_order_cycle?(order_cycle))
-
-          if distributor && order_cycle
-            product.in_distributor?(distributor) && product.in_order_cycle?(order_cycle)
-          elsif distributor
-            product.in_distributor?(distributor)
-          else
-            product.in_order_cycle?(order_cycle)
-          end
+          (!distributor || product.in_distributor?(distributor)) && (!order_cycle || product.in_order_cycle?(order_cycle))
         end
 
         products_local = products.select &selector
