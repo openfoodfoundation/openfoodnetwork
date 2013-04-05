@@ -16,7 +16,7 @@ class DistributorChangeValidator
   
   def available_distributors enterprises
     enterprises.select do |e|
-      (@order.line_item_variants - e.available_variants).empty?
+      (@order.line_item_variants - e.distributed_variants).empty?
     end
   end
 end

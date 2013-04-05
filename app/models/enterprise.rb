@@ -41,7 +41,7 @@ class Enterprise < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
   
-  def available_variants
+  def distributed_variants
     Spree::Product.in_distributor(self).map { |product| product.variants + [product.master] }.flatten
   end
 

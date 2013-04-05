@@ -94,26 +94,25 @@ describe Enterprise do
     end
   end
 
-  # TODO: Rename to distributed_variants?
   describe "finding variants distributed by the enterprise" do
     it "finds the master variant" do
       d = create(:distributor_enterprise)
       p = create(:product, distributors: [d])
-      d.available_variants.should == [p.master]
+      d.distributed_variants.should == [p.master]
     end
 
     it "finds other variants" do
       d = create(:distributor_enterprise)
       p = create(:product, distributors: [d])
       v = create(:variant, product: p)
-      d.available_variants.sort.should == [p.master, v].sort
+      d.distributed_variants.sort.should == [p.master, v].sort
     end
 
     it "finds variants distributed by order cycle" do
       d = create(:distributor_enterprise)
       p = create(:product)
       oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
-      d.available_variants.should == [p.master]
+      d.distributed_variants.should == [p.master]
     end
   end
 end
