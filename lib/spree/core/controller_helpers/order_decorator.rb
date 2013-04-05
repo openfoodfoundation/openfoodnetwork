@@ -8,8 +8,11 @@ Spree::Core::ControllerHelpers::Order.class_eval do
       if session[:order_id].nil? && last_incomplete_order
         session[:order_id] = last_incomplete_order.id
       elsif current_order && last_incomplete_order && current_order != last_incomplete_order
-        if current_order.distributor.nil? || current_order.distributor == last_incomplete_order.distributor
+        if (current_order.distributor.nil? || current_order.distributor == last_incomplete_order.distributor) &&
+           (current_order.order_cycle.nil? || current_order.order_cycle == last_incomplete_order.order_cycle)
+
           current_order.set_distributor! last_incomplete_order.distributor if current_order.distributor.nil?
+          current_order.set_order_cycle! last_incomplete_order.order_cycle if current_order.order_cycle.nil?
           current_order.merge!(last_incomplete_order)
         else
           last_incomplete_order.destroy
