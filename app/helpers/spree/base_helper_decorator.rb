@@ -8,7 +8,7 @@ module Spree
 
           # The concern of separating products by distributor and order cycle is dealt with in
           # a few other places: OpenFoodWeb::Searcher (for searching over products) and in
-          # OpenFoodWeb::SplitProductsByDistributor (for splitting the main product display).
+          # OpenFoodWeb::SplitProductsByDistribution (for splitting the main product display).
 
           products = Product.in_taxon(taxon)
           products = products.in_distributor(current_distributor) if current_distributor

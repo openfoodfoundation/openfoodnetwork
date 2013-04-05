@@ -4,11 +4,11 @@ module OpenFoodWeb
   # other places: OpenFoodWeb::Searcher (for searching over products) and in
   # Spree::BaseHelper decorator (for taxon counts).
 
-  module SplitProductsByDistributor
+  module SplitProductsByDistribution
     # If a distributor is provided, split the list of products into local (at that
     # distributor) and remote (at another distributor). If a distributor is not
     # provided, perform no split.
-    def split_products_by_distributor(products, distributor)
+    def split_products_by_distribution(products, distributor)
       products_local = products_remote = nil
 
       if distributor

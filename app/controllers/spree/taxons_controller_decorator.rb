@@ -1,10 +1,10 @@
-require 'open_food_web/split_products_by_distributor'
+require 'open_food_web/split_products_by_distribution'
 
 Spree::TaxonsController.class_eval do
   include EnterprisesHelper
-  include OpenFoodWeb::SplitProductsByDistributor
+  include OpenFoodWeb::SplitProductsByDistribution
 
   respond_override :show => { :html => { :success => lambda {
-        @products, @products_local, @products_remote = split_products_by_distributor @products, current_distributor
+        @products, @products_local, @products_remote = split_products_by_distribution @products, current_distributor
       } } }
 end
