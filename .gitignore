@@ -22,6 +22,7 @@ db/test_structure.sql
 db/staging_structure.sql
 db/production_structure.sql
 db/backup
+app/public
 public/system
 public/stylesheets
 public/images
