@@ -25,13 +25,21 @@ class Enterprise < ActiveRecord::Base
   scope :with_order_cycles_outer,
     joins('LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id)').
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_and_exchange_variants_outer,
+    with_order_cycles_outer.
+    joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
+    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
 
   scope :active_distributors, lambda {
     with_distributed_products_outer.with_order_cycles_outer.
     where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.now, Time.now, Time.now).
     select('DISTINCT enterprises.*')
   }
-
+  scope :distributing_product, lambda { |product|
+    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
+    where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
+    select('DISTINCT enterprises.*')
+  }
 
   def has_supplied_products_on_hand?
     self.supplied_products.where('count_on_hand > 0').present?
