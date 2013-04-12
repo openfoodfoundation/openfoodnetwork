@@ -11,7 +11,7 @@
     %tbody
       - order = current_order(false)
       - validator = DistributorChangeValidator.new(order)
-      - @product.distributors.each do |distributor|
+      - Enterprise.distributing_product(@product).each do |distributor|
         - if !order.nil? && distributor == order.distributor
           %tr.odd
             %td
@@ -27,4 +27,3 @@
           %tr.even
             %td= link_to distributor.name, [main_app, distributor]
             %td 
-            

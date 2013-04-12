@@ -11,15 +11,18 @@ feature %q{
   scenario "viewing a product shows its supplier and distributor" do
     # Given a product with a supplier and distributor
     s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise)
-    p = create(:product, :supplier => s, :distributors => [d])
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    p = create(:product, :supplier => s, :distributors => [d1])
+    oc = create(:simple_order_cycle, :distributors => [d2], :variants => [p.master])
 
     # When I view the product
     visit spree.product_path p
 
     # Then I should see the product's supplier and distributor
     page.should have_selector 'td', :text => s.name
-    page.should have_selector 'td', :text => d.name
+    page.should have_selector 'td', :text => d1.name
+    page.should have_selector 'td', :text => d2.name
   end
 
   describe "viewing distributor details" do
