@@ -240,6 +240,7 @@ GEM
     nested_set (1.7.0)
       activerecord (>= 3.0.0)
       railties (>= 3.0.0)
+    newrelic_rpm (3.6.0.83)
     nokogiri (1.5.6)
     orm_adapter (0.0.7)
     paperclip (2.8.0)
@@ -376,6 +377,7 @@ DEPENDENCIES
   haml
   jquery-rails
   letter_opener
+  newrelic_rpm
   pg
   pry-debugger
   rails (= 3.2.11)
