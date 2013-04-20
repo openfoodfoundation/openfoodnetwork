@@ -2,6 +2,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 require File.expand_path('../../spec/factories', __FILE__)
+require File.expand_path('../../spec/support/spree/init', __FILE__)
 
 
 # -- Spree
