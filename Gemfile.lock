@@ -105,6 +105,13 @@ GIT
       spree (~> 1.1)
 
 PATH
+  remote: lib/chili/eaterprises_feature
+  specs:
+    eaterprises_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
   remote: lib/chili/local_organics_feature
   specs:
     local_organics_feature (0.0.1)
@@ -396,6 +403,7 @@ DEPENDENCIES
   comfortable_mexican_sofa
   database_cleaner (= 0.7.1)
   deface!
+  eaterprises_feature!
   factory_girl_rails
   faker
   haml

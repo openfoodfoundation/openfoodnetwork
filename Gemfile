@@ -59,5 +59,6 @@ group :test, :development do
 end
 
 group :chili do
+  gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
   gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
 end
