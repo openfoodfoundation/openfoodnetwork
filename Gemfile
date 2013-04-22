@@ -24,6 +24,8 @@ gem 'aws-sdk'
 gem 'andand'
 gem 'truncate_html'
 gem 'representative_view'
+gem 'chili', :github => 'eaterprises/chili'
+gem 'deface', :github => 'spree/deface'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -55,4 +57,3 @@ group :test, :development do
   gem 'awesome_print'
   gem "letter_opener"
 end
-
