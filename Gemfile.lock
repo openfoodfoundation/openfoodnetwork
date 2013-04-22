@@ -15,14 +15,6 @@ GIT
       rails (~> 3.2)
 
 GIT
-  remote: git://github.com/eaterprises/spree-heroku.git
-  revision: a1e07bf7a22fc0c07a1be9148f477d20b557dbf6
-  specs:
-    spree_heroku (1.0)
-      aws-sdk (~> 1.3.4)
-      spree_core (>= 0.70.0)
-
-GIT
   remote: git://github.com/eaterprises/spree-last-address.git
   revision: f5ed71a5482fbc16da559737903bb46fe032c150
   specs:
@@ -418,7 +410,6 @@ DEPENDENCIES
   simple_form!
   spork (~> 1.0rc)
   spree!
-  spree_heroku!
   spree_i18n!
   spree_last_address!
   spree_paypal_express!
