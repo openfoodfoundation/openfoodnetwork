@@ -3,6 +3,9 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+# By default, test on eaterprises deployment settings
+ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
+
 
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
