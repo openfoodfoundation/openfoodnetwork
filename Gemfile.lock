@@ -104,6 +104,13 @@ GIT
       i18n (~> 0.5)
       spree (~> 1.1)
 
+PATH
+  remote: lib/chili/local_organics_feature
+  specs:
+    local_organics_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -394,6 +401,7 @@ DEPENDENCIES
   haml
   jquery-rails
   letter_opener
+  local_organics_feature!
   newrelic_rpm
   pg
   pry-debugger

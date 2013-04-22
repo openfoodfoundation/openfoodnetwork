@@ -57,3 +57,7 @@ group :test, :development do
   gem 'awesome_print'
   gem "letter_opener"
 end
+
+group :chili do
+  gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
+end
