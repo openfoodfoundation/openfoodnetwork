@@ -17,6 +17,7 @@ nav#filters .filter_choices li a {
   font-size: 16px;
 }
 
+/* Products listing page */
 #products-local ul {
   background-color: #e6f4ff;
 }
@@ -27,4 +28,11 @@ ul.product-listing li a.info {
 }
 ul.product-listing li .price {
   font-size: 20px;
+}
+
+
+/* Product details page */
+#cart-form .distributor {
+  font-size: 14px;
+  font-weight: bold;
 }
