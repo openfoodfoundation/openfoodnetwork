@@ -4,7 +4,7 @@ module EaterprisesFeature
 
     if ENV['OFW_DEPLOYMENT'] == 'eaterprises'
       initializer 'eaterprises_feature.sass', :after => :load_config_initializers do |app|
-        app.config.sass.load_paths += [self.root.join('app', 'assets', 'stylesheets', 'eaterprises_feature')]
+        app.config.sass.load_paths += [self.root.join('app', 'assets', 'stylesheets', 'eaterprises_feature')] if Rails.application.config.respond_to? :sass
       end
 
       initializer :assets do |app|
