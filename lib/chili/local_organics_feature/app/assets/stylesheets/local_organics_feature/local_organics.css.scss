@@ -5,3 +5,9 @@ body {
 nav #main-nav-bar {
   border-bottom: 9px solid #A3DCFF;
 }
+nav#taxonomies .taxonomy-root,
+nav#taxonomies .taxons-list li a,
+nav#filters .filter_name,
+nav#filters .filter_choices li a {
+  font-size: 16px;
+}
