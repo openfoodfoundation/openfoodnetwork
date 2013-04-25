@@ -1,4 +1,4 @@
-<!-- replace_contents '#header' -->
+<!-- replace_contents '#header' sequence 1 -->
 <div data-hook="admin_login_navigation_bar"></div>
 <%= link_to image_tag('local_organics_feature/logo.png', :id => 'logo'), spree.admin_path %>
 <h1><%= link_to t(:administration), spree.admin_path %></h1>
