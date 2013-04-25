@@ -2,6 +2,11 @@ body {
   background-color: #FFF5E0;
 }
 
+h2 {
+  font-size: 26px;
+  color: #331f00;
+}
+
 nav #main-nav-bar {
   border-bottom: 9px solid #A3DCFF;
 }
@@ -10,4 +15,8 @@ nav#taxonomies .taxons-list li a,
 nav#filters .filter_name,
 nav#filters .filter_choices li a {
   font-size: 16px;
+}
+
+#products-local ul {
+  background-color: #e6f4ff;
 }
