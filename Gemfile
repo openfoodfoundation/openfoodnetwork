@@ -54,7 +54,8 @@ group :test, :development do
   gem 'spork', '~> 1.0rc'
   gem 'pry-debugger'
   gem 'awesome_print'
-  gem "letter_opener"
+  gem 'letter_opener'
+  gem 'timecop'
 end
 
 group :chili do
