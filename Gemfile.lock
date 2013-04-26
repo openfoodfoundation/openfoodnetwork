@@ -104,6 +104,13 @@ PATH
       rails (~> 3.2.11)
 
 PATH
+  remote: lib/chili/enterprises_distributor_info_rich_text_feature
+  specs:
+    enterprises_distributor_info_rich_text_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
   remote: lib/chili/local_organics_feature
   specs:
     local_organics_feature (0.0.1)
@@ -394,6 +401,7 @@ DEPENDENCIES
   database_cleaner (= 0.7.1)
   deface!
   eaterprises_feature!
+  enterprises_distributor_info_rich_text_feature!
   factory_girl_rails
   faker
   haml
