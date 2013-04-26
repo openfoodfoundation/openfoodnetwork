@@ -4,6 +4,7 @@ require 'spork'
 #require 'spork/ext/ruby-debug'
 
 # By default, test on eaterprises deployment settings
+# This must be set before rails loads so that it's available in engine initializers
 ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
 
 
@@ -63,6 +64,11 @@ Spork.prefork do
     config.after(:each) do
       DatabaseCleaner.clean
     end
+
+    config.before(:each) do
+      # By default, test on eaterprises deployment settings
+      ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
+   end
 
     config.include Rails.application.routes.url_helpers
     config.include Spree::UrlHelpers
