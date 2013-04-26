@@ -1,6 +1,0 @@
-<!-- insert_bottom 'body' -->
-<div style='background: #FFF;text-align: center; padding: 4px 0;position: fixed;width: 100%;z-index: 9999;top: 0;'>
-  enterprises_distributor_info_rich_text_feature active - edit/remove this file:<br/>
-  <strong>lib/chili/enterprises_distributor_info_rich_text_feature/app/overrides/layouts/application/example.html.erb.deface</strong><br/>
-  <%= link_to 'deface docs', 'https://github.com/spree/deface', target: '_blank' %>
-</div>
