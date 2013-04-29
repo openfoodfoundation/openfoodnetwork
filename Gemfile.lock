@@ -204,6 +204,10 @@ GEM
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
     database_cleaner (0.7.1)
+    db2fog (0.7.0)
+      activerecord (~> 3.0)
+      fog (~> 1.0)
+      rails (~> 3.0)
     debugger (1.1.4)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -218,6 +222,7 @@ GEM
       warden (~> 1.1.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
+    excon (0.16.2)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (3.3.0)
@@ -229,6 +234,17 @@ GEM
       i18n (~> 0.4)
     ffaker (1.12.1)
     ffi (1.7.0)
+    fog (1.5.0)
+      builder
+      excon (~> 0.14)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.0.4)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5.0)
+      ruby-hmac
+    formatador (0.2.3)
     haml (3.1.6)
     highline (1.6.11)
     hike (1.2.2)
@@ -265,6 +281,9 @@ GEM
     nested_set (1.7.0)
       activerecord (>= 3.0.0)
       railties (>= 3.0.0)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-ssh (2.5.2)
     newrelic_rpm (3.6.0.83)
     nokogiri (1.5.9)
     orm_adapter (0.0.7)
@@ -338,6 +357,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.10.0)
+    ruby-hmac (0.4.0)
     rubyzip (0.9.9)
     sass (3.1.19)
     sass-rails (3.2.5)
@@ -399,6 +419,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   database_cleaner (= 0.7.1)
+  db2fog
   deface!
   eaterprises_feature!
   enterprises_distributor_info_rich_text_feature!
