@@ -6,6 +6,10 @@ feature "enterprises distributor info as rich text" do
 
   before(:each) do
     ENV['OFW_DEPLOYMENT'] = 'local_organics'
+
+    # The deployment is not set to local_organics on Rails init, so these
+    # initializers won't run. Re-call them now that the deployment is set.
+    EnterprisesDistributorInfoRichTextFeature::Engine.initializers.each &:run
   end
 
 
@@ -43,8 +47,10 @@ feature "enterprises distributor info as rich text" do
     page.should have_selector "tr[data-hook='distributor_info'] td", text: 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
   end
 
-  scenario "viewing distributor info" do
-    d = create(:distributor_enterprise, distributor_info: 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
+  scenario "viewing distributor info", js: true do
+    setup_shipping_details
+
+    d = create(:distributor_enterprise, distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
     p = create(:product, :distributors => [d])
 
     login_to_consumer_section
@@ -64,5 +70,39 @@ feature "enterprises distributor info as rich text" do
       page.should have_content 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
       page.should have_content 'Thursday 2nd May'
     end
+
+    # -- Purchase email
+    complete_purchase_from_checkout_address_page
+    ActionMailer::Base.deliveries.length.should == 1
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
+    email.body.should =~ /Thursday 2nd May/
+  end
+
+
+  private
+  def setup_shipping_details
+    zone = create(:zone)
+    c = Spree::Country.find_by_name('Australia')
+    Spree::ZoneMember.create(:zoneable => c, :zone => zone)
+    create(:itemwise_shipping_method, zone: zone)
+    create(:payment_method, :description => 'Cheque payment method')
+  end
+
+
+  def complete_purchase_from_checkout_address_page
+    fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
+                   'order_bill_address_attributes_lastname' => 'Luck',
+                   'order_bill_address_attributes_address1' => '19 Sycamore Lane',
+                   'order_bill_address_attributes_city' => 'Horse Hill',
+                   'order_bill_address_attributes_zipcode' => '3213',
+                   'order_bill_address_attributes_phone' => '12999911111')
+
+    select('Australia', :from => 'order_bill_address_attributes_country_id')
+    select('Victoria', :from => 'order_bill_address_attributes_state_id')
+
+    click_button 'Save and Continue'
+    click_button 'Save and Continue'
+    click_button 'Process My Order'
   end
 end
