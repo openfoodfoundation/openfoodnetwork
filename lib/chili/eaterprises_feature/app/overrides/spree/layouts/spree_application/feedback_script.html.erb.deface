@@ -1,3 +1,4 @@
+<!-- insert_bottom "[data-hook='inside_head']" -->
 <% if Rails.env.production? %>
   <script type="text/javascript">
     var uvOptions = {};
