@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 feature %q{
   As an Administrator
