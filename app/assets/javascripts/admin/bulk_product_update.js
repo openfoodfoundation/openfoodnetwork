@@ -1,4 +1,4 @@
-function AdminBulkProductsCtrl($scope, $http) {
+function AdminBulkProductsCtrl($scope, $timeout, $http) {
 	$scope.refreshSuppliers = function(){
 		$http.get('/enterprises/suppliers.json').success(function(data) {
 			$scope.suppliers = data;
@@ -32,11 +32,11 @@ function AdminBulkProductsCtrl($scope, $http) {
 				$scope.displaySuccess();
 			}
 			else{
-				$scope.displayFailure("Product lists do not match");
+				$scope.displayFailure("Product lists do not match.");
 			}
 		})
-		.error(function(status){
-			$scope.displayFailure("Server returned an error: "+status);
+		.error(function(data,status){
+			$scope.displayFailure("Server returned with error status: "+status);
 		});
 	}
 	
@@ -63,7 +63,7 @@ function AdminBulkProductsCtrl($scope, $http) {
 	}
 	
 	$scope.displayFailure = function(failMessage){
-		$scope.setMessage($scope.updateStatusMessage,"Updating failed: "+failMessage,{ color: "red" },10000);
+		$scope.setMessage($scope.updateStatusMessage,"Updating failed. "+failMessage,{ color: "red" },10000);
 	}
 }
 

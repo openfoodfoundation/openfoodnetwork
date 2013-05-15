@@ -139,11 +139,13 @@ describe("Auxillary functions", function(){
 describe("AdminBulkProductsCtrl", function(){
 	ctrl = null;
 	scope = null;
+	timeout = null;
 	httpBackend = null;
 	supplierController = null;
 
-	beforeEach(inject(function($controller,$rootScope,$httpBackend) {
+	beforeEach(inject(function($controller,$rootScope,$timeout,$httpBackend) {
 		scope = $rootScope.$new();
+		timeout = $timeout;
 		ctrl = $controller;
 		httpBackend = $httpBackend;
 	}));
@@ -326,12 +328,11 @@ describe("AdminBulkProductsCtrl", function(){
 			beforeEach(function(){
 				httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
 				httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
-				ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+				ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
 				httpBackend.flush();
 			});
 			
 			it("submits products to be updated with a http post request to /admin/products/bulk_update", function(){
-				spyOn(scope, "displaySuccess");
 				httpBackend.expectPOST('/admin/products/bulk_update').respond("list of products");
 				scope.updateProducts("list of products");
 				httpBackend.flush();
