@@ -14,9 +14,13 @@ function AdminBulkProductsCtrl($scope, $http) {
 	
 	$scope.refreshSuppliers();
 	$scope.refreshProducts();
-	
+	$scope.updateStatusMessage = {
+		text: "",
+		style: {}
+	}
 	
 	$scope.updateProducts = function(productsToSubmit){
+		$scope.displayUpdating();
 		$http({
 			method: 'POST',
 			url: '/admin/products/bulk_update',
@@ -42,12 +46,24 @@ function AdminBulkProductsCtrl($scope, $http) {
 		$scope.updateProducts(productsToSubmit);
 	}
 	
+	$scope.setMessage = function(model,text,style,timeout){
+		model.text = text;
+		model.style = style;
+		if (timeout){
+			$timeout(function() { $scope.setMessage(model,"",{},false); }, timeout, true);
+		}
+	}
+	
+	$scope.displayUpdating = function(){
+		$scope.setMessage($scope.updateStatusMessage,"Updating...",{ color: "orange" },false);
+	}
+	
 	$scope.displaySuccess = function(){
-		
+		$scope.setMessage($scope.updateStatusMessage,"Update complete",{ color: "green" },3000);
 	}
 	
 	$scope.displayFailure = function(failMessage){
-		
+		$scope.setMessage($scope.updateStatusMessage,"Updating failed: "+failMessage,{ color: "red" },10000);
 	}
 }
 

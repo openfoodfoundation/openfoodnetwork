@@ -1,10 +1,10 @@
 require 'spec_helper'
+require 'pry'
 
 feature %q{
   As an Administrator
   I want to be able to manage products in bulk
 } , js: true do
-  
   include AuthenticationWorkflow
   include WebHelper
   
@@ -23,8 +23,8 @@ feature %q{
     login_to_admin_section
     click_link 'Products'
     click_link 'Bulk Product Edit'
-    
-    page.first('input').value.should == p.name
+
+    page.should have_field "product_name", with: p.name
   end
   
   scenario "create a new product" do
@@ -49,8 +49,9 @@ feature %q{
     
     URI.parse(current_url).path.should == '/admin/products/bulk_index'
     flash_message.should == 'Product "Big Bag Of Apples" has been successfully created!'
-    page.should have_content 'Big Bag Of Apples'
+    page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
+  
   
   scenario "updating a product" do
     p = FactoryGirl.create(:product)
@@ -62,6 +63,11 @@ feature %q{
     click_link 'Products'
     click_link 'Bulk Product Edit'
     
-    page.first(:css, "td select", :text => s1.name).select(s2.name)
+    fill_in "product_name", with: "Big Bag Of Potatoes"
+    click_button 'Update'
+    page.find("div#update-status-message").should have_content "Updating complete"
+    click_link 'Bulk Product Edit'
+    
+    page.should have_field "product_name", with: "Big Bag Of Potatoes"
   end
 end 

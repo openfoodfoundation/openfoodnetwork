@@ -331,6 +331,7 @@ describe("AdminBulkProductsCtrl", function(){
 			});
 			
 			it("submits products to be updated with a http post request to /admin/products/bulk_update", function(){
+				spyOn(scope, "displaySuccess");
 				httpBackend.expectPOST('/admin/products/bulk_update').respond("list of products");
 				scope.updateProducts("list of products");
 				httpBackend.flush();

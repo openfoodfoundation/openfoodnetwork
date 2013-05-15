@@ -1,0 +1,4 @@
+r.list_of :suppliers, @suppliers do
+  r.element :id
+  r.element :name
+end
