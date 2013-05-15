@@ -24,7 +24,6 @@ function AdminBulkProductsCtrl($scope, $http) {
 			headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
 		})
 		.success(function(data){
-			debugger;
 			if (angular.toJson($scope.products) == angular.toJson(data)){
 				$scope.displaySuccess();
 			}
