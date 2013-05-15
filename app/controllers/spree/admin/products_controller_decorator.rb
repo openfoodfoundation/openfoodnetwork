@@ -10,6 +10,18 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
   
+  def bulk_update
+    @collection_hash = Hash[params[:_json].each_with_index.map { |p,i| [i,p] }]
+    @collection_attributes = { :collection_attributes => @collection_hash }
+    @product_set = Spree::ProductSet.new(@collection_attributes)
+
+    if @product_set.save
+      redirect_to bulk_index_admin_products_url :format => :json
+    else
+      render :nothing => true
+    end
+  end
+  
   protected
   def location_after_save
     if URI(request.referer).path == '/admin/products/bulk_index' 

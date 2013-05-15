@@ -1,3 +1,9 @@
+var productsApp = angular.module('bulk_product_update', [])
+
+productsApp.config(["$httpProvider", function(provider) {
+  provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+}]);
+
 function AdminBulkProductsCtrl($scope, $timeout, $http) {
 	$scope.refreshSuppliers = function(){
 		$http.get('/enterprises/suppliers.json').success(function(data) {
@@ -24,8 +30,7 @@ function AdminBulkProductsCtrl($scope, $timeout, $http) {
 		$http({
 			method: 'POST',
 			url: '/admin/products/bulk_update',
-			data: productsToSubmit,
-			headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+			data: productsToSubmit
 		})
 		.success(function(data){
 			if (angular.toJson($scope.products) == angular.toJson(data)){
@@ -66,8 +71,6 @@ function AdminBulkProductsCtrl($scope, $timeout, $http) {
 		$scope.setMessage($scope.updateStatusMessage,"Updating failed. "+failMessage,{ color: "red" },10000);
 	}
 }
-
-var productsApp = angular.module('bulk_product_update', [])
 
 function sortByID(array){
 	var sortedArray = [];

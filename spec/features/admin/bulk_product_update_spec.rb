@@ -64,7 +64,7 @@ feature %q{
     
     fill_in "product_name", with: "Big Bag Of Potatoes"
     click_button 'Update'
-    page.find("div#update-status-message").should have_content "Updating complete"
+    page.find("span#update-status-message").should have_content "Update complete"
     click_link 'Bulk Product Edit'
     
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
