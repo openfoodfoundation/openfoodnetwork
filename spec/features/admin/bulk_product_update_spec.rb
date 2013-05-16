@@ -15,7 +15,7 @@ feature %q{
   after :all do
     Capybara.default_wait_time = @default_wait_time
   end
-  
+
   describe "listing products" do
     before :each do
       login_to_admin_section
@@ -42,6 +42,16 @@ feature %q{
 
       page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s2.name
       page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s3.name
+    end
+    
+    it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
+      p1 = FactoryGirl.create(:product, available_on: Date.today)
+      p2 = FactoryGirl.create(:product, available_on: Date.today-1)
+
+      visit '/admin/products/bulk_index'
+
+      page.should have_field "available_on", with: p1.available_on.strftime("%F %T")
+      page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
     end
   end
   
@@ -74,18 +84,19 @@ feature %q{
   scenario "updating a product" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product)
-    p.supplier = s1
-
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
+    
     login_to_admin_section
 
     visit '/admin/products/bulk_index'
 
     page.should have_field "product_name", with: p.name
     page.should have_select "supplier_id", selected: s1.name
+    page.should have_field "available_on", with: p.available_on.strftime("%F %T")
 
     fill_in "product_name", with: "Big Bag Of Potatoes"
     select(s2.name, :from => 'supplier_id')
+    fill_in "available_on", with: (Date.today-3).strftime("%F %T")
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
@@ -94,5 +105,6 @@ feature %q{
 
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
     page.should have_select "supplier_id", selected: s2.name
+    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
   end
 end 

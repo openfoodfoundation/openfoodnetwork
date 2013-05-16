@@ -17,12 +17,15 @@
       %tr
         %th Name
         %th Supplier
+        %th Av. On
     %tbody{ 'ng-repeat' => 'product in products | filter:query' }
       %tr
         %td
           %input{ 'ng-model' => "product.name", :name => 'product_name', :type => 'text' }
         %td
           %select.select2{ :name => 'supplier_id', 'ng-model' => 'product.supplier_id', 'ng-options' => 's.id as s.name for s in suppliers' }
+        %td
+          %input{ 'ng-model' => 'product.available_on', :name => 'available_on', :type => 'text' }
   %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
   %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
     {{ updateStatusMessage.text }}
