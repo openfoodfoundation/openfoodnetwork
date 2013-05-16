@@ -1,4 +1,5 @@
 r.list_of :products, @collection do
   r.element :id
   r.element :name
+  r.element :supplier_id
 end

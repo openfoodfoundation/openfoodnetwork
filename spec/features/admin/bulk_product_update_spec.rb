@@ -17,13 +17,19 @@ feature %q{
   end
 
   scenario "listing products" do
+    s1 = FactoryGirl.create(:supplier_enterprise)
+    s2 = FactoryGirl.create(:supplier_enterprise)
+    s3 = FactoryGirl.create(:supplier_enterprise)
     p = FactoryGirl.create(:product)
+
+    p.supplier = s1;
     
     login_to_admin_section
     click_link 'Products'
     click_link 'Bulk Product Edit'
 
     page.should have_field "product_name", with: p.name
+    page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s1.name
   end
   
   scenario "create a new product" do
@@ -53,20 +59,26 @@ feature %q{
   
   
   scenario "updating a product" do
-    p = FactoryGirl.create(:product)
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
+    p = FactoryGirl.create(:product)
     p.supplier = s1
     
     login_to_admin_section
     click_link 'Products'
     click_link 'Bulk Product Edit'
     
+    page.should have_field "product_name", with: p.name
+    page.should have_select "supplier_id", selected: s1.name
+    
     fill_in "product_name", with: "Big Bag Of Potatoes"
+    select(s2.name, :from => 'supplier_id')
+    
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
     click_link 'Bulk Product Edit'
     
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
+    page.should have_select "supplier_id", selected: s2.name
   end
 end 
