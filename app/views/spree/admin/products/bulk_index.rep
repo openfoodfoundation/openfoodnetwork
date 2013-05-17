@@ -3,4 +3,8 @@ r.list_of :products, @collection do
   r.element :name
   r.element :supplier_id
   r.element :available_on, Proc.new{ |product| product.available_on.strftime("%F %T") }
+  r.element :master do
+    r.element :id
+    r.element :price
+  end
 end

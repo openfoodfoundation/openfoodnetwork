@@ -28,13 +28,21 @@ describe Spree::Admin::ProductsController do
         "id" => p1.id,
         "name" => p1.name,
         "supplier_id" => p1.supplier_id,
-        "available_on" => p1.available_on.strftime("%F %T")
+        "available_on" => p1.available_on.strftime("%F %T"),
+        "master" => {
+          "id" => p1.master.id,
+          "price" => p1.master.price.to_s
+        }
       }
       p2r = {
         "id" => p2.id,
         "name" => p2.name,
         "supplier_id" => p2.supplier_id,
-        "available_on" => p2.available_on.strftime("%F %T")
+        "available_on" => p2.available_on.strftime("%F %T"),
+        "master" => {
+          "id" => p2.master.id,
+          "price" => p2.master.price.to_s
+        }
       }
       json_response = JSON.parse(response.body)
       #json_response = Hash[json_response.map{ |k, v| [k.to_sym, v] }]

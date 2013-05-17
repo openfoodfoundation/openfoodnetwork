@@ -4,7 +4,39 @@ productsApp.config(["$httpProvider", function(provider) {
   provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 }]);
 
-function AdminBulkProductsCtrl($scope, $timeout, $http) {
+productsApp.directive('ngDecimal', function () {
+	return {
+		require: 'ngModel',
+		link: function(scope, element, attrs, ngModel) {
+			var numRegExp = /^\d+(\.\d+)?$/;
+			
+			element.bind('blur', function() {
+				scope.$apply(ngModel.$setViewValue(ngModel.$modelValue));
+				ngModel.$render();
+			});
+			
+			ngModel.$setValidity('notADecimalError', function(){
+				if (angular.isString(ngModel.$modelValue) && numRegExp.test(ngModel.$modelValue)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			});
+			
+			ngModel.$parsers.push(function(viewValue){
+				if (angular.isString(viewValue) && numRegExp.test(viewValue)){
+					if (viewValue.indexOf(".") == -1){
+						return viewValue+".0";
+					}
+				}
+				return viewValue;
+			});
+		}
+	}
+});
+
+productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http) {
 	$scope.refreshSuppliers = function(){
 		$http.get('/enterprises/suppliers.json').success(function(data) {
 			$scope.suppliers = data;
@@ -13,8 +45,8 @@ function AdminBulkProductsCtrl($scope, $timeout, $http) {
 	
 	$scope.refreshProducts = function(){
 		$http({ method: 'GET', url:'/admin/products/bulk_index.json' }).success(function(data) {
-			$scope.products = clone(data);
-			$scope.cleanProducts = clone(data);
+			$scope.products = angular.copy(data);
+			$scope.cleanProducts = angular.copy(data);
 		});
 	}
 	
@@ -70,7 +102,7 @@ function AdminBulkProductsCtrl($scope, $timeout, $http) {
 	$scope.displayFailure = function(failMessage){
 		$scope.setMessage($scope.updateStatusMessage,"Updating failed. "+failMessage,{ color: "red" },10000);
 	}
-}
+});
 
 function sortByID(array){
 	var sortedArray = [];
@@ -114,16 +146,25 @@ function getMatchedObjects(testList, cleanList){
 	return matchedObjects;
 }
 
-function getDirtyProperties(testObject, cleanObject){
+function getDirtyPropertiesOfObject(testObject, cleanObject){
 	var dirtyProperties = {};
 	for (var key in testObject){
 		if (testObject.hasOwnProperty(key) && cleanObject.hasOwnProperty(key)){
 			if (testObject[key] != cleanObject[key]){
 				if (testObject[key] instanceof Array){
-					dirtyProperties[key] = getDirtyObjects(testObject[key],cleanObject[key]); //only works for objects with id
+					if (key == "variants"){
+						dirtyProperties[key] = getDirtyObjects(testObject[key],cleanObject[key]);
+					}
+					else{
+						dirtyProperties[key] = testObject[key];
+					}
 				}
 				else if(testObject[key] instanceof Object){
-					dirtyProperties[key] = getDirtyObjects([testObject[key]],[cleanObject[key]]); //only works for objects with id
+					var tempObject = getDirtyPropertiesOfObject(testObject[key],cleanObject[key]);
+					if ( !isEmpty(tempObject) ){
+						if (testObject[key].hasOwnProperty("id")) { tempObject["id"] = testObject[key].id; }
+						dirtyProperties[key] = tempObject;
+					}
 				}
 				else{
 					dirtyProperties[key] = testObject[key];
@@ -140,7 +181,7 @@ function getDirtyObjects(testObjects, cleanObjects){
 	testObjects = sortByID(testObjects);
 	
 	for (var i in testObjects){
-		var dirtyObject = getDirtyProperties(testObjects[i], matchedCleanObjects[i])
+		var dirtyObject = getDirtyPropertiesOfObject(testObjects[i], matchedCleanObjects[i])
 		if ( !isEmpty(dirtyObject) ){
 			dirtyObject["id"] = testObjects[i].id;
 			dirtyObjects.push(dirtyObject);
@@ -187,35 +228,4 @@ function isEmpty(object){
         }
     }
     return true;
-}
-
-// A. Levy http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
-function clone(obj) {
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj;
-
-    // Handle Date
-    if (obj instanceof Date) {
-        var copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        var copy = [];
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i]);
-        }
-        return copy;
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        var copy = {};
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-        }
-        return copy;
-    }
 }

@@ -66,18 +66,25 @@ describe("Auxillary functions", function(){
 		});
 
 		it("returns only differing properties when object do not match", function() {
-			expect( getDirtyProperties(a, b) ).toEqual( { "2": 5 } );
-			expect( getDirtyProperties(b, b) ).toEqual( {} );
+			expect( getDirtyPropertiesOfObject(a, b) ).toEqual( { "2": 5 } );
+			expect( getDirtyPropertiesOfObject(b, b) ).toEqual( {} );
 		});
 
 		it("ignores properties which are not possessed by both objects", function() {
-			expect( getDirtyProperties(b, c) ).toEqual( {} );
-			expect( getDirtyProperties(c, b) ).toEqual( {} );
+			expect( getDirtyPropertiesOfObject(b, c) ).toEqual( {} );
+			expect( getDirtyPropertiesOfObject(c, b) ).toEqual( {} );
 		});
 		
-		it("sends and properties which are objects back to getDirtyObjects",function(){
+		it("sends properties which are objects back to getDirtyPropertiesOfObject",function(){
+			spyOn(window, "getDirtyPropertiesOfObject").andCallThrough();
+			getDirtyPropertiesOfObject( { id: 1, num: 3, object: { id: 1, value: "something" } }, { id: 1, num: 2, object: { id: 1, value: "somethingelse" } } );
+			expect(getDirtyPropertiesOfObject.calls.length).toEqual(2);
+			expect(getDirtyPropertiesOfObject).toHaveBeenCalledWith( { id: 1, value: "something" }, { id: 1, value: "somethingelse" } );
+		})
+		
+		it("sends properties which are arrays with a key of 'variants' back to getDirtyObjects, ignores other arrays",function(){
 			spyOn(window, "getDirtyObjects");
-			getDirtyProperties( { id: 1, num: 3, object: { id: 1, value: "something" } }, { id: 1, num: 2, object: { id: 1, value: "somethingelse" } } );
+			getDirtyPropertiesOfObject( { id: 1, num: 3, array: [ 1, 2, 3 ], variants: [ { id: 1, value: "something" } ] }, { id: 1, num: 2, array: [ 2, 3, 4], variants: [ { id: 1, value: "somethingelse" } ] } );
 			expect(getDirtyObjects.calls.length).toEqual(1);
 			expect(getDirtyObjects).toHaveBeenCalledWith( [ { id: 1, value: "something" } ], [ { id: 1, value: "somethingelse" } ] );
 		})
@@ -94,7 +101,7 @@ describe("Auxillary functions", function(){
 
 		it("calls getMatchedObjects() once for each call to getDirtyItems", function(){
 			spyOn(window, "getMatchedObjects").andReturn(b);
-			spyOn(window, "getDirtyProperties");
+			spyOn(window, "getDirtyPropertiesOfObject");
 			var dirtyObjects = getDirtyObjects(a, b);
 
 			expect(getMatchedObjects.calls.length).toEqual(1);
@@ -104,14 +111,14 @@ describe("Auxillary functions", function(){
 		it("calls sortByID once for the test Array", function(){
 			spyOn(window, "getMatchedObjects").andReturn(b);
 			spyOn(window, "sortByID");
-			spyOn(window, "getDirtyProperties");
+			spyOn(window, "getDirtyPropertiesOfObject");
 			var dirtyObjects = getDirtyObjects(a, b);
 
 			expect(sortByID.calls.length).toEqual(1);
 			expect(sortByID).toHaveBeenCalledWith(a);
 		});
 
-		it("returns only valid (non-empty) objects returned by getDirtyProperties", function(){
+		it("returns only valid (non-empty) objects returned by getDirtyPropertiesOfObject", function(){
 			expect( getDirtyObjects(a, b) ).not.toContain( {} );
 		});
 
@@ -119,58 +126,18 @@ describe("Auxillary functions", function(){
 			expect( getDirtyObjects(a, b) ).toEqual( [ { id: 2, value: 20 } ] );
 		});
 
-		it("calls getDirtyProperties() once for each pair of objects", function(){
+		it("calls getDirtyPropertiesOfObject() once for each pair of objects", function(){
 			spyOn(window, "getMatchedObjects").andReturn(b);
-			spyOn(window, "getDirtyProperties").andCallThrough();
+			spyOn(window, "getDirtyPropertiesOfObject").andCallThrough();
 			var dirtyObjects = getDirtyObjects(a, b);
 
-			expect(getDirtyProperties.calls.length).toEqual(2);
-			expect(getDirtyProperties).toHaveBeenCalledWith(a[0],b[0]);
-			expect(getDirtyProperties).toHaveBeenCalledWith(a[1],b[1]);
+			expect(getDirtyPropertiesOfObject.calls.length).toEqual(2);
+			expect(getDirtyPropertiesOfObject).toHaveBeenCalledWith(a[0],b[0]);
+			expect(getDirtyPropertiesOfObject).toHaveBeenCalledWith(a[1],b[1]);
 		});
 
 		it("returns an array of objects identified by their ids, and any additional differing properties", function(){
 			expect( getDirtyObjects(c, d) ).toEqual( [ { id: 2, value: 12 }, { id: 3, value2: 15 } ] );
-		});
-	});
-});
-
-
-describe("AdminBulkProductsCtrl", function(){
-	ctrl = null;
-	scope = null;
-	timeout = null;
-	httpBackend = null;
-	supplierController = null;
-
-	beforeEach(inject(function($controller,$rootScope,$timeout,$httpBackend) {
-		scope = $rootScope.$new();
-		timeout = $timeout;
-		ctrl = $controller;
-		httpBackend = $httpBackend;
-	}));
-	
-	describe("loading data upon initialisation", function(){
-		it("gets a list of suppliers, a list of products and stores a clean list of products", function(){
-			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
-			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
-			httpBackend.flush();
-			expect(scope.suppliers).toEqual("list of suppliers");
-			expect(scope.products).toEqual("list of products");
-			expect(scope.cleanProducts).toEqual("list of products");
-		});
-		
-		it("does not affect clean products list when products list is altered", function(){
-			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-			httpBackend.expectGET('/admin/products/bulk_index.json').respond( [1,2,3,4,5] );
-			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
-			httpBackend.flush();
-			expect(scope.products).toEqual( [1,2,3,4,5] );
-			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
-			scope.products.push(6);
-			expect(scope.products).toEqual( [1,2,3,4,5,6] );
-			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
 		});
 	});
 	
@@ -183,11 +150,11 @@ describe("AdminBulkProductsCtrl", function(){
 			expect( filterSubmitProducts( "2" ) ).toEqual([]);
 			expect( filterSubmitProducts( null ) ).toEqual([]);
 		});
-		
+
 		it("only returns products which have an id property", function(){
 			expect( filterSubmitProducts( [ { id: 1, name: "p1" }, { notanid: 2, name: "p2"} ] ) ).toEqual( [ { id: 1, name: "p1" } ]);
 		});
-		
+
 		it("returns variants as variants_attributes", function(){
 			var testProduct  = {
 				id: 1,
@@ -206,7 +173,7 @@ describe("AdminBulkProductsCtrl", function(){
 				} ]
 			} ] );
 		});
-		
+
 		it("returns master as master_attributes", function(){
 			var testProduct  = {
 				id: 1,
@@ -225,7 +192,7 @@ describe("AdminBulkProductsCtrl", function(){
 				} ]
 			} ] );
 		});
-		
+
 		it("ignores variants without an id, and those for which deleted_at is not null", function(){
 			var testProduct  = {
 				id: 1,
@@ -254,7 +221,7 @@ describe("AdminBulkProductsCtrl", function(){
 				} ]
 			} ] );
 		});
-		
+
 		// TODO Not an exhaustive test, is there a better way to do this?
 		it("only returns properties the properties of products which ought to be updated", function(){
 			var testProduct  = {
@@ -297,8 +264,65 @@ describe("AdminBulkProductsCtrl", function(){
 			);
 		});
 	});
-	
+});
+
+
+describe("AdminBulkProductsCtrl", function(){
+	describe("loading data upon initialisation", function(){
+		ctrl = null;
+		scope = null;
+		httpBackend = null;
+
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($controller,$rootScope,$httpBackend) {
+			scope = $rootScope.$new();
+			ctrl = $controller;
+			httpBackend = $httpBackend;
+		}));
+
+		it("gets a list of suppliers, a list of products and stores a clean list of products", function(){
+			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
+			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+			httpBackend.flush();
+			expect(scope.suppliers).toEqual("list of suppliers");
+			expect(scope.products).toEqual("list of products");
+			expect(scope.cleanProducts).toEqual("list of products");
+		});
+
+		it("does not affect clean products list when products list is altered", function(){
+			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
+			httpBackend.expectGET('/admin/products/bulk_index.json').respond( [1,2,3,4,5] );
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+			httpBackend.flush();
+			expect(scope.products).toEqual( [1,2,3,4,5] );
+			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
+			scope.products.push(6);
+			expect(scope.products).toEqual( [1,2,3,4,5,6] );
+			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
+		});
+	});
+
 	describe("submitting products to be updated", function(){
+		ctrl = null;
+		scope = null;
+		timeout = null;
+		httpBackend = null;
+
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($controller,$rootScope,$timeout,$httpBackend) {
+			scope = $rootScope.$new();
+			ctrl = $controller;
+			timeout = $timeout;
+			httpBackend = $httpBackend;
+		}));
+
 		describe("preparing products for submit",function(){
 			beforeEach(function(){
 				httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
@@ -310,15 +334,15 @@ describe("AdminBulkProductsCtrl", function(){
 				spyOn(scope, "updateProducts");
 				scope.prepareProductsForSubmit();
 			});
-			
+
 			it("fetches dirty products required for submitting", function(){
 				expect(getDirtyObjects).toHaveBeenCalledWith([1,2,3,4,5],[1,2,3,4,5]);
 			});
-			
+
 			it("filters returned dirty products", function(){
 				expect(filterSubmitProducts).toHaveBeenCalledWith( [ { id: 1, value: 1 }, { id:2, value: 2 } ] );
 			});
-			
+
 			it("sends dirty and filtered objects to submitProducts()", function(){
 				expect(scope.updateProducts).toHaveBeenCalledWith( [ { id: 1, value: 3 }, { id:2, value: 4 } ] );
 			});
@@ -331,13 +355,13 @@ describe("AdminBulkProductsCtrl", function(){
 				ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
 				httpBackend.flush();
 			});
-			
+
 			it("submits products to be updated with a http post request to /admin/products/bulk_update", function(){
 				httpBackend.expectPOST('/admin/products/bulk_update').respond("list of products");
 				scope.updateProducts("list of products");
 				httpBackend.flush();
 			});
-			
+
 			it("runs displaySuccess() when post returns success",function(){
 				spyOn(scope, "displaySuccess");
 				scope.products = "updated list of products";
@@ -346,7 +370,7 @@ describe("AdminBulkProductsCtrl", function(){
 				httpBackend.flush();
 				expect(scope.displaySuccess).toHaveBeenCalled();
 			});
-			
+
 			it("runs displayFailure() when post return data does not match $scope.products",function(){
 				spyOn(scope, "displayFailure");
 				scope.products = "current list of products";
@@ -355,7 +379,7 @@ describe("AdminBulkProductsCtrl", function(){
 				httpBackend.flush();
 				expect(scope.displayFailure).toHaveBeenCalled();
 			});
-			
+
 			it("runs displayFailure() when post returns error",function(){
 				spyOn(scope, "displayFailure");
 				scope.products = "updated list of products";
@@ -365,5 +389,30 @@ describe("AdminBulkProductsCtrl", function(){
 				expect(scope.displayFailure).toHaveBeenCalled();
 			});			
 		});
-	});	
+	});
+
+	/*describe("directives",function(){
+		scope = null;
+		compiler = null;
+		
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($rootScope,$compile) {
+			compiler = $compile;
+			scope = $rootScope;
+		}));
+		
+		it("should format numeric strings in ngDecimal fields as decimals in the associated model",function(){
+			scope.$apply(function() { scope.testValue = "123"; });
+		    
+			var field = angular.element("<input type='text' ng-demical='true' ng-model='testValue'>");
+			compiler(field)(scope);
+			
+		    scope.$apply();
+
+			expect(field.text()).toBe("123");
+		});
+	});*/
 });
