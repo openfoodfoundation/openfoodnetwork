@@ -67,6 +67,37 @@ feature %q{
       page.should have_field "master_price", with: "22.0"
       page.should have_field "master_price", with: "44.0"
     end
+    
+    it "displays an on hand count input (for master variant) for each product if no other variants exist" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+      p1.master.on_hand = 15
+      p2.master.on_hand = 12
+      p1.save!
+      p2.save!
+
+      visit '/admin/products/bulk_index'
+
+      page.should_not have_selector "span[name='master_on_hand']", text: "0"
+      page.should have_field "master_on_hand", with: "15"
+      page.should have_field "master_on_hand", with: "12"
+    end
+    
+    it "displays an on hand count in a span (for master variant) for each product if other variants exist" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 4)
+      p1.master.on_hand = 15
+      p2.master.on_hand = 12
+      p1.save!
+      p2.save!
+
+      visit '/admin/products/bulk_index'
+
+      page.should_not have_field "master_on_hand", with: "15"
+      page.should have_selector "span[name='master_on_hand']", text: "4"
+      page.should have_field "master_on_hand", with: "12"
+    end
   end
 
   scenario "create a new product" do
@@ -94,11 +125,12 @@ feature %q{
     page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
 
-  scenario "updating a product" do
+  scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
     p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
     p.master.price = 10.0
+    p.master.on_hand = 6;
     p.save!
 
     login_to_admin_section
@@ -109,11 +141,13 @@ feature %q{
     page.should have_select "supplier_id", selected: s1.name
     page.should have_field "available_on", with: p.available_on.strftime("%F %T")
     page.should have_field "master_price", with: "10.0"
+    page.should have_field "master_on_hand", with: "6"
 
     fill_in "product_name", with: "Big Bag Of Potatoes"
     select(s2.name, :from => 'supplier_id')
     fill_in "available_on", with: (Date.today-3).strftime("%F %T")
     fill_in "master_price", with: "20"
+    fill_in "master_on_hand", with: "18"
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
@@ -124,5 +158,30 @@ feature %q{
     page.should have_select "supplier_id", selected: s2.name
     page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
     page.should have_field "master_price", with: "20.0"
+    page.should have_field "master_on_hand", with: "18"
+  end
+  
+  scenario "updating a product mutiple times without refresh" do
+    p = FactoryGirl.create(:product, name: 'original name')
+    login_to_admin_section
+
+    visit '/admin/products/bulk_index'
+
+    page.should have_field "product_name", with: "original name"
+
+    fill_in "product_name", with: "new name 1"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    fill_in "product_name", with: "new name 2"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    fill_in "product_name", with: "original name"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
   end
 end 

@@ -11,13 +11,14 @@
 
 %div#new_product(data-hook)
 
-%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl' }
+%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => 'refreshSuppliers(); refreshProducts()' }
   %table.index#listing_products
     %thead
       %tr
         %th Name
         %th Supplier
         %th Price
+        %th On Hand
         %th Av. On
     %tbody{ 'ng-repeat' => 'product in products | filter:query' }
       %tr
@@ -27,6 +28,9 @@
           %select.select2{ :name => 'supplier_id', 'ng-model' => 'product.supplier_id', 'ng-options' => 's.id as s.name for s in suppliers' }
         %td
           %input{ 'ng-model' => 'product.master.price', 'ng-decimal' => :true, :name => 'master_price', :type => 'text' }
+        %td
+          %span{ 'ng-bind' => 'onHand(product)', :name => 'master_on_hand', 'ng-show' => 'product.variants.length > 0' }
+          %input.field{ 'ng-model' => 'product.master.on_hand', :name => 'master_on_hand', 'ng-show' => 'product.variants.length == 0', :type => 'number' }
         %td
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', :type => 'text' }
   %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}

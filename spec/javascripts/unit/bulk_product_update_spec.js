@@ -281,28 +281,61 @@ describe("AdminBulkProductsCtrl", function(){
 			scope = $rootScope.$new();
 			ctrl = $controller;
 			httpBackend = $httpBackend;
+
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		}));
 
-		it("gets a list of suppliers, a list of products and stores a clean list of products", function(){
+		it("gets a list of suppliers", function(){
 			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
-			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+			scope.refreshSuppliers();
 			httpBackend.flush();
 			expect(scope.suppliers).toEqual("list of suppliers");
+		});
+
+		it("gets a list of products and stores a clean list of products", function(){
+			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
+			scope.refreshProducts();
+			httpBackend.flush();
 			expect(scope.products).toEqual("list of products");
 			expect(scope.cleanProducts).toEqual("list of products");
 		});
 
 		it("does not affect clean products list when products list is altered", function(){
-			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
 			httpBackend.expectGET('/admin/products/bulk_index.json').respond( [1,2,3,4,5] );
-			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+			scope.refreshProducts();
 			httpBackend.flush();
 			expect(scope.products).toEqual( [1,2,3,4,5] );
 			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
 			scope.products.push(6);
 			expect(scope.products).toEqual( [1,2,3,4,5,6] );
 			expect(scope.cleanProducts).toEqual( [1,2,3,4,5] );
+		});
+	});
+	
+	describe("getting on_hand counts when products have variants", function(){		
+		var p1, p2, p3;
+		beforeEach(function(){
+			p1 = { variants: [ { on_hand: 1 }, { on_hand: 2 }, { on_hand: 3 } ] };
+			p2 = { variants: [ { not_on_hand: 1 }, { on_hand: 2 }, { on_hand: 3 } ] };
+			p3 = { not_variants: [ { on_hand: 1 }, { on_hand: 2 } ], variants: [ { on_hand: 3 } ] };
+		});
+
+		it("sums variant on_hand properties", function(){
+			expect(onHand(p1)).toEqual(6);r
+		});
+
+		it("ignores items in variants without an on_hand property (adds 0)", function(){
+			expect(onHand(p2)).toEqual(5);
+		});
+
+		it("ignores on_hand properties of objects in arrays which are not named 'variants' (adds 0)", function(){
+			expect(onHand(p3)).toEqual(3);
+		});
+
+		it("returns 'error' if not given an object with a variants property that is an array", function(){
+			expect( onHand([]) ).toEqual('error');
+			expect( onHand( { not_variants: [] } ) ).toEqual('error');
+			expect( onHand( { variants: {} } ) ).toEqual('error');
 		});
 	});
 
@@ -325,13 +358,12 @@ describe("AdminBulkProductsCtrl", function(){
 
 		describe("preparing products for submit",function(){
 			beforeEach(function(){
-				httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-				httpBackend.expectGET('/admin/products/bulk_index.json').respond( [1,2,3,4,5] );
 				ctrl('AdminBulkProductsCtrl', { $scope: scope } );
-				httpBackend.flush();
 				spyOn(window, "getDirtyObjects").andReturn( [ { id: 1, value: 1 }, { id:2, value: 2 } ] );
 				spyOn(window, "filterSubmitProducts").andReturn( [ { id: 1, value: 3 }, { id:2, value: 4 } ] );
 				spyOn(scope, "updateProducts");
+				scope.products = [1,2,3,4,5];
+				scope.cleanProducts = [1,2,3,4,5];
 				scope.prepareProductsForSubmit();
 			});
 
@@ -350,10 +382,7 @@ describe("AdminBulkProductsCtrl", function(){
 		
 		describe("updating products",function(){
 			beforeEach(function(){
-				httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-				httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
 				ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
-				httpBackend.flush();
 			});
 
 			it("submits products to be updated with a http post request to /admin/products/bulk_update", function(){
@@ -387,7 +416,7 @@ describe("AdminBulkProductsCtrl", function(){
 				scope.updateProducts("updated list of products");
 				httpBackend.flush();
 				expect(scope.displayFailure).toHaveBeenCalled();
-			});			
+			});
 		});
 	});
 

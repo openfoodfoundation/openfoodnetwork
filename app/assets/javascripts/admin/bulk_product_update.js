@@ -36,22 +36,25 @@ productsApp.directive('ngDecimal', function () {
 	}
 });
 
-productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http) {
+productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
 	$scope.refreshSuppliers = function(){
-		$http.get('/enterprises/suppliers.json').success(function(data) {
+		dataFetcher('/enterprises/suppliers.json').then(function(data){
 			$scope.suppliers = data;
 		});
 	};
 	
 	$scope.refreshProducts = function(){
-		$http({ method: 'GET', url:'/admin/products/bulk_index.json' }).success(function(data) {
+		dataFetcher('/admin/products/bulk_index.json').then(function(data){
 			$scope.products = angular.copy(data);
 			$scope.cleanProducts = angular.copy(data);
 		});
-	}
+	};
 	
-	$scope.refreshSuppliers();
-	$scope.refreshProducts();
+	//accessible from scope
+	$scope.onHand = function(products){
+		return onHand(products);
+	}
+
 	$scope.updateStatusMessage = {
 		text: "",
 		style: {}
@@ -66,6 +69,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		})
 		.success(function(data){
 			if (angular.toJson($scope.products) == angular.toJson(data)){
+				$scope.cleanProducts = angular.copy(data);
 				$scope.displaySuccess();
 			}
 			else{
@@ -103,6 +107,31 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		$scope.setMessage($scope.updateStatusMessage,"Updating failed. "+failMessage,{ color: "red" },10000);
 	}
 });
+
+productsApp.factory('dataFetcher', function($http,$q){
+	return function(dataLocation){
+		var deferred = $q.defer();
+		$http.get(dataLocation).success(function(data) {
+			deferred.resolve(data);
+		}).error(function(){
+			deferred.reject();
+		});
+		return deferred.promise;
+	};
+});
+
+function onHand(product){
+	var onHand = 0;
+	if(product.hasOwnProperty('variants') && product.variants instanceof Array){
+		angular.forEach(product.variants, function(variant) {
+			onHand = parseInt( onHand ) + parseInt( variant.on_hand > 0 ? variant.on_hand : 0 );
+		});
+	}
+	else{
+		onHand = 'error';
+	}
+	return onHand;
+}
 
 function sortByID(array){
 	var sortedArray = [];
