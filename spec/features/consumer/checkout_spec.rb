@@ -79,6 +79,42 @@ feature %q{
     page.should have_selector '#delivery-fees span.order-total', :text => '$3.00'
   end
 
+  scenario "changing distributor updates delivery fees" do
+    # Given two distributors and shipping methods
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    sm1 = create(:shipping_method)
+    sm1.calculator.set_preference :amount, 1.23; sm1.calculator.save!
+    sm2 = create(:free_shipping_method)
+    sm2.calculator.set_preference :amount, 2.34; sm2.calculator.save!
+
+    # And two products both available from both distributors
+    p1 = create(:product)
+    create(:product_distribution, product: p1, distributor: d1, shipping_method: sm1)
+    create(:product_distribution, product: p1, distributor: d2, shipping_method: sm2)
+    p2 = create(:product)
+    create(:product_distribution, product: p2, distributor: d1, shipping_method: sm1)
+    create(:product_distribution, product: p2, distributor: d2, shipping_method: sm2)
+
+    # When I add the first product to my cart with the first distributor
+    #visit spree.root_path
+    login_to_consumer_section
+    click_link p1.name
+    select d1.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see shipping costs for the first distributor
+    page.should have_selector 'span.shipping-total', text: '$1.23'
+
+    # When add the second with the second distributor
+    click_link 'Continue shopping'
+    click_link p2.name
+    select d2.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see shipping costs for the second distributor
+    page.should have_selector 'span.shipping-total', text: '$4.68'
+  end
 
   scenario "buying a product", :js => true do
     login_to_consumer_section
@@ -143,4 +179,5 @@ feature %q{
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
   end
+
 end

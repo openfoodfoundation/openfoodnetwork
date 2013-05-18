@@ -73,6 +73,7 @@ feature "enterprises distributor info as rich text" do
 
     # -- Purchase email
     complete_purchase_from_checkout_address_page
+    wait_until { ActionMailer::Base.deliveries.length == 1 }
     ActionMailer::Base.deliveries.length.should == 1
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
