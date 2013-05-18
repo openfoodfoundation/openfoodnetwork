@@ -11,8 +11,7 @@
   <div class="columns alpha six">
     <h6><%= "Distributor Details" %> <%# link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
     <div class="address">
-      Distributor: <%= order.distributor.name %><br />
-	  Address: <%= order.distributor.address.address1 + ", " + order.distributor.address.city %>
+      <%= render 'enterprises/distributor_details', :distributor => order.distributor %>
     </div>
   </div>
 
