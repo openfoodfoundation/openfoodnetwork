@@ -40,7 +40,7 @@ Spree::Order.class_eval do
   end
   
   def line_item_variants
-    line_items.map{ |li| li.variant }
+    line_items.map { |li| li.variant }
   end
 
 

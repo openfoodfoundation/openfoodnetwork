@@ -50,7 +50,7 @@ class Enterprise < ActiveRecord::Base
   end
   
   def distributed_variants
-    Spree::Product.in_distributor(self).map { |product| product.variants + [product.master] }.flatten
+    Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end
 
 

@@ -11,7 +11,7 @@ class DistributionChangeValidator
 
   def can_change_to_distributor? distributor
     # Distributor may not be changed once an item has been added to the cart/order, unless all items are available from the specified distributor
-    @order.line_items.empty? || (available_distributors(Enterprise.all) || []).include?(distributor)
+    @order.line_items.empty? || all_available_distributors.include?(distributor)
   end
 
   def product_compatible_with_current_order(product)
@@ -26,6 +26,10 @@ class DistributionChangeValidator
     end
 
     distributors
+  end
+
+  def all_available_distributors
+    @all_available_distributors ||= (available_distributors(Enterprise.all) || [])
   end
 
   def available_distributors enterprises
