@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature %q{
     As a consumer
-    I want select a distributor for collection
+    I want to select a distributor for collection
     So that I can pick up orders from the closest possible location
 } do
   include AuthenticationWorkflow
@@ -114,6 +114,27 @@ feature %q{
 
     # Then I should see shipping costs for the second distributor
     page.should have_selector 'span.shipping-total', text: '$4.68'
+  end
+
+  scenario "adding a product to cart after emptying cart shows correct delivery fees" do
+    # When I add a product to my cart
+    login_to_consumer_section
+    click_link @product_1.name
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see the correct delivery fee
+    page.should have_selector 'span.grand-total', text: '$20.99'
+
+    # When I empty my cart and add the product again
+    click_button 'Empty Cart'
+    click_link 'Continue shopping'
+    click_link @product_1.name
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see the correct delivery fee
+    page.should have_selector 'span.grand-total', text: '$20.99'
   end
 
   scenario "buying a product", :js => true do
