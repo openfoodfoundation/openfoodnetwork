@@ -27,9 +27,9 @@ class Enterprise < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
-  
+
   def available_variants
-    ProductDistribution.find_all_by_distributor_id( self.id ).map{ |pd| pd.product.variants + [pd.product.master] }.flatten
+    Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
 
