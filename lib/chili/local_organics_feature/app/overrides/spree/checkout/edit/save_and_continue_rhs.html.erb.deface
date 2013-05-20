@@ -1,0 +1,4 @@
+<!-- insert_after "[data-hook='checkout_summary_box']" -->
+<div class="form-buttons columns omega four" data-hook="buttons">
+  <%= submit_tag t(:save_and_continue), :class => 'continue button primary' %>
+</div>

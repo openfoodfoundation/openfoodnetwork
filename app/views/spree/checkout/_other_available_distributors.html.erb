@@ -1,5 +1,5 @@
 <% unless @order.state != 'address' %>
-<div class="columns omega four" style="padding-top: 30px">
+<div class="columns omega four alternative-available-distributors">
   <% unless alternative_available_distributors(@order).empty? %>
     <%= form_for(@order) do |f| %>
       <%= f.label :distributor_label, "Alternative distributors for this order:" %>
