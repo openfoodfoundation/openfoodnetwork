@@ -3,6 +3,31 @@ Spree::OrdersController.class_eval do
   before_filter :populate_order_count_on_hand,  :only => :populate
   after_filter  :populate_variant_attributes, :only => :populate
 
+  def select_distributor
+    distributor = Enterprise.is_distributor.find params[:id]
+
+    order = current_order(true)
+    order.distributor = distributor
+    order.save!
+
+    redirect_to main_app.enterprise_path(distributor)
+  end
+
+  def deselect_distributor
+    order = current_order(true)
+
+    order.distributor = nil
+    order.save!
+
+    redirect_to root_path
+  end
+
+
+  private
+
+
+  # -- Callbacks
+
   def populate_order_distributor
     @distributor = params[:distributor_id].present? ? Enterprise.is_distributor.find(params[:distributor_id]) : nil
 
@@ -49,26 +74,8 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  def select_distributor
-    distributor = Enterprise.is_distributor.find params[:id]
 
-    order = current_order(true)
-    order.distributor = distributor
-    order.save!
-
-    redirect_to main_app.enterprise_path(distributor)
-  end
-
-  def deselect_distributor
-    order = current_order(true)
-
-    order.distributor = nil
-    order.save!
-
-    redirect_to root_path
-  end
-
-  private
+  # -- Utils
 
   def populate_valid? distributor
     # -- Distributor must be specified
