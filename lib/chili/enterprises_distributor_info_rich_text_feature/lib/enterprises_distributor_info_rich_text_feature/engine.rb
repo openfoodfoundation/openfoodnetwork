@@ -5,6 +5,8 @@ module EnterprisesDistributorInfoRichTextFeature
     initializer 'enterprises_distributor_info_rich_text_feature.mailer', :after => :load_config_initializers do |app|
       if ENV['OFW_DEPLOYMENT'] == 'local_organics'
         ::Spree::OrderMailer.class_eval do
+          helper FeatureHelper
+
           def confirm_email(order, resend = false)
             @order = order
             subject = (resend ? "[#{t(:resend).upcase}] " : '')

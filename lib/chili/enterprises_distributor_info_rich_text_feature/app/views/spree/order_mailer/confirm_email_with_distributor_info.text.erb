@@ -26,7 +26,7 @@ Payment Details
 ============================================================
 Collection / Delivery Details
 ============================================================
-<%= strip_tags @order.distributor.distributor_info %>
+<%= raw strip_html @order.distributor.distributor_info %>
 <%= @order.distributor.next_collection_at %>
 
-Thank you for your business.
+Thank you for your support.
