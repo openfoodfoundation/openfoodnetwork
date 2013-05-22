@@ -1,11 +1,4 @@
 %nav#filters
-  %h6.filter_name Shop by Supplier
-  %ul.filter_choices
-    - @suppliers.each do |supplier|
-      - if supplier.has_supplied_products_on_hand?
-        %li.nowrap= link_to supplier.name, [main_app, supplier]
-    = button_to 'Browse All Suppliers', main_app.suppliers_enterprises_path, :method => :get
-
   %h6.filter_name Shop by Distributor
   %ul.filter_choices
     - order = current_order(false)
@@ -18,5 +11,18 @@
           = link_to distributor.name, [main_app, distributor]
         - else
           %abbr(title="One or more of the products in your cart is not available from this distributor")= distributor.name
+    - if @distributor_count > @distributors.count
+      - distributors_more = @distributors.count - @distributor_count
+      = "#{distributors_more} more..."
   - if current_distributor && validator.can_change_distributor?
     = button_to 'Browse All Distributors', deselect_distributor_orders_path, :method => :get
+
+  %h6.filter_name Shop by Supplier
+  %ul.filter_choices
+    - @suppliers.each do |supplier|
+      -# - if supplier.has_supplied_products_on_hand? -#d.cook: this is filtered in the controller now
+      %li.nowrap= link_to supplier.name, [main_app, supplier]
+    - if @supplier_count > @suppliers.count
+      - suppliers_more = @suppliers.count - @supplier_count
+      = "#{suppliers_more} more..."
+    = button_to 'Browse All Suppliers', main_app.suppliers_enterprises_path, :method => :get

@@ -10,8 +10,10 @@ class ApplicationController < ActionController::Base
   end
 
   def load_data_for_sidebar
-    @suppliers = Enterprise.is_primary_producer
-    @distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name
+    @suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(5)
+    @supplier_count = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.count
+    @distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(5)
+    @distributor_count = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.count
   end
 
   # All render calls within the block will be performed with the specified format

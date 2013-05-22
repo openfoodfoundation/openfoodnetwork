@@ -29,6 +29,18 @@ describe Enterprise do
 
       Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
     end
+    
+    it "returns suppliers with products in stock" do
+      d1 = create(:supplier_enterprise)
+      d2 = create(:supplier_enterprise)
+      d3 = create(:supplier_enterprise)
+      d4 = create(:supplier_enterprise)
+      create(:product, :supplier => d1, :on_hand => 5)
+      create(:product, :supplier => d2, :on_hand => 5, :available_on => 1.week.from_now)
+      create(:product, :supplier => d3, :on_hand => 0)
+      # supplier with no products, supplier with product out of stock, suplier with product thats unavailable, supplier with active product on hand
+      Enterprise.with_supplied_active_products_on_hand.sort.should == [d1]
+    end
   end
 
   context "has_supplied_products_on_hand?" do
