@@ -30,4 +30,3 @@ config/abr.yml
 config/heroku_env.rb
 NERD_tree*
 coverage
-config/database.yml
