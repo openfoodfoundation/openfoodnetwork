@@ -64,43 +64,82 @@ feature %q{
       order.distributor.should == d1
     end
 
-    it "does not allow the user to change distributor after a product has been added to the cart" do
-      # Given a product and some distributors
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
-      p = create(:product, :distributors => [d1])
-
-      # When I add a product to my cart (which sets my distributor)
-      visit spree.product_path p
-      select d1.name, :from => 'distributor_id'
-      click_button 'Add To Cart'
-      page.should have_content "You are shopping at #{d1.name}"
-
-      # Then I should not be able to change distributor
-      visit spree.root_path
-      page.should_not have_selector "a[href*='select']", :text => d1.name
-      page.should_not have_selector "a[href*='select']", :text => d2.name
-      page.should_not have_selector "a", :text => 'Leave distributor'
-    end
-
     context "adding a subsequent product to the cart" do
-      it "does not allow the user to choose a distributor" do
-        # Given a product under a distributor
-        d = create(:distributor_enterprise)
-        p = create(:product, :distributors => [d])
+      it "when there are several valid distributors, allows a choice from these options" do
+        # Given two products, both distributed by two distributors
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product, :distributors => [d1, d2])
+        p2 = create(:product, :distributors => [d1, d2])
 
-        # And a product in my cart
-        visit spree.product_path p
+        # When I add the first to my cart via d1
+        visit spree.product_path p1
+        select d1.name, :from => 'distributor_id'
+        click_button 'Add To Cart'
+
+        # And I go to add the second, I should have a choice of distributor
+        visit spree.product_path p2
+        page.should have_selector '#distributor_id option', :text => d1.name
+        page.should have_selector '#distributor_id option', :text => d2.name
+
+        # When I add the second, both should be in my cart, and my distributor should be the one chosen second
+        select d2.name, :from => 'distributor_id'
+        click_button 'Add To Cart'
+        visit spree.cart_path
+        page.should have_selector 'h4 a', :text => p1.name
+        page.should have_selector 'h4 a', :text => p2.name
+        page.should have_selector "#current-distributor a", :text => d2.name
+      end
+
+      it "when the only valid distributor is the chosen one, does not allow the user to choose a distributor" do
+        # Given two products, each at the same distributor
+        d = create(:distributor_enterprise)
+        p1 = create(:product, :distributors => [d])
+        p2 = create(:product, :distributors => [d])
+
+        # When I add the first to my cart
+        visit spree.product_path p1
         select d.name, :from => 'distributor_id'
         click_button 'Add To Cart'
 
-        # When I go to add it again, I should not have a choice of distributor
-        visit spree.product_path p
+        # And I go to add the second, I should not have a choice of distributor
+        visit spree.product_path p2
         page.should_not have_selector 'select#distributor_id'
         page.should     have_selector '.distributor-fixed', :text => "Your distributor for this order is #{d.name}"
+
+        # When I add the second, both should be in my cart
+        click_button 'Add To Cart'
+        visit spree.cart_path
+        page.should have_selector 'h4 a', :text => p1.name
+        page.should have_selector 'h4 a', :text => p2.name
       end
 
-      it "does not allow the user to add a product from another distributor" do
+      it "when the only valid distributor differs from the chosen one, alerts the user and changes distributor on add to cart" do
+        # Given two products, one available at only one distributor
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product, :distributors => [d1, d2])
+        p2 = create(:product, :distributors => [d2])
+
+        # When I add the first to my cart
+        visit spree.product_path p1
+        select d1.name, from: 'distributor_id'
+        click_button 'Add To Cart'
+
+        # And I go to add the second
+        visit spree.product_path p2
+
+        # Then I should see a message offering to change distributor for my order
+        page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
+
+        # When I add the second to my cart
+        click_button 'Add To Cart'
+
+        # Then My distributor should have changed
+        page.should have_selector "#current-distributor a", :text => d2.name
+      end
+
+      it "does not allow the user to add a product from a distributor that cannot supply the cart's products" do
         # Given two products, each at a different distributor
         d1 = create(:distributor_enterprise)
         d2 = create(:distributor_enterprise)
@@ -118,27 +157,6 @@ feature %q{
         # Then I should not be allowed to add the product
         page.should_not have_selector "button#add-to-cart-button"
         page.should have_content "Please complete your order at #{d1.name} before shopping with another distributor."
-      end
-
-      it "adds products with valid distributors" do
-        # Given two products, each at the same distributor
-        d = create(:distributor_enterprise)
-        p1 = create(:product, :distributors => [d])
-        p2 = create(:product, :distributors => [d])
-
-        # When I add the first to my cart
-        visit spree.product_path p1
-        select d.name, :from => 'distributor_id'
-        click_button 'Add To Cart'
-
-        # And I add the second
-        visit spree.product_path p2
-        click_button 'Add To Cart'
-
-        # Then both should be in my cart
-        visit spree.cart_path
-        page.should have_selector 'h4 a', :text => p1.name
-        page.should have_selector 'h4 a', :text => p2.name
       end
     end
   end
@@ -193,7 +211,7 @@ feature %q{
       click_button 'Add To Cart'
 
       # Then My distributor should have changed
-      page.should have_selector "#current-distributor a", :text => d2.name.upcase
+      page.should have_selector "#current-distributor a", :text => d2.name
     end
   end
 
