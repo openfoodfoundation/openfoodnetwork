@@ -3,7 +3,8 @@ require 'open_food_web/distributor_change_validator'
 describe DistributorChangeValidator do
   let(:order) { double(:order) }
   let(:subject) { DistributorChangeValidator.new(order) }
-  
+  let(:product) { double(:product) }
+
   context "permissions for changing distributor" do
     it "allows distributor to be changed if line_items is empty" do
       order.stub(:line_items) { [] }
@@ -82,6 +83,49 @@ describe DistributorChangeValidator do
     
     it "matches no enterprises when none are provided" do
       subject.available_distributors([]).should == []
+    end
+  end
+
+  describe "checking product compatibility with current order" do
+    it "returns true when order is nil" do
+      subject = DistributorChangeValidator.new(nil)
+      subject.product_compatible_with_current_order(product).should be_true
+    end
+
+    it "returns true when there's an distributor that can cover the new product" do
+      subject.stub(:available_distributors_for).and_return([1])
+      subject.product_compatible_with_current_order(product).should be_true
+    end
+
+    it "returns false when there's no distributor that can cover the new product" do
+      subject.stub(:available_distributors_for).and_return([])
+      subject.product_compatible_with_current_order(product).should be_false
+    end
+  end
+
+  describe "finding available distributors for a product" do
+    it "returns enterprises distributing the product when there's no order" do
+      subject = DistributorChangeValidator.new(nil)
+      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_distributors).never
+
+      subject.available_distributors_for(product).should == [1, 2, 3]
+    end
+
+    it "returns enterprises distributing the product when there's no order items" do
+      order.stub(:line_items) { [] }
+      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_distributors).never
+
+      subject.available_distributors_for(product).should == [1, 2, 3]
+    end
+
+    it "filters by available distributors when there are order items" do
+      order.stub(:line_items) { [1, 2, 3] }
+      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_distributors).and_return([2])
+
+      subject.available_distributors_for(product).should == [2]
     end
   end
 end

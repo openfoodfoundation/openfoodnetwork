@@ -4,16 +4,10 @@ module AddToCartHelper
   end
 
   def product_incompatible_with_current_order(order, product)
-    order.present? && available_distributors_for(order, product).empty?
+    !DistributorChangeValidator.new(order).product_compatible_with_current_order(product)
   end
 
   def available_distributors_for(order, product)
-    distributors = Enterprise.distributing_product(product)
-
-    if order && order.distributor
-      distributors = DistributorChangeValidator.new(order).available_distributors(distributors)
-    end
-
-    distributors
+    DistributorChangeValidator.new(order).available_distributors_for(product)
   end
 end
