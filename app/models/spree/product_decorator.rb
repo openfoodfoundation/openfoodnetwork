@@ -61,10 +61,20 @@ Spree::Product.class_eval do
     self.class.in_order_cycle(order_cycle).include? self
   end
 
+  # This method is called on products that are distributed via order cycles, but at the time of
+  # writing (27-5-2013), order cycle fees were not implemented, so there's no defined result
+  # that this method should return. As a stopgap, we notify Bugsnag of the situation and return
+  # an undefined, but valid shipping method. When order cycle fees are implemented, this method
+  # should return the order cycle shipping method, or raise an exepction with the message,
+  # "This product is not available through that distributor".
   def shipping_method_for_distributor(distributor)
     distribution = self.product_distributions.find_by_distributor_id(distributor)
-    raise ArgumentError, "This product is not available through that distributor" unless distribution
-    distribution.shipping_method
+
+    unless distribution
+      Bugsnag.notify(Exception.new "No product distribution for product #{id} at distributor #{distributor.id}. Perhaps this product is distributed via an order cycle? This is a warning that OrderCycle fees and shipping methods are not yet implemented, and the shipping fee charged is undefined until then.")
+    end
+
+    distribution.andand.shipping_method || Spree::ShippingMethod.where("name != 'Delivery'").last
   end
 
 

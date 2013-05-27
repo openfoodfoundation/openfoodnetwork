@@ -11,6 +11,15 @@ ProductDistribution.class_eval do
   end
 end
 
+Spree::Product.class_eval do
+  before_validation :init_shipping_method
+
+  def init_shipping_method
+    FactoryGirl.create(:shipping_method) if Spree::ShippingMethod.where("name != 'Delivery'").empty?
+  end
+
+end
+
 # Create a default shipping method, required when creating orders
 Spree::Order.class_eval do
   before_create :init_shipping_method

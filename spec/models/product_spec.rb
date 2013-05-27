@@ -144,12 +144,14 @@ module Spree
         product.shipping_method_for_distributor(distributor).should == shipping_method
       end
 
-      it "raises an error if distributor is not found" do
+      it "logs an error and returns an undefined shipping method if distributor is not found" do
         distributor = create(:distributor_enterprise)
         product = create(:product)
-        expect do
-          product.shipping_method_for_distributor(distributor)
-        end.to raise_error "This product is not available through that distributor"
+
+        Bugsnag.should_receive(:notify)
+
+        product.shipping_method_for_distributor(distributor).should ==
+          Spree::ShippingMethod.where("name != 'Delivery'").last
       end
     end
 
