@@ -1,0 +1,2 @@
+%div Distributor for your order:
+= select_tag "distributor_id", options_from_collection_for_select([Enterprise.new]+distributor_collection, "id", "name", current_distributor.andand.id)
