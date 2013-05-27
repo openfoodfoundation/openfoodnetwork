@@ -100,12 +100,12 @@ Spree::OrdersController.class_eval do
     # -- All products must be available under that distributor
     params[:products].each do |product_id, variant_id|
       product = Spree::Product.find product_id
-      return false unless product.distributors.include? distributor
+      return false unless Enterprise.distributing_product(product).include? distributor
     end if params[:products]
 
     params[:variants].each do |variant_id, quantity|
       variant = Spree::Variant.find variant_id
-      return false unless variant.product.distributors.include? distributor
+      return false unless Enterprise.distributing_product(variant.product).include? distributor
     end if params[:variants]
 
     # -- If products in cart, distributor can't be changed

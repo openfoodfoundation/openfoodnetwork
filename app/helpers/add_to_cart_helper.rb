@@ -4,7 +4,7 @@ module AddToCartHelper
   end
 
   def product_incompatible_with_current_order(order, product)
-    !order.nil? && !DistributorChangeValidator.new(order).can_change_distributor? && !Enterprise.distributing_product(product).include?(order.distributor)
+    order.present? && available_distributors_for(order, product).empty?
   end
 
   def available_distributors_for(order, product)

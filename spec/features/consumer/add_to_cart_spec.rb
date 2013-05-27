@@ -141,6 +141,60 @@ feature %q{
     end
   end
 
+  context "with distribution via order cycle" do
+    it "allows us to add two products from the same distributor" do
+      # Given two products, each at the same distributor
+      d = create(:distributor_enterprise)
+      p1 = create(:product)
+      p2 = create(:product)
+      create(:simple_order_cycle, :distributors => [d], :variants => [p1.master, p2.master])
+
+      # When I add the first to my cart
+      visit spree.product_path p1
+      select d.name, :from => 'distributor_id'
+      click_button 'Add To Cart'
+
+      # And I add the second
+      visit spree.product_path p2
+      click_button 'Add To Cart'
+
+      # Then both should be in my cart
+      visit spree.cart_path
+      page.should have_selector 'h4 a', :text => p1.name
+      page.should have_selector 'h4 a', :text => p2.name
+    end
+
+    it "offers to automatically change distributors when there is only one choice", js: true do
+      # Given two products, one available at only one distributor
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
+      p1 = create(:product)
+      p2 = create(:product)
+      create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+      create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
+
+      # p1 - available at both, select d1
+      # p2 - available at the one not selected
+
+      # When I add the first to my cart
+      visit spree.product_path p1
+      select d1.name, from: 'distributor_id'
+      click_button 'Add To Cart'
+
+      # And I go to add the second
+      visit spree.product_path p2
+
+      # Then I should see a message offering to change distributor for my order
+      page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
+
+      # When I add the second to my cart
+      click_button 'Add To Cart'
+
+      # Then My distributor should have changed
+      page.should have_selector "#current-distributor a", :text => d2.name.upcase
+    end
+  end
+
   context "group buys" do
     scenario "adding a product to the cart for a group buy" do
       # Given a group buy product and a distributor
