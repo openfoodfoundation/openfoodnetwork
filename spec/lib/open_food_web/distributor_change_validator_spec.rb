@@ -10,8 +10,15 @@ describe DistributorChangeValidator do
       subject.can_change_distributor?.should be_true
     end
     
-    it "does not allow distributor to be changed if line_items is not empty" do
+    it "allows distributor to be changed if there are multiple available distributors" do
       order.stub(:line_items) { [1, 2, 3] }
+      subject.stub(:available_distributors).and_return([1, 2])
+      subject.can_change_distributor?.should be_true
+    end
+
+    it "does not allow distributor to be changed if there are no other available distributors" do
+      order.stub(:line_items) { [1, 2, 3] }
+      subject.stub(:available_distributors).and_return([1])
       subject.can_change_distributor?.should be_false
     end
   end
