@@ -28,6 +28,17 @@ class DistributionChangeValidator
     distributors
   end
 
+  def available_order_cycles_for(product)
+    order_cycles = OrderCycle.distributing_product(product)
+
+    if @order.andand.line_items.present?
+      order_cycles = available_order_cycles(order_cycles)
+    end
+
+    order_cycles
+  end
+
+
   def all_available_distributors
     @all_available_distributors ||= (available_distributors(Enterprise.all) || [])
   end

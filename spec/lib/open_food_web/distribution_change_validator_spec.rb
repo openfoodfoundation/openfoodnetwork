@@ -128,4 +128,30 @@ describe DistributionChangeValidator do
       subject.available_distributors_for(product).should == [2]
     end
   end
+
+  describe "finding available order cycles for a product" do
+    it "returns order cycles distributing the product when there's no order" do
+      subject = DistributionChangeValidator.new(nil)
+      OrderCycle.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_order_cycles).never
+
+      subject.available_order_cycles_for(product).should == [1, 2, 3]
+    end
+
+    it "returns order cycles distributing the product when there's no order items" do
+      order.stub(:line_items) { [] }
+      OrderCycle.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_order_cycles).never
+
+      subject.available_order_cycles_for(product).should == [1, 2, 3]
+    end
+
+    it "filters by available order cycles when there are order items" do
+      order.stub(:line_items) { [1, 2, 3] }
+      OrderCycle.stub(:distributing_product).and_return([1, 2, 3])
+      subject.should_receive(:available_order_cycles).and_return([2])
+
+      subject.available_order_cycles_for(product).should == [2]
+    end
+  end
 end
