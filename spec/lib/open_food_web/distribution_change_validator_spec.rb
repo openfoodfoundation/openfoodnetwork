@@ -25,58 +25,47 @@ describe DistributionChangeValidator do
   end
   
   context "finding distributors which have the same variants" do
+    let(:variant1) { double(:variant) }
+    let(:variant2) { double(:variant) }
+    let(:variant3) { double(:variant) }
+    let(:variant4) { double(:variant) }
+    let(:variant5) { double(:variant) }
+
     it "matches enterprises which offer all products within the order" do
-      variant1 = double(:variant)
-      variant2 = double(:variant)
-      variant3 = double(:variant)
-      variant5 = double(:variant)
       line_item_variants = [variant1, variant3, variant5]
-      order.stub(:line_item_variants){ line_item_variants }
+      order.stub(:line_item_variants) { line_item_variants }
       enterprise = double(:enterprise)
-      enterprise.stub(:distributed_variants){ line_item_variants } # Exactly the same variants as the order
+      enterprise.stub(:distributed_variants) { line_item_variants } # Exactly the same variants as the order
 
       subject.available_distributors([enterprise]).should == [enterprise]
     end
 
     it "does not match enterprises with no products available" do
-      variant1 = double(:variant)
-      variant3 = double(:variant)
-      variant5 = double(:variant)
       line_item_variants = [variant1, variant3, variant5]
-      order.stub(:line_item_variants){ line_item_variants }
+      order.stub(:line_item_variants) { line_item_variants }
       enterprise = double(:enterprise)
-      enterprise.stub(:distributed_variants){ [] } # No variants
+      enterprise.stub(:distributed_variants) { [] } # No variants
 
       subject.available_distributors([enterprise]).should_not include enterprise
     end
 
     it "does not match enterprises with only some of the same variants in the order available" do
-      variant1 = double(:variant)
-      variant2 = double(:variant)
-      variant3 = double(:variant)
-      variant4 = double(:variant)
-      variant5 = double(:variant)
       line_item_variants = [variant1, variant3, variant5]
-      order.stub(:line_item_variants){ line_item_variants }
+      order.stub(:line_item_variants) { line_item_variants }
       enterprise_with_some_variants = double(:enterprise)
-      enterprise_with_some_variants.stub(:distributed_variants){ [variant1, variant3] } # Only some variants
+      enterprise_with_some_variants.stub(:distributed_variants) { [variant1, variant3] } # Only some variants
       enterprise_with_some_plus_extras = double(:enterprise)
-      enterprise_with_some_plus_extras.stub(:distributed_variants){ [variant1, variant2, variant3, variant4] } # Only some variants, plus extras
+      enterprise_with_some_plus_extras.stub(:distributed_variants) { [variant1, variant2, variant3, variant4] } # Only some variants, plus extras
       
       subject.available_distributors([enterprise_with_some_variants]).should_not include enterprise_with_some_variants
       subject.available_distributors([enterprise_with_some_plus_extras]).should_not include enterprise_with_some_plus_extras
     end
 
-    it "matches enteprises which offer all products in the order, plus additional products" do
-      variant1 = double(:variant)
-      variant2 = double(:variant)
-      variant3 = double(:variant)
-      variant4 = double(:variant)
-      variant5 = double(:variant)
+    it "matches enterprises which offer all products in the order, plus additional products" do
       line_item_variants = [variant1, variant3, variant5]
-      order.stub(:line_item_variants){ line_item_variants }
+      order.stub(:line_item_variants) { line_item_variants }
       enterprise = double(:enterprise)
-      enterprise.stub(:distributed_variants){ [variant1, variant2, variant3, variant4, variant5] } # Excess variants
+      enterprise.stub(:distributed_variants) { [variant1, variant2, variant3, variant4, variant5] } # Excess variants
       
       subject.available_distributors([enterprise]).should == [enterprise]
     end
