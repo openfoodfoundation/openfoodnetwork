@@ -33,6 +33,7 @@ Spree::OrdersController.class_eval do
     if populate_valid? @distributor
       order = current_order(true)
       order.set_distributor! @distributor
+      order.set_order_cycle! @order_cycle
 
     else
       if populate_order_cycle_required

@@ -13,6 +13,8 @@
     %div.cleared
       %br
       - available_distributors = available_distributors_for(order, @product)
+      - available_order_cycles = available_order_cycles_for(order, @product)
+
       - if available_distributors.length > 1 || order.andand.distributor.nil?
         = render 'add_to_cart_distributor_choice', distributor_collection: available_distributors
 
@@ -20,6 +22,9 @@
         - distributor = available_distributors.first
         - changing_distributor = distributor != order.andand.distributor
         = render 'add_to_cart_distributor_fixed', distributor: distributor, changing_distributor: changing_distributor
+
+
+      = render 'add_to_cart_order_cycle_choice', order_cycle_collection: available_order_cycles
 
     %br
     = button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do

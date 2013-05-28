@@ -10,4 +10,9 @@ module AddToCartHelper
   def available_distributors_for(order, product)
     DistributionChangeValidator.new(order).available_distributors_for(product)
   end
+
+  def available_order_cycles_for(order, product)
+    DistributionChangeValidator.new(order).available_order_cycles_for(product)
+  end
+
 end

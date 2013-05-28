@@ -182,6 +182,34 @@ feature %q{
       Spree::Order.last.should be_nil
     end
 
+    scenario "adding the first product to the cart" do
+      # Given a product and some distributors
+      d = create(:distributor_enterprise)
+      p = create(:product, :price => 12.34)
+      oc = create(:simple_order_cycle, :distributors => [d], :variants => [p.master])
+
+      # When I add an item to my cart
+      visit spree.product_path p
+      select d.name, :from => 'distributor_id'
+      select oc.name, :from => 'order_cycle_id'
+      click_button 'Add To Cart'
+
+      # Then the correct totals should be displayed
+      page.should have_selector 'span.item-total', :text => '$12.34'
+
+      # TODO: Test these when order cycle fees is implemented
+      # page.should have_selector 'span.shipping-total', :text => '$1.23'
+      # page.should have_selector 'span.grand-total', :text => '$13.57'
+
+      # And the item should be in my cart
+      order = Spree::Order.last
+      line_item = order.line_items.first
+      line_item.product.should == p
+
+      # And my order should have its distributor and order cycle set to the chosen ones
+      order.distributor.should == d
+      order.order_cycle.should == oc
+    end
 
     it "allows us to add two products from the same distributor" do
       # Given two products, each at the same distributor
