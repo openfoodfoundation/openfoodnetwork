@@ -75,6 +75,57 @@ describe DistributionChangeValidator do
     end
   end
 
+  context "finding order cycles which have the same variants" do
+    let(:variant1) { double(:variant) }
+    let(:variant2) { double(:variant) }
+    let(:variant3) { double(:variant) }
+    let(:variant4) { double(:variant) }
+    let(:variant5) { double(:variant) }
+
+    it "matches order cycles which offer all products within the order" do
+      line_item_variants = [variant1, variant3, variant5]
+      order.stub(:line_item_variants) { line_item_variants }
+      order_cycle = double(:order_cycle)
+      order_cycle.stub(:distributed_variants) { line_item_variants } # Exactly the same variants as the order
+
+      subject.available_order_cycles([order_cycle]).should == [order_cycle]
+    end
+
+    it "does not match order cycles with no products available" do
+      line_item_variants = [variant1, variant3, variant5]
+      order.stub(:line_item_variants) { line_item_variants }
+      order_cycle = double(:order_cycle)
+      order_cycle.stub(:distributed_variants) { [] } # No variants
+
+      subject.available_order_cycles([order_cycle]).should_not include order_cycle
+    end
+
+    it "does not match order cycles with only some of the same variants in the order available" do
+      line_item_variants = [variant1, variant3, variant5]
+      order.stub(:line_item_variants) { line_item_variants }
+      order_cycle_with_some_variants = double(:order_cycle)
+      order_cycle_with_some_variants.stub(:distributed_variants) { [variant1, variant3] } # Only some variants
+      order_cycle_with_some_plus_extras = double(:order_cycle)
+      order_cycle_with_some_plus_extras.stub(:distributed_variants) { [variant1, variant2, variant3, variant4] } # Only some variants, plus extras
+
+      subject.available_order_cycles([order_cycle_with_some_variants]).should_not include order_cycle_with_some_variants
+      subject.available_order_cycles([order_cycle_with_some_plus_extras]).should_not include order_cycle_with_some_plus_extras
+    end
+
+    it "matches order cycles which offer all products in the order, plus additional products" do
+      line_item_variants = [variant1, variant3, variant5]
+      order.stub(:line_item_variants) { line_item_variants }
+      order_cycle = double(:order_cycle)
+      order_cycle.stub(:distributed_variants) { [variant1, variant2, variant3, variant4, variant5] } # Excess variants
+
+      subject.available_order_cycles([order_cycle]).should == [order_cycle]
+    end
+
+    it "matches no order cycles when none are provided" do
+      subject.available_order_cycles([]).should == []
+    end
+  end
+
   describe "checking product compatibility with current order" do
     it "returns true when order is nil" do
       subject = DistributionChangeValidator.new(nil)

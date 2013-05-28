@@ -48,4 +48,10 @@ class DistributionChangeValidator
       (@order.line_item_variants - e.distributed_variants).empty?
     end
   end
+
+  def available_order_cycles order_cycles
+    order_cycles.select do |oc|
+      (@order.line_item_variants - oc.distributed_variants).empty?
+    end
+  end
 end
