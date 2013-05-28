@@ -17,14 +17,17 @@
 
       - if available_distributors.length > 1 || order.andand.distributor.nil?
         = render 'add_to_cart_distributor_choice', distributor_collection: available_distributors
-
       - else
         - distributor = available_distributors.first
         - changing_distributor = distributor != order.andand.distributor
         = render 'add_to_cart_distributor_fixed', distributor: distributor, changing_distributor: changing_distributor
 
-
-      = render 'add_to_cart_order_cycle_choice', order_cycle_collection: available_order_cycles
+      - if available_order_cycles.length > 1 || order.andand.order_cycle.nil?
+        = render 'add_to_cart_order_cycle_choice', order_cycle_collection: available_order_cycles
+      - else
+        - order_cycle = available_order_cycles.first
+        - changing_order_cycle = order_cycle != order.andand.order_cycle
+        = render 'add_to_cart_order_cycle_fixed', order_cycle: order_cycle, changing_order_cycle: changing_order_cycle
 
     %br
     = button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do

@@ -247,6 +247,35 @@ feature %q{
         page.should have_selector "#current-distribution a", :text => d2.name
         page.should have_selector "#current-distribution a", :text => oc2.name
       end
+
+      it "when the only valid order cycle is the chosen one, does not allow the user to choose an order cycle" do
+        # Given two products, each at the same distributor
+        d = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        oc = create(:simple_order_cycle, :distributors => [d],
+                    :variants => [p1.master, p2.master])
+
+        # When I add the first to my cart
+        visit spree.product_path p1
+        select d.name, :from => 'distributor_id'
+        select oc.name, :from => 'order_cycle_id'
+        click_button 'Add To Cart'
+
+        # And I go to add the second, I should not have a choice of distributor or order cycle
+        visit spree.product_path p2
+        page.should_not have_selector 'select#distributor_id'
+        page.should     have_selector '.distributor-fixed', :text => "Your distributor for this order is #{d.name}"
+        page.should_not have_selector 'select#order_cycle_id'
+        page.should     have_selector '.order-cycle-fixed', :text => "Your order cycle for this order is #{oc.name}"
+
+        # When I add the second, both should be in my cart
+        click_button 'Add To Cart'
+        visit spree.cart_path
+        page.should have_selector 'h4 a', :text => p1.name
+        page.should have_selector 'h4 a', :text => p2.name
+      end
+
     end
 
     it "allows us to add two products from the same distributor" do
