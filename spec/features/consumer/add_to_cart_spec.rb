@@ -162,6 +162,27 @@ feature %q{
   end
 
   context "with order cycle distribution" do
+    scenario "adding a product to the cart with no distribution chosen" do
+      # Given a product and some distributors
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
+      p1 = create(:product)
+      p2 = create(:product)
+      create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+      create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
+
+      # When I add an item to my cart without choosing a distributor or order cycle
+      visit spree.product_path p1
+      click_button 'Add To Cart'
+
+      # Then I should see an error message
+      page.should have_content "Please choose a distributor and order cycle for this order."
+
+      # And the product should not have been added to my cart
+      Spree::Order.last.should be_nil
+    end
+
+
     it "allows us to add two products from the same distributor" do
       # Given two products, each at the same distributor
       d = create(:distributor_enterprise)

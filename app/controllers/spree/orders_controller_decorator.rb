@@ -28,13 +28,19 @@ Spree::OrdersController.class_eval do
 
   def populate_order_distributor
     @distributor = params[:distributor_id].present? ? Enterprise.is_distributor.find(params[:distributor_id]) : nil
+    @order_cycle = params[:order_cycle_id].present? ? OrderCycle.find(params[:order_cycle_id]) : nil
 
     if populate_valid? @distributor
       order = current_order(true)
       order.set_distributor! @distributor
 
     else
-      flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
+      if populate_order_cycle_required
+        flash[:error] = "Please choose a distributor and order cycle for this order." if @distributor.nil? || @order_cycle.nil?
+      else
+        flash[:error] = "Please choose a distributor for this order." if @distributor.nil?
+      end
+
       redirect_populate_to_first_product
     end
   end
@@ -108,7 +114,7 @@ Spree::OrdersController.class_eval do
       return false unless Enterprise.distributing_product(variant.product).include? distributor
     end if params[:variants]
 
-    # -- If products in cart, distributor can't be changed
+    # -- Distributor can't be changed unless new distributor can service cart
     order = current_order(false)
     if !order.nil? && !DistributorChangeValidator.new(order).can_change_to_distributor?(distributor) 
       return false
@@ -116,6 +122,18 @@ Spree::OrdersController.class_eval do
 
     true
   end
+
+  # Adding product to cart requires an order cycle if product has no product distributions
+  def populate_order_cycle_required
+    populate_products.any? { |p| p.product_distributions.empty? }
+  end
+
+  def populate_products
+    # TODO: This is quite inefficient. Push to SQLland?
+    (params[:products] || []).map { |product_id, variant_id| Spree::Product.find product_id } +
+      (params[:variants] || []).map { |variant_id, quantity| Spree::Variant.find(variant_id).product }
+  end
+
 
   def redirect_populate_to_first_product
     product = if params[:products].present?
