@@ -88,7 +88,7 @@ feature %q{
         visit spree.cart_path
         page.should have_selector 'h4 a', :text => p1.name
         page.should have_selector 'h4 a', :text => p2.name
-        page.should have_selector "#current-distributor a", :text => d2.name
+        page.should have_selector "#current-distribution a", :text => d2.name
       end
 
       it "when the only valid distributor is the chosen one, does not allow the user to choose a distributor" do
@@ -136,7 +136,7 @@ feature %q{
         click_button 'Add To Cart'
 
         # Then My distributor should have changed
-        page.should have_selector "#current-distributor a", :text => d2.name
+        page.should have_selector "#current-distribution a", :text => d2.name
       end
 
       it "does not allow the user to add a product from a distributor that cannot supply the cart's products" do
@@ -211,6 +211,44 @@ feature %q{
       order.order_cycle.should == oc
     end
 
+    context "adding a subsequent product to the cart" do
+      it "when there are several valid order cycles, allows a choice from these options" do
+        # Given two products, both distributed by two distributors
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        oc1 = create(:simple_order_cycle,
+                     :distributors => [d1, d2], :variants => [p1.master, p2.master])
+        oc2 = create(:simple_order_cycle,
+                     :distributors => [d1, d2], :variants => [p1.master, p2.master])
+
+        # When I add the first to my cart via d1/oc1
+        visit spree.product_path p1
+        select d1.name, :from => 'distributor_id'
+        select oc1.name, :from => 'order_cycle_id'
+        click_button 'Add To Cart'
+
+        # And I go to add the second, I should have a choice of order cycle and distributor
+        visit spree.product_path p2
+        page.should have_selector '#distributor_id option', :text => d1.name
+        page.should have_selector '#distributor_id option', :text => d2.name
+        page.should have_selector '#order_cycle_id option', :text => oc1.name
+        page.should have_selector '#order_cycle_id option', :text => oc2.name
+
+        # When I add the second, both should be in my cart, and my
+        # distributor and order cycle should be the one chosen second
+        select d2.name, :from => 'distributor_id'
+        select oc2.name, :from => 'order_cycle_id'
+        click_button 'Add To Cart'
+        visit spree.cart_path
+        page.should have_selector 'h4 a', :text => p1.name
+        page.should have_selector 'h4 a', :text => p2.name
+        page.should have_selector "#current-distribution a", :text => d2.name
+        page.should have_selector "#current-distribution a", :text => oc2.name
+      end
+    end
+
     it "allows us to add two products from the same distributor" do
       # Given two products, each at the same distributor
       d = create(:distributor_enterprise)
@@ -259,8 +297,8 @@ feature %q{
       # When I add the second to my cart
       click_button 'Add To Cart'
 
-      # Then My distributor should have changed
-      page.should have_selector "#current-distributor a", :text => d2.name
+      # Then my distributor should have changed
+      page.should have_selector "#current-distribution a", :text => d2.name
     end
   end
 

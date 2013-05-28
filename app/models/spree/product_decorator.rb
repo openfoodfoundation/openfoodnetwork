@@ -71,7 +71,7 @@ Spree::Product.class_eval do
     distribution = self.product_distributions.find_by_distributor_id(distributor)
 
     unless distribution
-      Bugsnag.notify(Exception.new "No product distribution for product #{id} at distributor #{distributor.id}. Perhaps this product is distributed via an order cycle? This is a warning that OrderCycle fees and shipping methods are not yet implemented, and the shipping fee charged is undefined until then.")
+      Bugsnag.notify(Exception.new "No product distribution for product #{id} at distributor #{distributor.andand.id}. Perhaps this product is distributed via an order cycle? This is a warning that OrderCycle fees and shipping methods are not yet implemented, and the shipping fee charged is undefined until then.")
     end
 
     distribution.andand.shipping_method || Spree::ShippingMethod.where("name != 'Delivery'").last
