@@ -5,6 +5,9 @@ class OrderCycle < ActiveRecord::Base
 
   has_many :exchanges, :dependent => :destroy
 
+  # TODO: DRY the incoming/outgoing clause used in several cases below
+  # See Spree::Product definition, scopes variants and variants_including_master
+  # This will require these accessors to be renamed
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
   validates_presence_of :name, :coordinator_id
@@ -27,6 +30,10 @@ class OrderCycle < ActiveRecord::Base
 
   def variants
     self.exchanges.map(&:variants).flatten.uniq
+  end
+
+  def distributed_variants
+    self.exchanges.where(:sender_id => self.coordinator).map(&:variants).flatten.uniq
   end
 
   def products
