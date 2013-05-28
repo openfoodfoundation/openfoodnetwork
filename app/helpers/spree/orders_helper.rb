@@ -7,7 +7,7 @@ module Spree
     end
 
     def alternative_available_distributors(order)
-      DistributorChangeValidator.new(order).available_distributors(Enterprise.all) - [order.distributor]
+      DistributionChangeValidator.new(order).available_distributors(Enterprise.all) - [order.distributor]
     end
   end
 end

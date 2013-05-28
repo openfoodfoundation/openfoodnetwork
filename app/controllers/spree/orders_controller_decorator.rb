@@ -116,7 +116,7 @@ Spree::OrdersController.class_eval do
 
     # -- Distributor can't be changed unless new distributor can service cart
     order = current_order(false)
-    if !order.nil? && !DistributorChangeValidator.new(order).can_change_to_distributor?(distributor) 
+    if !order.nil? && !DistributionChangeValidator.new(order).can_change_to_distributor?(distributor)
       return false
     end
 

@@ -1,8 +1,8 @@
-require 'open_food_web/distributor_change_validator'
+require 'open_food_web/distribution_change_validator'
 
-describe DistributorChangeValidator do
+describe DistributionChangeValidator do
   let(:order) { double(:order) }
-  let(:subject) { DistributorChangeValidator.new(order) }
+  let(:subject) { DistributionChangeValidator.new(order) }
   let(:product) { double(:product) }
 
   context "permissions for changing distributor" do
@@ -88,7 +88,7 @@ describe DistributorChangeValidator do
 
   describe "checking product compatibility with current order" do
     it "returns true when order is nil" do
-      subject = DistributorChangeValidator.new(nil)
+      subject = DistributionChangeValidator.new(nil)
       subject.product_compatible_with_current_order(product).should be_true
     end
 
@@ -105,7 +105,7 @@ describe DistributorChangeValidator do
 
   describe "finding available distributors for a product" do
     it "returns enterprises distributing the product when there's no order" do
-      subject = DistributorChangeValidator.new(nil)
+      subject = DistributionChangeValidator.new(nil)
       Enterprise.stub(:distributing_product).and_return([1, 2, 3])
       subject.should_receive(:available_distributors).never
 

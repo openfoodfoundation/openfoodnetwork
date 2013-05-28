@@ -10,7 +10,7 @@
   %table#product-source.table-display{:width => "100%"}
     %tbody
       - order = current_order(false)
-      - validator = DistributorChangeValidator.new(order)
+      - validator = DistributionChangeValidator.new(order)
       - Enterprise.distributing_product(@product).each do |distributor|
         - if !order.nil? && distributor == order.distributor
           %tr.odd

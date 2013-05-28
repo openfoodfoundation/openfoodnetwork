@@ -1,4 +1,4 @@
-require 'open_food_web/distributor_change_validator'
+require 'open_food_web/distribution_change_validator'
 
 Spree::Order.class_eval do
   belongs_to :order_cycle
@@ -13,7 +13,7 @@ Spree::Order.class_eval do
   
   def products_available_from_new_distributor
     # Check that the line_items in the current order are available from a newly selected distributor
-    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
+    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
   end
 
   def set_order_cycle!(order_cycle)

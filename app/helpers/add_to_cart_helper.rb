@@ -4,10 +4,10 @@ module AddToCartHelper
   end
 
   def product_incompatible_with_current_order(order, product)
-    !DistributorChangeValidator.new(order).product_compatible_with_current_order(product)
+    !DistributionChangeValidator.new(order).product_compatible_with_current_order(product)
   end
 
   def available_distributors_for(order, product)
-    DistributorChangeValidator.new(order).available_distributors_for(product)
+    DistributionChangeValidator.new(order).available_distributors_for(product)
   end
 end
