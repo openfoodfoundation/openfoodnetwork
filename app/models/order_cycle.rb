@@ -12,6 +12,10 @@ class OrderCycle < ActiveRecord::Base
   scope :active, lambda { where('orders_open_at <= ? AND orders_close_at >= ?', Time.now, Time.now) }
   scope :inactive, lambda { where('orders_open_at > ? OR orders_close_at < ?', Time.now, Time.now) }
 
+  scope :distributing_product, lambda { |product| joins(:exchanges => :variants).
+    where('exchanges.sender_id = order_cycles.coordinator_id').
+    where('spree_variants.id IN (?)', product.variants_including_master.map(&:id)).
+    select('DISTINCT order_cycles.*') }
 
   def suppliers
     self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq

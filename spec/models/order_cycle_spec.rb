@@ -40,6 +40,33 @@ describe OrderCycle do
     OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
   end
 
+  describe "finding order cycles distributing a product" do
+    it "returns order cycles distributing the product's master variant" do
+      p = create(:product)
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+      OrderCycle.distributing_product(p).should == [oc]
+    end
+
+    it "returns order cycles distributing another variant" do
+      p = create(:product)
+      v = create(:variant, product: p)
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v])
+      OrderCycle.distributing_product(p).should == [oc]
+    end
+
+    it "does not return order cycles supplying but not distributing a product" do
+      p = create(:product)
+      s = create(:supplier_enterprise)
+      oc = create(:simple_order_cycle)
+      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator)
+      ex.variants << p.master
+
+      OrderCycle.distributing_product(p).should == []
+    end
+  end
+
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 
