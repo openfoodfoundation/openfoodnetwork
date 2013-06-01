@@ -10,6 +10,8 @@ r.list_of :products, @collection do
   end
   r.list_of :variants, Proc.new{ |product| product.variants.sort { |a,b| a.id <=> b.id } } do
     r.element :id
+    r.element :options_text
+    r.element :price
     r.element :on_hand
   end
 end

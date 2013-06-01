@@ -39,9 +39,9 @@ describe Spree::Admin::ProductsController do
           "on_hand" => p1.master.on_hand
         },
         "variants" => [ #ordered by id
-          { "id" => v11.id, "on_hand" => v11.on_hand },
-          { "id" => v12.id, "on_hand" => v12.on_hand },
-          { "id" => v13.id, "on_hand" => v13.on_hand }
+          { "id" => v11.id, "options_text" => v11.options_text, "price" => v11.price.to_s, "on_hand" => v11.on_hand },
+          { "id" => v12.id, "options_text" => v12.options_text, "price" => v12.price.to_s, "on_hand" => v12.on_hand },
+          { "id" => v13.id, "options_text" => v13.options_text, "price" => v13.price.to_s, "on_hand" => v13.on_hand }
         ]
       }
       p2r = {
@@ -55,7 +55,7 @@ describe Spree::Admin::ProductsController do
           "on_hand" => p2.master.on_hand
         },
         "variants" => [ #ordered by id
-          { "id" => v21.id, "on_hand" => v21.on_hand }
+          { "id" => v21.id, "options_text" => v21.options_text, "price" => v21.price.to_s, "on_hand" => v21.on_hand  }
         ]
       }
       json_response = JSON.parse(response.body)

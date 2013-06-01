@@ -31,7 +31,7 @@ feature %q{
       page.should have_field "product_name", with: p2.name
     end
 
-    it "displays a select box for suppliers, with the appropriate supplier selected" do
+    it "displays a select box for suppliers,  with the appropriate supplier selected" do
       s1 = FactoryGirl.create(:supplier_enterprise)
       s2 = FactoryGirl.create(:supplier_enterprise)
       s3 = FactoryGirl.create(:supplier_enterprise)
@@ -78,7 +78,7 @@ feature %q{
 
       visit '/admin/products/bulk_index'
 
-      page.should_not have_selector "span[name='master_on_hand']", text: "0"
+      page.should_not have_selector "span[name='on_hand']", text: "0"
       page.should have_field "master_on_hand", with: "15"
       page.should have_field "master_on_hand", with: "12"
     end
@@ -95,8 +95,51 @@ feature %q{
       visit '/admin/products/bulk_index'
 
       page.should_not have_field "master_on_hand", with: "15"
-      page.should have_selector "span[name='master_on_hand']", text: "4"
+      page.should have_selector "span[name='on_hand']", text: "4"
       page.should have_field "master_on_hand", with: "12"
+    end
+  end
+  
+  describe "listing variants" do
+    before :each do
+      login_to_admin_section
+    end
+
+    it "displays a list of variants for each product" do
+      v1 = FactoryGirl.create(:variant)
+      v2 = FactoryGirl.create(:variant)
+
+      visit '/admin/products/bulk_index'
+
+      page.should have_field "product_name", with: v1.product.name
+      page.should have_field "product_name", with: v2.product.name
+      page.should have_selector "td", text: v1.options_text
+      page.should have_selector "td", text: v2.options_text
+    end
+
+    it "displays an on_hand input (for each variant) for each product" do
+      p1 = FactoryGirl.create(:product)
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 15)
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
+
+      visit '/admin/products/bulk_index'
+
+      page.should have_selector "span[name='on_hand']", text: "21"
+      page.should have_field "variant_on_hand", with: "15"
+      page.should have_field "variant_on_hand", with: "6"
+    end
+    
+   
+    it "displays a price input (for each variant) for each product" do
+      p1 = FactoryGirl.create(:product, price: 2.0)
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75)
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
+
+      visit '/admin/products/bulk_index'
+
+      page.should have_field "master_price", with: "2.0"
+      page.should have_field "variant_price", with: "12.75"
+      page.should have_field "variant_price", with: "2.5"
     end
   end
 
@@ -161,6 +204,34 @@ feature %q{
     page.should have_field "master_on_hand", with: "18"
   end
   
+  scenario "updating a product with variants" do
+    s1 = FactoryGirl.create(:supplier_enterprise)
+    s2 = FactoryGirl.create(:supplier_enterprise)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
+    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9)
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_index'
+
+    page.should have_field "variant_price", with: "3.0"
+    page.should have_field "variant_on_hand", with: "9"
+    page.should have_selector "span[name='on_hand']", text: "9"
+
+    fill_in "variant_price", with: "4.0"
+    fill_in "variant_on_hand", with: "10"
+
+    page.should have_selector "span[name='on_hand']", text: "10"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    visit '/admin/products/bulk_index'
+
+    page.should have_field "variant_price", with: "4.0"
+    page.should have_field "variant_on_hand", with: "10"
+  end
+
   scenario "updating a product mutiple times without refresh" do
     p = FactoryGirl.create(:product, name: 'original name')
     login_to_admin_section

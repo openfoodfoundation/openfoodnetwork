@@ -321,7 +321,7 @@ describe("AdminBulkProductsCtrl", function(){
 		});
 
 		it("sums variant on_hand properties", function(){
-			expect(onHand(p1)).toEqual(6);r
+			expect(onHand(p1)).toEqual(6);
 		});
 
 		it("ignores items in variants without an on_hand property (adds 0)", function(){

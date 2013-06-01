@@ -29,10 +29,19 @@
         %td
           %input{ 'ng-model' => 'product.master.price', 'ng-decimal' => :true, :name => 'master_price', :type => 'text' }
         %td
-          %span{ 'ng-bind' => 'onHand(product)', :name => 'master_on_hand', 'ng-show' => 'product.variants.length > 0' }
+          %span{ 'ng-bind' => 'onHand(product)', :name => 'on_hand', 'ng-show' => 'product.variants.length > 0' }
           %input.field{ 'ng-model' => 'product.master.on_hand', :name => 'master_on_hand', 'ng-show' => 'product.variants.length == 0', :type => 'number' }
         %td
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', :type => 'text' }
+      %tr{ 'ng-repeat' => 'variant in product.variants' }
+        %td
+          {{ variant.options_text }}
+        %td
+        %td
+          %input{ 'ng-model' => 'variant.price', 'ng-decimal' => :true, :name => 'variant_price', :type => 'text' }
+        %td
+          %input.field{ 'ng-model' => 'variant.on_hand', :name => 'variant_on_hand', :type => 'number' }
+        %td
   %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
   %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
     {{ updateStatusMessage.text }}
