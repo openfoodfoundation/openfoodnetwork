@@ -3,11 +3,8 @@ r.list_of :products, @collection do
   r.element :name
   r.element :supplier_id
   r.element :available_on, Proc.new{ |product| product.available_on.strftime("%F %T") }
-  r.element :master do
-    r.element :id
-    r.element :price
-    r.element :on_hand
-  end
+  r.element :price
+  r.element :on_hand
   r.list_of :variants, Proc.new{ |product| product.variants.sort { |a,b| a.id <=> b.id } } do
     r.element :id
     r.element :options_text

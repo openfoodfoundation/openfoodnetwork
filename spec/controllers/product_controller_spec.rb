@@ -13,7 +13,6 @@ describe Spree::Admin::ProductsController do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
       spree_get :bulk_index, { format: :json }
-      #process :bulk_index, {:use_route=> :spree}, nil, nil, "GET"
       
       assigns[:collection].should_not be_empty
       assigns[:collection].should == [ p1, p2 ]
@@ -33,11 +32,8 @@ describe Spree::Admin::ProductsController do
         "name" => p1.name,
         "supplier_id" => p1.supplier_id,
         "available_on" => p1.available_on.strftime("%F %T"),
-        "master" => {
-          "id" => p1.master.id,
-          "price" => p1.master.price.to_s,
-          "on_hand" => p1.master.on_hand
-        },
+        "price" => p1.price.to_s,
+        "on_hand" => ( v11.on_hand + v12.on_hand + v13.on_hand ),
         "variants" => [ #ordered by id
           { "id" => v11.id, "options_text" => v11.options_text, "price" => v11.price.to_s, "on_hand" => v11.on_hand },
           { "id" => v12.id, "options_text" => v12.options_text, "price" => v12.price.to_s, "on_hand" => v12.on_hand },
@@ -49,17 +45,13 @@ describe Spree::Admin::ProductsController do
         "name" => p2.name,
         "supplier_id" => p2.supplier_id,
         "available_on" => p2.available_on.strftime("%F %T"),
-        "master" => {
-          "id" => p2.master.id,
-          "price" => p2.master.price.to_s,
-          "on_hand" => p2.master.on_hand
-        },
+        "price" => p2.price.to_s,
+        "on_hand" => v21.on_hand,
         "variants" => [ #ordered by id
           { "id" => v21.id, "options_text" => v21.options_text, "price" => v21.price.to_s, "on_hand" => v21.on_hand  }
         ]
       }
       json_response = JSON.parse(response.body)
-      #json_response = Hash[json_response.map{ |k, v| [k.to_sym, v] }]
       json_response.should == [ p1r, p2r ]
     end
   end

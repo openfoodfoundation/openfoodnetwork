@@ -140,7 +140,7 @@ describe("Auxillary functions", function(){
 			expect( getDirtyObjects(c, d) ).toEqual( [ { id: 2, value: 12 }, { id: 3, value2: 15 } ] );
 		});
 	});
-	
+
 	describe("filtering products", function(){
 		it("only accepts and returns an array", function(){
 			expect( filterSubmitProducts( [] ) ).toEqual([]);
@@ -155,9 +155,14 @@ describe("Auxillary functions", function(){
 			expect( filterSubmitProducts( [ { id: 1, name: "p1" }, { notanid: 2, name: "p2"} ] ) ).toEqual( [ { id: 1, name: "p1" } ]);
 		});
 
-		it("returns variants as variants_attributes", function(){
+		it("does not return a product object for products which have no propeties other than an id", function(){
+			expect( filterSubmitProducts( [ { id: 1, someunwantedproperty: "something" }, { id: 2, name: "p2"} ] ) ).toEqual( [ { id: 2, name: "p2" } ]);
+		});
+
+		it("does not return an on_hand count when a product has variants", function(){
 			var testProduct  = {
 				id: 1,
+				on_hand: 5,
 				variants: [ {
 					id: 1,
 					on_hand: 5,
@@ -174,10 +179,10 @@ describe("Auxillary functions", function(){
 			} ] );
 		});
 
-		it("returns master as master_attributes", function(){
+		it("returns variants as variants_attributes", function(){
 			var testProduct  = {
 				id: 1,
-				master: [ {
+				variants: [ {
 					id: 1,
 					on_hand: 5,
 					price: 12.0
@@ -185,7 +190,7 @@ describe("Auxillary functions", function(){
 			};
 			expect( filterSubmitProducts( [ testProduct ] ) ).toEqual( [ {
 				id: 1,
-				master_attributes: [ {
+				variants_attributes: [ {
 					id: 1,
 					on_hand: 5,
 					price: 12.0
@@ -219,6 +224,18 @@ describe("Auxillary functions", function(){
 					on_hand: 3,
 					price: 5.0
 				} ]
+			} ] );
+		});
+
+		it("does not return variants_attributes property if variants is an empty array", function(){
+			var testProduct  = {
+				id: 1,
+				price: 10,
+				variants: []
+			};
+			expect( filterSubmitProducts( [ testProduct ] ) ).toEqual( [ {
+				id: 1,
+				price: 10
 			} ] );
 		});
 

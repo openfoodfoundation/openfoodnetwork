@@ -50,16 +50,15 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		});
 	};
 	
-	//accessible from scope
-	$scope.onHand = function(products){
-		return onHand(products);
+	$scope.updateOnHand = function(product){
+		product.on_hand = onHand(product);
 	}
 
 	$scope.updateStatusMessage = {
 		text: "",
 		style: {}
 	}
-	
+
 	$scope.updateProducts = function(productsToSubmit){
 		$scope.displayUpdating();
 		$http({
@@ -226,12 +225,9 @@ function filterSubmitProducts(productsToFilter){
 		for (i in productsToFilter) {
 			if (productsToFilter[i].hasOwnProperty("id")){
 				var filteredProduct = {};
-				filteredProduct.id = productsToFilter[i].id;
-				if (productsToFilter[i].hasOwnProperty("supplier_id")) filteredProduct.supplier_id = productsToFilter[i].supplier_id;
-				if (productsToFilter[i].hasOwnProperty("name")) filteredProduct.name = productsToFilter[i].name;
-				if (productsToFilter[i].hasOwnProperty("available_on")) filteredProduct.available_on = productsToFilter[i].available_on;
+				var filteredVariants = [];
+
 				if (productsToFilter[i].hasOwnProperty("variants")){ 
-					var filteredVariants = [];
 					for (j in productsToFilter[i].variants){
 						if (productsToFilter[i].variants[j].deleted_at == null && productsToFilter[i].variants[j].hasOwnProperty("id")){
 							filteredVariants[j] = {};
@@ -240,10 +236,19 @@ function filterSubmitProducts(productsToFilter){
 							if (productsToFilter[i].variants[j].hasOwnProperty("price")) filteredVariants[j].price = productsToFilter[i].variants[j].price;
 						}
 					}
-					filteredProduct.variants_attributes = filteredVariants; // Note that the name of the property changes to enable mass assignment of variants attributes with rails
 				}
-				if (productsToFilter[i].hasOwnProperty("master")) filteredProduct.master_attributes = productsToFilter[i].master
-				filteredProducts.push(filteredProduct);
+
+				var hasUpdatableProperty = false;
+				filteredProduct.id = productsToFilter[i].id;
+				if (productsToFilter[i].hasOwnProperty("name")) { filteredProduct.name = productsToFilter[i].name; hasUpdatableProperty = true; }
+				if (productsToFilter[i].hasOwnProperty("supplier_id")) { filteredProduct.supplier_id = productsToFilter[i].supplier_id; hasUpdatableProperty = true; }
+				//if (productsToFilter[i].hasOwnProperty("master")) filteredProduct.master_attributes = productsToFilter[i].master
+				if (productsToFilter[i].hasOwnProperty("price")) { filteredProduct.price = productsToFilter[i].price; hasUpdatableProperty = true; }
+				if (productsToFilter[i].hasOwnProperty("on_hand") && filteredVariants.length == 0) { filteredProduct.on_hand = productsToFilter[i].on_hand; hasUpdatableProperty = true; } //only update if no variants present
+				if (productsToFilter[i].hasOwnProperty("available_on")) { filteredProduct.available_on = productsToFilter[i].available_on; hasUpdatableProperty = true; }
+				if (filteredVariants.length > 0) { filteredProduct.variants_attributes = filteredVariants; hasUpdatableProperty = true; } // Note that the name of the property changes to enable mass assignment of variants attributes with rails
+
+				if (hasUpdatableProperty) filteredProducts.push(filteredProduct);
 			}
 		}
 	}
