@@ -126,20 +126,44 @@ describe DistributionChangeValidator do
     end
   end
 
-  describe "checking product compatibility with current order" do
+  describe "checking if a distributor is available for a product" do
     it "returns true when order is nil" do
       subject = DistributionChangeValidator.new(nil)
-      subject.product_compatible_with_current_order(product).should be_true
+      subject.distributor_available_for?(product).should be_true
     end
 
     it "returns true when there's an distributor that can cover the new product" do
       subject.stub(:available_distributors_for).and_return([1])
-      subject.product_compatible_with_current_order(product).should be_true
+      subject.distributor_available_for?(product).should be_true
     end
 
     it "returns false when there's no distributor that can cover the new product" do
       subject.stub(:available_distributors_for).and_return([])
-      subject.product_compatible_with_current_order(product).should be_false
+      subject.distributor_available_for?(product).should be_false
+    end
+  end
+
+  describe "checking if an order cycle is available for a product" do
+    it "returns true when the order is nil" do
+      subject = DistributionChangeValidator.new(nil)
+      subject.order_cycle_available_for?(product).should be_true
+    end
+
+    it "returns true when the product doesn't require an order cycle" do
+      subject.stub(:product_requires_order_cycle).and_return(false)
+      subject.order_cycle_available_for?(product).should be_true
+    end
+
+    it "returns true when there's an order cycle that can cover the product" do
+      subject.stub(:product_requires_order_cycle).and_return(true)
+      subject.stub(:available_order_cycles_for).and_return([1])
+      subject.order_cycle_available_for?(product).should be_true
+    end
+
+    it "returns false otherwise" do
+      subject.stub(:product_requires_order_cycle).and_return(true)
+      subject.stub(:available_order_cycles_for).and_return([])
+      subject.order_cycle_available_for?(product).should be_false
     end
   end
 
@@ -192,6 +216,18 @@ describe DistributionChangeValidator do
       subject.should_receive(:available_order_cycles).and_return([2])
 
       subject.available_order_cycles_for(product).should == [2]
+    end
+  end
+
+  describe "determining if a product requires an order cycle" do
+    it "returns true when the product does not have any product distributions" do
+      product.stub(:product_distributions).and_return([])
+      subject.product_requires_order_cycle(product).should be_true
+    end
+
+    it "returns false otherwise" do
+      product.stub(:product_distributions).and_return([1])
+      subject.product_requires_order_cycle(product).should be_false
     end
   end
 end

@@ -276,58 +276,54 @@ feature %q{
         page.should have_selector 'h4 a', :text => p2.name
       end
 
-    end
+      it "when the only valid distributor differs from the chosen one, alerts the user and changes distributor on add to cart" do
+        # Given two products, one available at only one distributor
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
 
-    it "allows us to add two products from the same distributor" do
-      # Given two products, each at the same distributor
-      d = create(:distributor_enterprise)
-      p1 = create(:product)
-      p2 = create(:product)
-      create(:simple_order_cycle, :distributors => [d], :variants => [p1.master, p2.master])
+        # When I add the first to my cart
+        visit spree.product_path p1
+        select d1.name, from: 'distributor_id'
+        click_button 'Add To Cart'
 
-      # When I add the first to my cart
-      visit spree.product_path p1
-      select d.name, :from => 'distributor_id'
-      click_button 'Add To Cart'
+        # And I go to add the second
+        visit spree.product_path p2
 
-      # And I add the second
-      visit spree.product_path p2
-      click_button 'Add To Cart'
+        # Then I should see a message offering to change distributor for my order
+        page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
 
-      # Then both should be in my cart
-      visit spree.cart_path
-      page.should have_selector 'h4 a', :text => p1.name
-      page.should have_selector 'h4 a', :text => p2.name
-    end
+        # When I add the second to my cart
+        click_button 'Add To Cart'
 
-    it "offers to automatically change distributors when there is only one choice" do
-      # Given two products, one available at only one distributor
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
-      p1 = create(:product)
-      p2 = create(:product)
-      create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
-      create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
+        # Then my distributor should have changed
+        page.should have_selector "#current-distribution a", :text => d2.name
+      end
 
-      # p1 - available at both, select d1
-      # p2 - available at the one not selected
+      it "does not allow the user to add a product from an order cycle that cannot supply the cart's products" do
+        # Given two products, each at a different order cycle
+        d = create(:distributor_enterprise)
+        p1 = create(:product)
+        p2 = create(:product)
+        oc1 = create(:simple_order_cycle, :distributors => [d], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d], :variants => [p2.master])
 
-      # When I add the first to my cart
-      visit spree.product_path p1
-      select d1.name, from: 'distributor_id'
-      click_button 'Add To Cart'
+        # When I add one of them to my cart
+        visit spree.product_path p1
+        select d.name, :from => 'distributor_id'
+        select oc1.name, :from => 'order_cycle_id'
+        click_button 'Add To Cart'
 
-      # And I go to add the second
-      visit spree.product_path p2
+        # And I attempt to add the other
+        visit spree.product_path p2
 
-      # Then I should see a message offering to change distributor for my order
-      page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
-
-      # When I add the second to my cart
-      click_button 'Add To Cart'
-
-      # Then my distributor should have changed
-      page.should have_selector "#current-distribution a", :text => d2.name
+        # Then I should not be allowed to add the product
+        page.should_not have_selector "button#add-to-cart-button"
+        page.should have_content "Please complete your order from #{oc1.name} before shopping in a different order cycle."
+      end
     end
   end
 

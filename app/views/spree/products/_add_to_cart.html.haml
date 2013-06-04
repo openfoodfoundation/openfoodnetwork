@@ -4,8 +4,11 @@
   - if product_out_of_stock
     = content_tag('strong', t(:out_of_stock))
 
-  - elsif product_incompatible_with_current_order(order, @product)
+  - elsif !distributor_available_for?(order, @product)
     = render 'add_to_cart_distributor_unavailable'
+
+  - elsif !order_cycle_available_for?(order, @product)
+    = render 'add_to_cart_order_cycle_unavailable'
 
   - else
     = render 'add_to_cart_quantity_fields', product: @product

@@ -14,8 +14,12 @@ class DistributionChangeValidator
     @order.line_items.empty? || all_available_distributors.include?(distributor)
   end
 
-  def product_compatible_with_current_order(product)
+  def distributor_available_for?(product)
     @order.nil? || available_distributors_for(product).present?
+  end
+
+  def order_cycle_available_for?(product)
+    @order.nil? || !product_requires_order_cycle(product) || available_order_cycles_for(product).present?
   end
 
   def available_distributors_for(product)
@@ -38,6 +42,9 @@ class DistributionChangeValidator
     order_cycles
   end
 
+  def product_requires_order_cycle(product)
+    product.product_distributions.blank?
+  end
 
   def all_available_distributors
     @all_available_distributors ||= (available_distributors(Enterprise.all) || [])
