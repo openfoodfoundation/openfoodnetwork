@@ -44,10 +44,6 @@ Spree::OrderPopulator.class_eval do
     [distributor, order_cycle]
   end
 
-  def distributor_can_supply_products_in_cart(distributor)
-    !distributor || DistributionChangeValidator.new(@order).can_change_to_distributor?(distributor)
-  end
-
   def set_cart_distributor_and_order_cycle(distributor, order_cycle)
     # Using @order.reload or not performing any reload causes totals fields (ie. item_total)
     # to be set to zero
@@ -55,6 +51,10 @@ Spree::OrderPopulator.class_eval do
 
     @order.set_distributor! distributor
     @order.set_order_cycle! order_cycle if order_cycle
+  end
+
+  def distributor_can_supply_products_in_cart(distributor)
+    !distributor || DistributionChangeValidator.new(@order).can_change_to_distributor?(distributor)
   end
 
   def check_distribution_provided_for(variant)

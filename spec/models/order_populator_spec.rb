@@ -101,9 +101,23 @@ module Spree
 
     describe "validations" do
       describe "determining if distributor can supply products in cart" do
-        it "returns true if no distributor is supplied"
-        it "returns true if the order can be changed to that distributor"
-        it "returns false otherwise"
+        it "returns true if no distributor is supplied" do
+          op.send(:distributor_can_supply_products_in_cart, nil).should be_true
+        end
+
+        it "returns true if the order can be changed to that distributor" do
+          dcv = double(:dcv)
+          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(true)
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.send(:distributor_can_supply_products_in_cart, distributor).should be_true
+        end
+
+        it "returns false otherwise" do
+          dcv = double(:dcv)
+          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(false)
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.send(:distributor_can_supply_products_in_cart, distributor).should be_false
+        end
       end
 
       describe "checking distribution is provided for a variant" do
