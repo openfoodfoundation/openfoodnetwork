@@ -70,7 +70,26 @@ module Spree
     end
 
     describe "support" do
-      it "loads distributor and order cycle from hash"
+      describe "loading distributor and order cycle from hash" do
+        it "loads distributor and order cycle when present" do
+          params = {distributor_id: 1, order_cycle_id: 2}
+          distributor = double(:distributor)
+          order_cycle = double(:order_cycle)
+
+          enterprise_scope = double(:enterprise_scope)
+          enterprise_scope.should_receive(:find).with(1).and_return(distributor)
+          Enterprise.should_receive(:is_distributor).and_return(enterprise_scope)
+          OrderCycle.should_receive(:find).with(2).and_return(order_cycle)
+
+          op.send(:load_distributor_and_order_cycle, params).should ==
+            [distributor, order_cycle]
+        end
+
+        it "returns nil when not present" do
+          op.send(:load_distributor_and_order_cycle, {}).should == [nil, nil]
+        end
+      end
+
       it "sets cart distributor and order cycle"
     end
 
