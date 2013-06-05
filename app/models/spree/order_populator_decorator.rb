@@ -58,12 +58,10 @@ Spree::OrderPopulator.class_eval do
   end
 
   def check_distribution_provided_for(variant)
-    order_cycle_required = order_cycle_required_for(variant)
-    distribution_provided =
-      @distributor.present? && (!order_cycle_required || @order_cycle.present?)
+    distribution_provided = distribution_provided_for variant
 
     unless distribution_provided
-      if order_cycle_required
+      if order_cycle_required_for variant
         errors.add(:base, "Please choose a distributor and order cycle for this order.")
       else
         errors.add(:base, "Please choose a distributor for this order.")
@@ -82,8 +80,11 @@ Spree::OrderPopulator.class_eval do
     end
   end
 
+  def distribution_provided_for(variant)
+    @distributor.present? && (!order_cycle_required_for(variant) || @order_cycle.present?)
+  end
+
   def order_cycle_required_for(variant)
     variant.product.product_distributions.empty?
   end
-
 end

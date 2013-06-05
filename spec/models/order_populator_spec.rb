@@ -97,6 +97,33 @@ module Spree
 
         op.send(:set_cart_distributor_and_order_cycle, distributor, order_cycle)
       end
+
+      describe "checking if distribution is provided for a variant" do
+        let(:variant) { double(:variant) }
+
+        it "returns false when distributor is nil" do
+          op.instance_eval { @distributor = nil }
+          op.send(:distribution_provided_for, variant).should be_false
+        end
+
+        it "returns false when order cycle is nil when it's required" do
+          op.instance_eval { @distributor = 1; @order_cycle = nil }
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(true)
+          op.send(:distribution_provided_for, variant).should be_false
+        end
+
+        it "returns true when distributor is present and order cycle is not required" do
+          op.instance_eval { @distributor = 1; @order_cycle = nil }
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(false)
+          op.send(:distribution_provided_for, variant).should be_true
+        end
+
+        it "returns true when distributor is present and order cycle is required and present" do
+          op.instance_eval { @distributor = 1; @order_cycle = 1 }
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(true)
+          op.send(:distribution_provided_for, variant).should be_true
+        end
+      end
     end
 
     describe "validations" do
@@ -121,6 +148,30 @@ module Spree
       end
 
       describe "checking distribution is provided for a variant" do
+        let(:variant) { double(:variant) }
+
+        it "returns false and errors when distribution is not provided and order cycle is required" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(true)
+
+          op.send(:check_distribution_provided_for, variant).should be_false
+          op.errors.to_a.should == ["Please choose a distributor and order cycle for this order."]
+        end
+
+        it "returns false and errors when distribution is not provided and order cycle is not required" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(false)
+
+          op.send(:check_distribution_provided_for, variant).should be_false
+          op.errors.to_a.should == ["Please choose a distributor for this order."]
+        end
+
+        it "returns true and does not error otherwise" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(true)
+
+          op.send(:check_distribution_provided_for, variant).should be_true
+          op.errors.to_a.should be_empty
+        end
       end
 
       describe "checking variant is available under the distributor" do
