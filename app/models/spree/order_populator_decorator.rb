@@ -1,11 +1,8 @@
 Spree::OrderPopulator.class_eval do
   def populate_with_distribution_validation(from_hash)
-    @distributor = from_hash[:distributor_id].present? ?
-      Enterprise.is_distributor.find(from_hash[:distributor_id]) : nil
-    @order_cycle = from_hash[:order_cycle_id].present? ?
-                     OrderCycle.find(from_hash[:order_cycle_id]) : nil
+    @distributor, @order_cycle = load_distributor_and_order_cycle(from_hash)
 
-    if @distributor && !DistributionChangeValidator.new(@order).can_change_to_distributor?(@distributor)
+    if !distributor_can_supply_products_in_cart(@distributor)
       errors.add(:base, "That distributor can't supply all the products in your cart. Please choose another.")
     end
 
@@ -13,12 +10,7 @@ Spree::OrderPopulator.class_eval do
 
     # Set order distributor and order cycle
     if valid?
-      # Using @order.reload or not performing any reload causes totals fields (ie. item_total)
-      # to be set to zero
-      @order = Spree::Order.find @order.id
-
-      @order.set_distributor! @distributor
-      @order.set_order_cycle! @order_cycle if @order_cycle
+      set_cart_distributor_and_order_cycle @distributor, @order_cycle
     end
 
     valid?
@@ -38,6 +30,31 @@ Spree::OrderPopulator.class_eval do
         @order.add_variant(variant, quantity, currency)
       end
     end
+  end
+
+
+  private
+
+  def load_distributor_and_order_cycle(from_hash)
+    distributor = from_hash[:distributor_id].present? ?
+                    Enterprise.is_distributor.find(from_hash[:distributor_id]) : nil
+    order_cycle = from_hash[:order_cycle_id].present? ?
+                     OrderCycle.find(from_hash[:order_cycle_id]) : nil
+
+    [distributor, order_cycle]
+  end
+
+  def distributor_can_supply_products_in_cart(distributor)
+    !distributor || DistributionChangeValidator.new(@order).can_change_to_distributor?(distributor)
+  end
+
+  def set_cart_distributor_and_order_cycle(distributor, order_cycle)
+    # Using @order.reload or not performing any reload causes totals fields (ie. item_total)
+    # to be set to zero
+    @order = Spree::Order.find @order.id
+
+    @order.set_distributor! distributor
+    @order.set_order_cycle! order_cycle if order_cycle
   end
 
   def check_distribution_provided_for(variant)
