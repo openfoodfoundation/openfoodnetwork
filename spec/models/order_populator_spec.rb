@@ -185,11 +185,29 @@ module Spree
           op.should_receive(:distribution_provided_for).with(variant).and_return(true)
 
           op.send(:check_distribution_provided_for, variant).should be_true
-          op.errors.to_a.should be_empty
+          op.errors.should be_empty
         end
       end
 
       describe "checking variant is available under the distributor" do
+        let(:product) { double(:product) }
+        let(:variant) { double(:variant, product: product) }
+
+        it "is available if the distributor is distributing this product" do
+          op.instance_eval { @distributor = 123 }
+          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [123]
+
+          op.send(:check_variant_available_under_distributor, variant).should be_true
+          op.errors.should be_empty
+        end
+
+        it "returns false and errors otherwise" do
+          op.instance_eval { @distributor = 123 }
+          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [456]
+
+          op.send(:check_variant_available_under_distributor, variant).should be_false
+          op.errors.to_a.should == ["That product is not available from the chosen distributor."]
+        end
       end
     end
   end
