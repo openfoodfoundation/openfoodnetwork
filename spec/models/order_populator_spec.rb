@@ -124,6 +124,21 @@ module Spree
           op.send(:distribution_provided_for, variant).should be_true
         end
       end
+
+      describe "checking if order cycle is required for a variant" do
+        it "requires an order cycle when the product has no product distributions" do
+          product = double(:product, product_distributions: [])
+          variant = double(:variant, product: product)
+          op.send(:order_cycle_required_for, variant).should be_true
+        end
+
+        it "does not require an order cycle when the product has product distributions" do
+          product = double(:product, product_distributions: [1])
+          variant = double(:variant, product: product)
+          op.send(:order_cycle_required_for, variant).should be_false
+        end
+      end
+
     end
 
     describe "validations" do
@@ -175,9 +190,6 @@ module Spree
       end
 
       describe "checking variant is available under the distributor" do
-      end
-
-      describe "order cycle required for variant" do
       end
     end
   end
