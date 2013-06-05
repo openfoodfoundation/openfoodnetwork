@@ -24,7 +24,7 @@ feature %q{
       page.should have_content "Please choose a distributor for this order."
 
       # And the product should not have been added to my cart
-      Spree::Order.last.should be_nil
+      Spree::Order.last.line_items.should be_empty
     end
 
     scenario "adding the first product to the cart" do
@@ -179,11 +179,11 @@ feature %q{
       page.should have_content "Please choose a distributor and order cycle for this order."
 
       # And the product should not have been added to my cart
-      Spree::Order.last.should be_nil
+      Spree::Order.last.line_items.should be_empty
     end
 
-    scenario "adding the first product to the cart" do
-      # Given a product and some distributors
+    scenario "adding the first product to the cart", js: true do
+      # Given a product and a distributor
       d = create(:distributor_enterprise)
       p = create(:product, :price => 12.34)
       oc = create(:simple_order_cycle, :distributors => [d], :variants => [p.master])
@@ -210,6 +210,28 @@ feature %q{
       order.distributor.should == d
       order.order_cycle.should == oc
     end
+
+    scenario "adding a product to the cart with an invalid distribution combination" do
+      # Given a product and some distributors
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
+      p = create(:product, :price => 12.34)
+      oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p.master])
+      oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p.master])
+
+      # When I attempt to add the product to my cart with an invalid distribution
+      visit spree.product_path p
+      select d1.name, :from => 'distributor_id'
+      select oc2.name, :from => 'order_cycle_id'
+      click_button 'Add To Cart'
+
+      # Then I should see an error message
+      page.should have_content "That order cycle is not available at the distributor that you chose. Please choose another."
+
+      # And the product should not be in my cart
+      Spree::Order.last.should be_nil
+    end
+
 
     context "adding a subsequent product to the cart" do
       it "when there are several valid order cycles, allows a choice from these options" do
@@ -282,12 +304,14 @@ feature %q{
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
-        create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
+        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
 
         # When I add the first to my cart
         visit spree.product_path p1
         select d1.name, from: 'distributor_id'
+        select oc1.name, from: 'order_cycle_id'
+
         click_button 'Add To Cart'
 
         # And I go to add the second
