@@ -1,12 +1,11 @@
 require 'simplecov'
 SimpleCov.start
 
-require 'rubygems'
-
 # By default, test on eaterprises deployment settings
 # This must be set before rails loads so that it's available in engine initializers
 ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
 
+require 'rubygems'
 
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
