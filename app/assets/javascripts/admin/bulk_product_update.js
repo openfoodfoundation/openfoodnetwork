@@ -91,7 +91,6 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 	$scope.refreshProducts = function(){
 		dataFetcher('/admin/products/bulk_index.json').then(function(data){
 			$scope.products = angular.copy(data);
-			$scope.cleanProducts = angular.copy(data);
 		});
 	};
 
@@ -178,92 +177,6 @@ function onHand(product){
 	return onHand;
 }
 
-function sortByID(array){
-	var sortedArray = [];
-	for (var i in array){
-		if (array[i].hasOwnProperty("id")){
-			sortedArray.push(array[i]);
-		}
-	}
-	sortedArray.sort(function(a, b){
-		return a.id - b.id;
-	});
-	return sortedArray;
-}
-
-// This function returns all objects in cleanList which are able to be matched to an bjects in ListOne using the id properties of each
-// In the event that no items in cleanList match the id of an item in testList, the testList item is duplicated and placed into the returned lits
-// This means that the returned list has an identical length and identical ids to the testList, with only the values of other properties differing
-function getMatchedObjects(testList, cleanList){
-	testList = sortByID(testList);
-	cleanList = sortByID(cleanList);
-	
-	var matchedObjects = [];
-	var ti = 0, ci = 0;
-	
-	while (ti < testList.length){
-		if (testList[ti].hasOwnProperty("id")){
-			if (cleanList[ci].hasOwnProperty("id")){
-				while (ci < cleanList.length && cleanList[ci].id<testList[ti].id){
-					ci++;
-				}
-				if (cleanList[ci] && cleanList[ci].hasOwnProperty("id") && cleanList[ci].id==testList[ti].id){
-					matchedObjects.push(cleanList[ci])
-				}
-				else{
-					matchedObjects.push(testList[ti])
-				}
-			}
-		}
-		ti++;
-	}
-	return matchedObjects;
-}
-
-function getDirtyPropertiesOfObject(testObject, cleanObject){
-	var dirtyProperties = {};
-	for (var key in testObject){
-		if (testObject.hasOwnProperty(key) && cleanObject.hasOwnProperty(key)){
-			if (testObject[key] != cleanObject[key]){
-				if (testObject[key] instanceof Array){
-					if (key == "variants"){
-						dirtyProperties[key] = getDirtyObjects(testObject[key],cleanObject[key]);
-					}
-					else{
-						dirtyProperties[key] = testObject[key];
-					}
-				}
-				else if(testObject[key] instanceof Object){
-					var tempObject = getDirtyPropertiesOfObject(testObject[key],cleanObject[key]);
-					if ( !isEmpty(tempObject) ){
-						if (testObject[key].hasOwnProperty("id")) { tempObject["id"] = testObject[key].id; }
-						dirtyProperties[key] = tempObject;
-					}
-				}
-				else{
-					dirtyProperties[key] = testObject[key];
-				}
-			}
-		}
-	}
-	return dirtyProperties;
-}
-
-function getDirtyObjects(testObjects, cleanObjects){
-	var dirtyObjects = [];
-	var matchedCleanObjects = getMatchedObjects(testObjects,cleanObjects);
-	testObjects = sortByID(testObjects);
-	
-	for (var i in testObjects){
-		var dirtyObject = getDirtyPropertiesOfObject(testObjects[i], matchedCleanObjects[i])
-		if ( !isEmpty(dirtyObject) ){
-			dirtyObject["id"] = testObjects[i].id;
-			dirtyObjects.push(dirtyObject);
-		}
-	}
-	return dirtyObjects;
-}
-
 function filterSubmitProducts(productsToFilter){
 	var filteredProducts= [];
 
@@ -317,13 +230,4 @@ function addDirtyProperty(dirtyObjects, objectID, propertyName, propertyValue){
 function removeCleanProperty(dirtyObjects, objectID, propertyName){
 	if (dirtyObjects.hasOwnProperty(objectID) && dirtyObjects[objectID].hasOwnProperty(propertyName)) delete dirtyObjects[objectID][propertyName];
 	if (dirtyObjects.hasOwnProperty(objectID) && Object.keys(dirtyObjects[objectID]).length <= 1)	delete dirtyObjects[objectID];
-}
-
-function isEmpty(object){
-    for (var i in object){
-        if (object.hasOwnProperty(i)){
-            return false;
-        }
-    }
-    return true;
 }
