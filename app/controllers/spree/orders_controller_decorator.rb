@@ -1,3 +1,5 @@
+require 'spree/core/controller_helpers/order_decorator'
+
 Spree::OrdersController.class_eval do
   before_filter :populate_order_distributor,  :only => :populate
   before_filter :populate_order_count_on_hand,  :only => :populate

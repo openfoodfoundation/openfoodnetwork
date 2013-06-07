@@ -160,7 +160,7 @@ module OpenFoodWeb
         applicator.send(:update_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant3.id]})
 
         exchange.reload
-        exchange.variant_ids.should == [variant1.id, variant3.id]
+        exchange.variant_ids.sort.should == [variant1.id, variant3.id].sort
         applicator.send(:touched_exchanges).should == [exchange]
       end
     end
