@@ -142,10 +142,11 @@ describe("Auxillary functions", function(){
 	});
 
 	describe("filtering products", function(){
-		it("only accepts and returns an array", function(){
+		it("accepts an object or an array and only returns an array", function(){
 			expect( filterSubmitProducts( [] ) ).toEqual([]);
 			expect( filterSubmitProducts( {} ) ).toEqual([]);
-			expect( filterSubmitProducts( { thingone: { id: 1, name: "lala" } } ) ).toEqual([]);
+			expect( filterSubmitProducts( { 1: { id: 1, name: "lala" } } ) ).toEqual( [ { id: 1, name: "lala" } ] );
+			expect( filterSubmitProducts( [ { id: 1, name: "lala" } ] ) ).toEqual( [ { id: 1, name: "lala" } ] );
 			expect( filterSubmitProducts( 1 ) ).toEqual([]);
 			expect( filterSubmitProducts( "2" ) ).toEqual([]);
 			expect( filterSubmitProducts( null ) ).toEqual([]);
@@ -283,6 +284,46 @@ describe("Auxillary functions", function(){
 	});
 });
 
+describe("Maintaining a live record of dirty products and properties", function(){
+	describe("adding product properties to the dirtyProducts object", function(){ // Applies to both products and variants
+		it("adds the product and the property to the list if property is dirty", function(){
+			var dirtyProducts = { };
+			addDirtyProperty(dirtyProducts, 1, "name", "Product 1");
+
+			expect(dirtyProducts).toEqual( { 1: { id: 1, name: "Product 1" } } );
+		});
+
+		it("adds the relevant property to a product that is already in the list but which does not yet possess it if the property is dirty", function(){
+			var dirtyProducts = { 1: { id: 1, notaname: "something" } };
+			addDirtyProperty(dirtyProducts, 1, "name", "Product 3");
+
+			expect(dirtyProducts).toEqual( { 1: { id: 1, notaname: "something", name: "Product 3" } } );
+		});
+
+		it("changes the relevant property of a product that is already in the list if the property is dirty", function(){
+			var dirtyProducts = { 1: { id: 1, name: "Product 1" } };
+			addDirtyProperty(dirtyProducts, 1, "name", "Product 2");
+
+			expect(dirtyProducts).toEqual( { 1: { id: 1, name: "Product 2" } } );
+		});
+	});
+
+	describe("removing properties of products which are clean", function(){
+		it("removes the relevant property from a product if the property is clean and the product has that property", function(){
+			var dirtyProducts = { 1: { id: 1, someProperty: "something", name: "Product 1" } };
+			removeCleanProperty(dirtyProducts, 1, "name", "Product 1");
+
+			expect(dirtyProducts).toEqual( { 1: { id: 1, someProperty: "something" } } );
+		});
+
+		it("removes the product from dirtyProducts if the property is clean and by removing an existing property on an id is left", function(){
+			var dirtyProducts = { 1: { id: 1, name: "Product 1" } };
+			removeCleanProperty(dirtyProducts, 1, "name", "Product 1");
+
+			expect(dirtyProducts).toEqual( { } );
+		});
+	});
+});
 
 describe("AdminBulkProductsCtrl", function(){
 	describe("loading data upon initialisation", function(){
@@ -376,24 +417,18 @@ describe("AdminBulkProductsCtrl", function(){
 		describe("preparing products for submit",function(){
 			beforeEach(function(){
 				ctrl('AdminBulkProductsCtrl', { $scope: scope } );
-				spyOn(window, "getDirtyObjects").andReturn( [ { id: 1, value: 1 }, { id:2, value: 2 } ] );
-				spyOn(window, "filterSubmitProducts").andReturn( [ { id: 1, value: 3 }, { id:2, value: 4 } ] );
+				spyOn(window, "filterSubmitProducts").andReturn( [ { id: 1, value: 3 }, { id: 2, value: 4 } ] );
 				spyOn(scope, "updateProducts");
-				scope.products = [1,2,3,4,5];
-				scope.cleanProducts = [1,2,3,4,5];
+				scope.dirtyProducts = { 1: { id: 1 }, 2: { id: 2 } };
 				scope.prepareProductsForSubmit();
 			});
 
-			it("fetches dirty products required for submitting", function(){
-				expect(getDirtyObjects).toHaveBeenCalledWith([1,2,3,4,5],[1,2,3,4,5]);
-			});
-
 			it("filters returned dirty products", function(){
-				expect(filterSubmitProducts).toHaveBeenCalledWith( [ { id: 1, value: 1 }, { id:2, value: 2 } ] );
+				expect(filterSubmitProducts).toHaveBeenCalledWith( { 1: { id: 1 }, 2: { id: 2 } } );
 			});
 
 			it("sends dirty and filtered objects to submitProducts()", function(){
-				expect(scope.updateProducts).toHaveBeenCalledWith( [ { id: 1, value: 3 }, { id:2, value: 4 } ] );
+				expect(scope.updateProducts).toHaveBeenCalledWith( [ { id: 1, value: 3 }, { id: 2, value: 4 } ] );
 			});
 		});
 		
