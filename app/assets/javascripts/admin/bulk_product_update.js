@@ -208,16 +208,12 @@ function filterSubmitProducts(productsToFilter){
 
 	if (productsToFilter instanceof Object){
 		angular.forEach(productsToFilter, function(product){
-		//var productKeys = Object.keys(productsToFilter);
-		//for (i in productKeys) {
 			if (product.hasOwnProperty("id")){
 				var filteredProduct = {};
 				var filteredVariants = [];
 
 				if (product.hasOwnProperty("variants")){
 					angular.forEach(product.variants, function(variant){
-					//var variantKeys = Object.keys(product.variants);
-					//for (j in variantKeys){
 						if (variant.deleted_at == null && variant.hasOwnProperty("id")){
 							var hasUpdateableProperty = false;
 							var filteredVariant = {};
@@ -226,7 +222,6 @@ function filterSubmitProducts(productsToFilter){
 							if (variant.hasOwnProperty("price")) { filteredVariant.price = variant.price; hasUpdatableProperty = true; }
 							if (hasUpdatableProperty) filteredVariants.push(filteredVariant);
 						}
-					//}
 					});
 				}
 
@@ -234,7 +229,6 @@ function filterSubmitProducts(productsToFilter){
 				filteredProduct.id = product.id;
 				if (product.hasOwnProperty("name")) { filteredProduct.name = product.name; hasUpdatableProperty = true; }
 				if (product.hasOwnProperty("supplier_id")) { filteredProduct.supplier_id = product.supplier_id; hasUpdatableProperty = true; }
-				//if (product.hasOwnProperty("master")) filteredProduct.master_attributes = product.master
 				if (product.hasOwnProperty("price")) { filteredProduct.price = product.price; hasUpdatableProperty = true; }
 				if (product.hasOwnProperty("on_hand") && filteredVariants.length == 0) { filteredProduct.on_hand = product.on_hand; hasUpdatableProperty = true; } //only update if no variants present
 				if (product.hasOwnProperty("available_on")) { filteredProduct.available_on = product.available_on; hasUpdatableProperty = true; }
@@ -242,7 +236,6 @@ function filterSubmitProducts(productsToFilter){
 
 				if (hasUpdatableProperty) filteredProducts.push(filteredProduct);
 			}
-		//}
 		});
 	}
 	return filteredProducts;
