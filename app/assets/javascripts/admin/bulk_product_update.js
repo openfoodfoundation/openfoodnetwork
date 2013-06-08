@@ -207,37 +207,43 @@ function filterSubmitProducts(productsToFilter){
 	var filteredProducts= [];
 
 	if (productsToFilter instanceof Object){
-		var productKeys = Object.keys(productsToFilter);
-		for (i in productKeys) {
-			if (productsToFilter[productKeys[i]].hasOwnProperty("id")){
+		angular.forEach(productsToFilter, function(product){
+		//var productKeys = Object.keys(productsToFilter);
+		//for (i in productKeys) {
+			if (product.hasOwnProperty("id")){
 				var filteredProduct = {};
 				var filteredVariants = [];
 
-				if (productsToFilter[productKeys[i]].hasOwnProperty("variants")){
-					var variantKeys = Object.keys(productsToFilter[productKeys[i]].variants);
-					for (j in variantKeys){
-						if (productsToFilter[productKeys[i]].variants[variantKeys[j]].deleted_at == null && productsToFilter[productKeys[i]].variants[variantKeys[j]].hasOwnProperty("id")){
-							filteredVariants[j] = {};
-							filteredVariants[j].id = productsToFilter[productKeys[i]].variants[variantKeys[j]].id;
-							if (productsToFilter[productKeys[i]].variants[variantKeys[j]].hasOwnProperty("on_hand")) filteredVariants[j].on_hand = productsToFilter[productKeys[i]].variants[variantKeys[j]].on_hand;
-							if (productsToFilter[productKeys[i]].variants[variantKeys[j]].hasOwnProperty("price")) filteredVariants[j].price = productsToFilter[productKeys[i]].variants[variantKeys[j]].price;
+				if (product.hasOwnProperty("variants")){
+					angular.forEach(product.variants, function(variant){
+					//var variantKeys = Object.keys(product.variants);
+					//for (j in variantKeys){
+						if (variant.deleted_at == null && variant.hasOwnProperty("id")){
+							var hasUpdateableProperty = false;
+							var filteredVariant = {};
+							filteredVariant.id = variant.id;
+							if (variant.hasOwnProperty("on_hand")) { filteredVariant.on_hand = variant.on_hand; hasUpdatableProperty = true; }
+							if (variant.hasOwnProperty("price")) { filteredVariant.price = variant.price; hasUpdatableProperty = true; }
+							if (hasUpdatableProperty) filteredVariants.push(filteredVariant);
 						}
-					}
+					//}
+					});
 				}
 
 				var hasUpdatableProperty = false;
-				filteredProduct.id = productsToFilter[productKeys[i]].id;
-				if (productsToFilter[productKeys[i]].hasOwnProperty("name")) { filteredProduct.name = productsToFilter[productKeys[i]].name; hasUpdatableProperty = true; }
-				if (productsToFilter[productKeys[i]].hasOwnProperty("supplier_id")) { filteredProduct.supplier_id = productsToFilter[productKeys[i]].supplier_id; hasUpdatableProperty = true; }
-				//if (productsToFilter[productKeys[i]].hasOwnProperty("master")) filteredProduct.master_attributes = productsToFilter[productKeys[i]].master
-				if (productsToFilter[productKeys[i]].hasOwnProperty("price")) { filteredProduct.price = productsToFilter[productKeys[i]].price; hasUpdatableProperty = true; }
-				if (productsToFilter[productKeys[i]].hasOwnProperty("on_hand") && filteredVariants.length == 0) { filteredProduct.on_hand = productsToFilter[productKeys[i]].on_hand; hasUpdatableProperty = true; } //only update if no variants present
-				if (productsToFilter[productKeys[i]].hasOwnProperty("available_on")) { filteredProduct.available_on = productsToFilter[productKeys[i]].available_on; hasUpdatableProperty = true; }
+				filteredProduct.id = product.id;
+				if (product.hasOwnProperty("name")) { filteredProduct.name = product.name; hasUpdatableProperty = true; }
+				if (product.hasOwnProperty("supplier_id")) { filteredProduct.supplier_id = product.supplier_id; hasUpdatableProperty = true; }
+				//if (product.hasOwnProperty("master")) filteredProduct.master_attributes = product.master
+				if (product.hasOwnProperty("price")) { filteredProduct.price = product.price; hasUpdatableProperty = true; }
+				if (product.hasOwnProperty("on_hand") && filteredVariants.length == 0) { filteredProduct.on_hand = product.on_hand; hasUpdatableProperty = true; } //only update if no variants present
+				if (product.hasOwnProperty("available_on")) { filteredProduct.available_on = product.available_on; hasUpdatableProperty = true; }
 				if (filteredVariants.length > 0) { filteredProduct.variants_attributes = filteredVariants; hasUpdatableProperty = true; } // Note that the name of the property changes to enable mass assignment of variants attributes with rails
 
 				if (hasUpdatableProperty) filteredProducts.push(filteredProduct);
 			}
-		}
+		//}
+		});
 	}
 	return filteredProducts;
 }
