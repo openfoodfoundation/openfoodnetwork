@@ -103,10 +103,25 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			method: 'DELETE',
 			url: '/admin/products/'+product.permalink_live+".js"
 		})
-		.success(function(data,status,headers,config){
+		.success(function(data){
 			delete $scope.products[product.id]
-			delete $scope.dirtyProducts[product.id]
+			if ($scope.dirtyProducts.hasOwnProperty(product.id)) delete $scope.dirtyProducts[product.id]
 		})
+	}
+
+	$scope.deleteVariant = function(product,variant){
+		$http({
+			method: 'DELETE',
+			url: '/admin/products/'+product.permalink_live+"/variants/"+variant.id+".js"
+		})
+		.success(function(data){
+			delete $scope.products[product.id].variants[variant.id]
+			if ($scope.dirtyProducts.hasOwnProperty(product.id) && $scope.dirtyProducts[product.id].hasOwnProperty("variants") && $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)) delete $scope.dirtyProducts[product.id].variants[variant.id]
+		})
+	}
+
+	$scope.hasVariants = function(product){
+		return !angular.equals(product.variants,{});
 	}
 
 	$scope.updateProducts = function(productsToSubmit){
@@ -177,7 +192,7 @@ productsApp.factory('dataFetcher', function($http,$q){
 
 function onHand(product){
 	var onHand = 0;
-	if(product.hasOwnProperty('variants') && product.variants instanceof Array){
+	if(product.hasOwnProperty('variants') && product.variants instanceof Object){
 		angular.forEach(product.variants, function(variant) {
 			onHand = parseInt( onHand ) + parseInt( variant.on_hand > 0 ? variant.on_hand : 0 );
 		});
@@ -240,17 +255,20 @@ function addDirtyProperty(dirtyObjects, objectID, propertyName, propertyValue){
 
 function removeCleanProperty(dirtyObjects, objectID, propertyName){
 	if (dirtyObjects.hasOwnProperty(objectID) && dirtyObjects[objectID].hasOwnProperty(propertyName)) delete dirtyObjects[objectID][propertyName];
-	if (dirtyObjects.hasOwnProperty(objectID) && Object.keys(dirtyObjects[objectID]).length <= 1)	delete dirtyObjects[objectID];
+	if (dirtyObjects.hasOwnProperty(objectID) && Object.keys(dirtyObjects[objectID]).length <= 1) delete dirtyObjects[objectID];
 }
 
 function toObjectWithIDKeys(array){
-	object = {};
-	if (array instanceof Array){
+	var object = {};
+	//if (array instanceof Array){
 		for (i in array){
-			if (array[i].hasOwnProperty("id")){
-				object[array[i].id] = array[i];
+			if (array[i] instanceof Object && array[i].hasOwnProperty("id")){
+				object[array[i].id] = angular.copy(array[i]);
+				if (array[i].hasOwnProperty("variants") && array[i].variants instanceof Array){
+					object[array[i].id].variants = toObjectWithIDKeys(array[i].variants);
+				}
 			}
 		}
-	}
+	//}
 	return object;
 }

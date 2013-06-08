@@ -276,7 +276,27 @@ feature %q{
         visit '/admin/products/bulk_index'
 
         page.should have_selector "a.delete-product", :count => 2
-      end     
+      end
+
+      it "shows a delete button for variants, which deletes the appropriate variant when clicked" do
+        v1 = FactoryGirl.create(:variant)
+        v2 = FactoryGirl.create(:variant)
+        v3 = FactoryGirl.create(:variant)
+        login_to_admin_section
+
+        visit '/admin/products/bulk_index'
+
+        page.should have_selector "a.delete-variant", :count => 3
+
+        first("a.delete-variant").click
+
+        page.should have_selector "a.delete-variant", :count => 2
+        #page.should have_selector "div.flash.notice", text: "Product has been deleted."
+
+        visit '/admin/products/bulk_index'
+
+        page.should have_selector "a.delete-variant", :count => 2
+      end
     end
   end
 end 

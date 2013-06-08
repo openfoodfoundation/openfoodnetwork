@@ -218,9 +218,9 @@ describe("AdminBulkProductsCtrl", function(){
 	describe("getting on_hand counts when products have variants", function(){		
 		var p1, p2, p3;
 		beforeEach(function(){
-			p1 = { variants: [ { on_hand: 1 }, { on_hand: 2 }, { on_hand: 3 } ] };
-			p2 = { variants: [ { not_on_hand: 1 }, { on_hand: 2 }, { on_hand: 3 } ] };
-			p3 = { not_variants: [ { on_hand: 1 }, { on_hand: 2 } ], variants: [ { on_hand: 3 } ] };
+			p1 = { variants: { 1: { id: 1, on_hand: 1 }, 2: { id: 2, on_hand: 2 }, 3: { id: 3, on_hand: 3 } } };
+			p2 = { variants: { 4: { id: 4, not_on_hand: 1 }, 5: { id: 5, on_hand: 2 }, 6: { id: 6, on_hand: 3 } } };
+			p3 = { not_variants: { 7: { id: 7, on_hand: 1 }, 8: { id: 8, on_hand: 2 } }, variants: { 9: { id: 9, on_hand: 3 } } };
 		});
 
 		it("sums variant on_hand properties", function(){
@@ -235,10 +235,9 @@ describe("AdminBulkProductsCtrl", function(){
 			expect(onHand(p3)).toEqual(3);
 		});
 
-		it("returns 'error' if not given an object with a variants property that is an array", function(){
+		it("returns 'error' if not given an object with a variants property that is an object", function(){
 			expect( onHand([]) ).toEqual('error');
 			expect( onHand( { not_variants: [] } ) ).toEqual('error');
-			expect( onHand( { variants: {} } ) ).toEqual('error');
 		});
 	});
 
@@ -341,4 +340,30 @@ describe("AdminBulkProductsCtrl", function(){
 			expect(field.text()).toBe("123");
 		});
 	});*/
+});
+
+describe("converting arrays of objects with ids to an object with ids as keys", function(){
+	it("returns an object", function(){
+		var array = [];
+		expect(toObjectWithIDKeys(array)).toEqual({});
+	});
+
+	it("adds each object in the array provided with an id to the returned object with the id as its key", function(){
+		var array = [ { id: 1 }, { id: 3 } ];
+		expect(toObjectWithIDKeys(array)).toEqual({ 1: { id: 1 }, 3: { id: 3 } } );
+	});
+
+	it("ignores items which are not objects and those which do not possess ids", function(){
+		var array = [ { id: 1 }, "not an object", { notanid: 3 } ];
+		expect(toObjectWithIDKeys(array)).toEqual({ 1: { id: 1 } } );
+	});
+
+	it("sends arrays with the key 'variants' to itself", function(){
+		spyOn(window, "toObjectWithIDKeys").andCallThrough();
+		var array = [ { id: 1, variants: [ { id: 17 } ] }, { id: 2, variants: { 12: { id: 12 } } } ];
+		var products = toObjectWithIDKeys(array);
+		expect(products["1"].variants).toEqual( { 17: { id: 17 } } );
+		expect(toObjectWithIDKeys).toHaveBeenCalledWith( [ { id: 17 } ] );
+		expect(toObjectWithIDKeys).not.toHaveBeenCalledWith( { 12: { id: 12 } } );
+	});
 });

@@ -30,8 +30,8 @@
         %td
           %input{ 'ng-model' => 'product.price', 'ng-decimal' => :true, :name => 'price', 'ng-track-product' => 'price', :type => 'text' }
         %td
-          %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'product.variants.length > 0' }
-          %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ng-track-product' => 'on_hand', 'ng-show' => 'product.variants.length == 0', :type => 'number' }
+          %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
+          %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ng-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
         %td
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', :type => 'text' }
         %td.actions
@@ -45,6 +45,8 @@
         %td
           %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-track-variant' => 'on_hand', :type => 'number' }
         %td
+        %td.actions
+          %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
   %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
   %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
     {{ updateStatusMessage.text }}
