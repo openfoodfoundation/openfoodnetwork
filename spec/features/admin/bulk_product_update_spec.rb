@@ -255,4 +255,28 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
   end
+
+  describe "using action buttons" do
+    describe "using delete buttons" do
+      it "shows a delete button for products, which deletes the appropriate product when clicked" do
+        p1 = FactoryGirl.create(:product)
+        p2 = FactoryGirl.create(:product)
+        p3 = FactoryGirl.create(:product)
+        login_to_admin_section
+
+        visit '/admin/products/bulk_index'
+
+        page.should have_selector "a.delete-product", :count => 3
+
+        first("a.delete-product").click
+
+        page.should have_selector "a.delete-product", :count => 2
+        #page.should have_selector "div.flash.notice", text: "Product has been deleted."
+
+        visit '/admin/products/bulk_index'
+
+        page.should have_selector "a.delete-product", :count => 2
+      end     
+    end
+  end
 end 

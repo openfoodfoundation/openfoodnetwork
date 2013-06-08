@@ -206,11 +206,12 @@ describe("AdminBulkProductsCtrl", function(){
 			expect(scope.suppliers).toEqual("list of suppliers");
 		});
 
-		it("gets a list of products", function(){
+		it("gets a list of products which is then passed to toObjectWithIDKeys()", function(){
 			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
+			spyOn(window, "toObjectWithIDKeys").andReturn("product object with ids as keys")
 			scope.refreshProducts();
 			httpBackend.flush();
-			expect(scope.products).toEqual("list of products");
+			expect(scope.products).toEqual("product object with ids as keys");
 		});
 	});
 	
@@ -289,9 +290,9 @@ describe("AdminBulkProductsCtrl", function(){
 
 			it("runs displaySuccess() when post returns success",function(){
 				spyOn(scope, "displaySuccess");
-				scope.products = "updated list of products";
-				httpBackend.expectPOST('/admin/products/bulk_update').respond(200, "updated list of products");
-				scope.updateProducts("updated list of products");
+				scope.products = { 1: { id: 1, name: "P1" }, 2: { id: 2, name: "P2" } };
+				httpBackend.expectPOST('/admin/products/bulk_update').respond(200, [ { id: 1, name: "P1" }, { id: 2, name: "P2" } ] );
+				scope.updateProducts("list of dirty products");
 				httpBackend.flush();
 				expect(scope.displaySuccess).toHaveBeenCalled();
 			});

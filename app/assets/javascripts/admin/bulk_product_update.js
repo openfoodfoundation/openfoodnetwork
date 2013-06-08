@@ -90,12 +90,23 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 
 	$scope.refreshProducts = function(){
 		dataFetcher('/admin/products/bulk_index.json').then(function(data){
-			$scope.products = angular.copy(data);
+			$scope.products = toObjectWithIDKeys(data);
 		});
 	};
 
 	$scope.updateOnHand = function(product){
 		product.on_hand = onHand(product);
+	}
+
+	$scope.deleteProduct = function(product){
+		$http({
+			method: 'DELETE',
+			url: '/admin/products/'+product.permalink_live+".js"
+		})
+		.success(function(data,status,headers,config){
+			delete $scope.products[product.id]
+			delete $scope.dirtyProducts[product.id]
+		})
 	}
 
 	$scope.updateProducts = function(productsToSubmit){
@@ -106,9 +117,9 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			data: productsToSubmit
 		})
 		.success(function(data){
+			data = toObjectWithIDKeys(data);
 			if (angular.toJson($scope.products) == angular.toJson(data)){
-				$scope.products = angular.copy(data);
-				$scope.cleanProducts = angular.copy(data);
+				$scope.products = data;
 				$scope.displaySuccess();
 			}
 			else{
@@ -230,4 +241,16 @@ function addDirtyProperty(dirtyObjects, objectID, propertyName, propertyValue){
 function removeCleanProperty(dirtyObjects, objectID, propertyName){
 	if (dirtyObjects.hasOwnProperty(objectID) && dirtyObjects[objectID].hasOwnProperty(propertyName)) delete dirtyObjects[objectID][propertyName];
 	if (dirtyObjects.hasOwnProperty(objectID) && Object.keys(dirtyObjects[objectID]).length <= 1)	delete dirtyObjects[objectID];
+}
+
+function toObjectWithIDKeys(array){
+	object = {};
+	if (array instanceof Array){
+		for (i in array){
+			if (array[i].hasOwnProperty("id")){
+				object[array[i].id] = array[i];
+			}
+		}
+	}
+	return object;
 }

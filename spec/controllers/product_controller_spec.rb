@@ -38,7 +38,8 @@ describe Spree::Admin::ProductsController do
           { "id" => v11.id, "options_text" => v11.options_text, "price" => v11.price.to_s, "on_hand" => v11.on_hand },
           { "id" => v12.id, "options_text" => v12.options_text, "price" => v12.price.to_s, "on_hand" => v12.on_hand },
           { "id" => v13.id, "options_text" => v13.options_text, "price" => v13.price.to_s, "on_hand" => v13.on_hand }
-        ]
+        ],
+        "permalink_live" => p1.permalink
       }
       p2r = {
         "id" => p2.id,
@@ -49,7 +50,8 @@ describe Spree::Admin::ProductsController do
         "on_hand" => v21.on_hand,
         "variants" => [ #ordered by id
           { "id" => v21.id, "options_text" => v21.options_text, "price" => v21.price.to_s, "on_hand" => v21.on_hand  }
-        ]
+        ],
+        "permalink_live" => p2.permalink
       }
       json_response = JSON.parse(response.body)
       json_response.should == [ p1r, p2r ]
