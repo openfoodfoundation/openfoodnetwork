@@ -316,6 +316,53 @@ describe("AdminBulkProductsCtrl", function(){
 		});
 	});
 
+	describe("deleting products",function(){
+		beforeEach(function(){
+			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+		});
+
+		it("deletes products with a http delete request to /admin/products/(permalink).js", function(){
+			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } }
+			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
+			scope.deleteProduct(scope.products[13]);
+			httpBackend.flush();
+		});
+
+		it("removes the specified product from both scope.products and scope.dirtyProducts (if it exists there)", function(){
+			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } };
+			scope.dirtyProducts = { 9: { id: 9, someProperty: "something" }, 13: { id: 13, name: "P1" } };
+			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
+			scope.deleteProduct(scope.products[13]);
+			httpBackend.flush();
+			expect(scope.products).toEqual( { 9: { id: 9, permalink_live: "apples" } } );
+			expect(scope.dirtyProducts).toEqual( { 9: { id: 9, someProperty: "something" } } );
+		});
+	});
+
+	describe("deleting variants",function(){
+		beforeEach(function(){
+			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+		});
+
+		it("deletes variants with a http delete request to /admin/products/(permalink)/variants/(variant_id).js", function(){
+			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12 } } }, 13: { id: 13, permalink_live: "oranges" } }
+			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
+			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
+			httpBackend.flush();
+		});
+
+		it("removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", function(){
+			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, permalink_live: "oranges" } }
+			scope.dirtyProducts = { 9: { id: 9, variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } };
+			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
+			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
+			httpBackend.flush();
+			expect(scope.products[9].variants).toEqual( { 4: { id: 4, price: 6.0 } } );
+			expect(scope.dirtyProducts).toEqual( { 9: { id: 9, variants: { 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } } );
+		});
+	});
+
+
 	/*describe("directives",function(){
 		scope = null;
 		compiler = null;
