@@ -25,8 +25,7 @@ feature %q{
       @orders.each |order|
       
         #click the link for the order
-        click_link "[data-action=capture]"
-        #click_link "[data-action=capture][href|=R#{order.number}]" #not sure if possible to select value within an attribute value, |= doesn't work
+        click_link "[data-action=capture][href*=R#{order.number}]"
         
         #we should be notified
         flash_message.should == "Payment Updated"
