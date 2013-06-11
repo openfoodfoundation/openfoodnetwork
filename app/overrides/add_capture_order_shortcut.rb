@@ -3,7 +3,7 @@ Deface::Override.new(:virtual_path    => "spree/admin/orders/index",
                       :insert_bottom  => "[data-hook='admin_orders_index_row_actions']",
                       #copied from backend / app / views / spree / admin / payments / _list.html.erb:
                       :text           => '<% order.payments.last.actions.grep(/^capture$/).each do |action| %>
-                                            <%= link_to_with_icon "icon-#{action}", t(action), fire_admin_order_payment_path(order, order.payment, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
+                                            <%= link_to_with_icon "icon-#{action}", t(action), fire_admin_order_payment_path(order, order.payments.last, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
                                           <% end %>'
                       )
 
