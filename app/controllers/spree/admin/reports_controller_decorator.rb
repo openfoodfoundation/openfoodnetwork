@@ -25,7 +25,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.where("state != ?", 'canceled').search(params[:q])
     orders = @search.result
 
     @report = OpenFoodWeb::OrderAndDistributorReport.new orders
@@ -54,7 +54,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.where("state != ?", 'canceled').search(params[:q])
     orders = @search.result
     
     @distributors = Enterprise.is_distributor
@@ -85,7 +85,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.where("state != ?", 'canceled').search(params[:q])
     orders = @search.result
     line_items = orders.map { |o| o.line_items }.flatten
 
@@ -237,7 +237,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.where("state != ?", 'canceled').search(params[:q])
     orders = @search.result
     payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
@@ -341,7 +341,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.where("state != ?", 'canceled').search(params[:q])
     orders = @search.result
     line_items = orders.map { |o| o.line_items }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
