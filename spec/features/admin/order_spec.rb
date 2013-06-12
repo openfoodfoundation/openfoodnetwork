@@ -22,10 +22,10 @@ feature %q{
 
       click_link 'Orders'
       
-      @orders.each |order|
+      @orders.each do |order|
       
         #click the link for the order
-        click_link "[data-action=capture][href*=R#{order.number}]"
+        click_link "[data-action=capture][href*=R#{order.order_id}]"
         
         #we should be notified
         flash_message.should == "Payment Updated"
@@ -37,9 +37,6 @@ feature %q{
         
         
       end #orders.each
-      
-
     end #scenario
-
   end #context
-end
+end #feature
