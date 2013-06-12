@@ -45,6 +45,13 @@ module OpenFoodWeb
       line_item31 = create(:line_item, :variant => @variant3, :order => order3)
       order3.line_items << line_item31
       @orders << order3
+      
+      #order4 = create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions)
+      #line_item41 = create(:line_item, :variant => @variant3, :order => order4)
+      #order4.line_items << line_item41
+      #order4.state = 'canceled'
+      #@cancelled_order = order4
+      #@orders << order4
     end
 
     it "should return a header row describing the report" do
@@ -92,6 +99,15 @@ module OpenFoodWeb
       supplier_groups.length.should == 2
       variant_groups.length.should == 3
       product_groups.length.should == 3
+    end
+    
+    it "should not include cancelled orders in the counts" do
+      subject = GroupBuyReport.new @orders
+
+      table_row_objects = subject.variants_and_quantities
+      
+      #table.should_not == 
+      
     end
   end
 end
