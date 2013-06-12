@@ -36,6 +36,7 @@
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', :type => 'text' }
         %td.actions
           %a{ 'ng-href' => '/admin/products/{{product.permalink_live}}/edit', :class => "edit-product icon-edit no-text" }
+          %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
       %tr{ 'ng-repeat' => 'variant in product.variants' }
         %td

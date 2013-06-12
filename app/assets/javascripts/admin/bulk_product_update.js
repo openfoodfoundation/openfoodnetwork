@@ -120,8 +120,22 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		})
 	}
 
+	$scope.cloneProduct = function(product){
+		dataFetcher("/admin/products/"+product.permalink_live+"/clone.json").then(function(data){
+			// Ideally we would use Spree's built in respond_override helper here to redirect the user after a successful clone with .json in the accept headers
+			// However, at the time of writing there appears to be an issue which causes the repond_with block in the destroy action of Spree::Admin::Product to break
+			// when a respond_overrride for the clone action is used.
+			var id = data.product.id;
+			dataFetcher("/admin/products/bulk_index.json?q[id_eq]="+id).then(function(data){
+				var newProduct = data[0];
+				newProduct.variants = toObjectWithIDKeys(newProduct.variants)
+				$scope.products[newProduct.id] = newProduct;
+			});
+		});
+	}
+
 	$scope.hasVariants = function(product){
-		return !angular.equals(product.variants,{});
+		return Object.keys(product.variants).length > 0;
 	}
 
 	$scope.updateProducts = function(productsToSubmit){
@@ -135,6 +149,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			data = toObjectWithIDKeys(data);
 			if (angular.toJson($scope.products) == angular.toJson(data)){
 				$scope.products = data;
+				$scope.dirtyProducts = {};
 				$scope.displaySuccess();
 			}
 			else{

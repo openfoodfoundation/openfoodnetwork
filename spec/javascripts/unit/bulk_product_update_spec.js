@@ -362,6 +362,30 @@ describe("AdminBulkProductsCtrl", function(){
 		});
 	});
 
+	describe("cloning products",function(){
+		beforeEach(function(){
+			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+		});
+
+		it("clones products using a http get request to /admin/products/(permalink)/clone.json", function(){
+			scope.products = { 13: { id: 13, permalink_live: "oranges" } }
+			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product" } } );
+			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product" } ] );
+			scope.cloneProduct(scope.products[13]);
+			httpBackend.flush();
+		});
+
+		it("adds the newly created product to scope.products, sending variants to toObjectWithIDKeys()", function(){
+			spyOn(window, "toObjectWithIDKeys").andCallThrough();
+			scope.products = { 13: { id: 13, permalink_live: "oranges" } };
+			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } } );
+			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } ] );
+			scope.cloneProduct(scope.products[13]);
+			httpBackend.flush();
+			expect(toObjectWithIDKeys).toHaveBeenCalledWith([ { id: 3, name: "V1" } ])
+			expect(scope.products).toEqual( { 13: { id: 13, permalink_live: "oranges" }, 17: { id: 17, name: "new_product", variants: { 3: { id: 3, name: "V1" } } } } );
+		});
+	});
 
 	/*describe("directives",function(){
 		scope = null;

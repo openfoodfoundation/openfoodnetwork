@@ -330,5 +330,23 @@ feature %q{
         URI.parse(current_url).path.should == "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
       end
     end
+
+    describe "using clone buttons" do
+      it "shows a clone button for products, which duplicates the product and adds it to the page when clicked" do
+        p1 = FactoryGirl.create(:product, :name => "P1")
+        p2 = FactoryGirl.create(:product, :name => "P2")
+        p3 = FactoryGirl.create(:product, :name => "P3")
+        login_to_admin_section
+
+        visit '/admin/products/bulk_index'
+
+        page.should have_selector "a.clone-product", :count => 3
+
+        first("a.clone-product").click
+
+        page.should have_selector "a.clone-product", :count => 4
+        page.should have_field "product_name", with: "COPY OF #{p1.name}"
+      end
+    end
   end
 end 

@@ -57,4 +57,22 @@ describe Spree::Admin::ProductsController do
       json_response.should == [ p1r, p2r ]
     end
   end
+
+  context "cloning a product" do
+    let(:ability_user) { stub_model(Spree::LegacyUser, :has_spree_role? => true) }
+
+    it "renders the newly created product as json" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+
+      spree_get :clone, { :format => :json, :id => p1.permalink }
+
+      json_response = JSON.parse(response.body)
+      json_response.keys.should == ["product"]
+      json_response["product"]["id"].should_not == p1.id;
+      json_response["product"]["name"].should == "COPY OF #{p1.name}";
+      json_response["product"]["available_on"].should == p1.available_on.strftime("%FT%TZ");
+      json_response["product"]["supplier_id"].should == p1.supplier_id;
+    end
+  end
 end
