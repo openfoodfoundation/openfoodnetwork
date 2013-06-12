@@ -1,3 +1,5 @@
+require 'spree/core/controller_helpers/order_decorator'
+
 Spree::OrdersController.class_eval do
   after_filter  :populate_variant_attributes, :only => :populate
   before_filter :update_distribution, :only => :update
