@@ -6,11 +6,19 @@ Spree::OrderPopulator.class_eval do
       errors.add(:base, "That distributor can't supply all the products in your cart. Please choose another.")
     end
 
-    populate_without_distribution_validation(from_hash) if valid?
-
     # Set order distributor and order cycle
+    @orig_distributor, @orig_order_cycle = orig_distributor_and_order_cycle
+    cart_distribution_set = false
     if valid?
       set_cart_distributor_and_order_cycle @distributor, @order_cycle
+      cart_distribution_set = true
+    end
+
+    populate_without_distribution_validation(from_hash) if valid?
+
+    # Undo distribution setting if validation falied when adding a product
+    if !valid? && cart_distribution_set
+      set_cart_distributor_and_order_cycle @orig_distributor, @orig_order_cycle
     end
 
     valid?
@@ -34,6 +42,11 @@ Spree::OrderPopulator.class_eval do
 
 
   private
+
+  def orig_distributor_and_order_cycle
+    [@order.distributor, @order.order_cycle]
+  end
+
 
   def load_distributor_and_order_cycle(from_hash)
     distributor = from_hash[:distributor_id].present? ?
