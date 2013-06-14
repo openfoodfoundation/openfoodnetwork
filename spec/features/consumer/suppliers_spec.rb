@@ -8,23 +8,62 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing a list of suppliers in the sidebar" do
+  scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer" do
     # Given some suppliers
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
     s3 = create(:supplier_enterprise)
+    s4 = create(:supplier_enterprise)
+    s5 = create(:supplier_enterprise)
+    s6 = create(:supplier_enterprise)
 
     # And some of those suppliers have a product
     create(:product, :supplier => s1)
-    create(:product, :supplier => s3)
+    create(:product, :supplier => s3, :on_hand => 0)
 
     # When I go to the home page
     visit spree.root_path
 
-    # Then I should see a list containing all the suppliers that have products in stock
+    # Then I should see a list containing all the suppliers that have active products in stock
     page.should have_selector 'a', :text => s1.name
-    page.should have_selector 'a', :text => s3.name
-    page.should_not have_selector 'a', :text => s2.name
+    page.should_not have_selector 'a', :text => s2.name #has no products
+    page.should_not have_selector 'a', :text => s3.name #has no products on hand
+
+    # And I shouldn't see 'xx more'
+    page.should_not have_selector '#supplier_filter span.filter_more', :text => 'more'
+
+    # And I shouldn't see a browse suppliers button
+    page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
+  end
+
+  scenario "viewing a list of suppliers (with active products) in the sidebar when there's more than 5" do
+    # Given some suppliers
+    s1 = create(:supplier_enterprise)
+    s2 = create(:supplier_enterprise)
+    s3 = create(:supplier_enterprise)
+    s4 = create(:supplier_enterprise)
+    s5 = create(:supplier_enterprise)
+    s6 = create(:supplier_enterprise)
+
+    # And at least 5 of those suppliers have a product
+    create(:product, :supplier => s1)
+    create(:product, :supplier => s2)
+    create(:product, :supplier => s3)
+    create(:product, :supplier => s4)
+    create(:product, :supplier => s5)
+    create(:product, :supplier => s6)
+
+    # When I go to the home page
+    visit spree.root_path
+
+    # Then I should see a list containing 5 suppliers that have products in stock
+    page.should have_selector '#supplier_filter li a', :count => 5
+
+    # And I should see 'xx more'
+    page.should have_selector '#supplier_filter span.filter_more', :text => 'more'
+
+    # And I should see a browse suppliers button
+    page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
   end
 
   scenario "viewing a list of all suppliers" do

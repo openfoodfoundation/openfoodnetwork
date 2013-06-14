@@ -8,7 +8,7 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing a list of distributors" do
+  scenario "viewing a list of distributors in the sidebar" do
     # Given some distributors
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
@@ -25,6 +25,85 @@ feature %q{
     page.should have_selector 'a', :text => d2.name
     page.should_not have_selector 'a', :text => d3.name
   end
+
+scenario "viewing a list of distributors (with active products) in the sidebar when there's 5 or fewer" do
+    # Given some distributors
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    d3 = create(:distributor_enterprise)
+    d4 = create(:distributor_enterprise)
+    d5 = create(:distributor_enterprise)
+    d6 = create(:distributor_enterprise)
+
+    # And some of those distributors have a product
+    create(:product, :distributors => [d1])
+    create(:product, :distributors => [d3], :on_hand => 0)
+
+    # When I go to the home page
+    visit spree.root_path
+
+    # Then I should see a list containing all the distributors that have active products in stock
+    page.should have_selector 'a', :text => d1.name
+    page.should_not have_selector 'a', :text => d2.name #has no products
+    page.should_not have_selector 'a', :text => d3.name #has no products on hand
+
+    # And I shouldn't see 'xx more'
+    page.should_not have_selector '#distributor_filter span.filter_more', :text => 'more'
+
+    # And I shouldn't see a browse distributors button
+    page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
+  end
+
+  scenario "viewing a list of distributors (with active products) in the sidebar when there's more than 5" do
+    # Given some distributors
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    d3 = create(:distributor_enterprise)
+    d4 = create(:distributor_enterprise)
+    d5 = create(:distributor_enterprise)
+    d6 = create(:distributor_enterprise)
+
+    # And at least 5 of those distributors have a product
+    create(:product, :distributors => [d1])
+    create(:product, :distributors => [d2])
+    create(:product, :distributors => [d3])
+    create(:product, :distributors => [d4])
+    create(:product, :distributors => [d5])
+    create(:product, :distributors => [d6])
+
+    # When I go to the home page
+    visit spree.root_path
+
+    # Then I should see a list containing 5 distributors that have products in stock
+    page.should have_selector '#distributor_filter li a', :count => 5
+
+    # And I should see 'xx more'
+    page.should have_selector '#distributor_filter span.filter_more', :text => 'more'
+
+    # And I should see a browse distributors button
+    page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
+  end
+
+  scenario "viewing a list of all distributors" do
+    # Given some distributors
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    d3 = create(:distributor_enterprise)
+
+    # And some of those distributors have a product
+    create(:product, :distributors => [d1])
+    create(:product, :distributors => [d3])
+
+    # When I go to the distributors listing page
+    visit spree.root_path
+    click_button 'Browse All Distributors'
+
+    # Then I should see a list containing all the distributors
+    page.should have_selector '#content a', :text => d1.name
+    page.should have_selector '#content a', :text => d2.name
+    page.should have_selector '#content a', :text => d3.name
+  end
+
 
   scenario "viewing a distributor" do
     # Given some distributors with products
@@ -105,20 +184,6 @@ feature %q{
         page.should have_selector '#products-local', :text => p1.name
         page.should have_selector '#products-remote', :text => p2.name
       end
-    end
-
-    it "allows the user to leave the distributor" do
-      # Given a distributor with a product
-      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
-      p1 = create(:product, :distributors => [d])
-
-      # When I select the distributor and then leave it
-      visit spree.select_distributor_order_path(d)
-      visit spree.root_path
-      click_button 'Browse All Distributors'
-
-      # Then I should have left the distributor
-      page.should_not have_selector '#current-distributor', :text => 'You are shopping at Melb Uni Co-op'
     end
 
     context "viewing a product, it provides a choice of distributor when adding to cart" do
