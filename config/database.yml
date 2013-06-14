@@ -1,12 +1,8 @@
 development:
   adapter: postgresql
   encoding: unicode
-  #template: template0
-  #collate: en_US.UTF8
-  #ctype: en_US.UTF8
   database: open_food_web_dev
   pool: 5
-  host: localhost
   username: ofw
   password: f00d
 
@@ -15,7 +11,6 @@ test:
   encoding: unicode
   database: open_food_web_test
   pool: 5
-  host: localhost
   username: ofw
   password: f00d
 
