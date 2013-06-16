@@ -289,6 +289,7 @@ feature %q{
         page.should have_selector "a.delete-product", :count => 3
 
         first("a.delete-product").click
+        page.driver.browser.switch_to.alert.accept
 
         page.should have_selector "a.delete-product", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
@@ -309,6 +310,7 @@ feature %q{
         page.should have_selector "a.delete-variant", :count => 3
 
         first("a.delete-variant").click
+        page.driver.browser.switch_to.alert.accept
 
         page.should have_selector "a.delete-variant", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."

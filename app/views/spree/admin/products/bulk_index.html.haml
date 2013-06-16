@@ -35,7 +35,7 @@
         %td
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', :type => 'text' }
         %td.actions
-          %a{ 'ng-href' => '/admin/products/{{product.permalink_live}}/edit', :class => "edit-product icon-edit no-text" }
+          %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
       %tr{ 'ng-repeat' => 'variant in product.variants' }
@@ -48,7 +48,7 @@
           %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-track-variant' => 'on_hand', :type => 'number' }
         %td
         %td.actions
-          %a{  'ng-href' => '/admin/products/{{product.permalink_live}}/variants/{{variant.id}}/edit', :class => "edit-variant icon-edit no-text" }
+          %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }
           %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
   %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
   %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }

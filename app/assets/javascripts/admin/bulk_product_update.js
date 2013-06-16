@@ -98,26 +98,36 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		product.on_hand = onHand(product);
 	}
 
+	$scope.editWarn = function(product,variant){
+		if ( ( $scope.dirtyProductCount() > 0 && confirm("Unsaved changes will be lost. Continue anyway?") ) || ( $scope.dirtyProductCount() == 0 ) ){
+			window.location = "/admin/products/"+product.permalink_live+(variant ? "/variants/"+variant.id : "")+"/edit";
+		}
+	}
+
 	$scope.deleteProduct = function(product){
-		$http({
-			method: 'DELETE',
-			url: '/admin/products/'+product.permalink_live+".js"
-		})
-		.success(function(data){
-			delete $scope.products[product.id]
-			if ($scope.dirtyProducts.hasOwnProperty(product.id)) delete $scope.dirtyProducts[product.id]
-		})
+		if (confirm("Are you sure?")){
+			$http({
+				method: 'DELETE',
+				url: '/admin/products/'+product.permalink_live+".js"
+			})
+			.success(function(data){
+				delete $scope.products[product.id]
+				if ($scope.dirtyProducts.hasOwnProperty(product.id)) delete $scope.dirtyProducts[product.id]
+			})
+		}
 	}
 
 	$scope.deleteVariant = function(product,variant){
-		$http({
-			method: 'DELETE',
-			url: '/admin/products/'+product.permalink_live+"/variants/"+variant.id+".js"
-		})
-		.success(function(data){
-			delete $scope.products[product.id].variants[variant.id]
-			if ($scope.dirtyProducts.hasOwnProperty(product.id) && $scope.dirtyProducts[product.id].hasOwnProperty("variants") && $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)) delete $scope.dirtyProducts[product.id].variants[variant.id]
-		})
+		if (confirm("Are you sure?")){
+			$http({
+				method: 'DELETE',
+				url: '/admin/products/'+product.permalink_live+"/variants/"+variant.id+".js"
+			})
+			.success(function(data){
+				delete $scope.products[product.id].variants[variant.id]
+				if ($scope.dirtyProducts.hasOwnProperty(product.id) && $scope.dirtyProducts[product.id].hasOwnProperty("variants") && $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)) delete $scope.dirtyProducts[product.id].variants[variant.id]
+			})
+		}
 	}
 
 	$scope.cloneProduct = function(product){
@@ -187,9 +197,12 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 	}
 
 	$scope.displayDirtyProducts = function(){
-		var changedProductCount = Object.keys($scope.dirtyProducts).length;
-		if (changedProductCount > 0) $scope.setMessage($scope.updateStatusMessage,"Changes to "+Object.keys($scope.dirtyProducts).length+" products remain unsaved.",{ color: "gray" },false);
+		if ($scope.dirtyProductCount() > 0) $scope.setMessage($scope.updateStatusMessage,"Changes to "+$scope.dirtyProductCount()+" products remain unsaved.",{ color: "gray" },false);
 		else $scope.setMessage($scope.updateStatusMessage,"",{},false);
+	}
+
+	$scope.dirtyProductCount = function(){
+		return Object.keys($scope.dirtyProducts).length;
 	}
 });
 

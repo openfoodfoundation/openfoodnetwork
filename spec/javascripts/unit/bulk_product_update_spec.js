@@ -318,17 +318,19 @@ describe("AdminBulkProductsCtrl", function(){
 
 	describe("deleting products",function(){
 		beforeEach(function(){
-			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		});
 
 		it("deletes products with a http delete request to /admin/products/(permalink).js", function(){
-			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } }
+			spyOn(window, "confirm").andReturn(true);
+			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } };
 			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
 			scope.deleteProduct(scope.products[13]);
 			httpBackend.flush();
 		});
 
 		it("removes the specified product from both scope.products and scope.dirtyProducts (if it exists there)", function(){
+			spyOn(window, "confirm").andReturn(true);
 			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } };
 			scope.dirtyProducts = { 9: { id: 9, someProperty: "something" }, 13: { id: 13, name: "P1" } };
 			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
@@ -341,18 +343,20 @@ describe("AdminBulkProductsCtrl", function(){
 
 	describe("deleting variants",function(){
 		beforeEach(function(){
-			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		});
 
 		it("deletes variants with a http delete request to /admin/products/(permalink)/variants/(variant_id).js", function(){
-			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12 } } }, 13: { id: 13, permalink_live: "oranges" } }
+			spyOn(window, "confirm").andReturn(true);
+			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12 } } }, 13: { id: 13, permalink_live: "oranges" } };
 			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
 			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
 			httpBackend.flush();
 		});
 
 		it("removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", function(){
-			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, permalink_live: "oranges" } }
+			spyOn(window, "confirm").andReturn(true);
+			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, permalink_live: "oranges" } };
 			scope.dirtyProducts = { 9: { id: 9, variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } };
 			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
 			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
@@ -364,7 +368,7 @@ describe("AdminBulkProductsCtrl", function(){
 
 	describe("cloning products",function(){
 		beforeEach(function(){
-			ctrl('AdminBulkProductsCtrl', { $scope: scope, $timeout: timeout } );
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		});
 
 		it("clones products using a http get request to /admin/products/(permalink)/clone.json", function(){
@@ -386,31 +390,6 @@ describe("AdminBulkProductsCtrl", function(){
 			expect(scope.products).toEqual( { 13: { id: 13, permalink_live: "oranges" }, 17: { id: 17, name: "new_product", variants: { 3: { id: 3, name: "V1" } } } } );
 		});
 	});
-
-	/*describe("directives",function(){
-		scope = null;
-		compiler = null;
-		
-		beforeEach(function(){
-			module('bulk_product_update');
-		});
-
-		beforeEach(inject(function($rootScope,$compile) {
-			compiler = $compile;
-			scope = $rootScope;
-		}));
-		
-		it("should format numeric strings in ngDecimal fields as decimals in the associated model",function(){
-			scope.$apply(function() { scope.testValue = "123"; });
-		    
-			var field = angular.element("<input type='text' ng-demical='true' ng-model='testValue'>");
-			compiler(field)(scope);
-			
-		    scope.$apply();
-
-			expect(field.text()).toBe("123");
-		});
-	});*/
 });
 
 describe("converting arrays of objects with ids to an object with ids as keys", function(){
