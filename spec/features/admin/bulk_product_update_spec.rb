@@ -232,6 +232,26 @@ feature %q{
     page.should have_field "variant_on_hand", with: "10"
   end
 
+  scenario "updating delegated attributes of variants in isolation" do
+    p = FactoryGirl.create(:product)
+    v = FactoryGirl.create(:variant, product: p, price: 3.0)
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_index'
+
+    page.should have_field "variant_price", with: "3.0"
+
+    fill_in "variant_price", with: "10.0"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    visit '/admin/products/bulk_index'
+
+    page.should have_field "variant_price", with: "10.0"
+  end
+
   scenario "updating a product mutiple times without refresh" do
     p = FactoryGirl.create(:product, name: 'original name')
     login_to_admin_section
