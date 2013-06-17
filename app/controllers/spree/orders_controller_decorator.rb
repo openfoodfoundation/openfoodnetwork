@@ -61,16 +61,18 @@ Spree::OrdersController.class_eval do
   private
 
   def populate_variant_attributes
+    order = current_order.reload
+
     if params.key? :variant_attributes
       params[:variant_attributes].each do |variant_id, attributes|
-        current_order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
+        order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
       end
     end
 
     if params.key? :quantity
       params[:products].each do |product_id, variant_id|
         max_quantity = params[:max_quantity].to_i
-        current_order.set_variant_attributes(Spree::Variant.find(variant_id),
+        order.set_variant_attributes(Spree::Variant.find(variant_id),
                                              {:max_quantity => max_quantity})
       end
     end
