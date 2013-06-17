@@ -1,7 +1,7 @@
 class Spree::ProductSet < ModelSet
   def initialize(attributes={})
-    product_ids = attributes[:collection_attributes].each_value.map{ |p| p["id"] } if attributes[:collection_attributes]
-    super(Spree::Product, (product_ids ? Spree::Product.select{ |p| p.id.in? product_ids } : Spree::Product.all ),
+    product_ids = attributes[:collection_attributes].each_value.map{ |p| p[:id] } if attributes[:collection_attributes]
+    super(Spree::Product, (product_ids ? Spree::Product.where( :id => product_ids ) : Spree::Product.all ),
           proc { |attrs| attrs[:product_id].blank? },
           attributes)
   end
