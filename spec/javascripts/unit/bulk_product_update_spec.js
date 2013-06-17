@@ -206,12 +206,11 @@ describe("AdminBulkProductsCtrl", function(){
 			expect(scope.suppliers).toEqual("list of suppliers");
 		});
 
-		it("gets a list of products which is then passed to toObjectWithIDKeys()", function(){
+		it("gets a list of products", function(){
 			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
-			spyOn(window, "toObjectWithIDKeys").andReturn("product object with ids as keys")
 			scope.refreshProducts();
 			httpBackend.flush();
-			expect(scope.products).toEqual("product object with ids as keys");
+			expect(scope.products).toEqual("list of products");
 		});
 	});
 	
@@ -289,7 +288,7 @@ describe("AdminBulkProductsCtrl", function(){
 
 			it("runs displaySuccess() when post returns success",function(){
 				spyOn(scope, "displaySuccess");
-				scope.products = { 1: { id: 1, name: "P1" }, 2: { id: 2, name: "P2" } };
+				scope.products = [ { id: 1, name: "P1" }, { id: 2, name: "P2" } ];
 				httpBackend.expectPOST('/admin/products/bulk_update').respond(200, [ { id: 1, name: "P1" }, { id: 2, name: "P2" } ] );
 				scope.updateProducts("list of dirty products");
 				httpBackend.flush();
@@ -323,20 +322,20 @@ describe("AdminBulkProductsCtrl", function(){
 
 		it("deletes products with a http delete request to /admin/products/(permalink).js", function(){
 			spyOn(window, "confirm").andReturn(true);
-			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } };
+			scope.products = [ { id: 9, permalink_live: "apples" }, { id: 13, permalink_live: "oranges" } ];
 			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
-			scope.deleteProduct(scope.products[13]);
+			scope.deleteProduct(scope.products[1]);
 			httpBackend.flush();
 		});
 
 		it("removes the specified product from both scope.products and scope.dirtyProducts (if it exists there)", function(){
 			spyOn(window, "confirm").andReturn(true);
-			scope.products = { 9: { id: 9, permalink_live: "apples" }, 13: { id: 13, permalink_live: "oranges" } };
+			scope.products = [ { id: 9, permalink_live: "apples" }, { id: 13, permalink_live: "oranges" } ];
 			scope.dirtyProducts = { 9: { id: 9, someProperty: "something" }, 13: { id: 13, name: "P1" } };
 			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
-			scope.deleteProduct(scope.products[13]);
+			scope.deleteProduct(scope.products[1]);
 			httpBackend.flush();
-			expect(scope.products).toEqual( { 9: { id: 9, permalink_live: "apples" } } );
+			expect(scope.products).toEqual( [ { id: 9, permalink_live: "apples" } ] );
 			expect(scope.dirtyProducts).toEqual( { 9: { id: 9, someProperty: "something" } } );
 		});
 	});
@@ -348,20 +347,20 @@ describe("AdminBulkProductsCtrl", function(){
 
 		it("deletes variants with a http delete request to /admin/products/(permalink)/variants/(variant_id).js", function(){
 			spyOn(window, "confirm").andReturn(true);
-			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12 } } }, 13: { id: 13, permalink_live: "oranges" } };
+			scope.products = [ { id: 9, permalink_live: "apples", variants: [ { id: 3, price: 12 } ] }, { id: 13, permalink_live: "oranges" } ];
 			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
-			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
+			scope.deleteVariant(scope.products[0],scope.products[0].variants[0]);
 			httpBackend.flush();
 		});
 
 		it("removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", function(){
 			spyOn(window, "confirm").andReturn(true);
-			scope.products = { 9: { id: 9, permalink_live: "apples", variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, permalink_live: "oranges" } };
+			scope.products = [ { id: 9, permalink_live: "apples", variants: [ { id: 3, price: 12.0 }, { id: 4, price: 6.0 } ] }, { id: 13, permalink_live: "oranges" } ];
 			scope.dirtyProducts = { 9: { id: 9, variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } };
 			httpBackend.expectDELETE('/admin/products/apples/variants/3.js').respond(200, "data");
-			scope.deleteVariant(scope.products[9],scope.products[9].variants[3]);
+			scope.deleteVariant(scope.products[0],scope.products[0].variants[0]);
 			httpBackend.flush();
-			expect(scope.products[9].variants).toEqual( { 4: { id: 4, price: 6.0 } } );
+			expect(scope.products[0].variants).toEqual( [ { id: 4, price: 6.0 } ] );
 			expect(scope.dirtyProducts).toEqual( { 9: { id: 9, variants: { 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } } );
 		});
 	});
@@ -372,22 +371,20 @@ describe("AdminBulkProductsCtrl", function(){
 		});
 
 		it("clones products using a http get request to /admin/products/(permalink)/clone.json", function(){
-			scope.products = { 13: { id: 13, permalink_live: "oranges" } }
+			scope.products = [ { id: 13, permalink_live: "oranges" } ];
 			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product" } } );
 			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product" } ] );
-			scope.cloneProduct(scope.products[13]);
+			scope.cloneProduct(scope.products[0]);
 			httpBackend.flush();
 		});
 
-		it("adds the newly created product to scope.products, sending variants to toObjectWithIDKeys()", function(){
-			spyOn(window, "toObjectWithIDKeys").andCallThrough();
-			scope.products = { 13: { id: 13, permalink_live: "oranges" } };
+		it("adds the newly created product to scope.products", function(){
+			scope.products = [ { id: 13, permalink_live: "oranges" } ];
 			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } } );
 			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } ] );
-			scope.cloneProduct(scope.products[13]);
+			scope.cloneProduct(scope.products[0]);
 			httpBackend.flush();
-			expect(toObjectWithIDKeys).toHaveBeenCalledWith([ { id: 3, name: "V1" } ])
-			expect(scope.products).toEqual( { 13: { id: 13, permalink_live: "oranges" }, 17: { id: 17, name: "new_product", variants: { 3: { id: 3, name: "V1" } } } } );
+			expect(scope.products).toEqual( [ { id: 13, permalink_live: "oranges" }, { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } ] );
 		});
 	});
 });

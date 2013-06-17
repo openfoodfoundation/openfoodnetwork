@@ -1,4 +1,4 @@
-r.list_of :products, @collection do
+r.list_of :products, @collection.sort_by(&:id) do
   r.element :id
   r.element :name
   r.element :supplier_id

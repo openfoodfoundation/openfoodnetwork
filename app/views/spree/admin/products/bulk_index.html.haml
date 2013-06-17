@@ -11,11 +11,17 @@
 
 %div#new_product(data-hook)
 
-%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => 'refreshSuppliers(); refreshProducts()' }
+%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => 'refreshSuppliers(); refreshProducts();' }
+  %div.options
+    Filter Results:
+    %input.search{ 'ng-model' => 'query', :type => 'text', 'placeholder' => 'Search Value' }
+  %br.clear
+  %br.clear
   %table.index#listing_products
     %thead
       %tr
-        %th Name
+        %th.actions
+        %th.firstcol Name
         %th Supplier
         %th Price
         %th On Hand
@@ -23,7 +29,9 @@
         %th.actions
     %tbody{ 'ng-repeat' => 'product in products | filter:query' }
       %tr
-        %td
+        %td.actions
+          %a{ 'ng-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
+        %td.firstcol
           %input{ 'ng-model' => "product.name", :name => 'product_name', 'ng-track-product' => 'name', :type => 'text' }
         %td
           %select.select2{ 'ng-model' => 'product.supplier_id', :name => 'supplier_id', 'ng-track-product' => 'supplier_id', 'ng-options' => 's.id as s.name for s in suppliers' }
@@ -38,8 +46,10 @@
           %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
-      %tr{ 'ng-repeat' => 'variant in product.variants' }
-        %td
+      %tr{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants' }
+        %td.actions
+          %a{ :class => "variant-item icon-caret-right" }
+        %td.firstcol
           {{ variant.options_text }}
         %td
         %td

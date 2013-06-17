@@ -110,6 +110,8 @@ feature %q{
       v2 = FactoryGirl.create(:variant)
 
       visit '/admin/products/bulk_index'
+      page.should have_selector "a.view-variants"
+      first("a.view-variants").click
 
       page.should have_field "product_name", with: v1.product.name
       page.should have_field "product_name", with: v2.product.name
@@ -213,6 +215,8 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_index'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
 
     page.should have_field "variant_price", with: "3.0"
     page.should have_field "variant_on_hand", with: "9"
@@ -227,6 +231,8 @@ feature %q{
     page.find("span#update-status-message").should have_content "Update complete"
 
     visit '/admin/products/bulk_index'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
 
     page.should have_field "variant_price", with: "4.0"
     page.should have_field "variant_on_hand", with: "10"
@@ -239,6 +245,8 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_index'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
 
     page.should have_field "variant_price", with: "3.0"
 
@@ -248,6 +256,8 @@ feature %q{
     page.find("span#update-status-message").should have_content "Update complete"
 
     visit '/admin/products/bulk_index'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
 
     page.should have_field "variant_price", with: "10.0"
   end
@@ -291,6 +301,7 @@ feature %q{
         first("a.delete-product").click
         page.driver.browser.switch_to.alert.accept
 
+        page.should have_selector "a.delete-product"
         page.should have_selector "a.delete-product", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
 
@@ -306,6 +317,8 @@ feature %q{
         login_to_admin_section
 
         visit '/admin/products/bulk_index'
+        page.should have_selector "a.view-variants"
+        all("a.view-variants").each{ |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 3
 
@@ -316,6 +329,8 @@ feature %q{
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
 
         visit '/admin/products/bulk_index'
+        page.should have_selector "a.view-variants"
+        all("a.view-variants").select{ |e| e.visible? }.each{ |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 2
       end
@@ -344,6 +359,8 @@ feature %q{
         login_to_admin_section
 
         visit '/admin/products/bulk_index'
+        page.should have_selector "a.view-variants"
+        first("a.view-variants").click
 
         page.should have_selector "a.edit-variant", :count => 3
 
@@ -365,6 +382,11 @@ feature %q{
         page.should have_selector "a.clone-product", :count => 3
 
         first("a.clone-product").click
+
+        page.should have_selector "a.clone-product", :count => 4
+        page.should have_field "product_name", with: "COPY OF #{p1.name}"
+
+        visit '/admin/products/bulk_index'
 
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"

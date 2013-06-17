@@ -74,6 +74,27 @@ productsApp.directive('ngTrackVariant', function(){
 	}
 });
 
+productsApp.directive('ngToggleVariants',function(){
+	return {
+		link: function(scope,element,attrs){
+			element.bind('click', function(){
+				scope.$apply(function(){
+					if (scope.displayProperties[scope.product.id].showVariants){
+						scope.displayProperties[scope.product.id].showVariants = false;
+						element.removeClass('icon-chevron-down');
+						element.addClass('icon-chevron-right');
+					}
+					else {
+						scope.displayProperties[scope.product.id].showVariants = true;
+						element.removeClass('icon-chevron-right');
+						element.addClass('icon-chevron-down');
+					}
+				});
+			});
+		}
+	};
+});
+
 productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
 	$scope.dirtyProducts = {};
 
@@ -90,7 +111,11 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 
 	$scope.refreshProducts = function(){
 		dataFetcher('/admin/products/bulk_index.json').then(function(data){
-			$scope.products = toObjectWithIDKeys(data);
+			$scope.products = data;
+			$scope.displayProperties = {};
+			angular.forEach($scope.products,function(product){
+				$scope.displayProperties[product.id] = { showVariants: false }
+			});
 		});
 	};
 
@@ -111,8 +136,9 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 				url: '/admin/products/'+product.permalink_live+".js"
 			})
 			.success(function(data){
-				delete $scope.products[product.id]
-				if ($scope.dirtyProducts.hasOwnProperty(product.id)) delete $scope.dirtyProducts[product.id]
+				$scope.products.splice($scope.products.indexOf(product),1);
+				if ($scope.dirtyProducts.hasOwnProperty(product.id)) delete $scope.dirtyProducts[product.id];
+				$scope.displayDirtyProducts();
 			})
 		}
 	}
@@ -124,8 +150,9 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 				url: '/admin/products/'+product.permalink_live+"/variants/"+variant.id+".js"
 			})
 			.success(function(data){
-				delete $scope.products[product.id].variants[variant.id]
-				if ($scope.dirtyProducts.hasOwnProperty(product.id) && $scope.dirtyProducts[product.id].hasOwnProperty("variants") && $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)) delete $scope.dirtyProducts[product.id].variants[variant.id]
+				product.variants.splice(product.variants.indexOf(variant),1);
+				if ($scope.dirtyProducts.hasOwnProperty(product.id) && $scope.dirtyProducts[product.id].hasOwnProperty("variants") && $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)) delete $scope.dirtyProducts[product.id].variants[variant.id];
+				$scope.displayDirtyProducts();
 			})
 		}
 	}
@@ -138,8 +165,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			var id = data.product.id;
 			dataFetcher("/admin/products/bulk_index.json?q[id_eq]="+id).then(function(data){
 				var newProduct = data[0];
-				newProduct.variants = toObjectWithIDKeys(newProduct.variants)
-				$scope.products[newProduct.id] = newProduct;
+				$scope.products.push(newProduct);
 			});
 		});
 	}
@@ -156,7 +182,6 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			data: productsToSubmit
 		})
 		.success(function(data){
-			data = toObjectWithIDKeys(data);
 			if (angular.toJson($scope.products) == angular.toJson(data)){
 				$scope.products = data;
 				$scope.dirtyProducts = {};
