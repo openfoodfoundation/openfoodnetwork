@@ -33,6 +33,13 @@ describe DistributionChangeValidator do
       subject.variants_available_for_distribution(d, oc).should == [v]
     end
 
+    it "finds variants distributed by product distribution when order cycle is nil" do
+      v = double(:variant)
+      d = double(:distributor, distributed_variants: [v])
+
+      subject.variants_available_for_distribution(d, nil).should == [v]
+    end
+
     it "finds variants distributed by order cycle" do
       v = double(:variant)
       d = double(:distributor, distributed_variants: [])
