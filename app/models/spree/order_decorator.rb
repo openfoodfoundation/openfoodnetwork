@@ -13,7 +13,7 @@ Spree::Order.class_eval do
   
   def products_available_from_new_distributor
     # Check that the line_items in the current order are available from a newly selected distributor
-    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
+    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
   end
 
   def set_order_cycle!(order_cycle)
