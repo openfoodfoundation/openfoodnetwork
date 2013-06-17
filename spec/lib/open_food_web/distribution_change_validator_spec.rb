@@ -49,6 +49,10 @@ describe DistributionChangeValidator do
 
       subject.variants_available_for_distribution(d, oc).should == [v]
     end
+
+    it "returns an empty array when distributor and order cycle are both nil" do
+      subject.variants_available_for_distribution(nil, nil).should == []
+    end
   end
 
   describe "finding distributors which have the same variants" do
