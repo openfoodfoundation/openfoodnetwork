@@ -16,7 +16,7 @@ Spree::OrderPopulator.class_eval do
 
     populate_without_distribution_validation(from_hash) if valid?
 
-    # Undo distribution setting if validation falied when adding a product
+    # Undo distribution setting if validation failed when adding a product
     if !valid? && cart_distribution_set
       set_cart_distributor_and_order_cycle @orig_distributor, @orig_order_cycle
     end

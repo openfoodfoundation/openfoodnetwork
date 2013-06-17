@@ -182,7 +182,7 @@ feature %q{
       Spree::Order.last.line_items.should be_empty
     end
 
-    scenario "adding the first product to the cart", js: true do
+    scenario "adding the first product to the cart" do
       # Given a product and a distributor
       d = create(:distributor_enterprise)
       p = create(:product, :price => 12.34)
