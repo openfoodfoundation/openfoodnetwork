@@ -5,7 +5,46 @@ describe DistributionChangeValidator do
   let(:subject) { DistributionChangeValidator.new(order) }
   let(:product) { double(:product) }
 
-  context "finding distributors which have the same variants" do
+  describe "checking if an order can change to a specified new distribution" do
+    let(:distributor) { double(:distributor) }
+    let(:order_cycle) { double(:order_cycle) }
+
+    it "returns false when a variant is not available for the specified distribution" do
+      order.should_receive(:line_item_variants) { [1] }
+      subject.should_receive(:variants_available_for_distribution).
+        with(distributor, order_cycle) { [] }
+      subject.can_change_to_distribution?(distributor, order_cycle).should be_false
+    end
+
+    it "returns true when all variants are available for the specified distribution" do
+      order.should_receive(:line_item_variants) { [1] }
+      subject.should_receive(:variants_available_for_distribution).
+        with(distributor, order_cycle) { [1] }
+      subject.can_change_to_distribution?(distributor, order_cycle).should be_true
+    end
+  end
+
+  describe "finding variants that are available through a particular distribution" do
+    it "finds variants distributed by product distribution" do
+      v = double(:variant)
+      d = double(:distributor, distributed_variants: [v])
+      oc = double(:order_cycle, distributed_variants_by: [])
+
+      subject.variants_available_for_distribution(d, oc).should == [v]
+    end
+
+    it "finds variants distributed by order cycle" do
+      v = double(:variant)
+      d = double(:distributor, distributed_variants: [])
+      oc = double(:order_cycle)
+
+      oc.should_receive(:distributed_variants_by).with(d) { [v] }
+
+      subject.variants_available_for_distribution(d, oc).should == [v]
+    end
+  end
+
+  describe "finding distributors which have the same variants" do
     let(:variant1) { double(:variant) }
     let(:variant2) { double(:variant) }
     let(:variant3) { double(:variant) }
@@ -56,7 +95,7 @@ describe DistributionChangeValidator do
     end
   end
 
-  context "finding order cycles which have the same variants" do
+  describe "finding order cycles which have the same variants" do
     let(:variant1) { double(:variant) }
     let(:variant2) { double(:variant) }
     let(:variant3) { double(:variant) }
