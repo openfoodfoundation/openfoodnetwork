@@ -204,8 +204,9 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 	$scope.setMessage = function(model,text,style,timeout){
 		model.text = text;
 		model.style = style;
+		if (model.timeout) $timeout.cancel(model.timeout);
 		if (timeout){
-			$timeout(function() { $scope.setMessage(model,"",{},false); }, timeout, true);
+			model.timeout = $timeout(function() { $scope.setMessage(model,"",{},false); }, timeout, true);
 		}
 	}
 
