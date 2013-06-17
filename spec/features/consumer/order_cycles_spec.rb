@@ -153,5 +153,24 @@ feature %q{
       page.should have_selector "input[value='#{@oc1.id}'][checked='checked']"
       page.should have_selector "option[value='#{@d1.id}'][selected='selected']"
     end
+
+    scenario "selection form is not shown when there are products in the cart" do
+      # Given a product
+      d = create(:distributor_enterprise)
+      p = create(:product, :distributors => [d])
+
+      # When I go to the products listing page, I should see the selection form
+      visit spree.products_path
+      page.should have_selector "#distribution-selection"
+
+      # When I add a product to the cart
+      visit spree.product_path p
+      select d.name, :from => 'distributor_id'
+      click_button 'Add To Cart'
+
+      # Then I should no longer see the selection form
+      visit spree.products_path
+      page.should_not have_selector "#distribution-selection"
+    end
   end
 end
