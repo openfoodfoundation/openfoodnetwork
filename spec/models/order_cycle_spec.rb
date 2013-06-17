@@ -103,12 +103,15 @@ describe OrderCycle do
     before(:each) do
       @oc = create(:simple_order_cycle)
 
+      @d1 = create(:enterprise)
+      @d2 = create(:enterprise)
+
       e0 = create(:exchange,
                   order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
       e1 = create(:exchange,
-                  order_cycle: @oc, sender: @oc.coordinator, receiver: create(:enterprise))
+                  order_cycle: @oc, sender: @oc.coordinator, receiver: @d1)
       e2 = create(:exchange,
-                  order_cycle: @oc, sender: @oc.coordinator, receiver: create(:enterprise))
+                  order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
       @p0 = create(:product)
       @p1 = create(:product)
@@ -122,15 +125,19 @@ describe OrderCycle do
       e2.variants << @p1.master
     end
 
-    it "reports on the variants exchanged in the order cycle" do
+    it "reports on the variants exchanged" do
       @oc.variants.sort.should == [@p0.master, @p1.master, @p2.master, @p2_v].sort
     end
 
-    it "reports on the variants distributed in the order cycle" do
+    it "reports on the variants distributed" do
       @oc.distributed_variants.sort.should == [@p1.master, @p2.master, @p2_v].sort
     end
 
-    it "reports on the products exchanged in the order cycle" do
+    it "reports on the variants distributed by a particular distributor" do
+      @oc.distributed_variants_by(@d2).should == [@p1.master]
+    end
+
+    it "reports on the products exchanged" do
       @oc.products.sort.should == [@p0, @p1, @p2]
     end
   end

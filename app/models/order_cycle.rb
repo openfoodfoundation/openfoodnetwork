@@ -36,6 +36,11 @@ class OrderCycle < ActiveRecord::Base
     self.exchanges.where(:sender_id => self.coordinator).map(&:variants).flatten.uniq
   end
 
+  def distributed_variants_by(distributor)
+    self.exchanges.where(:sender_id => self.coordinator, :receiver_id => distributor).
+      map(&:variants).flatten.uniq
+  end
+
   def products
     self.variants.map(&:product).uniq
   end
