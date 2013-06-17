@@ -78,6 +78,78 @@ module Spree
       end
     end
 
+
+    describe "validations" do
+      describe "determining if distributor can supply products in cart" do
+        it "returns true if no distributor is supplied" do
+          op.send(:distributor_can_supply_products_in_cart, nil).should be_true
+        end
+
+        it "returns true if the order can be changed to that distributor" do
+          dcv = double(:dcv)
+          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(true)
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.send(:distributor_can_supply_products_in_cart, distributor).should be_true
+        end
+
+        it "returns false otherwise" do
+          dcv = double(:dcv)
+          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(false)
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.send(:distributor_can_supply_products_in_cart, distributor).should be_false
+        end
+      end
+
+      describe "checking distribution is provided for a variant" do
+        let(:variant) { double(:variant) }
+
+        it "returns false and errors when distribution is not provided and order cycle is required" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(true)
+
+          op.send(:check_distribution_provided_for, variant).should be_false
+          op.errors.to_a.should == ["Please choose a distributor and order cycle for this order."]
+        end
+
+        it "returns false and errors when distribution is not provided and order cycle is not required" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
+          op.should_receive(:order_cycle_required_for).with(variant).and_return(false)
+
+          op.send(:check_distribution_provided_for, variant).should be_false
+          op.errors.to_a.should == ["Please choose a distributor for this order."]
+        end
+
+        it "returns true and does not error otherwise" do
+          op.should_receive(:distribution_provided_for).with(variant).and_return(true)
+
+          op.send(:check_distribution_provided_for, variant).should be_true
+          op.errors.should be_empty
+        end
+      end
+
+      describe "checking variant is available under the distributor" do
+        let(:product) { double(:product) }
+        let(:variant) { double(:variant, product: product) }
+
+        it "is available if the distributor is distributing this product" do
+          op.instance_eval { @distributor = 123 }
+          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [123]
+
+          op.send(:check_variant_available_under_distributor, variant).should be_true
+          op.errors.should be_empty
+        end
+
+        it "returns false and errors otherwise" do
+          op.instance_eval { @distributor = 123 }
+          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [456]
+
+          op.send(:check_variant_available_under_distributor, variant).should be_false
+          op.errors.to_a.should == ["That product is not available from the chosen distributor."]
+        end
+      end
+    end
+
+
     describe "support" do
       describe "loading distributor and order cycle from hash" do
         it "loads distributor and order cycle when present" do
@@ -153,76 +225,6 @@ module Spree
         order.should_receive(:order_cycle).and_return(orig_order_cycle)
         op.send(:orig_distributor_and_order_cycle).should == [orig_distributor,
                                                               orig_order_cycle]
-      end
-    end
-
-    describe "validations" do
-      describe "determining if distributor can supply products in cart" do
-        it "returns true if no distributor is supplied" do
-          op.send(:distributor_can_supply_products_in_cart, nil).should be_true
-        end
-
-        it "returns true if the order can be changed to that distributor" do
-          dcv = double(:dcv)
-          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(true)
-          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
-          op.send(:distributor_can_supply_products_in_cart, distributor).should be_true
-        end
-
-        it "returns false otherwise" do
-          dcv = double(:dcv)
-          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(false)
-          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
-          op.send(:distributor_can_supply_products_in_cart, distributor).should be_false
-        end
-      end
-
-      describe "checking distribution is provided for a variant" do
-        let(:variant) { double(:variant) }
-
-        it "returns false and errors when distribution is not provided and order cycle is required" do
-          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
-          op.should_receive(:order_cycle_required_for).with(variant).and_return(true)
-
-          op.send(:check_distribution_provided_for, variant).should be_false
-          op.errors.to_a.should == ["Please choose a distributor and order cycle for this order."]
-        end
-
-        it "returns false and errors when distribution is not provided and order cycle is not required" do
-          op.should_receive(:distribution_provided_for).with(variant).and_return(false)
-          op.should_receive(:order_cycle_required_for).with(variant).and_return(false)
-
-          op.send(:check_distribution_provided_for, variant).should be_false
-          op.errors.to_a.should == ["Please choose a distributor for this order."]
-        end
-
-        it "returns true and does not error otherwise" do
-          op.should_receive(:distribution_provided_for).with(variant).and_return(true)
-
-          op.send(:check_distribution_provided_for, variant).should be_true
-          op.errors.should be_empty
-        end
-      end
-
-      describe "checking variant is available under the distributor" do
-        let(:product) { double(:product) }
-        let(:variant) { double(:variant, product: product) }
-
-        it "is available if the distributor is distributing this product" do
-          op.instance_eval { @distributor = 123 }
-          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [123]
-
-          op.send(:check_variant_available_under_distributor, variant).should be_true
-          op.errors.should be_empty
-        end
-
-        it "returns false and errors otherwise" do
-          op.instance_eval { @distributor = 123 }
-          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [456]
-
-          op.send(:check_variant_available_under_distributor, variant).should be_false
-          op.errors.to_a.should == ["That product is not available from the chosen distributor."]
-        end
       end
     end
   end
