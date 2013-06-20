@@ -25,7 +25,7 @@ feature %q{
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_field "product_name", with: p1.name
       page.should have_field "product_name", with: p2.name
@@ -38,7 +38,7 @@ feature %q{
       p1 = FactoryGirl.create(:product, supplier: s2)
       p2 = FactoryGirl.create(:product, supplier: s3)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s2.name
       page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s3.name
@@ -48,7 +48,7 @@ feature %q{
       p1 = FactoryGirl.create(:product, available_on: Date.today)
       p2 = FactoryGirl.create(:product, available_on: Date.today-1)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_field "available_on", with: p1.available_on.strftime("%F %T")
       page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
@@ -62,7 +62,7 @@ feature %q{
       p1.save!
       p2.save!
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_field "price", with: "22.0"
       page.should have_field "price", with: "44.0"
@@ -76,7 +76,7 @@ feature %q{
       p1.save!
       p2.save!
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should_not have_selector "span[name='on_hand']", text: "0"
       page.should have_field "on_hand", with: "15"
@@ -92,7 +92,7 @@ feature %q{
       p1.save!
       p2.save!
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should_not have_field "on_hand", with: "15"
       page.should have_selector "span[name='on_hand']", text: "4"
@@ -109,7 +109,7 @@ feature %q{
       v1 = FactoryGirl.create(:variant)
       v2 = FactoryGirl.create(:variant)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
       page.should have_selector "a.view-variants"
       first("a.view-variants").click
 
@@ -124,7 +124,7 @@ feature %q{
       v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 15)
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_selector "span[name='on_hand']", text: "21"
       page.should have_field "variant_on_hand", with: "15"
@@ -137,7 +137,7 @@ feature %q{
       v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75)
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
 
-      visit '/admin/products/bulk_index'
+      visit '/admin/products/bulk_edit'
 
       page.should have_field "price", with: "2.0"
       page.should have_field "variant_price", with: "12.75"
@@ -151,7 +151,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
 
     click_link 'New Product'
 
@@ -165,7 +165,7 @@ feature %q{
     check('product_product_distributions_attributes_0__destroy')
     click_button 'Create'
 
-    URI.parse(current_url).path.should == '/admin/products/bulk_index'
+    URI.parse(current_url).path.should == '/admin/products/bulk_edit'
     flash_message.should == 'Product "Big Bag Of Apples" has been successfully created!'
     page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
@@ -180,7 +180,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
 
     page.should have_field "product_name", with: p.name
     page.should have_select "supplier_id", selected: s1.name
@@ -197,7 +197,7 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
 
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
     page.should have_select "supplier_id", selected: s2.name
@@ -214,7 +214,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
     first("a.view-variants").click
 
@@ -230,7 +230,7 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
     first("a.view-variants").click
 
@@ -244,7 +244,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
     first("a.view-variants").click
 
@@ -255,7 +255,7 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
     first("a.view-variants").click
 
@@ -266,7 +266,7 @@ feature %q{
     p = FactoryGirl.create(:product, name: 'original name')
     login_to_admin_section
 
-    visit '/admin/products/bulk_index'
+    visit '/admin/products/bulk_edit'
 
     page.should have_field "product_name", with: "original name"
 
@@ -294,7 +294,7 @@ feature %q{
         p3 = FactoryGirl.create(:product)
         login_to_admin_section
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.delete-product", :count => 3
 
@@ -305,7 +305,7 @@ feature %q{
         page.should have_selector "a.delete-product", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.delete-product", :count => 2
       end
@@ -316,7 +316,7 @@ feature %q{
         v3 = FactoryGirl.create(:variant)
         login_to_admin_section
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
         all("a.view-variants").each{ |e| e.click }
 
@@ -328,7 +328,7 @@ feature %q{
         page.should have_selector "a.delete-variant", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
         all("a.view-variants").select{ |e| e.visible? }.each{ |e| e.click }
 
@@ -343,7 +343,7 @@ feature %q{
         p3 = FactoryGirl.create(:product)
         login_to_admin_section
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.edit-product", :count => 3
 
@@ -358,7 +358,7 @@ feature %q{
         v3 = FactoryGirl.create(:variant)
         login_to_admin_section
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
         first("a.view-variants").click
 
@@ -377,7 +377,7 @@ feature %q{
         p3 = FactoryGirl.create(:product, :name => "P3")
         login_to_admin_section
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.clone-product", :count => 3
 
@@ -386,7 +386,7 @@ feature %q{
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
 
-        visit '/admin/products/bulk_index'
+        visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"

@@ -1,9 +1,6 @@
 class Spree::ProductSet < ModelSet
   def initialize(attributes={})
-    product_ids = attributes[:collection_attributes].each_value.map{ |p| p[:id] } if attributes[:collection_attributes]
-    super(Spree::Product, (product_ids ? Spree::Product.where( :id => product_ids ) : Spree::Product.all ),
-          proc { |attrs| attrs[:product_id].blank? },
-          attributes)
+    super(Spree::Product, [], proc { |attrs| attrs[:product_id].blank? }, attributes)
   end
 
   # A separate method of updating products was required due to an issue with the way Rails' assign_attributes and updates_attributes behave when delegated attributes of a nested
@@ -29,8 +26,13 @@ class Spree::ProductSet < ModelSet
     end
   end
 
-  def save(collection_hash)
-    collection_hash.each_value.all? do |product_attributes|
+  def collection_attributes=(attributes)
+    @collection = Spree::Product.where( :id => attributes.each_value.map{ |p| p[:id] } )
+    @collection_hash = attributes
+  end
+
+  def save
+    @collection_hash.each_value.all? do |product_attributes|
       update_attributes(product_attributes)
     end
   end
