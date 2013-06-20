@@ -2,8 +2,8 @@ Spree::OrderPopulator.class_eval do
   def populate_with_distribution_validation(from_hash)
     @distributor, @order_cycle = load_distributor_and_order_cycle(from_hash)
 
-    if !distributor_can_supply_products_in_cart(@distributor)
-      errors.add(:base, "That distributor can't supply all the products in your cart. Please choose another.")
+    if !distribution_can_supply_products_in_cart(@distributor, @order_cycle)
+      errors.add(:base, "That distributor or order cycle can't supply all the products in your cart. Please choose another.")
     end
 
     # Set order distributor and order cycle
@@ -66,8 +66,8 @@ Spree::OrderPopulator.class_eval do
     @order.set_order_cycle! order_cycle if order_cycle
   end
 
-  def distributor_can_supply_products_in_cart(distributor)
-    !distributor || DistributionChangeValidator.new(@order).can_change_to_distributor?(distributor)
+  def distribution_can_supply_products_in_cart(distributor, order_cycle)
+    DistributionChangeValidator.new(@order).can_change_to_distribution?(distributor, order_cycle)
   end
 
   def check_distribution_provided_for(variant)

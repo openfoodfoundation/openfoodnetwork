@@ -13,25 +13,25 @@ module Spree
 
     describe "populate" do
 
-      it "checks that distributor can supply all products in the cart" do
+      it "checks that distribution can supply all products in the cart" do
         op.should_receive(:load_distributor_and_order_cycle).with(params).
           and_return([distributor, order_cycle])
-        op.should_receive(:distributor_can_supply_products_in_cart).with(distributor).
-          and_return(false)
+        op.should_receive(:distribution_can_supply_products_in_cart).
+          with(distributor, order_cycle).and_return(false)
         op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
                                                                orig_order_cycle])
         op.should_receive(:populate_without_distribution_validation).never
         op.should_receive(:set_cart_distributor_and_order_cycle).never
 
         op.populate(params).should be_false
-        op.errors.to_a.should == ["That distributor can't supply all the products in your cart. Please choose another."]
+        op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
       end
 
       it "resets cart distributor and order cycle if populate fails" do
         op.should_receive(:load_distributor_and_order_cycle).with(params).
           and_return([distributor, order_cycle])
-        op.should_receive(:distributor_can_supply_products_in_cart).with(distributor).
-          and_return(true)
+        op.should_receive(:distribution_can_supply_products_in_cart).
+          with(distributor, order_cycle).and_return(true)
         op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
                                                                orig_order_cycle])
 
@@ -51,8 +51,8 @@ module Spree
       it "sets cart distributor and order cycle when populate succeeds" do
         op.should_receive(:load_distributor_and_order_cycle).with(params).
           and_return([distributor, order_cycle])
-        op.should_receive(:distributor_can_supply_products_in_cart).with(distributor).
-          and_return(true)
+        op.should_receive(:distribution_can_supply_products_in_cart).
+          with(distributor, order_cycle).and_return(true)
         op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
                                                                orig_order_cycle])
         op.should_receive(:populate_without_distribution_validation).with(params)
@@ -81,22 +81,11 @@ module Spree
 
     describe "validations" do
       describe "determining if distributor can supply products in cart" do
-        it "returns true if no distributor is supplied" do
-          op.send(:distributor_can_supply_products_in_cart, nil).should be_true
-        end
-
-        it "returns true if the order can be changed to that distributor" do
+        it "delegates to DistributionChangeValidator" do
           dcv = double(:dcv)
-          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(true)
+          dcv.should_receive(:can_change_to_distribution?).with(distributor, order_cycle).and_return(true)
           DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
-          op.send(:distributor_can_supply_products_in_cart, distributor).should be_true
-        end
-
-        it "returns false otherwise" do
-          dcv = double(:dcv)
-          dcv.should_receive(:can_change_to_distributor?).with(distributor).and_return(false)
-          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
-          op.send(:distributor_can_supply_products_in_cart, distributor).should be_false
+          op.send(:distribution_can_supply_products_in_cart, distributor, order_cycle).should be_true
         end
       end
 
