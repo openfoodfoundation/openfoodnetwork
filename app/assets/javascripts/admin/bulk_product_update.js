@@ -14,16 +14,7 @@ productsApp.directive('ngDecimal', function () {
 				scope.$apply(ngModel.$setViewValue(ngModel.$modelValue));
 				ngModel.$render();
 			});
-			
-			ngModel.$setValidity('notADecimalError', function(){
-				if (angular.isString(ngModel.$modelValue) && numRegExp.test(ngModel.$modelValue)){
-					return true;
-				}
-				else{
-					return false;
-				}
-			});
-			
+
 			ngModel.$parsers.push(function(viewValue){
 				if (angular.isString(viewValue) && numRegExp.test(viewValue)){
 					if (viewValue.indexOf(".") == -1){
