@@ -18,7 +18,7 @@ Spree::Order.class_eval do
 
   def set_order_cycle!(order_cycle)
     self.order_cycle = order_cycle
-    self.distributor = nil unless self.order_cycle.has_distributor? distributor
+    self.distributor = nil unless self.order_cycle.andand.has_distributor? distributor
     save!
   end
 

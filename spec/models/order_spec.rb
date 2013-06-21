@@ -57,6 +57,14 @@ describe Spree::Order do
       subject.distributor.should == d
       subject.order_cycle.should be_nil
     end
+
+    it "clears the distributor when setting to nil" do
+      d = create(:distributor_enterprise)
+      subject.set_distributor! d
+      subject.set_distributor! nil
+
+      subject.distributor.should be_nil
+    end
   end
 
   describe "setting the order cycle" do
@@ -78,7 +86,7 @@ describe Spree::Order do
       subject.distributor.should == d
     end
 
-    it "clears the order cycle if it is not available at that distributor" do
+    it "clears the distributor if it is not available at that order cycle" do
       oc = create(:simple_order_cycle)
       d = create(:distributor_enterprise)
 
@@ -87,6 +95,14 @@ describe Spree::Order do
 
       subject.order_cycle.should == oc
       subject.distributor.should be_nil
+    end
+
+    it "clears the order cycle when setting to nil" do
+      oc = create(:simple_order_cycle)
+      subject.set_order_cycle! oc
+      subject.set_order_cycle! nil
+
+      subject.order_cycle.should be_nil
     end
   end
 
