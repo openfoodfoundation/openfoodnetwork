@@ -70,7 +70,7 @@ module Spree
 
         op.should_receive(:check_stock_levels).with(variant, quantity).and_return(true)
         op.should_receive(:check_distribution_provided_for).with(variant).and_return(true)
-        op.should_receive(:check_variant_available_under_distributor).with(variant).
+        op.should_receive(:check_variant_available_under_distribution).with(variant).
           and_return(true)
         order.should_receive(:add_variant).with(variant, quantity, currency)
 
@@ -120,20 +120,22 @@ module Spree
         let(:product) { double(:product) }
         let(:variant) { double(:variant, product: product) }
 
-        it "is available if the distributor is distributing this product" do
-          op.instance_eval { @distributor = 123 }
-          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [123]
-
-          op.send(:check_variant_available_under_distributor, variant).should be_true
+        it "delegates to DistributionChangeValidator, returning true when available" do
+          dcv = double(:dcv)
+          dcv.should_receive(:variants_available_for_distribution).with(123, 234).and_return([variant])
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.instance_eval { @distributor = 123; @order_cycle = 234 }
+          op.send(:check_variant_available_under_distribution, variant).should be_true
           op.errors.should be_empty
         end
 
-        it "returns false and errors otherwise" do
-          op.instance_eval { @distributor = 123 }
-          Enterprise.should_receive(:distributing_product).with(variant.product).and_return [456]
-
-          op.send(:check_variant_available_under_distributor, variant).should be_false
-          op.errors.to_a.should == ["That product is not available from the chosen distributor."]
+        it "delegates to DistributionChangeValidator, returning false and erroring otherwise" do
+          dcv = double(:dcv)
+          dcv.should_receive(:variants_available_for_distribution).with(123, 234).and_return([])
+          DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
+          op.instance_eval { @distributor = 123; @order_cycle = 234 }
+          op.send(:check_variant_available_under_distribution, variant).should be_false
+          op.errors.to_a.should == ["That product is not available from the chosen distributor or order cycle."]
         end
       end
     end

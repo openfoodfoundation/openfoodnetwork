@@ -33,7 +33,7 @@ Spree::OrderPopulator.class_eval do
     if quantity > 0
       if check_stock_levels(variant, quantity) &&
           check_distribution_provided_for(variant) &&
-          check_variant_available_under_distributor(variant)
+          check_variant_available_under_distribution(variant)
 
         @order.add_variant(variant, quantity, currency)
       end
@@ -84,11 +84,11 @@ Spree::OrderPopulator.class_eval do
     distribution_provided
   end
 
-  def check_variant_available_under_distributor(variant)
-    if Enterprise.distributing_product(variant.product).include? @distributor
+  def check_variant_available_under_distribution(variant)
+    if DistributionChangeValidator.new(@order).variants_available_for_distribution(@distributor, @order_cycle).include? variant
       return true
     else
-      errors.add(:base, "That product is not available from the chosen distributor.")
+      errors.add(:base, "That product is not available from the chosen distributor or order cycle.")
       return false
     end
   end
