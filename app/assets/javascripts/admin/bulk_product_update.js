@@ -68,6 +68,8 @@ productsApp.directive('ngTrackVariant', function(){
 productsApp.directive('ngToggleVariants',function(){
 	return {
 		link: function(scope,element,attrs){
+			if (scope.displayProperties[scope.product.id].showVariants) { element.removeClass('icon-chevron-right'); element.addClass('icon-chevron-down'); }
+			else { element.removeClass('icon-chevron-down'); element.addClass('icon-chevron-right'); }
 			element.bind('click', function(){
 				scope.$apply(function(){
 					if (scope.displayProperties[scope.product.id].showVariants){

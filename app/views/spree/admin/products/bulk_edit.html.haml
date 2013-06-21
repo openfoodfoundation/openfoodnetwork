@@ -27,8 +27,8 @@
         %th On Hand
         %th Av. On
         %th.actions
-    %tbody{ 'ng-repeat' => 'product in products | filter:query' }
-      %tr
+    %tbody{ 'ng-repeat' => 'product in products | filter:query', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tr.product
         %td.actions
           %a{ 'ng-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
         %td.firstcol
@@ -46,7 +46,7 @@
           %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
-      %tr{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants' }
+      %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %td.actions
           %a{ :class => "variant-item icon-caret-right" }
         %td.firstcol

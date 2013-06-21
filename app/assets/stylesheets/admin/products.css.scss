@@ -5,3 +5,18 @@
 th.firstcol, td.firstcol {
   border-left: 1px solid #cee1f4;
 }
+
+tbody.odd {
+	tr.product { td { background-color: white; } }
+	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }
+	tr.variant.even { td { background-color: white; } }
+}
+tbody.even {
+	tr.product { td { background-color: darken(#eff5fc, 1); } }
+	tr.variant.odd { td { background-color: lighten(#eff5fc, 2); } }
+	tr.variant.even { td { background-color: darken(#eff5fc, 1); } }
+}
+
+tbody tr.product td.actions { background-color: transparent; }
+tbody tr.variant td.actions { background-color: transparent; }
+tbody tr.variant td { padding: 5px 10px; }
