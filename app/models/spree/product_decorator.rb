@@ -36,6 +36,14 @@ Spree::Product.class_eval do
     select('distinct spree_products.*')
   }
 
+  scope :in_product_distribution_by, lambda { |distributor|
+    distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
+
+    with_product_distributions_outer.
+    where('product_distributions.distributor_id = ?', distributor).
+    select('distinct spree_products.*')
+  }
+
   # Find products that are supplied by a given enterprise or distributed via that enterprise EITHER through a product distribution OR through an order cycle
   scope :in_supplier_or_distributor, lambda { |enterprise|
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i

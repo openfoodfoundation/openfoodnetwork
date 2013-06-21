@@ -53,6 +53,10 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end
 
+  def product_distribution_variants
+    Spree::Variant.joins(:product).merge(Spree::Product.in_product_distribution_by(self)).select('spree_variants.*')
+  end
+
 
   private
 

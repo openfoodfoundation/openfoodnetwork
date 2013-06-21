@@ -84,6 +84,27 @@ module Spree
         end
       end
 
+      describe "in_product_distribution_by" do
+        it "shows products in product distribution" do
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product, distributors: [d1])
+          p2 = create(:product, distributors: [d2])
+          Product.in_product_distribution_by(d1).should == [p1]
+        end
+
+        it "does not show products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
+          Product.in_product_distribution_by(d1).should == []
+        end
+      end
+
       describe "in_supplier_or_distributor" do
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
