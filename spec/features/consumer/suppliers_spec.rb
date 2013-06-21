@@ -59,8 +59,8 @@ feature %q{
     # Then I should see a list containing 5 suppliers that have products in stock
     page.should have_selector '#supplier_filter li a', :count => 5
 
-    # And I should see 'xx more'
-    page.should have_selector '#supplier_filter span.filter_more', :text => 'more'
+    # And I should see '1 more'
+    page.should have_selector '#supplier_filter span.filter_more', :text => '1 more'
 
     # And I should see a browse suppliers button
     page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
