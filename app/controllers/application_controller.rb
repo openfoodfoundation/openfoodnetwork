@@ -10,10 +10,12 @@ class ApplicationController < ActionController::Base
   end
 
   def load_data_for_sidebar
-    @suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(5)
-    @total_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.count
-    @distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(5)
-    @total_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.count
+    sidebar_distributors_limit = 5 #set false to disable TODO: move to app config
+    sidebar_suppliers_limit = 5
+    @sidebar_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(sidebar_distributors_limit)
+    @total_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.count(:distinct => true)
+    @sidebar_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(sidebar_suppliers_limit) 
+    @total_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.count(:distinct => true)
   end
 
   # All render calls within the block will be performed with the specified format
