@@ -24,7 +24,8 @@ describe Enterprise do
       d3 = create(:distributor_enterprise)
       d4 = create(:distributor_enterprise)
       create(:product, :distributors => [d1, d2], :on_hand => 5)
-      create(:product, :distributors => [d1], :on_hand => 5)
+      create(:product, :distributors => [d1], :on_hand => 5, :available_on => 1.week.from_now)
+      create(:product, :distributors => [d2], :on_hand => 5)
       create(:product, :distributors => [d3], :on_hand => 0)
 
       Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
@@ -38,7 +39,7 @@ describe Enterprise do
       create(:product, :supplier => d1, :on_hand => 5)
       create(:product, :supplier => d2, :on_hand => 5, :available_on => 1.week.from_now)
       create(:product, :supplier => d3, :on_hand => 0)
-      # supplier with no products, supplier with product out of stock, suplier with product thats unavailable, supplier with active product on hand
+      # supplier with no products, supplier with product out of stock, supplier with product thats unavailable, supplier with active product on hand
       Enterprise.with_supplied_active_products_on_hand.sort.should == [d1]
     end
   end
