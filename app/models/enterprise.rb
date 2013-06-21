@@ -18,10 +18,14 @@ class Enterprise < ActiveRecord::Base
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where(:is_distributor => true)
   scope :with_supplied_active_products_on_hand, lambda { 
-    joins(:supplied_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
+    joins(:supplied_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).uniq }
   scope :with_distributed_active_products_on_hand, lambda { 
-    joins(:distributed_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
+    joins(:distributed_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).uniq }
 
+  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
+  def self.distinct_count
+    count(distinct: true)
+  end
 
   def has_supplied_products_on_hand?
     self.supplied_products.where('count_on_hand > 0').present?

@@ -13,9 +13,9 @@ class ApplicationController < ActionController::Base
     sidebar_distributors_limit = 5 #set false to disable TODO: move to app config
     sidebar_suppliers_limit = 5
     @sidebar_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(sidebar_distributors_limit)
-    @total_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.count(:distinct => true)
+    @total_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.distinct_count
     @sidebar_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(sidebar_suppliers_limit) 
-    @total_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.count(:distinct => true)
+    @total_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.distinct_count
   end
 
   # All render calls within the block will be performed with the specified format
