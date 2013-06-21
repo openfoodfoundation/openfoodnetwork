@@ -62,8 +62,7 @@ Spree::OrderPopulator.class_eval do
     # to be set to zero
     @order = Spree::Order.find @order.id
 
-    @order.set_distributor! distributor
-    @order.set_order_cycle! order_cycle if order_cycle
+    @order.set_distribution! distributor, order_cycle
   end
 
   def distribution_can_supply_products_in_cart(distributor, order_cycle)

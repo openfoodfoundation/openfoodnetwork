@@ -164,8 +164,7 @@ module Spree
 
       it "sets cart distributor and order cycle" do
         Spree::Order.should_receive(:find).with(order.id).and_return(order)
-        order.should_receive(:set_distributor!).with(distributor)
-        order.should_receive(:set_order_cycle!).with(order_cycle)
+        order.should_receive(:set_distribution!).with(distributor, order_cycle)
 
         op.send(:set_cart_distributor_and_order_cycle, distributor, order_cycle)
       end

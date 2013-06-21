@@ -226,10 +226,10 @@ feature %q{
       click_button 'Add To Cart'
 
       # Then I should see an error message
-      page.should have_content "That order cycle is not available at the distributor that you chose. Please choose another."
+      page.should have_content "That product is not available from the chosen distributor or order cycle."
 
       # And the product should not be in my cart
-      Spree::Order.last.should be_nil
+      Spree::Order.last.line_items.should be_empty
     end
 
 

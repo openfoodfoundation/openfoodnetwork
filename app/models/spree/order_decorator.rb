@@ -28,6 +28,12 @@ Spree::Order.class_eval do
     save!
   end
 
+  def set_distribution!(distributor, order_cycle)
+    self.distributor = distributor
+    self.order_cycle = order_cycle
+    save!
+  end
+
   def set_variant_attributes(variant, attributes)
     line_item = find_line_item_by_variant(variant)
 
