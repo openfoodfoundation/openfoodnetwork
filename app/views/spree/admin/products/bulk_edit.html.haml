@@ -15,51 +15,56 @@
   %div.options
     Filter Results:
     %input.search{ 'ng-model' => 'query', :type => 'text', 'placeholder' => 'Search Value' }
+    %input{ :type => 'button', :value => 'Toggle Columns', 'ng-toggle-column-list' => true }
+    %div{ :style => 'display: none;' }
+      %ul.column-list{ style: 'border: 1px solid darkgray; background-color: white;' }
+        %li.column-list-item{ 'ng-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
+          {{ column.name }}
   %br.clear
   %br.clear
   %table.index#listing_products
     %thead
       %tr
-        %th.actions
-        %th.firstcol Name
-        %th Supplier
-        %th Price
-        %th On Hand
-        %th Av. On
+        %th.left-actions
+        %th{ 'ng-show' => 'columns.name.visible' } Name
+        %th{ 'ng-show' => 'columns.supplier.visible' } Supplier
+        %th{ 'ng-show' => 'columns.price.visible' } Price
+        %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
+        %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
         %th.actions
     %tbody{ 'ng-repeat' => 'product in products | filter:query', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
       %tr.product
-        %td.actions
+        %td.left-actions
           %a{ 'ng-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
-        %td.firstcol
+        %td{ 'ng-show' => 'columns.name.visible' }
           %input{ 'ng-model' => "product.name", :name => 'product_name', 'ng-track-product' => 'name', :type => 'text' }
-        %td
+        %td{ 'ng-show' => 'columns.supplier.visible' }
           %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ng-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
-        %td
+        %td{ 'ng-show' => 'columns.price.visible' }
           %input{ 'ng-model' => 'product.price', 'ng-decimal' => :true, :name => 'price', 'ng-track-product' => 'price', :type => 'text' }
-        %td
+        %td{ 'ng-show' => 'columns.on_hand.visible' }
           %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
           %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ng-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
-        %td
+        %td{ 'ng-show' => 'columns.available_on.visible' }
           %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', :type => 'text' }
         %td.actions
           %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
       %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
-        %td.actions
+        %td.left-actions
           %a{ :class => "variant-item icon-caret-right" }
-        %td.firstcol
+        %td{ 'ng-show' => 'columns.name.visible' }
           {{ variant.options_text }}
-        %td
-        %td
+        %td{ 'ng-show' => 'columns.supplier.visible' }
+        %td{ 'ng-show' => 'columns.price.visible' }
           %input{ 'ng-model' => 'variant.price', 'ng-decimal' => :true, :name => 'variant_price', 'ng-track-variant' => 'price', :type => 'text' }
-        %td
+        %td{ 'ng-show' => 'columns.on_hand.visible' }
           %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-track-variant' => 'on_hand', :type => 'number' }
-        %td
+        %td{ 'ng-show' => 'columns.available_on.visible' }
         %td.actions
           %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }
           %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
-  %input{:type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
+  %input{ :type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
   %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
     {{ updateStatusMessage.text }}

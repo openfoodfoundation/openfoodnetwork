@@ -2,10 +2,6 @@
   display: block;
 }
 
-th.firstcol, td.firstcol {
-  border-left: 1px solid #cee1f4;
-}
-
 tbody.odd {
 	tr.product { td { background-color: white; } }
 	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }
@@ -20,3 +16,34 @@ tbody.even {
 tbody tr.product td.actions { background-color: transparent; }
 tbody tr.variant td.actions { background-color: transparent; }
 tbody tr.variant td { padding: 5px 10px; }
+
+th.left-actions, td.left-actions {
+	background-color: transparent !important;
+	border: none !important;
+	border-right: 1px solid #cee1f4 !important;
+}
+
+li.column-list-item {
+  border-radius: 3px;
+  padding: 2px 20px;
+  margin: 2px 1px;
+  border: 2px solid darken(#5498da, 3);
+  background-color: #5498da;
+  color: white;
+  font-size: 100%;
+  cursor: default;
+}
+
+li.column-list-item.unselected {
+  background-color: white;
+  border: 2px solid lightgray;
+  color: darkgray;
+  font-size: 100%;
+}
+
+ul.column-list{
+  padding: 5px 8px;
+  border-radius: 3px;
+  border: solid 1px darkgray;
+  list-style:none
+}

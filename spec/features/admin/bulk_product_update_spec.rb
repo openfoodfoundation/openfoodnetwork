@@ -393,4 +393,33 @@ feature %q{
       end
     end
   end
+
+  describe "using the page" do
+    describe "using column display toggle" do
+      it "shows a column display toggle button, which shows a list of columns when clicked" do
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        page.should have_selector "th", :text => "NAME"
+        page.should have_selector "th", :text => "SUPPLIER"
+        page.should have_selector "th", :text => "PRICE"
+        page.should have_selector "th", :text => "ON HAND"
+        page.should have_selector "th", :text => "AV. ON"
+
+        page.should have_button "Toggle Columns"
+
+        click_button "Toggle Columns"
+
+        page.should have_selector "div ul.column-list li.column-list-item", text: "Supplier"
+        all("div ul.column-list li.column-list-item").select{ |e| e.text == "Supplier" }.first.click
+
+        page.should_not have_selector "th", :text => "SUPPLIER"
+        page.should have_selector "th", :text => "NAME"
+        page.should have_selector "th", :text => "PRICE"
+        page.should have_selector "th", :text => "ON HAND"
+        page.should have_selector "th", :text => "AV. ON"
+      end
+    end
+  end
 end 

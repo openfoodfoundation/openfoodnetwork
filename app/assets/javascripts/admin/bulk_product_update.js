@@ -88,10 +88,49 @@ productsApp.directive('ngToggleVariants',function(){
 	};
 });
 
+productsApp.directive('ngToggleColumn',function(){
+	return {
+		link: function(scope,element,attrs){
+			if (!scope.column.visible) { element.addClass("unselected"); }
+			element.click('click', function(){
+				scope.$apply(function(){
+					if (scope.column.visible) { scope.column.visible = false; element.addClass("unselected"); }
+					else { scope.column.visible = true; element.removeClass("unselected"); }
+				});
+			});
+		}
+	};
+});
+
+productsApp.directive('ngToggleColumnList', function($compile){
+	return {
+		link: function(scope,element,attrs){
+			var dialogDiv = element.next();
+			element.on('click',function(){
+				var pos = element.position();
+				var height = element.outerHeight();
+				dialogDiv.css({
+					position: "absolute",
+					top: (pos.top + height) + "px",
+					left: pos.left + "px",
+				}).toggle();
+			});
+		}
+	}
+});
+
 productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
 	$scope.updateStatusMessage = {
 		text: "",
 		style: {}
+	}
+
+	$scope.columns = {
+		name: { name: 'Name', visible: true },
+		supplier: { name: 'Supplier', visible: true },
+		price: { name: 'Price', visible: true },
+		on_hand: { name: 'On Hand', visible: true },
+		available_on: { name: 'Available On', visible: true }
 	}
 
 	$scope.refreshSuppliers = function(){
