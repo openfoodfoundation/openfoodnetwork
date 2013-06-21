@@ -48,7 +48,7 @@ nav#filters {
 
   .filter_choices {
     padding-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     list-style: disc outside;
 
     li {
@@ -59,6 +59,10 @@ nav#filters {
         color: #999;
       }
     }
+  }
+
+  input[type=submit] {
+    margin-bottom: 15px;
   }
 }
 

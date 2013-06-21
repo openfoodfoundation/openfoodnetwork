@@ -16,7 +16,7 @@
         - distributors_more = @total_distributors - @sidebar_distributors.count
         %span.filter_more
           = "#{distributors_more} more..."
-    = button_to 'Browse All Distributors', main_app.distributors_enterprises_path, :method => :get, :style => "margin-top: -15px; margin-bottom: 15px;"
+    = button_to 'Browse All Distributors', main_app.distributors_enterprises_path, :method => :get
     
   %div#supplier_filter
     %h6.filter_name Shop by Supplier
@@ -27,4 +27,4 @@
         - suppliers_more = @total_suppliers - @sidebar_suppliers.count 
         %span.filter_more
           = "#{suppliers_more} more..."
-    = button_to 'Browse All Suppliers', main_app.suppliers_enterprises_path, :method => :get, :style => "margin-top: -15px; margin-bottom: 15px;"
+    = button_to 'Browse All Suppliers', main_app.suppliers_enterprises_path, :method => :get
