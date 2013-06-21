@@ -40,8 +40,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s2.name
-      page.should have_select "supplier_id", with_options: [s1.name,s2.name,s3.name], selected: s3.name
+      page.should have_select "supplier", with_options: [s1.name,s2.name,s3.name], selected: s2.name
+      page.should have_select "supplier", with_options: [s1.name,s2.name,s3.name], selected: s3.name
     end
 
     it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
@@ -183,13 +183,13 @@ feature %q{
     visit '/admin/products/bulk_edit'
 
     page.should have_field "product_name", with: p.name
-    page.should have_select "supplier_id", selected: s1.name
+    page.should have_select "supplier", selected: s1.name
     page.should have_field "available_on", with: p.available_on.strftime("%F %T")
     page.should have_field "price", with: "10.0"
     page.should have_field "on_hand", with: "6"
 
     fill_in "product_name", with: "Big Bag Of Potatoes"
-    select(s2.name, :from => 'supplier_id')
+    select(s2.name, :from => 'supplier')
     fill_in "available_on", with: (Date.today-3).strftime("%F %T")
     fill_in "price", with: "20"
     fill_in "on_hand", with: "18"
@@ -200,7 +200,7 @@ feature %q{
     visit '/admin/products/bulk_edit'
 
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
-    page.should have_select "supplier_id", selected: s2.name
+    page.should have_select "supplier", selected: s2.name
     page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
     page.should have_field "price", with: "20.0"
     page.should have_field "on_hand", with: "18"

@@ -114,6 +114,7 @@ describe("filtering products", function(){
 			updated_at: null,
 			count_on_hand: 0,
 			supplier_id: 5,
+			supplier: { id: 5, name: "Supplier 1" },
 			group_buy: null,
 			group_buy_unit_size: null,
 			on_demand: false,
@@ -323,6 +324,7 @@ describe("AdminBulkProductsCtrl", function(){
 		it("deletes products with a http delete request to /admin/products/(permalink).js", function(){
 			spyOn(window, "confirm").andReturn(true);
 			scope.products = [ { id: 9, permalink_live: "apples" }, { id: 13, permalink_live: "oranges" } ];
+			scope.dirtyProducts = {};
 			httpBackend.expectDELETE('/admin/products/oranges.js').respond(200, "data");
 			scope.deleteProduct(scope.products[1]);
 			httpBackend.flush();

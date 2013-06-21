@@ -87,8 +87,6 @@ productsApp.directive('ngToggleVariants',function(){
 });
 
 productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
-	$scope.dirtyProducts = {};
-
 	$scope.updateStatusMessage = {
 		text: "",
 		style: {}
@@ -102,13 +100,29 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 
 	$scope.refreshProducts = function(){
 		dataFetcher('/admin/products/bulk_index.json').then(function(data){
-			$scope.products = data;
-			$scope.displayProperties = {};
-			angular.forEach($scope.products,function(product){
-				$scope.displayProperties[product.id] = { showVariants: false }
-			});
+			$scope.resetProducts(data);
 		});
 	};
+
+	$scope.resetProducts = function(data){
+		$scope.products = data;
+		$scope.dirtyProducts = {};
+		$scope.displayProperties = $scope.displayProperties || {};
+		angular.forEach($scope.products,function(product){
+			$scope.displayProperties[product.id] = $scope.displayProperties[product.id] || { showVariants: false };
+			$scope.matchSupplier(product);
+		});
+	}
+
+	$scope.matchSupplier = function(product){
+		for (i in $scope.suppliers){
+			var supplier = $scope.suppliers[i];
+			if (angular.equals(supplier,product.supplier)){
+				product.supplier = supplier;
+				break;
+			}
+		}
+	}
 
 	$scope.updateOnHand = function(product){
 		product.on_hand = onHand(product);
@@ -174,8 +188,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		})
 		.success(function(data){
 			if (angular.toJson($scope.products) == angular.toJson(data)){
-				$scope.products = data;
-				$scope.dirtyProducts = {};
+				$scope.resetProducts(data);
 				$scope.displaySuccess();
 			}
 			else{
@@ -273,7 +286,7 @@ function filterSubmitProducts(productsToFilter){
 				var hasUpdatableProperty = false;
 				filteredProduct.id = product.id;
 				if (product.hasOwnProperty("name")) { filteredProduct.name = product.name; hasUpdatableProperty = true; }
-				if (product.hasOwnProperty("supplier_id")) { filteredProduct.supplier_id = product.supplier_id; hasUpdatableProperty = true; }
+				if (product.hasOwnProperty("supplier")) { filteredProduct.supplier_id = product.supplier.id; hasUpdatableProperty = true; }
 				if (product.hasOwnProperty("price")) { filteredProduct.price = product.price; hasUpdatableProperty = true; }
 				if (product.hasOwnProperty("on_hand") && filteredVariants.length == 0) { filteredProduct.on_hand = product.on_hand; hasUpdatableProperty = true; } //only update if no variants present
 				if (product.hasOwnProperty("available_on")) { filteredProduct.available_on = product.available_on; hasUpdatableProperty = true; }

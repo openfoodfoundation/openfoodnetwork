@@ -34,7 +34,7 @@
         %td.firstcol
           %input{ 'ng-model' => "product.name", :name => 'product_name', 'ng-track-product' => 'name', :type => 'text' }
         %td
-          %select.select2{ 'ng-model' => 'product.supplier_id', :name => 'supplier_id', 'ng-track-product' => 'supplier_id', 'ng-options' => 's.id as s.name for s in suppliers' }
+          %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ng-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
         %td
           %input{ 'ng-model' => 'product.price', 'ng-decimal' => :true, :name => 'price', 'ng-track-product' => 'price', :type => 'text' }
         %td

@@ -30,7 +30,10 @@ describe Spree::Admin::ProductsController do
       p1r = {
         "id" => p1.id,
         "name" => p1.name,
-        "supplier_id" => p1.supplier_id,
+        "supplier" => {
+          "id" => p1.supplier_id,
+          "name" => p1.supplier.name
+        },
         "available_on" => p1.available_on.strftime("%F %T"),
         "price" => p1.price.to_s,
         "on_hand" => ( v11.on_hand + v12.on_hand + v13.on_hand ),
@@ -44,7 +47,10 @@ describe Spree::Admin::ProductsController do
       p2r = {
         "id" => p2.id,
         "name" => p2.name,
-        "supplier_id" => p2.supplier_id,
+        "supplier" => {
+          "id" => p2.supplier_id,
+          "name" => p2.supplier.name
+        },
         "available_on" => p2.available_on.strftime("%F %T"),
         "price" => p2.price.to_s,
         "on_hand" => v21.on_hand,
