@@ -17,8 +17,10 @@ class Enterprise < ActiveRecord::Base
   scope :by_name, order('name')
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where(:is_distributor => true)
-  scope :with_supplied_active_products_on_hand, lambda { joins(:supplied_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
-  scope :with_distributed_active_products_on_hand, lambda { joins(:distributed_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
+  scope :with_supplied_active_products_on_hand, lambda { 
+    joins(:supplied_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
+  scope :with_distributed_active_products_on_hand, lambda { 
+    joins(:distributed_products).where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now).select('distinct(enterprises.*)') }
 
 
   def has_supplied_products_on_hand?
