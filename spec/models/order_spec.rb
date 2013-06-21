@@ -121,7 +121,7 @@ describe Spree::Order do
 
       subject.distributor = test_enterprise
       subject.should_not be_valid
-      subject.errors.should include :distributor_id
+      subject.errors.messages.should == {base: ["Distributor or order cycle cannot supply the products in your cart"]}
     end
   end
 end
