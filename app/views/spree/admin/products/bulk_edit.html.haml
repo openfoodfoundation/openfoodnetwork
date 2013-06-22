@@ -46,7 +46,7 @@
           %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
           %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ng-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
         %td{ 'ng-show' => 'columns.available_on.visible' }
-          %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', :type => 'text' }
+          %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
         %td.actions
           %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }

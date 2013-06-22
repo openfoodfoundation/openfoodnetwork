@@ -119,6 +119,26 @@ productsApp.directive('ngToggleColumnList', function($compile){
 	}
 });
 
+productsApp.directive('datetimepicker', function ($parse) {
+  return function (scope, element, attrs) {
+    // using $parse instead of scope[attrs.datetimepicker] for cases
+    // where attrs.datetimepicker is 'foo.bar.lol'
+	$(function(){
+		element.datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'HH:mm:ss',
+			stepMinute: 15,
+			onSelect:function (dateText, inst) {
+				scope.$apply(function(scope){
+					parsed = $parse(attrs.datetimepicker);
+					parsed.assign(scope, dateText);
+				});
+			}
+		});
+	});
+  }
+});
+
 productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
 	$scope.updateStatusMessage = {
 		text: "",
