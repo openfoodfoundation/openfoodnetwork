@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'spree/core/testing_support/authorization_helpers'
-require 'pry'
 
 describe Spree::Admin::ProductsController do
   stub_authorization!
