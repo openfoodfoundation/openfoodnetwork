@@ -263,6 +263,7 @@ GEM
     net-ssh (2.6.8)
     newrelic_rpm (3.6.0.83)
     nokogiri (1.5.6)
+    oj (2.1.2)
     orm_adapter (0.4.0)
     paperclip (2.8.0)
       activerecord (>= 2.3.0)
@@ -415,8 +416,10 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   newrelic_rpm
+  oj
   pg
   pry-debugger
+  rabl
   rails (= 3.2.11)
   representative_view
   rspec-rails
