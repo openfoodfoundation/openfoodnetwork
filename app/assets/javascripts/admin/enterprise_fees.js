@@ -1,17 +1,16 @@
-function AdminEnterpriseFeesCtrl($scope, $http) {
-  $http.get('/admin/enterprise_fees.json').success(function(data) {
-    $scope.enterprise_fees = data;
-
-    // TODO: Angular 1.1.0 will have a means to reset a form to its pristine state, which
-    //       would avoid the need to save off original calculator types for comparison.
-    for(i in $scope.enterprise_fees) {
-      $scope.enterprise_fees[i].orig_calculator_type = $scope.enterprise_fees[i].calculator_type;
-    }
-  });
-}
-
-
 angular.module('enterprise_fees', [])
+  .controller('AdminEnterpriseFeesCtrl', ['$scope', '$http', function($scope, $http) {
+    $http.get('/admin/enterprise_fees.json').success(function(data) {
+      $scope.enterprise_fees = data;
+
+      // TODO: Angular 1.1.0 will have a means to reset a form to its pristine state, which
+      //       would avoid the need to save off original calculator types for comparison.
+      for(i in $scope.enterprise_fees) {
+	$scope.enterprise_fees[i].orig_calculator_type = $scope.enterprise_fees[i].calculator_type;
+      }
+    });
+  }])
+
   .directive('ngBindHtmlUnsafeCompiled', function($compile) {
     return function(scope, element, attrs) {
       scope.$watch(attrs.ngBindHtmlUnsafeCompiled, function(value) {
