@@ -1,6 +1,6 @@
 app = angular.module('order_cycle', ['ngResource'])
 
-app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
+app.controller 'AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', ($scope, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
   $scope.supplied_products = Enterprise.supplied_products
 
@@ -35,9 +35,9 @@ app.controller 'AdminCreateOrderCycleCtrl', ($scope, OrderCycle, Enterprise) ->
 
   $scope.submit = ->
     OrderCycle.create()
+  ]
 
-
-app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterprise) ->
+app.controller 'AdminEditOrderCycleCtrl', ['$scope', '$location', 'OrderCycle', 'Enterprise', ($scope, $location, OrderCycle, Enterprise) ->
   $scope.enterprises = Enterprise.index()
   $scope.supplied_products = Enterprise.supplied_products
 
@@ -73,12 +73,13 @@ app.controller 'AdminEditOrderCycleCtrl', ($scope, $location, OrderCycle, Enterp
 
   $scope.submit = ->
     OrderCycle.update()
+  ]
 
-
-app.config ($httpProvider) ->
+app.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+  ]
 
-app.factory 'OrderCycle', ($resource, $window) ->
+app.factory 'OrderCycle', ['$resource', '$window', ($resource, $window) ->
   OrderCycle = $resource '/admin/order_cycles/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
 		'create': { method: 'POST'}
@@ -175,9 +176,9 @@ app.factory 'OrderCycle', ($resource, $window) ->
         (exchange for exchange in this.order_cycle.incoming_exchanges when exchange.active)
       this.order_cycle.outgoing_exchanges =
         (exchange for exchange in this.order_cycle.outgoing_exchanges when exchange.active)
-  }
+  }]
 
-app.factory 'Enterprise', ($resource) ->
+app.factory 'Enterprise', ['$resource', ($resource) ->
   Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {}, {'index': {method: 'GET', isArray: true}})
 
   {
@@ -204,7 +205,7 @@ app.factory 'Enterprise', ($resource) ->
         numVariants += if product.variants.length == 0 then 1 else product.variants.length
 
       numVariants
-  }
+  }]
 
 
 app.directive 'datetimepicker', ['$parse', ($parse) ->
