@@ -11,13 +11,14 @@ angular.module('enterprise_fees', [])
     });
   }])
 
-  .directive('ngBindHtmlUnsafeCompiled', function($compile) {
+  .directive('ngBindHtmlUnsafeCompiled', ['$compile', function($compile) {
     return function(scope, element, attrs) {
       scope.$watch(attrs.ngBindHtmlUnsafeCompiled, function(value) {
 	element.html($compile(value)(scope));
       });
     }
-  })
+  }])
+
   .directive('spreeDeleteResource', function() {
     return function(scope, element, attrs) {
       if(scope.enterprise_fee.id) {
@@ -28,6 +29,7 @@ angular.module('enterprise_fees', [])
       }
     }
   })
+
   .directive('spreeEnsureCalculatorPreferencesMatchType', function() {
     // Hide calculator preference fields when calculator type changed
     // Fixes 'Enterprise fee is not found' error when changing calculator type
