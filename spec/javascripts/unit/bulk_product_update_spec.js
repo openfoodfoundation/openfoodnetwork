@@ -428,13 +428,15 @@ describe("AdminBulkProductsCtrl", function(){
 			httpBackend.flush();
 		});
 
-		it("adds the newly created product to scope.products", function(){
+		it("adds the newly created product to scope.products and matches supplier", function(){
+			spyOn(scope, "matchSupplier").andCallThrough();
 			scope.products = [ { id: 13, permalink_live: "oranges" } ];
-			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } } );
-			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } ] );
+			httpBackend.expectGET('/admin/products/oranges/clone.json').respond(200, { product: { id: 17, name: "new_product", supplier: { id: 6 }, variants: [ { id: 3, name: "V1" } ] } } );
+			httpBackend.expectGET('/admin/products/bulk_index.json?q[id_eq]=17').respond(200, [ { id: 17, name: "new_product", supplier: { id: 6 }, variants: [ { id: 3, name: "V1" } ] } ] );
 			scope.cloneProduct(scope.products[0]);
 			httpBackend.flush();
-			expect(scope.products).toEqual( [ { id: 13, permalink_live: "oranges" }, { id: 17, name: "new_product", variants: [ { id: 3, name: "V1" } ] } ] );
+			expect(scope.matchSupplier).toHaveBeenCalledWith( { id: 17, name: "new_product", supplier: { id: 6 }, variants: [ { id: 3, name: "V1" } ] } );
+			expect(scope.products).toEqual( [ { id: 13, permalink_live: "oranges" }, { id: 17, name: "new_product", supplier: { id: 6 }, variants: [ { id: 3, name: "V1" } ] } ] );
 		});
 	});
 });

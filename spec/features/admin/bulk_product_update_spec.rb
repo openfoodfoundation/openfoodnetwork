@@ -384,11 +384,13 @@ feature %q{
 
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
+        page.should have_select "supplier", selected: "#{p1.supplier.name}"
 
         visit '/admin/products/bulk_edit'
 
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
+        page.should have_select "supplier", selected: "#{p1.supplier.name}"
       end
     end
   end

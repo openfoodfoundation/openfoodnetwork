@@ -224,6 +224,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			var id = data.product.id;
 			dataFetcher("/admin/products/bulk_index.json?q[id_eq]="+id).then(function(data){
 				var newProduct = data[0];
+				$scope.matchSupplier(newProduct);
 				$scope.products.push(newProduct);
 			});
 		});
