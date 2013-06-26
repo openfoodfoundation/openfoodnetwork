@@ -11,7 +11,7 @@
 
 %div#new_product(data-hook)
 
-%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => 'refreshSuppliers(); refreshProducts();' }
+%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => 'initialiseData();' }
   %div.options
     Filter Results:
     %input.search{ 'ng-model' => 'query', :type => 'text', 'placeholder' => 'Search Value' }

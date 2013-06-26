@@ -200,21 +200,69 @@ describe("AdminBulkProductsCtrl", function(){
 			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		}));
 
-		it("gets a list of suppliers", function(){
+		it("gets a list of suppliers and then resets products with a list of data", function(){
 			httpBackend.expectGET('/enterprises/suppliers.json').respond("list of suppliers");
-			scope.refreshSuppliers();
+			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
+			spyOn(scope, "resetProducts");
+			scope.initialiseData();
 			httpBackend.flush();
 			expect(scope.suppliers).toEqual("list of suppliers");
-		});
-
-		it("gets a list of products", function(){
-			httpBackend.expectGET('/admin/products/bulk_index.json').respond("list of products");
-			scope.refreshProducts();
-			httpBackend.flush();
-			expect(scope.products).toEqual("list of products");
+			expect(scope.resetProducts).toHaveBeenCalledWith("list of products");
 		});
 	});
-	
+
+	describe("resetting products", function(){
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($controller,$rootScope) {
+			scope = $rootScope.$new();
+			ctrl = $controller;
+
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+			spyOn(scope, "matchSupplier");
+			scope.products = {};
+			scope.resetProducts( [ { id: 1, name: "P1" }, { id: 3, name: "P2" } ] );
+		}));
+
+		it("sets products to the value of 'data'", function(){
+			expect(scope.products).toEqual( [ { id: 1, name: "P1" }, { id: 3, name: "P2" } ] );
+		});
+
+		it("resets dirtyProducts",function(){
+			expect(scope.dirtyProducts).toEqual({});
+		});
+
+		it("calls match matchSupplier once for each product", function(){
+			expect(scope.matchSupplier.calls.length).toEqual(2);
+		});
+	});
+
+	describe("matching supplier", function(){
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($controller,$rootScope) {
+			scope = $rootScope.$new();
+			ctrl = $controller;
+
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+		}));
+
+		it("changes the supplier of the product to the one which matches it from the suppliers list", function(){
+			var s1_s = { id: 1, name: "S1" };
+			var s2_s = { id: 2, name: "S2" };
+			var s1_p = { id: 1, name: "S1" };
+			expect(s1_s == s1_p).not.toEqual(true);
+			scope.suppliers = [ s1_s, s2_s ];
+			var product = { id: 10, supplier: s1_p };
+			scope.matchSupplier(product);
+			expect(product.supplier).toEqual(s1_s);
+		});
+	});
+
 	describe("getting on_hand counts when products have variants", function(){		
 		var p1, p2, p3;
 		beforeEach(function(){

@@ -31,12 +31,13 @@ productsApp.directive('ngTrackProduct', function(){
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, ngModel) {
-			var property = attrs.ngTrackProduct;
-			var clean_value = angular.copy(scope.product[property]);
-			element.bind('blur', function() {
-				if (scope.product[property] == clean_value) removeCleanProperty(scope.dirtyProducts, scope.product.id, property);
-				else addDirtyProperty(scope.dirtyProducts, scope.product.id, property, scope.product[property]);
-				scope.$apply(scope.displayDirtyProducts());
+			var property_name = attrs.ngTrackProduct;
+			ngModel.$parsers.push(function(viewValue){
+				if (ngModel.$dirty)	{
+					addDirtyProperty(scope.dirtyProducts, scope.product.id, property_name, viewValue);
+					scope.displayDirtyProducts();
+				}
+				return viewValue;
 			});
 		}
 	}
@@ -46,20 +47,16 @@ productsApp.directive('ngTrackVariant', function(){
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, ngModel) {
-			var property = attrs.ngTrackVariant;
-			var clean_value = angular.copy(scope.variant[property]);
-			element.bind('blur', function() {
+			var property_name = attrs.ngTrackVariant;
+			ngModel.$parsers.push(function(viewValue){
 				var dirtyVariants = {};
 				if (scope.dirtyProducts.hasOwnProperty(scope.product.id) && scope.dirtyProducts[scope.product.id].hasOwnProperty("variants")) dirtyVariants = scope.dirtyProducts[scope.product.id].variants;
-				if (scope.variant[property] == clean_value){
-					removeCleanProperty(dirtyVariants, scope.variant.id, property);
-					if (dirtyVariants == {}) removeCleanProperty(scope.dirtyProducts, scope.product.id, "variants");
-				}
-				else {
-					addDirtyProperty(dirtyVariants, scope.variant.id, property, scope.variant[property]);
+				if (ngModel.$dirty)	{
+					addDirtyProperty(dirtyVariants, scope.variant.id, property_name, viewValue);
 					addDirtyProperty(scope.dirtyProducts, scope.product.id, "variants", dirtyVariants);
+					scope.displayDirtyProducts();
 				}
-				scope.$apply(scope.displayDirtyProducts());
+				return viewValue;
 			});
 		}
 	}
@@ -70,7 +67,7 @@ productsApp.directive('ngToggleVariants',function(){
 		link: function(scope,element,attrs){
 			if (scope.displayProperties[scope.product.id].showVariants) { element.removeClass('icon-chevron-right'); element.addClass('icon-chevron-down'); }
 			else { element.removeClass('icon-chevron-down'); element.addClass('icon-chevron-right'); }
-			element.bind('click', function(){
+			element.on('click', function(){
 				scope.$apply(function(){
 					if (scope.displayProperties[scope.product.id].showVariants){
 						scope.displayProperties[scope.product.id].showVariants = false;
@@ -120,23 +117,21 @@ productsApp.directive('ngToggleColumnList', function($compile){
 });
 
 productsApp.directive('datetimepicker', function ($parse) {
-  return function (scope, element, attrs) {
-    // using $parse instead of scope[attrs.datetimepicker] for cases
-    // where attrs.datetimepicker is 'foo.bar.lol'
-	$(function(){
-		element.datetimepicker({
-			dateFormat: 'yy-mm-dd',
-			timeFormat: 'HH:mm:ss',
-			stepMinute: 15,
-			onSelect:function (dateText, inst) {
-				scope.$apply(function(scope){
-					parsed = $parse(attrs.datetimepicker);
-					parsed.assign(scope, dateText);
-				});
-			}
-		});
-	});
-  }
+  	return {
+		require: 'ngModel',
+		link: function (scope, element, attrs, ngModel) {
+			element.datetimepicker({
+				dateFormat: 'yy-mm-dd',
+				timeFormat: 'HH:mm:ss',
+				stepMinute: 15,
+				onSelect:function (dateText, inst) {
+					scope.$apply(function(scope){
+						ngModel.$setViewValue(dateText); // Fires ngModel.$parsers
+					});
+				}
+			});
+		}
+	}
 });
 
 productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
@@ -153,15 +148,13 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		available_on: { name: 'Available On', visible: true }
 	}
 
-	$scope.refreshSuppliers = function(){
+	$scope.initialiseData = function(){
 		dataFetcher('/enterprises/suppliers.json').then(function(data){
 			$scope.suppliers = data;
-		});
-	};
-
-	$scope.refreshProducts = function(){
-		dataFetcher('/admin/products/bulk_index.json').then(function(data){
-			$scope.resetProducts(data);
+			// Need to have suppliers before we get products so we can match suppliers to product.supplier
+			dataFetcher('/admin/products/bulk_index.json').then(function(data){
+				$scope.resetProducts(data);
+			});
 		});
 	};
 

@@ -301,7 +301,7 @@ feature %q{
         first("a.delete-product").click
         page.driver.browser.switch_to.alert.accept
 
-        page.should have_selector "a.delete-product"
+        sleep(0.1) if page.has_selector? "a.delete-product", :count => 3
         page.should have_selector "a.delete-product", :count => 2
         #page.should have_selector "div.flash.notice", text: "Product has been deleted."
 
