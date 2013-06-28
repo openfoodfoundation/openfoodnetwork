@@ -12,8 +12,8 @@
             = link_to distributor.name, [main_app, distributor]
           - else
             %abbr(title="One or more of the products in your cart is not available from this distributor")= distributor.name
-      - if @total_distributors > @sidebar_distributors.count
-        - distributors_more = @total_distributors - @sidebar_distributors.count
+      - if @total_distributors > @sidebar_distributors.length
+        - distributors_more = @total_distributors - @sidebar_distributors.length
         %span.filter_more
           = "#{distributors_more} more..."
     = button_to 'Browse All Distributors', main_app.distributors_enterprises_path, :method => :get
@@ -23,8 +23,8 @@
     %ul.filter_choices
       - @sidebar_suppliers.each do |supplier|
         %li.nowrap= link_to supplier.name, [main_app, supplier]
-      - if @total_suppliers > @sidebar_suppliers.count
-        - suppliers_more = @total_suppliers - @sidebar_suppliers.count 
+      - if @total_suppliers > @sidebar_suppliers.length
+        - suppliers_more = @total_suppliers - @sidebar_suppliers.length 
         %span.filter_more
           = "#{suppliers_more} more..."
     = button_to 'Browse All Suppliers', main_app.suppliers_enterprises_path, :method => :get
