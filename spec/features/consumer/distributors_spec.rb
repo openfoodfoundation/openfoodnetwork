@@ -48,7 +48,7 @@ scenario "viewing a list of distributors (with active products) in the sidebar w
     page.should_not have_selector 'a', :text => d3.name #has no products on hand
 
     # And I shouldn't see 'xx more'
-    page.should_not have_selector '#distributor_filter span.filter_more', :text => 'more'
+    page.should_not have_selector '#distributor_filter span.filter_more'
 
     # And I shouldn't see a browse distributors button
     page.should have_selector "#distributor_filter input[value='Browse All Distributors']"

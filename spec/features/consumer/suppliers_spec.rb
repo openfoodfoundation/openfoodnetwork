@@ -30,7 +30,7 @@ feature %q{
     page.should_not have_selector 'a', :text => s3.name #has no products on hand
 
     # And I shouldn't see 'xx more'
-    page.should_not have_selector '#supplier_filter span.filter_more', :text => 'more'
+    page.should_not have_selector '#supplier_filter span.filter_more'
 
     # And I shouldn't see a browse suppliers button
     page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
