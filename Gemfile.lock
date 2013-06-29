@@ -81,13 +81,13 @@ GIT
 
 GIT
   remote: https://github.com/spree/spree_auth_devise.git
-  revision: ab03a7a22740b52f96bf0311a1e9f18a99ee02f2
+  revision: b2b82f1bbe4b47a0713bcf70af8b3c17fa39c0d0
   branch: 1-3-stable
   specs:
     spree_auth_devise (1.0.0)
       cancan (~> 1.6.7)
       devise (~> 2.2.3)
-      devise-encryptable (= 0.1.1)
+      devise-encryptable (= 0.1.2)
       spree_core
 
 GEM
@@ -191,13 +191,13 @@ GEM
     deface (0.9.1)
       nokogiri (~> 1.5.0)
       rails (~> 3.1)
-    devise (2.2.3)
+    devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
-    devise-encryptable (0.1.1)
-      devise (>= 2.1.0.rc)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     excon (0.23.0)
