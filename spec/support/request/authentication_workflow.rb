@@ -11,8 +11,8 @@ module AuthenticationWorkflow
       :role_ids => [admin_role.id]})
 
     visit spree.admin_path
-    fill_in 'user_email', :with => 'admin@ofw.org'
-    fill_in 'user_password', :with => 'passw0rd'
+    fill_in 'spree_user_email', :with => 'admin@ofw.org'
+    fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
   end
 
@@ -32,8 +32,8 @@ module AuthenticationWorkflow
 
     visit spree.root_path
     click_link 'Login'
-    fill_in 'user_email', :with => 'someone@ofw.org'
-    fill_in 'user_password', :with => 'passw0rd'
+    fill_in 'spree_user_email', :with => 'someone@ofw.org'
+    fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
   end
 end
