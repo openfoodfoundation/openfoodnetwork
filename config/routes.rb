@@ -39,7 +39,6 @@ Spree::Core::Engine.routes.prepend do
 
   namespace :admin do
     resources :products do
-      get :bulk_index, :on => :collection, :as => :bulk_index
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
   end
