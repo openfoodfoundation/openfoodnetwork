@@ -1,5 +1,6 @@
 Spree::Admin::ProductsController.class_eval do
   before_filter :load_product_set, :only => :bulk_index
+  before_filter :load_spree_api_key, :only => :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -16,7 +17,7 @@ Spree::Admin::ProductsController.class_eval do
     product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
 
     if product_set.save
-      redirect_to bulk_index_admin_products_url :format => :json
+      redirect_to "/api/products?template=bulk_index"
     else
       render :nothing => true
     end
@@ -34,5 +35,10 @@ Spree::Admin::ProductsController.class_eval do
   private
   def load_product_set
     @product_set = Spree::ProductSet.new :collection => collection
+  end
+
+  def load_spree_api_key
+    current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
+    @spree_api_key = spree_current_user.spree_api_key
   end
 end

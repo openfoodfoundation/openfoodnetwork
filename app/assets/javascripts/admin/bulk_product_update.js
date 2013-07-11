@@ -148,13 +148,23 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		available_on: { name: 'Available On', visible: true }
 	}
 
-	$scope.initialiseData = function(){
-		dataFetcher('/enterprises/suppliers.json').then(function(data){
-			$scope.suppliers = data;
-			// Need to have suppliers before we get products so we can match suppliers to product.supplier
-			dataFetcher('/admin/products/bulk_index.json').then(function(data){
-				$scope.resetProducts(data);
-			});
+	$scope.initialise = function(spree_api_key){
+		var authorise_api_reponse = "";
+		dataFetcher('/api/users/authorise_api?token='+spree_api_key).then(function(data){
+			authorise_api_reponse = data;
+			$scope.spree_api_key_ok = data.hasOwnProperty("success") && data["success"] == "Use of API Authorised";
+			if ($scope.spree_api_key_ok){
+				$http.defaults.headers.common['X-Spree-Token'] = spree_api_key;
+				dataFetcher('/api/enterprises?template=bulk_index;q[is_primary_producer_eq]=true').then(function(data){
+					$scope.suppliers = data;
+					// Need to have suppliers before we get products so we can match suppliers to product.supplier
+					dataFetcher('/api/products?template=bulk_index').then(function(data){
+						$scope.resetProducts(data);
+					});
+				});
+			}
+			else if (authorise_api_reponse.hasOwnProperty("error")){ $scope.api_error_msg = authorise_api_reponse("error"); }
+			else{ api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access." }
 		});
 	};
 
@@ -192,7 +202,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		if (confirm("Are you sure?")){
 			$http({
 				method: 'DELETE',
-				url: '/admin/products/'+product.permalink_live+".js"
+				url: '/api/products/'+product.id
 			})
 			.success(function(data){
 				$scope.products.splice($scope.products.indexOf(product),1);
@@ -206,7 +216,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		if (confirm("Are you sure?")){
 			$http({
 				method: 'DELETE',
-				url: '/admin/products/'+product.permalink_live+"/variants/"+variant.id+".js"
+				url: '/api/products/'+product.id+"/variants/"+variant.id+".js"
 			})
 			.success(function(data){
 				product.variants.splice(product.variants.indexOf(variant),1);
@@ -222,8 +232,8 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 			// However, at the time of writing there appears to be an issue which causes the respond_with block in the destroy action of Spree::Admin::Product to break
 			// when a respond_overrride for the clone action is used.
 			var id = data.product.id;
-			dataFetcher("/admin/products/bulk_index.json?q[id_eq]="+id).then(function(data){
-				var newProduct = data[0];
+			dataFetcher("/api/products/"+id+"?template=bulk_show").then(function(data){
+				var newProduct = data;
 				$scope.matchSupplier(newProduct);
 				$scope.products.push(newProduct);
 			});

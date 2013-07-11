@@ -25,7 +25,7 @@ module Spree
       
       it "sorts products in ascending id order" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        ids = json_response.map{ |product| product['id'] }mate
+        ids = json_response.map{ |product| product['id'] }
         ids[0].should < ids[1]
         ids[1].should < ids[2]
       end

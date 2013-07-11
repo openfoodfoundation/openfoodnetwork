@@ -33,7 +33,9 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/order_cycles' => 'admin/reports#order_cycles', :as => "order_cycles_admin_reports",  :via  => [:get, :post]
   match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
 
-  match '/api/enterprises/:id' => 'api/enterprises#show', :via => :get, :defaults => { :format => 'json' }
+  match '/api/users/authorise_api' => 'api/users#authorise_api', :via => :get, :defaults => { :format => 'json' }
+  match '/api/enterprises' => 'api/enterprises#bulk_index', :via => :get, :defaults => { :format => 'json' }
+  match '/api/enterprises/:id' => 'api/enterprises#bulk_show', :via => :get, :defaults => { :format => 'json' }
 
   namespace :admin do
     resources :products do
