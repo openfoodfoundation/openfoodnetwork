@@ -53,9 +53,9 @@
           %td{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
-            %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
-          %td.actions
             %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
+          %td.actions
+            %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
           %td.actions
             %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
         %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
@@ -69,6 +69,7 @@
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-track-variant' => 'on_hand', :type => 'number' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
+          %td.actions
           %td.actions
             %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }
           %td.actions
