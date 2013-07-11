@@ -371,7 +371,7 @@ describe("AdminBulkProductsCtrl", function(){
 			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		});
 
-		it("deletes products with a http delete request to /admin/products/(permalink).js", function(){
+		it("deletes products with a http delete request to /api/products/id", function(){
 			spyOn(window, "confirm").andReturn(true);
 			scope.products = [ { id: 9, permalink_live: "apples" }, { id: 13, permalink_live: "oranges" } ];
 			scope.dirtyProducts = {};
@@ -397,10 +397,10 @@ describe("AdminBulkProductsCtrl", function(){
 			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
 		});
 
-		it("deletes variants with a http delete request to /admin/products/(permalink)/variants/(variant_id).js", function(){
+		it("deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", function(){
 			spyOn(window, "confirm").andReturn(true);
 			scope.products = [ { id: 9, permalink_live: "apples", variants: [ { id: 3, price: 12 } ] }, { id: 13, permalink_live: "oranges" } ];
-			httpBackend.expectDELETE('/api/products/9/variants/3.js').respond(200, "data");
+			httpBackend.expectDELETE('/api/products/9/variants/3').respond(200, "data");
 			scope.deleteVariant(scope.products[0],scope.products[0].variants[0]);
 			httpBackend.flush();
 		});
@@ -409,7 +409,7 @@ describe("AdminBulkProductsCtrl", function(){
 			spyOn(window, "confirm").andReturn(true);
 			scope.products = [ { id: 9, permalink_live: "apples", variants: [ { id: 3, price: 12.0 }, { id: 4, price: 6.0 } ] }, { id: 13, permalink_live: "oranges" } ];
 			scope.dirtyProducts = { 9: { id: 9, variants: { 3: { id: 3, price: 12.0 }, 4: { id: 4, price: 6.0 } } }, 13: { id: 13, name: "P1" } };
-			httpBackend.expectDELETE('/api/products/9/variants/3.js').respond(200, "data");
+			httpBackend.expectDELETE('/api/products/9/variants/3').respond(200, "data");
 			scope.deleteVariant(scope.products[0],scope.products[0].variants[0]);
 			httpBackend.flush();
 			expect(scope.products[0].variants).toEqual( [ { id: 4, price: 6.0 } ] );

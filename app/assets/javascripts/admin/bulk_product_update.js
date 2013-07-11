@@ -216,7 +216,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 		if (confirm("Are you sure?")){
 			$http({
 				method: 'DELETE',
-				url: '/api/products/'+product.id+"/variants/"+variant.id+".js"
+				url: '/api/products/'+product.id+"/variants/"+variant.id
 			})
 			.success(function(data){
 				product.variants.splice(product.variants.indexOf(variant),1);
