@@ -54,7 +54,9 @@
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ng-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
+          %td.actions
             %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
+          %td.actions
             %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
         %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
           %td.left-actions
@@ -69,6 +71,7 @@
           %td{ 'ng-show' => 'columns.available_on.visible' }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }
+          %td.actions
             %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
     %input{ :type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
     %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
