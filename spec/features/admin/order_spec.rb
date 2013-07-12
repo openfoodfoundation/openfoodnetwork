@@ -8,35 +8,41 @@ feature %q{
   include WebHelper
 
   background do
-    #unfinished.. need to set up test data here
     @user = create(:user)    
-    #ref: order_factory https://github.com/spree/spree/blob/b4353b88a4fc56fa95303a48409a623f68f7f659/core/lib/spree/testing_support/factories/order_factory.rb
-    @orders = (1..3).map {create(:order_with_line_items, :user => @user, :bill_address => '', :ship_address => '')}
-    
+    @order = create(:order_with_totals_and_distributor, :user => @user, :state => 'complete', :payment_state => 'balance_due')
+
+    # ensure order has a payment to capture
+    create :check_payment, order: @order, amount: @order.amount
+
+    # ensure order shows up as completed
+    #@order.completed_at = Time.now #to show up in list as completed
+    #@order.save!
+    @order.finalize! 
   end
 
   context "managing orders" do
     scenario "capture multiple payments from the orders index page" do
-      #d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
+      # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
       login_to_admin_section
 
       click_link 'Orders'
+      #choose 'Only Show Complete Orders'
+      #click_button 'Filter Results'
       
-      @orders.each do |order|
+      # click the link for the order
+      page.find("[data-action=capture][href*=#{@order.number}]").click
       
-        #click the link for the order
-        click_link "[data-action=capture][href*=R#{order.order_id}]"
+      # we should be notified
+      flash_message.should == "Payment Updated"
+
+      # check the order was captured
+      @order.reload
+      @order.payment_state.should == "paid"
+      
+      # we should still be on the right page
+      page.should have_selector "h1", text: "Listing Orders" #t(:listing_orders)
+      #current_path.should == admin_orders_path
         
-        #we should be notified
-        flash_message.should == "Payment Updated"
-        
-        #check the order was captured
-        order.payment_status.should == :captured
-        
-        #we should still be on the right page
-        
-        
-      end #orders.each
-    end #scenario
-  end #context
-end #feature
+    end # scenario
+  end # context
+end #f eature
