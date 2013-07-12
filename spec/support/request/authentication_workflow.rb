@@ -8,7 +8,7 @@ module AuthenticationWorkflow
       :remember_me => false,
       :persistence_token => 'pass',
       :login => 'admin@ofw.org',
-      :role_ids => [admin_role.id]})
+      :spree_role_ids => [admin_role.id]})
 
     visit spree.admin_path
     fill_in 'user_email', :with => 'admin@ofw.org'
