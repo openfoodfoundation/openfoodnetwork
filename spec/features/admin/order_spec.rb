@@ -15,8 +15,6 @@ feature %q{
     create :check_payment, order: @order, amount: @order.amount
 
     # ensure order shows up as completed
-    #@order.completed_at = Time.now #to show up in list as completed
-    #@order.save!
     @order.finalize! 
   end
 
@@ -26,10 +24,9 @@ feature %q{
       login_to_admin_section
 
       click_link 'Orders'
-      #choose 'Only Show Complete Orders'
-      #click_button 'Filter Results'
+      current_path.should == spree.admin_orders_path
       
-      # click the link for the order
+      # click the 'capture' link for the order
       page.find("[data-action=capture][href*=#{@order.number}]").click
       
       # we should be notified
@@ -40,8 +37,7 @@ feature %q{
       @order.payment_state.should == "paid"
       
       # we should still be on the right page
-      page.should have_selector "h1", text: "Listing Orders" #t(:listing_orders)
-      #current_path.should == admin_orders_path
+      current_path.should == spree.admin_orders_path
         
     end # scenario
   end # context
