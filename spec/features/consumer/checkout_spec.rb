@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature %q{
     As a consumer
-    I want select a distributor for collection
+    I want to select a distributor for collection
     So that I can pick up orders from the closest possible location
 } do
   include AuthenticationWorkflow
@@ -134,14 +134,17 @@ feature %q{
     
     page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
     
-    click_button 'Save and Continue'
+    #click_button 'Save and Continue'
+    page.find('#add_new_save_checkout_button input[type=submit]').click
 
     # -- Checkout: Delivery
     page.should have_selector 'label', :text => "Delivery $3.00"
-    click_button 'Save and Continue'
+    #click_button 'Save and Continue'
+    page.find('#add_new_save_checkout_button input[type=submit]').click
 
     # -- Checkout: Payment
-    click_button 'Process My Order'
+    #click_button 'Process My Order'
+    page.find('#add_new_save_checkout_button input[type=submit]').click
 
     # -- Checkout: Order complete
     page.should have_content('Your order has been processed successfully')
