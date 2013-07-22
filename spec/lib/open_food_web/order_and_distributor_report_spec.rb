@@ -20,14 +20,6 @@ module OpenFoodWeb
         @order.payments << payment
         @line_item = create(:line_item, :product => product, :order => @order)
         @order.line_items << @line_item
-        
-        #cancelled order
-        @cancelled_order = create(:order, :distributor => @distributor, :bill_address => @bill_address, :special_instructions => @shipping_instructions)
-        payment = create(:payment, :payment_method => @payment_method, :order => @cancelled_order )
-        @cancelled_order.payments << payment
-        line_item = create(:line_item, :product => product, :order => @cancelled_order)
-        @cancelled_order.line_items << line_item
-        @cancelled_order.state = 'canceled' #don't think this is right..
       end
 
       it "should return a header row describing the report" do
@@ -52,20 +44,6 @@ module OpenFoodWeb
           @payment_method.name,
           @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
       end
-      
-      it "should hide cancelled orders by default" do
-        subject = OrderAndDistributorReport.new [@order, @cancelled_order]
-
-        table = subject.table
-        
-        table.should_not include([@cancelled_order.created_at, @cancelled_order.id,
-          @bill_address.full_name, @cancelled_order.email, @bill_address.phone, @bill_address.city,
-          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.itemwise_shipping_cost,
-          @payment_method.name,
-          @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ])
-        
-      end
-      
     end
   end
 end
