@@ -10,6 +10,10 @@ require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
 
+# Do not require pry in Travis
+require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
