@@ -75,6 +75,8 @@ speak to Andrew Spinks.
 * Andrew Spinks (http://github.com/andrewspinks)
 * Rohan Mitchell (http://github.com/rohanm)
 * Rob Harrington (http://github.com/oeoeaio)
+* Alex Serdyuk (http://github.com/alexs333)
+* David Cook (http://github.com/dacook)
 
 
 ## Licence
