@@ -10,12 +10,12 @@ class ApplicationController < ActionController::Base
   end
 
   def load_data_for_sidebar
-    sidebar_distributors_limit = 5 #set false to disable TODO: move to app config
-    sidebar_suppliers_limit = 5
+    sidebar_distributors_limit = false # TODO: move to app config
+    sidebar_suppliers_limit = false
     @sidebar_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(sidebar_distributors_limit)
-    @total_distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.distinct_count
+    @total_distributors = Enterprise.is_distributor.distinct_count
     @sidebar_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(sidebar_suppliers_limit) 
-    @total_suppliers = Enterprise.is_primary_producer.with_supplied_active_products_on_hand.distinct_count
+    @total_suppliers = Enterprise.is_primary_producer.distinct_count
   end
 
   # All render calls within the block will be performed with the specified format
