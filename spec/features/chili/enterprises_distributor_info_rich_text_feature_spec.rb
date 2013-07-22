@@ -51,6 +51,8 @@ feature "enterprises distributor info as rich text" do
   end
 
   scenario "viewing distributor info", js: true do
+    ActionMailer::Base.deliveries.clear
+
     setup_shipping_details
 
     d = create(:distributor_enterprise, distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
@@ -76,9 +78,7 @@ feature "enterprises distributor info as rich text" do
 
     # -- Purchase email
     complete_purchase_from_checkout_address_page
-    sleep 2 # The default timeout for wait_until is not always enough here
     wait_until { ActionMailer::Base.deliveries.length == 1 }
-    ActionMailer::Base.deliveries.length.should == 1
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
     email.body.should =~ /Thursday 2nd May/
