@@ -72,21 +72,31 @@ end
 unless Spree::Product.count > 0
   puts "[db:seed] Seeding products"
 
-  FactoryGirl.create(:product,
+  prod1 = FactoryGirl.create(:product,
                      :name => 'Garlic', :price => 20.00,
                      :supplier => Enterprise.is_primary_producer[0],
-                     :distributors => [Enterprise.is_distributor[0]],
                      :taxons => [Spree::Taxon.find_by_name('Vegetables')])
 
-  FactoryGirl.create(:product,
+  ProductDistribution.create(:product => prod1,
+                             :distributor => Enterprise.is_distributor[0],
+                             :shipping_method => Spree::ShippingMethod.first)
+
+
+  prod2 = FactoryGirl.create(:product,
                      :name => 'Fuji Apple', :price => 5.00,
                      :supplier => Enterprise.is_primary_producer[1],
-                     :distributors => Enterprise.is_distributor,
                      :taxons => [Spree::Taxon.find_by_name('Fruit')])
 
-  FactoryGirl.create(:product,
+  ProductDistribution.create(:product => prod2,
+                             :distributor => Enterprise.is_distributor[1],
+                             :shipping_method => Spree::ShippingMethod.first)
+
+  prod3 = FactoryGirl.create(:product,
                      :name => 'Beef - 5kg Trays', :price => 50.00,
                      :supplier => Enterprise.is_primary_producer[2],
-                     :distributors => [Enterprise.is_distributor[2]],
                      :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+
+  ProductDistribution.create(:product => prod3,
+                             :distributor => Enterprise.is_distributor[2],
+                             :shipping_method => Spree::ShippingMethod.first)
 end
