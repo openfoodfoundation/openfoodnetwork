@@ -28,6 +28,15 @@ describe Spree::Order do
     li.max_quantity.should == 3
   end
 
+  context "canceled order" do
+    subject.state = 'canceled' #what is the correct way to set this?
+    
+    it "doesn't appear in not_state(canceled)" do
+      subject.should_not be_in_collection(Spree::Order.not_state('canceled'))
+    end
+  end
+
+
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
       order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
