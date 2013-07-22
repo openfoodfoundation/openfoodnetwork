@@ -5,7 +5,10 @@ feature "enterprises distributor info as rich text" do
   include WebHelper
 
   before(:each) do
-    ENV['OFW_DEPLOYMENT'] = 'local_organics'
+    OpenFoodWeb::FeatureToggle.stub(:features).and_return({eaterprises: false,
+                                                           local_organics: true,
+                                                           enterprises_distributor_info_rich_text: true})
+
 
     # The deployment is not set to local_organics on Rails init, so these
     # initializers won't run. Re-call them now that the deployment is set.

@@ -1,9 +1,6 @@
 require 'simplecov'
 SimpleCov.start
 
-# By default, test on eaterprises deployment settings
-# This must be set before rails loads so that it's available in engine initializers
-ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
 
 require 'rubygems'
 
@@ -55,11 +52,6 @@ RSpec.configure do |config|
     else
       DatabaseCleaner.strategy = :transaction
     end
-
-    config.before(:each) do
-      # By default, test on eaterprises deployment settings
-      ENV['OFW_DEPLOYMENT'] ||= 'eaterprises'
-   end
 
     config.include Rails.application.routes.url_helpers
     config.include Spree::UrlHelpers

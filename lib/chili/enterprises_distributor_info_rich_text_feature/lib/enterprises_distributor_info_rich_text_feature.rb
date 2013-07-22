@@ -3,5 +3,5 @@ require "enterprises_distributor_info_rich_text_feature/engine"
 
 module EnterprisesDistributorInfoRichTextFeature
   extend Chili::Base
-  active_if { ENV['OFW_DEPLOYMENT'] == 'local_organics' }
+  active_if { OpenFoodWeb::FeatureToggle.enabled? :enterprises_distributor_info_rich_text }
 end

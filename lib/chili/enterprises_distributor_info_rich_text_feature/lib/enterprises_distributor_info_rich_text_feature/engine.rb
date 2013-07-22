@@ -1,9 +1,11 @@
+require 'open_food_web/feature_toggle'
+
 module EnterprisesDistributorInfoRichTextFeature
   class Engine < ::Rails::Engine
     isolate_namespace EnterprisesDistributorInfoRichTextFeature
 
     initializer 'enterprises_distributor_info_rich_text_feature.mailer', :after => :load_config_initializers do |app|
-      if ENV['OFW_DEPLOYMENT'] == 'local_organics'
+      if OpenFoodWeb::FeatureToggle.enabled? :enterprises_distributor_info_rich_text
         ::Spree::OrderMailer.class_eval do
           helper FeatureHelper
 

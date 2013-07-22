@@ -3,5 +3,5 @@ require "eaterprises_feature/engine"
 
 module EaterprisesFeature
   extend Chili::Base
-  active_if { ENV['OFW_DEPLOYMENT'] == 'eaterprises' }
+  active_if { OpenFoodWeb::FeatureToggle.enabled? :eaterprises }
 end
