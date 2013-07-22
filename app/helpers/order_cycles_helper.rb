@@ -22,4 +22,8 @@ module OrderCyclesHelper
     options_for_select(options, current_distributor)
   end
 
+  def order_cycles_enabled?
+    false
+  end
+
 end

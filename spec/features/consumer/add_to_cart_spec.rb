@@ -159,9 +159,39 @@ feature %q{
         page.should have_content "Please complete your order at #{d1.name} before shopping with another distributor."
       end
     end
+
+    describe 'with order cycles disabled' do
+      before(:each) do
+        OrderCyclesHelper.class_eval do
+          def order_cycles_enabled?
+            false
+          end
+        end
+      end
+
+      scenario "should not show order cycle details when adding to cart" do
+        # Given a product and a distributor
+        d = create(:distributor_enterprise)
+        p = create(:product, :price => 12.34)
+
+        # When I add an item to my cart
+        visit spree.product_path p
+
+        page.should_not have_selector '#order_cycle_id option'
+      end
+
+    end
   end
 
   context "with order cycle distribution" do
+    before(:each) do
+      OrderCyclesHelper.class_eval do
+        def order_cycles_enabled?
+          true
+        end
+      end
+    end
+
     scenario "adding a product to the cart with no distribution chosen" do
       # Given a product and some distributors
       d1 = create(:distributor_enterprise)
