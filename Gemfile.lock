@@ -180,6 +180,10 @@ GEM
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
     database_cleaner (0.7.1)
+    db2fog (0.7.0)
+      activerecord (~> 3.0)
+      fog (~> 1.0)
+      rails (~> 3.0)
     debugger (1.1.4)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -199,6 +203,7 @@ GEM
       devise (>= 2.1.0.rc)
     diff-lcs (1.1.3)
     erubis (2.7.0)
+    excon (0.23.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (3.3.0)
@@ -210,6 +215,17 @@ GEM
       i18n (~> 0.4)
     ffaker (1.12.1)
     ffi (1.4.0)
+    fog (1.12.1)
+      builder
+      excon (~> 0.23.0)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.1)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5.0)
+      ruby-hmac
+    formatador (0.2.4)
     haml (3.1.6)
     highline (1.6.11)
     hike (1.2.1)
@@ -243,6 +259,10 @@ GEM
       json
     multi_json (1.6.1)
     multi_xml (0.5.3)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.6.8)
+    newrelic_rpm (3.6.0.83)
     nokogiri (1.5.6)
     orm_adapter (0.4.0)
     paperclip (2.8.0)
@@ -315,6 +335,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.10.0)
+    ruby-hmac (0.4.0)
     rubyzip (0.9.9)
     sass (3.1.19)
     sass-rails (3.2.5)
@@ -387,12 +408,14 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   database_cleaner (= 0.7.1)
+  db2fog
   debugger-linecache
   factory_girl_rails
   faker
   haml
   jquery-rails
   letter_opener
+  newrelic_rpm
   pg
   pry-debugger
   rails (= 3.2.11)
