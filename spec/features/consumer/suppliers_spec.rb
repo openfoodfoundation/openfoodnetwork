@@ -21,6 +21,9 @@ feature %q{
     create(:product, :supplier => s1)
     create(:product, :supplier => s3, :on_hand => 0)
 
+    # And no limit set for the sidebar
+    sidebar_suppliers_limit = false
+
     # When I go to the home page
     visit spree.root_path
 
@@ -29,13 +32,15 @@ feature %q{
     page.should_not have_selector 'a', :text => s2.name #has no products
     page.should_not have_selector 'a', :text => s3.name #has no products on hand
 
-    # And I shouldn't see 'xx more'
-    page.should_not have_selector '#supplier_filter span.filter_more'
+    # And I should see '5 more'
+    suppliers_more = Enterprise.is_primary_producer.distinct_count - Enterprise.is_primary_producer.with_supplied_active_products_on_hand.limit(sidebar_suppliers_limit).length 
+    page.should have_selector '#supplier_filter span.filter_more', :text => "#{suppliers_more} more"
 
-    # And I shouldn't see a browse suppliers button
+    # And I should (always) see a browse suppliers button
     page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
   end
 
+=begin
   scenario "viewing a list of suppliers (with active products) in the sidebar when there's more than 5" do
     # Given some suppliers
     s1 = create(:supplier_enterprise)
@@ -65,6 +70,7 @@ feature %q{
     # And I should see a browse suppliers button
     page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
   end
+=end
 
   scenario "viewing a list of all suppliers" do
     # Given some suppliers

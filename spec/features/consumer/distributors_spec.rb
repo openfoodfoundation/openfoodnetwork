@@ -26,7 +26,7 @@ feature %q{
     page.should_not have_selector 'a', :text => d3.name
   end
 
-scenario "viewing a list of distributors (with active products) in the sidebar when there's 5 or fewer" do
+scenario "viewing a list of distributors (with active products) in the sidebar when there's some inactive distributors" do
     # Given some distributors
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
@@ -39,6 +39,9 @@ scenario "viewing a list of distributors (with active products) in the sidebar w
     create(:product, :distributors => [d1])
     create(:product, :distributors => [d3], :on_hand => 0)
 
+    # And no limit set for the sidebar
+    sidebar_distributors_limit = false
+
     # When I go to the home page
     visit spree.root_path
 
@@ -47,13 +50,15 @@ scenario "viewing a list of distributors (with active products) in the sidebar w
     page.should_not have_selector 'a', :text => d2.name #has no products
     page.should_not have_selector 'a', :text => d3.name #has no products on hand
 
-    # And I shouldn't see 'xx more'
-    page.should_not have_selector '#distributor_filter span.filter_more'
+    # And I should see '5 more'
+    distributors_more = Enterprise.is_distributor.distinct_count - Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name.limit(sidebar_distributors_limit).length 
+    page.should have_selector '#distributor_filter span.filter_more', :text => "#{distributors_more} more"
 
-    # And I shouldn't see a browse distributors button
+    # And I should (always) see a browse distributors button
     page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
   end
 
+=begin
   scenario "viewing a list of distributors (with active products) in the sidebar when there's more than 5" do
     # Given some distributors
     d1 = create(:distributor_enterprise)
@@ -83,6 +88,7 @@ scenario "viewing a list of distributors (with active products) in the sidebar w
     # And I should see a browse distributors button
     page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
   end
+=end
 
   scenario "viewing a list of all distributors" do
     # Given some distributors
