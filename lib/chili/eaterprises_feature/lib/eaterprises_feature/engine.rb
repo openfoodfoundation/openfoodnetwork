@@ -1,4 +1,4 @@
-require 'open_food_web/feature_toggle'
+require_relative '../../../../open_food_web/feature_toggle'
 
 module EaterprisesFeature
   class Engine < ::Rails::Engine
