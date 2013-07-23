@@ -179,7 +179,7 @@ GEM
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
     database_cleaner (0.7.1)
-    db2fog (0.7.0)
+    db2fog (0.8.0)
       activerecord (~> 3.0)
       fog (~> 1.0)
       rails (~> 3.0)
@@ -201,7 +201,7 @@ GEM
       devise (>= 2.1.0)
     diff-lcs (1.1.3)
     erubis (2.7.0)
-    excon (0.23.0)
+    excon (0.25.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (3.3.0)
@@ -213,15 +213,15 @@ GEM
       i18n (~> 0.4)
     ffaker (1.15.0)
     ffi (1.4.0)
-    fog (1.12.1)
+    fog (1.14.0)
       builder
-      excon (~> 0.23.0)
+      excon (~> 0.25.0)
       formatador (~> 0.2.0)
       mime-types
       multi_json (~> 1.0)
       net-scp (~> 1.1)
       net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
+      nokogiri (~> 1.5)
       ruby-hmac
     formatador (0.2.4)
     haml (3.1.6)
@@ -259,7 +259,7 @@ GEM
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
-    newrelic_rpm (3.6.0.83)
+    newrelic_rpm (3.6.5.130)
     nokogiri (1.5.10)
     oj (2.1.2)
     orm_adapter (0.4.0)
@@ -420,6 +420,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   representative_view
   rspec-rails
+  sass
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
