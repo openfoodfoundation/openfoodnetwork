@@ -299,7 +299,6 @@ feature %q{
         page.should have_selector "a.delete-product", :count => 3
 
         first("a.delete-product").click
-        page.driver.browser.switch_to.alert.accept
 
         sleep(0.5) if page.has_selector? "a.delete-product", :count => 3 # Wait for product to be removed from page
         page.should have_selector "a.delete-product", :count => 2
@@ -322,7 +321,6 @@ feature %q{
         page.should have_selector "a.delete-variant", :count => 3
 
         first("a.delete-variant").click
-        page.driver.browser.switch_to.alert.accept
         
         sleep(0.5) if page.has_selector? "a.delete-variant", :count => 3 # Wait for variant to be removed from page
         page.should have_selector "a.delete-variant", :count => 2

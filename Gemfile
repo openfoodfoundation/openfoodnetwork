@@ -60,6 +60,7 @@ group :test, :development do
   gem 'simplecov', :require => false
   gem 'awesome_print'
   gem "letter_opener"
+  gem 'poltergeist'
 end
 
 group :development do

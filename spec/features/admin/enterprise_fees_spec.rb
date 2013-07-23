@@ -23,7 +23,7 @@ feature %q{
     click_link 'Configuration'
     click_link 'Enterprise Fees'
 
-    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id", :text => fee.enterprise.name
+    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
     page.should have_selector "option[selected]", text: 'Weight (per kg)'
@@ -93,7 +93,6 @@ feature %q{
 
     # And I click delete
     find("a.delete-resource").click
-    page.driver.browser.switch_to.alert.accept
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
