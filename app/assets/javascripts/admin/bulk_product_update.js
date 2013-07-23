@@ -9,7 +9,7 @@ productsApp.directive('ngDecimal', function () {
 		require: 'ngModel',
 		link: function(scope, element, attrs, ngModel) {
 			var numRegExp = /^\d+(\.\d+)?$/;
-			
+
 			element.bind('blur', function() {
 				scope.$apply(ngModel.$setViewValue(ngModel.$modelValue));
 				ngModel.$render();
@@ -133,8 +133,7 @@ productsApp.directive('datetimepicker', function ($parse) {
 		}
 	}
 });
-
-productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http, dataFetcher) {
+productsApp.controller('AdminBulkProductsCtrl', ["$scope", "$timeout", "$http", "dataFetcher", function($scope, $timeout, $http, dataFetcher) {
 	$scope.updateStatusMessage = {
 		text: "",
 		style: {}
@@ -299,7 +298,7 @@ productsApp.controller('AdminBulkProductsCtrl', function($scope, $timeout, $http
 	$scope.dirtyProductCount = function(){
 		return Object.keys($scope.dirtyProducts).length;
 	}
-});
+}]);
 
 productsApp.factory('dataFetcher', function($http,$q){
 	return function(dataLocation){
