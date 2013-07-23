@@ -9,8 +9,7 @@
                   :form=> "checkout_form_#{@order.state}" %>
   <script>
     //Show additional button only if form attribute is supported
-    if ($("#add_new_save_checkout_button input[type=submit]")[0].form)
-    {
+    if ($("#add_new_save_checkout_button input[type=submit]")[0].form) {
       $("#add_new_save_checkout_button").show();
     }
   </script>
