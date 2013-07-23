@@ -278,6 +278,14 @@ div#eft-payment-alert {
   border: 2px solid red;
 }
 
+/* Large 'Save and Continue/Process My Order' button under Order Summary on the checkout pages */
+#add_new_save_checkout_button {
+  display: none;
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #d9d9db;
+}
+
 /* Cleared div for clearing previous floating elements */
 div.cleared {
   clear: both;

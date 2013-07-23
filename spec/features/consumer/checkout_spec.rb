@@ -192,14 +192,15 @@ feature %q{
     # Disabled until this form takes order cycles into account
     # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
     
-    click_button 'Save and Continue'
+    #click_button 'Save and Continue'
+    click_continue_button
 
     # -- Checkout: Delivery
     page.should have_selector 'label', :text => "Delivery $3.00"
-    click_button 'Save and Continue'
+    click_continue_button
 
     # -- Checkout: Payment
-    click_button 'Process My Order'
+    click_continue_button
 
     # -- Checkout: Order complete
     page.should have_content('Your order has been processed successfully')
@@ -209,6 +210,13 @@ feature %q{
     # page.should have_content('Your order will be available on:')
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
+  end
+
+
+  private
+
+  def click_continue_button
+    page.find('#add_new_save_checkout_button input[type=submit]').click
   end
 
 end
