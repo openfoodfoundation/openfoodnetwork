@@ -1,0 +1,36 @@
+Dear <%= @order.bill_address.firstname %>,
+
+Please review and retain the following order information for your records.
+
+============================================================
+Order Summary
+============================================================
+Order for: <%= @order.bill_address.full_name %>
+<% @order.line_items.each do |item| %>
+  <%= item.variant.sku %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= number_to_currency item.price %> = <%= number_to_currency(item.price * item.quantity) %>
+<% end %>
+============================================================
+Subtotal: <%= number_to_currency @order.item_total %>
+<% @order.adjustments.each do |adjustment| %>
+  <%= raw(adjustment.label) %> <%= number_to_currency(adjustment.amount) %>
+<% end %>
+Order Total: <%= number_to_currency(@order.total) %>
+
+<% if @order.payment_method.name.include? "EFT" %>
+============================================================
+Payment Details
+============================================================
+<%= @order.payment_method.description.html_safe %>
+
+<% end %>
+============================================================
+Collection / Delivery Details
+============================================================
+<%= raw strip_html @order.distributor.distributor_info %>
+<%= @order.distributor.next_collection_at %>
+
+
+Thanks for your support.
+
+Marcus and Angie,
+Local Organics

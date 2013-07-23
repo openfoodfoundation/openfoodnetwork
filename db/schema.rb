@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20130629120645) do
     t.string   "next_collection_at"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.text     "distributor_info"
   end
 
   create_table "exchange_fees", :force => true do |t|

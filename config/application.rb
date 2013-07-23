@@ -37,6 +37,10 @@ module Openfoodweb
                                                       OpenFoodWeb::Calculator::Weight]
     end
 
+    # Register Spree payment methods
+    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
+      app.config.spree.payment_methods << Spree::Gateway::Migs
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -72,7 +76,7 @@ module Openfoodweb
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.assets.initialize_on_precompile = false
+    config.assets.initialize_on_precompile = true
     config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*']
   end
 end

@@ -1,14 +1,18 @@
 require 'simplecov'
 SimpleCov.start
 
-require 'rubygems'
 
+require 'rubygems'
 
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
+
+# Do not require pry in Travis
+require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -52,6 +56,13 @@ RSpec.configure do |config|
     else
       DatabaseCleaner.strategy = :transaction
     end
+
+    # TODO: Duplication of below. Remove?
+    config.include Rails.application.routes.url_helpers
+    config.include Spree::UrlHelpers
+    config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
+    config.include Devise::TestHelpers, :type => :controller
+
     DatabaseCleaner.start
   end
 

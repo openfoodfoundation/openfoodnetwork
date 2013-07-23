@@ -3,13 +3,20 @@ require 'open_food_web/distributor_change_validator'
 Spree::Order.class_eval do
   belongs_to :distributor, :class_name => 'Enterprise'
 
-  before_validation :shipping_address_from_distributor
   validate :products_available_from_new_distributor, :if => :distributor_id_changed?
   attr_accessible :distributor_id
 
+  before_validation :shipping_address_from_distributor
+  before_save :update_line_item_shipping_methods
   after_create :set_default_shipping_method
 
   
+  def empty!
+    line_items.destroy_all
+    adjustments.destroy_all
+    set_default_shipping_method
+  end
+
   def products_available_from_new_distributor
     # Check that the line_items in the current order are available from a newly selected distributor
     errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
@@ -32,7 +39,7 @@ Spree::Order.class_eval do
   end
   
   def line_item_variants
-    line_items.map{ |li| li.variant }
+    line_items.map { |li| li.variant }
   end
 
 
@@ -64,6 +71,13 @@ Spree::Order.class_eval do
         self.ship_address.lastname = bill_address.lastname
         self.ship_address.phone = bill_address.phone
       end
+    end
+  end
+
+  def update_line_item_shipping_methods
+    if %w(cart address delivery resumed).include? state
+      self.line_items.each { |li| li.update_itemwise_shipping_method_without_callbacks!(distributor) }
+      self.update!
     end
   end
 end
