@@ -25,6 +25,6 @@ Spree::Order.class_eval do
   before_create :init_shipping_method
 
   def init_shipping_method
-    FactoryGirl.create(:itemwise_shipping_method) if Spree::ShippingMethod.where("display_on != 'back_end'").empty?
+    FactoryGirl.create(:itemwise_shipping_method) unless Spree::ShippingMethod.all.any? { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
   end
 end

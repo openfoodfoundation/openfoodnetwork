@@ -19,6 +19,7 @@ feature 'shipping methods' do
   scenario "deleting a shipping method referenced by an order" do
     o = create(:order)
     o.shipping_method = @sm
+    o.save!
 
     visit_delete spree.admin_shipping_method_path(@sm)
 

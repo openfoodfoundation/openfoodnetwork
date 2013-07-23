@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Spree::Order do
   it "initialises a default shipping method after creation" do
-    shipping_method_back_end = create(:shipping_method, :display_on => :back_end)
-    shipping_method_both = create(:shipping_method, :display_on => :both)
+    shipping_method_regular = create(:shipping_method)
+    shipping_method_itemwise = create(:itemwise_shipping_method)
 
     subject.shipping_method.should be_nil
     subject.adjustments.should be_empty
 
     subject.save!
 
-    subject.shipping_method.should == shipping_method_both
+    subject.shipping_method.should == shipping_method_itemwise
     subject.adjustments.where(:label => "Shipping").should be_present
   end
 

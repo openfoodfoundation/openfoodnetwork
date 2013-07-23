@@ -68,13 +68,17 @@ Spree::Order.class_eval do
   # This is based on the assumption that there's only one shipping method visible to the user,
   # which is a method using the itemwise shipping calculator.
   def set_default_shipping_method
-    self.shipping_method = Spree::ShippingMethod.where("display_on != 'back_end'").first
+    self.shipping_method = itemwise_shipping_method
     if self.shipping_method
       self.save!
       self.create_shipment!
     else
       raise 'No default shipping method found'
     end
+  end
+
+  def itemwise_shipping_method
+    Spree::ShippingMethod.all.find { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
   end
 
   def shipping_address_from_distributor
