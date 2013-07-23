@@ -106,8 +106,8 @@ feature "enterprises distributor info as rich text" do
     select('Australia', :from => 'order_bill_address_attributes_country_id')
     select('Victoria', :from => 'order_bill_address_attributes_state_id')
 
-    click_button 'Save and Continue'
-    click_button 'Save and Continue'
-    click_button 'Process My Order'
+    click_checkout_continue_button
+    click_checkout_continue_button
+    click_checkout_continue_button
   end
 end
