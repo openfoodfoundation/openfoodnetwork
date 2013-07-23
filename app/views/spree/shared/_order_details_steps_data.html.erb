@@ -1,49 +1,37 @@
 <div class="row steps-data">
-  
-  <div class="columns alpha six">
-    <h6><%= "Customer Details" %> <%= link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
-    <div class="address">
-      Name: <%= order.bill_address.full_name %><br />
-	  Address: <%= order.bill_address.address1 + ", " + order.bill_address.city %>
-    </div>
-  </div>
 
-  <div class="columns alpha six">
-    <h6><%= "Distributor Details" %> <%# link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
-    <div class="address">
-      Distributor: <%= order.distributor.name %><br />
-	  Address: <%= order.distributor.address.address1 + ", " + order.distributor.address.city %>
+  <% if order.has_step?("address") %>
+    <div class="columns alpha six">
+      <h6><%= "Customer Details" %> <%= link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
+      <div class="address">
+        <%= render 'enterprises/distributor_details', :distributor => order.distributor %>
+      </div>
     </div>
-  </div>
 
-  <!-- <div class="columns alpha four">
-    <h6><%= t(:shipping_method) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:delivery) unless @order.completed? %></h6>
-    <div class="delivery">
-      <%= order.shipping_method.name %>
+    <div class="columns alpha two">
+	</div>
+
+    <div class="columns alpha six">
+      <h6><%= t(:billing_address) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h6>
+      <div class="address">
+        Distributor: <%= order.distributor.name %><br />
+		Address: <%= order.distributor.address.address1 + ", " + order.distributor.address.city %>
+      </div>
     </div>
-  </div> -->
+  <% end %>
+
 </div>
+
 <div class="row steps-data">
-  <div class="columns alpha six" <% if order.payment_method.name.include? "EFT" %>id="eft-payment-alert"<% end %>>
+	
+  <div class="columns alpha six">
     <h6><%= t(:payment_information) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h6>
     <div class="payment-info">
-      <% if order.payment_method.name.include? "PayPal" %>
+	  <% if order.payments.any? { |payment| payment.payment_method.name.include? "PayPal" } %>
 	    <div class="flash notice">Your payment via PayPal has been processed successfully.</div>
-	  <% elsif order.payment_method.name.include? "EFT" %>
-        <span><%= order.payment_method.description.html_safe %></span>
-      <% elsif order.credit_cards.empty? == false %>
-        <span class="cc-type">
-          <%= image_tag "credit_cards/icons/#{order.credit_cards.first.cc_type}.png" %>
-          <%= t(:ending_in)%> <%= order.credit_cards.first.last_digits %>
-        </span>
-	    <br />
-        <span class="full-name">
-          <%= order.credit_cards.first.first_name %>
-          <%= order.credit_cards.first.last_name %>
-        </span>
-	  <% elsif order.payment_method.type == "Spree::PaymentMethod::Check" %>
-	    <span><%= order.payment_method.description %></span>
-      <% end %>
+	  <% end %>
+      <%= render order.payments.valid %>
     </div>
   </div>
+
 </div>

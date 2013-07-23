@@ -1,0 +1,4 @@
+/ replace_contents "[data-hook='distributor-details']"
+%h2= distributor.name
+= distributor.distributor_info.andand.html_safe
+.next-collection-at= distributor.next_collection_at

@@ -1,13 +1,13 @@
 <% if @order.state == 'address' %>
-  <div class="columns omega four" style="padding-top: 30px">
-    <% if alternative_available_distributors(@order) %>
+  <div class="columns omega four alternative-available-distributors">
+    <% unless alternative_available_distributors(@order).empty? %>
       <%= form_for(@order) do |f| %>
         <%= f.label :distributor_label, "Alternative distributors for this order:" %>
-  	<%= f.select :distributor_id, options_for_select( enterprises_options(alternative_available_distributors(@order)) ) %>
-  	<%= f.submit "Change Distributor" %>
-      <% end %>
+  	  <%= f.select :distributor_id, options_for_select( enterprises_options(alternative_available_distributors(@order)) ) %>
+  	  <%= f.submit "Change Distributor" %>
+  	<% end %>
     <% else %>
-      No alternative distributors available.
+  	No alternative distributors available.
     <% end %>
   </div>
 <% end %>

@@ -1,13 +1,13 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'spree', :git => 'git://github.com/spree/spree.git', :branch => '1-3-stable'
 gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
 gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-3-stable'
-gem 'spree_last_address', :git => 'git://github.com/eaterprises/spree-last-address.git'
+gem 'spree_last_address', :git => 'git://github.com/eaterprises/spree-last-address.git', :branch => '1-3-stable'
 gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', :branch => '1-3-stable'
 
 gem 'comfortable_mexican_sofa'
@@ -18,12 +18,18 @@ gem 'simple_form', :git => 'git://github.com/RohanM/simple_form.git'
 
 gem 'unicorn'
 gem 'bugsnag'
-gem 'spree_heroku', :git => 'git://github.com/eaterprises/spree-heroku.git'
+gem 'newrelic_rpm'
 gem 'haml'
+gem 'sass'
 gem 'aws-sdk'
+gem 'db2fog'
 gem 'andand'
 gem 'truncate_html'
 gem 'representative_view'
+gem 'rabl'
+gem 'oj'
+gem 'chili', :github => 'eaterprises/chili'
+gem 'deface', :github => 'spree/deface'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -36,6 +42,8 @@ group :assets do
   gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'turbo-sprockets-rails3'
 end
 
 gem 'jquery-rails'
@@ -51,8 +59,16 @@ group :test, :development do
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
+  gem 'simplecov', :require => false
   gem 'awesome_print'
-  gem "letter_opener"
+  gem 'letter_opener'
+  gem 'timecop'
+end
+
+group :chili do
+  gem 'enterprises_distributor_info_rich_text_feature', path: 'lib/chili/enterprises_distributor_info_rich_text_feature'
+  gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
+  gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
 end
 
 group :development do

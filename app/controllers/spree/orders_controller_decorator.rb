@@ -19,25 +19,6 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  def update_distribution
-    @order = current_order(true)
-
-    if params[:commit] == 'Choose Hub'
-      distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
-      @order.set_distributor! distributor
-
-      flash[:notice] = 'Your hub has been selected.'
-      redirect_to request.referer
-
-    elsif params[:commit] == 'Choose Order Cycle'
-      order_cycle = OrderCycle.active.find params[:order][:order_cycle_id]
-      @order.set_order_cycle! order_cycle
-
-      flash[:notice] = 'Your order cycle has been selected.'
-      redirect_to request.referer
-    end
-  end
-
   def select_distributor
     distributor = Enterprise.is_distributor.find params[:id]
 
@@ -57,6 +38,24 @@ Spree::OrdersController.class_eval do
     redirect_to root_path
   end
 
+  def update_distribution
+    @order = current_order(true)
+
+    if params[:commit] == 'Choose Hub'
+      distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
+      @order.set_distributor! distributor
+
+      flash[:notice] = 'Your hub has been selected.'
+      redirect_to request.referer
+
+    elsif params[:commit] == 'Choose Order Cycle'
+      order_cycle = OrderCycle.active.find params[:order][:order_cycle_id]
+      @order.set_order_cycle! order_cycle
+
+      flash[:notice] = 'Your order cycle has been selected.'
+      redirect_to request.referer
+    end
+  end
 
   private
 

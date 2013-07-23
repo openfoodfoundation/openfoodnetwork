@@ -5,9 +5,14 @@ Spree::LineItem.class_eval do
 
   before_create :set_itemwise_shipping_method
 
+
   def itemwise_shipping_cost
     order = OpenStruct.new :line_items => [self]
     shipping_method.compute_amount(order)
+  end
+
+  def update_itemwise_shipping_method_without_callbacks!(distributor)
+    update_column(:shipping_method_id, self.product.shipping_method_for_distributor(distributor).id)
   end
 
 

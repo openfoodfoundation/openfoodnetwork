@@ -1,0 +1,3 @@
+/ replace_contents "[data-hook='long_description']"
+%td Profile Info:
+%td= f.text_area :long_description, :class => 'rich_text'

@@ -1,0 +1,4 @@
+/ insert_after "[data-hook='long_description']"
+%tr{"data-hook" => "distributor_info"}
+  %td Distributor Info:
+  %td= f.text_area :distributor_info, :class => 'rich_text'

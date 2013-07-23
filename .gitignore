@@ -1,5 +1,7 @@
 .bundle
 .rbenv-version
+.ruby-version
+.ruby-gemset
 .swp
 *.swo
 *.swp
@@ -16,6 +18,7 @@ tmp/
 *.~lock.*
 .emacs.desktop
 .DS_Store
+*.sublime-project*
 spec/javascripts/generated/*
 db/development_structure.sql
 db/test_structure.sql
@@ -29,4 +32,6 @@ public/images
 public/spree
 config/abr.yml
 config/heroku_env.rb
+config/initializers/feature_toggle.rb
 NERD_tree*
+coverage

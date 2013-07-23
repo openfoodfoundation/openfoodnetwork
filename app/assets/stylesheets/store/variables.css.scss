@@ -7,7 +7,7 @@ $c_red:         #e45353 !default;  /* Error red      */
 $layout_background_color:   #FFFFFF !default;
 $title_text_color:          #404042 !default;
 $body_text_color:           #404042 !default;
-$link_text_color:           #006066 !default;
+$link_text_color:           #00ADEE !default;
 
 $product_background_color:  #FFFFFF !default;
 $product_title_text_color:  #404042 !default;
@@ -55,6 +55,10 @@ $ff_base:       'Ubuntu', sans-serif !default;
       $button_font_size:                      12px !default;
       $input_box_font_size:                   13px !default;
       $base_font_size:                        12px !default;
-      $border_color:                          lighten($body_text_color, 60);
-      $default_border:                        1px solid $border_color;
+      $border_color:                          lighten($body_text_color, 60) !default;
+      $default_border:                        1px solid $border_color !default;
       $button_border_color:                   rgba(0, 138, 189, .75) !default;
+      $table_head_color:                      lighten($body_text_color, 60) !default;
+
+
+@import "./variables_changes.css.scss";

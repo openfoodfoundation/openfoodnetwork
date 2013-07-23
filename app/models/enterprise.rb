@@ -48,7 +48,7 @@ class Enterprise < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
-  
+
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end
@@ -57,6 +57,9 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product).merge(Spree::Product.in_product_distribution_by(self)).select('spree_variants.*')
   end
 
+  def available_variants
+    Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
+  end
 
   private
 

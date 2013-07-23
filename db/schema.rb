@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207043555) do
+ActiveRecord::Schema.define(:version => 20130629120645) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.string   "next_collection_at"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.text     "distributor_info"
   end
 
   create_table "exchange_fees", :force => true do |t|
@@ -240,17 +241,17 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
 
   create_table "spree_adjustments", :force => true do |t|
     t.integer  "source_id"
-    t.decimal  "amount",          :precision => 8, :scale => 2
+    t.decimal  "amount",          :precision => 10, :scale => 2
     t.string   "label"
     t.string   "source_type"
     t.integer  "adjustable_id"
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
     t.boolean  "mandatory"
     t.boolean  "locked"
     t.integer  "originator_id"
     t.string   "originator_type"
-    t.boolean  "eligible",                                      :default => true
+    t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
   end
 
@@ -405,17 +406,17 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
 
   create_table "spree_orders", :force => true do |t|
     t.string   "number",               :limit => 15
-    t.decimal  "item_total",                         :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "total",                              :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "item_total",                         :precision => 10, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "total",                              :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.string   "state"
-    t.decimal  "adjustment_total",                   :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "adjustment_total",                   :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                                                                        :null => false
-    t.datetime "updated_at",                                                                        :null => false
+    t.datetime "created_at",                                                                         :null => false
+    t.datetime "updated_at",                                                                         :null => false
     t.datetime "completed_at"
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
-    t.decimal  "payment_total",                      :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "payment_total",                      :precision => 10, :scale => 2, :default => 0.0
     t.integer  "shipping_method_id"
     t.string   "shipment_state"
     t.string   "payment_state"
@@ -442,10 +443,10 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   end
 
   create_table "spree_payments", :force => true do |t|
-    t.decimal  "amount",            :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "amount",               :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "order_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
     t.integer  "source_id"
     t.string   "source_type"
     t.integer  "payment_method_id"
@@ -453,7 +454,11 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.string   "response_code"
     t.string   "avs_response"
     t.string   "identifier"
+    t.string   "cvv_response_code"
+    t.string   "cvv_response_message"
   end
+
+  add_index "spree_payments", ["order_id"], :name => "index_spree_payments_on_order_id"
 
   create_table "spree_paypal_accounts", :force => true do |t|
     t.string "email"
@@ -485,6 +490,8 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.decimal "amount",     :precision => 8, :scale => 2
     t.string  "currency"
   end
+
+  add_index "spree_prices", ["variant_id"], :name => "index_spree_prices_on_variant_id"
 
   create_table "spree_product_groups", :force => true do |t|
     t.string "name"
@@ -534,7 +541,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.datetime "available_on"
     t.datetime "deleted_at"
     t.string   "permalink"
-    t.string   "meta_description"
+    t.text     "meta_description"
     t.string   "meta_keywords"
     t.integer  "tax_category_id"
     t.integer  "shipping_category_id"
@@ -551,6 +558,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   add_index "spree_products", ["deleted_at"], :name => "index_products_on_deleted_at"
   add_index "spree_products", ["name"], :name => "index_products_on_name"
   add_index "spree_products", ["permalink"], :name => "index_products_on_permalink"
+  add_index "spree_products", ["permalink"], :name => "permalink_idx_unique", :unique => true
 
   create_table "spree_products_promotion_rules", :id => false, :force => true do |t|
     t.integer "product_id"
@@ -560,7 +568,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   add_index "spree_products_promotion_rules", ["product_id"], :name => "index_products_promotion_rules_on_product_id"
   add_index "spree_products_promotion_rules", ["promotion_rule_id"], :name => "index_products_promotion_rules_on_promotion_rule_id"
 
-  create_table "spree_products_taxons", :id => false, :force => true do |t|
+  create_table "spree_products_taxons", :force => true do |t|
     t.integer "product_id"
     t.integer "taxon_id"
   end
@@ -621,11 +629,11 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   create_table "spree_return_authorizations", :force => true do |t|
     t.string   "number"
     t.string   "state"
-    t.decimal  "amount",     :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "amount",     :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "order_id"
     t.text     "reason"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
   end
 
   create_table "spree_roles", :force => true do |t|
@@ -654,6 +662,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   end
 
   add_index "spree_shipments", ["number"], :name => "index_shipments_on_number"
+  add_index "spree_shipments", ["order_id"], :name => "index_spree_shipments_on_order_id"
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"
@@ -744,6 +753,9 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
     t.text     "description"
+    t.string   "meta_title"
+    t.string   "meta_description"
+    t.string   "meta_keywords"
   end
 
   add_index "spree_taxons", ["parent_id"], :name => "index_taxons_on_parent_id"
