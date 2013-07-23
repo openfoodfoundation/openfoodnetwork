@@ -7,8 +7,8 @@ produce.
 
 ## Dependencies
 
-* Rails 3.x
-* Ruby >= 1.9.2
+* Rails 3.2.x
+* Ruby >= 1.9.3
 * PostgreSQL database
 * See Gemfile for a list of gems required
 
