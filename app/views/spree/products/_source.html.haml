@@ -10,8 +10,8 @@
   %table#product-source.table-display{:width => "100%"}
     %tbody
       - order = current_order(false)
-      - validator = DistributorChangeValidator.new(order)
-      - @product.distributors.each do |distributor|
+      - validator = DistributionChangeValidator.new(order)
+      - Enterprise.distributing_product(@product).each do |distributor|
         - if !order.nil? && distributor == order.distributor
           %tr.odd
             %td
@@ -22,9 +22,7 @@
           %tr.even
             %td= link_to distributor.name, [main_app, distributor]
             %td Available
-            -#%td= link_to "Change to distributor", select_distributor_order_path(distributor)
         - else
           %tr.even
             %td= link_to distributor.name, [main_app, distributor]
             %td 
-            

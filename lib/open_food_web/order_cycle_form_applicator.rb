@@ -7,6 +7,7 @@ module OpenFoodWeb
     def go!
       @touched_exchanges = []
 
+      @order_cycle.incoming_exchanges ||= []
       @order_cycle.incoming_exchanges.each do |exchange|
         variant_ids = exchange_variant_ids(exchange)
 
@@ -17,6 +18,7 @@ module OpenFoodWeb
         end
       end
 
+      @order_cycle.outgoing_exchanges ||= []
       @order_cycle.outgoing_exchanges.each do |exchange|
         variant_ids = exchange_variant_ids(exchange)
 

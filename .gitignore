@@ -25,11 +25,13 @@ db/test_structure.sql
 db/staging_structure.sql
 db/production_structure.sql
 db/backup
+app/public
 public/system
 public/stylesheets
 public/images
 public/spree
 config/abr.yml
 config/heroku_env.rb
+config/initializers/feature_toggle.rb
 NERD_tree*
 coverage

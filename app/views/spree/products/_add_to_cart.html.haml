@@ -1,34 +1,38 @@
 .add-to-cart
   - order = current_order(false)
-  - if !@product.has_stock? && !Spree::Config[:allow_backorders]
+
+  - if product_out_of_stock
     = content_tag('strong', t(:out_of_stock))
 
-  - elsif !order.nil? && !DistributorChangeValidator.new(order).can_change_distributor? && !@product.distributors.include?(order.distributor)
-    .error-distributor
-      Please complete your order at
-      = link_to current_distributor.name, root_path
-      before shopping with another distributor.
+  - elsif !distributor_available_for?(order, @product)
+    = render 'add_to_cart_distributor_unavailable'
+
+  - elsif !order_cycle_available_for?(order, @product) and order_cycles_enabled?
+    = render 'add_to_cart_order_cycle_unavailable'
+
   - else
-    %div(class = "columns alpha two")
-      %div Quantity
-      = number_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"), 1, :class => 'title', :in => 1..@product.on_hand
-    - if @product.group_buy
-      %div(class = "columns alpha three")
-        %div Max quantity
-        = number_field_tag (@product.has_variants? ? :max_quantity : "variant_attributes[#{@product.master.id}][max_quantity]"), 1, :class => 'title max_quantity', :in => 1..@product.on_hand
+    = render 'add_to_cart_quantity_fields', product: @product
+
     %div.cleared
       %br
-      - if order.nil? || order.distributor.nil?
-        %div Distributor for your order:
-        = select_tag "distributor_id", options_from_collection_for_select([Enterprise.new]+@product.distributors, "id", "name", :include_blank => '')
+      - available_distributors = available_distributors_for(order, @product)
+      - available_order_cycles = available_order_cycles_for(order, @product)
+
+      - if available_distributors.length > 1 || order.andand.distributor.nil?
+        = render 'add_to_cart_distributor_choice', distributor_collection: available_distributors
       - else
-        - available_distributors = DistributorChangeValidator.new(order).available_distributors(@product.distributors)
-        - if available_distributors.length > 1
-          %div Distributor for your order:
-          = select_tag "distributor_id", options_from_collection_for_select(available_distributors, "id", "name", current_distributor.andand.id)
+        - distributor = available_distributors.first
+        - changing_distributor = distributor != order.andand.distributor
+        = render 'add_to_cart_distributor_fixed', distributor: distributor, changing_distributor: changing_distributor
+
+      - if order_cycles_enabled?
+        - if available_order_cycles.length > 1 || order.andand.order_cycle.nil?
+          = render 'add_to_cart_order_cycle_choice', order_cycle_collection: available_order_cycles
         - else
-          = hidden_field_tag "distributor_id", order.distributor.id
-          .distributor-fixed= "Your distributor for this order is #{order.distributor.name}"
+          - order_cycle = available_order_cycles.first
+          - changing_order_cycle = order_cycle != order.andand.order_cycle
+          = render 'add_to_cart_order_cycle_fixed', order_cycle: order_cycle, changing_order_cycle: changing_order_cycle
+
     %br
     = button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do
       = t(:add_to_cart)

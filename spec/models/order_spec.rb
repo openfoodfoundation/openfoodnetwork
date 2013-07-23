@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Spree::Order do
   it "initialises a default shipping method after creation" do
-    shipping_method_back_end = create(:shipping_method, :display_on => :back_end)
-    shipping_method_both = create(:shipping_method, :display_on => :both)
+    shipping_method_regular = create(:shipping_method)
+    shipping_method_itemwise = create(:itemwise_shipping_method)
 
     subject.shipping_method.should be_nil
     subject.adjustments.should be_empty
 
     subject.save!
 
-    subject.shipping_method.should == shipping_method_both
+    subject.shipping_method.should == shipping_method_itemwise
     subject.adjustments.where(:label => "Shipping").should be_present
   end
 
@@ -26,6 +26,84 @@ describe Spree::Order do
 
     li = Spree::LineItem.last
     li.max_quantity.should == 3
+  end
+
+  describe "setting the distributor" do
+    it "sets the distributor when no order cycle is set" do
+      d = create(:distributor_enterprise)
+      subject.set_distributor! d
+      subject.distributor.should == d
+    end
+
+    it "keeps the order cycle when it is available at the new distributor" do
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+
+      subject.order_cycle = oc
+      subject.set_distributor! d
+
+      subject.distributor.should == d
+      subject.order_cycle.should == oc
+    end
+
+    it "clears the order cycle if it is not available at that distributor" do
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle)
+
+      subject.order_cycle = oc
+      subject.set_distributor! d
+
+      subject.distributor.should == d
+      subject.order_cycle.should be_nil
+    end
+
+    it "clears the distributor when setting to nil" do
+      d = create(:distributor_enterprise)
+      subject.set_distributor! d
+      subject.set_distributor! nil
+
+      subject.distributor.should be_nil
+    end
+  end
+
+  describe "setting the order cycle" do
+    it "sets the order cycle when no distributor is set" do
+      oc = create(:simple_order_cycle)
+      subject.set_order_cycle! oc
+      subject.order_cycle.should == oc
+    end
+
+    it "keeps the distributor when it is available in the new order cycle" do
+      oc = create(:simple_order_cycle)
+      d = create(:distributor_enterprise)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+
+      subject.distributor = d
+      subject.set_order_cycle! oc
+
+      subject.order_cycle.should == oc
+      subject.distributor.should == d
+    end
+
+    it "clears the distributor if it is not available at that order cycle" do
+      oc = create(:simple_order_cycle)
+      d = create(:distributor_enterprise)
+
+      subject.distributor = d
+      subject.set_order_cycle! oc
+
+      subject.order_cycle.should == oc
+      subject.distributor.should be_nil
+    end
+
+    it "clears the order cycle when setting to nil" do
+      oc = create(:simple_order_cycle)
+      subject.set_order_cycle! oc
+      subject.set_order_cycle! nil
+
+      subject.order_cycle.should be_nil
+    end
   end
 
   context "validating distributor changes" do
@@ -59,7 +137,7 @@ describe Spree::Order do
 
       subject.distributor = test_enterprise
       subject.should_not be_valid
-      subject.errors.should include :distributor_id
+      subject.errors.messages.should == {base: ["Distributor or order cycle cannot supply the products in your cart"]}
     end
   end
 end

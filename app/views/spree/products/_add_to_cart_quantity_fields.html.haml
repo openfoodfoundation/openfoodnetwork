@@ -1,0 +1,7 @@
+%div(class = "columns alpha two")
+  %div Quantity
+  = number_field_tag (product.has_variants? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :in => 1..product.on_hand
+- if product.group_buy
+  %div(class = "columns alpha three")
+    %div Max quantity
+    = number_field_tag (product.has_variants? ? :max_quantity : "variant_attributes[#{product.master.id}][max_quantity]"), 1, :class => 'title max_quantity', :in => 1..product.on_hand

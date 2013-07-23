@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
 
   def load_data_for_sidebar
     @suppliers = Enterprise.is_primary_producer
-    @distributors = Enterprise.is_distributor.with_distributed_active_products_on_hand.by_name
+    @order_cycles = OrderCycle.active
+    @distributors = Enterprise.active_distributors
   end
 
   # All render calls within the block will be performed with the specified format

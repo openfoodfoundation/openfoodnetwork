@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature %q{
     As a consumer
-    I want select a distributor for collection
+    I want to select a distributor for collection
     So that I can pick up orders from the closest possible location
 } do
   include AuthenticationWorkflow
@@ -88,6 +88,63 @@ feature %q{
     page.should have_selector '#delivery-fees span.order-total', :text => '$3.00'
   end
 
+  scenario "changing distributor updates delivery fees" do
+    # Given two distributors and shipping methods
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    sm1 = create(:shipping_method)
+    sm1.calculator.set_preference :amount, 1.23; sm1.calculator.save!
+    sm2 = create(:free_shipping_method)
+    sm2.calculator.set_preference :amount, 2.34; sm2.calculator.save!
+
+    # And two products both available from both distributors
+    p1 = create(:product)
+    create(:product_distribution, product: p1, distributor: d1, shipping_method: sm1)
+    create(:product_distribution, product: p1, distributor: d2, shipping_method: sm2)
+    p2 = create(:product)
+    create(:product_distribution, product: p2, distributor: d1, shipping_method: sm1)
+    create(:product_distribution, product: p2, distributor: d2, shipping_method: sm2)
+
+    # When I add the first product to my cart with the first distributor
+    #visit spree.root_path
+    login_to_consumer_section
+    click_link p1.name
+    select d1.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see shipping costs for the first distributor
+    page.should have_selector 'span.shipping-total', text: '$1.23'
+
+    # When add the second with the second distributor
+    click_link 'Continue shopping'
+    click_link p2.name
+    select d2.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see shipping costs for the second distributor
+    page.should have_selector 'span.shipping-total', text: '$4.68'
+  end
+
+  scenario "adding a product to cart after emptying cart shows correct delivery fees" do
+    # When I add a product to my cart
+    login_to_consumer_section
+    click_link @product_1.name
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see the correct delivery fee
+    page.should have_selector 'span.grand-total', text: '$20.99'
+
+    # When I empty my cart and add the product again
+    click_button 'Empty Cart'
+    click_link 'Continue shopping'
+    click_link @product_1.name
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+
+    # Then I should see the correct delivery fee
+    page.should have_selector 'span.grand-total', text: '$20.99'
+  end
 
   scenario "buying a product", :js => true do
     login_to_consumer_section
@@ -131,17 +188,18 @@ feature %q{
         page.should have_content value
       end
     end
+
+    # Disabled until this form takes order cycles into account
+    # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
     
-    page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
-    
-    click_button 'Save and Continue'
+    click_checkout_continue_button
 
     # -- Checkout: Delivery
     page.should have_selector 'label', :text => "Delivery $3.00"
-    click_button 'Save and Continue'
+    click_checkout_continue_button
 
     # -- Checkout: Payment
-    click_button 'Process My Order'
+    click_checkout_continue_button
 
     # -- Checkout: Order complete
     page.should have_content('Your order has been processed successfully')

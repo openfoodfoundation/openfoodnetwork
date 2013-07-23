@@ -7,12 +7,12 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/eaterprises/spree-heroku.git
-  revision: a1e07bf7a22fc0c07a1be9148f477d20b557dbf6
+  remote: git://github.com/eaterprises/chili.git
+  revision: b82608623d504eb39f852115b138a53af5f89505
   specs:
-    spree_heroku (1.0)
-      aws-sdk (~> 1.3.4)
-      spree_core (>= 0.70.0)
+    chili (3.1.0)
+      deface (~> 1.0.0.rc2)
+      rails (~> 3.2)
 
 GIT
   remote: git://github.com/eaterprises/spree-last-address.git
@@ -21,6 +21,15 @@ GIT
   specs:
     spree_last_address (1.1.0)
       spree_core (>= 1.1)
+
+GIT
+  remote: git://github.com/spree/deface.git
+  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
+  specs:
+    deface (1.0.0.rc3)
+      colorize (>= 0.5.8)
+      nokogiri (~> 1.6.0)
+      rails (>= 3.1)
 
 GIT
   remote: git://github.com/spree/spree.git
@@ -74,7 +83,7 @@ GIT
 
 GIT
   remote: git://github.com/spree/spree_paypal_express.git
-  revision: 483f6ababa9c8a1c574aad0a948c96cc21a591db
+  revision: 9d70ab6d537420ff41468d05d6d2ac3c8d2ff3bf
   branch: 1-3-stable
   specs:
     spree_paypal_express (1.2.0)
@@ -90,6 +99,27 @@ GIT
       devise (~> 2.2.3)
       devise-encryptable (= 0.1.2)
       spree_core
+
+PATH
+  remote: lib/chili/eaterprises_feature
+  specs:
+    eaterprises_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
+  remote: lib/chili/enterprises_distributor_info_rich_text_feature
+  specs:
+    enterprises_distributor_info_rich_text_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
+  remote: lib/chili/local_organics_feature
+  specs:
+    local_organics_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
 
 GEM
   remote: https://rubygems.org/
@@ -111,14 +141,14 @@ GEM
     active_utils (1.0.5)
       activesupport (>= 2.3.11)
       i18n
-    activemerchant (1.34.1)
+    activemerchant (1.34.0)
       active_utils (>= 1.0.2)
       activesupport (>= 2.3.14)
       builder (>= 2.0.0)
       i18n
       json (>= 1.5.1)
       money
-      nokogiri (< 1.6.0)
+      nokogiri
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -161,6 +191,7 @@ GEM
       xpath (~> 1.0.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    chunky_png (1.2.8)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -173,11 +204,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    colorize (0.5.8)
     columnize (0.3.6)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
       activerecord (~> 3.0)
@@ -189,9 +227,6 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
-    deface (0.9.1)
-      nokogiri (~> 1.5.0)
-      rails (~> 3.1)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -227,6 +262,7 @@ GEM
       nokogiri (~> 1.5)
       ruby-hmac
     formatador (0.2.4)
+    fssm (0.2.10)
     haml (3.1.6)
     highline (1.6.18)
     hike (1.2.3)
@@ -255,6 +291,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
+    mini_portile (0.5.1)
     money (5.0.0)
       i18n (~> 0.4)
       json
@@ -264,7 +301,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
     newrelic_rpm (3.6.5.130)
-    nokogiri (1.5.10)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     oj (2.1.2)
     orm_adapter (0.4.0)
     paperclip (2.8.0)
@@ -373,6 +411,7 @@ GEM
       libv8 (~> 3.3.10)
     thor (0.18.1)
     tilt (1.4.1)
+    timecop (0.6.2.2)
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -410,16 +449,22 @@ DEPENDENCIES
   aws-sdk
   bugsnag
   capybara
+  chili!
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
+  compass-rails
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
+  deface!
+  eaterprises_feature!
+  enterprises_distributor_info_rich_text_feature!
   factory_girl_rails
   faker
   haml
   jquery-rails
   letter_opener
+  local_organics_feature!
   newrelic_rpm
   oj
   pg
@@ -436,11 +481,11 @@ DEPENDENCIES
   simplecov
   spree!
   spree_auth_devise!
-  spree_heroku!
   spree_i18n!
   spree_last_address!
   spree_paypal_express!
   therubyracer
+  timecop
   truncate_html
   turbo-sprockets-rails3
   turn (~> 0.8.3)

@@ -7,20 +7,20 @@ Order Summary
 ============================================================
 Order for: <%= @order.bill_address.full_name %> 
 <% @order.line_items.each do |item| %>
-  <%= item.variant.sku %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= number_to_currency item.price %> = <%= number_to_currency(item.price * item.quantity) %>
+  <%= item.variant.sku %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %>
 <% end %>
 ============================================================
-Subtotal: <%= number_to_currency @order.item_total %>
+Subtotal: <%= @order.display_item_total %>
 <% @order.adjustments.each do |adjustment| %>
-  <%= raw(adjustment.label) %> <%= number_to_currency(adjustment.amount) %>
+  <%= raw(adjustment.label) %> <%= adjustment.display_amount %>
 <% end %>
-Order Total: <%= number_to_currency(@order.total) %>
+Order Total: <%= @order.display_total %>
 
-<% if @order.payment_method.name.include? "EFT" %>
+<% if @order.payments.first.payment_method.name.include? "EFT" %>
 ============================================================
 Payment Details
 ============================================================
-<%= @order.payment_method.description.html_safe %>
+<%= @order.payments.first.payment_method.description.html_safe %>
 
 <% end %>
 ============================================================

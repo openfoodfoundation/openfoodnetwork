@@ -6,8 +6,13 @@ module Spree
         root_taxon.children.map do |taxon|
           css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'current' : nil
 
+          # The concern of separating products by distributor and order cycle is dealt with in
+          # a few other places: OpenFoodWeb::Searcher (for searching over products) and in
+          # OpenFoodWeb::SplitProductsByDistribution (for splitting the main product display).
+
           products = Product.in_taxon(taxon)
           products = products.in_distributor(current_distributor) if current_distributor
+          products = products.in_order_cycle(current_order_cycle) if current_order_cycle
           num_products = products.count
 
           content_tag :li, :class => css_class do

@@ -1,22 +1,44 @@
-require 'open_food_web/distributor_change_validator'
+require 'open_food_web/distribution_change_validator'
 
 Spree::Order.class_eval do
+  belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
 
   before_validation :shipping_address_from_distributor
-  validate :products_available_from_new_distributor, :if => :distributor_id_changed?
-  attr_accessible :distributor_id
+  validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
+  attr_accessible :order_cycle_id, :distributor_id
 
+  before_validation :shipping_address_from_distributor
+  before_save :update_line_item_shipping_methods
   after_create :set_default_shipping_method
 
-  
-  def products_available_from_new_distributor
-    # Check that the line_items in the current order are available from a newly selected distributor
-    errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributorChangeValidator.new(self).can_change_to_distributor?(distributor)
+
+  def products_available_from_new_distribution
+    # Check that the line_items in the current order are available from a newly selected distribution
+    errors.add(:base, "Distributor or order cycle cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+  end
+
+  def set_order_cycle!(order_cycle)
+    self.order_cycle = order_cycle
+    self.distributor = nil unless self.order_cycle.andand.has_distributor? distributor
+    save!
+  end
+
+  def empty!
+    line_items.destroy_all
+    adjustments.destroy_all
+    set_default_shipping_method
   end
 
   def set_distributor!(distributor)
     self.distributor = distributor
+    self.order_cycle = nil unless self.order_cycle.andand.has_distributor? distributor
+    save!
+  end
+
+  def set_distribution!(distributor, order_cycle)
+    self.distributor = distributor
+    self.order_cycle = order_cycle
     save!
   end
 
@@ -30,9 +52,9 @@ Spree::Order.class_eval do
     line_item.assign_attributes(attributes)
     line_item.save!
   end
-  
+
   def line_item_variants
-    line_items.map{ |li| li.variant }
+    line_items.map { |li| li.variant }
   end
 
 
@@ -46,13 +68,17 @@ Spree::Order.class_eval do
   # This is based on the assumption that there's only one shipping method visible to the user,
   # which is a method using the itemwise shipping calculator.
   def set_default_shipping_method
-    self.shipping_method = Spree::ShippingMethod.where("display_on != 'back_end'").first
+    self.shipping_method = itemwise_shipping_method
     if self.shipping_method
       self.save!
       self.create_shipment!
     else
       raise 'No default shipping method found'
     end
+  end
+
+  def itemwise_shipping_method
+    Spree::ShippingMethod.all.find { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
   end
 
   def shipping_address_from_distributor
@@ -64,6 +90,13 @@ Spree::Order.class_eval do
         self.ship_address.lastname = bill_address.lastname
         self.ship_address.phone = bill_address.phone
       end
+    end
+  end
+
+  def update_line_item_shipping_methods
+    if %w(cart address delivery resumed).include? state
+      self.line_items.each { |li| li.update_itemwise_shipping_method_without_callbacks!(distributor) }
+      self.update!
     end
   end
 end

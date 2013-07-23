@@ -1,10 +1,13 @@
 require 'simplecov'
 SimpleCov.start
 
+
 require 'rubygems'
 
+# Require pry when we're not inside Travis-CI
+require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
 
-ENV["RAILS_ENV"] = 'test'
+ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
@@ -56,6 +59,7 @@ RSpec.configure do |config|
     else
       DatabaseCleaner.strategy = :transaction
     end
+
     DatabaseCleaner.start
   end
 
@@ -65,6 +69,7 @@ RSpec.configure do |config|
 
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
+  config.include Spree::CheckoutHelpers
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
 

@@ -6,7 +6,7 @@
   %tr
     %th Description:
     %td= @enterprise.description
-  %tr
+  %tr{"data-hook" => "long_description"}
     %th Extended Description:
     %td= @enterprise.long_description.andand.html_safe
   %tr

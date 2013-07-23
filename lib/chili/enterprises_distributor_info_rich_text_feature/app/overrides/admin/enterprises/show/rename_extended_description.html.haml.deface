@@ -1,0 +1,3 @@
+/ replace_contents "[data-hook='long_description']"
+%th Profile Info:
+%td= @enterprise.long_description.andand.html_safe

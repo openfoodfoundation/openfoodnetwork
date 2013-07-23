@@ -30,6 +30,24 @@ FactoryGirl.define do
     orders_close_at { Time.zone.now + 1.week }
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+
+    ignore do
+      suppliers []
+      distributors []
+      variants []
+    end
+
+    after(:create) do |oc, proxy|
+      proxy.suppliers.each do |supplier|
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
+      end
+
+      proxy.distributors.each do |distributor|
+        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
+      end
+    end
   end
 
   factory :exchange, :class => Exchange do
@@ -84,6 +102,14 @@ FactoryGirl.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
+  factory :order_with_totals_and_distributor, :parent => :order do #possibly called :order_with_line_items in newer Spree
+    # Ensure order has a distributor set
+    distributor { create(:distributor_enterprise) }
+    after(:create) do |order|
+      p = create(:simple_product, :distributors => [order.distributor])
+      FactoryGirl.create(:line_item, :order => order, :product => p)
+    end
+  end
 end
 
 
