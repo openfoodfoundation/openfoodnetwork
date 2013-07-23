@@ -13,8 +13,6 @@ feature %q{
 
     # ensure order has a payment to capture
     create :check_payment, order: @order, amount: @order.amount
-
-    # ensure order shows up as completed
     @order.finalize! 
   end
 
@@ -29,16 +27,14 @@ feature %q{
       # click the 'capture' link for the order
       page.find("[data-action=capture][href*=#{@order.number}]").click
       
-      # we should be notified
       flash_message.should == "Payment Updated"
 
       # check the order was captured
       @order.reload
       @order.payment_state.should == "paid"
       
-      # we should still be on the right page
+      # we should still be on the same page
       current_path.should == spree.admin_orders_path
-        
-    end # scenario
-  end # context
-end #f eature
+    end
+  end
+end

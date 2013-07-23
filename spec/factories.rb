@@ -84,8 +84,8 @@ FactoryGirl.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
-  #Ensure order has a distributor set
   factory :order_with_totals_and_distributor, :parent => :order do #possibly called :order_with_line_items in newer Spree
+    # Ensure order has a distributor set
     distributor { create(:distributor_enterprise) }
     after(:create) do |order|
       p = create(:simple_product, :distributors => [order.distributor])
