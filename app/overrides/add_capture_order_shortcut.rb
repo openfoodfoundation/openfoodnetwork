@@ -1,12 +1,7 @@
 Deface::Override.new(:virtual_path    => "spree/admin/orders/index",
                       :name           => "add_capture_order_shortcut",
                       :insert_bottom  => "[data-hook='admin_orders_index_row_actions']",
-                      #copied from backend / app / views / spree / admin / payments / _list.html.erb:
-                      :text           => '<% if ! order.payments.empty? %>
-                                            <% order.payments.last.actions.grep(/^capture$/).each do |action| %>
-                                              <%= link_to_with_icon "icon-#{action}", t(action), fire_admin_order_payment_path(order, order.payments.last, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
-                                            <% end %>
-                                          <% end %>'
+                      :partial        => 'spree/admin/orders/capture'
                       )
 
 #Resize columns to fit new button (note: this may break with a new version of spree)
