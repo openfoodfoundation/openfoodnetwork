@@ -99,7 +99,7 @@ productsApp.directive('ngToggleColumn',function(){
 	};
 });
 
-productsApp.directive('ngToggleColumnList', function($compile){
+productsApp.directive('ngToggleColumnList', ["$compile", function($compile){
 	return {
 		link: function(scope,element,attrs){
 			var dialogDiv = element.next();
@@ -114,9 +114,9 @@ productsApp.directive('ngToggleColumnList', function($compile){
 			});
 		}
 	}
-});
+}]);
 
-productsApp.directive('datetimepicker', function ($parse) {
+productsApp.directive('datetimepicker', ["$parse", function ($parse) {
   	return {
 		require: 'ngModel',
 		link: function (scope, element, attrs, ngModel) {
@@ -132,7 +132,7 @@ productsApp.directive('datetimepicker', function ($parse) {
 			});
 		}
 	}
-});
+}]);
 productsApp.controller('AdminBulkProductsCtrl', ["$scope", "$timeout", "$http", "dataFetcher", function($scope, $timeout, $http, dataFetcher) {
 	$scope.updateStatusMessage = {
 		text: "",
