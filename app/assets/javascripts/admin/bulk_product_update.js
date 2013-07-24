@@ -300,7 +300,7 @@ productsApp.controller('AdminBulkProductsCtrl', ["$scope", "$timeout", "$http", 
 	}
 }]);
 
-productsApp.factory('dataFetcher', function($http,$q){
+productsApp.factory('dataFetcher', ["$http", "$q", function($http,$q){
 	return function(dataLocation){
 		var deferred = $q.defer();
 		$http.get(dataLocation).success(function(data) {
@@ -310,7 +310,7 @@ productsApp.factory('dataFetcher', function($http,$q){
 		});
 		return deferred.promise;
 	};
-});
+}]);
 
 function onHand(product){
 	var onHand = 0;
