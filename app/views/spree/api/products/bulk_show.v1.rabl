@@ -1,6 +1,7 @@
 object @product
 attributes :id, :name, :price, :on_hand
-node( :available_on ) { |p| p.available_on.strftime("%F %T") }
+
+node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }
 node( :permalink_live ) { |p| p.permalink }
 node( :supplier ) do |p|
 	partial 'spree/api/enterprises/bulk_show', :object => p.supplier
