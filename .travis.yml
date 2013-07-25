@@ -4,11 +4,9 @@ rvm:
   - "1.9.3"
 services: postgresql
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database open_food_web_test;' -U postgres
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - export DISPLAY=:99.0 && bundle exec rake spec
+  - bundle exec rake spec
