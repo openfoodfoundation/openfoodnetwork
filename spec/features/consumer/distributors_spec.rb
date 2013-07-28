@@ -58,38 +58,6 @@ scenario "viewing a list of distributors (with active products) in the sidebar w
     page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
   end
 
-=begin
-  scenario "viewing a list of distributors (with active products) in the sidebar when there's more than 5" do
-    # Given some distributors
-    d1 = create(:distributor_enterprise)
-    d2 = create(:distributor_enterprise)
-    d3 = create(:distributor_enterprise)
-    d4 = create(:distributor_enterprise)
-    d5 = create(:distributor_enterprise)
-    d6 = create(:distributor_enterprise)
-
-    # And at least 5 of those distributors have a product
-    create(:product, :distributors => [d1])
-    create(:product, :distributors => [d2])
-    create(:product, :distributors => [d3])
-    create(:product, :distributors => [d4])
-    create(:product, :distributors => [d5])
-    create(:product, :distributors => [d6])
-
-    # When I go to the home page
-    visit spree.root_path
-
-    # Then I should see a list containing 5 distributors that have products in stock
-    page.should have_selector '#distributor_filter li a', :count => 5
-
-    # And I should see '1 more'
-    page.should have_selector '#distributor_filter span.filter_more', :text => '1 more'
-
-    # And I should see a browse distributors button
-    page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
-  end
-=end
-
   scenario "viewing a list of all distributors" do
     # Given some distributors
     d1 = create(:distributor_enterprise)
