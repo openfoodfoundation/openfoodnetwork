@@ -72,6 +72,43 @@ describe Enterprise do
 
         Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
       end
+
+      it "returns distributors with available products in stock" do
+        d1 = create(:distributor_enterprise) # two products on hand
+        d2 = create(:distributor_enterprise) # one product on hand
+        d3 = create(:distributor_enterprise) # product on hand but not yet available
+        d4 = create(:distributor_enterprise) # no products on hand
+        d5 = create(:distributor_enterprise) # deleted product
+        d6 = create(:distributor_enterprise) # no products
+        create(:product, :distributors => [d1, d2], :on_hand => 5)
+        create(:product, :distributors => [d1], :on_hand => 5)
+        create(:product, :distributors => [d3], :on_hand => 5, :available_on => 1.week.from_now)
+        create(:product, :distributors => [d4], :on_hand => 0)
+        create(:product, :distributors => [d5]).delete
+
+        Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
+        Enterprise.with_distributed_active_products_on_hand.distinct_count.should == 2
+      end
+    end
+
+    describe "with_supplied_active_products_on_hand" do
+      it "returns suppliers with available products in stock" do
+        d1 = create(:supplier_enterprise) # two products on hand
+        d2 = create(:supplier_enterprise) # one product on hand
+        d3 = create(:supplier_enterprise) # product on hand but not yet available
+        d4 = create(:supplier_enterprise) # no products on hand
+        d5 = create(:supplier_enterprise) # deleted product
+        d6 = create(:supplier_enterprise) # no products
+        create(:product, :supplier => d1, :on_hand => 5)
+        create(:product, :supplier => d1, :on_hand => 5)
+        create(:product, :supplier => d2, :on_hand => 5)
+        create(:product, :supplier => d3, :on_hand => 5, :available_on => 1.week.from_now) 
+        create(:product, :supplier => d4, :on_hand => 0) 
+        create(:product, :supplier => d5).delete 
+
+        Enterprise.with_supplied_active_products_on_hand.sort.should == [d1, d2]
+        Enterprise.with_supplied_active_products_on_hand.distinct_count.should == 2
+      end
     end
 
     describe "distributing_product" do

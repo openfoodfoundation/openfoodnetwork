@@ -67,20 +67,6 @@ feature %q{
       end
     end
 
-    it "allows the user to leave the distributor" do
-      # Given a distributor with a product
-      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
-      p1 = create(:product, :distributors => [d])
-
-      # When I select the distributor and then leave it
-      visit spree.select_distributor_order_path(d)
-      visit spree.root_path
-      click_button 'Browse All Distributors'
-
-      # Then I should have left the distributor
-      page.should_not have_selector '#current-distribution', :text => 'You are shopping at Melb Uni Co-op'
-    end
-
     context "viewing a product, it provides a choice of distributor when adding to cart" do
       it "works when no distributor is chosen" do
         # Given a distributor and a product under it

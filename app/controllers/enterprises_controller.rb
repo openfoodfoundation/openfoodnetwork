@@ -16,6 +16,9 @@ class EnterprisesController < BaseController
       format.js do
         @distributor_details = Hash[@distributors.map { |d| [d.id, render_to_string(:partial => 'enterprises/distributor_details', :locals => {:distributor => d})] }]
       end
+      format.html do
+        @distributors
+      end
     end
   end
 
