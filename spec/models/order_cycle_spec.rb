@@ -15,8 +15,7 @@ describe OrderCycle do
     oc = create(:simple_order_cycle)
 
     oc.coordinator = create(:enterprise)
-    oc.coordinator_admin_fee = create(:enterprise_fee)
-    oc.coordinator_sales_fee = create(:enterprise_fee)
+    oc.coordinator_fees << create(:enterprise_fee, enterprise: oc.coordinator)
 
     oc.save!
   end

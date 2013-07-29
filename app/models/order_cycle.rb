@@ -1,7 +1,6 @@
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
-  belongs_to :coordinator_admin_fee, :class_name => 'EnterpriseFee'
-  belongs_to :coordinator_sales_fee, :class_name => 'EnterpriseFee'
+  has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
 
   has_many :exchanges, :dependent => :destroy
 
