@@ -3,7 +3,7 @@
     %h6.filter_name Shop by Distributor
     %ul.filter_choices
       - order = current_order(false)
-      - validator = DistributorChangeValidator.new(order)
+      - validator = DistributionChangeValidator.new(order)
       - @sidebar_distributors.each do |distributor|
         %li.nowrap
           - if order.nil? || order.distributor == distributor || validator.can_change_to_distributor?(distributor)
