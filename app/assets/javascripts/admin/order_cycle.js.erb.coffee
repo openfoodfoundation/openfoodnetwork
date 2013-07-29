@@ -206,6 +206,16 @@ angular.module('order_cycle', ['ngResource'])
         numVariants
     }])
 
+  .factory('EnterpriseFee', ['$resource', ($resource) ->
+    EnterpriseFee = $resource('/admin/enterprise_fees/:enterprise_fee_id.json', {}, {'index': {method: 'GET', isArray: true}})
+
+    {
+      EnterpriseFee: EnterpriseFee
+      enterprise_fees: {}
+
+      index: ->
+        this.enterprise_fees = EnterpriseFee.index()
+    }])
 
   .directive('datetimepicker', ['$parse', ($parse) ->
     (scope, element, attrs) ->

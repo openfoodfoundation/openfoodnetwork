@@ -194,6 +194,29 @@ describe 'OrderCycle services', ->
       expect(Enterprise.totalVariants(enterprise)).toEqual(5)
 
 
+  describe 'EnterpriseFee service', ->
+    $httpBackend = null
+    EnterpriseFee = null
+
+    beforeEach ->
+      module 'order_cycle'
+      inject ($injector, _$httpBackend_)->
+        EnterpriseFee = $injector.get('EnterpriseFee')
+        $httpBackend = _$httpBackend_
+        $httpBackend.whenGET('/admin/enterprise_fees.json').respond [
+          {id: 1, name: "Yayfee"}
+          {id: 2, name: "FeeTwo"}
+          ]
+
+    it 'loads enterprise fees', ->
+      enterprise_fees = EnterpriseFee.index()
+      $httpBackend.flush()
+      expect(enterprise_fees).toEqual [
+        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee"})
+        new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo"})
+        ]
+
+
   describe 'OrderCycle service', ->
     OrderCycle = null
     $httpBackend = null
