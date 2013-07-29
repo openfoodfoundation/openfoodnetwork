@@ -7,6 +7,33 @@
         Name: <%= order.bill_address.full_name %><br />
         Address: <%= order.bill_address.address1 + ", " + order.bill_address.city %>
       </div>
+      <br/>
+      <div class="row steps-data">
+        <% order.payments.each do |payment| %>
+          <div <% if payment.payment_method.name.include? "EFT" %>id="eft-payment-alert"<% end %>>
+            <h6><%= t(:payment_information) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h6>
+            <div class="payment-info">
+              <% if payment.payment_method.name.include? "PayPal" %>
+              <div class="flash notice">Your payment via PayPal has been processed successfully.</div>
+            <% elsif payment.payment_method.name.include? "EFT" %>
+                <span><%= payment.payment_method.description.html_safe %></span>
+              <% elsif order.credit_cards.empty? == false %>
+                <span class="cc-type">
+                  <%= image_tag "credit_cards/icons/#{order.credit_cards.first.cc_type}.png" %>
+                  <%= t(:ending_in)%> <%= order.credit_cards.first.last_digits %>
+                </span>
+              <br />
+                <span class="full-name">
+                  <%= order.credit_cards.first.first_name %>
+                  <%= order.credit_cards.first.last_name %>
+                </span>
+            <% elsif payment.payment_method.type == "Spree::PaymentMethod::Check" %>
+              <span><%= payment.payment_method.description %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <div class="columns alpha six">
@@ -19,29 +46,3 @@
 
 </div>
 
-<div class="row steps-data">
-  <% order.payments.each do |payment| %>
-    <div class="columns alpha six" <% if payment.payment_method.name.include? "EFT" %>id="eft-payment-alert"<% end %>>
-      <h6><%= t(:payment_information) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h6>
-      <div class="payment-info">
-        <% if payment.payment_method.name.include? "PayPal" %>
-        <div class="flash notice">Your payment via PayPal has been processed successfully.</div>
-      <% elsif payment.payment_method.name.include? "EFT" %>
-          <span><%= payment.payment_method.description.html_safe %></span>
-        <% elsif order.credit_cards.empty? == false %>
-          <span class="cc-type">
-            <%= image_tag "credit_cards/icons/#{order.credit_cards.first.cc_type}.png" %>
-            <%= t(:ending_in)%> <%= order.credit_cards.first.last_digits %>
-          </span>
-        <br />
-          <span class="full-name">
-            <%= order.credit_cards.first.first_name %>
-            <%= order.credit_cards.first.last_name %>
-          </span>
-      <% elsif payment.payment_method.type == "Spree::PaymentMethod::Check" %>
-        <span><%= payment.payment_method.description %></span>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-</div>
