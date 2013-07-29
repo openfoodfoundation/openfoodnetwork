@@ -8,13 +8,14 @@ feature %q{
   include WebHelper
   
   before :all do
-     @default_wait_time = Capybara.default_wait_time
-     Capybara.default_wait_time = 5
-   end
+    @orig_default_wait_time = Capybara.default_wait_time
+    Capybara.default_wait_time = 5
+  end
 
-   after :all do
-     Capybara.default_wait_time = @default_wait_time
-   end
+  after :all do
+    Capybara.default_wait_time = @orig_default_wait_time
+  end
+
 
   scenario "listing order cycles" do
     # Given an order cycle
@@ -119,6 +120,7 @@ feature %q{
     page.find('#order_cycle_orders_open_at').value.should == oc.orders_open_at.to_s
     page.find('#order_cycle_orders_close_at').value.should == oc.orders_close_at.to_s
     page.find('#order_cycle_coordinator_id').value.to_i.should == oc.coordinator_id
+    page.should have_selector "select[name='order_cycle_coordinator_fee_0_id']"
 
     # And I should see the suppliers with products
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name

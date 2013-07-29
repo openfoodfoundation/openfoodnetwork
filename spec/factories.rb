@@ -3,6 +3,8 @@ require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
   factory :order_cycle, :parent => :simple_order_cycle do
+    coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
+
     after(:create) do |oc|
       # Suppliers
       ex1 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)

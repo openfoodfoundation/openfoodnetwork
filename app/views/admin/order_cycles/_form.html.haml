@@ -32,6 +32,11 @@
 = f.label :coordinator_id, 'Coordinator'
 = f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
 
+%table
+  %tr{'ng-repeat' => 'enterprise_fee in order_cycle.coordinator_fees'}
+    %td= select_tag 'order_cycle_coordinator_fee_{{ $index }}_id', nil, {'ng-model' => 'enterprise_fee.id', 'ng-options' => 'enterprise_fee.id as enterprise_fee.name for enterprise_fee in enterprise_fees'}
+
+
 %h2 Outgoing
 %table.exchanges
   %thead
