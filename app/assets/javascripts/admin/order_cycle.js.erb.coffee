@@ -1,7 +1,8 @@
 angular.module('order_cycle', ['ngResource'])
-  .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', ($scope, OrderCycle, Enterprise) ->
+  .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, OrderCycle, Enterprise, EnterpriseFee) ->
     $scope.enterprises = Enterprise.index()
     $scope.supplied_products = Enterprise.supplied_products
+    $scope.enterprise_fees = EnterpriseFee.index()
 
     $scope.order_cycle = OrderCycle.order_cycle
 
@@ -36,9 +37,10 @@ angular.module('order_cycle', ['ngResource'])
       OrderCycle.create()
   ])
 
-  .controller('AdminEditOrderCycleCtrl', ['$scope', '$location', 'OrderCycle', 'Enterprise', ($scope, $location, OrderCycle, Enterprise) ->
+  .controller('AdminEditOrderCycleCtrl', ['$scope', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $location, OrderCycle, Enterprise, EnterpriseFee) ->
     $scope.enterprises = Enterprise.index()
     $scope.supplied_products = Enterprise.supplied_products
+    $scope.enterprise_fees = EnterpriseFee.index()
 
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)

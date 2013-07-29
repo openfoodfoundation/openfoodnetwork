@@ -6,6 +6,7 @@ describe 'OrderCycle controllers', ->
     event = null
     OrderCycle = null
     Enterprise = null
+    EnterpriseFee = null
 
     beforeEach ->
       scope = {}
@@ -24,16 +25,22 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+      EnterpriseFee =
+        index: jasmine.createSpy('index').andReturn('enterprise fees list')
 
       module('order_cycle')
       inject ($controller) ->
-        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise}
+        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
 
     it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
       expect(scope.supplied_products).toEqual('supplied products')
+
+    it 'Loads enterprise fees', ->
+      expect(EnterpriseFee.index).toHaveBeenCalled()
+      expect(scope.enterprise_fees).toEqual('enterprise fees list')
 
     it 'Loads order cycles', ->
       expect(scope.order_cycle).toEqual('my order cycle')
@@ -82,6 +89,7 @@ describe 'OrderCycle controllers', ->
     location = null
     OrderCycle = null
     Enterprise = null
+    EnterpriseFee = null
 
     beforeEach ->
       scope = {}
@@ -103,15 +111,21 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+      EnterpriseFee =
+        index: jasmine.createSpy('index').andReturn('enterprise fees list')
 
       module('order_cycle')
       inject ($controller) ->
-        ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise}
+        ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
     it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
       expect(scope.supplied_products).toEqual('supplied products')
+
+    it 'Loads enterprise fees', ->
+      expect(EnterpriseFee.index).toHaveBeenCalled()
+      expect(scope.enterprise_fees).toEqual('enterprise fees list')
 
     it 'Loads order cycles', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
