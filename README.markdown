@@ -10,6 +10,7 @@ produce.
 * Rails 3.2.x
 * Ruby >= 1.9.3
 * PostgreSQL database
+* PhantomJS (for testing)
 * See Gemfile for a list of gems required
 
 
