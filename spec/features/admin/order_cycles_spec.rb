@@ -42,12 +42,15 @@ feature %q{
 
   scenario "creating an order cycle" do
     # Given coordinating, supplying and distributing enterprises with some products with variants
-    create(:distributor_enterprise, name: 'My coordinator')
+    coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     product = create(:product, supplier: supplier)
     create(:variant, product: product)
     create(:variant, product: product)
     distributor = create(:distributor_enterprise, name: 'My distributor')
+
+    # And some enterprise fees
+    coordinator_fee = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee')
 
     # When I go to the new order cycle page
     login_to_admin_section
@@ -59,6 +62,10 @@ feature %q{
     fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
     select 'My coordinator', from: 'order_cycle_coordinator_id'
+
+    # And I add a coordinator fee
+    click_button 'Add coordinator fee'
+    select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
 
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
@@ -92,6 +99,9 @@ feature %q{
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
     page.should have_selector 'td.distributors', text: 'My distributor'
+
+    # And it should have a coordinator fee
+    OrderCycle.last.coordinator_fees.should == [coordinator_fee]
 
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
@@ -160,12 +170,16 @@ feature %q{
     oc = create(:order_cycle)
 
     # And a coordinating, supplying and distributing enterprise with some products with variants
-    create(:distributor_enterprise, name: 'My coordinator')
+    coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     distributor = create(:distributor_enterprise, name: 'My distributor')
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
+
+    # And some enterprise fees
+    coordinator_fee1 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 1')
+    coordinator_fee2 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 2')
 
     # When I go to its edit page
     login_to_admin_section
@@ -178,6 +192,11 @@ feature %q{
     fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
     select 'My coordinator', from: 'order_cycle_coordinator_id'
+
+    # And I configure some coordinator fees
+    select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
+    click_button 'Add coordinator fee'
+    select 'Coord fee 2', from: 'order_cycle_coordinator_fee_1_id'
 
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
@@ -216,6 +235,9 @@ feature %q{
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
     page.should have_selector 'td.distributors', text: 'My distributor'
+
+    # And my coordinator fees should have been configured
+    OrderCycle.last.coordinator_fee_ids.sort.should == [coordinator_fee1.id, coordinator_fee2.id].sort
 
     # And it should have some variants selected
     OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort

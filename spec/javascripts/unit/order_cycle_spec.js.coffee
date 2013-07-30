@@ -424,30 +424,60 @@ describe 'OrderCycle services', ->
     describe 'creating an order cycle', ->
       it 'redirects to the order cycles page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle: 'this is the order cycle'
+          order_cycle: 'this is the submit data'
           }).respond {success: true}
 
         OrderCycle.create()
         $httpBackend.flush()
-        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual('/admin/order_cycles')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle: 'this is the order cycle'
+          order_cycle: 'this is the submit data'
           }).respond {success: false}
 
         OrderCycle.create()
         $httpBackend.flush()
-        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual(undefined)
 
+    describe 'updating an order cycle', ->
+      it 'redirects to the order cycles page on success', ->
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        $httpBackend.expectPUT('/admin/order_cycles.json', {
+          order_cycle: 'this is the submit data'
+          }).respond {success: true}
+
+        OrderCycle.update()
+        $httpBackend.flush()
+        expect($window.location).toEqual('/admin/order_cycles')
+
+      it 'does not redirect on error', ->
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        $httpBackend.expectPUT('/admin/order_cycles.json', {
+          order_cycle: 'this is the submit data'
+          }).respond {success: false}
+
+        OrderCycle.update()
+        $httpBackend.flush()
+        expect($window.location).toEqual(undefined)
+
+    describe 'preparing data for form submission', ->
+      it 'calls all the methods', ->
+        OrderCycle.order_cycle = {foo: 'bar'}
+        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'translateCoordinatorFees')
+        OrderCycle.dataForSubmit()
+        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
+        expect(OrderCycle.translateCoordinatorFees).toHaveBeenCalled()
+
       it 'removes inactive exchanges', ->
-        OrderCycle.order_cycle =
+        data =
           incoming_exchanges: [
             {enterprise_id: "1", active: false}
             {enterprise_id: "2", active: true}
@@ -458,11 +488,26 @@ describe 'OrderCycle services', ->
             {enterprise_id: "5", active: false}
             {enterprise_id: "6", active: true}
             ]
-        OrderCycle.removeInactiveExchanges()
-        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+
+        data = OrderCycle.removeInactiveExchanges(data)
+
+        expect(data.incoming_exchanges).toEqual [
           {enterprise_id: "2", active: true}
           ]
-        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+        expect(data.outgoing_exchanges).toEqual [
           {enterprise_id: "4", active: true}
           {enterprise_id: "6", active: true}
           ]
+
+      it 'converts coordinator fees into a list of ids', ->
+        data =
+          coordinator_fees: [
+            {id: 1}
+            {id: 2}
+            ]
+
+        data = OrderCycle.translateCoordinatorFees(data)
+
+        expect(data.coordinator_fees).toBeUndefined()
+        expect(data.coordinator_fee_ids).toEqual([1, 2])
+    

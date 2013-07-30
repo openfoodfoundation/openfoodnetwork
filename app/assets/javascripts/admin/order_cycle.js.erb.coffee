@@ -171,9 +171,7 @@ angular.module('order_cycle', ['ngResource'])
         this.order_cycle
 
       create: ->
-      	this.removeInactiveExchanges()
-
-      	oc = new OrderCycle({order_cycle: this.order_cycle})
+      	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
       	oc.$create (data) ->
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
@@ -181,20 +179,30 @@ angular.module('order_cycle', ['ngResource'])
       	    console.log('fail')
 
       update: ->
-      	this.removeInactiveExchanges()
-
-      	oc = new OrderCycle({order_cycle: this.order_cycle})
+      	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
       	oc.$update {order_cycle_id: this.order_cycle.id}, (data) ->
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
       	  else
       	    console.log('fail')
 
-      removeInactiveExchanges: ->
-        this.order_cycle.incoming_exchanges =
-          (exchange for exchange in this.order_cycle.incoming_exchanges when exchange.active)
-        this.order_cycle.outgoing_exchanges =
-          (exchange for exchange in this.order_cycle.outgoing_exchanges when exchange.active)
+      dataForSubmit: ->
+        data = angular.extend({}, this.order_cycle)
+        data = this.removeInactiveExchanges(data)
+        data = this.translateCoordinatorFees(data)
+        data
+
+      removeInactiveExchanges: (order_cycle)->
+        order_cycle.incoming_exchanges =
+          (exchange for exchange in order_cycle.incoming_exchanges when exchange.active)
+        order_cycle.outgoing_exchanges =
+          (exchange for exchange in order_cycle.outgoing_exchanges when exchange.active)
+        order_cycle
+
+      translateCoordinatorFees: (order_cycle)->
+        order_cycle.coordinator_fee_ids = (fee.id for fee in order_cycle.coordinator_fees)
+        delete order_cycle.coordinator_fees
+        order_cycle
     }])
 
   .factory('Enterprise', ['$resource', ($resource) ->
