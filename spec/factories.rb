@@ -146,13 +146,7 @@ FactoryGirl.modify do
   factory :shipping_method do
     display_on ''
   end
-
-  factory :address do
-    state { Spree::State.find_by_name 'Victoria' }
-    country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
-  end
 end
-
 
 # -- CMS
 FactoryGirl.define do
