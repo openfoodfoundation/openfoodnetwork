@@ -194,6 +194,7 @@ feature %q{
     select 'My coordinator', from: 'order_cycle_coordinator_id'
 
     # And I configure some coordinator fees
+    click_button 'Add coordinator fee'
     select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
     click_button 'Add coordinator fee'
     click_button 'Add coordinator fee'
