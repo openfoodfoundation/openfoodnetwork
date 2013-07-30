@@ -32,7 +32,7 @@
 = f.label :coordinator_id, 'Coordinator'
 = f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'ofw-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 
-%table
+%table.coordinator-fees
   %tr{'ng-repeat' => 'enterprise_fee in order_cycle.coordinator_fees'}
     %td= select_tag 'order_cycle_coordinator_fee_{{ $index }}_id', nil, {'ng-model' => 'enterprise_fee.id', 'ng-options' => 'enterprise_fee.id as enterprise_fee.name for enterprise_fee in enterpriseFeesForEnterprise(order_cycle.coordinator_id)'}
     %td= link_to 'Remove', '#', {'id' => 'order_cycle_coordinator_fee_{{ $index }}_remove', 'ng-click' => 'removeCoordinatorFee($event, $index)'}
