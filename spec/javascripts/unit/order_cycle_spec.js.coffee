@@ -27,6 +27,7 @@ describe 'OrderCycle controllers', ->
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
       module('order_cycle')
       inject ($controller) ->
@@ -65,6 +66,10 @@ describe 'OrderCycle controllers', ->
       scope.toggleProducts(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
+
+    it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
+      scope.enterpriseFeesForEnterprise('123')
+      expect(EnterpriseFee.forEnterprise).toHaveBeenCalledWith(123)
 
     it 'Adds order cycle suppliers', ->
       scope.new_supplier_id = 'new supplier id'
@@ -113,6 +118,7 @@ describe 'OrderCycle controllers', ->
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
       module('order_cycle')
       inject ($controller) ->
@@ -150,6 +156,10 @@ describe 'OrderCycle controllers', ->
       scope.toggleProducts(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
+
+    it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
+      scope.enterpriseFeesForEnterprise('123')
+      expect(EnterpriseFee.forEnterprise).toHaveBeenCalledWith(123)
 
     it 'Adds order cycle suppliers', ->
       scope.new_supplier_id = 'new supplier id'
@@ -218,16 +228,24 @@ describe 'OrderCycle services', ->
         EnterpriseFee = $injector.get('EnterpriseFee')
         $httpBackend = _$httpBackend_
         $httpBackend.whenGET('/admin/enterprise_fees.json').respond [
-          {id: 1, name: "Yayfee"}
-          {id: 2, name: "FeeTwo"}
+          {id: 1, name: "Yayfee", enterprise_id: 1}
+          {id: 2, name: "FeeTwo", enterprise_id: 2}
           ]
 
     it 'loads enterprise fees', ->
       enterprise_fees = EnterpriseFee.index()
       $httpBackend.flush()
       expect(enterprise_fees).toEqual [
-        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee"})
-        new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo"})
+        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
+        new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo", enterprise_id: 2})
+        ]
+
+    it 'returns enterprise fees for an enterprise', ->
+      all_enterprise_fees = EnterpriseFee.index()
+      $httpBackend.flush()
+      enterprise_fees = EnterpriseFee.forEnterprise(1)
+      expect(enterprise_fees).toEqual [
+        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
         ]
 
 

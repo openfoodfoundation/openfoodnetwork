@@ -25,6 +25,9 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.toggleProducts(exchange)
 
+    $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
+      EnterpriseFee.forEnterprise(parseInt(enterprise_id))
+
     $scope.addSupplier = ($event) ->
       $event.preventDefault()
       OrderCycle.addSupplier($scope.new_supplier_id)
@@ -63,6 +66,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.toggleProducts(exchange)
+
+    $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
+      EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
     $scope.addSupplier = ($event) ->
       $event.preventDefault()
@@ -217,6 +223,9 @@ angular.module('order_cycle', ['ngResource'])
 
       index: ->
         this.enterprise_fees = EnterpriseFee.index()
+
+      forEnterprise: (enterprise_id) ->
+        enterprise_fee for enterprise_fee in this.enterprise_fees when enterprise_fee.enterprise_id == enterprise_id
     }])
 
   .directive('datetimepicker', ['$parse', ($parse) ->
