@@ -275,3 +275,9 @@ angular.module('order_cycle', ['ngResource'])
       	    parsed = $parse(attrs.datetimepicker)
       	    parsed.assign(scope, dateText)
     ])
+
+  .directive('ofwOnChange', ->
+    (scope, element, attrs) ->
+      element.bind 'change', ->
+        scope.$apply(attrs.ofwOnChange)
+    )

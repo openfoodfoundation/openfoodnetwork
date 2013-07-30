@@ -30,7 +30,7 @@
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'required' => true}
+= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'ofw-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 
 %table
   %tr{'ng-repeat' => 'enterprise_fee in order_cycle.coordinator_fees'}
