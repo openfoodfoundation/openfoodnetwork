@@ -40,6 +40,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addCoordinatorFee()
 
+    $scope.removeCoordinatorFee = ($event, index) ->
+      $event.preventDefault()
+      OrderCycle.removeCoordinatorFee(index)
+
     $scope.submit = ->
       OrderCycle.create()
   ])
@@ -86,6 +90,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addCoordinatorFee()
 
+    $scope.removeCoordinatorFee = ($event, index) ->
+      $event.preventDefault()
+      OrderCycle.removeCoordinatorFee(index)
+
     $scope.submit = ->
       OrderCycle.update()
   ])
@@ -122,6 +130,9 @@ angular.module('order_cycle', ['ngResource'])
 
       addCoordinatorFee: ->
         this.order_cycle.coordinator_fees.push({})
+
+      removeCoordinatorFee: (index) ->
+        this.order_cycle.coordinator_fees.splice(index, 1)
 
       productSuppliedToOrderCycle: (product) ->
         product_variant_ids = (variant.id for variant in product.variants)
@@ -192,14 +203,14 @@ angular.module('order_cycle', ['ngResource'])
         data = this.translateCoordinatorFees(data)
         data
 
-      removeInactiveExchanges: (order_cycle)->
+      removeInactiveExchanges: (order_cycle) ->
         order_cycle.incoming_exchanges =
           (exchange for exchange in order_cycle.incoming_exchanges when exchange.active)
         order_cycle.outgoing_exchanges =
           (exchange for exchange in order_cycle.outgoing_exchanges when exchange.active)
         order_cycle
 
-      translateCoordinatorFees: (order_cycle)->
+      translateCoordinatorFees: (order_cycle) ->
         order_cycle.coordinator_fee_ids = (fee.id for fee in order_cycle.coordinator_fees)
         delete order_cycle.coordinator_fees
         order_cycle

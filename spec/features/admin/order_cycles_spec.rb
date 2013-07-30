@@ -196,6 +196,8 @@ feature %q{
     # And I configure some coordinator fees
     select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
     click_button 'Add coordinator fee'
+    click_button 'Add coordinator fee'
+    click_link 'order_cycle_coordinator_fee_2_remove'
     select 'Coord fee 2', from: 'order_cycle_coordinator_fee_1_id'
 
     # And I add a supplier and some products
