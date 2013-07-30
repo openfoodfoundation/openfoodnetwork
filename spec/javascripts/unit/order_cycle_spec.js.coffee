@@ -20,6 +20,7 @@ describe 'OrderCycle controllers', ->
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -83,6 +84,11 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
 
+    it 'Adds coordinator fees', ->
+      scope.addCoordinatorFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addCoordinatorFee).toHaveBeenCalled()
+
     it 'Submits the order cycle via OrderCycle create', ->
       scope.submit()
       expect(OrderCycle.create).toHaveBeenCalled()
@@ -111,6 +117,7 @@ describe 'OrderCycle controllers', ->
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -172,6 +179,11 @@ describe 'OrderCycle controllers', ->
       scope.addDistributor(event)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
+
+    it 'Adds coordinator fees', ->
+      scope.addCoordinatorFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addCoordinatorFee).toHaveBeenCalled()
 
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit()
@@ -268,6 +280,7 @@ describe 'OrderCycle services', ->
           id: 123
           name: 'Test Order Cycle'
           coordinator_id: 456
+          coordinator_fees: []
           exchanges: [
             {sender_id: 1, receiver_id: 456}
             {sender_id: 456, receiver_id: 2}
@@ -277,6 +290,7 @@ describe 'OrderCycle services', ->
       expect(OrderCycle.order_cycle).toEqual
         incoming_exchanges: []
         outgoing_exchanges: []
+        coordinator_fees: []
 
     it 'counts selected variants in an exchange', ->
       result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
@@ -319,6 +333,11 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
           {enterprise_id: '123', active: true, variants: {}}
         ]
+
+    describe 'adding coordinator fees', ->
+      it 'adds the coordinator fee', ->
+        OrderCycle.addCoordinatorFee()
+        expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{}]
 
     describe 'fetching all variants supplied on incoming exchanges', ->
       it 'collects variants from incoming exchanges', ->

@@ -36,6 +36,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addDistributor($scope.new_distributor_id)
 
+    $scope.addCoordinatorFee = ($event) ->
+      $event.preventDefault()
+      OrderCycle.addCoordinatorFee()
+
     $scope.submit = ->
       OrderCycle.create()
   ])
@@ -78,6 +82,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addDistributor($scope.new_distributor_id)
 
+    $scope.addCoordinatorFee = ($event) ->
+      $event.preventDefault()
+      OrderCycle.addCoordinatorFee()
+
     $scope.submit = ->
       OrderCycle.update()
   ])
@@ -96,6 +104,7 @@ angular.module('order_cycle', ['ngResource'])
       order_cycle:
         incoming_exchanges: []
    	    outgoing_exchanges: []
+        coordinator_fees: []
 
       exchangeSelectedVariants: (exchange) ->
         numActiveVariants = 0
@@ -110,6 +119,9 @@ angular.module('order_cycle', ['ngResource'])
 
       addDistributor: (new_distributor_id) ->
       	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}})
+
+      addCoordinatorFee: ->
+        this.order_cycle.coordinator_fees.push({})
 
       productSuppliedToOrderCycle: (product) ->
         product_variant_ids = (variant.id for variant in product.variants)
