@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130729021924) do
+ActiveRecord::Schema.define(:version => 20130729030515) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -130,17 +130,17 @@ ActiveRecord::Schema.define(:version => 20130729021924) do
   add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
   add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
-  create_table "coordinator_fees", :id => false, :force => true do |t|
-    t.integer "order_cycle_id"
-    t.integer "enterprise_fee_id"
-  end
-
   create_table "enterprise_fees", :force => true do |t|
     t.integer  "enterprise_id"
     t.string   "fee_type"
     t.string   "name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "enterprise_roles", :force => true do |t|
+    t.integer "user_id"
+    t.integer "enterprise_id"
   end
 
   create_table "enterprises", :force => true do |t|
@@ -194,8 +194,10 @@ ActiveRecord::Schema.define(:version => 20130729021924) do
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
     t.integer  "coordinator_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "coordinator_admin_fee_id"
+    t.integer  "coordinator_sales_fee_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "product_distributions", :force => true do |t|
