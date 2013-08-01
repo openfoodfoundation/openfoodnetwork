@@ -30,7 +30,6 @@ namespace :openfoodweb do
         end
       end
 
-
       # -- Enterprises
       unless Enterprise.count > 0
         puts "[db:seed] Seeding enterprises"
@@ -39,6 +38,9 @@ namespace :openfoodweb do
         3.times { FactoryGirl.create(:distributor_enterprise) }
       end
 
+      unless Spree::ShippingMethod.all.any? { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
+        FactoryGirl.create(:itemwise_shipping_method)
+      end
 
       # -- Products
       unless Spree::Product.count > 0

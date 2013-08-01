@@ -44,6 +44,10 @@ Create the development and test databases, using the settings specified in `conf
 
     rake db:schema:load db:seed
 
+Load some default data for your environment
+
+    rake openfoodweb:dev:load_sample_data
+
 At long last, your dreams of spinning up a development server can be realised:
 
     rails server
