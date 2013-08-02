@@ -5,8 +5,10 @@ Spree::Admin::ProductsController.class_eval do
 
   respond_to :json, :only => :clone
 
+  before_filter :filter_out_products_for_enterprise_users, :only => :index
+
   #respond_override :clone => { :json => {:success => lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
-  
+
   def bulk_update
     collection_hash = Hash[params[:_json].each_with_index.map { |p,i| [i,p] }]
     product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
@@ -17,16 +19,24 @@ Spree::Admin::ProductsController.class_eval do
       render :nothing => true
     end
   end
-  
+
   protected
   def location_after_save
-    if URI(request.referer).path == '/admin/products/bulk_edit' 
+    if URI(request.referer).path == '/admin/products/bulk_edit'
       bulk_edit_admin_products_url
-    else 
+    else
       location_after_save_original
     end
   end
-  
+
+  def filter_out_products_for_enterprise_users
+    unless spree_current_user.has_spree_role?('admin')
+      @collection.select! do |product|
+        product.supplier.users.include? spree_current_user
+      end
+    end
+  end
+
   private
 
   def load_spree_api_key

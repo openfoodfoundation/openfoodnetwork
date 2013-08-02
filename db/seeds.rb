@@ -26,9 +26,3 @@ unless Spree::State.find_by_name 'Victoria'
     Spree::State.create!({"name"=>state[0], "abbr"=>state[1], :country=>country}, :without_protection => true)
   end
 end
-
-# -- Roles
-unless Spree::Role.find_by_name 'enterprise'
-  puts "seeding roles"
-  Spree::Role.create!(:name => "enterprise")
-end
