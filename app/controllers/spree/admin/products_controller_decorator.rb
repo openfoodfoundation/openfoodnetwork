@@ -5,8 +5,6 @@ Spree::Admin::ProductsController.class_eval do
 
   respond_to :json, :only => :clone
 
-  before_filter :filter_out_products_for_enterprise_users, :only => :index
-
   #respond_override :clone => { :json => {:success => lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
 
   def bulk_update
@@ -29,12 +27,29 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
 
-  def filter_out_products_for_enterprise_users
-    unless spree_current_user.has_spree_role?('admin')
-      @collection.select! do |product|
-        !product.supplier.nil? and product.supplier.users.include? spree_current_user
-      end
+  def collection
+    # This method is copied directly from the spree product controller, except where we narrow the search below with the managed_by search to support
+    # enterprise users.
+    # TODO: There has to be a better way!!!
+    return @collection if @collection.present?
+    params[:q] ||= {}
+    params[:q][:deleted_at_null] ||= "1"
+
+    params[:q][:s] ||= "name asc"
+
+    @search = super.ransack(params[:q])
+    @collection = @search.result.
+      managed_by(spree_current_user). # this line is added to the original spree code!!!!!
+      group_by_products_id.
+      includes(product_includes).
+      page(params[:page]).
+      per(Spree::Config[:admin_products_per_page])
+
+    if params[:q][:s].include?("master_default_price_amount")
+      # PostgreSQL compatibility
+      @collection = @collection.group("spree_prices.amount")
     end
+    @collection
   end
 
   private

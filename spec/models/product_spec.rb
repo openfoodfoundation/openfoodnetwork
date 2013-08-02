@@ -154,6 +154,34 @@ module Spree
           Product.in_order_cycle(oc1).should == [p1]
         end
       end
+
+      describe 'access roles' do
+        before(:each) do
+          @e1 = create(:enterprise)
+          @e2 = create(:enterprise)
+          @p1 = create(:product, supplier: @e1)
+          @p2 = create(:product, supplier: @e2)
+        end
+
+        it "shows only products for given user" do
+          user = create(:user)
+          user.spree_roles = []
+          @e1.enterprise_roles.build(user: user).save
+
+          product = Product.managed_by user
+          product.count.should == 1
+          product.should include @p1
+        end
+
+        it "shows all products for admin user" do
+          user = create(:admin_user)
+
+          product = Product.managed_by user
+          product.count.should == 2
+          product.should include @p1
+          product.should include @p2
+        end
+      end
     end
 
     describe "finders" do

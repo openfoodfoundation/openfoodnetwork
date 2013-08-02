@@ -75,7 +75,6 @@ describe Enterprise do
         user = create(:admin_user)
         e1 = create(:enterprise)
         e2 = create(:enterprise)
-        e1.enterprise_roles.build(user: user).save
 
         enterprises = Enterprise.managed_by user
         enterprises.count.should == 2

@@ -57,6 +57,13 @@ Spree::Product.class_eval do
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
                                                 where('exchanges.sender_id = order_cycles.coordinator_id').
                                                 where('order_cycles.id = ?', order_cycle) }
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('supplier_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+    end
+  }
 
 
   # -- Methods

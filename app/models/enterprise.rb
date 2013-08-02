@@ -53,7 +53,7 @@ class Enterprise < ActiveRecord::Base
  }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      all
+      scoped
     else
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
