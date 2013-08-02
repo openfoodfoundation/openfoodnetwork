@@ -87,8 +87,8 @@ Spree::Product.class_eval do
 
 
   # Build a product distribution for each distributor
-  def build_product_distributions
-    Enterprise.is_distributor.each do |distributor|
+  def build_product_distributions_for_user user
+    Enterprise.is_distributor.managed_by(user).each do |distributor|
       unless self.product_distributions.find_by_distributor_id distributor.id
         self.product_distributions.build(:distributor => distributor)
       end

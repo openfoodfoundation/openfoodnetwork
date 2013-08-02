@@ -1,6 +1,6 @@
 %h2 Distributors
 = f.field_container :product_distributions do
-  - f.object.build_product_distributions
+  - f.object.build_product_distributions_for_user spree_current_user
   %table
     = f.fields_for :product_distributions do |pd_form|
       %tr

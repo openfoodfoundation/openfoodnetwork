@@ -32,7 +32,7 @@ Spree::Admin::ProductsController.class_eval do
   def filter_out_products_for_enterprise_users
     unless spree_current_user.has_spree_role?('admin')
       @collection.select! do |product|
-        product.supplier.users.include? spree_current_user
+        !product.supplier.nil? and product.supplier.users.include? spree_current_user
       end
     end
   end

@@ -50,6 +50,13 @@ class Enterprise < ActiveRecord::Base
     with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
     where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
     select('DISTINCT enterprises.*')
+ }
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      all
+    else
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+    end
   }
 
 

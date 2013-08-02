@@ -2,5 +2,5 @@
   = f.field_container :supplier do
     = f.label :supplier
     %br
-    = f.collection_select(:supplier_id, Enterprise.is_primary_producer, :id, :name, {:include_blank => true}, {:class => "select2"})
+    = f.collection_select(:supplier_id, Enterprise.is_primary_producer.managed_by(spree_current_user), :id, :name, {:include_blank => true}, {:class => "select2"})
     = f.error_message_on :supplier
