@@ -30,6 +30,7 @@ gem 'rabl'
 gem 'oj'
 gem 'chili', :github => 'eaterprises/chili'
 gem 'deface', :github => 'spree/deface'
+gem 'paperclip'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -64,6 +65,7 @@ group :test, :development do
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
+  gem 'zurb-foundation'
 end
 
 group :chili do

@@ -101,3 +101,8 @@ unless Spree::Product.count > 0
                              :distributor => Enterprise.is_distributor[2],
                              :shipping_method => Spree::ShippingMethod.first)
 end
+
+# -- Landing page images
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "carrots.jpg"))
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "tomatoes.jpg"))
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "potatoes.jpg"))

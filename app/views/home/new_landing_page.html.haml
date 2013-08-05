@@ -1,0 +1,42 @@
+%span#image-url-container.hide{ "data-url" => "#{LandingPageImage.random.photo.url(:max_common_res)}" }
+
+%section{ role: "main" }
+  .row
+    .large-10.large-centered.columns
+      #postcode_select_box
+        .row
+          = form_tag do
+            .large-10.columns
+              = text_field_tag :postcode, "", class: "right", placeholder: "Enter your postcode..."
+            .large-2.columns
+              = submit_tag "Search", class: "button-huge"
+        .row
+          .large-12.large-centered.columns
+            %p Open Food Web - fresh opportunities for farmers and eaters
+        .row.show-for-small
+          .large-12.large-centered.columns#home-page-nav
+            %ul
+              %li= link_to "DISTRIBUTORS", "#"
+              %li= link_to "FARMERS", "#", "data-reveal-id" => "login-modal"
+
+
+%section#sidebar{ role: "complementary" }
+  .login-panel
+    .row
+      .large-12.large-centered.columns
+        %h2 Login
+    = form_for Spree::User.new, :remote => true, :as => :spree_user, :url => spree.spree_user_session_path do |f|
+      #password-credentials
+        %p
+          = f.label :email, t(:email)
+          %br/
+          = f.email_field :email, :class => 'title', :tabindex => 1
+        %p
+          = f.label :password, t(:password)
+          %br/
+          = f.password_field :password, :class => 'title', :tabindex => 2
+        %p
+          %label
+            = f.check_box :remember_me
+            = f.label :remember_me, t(:remember_me)
+        %p= f.submit t(:login), :class => 'button primary', :tabindex => 3

@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+
+    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Web'
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "store/all"
+    = csrf_meta_tags
+  %body.off-canvas
+    %nav.top-bar
+      %section.top-bar-section
+        %ul.left
+          %li= link_to "Login", "#sidebar", id: "sidebarButton", class: "sidebar-button"
+        %ul.right
+          %li= link_to "Distributors", "#"
+          %li.divider
+          %li= link_to "Farmers", "#"
+
+    = yield
