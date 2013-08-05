@@ -2,7 +2,7 @@
   .alpha.six.columns
     = f.field_container :supplier do
       = f.label :supplier
-      = f.collection_select(:supplier_id, Enterprise.is_primary_producer, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+      = f.collection_select(:supplier_id, Enterprise.is_primary_producer.managed_by(spree_current_user), :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
       = f.error_message_on :supplier
   .four.columns
     = f.field_container :group_buy do

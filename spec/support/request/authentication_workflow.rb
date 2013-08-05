@@ -11,9 +11,20 @@ module AuthenticationWorkflow
 
     admin_user.spree_roles << admin_role
 
+    login_to_admin_as admin_user
+  end
+
+  def create_enterprise_user
+    new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah', :password_confirmation => 'blahblah', )
+    new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
+    new_user.save
+    new_user
+  end
+
+  def login_to_admin_as user
     visit spree.admin_path
-    fill_in 'spree_user_email', :with => 'admin@ofw.org'
-    fill_in 'spree_user_password', :with => 'passw0rd'
+    fill_in 'spree_user_email', :with => user.email
+    fill_in 'spree_user_password', :with => user.password
     click_button 'Login'
   end
 

@@ -15,7 +15,11 @@ Spree::Order.class_eval do
 
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
-    errors.add(:base, "Distributor or order cycle cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+    if OpenFoodWeb::FeatureToggle.enabled? :order_cycles
+      errors.add(:base, "Distributor or order cycle cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+    else
+      errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
+    end
   end
 
   def set_order_cycle!(order_cycle)

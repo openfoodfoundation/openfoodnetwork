@@ -143,6 +143,11 @@ ActiveRecord::Schema.define(:version => 20130801012854) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "enterprise_roles", :force => true do |t|
+    t.integer "user_id"
+    t.integer "enterprise_id"
+  end
+
   create_table "enterprises", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -435,9 +440,9 @@ ActiveRecord::Schema.define(:version => 20130801012854) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
   end
 
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"

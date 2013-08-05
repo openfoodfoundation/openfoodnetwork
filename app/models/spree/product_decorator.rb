@@ -57,6 +57,13 @@ Spree::Product.class_eval do
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
                                                 where('exchanges.sender_id = order_cycles.coordinator_id').
                                                 where('order_cycles.id = ?', order_cycle) }
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('supplier_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+    end
+  }
 
 
   # -- Methods
@@ -87,8 +94,8 @@ Spree::Product.class_eval do
 
 
   # Build a product distribution for each distributor
-  def build_product_distributions
-    Enterprise.is_distributor.each do |distributor|
+  def build_product_distributions_for_user user
+    Enterprise.is_distributor.managed_by(user).each do |distributor|
       unless self.product_distributions.find_by_distributor_id distributor.id
         self.product_distributions.build(:distributor => distributor)
       end

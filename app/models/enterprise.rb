@@ -4,6 +4,8 @@ class Enterprise < ActiveRecord::Base
   belongs_to :address, :class_name => 'Spree::Address'
   has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
   has_many :distributed_products, :through => :product_distributions, :source => :product
+  has_many :enterprise_roles
+  has_many :users, through: :enterprise_roles
 
   accepts_nested_attributes_for :address
 
@@ -48,6 +50,13 @@ class Enterprise < ActiveRecord::Base
     with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
     where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
     select('DISTINCT enterprises.*')
+ }
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+    end
   }
 
 

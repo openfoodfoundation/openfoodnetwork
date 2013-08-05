@@ -58,6 +58,29 @@ describe Enterprise do
         create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master], orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
         Enterprise.active_distributors.should be_empty
       end
+
+      it "shows only enterprises for given user" do
+        user = create(:user)
+        user.spree_roles = []
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+        e1.enterprise_roles.build(user: user).save
+
+        enterprises = Enterprise.managed_by user
+        enterprises.count.should == 1
+        enterprises.should include e1
+      end
+
+      it "shows all enterprises for admin user" do
+        user = create(:admin_user)
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+
+        enterprises = Enterprise.managed_by user
+        enterprises.count.should == 2
+        enterprises.should include e1
+        enterprises.should include e2
+      end
     end
 
     describe "with_distributed_active_products_on_hand" do
@@ -102,9 +125,9 @@ describe Enterprise do
         create(:product, :supplier => d1, :on_hand => 5)
         create(:product, :supplier => d1, :on_hand => 5)
         create(:product, :supplier => d2, :on_hand => 5)
-        create(:product, :supplier => d3, :on_hand => 5, :available_on => 1.week.from_now) 
-        create(:product, :supplier => d4, :on_hand => 0) 
-        create(:product, :supplier => d5).delete 
+        create(:product, :supplier => d3, :on_hand => 5, :available_on => 1.week.from_now)
+        create(:product, :supplier => d4, :on_hand => 0)
+        create(:product, :supplier => d5).delete
 
         Enterprise.with_supplied_active_products_on_hand.sort.should == [d1, d2]
         Enterprise.with_supplied_active_products_on_hand.distinct_count.should == 2
