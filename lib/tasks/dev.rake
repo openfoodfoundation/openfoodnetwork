@@ -7,10 +7,11 @@ namespace :openfoodweb do
     task :load_sample_data => :environment do
       require File.expand_path('../../../spec/factories', __FILE__)
       require File.expand_path('../../../spec/support/spree/init', __FILE__)
+      task_name = "openfoodweb:dev:load_sample_data"
 
       # -- Shipping / payment information
       unless Spree::Zone.find_by_name 'Australia'
-        puts "[db:seed] Seeding shipping / payment information"
+        puts "[#{task_name}] Seeding shipping / payment information"
         zone = FactoryGirl.create(:zone, :name => 'Australia', :zone_members => [])
         country = Spree::Country.find_by_name('Australia')
         Spree::ZoneMember.create(:zone => zone, :zoneable => country)
@@ -21,7 +22,7 @@ namespace :openfoodweb do
 
       # -- Taxonomies
       unless Spree::Taxonomy.find_by_name 'Products'
-        puts "[db:seed] Seeding taxonomies"
+        puts "[#{task_name}] Seeding taxonomies"
         taxonomy = Spree::Taxonomy.find_by_name('Products') || FactoryGirl.create(:taxonomy, :name => 'Products')
         taxonomy_root = taxonomy.root
 
@@ -32,7 +33,7 @@ namespace :openfoodweb do
 
       # -- Enterprises
       unless Enterprise.count > 0
-        puts "[db:seed] Seeding enterprises"
+        puts "[#{task_name}] Seeding enterprises"
 
         3.times { FactoryGirl.create(:supplier_enterprise) }
         3.times { FactoryGirl.create(:distributor_enterprise) }
@@ -44,7 +45,7 @@ namespace :openfoodweb do
 
       # -- Products
       unless Spree::Product.count > 0
-        puts "[db:seed] Seeding products"
+        puts "[#{task_name}] Seeding products"
 
         prod1 = FactoryGirl.create(:product,
                            :name => 'Garlic', :price => 20.00,
