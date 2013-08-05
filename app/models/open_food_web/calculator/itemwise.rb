@@ -7,7 +7,7 @@ module OpenFoodWeb
 
     def compute(object)
       # Given an order, sum the shipping on each individual item
-      object.line_items.map { |li| li.itemwise_shipping_cost }.inject(:+) || 0
+      object.line_items.sum { |li| li.distribution_fee } || 0
     end
   end
 end

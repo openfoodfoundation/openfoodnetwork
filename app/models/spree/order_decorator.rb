@@ -99,7 +99,7 @@ Spree::Order.class_eval do
 
   def update_line_item_shipping_methods
     if %w(cart address delivery resumed).include? state
-      self.line_items.each { |li| li.update_itemwise_shipping_method_without_callbacks!(distributor) }
+      self.line_items.each { |li| li.update_distribution_fee_without_callbacks!(distributor) }
       self.update!
     end
   end

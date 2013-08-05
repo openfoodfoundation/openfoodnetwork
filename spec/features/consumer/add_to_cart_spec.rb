@@ -54,11 +54,12 @@ feature %q{
       page.should have_selector 'span.shipping-total', :text => '$1.23'
       page.should have_selector 'span.grand-total', :text => '$13.57'
 
-      # And the item should be in my cart, with shipping method set for the line item
+      # And the item should be in my cart, with the distribution info set for the line item
       order = Spree::Order.last
       line_item = order.line_items.first
       line_item.product.should == p
-      line_item.shipping_method.should == p.product_distributions.first.shipping_method
+      line_item.distribution_fee.should == 1.23
+      line_item.shipping_method_name.should == p.product_distributions.first.shipping_method.name
 
       # And my order should have its distributor set to the chosen distributor
       order.distributor.should == d1
