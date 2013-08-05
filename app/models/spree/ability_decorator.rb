@@ -3,7 +3,7 @@ class AbilityDecorator
   include CanCan::Ability
   def initialize(user)
     if user.enterprises.count > 0
-      can [:admin, :read, :update, :bulk_edit], Spree::Product  do |product|
+      can [:admin, :read, :update, :bulk_edit, :clone, :destroy], Spree::Product  do |product|
         user.enterprises.include? product.supplier
       end
 
