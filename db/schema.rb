@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805050109) do
+ActiveRecord::Schema.define(:version => 20130805232516) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20130805050109) do
     t.integer  "shipping_method_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "enterprise_fee_id"
   end
 
   create_table "spree_activators", :force => true do |t|
