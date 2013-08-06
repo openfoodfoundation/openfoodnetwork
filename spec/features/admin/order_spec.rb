@@ -12,9 +12,9 @@ feature %q{
     @order = create(:order_with_totals_and_distributor, :user => @user, :state => 'complete', :payment_state => 'balance_due')
 
     # ensure order has a payment to capture
-    distribution_fee = 1
-    create :check_payment, order: @order, amount: (@order.amount + distribution_fee)
     @order.finalize!
+
+    create :check_payment, order: @order, amount: @order.total
   end
 
   context "managing orders" do
