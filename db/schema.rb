@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801012854) do
+ActiveRecord::Schema.define(:version => 20130806055125) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -863,6 +863,14 @@ ActiveRecord::Schema.define(:version => 20130801012854) do
     t.datetime "updated_at",                            :null => false
     t.boolean  "default_tax",        :default => false
     t.integer  "zone_members_count", :default => 0
+  end
+
+  create_table "suburbs", :force => true do |t|
+    t.string  "name"
+    t.integer "postcode"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "state_id"
   end
 
 end
