@@ -110,6 +110,7 @@ FactoryGirl.define do
     after(:create) do |order|
       p = create(:simple_product, :distributors => [order.distributor])
       FactoryGirl.create(:line_item, :order => order, :product => p)
+      order.reload
     end
   end
 end

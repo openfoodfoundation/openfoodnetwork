@@ -12,13 +12,15 @@ feature %q{
     @order = create(:order_with_totals_and_distributor, :user => @user, :state => 'complete', :payment_state => 'balance_due')
 
     # ensure order has a payment to capture
-    create :check_payment, order: @order, amount: @order.amount
+    distribution_fee = 1
+    create :check_payment, order: @order, amount: (@order.amount + distribution_fee)
     @order.finalize!
   end
 
   context "managing orders" do
     scenario "capture multiple payments from the orders index page" do
       # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
+
       login_to_admin_section
 
       click_link 'Orders'
