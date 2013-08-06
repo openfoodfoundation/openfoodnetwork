@@ -103,27 +103,6 @@ feature %q{
         product.distributors.should == [@distributors[0]]
       end
 
-      describe 'with existing product' do
-        before(:each) do
-          @product = create(:product, supplier: @supplier2)
-        end
-
-        scenario "can edit" do
-          click_link 'Products'
-
-          click_link @product.name
-          page.should_not have_selector('#product_supplier_id')
-
-          click_link "Images"
-          page.should_not have_content 'Authorization Failure'
-
-          click_link "Variants"
-          page.should_not have_content 'Authorization Failure'
-
-          click_link "Product Properties"
-          page.should_not have_content 'Authorization Failure'
-        end
-      end
     end
   end
 end
