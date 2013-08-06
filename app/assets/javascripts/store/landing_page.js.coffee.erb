@@ -1,0 +1,34 @@
+$(document).ready ->
+    setup_background()
+    setup_offcanvas_panel()
+    setup_login_handlers()
+
+
+setup_background = ->
+    if $("#image-url-container").length > 0
+        $('body').css('background-color', 'black', 'important');
+        $.backstretch($("#image-url-container").attr("data-url"));
+
+
+setup_offcanvas_panel = ->
+    events = 'click.fndtn'
+    $("#sidebarButton").on events, (e) ->
+        e.preventDefault()
+        $("body").toggleClass "active"
+
+
+setup_login_handlers = ->
+    $("#new_spree_user").on "ajax:error", (event, xhr, status) ->
+        $("#login-error-alert").show()
+
+    $("#new_spree_user").on "ajax:success", (event, xhr, status) ->
+        $("#login-error-alert").hide()
+        $("#login-name").html("<a href='#'>#{xhr['email']}</a>")
+
+        $("#login-link").hide()
+        $("#sign-up-link").hide()
+
+        $("#login-name").show()
+        $("#sign-out-link").show()
+
+        $("#sidebarButton").trigger("click")

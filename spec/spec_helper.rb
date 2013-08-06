@@ -26,6 +26,7 @@ ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/cou
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
+require "paperclip/matchers"
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -76,4 +77,6 @@ RSpec.configure do |config|
   # Factory girl
   require 'factory_girl_rails'
   config.include FactoryGirl::Syntax::Methods
+
+  config.include Paperclip::Shoulda::Matchers
 end

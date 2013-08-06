@@ -1,0 +1,32 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+
+    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Web'
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "store/all"
+    = csrf_meta_tags
+  %body.off-canvas
+    %nav.top-bar
+      %section.top-bar-section
+        %ul.left
+          - if spree_current_user.nil?
+            %li#login-link= link_to "Login", "#sidebar", id: "sidebarButton", class: "sidebar-button"
+            %li#login-name.hide
+            %li.divider
+            %li#sign-up-link= link_to "Sign Up", "#"
+            %li#sign-out-link.hide= link_to "Sign Out", "/logout"
+          - else
+            %li#login-link.hide= link_to "Login", "#sidebar", id: "sidebarButton", class: "sidebar-button"
+            %li#login-name= link_to "#{spree_current_user.email}", "#"
+            %li.divider
+            %li#sign-up-link.hide= link_to "Sign Up", "#"
+            %li#sign-out-link= link_to "Sign Out", "/logout"
+
+        %ul.right
+          %li= link_to "Distributors", "#"
+          %li.divider
+          %li= link_to "Farmers", "#"
+    = yield

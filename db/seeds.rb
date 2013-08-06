@@ -26,3 +26,8 @@ unless Spree::State.find_by_name 'Victoria'
     Spree::State.create!({"name"=>state[0], "abbr"=>state[1], :country=>country}, :without_protection => true)
   end
 end
+
+# -- Landing page images
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "carrots.jpg"))
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "tomatoes.jpg"))
+LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "potatoes.jpg"))

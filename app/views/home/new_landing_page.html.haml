@@ -1,0 +1,24 @@
+%span#image-url-container.hide{ "data-url" => "#{LandingPageImage.random.photo.url(:max_common_res)}" }
+
+%section{ role: "main" }
+  .row
+    .large-10.large-centered.columns
+      #postcode_select_box
+        .row
+          = form_tag do
+            .large-10.columns
+              = text_field_tag :postcode, "", class: "right", placeholder: "Enter your postcode..."
+            .large-2.columns
+              = submit_tag "Search", class: "button-huge"
+        .row
+          .large-12.large-centered.columns
+            %p Open Food Web - fresh opportunities for farmers and eaters
+        .row.show-for-small
+          .large-12.large-centered.columns#home-page-nav
+            %ul
+              %li= link_to "DISTRIBUTORS", "#"
+              %li= link_to "FARMERS", "#"
+
+
+%section#sidebar{ role: "complementary" }
+  = render "login"
