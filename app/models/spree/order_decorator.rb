@@ -12,7 +12,16 @@ Spree::Order.class_eval do
   before_save :update_line_item_shipping_methods
   after_create :set_default_shipping_method
 
+  # -- Scopes
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('distributor_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+    end
+  }
 
+  # -- Methods
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
     if OpenFoodWeb::FeatureToggle.enabled? :order_cycles
