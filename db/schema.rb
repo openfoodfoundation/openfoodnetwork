@@ -440,9 +440,9 @@ ActiveRecord::Schema.define(:version => 20130801012854) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
   end
 
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"

@@ -9,7 +9,7 @@ Spree::UserSessionsController.class_eval do
           redirect_back_or_default(after_sign_in_path_for(spree_current_user))
         }
         format.js {
-          render json: { email: spree_current_user.login }
+          render json: { email: spree_current_user.login }, status: :ok
         }
       end
     else
@@ -19,7 +19,7 @@ Spree::UserSessionsController.class_eval do
           render :new
         }
         format.js {
-          render json: { message: t('devise.failure.invalid') }, status: :unprocessable_entity
+          render json: { message: t('devise.failure.invalid') }, status: :unauthorized
         }
       end
     end

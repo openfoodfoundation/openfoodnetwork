@@ -17,26 +17,8 @@
           .large-12.large-centered.columns#home-page-nav
             %ul
               %li= link_to "DISTRIBUTORS", "#"
-              %li= link_to "FARMERS", "#", "data-reveal-id" => "login-modal"
+              %li= link_to "FARMERS", "#"
 
 
 %section#sidebar{ role: "complementary" }
-  .login-panel
-    .row
-      .large-12.large-centered.columns
-        %h2 Login
-    = form_for Spree::User.new, :remote => true, :as => :spree_user, :url => spree.spree_user_session_path do |f|
-      #password-credentials
-        %p
-          = f.label :email, t(:email)
-          %br/
-          = f.email_field :email, :class => 'title', :tabindex => 1
-        %p
-          = f.label :password, t(:password)
-          %br/
-          = f.password_field :password, :class => 'title', :tabindex => 2
-        %p
-          %label
-            = f.check_box :remember_me
-            = f.label :remember_me, t(:remember_me)
-        %p= f.submit t(:login), :class => 'button primary', :tabindex => 3
+  = render "login"
