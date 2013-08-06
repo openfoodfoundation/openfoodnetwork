@@ -2,7 +2,6 @@ class EnterpriseFee < ActiveRecord::Base
   belongs_to :enterprise
 
   calculated_adjustments
-  has_one   :calculator, :as => :calculable, :dependent => :destroy, :class_name => 'Spree::Calculator'
 
   attr_accessible :enterprise_id, :fee_type, :name, :calculator_type
 

@@ -1,24 +1,28 @@
 Spree::LineItem.class_eval do
-  belongs_to :shipping_method
-
   attr_accessible :max_quantity
 
-  before_create :set_itemwise_shipping_method
+  before_create :set_distribution_fee
 
 
-  def itemwise_shipping_cost
-    order = OpenStruct.new :line_items => [self]
-    shipping_method.compute_amount(order)
-  end
-
-  def update_itemwise_shipping_method_without_callbacks!(distributor)
-    update_column(:shipping_method_id, self.product.shipping_method_for_distributor(distributor).id)
+  def update_distribution_fee_without_callbacks!(distributor)
+    set_distribution_fee(distributor)
+    update_column(:distribution_fee, distribution_fee)
+    update_column(:shipping_method_name, shipping_method_name)
   end
 
 
   private
 
-  def set_itemwise_shipping_method
-    self.shipping_method = self.product.shipping_method_for_distributor(self.order.distributor)
+  def shipping_method(distributor=nil)
+    distributor ||= self.order.distributor
+    self.product.shipping_method_for_distributor(distributor)
+  end
+
+  def set_distribution_fee(distributor=nil)
+    order = OpenStruct.new :line_items => [self]
+    sm = shipping_method(distributor)
+
+    self.distribution_fee = sm.compute_amount(order)
+    self.shipping_method_name = sm.name
   end
 end

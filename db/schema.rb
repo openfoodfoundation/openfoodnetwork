@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20130806055125) do
     t.integer  "shipping_method_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "enterprise_fee_id"
   end
 
   create_table "spree_activators", :force => true do |t|
@@ -364,13 +365,14 @@ ActiveRecord::Schema.define(:version => 20130806055125) do
   create_table "spree_line_items", :force => true do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                         :null => false
-    t.decimal  "price",              :precision => 8, :scale => 2, :null => false
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.integer  "quantity",                                            :null => false
+    t.decimal  "price",                :precision => 8,  :scale => 2, :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.integer  "max_quantity"
-    t.integer  "shipping_method_id"
     t.string   "currency"
+    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
+    t.string   "shipping_method_name"
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"

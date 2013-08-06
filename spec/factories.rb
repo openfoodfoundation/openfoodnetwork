@@ -110,6 +110,7 @@ FactoryGirl.define do
     after(:create) do |order|
       p = create(:simple_product, :distributors => [order.distributor])
       FactoryGirl.create(:line_item, :order => order, :product => p)
+      order.reload
     end
   end
 end
@@ -137,10 +138,6 @@ FactoryGirl.modify do
         pd.save!
       end
     end
-  end
-
-  factory :line_item do
-    shipping_method { |li| li.product.shipping_method_for_distributor(li.order.distributor) }
   end
 
   factory :shipping_method do
