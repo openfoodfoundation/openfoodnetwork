@@ -55,6 +55,8 @@ RSpec.configure do |config|
   config.filter_run_excluding :skip => true
 
   config.before(:each) do
+    Spree::Address.any_instance.stub(:geocode).and_return([1,1])
+
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
     else
