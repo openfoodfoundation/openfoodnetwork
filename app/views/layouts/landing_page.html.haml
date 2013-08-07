@@ -5,8 +5,8 @@
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
     %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Web'
-    = stylesheet_link_tag "application"
-    = javascript_include_tag "store/all"
+    = stylesheet_link_tag "search/all"
+    = javascript_include_tag "search/all"
     = csrf_meta_tags
   %body.off-canvas
     %nav.top-bar
