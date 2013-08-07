@@ -36,4 +36,4 @@ end
 
 # -- Seeding suburbs
 require_relative './suburb_seeds'
-SuburbSeeder.seed_suburbs unless Suburb.find_all_by_name("Dayton")
+SuburbSeeder.seed_suburbs unless Suburb.find_by_name("Dayton")
