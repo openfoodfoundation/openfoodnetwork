@@ -76,6 +76,23 @@ namespace :openfoodweb do
         FactoryGirl.create(:itemwise_shipping_method)
       end
 
+      # -- Enterprise Users
+      unless Spree::User.count > 1 
+        puts "[#{task_name}] Seeding enterprise users"
+
+        pw = "spree123"
+
+        u = FactoryGirl.create(:user, email: "sup@example.com", password: pw, password_confirmation: pw)
+        u.enterprises << Enterprise.is_primary_producer.first
+        u.enterprises << Enterprise.is_primary_producer.second
+        puts "  Supplier User created:    #{u.email}/#{pw}  (" + u.enterprise_roles.map{ |er| er.enterprise.name}.join(", ") + ")"
+
+        u = FactoryGirl.create(:user, email: "dist@example.com", password: pw, password_confirmation: pw)
+        u.enterprises << Enterprise.is_distributor.first
+        u.enterprises << Enterprise.is_distributor.second
+        puts "  Distributor User created: #{u.email}/#{pw} (" + u.enterprise_roles.map{ |er| er.enterprise.name}.join(", ") + ")"
+      end
+
       # -- Products
       unless Spree::Product.count > 0
         puts "[#{task_name}] Seeding products"

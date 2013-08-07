@@ -41,11 +41,16 @@ module Spree
       end
 
       it "should allow available_on to be nil" do
+
+        spree_get :index, { :template => 'bulk_index', :format => :json }
+        json_response.size.should == 3
+
         product4 = FactoryGirl.create(:product)
         product4.available_on = nil
         product4.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
+        binding.pry
         json_response.size.should == 4
       end
     end
