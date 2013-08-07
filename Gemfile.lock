@@ -263,6 +263,7 @@ GEM
       ruby-hmac
     formatador (0.2.4)
     fssm (0.2.10)
+    geocoder (1.1.8)
     haml (3.1.6)
     highline (1.6.18)
     hike (1.2.3)
@@ -463,6 +464,7 @@ DEPENDENCIES
   enterprises_distributor_info_rich_text_feature!
   factory_girl_rails
   faker
+  geocoder
   haml
   jquery-rails
   letter_opener

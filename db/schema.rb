@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806055125) do
+ActiveRecord::Schema.define(:version => 20130807002915) do
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -252,6 +252,8 @@ ActiveRecord::Schema.define(:version => 20130806055125) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "company"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "spree_addresses", ["firstname"], :name => "index_addresses_on_firstname"

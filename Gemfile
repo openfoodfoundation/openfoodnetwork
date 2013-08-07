@@ -31,6 +31,7 @@ gem 'oj'
 gem 'chili', :github => 'eaterprises/chili'
 gem 'deface', :github => 'spree/deface'
 gem 'paperclip'
+gem 'geocoder'
 
 # Gems used only for assets and not required
 # in production environments by default.
