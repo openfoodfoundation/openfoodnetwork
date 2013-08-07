@@ -469,12 +469,13 @@ ActiveRecord::Schema.define(:version => 20130812233634) do
     t.string   "type"
     t.string   "name"
     t.text     "description"
-    t.boolean  "active",      :default => true
-    t.string   "environment", :default => "development"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.boolean  "active",         :default => true
+    t.string   "environment",    :default => "development"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
     t.string   "display_on"
+    t.integer  "distributor_id"
   end
 
   create_table "spree_payments", :force => true do |t|
