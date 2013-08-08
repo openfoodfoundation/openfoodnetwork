@@ -77,6 +77,6 @@ module Openfoodweb
     config.assets.version = '1.0'
 
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*']
+    config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*', 'search/all.css', 'search/*.js']
   end
 end
