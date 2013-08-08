@@ -48,7 +48,7 @@ describe ProductDistribution do
         order.line_items.last.adjustments.count.should == 1
         adjustment = order.line_items.last.adjustments.last
 
-        adjustment.source.should == enterprise_fee
+        adjustment.source.should == order.line_items.last
         adjustment.originator.should == enterprise_fee
         adjustment.label.should == "Product distribution by #{distributor.name}"
         adjustment.amount.should == 1.23
@@ -100,28 +100,18 @@ describe ProductDistribution do
       end
 
       it "returns the adjustment when present" do
-        # TODO: This spec can be simplified (ie. use the default ProductDistribution factory)
-        # once Spree's calculators are compatible with LineItem targets, not just Orders.
-        distributor = create(:distributor_enterprise)
-        enterprise_fee = create(:enterprise_fee, enterprise: distributor, calculator: build(:calculator))
-
-        pd = create(:product_distribution, distributor: distributor, enterprise_fee: enterprise_fee)
+        pd = create(:product_distribution)
         line_item = create(:line_item)
-        adjustment = pd.enterprise_fee.create_adjustment('foo', line_item, pd.enterprise_fee, true)
+        adjustment = pd.enterprise_fee.create_adjustment('foo', line_item, line_item, true)
 
         pd.send(:adjustment_on, line_item).should == adjustment
       end
 
       it "raises an error when there are multiple adjustments for this enterprise fee" do
-        # TODO: This spec can be simplified (ie. use the default ProductDistribution factory)
-        # once Spree's calculators are compatible with LineItem targets, not just Orders.
-        distributor = create(:distributor_enterprise)
-        enterprise_fee = create(:enterprise_fee, enterprise: distributor, calculator: build(:calculator))
-
-        pd = create(:product_distribution, distributor: distributor, enterprise_fee: enterprise_fee)
+        pd = create(:product_distribution)
         line_item = create(:line_item)
-        pd.enterprise_fee.create_adjustment('one', line_item, pd.enterprise_fee, true)
-        pd.enterprise_fee.create_adjustment('two', line_item, pd.enterprise_fee, true)
+        pd.enterprise_fee.create_adjustment('one', line_item, line_item, true)
+        pd.enterprise_fee.create_adjustment('two', line_item, line_item, true)
 
         expect do
           pd.send(:adjustment_on, line_item)
@@ -131,12 +121,7 @@ describe ProductDistribution do
 
     describe "creating an adjustment on a line item" do
       it "creates the adjustment via the enterprise fee" do
-        # TODO: This spec can be simplified (ie. use the default ProductDistribution factory)
-        # once Spree's calculators are compatible with LineItem targets, not just Orders.
-        distributor = create(:distributor_enterprise)
-        enterprise_fee = create(:enterprise_fee, enterprise: distributor, calculator: build(:calculator))
-        pd = create(:product_distribution, distributor: distributor, enterprise_fee: enterprise_fee)
-
+        pd = create(:product_distribution)
         pd.stub(:adjustment_label) { 'label' }
         line_item = create(:line_item)
 
@@ -145,8 +130,8 @@ describe ProductDistribution do
         adjustment = Spree::Adjustment.last
         adjustment.label.should == 'label'
         adjustment.adjustable.should == line_item
-        adjustment.source.should == enterprise_fee
-        adjustment.originator.should == enterprise_fee
+        adjustment.source.should == line_item
+        adjustment.originator.should == pd.enterprise_fee
         adjustment.should be_mandatory
       end
     end

@@ -17,7 +17,7 @@ class ProductDistribution < ActiveRecord::Base
   end
 
   def adjustment_on(line_item)
-    adjustments = line_item.adjustments.where(source_id: enterprise_fee)
+    adjustments = line_item.adjustments.where(originator_id: enterprise_fee)
 
     raise "Multiple adjustments for this enterprise fee on this line item. This method is not designed to deal with this scenario." if adjustments.count > 1
 
@@ -25,9 +25,8 @@ class ProductDistribution < ActiveRecord::Base
   end
 
   def create_adjustment_on(line_item)
-    enterprise_fee.create_adjustment(adjustment_label, line_item, enterprise_fee, true)
+    enterprise_fee.create_adjustment(adjustment_label, line_item, line_item, true)
   end
-
 
   def adjustment_label
     "Product distribution by #{distributor.name}"
