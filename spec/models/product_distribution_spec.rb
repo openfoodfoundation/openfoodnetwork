@@ -72,23 +72,37 @@ describe ProductDistribution do
       end
 
       describe "adding items to cart" do
-        it "creates an adjustment for the new item" do
-          pd.stub(:adjustment_on) { nil }
-          pd.should_receive(:create_adjustment_on).with(line_item)
-
+        it "clears all enterprise fee adjustments on the line item" do
+          pd.should_receive(:clear_all_enterprise_fee_adjustments_on).with(line_item)
+          pd.stub(:create_adjustment_on)
           pd.ensure_correct_adjustment_for line_item
         end
 
-        it "makes no change to the adjustment of existing items" do
-          pd.stub(:adjustment_on) { adjustment }
-          pd.should_receive(:create_adjustment_on).never
-
+        it "creates an adjustment on the line item" do
+          pd.stub(:clear_all_enterprise_fee_adjustments_on)
+          pd.should_receive(:create_adjustment_on).with(line_item)
           pd.ensure_correct_adjustment_for line_item
         end
       end
 
       describe "changing distributor" do
-        it "clears and re-creates the adjustment on the line item"
+        it "clears and re-creates the adjustment on the line item" do
+          # Given a line item with an adjustment via one enterprise fee
+          p = create(:simple_product)
+          d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
+          pd1 = create(:product_distribution, product: p, distributor: d1)
+          pd2 = create(:product_distribution, product: p, distributor: d2)
+          line_item = create(:line_item, product: p)
+          pd1.enterprise_fee.create_adjustment('foo', line_item, line_item, true)
+
+          # When I ensure correct adjustment through the other product distribution
+          pd2.ensure_correct_adjustment_for line_item
+
+          # Then I should have only an adjustment originating from the other product distribution
+          line_item.reload
+          line_item.adjustments.count.should == 1
+          line_item.adjustments.first.originator.should == pd2.enterprise_fee
+        end
       end
     end
 
@@ -133,6 +147,34 @@ describe ProductDistribution do
         adjustment.source.should == line_item
         adjustment.originator.should == pd.enterprise_fee
         adjustment.should be_mandatory
+      end
+    end
+
+    describe "clearing all enterprise fee adjustments on a line item" do
+      it "clears adjustments originating from many different enterprise fees" do
+        p = create(:simple_product)
+        d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
+        pd1 = create(:product_distribution, product: p, distributor: d1)
+        pd2 = create(:product_distribution, product: p, distributor: d2)
+        line_item = create(:line_item, product: p)
+        pd1.enterprise_fee.create_adjustment('foo1', line_item, line_item, true)
+        pd2.enterprise_fee.create_adjustment('foo2', line_item, line_item, true)
+
+        expect do
+          pd1.send(:clear_all_enterprise_fee_adjustments_on, line_item)
+        end.to change(line_item.adjustments, :count).by(-2)
+      end
+
+      it "does not clear adjustments originating from another source" do
+        p = create(:simple_product)
+        pd = create(:product_distribution)
+        line_item = create(:line_item, product: pd.product)
+        tax_rate = create(:tax_rate, calculator: build(:calculator, preferred_amount: 10))
+        tax_rate.create_adjustment('foo', line_item, line_item)
+
+        expect do
+          pd.send(:clear_all_enterprise_fee_adjustments_on, line_item)
+        end.to change(line_item.adjustments, :count).by(0)
       end
     end
   end

@@ -11,8 +11,8 @@ class ProductDistribution < ActiveRecord::Base
 
   def ensure_correct_adjustment_for(line_item)
     if enterprise_fee
-      adjustment = adjustment_on line_item
-      create_adjustment_on line_item unless adjustment
+      clear_all_enterprise_fee_adjustments_on line_item
+      create_adjustment_on line_item
     end
   end
 
@@ -26,6 +26,10 @@ class ProductDistribution < ActiveRecord::Base
 
   def create_adjustment_on(line_item)
     enterprise_fee.create_adjustment(adjustment_label, line_item, line_item, true)
+  end
+
+  def clear_all_enterprise_fee_adjustments_on(line_item)
+    line_item.adjustments.where(originator_type: 'EnterpriseFee').destroy_all
   end
 
   def adjustment_label
