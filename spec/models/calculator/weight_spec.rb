@@ -15,4 +15,13 @@ describe OpenFoodWeb::Calculator::Weight do
     subject.set_preference(:per_kg, 10)
     subject.compute(order).should == (10*1 + 20*3) * 10
   end
+
+  it "computes shipping cost for a line item" do
+    variant = double(:variant, :weight => 10)
+
+    line_item = double(:line_item, :variant => variant, :quantity => 2)
+
+    subject.set_preference(:per_kg, 10)
+    subject.compute(line_item).should == 10*2 * 10
+  end
 end
