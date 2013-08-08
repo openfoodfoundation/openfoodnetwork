@@ -31,4 +31,10 @@ class EnterprisesController < BaseController
     @searcher = Spree::Config.searcher_class.new(options)
     @products = @searcher.retrieve_products
   end
+
+  def search
+    suburb = Suburb.find_by_postcode(params[:postcode])
+    @enterpsises = Enterprise.all
+    render :layout => "landing_page"
+  end
 end

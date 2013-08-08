@@ -65,6 +65,10 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
+  def self.search_near(suburb)
+    Enterprise.near [suburb.latitude, suburb.longitude]
+  end
+
   def has_supplied_products_on_hand?
     self.supplied_products.where('count_on_hand > 0').present?
   end

@@ -4,6 +4,7 @@ Openfoodweb::Application.routes.draw do
   resources :enterprises do
     get :suppliers, :on => :collection
     get :distributors, :on => :collection
+    post :search, :on => :collection
   end
 
   namespace :admin do
