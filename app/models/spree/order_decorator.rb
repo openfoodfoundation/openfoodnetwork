@@ -3,6 +3,7 @@ require 'open_food_web/distribution_change_validator'
 Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
+  belongs_to :cart
 
   before_validation :shipping_address_from_distributor
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
