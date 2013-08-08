@@ -50,7 +50,6 @@ module Spree
         product4.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        binding.pry
         json_response.size.should == 4
       end
     end
