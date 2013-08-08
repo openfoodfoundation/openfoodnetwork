@@ -89,6 +89,7 @@ FactoryGirl.define do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
+    enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
   factory :itemwise_shipping_method, :parent => :shipping_method do

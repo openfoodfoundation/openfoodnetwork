@@ -13,6 +13,8 @@ Spree::Order.class_eval do
   before_save :update_line_item_shipping_methods
   after_create :set_default_shipping_method
 
+  register_update_hook :update_distribution_charge!
+
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -21,6 +23,7 @@ Spree::Order.class_eval do
       where('distributor_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
     end
   }
+
 
   # -- Methods
   def products_available_from_new_distribution
@@ -54,6 +57,13 @@ Spree::Order.class_eval do
     self.distributor = distributor
     self.order_cycle = order_cycle
     save!
+  end
+
+  def update_distribution_charge!
+    line_items.each do |line_item|
+      pd = product_distribution_for line_item
+      pd.ensure_correct_adjustment_for line_item
+    end
   end
 
   def set_variant_attributes(variant, attributes)
@@ -113,4 +123,9 @@ Spree::Order.class_eval do
       self.update!
     end
   end
+
+  def product_distribution_for(line_item)
+    line_item.variant.product.product_distribution_for self.distributor
+  end
+
 end

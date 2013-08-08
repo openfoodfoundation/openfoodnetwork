@@ -7,4 +7,30 @@ class ProductDistribution < ActiveRecord::Base
   validates_presence_of :product_id, :on => :update
   validates_presence_of :distributor_id, :shipping_method_id
   validates_uniqueness_of :product_id, :scope => :distributor_id
+
+
+  def ensure_correct_adjustment_for(line_item)
+    if enterprise_fee
+      adjustment = adjustment_on line_item
+      create_adjustment_on line_item unless adjustment
+    end
+  end
+
+  def adjustment_on(line_item)
+    adjustments = line_item.adjustments.where(source_id: enterprise_fee)
+
+    raise "Multiple adjustments for this enterprise fee on this line item. This method is not designed to deal with this scenario." if adjustments.count > 1
+
+    adjustments.first
+  end
+
+  def create_adjustment_on(line_item)
+    enterprise_fee.create_adjustment(adjustment_label, line_item, enterprise_fee, true)
+  end
+
+
+  def adjustment_label
+    "Product distribution by #{distributor.name}"
+  end
+
 end
