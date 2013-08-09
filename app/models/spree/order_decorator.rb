@@ -64,7 +64,7 @@ Spree::Order.class_eval do
   def update_distribution_charge!
     line_items.each do |line_item|
       pd = product_distribution_for line_item
-      pd.ensure_correct_adjustment_for line_item
+      pd.ensure_correct_adjustment_for line_item if pd
     end
   end
 

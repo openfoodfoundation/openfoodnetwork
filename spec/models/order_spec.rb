@@ -42,6 +42,15 @@ describe Spree::Order do
       subject.send(:update_distribution_charge!)
     end
 
+    it "skips line items that don't have a product distribution" do
+      line_item = double(:line_item)
+      subject.stub(:line_items) { [line_item] }
+
+      subject.stub(:product_distribution_for) { nil }
+
+      subject.send(:update_distribution_charge!)
+    end
+
     it "looks up product distribution enterprise fees for a line item" do
       product = double(:product)
       variant = double(:variant, product: product)
