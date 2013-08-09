@@ -88,3 +88,7 @@
 
   @include panel($bg, $padding, $adjust);
 }
+
+.centered {
+  text-align: center;
+}

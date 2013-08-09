@@ -34,7 +34,8 @@ class EnterprisesController < BaseController
 
   def search
     suburb = Suburb.find_by_postcode(params[:postcode])
-    @enterpsises = Enterprise.all
+    @enterpsises = Enterprise.find_near(suburb)
+    @enterprises_json = @enterpsises.to_gmaps4rails
     render :layout => "landing_page"
   end
 end

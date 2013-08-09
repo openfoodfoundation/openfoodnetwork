@@ -1,4 +1,8 @@
 class Enterprise < ActiveRecord::Base
+  ENTERPRISE_SEARCH_RADIUS = 100
+
+  acts_as_gmappable :process_geocoding => false
+
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id'
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'
@@ -6,6 +10,8 @@ class Enterprise < ActiveRecord::Base
   has_many :distributed_products, :through => :product_distributions, :source => :product
   has_many :enterprise_roles
   has_many :users, through: :enterprise_roles
+
+  delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
 
@@ -65,8 +71,15 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
-  def self.search_near(suburb)
-    Enterprise.near [suburb.latitude, suburb.longitude]
+  def self.find_near(suburb)
+    enterprises = []
+
+    unless suburb.nil?
+      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).limit(10)
+      enterprises = addresses.collect(&:enterprise)
+    end
+
+    enterprises
   end
 
   def has_supplied_products_on_hand?

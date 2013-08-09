@@ -1,0 +1,11 @@
+@import "foundation/variables";
+@import "foundation/components/global";
+
+.search-result {
+  min-height: emCalc(50);
+
+  .secondary-info {
+    font-size: 0.8em;
+    color: #b7b7b7;
+  }
+}

@@ -32,6 +32,7 @@ gem 'chili', :github => 'eaterprises/chili'
 gem 'deface', :github => 'spree/deface'
 gem 'paperclip'
 gem 'geocoder'
+gem 'gmaps4rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
