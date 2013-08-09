@@ -10,7 +10,17 @@ describe Enterprise do
   end
 
   describe "validations" do
+    subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
     it { should validate_presence_of(:name) }
+  end
+
+  describe "delegations" do
+    #subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+
+    it { should delegate(:latitude).to(:address) }
+    it { should delegate(:longitude).to(:address) }
+    it { should delegate(:city).to(:address) }
+    it { should delegate(:state_name).to(:address) }
   end
 
   it "should default address country to system country" do
@@ -211,6 +221,34 @@ describe Enterprise do
       p = create(:product)
       oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
       d.product_distribution_variants.should == []
+    end
+  end
+
+  describe "geo search" do
+    before(:each) do
+      Enterprise.delete_all
+
+      state_id_vic = Spree::State.where(abbr: "Vic").first.id
+      state_id_nsw = Spree::State.where(abbr: "NSW").first.id
+
+      @suburb_in_vic = Suburb.create(name: "Camberwell", postcode: 3124, latitude: -37.824818, longitude: 145.057957, state_id: state_id_vic)
+      @suburb_in_nsw = Suburb.create(name: "Cabramatta", postcode: 2166, latitude: -33.89507, longitude: 150.935889, state_id: state_id_nsw)
+
+      address_vic1 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Hawthorn", zipcode: "3123")
+      address_vic1.update_column(:latitude, -37.842105)
+      address_vic1.update_column(:longitude, 145.045951)
+
+      address_vic2 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Richmond", zipcode: "3121")
+      address_vic2.update_column(:latitude, -37.826869)
+      address_vic2.update_column(:longitude, 145.007098)
+    end
+
+    it "should find nearby hubs if there are any" do
+      Enterprise.find_near(@suburb_in_vic).count.should eql(2)
+    end
+
+    it "should not find hubs if not nearby " do
+      Enterprise.find_near(@suburb_in_nsw).count.should eql(0)
     end
   end
 end
