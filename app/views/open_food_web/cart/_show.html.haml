@@ -1,0 +1,8 @@
+/ %script = Spree.api_key = raw(try_spree_current_user.try(:spree_api_key).to_s.inspect)
+
+Hello
+%div{ 'ng-app' => 'store', 'ng-controller' => 'CartCtrl', 'ng-init' => "loadCart();" }
+  {{cart}}
+  %ul
+    %li(ng-repeat="order in cart.orders")
+      {{order.distributor}}

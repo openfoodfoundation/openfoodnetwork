@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807002915) do
+ActiveRecord::Schema.define(:version => 20130807230834) do
+
+  create_table "carts", :force => true do |t|
+    t.integer "user_id"
+  end
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -447,6 +451,7 @@ ActiveRecord::Schema.define(:version => 20130807002915) do
     t.string   "currency"
     t.string   "last_ip_address"
     t.integer  "order_cycle_id"
+    t.integer  "cart_id"
   end
 
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"

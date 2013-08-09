@@ -23,6 +23,10 @@ Openfoodweb::Application.routes.draw do
 
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
 
+  namespace :open_food_web do
+    resources :cart
+  end
+
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
 end

@@ -4,13 +4,13 @@ module OpenFoodWeb
       features[feature]
     end
 
-
     private
 
     def self.features
       {eaterprises: true,
        local_organics: false,
        order_cycles: false,
+       multi_cart: false,
        enterprises_distributor_info_rich_text: false}
     end
   end
