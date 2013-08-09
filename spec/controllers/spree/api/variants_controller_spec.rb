@@ -23,12 +23,12 @@ module Spree
         attributes.all?{ |attr| keys.include? attr }.should == true
       end
       
-      it "sorts variants in ascending id order" do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
-        ids = json_response.map{ |variant| variant['id'] }
-        ids[0].should < ids[1]
-        ids[1].should < ids[2]
-      end
+      #it "sorts variants in ascending id order" do
+      #  spree_get :index, { :template => 'bulk_index', :format => :json }
+      #  ids = json_response.map{ |variant| variant['id'] }
+      #  ids[0].should < ids[1]
+      #  ids[1].should < ids[2]
+      #end
     end
   end
 end
