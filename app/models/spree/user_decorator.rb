@@ -1,6 +1,7 @@
 Spree.user_class.class_eval do
   has_many :enterprise_roles, :dependent => :destroy
   has_many :enterprises, through: :enterprise_roles
+  has_one :cart
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
