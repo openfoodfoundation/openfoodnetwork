@@ -7,7 +7,7 @@ Spree::OrdersController.class_eval do
   # Patch Orders#populate to provide distributor_id and order_cycle_id to OrderPopulator
   def populate
     if OpenFoodWeb::FeatureToggle.enabled? :multi_cart
-      populate_cart params[:variants]
+      populate_cart params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id)
     end
 
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
@@ -81,7 +81,7 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  def populate_cart variants
+  def populate_cart hash
     if spree_current_user
       unless spree_current_user.cart
         spree_current_user.build_cart
@@ -89,10 +89,7 @@ Spree::OrdersController.class_eval do
         spree_current_user.cart = cart
         spree_current_user.save
       end
-      variants.each do |variant_id, quantity|
-        variant = Spree::Variant.find(variant_id)
-        spree_current_user.cart.add_variant variant, quantity
-      end
+      spree_current_user.cart.add_products hash, current_currency
     end
   end
 end

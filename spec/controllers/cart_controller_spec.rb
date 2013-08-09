@@ -8,6 +8,7 @@ module OpenFoodWeb
     let(:user) { FactoryGirl.create(:user) }
     let(:product1) { FactoryGirl.create(:product) }
     let(:cart) { Cart.create(user: user) }
+    let(:distributor) { FactoryGirl.create(:distributor_enterprise) }
 
     before do
     end
@@ -24,9 +25,8 @@ module OpenFoodWeb
           json_response['orders'].size.should == 0
         end
 
-        context 'with an order' do
-
-          let(:order) { FactoryGirl.create(:order_with_totals_and_distributor) }
+        context 'with an empty order' do
+          let(:order) { FactoryGirl.create(:order, distributor: distributor) }
 
           before(:each) do
             cart.orders << order
@@ -39,8 +39,34 @@ module OpenFoodWeb
 
             json_response['orders'].size.should == 1
             json_response['orders'].first['distributor'].should == order.distributor.name
+            json_response['orders'].first['line_items'].size.should == 0
           end
         end
+
+        context 'an order with line items' do
+          let(:product) { FactoryGirl.create(:product, distributors: [ distributor ]) }
+          let(:order) { FactoryGirl.create(:order, { distributor: distributor } ) }
+          let(:line_item) { FactoryGirl.create(:line_item, { variant: product.master }) }
+
+          before(:each) do
+            order.line_items << line_item
+            order.save
+            cart.orders << order
+            cart.save!
+          end
+
+          it "retrieves a cart with a single order and line item" do
+            get :show, {id: cart, :format => :json }
+            json_response = JSON.parse(response.body)
+
+            json_response['orders'].size.should == 1
+            json_response['orders'].first['distributor'].should == order.distributor.name
+            json_response['orders'].first['line_items'].first["name"].should == product.name
+            json_response['orders'].first['line_items'].first["quantity"].should == line_item.quantity
+          end
+        end
+
+        context 'an order for an order cycle'
       end
     end
   end
