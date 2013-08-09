@@ -1,5 +1,9 @@
 require 'open_food_web/distribution_change_validator'
 
+ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
+  payload[:order].reload.update_distribution_charge!
+end
+
 Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
@@ -12,8 +16,6 @@ Spree::Order.class_eval do
   before_validation :shipping_address_from_distributor
   before_save :update_line_item_shipping_methods
   after_create :set_default_shipping_method
-
-  register_update_hook :update_distribution_charge!
 
   # -- Scopes
   scope :managed_by, lambda { |user|

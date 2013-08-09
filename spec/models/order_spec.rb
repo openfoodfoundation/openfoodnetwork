@@ -31,11 +31,6 @@ describe Spree::Order do
   describe "updating the distribution charge" do
     let(:order) { build(:order) }
 
-    it "updates distribution charge after save" do
-      order.should_receive(:update_distribution_charge!).at_least(:once)
-      order.save!
-    end
-
     it "ensures the correct adjustment(s) are created for the product distribution" do
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
