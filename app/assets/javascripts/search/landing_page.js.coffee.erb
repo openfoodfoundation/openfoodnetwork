@@ -3,6 +3,21 @@ $(document).ready ->
     setup_offcanvas_panel()
     setup_login_handlers()
 
+    spinner = new Spinner({length: 10, width: 10, color: '#000'})
+
+
+
+
+    $("#suburb_search").autocomplete
+        source: $('#suburb_search').data('autocomplete-source')
+        minLength: 3
+        delay: 500
+        search: (event, ui) ->
+            $("#suburb_search").after($(spinner.spin().el).css("left", "93%").css("margin-top": "35px"))
+
+        response: (event, ui) ->
+            spinner.stop()
+
 
 setup_background = ->
     if $("#image-url-container").length > 0

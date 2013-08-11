@@ -7,6 +7,8 @@ Openfoodweb::Application.routes.draw do
     post :search, :on => :collection
   end
 
+  resources :suburbs
+
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, :on => :collection, :as => :bulk_update
