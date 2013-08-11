@@ -23,17 +23,8 @@ GIT
       spree_core (>= 1.1)
 
 GIT
-  remote: git://github.com/spree/deface.git
-  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
-  specs:
-    deface (1.0.0.rc3)
-      colorize (>= 0.5.8)
-      nokogiri (~> 1.6.0)
-      rails (>= 3.1)
-
-GIT
-  remote: git://github.com/spree/spree.git
-  revision: 94566bf1b7d50f474333d10844534e570b6edf5a
+  remote: git://github.com/eaterprises/spree.git
+  revision: 4fa1f51ba70519bfd3be0975e5b71f2ea73bbbd6
   branch: 1-3-stable
   specs:
     spree (1.3.3)
@@ -48,7 +39,7 @@ GIT
     spree_cmd (1.3.3)
       thor (>= 0.14.6)
     spree_core (1.3.3)
-      activemerchant (~> 1.31)
+      activemerchant (~> 1.34)
       acts_as_list (= 0.1.4)
       awesome_nested_set (= 2.1.5)
       aws-sdk (~> 1.3.4)
@@ -62,7 +53,7 @@ GIT
       money (= 5.0.0)
       paperclip (~> 2.8)
       rabl (= 0.7.2)
-      rails (~> 3.2.13)
+      rails (~> 3.2.14)
       ransack (= 0.7.2)
       select2-rails (= 3.2.1)
       state_machine (= 1.1.2)
@@ -72,6 +63,15 @@ GIT
       spree_core (= 1.3.3)
     spree_sample (1.3.3)
       spree_core (= 1.3.3)
+
+GIT
+  remote: git://github.com/spree/deface.git
+  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
+  specs:
+    deface (1.0.0.rc3)
+      colorize (>= 0.5.8)
+      nokogiri (~> 1.6.0)
+      rails (>= 3.1)
 
 GIT
   remote: git://github.com/spree/spree_i18n.git
@@ -124,12 +124,12 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (3.2.13)
-      actionpack (= 3.2.13)
-      mail (~> 2.5.3)
-    actionpack (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    actionmailer (3.2.14)
+      actionpack (= 3.2.14)
+      mail (~> 2.5.4)
+    actionpack (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -138,7 +138,7 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_utils (1.0.5)
+    active_utils (2.0.0)
       activesupport (>= 2.3.11)
       i18n
     activemerchant (1.34.0)
@@ -149,19 +149,19 @@ GEM
       json (>= 1.5.1)
       money
       nokogiri
-    activemodel (3.2.13)
-      activesupport (= 3.2.13)
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
-    activerecord (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
+    activerecord (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
-    activesupport (3.2.13)
-      i18n (= 0.6.1)
+    activeresource (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     acts_as_list (0.1.4)
     addressable (2.3.3)
@@ -272,7 +272,7 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    i18n (0.6.1)
+    i18n (0.6.4)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
@@ -298,7 +298,7 @@ GEM
       i18n (~> 0.4)
       json
     multi_json (1.7.8)
-    multi_xml (0.5.4)
+    multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
@@ -337,17 +337,17 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.13)
-      actionmailer (= 3.2.13)
-      actionpack (= 3.2.13)
-      activerecord (= 3.2.13)
-      activeresource (= 3.2.13)
-      activesupport (= 3.2.13)
+    rails (3.2.14)
+      actionmailer (= 3.2.14)
+      actionpack (= 3.2.14)
+      activerecord (= 3.2.14)
+      activeresource (= 3.2.14)
+      activesupport (= 3.2.14)
       bundler (~> 1.0)
-      railties (= 3.2.13)
-    railties (3.2.13)
-      actionpack (= 3.2.13)
-      activesupport (= 3.2.13)
+      railties (= 3.2.14)
+    railties (3.2.14)
+      actionpack (= 3.2.14)
+      activesupport (= 3.2.14)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -479,7 +479,7 @@ DEPENDENCIES
   pry-debugger
   rabl
   rack-ssl
-  rails (= 3.2.13)
+  rails (= 3.2.14)
   representative_view
   rspec-rails
   sass

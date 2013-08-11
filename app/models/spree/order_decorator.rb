@@ -1,5 +1,9 @@
 require 'open_food_web/distribution_change_validator'
 
+ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
+  payload[:order].reload.update_distribution_charge!
+end
+
 Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
@@ -21,6 +25,7 @@ Spree::Order.class_eval do
       where('distributor_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
     end
   }
+
 
   # -- Methods
   def products_available_from_new_distribution
@@ -54,6 +59,13 @@ Spree::Order.class_eval do
     self.distributor = distributor
     self.order_cycle = order_cycle
     save!
+  end
+
+  def update_distribution_charge!
+    line_items.each do |line_item|
+      pd = product_distribution_for line_item
+      pd.ensure_correct_adjustment_for line_item if pd
+    end
   end
 
   def set_variant_attributes(variant, attributes)
@@ -113,4 +125,9 @@ Spree::Order.class_eval do
       self.update!
     end
   end
+
+  def product_distribution_for(line_item)
+    line_item.variant.product.product_distribution_for self.distributor
+  end
+
 end

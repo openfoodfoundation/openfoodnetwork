@@ -155,7 +155,7 @@ module Spree
         end
       end
 
-      describe 'access roles' do
+      describe "access roles" do
         before(:each) do
           @e1 = create(:enterprise)
           @e2 = create(:enterprise)
@@ -185,6 +185,13 @@ module Spree
     end
 
     describe "finders" do
+      it "finds the product distribution for a particular distributor" do
+        distributor = create(:distributor_enterprise)
+        product = create(:product)
+        product_distribution = create(:product_distribution, product: product, distributor: distributor)
+        product.product_distribution_for(distributor).should == product_distribution
+      end
+
       it "finds the shipping method for a particular distributor" do
         shipping_method = create(:shipping_method)
         distributor = create(:distributor_enterprise)

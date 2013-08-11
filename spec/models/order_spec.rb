@@ -28,6 +28,41 @@ describe Spree::Order do
     li.max_quantity.should == 3
   end
 
+  describe "updating the distribution charge" do
+    let(:order) { build(:order) }
+
+    it "ensures the correct adjustment(s) are created for the product distribution" do
+      line_item = double(:line_item)
+      subject.stub(:line_items) { [line_item] }
+
+      product_distribution = double(:product_distribution)
+      product_distribution.should_receive(:ensure_correct_adjustment_for).with(line_item)
+      subject.stub(:product_distribution_for) { product_distribution }
+
+      subject.send(:update_distribution_charge!)
+    end
+
+    it "skips line items that don't have a product distribution" do
+      line_item = double(:line_item)
+      subject.stub(:line_items) { [line_item] }
+
+      subject.stub(:product_distribution_for) { nil }
+
+      subject.send(:update_distribution_charge!)
+    end
+
+    it "looks up product distribution enterprise fees for a line item" do
+      product = double(:product)
+      variant = double(:variant, product: product)
+      line_item = double(:line_item, variant: variant)
+
+      product_distribution = double(:product_distribution)
+      product.should_receive(:product_distribution_for).with(subject.distributor) { product_distribution }
+
+      subject.send(:product_distribution_for, line_item).should == product_distribution
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
