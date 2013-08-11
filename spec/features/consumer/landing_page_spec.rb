@@ -12,7 +12,7 @@ feature %q{
   end
 
   scenario "viewing the landing page" do
-    page.should have_selector "#postcode"
+    page.should have_selector "#suburb_search"
     page.should have_selector 'a', :text => "Login"
     page.should have_selector 'a', :text => "Sign Up"
   end
