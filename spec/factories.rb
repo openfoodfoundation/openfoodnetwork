@@ -97,6 +97,14 @@ FactoryGirl.define do
     calculator { FactoryGirl.build(:itemwise_calculator) }
   end
 
+  factory :adjustment_metadata, :class => AdjustmentMetadata do
+    adjustment { FactoryGirl.create(:adjustment) }
+    enterprise { FactoryGirl.create(:distributor_enterprise) }
+    fee_name 'fee'
+    fee_type 'packing'
+    enterprise_role 'distributor'
+  end
+
   factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
   end
 
