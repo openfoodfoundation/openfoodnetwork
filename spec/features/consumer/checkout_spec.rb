@@ -37,26 +37,26 @@ feature %q{
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')    
 
-    @shipping_method_1 = create(:shipping_method, :name => 'Shipping Method One')
-    @shipping_method_1.calculator.set_preference :amount, 1
-    @shipping_method_1.calculator.save!
+    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Shipping Method One', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_1.calculator.set_preference :amount, 1
+    @enterprise_fee_1.calculator.save!
 
-    @shipping_method_2 = create(:shipping_method, :name => 'Shipping Method Two')
-    @shipping_method_2.calculator.set_preference :amount, 2
-    @shipping_method_2.calculator.save!
+    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Shipping Method Two', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_2.calculator.set_preference :amount, 2
+    @enterprise_fee_2.calculator.save!
 
     @product_1 = create(:product, :name => 'Fuji apples')
-    @product_1.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_1)
-    @product_1.product_distributions.create(:distributor => @distributor_alternative, :shipping_method => @shipping_method_1)
+    @product_1.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_1)
+    @product_1.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_1)
 
     @product_2 = create(:product, :name => 'Garlic')
-    @product_2.product_distributions.create(:distributor => @distributor, :shipping_method => @shipping_method_2)
-    @product_2.product_distributions.create(:distributor => @distributor_alternative, :shipping_method => @shipping_method_2)
+    @product_2.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_2)
+    @product_2.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_2)
 
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
-    create(:itemwise_shipping_method, zone: @zone)
+    create(:shipping_method, zone: @zone)
     create(:payment_method, :description => 'Cheque payment method')
   end
 
@@ -91,21 +91,21 @@ feature %q{
   end
 
   scenario "changing distributor updates delivery fees" do
-    # Given two distributors and shipping methods
+    # Given two distributors and enterprise fees
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
-    sm1 = create(:shipping_method)
-    sm1.calculator.set_preference :amount, 1.23; sm1.calculator.save!
-    sm2 = create(:free_shipping_method)
-    sm2.calculator.set_preference :amount, 2.34; sm2.calculator.save!
+    ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+    ef1.calculator.set_preference :amount, 1.23; ef1.calculator.save!
+    ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+    ef2.calculator.set_preference :amount, 2.34; ef2.calculator.save!
 
     # And two products both available from both distributors
     p1 = create(:product)
-    create(:product_distribution, product: p1, distributor: d1, shipping_method: sm1)
-    create(:product_distribution, product: p1, distributor: d2, shipping_method: sm2)
+    create(:product_distribution, product: p1, distributor: d1, enterprise_fee: ef1)
+    create(:product_distribution, product: p1, distributor: d2, enterprise_fee: ef2)
     p2 = create(:product)
-    create(:product_distribution, product: p2, distributor: d1, shipping_method: sm1)
-    create(:product_distribution, product: p2, distributor: d2, shipping_method: sm2)
+    create(:product_distribution, product: p2, distributor: d1, enterprise_fee: ef1)
+    create(:product_distribution, product: p2, distributor: d2, enterprise_fee: ef2)
 
     # When I add the first product to my cart with the first distributor
     #visit spree.root_path
@@ -115,7 +115,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the first distributor
-    page.should have_selector 'span.shipping-total', text: '$1.23'
+    page.should have_selector 'span.distribution-total', text: '$1.23'
 
     # When add the second with the second distributor
     click_link 'Continue shopping'
@@ -124,7 +124,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the second distributor
-    page.should have_selector 'span.shipping-total', text: '$4.68'
+    page.should have_selector 'span.distribution-total', text: '$4.68'
   end
 
   scenario "adding a product to cart after emptying cart shows correct delivery fees" do

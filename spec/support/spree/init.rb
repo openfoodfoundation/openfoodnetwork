@@ -8,21 +8,3 @@ ProductDistribution.class_eval do
     self.enterprise_fee ||= EnterpriseFee.where(enterprise_id: distributor).first || FactoryGirl.create(:enterprise_fee, enterprise_id: distributor)
   end
 end
-
-Spree::Product.class_eval do
-  before_validation :init_shipping_method
-
-  def init_shipping_method
-    FactoryGirl.create(:shipping_method) if Spree::ShippingMethod.where("name != 'Delivery'").empty?
-  end
-
-end
-
-# Create a default shipping method, required when creating orders
-Spree::Order.class_eval do
-  before_create :init_shipping_method
-
-  def init_shipping_method
-    FactoryGirl.create(:itemwise_shipping_method) unless Spree::ShippingMethod.all.any? { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
-  end
-end
