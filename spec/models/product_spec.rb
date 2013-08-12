@@ -191,24 +191,6 @@ module Spree
         product_distribution = create(:product_distribution, product: product, distributor: distributor)
         product.product_distribution_for(distributor).should == product_distribution
       end
-
-      it "finds the shipping method for a particular distributor" do
-        shipping_method = create(:shipping_method)
-        distributor = create(:distributor_enterprise)
-        product = create(:product)
-        product_distribution = create(:product_distribution, product: product, distributor: distributor, shipping_method: shipping_method)
-        product.shipping_method_for_distributor(distributor).should == shipping_method
-      end
-
-      it "logs an error and returns an undefined shipping method if distributor is not found" do
-        distributor = create(:distributor_enterprise)
-        product = create(:product)
-
-        Bugsnag.should_receive(:notify)
-
-        product.shipping_method_for_distributor(distributor).should ==
-          Spree::ShippingMethod.where("name != 'Delivery'").last
-      end
     end
 
     describe "membership" do
