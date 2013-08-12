@@ -8,9 +8,9 @@
       \:
       %span.order-total.item-total= number_to_currency @order.item_total
     %h5
-      Shipping total
+      Distribution total
       \:
-      %span.order-total.shipping-total= order_delivery_fee_subtotal(@order)
+      %span.order-total.distribution-total= order_distribution_subtotal(@order)
     %h4
       Total
       \:

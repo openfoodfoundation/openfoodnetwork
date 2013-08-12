@@ -5,9 +5,9 @@ module Spree
       order.nil? || order.line_items.empty?
     end
 
-    def order_delivery_fee_subtotal(order, options={})
+    def order_distribution_subtotal(order, options={})
       options.reverse_merge! :format_as_currency => true
-      amount = OpenFoodWeb::Calculator::Itemwise.new.compute(order)
+      amount = order.adjustments.enterprise_fee.sum &:amount
       options.delete(:format_as_currency) ? number_to_currency(amount) : amount
     end
 
