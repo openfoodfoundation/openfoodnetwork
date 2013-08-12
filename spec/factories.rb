@@ -77,9 +77,10 @@ FactoryGirl.define do
   end
 
   factory :enterprise_fee, :class => EnterpriseFee do
+    sequence(:name) { |n| "Enterprise fee #{n}" }
+
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
     fee_type 'packing'
-    name '$0.50 / kg'
     calculator { FactoryGirl.build(:weight_calculator) }
 
     after(:create) { |ef| ef.calculator.save! }
@@ -88,13 +89,20 @@ FactoryGirl.define do
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
-    shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
     enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
   factory :itemwise_shipping_method, :parent => :shipping_method do
     name 'Delivery'
     calculator { FactoryGirl.build(:itemwise_calculator) }
+  end
+
+  factory :adjustment_metadata, :class => AdjustmentMetadata do
+    adjustment { FactoryGirl.create(:adjustment) }
+    enterprise { FactoryGirl.create(:distributor_enterprise) }
+    fee_name 'fee'
+    fee_type 'packing'
+    enterprise_role 'distributor'
   end
 
   factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
@@ -126,19 +134,6 @@ FactoryGirl.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     on_hand 3
-
-    # before(:create) do |product, evaluator|
-    #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
-    # end
-
-    # Do not create products distributed via the 'Delivery' shipping method
-    after(:create) do |product, evaluator|
-      pd = product.product_distributions.first
-      if pd.andand.shipping_method.andand.name == 'Delivery'
-        pd.shipping_method = Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method)
-        pd.save!
-      end
-    end
   end
 
   factory :shipping_method do

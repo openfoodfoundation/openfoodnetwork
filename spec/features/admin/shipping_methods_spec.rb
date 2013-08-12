@@ -26,15 +26,4 @@ feature 'shipping methods' do
     page.should have_content "That shipping method cannot be deleted as it is referenced by an order: #{o.number}."
     Spree::ShippingMethod.find(@sm.id).should_not be_nil
   end
-
-  scenario "deleting a shipping method referenced by a product distribution" do
-    p = create(:product)
-    d = create(:distributor_enterprise)
-    create(:product_distribution, product: p, distributor: d, shipping_method: @sm)
-
-    visit_delete spree.admin_shipping_method_path(@sm)
-
-    page.should have_content "That shipping method cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
-    Spree::ShippingMethod.find(@sm.id).should_not be_nil
-  end
 end

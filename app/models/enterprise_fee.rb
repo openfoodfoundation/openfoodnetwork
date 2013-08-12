@@ -9,4 +9,7 @@ class EnterpriseFee < ActiveRecord::Base
 
   validates_inclusion_of :fee_type, :in => FEE_TYPES
   validates_presence_of :name
+
+
+  scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
 end

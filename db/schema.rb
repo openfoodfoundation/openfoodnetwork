@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807230834) do
+ActiveRecord::Schema.define(:version => 20130809075103) do
+
+  create_table "adjustment_metadata", :force => true do |t|
+    t.integer "adjustment_id"
+    t.integer "enterprise_id"
+    t.string  "fee_name"
+    t.string  "fee_type"
+    t.string  "enterprise_role"
+  end
+
+  add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
 
   create_table "carts", :force => true do |t|
     t.integer "user_id"

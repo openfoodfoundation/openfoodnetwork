@@ -5,7 +5,7 @@ class ProductDistribution < ActiveRecord::Base
   belongs_to :enterprise_fee
 
   validates_presence_of :product_id, :on => :update
-  validates_presence_of :distributor_id, :shipping_method_id
+  validates_presence_of :distributor_id, :enterprise_fee_id
   validates_uniqueness_of :product_id, :scope => :distributor_id
 
 
@@ -25,7 +25,8 @@ class ProductDistribution < ActiveRecord::Base
   end
 
   def create_adjustment_for(line_item)
-    enterprise_fee.create_adjustment(adjustment_label_for(line_item), line_item.order, line_item, true)
+    a = enterprise_fee.create_adjustment(adjustment_label_for(line_item), line_item.order, line_item, true)
+    AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: 'distributor'
   end
 
   def clear_all_enterprise_fee_adjustments_for(line_item)

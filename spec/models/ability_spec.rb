@@ -92,6 +92,26 @@ module Spree
         it "should not be able to read/write other enterprises' orders" do
           should_not have_ability([:admin, :index, :read, :edit], for: o2) 
         end
+
+        it "should be able to create a new order" do
+          should have_ability(:create, for: Spree::Order)
+        end
+
+        it "should be able to read/write Payments on a product" do
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :fire], for: Spree::Payment)
+        end
+
+        it "should be able to read/write Shipments on a product" do
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :fire], for: Spree::Shipment)
+        end
+
+        it "should be able to read/write Adjustments on a product" do
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :fire], for: Spree::Adjustment)
+        end
+
+        it "should be able to read/write ReturnAuthorizations on a product" do
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :fire], for: Spree::ReturnAuthorization)
+        end
       end
 
     end

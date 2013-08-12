@@ -19,13 +19,14 @@ class AbilityDecorator
 
       #User can only access orders that they are a distributor for
       can [:index, :create], Spree::Order
-      can [:admin, :read, :update, :fire, :resend ], Spree::Order do |order| # :customer, :return_authorizations
+      can [:admin, :read, :update, :fire, :resend ], Spree::Order do |order|
         user.enterprises.include? order.distributor
       end
 
-      can [:admin, :index, :read, :create, :edit], Spree::Payment # , :fire, :capture,
-      can [:admin, :index, :read, :create, :edit], Spree::Shipment #edit order shipment doesn't work
-      can [:admin, :index, :read, :create, :edit], Spree::Adjustment
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment 
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
 
     end
   end

@@ -17,7 +17,7 @@ feature %q{
   end
 
   scenario "listing enterprise fees" do
-    fee = create(:enterprise_fee)
+    fee = create(:enterprise_fee, name: '$0.50 / kg')
 
     login_to_admin_section
     click_link 'Configuration'
@@ -99,4 +99,27 @@ feature %q{
     page.should_not have_selector "input[value='#{fee.name}']"
   end
 
+  scenario "deleting a shipping method referenced by a product distribution" do
+    # Given an enterprise fee referenced by a product distribution
+    fee = create(:enterprise_fee)
+    p = create(:product)
+    d = create(:distributor_enterprise)
+    create(:product_distribution, product: p, distributor: d, enterprise_fee: fee)
+
+    # When I go to the enterprise fees page
+    login_to_admin_section
+    click_link 'Configuration'
+    click_link 'Enterprise Fees'
+
+    # And I click delete
+    find("a.delete-resource").click
+
+    # Then I should see an error
+    page.should have_content "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
+
+    # And my enterprise fee should not have been deleted
+    visit admin_enterprise_fees_path
+    page.should have_selector "input[value='#{fee.name}']"
+    EnterpriseFee.find(fee.id).should_not be_nil
+  end
 end
