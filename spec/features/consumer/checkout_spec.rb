@@ -197,7 +197,9 @@ feature %q{
     click_checkout_continue_button
 
     # -- Checkout: Delivery
-    page.should have_selector 'label', :text => "Delivery $3.00"
+    order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
+    order_charges.should == [["Product distribution by Edible garden for Fuji apples:", "$1.00"],
+                             ["Product distribution by Edible garden for Garlic:",      "$2.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment
