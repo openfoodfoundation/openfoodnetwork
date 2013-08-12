@@ -8,6 +8,7 @@ class Enterprise < ActiveRecord::Base
   belongs_to :address, :class_name => 'Spree::Address'
   has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
   has_many :distributed_products, :through => :product_distributions, :source => :product
+  has_many :enterprise_fees
   has_many :enterprise_roles
   has_many :users, through: :enterprise_roles
 
