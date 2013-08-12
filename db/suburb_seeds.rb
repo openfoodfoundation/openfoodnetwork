@@ -11,7 +11,7 @@ module SuburbSeeder
 
 		connection = ActiveRecord::Base.connection()
 
-		puts "-- Seeding australian suburbs"
+		puts "-- Seeding Australian suburbs"
 		connection.execute("
 			INSERT INTO suburbs (postcode,name,state_id,latitude,longitude) VALUES
 			(200,$$AUSTRALIAN NATIONAL UNIVERSITY$$,#{state_id_act},-35.277272,149.117136),

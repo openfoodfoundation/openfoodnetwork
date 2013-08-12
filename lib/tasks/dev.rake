@@ -72,11 +72,7 @@ namespace :openfoodweb do
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3040"))
       end
 
-      unless Spree::ShippingMethod.all.any? { |sm| sm.calculator.is_a? OpenFoodWeb::Calculator::Itemwise }
-        FactoryGirl.create(:itemwise_shipping_method)
-      end
-
-      # -- Enterprise Users
+      # -- Enterprise users
       unless Spree::User.count > 1 
         puts "[#{task_name}] Seeding enterprise users"
 
@@ -93,6 +89,13 @@ namespace :openfoodweb do
         puts "  Distributor User created: #{u.email}/#{pw} (" + u.enterprise_roles.map{ |er| er.enterprise.name}.join(", ") + ")"
       end
 
+      # -- Enterprise fees
+      unless EnterpriseFee.count > 1
+        Enterprise.is_distributor.each do |distributor|
+          FactoryGirl.create(:enterprise_fee, enterprise: distributor)
+        end
+      end
+
       # -- Products
       unless Spree::Product.count > 0
         puts "[#{task_name}] Seeding products"
@@ -104,7 +107,7 @@ namespace :openfoodweb do
 
         ProductDistribution.create(:product => prod1,
                                    :distributor => Enterprise.is_distributor[0],
-                                   :shipping_method => Spree::ShippingMethod.first)
+                                   :enterprise_fee => Enterprise.is_distributor[0].enterprise_fees.first)
 
 
         prod2 = FactoryGirl.create(:product,
@@ -114,7 +117,7 @@ namespace :openfoodweb do
 
         ProductDistribution.create(:product => prod2,
                                    :distributor => Enterprise.is_distributor[1],
-                                   :shipping_method => Spree::ShippingMethod.first)
+                                   :enterprise_fee => Enterprise.is_distributor[1].enterprise_fees.first)
 
         prod3 = FactoryGirl.create(:product,
                            :name => 'Beef - 5kg Trays', :price => 50.00,
@@ -123,7 +126,7 @@ namespace :openfoodweb do
 
         ProductDistribution.create(:product => prod3,
                                    :distributor => Enterprise.is_distributor[2],
-                                   :shipping_method => Spree::ShippingMethod.first)
+                                   :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
       end
     end
   end
