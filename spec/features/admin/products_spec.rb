@@ -10,7 +10,7 @@ feature %q{
   background do
     @supplier = create(:supplier_enterprise, :name => 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
-    @shipping_method = create(:shipping_method, :name => 'My shipping method')
+    @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
   end
 
   context "creating a product" do
@@ -25,9 +25,9 @@ feature %q{
       select 'New supplier', :from => 'product_supplier_id'
 
       check @distributors[0].name
-      select 'My shipping method', :from => 'product_product_distributions_attributes_0_shipping_method_id'
+      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
       check @distributors[2].name
-      select 'My shipping method', :from => 'product_product_distributions_attributes_2_shipping_method_id'
+      select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
 
       click_button 'Create'
 
@@ -35,7 +35,7 @@ feature %q{
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
       product.distributors.should == [@distributors[0], @distributors[2]]
-      product.product_distributions.map { |pd| pd.shipping_method }.should == [@shipping_method, @shipping_method]
+      product.product_distributions.map { |pd| pd.enterprise_fee }.should == [@enterprise_fees[0], @enterprise_fees[2]]
       product.group_buy.should be_false
     end
 
@@ -60,7 +60,7 @@ feature %q{
     end
 
 
-    describe 'As an enterprise user' do
+    context "as an enterprise user" do
 
       before(:each) do
         @new_user = create_enterprise_user
@@ -87,7 +87,7 @@ feature %q{
         end
 
         check @distributors[0].name
-        select 'My shipping method', :from => 'product_product_distributions_attributes_0_shipping_method_id'
+        select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
 
         # Should only have distributors listed which the user can manage
         within "#product_product_distributions_field" do

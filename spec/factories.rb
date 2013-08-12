@@ -77,9 +77,10 @@ FactoryGirl.define do
   end
 
   factory :enterprise_fee, :class => EnterpriseFee do
+    sequence(:name) { |n| "Enterprise fee #{n}" }
+
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
     fee_type 'packing'
-    name '$0.50 / kg'
     calculator { FactoryGirl.build(:weight_calculator) }
 
     after(:create) { |ef| ef.calculator.save! }

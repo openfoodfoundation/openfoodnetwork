@@ -11,4 +11,4 @@
           = label_tag "#{pd_form.object_name}[_destroy]", pd_form.object.distributor.name
           = pd_form.hidden_field :distributor_id
         %td
-          = pd_form.collection_select :shipping_method_id, Spree::ShippingMethod.all, :id, :name, {}, :class => "select2"
+          = pd_form.collection_select :enterprise_fee_id, EnterpriseFee.for_enterprise(pd_form.object.distributor), :id, :name, {}, :class => "select2"
