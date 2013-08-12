@@ -17,7 +17,7 @@ feature %q{
   end
 
   scenario "listing enterprise fees" do
-    fee = create(:enterprise_fee)
+    fee = create(:enterprise_fee, name: '$0.50 / kg')
 
     login_to_admin_section
     click_link 'Configuration'

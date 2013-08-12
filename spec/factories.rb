@@ -89,7 +89,6 @@ FactoryGirl.define do
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
-    shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
     enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
@@ -135,19 +134,6 @@ FactoryGirl.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     on_hand 3
-
-    # before(:create) do |product, evaluator|
-    #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
-    # end
-
-    # Do not create products distributed via the 'Delivery' shipping method
-    after(:create) do |product, evaluator|
-      pd = product.product_distributions.first
-      if pd.andand.shipping_method.andand.name == 'Delivery'
-        pd.shipping_method = Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method)
-        pd.save!
-      end
-    end
   end
 
   factory :shipping_method do
