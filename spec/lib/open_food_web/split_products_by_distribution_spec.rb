@@ -66,15 +66,8 @@ describe OpenFoodWeb::SplitProductsByDistribution do
   def build_product(distributor, in_distributor, order_cycle, in_order_cycle)
     product = double(:product)
 
-    if distributor
-      product.should_receive(:in_distributor?).any_number_of_times.
-        with(distributor).and_return(in_distributor)
-    end
-
-    if order_cycle
-      product.should_receive(:in_order_cycle?).any_number_of_times.
-        with(order_cycle).and_return(in_order_cycle)
-    end
+    product.stub(:in_distributor?) { in_distributor } if distributor
+    product.stub(:in_order_cycle?) { in_order_cycle } if order_cycle
 
     product
   end
