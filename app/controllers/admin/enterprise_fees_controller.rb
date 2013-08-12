@@ -28,11 +28,14 @@ module Admin
       product_distribution = ProductDistribution.where(:enterprise_fee_id => @object).first
       if product_distribution
         p = product_distribution.product
-        flash[:error] = "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
+        error = "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
 
         respond_with(@object) do |format|
-          format.html { redirect_to collection_url }
-          format.js   { render text: flash[:error], status: 403 }
+          format.html do
+            flash[:error] = error
+            redirect_to collection_url
+          end
+          format.js { render text: error, status: 403 }
         end
       end
     end
