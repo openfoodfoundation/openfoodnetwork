@@ -1,3 +1,6 @@
+@import "foundation/variables";
+@import "foundation/components/global";
+
 ul.ui-autocomplete {
   position: absolute;
   list-style: none;
@@ -10,10 +13,19 @@ ul.ui-autocomplete {
     border-top: solid 1px #DDD;
     margin: 0;
     padding: 0;
+    font-size: 0.7em;
     a {
       color: #000;
       display: block;
       padding: 3px;
+
+      &:visited {
+        color: #000;
+      }
+
+      &:hover {
+        color: $primary-color
+      }
     }
     a.ui-state-hover, a.ui-state-active {
       background-color: #FFFCB2;

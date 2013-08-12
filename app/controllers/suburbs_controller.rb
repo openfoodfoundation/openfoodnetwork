@@ -1,6 +1,5 @@
 class SuburbsController < ActionController::Base
   def index
-    @suburbs = Suburb.order(:name).where("lower(name) like ?", "%#{params[:term].downcase}%")
-    render json: @suburbs.map{ |suburb| "#{suburb.name}, #{suburb.postcode}" }
+    @suburbs = Suburb.matching(params[:term]).order(:name).limit(8)
   end
 end

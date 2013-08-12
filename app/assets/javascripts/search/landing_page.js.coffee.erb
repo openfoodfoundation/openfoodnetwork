@@ -2,22 +2,7 @@ $(document).ready ->
     setup_background()
     setup_offcanvas_panel()
     setup_login_handlers()
-
-    spinner = new Spinner({length: 10, width: 10, color: '#000'})
-
-
-
-
-    $("#suburb_search").autocomplete
-        source: $('#suburb_search').data('autocomplete-source')
-        minLength: 3
-        delay: 500
-        search: (event, ui) ->
-            $("#suburb_search").after($(spinner.spin().el).css("left", "93%").css("margin-top": "35px"))
-
-        response: (event, ui) ->
-            spinner.stop()
-
+    setup_suburbs_autocomplete()
 
 setup_background = ->
     if $("#image-url-container").length > 0
@@ -47,3 +32,23 @@ setup_login_handlers = ->
         $("#sign-out-link").show()
 
         $("#sidebarButton").trigger("click")
+
+setup_suburbs_autocomplete = ->
+    spinner = new Spinner({length: 10, width: 10, color: '#000'})
+
+    $("#suburb_search").autocomplete
+        source: $('#suburb_search').data('autocomplete-source')
+        minLength: 3
+        delay: 500
+        search: (event, ui) ->
+            $("#suburb_search").after($(spinner.spin().el).css("left", "93%").css("margin-top": "35px"))
+        response: (event, ui) ->
+            spinner.stop()
+        select: (event, ui) ->
+            $("#suburb_id").val(ui.item.id)
+        messages:
+            noResults: ""
+            results: ->
+
+    $("#suburb_search").keypress ->
+        $("#suburb_id").val('')

@@ -8,7 +8,8 @@
           = form_tag search_enterprises_path do
             .large-10.columns
               = text_field_tag :suburb_search, "",
-                data: { autocomplete_source: suburbs_path }, class: "right", placeholder: "Enter your postcode..."
+                data: { autocomplete_source: suburbs_path }, class: "right", placeholder: "Enter your suburb or postcode..."
+              = hidden_field_tag :suburb_id
             .large-2.columns
               = submit_tag "Search", class: "button-huge"
         .row
