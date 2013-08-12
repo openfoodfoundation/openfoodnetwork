@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('store', ['ngResource']).
-  controller 'CartCtrl', ($scope, $window, CartFactory) ->
+  controller('CartCtrl', ['$scope', '$window', 'CartFactory', ($scope, $window, CartFactory) ->
 
     $scope.state = 'Empty'
 
@@ -14,6 +14,7 @@ angular.module('store', ['ngResource']).
 
     $scope.addVariant = (variant, quantity) ->
 
+  ])
   .config(['$httpProvider', ($httpProvider) ->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
   ])
