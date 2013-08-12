@@ -57,7 +57,11 @@ describe ProductDistribution do
         adjustment.amount.should == 1.23
 
         # And it should have some associated metadata
-        pending 'Needs metadata spec'
+        md = adjustment.metadata
+        md.enterprise.should == distributor
+        md.fee_name.should == enterprise_fee.name
+        md.fee_type.should == enterprise_fee.fee_type
+        md.enterprise_role.should == 'distributor'
       end
     end
 
@@ -152,6 +156,12 @@ describe ProductDistribution do
         adjustment.source.should == line_item
         adjustment.originator.should == pd.enterprise_fee
         adjustment.should be_mandatory
+
+        md = adjustment.metadata
+        md.enterprise.should == pd.distributor
+        md.fee_name.should == pd.enterprise_fee.name
+        md.fee_type.should == pd.enterprise_fee.fee_type
+        md.enterprise_role.should == 'distributor'
       end
     end
 
