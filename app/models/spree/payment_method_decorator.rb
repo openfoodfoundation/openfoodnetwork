@@ -14,3 +14,8 @@ Spree::PaymentMethod.class_eval do
     end
   }
 end
+
+# Ensure that all derived classes also allow distributor_id
+Spree::Gateway.providers.each do |p|
+  p.attr_accessible :distributor_id
+end
