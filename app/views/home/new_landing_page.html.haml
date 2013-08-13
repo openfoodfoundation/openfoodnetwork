@@ -4,6 +4,9 @@
   .large-10.large-centered.columns
     #postcode_select_box
       .row
+        .large-12.columns
+          #logo-container= image_tag "ofn_logo.png"
+      .row
         = form_tag search_enterprises_path do
           .large-10.columns
             = text_field_tag :suburb_search, "",
