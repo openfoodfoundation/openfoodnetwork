@@ -5,10 +5,14 @@
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
     %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Web'
+    = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "search/all"
     = javascript_include_tag "search/all"
     = csrf_meta_tags
   %body.off-canvas
+    = render "layouts/become_distributor"
+    = render "layouts/become_farmer"
+
     %nav.top-bar
       %section.top-bar-section
         %ul.left
@@ -28,9 +32,9 @@
             %li#sign-out-link= link_to "Sign Out", "/logout"
 
         %ul.right
-          %li= link_to "Distributors", "#"
+          %li= link_to "Distributors", "#", :data => { "reveal-id" => "become-distributor" }
           %li.divider
-          %li= link_to "Farmers", "#"
+          %li= link_to "Farmers", "#", :data => { "reveal-id" => "become-farmer" }
     %section{ role: "main" }
       = yield
     %section#sidebar{ role: "complementary" }
