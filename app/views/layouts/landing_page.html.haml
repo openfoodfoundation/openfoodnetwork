@@ -29,6 +29,9 @@
           %li= link_to "Distributors", "#"
           %li.divider
           %li= link_to "Farmers", "#"
-    = yield
+    %section{ role: "main" }
+      = yield
+    %section#sidebar{ role: "complementary" }
+      = render "home/login"
     = yield :scripts
 
