@@ -1300,5 +1300,9 @@ $topbar-link-font-size: emCalc(16);
 
 // $topbar-sticky-class: ".sticky";
 
+textarea {
+  min-height: emCalc(120) !important;
+}
+
 @import 'foundation';
 
