@@ -21,6 +21,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.participatingEnterprises = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
+
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.toggleProducts(exchange)
@@ -78,6 +81,9 @@ angular.module('order_cycle', ['ngResource'])
 
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
+
+    $scope.participatingEnterprises = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
 
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
@@ -177,6 +183,11 @@ angular.module('order_cycle', ['ngResource'])
         for exchange in this.order_cycle.incoming_exchanges
           variant_ids.push(parseInt(id)) for id, active of exchange.variants when active
         variant_ids
+
+      participatingEnterpriseIds: ->
+        suppliers = (exchange.enterprise_id for exchange in this.order_cycle.incoming_exchanges)
+        distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
+        jQuery.unique(suppliers.concat(distributors)).sort()
 
       load: (order_cycle_id) ->
       	service = this

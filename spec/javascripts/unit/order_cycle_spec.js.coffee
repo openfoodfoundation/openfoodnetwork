@@ -66,6 +66,15 @@ describe 'OrderCycle controllers', ->
       expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
       expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
 
+    it 'Finds enterprises participating in the order cycle', ->
+      scope.enterprises =
+        1: {id: 1, name: 'Eaterprises'}
+        2: {id: 2, name: 'Pepper Tree Place'}
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      expect(scope.participatingEnterprises()).toEqual([
+        {id: 2, name: 'Pepper Tree Place'}
+        ])
+
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
@@ -179,6 +188,15 @@ describe 'OrderCycle controllers', ->
     it 'Delegates variantSuppliedToOrderCycle to OrderCycle', ->
       expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
       expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
+
+    it 'Finds enterprises participating in the order cycle', ->
+      scope.enterprises =
+        1: {id: 1, name: 'Eaterprises'}
+        2: {id: 2, name: 'Pepper Tree Place'}
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      expect(scope.participatingEnterprises()).toEqual([
+        {id: 2, name: 'Pepper Tree Place'}
+        ])
 
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
@@ -405,6 +423,17 @@ describe 'OrderCycle services', ->
           {id: 1}
           {id: 3}
           ]
+
+    it 'finds participating enterprise ids', ->
+      OrderCycle.order_cycle.incoming_exchanges = [
+        {enterprise_id: 1}
+        {enterprise_id: 2}
+      ]
+      OrderCycle.order_cycle.outgoing_exchanges = [
+        {enterprise_id: 2}
+        {enterprise_id: 3}
+      ]
+      expect(OrderCycle.participatingEnterpriseIds()).toEqual [1, 2, 3]
 
     describe 'fetching all variants supplied on incoming exchanges', ->
       it 'collects variants from incoming exchanges', ->
