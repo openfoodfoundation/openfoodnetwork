@@ -44,6 +44,14 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
 
+    $scope.addExchangeFee = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.addExchangeFee(exchange)
+
+    $scope.removeExchangeFee = ($event, exchange, index) ->
+      $event.preventDefault()
+      OrderCycle.removeExchangeFee(exchange, index)
+
     $scope.submit = ->
       OrderCycle.create()
   ])
@@ -93,6 +101,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
+
+    $scope.addExchangeFee = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.addExchangeFee(exchange)
+
+    $scope.removeExchangeFee = ($event, exchange, index) ->
+      $event.preventDefault()
+      OrderCycle.removeExchangeFee(exchange, index)
 
     $scope.submit = ->
       OrderCycle.update()

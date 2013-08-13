@@ -22,6 +22,8 @@ describe 'OrderCycle controllers', ->
         addDistributor: jasmine.createSpy('addDistributor')
         addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
+        addExchangeFee: jasmine.createSpy('addExchangeFee')
+        removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -95,6 +97,16 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
 
+    it 'Adds exchange fees', ->
+      scope.addExchangeFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addExchangeFee).toHaveBeenCalled()
+
+    it 'Removes exchange fees', ->
+      scope.removeExchangeFee(event, 'exchange', 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
+
     it 'Submits the order cycle via OrderCycle create', ->
       scope.submit()
       expect(OrderCycle.create).toHaveBeenCalled()
@@ -125,6 +137,8 @@ describe 'OrderCycle controllers', ->
         addDistributor: jasmine.createSpy('addDistributor')
         addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
+        addExchangeFee: jasmine.createSpy('addExchangeFee')
+        removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -196,6 +210,16 @@ describe 'OrderCycle controllers', ->
       scope.removeCoordinatorFee(event, 0)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
+
+    it 'Adds exchange fees', ->
+      scope.addExchangeFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addExchangeFee).toHaveBeenCalled()
+
+    it 'Removes exchange fees', ->
+      scope.removeExchangeFee(event, 'exchange', 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
 
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit()
