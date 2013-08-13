@@ -150,6 +150,12 @@ angular.module('order_cycle', ['ngResource'])
       removeCoordinatorFee: (index) ->
         this.order_cycle.coordinator_fees.splice(index, 1)
 
+      addExchangeFee: (exchange) ->
+        exchange.enterprise_fees.push({})
+
+      removeExchangeFee: (exchange, index) ->
+        exchange.enterprise_fees.splice(index, 1)
+
       productSuppliedToOrderCycle: (product) ->
         product_variant_ids = (variant.id for variant in product.variants)
         variant_ids = [product.master_id].concat(product_variant_ids)

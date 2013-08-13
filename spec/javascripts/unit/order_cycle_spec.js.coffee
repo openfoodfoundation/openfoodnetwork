@@ -370,10 +370,9 @@ describe 'OrderCycle services', ->
           {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
 
-    describe 'adding coordinator fees', ->
-      it 'adds the coordinator fee', ->
-        OrderCycle.addCoordinatorFee()
-        expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{}]
+    it 'adds coordinator fees', ->
+      OrderCycle.addCoordinatorFee()
+      expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{}]
 
     describe 'removing coordinator fees', ->
       it 'removes a coordinator fee by index', ->
@@ -384,6 +383,25 @@ describe 'OrderCycle services', ->
           ]
         OrderCycle.removeCoordinatorFee(1)
         expect(OrderCycle.order_cycle.coordinator_fees).toEqual [
+          {id: 1}
+          {id: 3}
+          ]
+
+    it 'adds exchange fees', ->
+      exchange = {enterprise_fees: []}
+      OrderCycle.addExchangeFee(exchange)
+      expect(exchange.enterprise_fees).toEqual [{}]
+
+    describe 'removing exchange fees', ->
+      it 'removes an exchange fee by index', ->
+        exchange =
+          enterprise_fees: [
+            {id: 1}
+            {id: 2}
+            {id: 3}
+            ]
+        OrderCycle.removeExchangeFee(exchange, 1)
+        expect(exchange.enterprise_fees).toEqual [
           {id: 1}
           {id: 3}
           ]
