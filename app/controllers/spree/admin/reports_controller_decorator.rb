@@ -348,7 +348,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @distributors = Enterprise.is_distributor
     #@suppliers = Enterprise.is_primary_producer
-    @order_cycles = OrderCycle.all
+    @order_cycles = OrderCycle.active_or_complete.order('orders_close_at DESC')
     @report_type = params[:report_type]
 
     case params[:report_type]
