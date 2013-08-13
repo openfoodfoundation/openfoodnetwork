@@ -4,15 +4,24 @@ Current cart for:
 = spree_current_user.andand.email
 %div{ 'ng-app' => 'store', 'ng-controller' => 'CartCtrl', 'ng-init' => "loadCart(#{spree_current_user.andand.cart.andand.id});" }
   {{cart}} {{state}}
+  %br
+  %br
   %ul
     %li(ng-repeat="order in cart.orders")
-      Distributor: {{order.distributor}}
-      %br
-      Order cycle: {{order.order_cycle.andand.name}}
-      %br
-      From: {{order.order_cycle.andand.orders_open_at}} To: {{order.order_cycle.andand.orders_close_at}}
+      %strong Distributor:
+      {{order.distributor}}
+      %strong Order cycle:
+      {{order.order_cycle.andand.name}}
+      %strong From:
+      {{order.order_cycle.andand.orders_open_at}}
+      %strong To:
+      {{order.order_cycle.andand.orders_close_at}}
       %ul
         %li(ng-repeat="line_item in order.line_items")
-          Product: {{line_item.name}} Quantity: {{line_item.quantity}}
+          %strong Product:
+          {{line_item.name}}
+          %strong Quantity:
+          {{line_item.quantity}}
       %button Buy me
+      %br
 
