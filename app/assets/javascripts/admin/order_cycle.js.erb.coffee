@@ -203,7 +203,7 @@ angular.module('order_cycle', ['ngResource'])
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
       	  else
-      	    console.log('fail')
+            console.log('Failed to create order cycle')
 
       update: ->
       	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
@@ -211,7 +211,7 @@ angular.module('order_cycle', ['ngResource'])
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
       	  else
-      	    console.log('fail')
+            console.log('Failed to update order cycle')
 
       dataForSubmit: ->
         data = angular.extend({}, this.order_cycle)
