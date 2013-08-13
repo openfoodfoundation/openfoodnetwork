@@ -347,6 +347,8 @@ Spree::Admin::ReportsController.class_eval do
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
     @distributors = Enterprise.is_distributor
+    #@suppliers = Enterprise.is_primary_producer
+    @order_cycles = OrderCycle.all
     @report_type = params[:report_type]
 
     case params[:report_type]
