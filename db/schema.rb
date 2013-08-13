@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809075103) do
+ActiveRecord::Schema.define(:version => 20130812233634) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -229,7 +229,6 @@ ActiveRecord::Schema.define(:version => 20130809075103) do
   create_table "product_distributions", :force => true do |t|
     t.integer  "product_id"
     t.integer  "distributor_id"
-    t.integer  "shipping_method_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "enterprise_fee_id"
@@ -470,12 +469,13 @@ ActiveRecord::Schema.define(:version => 20130809075103) do
     t.string   "type"
     t.string   "name"
     t.text     "description"
-    t.boolean  "active",      :default => true
-    t.string   "environment", :default => "development"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.boolean  "active",         :default => true
+    t.string   "environment",    :default => "development"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
     t.string   "display_on"
+    t.integer  "distributor_id"
   end
 
   create_table "spree_payments", :force => true do |t|

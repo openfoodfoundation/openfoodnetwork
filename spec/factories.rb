@@ -92,20 +92,12 @@ FactoryGirl.define do
     enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
-  factory :itemwise_shipping_method, :parent => :shipping_method do
-    name 'Delivery'
-    calculator { FactoryGirl.build(:itemwise_calculator) }
-  end
-
   factory :adjustment_metadata, :class => AdjustmentMetadata do
     adjustment { FactoryGirl.create(:adjustment) }
     enterprise { FactoryGirl.create(:distributor_enterprise) }
     fee_name 'fee'
     fee_type 'packing'
     enterprise_role 'distributor'
-  end
-
-  factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
   end
 
   factory :weight_calculator, :class => OpenFoodWeb::Calculator::Weight do

@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe EnterprisesController do
-  before :each do
-    stub!(:before_save_new_order)
-    stub!(:after_save_new_order)
-  end
-
   it "displays suppliers" do
     s = create(:supplier_enterprise)
     d = create(:distributor_enterprise)

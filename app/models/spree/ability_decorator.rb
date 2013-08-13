@@ -4,7 +4,7 @@ class AbilityDecorator
   def initialize(user)
     if user.enterprises.count > 0
 
-      #User can only access products that they are a supplier for
+      #Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
       can [:admin, :read, :update, :bulk_edit, :clone, :destroy], Spree::Product  do |product|
         user.enterprises.include? product.supplier
@@ -28,6 +28,11 @@ class AbilityDecorator
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
 
+      #Enterprise User can only access payment methods for their distributors
+      can [:index, :create], Spree::PaymentMethod
+      can [:admin, :read, :update, :fire, :resend ], Spree::PaymentMethod do |payment_method|
+        user.enterprises.include? payment_method.distributor
+      end
     end
   end
 end
