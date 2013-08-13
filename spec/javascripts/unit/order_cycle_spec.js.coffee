@@ -334,7 +334,7 @@ describe 'OrderCycle services', ->
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}}
+          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'adding distributors', ->
@@ -343,7 +343,7 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}}
+          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'adding coordinator fees', ->

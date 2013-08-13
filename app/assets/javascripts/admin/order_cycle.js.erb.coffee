@@ -123,10 +123,10 @@ angular.module('order_cycle', ['ngResource'])
       	exchange.showProducts = !exchange.showProducts
 
       addSupplier: (new_supplier_id) ->
-      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}})
+      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}, enterprise_fees: []})
 
       addDistributor: (new_distributor_id) ->
-      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}})
+      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}, enterprise_fees: []})
 
       addCoordinatorFee: ->
         this.order_cycle.coordinator_fees.push({})
