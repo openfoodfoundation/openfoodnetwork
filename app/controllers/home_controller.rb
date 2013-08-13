@@ -3,4 +3,7 @@ class HomeController < ApplicationController
 
   def new_landing_page
   end
+
+  def about_us
+  end
 end

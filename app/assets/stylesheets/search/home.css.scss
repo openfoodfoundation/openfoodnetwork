@@ -45,6 +45,18 @@
   height: 100%; 
 }
 
+a {
+  &:link {
+    color: #FFF;
+  }
+  &:visited {
+    color: #FFF;
+  }
+  &:hover {
+    color: $primary-color;
+  }
+}
+
 #home-page-nav
 {
   ul {
@@ -57,12 +69,6 @@
       font-size: 1.2em;
       font-weight: bold;
       color: #FFF;
-
-      a {
-        &:link {
-          color: #FFF;
-        }
-      }
 
       &:before {
         content: " | ";
@@ -91,4 +97,8 @@
 
 .centered {
   text-align: center;
+}
+
+#logo-container {
+  margin-bottom: emCalc(25);
 }
