@@ -13,6 +13,8 @@
       %section.top-bar-section
         %ul.left
           - if spree_current_user.nil?
+            %li= link_to image_tag("ofn_logo_small.png"), root_url
+            %li.divider
             %li#login-link= link_to "Login", "#sidebar", id: "sidebarButton", class: "sidebar-button"
             %li#login-name.hide
             %li.divider
