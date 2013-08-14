@@ -33,8 +33,8 @@ class EnterprisesController < BaseController
   end
 
   def search
-    suburb = Suburb.find(params[:suburb_id]) if params[:suburb_id].present?
-    @enterpsises = Enterprise.find_near(suburb)
+    @suburb = Suburb.find(params[:suburb_id]) if params[:suburb_id].present?
+    @enterpsises = Enterprise.find_near(@suburb)
     @enterprises_json = @enterpsises.to_gmaps4rails
     render :layout => "landing_page"
   end

@@ -1,8 +1,14 @@
 - if @enterpsises.any?
   .row.full-width
     .large-4.columns
+      - if @suburb.present?
+        .row.search-result
+          .large-12.columns
+            You have searched at:
+            %strong
+              %div= "#{@suburb.name}, #{@suburb.state_name}"
       - @enterpsises.each do |enterprise|
-        .search-result
+        .row.search-result
           .large-12.columns
             = link_to enterprise.name, enterprise_path(enterprise)
             %span.secondary-info= "#{enterprise.city}, #{enterprise.state_name}"
@@ -10,7 +16,7 @@
       = gmaps4rails(@enterprises_json)
 
 - else
-  .row
+  .row.search-result
     .large-12.large-centered.columns
       .centered
         = "Nothing foud that matches your search criteria"
