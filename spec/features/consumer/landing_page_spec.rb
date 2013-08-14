@@ -24,8 +24,8 @@ feature %q{
     end
 
     scenario "with valid credentials" do
-      fill_in 'spree_user_email', :with => 'spree123@example.com'
-      fill_in 'spree_user_password', :with => 'spree123'
+      fill_in 'login_spree_user_email', :with => 'spree123@example.com'
+      fill_in 'login_spree_user_password', :with => 'spree123'
       find(:xpath, '//input[contains(@value, "Login")][contains(@type, "submit")]').click
       sleep 3
       page.should_not have_content("Invalid email or password")
@@ -33,8 +33,8 @@ feature %q{
     end
 
     scenario "with invalid credentials" do
-      fill_in 'spree_user_email', :with => 'spree123@example.com.WRONG'
-      fill_in 'spree_user_password', :with => 'spree123_WRONG'
+      fill_in 'login_spree_user_email', :with => 'spree123@example.com.WRONG'
+      fill_in 'login_spree_user_password', :with => 'spree123_WRONG'
       find(:xpath, '//input[contains(@value, "Login")][contains(@type, "submit")]').click
       sleep 3
       page.should have_content("Invalid email or password")
