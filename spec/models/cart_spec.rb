@@ -47,17 +47,21 @@ describe Cart do
       let(:order) { FactoryGirl.create(:order, :distributor => distributor) }
 
       before (:each) do
+        FactoryGirl.create(:line_item, :order => order, :product => product)
+        order.reload
         subject.orders << order
         subject.save!
       end
 
-      it 'should create a new order when product added for different distributor' do
+      it 'should create a new order and add a line item to it when product added for different distributor' do
         subject.add_variant product_from_other_distributor.master.id, 3, other_distributor, nil, currency
 
         subject.reload
         subject.orders.size.should == 2
         new_order_for_other_distributor = subject.orders.find { |order| order.distributor == other_distributor }
         new_order_for_other_distributor.order_cycle.should be_nil
+        order.line_items.size.should == 1
+        new_order_for_other_distributor.line_items.size.should == 1
         new_order_for_other_distributor.line_items.first.product.should == product_from_other_distributor
       end
 
@@ -66,13 +70,9 @@ describe Cart do
 
         subject.orders.size.should == 1
         order = subject.orders.first.reload
-        order.line_items.size.should == 1
+        order.line_items.size.should == 2
         order.line_items.first.product.should == product
       end
-
-      it 'should not create line items in an order, if the product is in a different distributor to the order'
-
-      it 'if the cart has a distributor set, then should only populate orders for that distributors'
 
       it 'should create a new order for product in an order cycle' do
         subject.add_variant product_with_order_cycle.master.id, 3, distributor, order_cycle, currency
