@@ -21,6 +21,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.participatingEnterprises = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
+
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.toggleProducts(exchange)
@@ -43,6 +46,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
+
+    $scope.addExchangeFee = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.addExchangeFee(exchange)
+
+    $scope.removeExchangeFee = ($event, exchange, index) ->
+      $event.preventDefault()
+      OrderCycle.removeExchangeFee(exchange, index)
 
     $scope.submit = ->
       OrderCycle.create()
@@ -71,6 +82,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.participatingEnterprises = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
+
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.toggleProducts(exchange)
@@ -93,6 +107,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
+
+    $scope.addExchangeFee = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.addExchangeFee(exchange)
+
+    $scope.removeExchangeFee = ($event, exchange, index) ->
+      $event.preventDefault()
+      OrderCycle.removeExchangeFee(exchange, index)
 
     $scope.submit = ->
       OrderCycle.update()
@@ -123,16 +145,22 @@ angular.module('order_cycle', ['ngResource'])
       	exchange.showProducts = !exchange.showProducts
 
       addSupplier: (new_supplier_id) ->
-      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}})
+      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}, enterprise_fees: []})
 
       addDistributor: (new_distributor_id) ->
-      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}})
+      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}, enterprise_fees: []})
 
       addCoordinatorFee: ->
         this.order_cycle.coordinator_fees.push({})
 
       removeCoordinatorFee: (index) ->
         this.order_cycle.coordinator_fees.splice(index, 1)
+
+      addExchangeFee: (exchange) ->
+        exchange.enterprise_fees.push({})
+
+      removeExchangeFee: (exchange, index) ->
+        exchange.enterprise_fees.splice(index, 1)
 
       productSuppliedToOrderCycle: (product) ->
         product_variant_ids = (variant.id for variant in product.variants)
@@ -155,6 +183,11 @@ angular.module('order_cycle', ['ngResource'])
         for exchange in this.order_cycle.incoming_exchanges
           variant_ids.push(parseInt(id)) for id, active of exchange.variants when active
         variant_ids
+
+      participatingEnterpriseIds: ->
+        suppliers = (exchange.enterprise_id for exchange in this.order_cycle.incoming_exchanges)
+        distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
+        jQuery.unique(suppliers.concat(distributors)).sort()
 
       load: (order_cycle_id) ->
       	service = this
@@ -187,7 +220,7 @@ angular.module('order_cycle', ['ngResource'])
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
       	  else
-      	    console.log('fail')
+            console.log('Failed to create order cycle')
 
       update: ->
       	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
@@ -195,7 +228,7 @@ angular.module('order_cycle', ['ngResource'])
       	  if data['success']
       	    $window.location = '/admin/order_cycles'
       	  else
-      	    console.log('fail')
+            console.log('Failed to update order cycle')
 
       dataForSubmit: ->
         data = angular.extend({}, this.order_cycle)

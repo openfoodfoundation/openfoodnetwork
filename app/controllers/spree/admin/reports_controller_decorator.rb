@@ -347,6 +347,8 @@ Spree::Admin::ReportsController.class_eval do
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
     @distributors = Enterprise.is_distributor
+    #@suppliers = Enterprise.is_primary_producer
+    @order_cycles = OrderCycle.active_or_complete.order('orders_close_at DESC')
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -393,9 +395,9 @@ Spree::Admin::ReportsController.class_eval do
         sort_by: proc { |product| product.name } },
         { group_by: proc { |line_item| line_item.variant },
         sort_by: proc { |variant| variant.options_text },
-        summary_columns: [ proc { |line_items| line_items.first.variant.product.supplier.name },
-          proc { |line_items| line_items.first.variant.product.name },
-          proc { |line_items| line_items.first.variant.options_text },
+        summary_columns: [ proc { |line_items| "" },
+          proc { |line_items| "" },
+          proc { |line_items| "" },
           proc { |line_items| "TOTAL" },
           proc { |line_items| line_items.sum { |li| li.quantity } },
           proc { |line_items| line_items.first.variant.price },
@@ -422,7 +424,7 @@ Spree::Admin::ReportsController.class_eval do
 
       rules = [ { group_by: proc { |line_item| line_item.order.distributor },
         sort_by: proc { |distributor| distributor.name },
-        summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
+        summary_columns: [ proc { |line_items| "" },
           proc { |line_items| "TOTAL" },
           proc { |line_items| "" },
           proc { |line_items| "" },
@@ -462,10 +464,10 @@ Spree::Admin::ReportsController.class_eval do
       sort_by: proc { |distributor| distributor.name } },
       { group_by: proc { |line_item| line_item.order },
       sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
-      summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
-        proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
-        proc { |line_items| line_items.first.order.email },
-        proc { |line_items| line_items.first.order.bill_address.phone },
+      summary_columns: [ proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
         proc { |line_items| "" },

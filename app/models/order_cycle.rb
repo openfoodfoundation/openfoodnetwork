@@ -12,6 +12,7 @@ class OrderCycle < ActiveRecord::Base
   validates_presence_of :name, :coordinator_id
 
   scope :active, lambda { where('orders_open_at <= ? AND orders_close_at >= ?', Time.now, Time.now) }
+  scope :active_or_complete, lambda { where('orders_open_at <= ?', Time.now) }
   scope :inactive, lambda { where('orders_open_at > ? OR orders_close_at < ?', Time.now, Time.now) }
 
   scope :distributing_product, lambda { |product| joins(:exchanges => :variants).

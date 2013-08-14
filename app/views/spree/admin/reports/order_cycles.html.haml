@@ -13,6 +13,12 @@
   %br
   = label_tag nil, "Distributor: "
   = f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => @include_blank)
+  /%br
+  =# label_tag nil, "Supplier: "
+  =# f.collection_select(:supplier_id_eq, @suppliers, :id, :name, :include_blank => @include_blank)
+  %br
+  = label_tag nil, "Order Cycle: "
+  = f.collection_select(:order_cycle_id_eq, @order_cycles, :id, :name, :include_blank => @include_blank)
   %br
   = label_tag nil, "Report Type: "
   = select_tag(:report_type, options_for_select([['Order Cycle Supplier Totals',:order_cycle_supplier_totals], ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor], ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier], ['Order Cycle Customer Totals',:order_cycle_customer_totals]], @report_type))

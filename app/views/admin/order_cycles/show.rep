@@ -16,6 +16,10 @@ r.element :order_cycle, @order_cycle do
 
     r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
 
+    r.list_of :enterprise_fees do |fee|
+      r.element :id
+    end
+
     r.element :pickup_time
     r.element :pickup_instructions
   end
