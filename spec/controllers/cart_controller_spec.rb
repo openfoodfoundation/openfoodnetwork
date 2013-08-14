@@ -66,7 +66,19 @@ module OpenFoodWeb
           end
         end
 
-        context 'an order for an order cycle'
+        context 'adding a variant' do
+
+          it 'should add variant to new order and return the order' do
+            product1.distributors << distributor
+            product1.save
+
+            put :add_variant, { cart_id: cart, variant_id: product1.master.id, quantity: 4, distributor_id: distributor, order_cycle_id: nil, max_quantity: nil }
+
+            cart.orders.size.should == 1
+            cart.orders.first.line_items.size.should == 1
+            cart.orders.first.line_items.first.product.should == product1
+          end
+        end
       end
     end
   end

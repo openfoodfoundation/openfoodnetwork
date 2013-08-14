@@ -33,7 +33,9 @@ Openfoodweb::Application.routes.draw do
   get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_web do
-    resources :cart
+    resources :cart do
+      post :add_variant
+    end
   end
 
   # Mount Spree's routes

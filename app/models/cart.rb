@@ -7,8 +7,8 @@ class Cart < ActiveRecord::Base
 
     order = create_or_find_order_for_distributor distributor, order_cycle, currency
 
-    populator = Spree::OrderPopulator.new(order, currency)
-    populator.populate({ :variants => { variant_id => quantity }, :distributor_id => distributor.id, :order_cycle_id => order_cycle })
+    @populator = Spree::OrderPopulator.new(order, currency)
+    @populator.populate({ :variants => { variant_id => quantity }, :distributor_id => distributor.id, :order_cycle_id => order_cycle })
   end
 
   def create_or_find_order_for_distributor distributor, order_cycle, currency
@@ -21,5 +21,9 @@ class Cart < ActiveRecord::Base
     end
 
     order_for_distributor
+  end
+
+  def populate_errors
+    @populator.errors
   end
 end
