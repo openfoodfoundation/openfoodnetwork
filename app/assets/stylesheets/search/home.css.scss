@@ -30,6 +30,18 @@
 
     @include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
   }
+
+  a {
+    &:link {
+      color: #FFF;
+    }
+    &:visited {
+      color: #FFF;
+    }
+    &:hover {
+      color: $primary-color;
+    }
+  }
 }
 
 .backstretch img {
@@ -43,18 +55,6 @@
 
 .bgheight { 
   height: 100%; 
-}
-
-a {
-  &:link {
-    color: #FFF;
-  }
-  &:visited {
-    color: #FFF;
-  }
-  &:hover {
-    color: $primary-color;
-  }
 }
 
 #home-page-nav

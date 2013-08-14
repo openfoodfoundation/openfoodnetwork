@@ -10,7 +10,7 @@
       - @enterpsises.each do |enterprise|
         .row.search-result
           .large-12.columns
-            = link_to enterprise.name, enterprise_path(enterprise)
+            = link_to enterprise.name, shop_front_enterprise_path(enterprise.id)
             %span.secondary-info= "#{enterprise.city}, #{enterprise.state_name}"
     .large-8.columns
       = gmaps4rails(@enterprises_json)

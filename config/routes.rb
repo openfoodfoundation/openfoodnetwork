@@ -2,9 +2,15 @@ Openfoodweb::Application.routes.draw do
   root :to => 'spree/home#index'
 
   resources :enterprises do
-    get :suppliers, :on => :collection
-    get :distributors, :on => :collection
-    post :search, :on => :collection
+    collection do
+      get :suppliers
+      get :distributors
+      post :search
+    end
+
+    member do
+      get :shop_front
+    end
   end
 
   resources :suburbs
