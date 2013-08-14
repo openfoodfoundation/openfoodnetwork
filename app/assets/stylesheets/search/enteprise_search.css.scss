@@ -2,10 +2,22 @@
 @import "foundation/components/global";
 
 .search-result {
-  min-height: emCalc(50);
+  min-height: 3em;
 
   .secondary-info {
     font-size: 0.8em;
     color: #b7b7b7;
+  }
+
+  a {
+    &:link {
+      color: #000;
+    }
+    &:visited {
+      color: #000;
+    }
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
