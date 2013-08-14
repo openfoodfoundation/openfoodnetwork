@@ -60,7 +60,7 @@ namespace :openfoodweb do
 
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3153"))
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3156"))
-        FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3130"))
+        FactoryGirl.create(:distributor_enterprise, :name => "Blackburn FreeGrossers", :address => Spree::Address.find_by_zipcode("3130"))
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3195"))
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3018"))
         FactoryGirl.create(:distributor_enterprise, :address => Spree::Address.find_by_zipcode("3106"))
@@ -127,6 +127,43 @@ namespace :openfoodweb do
         ProductDistribution.create(:product => prod3,
                                    :distributor => Enterprise.is_distributor[2],
                                    :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
+
+        prod4 = FactoryGirl.create(:product,
+                                   :name => 'Carrots', :price => 3.00,
+                                   :supplier => Enterprise.is_primary_producer[2],
+                                   :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+
+        ProductDistribution.create(:product => prod4,
+                                   :distributor => Enterprise.is_distributor[2],
+                                   :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
+
+        prod5 = FactoryGirl.create(:product,
+                                   :name => 'Potatoes', :price => 2.00,
+                                   :supplier => Enterprise.is_primary_producer[2],
+                                   :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+
+        ProductDistribution.create(:product => prod5,
+                                   :distributor => Enterprise.is_distributor[2],
+                                   :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
+
+        prod6 = FactoryGirl.create(:product,
+                                   :name => 'Tomatoes', :price => 2.00,
+                                   :supplier => Enterprise.is_primary_producer[2],
+                                   :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+
+        ProductDistribution.create(:product => prod6,
+                                   :distributor => Enterprise.is_distributor[2],
+                                   :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
+
+        prod7 = FactoryGirl.create(:product,
+                                   :name => 'Potatoes', :price => 2.00,
+                                   :supplier => Enterprise.is_primary_producer[2],
+                                   :taxons => [Spree::Taxon.find_by_name('Meat and Fish')])
+
+        ProductDistribution.create(:product => prod7,
+                                   :distributor => Enterprise.is_distributor[2],
+                                   :enterprise_fee => Enterprise.is_distributor[2].enterprise_fees.first)
+
       end
     end
   end
