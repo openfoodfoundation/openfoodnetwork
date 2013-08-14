@@ -70,6 +70,7 @@ group :test, :development do
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
+  gem 'webmock'
 end
 
 group :chili do
