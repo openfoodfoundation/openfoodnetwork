@@ -21,6 +21,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.exchangeDirection = (exchange) ->
+      OrderCycle.exchangeDirection(exchange)
+
     $scope.participatingEnterprises = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
 
@@ -82,6 +85,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.exchangeDirection = (exchange) ->
+      OrderCycle.exchangeDirection(exchange)
+
     $scope.participatingEnterprises = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
 
@@ -140,6 +146,9 @@ angular.module('order_cycle', ['ngResource'])
         numActiveVariants = 0
         numActiveVariants++ for id, active of exchange.variants when active
         numActiveVariants
+
+      exchangeDirection: (exchange) ->
+        if this.order_cycle.incoming_exchanges.indexOf(exchange) == -1 then 'outgoing' else 'incoming'
 
       toggleProducts: (exchange) ->
       	exchange.showProducts = !exchange.showProducts
