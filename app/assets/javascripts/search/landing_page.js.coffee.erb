@@ -12,9 +12,36 @@ setup_background = ->
 
 setup_offcanvas_panel = ->
     events = 'click.fndtn'
-    $("#sidebarButton").on events, (e) ->
+    $("#sidebarLoginButton").on events, (e) ->
         e.preventDefault()
-        $("body").toggleClass "active"
+
+        if $("#sign-up-content").is(':visible') && $("body").hasClass("active")
+            $("#login-content").show()
+            $("#sign-up-content").hide()
+        else if $("body").hasClass("active")
+            $("body").toggleClass "active"
+            $("#login-content").hide(400)
+            $("#sign-up-content").hide(400)
+        else
+            $("body").toggleClass "active"
+            $("#login-content").show()
+            $("#sign-up-content").hide()
+
+    $("#sidebarSignUpButton").on events, (e) ->
+        e.preventDefault()
+
+        if $("#login-content").is(':visible') && $("body").hasClass("active")
+
+            $("#login-content").hide()
+            $("#sign-up-content").show()
+        else if $("body").hasClass("active")
+            $("body").toggleClass "active"
+            $("#login-content").hide(400)
+            $("#sign-up-content").hide(400)
+        else
+            $("body").toggleClass "active"
+            $("#login-content").hide()
+            $("#sign-up-content").show()
 
 
 setup_login_handlers = ->

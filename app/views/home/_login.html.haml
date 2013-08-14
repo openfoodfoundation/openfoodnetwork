@@ -1,19 +1,18 @@
-.login-panel
-  .row
-    .large-12.large-centered.columns
-      %h2 Login
-  = form_for Spree::User.new, :remote => true, :html => {'data-type' => :json}, :as => :spree_user, :url => spree.spree_user_session_path do |f|
-    #password-credentials
-      #login-error-alert.alert-box.alert.hide
-        Invalid email or password
-      %p
-        = f.label :email, t(:email)
-        = f.email_field :email, :class => 'title', :tabindex => 1
-      %p
-        = f.label :password, t(:password)
-        = f.password_field :password, :class => 'title', :tabindex => 2
-      %p
-        %label
-          = f.check_box :remember_me
-          = f.label :remember_me, t(:remember_me)
-      %p= f.submit t(:login), :class => 'button primary', :tabindex => 3
+.row
+  .large-12.large-centered.columns
+    %h2 Login
+= form_for Spree::User.new, :remote => true, :html => {'data-type' => :json}, :as => :spree_user, :url => spree.spree_user_session_path do |f|
+  #password-credentials
+    #login-error-alert.alert-box.alert.hide
+      Invalid email or password
+    %p
+      = f.label :email, t(:email)
+      = f.email_field :email, :class => 'title', :tabindex => 1
+    %p
+      = f.label :password, t(:password)
+      = f.password_field :password, :class => 'title', :tabindex => 2
+    %p
+      %label
+        = f.check_box :remember_me
+        = f.label :remember_me, t(:remember_me)
+    %p= f.submit t(:login), :class => 'button primary', :tabindex => 3
