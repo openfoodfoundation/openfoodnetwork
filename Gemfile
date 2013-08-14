@@ -49,7 +49,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
-  gem 'zurb-foundation', '= 4.2.1'
+  gem 'zurb-foundation', :git => 'git://github.com/zurb/foundation.git'
 end
 
 gem 'jquery-rails'
