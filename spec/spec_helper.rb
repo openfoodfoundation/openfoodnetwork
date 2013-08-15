@@ -86,4 +86,6 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.include Paperclip::Shoulda::Matchers
+
+  config.include JsonSpec::Helpers
 end
