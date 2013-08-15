@@ -6,7 +6,7 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
-  
+
   before :all do
     @orig_default_wait_time = Capybara.default_wait_time
     Capybara.default_wait_time = 5
@@ -340,6 +340,73 @@ feature %q{
     flash_message.should == 'Order cycles have been updated.'
     OrderCycle.all.map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
     OrderCycle.all.map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
+  end
+
+  context 'as an Enterprise user' do
+
+    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+
+    before(:each) do
+      product = create(:product, supplier: supplier1)
+      product.distributors << distributor1
+      product.save!
+
+      @new_user = create_enterprise_user
+      @new_user.enterprise_roles.build(enterprise: supplier1).save
+      @new_user.enterprise_roles.build(enterprise: distributor1).save
+
+      login_to_admin_as @new_user
+    end
+
+    scenario "can view products I am coordinating" do
+      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+
+      click_link "Order Cycles"
+
+      page.should have_content oc_user_coordinating.name
+      page.should_not have_content oc_for_other_user.name
+    end
+
+    scenario "can create a new order cycle" do
+      click_link "Order Cycles"
+      click_link 'New Order Cycle'
+
+      fill_in 'order_cycle_name', with: 'My order cycle'
+      fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+
+      select 'First Supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
+
+      select 'First Distributor', from: 'order_cycle_coordinator_id'
+
+      select 'First Distributor', from: 'new_distributor_id'
+      click_button 'Add distributor'
+
+      # Should only have suppliers / distributors listed which the user can manage
+      within "#new_supplier_id" do
+        page.should_not have_content supplier2.name
+      end
+      within "#new_distributor_id" do
+        page.should_not have_content distributor2.name
+      end
+      within "#order_cycle_coordinator_id" do
+        page.should_not have_content distributor2.name
+        page.should_not have_content supplier1.name
+        page.should_not have_content supplier2.name
+      end
+
+      click_button 'Create'
+
+      flash_message.should == "Your order cycle has been created."
+      order_cycle = OrderCycle.find_by_name('My order cycle')
+      order_cycle.coordinator.should == distributor1
+    end
+
   end
 
 end

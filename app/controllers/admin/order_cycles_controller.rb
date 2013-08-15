@@ -61,6 +61,10 @@ module Admin
       end
     end
 
+    protected
+    def collection
+      OrderCycle.managed_by(spree_current_user)
+    end
 
     private
     def load_order_cycle_set
