@@ -71,6 +71,7 @@ group :test, :development do
   gem 'timecop'
   gem 'poltergeist'
   gem 'json_spec'
+  gem 'unicorn-rails'
 end
 
 group :test do

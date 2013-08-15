@@ -448,6 +448,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-rails (1.1.0)
+      rack
+      unicorn
     uuidtools (2.1.4)
     versioncake (0.4.0)
       actionpack (>= 3.0)
@@ -519,5 +522,6 @@ DEPENDENCIES
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn
+  unicorn-rails
   webmock
   zurb-foundation!
