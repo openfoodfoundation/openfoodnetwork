@@ -10,22 +10,30 @@ module OpenFoodWeb
       @order_cycle.incoming_exchanges ||= []
       @order_cycle.incoming_exchanges.each do |exchange|
         variant_ids = exchange_variant_ids(exchange)
+        enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id)
-          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, {variant_ids: variant_ids})
+          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id,
+                          {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
         else
-          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, {variant_ids: variant_ids})
+          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id,
+                       {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
         end
       end
 
       @order_cycle.outgoing_exchanges ||= []
       @order_cycle.outgoing_exchanges.each do |exchange|
         variant_ids = exchange_variant_ids(exchange)
+        enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
         if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id])
-          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], {variant_ids: variant_ids, pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
+          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id],
+                          {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                           pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         else
-          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], {variant_ids: variant_ids, pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
+          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id],
+                       {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                        pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         end
       end
 
