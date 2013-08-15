@@ -241,10 +241,17 @@ describe Enterprise do
       address_vic2 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Richmond", zipcode: "3121")
       address_vic2.update_column(:latitude, -37.826869)
       address_vic2.update_column(:longitude, 145.007098)
+
+      FactoryGirl.create(:distributor_enterprise, address: address_vic1)
+      FactoryGirl.create(:distributor_enterprise, address: address_vic2)
     end
 
     it "should find nearby hubs if there are any" do
       Enterprise.find_near(@suburb_in_vic).count.should eql(2)
+    end
+
+    it "should not have nils in the result" do
+      Enterprise.find_near(@suburb_in_vic).should_not include(nil)
     end
 
     it "should not find hubs if not nearby " do
