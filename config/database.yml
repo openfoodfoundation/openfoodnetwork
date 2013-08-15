@@ -24,3 +24,11 @@ production:
   pool: 5
   username: ofw
   password: f00d
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: open_food_web_prod
+  pool: 5
+  username: ofw
+  password: f00d
