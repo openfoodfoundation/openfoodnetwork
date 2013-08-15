@@ -89,7 +89,9 @@ Spree::OrdersController.class_eval do
         spree_current_user.cart = cart
         spree_current_user.save
       end
-      spree_current_user.cart.add_products hash, current_currency
+      distributor = Enterprise.find(hash[:distributor_id])
+      order_cycle = OrderCycle.find(hash[:order_cycle_id]) if hash[:order_cycle_id]
+      spree_current_user.cart.add_variant hash[:variants].keys.first, hash[:variants].values.first, distributor, order_cycle, current_currency
     end
   end
 end

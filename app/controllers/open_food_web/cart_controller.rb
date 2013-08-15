@@ -18,8 +18,22 @@ module OpenFoodWeb
       respond_with(@cart)
     end
 
-    def add_product
+    def add_variant
+      @cart = Cart.find(params[:cart_id])
+      distributor = Enterprise.find(params[:distributor_id])
+      order_cycle = OrderCycle.find(params[:order_cycle_id]) if params[:order_cycle_id]
+
+      if @cart.add_variant params[:variant_id], params[:quantity], distributor, order_cycle, current_currency
+        respond_with(@cart)
+      else
+        respond_with(@cart.populate_errors)
+      end
     end
 
+    private
+
+    def current_currency
+      Spree::Config[:currency]
+    end
   end
 end
