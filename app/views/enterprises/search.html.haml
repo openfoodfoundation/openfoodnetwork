@@ -2,13 +2,13 @@
   .row.full-width
     .large-4.columns
       - if @suburb.present?
-        .row.search-result
+        .row.search-result.with-separator
           .large-12.columns
             You have searched at:
             %strong
               %div= "#{@suburb.name}, #{@suburb.state_name}"
       - @enterpsises.each do |enterprise|
-        .row.search-result
+        .row.search-result.with-separator
           .large-12.columns
             = link_to enterprise.name, shop_front_enterprise_path(enterprise.id)
             %span.secondary-info= "#{enterprise.city}, #{enterprise.state_name}"

@@ -3,9 +3,14 @@
 
 .search-result {
   min-height: 3em;
+  padding: 15px 0;
 
   .secondary-info {
     font-size: 0.8em;
     color: #b7b7b7;
   }
+}
+
+.with-separator {
+  border-bottom: 1px solid #E0E0E0;
 }
