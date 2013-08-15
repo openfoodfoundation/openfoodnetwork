@@ -18,6 +18,7 @@ r.element :order_cycle, @order_cycle do
 
     r.list_of :enterprise_fees do |fee|
       r.element :id
+      r.element :enterprise_id
     end
 
     r.element :pickup_time
