@@ -76,7 +76,7 @@ class Enterprise < ActiveRecord::Base
     enterprises = []
 
     unless suburb.nil?
-      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).limit(10)
+      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).joins(:enterprise)
       enterprises = addresses.collect(&:enterprise)
     end
 

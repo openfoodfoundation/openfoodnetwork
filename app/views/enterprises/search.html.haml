@@ -1,4 +1,4 @@
-- if @enterpsises.any?
+- if @enterprises.any?
   .row.full-width
     .large-4.columns
       - if @suburb.present?
@@ -7,7 +7,7 @@
             You have searched at:
             %strong
               %div= "#{@suburb.name}, #{@suburb.state_name}"
-      - @enterpsises.each do |enterprise|
+      - @enterprises.each do |enterprise|
         .row.search-result.with-separator
           .large-12.columns
             = link_to enterprise.name, shop_front_enterprise_path(enterprise.id)
