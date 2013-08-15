@@ -1,4 +1,9 @@
 module OpenFoodWeb
+
+  # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
+  # there is the OrderCycle#dataForSubmit method, and on the Rails side is this class. I think data
+  # translation is more a responsibility of Angular, so I'd be inclined to refactor this class to move
+  # as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
     def initialize(order_cycle)
       @order_cycle = order_cycle

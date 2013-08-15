@@ -591,9 +591,11 @@ describe 'OrderCycle services', ->
         OrderCycle.order_cycle = {foo: 'bar'}
         spyOn(OrderCycle, 'removeInactiveExchanges')
         spyOn(OrderCycle, 'translateCoordinatorFees')
+        spyOn(OrderCycle, 'translateExchangeFees')
         OrderCycle.dataForSubmit()
         expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect(OrderCycle.translateCoordinatorFees).toHaveBeenCalled()
+        expect(OrderCycle.translateExchangeFees).toHaveBeenCalled()
 
       it 'removes inactive exchanges', ->
         data =
@@ -628,5 +630,26 @@ describe 'OrderCycle services', ->
         data = OrderCycle.translateCoordinatorFees(data)
 
         expect(data.coordinator_fees).toBeUndefined()
-        expect(data.coordinator_fee_ids).toEqual([1, 2])
-    
+        expect(data.coordinator_fee_ids).toEqual [1, 2]
+
+      it 'converts exchange fees into a list of ids', ->
+        data =
+          incoming_exchanges: [
+            enterprise_fees: [
+              {id: 1}
+              {id: 2}
+            ]
+          ]
+          outgoing_exchanges: [
+            enterprise_fees: [
+              {id: 3}
+              {id: 4}
+            ]
+          ]
+
+        data = OrderCycle.translateExchangeFees(data)
+
+        expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
+        expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
+        expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
+        expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]
