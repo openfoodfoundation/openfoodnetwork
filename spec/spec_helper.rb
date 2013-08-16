@@ -80,6 +80,7 @@ RSpec.configure do |config|
   config.include Spree::CheckoutHelpers
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
+  config.include OpenFoodWeb::FeatureToggleHelper
 
   # Factory girl
   require 'factory_girl_rails'
