@@ -23,7 +23,7 @@ class AbilityDecorator
         user.enterprises.include? order.distributor
       end
 
-      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment 
+      can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
@@ -33,6 +33,13 @@ class AbilityDecorator
       can [:admin, :read, :update, :fire, :resend ], Spree::PaymentMethod do |payment_method|
         user.enterprises.include? payment_method.distributor
       end
+
+      can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
+        user.enterprises.include? order_cycle.coordinator
+      end
+
+      can [:create], OrderCycle
+
     end
   end
 end

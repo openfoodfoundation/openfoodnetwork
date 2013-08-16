@@ -21,6 +21,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.exchangeDirection = (exchange) ->
+      OrderCycle.exchangeDirection(exchange)
+
     $scope.participatingEnterprises = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
 
@@ -82,6 +85,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.incomingExchangesVariants = ->
       OrderCycle.incomingExchangesVariants()
 
+    $scope.exchangeDirection = (exchange) ->
+      OrderCycle.exchangeDirection(exchange)
+
     $scope.participatingEnterprises = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
 
@@ -140,6 +146,9 @@ angular.module('order_cycle', ['ngResource'])
         numActiveVariants = 0
         numActiveVariants++ for id, active of exchange.variants when active
         numActiveVariants
+
+      exchangeDirection: (exchange) ->
+        if this.order_cycle.incoming_exchanges.indexOf(exchange) == -1 then 'outgoing' else 'incoming'
 
       toggleProducts: (exchange) ->
       	exchange.showProducts = !exchange.showProducts
@@ -234,6 +243,7 @@ angular.module('order_cycle', ['ngResource'])
         data = angular.extend({}, this.order_cycle)
         data = this.removeInactiveExchanges(data)
         data = this.translateCoordinatorFees(data)
+        data = this.translateExchangeFees(data)
         data
 
       removeInactiveExchanges: (order_cycle) ->
@@ -246,6 +256,15 @@ angular.module('order_cycle', ['ngResource'])
       translateCoordinatorFees: (order_cycle) ->
         order_cycle.coordinator_fee_ids = (fee.id for fee in order_cycle.coordinator_fees)
         delete order_cycle.coordinator_fees
+        order_cycle
+
+      translateExchangeFees: (order_cycle) ->
+        for exchange in order_cycle.incoming_exchanges
+          exchange.enterprise_fee_ids = (fee.id for fee in exchange.enterprise_fees)
+          delete exchange.enterprise_fees
+        for exchange in order_cycle.outgoing_exchanges
+          exchange.enterprise_fee_ids = (fee.id for fee in exchange.enterprise_fees)
+          delete exchange.enterprise_fees
         order_cycle
     }])
 

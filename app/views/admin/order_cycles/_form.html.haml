@@ -18,13 +18,14 @@
       %th
       %th Supplier
       %th Products
+      %th Fees
   %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %tr.supplier
+    %tr{'class' => "supplier supplier-{{ exchange.enterprise_id }}"}
       = render 'exchange_form', :f => f, :type => 'supplier'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
 
-= select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer, :id, :name), {'ng-model' => 'new_supplier_id'}
+= select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer.managed_by(spree_current_user), :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
 
 
@@ -42,13 +43,14 @@
       %th Distributor
       %th Products
       %th Collection details
+      %th Fees
   %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
-    %tr.distributor
+    %tr{'class' => "distributor distributor-{{ exchange.enterprise_id }}"}
       = render 'exchange_form', :f => f, :type => 'distributor'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 
-= select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor, :id, :name), {'ng-model' => 'new_distributor_id'}
+= select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor.managed_by(spree_current_user), :id, :name), {'ng-model' => 'new_distributor_id'}
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions

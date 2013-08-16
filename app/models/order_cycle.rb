@@ -20,6 +20,14 @@ class OrderCycle < ActiveRecord::Base
     where('spree_variants.id IN (?)', product.variants_including_master.map(&:id)).
     select('DISTINCT order_cycles.*') }
 
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('coordinator_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+    end
+  }
+
   def suppliers
     self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
   end
