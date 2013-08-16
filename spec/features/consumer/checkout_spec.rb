@@ -64,7 +64,7 @@ feature %q{
   end
 
 
-  scenario "viewing delivery fees" do
+  scenario "viewing delivery fees for product distribution" do
     # Given I am logged in
     login_to_consumer_section
 
@@ -78,20 +78,15 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
-    # Item        | Shipping Method     | Delivery Fee
-    # Garlic      | Shipping Method Two | $2.00
-    # Fuji apples | Shipping Method One | $1.00
-    #
-    # Subtotal: $3.00
-
-    # Disabled pending spec for the new table
-    # table = page.find 'table#delivery'
-    # rows = table.all('tr')
-    # rows[0].all('th').map { |cell| cell.text.strip }.should == ['Item',        'Shipping Method',     'Delivery Fee']
-    # rows[1].all('td').map { |cell| cell.text.strip }.should == ['Fuji apples', 'Shipping Method One', '$1.00']
-    # rows[2].all('td').map { |cell| cell.text.strip }.should == ['Garlic',      'Shipping Method Two', '$2.00']
-    # page.should have_selector '#delivery-fees span.order-total', :text => '$3.00'
+    table = page.find 'tbody#cart_adjustments'
+    rows = table.all 'tr'
+    rows[0].all('td').map { |cell| cell.text.strip }.should == ['Product distribution by Edible garden for Fuji apples', '$1.00', '']
+    rows[1].all('td').map { |cell| cell.text.strip }.should == ['Product distribution by Edible garden for Garlic',      '$2.00', '']
+    page.should have_selector 'span.distribution-total', :text => '$3.00'
   end
+
+  #scenario "viewing delivery fees for order cycle distribution"
+  #scenario "viewing delivery fees for mixed product and order cycle distribution"
 
   scenario "changing distributor updates delivery fees" do
     # Given two distributors and enterprise fees
