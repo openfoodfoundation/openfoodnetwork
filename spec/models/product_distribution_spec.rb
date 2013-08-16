@@ -74,20 +74,20 @@ describe ProductDistribution do
       # TODO: This spec will go away once enterprise_fee is required
       it "does nothing if there is no enterprise fee set" do
         pd.enterprise_fee = nil
-        pd.should_receive(:clear_all_enterprise_fee_adjustments_for).never
+        EnterpriseFee.should_receive(:clear_all_adjustments_for).never
         pd.should_receive(:create_adjustment_for).never
         pd.ensure_correct_adjustment_for line_item
       end
 
       describe "adding items to cart" do
         it "clears all enterprise fee adjustments on the line item" do
-          pd.should_receive(:clear_all_enterprise_fee_adjustments_for).with(line_item)
+          EnterpriseFee.should_receive(:clear_all_adjustments_for).with(line_item)
           pd.stub(:create_adjustment_for)
           pd.ensure_correct_adjustment_for line_item
         end
 
         it "creates an adjustment on the line item" do
-          pd.stub(:clear_all_enterprise_fee_adjustments_for)
+          EnterpriseFee.stub(:clear_all_adjustments_for)
           pd.should_receive(:create_adjustment_for).with(line_item)
           pd.ensure_correct_adjustment_for line_item
         end
@@ -162,34 +162,6 @@ describe ProductDistribution do
         md.fee_name.should == pd.enterprise_fee.name
         md.fee_type.should == pd.enterprise_fee.fee_type
         md.enterprise_role.should == 'distributor'
-      end
-    end
-
-    describe "clearing all enterprise fee adjustments for a line item" do
-      it "clears adjustments originating from many different enterprise fees" do
-        p = create(:simple_product)
-        d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-        pd1 = create(:product_distribution, product: p, distributor: d1)
-        pd2 = create(:product_distribution, product: p, distributor: d2)
-        line_item = create(:line_item, product: p)
-        pd1.enterprise_fee.create_adjustment('foo1', line_item.order, line_item, true)
-        pd2.enterprise_fee.create_adjustment('foo2', line_item.order, line_item, true)
-
-        expect do
-          pd1.send(:clear_all_enterprise_fee_adjustments_for, line_item)
-        end.to change(line_item.order.adjustments, :count).by(-2)
-      end
-
-      it "does not clear adjustments originating from another source" do
-        p = create(:simple_product)
-        pd = create(:product_distribution)
-        line_item = create(:line_item, product: pd.product)
-        tax_rate = create(:tax_rate, calculator: build(:calculator, preferred_amount: 10))
-        tax_rate.create_adjustment('foo', line_item.order, line_item)
-
-        expect do
-          pd.send(:clear_all_enterprise_fee_adjustments_for, line_item)
-        end.to change(line_item.order.adjustments, :count).by(0)
       end
     end
   end

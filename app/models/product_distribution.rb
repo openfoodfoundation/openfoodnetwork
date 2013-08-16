@@ -10,7 +10,7 @@ class ProductDistribution < ActiveRecord::Base
 
   def ensure_correct_adjustment_for(line_item)
     if enterprise_fee
-      clear_all_enterprise_fee_adjustments_for line_item
+      EnterpriseFee.clear_all_adjustments_for line_item
       create_adjustment_for line_item
     end
   end
@@ -28,12 +28,8 @@ class ProductDistribution < ActiveRecord::Base
     AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: 'distributor'
   end
 
-  def clear_all_enterprise_fee_adjustments_for(line_item)
-    line_item.order.adjustments.where(originator_type: 'EnterpriseFee', source_id: line_item, source_type: 'Spree::LineItem').destroy_all
-  end
 
   def adjustment_label_for(line_item)
     "Product distribution by #{distributor.name} for #{line_item.product.name}"
   end
-
 end
