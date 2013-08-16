@@ -43,4 +43,22 @@ describe Exchange do
     e.exchange_fees.create(:enterprise_fee => f)
     e.enterprise_fees.count.should == 1
   end
+
+  describe "scopes" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
+    let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+
+    it "finds incoming exchanges" do
+      Exchange.incoming.should == [incoming_exchange]
+    end
+
+    it "finds outgoing exchanges" do
+      Exchange.outgoing.should == [outgoing_exchange]
+    end
+  end
 end

@@ -14,4 +14,7 @@ class Exchange < ActiveRecord::Base
   validates_uniqueness_of :sender_id,   :scope => [:order_cycle_id, :receiver_id]
 
   accepts_nested_attributes_for :variants
+
+  scope :incoming, joins(:order_cycle).where('exchanges.receiver_id = order_cycles.coordinator_id')
+  scope :outgoing, joins(:order_cycle).where('exchanges.sender_id   = order_cycles.coordinator_id')
 end
