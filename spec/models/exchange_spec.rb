@@ -44,6 +44,24 @@ describe Exchange do
     e.enterprise_fees.count.should == 1
   end
 
+  describe "reporting whether it is an incoming exchange" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
+    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+
+    it "returns true for incoming exchanges" do
+      incoming_exchange.should be_incoming
+    end
+
+    it "returns false for outgoing exchanges" do
+      outgoing_exchange.should_not be_incoming
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
