@@ -50,7 +50,9 @@ feature %q{
     distributor = create(:distributor_enterprise, name: 'My distributor')
 
     # And some enterprise fees
+    supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
     coordinator_fee = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee')
+    distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
 
     # When I go to the new order cycle page
     login_to_admin_section
@@ -74,6 +76,11 @@ feature %q{
     check 'order_cycle_incoming_exchange_0_variants_2'
     check 'order_cycle_incoming_exchange_0_variants_3'
 
+    # And I add a supplier fee
+    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+    select 'My supplier',  from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id'
+    select 'Supplier fee', from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id'
+
     # And I add a distributor with the same products
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
@@ -84,6 +91,11 @@ feature %q{
     page.find('table.exchanges tr.distributor td.products input').click
     check 'order_cycle_outgoing_exchange_0_variants_2'
     check 'order_cycle_outgoing_exchange_0_variants_3'
+
+    # And I add a distributor fee
+    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+    select 'My distributor',  from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id'
+    select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Create
     click_button 'Create'
@@ -100,8 +112,10 @@ feature %q{
     page.should have_selector 'td.suppliers', text: 'My supplier'
     page.should have_selector 'td.distributors', text: 'My distributor'
 
-    # And it should have a coordinator fee
-    OrderCycle.last.coordinator_fees.should == [coordinator_fee]
+    # And it should have some fees
+    OrderCycle.last.exchanges.first.enterprise_fees.should == [supplier_fee]
+    OrderCycle.last.coordinator_fees.should                == [coordinator_fee]
+    OrderCycle.last.exchanges.last.enterprise_fees.should  == [distributor_fee]
 
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
@@ -132,10 +146,11 @@ feature %q{
     page.find('#order_cycle_coordinator_id').value.to_i.should == oc.coordinator_id
     page.should have_selector "select[name='order_cycle_coordinator_fee_0_id']"
 
-    # And I should see the suppliers with products
+    # And I should see the suppliers
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
 
+    # And the suppliers should have products
     page.all('table.exchanges tbody tr.supplier').each do |row|
       row.find('td.products input').click
 
@@ -145,7 +160,18 @@ feature %q{
       row.find('td.products input').click
     end
 
-    # And I should see the distributors with products
+    # And the suppliers should have fees
+    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
+      text.should == oc.suppliers.first.name
+    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
+      text.should == oc.suppliers.first.enterprise_fees.first.name
+
+    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
+      text.should == oc.suppliers.last.name
+    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
+      text.should == oc.suppliers.last.enterprise_fees.first.name
+
+    # And I should see the distributors
     page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
     page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
 
@@ -154,6 +180,7 @@ feature %q{
     page.find('#order_cycle_outgoing_exchange_1_pickup_time').value.should == 'time 1'
     page.find('#order_cycle_outgoing_exchange_1_pickup_instructions').value.should == 'instructions 1'
 
+    # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each do |row|
       row.find('td.products input').click
 
@@ -162,6 +189,17 @@ feature %q{
 
       row.find('td.products input').click
     end
+
+    # And the distributors should have fees
+    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
+      text.should == oc.distributors.first.name
+    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
+      text.should == oc.distributors.first.enterprise_fees.first.name
+
+    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
+      text.should == oc.distributors.last.name
+    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
+      text.should == oc.distributors.last.enterprise_fees.first.name
   end
 
 
@@ -178,8 +216,12 @@ feature %q{
     v2 = create(:variant, product: product)
 
     # And some enterprise fees
+    supplier_fee1 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 1')
+    supplier_fee2 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 2')
     coordinator_fee1 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 1')
     coordinator_fee2 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 2')
+    distributor_fee1 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 1')
+    distributor_fee2 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 2')
 
     # When I go to its edit page
     login_to_admin_section
@@ -210,6 +252,16 @@ feature %q{
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
+    # And I configure some supplier fees
+    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+    select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
+    select 'Supplier fee 1', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+    click_link 'order_cycle_incoming_exchange_2_enterprise_fees_0_remove'
+    select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
+    select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+
     # And I add a distributor and some products
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
@@ -223,6 +275,16 @@ feature %q{
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
     check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
+
+    # And I configure some distributor fees
+    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+    select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
+    select 'Distributor fee 1', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
+    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+    click_link 'order_cycle_outgoing_exchange_2_enterprise_fees_0_remove'
+    select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
+    select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Update
     click_button 'Update'
@@ -241,6 +303,12 @@ feature %q{
 
     # And my coordinator fees should have been configured
     OrderCycle.last.coordinator_fee_ids.sort.should == [coordinator_fee1.id, coordinator_fee2.id].sort
+
+    # And my supplier fees should have been configured
+    OrderCycle.last.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
+
+    # And my distributor fees should have been configured
+    OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
 
     # And it should have some variants selected
     OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort

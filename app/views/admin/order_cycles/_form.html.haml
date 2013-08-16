@@ -18,8 +18,9 @@
       %th
       %th Supplier
       %th Products
+      %th Fees
   %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %tr.supplier
+    %tr{'class' => "supplier supplier-{{ exchange.enterprise_id }}"}
       = render 'exchange_form', :f => f, :type => 'supplier'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
@@ -42,8 +43,9 @@
       %th Distributor
       %th Products
       %th Collection details
+      %th Fees
   %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
-    %tr.distributor
+    %tr{'class' => "distributor distributor-{{ exchange.enterprise_id }}"}
       = render 'exchange_form', :f => f, :type => 'distributor'
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'

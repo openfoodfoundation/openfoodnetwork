@@ -9,10 +9,18 @@ FactoryGirl.define do
       # Suppliers
       ex1 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
       ex2 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      ExchangeFee.create!(exchange: ex1,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
+      ExchangeFee.create!(exchange: ex2,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
       # Distributors
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ex3 = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
+      ex4 = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ExchangeFee.create!(exchange: ex3,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
+      ExchangeFee.create!(exchange: ex4,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex4.receiver))
 
       # Products with images
       [ex1, ex2].each do |exchange|
