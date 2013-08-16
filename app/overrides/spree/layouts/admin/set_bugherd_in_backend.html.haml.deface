@@ -1,0 +1,4 @@
+/
+  insert_before '[data-hook="admin_inside_head"]'
+
+= render "layouts/bugherd_script"

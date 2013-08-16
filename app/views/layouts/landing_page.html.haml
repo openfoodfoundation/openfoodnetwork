@@ -8,14 +8,7 @@
     = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "search/all"
     = javascript_include_tag "search/all"
-    - if Rails.env.staging?
-      :javascript
-        (function (d, t) {
-          var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-          bh.type = 'text/javascript';
-          bh.src = '//www.bugherd.com/sidebarv2.js?apikey=4ftxjbgwx7y6ssykayr04w';
-          s.parentNode.insertBefore(bh, s);
-        })(document, 'script');
+    = render "layouts/bugherd_script"
 
     = csrf_meta_tags
   %body.off-canvas
