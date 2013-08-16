@@ -71,14 +71,6 @@ describe ProductDistribution do
       let(:line_item) { double(:line_item) }
       let(:adjustment) { double(:adjustment) }
 
-      # TODO: This spec will go away once enterprise_fee is required
-      it "does nothing if there is no enterprise fee set" do
-        pd.enterprise_fee = nil
-        EnterpriseFee.should_receive(:clear_all_adjustments_for).never
-        pd.should_receive(:create_adjustment_for).never
-        pd.ensure_correct_adjustment_for line_item
-      end
-
       describe "adding items to cart" do
         it "clears all enterprise fee adjustments on the line item" do
           EnterpriseFee.should_receive(:clear_all_adjustments_for).with(line_item)
