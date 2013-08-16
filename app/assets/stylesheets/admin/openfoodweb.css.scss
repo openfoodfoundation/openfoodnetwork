@@ -32,6 +32,12 @@ form.order_cycle {
     float: left;
     margin-right: 3em;
   }
+  ol {
+    list-style-type: none;
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
   table.exchanges {
     tr td.active {
       width: 20px;
@@ -68,6 +74,7 @@ form.order_cycle {
   .coordinator-fees {
     margin-top: 1em;
   }
+
   .actions {
     margin-top: 3em;
   }
