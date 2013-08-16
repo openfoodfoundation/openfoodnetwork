@@ -1,6 +1,7 @@
 include Spree::ProductsHelper
+
 class EnterprisesController < BaseController
-  
+
   def index
     @enterprises = Enterprise.all
   end
@@ -30,6 +31,20 @@ class EnterprisesController < BaseController
 
     @searcher = Spree::Config.searcher_class.new(options)
     @products = @searcher.retrieve_products
+  end
+
+  def shop
+    distributor = Enterprise.is_distributor.find params[:id]
+    order = current_order(true)
+
+    if order.distributor and order.distributor != distributor
+      order.empty!
+    end
+
+    order.distributor = distributor
+    order.save!
+
+    redirect_to main_app.enterprise_path(distributor)
   end
 
   # essentially the new 'show' action that renders non-spree view
