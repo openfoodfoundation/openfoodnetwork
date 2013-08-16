@@ -17,4 +17,5 @@ class Exchange < ActiveRecord::Base
 
   scope :incoming, joins(:order_cycle).where('exchanges.receiver_id = order_cycles.coordinator_id')
   scope :outgoing, joins(:order_cycle).where('exchanges.sender_id   = order_cycles.coordinator_id')
+  scope :with_variant, lambda { |variant| joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant) }
 end

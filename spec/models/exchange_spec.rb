@@ -60,5 +60,13 @@ describe Exchange do
     it "finds outgoing exchanges" do
       Exchange.outgoing.should == [outgoing_exchange]
     end
+
+    it "finds exchanges with a particular variant" do
+      v = create(:variant)
+      ex = create(:exchange)
+      ex.variants << v
+
+      Exchange.with_variant(v).should == [ex]
+    end
   end
 end
