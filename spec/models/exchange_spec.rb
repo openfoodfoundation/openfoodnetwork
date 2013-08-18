@@ -79,6 +79,16 @@ describe Exchange do
       Exchange.outgoing.should == [outgoing_exchange]
     end
 
+    it "finds exchanges going to any of a number of enterprises" do
+      Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
+      Exchange.to_enterprises([coordinator, distributor]).should == [incoming_exchange, outgoing_exchange]
+    end
+
+    it "finds exchanges coming from any of a number of enterprises" do
+      Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
+      Exchange.from_enterprises([supplier, coordinator]).should == [incoming_exchange, outgoing_exchange]
+    end
+
     it "finds exchanges with a particular variant" do
       v = create(:variant)
       ex = create(:exchange)
