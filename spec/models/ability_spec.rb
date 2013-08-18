@@ -137,6 +137,27 @@ module Spree
           should have_ability([:create], for: OrderCycle)
         end
       end
+
+      context 'Enterprise manager' do
+        let (:user) do
+          user = create(:user)
+          user.spree_roles = []
+          s1.enterprise_roles.build(user: user).save
+          user
+        end
+
+        it 'should have the ability to read and edit enterprises that I manage' do
+          should have_ability([:read, :edit, :update], for: s1)
+        end
+
+        it 'should not have the ability to read and edit enterprises that I do not manage' do
+          should_not have_ability([:read, :edit, :update], for: s2)
+        end
+
+        it 'should have the ability administrate enterpises' do
+          should have_ability([:admin, :index], for: Enterprise)
+        end
+      end
     end
   end
 end
