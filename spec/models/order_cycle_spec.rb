@@ -140,4 +140,77 @@ describe OrderCycle do
       @oc.products.sort.should == [@p0, @p1, @p2]
     end
   end
+
+  describe "ensuring that a line item has the correct adjustment" do
+    let(:oc) { OrderCycle.new }
+    let(:line_item) { double(:line_item) }
+
+    it "clears all enterprise fee adjustments on the line item" do
+      EnterpriseFee.should_receive(:clear_all_adjustments_for).with(line_item)
+      oc.stub(:create_adjustments_for)
+      oc.ensure_correct_adjustments_for line_item
+    end
+
+    it "creates an adjustment on the line item" do
+      EnterpriseFee.stub(:clear_all_adjustments_for)
+      oc.should_receive(:create_adjustments_for).with(line_item)
+      oc.ensure_correct_adjustments_for line_item
+    end
+  end
+
+  describe "creating adjustments for a line item" do
+    let(:oc) { OrderCycle.new }
+    let(:line_item) { double(:line_item, variant: 123) }
+
+    it "creates adjustment for each fee" do
+      fee = {enterprise_fee: 'ef', label: 'label', role: 'role'}
+      oc.stub(:fees_for) { [fee] }
+      oc.should_receive(:create_adjustment_for_fee).with(line_item, 'ef', 'label', 'role')
+
+      oc.send(:create_adjustments_for, line_item)
+    end
+
+    it "finds fees for a line item" do
+      ef1 = double(:enterprise_fee)
+      ef2 = double(:enterprise_fee)
+      ef3 = double(:enterprise_fee)
+      incoming_exchange = double(:exchange, enterprise_fees: [ef1], incoming?: true)
+      outgoing_exchange = double(:exchange, enterprise_fees: [ef2], incoming?: false)
+      oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
+      oc.stub(:coordinator_fees) { [ef3] }
+      oc.stub(:adjustment_label_for) { 'label' }
+
+      oc.send(:fees_for, line_item).should ==
+        [{enterprise_fee: ef1, label: 'label', role: 'supplier'},
+         {enterprise_fee: ef2, label: 'label', role: 'distributor'},
+         {enterprise_fee: ef3, label: 'label', role: 'coordinator'}]
+    end
+
+    it "creates an adjustment for a fee" do
+      line_item = create(:line_item)
+      enterprise_fee = create(:enterprise_fee)
+
+      oc.send(:create_adjustment_for_fee, line_item, enterprise_fee, 'label', 'role')
+
+      adjustment = Spree::Adjustment.last
+      adjustment.label.should == 'label'
+      adjustment.adjustable.should == line_item.order
+      adjustment.source.should == line_item
+      adjustment.originator.should == enterprise_fee
+      adjustment.should be_mandatory
+
+      md = adjustment.metadata
+      md.enterprise.should == enterprise_fee.enterprise
+      md.fee_name.should == enterprise_fee.name
+      md.fee_type.should == enterprise_fee.fee_type
+      md.enterprise_role.should == 'role'
+    end
+
+    it "makes adjustment labels" do
+      line_item = double(:line_item, variant: double(:variant, product: double(:product, name: 'Bananas')))
+      enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
+
+      oc.send(:adjustment_label_for, line_item, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
+    end
+  end
 end

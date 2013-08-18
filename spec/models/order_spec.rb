@@ -21,6 +21,7 @@ describe Spree::Order do
     it "ensures the correct adjustment(s) are created for the product distribution" do
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
+      subject.stub(:provided_by_order_cycle?) { false }
 
       product_distribution = double(:product_distribution)
       product_distribution.should_receive(:ensure_correct_adjustment_for).with(line_item)
@@ -32,10 +33,51 @@ describe Spree::Order do
     it "skips line items that don't have a product distribution" do
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
+      subject.stub(:provided_by_order_cycle?) { false }
 
       subject.stub(:product_distribution_for) { nil }
 
       subject.send(:update_distribution_charge!)
+    end
+
+    it "ensures the correct adjustment(s) are created for order cycles" do
+      line_item = double(:line_item)
+      subject.stub(:line_items) { [line_item] }
+      subject.stub(:provided_by_order_cycle?) { true }
+
+      order_cycle = double(:order_cycle)
+      order_cycle.should_receive(:ensure_correct_adjustments_for).with(line_item)
+      subject.stub(:order_cycle) { order_cycle }
+
+      subject.send(:update_distribution_charge!)
+    end
+
+    describe "looking up whether a line item can be provided by an order cycle" do
+      it "returns true when the variant is provided" do
+        v = double(:variant)
+        line_item = double(:line_item, variant: v)
+        order_cycle = double(:order_cycle, variants: [v])
+        subject.stub(:order_cycle) { order_cycle }
+
+        subject.send(:provided_by_order_cycle?, line_item).should be_true
+      end
+
+      it "returns false otherwise" do
+        v = double(:variant)
+        line_item = double(:line_item, variant: v)
+        order_cycle = double(:order_cycle, variants: [])
+        subject.stub(:order_cycle) { order_cycle }
+
+        subject.send(:provided_by_order_cycle?, line_item).should be_false
+      end
+
+      it "returns false when there is no order cycle" do
+        v = double(:variant)
+        line_item = double(:line_item, variant: v)
+        subject.stub(:order_cycle) { nil }
+
+        subject.send(:provided_by_order_cycle?, line_item).should be_false
+      end
     end
 
     it "looks up product distribution enterprise fees for a line item" do
