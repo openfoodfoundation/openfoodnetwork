@@ -59,19 +59,14 @@ class OrderCycle < ActiveRecord::Base
 
 
   # -- Fees
-  def ensure_correct_adjustments_for(line_item)
-    EnterpriseFee.clear_all_adjustments_for line_item
-    create_adjustments_for line_item
+  def create_adjustments_for(line_item)
+    fees_for(line_item).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
   end
 
 
   private
 
   # -- Fees
-  def create_adjustments_for(line_item)
-    fees_for(line_item).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
-  end
-
   def fees_for(line_item)
     fees = []
 

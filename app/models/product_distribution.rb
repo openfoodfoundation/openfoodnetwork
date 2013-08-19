@@ -8,11 +8,6 @@ class ProductDistribution < ActiveRecord::Base
   validates_uniqueness_of :product_id, :scope => :distributor_id
 
 
-  def ensure_correct_adjustment_for(line_item)
-    EnterpriseFee.clear_all_adjustments_for line_item
-    create_adjustment_for line_item
-  end
-
   def adjustment_for(line_item)
     adjustments = line_item.order.adjustments.enterprise_fee.where(originator_id: enterprise_fee)
 

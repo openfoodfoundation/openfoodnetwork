@@ -65,48 +65,6 @@ describe ProductDistribution do
       end
     end
 
-    describe "ensuring that a line item has the correct adjustment" do
-      let(:enterprise_fee) { EnterpriseFee.new }
-      let(:pd) { ProductDistribution.new enterprise_fee: enterprise_fee }
-      let(:line_item) { double(:line_item) }
-      let(:adjustment) { double(:adjustment) }
-
-      describe "adding items to cart" do
-        it "clears all enterprise fee adjustments on the line item" do
-          EnterpriseFee.should_receive(:clear_all_adjustments_for).with(line_item)
-          pd.stub(:create_adjustment_for)
-          pd.ensure_correct_adjustment_for line_item
-        end
-
-        it "creates an adjustment on the line item" do
-          EnterpriseFee.stub(:clear_all_adjustments_for)
-          pd.should_receive(:create_adjustment_for).with(line_item)
-          pd.ensure_correct_adjustment_for line_item
-        end
-      end
-
-      describe "changing distributor" do
-        it "clears and re-creates the adjustment for the line item" do
-          # Given a line item with an adjustment via one enterprise fee
-          p = create(:simple_product)
-          d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-          pd1 = create(:product_distribution, product: p, distributor: d1)
-          pd2 = create(:product_distribution, product: p, distributor: d2)
-          line_item = create(:line_item, product: p)
-          pd1.enterprise_fee.create_adjustment('foo', line_item.order, line_item, true)
-
-          # When I ensure correct adjustment through the other product distribution
-          pd2.ensure_correct_adjustment_for line_item
-
-          # Then I should have only an adjustment originating from the other product distribution
-          line_item.order.reload
-          adjustments = line_item.order.adjustments.enterprise_fee
-          adjustments.count.should == 1
-          adjustments.first.originator.should == pd2.enterprise_fee
-        end
-      end
-    end
-
     describe "finding our adjustment for a line item" do
       it "returns nil when not present" do
         line_item = build(:line_item)

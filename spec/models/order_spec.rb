@@ -18,38 +18,46 @@ describe Spree::Order do
   describe "updating the distribution charge" do
     let(:order) { build(:order) }
 
+    it "clears all enterprise fee adjustments on the order" do
+      EnterpriseFee.should_receive(:clear_all_adjustments_on_order).with(subject)
+      subject.update_distribution_charge!
+    end
+
     it "ensures the correct adjustment(s) are created for the product distribution" do
+      EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
       subject.stub(:provided_by_order_cycle?) { false }
 
       product_distribution = double(:product_distribution)
-      product_distribution.should_receive(:ensure_correct_adjustment_for).with(line_item)
+      product_distribution.should_receive(:create_adjustment_for).with(line_item)
       subject.stub(:product_distribution_for) { product_distribution }
 
-      subject.send(:update_distribution_charge!)
+      subject.update_distribution_charge!
     end
 
     it "skips line items that don't have a product distribution" do
+      EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
       subject.stub(:provided_by_order_cycle?) { false }
 
       subject.stub(:product_distribution_for) { nil }
 
-      subject.send(:update_distribution_charge!)
+      subject.update_distribution_charge!
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
+      EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
       subject.stub(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
-      order_cycle.should_receive(:ensure_correct_adjustments_for).with(line_item)
+      order_cycle.should_receive(:create_adjustments_for).with(line_item)
       subject.stub(:order_cycle) { order_cycle }
 
-      subject.send(:update_distribution_charge!)
+      subject.update_distribution_charge!
     end
 
     describe "looking up whether a line item can be provided by an order cycle" do

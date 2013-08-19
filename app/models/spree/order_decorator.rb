@@ -54,13 +54,15 @@ Spree::Order.class_eval do
   end
 
   def update_distribution_charge!
+    EnterpriseFee.clear_all_adjustments_on_order self
+
     line_items.each do |line_item|
       if provided_by_order_cycle? line_item
-        order_cycle.ensure_correct_adjustments_for line_item
+        order_cycle.create_adjustments_for line_item
 
       else
         pd = product_distribution_for line_item
-        pd.ensure_correct_adjustment_for line_item if pd
+        pd.create_adjustment_for line_item if pd
       end
     end
   end

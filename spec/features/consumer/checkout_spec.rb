@@ -83,8 +83,11 @@ feature %q{
     # Then I should see a breakdown of my delivery fees:
     table = page.find 'tbody#cart_adjustments'
     rows = table.all 'tr'
-    rows[0].all('td').map { |cell| cell.text.strip }.should == ['Product distribution by Edible garden for Fuji apples', '$1.00', '']
-    rows[1].all('td').map { |cell| cell.text.strip }.should == ['Product distribution by Edible garden for Garlic',      '$2.00', '']
+
+    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+      [['Product distribution by Edible garden for Fuji apples', '$1.00', ''],
+       ['Product distribution by Edible garden for Garlic',      '$2.00', '']]
+
     page.should have_selector 'span.distribution-total', :text => '$3.00'
   end
 
@@ -148,6 +151,33 @@ feature %q{
 
     # Then I should see an error about changing order cycle
     page.should have_content 'Please complete your order from your current order cycle before shopping in a different order cycle.'
+  end
+
+  scenario "removing a product from cart removes its fees", js: true do
+    # Given I am logged in
+    login_to_consumer_section
+
+    # When I add some apples and some garlic to my cart
+    click_link 'Fuji apples'
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Garlic'
+    click_button 'Add To Cart'
+
+    # And I remove the applies
+    line_item = Spree::Order.last.line_items.first
+    page.find("a#delete_line_item_#{line_item.id}").click
+
+    # Then I should see fees for only the garlic
+    table = page.find 'tbody#cart_adjustments'
+    rows = table.all 'tr'
+
+    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+      [['Product distribution by Edible garden for Garlic',      '$2.00', '']]
+
+    page.should have_selector 'span.distribution-total', :text => '$2.00'
   end
 
   scenario "changing distributor updates delivery fees" do

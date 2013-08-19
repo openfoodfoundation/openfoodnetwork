@@ -141,23 +141,6 @@ describe OrderCycle do
     end
   end
 
-  describe "ensuring that a line item has the correct adjustment" do
-    let(:oc) { OrderCycle.new }
-    let(:line_item) { double(:line_item) }
-
-    it "clears all enterprise fee adjustments on the line item" do
-      EnterpriseFee.should_receive(:clear_all_adjustments_for).with(line_item)
-      oc.stub(:create_adjustments_for)
-      oc.ensure_correct_adjustments_for line_item
-    end
-
-    it "creates an adjustment on the line item" do
-      EnterpriseFee.stub(:clear_all_adjustments_for)
-      oc.should_receive(:create_adjustments_for).with(line_item)
-      oc.ensure_correct_adjustments_for line_item
-    end
-  end
-
   describe "creating adjustments for a line item" do
     let(:oc) { OrderCycle.new }
     let(:line_item) { double(:line_item, variant: 123) }
