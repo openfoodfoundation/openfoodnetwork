@@ -286,18 +286,18 @@ feature %q{
     @order_cycle = oc = create(:simple_order_cycle, coordinator: create(:distributor_enterprise, name: 'My coordinator'))
 
     # Coordinator
-    coordinator_fee1 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'admin')
-    coordinator_fee2 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'sales')
+    coordinator_fee1 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'admin', amount: 1)
+    coordinator_fee2 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'sales', amount: 2)
     oc.coordinator_fees << coordinator_fee1
     oc.coordinator_fees << coordinator_fee2
 
     # Suppliers
     supplier1 = create(:supplier_enterprise, name: 'Supplier 1')
     supplier2 = create(:supplier_enterprise, name: 'Supplier 2')
-    supplier_fee1 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'packing')
-    supplier_fee2 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'transport')
-    supplier_fee3 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'admin')
-    supplier_fee4 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'sales')
+    supplier_fee1 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'packing', amount: 3)
+    supplier_fee2 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'transport', amount: 4)
+    supplier_fee3 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'admin', amount: 5)
+    supplier_fee4 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'sales', amount: 6)
     ex1 = create(:exchange, order_cycle: oc, sender: supplier1, receiver: oc.coordinator)
     ex2 = create(:exchange, order_cycle: oc, sender: supplier2, receiver: oc.coordinator)
     ExchangeFee.create!(exchange: ex1, enterprise_fee: supplier_fee1)
@@ -308,10 +308,10 @@ feature %q{
     # Distributors
     distributor1 = create(:distributor_enterprise, name: 'Distributor 1')
     distributor2 = create(:distributor_enterprise, name: 'Distributor 2')
-    distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing')
-    distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport')
-    distributor_fee3 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'admin')
-    distributor_fee4 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'sales')
+    distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)
+    distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport', amount: 8)
+    distributor_fee3 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'admin', amount: 9)
+    distributor_fee4 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'sales', amount: 10)
     ex3 = create(:exchange, order_cycle: oc,
                  sender: oc.coordinator, receiver: distributor1,
                  pickup_time: 'time 0', pickup_instructions: 'instructions 0')

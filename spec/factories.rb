@@ -97,11 +97,13 @@ FactoryGirl.define do
 
   sequence(:calculator_amount)
   factory :enterprise_fee, :class => EnterpriseFee do
+    ignore { amount nil }
+
     sequence(:name) { |n| "Enterprise fee #{n}" }
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
 
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
-    calculator { FactoryGirl.build(:calculator, preferred_amount: generate(:calculator_amount)) }
+    calculator { FactoryGirl.build(:calculator, preferred_amount: amount || generate(:calculator_amount)) }
 
     after(:create) { |ef| ef.calculator.save! }
   end

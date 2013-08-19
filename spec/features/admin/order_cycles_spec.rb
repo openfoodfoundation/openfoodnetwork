@@ -206,6 +206,7 @@ feature %q{
   scenario "updating an order cycle" do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
+    initial_variants = oc.variants
 
     # And a coordinating, supplying and distributing enterprise with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
@@ -311,7 +312,7 @@ feature %q{
     OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
 
     # And it should have some variants selected
-    OrderCycle.last.variants.map { |v| v.id }.sort.should == [1, v1.id, v2.id].sort
+    OrderCycle.last.variants.map(&:id).sort.should == (initial_variants.map(&:id) + [v1.id, v2.id]).sort
 
     # And the collection details should have been updated
     OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
