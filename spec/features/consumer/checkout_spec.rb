@@ -89,6 +89,13 @@ feature %q{
        ['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
     page.should have_selector 'span.distribution-total', :text => '$3.00'
+
+    # When I check out
+    click_link 'Checkout'
+
+    # Then I should see a summary of my distribution charges
+    page.should have_selector 'tbody#summary-order-charges td', text: 'Distribution:'
+    page.should have_selector 'tbody#summary-order-charges td', text: '$3.00'
   end
 
   scenario "viewing delivery fees for order cycle distribution" do
