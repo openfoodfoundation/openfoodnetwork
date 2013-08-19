@@ -65,56 +65,6 @@ describe ProductDistribution do
       end
     end
 
-    describe "ensuring that a line item has the correct adjustment" do
-      let(:enterprise_fee) { EnterpriseFee.new }
-      let(:pd) { ProductDistribution.new enterprise_fee: enterprise_fee }
-      let(:line_item) { double(:line_item) }
-      let(:adjustment) { double(:adjustment) }
-
-      # TODO: This spec will go away once enterprise_fee is required
-      it "does nothing if there is no enterprise fee set" do
-        pd.enterprise_fee = nil
-        pd.should_receive(:clear_all_enterprise_fee_adjustments_for).never
-        pd.should_receive(:create_adjustment_for).never
-        pd.ensure_correct_adjustment_for line_item
-      end
-
-      describe "adding items to cart" do
-        it "clears all enterprise fee adjustments on the line item" do
-          pd.should_receive(:clear_all_enterprise_fee_adjustments_for).with(line_item)
-          pd.stub(:create_adjustment_for)
-          pd.ensure_correct_adjustment_for line_item
-        end
-
-        it "creates an adjustment on the line item" do
-          pd.stub(:clear_all_enterprise_fee_adjustments_for)
-          pd.should_receive(:create_adjustment_for).with(line_item)
-          pd.ensure_correct_adjustment_for line_item
-        end
-      end
-
-      describe "changing distributor" do
-        it "clears and re-creates the adjustment for the line item" do
-          # Given a line item with an adjustment via one enterprise fee
-          p = create(:simple_product)
-          d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-          pd1 = create(:product_distribution, product: p, distributor: d1)
-          pd2 = create(:product_distribution, product: p, distributor: d2)
-          line_item = create(:line_item, product: p)
-          pd1.enterprise_fee.create_adjustment('foo', line_item.order, line_item, true)
-
-          # When I ensure correct adjustment through the other product distribution
-          pd2.ensure_correct_adjustment_for line_item
-
-          # Then I should have only an adjustment originating from the other product distribution
-          line_item.order.reload
-          adjustments = line_item.order.adjustments.enterprise_fee
-          adjustments.count.should == 1
-          adjustments.first.originator.should == pd2.enterprise_fee
-        end
-      end
-    end
-
     describe "finding our adjustment for a line item" do
       it "returns nil when not present" do
         line_item = build(:line_item)
@@ -125,7 +75,7 @@ describe ProductDistribution do
       it "returns the adjustment when present" do
         pd = create(:product_distribution)
         line_item = create(:line_item)
-        adjustment = pd.enterprise_fee.create_adjustment('foo', line_item.order, line_item, true)
+        adjustment = pd.enterprise_fee.create_locked_adjustment('foo', line_item.order, line_item, true)
 
         pd.send(:adjustment_for, line_item).should == adjustment
       end
@@ -133,8 +83,8 @@ describe ProductDistribution do
       it "raises an error when there are multiple adjustments for this enterprise fee" do
         pd = create(:product_distribution)
         line_item = create(:line_item)
-        pd.enterprise_fee.create_adjustment('one', line_item.order, line_item, true)
-        pd.enterprise_fee.create_adjustment('two', line_item.order, line_item, true)
+        pd.enterprise_fee.create_locked_adjustment('one', line_item.order, line_item, true)
+        pd.enterprise_fee.create_locked_adjustment('two', line_item.order, line_item, true)
 
         expect do
           pd.send(:adjustment_for, line_item)
@@ -162,34 +112,6 @@ describe ProductDistribution do
         md.fee_name.should == pd.enterprise_fee.name
         md.fee_type.should == pd.enterprise_fee.fee_type
         md.enterprise_role.should == 'distributor'
-      end
-    end
-
-    describe "clearing all enterprise fee adjustments for a line item" do
-      it "clears adjustments originating from many different enterprise fees" do
-        p = create(:simple_product)
-        d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-        pd1 = create(:product_distribution, product: p, distributor: d1)
-        pd2 = create(:product_distribution, product: p, distributor: d2)
-        line_item = create(:line_item, product: p)
-        pd1.enterprise_fee.create_adjustment('foo1', line_item.order, line_item, true)
-        pd2.enterprise_fee.create_adjustment('foo2', line_item.order, line_item, true)
-
-        expect do
-          pd1.send(:clear_all_enterprise_fee_adjustments_for, line_item)
-        end.to change(line_item.order.adjustments, :count).by(-2)
-      end
-
-      it "does not clear adjustments originating from another source" do
-        p = create(:simple_product)
-        pd = create(:product_distribution)
-        line_item = create(:line_item, product: pd.product)
-        tax_rate = create(:tax_rate, calculator: build(:calculator, preferred_amount: 10))
-        tax_rate.create_adjustment('foo', line_item.order, line_item)
-
-        expect do
-          pd.send(:clear_all_enterprise_fee_adjustments_for, line_item)
-        end.to change(line_item.order.adjustments, :count).by(0)
       end
     end
   end

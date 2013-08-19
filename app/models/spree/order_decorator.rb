@@ -54,9 +54,16 @@ Spree::Order.class_eval do
   end
 
   def update_distribution_charge!
+    EnterpriseFee.clear_all_adjustments_on_order self
+
     line_items.each do |line_item|
-      pd = product_distribution_for line_item
-      pd.ensure_correct_adjustment_for line_item if pd
+      if provided_by_order_cycle? line_item
+        order_cycle.create_adjustments_for line_item
+
+      else
+        pd = product_distribution_for line_item
+        pd.create_adjustment_for line_item if pd
+      end
     end
   end
 
@@ -94,6 +101,11 @@ Spree::Order.class_eval do
         self.ship_address.phone = bill_address.phone
       end
     end
+  end
+
+  def provided_by_order_cycle?(line_item)
+    order_cycle_variants = order_cycle.andand.variants || []
+    order_cycle_variants.include? line_item.variant
   end
 
   def product_distribution_for(line_item)

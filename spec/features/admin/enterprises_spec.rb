@@ -6,12 +6,12 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
-  
+
   before :all do
     @default_wait_time = Capybara.default_wait_time
     Capybara.default_wait_time = 5
   end
-  
+
   after :all do
     Capybara.default_wait_time = @default_wait_time
   end
@@ -127,4 +127,31 @@ feature %q{
     Enterprise.is_distributor.map { |d| d.next_collection_at }.should == %w(One Two Three)
   end
 
+  context 'as an Enterprise user' do
+
+    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+
+    before(:each) do
+      @new_user = create_enterprise_user
+      @new_user.enterprise_roles.build(enterprise: supplier1).save
+      @new_user.enterprise_roles.build(enterprise: distributor1).save
+
+      login_to_admin_as @new_user
+    end
+
+    scenario "can view enterprises I have permission to" do
+      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+
+      click_link "Enterprises"
+
+      page.should have_content supplier1.name
+      page.should have_content distributor1.name
+      page.should_not have_content supplier2.name
+      page.should_not have_content distributor2.name
+    end
+  end
 end

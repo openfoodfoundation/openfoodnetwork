@@ -9,7 +9,8 @@ Openfoodweb::Application.routes.draw do
     end
 
     member do
-      get :shop_front
+      get :shop_front #new world
+      get :shop # old world
     end
   end
 

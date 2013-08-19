@@ -17,7 +17,8 @@ feature %q{
   end
 
   scenario "listing enterprise fees" do
-    fee = create(:enterprise_fee, name: '$0.50 / kg')
+    fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing')
+    amount = fee.calculator.preferred_amount
 
     login_to_admin_section
     click_link 'Configuration'
@@ -26,8 +27,8 @@ feature %q{
     page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
-    page.should have_selector "option[selected]", text: 'Weight (per kg)'
-    page.should have_selector "input[value='0.5']"
+    page.should have_selector "option[selected]", text: 'Flat Rate (per item)'
+    page.should have_selector "input[value='#{amount}']"
   end
 
   scenario "creating an enterprise fee" do

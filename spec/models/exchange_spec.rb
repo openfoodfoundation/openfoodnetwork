@@ -44,6 +44,24 @@ describe Exchange do
     e.enterprise_fees.count.should == 1
   end
 
+  describe "reporting whether it is an incoming exchange" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
+    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+
+    it "returns true for incoming exchanges" do
+      incoming_exchange.should be_incoming
+    end
+
+    it "returns false for outgoing exchanges" do
+      outgoing_exchange.should_not be_incoming
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
@@ -59,6 +77,24 @@ describe Exchange do
 
     it "finds outgoing exchanges" do
       Exchange.outgoing.should == [outgoing_exchange]
+    end
+
+    it "finds exchanges going to any of a number of enterprises" do
+      Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
+      Exchange.to_enterprises([coordinator, distributor]).should == [incoming_exchange, outgoing_exchange]
+    end
+
+    it "finds exchanges coming from any of a number of enterprises" do
+      Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
+      Exchange.from_enterprises([supplier, coordinator]).should == [incoming_exchange, outgoing_exchange]
+    end
+
+    it "finds exchanges with a particular variant" do
+      v = create(:variant)
+      ex = create(:exchange)
+      ex.variants << v
+
+      Exchange.with_variant(v).should == [ex]
     end
   end
 end

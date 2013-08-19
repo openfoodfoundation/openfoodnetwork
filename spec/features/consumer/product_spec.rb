@@ -44,18 +44,9 @@ feature %q{
 
         within '#product-distributor-details' do
           [d.name,
-           d.address.address1,
-           d.address.city,
-           d.address.zipcode,
-           d.address.state_text,
-           d.address.country.name,
-           d.pickup_times,
-           d.next_collection_at,
-           d.contact,
-           d.phone,
-           d.email,
-           d.description,
-           d.website].each do |value|
+           d.distributor_info,
+           d.next_collection_at
+          ].each do |value|
 
             page.should have_content value
           end
