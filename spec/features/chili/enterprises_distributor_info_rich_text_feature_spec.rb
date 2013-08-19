@@ -80,7 +80,6 @@ feature "enterprises distributor info as rich text" do
     complete_purchase_from_checkout_address_page
     wait_until { ActionMailer::Base.deliveries.length == 1 }
     email = ActionMailer::Base.deliveries.last
-    binding.pry
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
     email.body.should =~ /Thursday 2nd May/
   end
