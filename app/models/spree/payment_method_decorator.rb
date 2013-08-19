@@ -1,5 +1,7 @@
 Spree::PaymentMethod.class_eval do  
   belongs_to :distributor, :class_name => 'Enterprise'
+  
+  validates_presence_of :distributor_id
 
   attr_accessible :distributor_id
 
