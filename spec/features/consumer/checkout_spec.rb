@@ -89,13 +89,6 @@ feature %q{
        ['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
     page.should have_selector 'span.distribution-total', :text => '$3.00'
-
-    # When I check out
-    click_link 'Checkout'
-
-    # Then I should see a summary of my distribution charges
-    page.should have_selector 'tbody#summary-order-charges td', text: 'Distribution:'
-    page.should have_selector 'tbody#summary-order-charges td', text: '$3.00'
   end
 
   scenario "viewing delivery fees for order cycle distribution" do
@@ -295,18 +288,9 @@ feature %q{
     # Distributor details should be displayed
     within('fieldset#shipping') do
       [@distributor.name,
-       @distributor.address.address1,
-       @distributor.address.city,
-       @distributor.address.zipcode,
-       @distributor.address.state_text,
-       @distributor.address.country.name,
-       @distributor.pickup_times,
-       @distributor.next_collection_at,
-       @distributor.contact,
-       @distributor.phone,
-       @distributor.email,
-       @distributor.description,
-       @distributor.website].each do |value|
+       @distributor.distributor_info,
+       @distributor.next_collection_at
+      ].each do |value|
 
         page.should have_content value
       end
@@ -319,8 +303,8 @@ feature %q{
 
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Product distribution by Edible garden for Fuji apples:", "$1.00"],
-                             ["Product distribution by Edible garden for Garlic:",      "$2.00"]]
+    order_charges.should == [["Shipping:", "$0.00"],
+                             ["Distribution:", "$3.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment

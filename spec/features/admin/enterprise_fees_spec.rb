@@ -27,7 +27,7 @@ feature %q{
     page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
-    page.should have_selector "option[selected]", text: 'Flat Rate (per order)'
+    page.should have_selector "option[selected]", text: 'Flat Rate (per item)'
     page.should have_selector "input[value='#{amount}']"
   end
 
