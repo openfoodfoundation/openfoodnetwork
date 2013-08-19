@@ -65,7 +65,6 @@ feature %q{
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
     create(:shipping_method, zone: @zone)
 
-    @payment_method_all = create(:payment_method, :name => 'Cheque payment method', :description => 'Cheque payment method') #valid for any distributor
     @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributor => @distributor)
     @payment_method_alternative = create(:payment_method, :name => 'Alternative Distributor payment method', :distributor => @distributor_alternative)
   end
@@ -319,7 +318,6 @@ feature %q{
 
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
-    page.should have_selector     'label', :text => @payment_method_all.name
     page.should have_selector     'label', :text => @payment_method_distributor.name
     page.should_not have_selector 'label', :text => @payment_method_alternative.name
     click_checkout_continue_button
