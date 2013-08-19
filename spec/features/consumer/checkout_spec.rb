@@ -109,8 +109,6 @@ feature %q{
     table = page.find 'tbody#cart_adjustments'
     rows = table.all 'tr'
 
-    binding.pry
-
     rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
@@ -128,7 +126,29 @@ feature %q{
     page.should have_selector 'span.distribution-total', :text => '$54.00'
   end
 
-  #scenario "viewing delivery fees for mixed product and order cycle distribution"
+  scenario "attempting to purchase products that mix product and order cycle distribution" do
+    # Given some products, one with product distribution only, (@product1)
+    # one with order cycle distribution only, (@product_oc)
+    supplier = create(:supplier_enterprise)
+    product_oc = create(:simple_product, name: 'Feijoas')
+    @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [product_oc.master])
+    @order_cycle.coordinator_fees << create(:enterprise_fee, enterprise: @order_cycle.coordinator)
+
+    # And I am logged in
+    login_to_consumer_section
+
+    # When I add the first to my cart
+    click_link 'Fuji apples'
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    # And I attempt to add another
+    click_link 'Feijoas'
+
+    # Then I should see an error about changing order cycle
+    page.should have_content 'Please complete your order from your current order cycle before shopping in a different order cycle.'
+  end
 
   scenario "changing distributor updates delivery fees" do
     # Given two distributors and enterprise fees
