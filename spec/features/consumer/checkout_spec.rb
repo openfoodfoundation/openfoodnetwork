@@ -18,6 +18,8 @@ feature %q{
   end
 
   background do
+    set_feature_toggle :order_cycles, true
+
     @distributor = create(:distributor_enterprise, :name => 'Edible garden',
                           :address => create(:address,
                                              :address1 => '12 Bungee Rd',
@@ -37,11 +39,11 @@ feature %q{
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')    
 
-    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Shipping Method One', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Enterprise Fee One', :calculator => Spree::Calculator::FlatRate.new)
     @enterprise_fee_1.calculator.set_preference :amount, 1
     @enterprise_fee_1.calculator.save!
 
-    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Shipping Method Two', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Enterprise Fee Two', :calculator => Spree::Calculator::FlatRate.new)
     @enterprise_fee_2.calculator.set_preference :amount, 2
     @enterprise_fee_2.calculator.save!
 
@@ -53,6 +55,7 @@ feature %q{
     @product_2.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_2)
     @product_2.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_2)
 
+    # -- Shipping
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
@@ -85,7 +88,46 @@ feature %q{
     page.should have_selector 'span.distribution-total', :text => '$3.00'
   end
 
-  #scenario "viewing delivery fees for order cycle distribution"
+  scenario "viewing delivery fees for order cycle distribution" do
+    # Given an order cycle
+    make_order_cycle
+
+    # And I am logged in
+    login_to_consumer_section
+
+    # When I add some bananas and zucchini to my cart
+    click_link 'Bananas'
+    select @distributor_oc.name, :from => 'distributor_id'
+    select @order_cycle.name, :from => 'order_cycle_id'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Zucchini'
+    click_button 'Add To Cart'
+
+    # Then I should see a breakdown of my delivery fees:
+    table = page.find 'tbody#cart_adjustments'
+    rows = table.all 'tr'
+
+    binding.pry
+
+    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+      [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
+       ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
+       ["Bananas - packing fee by distributor Distributor 1", "$7.00", ""],
+       ["Bananas - transport fee by distributor Distributor 1", "$8.00", ""],
+       ["Bananas - admin fee by coordinator My coordinator", "$1.00", ""],
+       ["Bananas - sales fee by coordinator My coordinator", "$2.00", ""],
+       ["Zucchini - admin fee by supplier Supplier 2", "$5.00", ""],
+       ["Zucchini - sales fee by supplier Supplier 2", "$6.00", ""],
+       ["Zucchini - packing fee by distributor Distributor 1", "$7.00", ""],
+       ["Zucchini - transport fee by distributor Distributor 1", "$8.00", ""],
+       ["Zucchini - admin fee by coordinator My coordinator", "$1.00", ""],
+       ["Zucchini - sales fee by coordinator My coordinator", "$2.00", ""]]
+
+    page.should have_selector 'span.distribution-total', :text => '$54.00'
+  end
+
   #scenario "viewing delivery fees for mixed product and order cycle distribution"
 
   scenario "changing distributor updates delivery fees" do
@@ -215,5 +257,63 @@ feature %q{
     # page.should have_content('Your order will be available on:')
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
+  end
+
+
+  private
+
+  def make_order_cycle
+    @order_cycle = oc = create(:simple_order_cycle, coordinator: create(:distributor_enterprise, name: 'My coordinator'))
+
+    # Coordinator
+    coordinator_fee1 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'admin')
+    coordinator_fee2 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'sales')
+    oc.coordinator_fees << coordinator_fee1
+    oc.coordinator_fees << coordinator_fee2
+
+    # Suppliers
+    supplier1 = create(:supplier_enterprise, name: 'Supplier 1')
+    supplier2 = create(:supplier_enterprise, name: 'Supplier 2')
+    supplier_fee1 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'packing')
+    supplier_fee2 = create(:enterprise_fee, enterprise: supplier1, fee_type: 'transport')
+    supplier_fee3 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'admin')
+    supplier_fee4 = create(:enterprise_fee, enterprise: supplier2, fee_type: 'sales')
+    ex1 = create(:exchange, order_cycle: oc, sender: supplier1, receiver: oc.coordinator)
+    ex2 = create(:exchange, order_cycle: oc, sender: supplier2, receiver: oc.coordinator)
+    ExchangeFee.create!(exchange: ex1, enterprise_fee: supplier_fee1)
+    ExchangeFee.create!(exchange: ex1, enterprise_fee: supplier_fee2)
+    ExchangeFee.create!(exchange: ex2, enterprise_fee: supplier_fee3)
+    ExchangeFee.create!(exchange: ex2, enterprise_fee: supplier_fee4)
+
+    # Distributors
+    distributor1 = create(:distributor_enterprise, name: 'Distributor 1')
+    distributor2 = create(:distributor_enterprise, name: 'Distributor 2')
+    distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing')
+    distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport')
+    distributor_fee3 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'admin')
+    distributor_fee4 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'sales')
+    ex3 = create(:exchange, order_cycle: oc,
+                 sender: oc.coordinator, receiver: distributor1,
+                 pickup_time: 'time 0', pickup_instructions: 'instructions 0')
+    ex4 = create(:exchange, order_cycle: oc,
+                 sender: oc.coordinator, receiver: distributor2,
+                 pickup_time: 'time 1', pickup_instructions: 'instructions 1')
+    ExchangeFee.create!(exchange: ex3, enterprise_fee: distributor_fee1)
+    ExchangeFee.create!(exchange: ex3, enterprise_fee: distributor_fee2)
+    ExchangeFee.create!(exchange: ex4, enterprise_fee: distributor_fee3)
+    ExchangeFee.create!(exchange: ex4, enterprise_fee: distributor_fee4)
+
+    # Products
+    @distributor_oc = distributor1
+
+    @product_3 = create(:simple_product, name: 'Bananas', supplier: supplier1)
+    ex1.variants << @product_3.master
+    ex3.variants << @product_3.master
+    ex4.variants << @product_3.master
+
+    @product_4 = create(:simple_product, name: 'Zucchini', supplier: supplier2)
+    ex2.variants << @product_4.master
+    ex3.variants << @product_4.master
+    ex4.variants << @product_4.master
   end
 end

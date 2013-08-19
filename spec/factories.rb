@@ -7,16 +7,22 @@ FactoryGirl.define do
 
     after(:create) do |oc|
       # Suppliers
-      ex1 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
-      ex2 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      ex1 = create(:exchange, :order_cycle => oc,
+                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
+      ex2 = create(:exchange, :order_cycle => oc,
+                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
       ExchangeFee.create!(exchange: ex2,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
       # Distributors
-      ex3 = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
-      ex4 = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ex3 = create(:exchange, :order_cycle => oc,
+                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
+      ex4 = create(:exchange, :order_cycle => oc,
+                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
       ExchangeFee.create!(exchange: ex3,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
       ExchangeFee.create!(exchange: ex4,
@@ -29,6 +35,11 @@ FactoryGirl.define do
         Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
         exchange.variants << product.master
+      end
+
+      variants = [ex1, ex2].map(&:variants).flatten
+      [ex3, ex4].each do |exchange|
+        variants.each { |v| exchange.variants << v }
       end
     end
   end
@@ -84,12 +95,13 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  sequence(:calculator_amount)
   factory :enterprise_fee, :class => EnterpriseFee do
     sequence(:name) { |n| "Enterprise fee #{n}" }
+    sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
 
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
-    fee_type 'packing'
-    calculator { FactoryGirl.build(:weight_calculator) }
+    calculator { FactoryGirl.build(:calculator, preferred_amount: generate(:calculator_amount)) }
 
     after(:create) { |ef| ef.calculator.save! }
   end

@@ -78,7 +78,7 @@ class OrderCycle < ActiveRecord::Base
     # If there are multiple distributors with this variant, won't this mean that we get a fee charged for each of them?
     # We just want the one matching line_item.order.distributor
 
-    exchanges_carrying(line_item.variant).each do |exchange|
+    exchanges_carrying(line_item).each do |exchange|
       exchange.enterprise_fees.each do |enterprise_fee|
         role = exchange.incoming? ? 'supplier' : 'distributor'
         fees << {enterprise_fee: enterprise_fee,
@@ -105,7 +105,10 @@ class OrderCycle < ActiveRecord::Base
     "#{line_item.variant.product.name} - #{enterprise_fee.fee_type} fee by #{role} #{enterprise_fee.enterprise.name}"
   end
 
-  def exchanges_carrying(variant)
-    exchanges.with_variant(variant)
+  def exchanges_carrying(line_item)
+    coordinator = line_item.order.order_cycle.coordinator
+    distributor = line_item.order.distributor
+
+    exchanges.to_enterprises([coordinator, distributor]).with_variant(line_item.variant)
   end
 end
