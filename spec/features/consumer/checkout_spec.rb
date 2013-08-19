@@ -81,10 +81,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
-    table = page.find 'tbody#cart_adjustments'
-    rows = table.all 'tr'
-
-    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+    checkout_fees_table.should ==
       [['Product distribution by Edible garden for Fuji apples', '$1.00', ''],
        ['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
@@ -109,10 +106,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
-    table = page.find 'tbody#cart_adjustments'
-    rows = table.all 'tr'
-
-    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+    checkout_fees_table.should ==
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
        ["Bananas - packing fee by distributor Distributor 1", "$7.00", ""],
@@ -171,10 +165,7 @@ feature %q{
     page.find("a#delete_line_item_#{line_item.id}").click
 
     # Then I should see fees for only the garlic
-    table = page.find 'tbody#cart_adjustments'
-    rows = table.all 'tr'
-
-    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }.should ==
+    checkout_fees_table.should ==
       [['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
     page.should have_selector 'span.distribution-total', :text => '$2.00'
@@ -365,5 +356,11 @@ feature %q{
     ex2.variants << @product_4.master
     ex3.variants << @product_4.master
     ex4.variants << @product_4.master
+  end
+
+  def checkout_fees_table
+    table = page.find 'tbody#cart_adjustments'
+    rows = table.all 'tr'
+    rows.map { |row| row.all('td').map { |cell| cell.text.strip } }
   end
 end
