@@ -15,10 +15,10 @@ Spree::PaymentMethod.class_eval do
       where('distributor_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
     end
   }
-end
 
-def has_distributor?(distributor)
-  self.distributor == distributor
+  def has_distributor?(distributor)
+    self.distributor == distributor
+  end
 end
 
 # Ensure that all derived classes also allow distributor_id

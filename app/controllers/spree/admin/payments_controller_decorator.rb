@@ -15,6 +15,7 @@ Spree::Admin::PaymentsController.class_eval do
   # Only show payments for the order's distributor
   def filter_payment_methods
     @payment_methods = @payment_methods.select{ |pm| pm.has_distributor? @order.distributor}
+    @payment_method ||= @payment_methods.first
   end
 
 end
