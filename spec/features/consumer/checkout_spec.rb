@@ -39,11 +39,11 @@ feature %q{
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')    
 
-    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Enterprise Fee One', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Enterprise Fee One', :calculator => Spree::Calculator::PerItem.new)
     @enterprise_fee_1.calculator.set_preference :amount, 1
     @enterprise_fee_1.calculator.save!
 
-    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Enterprise Fee Two', :calculator => Spree::Calculator::FlatRate.new)
+    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Enterprise Fee Two', :calculator => Spree::Calculator::PerItem.new)
     @enterprise_fee_2.calculator.set_preference :amount, 2
     @enterprise_fee_2.calculator.save!
 
@@ -175,9 +175,9 @@ feature %q{
     # Given two distributors and enterprise fees
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
-    ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+    ef1 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
     ef1.calculator.set_preference :amount, 1.23; ef1.calculator.save!
-    ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+    ef2 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
     ef2.calculator.set_preference :amount, 2.34; ef2.calculator.save!
 
     # And two products both available from both distributors

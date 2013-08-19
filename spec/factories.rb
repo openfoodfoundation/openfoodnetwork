@@ -103,7 +103,7 @@ FactoryGirl.define do
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
 
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
-    calculator { FactoryGirl.build(:calculator, preferred_amount: amount || generate(:calculator_amount)) }
+    calculator { Spree::Calculator::PerItem.new(preferred_amount: amount || generate(:calculator_amount)) }
 
     after(:create) { |ef| ef.calculator.save! }
   end
