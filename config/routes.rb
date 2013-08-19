@@ -1,5 +1,5 @@
 Openfoodweb::Application.routes.draw do
-  root :to => 'spree/home#index'
+  root :to => 'home#temp_landing_page'
 
   resources :enterprises do
     collection do
