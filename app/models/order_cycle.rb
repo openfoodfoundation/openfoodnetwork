@@ -92,7 +92,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def create_adjustment_for_fee(line_item, enterprise_fee, label, role)
-    a = enterprise_fee.create_adjustment(label, line_item.order, line_item, true)
+    a = enterprise_fee.create_locked_adjustment(label, line_item.order, line_item, true)
     AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
   end
 

@@ -22,4 +22,16 @@ class EnterpriseFee < ActiveRecord::Base
     order.adjustments.where(originator_type: 'EnterpriseFee', source_type: 'Spree::LineItem').destroy_all
   end
 
+  # Create an adjustment that starts as locked. Preferable to making an adjustment and locking it since
+  # the unlocked adjustment tends to get hit by callbacks before we have a chance to lock it.
+  def create_locked_adjustment(label, target, calculable, mandatory=false)
+    amount = compute_amount(calculable)
+    return if amount == 0 && !mandatory
+    target.adjustments.create({ :amount => amount,
+                                :source => calculable,
+                                :originator => self,
+                                :label => label,
+                                :mandatory => mandatory,
+                                :locked => true}, :without_protection => true)
+  end
 end

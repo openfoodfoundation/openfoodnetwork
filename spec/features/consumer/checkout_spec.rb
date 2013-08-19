@@ -51,6 +51,10 @@ feature %q{
     @product_1.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_1)
     @product_1.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_1)
 
+    @product_1a = create(:product, :name => 'Sundowner apples')
+    @product_1a.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_1)
+    @product_1a.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_1)
+
     @product_2 = create(:product, :name => 'Garlic')
     @product_2.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_2)
     @product_2.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_2)
@@ -169,6 +173,36 @@ feature %q{
       [['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
     page.should have_selector 'span.distribution-total', :text => '$2.00'
+  end
+
+  scenario "adding products with differing quantities produces correct fees" do
+    # Given I am logged in
+    login_to_consumer_section
+
+    # When I add two products to my cart that share the same enterprise fee
+    click_link 'Fuji apples'
+    select @distributor.name, :from => 'distributor_id'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Sundowner apples'
+    click_button 'Add To Cart'
+
+    # Then I should have some delivery fees
+    checkout_fees_table.should ==
+      [['Product distribution by Edible garden for Fuji apples',      '$1.00', ''],
+       ['Product distribution by Edible garden for Sundowner apples', '$1.00', '']]
+    page.should have_selector 'span.distribution-total', :text => '$2.00'
+
+    # And I update the quantity of one of them
+    fill_in 'order_line_items_attributes_0_quantity', with: 2
+    click_button 'Update'
+
+    # Then I should see updated delivery fees
+    checkout_fees_table.should ==
+      [['Product distribution by Edible garden for Fuji apples',      '$2.00', ''],
+       ['Product distribution by Edible garden for Sundowner apples', '$1.00', '']]
+    page.should have_selector 'span.distribution-total', :text => '$3.00'
   end
 
   scenario "changing distributor updates delivery fees" do
