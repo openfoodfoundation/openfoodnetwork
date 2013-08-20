@@ -11,7 +11,7 @@ Order for: <%= @order.bill_address.full_name %>
 <% end %>
 ============================================================
 Subtotal: <%= @order.display_item_total %>
-<% @order.adjustments.eligible.each do |adjustment| %>
+<% checkout_adjustments_for_summary(@order).each do |adjustment| %>
   <%= raw(adjustment.label) %> <%= adjustment.display_amount %>
 <% end %>
 Order Total: <%= @order.display_total %>

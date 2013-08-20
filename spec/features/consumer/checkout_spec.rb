@@ -324,13 +324,19 @@ feature %q{
     click_checkout_continue_button
 
     # -- Checkout: Order complete
-    page.should have_content('Your order has been processed successfully')
-    page.should have_content(@payment_method_all.description)
+    page.should have_content 'Your order has been processed successfully'
+    page.should have_content @payment_method_all.description
 
+    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '$3.00'
 
     # page.should have_content('Your order will be available on:')
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
+
+    # -- Checkout: Email
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Distribution \$3.00/
   end
 
 

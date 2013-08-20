@@ -7,6 +7,8 @@ module EnterprisesDistributorInfoRichTextFeature
     initializer 'enterprises_distributor_info_rich_text_feature.mailer', :after => :load_config_initializers do |app|
       if OpenFoodWeb::FeatureToggle.enabled? :enterprises_distributor_info_rich_text
         ::Spree::OrderMailer.class_eval do
+          helper CheckoutHelper
+
           def confirm_email(order, resend = false)
             find_order(order)
             subject = (resend ? "[#{t(:resend).upcase}] " : '')
