@@ -8,6 +8,10 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
+  background do
+    create(:distributor_enterprise, :name => "Edible garden")
+  end
+
   # How should this work with distributors/order cycles?
   # - No distributor or OC selected - all shown
   # - Distributor selected - any from that distributor in any OC
@@ -16,7 +20,7 @@ feature %q{
 
   # Also keep specs for distributors outside order cycles.
 
-  scenario "viewing product counts when no distributor or order cycle is selected" do
+  scenario "viewing product counts when no distributor or order cycle is selected", :future => true do
     # Given some taxons and some products
     taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
     taxonomy_root = taxonomy.root
@@ -32,6 +36,9 @@ feature %q{
     # When I visit the home page
     visit spree.root_path
 
+    # and proceed to the shop front
+    click_on "Edible garden"
+
     # Then I should see product counts next to the taxons
     page.should have_selector 'nav#taxonomies li', :text => 'Taxon one (1)'
     page.should have_selector 'nav#taxonomies li', :text => 'Taxon two (2)'
@@ -39,7 +46,7 @@ feature %q{
   end
 
 
-  scenario "viewing product counts when a distributor is selected" do
+  scenario "viewing product counts when a distributor is selected", :future => true do
     # Given some taxons and some products under distributors
     taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
     taxonomy_root = taxonomy.root
@@ -81,7 +88,7 @@ feature %q{
       end
     end
 
-    scenario "viewing product counts when an order cycle is selected" do
+    scenario "viewing product counts when an order cycle is selected", :future => true do
       # Given some taxons and some products and some order cycles
       taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
       taxonomy_root = taxonomy.root
@@ -104,6 +111,7 @@ feature %q{
 
       # When I visit the home page and select my order cycle
       visit root_path
+      click_on "Edible garden"
       choose oc2.name
       click_button 'Choose Order Cycle'
       page.should have_content 'Your order cycle has been selected.'
@@ -114,7 +122,7 @@ feature %q{
       page.should have_selector 'nav#taxonomies li', :text => 'Taxon three (2)'
     end
 
-    scenario "viewing product counts when both a distributor and an order cycle are selected" do
+    scenario "viewing product counts when both a distributor and an order cycle are selected", :future => true do
       # Given some taxons and some products under distributors
       taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
       taxonomy_root = taxonomy.root
@@ -145,6 +153,7 @@ feature %q{
       within('nav#filters') { click_link my_distributor.name }
       page.should have_content 'You are shopping at My Distributor'
       visit root_path
+      click_on "Edible garden"
       choose oc2.name
       click_button 'Choose Order Cycle'
       page.should have_content 'Your order cycle has been selected.'

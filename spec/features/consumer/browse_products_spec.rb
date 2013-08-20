@@ -32,6 +32,7 @@ feature %q{
       # When I select the distributor
       visit spree.select_distributor_order_path(d)
       visit spree.root_path
+      click_on "Melb Uni Co-op"
 
       # Then I should see the name of the distributor that I've selected
       page.should have_content 'You are shopping at Melb Uni Co-op'
@@ -54,8 +55,7 @@ feature %q{
 
       # Then I should see products split by local/remote distributor
       # on the home page, the products page, the search results page and the taxon page
-      [spree.root_path,
-       spree.products_path,
+      [spree.products_path,
        spree.products_path(:keywords => 'Product'),
        spree.nested_taxons_path(taxon.permalink)
       ].each do |path|
@@ -146,7 +146,7 @@ feature %q{
       taxonomy = Spree::Taxonomy.find_by_name('Products') || create(:taxonomy, :name => 'Products')
       taxonomy_root = taxonomy.root
       taxon = create(:taxon, :name => 'Taxon one', :parent_id => taxonomy_root.id)
-      d1 = create(:distributor_enterprise)
+      d1 = create(:distributor_enterprise, :name => "Melb Uni Co-op")
       d2 = create(:distributor_enterprise)
       p1 = create(:product, :taxons => [taxon])
       p2 = create(:product, :taxons => [taxon])
@@ -155,13 +155,13 @@ feature %q{
 
       # When I select the first order cycle
       visit spree.root_path
+      click_on "Melb Uni Co-op"
       choose oc1.name
       click_button 'Choose Order Cycle'
 
       # Then I should see the products split by local/remote order cycle
       # on the home page, the products page, the search results page and the taxon page
-      [spree.root_path,
-       spree.products_path,
+      [spree.products_path,
        spree.products_path(:keywords => 'Product'),
        spree.nested_taxons_path(taxon.permalink)
       ].each do |path|

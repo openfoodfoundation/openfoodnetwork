@@ -10,7 +10,7 @@ feature %q{
 
   scenario "viewing a list of distributors in the sidebar" do
     # Given some distributors
-    d1 = create(:distributor_enterprise)
+    d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
     d3 = create(:distributor_enterprise)
 
@@ -20,6 +20,9 @@ feature %q{
     # When I go to the home page
     visit spree.root_path
 
+    # and proceed to the shop front
+    click_on "Edible garden"
+
     # Then I should see a list containing the distributors that have products
     page.should have_selector 'a', :text => d1.name
     page.should have_selector 'a', :text => d2.name
@@ -28,7 +31,7 @@ feature %q{
 
   scenario "viewing a list of distributors (with active products) in the sidebar when there's some inactive distributors" do
     # Given some distributors
-    d1 = create(:distributor_enterprise)
+    d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
     d3 = create(:distributor_enterprise)
     d4 = create(:distributor_enterprise)
@@ -45,6 +48,9 @@ feature %q{
     # When I go to the home page
     visit spree.root_path
 
+    # and proceed to the shop front
+    click_on "Edible garden"
+
     # Then I should see a list containing all the distributors that have active products in stock
     page.should have_selector 'a', :text => d1.name
     page.should_not have_selector 'a', :text => d2.name #has no products
@@ -60,7 +66,7 @@ feature %q{
 
   scenario "viewing a list of all distributors" do
     # Given some distributors
-    d1 = create(:distributor_enterprise)
+    d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
     d3 = create(:distributor_enterprise)
 
@@ -70,6 +76,7 @@ feature %q{
 
     # When I go to the distributors listing page
     visit spree.root_path
+    click_on "Edible garden"
     click_button 'Browse All Distributors'
 
     # Then I should see a list containing all the distributors
@@ -81,7 +88,7 @@ feature %q{
 
   scenario "viewing a distributor" do
     # Given some distributors with products
-    d1 = create(:distributor_enterprise, :long_description => "<p>Hello, world!</p>")
+    d1 = create(:distributor_enterprise, :name => "Edible garden", :long_description => "<p>Hello, world!</p>")
     d2 = create(:distributor_enterprise)
     p1 = create(:product, :distributors => [d1])
     p2 = create(:product, :distributors => [d2])

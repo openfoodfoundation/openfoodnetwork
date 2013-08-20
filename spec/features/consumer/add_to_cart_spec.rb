@@ -27,7 +27,7 @@ feature %q{
       Spree::Order.last.line_items.should be_empty
     end
 
-    scenario "adding the first product to the cart" do
+    scenario "adding the first product to the cart", :future => true do
       # Given a product, some distributors and a defined shipping cost
       d1 = create(:distributor_enterprise, :name => "Green Grass")
       d2 = create(:distributor_enterprise, :name => "AusFarmers United")
@@ -42,11 +42,11 @@ feature %q{
 
       # When I choose a distributor
       visit spree.root_path
-      click_link d2.name
+      click_on "AusFarmers United"
 
       # And I add an item to my cart from a different distributor
       visit spree.product_path p
-      select d1.name, :from => 'distributor_id'
+      select(d1.name, :from => 'distributor_id')
       click_button 'Add To Cart'
 
       # Then the correct totals should be displayed

@@ -57,7 +57,7 @@ RSpec.configure do |config|
 
   # ## Filters
   #
-  config.filter_run_excluding :skip => true
+  config.filter_run_excluding :skip => true, :future => true
 
   config.before(:each) do
     Spree::Address.any_instance.stub(:geocode).and_return([1,1])

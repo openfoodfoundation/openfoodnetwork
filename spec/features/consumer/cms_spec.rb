@@ -8,16 +8,8 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
-  scenario "viewing the home page" do
-    # Given a CMS home page
-    create(:cms_page, content: 'Home page content')
-
-    # When I visit the home page
-    visit spree.root_path
-
-    # Then I should see my content
-    page.should have_content 'Home page content'
+  background do
+    create(:distributor_enterprise, :name => 'Edible garden')
   end
 
   scenario "viewing another products listing page does not display home page content" do
@@ -41,6 +33,9 @@ feature %q{
     # When I visit the home page
     visit spree.root_path
 
+    # and proceed to the shop front
+    click_on "Edible garden"
+
     # Then I should see a menu with these pages
     page.should have_selector 'ul#main-nav-bar li', :text => 'One'
     page.should have_selector 'ul#main-nav-bar li', :text => 'Two'
@@ -56,6 +51,7 @@ feature %q{
 
     # When I go to one of the pages
     visit spree.root_path
+    click_on "Edible garden"
     click_link 'Two'
 
     # Then I should see the page

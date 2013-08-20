@@ -74,6 +74,7 @@ feature %q{
   scenario "viewing delivery fees for product distribution" do
     # Given I am logged in
     login_to_consumer_section
+    click_link "Edible garden"
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -98,6 +99,7 @@ feature %q{
 
     # And I am logged in
     login_to_consumer_section
+    click_link "FruitAndVeg"
 
     # When I add some bananas and zucchini to my cart
     click_link 'Bananas'
@@ -113,14 +115,14 @@ feature %q{
     checkout_fees_table.should ==
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
-       ["Bananas - packing fee by distributor Distributor 1", "$7.00", ""],
-       ["Bananas - transport fee by distributor Distributor 1", "$8.00", ""],
+       ["Bananas - packing fee by distributor FruitAndVeg", "$7.00", ""],
+       ["Bananas - transport fee by distributor FruitAndVeg", "$8.00", ""],
        ["Bananas - admin fee by coordinator My coordinator", "$1.00", ""],
        ["Bananas - sales fee by coordinator My coordinator", "$2.00", ""],
        ["Zucchini - admin fee by supplier Supplier 2", "$5.00", ""],
        ["Zucchini - sales fee by supplier Supplier 2", "$6.00", ""],
-       ["Zucchini - packing fee by distributor Distributor 1", "$7.00", ""],
-       ["Zucchini - transport fee by distributor Distributor 1", "$8.00", ""],
+       ["Zucchini - packing fee by distributor FruitAndVeg", "$7.00", ""],
+       ["Zucchini - transport fee by distributor FruitAndVeg", "$8.00", ""],
        ["Zucchini - admin fee by coordinator My coordinator", "$1.00", ""],
        ["Zucchini - sales fee by coordinator My coordinator", "$2.00", ""]]
 
@@ -137,6 +139,7 @@ feature %q{
 
     # And I am logged in
     login_to_consumer_section
+    click_link "Edible garden"
 
     # When I add the first to my cart
     click_link 'Fuji apples'
@@ -154,6 +157,7 @@ feature %q{
   scenario "removing a product from cart removes its fees", js: true do
     # Given I am logged in
     login_to_consumer_section
+    click_link "Edible garden"
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -178,6 +182,7 @@ feature %q{
   scenario "adding products with differing quantities produces correct fees" do
     # Given I am logged in
     login_to_consumer_section
+    click_link "Edible garden"
 
     # When I add two products to my cart that share the same enterprise fee
     click_link 'Fuji apples'
@@ -207,7 +212,7 @@ feature %q{
 
   scenario "changing distributor updates delivery fees" do
     # Given two distributors and enterprise fees
-    d1 = create(:distributor_enterprise)
+    d1 = create(:distributor_enterprise, :name => "FruitAndVeg")
     d2 = create(:distributor_enterprise)
     ef1 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
     ef1.calculator.set_preference :amount, 1.23; ef1.calculator.save!
@@ -225,6 +230,7 @@ feature %q{
     # When I add the first product to my cart with the first distributor
     #visit spree.root_path
     login_to_consumer_section
+    click_link "FruitAndVeg"
     click_link p1.name
     select d1.name, :from => 'distributor_id'
     click_button 'Add To Cart'
@@ -245,6 +251,7 @@ feature %q{
   scenario "adding a product to cart after emptying cart shows correct delivery fees" do
     # When I add a product to my cart
     login_to_consumer_section
+    click_link "Edible garden"
     click_link @product_1.name
     select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
@@ -265,6 +272,7 @@ feature %q{
 
   scenario "buying a product", :js => true do
     login_to_consumer_section
+    click_link "Edible garden"
 
     click_link 'Fuji apples'
     select @distributor.name, :from => 'distributor_id'
@@ -352,8 +360,8 @@ feature %q{
     ExchangeFee.create!(exchange: ex2, enterprise_fee: supplier_fee4)
 
     # Distributors
-    distributor1 = create(:distributor_enterprise, name: 'Distributor 1')
-    distributor2 = create(:distributor_enterprise, name: 'Distributor 2')
+    distributor1 = FactoryGirl.create(:distributor_enterprise, name: "FruitAndVeg")
+    distributor2 = FactoryGirl.create(:distributor_enterprise, name: "MoreFreshStuff")
     distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)
     distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport', amount: 8)
     distributor_fee3 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'admin', amount: 9)

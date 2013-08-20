@@ -8,6 +8,10 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
+  background do
+    create(:distributor_enterprise, :name => "Edible garden")
+  end
+
   scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer" do
     # Given some suppliers
     s1 = create(:supplier_enterprise)
@@ -26,6 +30,9 @@ feature %q{
 
     # When I go to the home page
     visit spree.root_path
+
+    # and proceed to the shop front
+    click_on "Edible garden"
 
     # Then I should see a list containing all the suppliers that have active products in stock
     page.should have_selector 'a', :text => s1.name
@@ -52,6 +59,7 @@ feature %q{
 
     # When I go to the suppliers listing page
     visit spree.root_path
+    click_on "Edible garden"
     click_button 'Browse All Suppliers'
 
     # Then I should see a list containing all the suppliers
@@ -71,6 +79,7 @@ feature %q{
 
     # When I select the first supplier
     visit spree.root_path
+    click_on "Edible garden"
     click_link s1.name
 
     # Then I should see the supplier details
