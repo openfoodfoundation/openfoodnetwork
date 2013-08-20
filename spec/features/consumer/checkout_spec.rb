@@ -63,7 +63,8 @@ feature %q{
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
-    create(:shipping_method, zone: @zone)
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new)
+    sm.calculator.set_preference(:amount, 0); sm.calculator.save!
 
     @payment_method_all = create(:payment_method, :name => 'Cheque payment method', :description => 'Cheque payment method') #valid for any distributor
     @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributor => @distributor)
