@@ -28,7 +28,7 @@
             .row.distributor-link-row
               .large-12.columns
                 = succeed ',' do
-                  = link_to "<strong>#{distributor.name}</strong>".html_safe, enterprise_path(distributor)
+                  = link_to "<strong>#{distributor.name}</strong>".html_safe, shop_enterprise_path(distributor)
 
                 %span.secondary= distributor.city
     %footer
