@@ -1,5 +1,5 @@
 module HtmlHelper
   def strip_html(html)
-    strip_tags(html).gsub(/&nbsp;/i, ' ').gsub(/&amp;/i, '&')
+    strip_tags(html).andand.gsub(/&nbsp;/i, ' ').andand.gsub(/&amp;/i, '&')
   end
 end

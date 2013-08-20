@@ -158,18 +158,6 @@ FactoryGirl.modify do
     state { Spree::State.find_by_name 'Victoria' }
     country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
   end
-
-  factory :payment  do
-    ignore do
-      distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
-    end
-    payment_method { FactoryGirl.create(:payment_method, distributor: distributor) }
-  end
-
-  factory :payment_method do
-    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) } #Always need a distributor
-  end
-
 end
 
 
