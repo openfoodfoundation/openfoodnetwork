@@ -43,8 +43,7 @@ module AuthenticationWorkflow
 
     user.spree_roles << user_role
 
-    visit spree.root_path
-    click_link 'Login'
+    visit spree.login_path
     fill_in 'spree_user_email', :with => 'someone@ofw.org'
     fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'

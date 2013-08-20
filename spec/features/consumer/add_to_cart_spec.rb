@@ -29,8 +29,8 @@ feature %q{
 
     scenario "adding the first product to the cart" do
       # Given a product, some distributors and a defined shipping cost
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
+      d1 = create(:distributor_enterprise, :name => "Green Grass")
+      d2 = create(:distributor_enterprise, :name => "AusFarmers United")
       create(:product, :distributors => [d2])
       p = create(:product, :price => 12.34)
       create(:product_distribution, :product => p, :distributor => d1)
