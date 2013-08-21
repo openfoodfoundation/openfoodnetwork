@@ -16,7 +16,6 @@ namespace :openfoodweb do
         country = Spree::Country.find_by_name('Australia')
         Spree::ZoneMember.create(:zone => zone, :zoneable => country)
         FactoryGirl.create(:shipping_method, :zone => zone)
-        FactoryGirl.create(:payment_method, :environment => 'development')
       end
 
 
@@ -93,6 +92,13 @@ namespace :openfoodweb do
       unless EnterpriseFee.count > 1
         Enterprise.is_distributor.each do |distributor|
           FactoryGirl.create(:enterprise_fee, enterprise: distributor)
+        end
+      end
+
+      # -- Enterprise Payment Methods
+      unless Spree::PaymentMethod.count > 1
+        Enterprise.is_distributor.each do |distributor|
+          FactoryGirl.create(:payment_method, distributor: distributor, name: "Cheque (#{distributor.name})", :environment => 'development')
         end
       end
 
