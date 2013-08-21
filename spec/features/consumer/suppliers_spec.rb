@@ -12,7 +12,7 @@ feature %q{
     create(:distributor_enterprise, :name => "Edible garden")
   end
 
-  scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer" do
+  scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer", :future => true do
     # Given some suppliers
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
@@ -47,7 +47,7 @@ feature %q{
     page.should have_selector "#supplier_filter input[value='Browse All Suppliers']"
   end
 
-  scenario "viewing a list of all suppliers" do
+  scenario "viewing a list of all suppliers", :future => true do
     # Given some suppliers
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
@@ -68,7 +68,7 @@ feature %q{
     page.should have_selector '#content a', :text => s3.name
   end
 
-  scenario "viewing products provided by a supplier" do
+  scenario "viewing products provided by a supplier", :future => true do
     # Given a supplier with a product
     s1 = create(:supplier_enterprise, :name => 'Murrnong', :long_description => "<p>Hello, world!</p>")
     p1 = create(:product, :supplier => s1)

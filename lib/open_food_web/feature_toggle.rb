@@ -9,7 +9,7 @@ module OpenFoodWeb
     def self.features
       {eaterprises: true,
        local_organics: false,
-       order_cycles: false,
+       order_cycles: true,
        multi_cart: false,
        enterprises_distributor_info_rich_text: true}
     end

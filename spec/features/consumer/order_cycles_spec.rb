@@ -31,7 +31,7 @@ feature %q{
       end
     end
 
-    scenario "viewing order cycle and distributor choices" do
+    scenario "viewing order cycle and distributor choices", :future => true do
       # When I go to the product listing page
       visit spree.products_path
 
@@ -51,7 +51,7 @@ feature %q{
       page.should have_selector "#distribution-choice", text: 'You have not yet picked where you will get your order from.'
     end
 
-    context "without javascript" do
+    context "without javascript", :future => true do
       scenario "selecting a distributor highlights valid order cycle choices" do
         # When I go to the product listing page
         visit spree.products_path
@@ -81,7 +81,7 @@ feature %q{
         end
       end
 
-      scenario "selecting an order cycle highlights valid distributor choices" do
+      scenario "selecting an order cycle highlights valid distributor choices", :future => true do
         # When I go to the product listing page
         visit spree.products_path
 
@@ -142,7 +142,7 @@ feature %q{
         page.should_not have_selector "input[value='#{@oc1.id}'][checked='checked']"
       end
 
-      scenario "selecting both an order cycle and distributor" do
+      scenario "selecting both an order cycle and distributor", :future => true do
         # When I go to the products listing page
         visit spree.products_path
 

@@ -8,7 +8,7 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing a list of distributors in the sidebar" do
+  scenario "viewing a list of distributors in the sidebar", :future => true do
     # Given some distributors
     d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
@@ -29,7 +29,7 @@ feature %q{
     page.should_not have_selector 'a', :text => d3.name
   end
 
-  scenario "viewing a list of distributors (with active products) in the sidebar when there's some inactive distributors" do
+  scenario "viewing a list of distributors (with active products) in the sidebar when there's some inactive distributors", :future => true do
     # Given some distributors
     d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
@@ -64,7 +64,7 @@ feature %q{
     page.should have_selector "#distributor_filter input[value='Browse All Distributors']"
   end
 
-  scenario "viewing a list of all distributors" do
+  scenario "viewing a list of all distributors", :future => true do
     # Given some distributors
     d1 = create(:distributor_enterprise, :name => "Edible garden")
     d2 = create(:distributor_enterprise)
