@@ -27,7 +27,7 @@ feature %q{
       fill_in 'login_spree_user_email', :with => 'spree123@example.com'
       fill_in 'login_spree_user_password', :with => 'spree123'
       find(:xpath, '//input[contains(@value, "Login")][contains(@type, "submit")]').click
-      sleep 3
+      sleep 4
       page.should_not have_content("Invalid email or password")
       page.should have_content("Sign Out")
     end
@@ -36,7 +36,7 @@ feature %q{
       fill_in 'login_spree_user_email', :with => 'spree123@example.com.WRONG'
       fill_in 'login_spree_user_password', :with => 'spree123_WRONG'
       find(:xpath, '//input[contains(@value, "Login")][contains(@type, "submit")]').click
-      sleep 3
+      sleep 4
       page.should have_content("Invalid email or password")
       page.should_not have_content("Sign Out")
     end
