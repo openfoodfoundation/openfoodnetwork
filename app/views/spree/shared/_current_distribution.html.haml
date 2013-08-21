@@ -1,9 +1,0 @@
-- if current_distributor || current_order_cycle
-  %li#current-distribution{'data-hook' => ''}
-    You are shopping
-    - if current_distributor
-      at
-      = link_to current_distributor.name, root_path
-    - if current_order_cycle
-      in
-      = link_to current_order_cycle.name, root_path

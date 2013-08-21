@@ -35,7 +35,7 @@ feature %q{
       click_on "Melb Uni Co-op"
 
       # Then I should see the name of the distributor that I've selected
-      page.should have_content 'You are shopping at Melb Uni Co-op'
+      page.should have_content 'Melb Uni Co-op'
       page.should_not have_selector 'div.distributor-description'
     end
 
@@ -137,7 +137,7 @@ feature %q{
       click_button 'Add To Cart'
 
       # Then I should see the name of the distributor and order cycle that I've selected
-      page.should have_content 'You are shopping at Melb Uni Co-op in Bulk Foods'
+      page.should have_content 'Melb Uni Co-op'
       page.should_not have_selector 'div.distributor-description'
     end
 

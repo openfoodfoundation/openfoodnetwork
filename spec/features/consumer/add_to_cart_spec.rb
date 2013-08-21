@@ -87,7 +87,7 @@ feature %q{
         visit spree.cart_path
         page.should have_selector 'h4 a', :text => p1.name
         page.should have_selector 'h4 a', :text => p2.name
-        page.should have_selector "#current-distribution a", :text => d2.name
+        page.should have_selector "#logo h1 a", :text => d2.name
       end
 
       it "when the only valid distributor is the chosen one, does not allow the user to choose a distributor" do
@@ -135,7 +135,7 @@ feature %q{
         click_button 'Add To Cart'
 
         # Then My distributor should have changed
-        page.should have_selector "#current-distribution a", :text => d2.name
+        page.should have_selector "#logo h1 a", :text => d2.name
       end
 
       it "does not allow the user to add a product from a distributor that cannot supply the cart's products" do
@@ -295,8 +295,7 @@ feature %q{
         visit spree.cart_path
         page.should have_selector 'h4 a', :text => p1.name
         page.should have_selector 'h4 a', :text => p2.name
-        page.should have_selector "#current-distribution a", :text => d2.name
-        page.should have_selector "#current-distribution a", :text => oc2.name
+        page.should have_selector "#logo h1 a", :text => d2.name
       end
 
       it "when the only valid order cycle is the chosen one, does not allow the user to choose an order cycle" do
@@ -353,7 +352,7 @@ feature %q{
         click_button 'Add To Cart'
 
         # Then my distributor should have changed
-        page.should have_selector "#current-distribution a", :text => d2.name
+        page.should have_selector "#logo h1 a", :text => d2.name
       end
 
       it "does not allow the user to add a product from an order cycle that cannot supply the cart's products" do

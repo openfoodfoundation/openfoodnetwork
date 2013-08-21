@@ -16,6 +16,7 @@ table {
 }
 
 #header #logo {
+  margin-top: 10px;
   padding-top: 10px;
 }
 
@@ -294,4 +295,8 @@ div#eft-payment-alert {
 /* Cleared div for clearing previous floating elements */
 div.cleared {
   clear: both;
+}
+
+#link-to-login {
+  padding: 10px;
 }
