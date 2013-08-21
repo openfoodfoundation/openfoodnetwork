@@ -37,28 +37,29 @@ staging:
   regions:
     - name: "Inner Melbourne"
       distributors:
-      - name: "AB Organics"
-      - name: "Biodynamic Marketing"
-      - name: "Carefully selected"
+      - name: "Ballantyne (Thornbury)"
+      - name: "Childcare Center Near You"
+      - name: "Northcote Bulk Foods Coop :)"
 
     - name: "South East Melbourne"
       distributors:
-      - name: "Common Fields"
-      - name: "Great Western Olives"
-      - name: "Kindred Organic"
-      - name: "LO"
+      - name: "Delivery (Cafes / Restaurants only)"
+      - name: "Grow Lightly (Inverloch)"
+      - name: "Grow Lightly (Korumburra)"
+      - name: "Grow Lightly (Leongatha)"
 
     - name: "Mildura"
       distributors:
-      - name: "Manna Hill Olives"
-      - name: "Matt's Patch"
-      - name: "Old McDonald's Daughter"
+      - name: "LO"
+      - name: "Murrnong"
+      - name: "Murrnong (Violet Town)"
 
     - name: "South East Gippsland"
       distributors:
-      - name: "Paddock to Plate"
-      - name: "Powlett Hill"
-      - name: "Urban Honey Co"
+      - name: "Neighbourhood Coop"
+      - name: "Northcote Bulk Foods Coop :)"
+      - name: "Murundaka (Heidelberg)"
+      - name: "PepperTree Place (Coburg)"
 
 production:
   regions:

@@ -15,8 +15,8 @@ class HomeController < ApplicationController
       region[:name] = region_data["name"]
       distributors = []
       region_data["distributors"].each do |distributor_data|
-        distributor = Enterprise.find_by_name(distributor_data["name"])
-        distributors << distributor unless distributor.nil?
+        enterprise = Enterprise.find_by_name(distributor_data["name"])
+        distributors << enterprise if !enterprise.nil? && enterprise.is_distributor
       end
       region[:distributors] = distributors
       @regions << region
