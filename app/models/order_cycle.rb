@@ -24,7 +24,7 @@ class OrderCycle < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      where('coordinator_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+      where('coordinator_id IN (?)', user.enterprises)
     end
   }
 

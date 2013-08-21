@@ -136,6 +136,10 @@ module Spree
         it "should be able to create OrderCycles" do
           should have_ability([:create], for: OrderCycle)
         end
+
+        it "should be able to read EnterpriseFees" do
+          should have_ability([:admin, :index, :read], for: EnterpriseFee)
+        end
       end
 
       context 'Enterprise manager' do

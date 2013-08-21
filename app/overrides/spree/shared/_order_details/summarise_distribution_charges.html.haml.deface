@@ -1,0 +1,8 @@
+/ replace_contents 'tfoot#order-charges'
+
+- checkout_adjustments_for_summary(@order).each do |adjustment|
+  %tr.total
+    %td{:colspan => "4"}
+      %strong= adjustment.label
+    %td.total
+      %span= adjustment.display_amount.to_html

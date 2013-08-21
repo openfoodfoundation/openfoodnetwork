@@ -61,7 +61,7 @@ Spree::Product.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('supplier_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+      where('supplier_id IN (?)', user.enterprises)
     end
   }
 

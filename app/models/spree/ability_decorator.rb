@@ -40,7 +40,10 @@ class AbilityDecorator
 
       can [:create], OrderCycle
 
-      can [:index, :read], EnterpriseFee
+      can [:admin, :index, :read], EnterpriseFee do |enterprise_fee|
+        user.enterprises.include? enterprise_fee.enterprise
+      end
+
       can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
       can [:admin, :index, :read, :create, :edit, :update], Exchange
       can [:admin, :index, :read, :create, :edit, :update], ExchangeFee

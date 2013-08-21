@@ -49,7 +49,7 @@ module Admin
     end
 
     def collection
-      super.order('enterprise_id', 'fee_type', 'name')
+      EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
     end
   end
 end

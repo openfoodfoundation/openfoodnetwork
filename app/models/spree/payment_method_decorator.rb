@@ -10,7 +10,7 @@ Spree::PaymentMethod.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('distributor_id IN (?)', user.enterprises.map {|enterprise| enterprise.id })
+      where('distributor_id IN (?)', user.enterprises)
     end
   }
 end

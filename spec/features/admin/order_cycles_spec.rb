@@ -349,7 +349,7 @@ feature %q{
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
-
+    let!(:distributor1_fee) { create(:enterprise_fee, enterprise: distributor1, name: 'First Distributor Fee') }
     before(:each) do
       product = create(:product, supplier: supplier1)
       product.distributors << distributor1
@@ -384,6 +384,8 @@ feature %q{
       click_button 'Add supplier'
 
       select 'First Distributor', from: 'order_cycle_coordinator_id'
+      click_button 'Add coordinator fee'
+      select 'First Distributor Fee', from: 'order_cycle_coordinator_fee_0_id'
 
       select 'First Distributor', from: 'new_distributor_id'
       click_button 'Add distributor'

@@ -63,7 +63,8 @@ feature %q{
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
-    create(:shipping_method, zone: @zone)
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new)
+    sm.calculator.set_preference(:amount, 0); sm.calculator.save!
 
     @payment_method_all = create(:payment_method, :name => 'Cheque payment method', :description => 'Cheque payment method') #valid for any distributor
     @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributor => @distributor)
@@ -324,13 +325,19 @@ feature %q{
     click_checkout_continue_button
 
     # -- Checkout: Order complete
-    page.should have_content('Your order has been processed successfully')
-    page.should have_content(@payment_method_all.description)
+    page.should have_content 'Your order has been processed successfully'
+    page.should have_content @payment_method_all.description
 
+    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '$3.00'
 
     # page.should have_content('Your order will be available on:')
     # page.should have_content('On Tuesday, 4 PM')
     # page.should have_content('12 Bungee Rd, Carion')
+
+    # -- Checkout: Email
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Distribution \$3.00/
   end
 
 
