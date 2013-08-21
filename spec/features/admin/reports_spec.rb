@@ -79,4 +79,50 @@ feature %q{
     all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
   end
 
+  scenario "Order cycle reports show only the selected order cycle" do
+    # Given two orders for two order cycles
+    @bill_address = create(:address)
+    @distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
+    d1 = create(:distributor_enterprise, :address => @distributor_address)
+    p1 = create(:product, price: 12.34)
+    p2 = create(:product, price: 23.45)
+    product_distribution = create(:product_distribution, :product => p1, :distributor => d1)
+    product_distribution = create(:product_distribution, :product => p2, :distributor => d1)
+    @shipping_instructions = "pick up on thursday please!"
+
+    oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
+    oc2 = create(:order_cycle, :distributors => [d1], :variants => [p2.master])
+
+    # Given each order has one product, p1 for oc1; p2 for oc2
+    @order11 = create(:order, :distributor => d1, :bill_address => @bill_address, :special_instructions => @shipping_instructions, :order_cycle => oc1)
+    @order12 = create(:order, :distributor => d1, :bill_address => @bill_address, :special_instructions => @shipping_instructions, :order_cycle => oc1)
+    @order21 = create(:order, :distributor => d1, :bill_address => @bill_address, :special_instructions => @shipping_instructions, :order_cycle => oc2)
+    @order22 = create(:order, :distributor => d1, :bill_address => @bill_address, :special_instructions => @shipping_instructions, :order_cycle => oc2)
+
+    @order11.line_items << create(:line_item, variant: p1.master)
+    @order12.line_items << create(:line_item, variant: p1.master)
+    @order21.line_items << create(:line_item, variant: p2.master)
+    @order22.line_items << create(:line_item, variant: p2.master)
+
+    @order11.finalize!
+    @order12.finalize!
+    @order21.finalize!
+    @order21.finalize!
+
+    # When I select one order cycle
+    login_to_admin_section
+    click_link 'Reports'
+    click_link 'Order Cycle Reports'
+
+    select oc1.name, from: 'q_order_cycle_id_eq'
+    select 'Order Cycle Supplier Totals', from: 'report_type'
+    click_button 'Search'
+
+    # Then I should see the rows for order cycle 1 but not order cycle 2
+    all('table#listing_orders tbody tr').count.should == 1 # One row per product
+    page.should have_content p1.price.to_s
+    page.should_not have_content p2.price.to_s
+  end
+
+
 end
