@@ -34,7 +34,7 @@ class AbilityDecorator
         user.enterprises.include? payment_method.distributor
       end
 
-      can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
+      can [:admin, :index, :read, :edit, :update, :clone], OrderCycle do |order_cycle|
         user.enterprises.include? order_cycle.coordinator
       end
 

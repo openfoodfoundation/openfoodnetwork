@@ -62,7 +62,7 @@ module Admin
     end
 
     def clone
-      @order_cycle = OrderCycle.find params[:order_cycle_id]
+      @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
       redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
     end

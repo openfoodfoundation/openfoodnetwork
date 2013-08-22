@@ -426,6 +426,18 @@ feature %q{
       order_cycle.coordinator.should == distributor1
     end
 
+    scenario "cloning an order cycle" do
+      oc = create(:simple_order_cycle)
+
+      click_link "Order Cycles"
+      first('a.clone-order-cycle').click
+      flash_message.should == "Your order cycle #{oc.name} has been cloned."
+
+      # Then I should have clone of the order cycle
+      occ = OrderCycle.last
+      occ.name.should == "COPY OF #{oc.name}"
+    end
+
   end
 
 end

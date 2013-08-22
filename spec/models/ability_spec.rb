@@ -126,11 +126,11 @@ module Spree
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
-          should have_ability([:admin, :index, :read, :edit], for: oc1)
+          should have_ability([:admin, :index, :read, :edit, :update, :clone], for: oc1)
         end
 
         it "should not be able to read/write OrderCycles they are not the co-ordinator of" do
-          should_not have_ability([:admin, :index, :read, :create, :edit], for: oc2)
+          should_not have_ability([:admin, :index, :read, :create, :edit, :update, :clone], for: oc2)
         end
 
         it "should be able to create OrderCycles" do
