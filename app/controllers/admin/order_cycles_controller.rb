@@ -61,6 +61,13 @@ module Admin
       end
     end
 
+    def clone
+      @order_cycle = OrderCycle.find params[:order_cycle_id]
+      @order_cycle.clone!
+      redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
+    end
+
+
     protected
     def collection
       OrderCycle.managed_by(spree_current_user)

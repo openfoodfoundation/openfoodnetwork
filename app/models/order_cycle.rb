@@ -28,6 +28,17 @@ class OrderCycle < ActiveRecord::Base
     end
   }
 
+
+  def clone!
+    oc = self.dup
+    oc.name = "COPY OF #{oc.name}"
+    oc.orders_open_at = oc.orders_close_at = nil
+    oc.coordinator_fee_ids = self.coordinator_fee_ids
+    oc.save!
+    self.exchanges.each { |e| e.clone!(oc) }
+    oc.reload
+  end
+
   def suppliers
     self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
   end
