@@ -17,7 +17,7 @@ class AbilityDecorator
       can [:admin, :index, :read, :search], Spree::Taxon
       can [:admin, :index, :read, :create, :edit], Spree::Classification
 
-      #User can only access orders that they are a distributor for
+      #Enterprise User can only access orders that they are a distributor for
       can [:index, :create], Spree::Order
       can [:admin, :read, :update, :fire, :resend ], Spree::Order do |order|
         user.enterprises.include? order.distributor
@@ -52,6 +52,8 @@ class AbilityDecorator
         user.enterprises.include? enterprise
       end
 
+      #Enterprise User can access reports page
+      can [:admin, :index, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :order_cycles], :report
     end
   end
 end
