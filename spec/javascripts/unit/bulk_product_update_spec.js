@@ -202,8 +202,8 @@ describe("AdminBulkProductsCtrl", function(){
 
 		it("gets a list of suppliers and then resets products with a list of data", function(){
 			httpBackend.expectGET('/api/users/authorise_api?token=api_key').respond( { "success": "Use of API Authorised" } );
-			httpBackend.expectGET('/api/enterprises?template=bulk_index;q[is_primary_producer_eq]=true').respond("list of suppliers");
-			httpBackend.expectGET('/api/products?template=bulk_index').respond("list of products");
+			httpBackend.expectGET('/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true').respond("list of suppliers");
+			httpBackend.expectGET('/api/products/managed?template=bulk_index').respond("list of products");
 			spyOn(scope, "resetProducts");
 			scope.initialise('api_key');
 			httpBackend.flush();

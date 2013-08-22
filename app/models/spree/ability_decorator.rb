@@ -6,7 +6,7 @@ class AbilityDecorator
 
       #Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
-      can [:admin, :read, :update, :bulk_edit, :clone, :destroy], Spree::Product  do |product|
+      can [:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product  do |product|
         user.enterprises.include? product.supplier
       end
 
