@@ -141,6 +141,21 @@ describe OrderCycle do
     end
   end
 
+  it "clones itself" do
+    oc = create(:order_cycle)
+    occ = oc.clone!
+
+    occ = OrderCycle.last
+    occ.name.should == "COPY OF #{oc.name}"
+    occ.orders_open_at.should be_nil
+    occ.orders_close_at.should be_nil
+    occ.coordinator.should == oc.coordinator
+
+    occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
+
+    (0..occ.exchanges.count).all? { |i| occ.exchanges[i].eql? oc.exchanges[i] }.should be_true
+  end
+
   describe "creating adjustments for a line item" do
     let(:oc) { OrderCycle.new }
     let(:line_item) { double(:line_item, variant: 123) }

@@ -154,10 +154,10 @@ productsApp.controller('AdminBulkProductsCtrl', ["$scope", "$timeout", "$http", 
 			$scope.spree_api_key_ok = data.hasOwnProperty("success") && data["success"] == "Use of API Authorised";
 			if ($scope.spree_api_key_ok){
 				$http.defaults.headers.common['X-Spree-Token'] = spree_api_key;
-				dataFetcher('/api/enterprises?template=bulk_index;q[is_primary_producer_eq]=true').then(function(data){
+				dataFetcher('/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true').then(function(data){
 					$scope.suppliers = data;
 					// Need to have suppliers before we get products so we can match suppliers to product.supplier
-					dataFetcher('/api/products?template=bulk_index').then(function(data){
+					dataFetcher('/api/products/managed?template=bulk_index').then(function(data){
 						$scope.resetProducts(data);
 					});
 				});

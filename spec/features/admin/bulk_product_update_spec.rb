@@ -31,7 +31,7 @@ feature %q{
       page.should have_field "product_name", with: p2.name
     end
 
-    it "displays a select box for suppliers,  with the appropriate supplier selected" do
+    it "displays a select box for suppliers, with the appropriate supplier selected" do
       s1 = FactoryGirl.create(:supplier_enterprise)
       s2 = FactoryGirl.create(:supplier_enterprise)
       s3 = FactoryGirl.create(:supplier_enterprise)
@@ -421,4 +421,66 @@ feature %q{
       end
     end
   end
-end 
+
+  context "as an enterprise manager" do
+    let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:s2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:s3) { create(:supplier_enterprise, name: 'Yet Another Supplier') }
+    let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let!(:product_supplied) { create(:product, supplier: s1, price: 10.0, on_hand: 6) }
+    let!(:product_not_supplied) { create(:product, supplier: s3) }
+
+    before(:each) do
+      @enterprise_user = create_enterprise_user
+      @enterprise_user.enterprise_roles.build(enterprise: s1).save
+      @enterprise_user.enterprise_roles.build(enterprise: s2).save
+      @enterprise_user.enterprise_roles.build(enterprise: d1).save
+
+      login_to_admin_as @enterprise_user
+    end
+
+    it "shows only products that I supply" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field 'product_name', with: product_supplied.name
+      page.should_not have_field 'product_name', with: product_not_supplied.name
+    end
+
+    it "shows only suppliers that I manage" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select 'supplier', with_options: [s1.name, s2.name], selected: s1.name
+      page.should_not have_select 'supplier', with_options: [s3.name]
+    end
+
+    it "allows me to update a product" do
+      p = product_supplied
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field "product_name", with: p.name
+      page.should have_select "supplier", selected: s1.name
+      page.should have_field "available_on", with: p.available_on.strftime("%F %T")
+      page.should have_field "price", with: "10.0"
+      page.should have_field "on_hand", with: "6"
+
+      fill_in "product_name", with: "Big Bag Of Potatoes"
+      select s2.name, from: 'supplier'
+      fill_in "available_on", with: (Date.today-3).strftime("%F %T")
+      fill_in "price", with: "20"
+      fill_in "on_hand", with: "18"
+
+      click_button 'Update'
+      page.find("span#update-status-message").should have_content "Update complete"
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field "product_name", with: "Big Bag Of Potatoes"
+      page.should have_select "supplier", selected: s2.name
+      page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
+      page.should have_field "price", with: "20.0"
+      page.should have_field "on_hand", with: "18"
+    end
+  end
+end

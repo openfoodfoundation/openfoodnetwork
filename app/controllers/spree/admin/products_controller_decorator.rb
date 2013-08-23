@@ -12,7 +12,7 @@ Spree::Admin::ProductsController.class_eval do
     product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
 
     if product_set.save
-      redirect_to "/api/products?template=bulk_index"
+      redirect_to "/api/products/managed?template=bulk_index"
     else
       render :nothing => true
     end
@@ -37,7 +37,7 @@ Spree::Admin::ProductsController.class_eval do
 
     params[:q][:s] ||= "name asc"
 
-    @search = super.ransack(params[:q])
+    @search = Spree::Product.ransack(params[:q]) # this line is modified - hit Spree::Product instead of super, avoiding cancan error for fetching records with block permissions via accessible_by
     @collection = @search.result.
       managed_by(spree_current_user). # this line is added to the original spree code!!!!!
       group_by_products_id.
@@ -51,6 +51,11 @@ Spree::Admin::ProductsController.class_eval do
     end
     @collection
   end
+
+  def collection_actions
+    [:index, :bulk_edit, :bulk_update]
+  end
+
 
   private
 

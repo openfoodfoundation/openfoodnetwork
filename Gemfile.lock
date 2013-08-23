@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/eaterprises/spree-last-address.git
-  revision: f93ea5a6b06e4605ea9c3fc5ef8e71f8e6aa0ffc
+  revision: 39653f38429546f6367e376e823d2b5482d1cd8d
   branch: 1-3-stable
   specs:
     spree_last_address (1.1.0)
@@ -24,7 +24,7 @@ GIT
 
 GIT
   remote: git://github.com/eaterprises/spree.git
-  revision: 4fa1f51ba70519bfd3be0975e5b71f2ea73bbbd6
+  revision: 1c133672652e1ee8b6c8d694efe258e62378062e
   branch: 1-3-stable
   specs:
     spree (1.3.3)
@@ -256,6 +256,7 @@ GEM
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
     ffaker (1.15.0)
+    ffi (1.9.0)
     fog (1.14.0)
       builder
       excon (~> 0.25.0)
@@ -277,7 +278,7 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    i18n (0.6.4)
+    i18n (0.6.5)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
@@ -400,6 +401,11 @@ GEM
       tilt (~> 1.3)
     select2-rails (3.2.1)
       thor (~> 0.14)
+    selenium-webdriver (2.35.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
     simplecov (0.7.1)
@@ -421,7 +427,7 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timecop (0.6.2.2)
-    treetop (1.4.14)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     truncate_html (0.5.5)

@@ -105,6 +105,7 @@ feature %q{
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+    page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
   end
 
 
@@ -128,7 +129,6 @@ feature %q{
   end
 
   context 'as an Enterprise user' do
-
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
@@ -152,6 +152,32 @@ feature %q{
       page.should have_content distributor1.name
       page.should_not have_content supplier2.name
       page.should_not have_content distributor2.name
+    end
+
+    scenario "can edit enterprises I have permission to" do
+      click_link 'Enterprises'
+      within('#listing_enterprises tbody tr:first') { click_link 'Edit' }
+
+      fill_in 'enterprise_name', :with => 'Eaterprises'
+      click_button 'Update'
+
+      flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+      page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
+    end
+
+    scenario "can bulk edit enterprise collection dates/times for enterprises I have permission to" do
+      click_link 'Enterprises'
+
+      fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
+      fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
+      click_button 'Update'
+
+      flash_message.should == 'Distributor collection times updated.'
+
+      supplier1.reload.next_collection_at.should == 'One'
+      distributor1.reload.next_collection_at.should == 'Two'
+      supplier2.reload.next_collection_at.should be_nil
+      distributor2.reload.next_collection_at.should be_nil
     end
   end
 end

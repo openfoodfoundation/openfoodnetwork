@@ -24,7 +24,11 @@ module Admin
     end
 
     def collection
-      super.managed_by(spree_current_user).order('is_primary_producer DESC, is_distributor ASC, name')
+      Enterprise.managed_by(spree_current_user).order('is_primary_producer DESC, is_distributor ASC, name')
+    end
+
+    def collection_actions
+      [:index, :bulk_update]
     end
   end
 end

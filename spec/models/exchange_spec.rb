@@ -97,4 +97,61 @@ describe Exchange do
       Exchange.with_variant(v).should == [ex]
     end
   end
+
+  it "clones itself" do
+    oc = create(:order_cycle)
+    new_oc = create(:simple_order_cycle)
+
+    ex1 = oc.exchanges.last
+    ex2 = ex1.clone! new_oc
+
+    ex1.eql?(ex2).should be_true
+  end
+
+  describe "converting to hash" do
+    let(:oc) { create(:order_cycle) }
+    let(:exchange) do
+      exchange = oc.exchanges.last
+      exchange.payment_enterprise = Enterprise.last
+      exchange.save!
+      exchange
+    end
+
+    it "converts to a hash" do
+      exchange.to_h.should ==
+        {'id' => exchange.id, 'order_cycle_id' => oc.id,
+        'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+        'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
+        'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+        'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
+        'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at}
+    end
+
+    it "converts to a hash of core attributes only" do
+      exchange.to_h(true).should ==
+        {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
+         'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions}
+    end
+  end
+
+  describe "comparing equality" do
+    it "compares Exchanges using to_h" do
+      e1 = Exchange.new
+      e2 = Exchange.new
+
+      e1.stub(:to_h) { {'sender_id' => 456} }
+      e2.stub(:to_h) { {'sender_id' => 456} }
+
+      e1.eql?(e2).should be_true
+    end
+
+    it "compares other objects using super" do
+      exchange = Exchange.new
+      exchange_fee = ExchangeFee.new
+
+      exchange.eql?(exchange_fee).should be_false
+    end
+  end
 end

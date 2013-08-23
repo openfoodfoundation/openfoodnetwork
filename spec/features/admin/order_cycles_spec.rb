@@ -343,6 +343,22 @@ feature %q{
     OrderCycle.all.map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
   end
 
+  scenario "cloning an order cycle" do
+    # Given an order cycle
+    oc = create(:order_cycle)
+
+    # When I clone it
+    login_to_admin_section
+    click_link 'Order Cycles'
+    first('a.clone-order-cycle').click
+    flash_message.should == "Your order cycle #{oc.name} has been cloned."
+
+    # Then I should have clone of the order cycle
+    occ = OrderCycle.last
+    occ.name.should == "COPY OF #{oc.name}"
+  end
+
+
   context 'as an Enterprise user' do
 
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
@@ -408,6 +424,18 @@ feature %q{
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
       order_cycle.coordinator.should == distributor1
+    end
+
+    scenario "cloning an order cycle" do
+      oc = create(:simple_order_cycle)
+
+      click_link "Order Cycles"
+      first('a.clone-order-cycle').click
+      flash_message.should == "Your order cycle #{oc.name} has been cloned."
+
+      # Then I should have clone of the order cycle
+      occ = OrderCycle.last
+      occ.name.should == "COPY OF #{oc.name}"
     end
 
   end

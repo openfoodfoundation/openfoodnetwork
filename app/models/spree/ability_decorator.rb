@@ -6,7 +6,7 @@ class AbilityDecorator
 
       #Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
-      can [:admin, :read, :update, :bulk_edit, :clone, :destroy], Spree::Product  do |product|
+      can [:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product  do |product|
         user.enterprises.include? product.supplier
       end
 
@@ -17,7 +17,7 @@ class AbilityDecorator
       can [:admin, :index, :read, :search], Spree::Taxon
       can [:admin, :index, :read, :create, :edit], Spree::Classification
 
-      #User can only access orders that they are a distributor for
+      #Enterprise User can only access orders that they are a distributor for
       can [:index, :create], Spree::Order
       can [:admin, :read, :update, :fire, :resend ], Spree::Order do |order|
         user.enterprises.include? order.distributor
@@ -34,7 +34,7 @@ class AbilityDecorator
         user.enterprises.include? payment_method.distributor
       end
 
-      can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
+      can [:admin, :index, :read, :edit, :update, :clone], OrderCycle do |order_cycle|
         user.enterprises.include? order_cycle.coordinator
       end
 
@@ -47,11 +47,14 @@ class AbilityDecorator
       can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
       can [:admin, :index, :read, :create, :edit, :update], Exchange
       can [:admin, :index, :read, :create, :edit, :update], ExchangeFee
+
       can [:admin, :index], Enterprise
-      can [:read, :edit, :update], Enterprise do |enterprise|
+      can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|
         user.enterprises.include? enterprise
       end
 
+      #Enterprise User can access reports page
+      can [:admin, :index, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :order_cycles], :report
     end
   end
 end

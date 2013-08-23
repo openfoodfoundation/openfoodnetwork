@@ -17,7 +17,7 @@
         %th Suppliers
         %th Distributors
         %th Products
-        %th
+        %th.actions
     %tbody
       = f.fields_for :collection do |order_cycle_form|
         - order_cycle = order_cycle_form.object
@@ -37,5 +37,6 @@
           %td.products
             - order_cycle.variants.each do |v|
               = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
-          %td
+          %td.actions
+            = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'
   = f.submit 'Update'

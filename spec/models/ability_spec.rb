@@ -32,11 +32,11 @@ module Spree
         let (:order) {create(:order, )}
 
         it "should be able to read/write their enterprises' products" do
-          should have_ability([:admin, :read, :update, :bulk_edit, :clone, :destroy], for: p1)
+          should have_ability([:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
         end
 
         it "should not be able to read/write other enterprises' products" do
-          should_not have_ability([:admin, :read, :update, :bulk_edit, :clone, :destroy], for: p2)
+          should_not have_ability([:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
         end
 
         it "should be able to create a new product" do
@@ -126,11 +126,11 @@ module Spree
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
-          should have_ability([:admin, :index, :read, :edit], for: oc1)
+          should have_ability([:admin, :index, :read, :edit, :update, :clone], for: oc1)
         end
 
         it "should not be able to read/write OrderCycles they are not the co-ordinator of" do
-          should_not have_ability([:admin, :index, :read, :create, :edit], for: oc2)
+          should_not have_ability([:admin, :index, :read, :create, :edit, :update, :clone], for: oc2)
         end
 
         it "should be able to create OrderCycles" do
@@ -151,11 +151,11 @@ module Spree
         end
 
         it 'should have the ability to read and edit enterprises that I manage' do
-          should have_ability([:read, :edit, :update], for: s1)
+          should have_ability([:read, :edit, :update, :bulk_update], for: s1)
         end
 
         it 'should not have the ability to read and edit enterprises that I do not manage' do
-          should_not have_ability([:read, :edit, :update], for: s2)
+          should_not have_ability([:read, :edit, :update, :bulk_update], for: s2)
         end
 
         it 'should have the ability administrate enterpises' do
