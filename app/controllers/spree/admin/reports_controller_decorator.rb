@@ -11,6 +11,11 @@ Spree::Admin::ReportsController.class_eval do
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:order_cycles => {:name => "Order Cycle Reports", :description => "Reports for Order Cycles"}})
 
+  # Equivalent to CanCan's "authorize_resource :class => false" (see https://github.com/ryanb/cancan/blob/60cf6a67ef59c0c9b63bc27ea0101125c4193ea6/lib/cancan/controller_resource.rb#L146)
+  def model_class
+    self.class.to_s.sub("Controller", "").underscore.split('/').last.singularize.to_sym
+  end
+
   def orders_and_distributors
     params[:q] = {} unless params[:q]
 
