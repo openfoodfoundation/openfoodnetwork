@@ -4,5 +4,4 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
     load_order unless @order
     @order
   end
-
 end
