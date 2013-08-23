@@ -22,6 +22,7 @@ WebMock.disable_net_connect!(:allow_localhost => true)
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/core/testing_support/controller_requests'
+require 'spree/core/testing_support/capybara_ext'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
