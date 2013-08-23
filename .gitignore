@@ -1,7 +1,5 @@
 .bundle
 .rbenv-version
-.ruby-version
-.ruby-gemset
 .swp
 *.swo
 *.swp
