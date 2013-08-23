@@ -2,19 +2,16 @@ require 'csv'
 require 'open_food_web/order_and_distributor_report'
 require 'open_food_web/group_buy_report'
 require 'open_food_web/order_grouper'
+require 'open_food_web/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
+  include OpenFoodWeb::ModelClassFromControllerName
 
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:group_buys => {:name => "Group Buys", :description => "Orders by supplier and variant"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:order_cycles => {:name => "Order Cycle Reports", :description => "Reports for Order Cycles"}})
-
-  # Equivalent to CanCan's "authorize_resource :class => false" (see https://github.com/ryanb/cancan/blob/60cf6a67ef59c0c9b63bc27ea0101125c4193ea6/lib/cancan/controller_resource.rb#L146)
-  def model_class
-    self.class.to_s.sub("Controller", "").underscore.split('/').last.singularize.to_sym
-  end
 
   def orders_and_distributors
     params[:q] = {} unless params[:q]
