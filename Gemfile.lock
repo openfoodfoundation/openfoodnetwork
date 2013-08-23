@@ -16,53 +16,11 @@ GIT
 
 GIT
   remote: git://github.com/eaterprises/spree-last-address.git
-  revision: f93ea5a6b06e4605ea9c3fc5ef8e71f8e6aa0ffc
+  revision: 39653f38429546f6367e376e823d2b5482d1cd8d
   branch: 1-3-stable
   specs:
     spree_last_address (1.1.0)
       spree_core (>= 1.1)
-
-GIT
-  remote: git://github.com/eaterprises/spree.git
-  revision: 4fa1f51ba70519bfd3be0975e5b71f2ea73bbbd6
-  branch: 1-3-stable
-  specs:
-    spree (1.3.3)
-      spree_api (= 1.3.3)
-      spree_cmd (= 1.3.3)
-      spree_core (= 1.3.3)
-      spree_promo (= 1.3.3)
-      spree_sample (= 1.3.3)
-    spree_api (1.3.3)
-      spree_core (= 1.3.3)
-      versioncake (= 0.4.0)
-    spree_cmd (1.3.3)
-      thor (>= 0.14.6)
-    spree_core (1.3.3)
-      activemerchant (~> 1.34)
-      acts_as_list (= 0.1.4)
-      awesome_nested_set (= 2.1.5)
-      aws-sdk (~> 1.3.4)
-      cancan (= 1.6.8)
-      deface (>= 0.9.0)
-      ffaker (~> 1.15.0)
-      highline (= 1.6.18)
-      jquery-rails (~> 2.2.0)
-      json (>= 1.5.5)
-      kaminari (= 0.13.0)
-      money (= 5.0.0)
-      paperclip (~> 2.8)
-      rabl (= 0.7.2)
-      rails (~> 3.2.14)
-      ransack (= 0.7.2)
-      select2-rails (= 3.2.1)
-      state_machine (= 1.1.2)
-      stringex (~> 1.3.2)
-      truncate_html (~> 0.5.5)
-    spree_promo (1.3.3)
-      spree_core (= 1.3.3)
-    spree_sample (1.3.3)
-      spree_core (= 1.3.3)
 
 GIT
   remote: git://github.com/spree/deface.git
@@ -106,6 +64,46 @@ GIT
       devise (~> 2.2.3)
       devise-encryptable (= 0.1.2)
       spree_core
+
+PATH
+  remote: /home/rohan/work/rm/eaterprises/spree
+  specs:
+    spree (1.3.3)
+      spree_api (= 1.3.3)
+      spree_cmd (= 1.3.3)
+      spree_core (= 1.3.3)
+      spree_promo (= 1.3.3)
+      spree_sample (= 1.3.3)
+    spree_api (1.3.3)
+      spree_core (= 1.3.3)
+      versioncake (= 0.4.0)
+    spree_cmd (1.3.3)
+      thor (>= 0.14.6)
+    spree_core (1.3.3)
+      activemerchant (~> 1.34)
+      acts_as_list (= 0.1.4)
+      awesome_nested_set (= 2.1.5)
+      aws-sdk (~> 1.3.4)
+      cancan (= 1.6.8)
+      deface (>= 0.9.0)
+      ffaker (~> 1.15.0)
+      highline (= 1.6.18)
+      jquery-rails (~> 2.2.0)
+      json (>= 1.5.5)
+      kaminari (= 0.13.0)
+      money (= 5.0.0)
+      paperclip (~> 2.8)
+      rabl (= 0.7.2)
+      rails (~> 3.2.14)
+      ransack (= 0.7.2)
+      select2-rails (= 3.2.1)
+      state_machine (= 1.1.2)
+      stringex (~> 1.3.2)
+      truncate_html (~> 0.5.5)
+    spree_promo (1.3.3)
+      spree_core (= 1.3.3)
+    spree_sample (1.3.3)
+      spree_core (= 1.3.3)
 
 PATH
   remote: lib/chili/eaterprises_feature
@@ -281,7 +279,7 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    i18n (0.6.4)
+    i18n (0.6.5)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
@@ -304,7 +302,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.23)
+    mime-types (1.24)
     mini_portile (0.5.1)
     money (5.0.0)
       i18n (~> 0.4)
@@ -431,7 +429,7 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timecop (0.6.2.2)
-    treetop (1.4.14)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     truncate_html (0.5.5)
