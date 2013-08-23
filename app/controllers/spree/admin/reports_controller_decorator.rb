@@ -25,7 +25,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
 
     @report = OpenFoodWeb::OrderAndDistributorReport.new orders
@@ -54,10 +54,10 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
     
-    @distributors = Enterprise.is_distributor
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
 
     @report = OpenFoodWeb::GroupBuyReport.new orders
     unless params[:csv]
@@ -85,11 +85,11 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
     line_items = orders.map { |o| o.line_items }.flatten
 
-    @distributors = Enterprise.is_distributor
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -237,11 +237,11 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
     payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
-    @distributors = Enterprise.is_distributor
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -341,12 +341,12 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
     line_items = orders.map { |o| o.line_items }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
 
-    @distributors = Enterprise.is_distributor
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     #@suppliers = Enterprise.is_primary_producer
     @order_cycles = OrderCycle.active_or_complete.order('orders_close_at DESC')
     @report_type = params[:report_type]
