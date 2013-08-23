@@ -43,7 +43,17 @@ feature %q{
     o.order_cycle.should == order_cycle
   end
 
-  it "can't change distributor and order cycle once order is created (or similar restriction)"
+  scenario "can't change distributor or order cycle once order has been finalized" do
+    login_to_admin_section
+    click_link 'Orders'
+    page.find('td.actions a.icon-edit').click
+
+    page.should have_no_select 'order_distributor_id'
+    page.should have_no_select 'order_order_cycle_id'
+
+    page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
+    page.should have_selector 'p', text: 'Order cycle: None'
+  end
 
   scenario "capture multiple payments from the orders index page" do
     # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.

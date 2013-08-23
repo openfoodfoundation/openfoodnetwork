@@ -3,12 +3,22 @@
 %fieldset.no-border-bottom
   %legend{align => 'center'} Distribution
 
-  .alpha.six.columns
-    .field
-      = f.label :distributor_id
-      = f.collection_select :distributor_id, Enterprise.is_distributor.managed_by(spree_current_user), :id, :name, include_blank: true
+  - if @order.complete?
+    .alpha.six.columns
+      %p
+        %b Distributor:
+        = f.object.distributor.andand.name || "None"
+    .omega.six.columns
+      %p
+        %b Order cycle:
+        = f.object.order_cycle.andand.name || "None"
 
-  .omega.six.columns
-    .field
-      = f.label :order_cycle_id
-      = f.collection_select :order_cycle_id, OrderCycle.managed_by(spree_current_user), :id, :name, include_blank: true
+  - else
+    .alpha.six.columns
+      .field
+        = f.label :distributor_id
+        = f.collection_select :distributor_id, Enterprise.is_distributor.managed_by(spree_current_user), :id, :name, include_blank: true
+    .omega.six.columns
+      .field
+        = f.label :order_cycle_id
+        = f.collection_select :order_cycle_id, OrderCycle.managed_by(spree_current_user), :id, :name, include_blank: true
