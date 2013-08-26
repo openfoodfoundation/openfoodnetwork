@@ -75,4 +75,53 @@ feature %q{
     # we should still be on the same page
     current_path.should == spree.admin_orders_path
   end
+
+  context "as an enterprise manager" do
+    let(:coordinator1) { create(:distributor_enterprise) }
+    let(:coordinator2) { create(:distributor_enterprise) }
+    let!(:order_cycle1) { create(:order_cycle, coordinator: coordinator1) }
+    let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
+    let(:supplier1) { order_cycle1.suppliers.first }
+    let(:supplier2) { order_cycle1.suppliers.last }
+    let(:distributor1) { order_cycle1.distributors.first }
+    let(:distributor2) { order_cycle1.distributors.last }
+    let(:product) { order_cycle1.products.first }
+
+    before(:each) do
+      @enterprise_user = create_enterprise_user
+      @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
+      @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
+      @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
+      @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+
+      login_to_admin_as @enterprise_user
+    end
+
+    scenario "creating an order with distributor and order cycle", js: true do
+      click_link 'Orders'
+      click_link 'New Order'
+
+      page.should have_content 'ADD PRODUCT'
+      targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+      click_link 'Add'
+      page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+      page.should have_selector 'td', text: product.name
+
+      page.should have_select 'order_distributor_id', with_options: [distributor1.name]
+      page.should have_no_select 'order_distributor_id', with_options: [distributor2.name]
+
+      page.should have_select 'order_order_cycle_id', with_options: [order_cycle1.name]
+      page.should have_no_select 'order_order_cycle_id', with_options: [order_cycle2.name]
+
+      select distributor1.name, from: 'order_distributor_id'
+      select order_cycle1.name, from: 'order_order_cycle_id'
+      click_button 'Update'
+
+      page.should have_selector 'h1', text: 'Customer Details'
+      o = Spree::Order.last
+      o.distributor.should == distributor1
+      o.order_cycle.should == order_cycle1
+    end
+
+  end
 end

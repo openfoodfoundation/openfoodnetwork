@@ -18,18 +18,18 @@ module Spree
       let(:p2) { create(:product, supplier: s2, distributors:[d1, d2]) }
 
       subject { user }
-      let(:user){ nil }
+      let(:user) { nil }
 
       context "when is a supplier enterprise user" do
         # create supplier_enterprise1 user without full admin access
-        let (:user) do
+        let(:user) do
           user = create(:user)
           user.spree_roles = []
           s1.enterprise_roles.build(user: user).save
           user
         end
 
-        let (:order) {create(:order, )}
+        let(:order) {create(:order)}
 
         it "should be able to read/write their enterprises' products" do
           should have_ability([:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
@@ -44,7 +44,7 @@ module Spree
         end
 
         it "should be able to read/write their enterprises' product variants" do
-          should have_ability([:admin, :index, :read, :create, :edit], for: Spree::Variant)
+          should have_ability([:admin, :index, :read, :create, :edit, :search], for: Spree::Variant)
         end
 
         it "should be able to read/write their enterprises' product properties" do
@@ -84,6 +84,11 @@ module Spree
           create(:line_item, order: o, product: p1)
           o
         end
+        let(:o3) do
+          o = create(:order, distributor: nil, bill_address: create(:address))
+          create(:line_item, order: o, product: p1)
+          o
+        end
 
         it "should be able to read/write their enterprises' orders" do
           should have_ability([:admin, :index, :read, :edit], for: o1)
@@ -93,8 +98,20 @@ module Spree
           should_not have_ability([:admin, :index, :read, :edit], for: o2)
         end
 
+        it "should be able to read/write orders that are in the process of being created" do
+          should have_ability([:admin, :index, :read, :edit], for: o3)
+        end
+
+        it "should be able to create and search on nil (required for creating an order)" do
+          should have_ability([:create, :search], for: nil)
+        end
+
         it "should be able to create a new order" do
-          should have_ability(:create, for: Spree::Order)
+          should have_ability([:admin, :index, :read, :create, :update], for: Spree::Order)
+        end
+
+        it "should be able to create a new line item" do
+          should have_ability([:admin, :create], for: Spree::LineItem)
         end
 
         it "should be able to read/write Payments on a product" do

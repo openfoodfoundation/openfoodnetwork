@@ -4,33 +4,40 @@ class AbilityDecorator
   def initialize(user)
     if user.enterprises.count > 0
 
-      #Enterprise User can only access products that they are a supplier for
+      # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
+      # when searching for variants to add to the order
+      can [:create, :search], nil
+
+      # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
       can [:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product  do |product|
         user.enterprises.include? product.supplier
       end
 
-      can [:admin, :index, :read, :create, :edit], Spree::Variant
+      can [:admin, :index, :read, :create, :edit, :search], Spree::Variant
       can [:admin, :index, :read, :create, :edit], Spree::ProductProperty
       can [:admin, :index, :read, :create, :edit], Spree::Image
 
       can [:admin, :index, :read, :search], Spree::Taxon
       can [:admin, :index, :read, :create, :edit], Spree::Classification
 
-      #Enterprise User can only access orders that they are a distributor for
+      # Enterprise User can only access orders that they are a distributor for
       can [:index, :create], Spree::Order
-      can [:admin, :read, :update, :fire, :resend ], Spree::Order do |order|
-        user.enterprises.include? order.distributor
+      can [:admin, :index, :read, :create, :update, :fire, :resend], Spree::Order do |order|
+        # We allow editing orders with a nil distributor as this state occurs
+        # during the order creation process from the admin backend
+        order.distributor.nil? || user.enterprises.include?(order.distributor)
       end
+      can [:admin, :create], Spree::LineItem
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
 
-      #Enterprise User can only access payment methods for their distributors
+      # Enterprise User can only access payment methods for their distributors
       can [:index, :create], Spree::PaymentMethod
-      can [:admin, :read, :update, :fire, :resend, :destroy ], Spree::PaymentMethod do |payment_method|
+      can [:admin, :read, :update, :fire, :resend, :destroy], Spree::PaymentMethod do |payment_method|
         user.enterprises.include? payment_method.distributor
       end
 
@@ -53,7 +60,7 @@ class AbilityDecorator
         user.enterprises.include? enterprise
       end
 
-      #Enterprise User can access reports page
+      # Enterprise User can access reports page
       can [:admin, :index, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :order_cycles], :report
     end
   end
