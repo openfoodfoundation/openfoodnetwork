@@ -66,10 +66,11 @@ module Spree
 
         it "doesn't show products listed in the incoming exchange only" do
           s = create(:supplier_enterprise)
+          c = create(:distributor_enterprise)
           d = create(:distributor_enterprise)
           p = create(:product)
-          oc = create(:simple_order_cycle, coordinator: d, suppliers: [s], distributors: [d])
-          ex = oc.exchanges.where(receiver_id: oc.coordinator_id).first
+          oc = create(:simple_order_cycle, coordinator: c, suppliers: [s], distributors: [d])
+          ex = oc.exchanges.incoming.first
           ex.variants << p.master
 
           Product.in_distributor(d).should be_empty
