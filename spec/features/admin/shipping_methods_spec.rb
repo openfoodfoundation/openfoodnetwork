@@ -9,6 +9,27 @@ feature 'shipping methods' do
     @sm = create(:shipping_method)
   end
 
+  scenario "creating a shipping method owned by a distributor" do
+    # Given a distributor
+    distributor = create(:distributor_enterprise, name: 'Aeronautical Adventures')
+
+    # When I create a shipping method and set the distributor
+    visit new_admin_shipping_method_path
+    fill_in :name, with: 'Carrier Pidgeon'
+    select 'Aeronautical Adventures', from: 'shipping_method_distributor_id'
+    click_button 'Create'
+
+    # Then the shipping method should have its distributor set
+    flash_message.should == 'Your shipping method has been created'
+    sm = Spree::ShippingMethod.last
+    sm.name.should == 'Carrier Pidgeon'
+    sm.distributor.should == distributor
+  end
+
+  it "shipping method requires distributor"
+  it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
+
+
   scenario "deleting a shipping method" do
     visit_delete spree.admin_shipping_method_path(@sm)
 
