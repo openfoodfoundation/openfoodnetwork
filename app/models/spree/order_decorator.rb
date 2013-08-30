@@ -20,14 +20,18 @@ Spree::Order.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      # User has a distributor on an Order or supplier that supplies a Product to an Order
-      # NOTE: supplier Orders should use LineItem.managed_by to ensure they only see their own LineItems!
-      joins('LEFT OUTER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
-      joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
-      joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)').
+      # Find orders that are distributed by the user or have products supplied by the user
+      # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
+      with_line_items_variants_and_products_outer.
       where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
       select('DISTINCT spree_orders.*')
     end
+  }
+
+  scope :with_line_items_variants_and_products_outer, lambda {
+    joins('LEFT OUTER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
+    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
+    joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
   }
 
 

@@ -6,9 +6,8 @@ Spree::LineItem.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      # User has a distributor on the Order or supplier that supplies a LineItem
-      joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
-      joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)').
+      # Find line items that are from orders distributed by the user or supplied by the user
+      joins(:variant => :product).
       joins(:order).
       where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
       select('spree_line_items.*')
