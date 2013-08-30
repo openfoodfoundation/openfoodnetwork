@@ -20,7 +20,13 @@ Spree::Order.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('distributor_id IN (?)', user.enterprises)
+      # User has a distributor on an Order or supplier that supplies a Product to an Order
+      # NOTE: supplier Orders should use LineItem.managed_by to ensure they only see their own LineItems!
+      joins('LEFT OUTER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
+      joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
+      joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)').
+      where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
+      select('DISTINCT spree_orders.*')
     end
   }
 
