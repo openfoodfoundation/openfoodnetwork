@@ -151,6 +151,7 @@ FactoryGirl.modify do
   end
 
   factory :shipping_method do
+    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     display_on ''
   end
 

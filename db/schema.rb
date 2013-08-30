@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130814010857) do
+ActiveRecord::Schema.define(:version => 20130830012138) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -717,7 +717,10 @@ ActiveRecord::Schema.define(:version => 20130814010857) do
     t.boolean  "match_all"
     t.boolean  "match_one"
     t.datetime "deleted_at"
+    t.integer  "distributor_id"
   end
+
+  add_index "spree_shipping_methods", ["distributor_id"], :name => "index_spree_shipping_methods_on_distributor_id"
 
   create_table "spree_skrill_transactions", :force => true do |t|
     t.string   "email"

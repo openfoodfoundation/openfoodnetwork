@@ -14,13 +14,14 @@ feature 'shipping methods' do
     distributor = create(:distributor_enterprise, name: 'Aeronautical Adventures')
 
     # When I create a shipping method and set the distributor
-    visit new_admin_shipping_method_path
-    fill_in :name, with: 'Carrier Pidgeon'
+    visit spree.new_admin_shipping_method_path
+    fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
     select 'Aeronautical Adventures', from: 'shipping_method_distributor_id'
     click_button 'Create'
 
     # Then the shipping method should have its distributor set
-    flash_message.should == 'Your shipping method has been created'
+    flash_message.should == 'Shipping method "Carrier Pidgeon" has been successfully created!'
+
     sm = Spree::ShippingMethod.last
     sm.name.should == 'Carrier Pidgeon'
     sm.distributor.should == distributor
