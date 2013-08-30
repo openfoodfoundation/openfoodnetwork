@@ -87,7 +87,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
-    line_items = orders.map { |o| o.line_items }.flatten
+    @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
 
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
@@ -217,7 +217,7 @@ Spree::Admin::ReportsController.class_eval do
     order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
 
     @header = header
-    @table = order_grouper.table(line_items)
+    @table = order_grouper.table(@line_items)
     csv_file_name = "bulk_coop.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
@@ -343,9 +343,9 @@ Spree::Admin::ReportsController.class_eval do
 
     @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
-    line_items = orders.map { |o| o.line_items }.flatten
+    @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
-
+    
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     #@suppliers = Enterprise.is_primary_producer
     @order_cycles = OrderCycle.active_or_complete.order('orders_close_at DESC')
@@ -353,7 +353,7 @@ Spree::Admin::ReportsController.class_eval do
 
     case params[:report_type]
     when "order_cycle_supplier_totals"
-      table_items = line_items
+      table_items = @line_items
       @include_blank = 'All'
 
       header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
@@ -375,7 +375,7 @@ Spree::Admin::ReportsController.class_eval do
           sort_by: proc { |variant| variant.options_text } } ]
 
     when "order_cycle_supplier_totals_by_distributor"
-      table_items = line_items
+      table_items = @line_items
       @include_blank = 'All'
 
       header = ["Supplier", "Product", "Variant", "To Distributor", "Amount", "Cost per Unit", "Total Cost", "Shipping Method"]
@@ -407,7 +407,7 @@ Spree::Admin::ReportsController.class_eval do
         sort_by: proc { |distributor| distributor.name } } ]
 
     when "order_cycle_distributor_totals_by_supplier"
-      table_items = line_items
+      table_items = @line_items
       @include_blank = 'All'
 
       header = ["Distributor", "Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
@@ -441,7 +441,7 @@ Spree::Admin::ReportsController.class_eval do
         sort_by: proc { |variant| variant.options_text } } ]
 
     when "order_cycle_customer_totals"
-      table_items = line_items
+      table_items = @line_items
       @include_blank = 'All'
 
       header = ["Distributor", "Customer", "Email", "Phone", "Product", "Variant", "Amount", "Item ($)", "Ship ($)", "Total ($)", "Paid?", "Packed?", "Shipped?"]
@@ -483,7 +483,7 @@ Spree::Admin::ReportsController.class_eval do
        sort_by: proc { |variant| variant.options_text } } ]
 
     else
-      table_items = line_items
+      table_items = @line_items
       @include_blank = 'All'
 
       header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
