@@ -27,7 +27,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.not_state('canceled').managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
     orders = @search.result
 
     @report = OpenFoodWeb::OrderAndDistributorReport.new orders
@@ -56,7 +56,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.not_state('canceled').managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
 
     orders = @search.result
     
@@ -88,7 +88,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.not_state('canceled').managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
 
     orders = @search.result
     @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
@@ -241,7 +241,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.not_state('canceled').managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
 
     orders = @search.result
     payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
@@ -346,7 +346,7 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    @search = Spree::Order.complete.not_state('canceled').managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
     
     orders = @search.result
     @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten

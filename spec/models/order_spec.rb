@@ -216,13 +216,10 @@ describe Spree::Order do
    describe "scopes" do
     describe "not_state" do
       it "finds only orders not in specified state" do
-        pending "write this test"
-        s0 = create(:supplier_enterprise)
-        s1 = create(:supplier_enterprise)
-        p0 = create(:product, :supplier => s0)
-        p1 = create(:product, :supplier => s1)
+        o = FactoryGirl.create(:completed_order_with_totals)
+        o.cancel!
 
-        Spree::Product.in_supplier_or_distributor(s1).should == [p1]
+        Spree::Order.not_state(:canceled).should_not include o
       end
 
     end
