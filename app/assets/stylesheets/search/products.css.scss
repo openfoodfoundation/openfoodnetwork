@@ -1,0 +1,8 @@
+@import "foundation/variables";
+@import "foundation/components/global";
+
+.products {
+  margin: 0, emCalc(20);
+  border: 1px solid black;
+  padding: emCalc(10);
+}

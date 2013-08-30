@@ -1,0 +1,23 @@
+- if @enterprises.any?
+  .row.full-width
+    .large-4.columns
+      - if @suburb.present?
+        .row.search-result.with-separator
+          .large-12.columns
+            You have searched at:
+            %strong
+              %div= "#{@suburb.name}, #{@suburb.state_name}"
+      - @enterprises.each do |enterprise|
+        .row.search-result.with-separator
+          .large-12.columns
+            = link_to enterprise.name, shop_front_enterprise_path(enterprise.id)
+            %span.secondary-info= "#{enterprise.city}, #{enterprise.state_name}"
+    .large-8.columns
+      = gmaps4rails(@enterprises_json)
+
+- else
+  .row.search-result
+    .large-12.large-centered.columns
+      .centered
+        = "Nothing foud that matches your search criteria"
+        = link_to "Try again...", new_landing_page_path

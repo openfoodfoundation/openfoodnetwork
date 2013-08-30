@@ -7,63 +7,71 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/eaterprises/spree-heroku.git
-  revision: a1e07bf7a22fc0c07a1be9148f477d20b557dbf6
+  remote: git://github.com/eaterprises/chili.git
+  revision: b82608623d504eb39f852115b138a53af5f89505
   specs:
-    spree_heroku (1.0)
-      aws-sdk (~> 1.3.4)
-      spree_core (>= 0.70.0)
+    chili (3.1.0)
+      deface (~> 1.0.0.rc2)
+      rails (~> 3.2)
 
 GIT
   remote: git://github.com/eaterprises/spree-last-address.git
-  revision: f5ed71a5482fbc16da559737903bb46fe032c150
+  revision: 39653f38429546f6367e376e823d2b5482d1cd8d
+  branch: 1-3-stable
   specs:
     spree_last_address (1.1.0)
       spree_core (>= 1.1)
 
 GIT
-  remote: git://github.com/spree/spree.git
-  revision: 36a59eb311470a2c24b9aa826ecad114c518c01f
+  remote: git://github.com/eaterprises/spree.git
+  revision: 1c133672652e1ee8b6c8d694efe258e62378062e
   branch: 1-3-stable
   specs:
-    spree (1.3.3.beta)
-      spree_api (= 1.3.3.beta)
-      spree_cmd (= 1.3.3.beta)
-      spree_core (= 1.3.3.beta)
-      spree_dash (= 1.3.3.beta)
-      spree_promo (= 1.3.3.beta)
-      spree_sample (= 1.3.3.beta)
-    spree_api (1.3.3.beta)
-      spree_core (= 1.3.3.beta)
+    spree (1.3.3)
+      spree_api (= 1.3.3)
+      spree_cmd (= 1.3.3)
+      spree_core (= 1.3.3)
+      spree_promo (= 1.3.3)
+      spree_sample (= 1.3.3)
+    spree_api (1.3.3)
+      spree_core (= 1.3.3)
       versioncake (= 0.4.0)
-    spree_cmd (1.3.3.beta)
+    spree_cmd (1.3.3)
       thor (>= 0.14.6)
-    spree_core (1.3.3.beta)
-      activemerchant (~> 1.29.3)
+    spree_core (1.3.3)
+      activemerchant (~> 1.34)
       acts_as_list (= 0.1.4)
       awesome_nested_set (= 2.1.5)
       aws-sdk (~> 1.3.4)
       cancan (= 1.6.8)
       deface (>= 0.9.0)
-      ffaker (~> 1.12.0)
-      highline (= 1.6.11)
+      ffaker (~> 1.15.0)
+      highline (= 1.6.18)
       jquery-rails (~> 2.2.0)
+      json (>= 1.5.5)
       kaminari (= 0.13.0)
       money (= 5.0.0)
       paperclip (~> 2.8)
       rabl (= 0.7.2)
-      rails (~> 3.2.11)
-      ransack (~> 0.7.2)
-      select2-rails (~> 3.2)
+      rails (~> 3.2.14)
+      ransack (= 0.7.2)
+      select2-rails (= 3.2.1)
       state_machine (= 1.1.2)
       stringex (~> 1.3.2)
-    spree_dash (1.3.3.beta)
-      httparty (~> 0.8.1)
-      spree_core (= 1.3.3.beta)
-    spree_promo (1.3.3.beta)
-      spree_core (= 1.3.3.beta)
-    spree_sample (1.3.3.beta)
-      spree_core (= 1.3.3.beta)
+      truncate_html (~> 0.5.5)
+    spree_promo (1.3.3)
+      spree_core (= 1.3.3)
+    spree_sample (1.3.3)
+      spree_core (= 1.3.3)
+
+GIT
+  remote: git://github.com/spree/deface.git
+  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
+  specs:
+    deface (1.0.0.rc3)
+      colorize (>= 0.5.8)
+      nokogiri (~> 1.6.0)
+      rails (>= 3.1)
 
 GIT
   remote: git://github.com/spree/spree_i18n.git
@@ -75,44 +83,72 @@ GIT
 
 GIT
   remote: git://github.com/spree/spree_paypal_express.git
-  revision: 483f6ababa9c8a1c574aad0a948c96cc21a591db
+  revision: 9d70ab6d537420ff41468d05d6d2ac3c8d2ff3bf
   branch: 1-3-stable
   specs:
     spree_paypal_express (1.2.0)
       spree_core (~> 1.3.0)
 
 GIT
+  remote: git://github.com/zurb/foundation.git
+  revision: a81d639847ba5fc2e324b749b8e409e31e8d83c9
+  specs:
+    zurb-foundation (4.3.1)
+      sass (>= 3.2.0)
+
+GIT
   remote: https://github.com/spree/spree_auth_devise.git
-  revision: ab03a7a22740b52f96bf0311a1e9f18a99ee02f2
+  revision: b2b82f1bbe4b47a0713bcf70af8b3c17fa39c0d0
   branch: 1-3-stable
   specs:
     spree_auth_devise (1.0.0)
       cancan (~> 1.6.7)
       devise (~> 2.2.3)
-      devise-encryptable (= 0.1.1)
+      devise-encryptable (= 0.1.2)
       spree_core
 
-GEM
-  remote: http://rubygems.org/
+PATH
+  remote: lib/chili/eaterprises_feature
   specs:
-    actionmailer (3.2.11)
-      actionpack (= 3.2.11)
-      mail (~> 2.4.4)
-    actionpack (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
+    eaterprises_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
+  remote: lib/chili/enterprises_distributor_info_rich_text_feature
+  specs:
+    enterprises_distributor_info_rich_text_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+PATH
+  remote: lib/chili/local_organics_feature
+  specs:
+    local_organics_feature (0.0.1)
+      chili (~> 3.1)
+      rails (~> 3.2.11)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (3.2.14)
+      actionpack (= 3.2.14)
+      mail (~> 2.5.4)
+    actionpack (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
-      rack (~> 1.4.0)
+      rack (~> 1.4.5)
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_utils (1.0.5)
+    active_utils (2.0.0)
       activesupport (>= 2.3.11)
       i18n
-    activemerchant (1.29.3)
+    activemerchant (1.34.0)
       active_utils (>= 1.0.2)
       activesupport (>= 2.3.14)
       builder (>= 2.0.0)
@@ -120,19 +156,19 @@ GEM
       json (>= 1.5.1)
       money
       nokogiri
-    activemodel (3.2.11)
-      activesupport (= 3.2.11)
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
-    activerecord (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
+    activerecord (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.11)
-      activemodel (= 3.2.11)
-      activesupport (= 3.2.11)
-    activesupport (3.2.11)
-      i18n (~> 0.6)
+    activeresource (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     acts_as_list (0.1.4)
     addressable (2.3.3)
@@ -162,11 +198,12 @@ GEM
       xpath (~> 1.0.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    chunky_png (1.2.8)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
       climate_control (>= 0.0.3, < 1.0)
-    coderay (1.0.7)
+    coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -174,31 +211,42 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    colorize (0.5.8)
     columnize (0.3.6)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
       paperclip (>= 2.3.0)
       rails (>= 3.0.0)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
+    crack (0.4.1)
+      safe_yaml (~> 0.9.0)
     database_cleaner (0.7.1)
-    debugger (1.1.4)
+    db2fog (0.8.0)
+      activerecord (~> 3.0)
+      fog (~> 1.0)
+      rails (~> 3.0)
+    debugger (1.6.1)
       columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.1.3)
-    debugger-linecache (1.1.2)
-      debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.3)
-    deface (0.9.1)
-      nokogiri (~> 1.5.0)
-      rails (~> 3.1)
-    devise (2.2.3)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.3)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.3)
+    devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
-    devise-encryptable (0.1.1)
-      devise (>= 2.1.0.rc)
-    diff-lcs (1.1.3)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
+    diff-lcs (1.2.4)
     erubis (2.7.0)
+    eventmachine (1.0.3)
+    excon (0.25.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (3.3.0)
@@ -208,20 +256,40 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
-    ffaker (1.12.1)
-    ffi (1.4.0)
-    haml (3.1.6)
-    highline (1.6.11)
-    hike (1.2.1)
-    httparty (0.8.3)
+    faye-websocket (0.4.7)
+      eventmachine (>= 0.12.0)
+    ffaker (1.15.0)
+    ffi (1.9.0)
+    fog (1.14.0)
+      builder
+      excon (~> 0.25.0)
+      formatador (~> 0.2.0)
+      mime-types
       multi_json (~> 1.0)
-      multi_xml
-    i18n (0.6.1)
+      net-scp (~> 1.1)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5)
+      ruby-hmac
+    formatador (0.2.4)
+    fssm (0.2.10)
+    geocoder (1.1.8)
+    gmaps4rails (1.5.6)
+    haml (3.1.6)
+    highline (1.6.18)
+    hike (1.2.3)
+    http_parser.rb (0.5.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
+    i18n (0.6.5)
     journey (1.0.4)
-    jquery-rails (2.2.1)
+    jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.7.7)
+    json (1.8.0)
+    json_spec (1.1.1)
+      multi_json (~> 1.0)
+      rspec (~> 2.0)
     kaminari (0.13.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -232,18 +300,24 @@ GEM
     letter_opener (1.0.0)
       launchy (>= 2.0.4)
     libv8 (3.3.10.4)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    method_source (0.8)
-    mime-types (1.21)
+    method_source (0.8.1)
+    mime-types (1.24)
+    mini_portile (0.5.1)
     money (5.0.0)
       i18n (~> 0.4)
       json
-    multi_json (1.6.1)
-    multi_xml (0.5.3)
-    nokogiri (1.5.6)
+    multi_json (1.7.9)
+    multi_xml (0.5.5)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.6.8)
+    newrelic_rpm (3.6.5.130)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    oj (2.1.2)
     orm_adapter (0.4.0)
     paperclip (2.8.0)
       activerecord (>= 2.3.0)
@@ -251,16 +325,20 @@ GEM
       cocaine (>= 0.0.2)
       mime-types
     pg (0.13.2)
+    poltergeist (1.1.2)
+      capybara (~> 2.0.1)
+      faye-websocket (~> 0.4.4)
+      http_parser.rb (~> 0.5.3)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
-    pry (0.9.10)
+    pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
-      slop (~> 3.3.1)
-    pry-debugger (0.2.0)
-      debugger (~> 1.1.3)
-      pry (~> 0.9.9)
+      slop (~> 3.4)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
+      pry (~> 0.9.10)
     rabl (0.7.2)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
@@ -271,28 +349,28 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.11)
-      actionmailer (= 3.2.11)
-      actionpack (= 3.2.11)
-      activerecord (= 3.2.11)
-      activeresource (= 3.2.11)
-      activesupport (= 3.2.11)
+    rails (3.2.14)
+      actionmailer (= 3.2.14)
+      actionpack (= 3.2.14)
+      activerecord (= 3.2.14)
+      activeresource (= 3.2.14)
+      activesupport (= 3.2.14)
       bundler (~> 1.0)
-      railties (= 3.2.11)
-    railties (3.2.11)
-      actionpack (= 3.2.11)
-      activesupport (= 3.2.11)
+      railties (= 3.2.14)
+    railties (3.2.14)
+      actionpack (= 3.2.14)
+      activesupport (= 3.2.14)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.9.0)
-    rake (10.0.3)
+    rake (10.1.0)
     ransack (0.7.2)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
       polyamorous (~> 0.5.0)
-    rdoc (3.12.1)
+    rdoc (3.12.2)
       json (~> 1.4)
     representative (1.0.5)
       activesupport (>= 2.2.2)
@@ -302,29 +380,32 @@ GEM
     representative_view (1.2.2)
       actionpack (> 2.3.0, < 4.0.0)
       representative (~> 1.0.2)
-    rspec (2.10.0)
-      rspec-core (~> 2.10.0)
-      rspec-expectations (~> 2.10.0)
-      rspec-mocks (~> 2.10.0)
-    rspec-core (2.10.1)
-    rspec-expectations (2.10.0)
-      diff-lcs (~> 1.1.3)
-    rspec-mocks (2.10.1)
-    rspec-rails (2.10.1)
+    rspec (2.14.1)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    rspec-core (2.14.4)
+    rspec-expectations (2.14.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.2)
+    rspec-rails (2.14.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec (~> 2.10.0)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    ruby-hmac (0.4.0)
     rubyzip (0.9.9)
-    sass (3.1.19)
-    sass-rails (3.2.5)
+    safe_yaml (0.9.5)
+    sass (3.2.10)
+    sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.3.0)
-      sass-rails (~> 3.2)
+    select2-rails (3.2.1)
       thor (~> 0.14)
-    selenium-webdriver (2.31.0)
+    selenium-webdriver (2.35.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -335,7 +416,9 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    slop (3.3.3)
+    slop (3.4.5)
+    spinjs-rails (1.3)
+      rails (>= 3.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -345,9 +428,10 @@ GEM
     stringex (1.3.3)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
-    thor (0.17.0)
-    tilt (1.3.3)
-    treetop (1.4.12)
+    thor (0.18.1)
+    tilt (1.4.1)
+    timecop (0.6.2.2)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     truncate_html (0.5.5)
@@ -356,7 +440,7 @@ GEM
       sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
-    tzinfo (0.3.35)
+    tzinfo (0.3.37)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
@@ -364,13 +448,19 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    uuidtools (2.1.3)
+    unicorn-rails (1.1.0)
+      rack
+      unicorn
+    uuidtools (2.1.4)
     versioncake (0.4.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
     warden (1.2.1)
       rack (>= 1.0)
+    webmock (1.13.0)
+      addressable (>= 2.2.7)
+      crack (>= 0.3.2)
     websocket (1.0.7)
     xpath (1.0.0)
       nokogiri (~> 1.3)
@@ -384,33 +474,54 @@ DEPENDENCIES
   aws-sdk
   bugsnag
   capybara
+  chili!
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
+  compass-rails
   database_cleaner (= 0.7.1)
+  db2fog
   debugger-linecache
+  deface!
+  eaterprises_feature!
+  enterprises_distributor_info_rich_text_feature!
   factory_girl_rails
   faker
+  geocoder
+  gmaps4rails
   haml
   jquery-rails
+  json_spec
   letter_opener
+  local_organics_feature!
+  newrelic_rpm
+  oj
+  paperclip
   pg
+  poltergeist
   pry-debugger
-  rails (= 3.2.11)
+  rabl
+  rack-ssl
+  rails (= 3.2.14)
   representative_view
   rspec-rails
+  sass
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
   simplecov
+  spinjs-rails
   spree!
   spree_auth_devise!
-  spree_heroku!
   spree_i18n!
   spree_last_address!
   spree_paypal_express!
   therubyracer
+  timecop
   truncate_html
   turbo-sprockets-rails3
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn
+  unicorn-rails
+  webmock
+  zurb-foundation!

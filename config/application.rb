@@ -26,7 +26,6 @@ module Openfoodweb
 
     # Register Spree calculators
     initializer "spree.register.calculators" do |app|
-      app.config.spree.calculators.shipping_methods << OpenFoodWeb::Calculator::Itemwise
       app.config.spree.calculators.shipping_methods << OpenFoodWeb::Calculator::Weight
 
       app.config.spree.calculators.enterprise_fees = [Spree::Calculator::FlatPercentItemTotal,
@@ -37,6 +36,10 @@ module Openfoodweb
                                                       OpenFoodWeb::Calculator::Weight]
     end
 
+    # Register Spree payment methods
+    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
+      app.config.spree.payment_methods << Spree::Gateway::Migs
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -72,7 +75,11 @@ module Openfoodweb
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.assets.initialize_on_precompile = false
-    config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*']
+    config.assets.initialize_on_precompile = true
+    config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*', 'search/all.css', 'search/*.js']
   end
 end
+
+# YAML distributors config
+DISTRIBUTOR_CONFIG = YAML.load(File.read(File.expand_path('../distributors.yml', __FILE__)))
+DISTRIBUTOR_CONFIG.merge! DISTRIBUTOR_CONFIG.fetch(Rails.env, {})

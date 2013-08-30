@@ -1,0 +1,6 @@
+%ol.coordinator-fees
+  %li{'ng-repeat' => 'enterprise_fee in order_cycle.coordinator_fees'}
+    = select_tag 'order_cycle_coordinator_fee_{{ $index }}_id', nil, {'ng-model' => 'enterprise_fee.id', 'ng-options' => 'enterprise_fee.id as enterprise_fee.name for enterprise_fee in enterpriseFeesForEnterprise(order_cycle.coordinator_id)'}
+    = link_to 'Remove', '#', {'id' => 'order_cycle_coordinator_fee_{{ $index }}_remove', 'ng-click' => 'removeCoordinatorFee($event, $index)'}
+
+= f.submit 'Add coordinator fee', 'ng-click' => 'addCoordinatorFee($event)'

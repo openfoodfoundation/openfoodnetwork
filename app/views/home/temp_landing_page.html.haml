@@ -1,0 +1,38 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+
+    %title Welcome to Open Food Web
+    = favicon_link_tag "favicon.ico"
+    = stylesheet_link_tag "search/all"
+    = javascript_include_tag "search/all"
+    = render "layouts/bugherd_script"
+
+    = csrf_meta_tags
+  %body
+    .row.landing-page-row.with-bottom-border
+      .large-12.columns.centered
+        = image_tag "ofn_logo_black.png"
+    .row.landing-page-row.with-bottom-border.with-pin-bg
+      .large-12.columns.centered
+        %h3 WHERE WOULD YOU LIKE TO SHOP?
+        %p.secondary Select your hub from the list below
+    .row.landing-page-row.with-bottom-border
+      - @regions.each do |region|
+        .large-3.columns
+          .region-header
+            %h5= region[:name].upcase
+          - region[:distributors].each do |distributor|
+            .row.distributor-link-row
+              .large-12.columns
+                = succeed ',' do
+                  = link_to "<strong>#{distributor.name}</strong>".html_safe, shop_enterprise_path(distributor)
+
+                %span.secondary= distributor.city
+    %footer
+      .row.landing-page-row
+        .large-6.columns.text-left
+          %strong= link_to "WHAT IS OPEN FOOD NETWORK?", "#"
+        .large-6.columns.text-right.secondary All rights reserved. &copy; 2013 Open Food Foundation

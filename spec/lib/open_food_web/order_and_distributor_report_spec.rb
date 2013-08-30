@@ -12,10 +12,10 @@ module OpenFoodWeb
         @distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
         @distributor = create(:distributor_enterprise, :address => @distributor_address)
         product = create(:product)
-        product_distribution = create(:product_distribution, :product => product, :distributor => @distributor, :shipping_method => create(:shipping_method))
+        product_distribution = create(:product_distribution, :product => product, :distributor => @distributor)
         @shipping_instructions = "pick up on thursday please!"
         @order = create(:order, :distributor => @distributor, :bill_address => @bill_address, :special_instructions => @shipping_instructions)
-        @payment_method = create(:payment_method)
+        @payment_method = create(:payment_method, :distributor => @distributor)
         payment = create(:payment, :payment_method => @payment_method, :order => @order )
         @order.payments << payment
         @line_item = create(:line_item, :product => product, :order => @order)
@@ -40,7 +40,7 @@ module OpenFoodWeb
 
         table[0].should == [@order.created_at, @order.id,
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
-          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.itemwise_shipping_cost,
+          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.distribution_fee,
           @payment_method.name,
           @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
       end

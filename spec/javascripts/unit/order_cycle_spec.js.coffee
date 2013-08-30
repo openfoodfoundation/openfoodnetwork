@@ -6,6 +6,7 @@ describe 'OrderCycle controllers', ->
     event = null
     OrderCycle = null
     Enterprise = null
+    EnterpriseFee = null
 
     beforeEach ->
       scope = {}
@@ -16,24 +17,36 @@ describe 'OrderCycle controllers', ->
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
+        exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
+        removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
+        addExchangeFee: jasmine.createSpy('addExchangeFee')
+        removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+      EnterpriseFee =
+        index: jasmine.createSpy('index').andReturn('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
       module('order_cycle')
       inject ($controller) ->
-        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise}
+        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
 
     it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
       expect(scope.supplied_products).toEqual('supplied products')
+
+    it 'Loads enterprise fees', ->
+      expect(EnterpriseFee.index).toHaveBeenCalled()
+      expect(scope.enterprise_fees).toEqual('enterprise fees list')
 
     it 'Loads order cycles', ->
       expect(scope.order_cycle).toEqual('my order cycle')
@@ -54,10 +67,27 @@ describe 'OrderCycle controllers', ->
       expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
       expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
 
+    it 'Delegates exchangeDirection to OrderCycle', ->
+      expect(scope.exchangeDirection('exchange')).toEqual('exchange direction')
+      expect(OrderCycle.exchangeDirection).toHaveBeenCalledWith('exchange')
+
+    it 'Finds enterprises participating in the order cycle', ->
+      scope.enterprises =
+        1: {id: 1, name: 'Eaterprises'}
+        2: {id: 2, name: 'Pepper Tree Place'}
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      expect(scope.participatingEnterprises()).toEqual([
+        {id: 2, name: 'Pepper Tree Place'}
+        ])
+
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
+
+    it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
+      scope.enterpriseFeesForEnterprise('123')
+      expect(EnterpriseFee.forEnterprise).toHaveBeenCalledWith(123)
 
     it 'Adds order cycle suppliers', ->
       scope.new_supplier_id = 'new supplier id'
@@ -71,6 +101,26 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
 
+    it 'Adds coordinator fees', ->
+      scope.addCoordinatorFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addCoordinatorFee).toHaveBeenCalled()
+
+    it 'Removes coordinator fees', ->
+      scope.removeCoordinatorFee(event, 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
+
+    it 'Adds exchange fees', ->
+      scope.addExchangeFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addExchangeFee).toHaveBeenCalled()
+
+    it 'Removes exchange fees', ->
+      scope.removeExchangeFee(event, 'exchange', 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
+
     it 'Submits the order cycle via OrderCycle create', ->
       scope.submit()
       expect(OrderCycle.create).toHaveBeenCalled()
@@ -82,6 +132,7 @@ describe 'OrderCycle controllers', ->
     location = null
     OrderCycle = null
     Enterprise = null
+    EnterpriseFee = null
 
     beforeEach ->
       scope = {}
@@ -95,23 +146,35 @@ describe 'OrderCycle controllers', ->
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
+        exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
+        removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
+        addExchangeFee: jasmine.createSpy('addExchangeFee')
+        removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+      EnterpriseFee =
+        index: jasmine.createSpy('index').andReturn('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
       module('order_cycle')
       inject ($controller) ->
-        ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise}
+        ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
     it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
       expect(scope.supplied_products).toEqual('supplied products')
+
+    it 'Loads enterprise fees', ->
+      expect(EnterpriseFee.index).toHaveBeenCalled()
+      expect(scope.enterprise_fees).toEqual('enterprise fees list')
 
     it 'Loads order cycles', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
@@ -132,10 +195,27 @@ describe 'OrderCycle controllers', ->
       expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
       expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
 
+    it 'Delegates exchangeDirection to OrderCycle', ->
+      expect(scope.exchangeDirection('exchange')).toEqual('exchange direction')
+      expect(OrderCycle.exchangeDirection).toHaveBeenCalledWith('exchange')
+
+    it 'Finds enterprises participating in the order cycle', ->
+      scope.enterprises =
+        1: {id: 1, name: 'Eaterprises'}
+        2: {id: 2, name: 'Pepper Tree Place'}
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      expect(scope.participatingEnterprises()).toEqual([
+        {id: 2, name: 'Pepper Tree Place'}
+        ])
+
     it 'Delegates toggleProducts to OrderCycle', ->
       scope.toggleProducts(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
+
+    it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
+      scope.enterpriseFeesForEnterprise('123')
+      expect(EnterpriseFee.forEnterprise).toHaveBeenCalledWith(123)
 
     it 'Adds order cycle suppliers', ->
       scope.new_supplier_id = 'new supplier id'
@@ -148,6 +228,26 @@ describe 'OrderCycle controllers', ->
       scope.addDistributor(event)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
+
+    it 'Adds coordinator fees', ->
+      scope.addCoordinatorFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addCoordinatorFee).toHaveBeenCalled()
+
+    it 'Removes coordinator fees', ->
+      scope.removeCoordinatorFee(event, 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
+
+    it 'Adds exchange fees', ->
+      scope.addExchangeFee(event)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.addExchangeFee).toHaveBeenCalled()
+
+    it 'Removes exchange fees', ->
+      scope.removeExchangeFee(event, 'exchange', 0)
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
 
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit()
@@ -194,6 +294,37 @@ describe 'OrderCycle services', ->
       expect(Enterprise.totalVariants(enterprise)).toEqual(5)
 
 
+  describe 'EnterpriseFee service', ->
+    $httpBackend = null
+    EnterpriseFee = null
+
+    beforeEach ->
+      module 'order_cycle'
+      inject ($injector, _$httpBackend_)->
+        EnterpriseFee = $injector.get('EnterpriseFee')
+        $httpBackend = _$httpBackend_
+        $httpBackend.whenGET('/admin/enterprise_fees.json').respond [
+          {id: 1, name: "Yayfee", enterprise_id: 1}
+          {id: 2, name: "FeeTwo", enterprise_id: 2}
+          ]
+
+    it 'loads enterprise fees', ->
+      enterprise_fees = EnterpriseFee.index()
+      $httpBackend.flush()
+      expect(enterprise_fees).toEqual [
+        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
+        new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo", enterprise_id: 2})
+        ]
+
+    it 'returns enterprise fees for an enterprise', ->
+      all_enterprise_fees = EnterpriseFee.index()
+      $httpBackend.flush()
+      enterprise_fees = EnterpriseFee.forEnterprise(1)
+      expect(enterprise_fees).toEqual [
+        new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
+        ]
+
+
   describe 'OrderCycle service', ->
     OrderCycle = null
     $httpBackend = null
@@ -213,6 +344,7 @@ describe 'OrderCycle services', ->
           id: 123
           name: 'Test Order Cycle'
           coordinator_id: 456
+          coordinator_fees: []
           exchanges: [
             {sender_id: 1, receiver_id: 456}
             {sender_id: 456, receiver_id: 2}
@@ -222,10 +354,24 @@ describe 'OrderCycle services', ->
       expect(OrderCycle.order_cycle).toEqual
         incoming_exchanges: []
         outgoing_exchanges: []
+        coordinator_fees: []
 
     it 'counts selected variants in an exchange', ->
       result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
       expect(result).toEqual(2)
+
+    describe 'fetching the direction for an exchange', ->
+      it 'returns "incoming" for incoming exchanges', ->
+        exchange = {id: 1}
+        OrderCycle.order_cycle.incoming_exchanges = [exchange]
+        OrderCycle.order_cycle.outgoing_exchanges = []
+        expect(OrderCycle.exchangeDirection(exchange)).toEqual 'incoming'
+
+      it 'returns "outgoing" for outgoing exchanges', ->
+        exchange = {id: 1}
+        OrderCycle.order_cycle.incoming_exchanges = []
+        OrderCycle.order_cycle.outgoing_exchanges = [exchange]
+        expect(OrderCycle.exchangeDirection(exchange)).toEqual 'outgoing'
 
     describe 'toggling products', ->
       exchange = null
@@ -253,7 +399,7 @@ describe 'OrderCycle services', ->
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}}
+          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'adding distributors', ->
@@ -262,8 +408,55 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}}
+          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
+
+    it 'adds coordinator fees', ->
+      OrderCycle.addCoordinatorFee()
+      expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{}]
+
+    describe 'removing coordinator fees', ->
+      it 'removes a coordinator fee by index', ->
+        OrderCycle.order_cycle.coordinator_fees = [
+          {id: 1}
+          {id: 2}
+          {id: 3}
+          ]
+        OrderCycle.removeCoordinatorFee(1)
+        expect(OrderCycle.order_cycle.coordinator_fees).toEqual [
+          {id: 1}
+          {id: 3}
+          ]
+
+    it 'adds exchange fees', ->
+      exchange = {enterprise_fees: []}
+      OrderCycle.addExchangeFee(exchange)
+      expect(exchange.enterprise_fees).toEqual [{}]
+
+    describe 'removing exchange fees', ->
+      it 'removes an exchange fee by index', ->
+        exchange =
+          enterprise_fees: [
+            {id: 1}
+            {id: 2}
+            {id: 3}
+            ]
+        OrderCycle.removeExchangeFee(exchange, 1)
+        expect(exchange.enterprise_fees).toEqual [
+          {id: 1}
+          {id: 3}
+          ]
+
+    it 'finds participating enterprise ids', ->
+      OrderCycle.order_cycle.incoming_exchanges = [
+        {enterprise_id: 1}
+        {enterprise_id: 2}
+      ]
+      OrderCycle.order_cycle.outgoing_exchanges = [
+        {enterprise_id: 2}
+        {enterprise_id: 3}
+      ]
+      expect(OrderCycle.participatingEnterpriseIds()).toEqual [1, 2, 3]
 
     describe 'fetching all variants supplied on incoming exchanges', ->
       it 'collects variants from incoming exchanges', ->
@@ -350,30 +543,62 @@ describe 'OrderCycle services', ->
     describe 'creating an order cycle', ->
       it 'redirects to the order cycles page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle: 'this is the order cycle'
+          order_cycle: 'this is the submit data'
           }).respond {success: true}
 
         OrderCycle.create()
         $httpBackend.flush()
-        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual('/admin/order_cycles')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
-          order_cycle: 'this is the order cycle'
+          order_cycle: 'this is the submit data'
           }).respond {success: false}
 
         OrderCycle.create()
         $httpBackend.flush()
-        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
         expect($window.location).toEqual(undefined)
 
+    describe 'updating an order cycle', ->
+      it 'redirects to the order cycles page on success', ->
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        $httpBackend.expectPUT('/admin/order_cycles.json', {
+          order_cycle: 'this is the submit data'
+          }).respond {success: true}
+
+        OrderCycle.update()
+        $httpBackend.flush()
+        expect($window.location).toEqual('/admin/order_cycles')
+
+      it 'does not redirect on error', ->
+        OrderCycle.order_cycle = 'this is the order cycle'
+        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        $httpBackend.expectPUT('/admin/order_cycles.json', {
+          order_cycle: 'this is the submit data'
+          }).respond {success: false}
+
+        OrderCycle.update()
+        $httpBackend.flush()
+        expect($window.location).toEqual(undefined)
+
+    describe 'preparing data for form submission', ->
+      it 'calls all the methods', ->
+        OrderCycle.order_cycle = {foo: 'bar'}
+        spyOn(OrderCycle, 'removeInactiveExchanges')
+        spyOn(OrderCycle, 'translateCoordinatorFees')
+        spyOn(OrderCycle, 'translateExchangeFees')
+        OrderCycle.dataForSubmit()
+        expect(OrderCycle.removeInactiveExchanges).toHaveBeenCalled()
+        expect(OrderCycle.translateCoordinatorFees).toHaveBeenCalled()
+        expect(OrderCycle.translateExchangeFees).toHaveBeenCalled()
+
       it 'removes inactive exchanges', ->
-        OrderCycle.order_cycle =
+        data =
           incoming_exchanges: [
             {enterprise_id: "1", active: false}
             {enterprise_id: "2", active: true}
@@ -384,11 +609,47 @@ describe 'OrderCycle services', ->
             {enterprise_id: "5", active: false}
             {enterprise_id: "6", active: true}
             ]
-        OrderCycle.removeInactiveExchanges()
-        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
+
+        data = OrderCycle.removeInactiveExchanges(data)
+
+        expect(data.incoming_exchanges).toEqual [
           {enterprise_id: "2", active: true}
           ]
-        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+        expect(data.outgoing_exchanges).toEqual [
           {enterprise_id: "4", active: true}
           {enterprise_id: "6", active: true}
           ]
+
+      it 'converts coordinator fees into a list of ids', ->
+        data =
+          coordinator_fees: [
+            {id: 1}
+            {id: 2}
+            ]
+
+        data = OrderCycle.translateCoordinatorFees(data)
+
+        expect(data.coordinator_fees).toBeUndefined()
+        expect(data.coordinator_fee_ids).toEqual [1, 2]
+
+      it 'converts exchange fees into a list of ids', ->
+        data =
+          incoming_exchanges: [
+            enterprise_fees: [
+              {id: 1}
+              {id: 2}
+            ]
+          ]
+          outgoing_exchanges: [
+            enterprise_fees: [
+              {id: 3}
+              {id: 4}
+            ]
+          ]
+
+        data = OrderCycle.translateExchangeFees(data)
+
+        expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
+        expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
+        expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
+        expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]

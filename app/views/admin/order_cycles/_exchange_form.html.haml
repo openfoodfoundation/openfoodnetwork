@@ -13,3 +13,13 @@
     = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', 'placeholder' => 'Pickup time / date', 'ng-model' => 'exchange.pickup_time'
     %br/
     = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', 'placeholder' => 'Delivery instructions', 'ng-model' => 'exchange.pickup_instructions'
+%td.fees
+  %ol
+    %li{'ng-repeat' => 'enterprise_fee in exchange.enterprise_fees'}
+      = select_tag 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_id', nil, {'id' => 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_id', 'ng-model' => 'enterprise_fee.enterprise_id', 'ng-options' => 'enterprise.id as enterprise.name for enterprise in participatingEnterprises()'}
+
+      = select_tag 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_fee_id', nil, {'id' => 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_fee_id', 'ng-model' => 'enterprise_fee.id', 'ng-options' => 'enterprise_fee.id as enterprise_fee.name for enterprise_fee in enterpriseFeesForEnterprise(enterprise_fee.enterprise_id)'}
+
+      = link_to 'Remove', '#', {'id' => 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_remove', 'ng-click' => 'removeExchangeFee($event, exchange, $index)'}
+
+  = f.submit 'Add fee', 'ng-click' => 'addExchangeFee($event, exchange)'

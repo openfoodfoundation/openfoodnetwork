@@ -1,0 +1,3 @@
+<!-- insert_bottom '#footer-left p' -->
+| <%= link_to 'Terms and Conditions', "http://www.localorg.com.au/contactterms-and-conditions.html" %>
+| <%= link_to "http://openfoodweb.org/foundation" do %><%= image_tag 'ofw.png', alt: 'Open Food Web Foundation' %><% end %>

@@ -2,6 +2,8 @@ module Admin
   class EnterpriseFeesController < ResourceController
     before_filter :load_enterprise_fee_set, :only => :index
     before_filter :load_data
+    before_filter :do_not_destroy_referenced_fees, :only => :destroy
+
 
     def index
       respond_to do |format|
@@ -21,6 +23,23 @@ module Admin
 
 
     private
+
+    def do_not_destroy_referenced_fees
+      product_distribution = ProductDistribution.where(:enterprise_fee_id => @object).first
+      if product_distribution
+        p = product_distribution.product
+        error = "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
+
+        respond_with(@object) do |format|
+          format.html do
+            flash[:error] = error
+            redirect_to collection_url
+          end
+          format.js { render text: error, status: 403 }
+        end
+      end
+    end
+
     def load_enterprise_fee_set
       @enterprise_fee_set = EnterpriseFeeSet.new :collection => collection
     end
@@ -30,8 +49,7 @@ module Admin
     end
 
     def collection
-      super.order('enterprise_id', 'fee_type', 'name') + (1..3).map { EnterpriseFee.new }
+      EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
     end
-
   end
 end

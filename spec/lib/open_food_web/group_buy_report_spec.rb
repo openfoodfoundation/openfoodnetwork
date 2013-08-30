@@ -13,8 +13,7 @@ module OpenFoodWeb
       @variant1 = create(:variant)
       @variant1.product.supplier = @supplier1
       @variant1.product.save!
-      shipping_method = create(:shipping_method)
-      product_distribution = create(:product_distribution, :product => @variant1.product, :distributor => distributor, :shipping_method => create(:shipping_method))
+      product_distribution = create(:product_distribution, :product => @variant1.product, :distributor => distributor)
       shipping_instructions = "pick up on thursday please!"
 
       order1 = create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions)
@@ -29,7 +28,7 @@ module OpenFoodWeb
       @variant2 = create(:variant)
       @variant2.product.supplier = @supplier1
       @variant2.product.save!
-      product_distribution = create(:product_distribution, :product => @variant2.product, :distributor => distributor, :shipping_method => create(:shipping_method))
+      product_distribution = create(:product_distribution, :product => @variant2.product, :distributor => distributor)
 
       line_item22 = create(:line_item, :variant => @variant2, :order => order2)
       order2.line_items << line_item22
@@ -39,7 +38,7 @@ module OpenFoodWeb
       @variant3 = create(:variant, :weight => nil)
       @variant3.product.supplier = @supplier2
       @variant3.product.save!
-      product_distribution = create(:product_distribution, :product => @variant3.product, :distributor => distributor, :shipping_method => create(:shipping_method))
+      product_distribution = create(:product_distribution, :product => @variant3.product, :distributor => distributor)
 
       order3 = create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions)
       line_item31 = create(:line_item, :variant => @variant3, :order => order3)

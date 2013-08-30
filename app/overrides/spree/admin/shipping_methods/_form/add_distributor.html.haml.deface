@@ -1,0 +1,5 @@
+/ insert_bottom "[data-hook='admin_shipping_method_form_availability_fields'] > fieldset"
+
+= f.field_container :shipping_category do
+  = f.label :distributor_id, 'Distributor'
+  = f.collection_select :distributor_id, Enterprise.is_distributor, :id, :name, {include_blank: false}, {class: 'select2 fullwidth'}

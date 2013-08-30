@@ -1,24 +1,38 @@
 require 'simplecov'
 SimpleCov.start
 
+
 require 'rubygems'
 
+# Require pry when we're not inside Travis-CI
+require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
 
-ENV["RAILS_ENV"] = 'test'
+ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
 
+# Allow connections to phantomjs/selenium whilst raising errors
+# when connecting to external sites
+require 'webmock/rspec'
+WebMock.disable_net_connect!(:allow_localhost => true)
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/core/testing_support/controller_requests'
+require 'spree/core/testing_support/capybara_ext'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
 ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/countries'])
 
+# Capybara config
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+
+require "paperclip/matchers"
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -44,14 +58,17 @@ RSpec.configure do |config|
 
   # ## Filters
   #
-  config.filter_run_excluding :skip => true
+  config.filter_run_excluding :skip => true, :future => true
 
   config.before(:each) do
+    Spree::Address.any_instance.stub(:geocode).and_return([1,1])
+
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
     else
       DatabaseCleaner.strategy = :transaction
     end
+
     DatabaseCleaner.start
   end
 
@@ -61,10 +78,16 @@ RSpec.configure do |config|
 
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
+  config.include Spree::CheckoutHelpers
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
+  config.include OpenFoodWeb::FeatureToggleHelper
 
   # Factory girl
   require 'factory_girl_rails'
   config.include FactoryGirl::Syntax::Methods
+
+  config.include Paperclip::Shoulda::Matchers
+
+  config.include JsonSpec::Helpers
 end

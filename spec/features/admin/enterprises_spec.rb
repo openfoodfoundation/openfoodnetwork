@@ -6,12 +6,12 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
-  
+
   before :all do
     @default_wait_time = Capybara.default_wait_time
     Capybara.default_wait_time = 5
   end
-  
+
   after :all do
     Capybara.default_wait_time = @default_wait_time
   end
@@ -105,6 +105,7 @@ feature %q{
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+    page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
   end
 
 
@@ -127,4 +128,56 @@ feature %q{
     Enterprise.is_distributor.map { |d| d.next_collection_at }.should == %w(One Two Three)
   end
 
+  context 'as an Enterprise user' do
+    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+
+    before(:each) do
+      @new_user = create_enterprise_user
+      @new_user.enterprise_roles.build(enterprise: supplier1).save
+      @new_user.enterprise_roles.build(enterprise: distributor1).save
+
+      login_to_admin_as @new_user
+    end
+
+    scenario "can view enterprises I have permission to" do
+      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+
+      click_link "Enterprises"
+
+      page.should have_content supplier1.name
+      page.should have_content distributor1.name
+      page.should_not have_content supplier2.name
+      page.should_not have_content distributor2.name
+    end
+
+    scenario "can edit enterprises I have permission to" do
+      click_link 'Enterprises'
+      within('#listing_enterprises tbody tr:first') { click_link 'Edit' }
+
+      fill_in 'enterprise_name', :with => 'Eaterprises'
+      click_button 'Update'
+
+      flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+      page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
+    end
+
+    scenario "can bulk edit enterprise collection dates/times for enterprises I have permission to" do
+      click_link 'Enterprises'
+
+      fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
+      fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
+      click_button 'Update'
+
+      flash_message.should == 'Distributor collection times updated.'
+
+      supplier1.reload.next_collection_at.should == 'One'
+      distributor1.reload.next_collection_at.should == 'Two'
+      supplier2.reload.next_collection_at.should be_nil
+      distributor2.reload.next_collection_at.should be_nil
+    end
+  end
 end

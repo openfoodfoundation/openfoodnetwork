@@ -3,13 +3,23 @@ r.element :order_cycle, @order_cycle do
   r.element :name
   r.element :orders_open_at, @order_cycle.orders_open_at.to_s
   r.element :orders_close_at, @order_cycle.orders_close_at.to_s
+
   r.element :coordinator_id
+  r.list_of :coordinator_fees do |fee|
+    r.element :id
+  end
+
   r.list_of :exchanges do |exchange|
     r.element :id
     r.element :sender_id
     r.element :receiver_id
 
     r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
+
+    r.list_of :enterprise_fees do |fee|
+      r.element :id
+      r.element :enterprise_id
+    end
 
     r.element :pickup_time
     r.element :pickup_instructions

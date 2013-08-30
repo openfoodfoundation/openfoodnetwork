@@ -7,9 +7,10 @@ produce.
 
 ## Dependencies
 
-* Rails 3.x
-* Ruby >= 1.9.2
+* Rails 3.2.x
+* Ruby >= 1.9.3
 * PostgreSQL database
+* PhantomJS (for testing)
 * See Gemfile for a list of gems required
 
 
@@ -43,6 +44,10 @@ Create the development and test databases, using the settings specified in `conf
 
     rake db:schema:load db:seed
 
+Load some default data for your environment
+
+    rake openfoodweb:dev:load_sample_data
+
 At long last, your dreams of spinning up a development server can be realised:
 
     rails server
@@ -75,8 +80,10 @@ speak to Andrew Spinks.
 * Andrew Spinks (http://github.com/andrewspinks)
 * Rohan Mitchell (http://github.com/rohanm)
 * Rob Harrington (http://github.com/oeoeaio)
+* Alex Serdyuk (http://github.com/alexs333)
+* David Cook (http://github.com/dacook)
 
 
 ## Licence
 
-Copyright (c) 2012 Eaterprises, released under the AGPL licence.
+Copyright (c) 2012 - 2013 Eaterprises, released under the AGPL licence.

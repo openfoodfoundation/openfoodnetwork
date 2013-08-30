@@ -7,7 +7,7 @@ module OpenFoodWeb
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}}
+        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2]}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange], :outgoing_exchanges => [])
 
@@ -15,7 +15,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(false)
-        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3]})
+        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2]})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -25,7 +25,7 @@ module OpenFoodWeb
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [], :outgoing_exchanges => [outgoing_exchange])
 
@@ -33,7 +33,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(false)
-        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
+        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -43,7 +43,7 @@ module OpenFoodWeb
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}}
+        incoming_exchange = {:enterprise_id => supplier_id, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2]}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
@@ -55,7 +55,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id).and_return(true)
-        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3]})
+        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2]})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -65,7 +65,7 @@ module OpenFoodWeb
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
+        outgoing_exchange = {:enterprise_id => distributor_id, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
@@ -77,7 +77,7 @@ module OpenFoodWeb
 
         applicator.should_receive(:exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id).and_return(true)
-        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
+        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -133,14 +133,17 @@ module OpenFoodWeb
         receiver = FactoryGirl.create(:enterprise)
         variant1 = FactoryGirl.create(:variant)
         variant2 = FactoryGirl.create(:variant)
+        enterprise_fee1 = FactoryGirl.create(:enterprise_fee)
+        enterprise_fee2 = FactoryGirl.create(:enterprise_fee)
 
         applicator.send(:touched_exchanges=, [])
-        applicator.send(:add_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant2.id]})
+        applicator.send(:add_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant2.id], :enterprise_fee_ids => [enterprise_fee1.id, enterprise_fee2.id]})
 
         exchange = Exchange.last
         exchange.sender.should == sender
         exchange.receiver.should == receiver
         exchange.variants.sort.should == [variant1, variant2].sort
+        exchange.enterprise_fees.sort.should == [enterprise_fee1, enterprise_fee2].sort
 
         applicator.send(:touched_exchanges).should == [exchange]
       end
@@ -153,14 +156,18 @@ module OpenFoodWeb
         variant1 = FactoryGirl.create(:variant)
         variant2 = FactoryGirl.create(:variant)
         variant3 = FactoryGirl.create(:variant)
+        enterprise_fee1 = FactoryGirl.create(:enterprise_fee)
+        enterprise_fee2 = FactoryGirl.create(:enterprise_fee)
+        enterprise_fee3 = FactoryGirl.create(:enterprise_fee)
 
-        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1.id, variant2.id])
+        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, variant_ids: [variant1.id, variant2.id], enterprise_fee_ids: [enterprise_fee1.id, enterprise_fee2.id])
 
         applicator.send(:touched_exchanges=, [])
-        applicator.send(:update_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant3.id]})
+        applicator.send(:update_exchange, sender.id, receiver.id, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id]})
 
         exchange.reload
-        exchange.variant_ids.sort.should == [variant1.id, variant3.id].sort
+        exchange.variants.sort.should == [variant1, variant3].sort
+        exchange.enterprise_fees.sort.should == [enterprise_fee2, enterprise_fee3]
         applicator.send(:touched_exchanges).should == [exchange]
       end
     end

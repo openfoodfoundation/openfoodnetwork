@@ -43,4 +43,115 @@ describe Exchange do
     e.exchange_fees.create(:enterprise_fee => f)
     e.enterprise_fees.count.should == 1
   end
+
+  describe "reporting whether it is an incoming exchange" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
+    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+
+    it "returns true for incoming exchanges" do
+      incoming_exchange.should be_incoming
+    end
+
+    it "returns false for outgoing exchanges" do
+      outgoing_exchange.should_not be_incoming
+    end
+  end
+
+  describe "scopes" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
+    let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+
+    it "finds incoming exchanges" do
+      Exchange.incoming.should == [incoming_exchange]
+    end
+
+    it "finds outgoing exchanges" do
+      Exchange.outgoing.should == [outgoing_exchange]
+    end
+
+    it "finds exchanges going to any of a number of enterprises" do
+      Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
+      Exchange.to_enterprises([coordinator, distributor]).should == [incoming_exchange, outgoing_exchange]
+    end
+
+    it "finds exchanges coming from any of a number of enterprises" do
+      Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
+      Exchange.from_enterprises([supplier, coordinator]).should == [incoming_exchange, outgoing_exchange]
+    end
+
+    it "finds exchanges with a particular variant" do
+      v = create(:variant)
+      ex = create(:exchange)
+      ex.variants << v
+
+      Exchange.with_variant(v).should == [ex]
+    end
+  end
+
+  it "clones itself" do
+    oc = create(:order_cycle)
+    new_oc = create(:simple_order_cycle)
+
+    ex1 = oc.exchanges.last
+    ex2 = ex1.clone! new_oc
+
+    ex1.eql?(ex2).should be_true
+  end
+
+  describe "converting to hash" do
+    let(:oc) { create(:order_cycle) }
+    let(:exchange) do
+      exchange = oc.exchanges.last
+      exchange.payment_enterprise = Enterprise.last
+      exchange.save!
+      exchange
+    end
+
+    it "converts to a hash" do
+      exchange.to_h.should ==
+        {'id' => exchange.id, 'order_cycle_id' => oc.id,
+        'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+        'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
+        'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+        'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
+        'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at}
+    end
+
+    it "converts to a hash of core attributes only" do
+      exchange.to_h(true).should ==
+        {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
+         'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions}
+    end
+  end
+
+  describe "comparing equality" do
+    it "compares Exchanges using to_h" do
+      e1 = Exchange.new
+      e2 = Exchange.new
+
+      e1.stub(:to_h) { {'sender_id' => 456} }
+      e2.stub(:to_h) { {'sender_id' => 456} }
+
+      e1.eql?(e2).should be_true
+    end
+
+    it "compares other objects using super" do
+      exchange = Exchange.new
+      exchange_fee = ExchangeFee.new
+
+      exchange.eql?(exchange_fee).should be_false
+    end
+  end
 end

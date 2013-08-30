@@ -1,0 +1,33 @@
+<%# When written in HAML, dynamic attributes (ie. (class="order-cycle-#{foo}")) were failing to parse.
+    Regrettably rewritten in ERB. Fix me! %>
+
+<% if cart_is_empty and order_cycles_enabled? %>
+  <div id="distribution-selection">
+    <%= form_for current_order(true) do |f| %>
+      <div class="distributors">
+        <h2>Active Hubs</h2>
+        <%= f.select :distributor_id, distributor_options(@all_distributors, f.object.distributor_id, current_order_cycle) %>
+        <br />
+        <%= f.submit 'Choose Hub' %>
+      </div>
+
+      <div class="order-cycles">
+        <h2>Closing Soon</h2>
+        <table>
+          <% @order_cycles.each do |order_cycle| %>
+            <tr class="order-cycle-<%= order_cycle.id %><%= order_cycle_local_remote_class(current_distributor, order_cycle) %>">
+              <td><%= f.radio_button :order_cycle_id, order_cycle.id %></td>
+              <td>
+                <label for="order_order_cycle_id_<%= order_cycle.id %>"><%= order_cycle.name %></label>
+              </td>
+              <td>
+                <label for="order_order_cycle_id_<%= order_cycle.id %>"><%= distance_of_time_in_words_to_now order_cycle.orders_close_at %></label>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <%= f.submit 'Choose Order Cycle' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

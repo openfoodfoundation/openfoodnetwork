@@ -3,14 +3,30 @@ require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
   factory :order_cycle, :parent => :simple_order_cycle do
+    coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
+
     after(:create) do |oc|
       # Suppliers
-      ex1 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
-      ex2 = create(:exchange, :order_cycle => oc, :receiver => oc.coordinator)
+      ex1 = create(:exchange, :order_cycle => oc,
+                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
+      ex2 = create(:exchange, :order_cycle => oc,
+                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
+      ExchangeFee.create!(exchange: ex1,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
+      ExchangeFee.create!(exchange: ex2,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
       # Distributors
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
-      create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ex3 = create(:exchange, :order_cycle => oc,
+                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
+      ex4 = create(:exchange, :order_cycle => oc,
+                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ExchangeFee.create!(exchange: ex3,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
+      ExchangeFee.create!(exchange: ex4,
+                          enterprise_fee: create(:enterprise_fee, enterprise: ex4.receiver))
 
       # Products with images
       [ex1, ex2].each do |exchange|
@@ -19,6 +35,11 @@ FactoryGirl.define do
         Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
         exchange.variants << product.master
+      end
+
+      variants = [ex1, ex2].map(&:variants).flatten
+      [ex3, ex4].each do |exchange|
+        variants.each { |v| exchange.variants << v }
       end
     end
   end
@@ -30,6 +51,24 @@ FactoryGirl.define do
     orders_close_at { Time.zone.now + 1.week }
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+
+    ignore do
+      suppliers []
+      distributors []
+      variants []
+    end
+
+    after(:create) do |oc, proxy|
+      proxy.suppliers.each do |supplier|
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
+      end
+
+      proxy.distributors.each do |distributor|
+        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        proxy.variants.each { |v| ex.variants << v }
+      end
+    end
   end
 
   factory :exchange, :class => Exchange do
@@ -56,11 +95,15 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  sequence(:calculator_amount)
   factory :enterprise_fee, :class => EnterpriseFee do
+    ignore { amount nil }
+
+    sequence(:name) { |n| "Enterprise fee #{n}" }
+    sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
+
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
-    fee_type 'packing'
-    name '$0.50 / kg'
-    calculator { FactoryGirl.build(:weight_calculator) }
+    calculator { Spree::Calculator::PerItem.new(preferred_amount: amount || generate(:calculator_amount)) }
 
     after(:create) { |ef| ef.calculator.save! }
   end
@@ -68,15 +111,15 @@ FactoryGirl.define do
   factory :product_distribution, :class => ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
-    shipping_method { |pd| Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method) }
+    enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
-  factory :itemwise_shipping_method, :parent => :shipping_method do
-    name 'Delivery'
-    calculator { FactoryGirl.build(:itemwise_calculator) }
-  end
-
-  factory :itemwise_calculator, :class => OpenFoodWeb::Calculator::Itemwise do
+  factory :adjustment_metadata, :class => AdjustmentMetadata do
+    adjustment { FactoryGirl.create(:adjustment) }
+    enterprise { FactoryGirl.create(:distributor_enterprise) }
+    fee_name 'fee'
+    fee_type 'packing'
+    enterprise_role 'distributor'
   end
 
   factory :weight_calculator, :class => OpenFoodWeb::Calculator::Weight do
@@ -84,6 +127,15 @@ FactoryGirl.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
+  factory :order_with_totals_and_distributor, :parent => :order do #possibly called :order_with_line_items in newer Spree
+    # Ensure order has a distributor set
+    distributor { create(:distributor_enterprise) }
+    after(:create) do |order|
+      p = create(:simple_product, :distributors => [order.distributor])
+      FactoryGirl.create(:line_item, :order => order, :product => p)
+      order.reload
+    end
+  end
 end
 
 
@@ -96,26 +148,10 @@ FactoryGirl.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     on_hand 3
-
-    # before(:create) do |product, evaluator|
-    #   product.product_distributions = [FactoryGirl.create(:product_distribution, :product => product)]
-    # end
-
-    # Do not create products distributed via the 'Delivery' shipping method
-    after(:create) do |product, evaluator|
-      pd = product.product_distributions.first
-      if pd.andand.shipping_method.andand.name == 'Delivery'
-        pd.shipping_method = Spree::ShippingMethod.where("name != 'Delivery'").first || FactoryGirl.create(:shipping_method)
-        pd.save!
-      end
-    end
-  end
-
-  factory :line_item do
-    shipping_method { |li| li.product.shipping_method_for_distributor(li.order.distributor) }
   end
 
   factory :shipping_method do
+    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     display_on ''
   end
 
@@ -123,6 +159,18 @@ FactoryGirl.modify do
     state { Spree::State.find_by_name 'Victoria' }
     country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
   end
+
+  factory :payment  do
+    ignore do
+      distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+    end
+    payment_method { FactoryGirl.create(:payment_method, distributor: distributor) }
+  end
+
+  factory :payment_method do
+    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) } #Always need a distributor
+  end
+
 end
 
 

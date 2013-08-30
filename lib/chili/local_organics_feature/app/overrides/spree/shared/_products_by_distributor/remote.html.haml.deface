@@ -1,0 +1,3 @@
+/ replace_contents '#products-remote'
+%h5 Products found elsewhere
+= render 'spree/shared/products', :products => @products_remote, :taxon => @taxon

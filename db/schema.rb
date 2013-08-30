@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207043555) do
+ActiveRecord::Schema.define(:version => 20130830012138) do
+
+  create_table "adjustment_metadata", :force => true do |t|
+    t.integer "adjustment_id"
+    t.integer "enterprise_id"
+    t.string  "fee_name"
+    t.string  "fee_type"
+    t.string  "enterprise_role"
+  end
+
+  add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
+
+  create_table "carts", :force => true do |t|
+    t.integer "user_id"
+  end
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -130,12 +144,22 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
   add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
+  create_table "coordinator_fees", :id => false, :force => true do |t|
+    t.integer "order_cycle_id"
+    t.integer "enterprise_fee_id"
+  end
+
   create_table "enterprise_fees", :force => true do |t|
     t.integer  "enterprise_id"
     t.string   "fee_type"
     t.string   "name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "enterprise_roles", :force => true do |t|
+    t.integer "user_id"
+    t.integer "enterprise_id"
   end
 
   create_table "enterprises", :force => true do |t|
@@ -156,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.string   "next_collection_at"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.text     "distributor_info"
   end
 
   create_table "exchange_fees", :force => true do |t|
@@ -183,23 +208,30 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.datetime "updated_at",            :null => false
   end
 
+  create_table "landing_page_images", :force => true do |t|
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+  end
+
   create_table "order_cycles", :force => true do |t|
     t.string   "name"
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
     t.integer  "coordinator_id"
-    t.integer  "coordinator_admin_fee_id"
-    t.integer  "coordinator_sales_fee_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "product_distributions", :force => true do |t|
     t.integer  "product_id"
     t.integer  "distributor_id"
-    t.integer  "shipping_method_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "enterprise_fee_id"
   end
 
   create_table "spree_activators", :force => true do |t|
@@ -233,6 +265,8 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "company"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "spree_addresses", ["firstname"], :name => "index_addresses_on_firstname"
@@ -240,17 +274,17 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
 
   create_table "spree_adjustments", :force => true do |t|
     t.integer  "source_id"
-    t.decimal  "amount",          :precision => 8, :scale => 2
+    t.decimal  "amount",          :precision => 10, :scale => 2
     t.string   "label"
     t.string   "source_type"
     t.integer  "adjustable_id"
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
     t.boolean  "mandatory"
     t.boolean  "locked"
     t.integer  "originator_id"
     t.string   "originator_type"
-    t.boolean  "eligible",                                      :default => true
+    t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
   end
 
@@ -346,13 +380,14 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   create_table "spree_line_items", :force => true do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                         :null => false
-    t.decimal  "price",              :precision => 8, :scale => 2, :null => false
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.integer  "quantity",                                            :null => false
+    t.decimal  "price",                :precision => 8,  :scale => 2, :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.integer  "max_quantity"
-    t.integer  "shipping_method_id"
     t.string   "currency"
+    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
+    t.string   "shipping_method_name"
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"
@@ -405,17 +440,17 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
 
   create_table "spree_orders", :force => true do |t|
     t.string   "number",               :limit => 15
-    t.decimal  "item_total",                         :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "total",                              :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "item_total",                         :precision => 10, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "total",                              :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.string   "state"
-    t.decimal  "adjustment_total",                   :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "adjustment_total",                   :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                                                                        :null => false
-    t.datetime "updated_at",                                                                        :null => false
+    t.datetime "created_at",                                                                         :null => false
+    t.datetime "updated_at",                                                                         :null => false
     t.datetime "completed_at"
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
-    t.decimal  "payment_total",                      :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "payment_total",                      :precision => 10, :scale => 2, :default => 0.0
     t.integer  "shipping_method_id"
     t.string   "shipment_state"
     t.string   "payment_state"
@@ -424,6 +459,8 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.integer  "distributor_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
+    t.integer  "cart_id"
   end
 
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
@@ -432,19 +469,20 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.string   "type"
     t.string   "name"
     t.text     "description"
-    t.boolean  "active",      :default => true
-    t.string   "environment", :default => "development"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.boolean  "active",         :default => true
+    t.string   "environment",    :default => "development"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
     t.string   "display_on"
+    t.integer  "distributor_id"
   end
 
   create_table "spree_payments", :force => true do |t|
-    t.decimal  "amount",            :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "amount",               :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "order_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
     t.integer  "source_id"
     t.string   "source_type"
     t.integer  "payment_method_id"
@@ -452,7 +490,11 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.string   "response_code"
     t.string   "avs_response"
     t.string   "identifier"
+    t.string   "cvv_response_code"
+    t.string   "cvv_response_message"
   end
+
+  add_index "spree_payments", ["order_id"], :name => "index_spree_payments_on_order_id"
 
   create_table "spree_paypal_accounts", :force => true do |t|
     t.string "email"
@@ -484,6 +526,8 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.decimal "amount",     :precision => 8, :scale => 2
     t.string  "currency"
   end
+
+  add_index "spree_prices", ["variant_id"], :name => "index_spree_prices_on_variant_id"
 
   create_table "spree_product_groups", :force => true do |t|
     t.string "name"
@@ -533,7 +577,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.datetime "available_on"
     t.datetime "deleted_at"
     t.string   "permalink"
-    t.string   "meta_description"
+    t.text     "meta_description"
     t.string   "meta_keywords"
     t.integer  "tax_category_id"
     t.integer  "shipping_category_id"
@@ -550,6 +594,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   add_index "spree_products", ["deleted_at"], :name => "index_products_on_deleted_at"
   add_index "spree_products", ["name"], :name => "index_products_on_name"
   add_index "spree_products", ["permalink"], :name => "index_products_on_permalink"
+  add_index "spree_products", ["permalink"], :name => "permalink_idx_unique", :unique => true
 
   create_table "spree_products_promotion_rules", :id => false, :force => true do |t|
     t.integer "product_id"
@@ -559,7 +604,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   add_index "spree_products_promotion_rules", ["product_id"], :name => "index_products_promotion_rules_on_product_id"
   add_index "spree_products_promotion_rules", ["promotion_rule_id"], :name => "index_products_promotion_rules_on_promotion_rule_id"
 
-  create_table "spree_products_taxons", :id => false, :force => true do |t|
+  create_table "spree_products_taxons", :force => true do |t|
     t.integer "product_id"
     t.integer "taxon_id"
   end
@@ -620,11 +665,11 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   create_table "spree_return_authorizations", :force => true do |t|
     t.string   "number"
     t.string   "state"
-    t.decimal  "amount",     :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "amount",     :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "order_id"
     t.text     "reason"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
   end
 
   create_table "spree_roles", :force => true do |t|
@@ -653,6 +698,7 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
   end
 
   add_index "spree_shipments", ["number"], :name => "index_shipments_on_number"
+  add_index "spree_shipments", ["order_id"], :name => "index_spree_shipments_on_order_id"
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"
@@ -671,7 +717,10 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.boolean  "match_all"
     t.boolean  "match_one"
     t.datetime "deleted_at"
+    t.integer  "distributor_id"
   end
+
+  add_index "spree_shipping_methods", ["distributor_id"], :name => "index_spree_shipping_methods_on_distributor_id"
 
   create_table "spree_skrill_transactions", :force => true do |t|
     t.string   "email"
@@ -743,6 +792,9 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
     t.text     "description"
+    t.string   "meta_title"
+    t.string   "meta_description"
+    t.string   "meta_keywords"
   end
 
   add_index "spree_taxons", ["parent_id"], :name => "index_taxons_on_parent_id"
@@ -833,6 +885,14 @@ ActiveRecord::Schema.define(:version => 20130207043555) do
     t.datetime "updated_at",                            :null => false
     t.boolean  "default_tax",        :default => false
     t.integer  "zone_members_count", :default => 0
+  end
+
+  create_table "suburbs", :force => true do |t|
+    t.string  "name"
+    t.integer "postcode"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.integer "state_id"
   end
 
 end

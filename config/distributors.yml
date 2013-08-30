@@ -1,0 +1,89 @@
+---
+
+development: &test
+  regions:
+    - name: "Inner Melbourne"
+      distributors:
+      - name: "Green Grass"
+      - name: "AusFarmers United"
+      - name: "Blackburn FreeGrossers"
+      - name: "Melb Uni Co-op"
+      - name: "Edible garden"
+      - name: "FruitAndVeg"
+      - name: "MoreFreshStuff"
+
+    - name: "South East Melbourne"
+      distributors:
+      - name: "MegaFoods"
+      - name: "Eco Butchers"
+      - name: "Eastern Wines"
+      - name: "QuickFresh"
+
+    - name: "Mildura"
+      distributors:
+      - name: "Fooderers"
+      - name: "Food Local"
+
+    - name: "South East Gippsland"
+      distributors:
+      - name: "Green Food Trading Corporation"
+      - name: "Better Food"
+      - name: "Gippsland Poultry"
+
+test:
+  <<: *test
+
+staging:
+  regions:
+    - name: "Inner Melbourne"
+      distributors:
+      - name: "Ballantyne (Thornbury)"
+      - name: "Childcare Center Near You"
+      - name: "Northcote Bulk Foods Coop :)"
+
+    - name: "South East Melbourne"
+      distributors:
+      - name: "Delivery (Cafes / Restaurants only)"
+      - name: "Grow Lightly (Inverloch)"
+      - name: "Grow Lightly (Korumburra)"
+      - name: "Grow Lightly (Leongatha)"
+
+    - name: "Mildura"
+      distributors:
+      - name: "LO"
+      - name: "Murrnong"
+      - name: "Murrnong (Violet Town)"
+
+    - name: "South East Gippsland"
+      distributors:
+      - name: "Neighbourhood Coop"
+      - name: "Northcote Bulk Foods Coop :)"
+      - name: "Murundaka (Heidelberg)"
+      - name: "PepperTree Place (Coburg)"
+
+production:
+  regions:
+    - name: "Inner Melbourne"
+      distributors:
+      - name: "AB Organics"
+      - name: "Biodynamic Marketing"
+      - name: "Carefully selected"
+
+    - name: "South East Melbourne"
+      distributors:
+      - name: "Common Fields"
+      - name: "Great Western Olives"
+      - name: "Kindred Organic"
+      - name: "LO"
+
+    - name: "Mildura"
+      distributors:
+      - name: "Manna Hill Olives"
+      - name: "Matt's Patch"
+      - name: "Old McDonald's Daughter"
+
+    - name: "South East Gippsland"
+      distributors:
+      - name: "Paddock to Plate"
+      - name: "Powlett Hill"
+      - name: "Urban Honey Co"

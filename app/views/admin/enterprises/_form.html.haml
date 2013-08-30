@@ -42,7 +42,7 @@
   %legend Address
   %table
     = f.fields_for :address do |address_form|
-      = render 'spree/admin/shared/address_form', :f => address_form
+      = render 'spree/admin/shared/address_form_simple', :f => address_form
 %fieldset
   %legend Pickup details
   %table{"data-hook" => "distributors_pickup_details"}

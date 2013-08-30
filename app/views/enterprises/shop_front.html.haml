@@ -1,0 +1,15 @@
+.row
+  .large-12.columns
+    %h2= @enterprise.name
+.row
+  .large-12.columns= @enterprise.long_description.andand.html_safe
+
+.row
+  .large-12.columns
+    .products
+      - @products.each_slice(4).to_a.each do |products_row|
+        .row
+          - products_row.each do |product|
+            .large-4.columns.centered
+              .clearfix= link_to small_image(product), product
+              = link_to product.name, product

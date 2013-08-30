@@ -1,0 +1,7 @@
+- # Get the payment in 'checkout' state if any, and show capture button
+- if order.payments.present?
+  - payment = order.payments.select{|p| p if p.state == 'checkout'}.first
+  - if !payment.nil?
+    - payment.actions.grep(/^capture$/).each do |action|
+      - # copied from backend/app/views/spree/admin/payments/_list.html.erb
+      = link_to_with_icon "icon-#{action}", t(action), fire_admin_order_payment_path(order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action}

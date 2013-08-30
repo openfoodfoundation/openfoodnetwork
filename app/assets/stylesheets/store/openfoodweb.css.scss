@@ -1,4 +1,5 @@
-@import 'screen';
+@import "screen";
+@import "compass/css3/border-radius";
 
 a:hover {
   color: lighten($link_text_color, 20) !important;
@@ -15,15 +16,17 @@ table {
 }
 
 #header #logo {
+  margin-top: 10px;
   padding-top: 10px;
 }
 
 /* Style current distributor in main nav bar */
 nav #main-nav-bar {
   li {
-    &#current-distributor {
+    &#current-distribution {
       float: right;
-      margin-right: 24px;
+      clear: right;
+      margin: 0.5em 5px 0 0;
 
       a {
         font-size: 12px;
@@ -48,7 +51,7 @@ nav#filters {
 
   .filter_choices {
     padding-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     list-style: disc outside;
 
     li {
@@ -58,6 +61,50 @@ nav#filters {
       span.inactive {
         color: #999;
       }
+    }
+  }
+
+  input[type=submit] {
+    margin-bottom: 15px;
+  }
+}
+
+
+/* Distributor and order cycle selection and display */
+#distribution-choice {
+  margin-bottom: 2em;
+  padding: 5px;
+  border: 2px solid #ccc;
+  @include border-radius(10px);
+}
+
+#distribution-selection {
+  overflow: auto;
+  margin-bottom: 2em;
+  padding: 5px;
+  border: 2px solid #ccc;
+  @include border-radius(10px);
+
+  .distributors {
+    float: left;
+    margin-right: 4em;
+
+    option.local {
+      background-color: #cfc;
+    }
+    option.remote {
+      background-color: #fcc;
+    }
+  }
+
+  .order-cycles {
+    float: left;
+
+    tr.local {
+      background-color: #cfc;
+    }
+    tr.remote {
+      background-color: #fcc;
     }
   }
 }
@@ -139,7 +186,7 @@ ul.product-listing {
 #products-local ul {
   margin-bottom: 1em;
   padding: 10px;
-  border-radius: 10px;
+  @include border-radius(10px);
   background-color: #def;
 }
 
@@ -192,6 +239,11 @@ fieldset#product-distributor-details {
   }
 }
 
+/* Checkout address page */
+#checkout .alternative-available-distributors {
+  padding-top: 30px;
+}
+
 
 /* Delivery fees table on checkout page */
 #delivery-fees {
@@ -229,9 +281,22 @@ fieldset#product-distributor-details {
 /* Alert for EFT Payment during checkout process */
 div#eft-payment-alert {
   border: 2px solid red;
+  padding-left: 5px;
+}
+
+/* Large 'Save and Continue/Process My Order' button under Order Summary on the checkout pages */
+#add_new_save_checkout_button {
+  display: none;
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #d9d9db;
 }
 
 /* Cleared div for clearing previous floating elements */
 div.cleared {
   clear: both;
+}
+
+#link-to-login {
+  padding: 10px;
 }

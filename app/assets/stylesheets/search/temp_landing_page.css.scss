@@ -1,0 +1,31 @@
+@import "foundation/variables";
+@import "foundation/components/global";
+
+.landing-page-row {
+  padding-top: emCalc(40);
+  padding-bottom: emCalc(30);
+}
+
+.distributor-link-row {
+  padding: emCalc(5) 0;
+}
+
+.with-bottom-border {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.with-pin-bg {
+  background-image: url('../pin_bg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 200px;
+}
+
+.secondary {
+  color: #6A6A6A;
+}
+
+.region-header {
+  min-height: emCalc(55);
+  vertical-align: top;
+}

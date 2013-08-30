@@ -1,0 +1,6 @@
+= hidden_field_tag "order_cycle_id", order_cycle.id
+
+- if changing_order_cycle
+  .order-cycle-fixed= "Your order cycle for this order will be changed to #{order_cycle.name} if you add this product to your cart."
+- else
+  .order-cycle-fixed= "Your order cycle for this order is #{order_cycle.name}"

@@ -22,13 +22,8 @@ module Spree
 
     private
     def make_variant_stub(product_price, variant_price)
-      product = stub(:product)
-      product.stub(:price).and_return(product_price)
-
-      variant = stub(:variant)
-      variant.stub(:product).and_return(product)
-      variant.stub(:price).and_return(variant_price)
-
+      product = double(:product, price: product_price)
+      variant = double(:variant, product: product, price: variant_price)
       variant
     end
   end

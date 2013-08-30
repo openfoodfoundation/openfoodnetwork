@@ -1,0 +1,6 @@
+= hidden_field_tag "distributor_id", distributor.id
+
+- if changing_distributor
+  .distributor-fixed= "Your distributor for this order will be changed to #{distributor.name} if you add this product to your cart."
+- else
+  .distributor-fixed= "Your distributor for this order is #{distributor.name}"

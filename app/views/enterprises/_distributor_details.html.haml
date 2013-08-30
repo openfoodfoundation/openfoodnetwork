@@ -1,23 +1,24 @@
-%h2= distributor.name
-%p
-  %strong Address:
-  %br/
-  = render 'spree/shared/address', :address => distributor.address
-%p
-  %strong Next collection time:
-  %br/
-  = distributor.next_collection_at
-%p
-  %strong Regular collection times:
-  %br/
-  = distributor.pickup_times
-%p
-  %strong Contact:
-  %br/
-  = distributor.contact
-  %br/
-  = "Phone: #{distributor.phone}"
-  %br/
-  = "Email: #{distributor.email}"
-%p= distributor.description
-%p= link_to distributor.website, distributor.website if distributor.website
+.distributor-details{'data-hook' => 'distributor-details'}
+  %h2= distributor.name
+  %p
+    %strong Address:
+    %br/
+    = render 'spree/shared/address', :address => distributor.address
+  %p
+    %strong Next collection time:
+    %br/
+    = distributor.next_collection_at
+  %p
+    %strong Regular collection times:
+    %br/
+    = distributor.pickup_times
+  %p
+    %strong Contact:
+    %br/
+    = distributor.contact
+    %br/
+    = "Phone: #{distributor.phone}"
+    %br/
+    = "Email: #{distributor.email}"
+  %p= distributor.description
+  %p= link_to distributor.website, distributor.website if distributor.website

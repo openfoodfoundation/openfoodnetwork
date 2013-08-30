@@ -17,17 +17,18 @@ feature %q{
   end
 
   scenario "listing enterprise fees" do
-    fee = create(:enterprise_fee)
+    fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing')
+    amount = fee.calculator.preferred_amount
 
     login_to_admin_section
     click_link 'Configuration'
     click_link 'Enterprise Fees'
 
-    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id", :text => fee.enterprise.name
+    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
-    page.should have_selector "option[selected]", text: 'Weight (per kg)'
-    page.should have_selector "input[value='0.5']"
+    page.should have_selector "option[selected]", text: 'Flat Rate (per item)'
+    page.should have_selector "input[value='#{amount}']"
   end
 
   scenario "creating an enterprise fee" do
@@ -93,11 +94,33 @@ feature %q{
 
     # And I click delete
     find("a.delete-resource").click
-    page.driver.browser.switch_to.alert.accept
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
     page.should_not have_selector "input[value='#{fee.name}']"
   end
 
+  scenario "deleting a shipping method referenced by a product distribution" do
+    # Given an enterprise fee referenced by a product distribution
+    fee = create(:enterprise_fee)
+    p = create(:product)
+    d = create(:distributor_enterprise)
+    create(:product_distribution, product: p, distributor: d, enterprise_fee: fee)
+
+    # When I go to the enterprise fees page
+    login_to_admin_section
+    click_link 'Configuration'
+    click_link 'Enterprise Fees'
+
+    # And I click delete
+    find("a.delete-resource").click
+
+    # Then I should see an error
+    page.should have_content "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
+
+    # And my enterprise fee should not have been deleted
+    visit admin_enterprise_fees_path
+    page.should have_selector "input[value='#{fee.name}']"
+    EnterpriseFee.find(fee.id).should_not be_nil
+  end
 end

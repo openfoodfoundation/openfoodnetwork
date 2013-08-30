@@ -11,15 +11,18 @@ feature %q{
   scenario "viewing a product shows its supplier and distributor" do
     # Given a product with a supplier and distributor
     s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise)
-    p = create(:product, :supplier => s, :distributors => [d])
+    d1 = create(:distributor_enterprise)
+    d2 = create(:distributor_enterprise)
+    p = create(:product, :supplier => s, :distributors => [d1])
+    oc = create(:simple_order_cycle, :distributors => [d2], :variants => [p.master])
 
     # When I view the product
     visit spree.product_path p
 
     # Then I should see the product's supplier and distributor
     page.should have_selector 'td', :text => s.name
-    page.should have_selector 'td', :text => d.name
+    page.should have_selector 'td', :text => d1.name
+    page.should have_selector 'td', :text => d2.name
   end
 
   describe "viewing distributor details" do
@@ -41,18 +44,9 @@ feature %q{
 
         within '#product-distributor-details' do
           [d.name,
-           d.address.address1,
-           d.address.city,
-           d.address.zipcode,
-           d.address.state_text,
-           d.address.country.name,
-           d.pickup_times,
-           d.next_collection_at,
-           d.contact,
-           d.phone,
-           d.email,
-           d.description,
-           d.website].each do |value|
+           d.distributor_info,
+           d.next_collection_at
+          ].each do |value|
 
             page.should have_content value
           end
