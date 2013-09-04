@@ -53,12 +53,21 @@ Spree::OrdersController.class_eval do
       redirect_to request.referer
 
     elsif params[:commit] == 'Choose Order Cycle'
+      @order.empty! # empty cart
       order_cycle = OrderCycle.active.find params[:order][:order_cycle_id]
       @order.set_order_cycle! order_cycle
 
       flash[:notice] = 'Your order cycle has been selected.'
       redirect_to request.referer
     end
+  end
+
+  def clear
+    @order = current_order(true)
+    current_distributor = @order.distributor
+    @order.order_cycle = nil
+    @order.set_order_cycle! nil
+    redirect_to main_app.shop_enterprise_path(current_distributor.id)
   end
 
   private

@@ -81,9 +81,8 @@ nav#filters {
 #distribution-selection {
   overflow: auto;
   margin-bottom: 2em;
-  padding: 5px;
-  border: 2px solid #ccc;
-  @include border-radius(10px);
+  padding: 20px;
+  background-color: #f3f3f3;
 
   .distributors {
     float: left;
@@ -98,6 +97,14 @@ nav#filters {
   }
 
   .order-cycles {
+
+    select {
+      padding: 10px;
+      margin-top: 15px;
+      border: 2px solid white;
+      font-size: 1.5em;
+    }
+
     float: left;
 
     tr.local {
@@ -107,6 +114,13 @@ nav#filters {
       background-color: #fcc;
     }
   }
+}
+
+.countdown-panel {
+  background: url("../countdown.png") no-repeat left;
+  min-height: 60px;
+  min-width: 70px;
+  padding-left: 77px;
 }
 
 
@@ -300,3 +314,12 @@ div.cleared {
 #link-to-login {
   padding: 10px;
 }
+
+.secondary {
+  color: #6A6A6A;
+}
+
+.hide {
+  display: none;
+}
+

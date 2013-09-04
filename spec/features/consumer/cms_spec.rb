@@ -12,12 +12,15 @@ feature %q{
     create(:distributor_enterprise, :name => 'Edible garden')
   end
 
-  scenario "viewing another products listing page does not display home page content" do
+  scenario "viewing shop front does not display home page content" do
     # Given a CMS home page
     create(:cms_page, content: 'Home page content')
 
-    # When I visit a products listing page
-    visit spree.products_path
+    # When I visit the home page
+    visit spree.root_path
+
+    # and proceed to the shop front
+    click_on 'Edible garden'
 
     # Then I should not see the home page content
     page.should_not have_content 'Home page content'

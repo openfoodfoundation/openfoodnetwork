@@ -17,8 +17,16 @@ feature %q{
     Capybara.default_wait_time = @default_wait_time
   end
 
+  #before :each do
+  #  DatabaseCleaner.strategy = :truncation
+  #end
+
   background do
     set_feature_toggle :order_cycles, true
+
+    Spree::Product.destroy_all
+    Spree::Order.destroy_all
+    Spree::LineItem.destroy_all
 
     @distributor = create(:distributor_enterprise, :name => 'Edible garden',
                           :address => create(:address,
@@ -68,17 +76,25 @@ feature %q{
 
     @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributor => @distributor)
     @payment_method_alternative = create(:payment_method, :name => 'Alternative Distributor payment method', :distributor => @distributor_alternative)
+
+    supplier = create(:supplier_enterprise)
+    @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [@product_1.master, @product_1a.master, @product_2.master])
+    @order_cycle.coordinator_fees << create(:enterprise_fee, enterprise: @order_cycle.coordinator)
   end
 
 
-  scenario "viewing delivery fees for product distribution" do
+  scenario "viewing delivery fees for product distribution", :js => true, :to_figure_out => true do
     # Given I am logged in
     login_to_consumer_section
-    click_link "Edible garden"
+    click_link 'Edible garden'
+
+    make_order_cycle
+
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -87,13 +103,13 @@ feature %q{
 
     # Then I should see a breakdown of my delivery fees:
     checkout_fees_table.should ==
-      [['Product distribution by Edible garden for Fuji apples', '$1.00', ''],
-       ['Product distribution by Edible garden for Garlic',      '$2.00', '']]
+      [['Fuji apples - sales fee by coordinator Edible garden', '$1.00', ''],
+       ['Garlic - sales fee by coordinator Edible garden', '$1.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$3.00'
+    page.should have_selector 'span.distribution-total', :text => '$2.00'
   end
 
-  scenario "viewing delivery fees for order cycle distribution" do
+  scenario "viewing delivery fees for order cycle distribution", :js => true do
     # Given an order cycle
     make_order_cycle
 
@@ -101,10 +117,11 @@ feature %q{
     login_to_consumer_section
     click_link "FruitAndVeg"
 
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
+
     # When I add some bananas and zucchini to my cart
     click_link 'Bananas'
-    select @distributor_oc.name, :from => 'distributor_id'
-    select @order_cycle.name, :from => 'order_cycle_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -129,21 +146,23 @@ feature %q{
     page.should have_selector 'span.distribution-total', :text => '$54.00'
   end
 
-  scenario "attempting to purchase products that mix product and order cycle distribution" do
+  scenario "attempting to purchase products that mix product and order cycle distribution", future: true do
     # Given some products, one with product distribution only, (@product1)
     # one with order cycle distribution only, (@product_oc)
     supplier = create(:supplier_enterprise)
     product_oc = create(:simple_product, name: 'Feijoas')
-    @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [product_oc.master])
+    @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [product_oc.master], orders_close_at: Time.zone.now + 2.weeks)
     @order_cycle.coordinator_fees << create(:enterprise_fee, enterprise: @order_cycle.coordinator)
 
     # And I am logged in
     login_to_consumer_section
     click_link "Edible garden"
 
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
+
     # When I add the first to my cart
     click_link 'Fuji apples'
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -159,9 +178,11 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
+
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -174,19 +195,22 @@ feature %q{
 
     # Then I should see fees for only the garlic
     checkout_fees_table.should ==
-      [['Product distribution by Edible garden for Garlic',      '$2.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$2.00'
+      [['Garlic - transport fee by coordinator Edible garden', '$3.00', '']]
+
+    page.should have_selector 'span.distribution-total', :text => '$3.00'
   end
 
-  scenario "adding products with differing quantities produces correct fees" do
+  scenario "adding products with differing quantities produces correct fees", js: true, :to_figure_out => true do
     # Given I am logged in
     login_to_consumer_section
     click_link "Edible garden"
 
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
+
     # When I add two products to my cart that share the same enterprise fee
     click_link 'Fuji apples'
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -195,9 +219,10 @@ feature %q{
 
     # Then I should have some delivery fees
     checkout_fees_table.should ==
-      [['Product distribution by Edible garden for Fuji apples',      '$1.00', ''],
-       ['Product distribution by Edible garden for Sundowner apples', '$1.00', '']]
-    page.should have_selector 'span.distribution-total', :text => '$2.00'
+      [['Fuji apples - packing fee by coordinator Edible garden', '$4.00', ''],
+       ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
+
+    page.should have_selector 'span.distribution-total', :text => '$8.00'
 
     # And I update the quantity of one of them
     fill_in 'order_line_items_attributes_0_quantity', with: 2
@@ -205,12 +230,13 @@ feature %q{
 
     # Then I should see updated delivery fees
     checkout_fees_table.should ==
-      [['Product distribution by Edible garden for Fuji apples',      '$2.00', ''],
-       ['Product distribution by Edible garden for Sundowner apples', '$1.00', '']]
-    page.should have_selector 'span.distribution-total', :text => '$3.00'
+      [['Fuji apples - packing fee by coordinator Edible garden', '$8.00', ''],
+       ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
+
+    page.should have_selector 'span.distribution-total', :text => '$12.00'
   end
 
-  scenario "changing distributor updates delivery fees" do
+  scenario "changing distributor updates delivery fees", :future => true do
     # Given two distributors and enterprise fees
     d1 = create(:distributor_enterprise, :name => "FruitAndVeg")
     d2 = create(:distributor_enterprise)
@@ -232,7 +258,6 @@ feature %q{
     login_to_consumer_section
     click_link "FruitAndVeg"
     click_link p1.name
-    select d1.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the first distributor
@@ -241,41 +266,44 @@ feature %q{
     # When add the second with the second distributor
     click_link 'Continue shopping'
     click_link p2.name
-    select d2.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the second distributor
     page.should have_selector 'span.distribution-total', text: '$4.68'
   end
 
-  scenario "adding a product to cart after emptying cart shows correct delivery fees" do
+  scenario "adding a product to cart after emptying cart shows correct delivery fees", js: true, :to_figure_out => true do
     # When I add a product to my cart
     login_to_consumer_section
     click_link "Edible garden"
+
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
+
     click_link @product_1.name
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
     # Then I should see the correct delivery fee
-    page.should have_selector 'span.grand-total', text: '$20.99'
+    page.should have_selector 'span.grand-total', text: '$24.99'
 
     # When I empty my cart and add the product again
     click_button 'Empty Cart'
     click_link 'Continue shopping'
     click_link @product_1.name
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
 
     # Then I should see the correct delivery fee
-    page.should have_selector 'span.grand-total', text: '$20.99'
+    page.should have_selector 'span.grand-total', text: '$24.99'
   end
 
-  scenario "buying a product", :js => true do
+  scenario "buying a product", :js => true, :to_figure_out => true do
     login_to_consumer_section
-    click_link "Edible garden"
+    click_link 'Edible garden'
+
+    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     click_link 'Fuji apples'
-    select @distributor.name, :from => 'distributor_id'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
 
@@ -313,7 +341,7 @@ feature %q{
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
     order_charges.should == [["Shipping:", "$0.00"],
-                             ["Distribution:", "$3.00"]]
+                             ["Distribution:", "$12.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment
@@ -327,15 +355,11 @@ feature %q{
     page.should have_content @payment_method_distributor.description
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '$3.00'
-
-    # page.should have_content('Your order will be available on:')
-    # page.should have_content('On Tuesday, 4 PM')
-    # page.should have_content('12 Bungee Rd, Carion')
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '12.00'
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution \$3.00/
+    email.body.should =~ /Distribution \$12.00/
   end
 
 

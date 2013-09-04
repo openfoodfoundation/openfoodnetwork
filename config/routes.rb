@@ -77,5 +77,6 @@ Spree::Core::Engine.routes.prepend do
   resources :orders do
     get :select_distributor, :on => :member
     get :deselect_distributor, :on => :collection
+    get :clear, :on => :collection
   end
 end

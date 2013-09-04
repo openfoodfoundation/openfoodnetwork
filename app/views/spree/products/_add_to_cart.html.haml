@@ -13,7 +13,8 @@
   - else
     = render 'add_to_cart_quantity_fields', product: @product
 
-    %div.cleared
+    -#temporary hiding the options to choose order cycles and distributors
+    %div.cleared.hide
       %br
       - available_distributors = available_distributors_for(order, @product)
       - available_order_cycles = available_order_cycles_for(order, @product)

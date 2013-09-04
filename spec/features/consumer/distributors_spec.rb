@@ -86,16 +86,22 @@ feature %q{
   end
 
 
-  scenario "viewing a distributor" do
+  scenario "viewing a distributor", :js => true do
     # Given some distributors with products
     d1 = create(:distributor_enterprise, :name => "Edible garden", :long_description => "<p>Hello, world!</p>")
     d2 = create(:distributor_enterprise)
     p1 = create(:product, :distributors => [d1])
     p2 = create(:product, :distributors => [d2])
+    supplier = create(:supplier_enterprise)
+    order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [d1], variants: [p1.master])
 
     # When I go to the first distributor page
     visit spree.root_path
     click_link d1.name
+
+    # And when I choose an order cycle
+    select distance_of_time_in_words_to_now(order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # Then I should see the distributor details
     page.should have_selector 'h2', :text => d1.name

@@ -1,0 +1,26 @@
+- if order_cycles_enabled?
+  #distribution-selection.row
+    - if current_order_cycle && current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.any?
+      .columns.six
+        %h1= "Your order will be ready on #{current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time}"
+        %i
+          = link_to 'Change Pick-up Date', spree.clear_orders_path, :id => 'reset_order_cycle'
+          (This will reset your cart)
+        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      .columns.five
+        .row
+          %strong ORDERS CLOSE
+        .countdown-panel
+          %h1= distance_of_time_in_words_to_now(current_order_cycle.orders_close_at)
+
+
+    - else
+      .columns.two= image_tag 'pickup.png'
+      .columns.six
+        %h2 When do you want your order?
+        %p No products are displayed until you select a date.
+      = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
+        = f.hidden_field :distributor_id, :value => @enterprise.id
+        .order-cycles
+          = f.select :order_cycle_id, @order_cycles.select{ |oc| oc.distributors.include? current_distributor }.collect {|o| [ distance_of_time_in_words_to_now(o.orders_close_at), o.id ] }, {include_blank: 'Pick-up date'}
+        = hidden_field_tag :commit, 'Choose Order Cycle'

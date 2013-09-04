@@ -64,7 +64,7 @@ module Spree
           Product.in_distributor(d1).should == [p1]
         end
 
-        it "doesn't show products listed in the incoming exchange only" do
+        it "doesn't show products listed in the incoming exchange only", :future => true do
           s = create(:supplier_enterprise)
           c = create(:distributor_enterprise)
           d = create(:distributor_enterprise)

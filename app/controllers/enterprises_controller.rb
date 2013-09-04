@@ -1,4 +1,5 @@
 include Spree::ProductsHelper
+include OrderCyclesHelper
 
 class EnterprisesController < BaseController
 
@@ -29,8 +30,8 @@ class EnterprisesController < BaseController
 
     @enterprise = Enterprise.find params[:id]
 
-    @searcher = Spree::Config.searcher_class.new(options)
-    @products = @searcher.retrieve_products
+    @products = []
+    @products = current_order_cycle.products if current_order_cycle
   end
 
   def shop
@@ -39,6 +40,7 @@ class EnterprisesController < BaseController
 
     if order.distributor and order.distributor != distributor
       order.empty!
+      order.set_order_cycle! nil
     end
 
     order.distributor = distributor

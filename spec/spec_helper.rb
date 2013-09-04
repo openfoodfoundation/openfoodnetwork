@@ -5,7 +5,7 @@ SimpleCov.start
 require 'rubygems'
 
 # Require pry when we're not inside Travis-CI
-require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+#require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -58,13 +58,13 @@ RSpec.configure do |config|
 
   # ## Filters
   #
-  config.filter_run_excluding :skip => true, :future => true
+  config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
 
   config.before(:each) do
     Spree::Address.any_instance.stub(:geocode).and_return([1,1])
 
     if example.metadata[:js]
-      DatabaseCleaner.strategy = :truncation, { :except => ['spree_countries', 'spree_states'] }
+      DatabaseCleaner.strategy = :deletion, { :except => ['spree_countries', 'spree_states'] }
     else
       DatabaseCleaner.strategy = :transaction
     end
@@ -82,6 +82,7 @@ RSpec.configure do |config|
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
   config.include OpenFoodWeb::FeatureToggleHelper
+  config.include ActionView::Helpers::DateHelper
 
   # Factory girl
   require 'factory_girl_rails'
