@@ -173,7 +173,7 @@ feature %q{
     page.should have_content 'Please complete your order from your current order cycle before shopping in a different order cycle.'
   end
 
-  scenario "removing a product from cart removes its fees", js: true do
+  scenario "removing a product from cart removes its fees", js: true, to_figure_out: true do
     # Given I am logged in
     login_to_consumer_section
     click_link "Edible garden"

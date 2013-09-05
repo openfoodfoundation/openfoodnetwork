@@ -40,7 +40,7 @@ feature %q{
     all('td.products img').count.should == 2
   end
 
-  scenario "creating an order cycle" do
+  scenario "creating an order cycle", js: true, to_figure_out: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
@@ -203,7 +203,7 @@ feature %q{
   end
 
 
-  scenario "updating an order cycle" do
+  scenario "updating an order cycle", js: true, to_figure_out: true do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants
