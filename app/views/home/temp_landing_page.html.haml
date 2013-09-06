@@ -12,6 +12,15 @@
 
     = csrf_meta_tags
   %body
+    - unless spree_current_user
+      %nav.top-bar
+        %ul.title-area
+          %li.name
+        %section.top-bar-section
+          %ul.right
+            %li= link_to 'Log in', spree.login_path
+            %li= link_to 'Sign up', spree.signup_path
+
     .row.landing-page-row.with-bottom-border
       .large-12.columns.centered
         = image_tag "ofn_logo_black.png"

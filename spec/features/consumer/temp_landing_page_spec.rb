@@ -5,6 +5,7 @@ feature %q{
     I want to see the landing page
     So I choose a distributor
 }, js: true do
+  include AuthenticationWorkflow
 
   background do
     # for the link to be visible, it would also have to be in 'distributors.yml'
@@ -23,9 +24,24 @@ feature %q{
     end
   end
 
+  describe "account links" do
+    it "should display log in and sign up links when signed out" do
+      page.should have_link 'Log in'
+      page.should have_link 'Sign up'
+    end
+
+    it "should not display links when signed in" do
+      login_to_consumer_section
+      visit root_path
+
+      page.should_not have_link 'Log in'
+      page.should_not have_link 'Sign up'
+    end
+  end
+
   describe "hub list" do
     it "should display hub link" do
-      page.should have_link("Green Grass")
+      page.should have_link "Green Grass"
     end
 
     it "should link to the hub page" do
