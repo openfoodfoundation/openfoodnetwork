@@ -9,18 +9,18 @@ Spree::Admin::ReportsController.class_eval do
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
-    @reports[:order_cycles][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycles]}).html_safe
+    @reports[:orders_and_fulfillment][:description] =
+      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
   } } }
 
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:group_buys => {:name => "Group Buys", :description => "Orders by supplier and variant"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:order_cycles => {:name => "Order Cycle Reports", :description => ''}})
+  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''}})
 
   REPORT_TYPES = {
-    order_cycles: [
+    orders_and_fulfillment: [
       ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
       ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
       ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
@@ -347,7 +347,7 @@ Spree::Admin::ReportsController.class_eval do
 
   end
 
-  def order_cycles
+  def orders_and_fulfillment
     params[:q] = {} unless params[:q]
 
     if params[:q][:completed_at_gt].blank?
@@ -370,7 +370,7 @@ Spree::Admin::ReportsController.class_eval do
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     #@suppliers = Enterprise.is_primary_producer
     @order_cycles = OrderCycle.active_or_complete.order('orders_close_at DESC')
-    @report_types = REPORT_TYPES[:order_cycles]
+    @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
 
     case params[:report_type]
@@ -532,7 +532,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
-    csv_file_name = "order_cycles.csv"
+    csv_file_name = "#{__method__}.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 

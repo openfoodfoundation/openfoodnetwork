@@ -107,9 +107,9 @@ describe Spree::Admin::ReportsController do
       end
     end
 
-    describe 'Order Cycles' do
+    describe 'Orders & Fulfillment' do
       it "only shows orders that I have access to" do
-        spree_get :order_cycles
+        spree_get :orders_and_fulfillment
 
         assigns(:search).result.should include(orderA1, orderB1)
         assigns(:search).result.should_not include(orderA2)
@@ -117,7 +117,7 @@ describe Spree::Admin::ReportsController do
       end
 
       it "only shows the selected order cycle" do
-        spree_get :order_cycles, q: {order_cycle_id_eq: ocA.id}
+        spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
         assigns(:search).result.should include(orderA1)
         assigns(:search).result.should_not include(orderB1)
@@ -148,9 +148,9 @@ describe Spree::Admin::ReportsController do
       end
     end
 
-    describe 'Order Cycles' do
+    describe 'Orders & Fulfillment' do
       it "only shows product line items that I am supplying" do
-        spree_get :order_cycles
+        spree_get :orders_and_fulfillment
 
         assigns(:line_items).map(&:product).should include(p1)
         assigns(:line_items).map(&:product).should_not include(p2)
@@ -158,7 +158,7 @@ describe Spree::Admin::ReportsController do
       end
 
       it "only shows the selected order cycle" do
-        spree_get :order_cycles, q: {order_cycle_id_eq: ocA.id}
+        spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
         assigns(:search).result.should include(orderA1)
         assigns(:search).result.should_not include(orderB1)

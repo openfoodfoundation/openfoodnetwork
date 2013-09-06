@@ -40,15 +40,15 @@ feature %q{
     page.should have_content 'Payment State'
   end
 
-  scenario "order cycle reports" do
+  scenario "orders & fulfillment reports" do
     login_to_admin_section
     click_link 'Reports'
-    click_link 'Order Cycle Reports'
+    click_link 'Orders & Fulfillment Reports'
 
     page.should have_content 'Supplier'
   end
 
-  scenario "order cycle reports are precise to time of day, not just date" do
+  scenario "orders & fulfillment reports are precise to time of day, not just date" do
     # Given two orders on the same day at different times
     @bill_address = create(:address)
     @distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
@@ -68,7 +68,7 @@ feature %q{
     # When I generate a customer report with a timeframe that includes one order but not the other
     login_to_admin_section
     click_link 'Reports'
-    click_link 'Order Cycle Reports'
+    click_link 'Orders & Fulfillment Reports'
 
     fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
     fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
