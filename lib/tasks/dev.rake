@@ -18,7 +18,6 @@ namespace :openfoodweb do
         FactoryGirl.create(:shipping_method, :zone => zone)
       end
 
-
       # -- Taxonomies
       unless Spree::Taxonomy.find_by_name 'Products'
         puts "[#{task_name}] Seeding taxonomies"
@@ -51,9 +50,8 @@ namespace :openfoodweb do
       end
 
       # -- Enterprises
-      unless Enterprise.count > 0
+      unless Enterprise.count > 1
         puts "[#{task_name}] Seeding enterprises"
-        Enterprise.delete_all
 
         3.times { FactoryGirl.create(:supplier_enterprise, :address => Spree::Address.find_by_zipcode("3160")) }
 
