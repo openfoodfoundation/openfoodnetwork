@@ -39,6 +39,21 @@ describe OrderCycle do
     OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
   end
 
+  it "finds order cycles accessible by a user" do
+    e1 = create(:enterprise, is_primary_producer: true, is_distributor: true)
+    e2 = create(:enterprise, is_primary_producer: true, is_distributor: true)
+    user = create(:user, enterprises: [e2], spree_roles: [])
+    user.spree_roles = []
+
+    oc_coordinated = create(:simple_order_cycle, coordinator: e2)
+    oc_sent = create(:simple_order_cycle, suppliers: [e2])
+    oc_received = create(:simple_order_cycle, distributors: [e2])
+    oc_not_accessible = create(:simple_order_cycle, coordinator: e1)
+
+    OrderCycle.accessible_by(user).should include(oc_coordinated, oc_sent, oc_received)
+    OrderCycle.accessible_by(user).should_not include(oc_not_accessible)
+  end
+
   describe "finding order cycles distributing a product" do
     it "returns order cycles distributing the product's master variant" do
       p = create(:product)

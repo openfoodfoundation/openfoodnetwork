@@ -34,6 +34,22 @@ class OrderCycle < ActiveRecord::Base
     end
   }
 
+  # Order cycles that user coordinates, sends to or receives from
+  scope :accessible_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      with_exchanging_enterprises_outer.
+      where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises, user.enterprises).
+      select('DISTINCT order_cycles.*')
+    end
+  }
+
+  scope :with_exchanging_enterprises_outer, lambda {
+    joins('LEFT OUTER JOIN exchanges ON (exchanges.order_cycle_id = order_cycles.id)').
+    joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
+  }
+
 
   def clone!
     oc = self.dup
