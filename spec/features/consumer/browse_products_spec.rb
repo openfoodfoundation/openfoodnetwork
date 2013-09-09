@@ -65,6 +65,31 @@ feature %q{
       end
     end
 
+    describe "variant listing" do
+      it "shows only variants that are in the distributor and order cycle", js: true do
+        # Given a product with two variants
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise, name: 'Green Grass')
+        p = create(:simple_product, supplier: s)
+        v1 = create(:variant, product: p, is_master: false)
+        v2 = create(:variant, product: p, is_master: false)
+
+        # And only one of those is distributed by an order cycle
+        oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [v1])
+
+        # When I am in that order cycle
+        visit root_path
+        click_link d.name
+        select '7 days', from: 'order_order_cycle_id'
+
+        # And I view the product
+        click_link p.name
+
+        # Then I should see only the relevant variant
+        page.all('#product-variants li input').count.should == 1
+      end
+    end
+
     context "viewing a product, it provides a choice of distributor when adding to cart" do
       it "works when no distributor is chosen" do
         # Given a distributor and a product under it

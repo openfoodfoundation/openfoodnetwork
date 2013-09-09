@@ -98,6 +98,15 @@ describe OrderCycle do
     oc.should_not have_distributor(d2)
   end
 
+  it "checks for variants" do
+    p1 = create(:simple_product)
+    p2 = create(:simple_product)
+    oc = create(:simple_order_cycle, suppliers: [p1.supplier], variants: [p1.master])
+
+    oc.should have_variant(p1.master)
+    oc.should_not have_variant(p2.master)
+  end
+
   describe "product exchanges" do
     before(:each) do
       @oc = create(:simple_order_cycle)

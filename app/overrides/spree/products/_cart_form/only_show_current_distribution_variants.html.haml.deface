@@ -1,0 +1,16 @@
+/ replace_contents '#product-variants'
+
+%h6.product-section-title= t(:variants)
+%ul
+  - has_checked = false
+  - @product.variants.active(current_currency).each_with_index do |v,index|
+    - next if v.option_values.empty? || (!v.in_stock && !Spree::Config[:show_zero_stock_products])
+    - next if current_order_cycle.present? && !current_order_cycle.has_variant?(v) # All copied from spree apart from this line
+    - checked = !has_checked && (v.in_stock || Spree::Config[:allow_backorders])
+    - has_checked = true if checked
+    %li
+      = radio_button_tag "products[#{@product.id}]", v.id, checked, :disabled => !v.in_stock && !Spree::Config[:allow_backorders], 'data-price' => v.price_in(current_currency).display_price
+      %label{:for => ['products', @product.id, v.id].join('_')}
+        %span.variant-description= variant_options v
+        - if variant_price v
+          %span.price.diff= variant_price v

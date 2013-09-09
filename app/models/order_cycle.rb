@@ -68,6 +68,10 @@ class OrderCycle < ActiveRecord::Base
     self.distributors.include? distributor
   end
 
+  def has_variant?(variant)
+    self.variants.include? variant
+  end
+
 
   # -- Fees
   def create_adjustments_for(line_item)
