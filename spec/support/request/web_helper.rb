@@ -14,6 +14,12 @@ module WebHelper
     end
   end
 
+  def select_by_value(value, options={})
+    from = options.delete :from
+    page.find_by_id(from).find("option[value='#{value}']").select_option
+  end
+
+
   def should_have_failed
     page.status_code.should == 200
     errors.count.should > 0

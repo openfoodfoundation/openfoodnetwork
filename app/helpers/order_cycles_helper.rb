@@ -22,6 +22,19 @@ module OrderCyclesHelper
     options_for_select(options, current_distributor)
   end
 
+  def order_cycle_options
+    @order_cycles.
+      select { |oc| oc.distributors.include? current_distributor }.
+      map    { |oc| [order_cycle_close_to_s(oc.orders_close_at),
+                     oc.id] }
+  end
+
+  def order_cycle_close_to_s(orders_close_at)
+    "%s (%s)" % [orders_close_at.strftime("#{orders_close_at.day.ordinalize} %b"),
+                 distance_of_time_in_words_to_now(orders_close_at)]
+  end
+
+
   def order_cycles_enabled?
     OpenFoodWeb::FeatureToggle.enabled? :order_cycles
   end

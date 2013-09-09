@@ -19,8 +19,9 @@
       .columns.six
         %h2 When do you want your order?
         %p No products are displayed until you select a date.
-      = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
-        = f.hidden_field :distributor_id, :value => @enterprise.id
-        .order-cycles
-          = f.select :order_cycle_id, @order_cycles.select{ |oc| oc.distributors.include? current_distributor }.collect {|o| [ distance_of_time_in_words_to_now(o.orders_close_at), o.id ] }, {include_blank: 'Pick-up date'}
-        = hidden_field_tag :commit, 'Choose Order Cycle'
+      .columns.three
+        = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
+          = f.hidden_field :distributor_id, :value => @enterprise.id
+          .order-cycles
+            = f.select :order_cycle_id, order_cycle_options, {include_blank: 'Available On'}
+          = hidden_field_tag :commit, 'Choose Order Cycle'

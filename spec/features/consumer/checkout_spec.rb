@@ -90,7 +90,7 @@ feature %q{
 
     make_order_cycle
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some apples and some garlic to my cart
@@ -117,7 +117,7 @@ feature %q{
     login_to_consumer_section
     click_link "FruitAndVeg"
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some bananas and zucchini to my cart
@@ -158,7 +158,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add the first to my cart
@@ -178,7 +178,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some apples and some garlic to my cart
@@ -206,7 +206,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add two products to my cart that share the same enterprise fee
@@ -277,7 +277,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     click_link @product_1.name
@@ -300,7 +300,7 @@ feature %q{
     login_to_consumer_section
     click_link 'Edible garden'
 
-    select distance_of_time_in_words_to_now(@order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     click_link 'Fuji apples'

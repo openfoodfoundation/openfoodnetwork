@@ -80,7 +80,7 @@ feature %q{
         # When I am in that order cycle
         visit root_path
         click_link d.name
-        select '7 days', from: 'order_order_cycle_id'
+        select_by_value oc.id, from: 'order_order_cycle_id'
 
         # And I view the product
         click_link p.name

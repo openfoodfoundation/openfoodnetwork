@@ -100,7 +100,7 @@ feature %q{
     click_link d1.name
 
     # And when I choose an order cycle
-    select distance_of_time_in_words_to_now(order_cycle.orders_close_at), :from => 'order_order_cycle_id'
+    select_by_value order_cycle.id, :from => 'order_order_cycle_id'
     page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # Then I should see the distributor details
