@@ -79,7 +79,3 @@ module Openfoodweb
     config.assets.precompile += ['store/all.css', 'store/all.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*', 'search/all.css', 'search/*.js']
   end
 end
-
-# YAML distributors config
-DISTRIBUTOR_CONFIG = YAML.load(File.read(File.expand_path('../distributors.yml', __FILE__)))
-DISTRIBUTOR_CONFIG.merge! DISTRIBUTOR_CONFIG.fetch(Rails.env, {})
