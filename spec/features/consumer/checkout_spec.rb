@@ -91,7 +91,6 @@ feature %q{
     make_order_cycle
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -118,7 +117,6 @@ feature %q{
     click_link "FruitAndVeg"
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some bananas and zucchini to my cart
     click_link 'Bananas'
@@ -159,7 +157,6 @@ feature %q{
     click_link "Edible garden"
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add the first to my cart
     click_link 'Fuji apples'
@@ -179,7 +176,6 @@ feature %q{
     click_link "Edible garden"
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -207,7 +203,6 @@ feature %q{
     click_link "Edible garden"
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # When I add two products to my cart that share the same enterprise fee
     click_link 'Fuji apples'
@@ -278,7 +273,6 @@ feature %q{
     click_link "Edible garden"
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     click_link @product_1.name
     click_button 'Add To Cart'
@@ -301,7 +295,6 @@ feature %q{
     click_link 'Edible garden'
 
     select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     click_link 'Fuji apples'
     click_button 'Add To Cart'
