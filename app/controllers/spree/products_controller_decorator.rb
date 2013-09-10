@@ -6,7 +6,10 @@ Spree::ProductsController.class_eval do
   include OpenFoodWeb::SplitProductsByDistribution
 
   respond_override :index => { :html => { :success => lambda {
-        @products = current_order_cycle.products if current_order_cycle
+        if current_order_cycle
+          order_cycle_products = current_order_cycle.products
+          @products.select! { |p| order_cycle_products.include? p }
+        end
       } } }
 
 end

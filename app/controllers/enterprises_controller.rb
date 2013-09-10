@@ -31,7 +31,14 @@ class EnterprisesController < BaseController
     @enterprise = Enterprise.find params[:id]
 
     @products = []
-    @products = current_order_cycle.products if current_order_cycle
+
+    if current_order_cycle
+      @searcher = Spree::Config.searcher_class.new(options)
+      @products = @searcher.retrieve_products
+
+      order_cycle_products = current_order_cycle.products
+      @products.select! { |p| order_cycle_products.include? p }
+    end
   end
 
   def shop
