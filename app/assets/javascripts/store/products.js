@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 
 function products_update_price_with_variant() {
-  var variant_price = $("#product-variants input[type='radio']:checked").parent().find("span.price").html();
+  var variant_price = $("#product-variants input[type='radio']:checked").parent().find("span.price").html().trim();
   variant_price = variant_price.substr(2, variant_price.length-3);
 
   var quantity = $("#quantity").val();
