@@ -171,10 +171,14 @@ describe Spree::Order do
 
     it "clears the order cycle when setting to nil" do
       oc = create(:simple_order_cycle)
+      d = create(:distributor_enterprise)
       subject.set_order_cycle! oc
+      subject.distributor = d
+
       subject.set_order_cycle! nil
 
       subject.order_cycle.should be_nil
+      subject.distributor.should == d
     end
   end
 

@@ -64,10 +64,9 @@ Spree::OrdersController.class_eval do
 
   def clear
     @order = current_order(true)
-    current_distributor = @order.distributor
-    @order.order_cycle = nil
+    @order.empty!
     @order.set_order_cycle! nil
-    redirect_to main_app.shop_enterprise_path(current_distributor.id)
+    redirect_to main_app.enterprise_path(@order.distributor.id)
   end
 
   private

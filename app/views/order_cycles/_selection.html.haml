@@ -4,9 +4,9 @@
       .columns.six
         %h1= "Your order will be ready on #{current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time}"
         %i
-          = link_to 'Change Pick-up Date', spree.clear_orders_path, :id => 'reset_order_cycle'
+          = link_to 'Change Collection Date', spree.clear_orders_path, :id => 'reset_order_cycle'
           (This will reset your cart)
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        %p.hide Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
       .columns.five
         .row
           %strong ORDERS CLOSE

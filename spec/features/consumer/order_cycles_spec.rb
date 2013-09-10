@@ -31,6 +31,33 @@ feature %q{
       end
     end
 
+
+    scenario "changing order cycle", js: true do
+      s = create(:supplier_enterprise)
+      d = create(:distributor_enterprise, name: 'Green Grass')
+      p = create(:simple_product, supplier: s)
+      oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+
+      visit spree.root_path
+      click_link d.name
+      select_by_value oc.id, from: 'order_order_cycle_id'
+
+      click_link p.name
+      click_button 'Add To Cart'
+
+      click_link 'Continue shopping'
+      click_link 'Change Collection Date'
+
+      # Then we should be back at the landing page with a reset cart
+      page.should have_content 'Green Grass'
+      page.should have_content 'When do you want your order?'
+      cart = Spree::Order.last
+      cart.distributor.should == d
+      cart.order_cycle.should be_nil
+      cart.line_items.should be_empty
+    end
+
+
     scenario "viewing order cycle and distributor choices", :future => true do
       # When I go to the product listing page
       visit spree.products_path
