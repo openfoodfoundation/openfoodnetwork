@@ -18,7 +18,7 @@ feature %q{
       visit spree.select_distributor_order_path(d)
 
       # Then I should see the name of the distributor that I've selected
-      page.should have_selector 'h2', :text => 'Melb Uni Co-op'
+      page.should have_selector 'h1', :text => 'Melb Uni Co-op'
 
       # And I should see the distributor's long description
       page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'

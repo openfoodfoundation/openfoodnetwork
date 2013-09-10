@@ -1,4 +1,5 @@
-%h2= @enterprise.name
+- if @enterprise != current_order(false).andand.distributor
+  %h2= @enterprise.name
 
 .enterprise-description= @enterprise.long_description.andand.html_safe
 

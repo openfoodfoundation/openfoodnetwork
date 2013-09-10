@@ -101,10 +101,9 @@ feature %q{
 
     # And when I choose an order cycle
     select_by_value order_cycle.id, :from => 'order_order_cycle_id'
-    page.execute_script "$('#order_order_cycle_id').trigger('change');"
 
     # Then I should see the distributor details
-    page.should have_selector 'h2', :text => d1.name
+    page.should have_selector 'h1', :text => d1.name
     page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'
 
     # And I should see the first, but not the second product
