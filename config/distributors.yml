@@ -37,29 +37,26 @@ staging:
   regions:
     - name: "Inner Melbourne"
       distributors:
-      - name: "Ballantyne (Thornbury)"
-      - name: "Childcare Center Near You"
-      - name: "Northcote Bulk Foods Coop :)"
+      - name: "Eaterprises (Ballantyne)"
+      - name: "PepperTree Place"
+      - name: "Childcare Center"
+      - name: "Bulk Foods Coop"
+      - name: "Sporting Club"
 
     - name: "South East Melbourne"
       distributors:
-      - name: "Delivery (Cafes / Restaurants only)"
-      - name: "Grow Lightly (Inverloch)"
-      - name: "Grow Lightly (Korumburra)"
-      - name: "Grow Lightly (Leongatha)"
-
-    - name: "Mildura"
-      distributors:
-      - name: "LO"
-      - name: "Murrnong"
-      - name: "Murrnong (Violet Town)"
-
-    - name: "South East Gippsland"
-      distributors:
+      - name: "South East Food Hub"
+      - name: "Primary School"
+      - name: "Farmers Market"
       - name: "Neighbourhood Coop"
-      - name: "Northcote Bulk Foods Coop :)"
-      - name: "Murundaka (Heidelberg)"
-      - name: "PepperTree Place (Coburg)"
+
+    - name: "Regional Victoria"
+      distributors:
+      - name: "SW Food Hub"
+      - name: "Farmer Coop"
+      - name: "Mildura Food Centre"
+      - name: "Grow Lightly (Korumburra)"
+
 
 production:
   regions:
