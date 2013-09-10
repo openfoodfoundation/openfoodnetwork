@@ -215,6 +215,10 @@ fieldset#product-distributor-details {
 
 #product-variants {
   float: none;
+
+  ul {
+    list-style-type: none;
+  }
 }
 
 
