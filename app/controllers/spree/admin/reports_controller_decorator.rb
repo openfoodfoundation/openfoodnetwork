@@ -370,6 +370,7 @@ Spree::Admin::ReportsController.class_eval do
     orders = @search.result
     @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
+    # binding.pry
     
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     #@suppliers = Enterprise.is_primary_producer
@@ -389,7 +390,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.variant.options_text },
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
         proc { |line_items| "incoming transport" } ]
 
@@ -412,7 +413,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "shipping method" } ]
 
       rules = [ { group_by: proc { |line_item| line_item.variant.product.supplier },
@@ -425,9 +426,9 @@ Spree::Admin::ReportsController.class_eval do
           proc { |line_items| "" },
           proc { |line_items| "" },
           proc { |line_items| "TOTAL" },
-          proc { |line_items| line_items.sum { |li| li.quantity } },
-          proc { |line_items| line_items.first.variant.price },
-          proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+          proc { |line_items| "" },
+          proc { |line_items| "" },
+          proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
           proc { |line_items| "" } ] },
         { group_by: proc { |line_item| line_item.order.distributor },
         sort_by: proc { |distributor| distributor.name } } ]
@@ -444,7 +445,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.variant.options_text },
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
         proc { |line_items| "shipping method" } ]
 
@@ -456,7 +457,7 @@ Spree::Admin::ReportsController.class_eval do
           proc { |line_items| "" },
           proc { |line_items| "" },
           proc { |line_items| "" },
-          proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+          proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
           proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
           proc { |line_items| "" } ] },
         { group_by: proc { |line_item| line_item.variant.product.supplier },
@@ -479,7 +480,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.options_text },
         proc { |line_items| line_items.sum { |li| li.quantity } },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
@@ -497,7 +498,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
         proc { |line_items| "" },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
         proc { |line_items| line_items.map { |li| li.order.paid? }.all? { |paid| paid == true } ? "Yes" : "No" },
@@ -519,7 +520,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.variant.options_text },
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.first.variant.price },
-        proc { |line_items| line_items.sum { |li| li.quantity * li.variant.price } },
+        proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
         proc { |line_items| "incoming transport" } ]
 
