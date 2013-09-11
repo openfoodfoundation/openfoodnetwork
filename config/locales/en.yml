@@ -7,3 +7,4 @@ en:
       invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
+  home: "OFN"
