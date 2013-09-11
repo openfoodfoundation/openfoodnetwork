@@ -361,6 +361,10 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
+    if params[:q] && !params[:q][:order_cycle_id_eq] == -1
+      params[:q][:order_cycle_id_null] = true
+    end
+
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
     
     orders = @search.result
