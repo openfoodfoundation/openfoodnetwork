@@ -62,25 +62,6 @@ production:
   regions:
     - name: "Inner Melbourne"
       distributors:
-      - name: "AB Organics"
-      - name: "Biodynamic Marketing"
-      - name: "Carefully selected"
-
-    - name: "South East Melbourne"
-      distributors:
-      - name: "Common Fields"
-      - name: "Great Western Olives"
-      - name: "Kindred Organic"
-      - name: "LO"
-
-    - name: "Mildura"
-      distributors:
-      - name: "Manna Hill Olives"
-      - name: "Matt's Patch"
-      - name: "Old McDonald's Daughter"
-
-    - name: "South East Gippsland"
-      distributors:
-      - name: "Paddock to Plate"
-      - name: "Powlett Hill"
-      - name: "Urban Honey Co"
+      - name: "Murundaka (Heidelberg)"
+      - name: "Ballantyne (Thornbury)"
+      - name: "O'Hea Street, Coburg"
