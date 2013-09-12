@@ -1,5 +1,5 @@
 / replace_contents "table#listing_orders colgroup" 
-/ See also: add_capture_order_shortcut, admin/orders/index/add_distributor_*to_admin_orders
+-# See also: add_capture_order_shortcut, admin/orders/index/add_distributor_*to_admin_orders
 
 %col{style: "width: 10%"}
 -# There are 8 other columns, but they seem to sort themselves out :)
