@@ -3,18 +3,15 @@ Spree::PaymentMethod.class_eval do
 
   belongs_to :distributor, :class_name => 'Enterprise'
 
-  validates_presence_of :distributor_id
-
-  attr_accessible :distributor_id
+  attr_accessible :distributor_ids
 
   # -- Scopes
-  scope :in_distributor, lambda { |distributor| where(:distributor_id => distributor) }
-
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
     else
-      where('distributor_id IN (?)', user.enterprises)
+      joins(:distributors).
+      where('distributors_payment_methods.distributor_id IN (?)', user.enterprises)
     end
   }
 

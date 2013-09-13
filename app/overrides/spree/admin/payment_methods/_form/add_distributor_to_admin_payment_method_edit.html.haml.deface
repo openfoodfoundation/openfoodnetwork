@@ -1,9 +1,0 @@
-/
-  insert_before '[data-hook="environment"]'
-
-= f.field_container :distributor do
-  = f.label :distributor
-  %br
-
-  = collection_select(:payment_method, :distributor_id, Enterprise.is_distributor.managed_by(spree_current_user), :id, :name, {:include_blank => false}, {:class => "select2 fullwidth"})
-  = f.error_message_on :distributor

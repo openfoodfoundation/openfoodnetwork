@@ -1,0 +1,9 @@
+/
+  insert_before '[data-hook="environment"]'
+
+= f.field_container :distributors do
+  = f.label :distributors
+  %br
+  - distributors = Enterprise.is_distributor.managed_by(spree_current_user) | f.object.distributors
+  = collection_select(:payment_method, :distributor_ids, distributors, :id, :name, {include_blank: false}, {class: "select2 fullwidth", multiple: true})
+  = f.error_message_on :distributors
