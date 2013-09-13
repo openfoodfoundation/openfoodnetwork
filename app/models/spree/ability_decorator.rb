@@ -38,7 +38,7 @@ class AbilityDecorator
       # Enterprise User can only access payment methods for their distributors
       can [:index, :create], Spree::PaymentMethod
       can [:admin, :read, :update, :fire, :resend, :destroy], Spree::PaymentMethod do |payment_method|
-        user.enterprises.include? payment_method.distributor
+        (user.enterprises & payment_method.distributors).any?
       end
 
       can [:admin, :index, :read, :edit, :update, :clone], OrderCycle do |order_cycle|

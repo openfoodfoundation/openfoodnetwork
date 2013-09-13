@@ -91,7 +91,7 @@ feature "enterprises distributor info as rich text" do
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => zone)
     create(:shipping_method, zone: zone)
-    create(:payment_method, :description => 'Cheque payment method', distributor: distributor)
+    create(:payment_method, :description => 'Cheque payment method', distributors: [distributor])
   end
 
 

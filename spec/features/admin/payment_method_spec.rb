@@ -22,13 +22,13 @@ feature %q{
 
       fill_in 'payment_method_name', :with => 'Cheque payment method'
 
-      select @distributors[0].name, :from => 'payment_method_distributor_id'
+      select @distributors[0].name, :from => 'payment_method_distributor_ids'
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'
       
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
-      payment_method.distributor.should == @distributors[0]
+      payment_method.distributors.should include(@distributors[0])
     end
   end
 end

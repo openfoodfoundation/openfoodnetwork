@@ -96,7 +96,7 @@ namespace :openfoodweb do
       # -- Enterprise Payment Methods
       unless Spree::PaymentMethod.count > 1
         Enterprise.is_distributor.each do |distributor|
-          FactoryGirl.create(:payment_method, distributor: distributor, name: "Cheque (#{distributor.name})", :environment => 'development')
+          FactoryGirl.create(:payment_method, distributors: [distributor], name: "Cheque (#{distributor.name})", :environment => 'development')
         end
       end
 

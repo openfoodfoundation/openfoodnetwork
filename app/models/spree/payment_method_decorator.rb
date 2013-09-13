@@ -1,7 +1,5 @@
-Spree::PaymentMethod.class_eval do  
+Spree::PaymentMethod.class_eval do
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
-
-  belongs_to :distributor, :class_name => 'Enterprise'
 
   attr_accessible :distributor_ids
 
@@ -11,16 +9,17 @@ Spree::PaymentMethod.class_eval do
       scoped
     else
       joins(:distributors).
-      where('distributors_payment_methods.distributor_id IN (?)', user.enterprises)
+      where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
+      select('DISTINCT spree_payment_methods.*')
     end
   }
 
   def has_distributor?(distributor)
-    self.distributor == distributor
+    self.distributors.include?(distributor)
   end
 end
 
-# Ensure that all derived classes also allow distributor_id
+# Ensure that all derived classes also allow distributor_ids
 Spree::Gateway.providers.each do |p|
-  p.attr_accessible :distributor_id
+  p.attr_accessible :distributor_ids
 end

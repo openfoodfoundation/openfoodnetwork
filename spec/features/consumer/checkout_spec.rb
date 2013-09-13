@@ -74,8 +74,8 @@ feature %q{
     sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new)
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
 
-    @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributor => @distributor)
-    @payment_method_alternative = create(:payment_method, :name => 'Alternative Distributor payment method', :distributor => @distributor_alternative)
+    @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributors => [@distributor])
+    @payment_method_alternative = create(:payment_method, :name => 'Alternative Distributor payment method', :distributors => [@distributor_alternative])
 
     supplier = create(:supplier_enterprise)
     @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [@product_1.master, @product_1a.master, @product_2.master])

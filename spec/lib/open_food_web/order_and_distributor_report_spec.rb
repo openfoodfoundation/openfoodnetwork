@@ -15,7 +15,7 @@ module OpenFoodWeb
         product_distribution = create(:product_distribution, :product => product, :distributor => @distributor)
         @shipping_instructions = "pick up on thursday please!"
         @order = create(:order, :distributor => @distributor, :bill_address => @bill_address, :special_instructions => @shipping_instructions)
-        @payment_method = create(:payment_method, :distributor => @distributor)
+        @payment_method = create(:payment_method, :distributors => [@distributor])
         payment = create(:payment, :payment_method => @payment_method, :order => @order )
         @order.payments << payment
         @line_item = create(:line_item, :product => product, :order => @order)

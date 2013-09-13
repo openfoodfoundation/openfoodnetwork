@@ -164,11 +164,11 @@ FactoryGirl.modify do
     ignore do
       distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     end
-    payment_method { FactoryGirl.create(:payment_method, distributor: distributor) }
+    payment_method { FactoryGirl.create(:payment_method, distributors: [distributor]) }
   end
 
   factory :payment_method do
-    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) } #Always need a distributor
+    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] } #Always need a distributor
   end
 
 end
