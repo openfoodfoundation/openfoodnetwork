@@ -1,4 +1,6 @@
 Spree::PaymentMethod.class_eval do  
+  has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+
   belongs_to :distributor, :class_name => 'Enterprise'
 
   validates_presence_of :distributor_id
