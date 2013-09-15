@@ -5,16 +5,16 @@ gem 'rails', '3.2.14'
 
 gem 'pg'
 gem 'spree', :github => 'eaterprises/spree', :branch => '1-3-stable'
-gem 'spree_i18n', :git => 'git://github.com/spree/spree_i18n.git'
-gem 'spree_paypal_express', :git => 'git://github.com/spree/spree_paypal_express.git', :branch => '1-3-stable'
-gem 'spree_last_address', :git => 'git://github.com/eaterprises/spree-last-address.git', :branch => '1-3-stable'
-gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', :branch => '1-3-stable'
+gem 'spree_i18n', :github => 'spree/spree_i18n'
+gem 'spree_paypal_express', :github => 'spree/spree_paypal_express', :branch => '1-3-stable'
+gem 'spree_last_address', :github => 'eaterprises/spree-last-address', :branch => '1-3-stable'
+gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
 
 gem 'comfortable_mexican_sofa'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
-gem 'simple_form', :git => 'git://github.com/RohanM/simple_form.git'
+gem 'simple_form', :github => 'RohanM/simple_form'
 
 gem 'unicorn'
 gem 'bugsnag'
@@ -49,7 +49,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
-  gem 'zurb-foundation', :git => 'git://github.com/zurb/foundation.git'
+  gem 'zurb-foundation', :github => 'zurb/foundation'
 end
 
 gem 'jquery-rails'
