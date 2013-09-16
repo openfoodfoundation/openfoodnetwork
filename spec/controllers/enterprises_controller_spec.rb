@@ -15,6 +15,8 @@ describe EnterprisesController do
     before(:each) do
       @current_distributor = create(:distributor_enterprise)
       @distributor = create(:distributor_enterprise)
+      @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor])
+      @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor])
       controller.current_order(true).distributor = @current_distributor
     end
 
@@ -22,6 +24,7 @@ describe EnterprisesController do
       spree_get :shop, {id: @distributor}
 
       controller.current_order.distributor.should == @distributor
+      controller.current_order.order_cycle.should be_nil
     end
 
     it "empties an order that was set for a previous distributor, when shopping at a new distributor" do
@@ -31,6 +34,7 @@ describe EnterprisesController do
       spree_get :shop, {id: @distributor}
 
       controller.current_order.distributor.should == @distributor
+      controller.current_order.order_cycle.should be_nil
       controller.current_order.line_items.size.should == 0
     end
 
@@ -43,7 +47,17 @@ describe EnterprisesController do
       spree_get :shop, {id: @current_distributor}
 
       controller.current_order.distributor.should == @current_distributor
+      controller.current_order.order_cycle.should be_nil
       controller.current_order.line_items.size.should == 1
+    end
+
+    it "sets order cycle if only one is available at the chosen distributor" do
+      @order_cycle2.destroy
+
+      spree_get :shop, {id: @distributor}
+
+      controller.current_order.distributor.should == @distributor
+      controller.current_order.order_cycle.should == @order_cycle1
     end
   end
 end

@@ -99,9 +99,6 @@ feature %q{
     visit spree.root_path
     click_link d1.name
 
-    # And when I choose an order cycle
-    select_by_value order_cycle.id, :from => 'order_order_cycle_id'
-
     # Then I should see the distributor details
     page.should have_selector 'h1', :text => d1.name
     page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'

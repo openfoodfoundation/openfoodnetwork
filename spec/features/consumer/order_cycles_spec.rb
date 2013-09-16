@@ -32,6 +32,20 @@ feature %q{
     end
 
 
+    scenario "selecting order cycle when multiple options are available", js: true do
+      d = create(:distributor_enterprise, name: 'Green Grass')
+      oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d])
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [d])
+
+      visit spree.root_path
+      click_link d.name
+
+      page.should have_select 'order_order_cycle_id'
+      select_by_value oc1.id, from: 'order_order_cycle_id'
+      page.should have_content 'Your order will be ready on'
+    end
+
+
     scenario "changing order cycle", js: true do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise, name: 'Green Grass')
@@ -40,7 +54,6 @@ feature %q{
 
       visit spree.root_path
       click_link d.name
-      select_by_value oc.id, from: 'order_order_cycle_id'
 
       click_link p.name
       click_button 'Add To Cart'

@@ -113,8 +113,6 @@ feature %q{
     login_to_consumer_section
     click_link "FruitAndVeg"
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-
     # When I add some bananas and zucchini to my cart
     click_link 'Bananas'
     click_button 'Add To Cart'
@@ -358,8 +356,6 @@ feature %q{
     login_to_consumer_section
     click_link 'FruitAndVeg'
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
-
     click_link 'Bananas'
     click_button 'Add To Cart'
     click_link 'Continue shopping'
@@ -435,8 +431,6 @@ feature %q{
     click_link 'FruitAndVeg'
     click_link 'Logout'
     click_link 'FruitAndVeg'
-
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
 
     click_link 'Bananas'
     click_button 'Add To Cart'
