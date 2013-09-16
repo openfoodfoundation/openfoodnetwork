@@ -125,7 +125,7 @@ feature %q{
 
     # Then my times should have been saved
     flash_message.should == 'Distributor collection times updated.'
-    Enterprise.is_distributor.map { |d| d.next_collection_at }.should == %w(One Two Three)
+    Enterprise.is_distributor.map { |d| d.next_collection_at }.sort.should == %w(One Two Three).sort
   end
 
   context 'as an Enterprise user' do
