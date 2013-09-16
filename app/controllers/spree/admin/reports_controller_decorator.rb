@@ -384,7 +384,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+      header = ["Supplier", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
 
       columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
@@ -406,7 +406,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Supplier", "Product", "Variant", "To Distributor", "Amount", "Cost per Unit", "Total Cost", "Shipping Method"]
+      header = ["Supplier", "Product", "Variant", "To Distributor", "Amount", "Curr. Cost per Unit", "Total Cost", "Shipping Method"]
 
       columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
@@ -438,7 +438,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Distributor", "Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
+      header = ["Distributor", "Supplier", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
 
       columns = [ proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.variant.product.supplier.name },
@@ -514,7 +514,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Supplier", "Product", "Variant", "Amount", "Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+      header = ["Supplier", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
 
       columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
