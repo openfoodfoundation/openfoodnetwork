@@ -17,9 +17,6 @@ feature %q{
     Capybara.default_wait_time = @default_wait_time
   end
 
-  #before :each do
-  #  DatabaseCleaner.strategy = :truncation
-  #end
 
   background do
     set_feature_toggle :order_cycles, true
@@ -328,7 +325,7 @@ feature %q{
 
     # Disabled until this form takes order cycles into account
     # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
-    
+
     click_checkout_continue_button
 
     # -- Checkout: Delivery
@@ -353,6 +350,158 @@ feature %q{
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Distribution \$12.00/
+  end
+
+  scenario "buying a product from an order cycle", :js => true do
+    make_order_cycle
+
+    login_to_consumer_section
+    click_link 'FruitAndVeg'
+
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+
+    click_link 'Bananas'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Zucchini'
+    click_button 'Add To Cart'
+    click_link 'Checkout'
+
+    # -- Checkout: Address
+    fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
+                   'order_bill_address_attributes_lastname' => 'Luck',
+                   'order_bill_address_attributes_address1' => '19 Sycamore Lane',
+                   'order_bill_address_attributes_city' => 'Horse Hill',
+                   'order_bill_address_attributes_zipcode' => '3213',
+                   'order_bill_address_attributes_phone' => '12999911111')
+
+    select('Australia', :from => 'order_bill_address_attributes_country_id')
+    select('Victoria', :from => 'order_bill_address_attributes_state_id')
+
+    # Distributor details should be displayed
+    within('fieldset#shipping') do
+      [@distributor_oc.name,
+       @distributor_oc.distributor_info,
+       @distributor_oc.next_collection_at
+      ].each do |value|
+
+        page.should have_content value
+      end
+    end
+
+    # Disabled until this form takes order cycles into account
+    # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
+
+    click_checkout_continue_button
+
+    # -- Checkout: Delivery
+    order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
+    order_charges.should == [["Shipping:", "$0.00"],
+                             ["Distribution:", "$54.00"]]
+    click_checkout_continue_button
+
+    # -- Checkout: Payment
+    # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
+    page.should have_selector     'label', :text => @payment_method_distributor_oc.name
+    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    click_checkout_continue_button
+
+    # -- Checkout: Order complete
+    page.should have_content 'Your order has been processed successfully'
+    page.should have_content @payment_method_distributor_oc.description
+
+    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '54.00'
+
+    # -- Checkout: Email
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Distribution \$54.00/
+  end
+
+  scenario "when I have past orders, it fills in my address", :js => true do
+    make_order_cycle
+
+    login_to_consumer_section
+
+    user = Spree::User.find_by_email 'someone@ofw.org'
+    o = create(:completed_order_with_totals, user: user,
+               bill_address: create(:address, firstname: 'Joe', lastname: 'Luck',
+                                    address1: '19 Sycamore Lane', city: 'Horse Hill',
+                                    zipcode: '3213', phone: '12999911111',
+                                    state: Spree::State.find_by_name('Victoria'),
+                                    country: Spree::Country.find_by_name('Australia')))
+
+    click_link 'FruitAndVeg'
+    click_link 'Logout'
+    click_link 'FruitAndVeg'
+
+    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+
+    click_link 'Bananas'
+    click_button 'Add To Cart'
+    click_link 'Continue shopping'
+
+    click_link 'Zucchini'
+    click_button 'Add To Cart'
+    click_link 'Checkout'
+
+    # -- Login
+    # We perform login inline because:
+    # a) It's a common user flow
+    # b) It has been known to trigger errors with spree_last_address
+    fill_in 'spree_user_email', :with => 'someone@ofw.org'
+    fill_in 'spree_user_password', :with => 'passw0rd'
+    click_button 'Login'
+
+    # -- Checkout: Address
+    page.should have_field 'order_bill_address_attributes_firstname', with: 'Joe'
+    page.should have_field 'order_bill_address_attributes_lastname', with: 'Luck'
+    page.should have_field 'order_bill_address_attributes_address1', with: '19 Sycamore Lane'
+    page.should have_field 'order_bill_address_attributes_city', with: 'Horse Hill'
+    page.should have_field 'order_bill_address_attributes_zipcode', with: '3213'
+    page.should have_field 'order_bill_address_attributes_phone', with: '12999911111'
+    page.should have_select 'order_bill_address_attributes_state_id', selected: 'Victoria'
+    page.should have_select 'order_bill_address_attributes_country_id', selected: 'Australia'
+
+    # Distributor details should be displayed
+    within('fieldset#shipping') do
+      [@distributor_oc.name,
+       @distributor_oc.distributor_info,
+       @distributor_oc.next_collection_at
+      ].each do |value|
+
+        page.should have_content value
+      end
+    end
+
+    # Disabled until this form takes order cycles into account
+    # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
+
+    click_checkout_continue_button
+
+    # -- Checkout: Delivery
+    order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
+    order_charges.should == [["Shipping:", "$0.00"],
+                             ["Distribution:", "$54.00"]]
+    click_checkout_continue_button
+
+    # -- Checkout: Payment
+    # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
+    page.should have_selector     'label', :text => @payment_method_distributor_oc.name
+    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    click_checkout_continue_button
+
+    # -- Checkout: Order complete
+    page.should have_content 'Your order has been processed successfully'
+    page.should have_content @payment_method_distributor_oc.description
+
+    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '54.00'
+
+    # -- Checkout: Email
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Distribution \$54.00/
   end
 
 
@@ -411,6 +560,11 @@ feature %q{
     ex2.variants << @product_4.master
     ex3.variants << @product_4.master
     ex4.variants << @product_4.master
+
+    # Shipping method and payment method
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributor: @distributor_oc)
+    sm.calculator.set_preference(:amount, 0); sm.calculator.save!
+    @payment_method_distributor_oc = create(:payment_method, :name => 'FruitAndVeg payment method', :distributor => @distributor_oc)
   end
 
   def checkout_fees_table
