@@ -32,6 +32,12 @@ ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/cou
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
+# For debugging, extend poltergeist's timeout
+# Capybara.register_driver :poltergeist do |app|
+#   Capybara::Poltergeist::Driver.new(app, timeout: 5.minutes)
+# end
+
+
 require "paperclip/matchers"
 
 RSpec.configure do |config|
