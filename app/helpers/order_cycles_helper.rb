@@ -24,9 +24,8 @@ module OrderCyclesHelper
 
   def order_cycle_options
     @order_cycles.
-      select { |oc| oc.distributors.include? current_distributor }.
-      map    { |oc| [order_cycle_close_to_s(oc.orders_close_at),
-                     oc.id] }
+      with_distributor(current_distributor).
+      map { |oc| [order_cycle_close_to_s(oc.orders_close_at), oc.id] }
   end
 
   def order_cycle_close_to_s(orders_close_at)

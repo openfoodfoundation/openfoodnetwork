@@ -66,6 +66,26 @@ describe OrderCycle do
     end
   end
 
+  describe "finding order cycles with a particular distributor" do
+    let(:c) { create(:supplier_enterprise) }
+    let(:d) { create(:distributor_enterprise) }
+
+    it "returns order cycles with that distributor" do
+      oc = create(:simple_order_cycle, coordinator: c, distributors: [d])
+      OrderCycle.with_distributor(d).should == [oc]
+    end
+
+    it "does not return order cycles with that enterprise as supplier" do
+      oc = create(:simple_order_cycle, coordinator: c, suppliers: [d])
+      OrderCycle.with_distributor(d).should == []
+    end
+
+    it "does not return order cycles without that distributor" do
+      oc = create(:simple_order_cycle, coordinator: c)
+      OrderCycle.with_distributor(d).should == []
+    end
+  end
+
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 
