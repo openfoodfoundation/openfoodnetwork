@@ -16,9 +16,9 @@
   =# f.collection_select(:supplier_id_eq, @suppliers, :id, :name, :include_blank => @include_blank)
   %br
   = label_tag nil, "Order Cycle: "
-  - order_cycles_select = [['No Order Cycle', -1]] 
-  - order_cycles_select += @order_cycles.collect {|oc| [ "#{oc.name}   (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})", oc.id ] }
-  = f.select(:order_cycle_id_eq, order_cycles_select, :include_blank => @include_blank)
+  - order_cycles_select = [['No Order Cycle', '-1']]
+  - order_cycles_select += @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
+  = f.select(:order_cycle_id_eq, order_cycles_select, include_blank: @include_blank, selected: params[:q][:order_cycle_id_eq])
   %br
   = label_tag nil, "Report Type: "
   = select_tag(:report_type, options_for_select(@report_types, @report_type))

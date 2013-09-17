@@ -367,11 +367,15 @@ Spree::Admin::ReportsController.class_eval do
     end
 
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
+
+    if params[:q] && params[:q][:order_cycle_id_null] == true
+      # Ensure 'No Order Cycle' remains selected
+      params[:q][:order_cycle_id_eq] = '-1'
+    end
     
     orders = @search.result
     @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
-    # binding.pry
     
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     #@suppliers = Enterprise.is_primary_producer
