@@ -8,7 +8,6 @@ gem 'spree', :github => 'eaterprises/spree', :branch => '1-3-stable'
 gem 'spree_i18n', :github => 'spree/spree_i18n'
 gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
 gem 'spree_paypal_express', :github => 'spree/spree_paypal_express', :branch => '1-3-stable'
-gem 'spree_last_address', :github => 'eaterprises/spree_last_address'
 
 gem 'comfortable_mexican_sofa'
 
