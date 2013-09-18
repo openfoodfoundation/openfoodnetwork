@@ -348,6 +348,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
+    # -- Prepare parameters
     params[:q] = {} unless params[:q]
 
     if params[:q][:completed_at_gt].blank?
@@ -366,6 +367,7 @@ Spree::Admin::ReportsController.class_eval do
       params[:q][:order_cycle_id_eq] = nil
     end
 
+    # -- Search
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
 
     if params[:q] && params[:q][:order_cycle_id_null] == true
@@ -381,12 +383,23 @@ Spree::Admin::ReportsController.class_eval do
     end
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
     
-    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    @suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+    # -- Prepare form options
+    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user) 
+    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+
+    # My distributors and any distributors distributing my products
+    @distributors = my_distributors | 
+      Enterprise.with_distributed_products_outer.where('spree_products.supplier_id IN (?)', my_suppliers.map(&:id)).select('DISTINCT enterprises.*')
+
+    # My suppliers and any suppliers supplying my product distributions
+    @suppliers = my_suppliers | 
+      Enterprise.joins(:supplied_products => :product_distributions).where('product_distributions.distributor_id IN (?)', my_distributors.map(&:id)).select('DISTINCT enterprises.*')
+
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
 
+    # -- Format according to report type
     case params[:report_type]
     when "order_cycle_supplier_totals"
       table_items = @line_items
