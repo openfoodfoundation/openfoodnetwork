@@ -58,7 +58,7 @@ GIT
 
 GIT
   remote: git://github.com/eaterprises/spree_paypal_express.git
-  revision: 3101d9fb2888cb07700787c705ec871367697f67
+  revision: d2f38e5068c4b6979c2af7f64caca9e1df50de89
   branch: 1-3-stable
   specs:
     spree_paypal_express (1.2.0)
@@ -67,6 +67,7 @@ GIT
 GIT
   remote: git://github.com/spree/deface.git
   revision: 1110a1336252109bce7f98f9182042e0bc2930ae
+  ref: 1110a13
   specs:
     deface (1.0.0.rc3)
       colorize (>= 0.5.8)
@@ -140,14 +141,14 @@ GEM
     active_utils (2.0.0)
       activesupport (>= 2.3.11)
       i18n
-    activemerchant (1.34.0)
-      active_utils (>= 1.0.2)
-      activesupport (>= 2.3.14)
-      builder (>= 2.0.0)
-      i18n
-      json (>= 1.5.1)
-      money
-      nokogiri
+    activemerchant (1.38.1)
+      active_utils (~> 2.0)
+      activesupport (>= 2.3.14, < 5.0.0)
+      builder (>= 2.1.2, < 4.0.0)
+      i18n (~> 0.5)
+      json (~> 1.7)
+      money (< 6.0.0)
+      nokogiri (~> 1.4)
     activemodel (3.2.14)
       activesupport (= 3.2.14)
       builder (~> 3.0.0)
@@ -296,7 +297,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.24)
+    mime-types (1.25)
     mini_portile (0.5.1)
     money (5.0.0)
       i18n (~> 0.4)
