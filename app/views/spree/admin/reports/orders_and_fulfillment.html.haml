@@ -11,9 +11,9 @@
   %br
   = label_tag nil, "Distributor: "
   = f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => @include_blank)
-  /%br
-  =# label_tag nil, "Supplier: "
-  =# f.collection_select(:supplier_id_eq, @suppliers, :id, :name, :include_blank => @include_blank)
+  %br
+  = label_tag nil, "Supplier: "
+  = select_tag(:supplier_id, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]), :prompt => @include_blank)
   %br
   = label_tag nil, "Order Cycle: "
   - order_cycles_select = [['No Order Cycle', '-1']]

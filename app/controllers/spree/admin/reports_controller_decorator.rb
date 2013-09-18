@@ -375,10 +375,14 @@ Spree::Admin::ReportsController.class_eval do
     
     orders = @search.result
     @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
+
+    if !params[:supplier_id].blank?
+      @line_items.select! { |li| params[:supplier_id] == li.product.supplier_id.to_s }
+    end
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
     
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    #@suppliers = Enterprise.is_primary_producer
+    @suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
