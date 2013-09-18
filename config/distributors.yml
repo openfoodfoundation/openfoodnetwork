@@ -60,7 +60,7 @@ staging:
 
 production:
   regions:
-    - name: "Inner Melbourne"
+    - name: "Eaterprises"
       distributors:
       - name: "Murundaka (Heidelberg)"
       - name: "Ballantyne (Thornbury)"
