@@ -1,0 +1,4 @@
+/ insert_top "[data-hook='admin_payment_methods_index_rows']"
+
+%td.align-center
+  = method.distributors.map(&:name).join(', ')

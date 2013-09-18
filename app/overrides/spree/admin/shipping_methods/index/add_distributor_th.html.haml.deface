@@ -1,0 +1,4 @@
+/ insert_top "[data-hook='admin_shipping_methods_index_headers']" 
+
+%th
+  Distributor

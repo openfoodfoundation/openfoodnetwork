@@ -1,0 +1,4 @@
+/ replace_contents "table#listing_shipping_methods colgroup" 
+
+%col{style: "width: 12%"}
+-# There are other columns, but they seem to sort themselves out :)
