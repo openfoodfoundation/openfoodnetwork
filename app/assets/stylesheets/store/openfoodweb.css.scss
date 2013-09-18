@@ -15,13 +15,29 @@ table {
   }
 }
 
-#header #logo {
-  margin-top: 10px;
-  padding-top: 10px;
+/* Style current distributor in main nav bar */
+#header {
+  position: relative;
+  margin-bottom: 40px;
+
+  #logo {
+    margin-top: 40px;
+    padding-top: 10px;
+  }
 }
 
-/* Style current distributor in main nav bar */
 nav #main-nav-bar {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  width: 100%;
+
+  #link-to-cart {
+    position: relative;
+    top: 40px;
+    right: 16px;
+  }
+
   li {
     &#current-distribution {
       float: right;
@@ -34,6 +50,12 @@ nav #main-nav-bar {
       }
     }
   }
+}
+
+nav#top-nav-bar {
+  position: relative;
+  z-index: 999;
+  margin-top: 20px;
 }
 
 
@@ -313,10 +335,6 @@ div#eft-payment-alert {
 /* Cleared div for clearing previous floating elements */
 div.cleared {
   clear: both;
-}
-
-#link-to-login {
-  padding: 10px;
 }
 
 .secondary {
