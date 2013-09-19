@@ -79,3 +79,12 @@ form.order_cycle {
     margin-top: 3em;
   }
 }
+
+table#listing_payment_methods {
+  table-layout: fixed;
+
+  td {
+    padding: 15px 5px;
+    word-wrap: break-word;
+  }
+}

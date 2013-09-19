@@ -1,4 +1,9 @@
 / replace_contents "table#listing_payment_methods colgroup" 
 
-%col{style: "width: 12%"}
--# There are other columns, but they seem to sort themselves out :)
+%col{style: "width: 14%"}
+%col{style: "width: 13%"}
+%col{style: "width: 32%"}
+%col{style: "width: 14%"}
+%col{style: "width:  8%"}
+%col{style: "width:  8%"}
+%col{style: "width: 11%"}
