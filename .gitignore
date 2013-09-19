@@ -30,6 +30,7 @@ public/images
 public/spree
 config/abr.yml
 config/heroku_env.rb
+config/newrelic.yml
 config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
