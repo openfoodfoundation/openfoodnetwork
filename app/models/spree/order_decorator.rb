@@ -28,6 +28,14 @@ Spree::Order.class_eval do
     end
   }
 
+  scope :distributed_by_user, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('spree_orders.distributor_id IN (?)', user.enterprises)
+    end
+  }
+
   scope :with_line_items_variants_and_products_outer, lambda {
     joins('LEFT OUTER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
     joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
