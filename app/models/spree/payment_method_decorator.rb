@@ -14,6 +14,12 @@ Spree::PaymentMethod.class_eval do
     end
   }
 
+  scope :by_distributor, lambda {
+    joins(:distributors).
+    order('enterprises.name, spree_payment_methods.name').
+    select('enterprises.*, spree_payment_methods.*')
+  }
+
   def has_distributor?(distributor)
     self.distributors.include?(distributor)
   end

@@ -3,6 +3,19 @@ module Spree
     ShippingMethodsController.class_eval do
       before_filter :do_not_destroy_referenced_shipping_methods, :only => :destroy
 
+      # Sort shipping methods by distributor name
+      # ! Redundant code copied from Spree::Admin::ResourceController with two added lines
+      def collection
+        return parent.send(controller_name) if parent_data.present?
+        if model_class.respond_to?(:accessible_by) && !current_ability.has_block?(params[:action], model_class)
+          model_class.accessible_by(current_ability, action).
+            by_distributor # this line added
+        else
+          model_class.scoped.
+            by_distributor # this line added
+        end
+      end
+
       # This method was originally written because ProductDistributions referenced shipping
       # methods, and deleting a referenced shipping method would break all the reports that
       # queried it.
