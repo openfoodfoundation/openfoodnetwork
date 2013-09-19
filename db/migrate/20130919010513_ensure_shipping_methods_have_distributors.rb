@@ -2,9 +2,13 @@ class EnsureShippingMethodsHaveDistributors < ActiveRecord::Migration
   def up
     d = Enterprise.is_distributor.first
     sms = Spree::ShippingMethod.where('distributor_id IS NULL')
-    say "Assigning an arbitrary distributor (#{d.name}) to all shipping methods without one (#{sms.count} total)"
 
-    sms.update_all(distributor_id: d)
+    if d
+      say "Assigning an arbitrary distributor (#{d.name}) to all shipping methods without one (#{sms.count} total)"
+      sms.update_all(distributor_id: d)
+    else
+      say "There are #{sms.count} shipping methods without distributors, but there are no distributors to assign to them"
+    end
   end
 
   def down
