@@ -10,4 +10,8 @@ Spree::ShippingMethod.class_eval do
   end
   alias_method_chain :available_to_order?, :distributor_check
 
+  def adjustment_label
+    'Delivery'
+  end
+
 end
