@@ -78,6 +78,16 @@ form.order_cycle {
   .actions {
     margin-top: 3em;
   }
+
+  #order-cycles-debug {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 316px;
+    overflow-y: scroll;
+    background-color: #fff;
+  }
 }
 
 table#listing_payment_methods {
