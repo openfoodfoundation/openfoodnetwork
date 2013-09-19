@@ -349,7 +349,7 @@ Spree::Admin::ReportsController.class_eval do
 
   def orders_and_fulfillment
     # -- Prepare parameters
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -362,38 +362,32 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    if params[:q] && params[:q][:order_cycle_id_eq] == '-1'
-      params[:q][:order_cycle_id_null] = true
-      params[:q][:order_cycle_id_eq] = nil
+    q = params[:q].dup
+    if q[:order_cycle_id_eq] == '-1'
+      q[:order_cycle_id_null] = true
+      q[:order_cycle_id_eq] = nil
     end
 
     # -- Search
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-
-    if params[:q] && params[:q][:order_cycle_id_null] == true
-      # Ensure 'No Order Cycle' remains selected
-      params[:q][:order_cycle_id_eq] = '-1'
-    end
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(q)
     
     orders = @search.result
-    @line_items = orders.map { |o| o.line_items.managed_by(spree_current_user) }.flatten
-
-    if !params[:supplier_id].blank?
-      @line_items.select! { |li| params[:supplier_id] == li.product.supplier_id.to_s }
-    end
+    @line_items = orders.map do |o|
+      lis = o.line_items.managed_by(spree_current_user)
+      lis = lis.supplied_by(params[:supplier_id]) if params[:supplier_id].present?
+      lis
+    end.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
     
     # -- Prepare form options
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user) 
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
 
-    # My distributors and any distributors distributing my products
-    @distributors = my_distributors | 
-      Enterprise.with_distributed_products_outer.where('spree_products.supplier_id IN (?)', my_suppliers.map(&:id)).select('DISTINCT enterprises.*')
+    # My distributors and any distributors distributing products I supply
+    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
 
-    # My suppliers and any suppliers supplying my product distributions
-    @suppliers = my_suppliers | 
-      Enterprise.joins(:supplied_products => :product_distributions).where('product_distributions.distributor_id IN (?)', my_distributors.map(&:id)).select('DISTINCT enterprises.*')
+    # My suppliers and any suppliers supplying products I distribute
+    @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
 
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
     @report_types = REPORT_TYPES[:orders_and_fulfillment]

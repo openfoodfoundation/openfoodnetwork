@@ -27,6 +27,10 @@ Spree::Product.class_eval do
   # -- Scopes
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
 
+  scope :in_any_supplier, lambda { |suppliers|
+    where('supplier_id IN (?)', suppliers.map(&:id))
+  }
+
   # Find products that are distributed via the given distributor EITHER through a product distribution OR through an order cycle
   scope :in_distributor, lambda { |distributor|
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
