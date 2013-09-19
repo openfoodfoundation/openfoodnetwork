@@ -6,7 +6,7 @@ class AbilityDecorator
 
       # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
       # when searching for variants to add to the order
-      can [:create, :search], nil
+      can [:create, :search, :bulk_update], nil
 
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
@@ -41,11 +41,10 @@ class AbilityDecorator
         (user.enterprises & payment_method.distributors).any?
       end
 
-      can [:admin, :index, :read, :edit, :update, :clone], OrderCycle do |order_cycle|
+      can [:create], OrderCycle
+      can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
         user.enterprises.include? order_cycle.coordinator
       end
-
-      can [:create], OrderCycle
 
       can [:admin, :index, :read], EnterpriseFee do |enterprise_fee|
         user.enterprises.include? enterprise_fee.enterprise
