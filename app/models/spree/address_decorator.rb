@@ -2,7 +2,6 @@ Spree::Address.class_eval do
   has_one :enterprise
 
   geocoded_by :full_address
-  after_validation :geocode
 
   delegate :name, :to => :state, :prefix => true, :allow_nil => true
 
@@ -19,7 +18,7 @@ Spree::Address.class_eval do
   # their way into the database. I don't know what the source of them is, so this patch
   # is designed to track them down.
   # This is intended to be a temporary investigative measure, and should be removed from the
-  # code base shortly.
+  # code base shortly. If it's past 17-10-2013, take it out.
   #
   #-- Rohan, 17-9-2913
   def create

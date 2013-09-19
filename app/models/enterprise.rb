@@ -23,6 +23,7 @@ class Enterprise < ActiveRecord::Base
 
   after_initialize :initialize_country
   before_validation :set_unused_address_fields
+  after_validation :geocode_address
 
   scope :by_name, order('name')
   scope :is_primary_producer, where(:is_primary_producer => true)
@@ -113,5 +114,9 @@ class Enterprise < ActiveRecord::Base
 
   def set_unused_address_fields
     address.firstname = address.lastname = address.phone = 'unused' if address.present?
+  end
+
+  def geocode_address
+    address.geocode if address.changed?
   end
 end
