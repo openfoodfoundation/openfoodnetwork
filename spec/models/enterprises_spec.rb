@@ -7,6 +7,16 @@ describe Enterprise do
     it { should have_many(:distributed_orders) }
     it { should belong_to(:address) }
     it { should have_many(:product_distributions) }
+
+    it "should destroy enterprise roles upon its own demise" do
+      e = create(:enterprise)
+      u = create(:user)
+      u.enterprise_roles.build(enterprise: e).save!
+
+      role = e.enterprise_roles.first
+      e.destroy
+      EnterpriseRole.where(id: role.id).should be_empty
+    end
   end
 
   describe "validations" do

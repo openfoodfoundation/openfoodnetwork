@@ -9,7 +9,7 @@ class Enterprise < ActiveRecord::Base
   has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
   has_many :distributed_products, :through => :product_distributions, :source => :product
   has_many :enterprise_fees
-  has_many :enterprise_roles
+  has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
 
