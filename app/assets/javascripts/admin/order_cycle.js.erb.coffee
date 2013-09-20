@@ -58,6 +58,9 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.removeExchangeFee(exchange, index)
 
+    $scope.removeDistributionOfVariant = (variant_id) ->
+      OrderCycle.removeDistributionOfVariant(variant_id)
+
     $scope.submit = ->
       OrderCycle.create()
   ])
@@ -121,6 +124,9 @@ angular.module('order_cycle', ['ngResource'])
     $scope.removeExchangeFee = ($event, exchange, index) ->
       $event.preventDefault()
       OrderCycle.removeExchangeFee(exchange, index)
+
+    $scope.removeDistributionOfVariant = (variant_id) ->
+      OrderCycle.removeDistributionOfVariant(variant_id)
 
     $scope.submit = ->
       OrderCycle.update()
@@ -197,6 +203,10 @@ angular.module('order_cycle', ['ngResource'])
         suppliers = (exchange.enterprise_id for exchange in this.order_cycle.incoming_exchanges)
         distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
         jQuery.unique(suppliers.concat(distributors)).sort()
+
+      removeDistributionOfVariant: (variant_id) ->
+        for exchange in this.order_cycle.outgoing_exchanges
+          exchange.variants[variant_id] = false
 
       load: (order_cycle_id) ->
       	service = this
@@ -332,4 +342,12 @@ angular.module('order_cycle', ['ngResource'])
     (scope, element, attrs) ->
       element.bind 'change', ->
         scope.$apply(attrs.ofwOnChange)
+    )
+
+  .directive('ofwSyncDistributions', ->
+    (scope, element, attrs) ->
+      element.bind 'change', ->
+        if !$(this).is(':checked')
+          scope.$apply ->
+            scope.removeDistributionOfVariant(attrs.ofwSyncDistributions)
     )

@@ -25,6 +25,7 @@ describe 'OrderCycle controllers', ->
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
         addExchangeFee: jasmine.createSpy('addExchangeFee')
         removeExchangeFee: jasmine.createSpy('removeExchangeFee')
+        removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
         create: jasmine.createSpy('create')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -121,6 +122,10 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
 
+    it 'Removes distribution of a variant', ->
+      scope.removeDistributionOfVariant('variant')
+      expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
+
     it 'Submits the order cycle via OrderCycle create', ->
       scope.submit()
       expect(OrderCycle.create).toHaveBeenCalled()
@@ -154,6 +159,7 @@ describe 'OrderCycle controllers', ->
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
         addExchangeFee: jasmine.createSpy('addExchangeFee')
         removeExchangeFee: jasmine.createSpy('removeExchangeFee')
+        removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
         update: jasmine.createSpy('update')
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
@@ -248,6 +254,10 @@ describe 'OrderCycle controllers', ->
       scope.removeExchangeFee(event, 'exchange', 0)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
+
+    it 'Removes distribution of a variant', ->
+      scope.removeDistributionOfVariant('variant')
+      expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit()
@@ -513,6 +523,18 @@ describe 'OrderCycle services', ->
       it 'returns false for variants that are not supplied', ->
         expect(OrderCycle.variantSuppliedToOrderCycle({id: 999})).toBeFalsy()
 
+
+    describe 'remove all distribution of a variant', ->
+      it 'removes the variant from every outgoing exchange', ->
+        OrderCycle.order_cycle.outgoing_exchanges = [
+          {variants: {123: true, 234: true}}
+          {variants: {123: true, 333: true}}
+        ]
+        OrderCycle.removeDistributionOfVariant('123')
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+          {variants: {123: false, 234: true}}
+          {variants: {123: false, 333: true}}
+        ]
 
     describe 'loading an order cycle', ->
       beforeEach ->
