@@ -157,7 +157,7 @@ productsApp.controller('AdminBulkProductsCtrl', ["$scope", "$timeout", "$http", 
 				dataFetcher('/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true').then(function(data){
 					$scope.suppliers = data;
 					// Need to have suppliers before we get products so we can match suppliers to product.supplier
-					dataFetcher('/api/products/managed?template=bulk_index').then(function(data){
+					dataFetcher('/api/products/managed?template=bulk_index;page=1;per_page=500').then(function(data){
 						$scope.resetProducts(data);
 					});
 				});
