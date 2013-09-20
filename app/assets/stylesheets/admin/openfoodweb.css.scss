@@ -79,6 +79,8 @@ form.order_cycle {
     margin-top: 3em;
   }
 
+  /* This styling makes it easier to read the debug info at the same time as working with the
+   * interface, but it breaks the tests. Enable when you need it.
   #order-cycles-debug {
     position: fixed;
     top: 0px;
@@ -88,6 +90,7 @@ form.order_cycle {
     overflow-y: scroll;
     background-color: #fff;
   }
+  */
 }
 
 table#listing_payment_methods {
