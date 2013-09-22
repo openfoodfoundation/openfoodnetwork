@@ -1,8 +1,8 @@
-/
-  replace "#logo"
+/ replace "#logo"
 
-%figure#logo.columns.six
+%figure#logo.columns.eight
   - if current_distributor
     %h1= link_to current_distributor.name, main_app.shop_enterprise_path(current_distributor)
+    .change-location= link_to 'Change Location', root_path
   - else
     %h1= link_to "OPEN FOOD NETWORK", root_path
