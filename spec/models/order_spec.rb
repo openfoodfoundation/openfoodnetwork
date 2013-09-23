@@ -1,18 +1,25 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  it "sets attributes on line items for variants" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
+  describe "setting variant attributes" do
+    it "sets attributes on line items for variants" do
+      d = create(:distributor_enterprise)
+      p = create(:product, :distributors => [d])
 
-    subject.distributor = d
-    subject.save!
+      subject.distributor = d
+      subject.save!
 
-    subject.add_variant(p.master, 1)
-    subject.set_variant_attributes(p.master, {'max_quantity' => '3'})
+      subject.add_variant(p.master, 1)
+      subject.set_variant_attributes(p.master, {'max_quantity' => '3'})
 
-    li = Spree::LineItem.last
-    li.max_quantity.should == 3
+      li = Spree::LineItem.last
+      li.max_quantity.should == 3
+    end
+
+    it "does nothing when the line item is not found" do
+      p = create(:simple_product)
+      subject.set_variant_attributes(p.master, {'max_quantity' => '3'}.with_indifferent_access)
+    end
   end
 
   describe "updating the distribution charge" do
