@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class HomeController < BaseController
   layout 'landing_page'
 
   def new_landing_page

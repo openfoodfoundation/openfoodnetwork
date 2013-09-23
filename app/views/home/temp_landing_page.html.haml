@@ -8,6 +8,7 @@
     = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "search/all"
     = javascript_include_tag "search/all"
+    = javascript_include_tag "store/shop_front"
     = render "layouts/bugherd_script"
 
     = csrf_meta_tags
@@ -37,7 +38,7 @@
             .row.distributor-link-row
               .large-12.columns
                 = succeed ',' do
-                  = link_to "<strong>#{distributor.name}</strong>".html_safe, shop_enterprise_path(distributor)
+                  = link_to "<strong>#{distributor.name}</strong>".html_safe, shop_enterprise_path(distributor), {class: temp_landing_page_distributor_link_class(distributor)}
 
                 %span.secondary= distributor.city
     %footer
