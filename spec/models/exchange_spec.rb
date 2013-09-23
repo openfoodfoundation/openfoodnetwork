@@ -96,6 +96,23 @@ describe Exchange do
 
       Exchange.with_variant(v).should == [ex]
     end
+
+    it "finds exchanges with a particular product's master variant" do
+      p = create(:simple_product)
+      ex = create(:exchange)
+      ex.variants << p.master
+
+      Exchange.with_product(p).should == [ex]
+    end
+
+    it "finds exchanges with a particular product's non-master variant" do
+      p = create(:simple_product)
+      v = create(:variant, product: p)
+      ex = create(:exchange)
+      ex.variants << v
+
+      Exchange.with_product(p).should == [ex]
+    end
   end
 
   it "clones itself" do
