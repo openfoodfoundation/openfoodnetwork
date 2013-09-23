@@ -1,7 +1,8 @@
-include Spree::ProductsHelper
-include OrderCyclesHelper
-
 class EnterprisesController < BaseController
+  include Spree::ProductsHelper
+  include OrderCyclesHelper
+
+  before_filter :require_distributor_chosen, only: :show
 
   def index
     @enterprises = Enterprise.all

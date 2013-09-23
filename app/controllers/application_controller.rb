@@ -27,6 +27,14 @@ class ApplicationController < ActionController::Base
     @total_distributors = Enterprise.is_distributor.distinct_count
   end
 
+  def require_distributor_chosen
+    unless current_order(false).andand.distributor
+      redirect_to spree.root_path
+      false
+    end
+  end
+
+
   # All render calls within the block will be performed with the specified format
   # Useful for rendering html within a JSON response, particularly if the specified
   # template or partial then goes on to render further partials without specifying

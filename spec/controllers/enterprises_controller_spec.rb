@@ -10,7 +10,7 @@ describe EnterprisesController do
     assigns(:suppliers).should == [s]
   end
 
-  context 'shopping for a distributor' do
+  context "shopping for a distributor" do
 
     before(:each) do
       @current_distributor = create(:distributor_enterprise)
@@ -58,6 +58,14 @@ describe EnterprisesController do
 
       controller.current_order.distributor.should == @distributor
       controller.current_order.order_cycle.should == @order_cycle1
+    end
+  end
+
+  context "when a distributor has not been chosen" do
+    it "redirects #show to distributor selection" do
+      @distributor = create(:distributor_enterprise)
+      spree_get :show, {id: @distributor}
+      response.should redirect_to spree.root_path
     end
   end
 end
