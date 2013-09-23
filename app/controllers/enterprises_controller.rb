@@ -1,5 +1,5 @@
 class EnterprisesController < BaseController
-  include Spree::ProductsHelper
+  helper Spree::ProductsHelper
   include OrderCyclesHelper
 
   before_filter :require_distributor_chosen, only: :show

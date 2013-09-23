@@ -5,7 +5,7 @@ Spree::ProductsController.class_eval do
   include OrderCyclesHelper
   include OpenFoodWeb::SplitProductsByDistribution
 
-  before_filter :require_distributor_chosen, only: [:index, :show]
+  before_filter :require_distributor_chosen, only: :index
 
   respond_override :index => { :html => { :success => lambda {
         if current_order_cycle
