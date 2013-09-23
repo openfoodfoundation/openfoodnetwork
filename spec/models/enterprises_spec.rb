@@ -8,7 +8,7 @@ describe Enterprise do
     it { should belong_to(:address) }
     it { should have_many(:product_distributions) }
 
-    it "should destroy enterprise roles upon its own demise" do
+    it "destroys enterprise roles upon its own demise" do
       e = create(:enterprise)
       u = create(:user)
       u.enterprise_roles.build(enterprise: e).save!
@@ -16,6 +16,15 @@ describe Enterprise do
       role = e.enterprise_roles.first
       e.destroy
       EnterpriseRole.where(id: role.id).should be_empty
+    end
+
+    it "destroys supplied products upon destroy" do
+      s = create(:supplier_enterprise)
+      p = create(:simple_product, supplier: s)
+
+      s.destroy
+
+      Spree::Product.where(id: p.id).should be_empty
     end
   end
 
