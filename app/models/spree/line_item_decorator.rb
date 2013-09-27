@@ -13,4 +13,9 @@ Spree::LineItem.class_eval do
       select('spree_line_items.*')
     end
   }
+
+  scope :supplied_by, lambda { |enterprise|
+    joins(:product).
+    where('spree_products.supplier_id = ?', enterprise)
+  }
 end
