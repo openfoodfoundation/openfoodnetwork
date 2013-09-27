@@ -40,13 +40,13 @@ feature %q{
     all('td.products img').count.should == 2
   end
 
-  scenario "creating an order cycle", js: true, to_figure_out: true do
+  scenario "creating an order cycle", js: true do
     # Given coordinating, supplying and distributing enterprises with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     product = create(:product, supplier: supplier)
-    create(:variant, product: product)
-    create(:variant, product: product)
+    v1 = create(:variant, product: product)
+    v2 = create(:variant, product: product)
     distributor = create(:distributor_enterprise, name: 'My distributor')
 
     # And some enterprise fees
@@ -73,8 +73,8 @@ feature %q{
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
     page.find('table.exchanges tr.supplier td.products input').click
-    check 'order_cycle_incoming_exchange_0_variants_2'
-    check 'order_cycle_incoming_exchange_0_variants_3'
+    check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+    check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
     # And I add a supplier fee
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
@@ -89,8 +89,8 @@ feature %q{
     fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
     page.find('table.exchanges tr.distributor td.products input').click
-    check 'order_cycle_outgoing_exchange_0_variants_2'
-    check 'order_cycle_outgoing_exchange_0_variants_3'
+    check "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
+    check "order_cycle_outgoing_exchange_0_variants_#{v2.id}"
 
     # And I add a distributor fee
     within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
@@ -203,7 +203,7 @@ feature %q{
   end
 
 
-  scenario "updating an order cycle", js: true, to_figure_out: true do
+  scenario "updating an order cycle", js: true do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants
@@ -249,7 +249,7 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_incoming_exchange_1_variants_2"
+    uncheck "order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
@@ -312,7 +312,8 @@ feature %q{
     OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
 
     # And it should have some variants selected
-    OrderCycle.last.variants.map(&:id).sort.should == (initial_variants.map(&:id) + [v1.id, v2.id]).sort
+    selected_initial_variants = initial_variants.take initial_variants.size - 1
+    OrderCycle.last.variants.map(&:id).sort.should == (selected_initial_variants.map(&:id) + [v1.id, v2.id]).sort
 
     # And the collection details should have been updated
     OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
