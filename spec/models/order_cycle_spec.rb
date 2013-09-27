@@ -149,11 +149,11 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise)
 
-      e0 = create(:exchange,
+      @e0 = create(:exchange,
                   order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      e1 = create(:exchange,
+      @e1 = create(:exchange,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d1)
-      e2 = create(:exchange,
+      @e2 = create(:exchange,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
       @p0 = create(:product)
@@ -161,11 +161,11 @@ describe OrderCycle do
       @p2 = create(:product)
       @p2_v = create(:variant, product: @p2)
 
-      e0.variants << @p0.master
-      e1.variants << @p1.master
-      e1.variants << @p2.master
-      e1.variants << @p2_v
-      e2.variants << @p1.master
+      @e0.variants << @p0.master
+      @e1.variants << @p1.master
+      @e1.variants << @p2.master
+      @e1.variants << @p2_v
+      @e2.variants << @p1.master
     end
 
     it "reports on the variants exchanged" do
@@ -182,6 +182,34 @@ describe OrderCycle do
 
     it "reports on the products exchanged" do
       @oc.products.sort.should == [@p0, @p1, @p2]
+    end
+  end
+
+  describe "exchanges" do
+    before(:each) do
+      @oc = create(:simple_order_cycle)
+
+      @d1 = create(:enterprise)
+      @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
+
+      @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
+      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday')
+      @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, pickup_time: nil)
+    end
+
+    it "finds the exchange for a distributor" do
+      @oc.exchange_for_distributor(@d1).should == @e1
+      @oc.exchange_for_distributor(@d2).should == @e2
+    end
+
+    describe "finding pickup time for a distributor" do
+      it "looks up the pickup time on the exchange when present" do
+        @oc.pickup_time_for(@d1).should == '5pm Tuesday'
+      end
+
+      it "returns the distributor's default collection time otherwise" do
+        @oc.pickup_time_for(@d2).should == '2-8pm Friday'
+      end
     end
   end
 

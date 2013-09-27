@@ -94,6 +94,14 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
+  def exchange_for_distributor(distributor)
+    exchanges.outgoing.to_enterprises([distributor]).first
+  end
+
+  def pickup_time_for(distributor)
+    exchange_for_distributor(distributor).andand.pickup_time || distributor.next_collection_at
+  end
+
 
   # -- Fees
   def create_adjustments_for(line_item)

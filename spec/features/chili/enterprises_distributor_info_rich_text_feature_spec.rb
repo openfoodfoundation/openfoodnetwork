@@ -50,7 +50,7 @@ feature "enterprises distributor info as rich text" do
     page.should have_selector "tr[data-hook='distributor_info'] td", text: 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
   end
 
-  scenario "viewing distributor info", js: true do
+  scenario "viewing distributor info with product distribution", js: true do
     ActionMailer::Base.deliveries.clear
 
     d = create(:distributor_enterprise, distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
@@ -82,6 +82,46 @@ feature "enterprises distributor info as rich text" do
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
     email.body.should =~ /Thursday 2nd May/
+  end
+
+  scenario "viewing distributor info with order cycle distribution", js: true do
+    set_feature_toggle :order_cycles, true
+    ActionMailer::Base.deliveries.clear
+
+    d = create(:distributor_enterprise, name: 'Green Grass', distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
+    p = create(:product)
+    oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+    ex = oc.exchanges.outgoing.last
+    ex = Exchange.find ex.id
+    ex.pickup_time = 'Friday 4th May'
+    ex.save!
+
+    setup_shipping_details d
+
+    login_to_consumer_section
+    click_link 'Green Grass'
+
+    # -- Product details page
+    click_link p.name
+    within '#product-distributor-details' do
+      page.should have_content 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
+      page.should have_content 'Friday 4th May'
+    end
+
+    # -- Checkout
+    click_button 'Add To Cart'
+    click_link 'Checkout'
+    within 'fieldset#shipping' do
+      page.should have_content 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
+      page.should have_content 'Friday 4th May'
+    end
+
+    # -- Purchase email
+    complete_purchase_from_checkout_address_page
+    wait_until { ActionMailer::Base.deliveries.length == 1 }
+    email = ActionMailer::Base.deliveries.last
+    email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
+    email.body.should =~ /Friday 4th May/
   end
 
 
