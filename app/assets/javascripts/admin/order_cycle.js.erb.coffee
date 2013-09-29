@@ -42,6 +42,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addDistributor($scope.new_distributor_id)
 
+    $scope.removeExchange = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.removeExchange(exchange)
+
     $scope.addCoordinatorFee = ($event) ->
       $event.preventDefault()
       OrderCycle.addCoordinatorFee()
@@ -109,6 +113,10 @@ angular.module('order_cycle', ['ngResource'])
       $event.preventDefault()
       OrderCycle.addDistributor($scope.new_distributor_id)
 
+    $scope.removeExchange = ($event, exchange) ->
+      $event.preventDefault()
+      OrderCycle.removeExchange(exchange)
+
     $scope.addCoordinatorFee = ($event) ->
       $event.preventDefault()
       OrderCycle.addCoordinatorFee()
@@ -164,6 +172,14 @@ angular.module('order_cycle', ['ngResource'])
 
       addDistributor: (new_distributor_id) ->
       	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}, enterprise_fees: []})
+
+      removeExchange: (exchange) ->
+        incoming_index = this.order_cycle.incoming_exchanges.indexOf exchange
+        this.order_cycle.incoming_exchanges.splice(incoming_index, 1) if incoming_index > -1
+        outgoing_index = this.order_cycle.outgoing_exchanges.indexOf exchange
+        this.order_cycle.outgoing_exchanges.splice(outgoing_index, 1) if outgoing_index > -1
+
+        this.removeDistributionOfVariant(variant_id) for variant_id, active of exchange.variants when active
 
       addCoordinatorFee: ->
         this.order_cycle.coordinator_fees.push({})

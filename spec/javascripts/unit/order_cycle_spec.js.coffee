@@ -21,6 +21,7 @@ describe 'OrderCycle controllers', ->
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        removeExchange: jasmine.createSpy('removeExchange')
         addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
         addExchangeFee: jasmine.createSpy('addExchangeFee')
@@ -102,6 +103,11 @@ describe 'OrderCycle controllers', ->
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
 
+    it 'Removes order cycle exchanges', ->
+      scope.removeExchange(event, 'exchange')
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchange).toHaveBeenCalledWith('exchange')
+
     it 'Adds coordinator fees', ->
       scope.addCoordinatorFee(event)
       expect(event.preventDefault).toHaveBeenCalled()
@@ -155,6 +161,7 @@ describe 'OrderCycle controllers', ->
         toggleProducts: jasmine.createSpy('toggleProducts')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
+        removeExchange: jasmine.createSpy('removeExchange')
         addCoordinatorFee: jasmine.createSpy('addCoordinatorFee')
         removeCoordinatorFee: jasmine.createSpy('removeCoordinatorFee')
         addExchangeFee: jasmine.createSpy('addExchangeFee')
@@ -234,6 +241,11 @@ describe 'OrderCycle controllers', ->
       scope.addDistributor(event)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
+
+    it 'Removes order cycle exchanges', ->
+      scope.removeExchange(event, 'exchange')
+      expect(event.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.removeExchange).toHaveBeenCalledWith('exchange')
 
     it 'Adds coordinator fees', ->
       scope.addCoordinatorFee(event)
@@ -420,6 +432,32 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
           {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
         ]
+
+    describe 'removing exchanges', ->
+      it 'removes incoming exchanges', ->
+        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+        OrderCycle.order_cycle.incoming_exchanges = [exchange]
+        OrderCycle.removeExchange(exchange)
+        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+
+      it 'removes outgoing exchanges', ->
+        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+        OrderCycle.order_cycle.outgoing_exchanges = [exchange]
+        OrderCycle.removeExchange(exchange)
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
+
+      it 'removes distribution of all exchange variants', ->
+        spyOn(OrderCycle, 'removeDistributionOfVariant')
+        exchange =
+          enterprise_id: '123'
+          active: true
+          variants: {1: true, 2: false, 3: true}
+          enterprise_fees: []
+        OrderCycle.order_cycle.incoming_exchanges = [exchange]
+        OrderCycle.removeExchange(exchange)
+        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('1')
+        expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalledWith('2')
+        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('3')
 
     it 'adds coordinator fees', ->
       OrderCycle.addCoordinatorFee()

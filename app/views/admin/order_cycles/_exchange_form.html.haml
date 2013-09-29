@@ -1,4 +1,3 @@
-%td.active= check_box_tag 'order_cycle_exchange_{{ $index }}_active', 1, 1, 'ng-model' => 'exchange.active', 'id' => 'order_cycle_exchange_{{ $index }}_active'
 %td{:class => "#{type}_name"} {{ enterprises[exchange.enterprise_id].name }}
 %td.products
   = f.submit 'Products', 'ng-click' => 'toggleProducts($event, exchange)'
@@ -23,3 +22,5 @@
       = link_to 'Remove', '#', {'id' => 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_remove', 'ng-click' => 'removeExchangeFee($event, exchange, $index)'}
 
   = f.submit 'Add fee', 'ng-click' => 'addExchangeFee($event, exchange)'
+%td.actions
+  %a{'ng-click' => 'removeExchange($event, exchange)', :class => "icon-trash no-text"}
