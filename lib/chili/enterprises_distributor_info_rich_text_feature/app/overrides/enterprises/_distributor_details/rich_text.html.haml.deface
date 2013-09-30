@@ -2,7 +2,9 @@
 %h2= distributor.name
 = distributor.distributor_info.andand.html_safe
 .next-collection-at
-  - if current_order_cycle
-    = current_order_cycle.pickup_time_for(distributor)
+  -# Handle both checkout process and show order page
+  - order_cycle = current_order_cycle || @order.andand.order_cycle
+  - if order_cycle
+    = order_cycle.pickup_time_for(distributor)
   - else
     = distributor.next_collection_at

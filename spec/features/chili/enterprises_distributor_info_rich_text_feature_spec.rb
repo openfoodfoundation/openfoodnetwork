@@ -76,8 +76,11 @@ feature "enterprises distributor info as rich text" do
       page.should have_content 'Thursday 2nd May'
     end
 
-    # -- Purchase email
+    # -- Confirmation
     complete_purchase_from_checkout_address_page
+    page.should have_content 'Thursday 2nd May'
+
+    # -- Purchase email
     wait_until { ActionMailer::Base.deliveries.length == 1 }
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
@@ -116,8 +119,11 @@ feature "enterprises distributor info as rich text" do
       page.should have_content 'Friday 4th May'
     end
 
-    # -- Purchase email
+    # -- Confirmation
     complete_purchase_from_checkout_address_page
+    page.should have_content 'Friday 4th May'
+
+    # -- Purchase email
     wait_until { ActionMailer::Base.deliveries.length == 1 }
     email = ActionMailer::Base.deliveries.last
     email.body.should =~ /Chu ge sai yubi dan bisento tobi ashi yubi ge omote./
