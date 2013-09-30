@@ -105,8 +105,8 @@ feature %q{
 
     page.should have_selector 'a', text: 'Plums & Avos'
 
-    page.should have_selector "input[value='2012-11-06 06:00:00 UTC']"
-    page.should have_selector "input[value='2012-11-13 17:00:00 UTC']"
+    page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
+    page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
@@ -295,8 +295,8 @@ feature %q{
 
     page.should have_selector 'a', text: 'Plums & Avos'
 
-    page.should have_selector "input[value='2012-11-06 06:00:00 UTC']"
-    page.should have_selector "input[value='2012-11-13 17:00:00 UTC']"
+    page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
+    page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
