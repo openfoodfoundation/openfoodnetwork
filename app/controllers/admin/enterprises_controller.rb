@@ -2,6 +2,7 @@ module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
+    create.after :grant_management
 
     helper 'spree/products'
 
@@ -14,7 +15,17 @@ module Admin
       end
     end
 
+
     private
+
+    # When an enterprise user creates another enterprise, it is granted management
+    # permission for it
+    def grant_management
+      unless spree_current_user.has_spree_role? 'admin'
+        spree_current_user.enterprise_roles.create(enterprise: @object)
+      end
+    end
+
     def load_enterprise_set
       @enterprise_set = EnterpriseSet.new :collection => collection
     end

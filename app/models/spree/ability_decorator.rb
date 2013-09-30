@@ -54,7 +54,7 @@ class AbilityDecorator
       can [:admin, :index, :read, :create, :edit, :update], Exchange
       can [:admin, :index, :read, :create, :edit, :update], ExchangeFee
 
-      can [:admin, :index], Enterprise
+      can [:admin, :index, :create], Enterprise
       can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|
         user.enterprises.include? enterprise
       end

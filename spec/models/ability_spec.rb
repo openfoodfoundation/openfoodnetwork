@@ -175,8 +175,8 @@ module Spree
           should_not have_ability([:read, :edit, :update, :bulk_update], for: s2)
         end
 
-        it 'should have the ability administrate enterpises' do
-          should have_ability([:admin, :index], for: Enterprise)
+        it 'should have the ability administrate and create enterpises' do
+          should have_ability([:admin, :index, :create], for: Enterprise)
         end
       end
     end

@@ -180,4 +180,33 @@ feature %q{
       distributor2.reload.next_collection_at.should be_nil
     end
   end
+
+  context "as an enterprise user" do
+    let(:enterprise_user) { create_enterprise_user }
+    let(:distributor) { create(:distributor_enterprise, name: 'First Distributor') }
+
+    before(:each) do
+      enterprise_user.enterprise_roles.build(enterprise: distributor).save
+      login_to_admin_as enterprise_user
+    end
+
+    scenario "creating an enterprise" do
+      # When I create an enterprise
+      click_link 'Enterprises'
+      click_link 'New Enterprise'
+      fill_in 'enterprise_name', with: 'zzz'
+      fill_in 'enterprise_address_attributes_address1', with: 'z'
+      fill_in 'enterprise_address_attributes_city', with: 'z'
+      fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+      click_button 'Create'
+
+      # Then it should be created
+      page.should have_content 'Enterprise "zzz" has been successfully created!'
+      enterprise = Enterprise.last
+      enterprise.name.should == 'zzz'
+
+      # And I should be managing it
+      Enterprise.managed_by(enterprise_user).should include enterprise
+    end
+  end
 end
