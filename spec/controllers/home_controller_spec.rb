@@ -44,8 +44,9 @@ describe Spree::HomeController do
     end
 
     it "destroys the incomplete order when there is a current order" do
-      incomplete_order = double(:order, distributor: 1, order_cycle: 1)
-      current_order = double(:order, distributor: 1, order_cycle: 1)
+      oc = double(:order_cycle, expired?: false)
+      incomplete_order = double(:order, distributor: 1, order_cycle: oc)
+      current_order = double(:order, distributor: 1, order_cycle: oc)
 
       user = double(:user, last_incomplete_spree_order: incomplete_order)
       controller.stub(:try_spree_current_user).and_return(user)
