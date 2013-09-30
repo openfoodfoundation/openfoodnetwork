@@ -91,6 +91,34 @@ feature %q{
       page.should have_selector "#distribution-choice", text: 'You have not yet picked where you will get your order from.'
     end
 
+    scenario "order cycle expires mid-order" do
+      d = create(:distributor_enterprise,
+                 name: 'Green Grass', email: 'd@example.com', phone: '1029 3847')
+      p = create(:simple_product)
+      oc = create(:simple_order_cycle, name: 'oc', distributors: [d], variants: [p.master])
+
+      # When I select an order cycle and add a product to my cart
+      visit spree.root_path
+      click_link 'Green Grass'
+      click_link p.name
+      click_button 'Add To Cart'
+
+      # And the order cycle expires and I load a page
+      Timecop.travel(oc.orders_close_at + 1.day) do
+        click_link 'Continue shopping'
+
+        # Then I should see an expiry message
+        page.should have_content "Sorry, orders for this order cycle closed 1 day ago! Please contact your hub directly to see if they can accept late orders."
+        page.should have_content d.email
+        page.should have_content d.phone
+
+        # And my cart should have been cleared
+        page.should have_content "Cart: (Empty)"
+        page.should have_content 'Green Grass'
+      end
+    end
+
+
     context "without javascript", :future => true do
       scenario "selecting a distributor highlights valid order cycle choices" do
         # When I go to the product listing page

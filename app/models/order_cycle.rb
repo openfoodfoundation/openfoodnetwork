@@ -94,6 +94,10 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
+  def expired?
+    Time.now > self.orders_close_at
+  end
+
   def exchange_for_distributor(distributor)
     exchanges.outgoing.to_enterprises([distributor]).first
   end

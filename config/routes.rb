@@ -78,5 +78,6 @@ Spree::Core::Engine.routes.prepend do
     get :select_distributor, :on => :member
     get :deselect_distributor, :on => :collection
     get :clear, :on => :collection
+    get :order_cycle_expired, :on => :collection
   end
 end

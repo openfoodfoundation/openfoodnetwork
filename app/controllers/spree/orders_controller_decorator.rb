@@ -69,6 +69,11 @@ Spree::OrdersController.class_eval do
     redirect_to main_app.enterprise_path(@order.distributor.id)
   end
 
+  def order_cycle_expired
+    @order_cycle = OrderCycle.find session[:expired_order_cycle_id]
+  end
+
+
   private
 
   def populate_variant_attributes

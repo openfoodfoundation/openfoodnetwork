@@ -1,0 +1,17 @@
+%h2 Orders have closed for this order cycle
+
+%p
+  = succeed "." do
+    Sorry, orders for this order cycle closed
+    = distance_of_time_in_words_to_now @order_cycle.orders_close_at
+    ago! Please contact your hub directly to see if they can accept late orders
+
+    - if active_order_cycle_for_distributor? current_distributor
+      %strong= link_to 'or see the other order cycles available at this hub', spree.clear_orders_path
+
+%p
+  %strong Email:
+  = current_distributor.email
+  %br/
+  %strong Phone:
+  = current_distributor.phone

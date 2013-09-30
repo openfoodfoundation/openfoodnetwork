@@ -33,6 +33,10 @@ module OrderCyclesHelper
                  distance_of_time_in_words_to_now(orders_close_at)]
   end
 
+  def active_order_cycle_for_distributor?(distributor)
+    OrderCycle.active.with_distributor(@distributor).present?
+  end
+
 
   def order_cycles_enabled?
     OpenFoodWeb::FeatureToggle.enabled? :order_cycles

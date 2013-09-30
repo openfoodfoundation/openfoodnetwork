@@ -213,6 +213,20 @@ describe OrderCycle do
     end
   end
 
+  describe "checking expiry" do
+    let(:oc) { create(:order_cycle) }
+
+    it "returns false when not expired" do
+      oc.expired?.should be_false
+    end
+
+    it "returns true when expired" do
+      Timecop.freeze(oc.orders_close_at + 1.second) do
+        oc.expired?.should be_true
+      end
+    end
+  end
+
   it "clones itself" do
     oc = create(:order_cycle)
     occ = oc.clone!
