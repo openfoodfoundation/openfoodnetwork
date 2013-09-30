@@ -6,7 +6,11 @@ module OpenFoodWeb
     render_views
 
     let(:user) { FactoryGirl.create(:user) }
-    let(:product1) { FactoryGirl.create(:product) }
+    let(:product1) do
+      p1 = FactoryGirl.create(:product)
+      p1.update_column(:count_on_hand, 10)
+      p1
+    end
     let(:cart) { Cart.create(user: user) }
     let(:distributor) { FactoryGirl.create(:distributor_enterprise) }
 
