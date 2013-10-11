@@ -14,9 +14,11 @@ Spree.config do |config|
   config.shipping_instructions = true
   config.checkout_zone = 'Australia'
   config.address_requires_state = true
-  config.default_country_id = Spree::Country.find_by_name('Australia').id
-
   config.searcher_class = OpenFoodWeb::Searcher
+
+  # 109 should be Australia. Hardcoded for CI (Jenkins), where countries are not pre-loaded.
+  config.default_country_id = Spree::Country.find_by_name('Australia').andand.id || 109
+
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
