@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :load_data_for_menu
   before_filter :load_data_for_sidebar
+  before_filter :require_certified_hostname
 
   private
   def load_data_for_menu
@@ -31,6 +32,17 @@ class ApplicationController < ActionController::Base
     unless current_order(false).andand.distributor
       redirect_to spree.root_path
       false
+    end
+  end
+
+  # There are several domains that point to the production server, but only one
+  # (vic.openfoodnetwork.org) that has the SSL certificate. Redirect all requests to this
+  # domain to avoid showing customers a scary invalid certificate error.
+  def require_certified_hostname
+    certified_host = "vic.openfoodnetwork.org"
+
+    if Rails.env.production? && request.host != certified_host
+      redirect_to "http://#{certified_host}#{request.fullpath}"
     end
   end
 
