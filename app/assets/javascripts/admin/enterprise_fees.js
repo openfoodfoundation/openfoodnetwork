@@ -1,6 +1,6 @@
 angular.module('enterprise_fees', [])
   .controller('AdminEnterpriseFeesCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/admin/enterprise_fees.json').success(function(data) {
+    $http.get('/admin/enterprise_fees.json?include_calculators=1').success(function(data) {
       $scope.enterprise_fees = data;
 
       for(i=0; i<3; i++) {

@@ -6,5 +6,5 @@ r.list_of :enterprise_fees, @presented_collection do
   r.element :name
   r.element :calculator_type
   r.element :calculator_description
-  r.element :calculator_settings
+  r.element :calculator_settings if @include_calculators
 end

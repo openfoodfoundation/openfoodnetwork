@@ -6,6 +6,8 @@ module Admin
 
 
     def index
+      @include_calculators = params[:include_calculators].present?
+
       respond_to do |format|
         format.html
         format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
