@@ -59,13 +59,14 @@
   = link_to 'Cancel', main_app.admin_order_cycles_path
 
 
-#order-cycles-debug
-  %h2 Debug information
+- unless Rails.env.production?
+  #order-cycles-debug
+    %h2 Debug information
 
-  %pre order_cycle = {{ order_cycle | json }}
-  %hr/
-  %pre enterprises = {{ enterprises | json }}
-  %hr/
-  %pre enterprise_fees = {{ enterprise_fees | json }}
-  %hr/
-  %pre supplied_products = {{ supplied_products | json }}
+    %pre order_cycle = {{ order_cycle | json }}
+    %hr/
+    %pre enterprises = {{ enterprises | json }}
+    %hr/
+    %pre enterprise_fees = {{ enterprise_fees | json }}
+    %hr/
+    %pre supplied_products = {{ supplied_products | json }}
