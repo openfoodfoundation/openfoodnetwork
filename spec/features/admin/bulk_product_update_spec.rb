@@ -286,6 +286,18 @@ feature %q{
     page.find("span#update-status-message").should have_content "Update complete"
   end
 
+  scenario "updating a product when there are more products than the default API page size" do
+    26.times { FactoryGirl.create(:simple_product) }
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    field = page.all("table#listing_products input[name='product_name']").first
+    field.set "new name"
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
   describe "using action buttons" do
     describe "using delete buttons" do
       it "shows a delete button for products, which deletes the appropriate product when clicked" do
