@@ -442,6 +442,7 @@ feature %q{
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:product_supplied) { create(:product, supplier: s1, price: 10.0, on_hand: 6) }
     let!(:product_not_supplied) { create(:product, supplier: s3) }
+    let!(:product_supplied_inactive) { create(:product, supplier: s1, price: 10.0, on_hand: 6, available_on: 1.week.from_now) }
 
     before(:each) do
       @enterprise_user = create_enterprise_user
@@ -464,6 +465,12 @@ feature %q{
 
       page.should have_select 'supplier', with_options: [s1.name, s2.name], selected: s1.name
       page.should_not have_select 'supplier', with_options: [s3.name]
+    end
+
+    it "shows inactive products that I supply" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field 'product_name', with: product_supplied_inactive.name
     end
 
     it "allows me to update a product" do
