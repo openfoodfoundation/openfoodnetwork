@@ -1,4 +1,4 @@
 / insert_top "[data-hook='admin_shipping_methods_index_rows']"
 
 %td.align-center
-  = shipping_method.distributor.name
+  = enterprises_to_names shipping_method.distributors

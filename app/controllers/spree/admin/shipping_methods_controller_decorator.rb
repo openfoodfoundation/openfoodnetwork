@@ -4,7 +4,7 @@ module Spree
       before_filter :do_not_destroy_referenced_shipping_methods, :only => :destroy
 
       # Sort shipping methods by distributor name
-      # ! Redundant code copied from Spree::Admin::ResourceController with two added lines
+      # ! Code copied from Spree::Admin::ResourceController with two added lines
       def collection
         return parent.send(controller_name) if parent_data.present?
         if model_class.respond_to?(:accessible_by) && !current_ability.has_block?(params[:action], model_class)

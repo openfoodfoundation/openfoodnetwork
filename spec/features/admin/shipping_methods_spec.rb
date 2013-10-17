@@ -9,14 +9,16 @@ feature 'shipping methods' do
     @sm = create(:shipping_method)
   end
 
-  scenario "creating a shipping method owned by a distributor" do
-    # Given a distributor
-    distributor = create(:distributor_enterprise, name: 'Aeronautical Adventures')
+  scenario "creating a shipping method owned by some distributors" do
+    # Given some distributors
+    d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
+    d2 = create(:distributor_enterprise, name: 'Nautical Travels')
 
-    # When I create a shipping method and set the distributor
+    # When I create a shipping method and set the distributors
     visit spree.new_admin_shipping_method_path
     fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
-    select 'Aeronautical Adventures', from: 'shipping_method_distributor_id'
+    select 'Aeronautical Adventures', from: 'shipping_method_distributor_ids'
+    select 'Nautical Travels', from: 'shipping_method_distributor_ids'
     click_button 'Create'
 
     # Then the shipping method should have its distributor set
@@ -24,10 +26,9 @@ feature 'shipping methods' do
 
     sm = Spree::ShippingMethod.last
     sm.name.should == 'Carrier Pidgeon'
-    sm.distributor.should == distributor
+    sm.distributors.should == [d1, d2]
   end
 
-  it "shipping method requires distributor"
   it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
 
 
