@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130919010513) do
+ActiveRecord::Schema.define(:version => 20131016230055) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -153,6 +153,14 @@ ActiveRecord::Schema.define(:version => 20130919010513) do
     t.integer "distributor_id"
     t.integer "payment_method_id"
   end
+
+  create_table "distributors_shipping_methods", :id => false, :force => true do |t|
+    t.integer "distributor_id"
+    t.integer "shipping_method_id"
+  end
+
+  add_index "distributors_shipping_methods", ["distributor_id"], :name => "index_distributors_shipping_methods_on_distributor_id"
+  add_index "distributors_shipping_methods", ["shipping_method_id"], :name => "index_distributors_shipping_methods_on_shipping_method_id"
 
   create_table "enterprise_fees", :force => true do |t|
     t.integer  "enterprise_id"
@@ -462,9 +470,9 @@ ActiveRecord::Schema.define(:version => 20130919010513) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -721,10 +729,7 @@ ActiveRecord::Schema.define(:version => 20130919010513) do
     t.boolean  "match_all"
     t.boolean  "match_one"
     t.datetime "deleted_at"
-    t.integer  "distributor_id"
   end
-
-  add_index "spree_shipping_methods", ["distributor_id"], :name => "index_spree_shipping_methods_on_distributor_id"
 
   create_table "spree_skrill_transactions", :force => true do |t|
     t.string   "email"

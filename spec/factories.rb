@@ -151,7 +151,7 @@ FactoryGirl.modify do
   end
 
   factory :shipping_method do
-    distributor { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
     display_on ''
   end
 
@@ -168,7 +168,7 @@ FactoryGirl.modify do
   end
 
   factory :payment_method do
-    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] } #Always need a distributor
+    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
   end
 
 end
