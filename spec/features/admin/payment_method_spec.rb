@@ -11,8 +11,7 @@ feature %q{
     @distributors = (1..3).map { create(:distributor_enterprise) }
   end
 
-  #Create and Edit uses same partial form
-  context "creating a payment method", js: true do 
+  describe "creating a payment method", js: true do
     scenario "assigning a distributor to the payment method" do
       login_to_admin_section
 
@@ -28,7 +27,52 @@ feature %q{
       flash_message.should == 'Payment Method has been successfully created!'
       
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
-      payment_method.distributors.should include(@distributors[0])
+      payment_method.distributors.should == [@distributors[0]]
+    end
+  end
+
+  context "as an enterprise user" do
+    let(:enterprise_user) { create_enterprise_user }
+    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
+    let(:pm1) { create(:payment_method, name: 'One', distributors: [distributor1]) }
+    let(:pm2) { create(:payment_method, name: 'Two', distributors: [distributor2]) }
+
+    before(:each) do
+      enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor2).save
+      login_to_admin_as enterprise_user
+    end
+
+    it "creates payment methods" do
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor1.id}") { click_link 'Payment Methods' }
+      click_link 'New Payment Method'
+
+      fill_in 'payment_method_name', :with => 'Cheque payment method'
+
+      select distributor1.name, :from => 'payment_method_distributor_ids'
+      click_button 'Create'
+
+      flash_message.should == 'Payment Method has been successfully created!'
+
+      payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
+      payment_method.distributors.should == [distributor1]
+    end
+
+    it "shows me only payment methods for the enterprise I select" do
+      pm1
+      pm2
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor1.id}") { click_link 'Payment Methods' }
+      page.should     have_content pm1.name
+      page.should_not have_content pm2.name
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor2.id}") { click_link 'Payment Methods' }
+      page.should_not have_content pm1.name
+      page.should     have_content pm2.name
     end
   end
 end

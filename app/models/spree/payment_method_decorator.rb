@@ -14,6 +14,11 @@ Spree::PaymentMethod.class_eval do
     end
   }
 
+  scope :for_distributor, lambda { |distributor|
+    joins(:distributors).
+    where('enterprises.id = ?', distributor)
+  }
+
   scope :by_distributor, lambda {
     joins(:distributors).
     order('enterprises.name, spree_payment_methods.name').
