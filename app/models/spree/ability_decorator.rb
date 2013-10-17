@@ -41,6 +41,11 @@ class AbilityDecorator
         (user.enterprises & payment_method.distributors).any?
       end
 
+      can [:index, :create], Spree::ShippingMethod
+      can [:admin, :read, :update, :destroy], Spree::ShippingMethod do |shipping_method|
+        (user.enterprises & shipping_method.distributors).any?
+      end
+
       can [:create], OrderCycle
       can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
         user.enterprises.include? order_cycle.coordinator

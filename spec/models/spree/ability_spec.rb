@@ -129,6 +129,14 @@ module Spree
         it "should be able to read/write ReturnAuthorizations on a product" do
           should have_ability([:admin, :index, :read, :create, :edit, :update, :fire], for: Spree::ReturnAuthorization)
         end
+
+        it "should be able to read/write PaymentMethods" do
+          should have_ability([:admin, :index, :create, :update, :destroy], for: Spree::PaymentMethod)
+        end
+
+        it "should be able to read/write ShippingMethods" do
+          should have_ability([:admin, :index, :create, :update, :destroy], for: Spree::ShippingMethod)
+        end
       end
 
       context 'Order Cycle co-ordinator' do
