@@ -7,13 +7,25 @@ module Spree
       # ! Code copied from Spree::Admin::ResourceController with two added lines
       def collection
         return parent.send(controller_name) if parent_data.present?
-        if model_class.respond_to?(:accessible_by) && !current_ability.has_block?(params[:action], model_class)
-          model_class.accessible_by(current_ability, action).
-            by_distributor # this line added
-        else
-          model_class.scoped.
-            by_distributor # this line added
+
+        collection = if model_class.respond_to?(:accessible_by) &&
+                         !current_ability.has_block?(params[:action], model_class)
+
+                       model_class.accessible_by(current_ability, action).
+                         by_distributor # This line added
+
+                     else
+                       model_class.scoped.
+                         by_distributor # This line added
+                     end
+
+        # This block added
+        if params.key? :enterprise_id
+          distributor = Enterprise.find params[:enterprise_id]
+          collection = collection.for_distributor(distributor)
         end
+
+        collection
       end
 
       # This method was originally written because ProductDistributions referenced shipping

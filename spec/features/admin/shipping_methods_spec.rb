@@ -83,5 +83,20 @@ feature 'shipping methods' do
       shipping_method = Spree::ShippingMethod.find_by_name('Teleport')
       shipping_method.distributors.should == [distributor1]
     end
+
+    it "shows me only payment methods for the enterprise I select" do
+      sm1
+      sm2
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
+      page.should     have_content sm1.name
+      page.should_not have_content sm2.name
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor2.id}") { click_link 'Shipping Methods' }
+      page.should_not have_content sm1.name
+      page.should     have_content sm2.name
+    end
   end
 end

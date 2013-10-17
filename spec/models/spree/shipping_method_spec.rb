@@ -18,6 +18,15 @@ module Spree
       sm.reload.distributors.should == [d1, d2]
     end
 
+    it "finds shipping methods for a particular distributor" do
+      d1 = create(:distributor_enterprise)
+      d2 = create(:distributor_enterprise)
+      sm1 = create(:shipping_method, distributors: [d1, d1])
+      sm2 = create(:shipping_method, distributors: [d2, d2])
+
+      ShippingMethod.for_distributor(d1).should == [sm1]
+    end
+
     it "can order by distributor" do
       d1 = create(:distributor_enterprise, name: '222')
       d2 = create(:distributor_enterprise, name: '111')

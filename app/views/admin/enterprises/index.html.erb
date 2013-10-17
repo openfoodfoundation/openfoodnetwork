@@ -42,7 +42,7 @@
             <%= link_to_delete_enterprise enterprise %><br />
 
             <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />
-            <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path %> (<%= enterprise.shipping_methods.count %>)<br />
+            <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)<br />
             <%#= link_to_with_icon 'icon-money', 'Enterprise Fees', main_app.admin_enterprise_fees_path %>
           </td>
         </tr>
