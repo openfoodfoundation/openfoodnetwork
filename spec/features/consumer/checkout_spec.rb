@@ -556,7 +556,7 @@ feature %q{
     ex4.variants << @product_4.master
 
     # Shipping method and payment method
-    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributor: @distributor_oc)
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributors: [@distributor_oc])
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
     @payment_method_distributor_oc = create(:payment_method, :name => 'FruitAndVeg payment method', :distributors => [@distributor_oc])
   end
