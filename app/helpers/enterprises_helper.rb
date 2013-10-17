@@ -7,6 +7,10 @@ module EnterprisesHelper
     enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
   end
 
+  def enterprises_to_names(enterprises)
+    enterprises.map(&:name).sort.join(', ')
+  end
+
   def enterprise_confirm_delete_message(enterprise)
     if enterprise.supplied_products.present?
       "This will also delete the #{pluralize enterprise.supplied_products.count, 'product'} that this enterprise supplies. Are you sure you want to continue?"
