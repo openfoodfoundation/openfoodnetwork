@@ -21,8 +21,8 @@ module Spree
     it "finds shipping methods for a particular distributor" do
       d1 = create(:distributor_enterprise)
       d2 = create(:distributor_enterprise)
-      sm1 = create(:shipping_method, distributors: [d1, d1])
-      sm2 = create(:shipping_method, distributors: [d2, d2])
+      sm1 = create(:shipping_method, distributors: [d1])
+      sm2 = create(:shipping_method, distributors: [d2])
 
       ShippingMethod.for_distributor(d1).should == [sm1]
     end

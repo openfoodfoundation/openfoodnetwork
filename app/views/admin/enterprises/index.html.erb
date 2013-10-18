@@ -38,7 +38,7 @@
           <td><%= enterprise.description %></td>
           <td data-hook="admin_users_index_row_actions">
 
-            <%= link_to_with_icon('icon-edit', 'Edit Profile', main_app.admin_enterprise_path(enterprise), class: 'edit') %><br />
+            <%= link_to_with_icon('icon-edit', 'Edit Profile', main_app.edit_admin_enterprise_path(enterprise), class: 'edit') %><br />
             <%= link_to_delete_enterprise enterprise %><br />
 
             <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />

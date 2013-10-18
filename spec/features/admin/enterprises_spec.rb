@@ -76,7 +76,7 @@ feature %q{
     login_to_admin_section
 
     click_link 'Enterprises'
-    click_link 'Edit'
+    click_link 'Edit Profile'
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
@@ -156,7 +156,7 @@ feature %q{
 
     scenario "can edit enterprises I have permission to" do
       click_link 'Enterprises'
-      within('#listing_enterprises tbody tr:first') { click_link 'Edit' }
+      within('#listing_enterprises tbody tr:first') { click_link 'Edit Profile' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
       click_button 'Update'
