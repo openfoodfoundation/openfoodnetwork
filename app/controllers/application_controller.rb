@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   private
   def load_data_for_menu
-    @cms_site = Cms::Site.where(:identifier => 'open-food-web').first
+    @cms_site = Cms::Site.where(:identifier => 'open-food-network').first
   end
 
   # This is getting sloppy, since @all_distributors is also used for order cycle selection,

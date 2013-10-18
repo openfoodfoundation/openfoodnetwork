@@ -177,8 +177,8 @@ end
 # -- CMS
 FactoryGirl.define do
   factory :cms_site, :class => Cms::Site do
-    identifier 'open-food-web'
-    label      'Open Food Web'
+    identifier 'open-food-network'
+    label      'Open Food Network'
     hostname   'localhost'
   end
 
