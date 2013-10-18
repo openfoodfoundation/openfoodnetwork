@@ -420,7 +420,7 @@ feature %q{
 
     login_to_consumer_section
 
-    user = Spree::User.find_by_email 'someone@ofw.org'
+    user = Spree::User.find_by_email 'someone@ofn.org'
     o = create(:completed_order_with_totals, user: user,
                bill_address: create(:address, firstname: 'Joe', lastname: 'Luck',
                                     address1: '19 Sycamore Lane', city: 'Horse Hill',
@@ -444,7 +444,7 @@ feature %q{
     # We perform login inline because:
     # a) It's a common user flow
     # b) It has been known to trigger errors with spree_last_address
-    fill_in 'spree_user_email', :with => 'someone@ofw.org'
+    fill_in 'spree_user_email', :with => 'someone@ofn.org'
     fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
 

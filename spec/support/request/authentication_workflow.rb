@@ -2,12 +2,12 @@ module AuthenticationWorkflow
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = Spree::User.create!({
-      :email => 'admin@ofw.org',
+      :email => 'admin@ofn.org',
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
       :remember_me => false,
       :persistence_token => 'pass',
-      :login => 'admin@ofw.org'})
+      :login => 'admin@ofn.org'})
 
     admin_user.spree_roles << admin_role
 
@@ -34,17 +34,17 @@ module AuthenticationWorkflow
 
     user_role = Spree::Role.find_or_create_by_name!('user')
     user = Spree::User.create!({
-      :email => 'someone@ofw.org',
+      :email => 'someone@ofn.org',
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
       :remember_me => false,
       :persistence_token => 'pass',
-      :login => 'someone@ofw.org'})
+      :login => 'someone@ofn.org'})
 
     user.spree_roles << user_role
 
     visit spree.login_path
-    fill_in 'spree_user_email', :with => 'someone@ofw.org'
+    fill_in 'spree_user_email', :with => 'someone@ofn.org'
     fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
   end

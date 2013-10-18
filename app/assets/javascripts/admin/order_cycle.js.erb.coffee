@@ -354,16 +354,16 @@ angular.module('order_cycle', ['ngResource'])
       	    parsed.assign(scope, dateText)
     ])
 
-  .directive('ofwOnChange', ->
+  .directive('ofnOnChange', ->
     (scope, element, attrs) ->
       element.bind 'change', ->
-        scope.$apply(attrs.ofwOnChange)
+        scope.$apply(attrs.ofnOnChange)
     )
 
-  .directive('ofwSyncDistributions', ->
+  .directive('ofnSyncDistributions', ->
     (scope, element, attrs) ->
       element.bind 'change', ->
         if !$(this).is(':checked')
           scope.$apply ->
-            scope.removeDistributionOfVariant(attrs.ofwSyncDistributions)
+            scope.removeDistributionOfVariant(attrs.ofnSyncDistributions)
     )
