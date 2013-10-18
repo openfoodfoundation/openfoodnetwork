@@ -2,7 +2,7 @@
 
 angular.module('store').
   factory('CartFactory', ['$resource', '$window', '$http', ($resource, $window, $http) ->
-    Cart = $resource '/open_food_web/cart/:cart_id.json', {},
+    Cart = $resource '/open_food_network/cart/:cart_id.json', {},
       { 'show':  { method: 'GET'} }
 
     load: (id, callback) ->

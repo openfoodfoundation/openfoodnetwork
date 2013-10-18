@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'open_food_web/searcher'
+require 'open_food_network/searcher'
 
 module OpenFoodNetwork
   describe Searcher do

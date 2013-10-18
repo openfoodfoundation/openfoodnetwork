@@ -1,4 +1,4 @@
-require 'open_food_web/feature_toggle'
+require 'open_food_network/feature_toggle'
 
 module OpenFoodNetwork
   describe FeatureToggle do

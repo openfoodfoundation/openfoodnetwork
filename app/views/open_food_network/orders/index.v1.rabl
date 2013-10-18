@@ -1,3 +1,3 @@
 collection @orders
 
-extends "open_food_web/orders/show"
+extends "open_food_network/orders/show"

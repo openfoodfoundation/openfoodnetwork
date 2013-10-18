@@ -1,8 +1,8 @@
 require 'csv'
-require 'open_food_web/order_and_distributor_report'
-require 'open_food_web/group_buy_report'
-require 'open_food_web/order_grouper'
-require 'open_food_web/model_class_from_controller_name'
+require 'open_food_network/order_and_distributor_report'
+require 'open_food_network/group_buy_report'
+require 'open_food_network/order_grouper'
+require 'open_food_network/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
   include OpenFoodNetwork::ModelClassFromControllerName

@@ -1,3 +1,3 @@
 collection @line_items
 
-extends "open_food_web/line_items/show"
+extends "open_food_network/line_items/show"

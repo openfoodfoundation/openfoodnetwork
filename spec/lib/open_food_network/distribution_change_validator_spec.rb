@@ -1,4 +1,4 @@
-require 'open_food_web/distribution_change_validator'
+require 'open_food_network/distribution_change_validator'
 
 describe DistributionChangeValidator do
   let(:order) { double(:order) }

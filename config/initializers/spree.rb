@@ -8,7 +8,7 @@
 
 
 require 'spree/product_filters'
-require 'open_food_web/searcher'
+require 'open_food_network/searcher'
 
 Spree.config do |config|
   config.shipping_instructions = true

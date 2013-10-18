@@ -34,7 +34,7 @@ Openfoodnetwork::Application.routes.draw do
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
   get "about_us", :controller => 'home', :action => "about_us"
 
-  namespace :open_food_web do
+  namespace :open_food_network do
     resources :cart do
       post :add_variant
     end

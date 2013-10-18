@@ -1,4 +1,4 @@
-require 'open_food_web/distribution_change_validator'
+require 'open_food_network/distribution_change_validator'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
