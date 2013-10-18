@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe CartController do
     render_views
 

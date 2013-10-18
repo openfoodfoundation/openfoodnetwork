@@ -6,7 +6,7 @@ Spree::OrdersController.class_eval do
 
   # Patch Orders#populate to provide distributor_id and order_cycle_id to OrderPopulator
   def populate
-    if OpenFoodWeb::FeatureToggle.enabled? :multi_cart
+    if OpenFoodNetwork::FeatureToggle.enabled? :multi_cart
       populate_cart params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id)
     end
 

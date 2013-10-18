@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe OrderGrouper do
 
     before(:each) do

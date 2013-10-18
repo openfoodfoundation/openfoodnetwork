@@ -5,7 +5,7 @@ feature "enterprises distributor info as rich text" do
   include WebHelper
 
   before(:each) do
-    OpenFoodWeb::FeatureToggle.stub(:features).and_return({eaterprises: false,
+    OpenFoodNetwork::FeatureToggle.stub(:features).and_return({eaterprises: false,
                                                            local_organics: true,
                                                            enterprises_distributor_info_rich_text: true})
 

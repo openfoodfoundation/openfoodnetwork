@@ -3,7 +3,7 @@ require 'open_food_web/split_products_by_distribution'
 Spree::TaxonsController.class_eval do
   include EnterprisesHelper
   include OrderCyclesHelper
-  include OpenFoodWeb::SplitProductsByDistribution
+  include OpenFoodNetwork::SplitProductsByDistribution
 
   before_filter :require_distributor_chosen, only: :show
 

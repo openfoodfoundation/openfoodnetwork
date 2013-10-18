@@ -1,5 +1,5 @@
 
-module OpenFoodWeb
+module OpenFoodNetwork
   class OrderAndDistributorReport
 
     def initialize orders

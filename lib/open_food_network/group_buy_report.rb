@@ -1,4 +1,4 @@
-module OpenFoodWeb
+module OpenFoodNetwork
 
   GroupBuyVariantRow = Struct.new(:variant, :sum_quantities, :sum_max_quantities) do
     def to_row

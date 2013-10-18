@@ -1,4 +1,4 @@
-module OpenFoodWeb
+module OpenFoodNetwork
   class CartController < ApplicationController
     respond_to :json
 

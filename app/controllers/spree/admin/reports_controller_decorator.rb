@@ -5,7 +5,7 @@ require 'open_food_web/order_grouper'
 require 'open_food_web/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
-  include OpenFoodWeb::ModelClassFromControllerName
+  include OpenFoodNetwork::ModelClassFromControllerName
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -45,7 +45,7 @@ Spree::Admin::ReportsController.class_eval do
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
     orders = @search.result
 
-    @report = OpenFoodWeb::OrderAndDistributorReport.new orders
+    @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
     unless params[:csv]
       render :html => @report
     else
@@ -77,7 +77,7 @@ Spree::Admin::ReportsController.class_eval do
     
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
 
-    @report = OpenFoodWeb::GroupBuyReport.new orders
+    @report = OpenFoodNetwork::GroupBuyReport.new orders
     unless params[:csv]
       render :html => @report
     else
@@ -233,7 +233,7 @@ Spree::Admin::ReportsController.class_eval do
 
     end
 
-    order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
+    order_grouper = OpenFoodNetwork::OrderGrouper.new rules, columns
 
     @header = header
     @table = order_grouper.table(@line_items)
@@ -337,7 +337,7 @@ Spree::Admin::ReportsController.class_eval do
 
     end
 
-    order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
+    order_grouper = OpenFoodNetwork::OrderGrouper.new rules, columns
 
     @header = header
     @table = order_grouper.table(table_items)
@@ -549,7 +549,7 @@ Spree::Admin::ReportsController.class_eval do
 
     end
 
-    order_grouper = OpenFoodWeb::OrderGrouper.new rules, columns
+    order_grouper = OpenFoodNetwork::OrderGrouper.new rules, columns
 
     @header = header
     @table = order_grouper.table(table_items)

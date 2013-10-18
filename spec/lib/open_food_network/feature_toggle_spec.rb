@@ -1,6 +1,6 @@
 require 'open_food_web/feature_toggle'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe FeatureToggle do
     it "returns true when feature is on" do
       FeatureToggle.stub(:features).and_return({foo: true})

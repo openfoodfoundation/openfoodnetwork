@@ -1,6 +1,6 @@
 require 'open_food_web/order_cycle_form_applicator'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe OrderCycleFormApplicator do
     context "unit specs" do
       it "creates new exchanges for incoming_exchanges" do

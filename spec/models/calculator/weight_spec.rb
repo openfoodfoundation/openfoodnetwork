@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OpenFoodWeb::Calculator::Weight do
+describe OpenFoodNetwork::Calculator::Weight do
   it "computes shipping cost for an order by total weight" do
     variant_1 = double(:variant, :weight => 10)
     variant_2 = double(:variant, :weight => 20)

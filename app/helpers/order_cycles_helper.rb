@@ -39,7 +39,7 @@ module OrderCyclesHelper
 
 
   def order_cycles_enabled?
-    OpenFoodWeb::FeatureToggle.enabled? :order_cycles
+    OpenFoodNetwork::FeatureToggle.enabled? :order_cycles
   end
 
 end

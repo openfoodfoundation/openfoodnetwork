@@ -1,7 +1,7 @@
-module OpenFoodWeb
+module OpenFoodNetwork
 
   # The concern of separating products by distributor and order cycle is dealt with in a few
-  # other places: OpenFoodWeb::Searcher (for searching over products) and in
+  # other places: OpenFoodNetwork::Searcher (for searching over products) and in
   # Spree::BaseHelper decorator (for taxon counts).
 
   module SplitProductsByDistribution

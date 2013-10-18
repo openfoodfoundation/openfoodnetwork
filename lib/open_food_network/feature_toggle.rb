@@ -1,4 +1,4 @@
-module OpenFoodWeb
+module OpenFoodNetwork
   class FeatureToggle
     def self.enabled? feature
       features[feature]

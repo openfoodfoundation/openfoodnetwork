@@ -1,9 +1,9 @@
-module OpenFoodWeb
+module OpenFoodNetwork
   module FeatureToggleHelper
     def set_feature_toggle(feature, status)
-      features = OpenFoodWeb::FeatureToggle.features
+      features = OpenFoodNetwork::FeatureToggle.features
       features[feature] = status
-      OpenFoodWeb::FeatureToggle.stub(:features) { features }
+      OpenFoodNetwork::FeatureToggle.stub(:features) { features }
     end
   end
 end

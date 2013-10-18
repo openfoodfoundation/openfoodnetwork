@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe GroupBuyReport do
 
     before(:each) do
@@ -81,8 +81,8 @@ module OpenFoodWeb
 
       table_row_objects = subject.variants_and_quantities
 
-      variant_rows = table_row_objects.select { |r| r.class == OpenFoodWeb::GroupBuyVariantRow }
-      product_rows = table_row_objects.select { |r| r.class == OpenFoodWeb::GroupBuyProductRow }
+      variant_rows = table_row_objects.select { |r| r.class == OpenFoodNetwork::GroupBuyVariantRow }
+      product_rows = table_row_objects.select { |r| r.class == OpenFoodNetwork::GroupBuyProductRow }
 
       supplier_groups = variant_rows.group_by { |r| r.variant.product.supplier }
       variant_groups = variant_rows.group_by { |r| r.variant }

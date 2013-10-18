@@ -1,4 +1,4 @@
-module OpenFoodWeb
+module OpenFoodNetwork
   class Calculator::Weight < Spree::Calculator
     preference :per_kg, :decimal, :default => 0.0
     attr_accessible :preferred_per_kg

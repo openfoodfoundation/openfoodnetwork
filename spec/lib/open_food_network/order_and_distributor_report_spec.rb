@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe OrderAndDistributorReport do
 
     describe "orders and distributors report" do

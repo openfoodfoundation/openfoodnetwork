@@ -1,4 +1,4 @@
-module OpenFoodWeb
+module OpenFoodNetwork
 
   # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
   # there is the OrderCycle#dataForSubmit method, and on the Rails side is this class. I think data

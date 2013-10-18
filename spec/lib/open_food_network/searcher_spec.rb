@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_web/searcher'
 
-module OpenFoodWeb
+module OpenFoodNetwork
   describe Searcher do
     it "searches by supplier" do
       # Given products under two suppliers

@@ -1,7 +1,7 @@
 require 'open_food_web/split_products_by_distribution'
 
-describe OpenFoodWeb::SplitProductsByDistribution do
-  let(:products_splitter) { Class.new { include OpenFoodWeb::SplitProductsByDistribution } }
+describe OpenFoodNetwork::SplitProductsByDistribution do
+  let(:products_splitter) { Class.new { include OpenFoodNetwork::SplitProductsByDistribution } }
   let(:subject) { products_splitter.new }
 
 
