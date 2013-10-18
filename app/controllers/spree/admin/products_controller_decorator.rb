@@ -14,7 +14,7 @@ Spree::Admin::ProductsController.class_eval do
     if product_set.save
       redirect_to "/api/products/managed?template=bulk_index&page=1&per_page=500"
     else
-      render :nothing => true
+      render :nothing => true, :status => 418
     end
   end
 
