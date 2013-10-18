@@ -1,5 +1,5 @@
 
-namespace :openfoodweb do
+namespace :openfoodnetwork do
 
   namespace :dev do
 
@@ -7,7 +7,7 @@ namespace :openfoodweb do
     task :load_sample_data => :environment do
       require File.expand_path('../../../spec/factories', __FILE__)
       require File.expand_path('../../../spec/support/spree/init', __FILE__)
-      task_name = "openfoodweb:dev:load_sample_data"
+      task_name = "openfoodnetwork:dev:load_sample_data"
 
       # -- Shipping / payment information
       unless Spree::Zone.find_by_name 'Australia'

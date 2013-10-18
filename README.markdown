@@ -1,4 +1,4 @@
-# Open Food Web
+# Open Food Network
 
 Connect suppliers (ie. farmers), distributors (ie. co-ops) and
 consumers (ie. local food lovers) for the sale and purchase of local
@@ -21,11 +21,11 @@ hosted at GitHub.
 
 You can view the code at:
 
-    https://github.com/eaterprises/openfoodweb
+    https://github.com/eaterprises/openfoodnetwork
 
 You can download the source with the command:
 
-    git clone git@github.com:eaterprises/openfoodweb
+    git clone git@github.com:eaterprises/openfoodnetwork
 
 
 ## Get it running
@@ -46,7 +46,7 @@ Create the development and test databases, using the settings specified in `conf
 
 Load some default data for your environment
 
-    rake openfoodweb:dev:load_sample_data
+    rake openfoodnetwork:dev:load_sample_data
 
 At long last, your dreams of spinning up a development server can be realised:
 
