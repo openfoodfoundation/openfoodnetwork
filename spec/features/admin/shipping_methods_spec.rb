@@ -68,7 +68,7 @@ feature 'shipping methods' do
       login_to_admin_as enterprise_user
     end
 
-    it "creates payment methods" do
+    it "creates shipping methods" do
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
       click_link 'New Shipping Method'

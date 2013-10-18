@@ -162,8 +162,8 @@ module Spree
           should have_ability([:create], for: OrderCycle)
         end
 
-        it "should be able to read EnterpriseFees" do
-          should have_ability([:admin, :index, :read], for: EnterpriseFee)
+        it "should be able to read/write EnterpriseFees" do
+          should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
         end
       end
 

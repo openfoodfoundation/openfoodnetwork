@@ -123,4 +123,33 @@ feature %q{
     page.should have_selector "input[value='#{fee.name}']"
     EnterpriseFee.find(fee.id).should_not be_nil
   end
+
+  context "as an enterprise manager" do
+    let(:enterprise_user) { create_enterprise_user }
+    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
+    let(:ef1) { create(:enterprise_fee, name: 'One', distributors: [distributor1]) }
+    let(:ef2) { create(:enterprise_fee, name: 'Two', distributors: [distributor2]) }
+
+    before(:each) do
+      enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor2).save
+      login_to_admin_as enterprise_user
+    end
+
+    it "creates enterprise fees" do
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor1.id}") { click_link 'Enterprise Fees' }
+
+      select distributor1.name, :from => 'enterprise_fee_set_collection_attributes_0_enterprise_id'
+      fill_in 'enterprise_fee_set_collection_attributes_0_name', :with => 'foo'
+      select 'Flat Percent', :from => 'enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
+
+      flash_message.should == 'Your enterprise fees have been updated.'
+
+      enterprise_fee = EnterpriseFee.find_by_name 'foo'
+      enterprise_fee.enterprise.should == distributor1
+    end
+  end
 end

@@ -51,7 +51,8 @@ class AbilityDecorator
         user.enterprises.include? order_cycle.coordinator
       end
 
-      can [:admin, :index, :read], EnterpriseFee do |enterprise_fee|
+      can [:index, :create], EnterpriseFee
+      can [:admin, :read, :edit, :bulk_update, :destroy], EnterpriseFee do |enterprise_fee|
         user.enterprises.include? enterprise_fee.enterprise
       end
 
