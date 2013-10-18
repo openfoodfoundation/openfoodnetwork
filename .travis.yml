@@ -6,7 +6,7 @@ services: postgresql
 before_install:
 before_script:
   - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database open_food_web_test;' -U postgres
+  - psql -c 'create database open_food_network_test;' -U postgres
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake spec

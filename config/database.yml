@@ -1,34 +1,34 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: open_food_web_dev
+  database: open_food_network_dev
   pool: 5
   host: localhost
-  username: ofw
+  username: ofn
   password: f00d
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: open_food_web_test
+  database: open_food_network_test
   pool: 5
   host: localhost
-  username: ofw
+  username: ofn
   password: f00d
 
 #not used with heroku
 production:
   adapter: postgresql
   encoding: unicode
-  database: open_food_web_prod
+  database: open_food_network_prod
   pool: 5
-  username: ofw
+  username: ofn
   password: f00d
 
 staging:
   adapter: postgresql
   encoding: unicode
-  database: open_food_web_prod
+  database: open_food_network_prod
   pool: 5
-  username: ofw
+  username: ofn
   password: f00d
