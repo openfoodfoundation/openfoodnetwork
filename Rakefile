@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Openfoodweb::Application.load_tasks
+Openfoodnetwork::Application.load_tasks
