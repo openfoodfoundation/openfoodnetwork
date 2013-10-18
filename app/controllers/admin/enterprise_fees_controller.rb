@@ -51,7 +51,14 @@ module Admin
     end
 
     def collection
-      EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
+      collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
+
+      if params.key? :enterprise_id
+        enterprise = Enterprise.find params[:enterprise_id]
+        collection = collection.for_enterprise(enterprise)
+      end
+
+      collection
     end
   end
 end

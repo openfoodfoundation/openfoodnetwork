@@ -1,6 +1,17 @@
 angular.module('enterprise_fees', [])
-  .controller('AdminEnterpriseFeesCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('/admin/enterprise_fees.json?include_calculators=1').success(function(data) {
+  .controller('AdminEnterpriseFeesCtrl', ['$scope', '$http', '$window', function($scope, $http, $window) {
+    $scope.enterpriseFeesUrl = function() {
+      var url = '/admin/enterprise_fees.json?include_calculators=1';
+
+      var match = $window.location.search.match(/enterprise_id=(\d+)/);
+      if(match) {
+	url += "&"+match[0];
+      }
+
+      return url;
+    };
+
+    $http.get($scope.enterpriseFeesUrl()).success(function(data) {
       $scope.enterprise_fees = data;
 
       for(i=0; i<3; i++) {

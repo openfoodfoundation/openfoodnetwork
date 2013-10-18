@@ -128,8 +128,8 @@ feature %q{
     let(:enterprise_user) { create_enterprise_user }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
-    let(:ef1) { create(:enterprise_fee, name: 'One', distributors: [distributor1]) }
-    let(:ef2) { create(:enterprise_fee, name: 'Two', distributors: [distributor2]) }
+    let(:ef1) { create(:enterprise_fee, name: 'One', enterprise: distributor1) }
+    let(:ef2) { create(:enterprise_fee, name: 'Two', enterprise: distributor2) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
@@ -150,6 +150,21 @@ feature %q{
 
       enterprise_fee = EnterpriseFee.find_by_name 'foo'
       enterprise_fee.enterprise.should == distributor1
+    end
+
+    it "shows me only enterprise fees for the enterprise I select" do
+      ef1
+      ef2
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor1.id}") { click_link 'Enterprise Fees' }
+      page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
+      page.should_not have_field 'enterprise_fee_set_collection_attributes_1_name', with: 'Two'
+
+      click_link 'Enterprises'
+      within(".enterprise-#{distributor2.id}") { click_link 'Enterprise Fees' }
+      page.should_not have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
+      page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'Two'
     end
   end
 end
