@@ -21,11 +21,11 @@ hosted at GitHub.
 
 You can view the code at:
 
-    https://github.com/eaterprises/openfoodnetwork
+    https://github.com/openfoodfoundation/openfoodnetwork
 
 You can download the source with the command:
 
-    git clone git@github.com:eaterprises/openfoodnetwork
+    git clone git@github.com:openfoodfoundation/openfoodnetwork
 
 
 ## Get it running
@@ -86,4 +86,4 @@ speak to Andrew Spinks.
 
 ## Licence
 
-Copyright (c) 2012 - 2013 Eaterprises, released under the AGPL licence.
+Copyright (c) 2012 - 2013 Open Food Foundation, released under the AGPL licence.
