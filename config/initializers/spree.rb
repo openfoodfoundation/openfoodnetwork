@@ -17,8 +17,8 @@ Spree.config do |config|
   config.searcher_class = OpenFoodNetwork::Searcher
 
   # 109 should be Australia. Hardcoded for CI (Jenkins), where countries are not pre-loaded.
-  config.default_country_id   = Spree::Country.table_exists? && Spree::Country.find_by_name('Australia').andand.id
-  config.default_country_id ||= 109
+  config.default_country_id = Spree::Country.table_exists? && Spree::Country.find_by_name('Australia').andand.id
+  config.default_country_id = 109 unless config.default_country_id.present? && config.default_country_id > 0
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
