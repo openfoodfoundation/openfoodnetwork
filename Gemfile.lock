@@ -7,7 +7,7 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/eaterprises/chili.git
+  remote: git://github.com/openfoodfoundation/chili.git
   revision: b82608623d504eb39f852115b138a53af5f89505
   specs:
     chili (3.1.0)
@@ -15,7 +15,7 @@ GIT
       rails (~> 3.2)
 
 GIT
-  remote: git://github.com/eaterprises/spree.git
+  remote: git://github.com/openfoodfoundation/spree.git
   revision: 1c133672652e1ee8b6c8d694efe258e62378062e
   branch: 1-3-stable
   specs:
@@ -57,7 +57,7 @@ GIT
       spree_core (= 1.3.3)
 
 GIT
-  remote: git://github.com/eaterprises/spree_paypal_express.git
+  remote: git://github.com/openfoodfoundation/spree_paypal_express.git
   revision: d2f38e5068c4b6979c2af7f64caca9e1df50de89
   branch: 1-3-stable
   specs:
@@ -138,11 +138,11 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_utils (2.0.0)
+    active_utils (2.0.1)
       activesupport (>= 2.3.11)
       i18n
-    activemerchant (1.38.1)
-      active_utils (~> 2.0)
+    activemerchant (1.40.0)
+      active_utils (~> 2.0, >= 2.0.1)
       activesupport (>= 2.3.14, < 5.0.0)
       builder (>= 2.1.2, < 4.0.0)
       i18n (~> 0.5)

@@ -4,10 +4,10 @@ ruby "1.9.3"
 gem 'rails', '3.2.14'
 
 gem 'pg'
-gem 'spree', :github => 'eaterprises/spree', :branch => '1-3-stable'
+gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
 gem 'spree_i18n', :github => 'spree/spree_i18n'
 gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
-gem 'spree_paypal_express', :github => 'eaterprises/spree_paypal_express', :branch => '1-3-stable'
+gem 'spree_paypal_express', :github => 'openfoodfoundation/spree_paypal_express', :branch => '1-3-stable'
 
 gem 'comfortable_mexican_sofa'
 
@@ -27,7 +27,7 @@ gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
 gem 'oj'
-gem 'chili', :github => 'eaterprises/chili'
+gem 'chili', :github => 'openfoodfoundation/chili'
 gem 'deface', :github => 'spree/deface', :ref => '1110a13'
 gem 'paperclip'
 gem 'geocoder'
