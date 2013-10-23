@@ -6,6 +6,9 @@ angular.module('order_cycle', ['ngResource'])
 
     $scope.order_cycle = OrderCycle.order_cycle
 
+    $scope.loaded = ->
+      Enterprise.loaded && EnterpriseFee.loaded
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
 
@@ -76,6 +79,9 @@ angular.module('order_cycle', ['ngResource'])
 
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
+
+    $scope.loaded = ->
+      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
@@ -156,6 +162,8 @@ angular.module('order_cycle', ['ngResource'])
    	    outgoing_exchanges: []
         coordinator_fees: []
 
+      loaded: false
+
       exchangeSelectedVariants: (exchange) ->
         numActiveVariants = 0
         numActiveVariants++ for id, active of exchange.variants when active
@@ -225,9 +233,8 @@ angular.module('order_cycle', ['ngResource'])
           exchange.variants[variant_id] = false
 
       load: (order_cycle_id) ->
-      	service = this
-
-      	OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
+        service = this
+        OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
       	  angular.extend(service.order_cycle, oc)
       	  service.order_cycle.incoming_exchanges = []
       	  service.order_cycle.outgoing_exchanges = []
@@ -245,7 +252,8 @@ angular.module('order_cycle', ['ngResource'])
       	    else
       	      console.log('Exchange between two enterprises, neither of which is coordinator!')
       
-      	  delete(service.order_cycle.exchanges)
+          delete(service.order_cycle.exchanges)
+          service.loaded = true
 
         this.order_cycle
 
@@ -301,6 +309,7 @@ angular.module('order_cycle', ['ngResource'])
       Enterprise: Enterprise
       enterprises: {}
       supplied_products: []
+      loaded: false
 
       index: ->
       	service = this
@@ -311,6 +320,8 @@ angular.module('order_cycle', ['ngResource'])
 
             for product in enterprise.supplied_products
               service.supplied_products.push(product)
+
+          service.loaded = true
 
       	this.enterprises
 
@@ -329,9 +340,13 @@ angular.module('order_cycle', ['ngResource'])
     {
       EnterpriseFee: EnterpriseFee
       enterprise_fees: {}
+      loaded: false
 
       index: ->
-        this.enterprise_fees = EnterpriseFee.index()
+        service = this
+        EnterpriseFee.index (data) ->
+          service.enterprise_fees = data
+          service.loaded = true
 
       forEnterprise: (enterprise_id) ->
         enterprise_fee for enterprise_fee in this.enterprise_fees when enterprise_fee.enterprise_id == enterprise_id

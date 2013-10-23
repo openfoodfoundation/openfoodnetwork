@@ -53,6 +53,16 @@ describe 'OrderCycle controllers', ->
     it 'Loads order cycles', ->
       expect(scope.order_cycle).toEqual('my order cycle')
 
+    describe 'Reporting when all resources are loaded', ->
+      it 'returns true when Enterprise and EnterpriseFee are loaded', ->
+        Enterprise.loaded = EnterpriseFee.loaded = true
+        expect(scope.loaded()).toBe(true)
+
+      it 'returns false otherwise', ->
+        Enterprise.loaded = true
+        EnterpriseFee.loaded = false
+        expect(scope.loaded()).toBe(false)
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
@@ -192,6 +202,17 @@ describe 'OrderCycle controllers', ->
     it 'Loads order cycles', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
 
+    describe 'Reporting when all resources are loaded', ->
+      it 'returns true when Enterprise, EnterpriseFee and OrderCycle are loaded', ->
+        Enterprise.loaded = EnterpriseFee.loaded = OrderCycle.loaded = true
+        expect(scope.loaded()).toBe(true)
+
+      it 'returns false otherwise', ->
+        Enterprise.loaded = true
+        EnterpriseFee.loaded = true
+        OrderCycle.loaded = false
+        expect(scope.loaded()).toBe(false)
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
@@ -300,6 +321,12 @@ describe 'OrderCycle services', ->
         2: new Enterprise.Enterprise({id: 2, name: 'Two', supplied_products: [3, 4]})
         3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6]})
 
+    it 'reports its loadedness', ->
+      expect(Enterprise.loaded).toBe(false)
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.loaded).toBe(true)
+
     it 'collates all supplied products', ->
       enterprises = Enterprise.index()
       $httpBackend.flush()
@@ -337,6 +364,12 @@ describe 'OrderCycle services', ->
         new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
         new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo", enterprise_id: 2})
         ]
+
+    it 'reports its loadedness', ->
+      expect(EnterpriseFee.loaded).toBe(false)
+      EnterpriseFee.index()
+      $httpBackend.flush()
+      expect(EnterpriseFee.loaded).toBe(true)
 
     it 'returns enterprise fees for an enterprise', ->
       all_enterprise_fees = EnterpriseFee.index()
@@ -573,6 +606,13 @@ describe 'OrderCycle services', ->
           {variants: {123: false, 234: true}}
           {variants: {123: false, 333: true}}
         ]
+
+    describe 'loading an order cycle, reporting loadedness', ->
+      it 'reports its loadedness', ->
+        expect(OrderCycle.loaded).toBe(false)
+        OrderCycle.load('123')
+        $httpBackend.flush()
+        expect(OrderCycle.loaded).toBe(true)
 
     describe 'loading an order cycle', ->
       beforeEach ->

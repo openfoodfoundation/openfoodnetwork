@@ -54,15 +54,19 @@
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions
-  = f.submit @order_cycle.new_record? ? 'Create' : 'Update'
-  or
-  = link_to 'Cancel', main_app.admin_order_cycles_path
+  = f.submit @order_cycle.new_record? ? 'Create' : 'Update', 'ng-disabled' => '!loaded()'
+  %span{'ng-show' => 'loaded()'}
+    or
+    = link_to 'Cancel', main_app.admin_order_cycles_path
+  %span{'ng-hide' => 'loaded()'} Loading...
 
 
 - unless Rails.env.production?
   #order-cycles-debug
     %h2 Debug information
 
+    %pre loaded =  {{ loaded() | json }}
+    %hr/
     %pre order_cycle = {{ order_cycle | json }}
     %hr/
     %pre enterprises = {{ enterprises | json }}
