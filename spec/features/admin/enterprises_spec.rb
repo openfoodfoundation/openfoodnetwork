@@ -17,12 +17,29 @@ feature %q{
   end
 
   scenario "listing enterprises" do
-    e = create(:enterprise)
+    s = create(:supplier_enterprise)
+    d = create(:distributor_enterprise)
 
     login_to_admin_section
     click_link 'Enterprises'
 
-    page.should have_content e.name
+    within("tr.enterprise-#{s.id}") do
+      page.should have_content s.name
+      page.should have_content "Edit Profile"
+      page.should have_content "Delete"
+      page.should_not have_content "Payment Methods"
+      page.should_not have_content "Shipping Methods"
+      page.should have_content "Enterprise Fees"
+    end
+
+    within("tr.enterprise-#{d.id}") do
+      page.should have_content d.name
+      page.should have_content "Edit Profile"
+      page.should have_content "Delete"
+      page.should have_content "Payment Methods"
+      page.should have_content "Shipping Methods"
+      page.should have_content "Enterprise Fees"
+    end
   end
 
   scenario "viewing an enterprise" do

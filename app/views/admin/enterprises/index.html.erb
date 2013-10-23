@@ -41,8 +41,10 @@
             <%= link_to_with_icon('icon-edit', 'Edit Profile', main_app.edit_admin_enterprise_path(enterprise), class: 'edit') %><br />
             <%= link_to_delete_enterprise enterprise %><br />
 
-            <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />
-            <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)<br />
+            <% if enterprise.is_distributor %>
+              <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />
+              <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)<br />
+            <% end %>
             <%= link_to_with_icon 'icon-money', 'Enterprise Fees', main_app.admin_enterprise_fees_path(enterprise_id: enterprise.id) %> (<%= enterprise.enterprise_fees.count %>)
           </td>
         </tr>
