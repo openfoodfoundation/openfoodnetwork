@@ -68,4 +68,20 @@ describe EnterprisesController do
       response.should redirect_to spree.root_path
     end
   end
+
+  context "BaseController: handling order cycles expiring mid-order" do
+    it "clears the order and displays an expiry message" do
+      oc = double(:order_cycle, id: 123, expired?: true)
+      controller.stub(:current_order_cycle) { oc }
+
+      order = double(:order)
+      order.should_receive(:empty!)
+      order.should_receive(:set_order_cycle!).with(nil)
+      controller.stub(:current_order) { order }
+
+      spree_get :index
+      session[:expired_order_cycle_id].should == 123
+      response.should redirect_to spree.order_cycle_expired_orders_path
+    end
+  end
 end

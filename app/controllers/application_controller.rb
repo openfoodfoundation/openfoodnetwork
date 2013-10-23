@@ -35,6 +35,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_order_cycle_expiry
+    if current_order_cycle.andand.expired?
+      session[:expired_order_cycle_id] = current_order_cycle.id
+      current_order.empty!
+      current_order.set_order_cycle! nil
+      redirect_to spree.order_cycle_expired_orders_path
+    end
+  end
+
   # There are several domains that point to the production server, but only one
   # (vic.openfoodnetwork.org) that has the SSL certificate. Redirect all requests to this
   # domain to avoid showing customers a scary invalid certificate error.
