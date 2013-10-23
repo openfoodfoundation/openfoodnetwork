@@ -25,6 +25,9 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).merge(Exchange.outgoing).where('exchanges.receiver_id = ?', distributor)
   }
 
+  scope :most_recently_closed, lambda {
+    where('orders_close_at < ?', Time.now).order('orders_close_at DESC')
+  }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')

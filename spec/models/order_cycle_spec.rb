@@ -81,6 +81,14 @@ describe OrderCycle do
     end
   end
 
+  it "finds the most recently closed order cycles" do
+    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:order_cycle, orders_close_at: 1.hour.ago)
+    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+
+    OrderCycle.most_recently_closed.should == [oc2, oc1]
+  end
+
   describe "finding order cycles with a particular distributor" do
     let(:c) { create(:supplier_enterprise) }
     let(:d) { create(:distributor_enterprise) }

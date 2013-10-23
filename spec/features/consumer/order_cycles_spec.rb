@@ -45,6 +45,22 @@ feature %q{
       page.should have_content 'Your order will be ready on'
     end
 
+    scenario "when there are no available order cycles" do
+      Timecop.freeze do
+        d = create(:distributor_enterprise, name: 'Green Grass')
+        oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d], orders_close_at: 5.minutes.ago)
+
+        visit spree.root_path
+        click_link d.name
+
+        page.should have_content "Orders are currently closed for this hub"
+        page.should have_content "The last cycle closed 5 minutes ago."
+        page.should have_content "Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens."
+        page.should have_content d.email
+        page.should have_content d.phone
+      end
+    end
+
 
     scenario "changing order cycle", js: true do
       s = create(:supplier_enterprise)

@@ -13,6 +13,21 @@
         .countdown-panel
           %h1= distance_of_time_in_words_to_now(current_order_cycle.orders_close_at)
 
+    - elsif order_cycle_options.empty?
+      .columns.two= image_tag 'pickup.png'
+      .columns.nine
+        %h2 Orders are currently closed for this hub
+        %p
+          - if OrderCycle.most_recently_closed.present?
+            The last cycle closed
+            = distance_of_time_in_words_to_now OrderCycle.most_recently_closed.first.orders_close_at
+            ago.
+          Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
+        %p
+          = "Email: #{current_distributor.email}" if current_distributor.email
+          %br/
+          = "Phone: #{current_distributor.phone}" if current_distributor.phone
+
 
     - else
       .columns.two= image_tag 'pickup.png'

@@ -1,6 +1,7 @@
 class BaseController < ApplicationController
   include Spree::Core::ControllerHelpers
   include Spree::Core::ControllerHelpers::RespondWith
+  include OrderCyclesHelper
 
   helper 'spree/base'
 
