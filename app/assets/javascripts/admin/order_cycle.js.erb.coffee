@@ -328,8 +328,9 @@ angular.module('order_cycle', ['ngResource'])
       totalVariants: (enterprise) ->
         numVariants = 0
 
-        counts = for product in enterprise.supplied_products
-          numVariants += if product.variants.length == 0 then 1 else product.variants.length
+        if enterprise
+          counts = for product in enterprise.supplied_products
+            numVariants += if product.variants.length == 0 then 1 else product.variants.length
 
         numVariants
     }])

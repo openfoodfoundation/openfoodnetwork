@@ -342,6 +342,8 @@ describe 'OrderCycle services', ->
 
       expect(Enterprise.totalVariants(enterprise)).toEqual(5)
 
+    it 'returns zero when enterprise is null', ->
+      expect(Enterprise.totalVariants(null)).toEqual(0)
 
   describe 'EnterpriseFee service', ->
     $httpBackend = null
