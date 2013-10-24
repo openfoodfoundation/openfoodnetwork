@@ -73,6 +73,18 @@ feature %q{
     eg.enterprises.should == [e2]
   end
 
+  scenario "deleting an enterprise group", js: true do
+    eg = create(:enterprise_group, name: 'EGEGEG')
+
+    click_link 'Configuration'
+    click_link 'Enterprise Groups'
+    first("a.delete-resource").click
+
+    page.should have_no_content 'EGEGEG'
+
+    EnterpriseGroup.all.should_not include eg
+  end
+
 
   context "as an enterprise user" do
     xit "should show me only enterprises I manage when creating a new enterprise group"
