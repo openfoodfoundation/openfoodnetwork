@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_distributor_chosen
-    unless current_order(false).andand.distributor
+    unless current_distributor
       redirect_to spree.root_path
       false
     end
