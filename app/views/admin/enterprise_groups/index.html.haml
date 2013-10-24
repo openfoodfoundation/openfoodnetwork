@@ -21,4 +21,4 @@
         %td= enterprise_group.on_front_page ? 'Y' : 'N'
         %td= enterprise_group.enterprises.map(&:name).join ', '
         %td.actions
-          jjj
+          = link_to '', main_app.edit_admin_enterprise_group_path(enterprise_group), class: 'edit-enterprise-group icon-edit no-text'

@@ -46,6 +46,33 @@ feature %q{
     eg.enterprises.sort.should == [e1, e2].sort
   end
 
+  scenario "editing an enterprise group" do
+    e1 = create(:enterprise)
+    e2 = create(:enterprise)
+    eg = create(:enterprise_group, name: 'EGEGEG', on_front_page: true, enterprises: [e1, e2])
+
+    click_link 'Configuration'
+    click_link 'Enterprise Groups'
+    first("a.edit-enterprise-group").click
+
+    page.should have_field 'enterprise_group_name', with: 'EGEGEG'
+    page.should have_checked_field 'enterprise_group_on_front_page'
+    page.should have_select 'enterprise_group_enterprise_ids', selected: [e1.name, e2.name]
+
+    fill_in 'enterprise_group_name', with: 'xyzzy'
+    uncheck 'enterprise_group_on_front_page'
+    unselect e1.name, from: 'enterprise_group_enterprise_ids'
+    select e2.name, from: 'enterprise_group_enterprise_ids'
+    click_button 'Update'
+
+    page.should have_content 'Enterprise group "xyzzy" has been successfully updated!'
+
+    eg = EnterpriseGroup.last
+    eg.name.should == 'xyzzy'
+    eg.on_front_page.should be_false
+    eg.enterprises.should == [e2]
+  end
+
 
   context "as an enterprise user" do
     xit "should show me only enterprises I manage when creating a new enterprise group"
