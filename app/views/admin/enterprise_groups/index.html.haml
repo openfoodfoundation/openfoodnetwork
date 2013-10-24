@@ -1,0 +1,18 @@
+%h1 Enterprise Groups
+
+%table.index#listing_enterprise_groups
+  %thead
+    %tr
+      %th Name
+      %th On front page?
+      %th Enterprises
+      %th.actions
+
+  %tbody
+    - @enterprise_groups.each do |enterprise_group|
+      %tr
+        %td= enterprise_group.name
+        %td= enterprise_group.on_front_page ? 'Y' : 'N'
+        %td= enterprise_group.enterprises.map(&:name).join ', '
+        %td.actions
+          jjj

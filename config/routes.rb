@@ -29,6 +29,8 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprise_fees do
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
+
+    resources :enterprise_groups
   end
 
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
