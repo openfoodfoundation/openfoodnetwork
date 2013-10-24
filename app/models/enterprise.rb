@@ -3,6 +3,7 @@ class Enterprise < ActiveRecord::Base
 
   acts_as_gmappable :process_geocoding => false
 
+  has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'

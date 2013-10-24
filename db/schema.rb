@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016230055) do
+ActiveRecord::Schema.define(:version => 20131024005253) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -168,6 +168,16 @@ ActiveRecord::Schema.define(:version => 20131016230055) do
     t.string   "name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "enterprise_groups", :force => true do |t|
+    t.string  "name"
+    t.boolean "on_front_page"
+  end
+
+  create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
+    t.integer "enterprise_group_id"
+    t.integer "enterprise_id"
   end
 
   create_table "enterprise_roles", :force => true do |t|
@@ -470,9 +480,9 @@ ActiveRecord::Schema.define(:version => 20131016230055) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 

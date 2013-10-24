@@ -95,6 +95,11 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_group, :class => EnterpriseGroup do
+    name 'Enterprise group'
+    on_front_page false
+  end
+
   sequence(:calculator_amount)
   factory :enterprise_fee, :class => EnterpriseFee do
     ignore { amount nil }
