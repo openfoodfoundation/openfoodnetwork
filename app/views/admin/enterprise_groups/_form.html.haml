@@ -1,0 +1,14 @@
+= f.field_container :name do
+  = f.label :name
+  %br/
+  = f.text_field :name
+
+= f.field_container :on_front_page do
+  = f.label :on_front_page, 'On front page?'
+  %br/
+  = f.check_box :on_front_page
+
+= f.field_container :enterprise_ids do
+  = f.label :enterprise_ids, 'Enterprises'
+  %br/
+  = f.collection_select :enterprise_ids, Enterprise.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}

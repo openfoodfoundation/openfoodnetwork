@@ -1,3 +1,9 @@
+.toolbar{'data-hook' => "toolbar"}
+  %ul.actions
+    %li
+      = button_link_to "New Enterprise Group", main_app.new_admin_enterprise_group_path, :icon => 'add', :id => 'admin_new_enterprise_group_link'
+  %br.clear/
+
 %h1 Enterprise Groups
 
 %table.index#listing_enterprise_groups
