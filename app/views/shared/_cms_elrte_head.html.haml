@@ -1,4 +1,5 @@
 -# Include all stylesheets except reset (which overrides Spree styles)
+-# Then restore styles which override Spree's
 -# See cms/app/views/layouts/cms_admin/_head.html.erb
 = stylesheet_link_tag 'comfortable_mexican_sofa/structure',
                       'comfortable_mexican_sofa/typography',
@@ -9,7 +10,8 @@
                       'comfortable_mexican_sofa/codemirror',
                       'comfortable_mexican_sofa/jquery_ui',
                       'comfortable_mexican_sofa/dialogs',
-                      'comfortable_mexican_sofa/widgets'
+                      'comfortable_mexican_sofa/widgets',
+                      'shared/restore_spree_from_cms'
 
 = javascript_include_tag('comfortable_mexican_sofa/application')
 
