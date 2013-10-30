@@ -3,14 +3,18 @@ require 'spec_helper'
 feature %q{
     As a consumer
     I want to see the landing page
-    So I choose a distributor
+    So I can choose a distributor
 }, js: true do
   include AuthenticationWorkflow
 
   background do
-    # for the link to be visible, it would also have to be in 'distributors.yml'
-    FactoryGirl.create(:address, :address1 => "25 Myrtle Street", :zipcode => "3153", :city => "Bayswater")
-    FactoryGirl.create(:distributor_enterprise, :name => "Green Grass", :address => Spree::Address.find_by_zipcode("3153"))
+    d1 = create(:distributor_enterprise, name: 'Murandaka')
+    d2 = create(:distributor_enterprise, name: 'Ballantyne')
+    d3 = create(:distributor_enterprise, name: "O'Hea Street")
+
+    eg1 = create(:enterprise_group, name: 'Group One', on_front_page: true, enterprises: [d1, d2])
+    eg2 = create(:enterprise_group, name: 'Group Two', on_front_page: true, enterprises: [d3])
+
     visit root_path
   end
 
@@ -40,13 +44,18 @@ feature %q{
   end
 
   describe "hub list" do
-    it "should display hub link" do
-      page.should have_link "Green Grass"
+    it "should display grouped hubs" do
+      page.should have_content 'GROUP ONE'
+      page.should have_link 'Murandaka'
+      page.should have_link 'Ballantyne'
+
+      page.should have_content 'GROUP TWO'
+      page.should have_link "O'Hea Street"
     end
 
     it "should link to the hub page" do
-      click_on "Green Grass"
-      page.should have_content "CART"
+      click_on 'Murandaka'
+      page.should have_content 'CART'
     end
   end
 

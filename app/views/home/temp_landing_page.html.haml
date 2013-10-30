@@ -30,11 +30,11 @@
         %h3 WHERE WOULD YOU LIKE TO SHOP?
         %p.secondary Select your hub from the list below
     .row.landing-page-row.with-bottom-border
-      - @regions.each do |region|
+      - @groups.each do |group|
         .large-3.columns
           .region-header
-            %h5= region[:name].upcase
-          - region[:distributors].each do |distributor|
+            %h5= group.name.upcase
+          - group.enterprises.is_distributor.each do |distributor|
             .row.distributor-link-row
               .large-12.columns
                 = succeed ',' do
