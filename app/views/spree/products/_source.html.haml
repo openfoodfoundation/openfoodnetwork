@@ -5,24 +5,25 @@
       - if @product.supplier
         %tr.odd
           %td= link_to @product.supplier.name, [main_app, @product.supplier]
-  %br/
-  %h6.product-section-title DISTRIBUTORS
-  %table#product-source.table-display{:width => "100%"}
-    %tbody
-      - order = current_order(false)
-      - validator = DistributionChangeValidator.new(order)
-      - Enterprise.distributing_product(@product).each do |distributor|
-        - if !order.nil? && distributor == order.distributor
-          %tr.odd
-            %td
-              %b= link_to(distributor.name, [main_app, distributor])
-            %td
-              %b Current
-        - elsif order.nil? || validator.can_change_to_distributor?(distributor)
-          %tr.even
-            %td= link_to distributor.name, [main_app, distributor]
-            %td Available
-        - else
-          %tr.even
-            %td= link_to distributor.name, [main_app, distributor]
-            %td 
+  - if false
+    %br/
+    %h6.product-section-title DISTRIBUTORS
+    %table#product-source.table-display{:width => "100%"}
+      %tbody
+        - order = current_order(false)
+        - validator = DistributionChangeValidator.new(order)
+        - Enterprise.distributing_product(@product).each do |distributor|
+          - if !order.nil? && distributor == order.distributor
+            %tr.odd
+              %td
+                %b= link_to(distributor.name, [main_app, distributor])
+              %td
+                %b Current
+          - elsif order.nil? || validator.can_change_to_distributor?(distributor)
+            %tr.even
+              %td= link_to distributor.name, [main_app, distributor]
+              %td Available
+          - else
+            %tr.even
+              %td= link_to distributor.name, [main_app, distributor]
+              %td
