@@ -14,10 +14,6 @@ angular.module('enterprise_fees', [])
     $http.get($scope.enterpriseFeesUrl()).success(function(data) {
       $scope.enterprise_fees = data;
 
-      for(i=0; i<3; i++) {
-	$scope.enterprise_fees.push({});
-      }
-
       // TODO: Angular 1.1.0 will have a means to reset a form to its pristine state, which
       //       would avoid the need to save off original calculator types for comparison.
       for(i in $scope.enterprise_fees) {

@@ -8,6 +8,10 @@ module Admin
     def index
       @include_calculators = params[:include_calculators].present?
 
+      blank_enterprise_fee = EnterpriseFee.new
+      blank_enterprise_fee.enterprise = current_enterprise
+      3.times { @collection << blank_enterprise_fee }
+
       respond_to do |format|
         format.html
         format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
@@ -52,13 +56,13 @@ module Admin
 
     def collection
       collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
-
-      if params.key? :enterprise_id
-        enterprise = Enterprise.find params[:enterprise_id]
-        collection = collection.for_enterprise(enterprise)
-      end
-
+      collection = collection.for_enterprise(current_enterprise) if current_enterprise
       collection
     end
+
+    def current_enterprise
+      Enterprise.find params[:enterprise_id] if params.key? :enterprise_id
+    end
+
   end
 end
