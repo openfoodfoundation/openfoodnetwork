@@ -92,6 +92,7 @@ feature "enterprises distributor info as rich text" do
     ActionMailer::Base.deliveries.clear
 
     d = create(:distributor_enterprise, name: 'Green Grass', distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
+    create_enterprise_group_for d
     p = create(:product)
     oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
     ex = oc.exchanges.outgoing.last

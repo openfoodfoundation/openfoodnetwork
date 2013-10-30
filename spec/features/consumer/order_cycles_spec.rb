@@ -34,6 +34,7 @@ feature %q{
 
     scenario "selecting order cycle when multiple options are available", js: true do
       d = create(:distributor_enterprise, name: 'Green Grass')
+      create_enterprise_group_for d
       oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d])
       oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [d])
 
@@ -48,6 +49,7 @@ feature %q{
     scenario "when there are no available order cycles" do
       Timecop.freeze do
         d = create(:distributor_enterprise, name: 'Green Grass')
+        create_enterprise_group_for d
         oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d], orders_close_at: 5.minutes.ago)
 
         visit spree.root_path
@@ -65,6 +67,7 @@ feature %q{
     scenario "changing order cycle", js: true do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise, name: 'Green Grass')
+      create_enterprise_group_for d
       p = create(:simple_product, supplier: s)
       oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
 
@@ -110,6 +113,7 @@ feature %q{
     scenario "order cycle expires mid-order" do
       d = create(:distributor_enterprise,
                  name: 'Green Grass', email: 'd@example.com', phone: '1029 3847')
+      create_enterprise_group_for d
       p = create(:simple_product)
       oc = create(:simple_order_cycle, name: 'oc', distributors: [d], variants: [p.master])
 

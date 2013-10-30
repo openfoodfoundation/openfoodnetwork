@@ -9,7 +9,8 @@ feature %q{
   include WebHelper
 
   background do
-    create(:distributor_enterprise, :name => 'Edible garden')
+    d = create(:distributor_enterprise, :name => 'Edible garden')
+    create_enterprise_group_for d
   end
 
   scenario "viewing shop front does not display home page content" do

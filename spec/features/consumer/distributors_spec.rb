@@ -90,6 +90,7 @@ feature %q{
     # Given some distributors with products
     d1 = create(:distributor_enterprise, :name => "Edible garden", :long_description => "<p>Hello, world!</p>")
     d2 = create(:distributor_enterprise)
+    create_enterprise_group_for d1
     p1 = create(:product, :distributors => [d1])
     p2 = create(:product, :distributors => [d2])
     supplier = create(:supplier_enterprise)

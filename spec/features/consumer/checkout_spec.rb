@@ -229,6 +229,7 @@ feature %q{
   scenario "changing distributor updates delivery fees", :future => true do
     # Given two distributors and enterprise fees
     d1 = create(:distributor_enterprise, :name => "FruitAndVeg")
+    create_enterprise_group_for d1
     d2 = create(:distributor_enterprise)
     ef1 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
     ef1.calculator.set_preference :amount, 1.23; ef1.calculator.save!
@@ -527,6 +528,7 @@ feature %q{
     # Distributors
     distributor1 = FactoryGirl.create(:distributor_enterprise, name: "FruitAndVeg")
     distributor2 = FactoryGirl.create(:distributor_enterprise, name: "MoreFreshStuff")
+    create_enterprise_group_for distributor1
     distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)
     distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport', amount: 8)
     distributor_fee3 = create(:enterprise_fee, enterprise: distributor2, fee_type: 'admin', amount: 9)

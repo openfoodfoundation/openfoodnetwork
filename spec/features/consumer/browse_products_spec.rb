@@ -27,6 +27,7 @@ feature %q{
     it "displays the distributor's name on the home page" do
       # Given a distributor with a product
       d = create(:distributor_enterprise, :name => 'Melb Uni Co-op', :description => '<p>Hello, world!</p>')
+      create_enterprise_group_for d
       p1 = create(:product, :distributors => [d])
 
       # When I select the distributor
@@ -70,6 +71,7 @@ feature %q{
         # Given a product with two variants
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise, name: 'Green Grass')
+        create_enterprise_group_for d
         p = create(:simple_product, supplier: s)
         v1 = create(:variant, product: p, is_master: false)
         v2 = create(:variant, product: p, is_master: false)
