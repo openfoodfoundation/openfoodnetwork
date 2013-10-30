@@ -28,4 +28,13 @@ describe EnterpriseGroup do
     #   eg.reload.image.should == image
     # end
   end
+
+  describe "scopes" do
+    it "finds enterprise groups on the front page" do
+      eg1 = create(:enterprise_group, on_front_page: true)
+      eg2 = create(:enterprise_group, on_front_page: false)
+
+      EnterpriseGroup.on_front_page.should == [eg1]
+    end
+  end
 end
