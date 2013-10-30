@@ -139,6 +139,8 @@ feature %q{
     end
 
     it "creates enterprise fees" do
+      ef2
+
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Enterprise Fees' }
 
@@ -148,6 +150,9 @@ feature %q{
       click_button 'Update'
 
       flash_message.should == 'Your enterprise fees have been updated.'
+
+      # After saving, we should be redirected to the fees for our chosen enterprise
+      page.should_not have_select 'enterprise_fee_set_collection_attributes_1_enterprise_id', selected: 'Second Distributor'
 
       enterprise_fee = EnterpriseFee.find_by_name 'foo'
       enterprise_fee.enterprise.should == distributor1

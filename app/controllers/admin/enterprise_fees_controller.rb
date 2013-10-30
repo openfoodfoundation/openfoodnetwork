@@ -7,6 +7,7 @@ module Admin
 
     def index
       @include_calculators = params[:include_calculators].present?
+      @enterprise = current_enterprise
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
@@ -21,7 +22,12 @@ module Admin
     def bulk_update
       @enterprise_fee_set = EnterpriseFeeSet.new(params[:enterprise_fee_set])
       if @enterprise_fee_set.save
-        redirect_to main_app.admin_enterprise_fees_path, :notice => 'Your enterprise fees have been updated.'
+        redirect_path = main_app.admin_enterprise_fees_path
+        if params.key? :enterprise_id
+          redirect_path = main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
+        end
+        redirect_to redirect_path, :notice => 'Your enterprise fees have been updated.'
+
       else
         render :index
       end
