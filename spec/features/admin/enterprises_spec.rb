@@ -53,6 +53,9 @@ feature %q{
   end
 
   scenario "creating a new enterprise" do
+    eg1 = create(:enterprise_group, name: 'eg1')
+    eg2 = create(:enterprise_group, name: 'eg2')
+
     login_to_admin_section
 
     click_link 'Enterprises'
@@ -64,6 +67,8 @@ feature %q{
 
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
+
+    select eg1.name, from: 'enterprise_group_ids'
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -89,6 +94,8 @@ feature %q{
 
   scenario "editing an existing enterprise" do
     @enterprise = create(:enterprise)
+    eg1 = create(:enterprise_group, name: 'eg1')
+    eg2 = create(:enterprise_group, name: 'eg2')
 
     login_to_admin_section
 
@@ -101,6 +108,8 @@ feature %q{
 
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
+
+    select eg1.name, from: 'enterprise_group_ids'
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -171,6 +180,25 @@ feature %q{
       page.should_not have_content distributor2.name
     end
 
+    scenario "creating an enterprise" do
+      # When I create an enterprise
+      click_link 'Enterprises'
+      click_link 'New Enterprise'
+      fill_in 'enterprise_name', with: 'zzz'
+      fill_in 'enterprise_address_attributes_address1', with: 'z'
+      fill_in 'enterprise_address_attributes_city', with: 'z'
+      fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+      click_button 'Create'
+
+      # Then it should be created
+      page.should have_content 'Enterprise "zzz" has been successfully created!'
+      enterprise = Enterprise.last
+      enterprise.name.should == 'zzz'
+
+      # And I should be managing it
+      Enterprise.managed_by(@new_user).should include enterprise
+    end
+
     scenario "can edit enterprises I have permission to" do
       click_link 'Enterprises'
       within('#listing_enterprises tbody tr:first') { click_link 'Edit Profile' }
@@ -195,35 +223,6 @@ feature %q{
       distributor1.reload.next_collection_at.should == 'Two'
       supplier2.reload.next_collection_at.should be_nil
       distributor2.reload.next_collection_at.should be_nil
-    end
-  end
-
-  context "as an enterprise user" do
-    let(:enterprise_user) { create_enterprise_user }
-    let(:distributor) { create(:distributor_enterprise, name: 'First Distributor') }
-
-    before(:each) do
-      enterprise_user.enterprise_roles.build(enterprise: distributor).save
-      login_to_admin_as enterprise_user
-    end
-
-    scenario "creating an enterprise" do
-      # When I create an enterprise
-      click_link 'Enterprises'
-      click_link 'New Enterprise'
-      fill_in 'enterprise_name', with: 'zzz'
-      fill_in 'enterprise_address_attributes_address1', with: 'z'
-      fill_in 'enterprise_address_attributes_city', with: 'z'
-      fill_in 'enterprise_address_attributes_zipcode', with: 'z'
-      click_button 'Create'
-
-      # Then it should be created
-      page.should have_content 'Enterprise "zzz" has been successfully created!'
-      enterprise = Enterprise.last
-      enterprise.name.should == 'zzz'
-
-      # And I should be managing it
-      Enterprise.managed_by(enterprise_user).should include enterprise
     end
   end
 end

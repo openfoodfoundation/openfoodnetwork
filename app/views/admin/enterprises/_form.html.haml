@@ -17,6 +17,9 @@
   %tr{'data-hook' => "is_distributor"}
     %td Distributor?
     %td= f.check_box :is_distributor
+  %tr{'data-hook' => "enterprise_group_ids"}
+    %td Groups
+    %td= f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
   %tr{"data-hook" => "contact"}
     %td Contact Person:
     %td= f.text_field :contact
