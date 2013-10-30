@@ -8,7 +8,7 @@ class HomeController < BaseController
   end
 
   def temp_landing_page
-    @groups = EnterpriseGroup.on_front_page
+    @groups = EnterpriseGroup.on_front_page.by_position
 
     render layout: false
   end
