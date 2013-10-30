@@ -32,7 +32,7 @@
     .row.landing-page-row.with-bottom-border
       - @groups.each do |group|
         .large-3.columns
-          .region-header
+          .group-header
             %h5= group.name.upcase
           - group.enterprises.is_distributor.each do |distributor|
             .row.distributor-link-row
