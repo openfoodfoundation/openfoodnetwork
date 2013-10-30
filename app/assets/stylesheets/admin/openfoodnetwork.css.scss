@@ -1,3 +1,8 @@
+table .blank-action {
+  display: inline-block;
+  width: 29px;
+}
+
 #header #logo {
   top: 10px;
 }
@@ -99,5 +104,11 @@ table#listing_payment_methods {
   td {
     padding: 15px 5px;
     word-wrap: break-word;
+  }
+}
+
+table#listing_enterprise_groups {
+  td.actions {
+    text-align: left;
   }
 }

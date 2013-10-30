@@ -73,6 +73,20 @@ feature %q{
     eg.enterprises.should == [e2]
   end
 
+  scenario "re-ordering enterprise groups" do
+    eg1 = create(:enterprise_group, name: 'A')
+    eg2 = create(:enterprise_group, name: 'B')
+
+    click_link 'Configuration'
+    click_link 'Enterprise Groups'
+
+    page.all('td.name').map(&:text).should == ['A', 'B']
+    all("a.move-down").first.click
+    page.all('td.name').map(&:text).should == ['B', 'A']
+    all("a.move-up").last.click
+    page.all('td.name').map(&:text).should == ['A', 'B']
+  end
+
   scenario "deleting an enterprise group", js: true do
     eg = create(:enterprise_group, name: 'EGEGEG')
 

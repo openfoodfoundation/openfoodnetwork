@@ -30,6 +30,14 @@ describe EnterpriseGroup do
   end
 
   describe "scopes" do
+    it "orders enterprise groups by their position" do
+      eg1 = create(:enterprise_group, position: 1)
+      eg2 = create(:enterprise_group, position: 3)
+      eg3 = create(:enterprise_group, position: 2)
+
+      EnterpriseGroup.by_position.should == [eg1, eg3, eg2]
+    end
+
     it "finds enterprise groups on the front page" do
       eg1 = create(:enterprise_group, on_front_page: true)
       eg2 = create(:enterprise_group, on_front_page: false)

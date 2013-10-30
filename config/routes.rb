@@ -30,7 +30,10 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
 
-    resources :enterprise_groups
+    resources :enterprise_groups do
+      get :move_up
+      get :move_down
+    end
   end
 
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
