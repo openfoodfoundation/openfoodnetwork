@@ -2,22 +2,16 @@ require 'spec_helper'
 
 module Spree
   describe ProductsHelper do
-    subject do
-      obj = Object.new
-      obj.extend(ProductsHelper)
-      obj.extend(ActionView::Helpers::NumberHelper)
-    end
-
-
     it "displays variant price differences as absolute, not relative values" do
+      binding.pry
       variant = make_variant_stub(10.00, 10.00)
-      subject.variant_price_diff(variant).should == "($10.00)"
+      helper.variant_price_diff(variant).should == "($10.00)"
 
       variant = make_variant_stub(10.00, 15.55)
-      subject.variant_price_diff(variant).should == "($15.55)"
+      helper.variant_price_diff(variant).should == "($15.55)"
 
       variant = make_variant_stub(10.00, 5.55)
-      subject.variant_price_diff(variant).should == "($5.55)"
+      helper.variant_price_diff(variant).should == "($5.55)"
     end
 
     private
