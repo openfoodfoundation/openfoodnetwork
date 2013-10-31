@@ -8,7 +8,7 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "viewing a product shows its supplier and distributor" do
+  scenario "viewing a product shows its supplier" do
     # Given a product with a supplier and distributor
     s = create(:supplier_enterprise)
     d1 = create(:distributor_enterprise)
@@ -19,10 +19,8 @@ feature %q{
     # When I view the product
     visit spree.product_path p
 
-    # Then I should see the product's supplier and distributor
+    # Then I should see the product's supplier
     page.should have_selector 'td', :text => s.name
-    page.should have_selector 'td', :text => d1.name
-    page.should have_selector 'td', :text => d2.name
   end
 
   describe "viewing distributor details" do
