@@ -3,7 +3,6 @@ require 'spec_helper'
 module Spree
   describe ProductsHelper do
     it "displays variant price differences as absolute, not relative values" do
-      binding.pry
       variant = make_variant_stub(10.00, 10.00)
       helper.variant_price_diff(variant).should == "($10.00)"
 
