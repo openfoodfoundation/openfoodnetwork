@@ -34,7 +34,7 @@
         .large-3.columns
           .group-header
             %h5= group.name.upcase
-          - group.enterprises.is_distributor.each do |distributor|
+          - group.enterprises.is_distributor.by_name.each do |distributor|
             .row.distributor-link-row
               .large-12.columns
                 = succeed ',' do
