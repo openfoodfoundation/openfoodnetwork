@@ -2,7 +2,6 @@ class EnterprisesController < BaseController
   helper Spree::ProductsHelper
   include OrderCyclesHelper
 
-  before_filter :require_distributor_chosen, only: :show
 
   def index
     @enterprises = Enterprise.all
@@ -26,12 +25,24 @@ class EnterprisesController < BaseController
   end
 
   def show
+    @enterprise = Enterprise.find params[:id]
+
+    # User can view this page if they've already chosen their distributor, or if this page
+    # is for a supplier, they may use it to select a distributor that sells this supplier's
+    # products.
+    unless current_distributor || @enterprise.is_primary_producer
+      redirect_to spree.root_path and return
+    end
+
+
     options = {:enterprise_id => params[:id]}
     options.merge(params.reject { |k,v| k == :id })
 
-    @enterprise = Enterprise.find params[:id]
-
     @products = []
+
+    if @enterprise.is_primary_producer
+      @distributors = Enterprise.distributing_any_product_of(@enterprise.supplied_products)
+    end
 
     if current_order_cycle
       @searcher = Spree::Config.searcher_class.new(options)

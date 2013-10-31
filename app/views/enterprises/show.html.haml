@@ -1,6 +1,15 @@
-- if @enterprise != current_order(false).andand.distributor
+- if @enterprise != current_distributor
   %h2= @enterprise.name
 
 .enterprise-description= @enterprise.long_description.andand.html_safe
 
-= render :template => 'spree/products/index'
+- if current_distributor
+  = render :template => 'spree/products/index'
+
+- else
+  %h3 Hubs that distribute our products
+  %p.hint Select a hub to start shopping:
+
+  %ul.distributors
+    - @distributors.each do |distributor|
+      %li= link_to distributor.name, shop_enterprise_path(distributor)

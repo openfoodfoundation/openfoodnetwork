@@ -12,6 +12,30 @@ feature %q{
     create(:distributor_enterprise, :name => "Edible garden")
   end
 
+
+  scenario "entering the site via a supplier's page" do
+    # Given a supplier with some distributed products
+    s = create(:supplier_enterprise)
+    d = create(:distributor_enterprise)
+    p = create(:simple_product, supplier: s) #, distributors: [d])
+    oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+
+    # When I visit a supplier page
+    visit enterprise_path(s)
+
+    # Then I should see a list of hubs that distribute the suppliers products
+    page.should have_link d.name
+
+    # When I click on a hub
+    click_link d.name
+
+    # Then that hub should be selected
+    page.should have_selector 'h1', text: d.name
+
+    # And I should be on the hub page
+    within('#products') { page.should have_content p.name }
+  end
+
   scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer", :future => true do
     # Given some suppliers
     s1 = create(:supplier_enterprise)

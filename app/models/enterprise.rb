@@ -61,7 +61,12 @@ class Enterprise < ActiveRecord::Base
     with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
     where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
     select('DISTINCT enterprises.*')
- }
+  }
+  scope :distributing_any_product_of, lambda { |products|
+    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
+    where('product_distributions.product_id IN (?) OR spree_variants.product_id IN (?)', products, products).
+    select('DISTINCT enterprises.*')
+  }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped

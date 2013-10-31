@@ -1,8 +1,21 @@
 @import "screen";
 @import "compass/css3/border-radius";
 
+/* General purpose styles */
+
 a:hover {
   color: lighten($link_text_color, 20) !important;
+}
+
+/* Cleared div for clearing previous floating elements */
+div.cleared {
+  clear: both;
+}
+
+p.hint {
+  margin: 0 0 0.5em 0;
+  padding: 0;
+  color: #6a6a6a;
 }
 
 table {
@@ -14,6 +27,8 @@ table {
     }
   }
 }
+
+
 
 /* Style current distributor in main nav bar */
 #header {
@@ -342,11 +357,6 @@ div#eft-payment-alert {
   margin-top: 30px;
   padding-top: 10px;
   border-top: 1px solid #d9d9db;
-}
-
-/* Cleared div for clearing previous floating elements */
-div.cleared {
-  clear: both;
 }
 
 .secondary {

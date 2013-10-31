@@ -177,6 +177,28 @@ describe Enterprise do
         Enterprise.distributing_product(p).should == [d]
       end
     end
+
+    describe "distributing_any_product_of" do
+      it "returns enterprises distributing via a product distribution" do
+        d = create(:distributor_enterprise)
+        p = create(:product, distributors: [d])
+        Enterprise.distributing_any_product_of([p]).should == [d]
+      end
+
+      it "returns enterprises distributing via an order cycle" do
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+        Enterprise.distributing_any_product_of([p]).should == [d]
+      end
+
+      it "does not return duplicate enterprises" do
+        d = create(:distributor_enterprise)
+        p1 = create(:product, distributors: [d])
+        p2 = create(:product, distributors: [d])
+        Enterprise.distributing_any_product_of([p1, p2]).should == [d]
+      end
+    end
   end
 
   describe "has_supplied_products_on_hand?" do
