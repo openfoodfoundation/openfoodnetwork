@@ -41,7 +41,7 @@ class EnterprisesController < BaseController
     @products = []
 
     if @enterprise.is_primary_producer
-      @distributors = Enterprise.distributing_any_product_of(@enterprise.supplied_products)
+      @distributors = Enterprise.distributing_any_product_of(@enterprise.supplied_products).by_name.all
     end
 
     if current_order_cycle
