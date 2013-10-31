@@ -10,6 +10,6 @@
   %h3 Hubs that distribute our products
   %p.hint Select a hub to start shopping:
 
-  %ul.distributors
+  %ul#supplier-distributors
     - @distributors.each do |distributor|
-      %li= link_to distributor.name, shop_enterprise_path(distributor)
+      %li= link_to distributor.name, shop_enterprise_path(distributor), {class: temp_landing_page_distributor_link_class(distributor)}
