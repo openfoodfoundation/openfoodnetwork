@@ -47,6 +47,25 @@ describe Enterprise do
   end
 
   describe "scopes" do
+    
+    describe "distributors_with_active_order_cycles" do
+      it "finds active distributors by order cycles" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+        Enterprise.distributors_with_active_order_cycles.should == [d]
+      end
+
+      it "should not find inactive distributors by order cycles" do
+        s = create(:supplier_enterprise)
+        d = create(:distributor_enterprise)
+        p = create(:product)
+        create(:simple_order_cycle, :orders_open_at => 10.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
+        Enterprise.distributors_with_active_order_cycles.should_not include d
+      end
+    end
+
     describe "active_distributors" do
       it "finds active distributors by product distributions" do
         d = create(:distributor_enterprise)
@@ -88,28 +107,6 @@ describe Enterprise do
         Enterprise.active_distributors.should be_empty
       end
 
-      it "shows only enterprises for given user" do
-        user = create(:user)
-        user.spree_roles = []
-        e1 = create(:enterprise)
-        e2 = create(:enterprise)
-        e1.enterprise_roles.build(user: user).save
-
-        enterprises = Enterprise.managed_by user
-        enterprises.count.should == 1
-        enterprises.should include e1
-      end
-
-      it "shows all enterprises for admin user" do
-        user = create(:admin_user)
-        e1 = create(:enterprise)
-        e2 = create(:enterprise)
-
-        enterprises = Enterprise.managed_by user
-        enterprises.count.should == 2
-        enterprises.should include e1
-        enterprises.should include e2
-      end
     end
 
     describe "with_distributed_active_products_on_hand" do
@@ -197,6 +194,31 @@ describe Enterprise do
         p1 = create(:product, distributors: [d])
         p2 = create(:product, distributors: [d])
         Enterprise.distributing_any_product_of([p1, p2]).should == [d]
+      end
+    end
+
+    describe "managed_by" do
+      it "shows only enterprises for given user" do
+        user = create(:user)
+        user.spree_roles = []
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+        e1.enterprise_roles.build(user: user).save
+
+        enterprises = Enterprise.managed_by user
+        enterprises.count.should == 1
+        enterprises.should include e1
+      end
+
+      it "shows all enterprises for admin user" do
+        user = create(:admin_user)
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+
+        enterprises = Enterprise.managed_by user
+        enterprises.count.should == 2
+        enterprises.should include e1
+        enterprises.should include e2
       end
     end
   end

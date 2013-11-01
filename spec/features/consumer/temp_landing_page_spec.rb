@@ -58,7 +58,7 @@ feature %q{
       page.should have_link "PepperTree Place"
     end
 
-    it "should grey out hubs that have no products available for distribution and are not in an order cycle" do
+    it "should grey out hubs that are not in an order cycle" do
 
       create(:simple_order_cycle, distributors: [d1, d3])
       create(:simple_product, distributors: [d1, d2])
@@ -66,7 +66,7 @@ feature %q{
       visit root_path
 
       page.should have_selector 'a.shop-distributor.active',   text: 'Murandaka'
-      page.should have_selector 'a.shop-distributor.active',   text: 'Ballantyne'
+      page.should have_selector 'a.shop-distributor.inactive',   text: 'Ballantyne'
       page.should have_selector 'a.shop-distributor.active',   text: "O'Hea Street"
       page.should have_selector 'a.shop-distributor.inactive', text: 'PepperTree Place'
     end
