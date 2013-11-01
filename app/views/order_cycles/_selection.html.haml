@@ -44,5 +44,5 @@
         = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
           = f.hidden_field :distributor_id, :value => @enterprise.id
           .order-cycles
-            = f.select :order_cycle_id, order_cycle_options, {include_blank: 'Available On'}
+            = f.select :order_cycle_id, order_cycle_options, {include_blank: 'Closing On'}
           = hidden_field_tag :commit, 'Choose Order Cycle'
