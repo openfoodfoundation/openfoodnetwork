@@ -82,8 +82,10 @@ speak to Andrew Spinks.
 * Rob Harrington (http://github.com/oeoeaio)
 * Alex Serdyuk (http://github.com/alexs333)
 * David Cook (http://github.com/dacook)
+* Will Marshall (http://soundcloud.com/willmarshall)
 
 
 ## Licence
 
 Copyright (c) 2012 - 2013 Open Food Foundation, released under the AGPL licence.
+
