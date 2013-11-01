@@ -76,6 +76,10 @@ module Openfoodnetwork
     config.assets.version = '1.0'
 
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js', 'admin/all.css', 'admin/*.js', 'admin/**/*.js', 'comfortable_mexican_sofa/*', 'search/all.css', 'search/*.js']
+    config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js']
+    config.assets.precompile += ['admin/all.css', 'admin/*.js', 'admin/**/*.js']
+    config.assets.precompile += ['comfortable_mexican_sofa/*']
+    config.assets.precompile += ['search/all.css', 'search/*.js']
+    config.assets.precompile += ['shared/*']
   end
 end
