@@ -26,8 +26,13 @@ class OrderCycle < ActiveRecord::Base
   }
 
   scope :most_recently_closed, lambda {
-    where('orders_close_at < ?', Time.now).order('orders_close_at DESC')
+    where('order_cycles.orders_close_at < ?', Time.now).order('order_cycles.orders_close_at DESC')
   }
+
+  scope :soonest_opening, lambda {
+    where('order_cycles.orders_open_at > ?', Time.now).order('order_cycles.orders_open_at ASC')
+  }
+
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -53,6 +58,9 @@ class OrderCycle < ActiveRecord::Base
     joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
+  def self.first_opening_for(distributor)
+    with_distributor(distributor).soonest_opening.first
+  end
 
   def clone!
     oc = self.dup
@@ -114,6 +122,8 @@ class OrderCycle < ActiveRecord::Base
   def create_adjustments_for(line_item)
     fees_for(line_item).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
   end
+
+
 
 
   private

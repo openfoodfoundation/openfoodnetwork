@@ -23,6 +23,12 @@
             = distance_of_time_in_words_to_now OrderCycle.most_recently_closed.first.orders_close_at
             ago.
           Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
+
+        - if next_oc = OrderCycle.first_opening_for(@enterprise)
+          %p
+            The next order cycle opens in
+            = distance_of_time_in_words_to_now next_oc.orders_open_at
+
         %p
           = "Email: #{current_distributor.email}" if current_distributor.email
           %br/

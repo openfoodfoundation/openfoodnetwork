@@ -89,6 +89,14 @@ describe OrderCycle do
     OrderCycle.most_recently_closed.should == [oc2, oc1]
   end
 
+  it "finds the soonest opening order cycles" do
+    oc1 = create(:order_cycle, orders_open_at: 1.weeks.from_now)
+    oc2 = create(:order_cycle, orders_open_at: 2.hours.from_now)
+    oc3 = create(:order_cycle, orders_open_at: 1.hour.ago)
+
+    OrderCycle.soonest_opening.should == [oc2, oc1]
+  end
+
   describe "finding order cycles with a particular distributor" do
     let(:c) { create(:supplier_enterprise) }
     let(:d) { create(:distributor_enterprise) }
@@ -303,6 +311,19 @@ describe OrderCycle do
       enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
 
       oc.send(:adjustment_label_for, line_item, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
+    end
+  end
+  
+  describe "finding order cycles opening in the future" do
+    it "should give the soonest opening order cycle for a distributor" do
+      distributor = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now) 
+      OrderCycle.first_opening_for(distributor).should == oc
+    end
+
+    it "should return no order cycle when none are impending" do
+      distributor = create(:distributor_enterprise)
+      OrderCycle.first_opening_for(distributor).should == nil
     end
   end
 end
