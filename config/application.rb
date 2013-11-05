@@ -75,9 +75,17 @@ module Openfoodnetwork
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # css and js files other than application.* are not precompiled by default
+    # Instead, they must be explicitly included below
+    # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
+    #
+    # It looks like Rails should compile scss files without explicitly listing them here
+    # (see railties/lib/rails/application/configuration.rb). However, that's not what's
+    # happening with admin/restore_spree_form_cms.css.scss. If this becomes an ongoing problem,
+    # investigate further.
     config.assets.initialize_on_precompile = true
     config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js']
-    config.assets.precompile += ['admin/all.css', 'admin/*.js', 'admin/**/*.js']
+    config.assets.precompile += ['admin/all.css', 'admin/restore_spree_from_cms.css.scss', 'admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['comfortable_mexican_sofa/*']
     config.assets.precompile += ['search/all.css', 'search/*.js']
     config.assets.precompile += ['shared/*']
