@@ -25,7 +25,7 @@
           Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
 
         - if next_oc = OrderCycle.first_opening_for(@enterprise)
-          %p
+          %h4
             The next order cycle opens in
             = distance_of_time_in_words_to_now next_oc.orders_open_at
 
