@@ -30,7 +30,7 @@
         %h3 WHERE WOULD YOU LIKE TO SHOP?
         %p.secondary Select your hub from the list below
     - @groups.in_groups_of(4, false) do |row|
-      .row.landing-page-row{:class => row == @groups.last ? "with-bottom-border" : ""}
+      .row.landing-page-row{:class => (row.last == @groups.last ? "with-bottom-border" : "")}
         - row.each do |group|
           .large-3.columns
             .group-header
