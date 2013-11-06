@@ -314,6 +314,19 @@ describe OrderCycle do
     end
   end
   
+  describe "finding recently closed order cycles" do
+    it "should give the most recently closed order cycle for a distributor" do
+      distributor = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.ago, orders_close_at: 9.days.ago)
+      OrderCycle.most_recently_closed_for(distributor).should == oc
+    end
+
+    it "should return nil when there have been none" do
+      distributor = create(:distributor_enterprise)
+      OrderCycle.most_recently_closed_for(distributor).should == nil
+    end
+  end
+
   describe "finding order cycles opening in the future" do
     it "should give the soonest opening order cycle for a distributor" do
       distributor = create(:distributor_enterprise)

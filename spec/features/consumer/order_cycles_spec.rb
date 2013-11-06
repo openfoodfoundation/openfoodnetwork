@@ -47,33 +47,37 @@ feature %q{
     end
 
     context "when there are no available order cycles" do
-      let(:d) { create(:distributor_enterprise, name: 'Green Grass') }
+      let(:d1) { create(:distributor_enterprise, name: 'Green Grass') }
+      let(:d2) { create(:distributor_enterprise, name: 'Blue Grass') }
       before do
-        create_enterprise_group_for d
+        create_enterprise_group_for d1
         visit spree.root_path
       end
+
       it "indicates there are no current order cycles" do
         Timecop.freeze do
-          oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d], orders_close_at: 5.minutes.ago)
-          click_link d.name
+          oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d1], orders_close_at: 5.minutes.ago)
+          oc2 = create(:simple_order_cycle, name: 'oc 1', distributors: [d2], orders_close_at: 3.minutes.ago)
+          click_link d1.name
 
           page.should have_content "Orders are currently closed for this hub"
           page.should have_content "The last cycle closed 5 minutes ago."
           page.should have_content "Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens."
-          page.should have_content d.email
-          page.should have_content d.phone
+          page.should have_content d1.email
+          page.should have_content d1.phone
         end
       end
+
       context "displaying future order cycles" do
         it "should show the time until the next order cycle opens" do
-          create(:simple_order_cycle, name: 'oc 1', distributors: [d], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
+          create(:simple_order_cycle, name: 'oc 1', distributors: [d1], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
 
-          click_link d.name
+          click_link d1.name
           page.should have_content "The next order cycle opens in 10 days" 
         end
 
         it "should show nothing when there is no next order cycle" do
-          click_link d.name
+          click_link d1.name
           page.should_not have_content "The next order cycle opens" 
         end
       end

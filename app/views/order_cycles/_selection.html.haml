@@ -18,9 +18,9 @@
       .columns.nine
         %h2 Orders are currently closed for this hub
         %p
-          - if OrderCycle.most_recently_closed.present?
+          - if most_recently_closed = OrderCycle.most_recently_closed_for(@enterprise)
             The last cycle closed
-            = distance_of_time_in_words_to_now OrderCycle.most_recently_closed.first.orders_close_at
+            = distance_of_time_in_words_to_now most_recently_closed.orders_close_at
             ago.
           Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
 
