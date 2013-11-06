@@ -33,3 +33,18 @@ a.inactive {
   min-height: emCalc(55);
   vertical-align: top;
 }
+
+@media only screen and (max-width: 768px) {
+  .hub_group.landing-page-row {
+    padding-bottom: 0px;
+    &.with-bottom-border {
+      padding-top: 0px;
+    }
+    & > .columns {
+      margin-bottom: 60px;
+    }
+  }
+  .group-header {
+    min-height: 0px;
+  }
+}
