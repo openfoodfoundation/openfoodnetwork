@@ -18,6 +18,18 @@ Spree::CheckoutController.class_eval do
     @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
 
+  def after_complete
+    distributor = current_order.distributor
+    session[:order_id] = nil
+    clear_current_order_cache
+    current_order(true)
+    current_order.set_distributor!(distributor)
+  end
+
+  def clear_current_order_cache
+    @current_order = nil 
+  end
+
   def find_last_used_addresses(email)
     past = Spree::Order.order("id desc").where(:email => email).where("state != 'cart'").limit(8)
     if order = past.detect(&:bill_address)
