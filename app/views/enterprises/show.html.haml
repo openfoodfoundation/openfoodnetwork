@@ -12,7 +12,7 @@
 
   %ul#supplier-distributors
     - if @distributors.delete @enterprise
-      %li= link_to "Buy direct from the farm", shop_enterprise_path(@enterprise), {class: temp_landing_page_distributor_link_class(@enterprise)}
+      %li= link_to "Buy direct from the farm", shop_enterprise_path(@enterprise), {class: distributor_link_class(@enterprise)}
 
     - @distributors.each do |distributor|
-      %li= link_to distributor.name, shop_enterprise_path(distributor), {class: temp_landing_page_distributor_link_class(distributor)}
+      %li= render partial: "shared/distributor", object: distributor

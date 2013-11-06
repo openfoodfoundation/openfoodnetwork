@@ -29,6 +29,7 @@
       .large-12.columns.centered
         %h3 WHERE WOULD YOU LIKE TO SHOP?
         %p.secondary Select your hub from the list below
+
     - @groups.in_groups_of(4, false) do |row|
       .row.landing-page-row.hub_group{:class => (row.last == @groups.last ? "with-bottom-border" : "")}
         - row.each do |group|
@@ -38,10 +39,7 @@
             - group.enterprises.is_distributor.by_name.each do |distributor|
               .row.distributor-link-row
                 .large-12.columns
-                  = succeed ',' do
-                    = link_to "<strong>#{distributor.name}</strong>".html_safe, shop_enterprise_path(distributor), {class: temp_landing_page_distributor_link_class(distributor)}
-
-                  %span.secondary= distributor.city
+                  = render partial: "shared/distributor", object: distributor
     %footer
       .row.landing-page-row
         .large-6.columns.text-left
