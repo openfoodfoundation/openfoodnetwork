@@ -191,6 +191,7 @@ describe Spree::Order do
 
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
+      set_feature_toggle :order_cycles, false
       order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
       subject.distributor = order_enterprise
       product1 = FactoryGirl.create(:product)
