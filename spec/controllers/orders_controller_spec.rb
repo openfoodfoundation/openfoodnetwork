@@ -112,11 +112,38 @@ describe Spree::OrdersController do
     end
   end
 
+  context "removing line items from cart" do
+    describe "when I pass params that includes a line item no longer in our cart" do
+      it "should silently ignore the missing line item" do
+        order = subject.current_order(true)
+        li = order.add_variant(create(:simple_product).master)
+        spree_get :update, order: { line_items_attributes: {
+          "0" => {quantity: "0", id: "9999"},
+          "1" => {quantity: "99", id: li.id}
+        }}
+        response.status.should == 302
+        li.reload.quantity.should == 99
+      end
+    end
+
+    it "filters line items that are missing from params" do
+      order = subject.current_order(true)
+      li = order.add_variant(create(:simple_product).master)
+
+      attrs = {
+        "0" => {quantity: "0", id: "9999"},
+        "1" => {quantity: "99", id: li.id}
+      }
+
+      controller.remove_missing_line_items(attrs).should == {
+        "1" => {quantity: "99", id: li.id}
+      }
+    end
+  end
 
   private
 
   def num_items_in_cart
     Spree::Order.last.andand.line_items.andand.count || 0
   end
-
 end

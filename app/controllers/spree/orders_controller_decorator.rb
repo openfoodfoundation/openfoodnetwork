@@ -3,6 +3,7 @@ require 'spree/core/controller_helpers/order_decorator'
 Spree::OrdersController.class_eval do
   after_filter  :populate_variant_attributes, :only => :populate
   before_filter :update_distribution, :only => :update
+  before_filter :filter_order_params, :only => :update
 
   # Patch Orders#populate to provide distributor_id and order_cycle_id to OrderPopulator
   def populate
@@ -62,6 +63,18 @@ Spree::OrdersController.class_eval do
     end
   end
 
+  def filter_order_params
+    if params[:order] and params[:order][:line_items_attributes]
+      params[:order][:line_items_attributes] = remove_missing_line_items(params[:order][:line_items_attributes])
+    end
+  end
+
+  def remove_missing_line_items(attrs)
+    attrs.select do |i, line_item|
+      Spree::LineItem.find_by_id(line_item[:id])
+    end
+  end
+
   def clear
     @order = current_order(true)
     @order.empty!
@@ -107,4 +120,5 @@ Spree::OrdersController.class_eval do
       spree_current_user.cart.add_variant hash[:variants].keys.first, hash[:variants].values.first, distributor, order_cycle, current_currency
     end
   end
+
 end
