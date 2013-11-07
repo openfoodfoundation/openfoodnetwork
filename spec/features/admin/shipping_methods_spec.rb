@@ -59,8 +59,10 @@ feature 'shipping methods' do
     let(:enterprise_user) { create_enterprise_user }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
+    let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
     let(:sm1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
     let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor2]) }
+    let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
@@ -84,7 +86,18 @@ feature 'shipping methods' do
       shipping_method.distributors.should == [distributor1]
     end
 
-    it "shows me only payment methods for the enterprise I select" do
+    it "shows me only shipping methods I have access to" do
+      sm1
+      sm2
+      sm3
+
+      visit spree.admin_shipping_methods_path
+      page.should     have_content sm1.name
+      page.should     have_content sm2.name
+      page.should_not have_content sm3.name
+    end
+
+    it "shows me only shipping methods for the enterprise I select" do
       sm1
       sm2
 

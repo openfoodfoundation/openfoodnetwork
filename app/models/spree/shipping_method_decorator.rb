@@ -2,6 +2,16 @@ Spree::ShippingMethod.class_eval do
   has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
   attr_accessible :distributor_ids
 
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      joins(:distributors).
+      where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).
+      select('DISTINCT spree_shipping_methods.*')
+    end
+  }
+
   scope :for_distributor, lambda { |distributor|
     joins(:distributors).
     where('enterprises.id = ?', distributor)

@@ -12,11 +12,11 @@ module Spree
                          !current_ability.has_block?(params[:action], model_class)
 
                        model_class.accessible_by(current_ability, action).
-                         by_distributor # This line added
+                         managed_by(spree_current_user).by_distributor # This line added
 
                      else
                        model_class.scoped.
-                         by_distributor # This line added
+                         managed_by(spree_current_user).by_distributor # This line added
                      end
 
         # This block added
