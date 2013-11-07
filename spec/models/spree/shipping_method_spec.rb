@@ -27,16 +27,14 @@ module Spree
       ShippingMethod.for_distributor(d1).should == [sm1]
     end
 
-    it "can order by distributor" do
-      d1 = create(:distributor_enterprise, name: '222')
-      d2 = create(:distributor_enterprise, name: '111')
+    it "orders shipping methods by name" do
+      sm1 = create(:shipping_method, name: 'ZZ')
+      sm2 = create(:shipping_method, name: 'AA')
+      sm3 = create(:shipping_method, name: 'BB')
 
-      sm1 = create(:shipping_method, distributors: [d2], name: 'ZZ')
-      sm2 = create(:shipping_method, distributors: [d1], name: 'BB')
-      sm3 = create(:shipping_method, distributors: [d1], name: 'AA')
-
-      ShippingMethod.by_distributor.should == [sm1, sm3, sm2]
+      ShippingMethod.by_name.should == [sm2, sm3, sm1]
     end
+
 
     describe "availability" do
       let(:sm) { build(:shipping_method) }

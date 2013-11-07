@@ -17,11 +17,7 @@ Spree::ShippingMethod.class_eval do
     where('enterprises.id = ?', distributor)
   }
 
-  scope :by_distributor, lambda {
-    joins(:distributors).
-    order('enterprises.name, spree_shipping_methods.name').
-    select('enterprises.*, spree_shipping_methods.*')
-  }
+  scope :by_name, order('spree_shipping_methods.name ASC')
 
   def available_to_order_with_distributor_check?(order, display_on=nil)
     available_to_order_without_distributor_check?(order, display_on) &&

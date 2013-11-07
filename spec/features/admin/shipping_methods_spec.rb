@@ -61,7 +61,7 @@ feature 'shipping methods' do
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
     let(:sm1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
-    let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor2]) }
+    let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
     let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
 
     before(:each) do
@@ -92,9 +92,19 @@ feature 'shipping methods' do
       sm3
 
       visit spree.admin_shipping_methods_path
+
       page.should     have_content sm1.name
       page.should     have_content sm2.name
       page.should_not have_content sm3.name
+    end
+
+    it "does not show duplicates of shipping methods" do
+      sm1
+      sm2
+
+      visit spree.admin_shipping_methods_path
+
+      page.all('td', text: 'Two').count.should == 1
     end
 
     it "shows me only shipping methods for the enterprise I select" do
@@ -104,7 +114,7 @@ feature 'shipping methods' do
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
       page.should     have_content sm1.name
-      page.should_not have_content sm2.name
+      page.should     have_content sm2.name
 
       click_link 'Enterprises'
       within(".enterprise-#{distributor2.id}") { click_link 'Shipping Methods' }
