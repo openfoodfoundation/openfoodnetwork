@@ -1,19 +1,19 @@
-/
-  replace "footer"
+/ replace "footer"
 
+-#= render partial: "shared/footer"
 %footer
   %hr/
 
-  .row
-    .seven.columns.offset-by-three
-      %center
-        %h1 What is open food network?
-        %p
-          %i
-            Open food network is an online space in which people can connect with, trade and sell food directly with
-            Australian farmers.  We aim to reconnect people with their food.
-  %hr/
+  -#.row
+    -#.seven.columns.offset-by-three
+      -#%center
+        -#%h1 What is open food network?
+        -#%p
+          -#%i
+            -#Open food network is an online space in which people can connect with, trade and sell food directly with
+            -#Australian farmers.  We aim to reconnect people with their food.
+  -#%hr/
 
-  .row
-    .five.columns.secondary.offset-by-seven.secondary
+  -#.row
+    -#.five.columns.secondary.offset-by-seven.secondary
       -#All rights reserved. &copy; 2013 Open Food Foundation

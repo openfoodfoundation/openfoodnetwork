@@ -40,11 +40,13 @@
               .row.distributor-link-row
                 .large-12.columns
                   = render partial: "shared/distributor", object: distributor
-    %footer
-      .row.landing-page-row
-        .large-6.columns.text-left
-          %strong
-            %span.has-tip.tip-top{"data-tooltip" => "", "data-options" => "disable-for-touch:true", title: "Open Food Network is a marketplace connecting you to local producers and food hubs"} 
-              = link_to "WHAT IS OPEN FOOD NETWORK?", "http://openfoodnetwork.org"
+
+    = render partial: "shared/footer"
+    -#%footer
+      -#.row.landing-page-row
+        -#.large-6.columns.text-left
+          -#%strong
+            -#%span.has-tip.tip-top{"data-tooltip" => "", "data-options" => "disable-for-touch:true", title: "Open Food Network is a marketplace connecting you to local producers and food hubs"} 
+              -#= link_to "WHAT IS OPEN FOOD NETWORK?", "http://openfoodnetwork.org"
 
         -#.large-6.columns.text-right.secondary All rights reserved. &copy; 2013 Open Food Foundation
