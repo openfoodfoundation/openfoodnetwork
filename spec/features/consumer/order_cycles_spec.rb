@@ -83,6 +83,7 @@ feature %q{
         it "should show nothing when there is no next order cycle" do
           click_link d1.name
           page.should_not have_content "The next order cycle opens" 
+          page.should_not have_content "No products found"
         end
       end
     end
@@ -102,16 +103,20 @@ feature %q{
 
       click_link 'Continue shopping'
       click_link 'Change Collection Date'
+      
 
       # Then we should be back at the landing page with a reset cart
       page.should have_content 'Green Grass'
       page.should have_content 'When do you want your order?'
+      # When we get taken back to select order cycle, there is no selected order cycle
+      # Therefore we should not see the no products info
+      page.should_not have_content "No products found"
+
       cart = Spree::Order.last
       cart.distributor.should == d
       cart.order_cycle.should be_nil
       cart.line_items.should be_empty
     end
-
 
     scenario "viewing order cycle and distributor choices", :future => true do
       # When I go to the product listing page
