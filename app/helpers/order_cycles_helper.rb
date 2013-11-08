@@ -37,9 +37,12 @@ module OrderCyclesHelper
     OrderCycle.active.with_distributor(@distributor).present?
   end
 
-
   def order_cycles_enabled?
     OpenFoodNetwork::FeatureToggle.enabled? :order_cycles
+  end
+
+  def pickup_time
+    current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end
 
 end

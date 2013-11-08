@@ -38,12 +38,16 @@ feature %q{
       oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d])
       oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [d])
 
+      # We find by ID because the scope returns read-only models
+      exchange = Exchange.find(oc1.exchanges.to_enterprises(d).outgoing.first.id) 
+      exchange.update_attribute :pickup_time, "turtles" 
+      
       visit spree.root_path
       click_link d.name
 
       page.should have_select 'order_order_cycle_id'
       select_by_value oc1.id, from: 'order_order_cycle_id'
-      page.should have_content 'Your order will be ready on'
+      page.should have_content 'Your order will be ready on turtles'
     end
 
     context "when there are no available order cycles" do
