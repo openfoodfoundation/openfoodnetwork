@@ -1,0 +1,10 @@
+.columns.two= image_tag 'pickup.png'
+.columns.six
+  %h2 When do you want your order?
+  %p No products are displayed until you select a date.
+.columns.three
+  = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
+    = f.hidden_field :distributor_id, :value => @enterprise.id
+    .order-cycles
+      = f.select :order_cycle_id, order_cycle_options, {include_blank: 'Closing On'}
+    = hidden_field_tag :commit, 'Choose Order Cycle'

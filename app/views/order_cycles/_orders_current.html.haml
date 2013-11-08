@@ -1,0 +1,11 @@
+.columns.six
+  %h1= "Your order will be ready on #{current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time}"
+  %i
+    = link_to 'Change Collection Date', spree.clear_orders_path, :id => 'reset_order_cycle'
+    (This will reset your cart)
+  %p.hide Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+.columns.five
+  .row
+    %strong ORDERS CLOSE
+  .countdown-panel
+    %h1= distance_of_time_in_words_to_now(current_order_cycle.orders_close_at)

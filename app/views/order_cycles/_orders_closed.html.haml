@@ -1,0 +1,19 @@
+.columns.two= image_tag 'pickup.png'
+.columns.nine
+  %h2 Orders are currently closed for this hub
+  %p
+    - if most_recently_closed = OrderCycle.most_recently_closed_for(@enterprise)
+      The last cycle closed
+      = distance_of_time_in_words_to_now most_recently_closed.orders_close_at
+      ago.
+    Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
+
+  - if next_oc = OrderCycle.first_opening_for(@enterprise)
+    %h4
+      The next order cycle opens in
+      = distance_of_time_in_words_to_now next_oc.orders_open_at
+
+  %p
+    = "Email: #{current_distributor.email}" if current_distributor.email
+    %br/
+    = "Phone: #{current_distributor.phone}" if current_distributor.phone
