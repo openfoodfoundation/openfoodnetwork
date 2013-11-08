@@ -20,10 +20,16 @@ Spree::CheckoutController.class_eval do
 
   def after_complete
     distributor = current_order.distributor
+    token = current_order.token
+
     session[:order_id] = nil
     clear_current_order_cache
     current_order(true)
+
     current_order.set_distributor!(distributor)
+    current_order.tokenized_permission.token = token
+    current_order.tokenized_permission.save!
+    session[:access_token] = token
   end
 
   def clear_current_order_cache

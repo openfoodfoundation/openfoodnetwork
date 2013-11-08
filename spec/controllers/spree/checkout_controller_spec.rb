@@ -26,5 +26,14 @@ describe Spree::CheckoutController do
       controller.current_order.distributor.should == distributor
     end
 
+    it "should set the new order's token to the same as the old order, and preserve the access token in the session" do
+      order = controller.current_order(true)
+
+      controller.send(:after_complete)
+
+      controller.current_order.token.should == order.token
+      session[:access_token].should == order.token
+    end
+
   end
 end
