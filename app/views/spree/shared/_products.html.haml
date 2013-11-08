@@ -7,7 +7,7 @@
   %h6.search-results-title= t(:search_results, :keywords => h(params[:keywords]))
 
 - if products.any?
-  %ul.inline.product-listing{"data-hook" => ""}
+  %ul#products.inline.product-listing{"data-hook" => ""}
     - reset_cycle('default')
     - products.each do |product|
       - if Spree::Config[:show_zero_stock_products] || product.has_stock?
