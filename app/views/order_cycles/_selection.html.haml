@@ -1,48 +1,11 @@
 - if order_cycles_enabled?
   #distribution-selection.row
-    - if current_order_cycle && current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.any?
-      .columns.six
-        %h1= "Your order will be ready on #{current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time}"
-        %i
-          = link_to 'Change Collection Date', spree.clear_orders_path, :id => 'reset_order_cycle'
-          (This will reset your cart)
-        %p.hide Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      .columns.five
-        .row
-          %strong ORDERS CLOSE
-        .countdown-panel
-          %h1= distance_of_time_in_words_to_now(current_order_cycle.orders_close_at)
+
+    - if current_order_cycle# && current_order_cycle.exchanges.to_enterprises(current_distributor).outgoing.any?
+      = render partial: "order_cycles/orders_current"
 
     - elsif order_cycle_options.empty?
-      .columns.two= image_tag 'pickup.png'
-      .columns.nine
-        %h2 Orders are currently closed for this hub
-        %p
-          - if most_recently_closed = OrderCycle.most_recently_closed_for(@enterprise)
-            The last cycle closed
-            = distance_of_time_in_words_to_now most_recently_closed.orders_close_at
-            ago.
-          Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
-
-        - if next_oc = OrderCycle.first_opening_for(@enterprise)
-          %h4
-            The next order cycle opens in
-            = distance_of_time_in_words_to_now next_oc.orders_open_at
-
-        %p
-          = "Email: #{current_distributor.email}" if current_distributor.email
-          %br/
-          = "Phone: #{current_distributor.phone}" if current_distributor.phone
-
+      = render partial: "order_cycles/orders_closed"
 
     - else
-      .columns.two= image_tag 'pickup.png'
-      .columns.six
-        %h2 When do you want your order?
-        %p No products are displayed until you select a date.
-      .columns.three
-        = form_for current_order(true), :html => {:id => 'order_cycle_select'} do |f|
-          = f.hidden_field :distributor_id, :value => @enterprise.id
-          .order-cycles
-            = f.select :order_cycle_id, order_cycle_options, {include_blank: 'Closing On'}
-          = hidden_field_tag :commit, 'Choose Order Cycle'
+      = render partial: "order_cycles/orders_open"
