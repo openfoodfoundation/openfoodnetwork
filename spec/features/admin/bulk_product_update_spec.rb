@@ -162,7 +162,6 @@ feature %q{
     choose('product_group_buy_0')
     fill_in 'product_price', :with => '10.00'
     fill_in 'product_available_on', :with => Date.today.strftime("%Y/%m/%d")
-    check('product_product_distributions_attributes_0__destroy')
     click_button 'Create'
 
     URI.parse(current_url).path.should == '/admin/products/bulk_edit'
