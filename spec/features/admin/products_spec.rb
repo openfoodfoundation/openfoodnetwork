@@ -24,19 +24,26 @@ feature %q{
       fill_in 'product_price', :with => '19.99'
       select 'New supplier', :from => 'product_supplier_id'
 
-      check @distributors[0].name
-      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
-      check @distributors[2].name
-      select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
-
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
+      product.group_buy.should be_false
+
+      # Distributors
+      within('#sidebar') { click_link 'Product Distributions' }
+
+      check @distributors[0].name
+      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
+      check @distributors[2].name
+      select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
+
+      click_button 'Update'
+      
+      product.reload
       product.distributors.should == [@distributors[0], @distributors[2]]
       product.product_distributions.map { |pd| pd.enterprise_fee }.should == [@enterprise_fees[0], @enterprise_fees[2]]
-      product.group_buy.should be_false
     end
 
     scenario "making a group buy product" do
@@ -86,6 +93,20 @@ feature %q{
           page.should_not have_content @supplier.name
         end
 
+        click_button 'Create'
+
+        flash_message.should == 'Product "A new product !!!" has been successfully created!'
+        product = Spree::Product.find_by_name('A new product !!!')
+        product.supplier.should == @supplier2
+      end
+
+      scenario "editing product distributions" do
+        product = create(:simple_product, supplier: @supplier2)
+
+        click_link 'Products'
+        click_link product.name
+        within('#sidebar') { click_link 'Product Distributions' }
+
         check @distributors[0].name
         select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
 
@@ -95,14 +116,11 @@ feature %q{
           page.should_not have_content @distributors[2].name
         end
 
-        click_button 'Create'
+        click_button 'Update'
+        flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
 
-        flash_message.should == 'Product "A new product !!!" has been successfully created!'
-        product = Spree::Product.find_by_name('A new product !!!')
-        product.supplier.should == @supplier2
         product.distributors.should == [@distributors[0]]
       end
-
     end
   end
 end

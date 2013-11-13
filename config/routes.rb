@@ -75,6 +75,8 @@ Spree::Core::Engine.routes.prepend do
 
   namespace :admin do
     resources :products do
+      get :product_distributions, on: :member
+
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
   end

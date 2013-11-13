@@ -1,0 +1,8 @@
+= render :partial => 'spree/admin/shared/product_sub_menu'
+= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Product Distributions' }
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @product }
+
+= form_for [:admin, @product], :method => :put, :html => { :multipart => true } do |f|
+  %fieldset.no-border-top
+    = render :partial => 'distributors_form', :locals => { :f => f }
+    = render :partial => 'spree/admin/shared/edit_resource_links'

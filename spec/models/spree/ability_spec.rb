@@ -32,11 +32,11 @@ module Spree
         let(:order) {create(:order)}
 
         it "should be able to read/write their enterprises' products" do
-          should have_ability([:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
+          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
         end
 
         it "should not be able to read/write other enterprises' products" do
-          should_not have_ability([:admin, :read, :update, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
+          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
         end
 
         it "should be able to create a new product" do
