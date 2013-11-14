@@ -1,4 +1,4 @@
-- if Rails.env.staging?
+- if Rails.env.staging? or Rails.env.production?
   :javascript
     (function (d, t) {
       var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
