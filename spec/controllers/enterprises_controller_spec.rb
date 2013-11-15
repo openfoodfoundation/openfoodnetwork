@@ -10,7 +10,48 @@ describe EnterprisesController do
     assigns(:suppliers).should == [s]
   end
 
-  context "shopping for a distributor" do
+  describe "displaying an enterprise and its products" do
+    let(:p)   { create(:simple_product, supplier: s) }
+    let(:s)   { create(:supplier_enterprise) }
+    let!(:c)  { create(:distributor_enterprise) }
+    let(:d1)  { create(:distributor_enterprise) }
+    let(:d2)  { create(:distributor_enterprise) }
+    let(:oc1) { create(:simple_order_cycle) }
+    let(:oc2) { create(:simple_order_cycle) }
+
+    it "displays products for the selected (order_cycle -> outgoing exchange)" do
+      create(:exchange, order_cycle: oc1, sender: s, receiver: c, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: c, receiver: d1, variants: [p.master])
+
+      controller.stub(:current_distributor) { d1 }
+      controller.stub(:current_order_cycle) { oc1 }
+
+      spree_get :show, {id: d1}
+
+      assigns(:products).should include p
+    end
+
+    it "does not display other products in the order cycle or in the distributor" do
+      # Given a product that is in this order cycle on a different distributor
+      create(:exchange, order_cycle: oc1, sender: s, receiver: c, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: c, receiver: d2, variants: [p.master])
+
+      # And is also in this distributor in a different order cycle
+      create(:exchange, order_cycle: oc2, sender: s, receiver: c, variants: [p.master])
+      create(:exchange, order_cycle: oc2, sender: c, receiver: d1, variants: [p.master])
+
+      # When I view the enterprise page for d1 x oc1
+      controller.stub(:current_distributor) { d1 }
+      controller.stub(:current_order_cycle) { oc1 }
+      spree_get :show, {id: d1}
+
+      # Then I should not see the product
+      assigns(:products).should_not include p
+    end
+
+  end
+
+  describe "shopping for a distributor" do
 
     before(:each) do
       @current_distributor = create(:distributor_enterprise)
@@ -69,7 +110,7 @@ describe EnterprisesController do
     end
   end
 
-  context "BaseController: handling order cycles expiring mid-order" do
+  describe "BaseController: handling order cycles expiring mid-order" do
     it "clears the order and displays an expiry message" do
       oc = double(:order_cycle, id: 123, expired?: true)
       controller.stub(:current_order_cycle) { oc }

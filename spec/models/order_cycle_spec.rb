@@ -172,9 +172,9 @@ describe OrderCycle do
       @e2 = create(:exchange,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
-      @p0 = create(:product)
-      @p1 = create(:product)
-      @p2 = create(:product)
+      @p0 = create(:simple_product)
+      @p1 = create(:simple_product)
+      @p2 = create(:simple_product)
       @p2_v = create(:variant, product: @p2)
 
       @e0.variants << @p0.master
@@ -194,6 +194,10 @@ describe OrderCycle do
 
     it "reports on the variants distributed by a particular distributor" do
       @oc.variants_distributed_by(@d2).should == [@p1.master]
+    end
+
+    it "reports on the products distributed by a particular distributor" do
+      @oc.products_distributed_by(@d2).should == [@p1]
     end
 
     it "reports on the products exchanged" do

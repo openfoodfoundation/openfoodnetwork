@@ -48,8 +48,8 @@ class EnterprisesController < BaseController
       @searcher = Spree::Config.searcher_class.new(options)
       @products = @searcher.retrieve_products
 
-      order_cycle_products = current_order_cycle.products
-      @products.select! { |p| order_cycle_products.include? p }
+      order_cycle_products = current_order_cycle.products_distributed_by(current_distributor)
+      @products = @products & order_cycle_products
     end
   end
 

@@ -97,6 +97,10 @@ class OrderCycle < ActiveRecord::Base
       map(&:variants).flatten.uniq
   end
 
+  def products_distributed_by(distributor)
+    variants_distributed_by(distributor).map(&:product).uniq
+  end
+
   def products
     self.variants.map(&:product).uniq
   end
