@@ -36,7 +36,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def to_h(core=false)
-    h = attributes.merge({ 'variant_ids' => variant_ids, 'enterprise_fee_ids' => enterprise_fee_ids })
+    h = attributes.merge({ 'variant_ids' => variant_ids.sort, 'enterprise_fee_ids' => enterprise_fee_ids.sort })
     h.reject! { |k| %w(id order_cycle_id created_at updated_at).include? k } if core
     h
   end

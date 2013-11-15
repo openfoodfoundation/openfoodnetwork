@@ -131,6 +131,8 @@ describe Exchange do
       exchange = oc.exchanges.last
       exchange.payment_enterprise = Enterprise.last
       exchange.save!
+      exchange.stub(:variant_ids) { [1835, 1834] } # Test id ordering
+      exchange.stub(:enterprise_fee_ids) { [1493, 1492] } # Test id ordering
       exchange
     end
 
@@ -138,8 +140,8 @@ describe Exchange do
       exchange.to_h.should ==
         {'id' => exchange.id, 'order_cycle_id' => oc.id,
         'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
-        'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
-        'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+        'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
+        'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
         'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at}
     end
@@ -147,8 +149,8 @@ describe Exchange do
     it "converts to a hash of core attributes only" do
       exchange.to_h(true).should ==
         {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
-         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids,
-         'enterprise_fee_ids' => exchange.enterprise_fee_ids,
+         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
+         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
          'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions}
     end
   end
