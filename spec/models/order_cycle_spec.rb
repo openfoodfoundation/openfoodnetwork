@@ -193,7 +193,7 @@ describe OrderCycle do
     end
 
     it "reports on the variants distributed by a particular distributor" do
-      @oc.distributed_variants_by(@d2).should == [@p1.master]
+      @oc.variants_distributed_by(@d2).should == [@p1.master]
     end
 
     it "reports on the products exchanged" do

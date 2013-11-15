@@ -28,7 +28,7 @@ describe DistributionChangeValidator do
     it "finds variants distributed by product distribution" do
       v = double(:variant)
       d = double(:distributor, product_distribution_variants: [v])
-      oc = double(:order_cycle, distributed_variants_by: [])
+      oc = double(:order_cycle, variants_distributed_by: [])
 
       subject.variants_available_for_distribution(d, oc).should == [v]
     end
@@ -45,7 +45,7 @@ describe DistributionChangeValidator do
       d = double(:distributor, product_distribution_variants: [])
       oc = double(:order_cycle)
 
-      oc.should_receive(:distributed_variants_by).with(d) { [v] }
+      oc.should_receive(:variants_distributed_by).with(d) { [v] }
 
       subject.variants_available_for_distribution(d, oc).should == [v]
     end
