@@ -22,8 +22,8 @@
         %th Name
         %th Open
         %th Close
-        %th Coordinator
         %th Suppliers
+        %th Coordinator
         %th Distributors
         %th Products
         %th.actions
@@ -34,11 +34,11 @@
           %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
           %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
           %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
-          %td= order_cycle.coordinator.name
           %td.suppliers
             - order_cycle.suppliers.each do |s|
               = s.name
               %br/
+          %td= order_cycle.coordinator.name
           %td.distributors
             - order_cycle.distributors.each do |d|
               = d.name
