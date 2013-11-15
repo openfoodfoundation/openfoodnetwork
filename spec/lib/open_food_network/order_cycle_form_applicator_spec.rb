@@ -83,23 +83,38 @@ module OpenFoodNetwork
         applicator.go!
       end
 
-      it "removes exchanges that are no longer present" do
-        coordinator_id = 123
-        supplier_id = 456
-        exchange = double(:exchange, :sender_id => supplier_id, :receiver_id => coordinator_id)
+      describe "removing exchanges that are no longer present" do
+        it "destroys untouched exchanges" do
+          coordinator_id = 123
+          supplier_id = 456
+          exchange = double(:exchange, :id => 1, :sender_id => supplier_id, :receiver_id => coordinator_id)
 
-        oc = double(:order_cycle,
-                    :coordinator_id => coordinator_id,
-                    :exchanges => [exchange],
-                    :incoming_exchanges => [],
-                    :outgoing_exchanges => [])
+          oc = double(:order_cycle,
+                      :coordinator_id => coordinator_id,
+                      :exchanges => [exchange],
+                      :incoming_exchanges => [],
+                      :outgoing_exchanges => [])
 
-        applicator = OrderCycleFormApplicator.new(oc)
+          applicator = OrderCycleFormApplicator.new(oc)
 
-        applicator.should_receive(:destroy_untouched_exchanges)
+          applicator.should_receive(:destroy_untouched_exchanges)
 
-        applicator.go!
-        applicator.send(:untouched_exchanges).should == [exchange]
+          applicator.go!
+          applicator.send(:untouched_exchanges).should == [exchange]
+        end
+
+        it "compares exchanges by id only" do
+          e1 = double(:exchange1, id: 1, foo: 1)
+          e2 = double(:exchange2, id: 1, foo: 2)
+          oc = double(:order_cycle, :exchanges => [e1])
+
+          applicator = OrderCycleFormApplicator.new(oc)
+          applicator.instance_eval do
+            @touched_exchanges = [e2]
+          end
+
+          applicator.send(:untouched_exchanges).should == []
+        end
       end
 
       it "converts exchange variant ids hash to an array of ids" do

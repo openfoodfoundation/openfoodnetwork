@@ -72,7 +72,8 @@ module OpenFoodNetwork
     end
 
     def untouched_exchanges
-      @order_cycle.exchanges - @touched_exchanges
+      touched_exchange_ids = @touched_exchanges.map(&:id)
+      @order_cycle.exchanges.reject { |ex| touched_exchange_ids.include? ex.id }
     end
 
 
