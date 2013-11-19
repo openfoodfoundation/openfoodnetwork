@@ -11,13 +11,16 @@ Spree::Admin::ReportsController.class_eval do
   respond_override :index => { :html => { :success => lambda {
     @reports[:orders_and_fulfillment][:description] =
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
+    @reports[:products_and_inventory][:description] =
+      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
   } } }
 
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:group_buys => {:name => "Group Buys", :description => "Orders by supplier and variant"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
   Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''}})
+  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:products_and_inventory => {:name => "Products & Inventory", :description => ''}})
+
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
@@ -25,6 +28,10 @@ Spree::Admin::ReportsController.class_eval do
       ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
       ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
       ['Order Cycle Customer Totals',:order_cycle_customer_totals]
+    ],
+    products_and_inventory: [
+      ['All products', :all_products],
+      ['Inventory (on hand)', :inventory]
     ]
   }
 
@@ -54,38 +61,6 @@ Spree::Admin::ReportsController.class_eval do
         @report.table.each { |row| csv << row }
       end
       send_data csv_string, :filename => "orders_and_distributors.csv"
-    end
-  end
-
-  def group_buys
-    params[:q] = {} unless params[:q]
-
-    if params[:q][:completed_at_gt].blank?
-      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
-    else
-      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
-    end
-
-    if params[:q] && !params[:q][:completed_at_lt].blank?
-      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]).end_of_day rescue ""
-    end
-    params[:q][:meta_sort] ||= "completed_at.desc"
-
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-
-    orders = @search.result
-    
-    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-
-    @report = OpenFoodNetwork::GroupBuyReport.new orders
-    unless params[:csv]
-      render :html => @report
-    else
-      csv_string = CSV.generate do |csv|
-        csv << @report.header
-        @report.table.each { |row| csv << row }
-      end
-      send_data csv_string, :filename => "group_buy.csv"
     end
   end
 
@@ -556,6 +531,10 @@ Spree::Admin::ReportsController.class_eval do
     csv_file_name = "#{__method__}.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
+
+  end
+
+  def products_and_inventory
 
   end
 

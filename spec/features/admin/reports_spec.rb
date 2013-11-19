@@ -16,14 +16,6 @@ feature %q{
     page.should have_content 'Order date'
   end
 
-  scenario "group buys report" do
-    login_to_admin_section
-    click_link 'Reports'
-    click_link 'Group Buys'
-
-    page.should have_content 'Supplier'
-  end
-
   scenario "bulk co-op report" do
     login_to_admin_section
     click_link 'Reports'
@@ -77,6 +69,18 @@ feature %q{
 
     # Then I should see the rows for the first order but not the second
     all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
+  end
+
+  describe "products and inventory report" do
+    it "shows products and inventory report" do
+      login_to_admin_section
+      click_link 'Reports'
+
+      page.should have_content "All products"
+      page.should have_content "Inventory (on hand)"
+      click_link 'Products & Inventory'
+      page.should have_content "Supplier"
+    end
   end
 
 end

@@ -66,7 +66,7 @@ class AbilityDecorator
       end
 
       # Enterprise User can access reports page
-      can [:admin, :index, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment], :report
+      can [:admin, :index, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
     end
   end
 end
