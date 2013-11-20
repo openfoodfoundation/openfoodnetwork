@@ -39,5 +39,14 @@ module OpenFoodNetwork
       .joins(:product)
       .merge(Spree::Product.managed_by(@user))
     end
+
+    def master_variants
+      Spree::Variant.where(:is_master => true)
+      .joins(:product)
+      .where("(select spree_variants.id from spree_variants as other_spree_variants
+                  WHERE other_spree_variants.product_id = spree_variants.product_id
+                 AND other_spree_variants.is_master = 'f' LIMIT 1) IS NULL")
+      .merge(Spree::Product.managed_by(@user))
+    end
   end
 end

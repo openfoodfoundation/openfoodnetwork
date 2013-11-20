@@ -73,6 +73,22 @@ module OpenFoodNetwork
         end
       end
 
+      describe "fetching master variants" do
+        it "should only return variants managed by the user" do
+          product1 = create(:simple_product, supplier: create(:supplier_enterprise))
+          product2 = create(:simple_product, supplier: supplier)
+          
+          subject.master_variants.should == [product2.master]
+        end
+
+        it "doesn't return master variants with siblings" do
+          product = create(:simple_product, supplier: supplier)
+          create(:variant, product: product)  
+          
+          subject.master_variants.should be_empty 
+        end
+      end
+
     end
     
     it "should fetch variants"
