@@ -1,5 +1,6 @@
 require 'csv'
 require 'open_food_network/order_and_distributor_report'
+require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/model_class_from_controller_name'
@@ -535,7 +536,16 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def products_and_inventory
+    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers)) 
+    @distributors = my_distributors | distributors_of_my_products 
+    suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @suppliers = my_suppliers | suppliers_of_products_I_distribute 
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+    @report_types = REPORT_TYPES[:products_and_inventory]
 
+    @report = OpenFoodNetwork::ProductsAndInventoryReport.new params
   end
 
   def render_report (header, table, create_csv, csv_file_name)

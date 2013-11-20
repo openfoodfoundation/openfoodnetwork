@@ -165,4 +165,43 @@ describe Spree::Admin::ReportsController do
       end
     end
   end
+
+  context "Products & Inventory" do
+    let(:user) do
+      user = create(:user)
+      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+      user
+    end
+    before do
+      controller.stub spree_current_user: user
+    end
+
+    it "should build distributors for the current user" do
+      spree_get :products_and_inventory
+      assigns(:distributors).should == [d1, d2, d3]
+    end
+
+    it "builds suppliers for the current user" do
+      spree_get :products_and_inventory
+      assigns(:suppliers).should == [s1, s2, s3]
+    end
+
+    it "builds order cycles for the current user" do
+      spree_get :products_and_inventory
+      assigns(:order_cycles).should == [ocB, ocA]
+    end
+
+    it "assigns report types" do
+      spree_get :products_and_inventory
+      assigns(:report_types).should == Spree::Admin::ReportsController::REPORT_TYPES[:products_and_inventory]
+    end
+
+    it "creates a ProductAndInventoryReport" do
+      OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
+      .with({"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"products_and_inventory"})
+      .and_return({})
+      spree_get :products_and_inventory, :test => "foo"
+      assigns(:report).should == {}
+    end
+  end
 end

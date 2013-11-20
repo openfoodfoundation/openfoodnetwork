@@ -1,0 +1,45 @@
+= form_for @search, :url => spree.products_and_inventory_admin_reports_url do |f|
+  %br
+  = label_tag nil, "Distributor: "
+  = select_tag(:distributor_id,
+    options_from_collection_for_select(@distributors, :id, :name, params[:distributor_id]),
+    :include_blank => true)
+
+  %br
+  = label_tag nil, "Supplier: "
+  = select_tag(:supplier_id,
+    options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]),
+    :include_blank => true)
+
+  %br
+  = label_tag nil, "Order Cycle: "
+  - order_cycles_select = @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
+  = select_tag(:order_cycle_id,
+    options_for_select(order_cycles_select, params[:order_cycle_id]),
+              include_blank: true)
+
+  %br
+  = label_tag nil, "Report Type: "
+  = select_tag(:report_type, options_for_select(@report_types, @report_type))
+
+  %br
+  %br
+  = check_box_tag :csv
+  = label_tag :csv, "Download as csv"
+  %br
+  = button t(:search)
+%br
+%br
+%table#listing_products.index
+  %thead
+    %tr{'data-hook' => "products_header"}
+      - @header.each do |heading|
+        %th=heading
+  %tbody
+    - @table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)
