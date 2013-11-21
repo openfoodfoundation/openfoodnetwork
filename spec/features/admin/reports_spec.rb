@@ -73,6 +73,15 @@ feature %q{
 
   describe "products and inventory report" do
     it "shows products and inventory report" do
+      product_1 = create(:simple_product, name: "Product Name")
+      variant_1 = create(:variant, product: product_1,  price: 100.0)
+      variant_2 = create(:variant, product: product_1,  price: 80.0)
+      product_2 = create(:simple_product, name: "Product 2", price: 99.0)
+      variant_1.update_column(:count_on_hand, 10)
+      variant_2.update_column(:count_on_hand, 20)
+      product_2.master.update_column(:count_on_hand, 9)
+      variant_1.option_values = [create(:option_value, :presentation => "Test")]
+      
       login_to_admin_section
       click_link 'Reports'
 
@@ -80,6 +89,16 @@ feature %q{
       page.should have_content "Inventory (on hand)"
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
+
+      rows = find("table#listing_products").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
+
+      table.should == [
+        ["Supplier",    "Product",      "SKU",    "Variant",              "On Hand",    "Price"],
+        [product_1.supplier.name,  "Product Name", variant_1.sku,         "Size: Test", "10",       "100.0"],
+        [product_1.supplier.name,  "Product Name", variant_2.sku,         "Size: S",    "20",       "80.0"],
+        [product_2.supplier.name,  "Product 2",    product_2.master.sku,  "",           "9",       "99.0"]
+      ]
     end
   end
 

@@ -198,10 +198,12 @@ describe Spree::Admin::ReportsController do
 
     it "creates a ProductAndInventoryReport" do
       OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
-      .with({"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"products_and_inventory"})
-      .and_return({})
+      .with(user, {"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"products_and_inventory"})
+      .and_return(report = double(:report))
+      report.stub(:table).and_return {}
+      report.stub(:header).and_return []
       spree_get :products_and_inventory, :test => "foo"
-      assigns(:report).should == {}
+      assigns(:report).should == report
     end
   end
 end

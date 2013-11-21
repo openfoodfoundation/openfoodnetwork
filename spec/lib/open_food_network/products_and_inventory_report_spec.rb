@@ -132,10 +132,5 @@ module OpenFoodNetwork
         end
       end
     end
-    
-    it "should fetch variants"
-    it "should should fetch products without variants"
-
-    it "should merge variants and products"
   end
 end

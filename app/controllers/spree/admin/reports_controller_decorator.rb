@@ -545,7 +545,9 @@ Spree::Admin::ReportsController.class_eval do
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
     @report_types = REPORT_TYPES[:products_and_inventory]
 
-    @report = OpenFoodNetwork::ProductsAndInventoryReport.new params
+    @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
+    @table = @report.table
+    @header = @report.header
   end
 
   def render_report (header, table, create_csv, csv_file_name)
