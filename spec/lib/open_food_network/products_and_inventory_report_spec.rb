@@ -130,6 +130,20 @@ module OpenFoodNetwork
           subject.stub(:params).and_return(order_cycle_id: order_cycle.id)
           subject.filter(variants).should == [product1.master]
         end
+
+        it "should do all the filters at once" do
+          distributor = create(:distributor_enterprise)
+          product1 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.master])
+
+          subject.stub(:params).and_return(
+            order_cycle_id: order_cycle.id,
+            supplier_id: supplier.id,
+            distributor_id: distributor.id,
+            report_type: 'inventory')
+          subject.filter(variants)
+        end
       end
     end
   end

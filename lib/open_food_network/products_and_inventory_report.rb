@@ -42,7 +42,9 @@ module OpenFoodNetwork
     end
 
     def filter(variants)
-      filter_on_hand filter_to_supplier filter_to_distributor filter_to_order_cycle variants
+      # NOTE: Ordering matters.
+      # filter_to_order_cycle and filter_to_distributor return Arrays not Arel
+      filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier variants
     end
 
     def filter_on_hand(variants)
