@@ -14,6 +14,8 @@ class OrderCycle < ActiveRecord::Base
   scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.now, Time.now) }
   scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.now) }
   scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.now, Time.now) }
+  scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.now) }
+  scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.now) }
 
   scope :distributing_product, lambda { |product|
     joins(:exchanges => :variants).
@@ -25,13 +27,9 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).merge(Exchange.outgoing).where('exchanges.receiver_id = ?', distributor)
   }
 
-  scope :most_recently_closed, lambda {
-    where('order_cycles.orders_close_at < ?', Time.now).order('order_cycles.orders_close_at DESC')
-  }
-
-  scope :soonest_opening, lambda {
-    where('order_cycles.orders_open_at > ?', Time.now).order('order_cycles.orders_open_at ASC')
-  }
+  scope :soonest_closing,      active.order('order_cycles.orders_close_at ASC')
+  scope :most_recently_closed, closed.order('order_cycles.orders_close_at DESC')
+  scope :soonest_opening,      upcoming.order('order_cycles.orders_open_at ASC')
 
 
   scope :managed_by, lambda { |user|

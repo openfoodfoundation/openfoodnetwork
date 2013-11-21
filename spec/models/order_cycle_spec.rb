@@ -30,13 +30,15 @@ describe OrderCycle do
     oc.exchanges.count.should == 3
   end
 
-  it "finds active and inactive order cycles" do
+  it "finds order cycles in various stages of their lifecycle" do
     oc_active = create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.week.from_now)
     oc_not_yet_open = create(:simple_order_cycle, orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
     oc_already_closed = create(:simple_order_cycle, orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
 
     OrderCycle.active.should == [oc_active]
     OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
+    OrderCycle.upcoming.should == [oc_not_yet_open]
+    OrderCycle.closed.should == [oc_already_closed]
   end
 
   it "finds order cycles accessible by a user" do
@@ -95,6 +97,14 @@ describe OrderCycle do
     oc3 = create(:order_cycle, orders_open_at: 1.hour.ago)
 
     OrderCycle.soonest_opening.should == [oc2, oc1]
+  end
+
+  it "finds the soonest closing order cycles" do
+    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:order_cycle, orders_close_at: 2.hour.from_now)
+    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+
+    OrderCycle.soonest_closing.should == [oc3, oc2]
   end
 
   describe "finding order cycles with a particular distributor" do
