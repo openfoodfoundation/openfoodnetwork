@@ -7,6 +7,9 @@ require 'open_food_network/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
   include OpenFoodNetwork::ModelClassFromControllerName
+  
+  # Fetches user's distributors, suppliers and order_cycles 
+  before_filter :load_data, only: :products_and_inventory
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -536,13 +539,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def products_and_inventory
-    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
-    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers)) 
-    @distributors = my_distributors | distributors_of_my_products 
-    suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
-    @suppliers = my_suppliers | suppliers_of_products_I_distribute 
-    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
     @report_types = REPORT_TYPES[:products_and_inventory]
 
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
@@ -560,5 +556,17 @@ Spree::Admin::ReportsController.class_eval do
       end
       send_data csv_string, :filename => csv_file_name
     end
+  end
+
+  private
+
+  def load_data
+    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers)) 
+    @distributors = my_distributors | distributors_of_my_products 
+    suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @suppliers = my_suppliers | suppliers_of_products_I_distribute 
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
   end
 end

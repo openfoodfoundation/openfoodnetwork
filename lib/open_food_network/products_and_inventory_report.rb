@@ -5,15 +5,6 @@ module OpenFoodNetwork
     def initialize(user, params = {})
       @user = user
       @params = params
-      #@variants = fetch_variants
-      # Fetch filter(variants) + filter(master_variants)
-      # Fetch master variants
-      #
-      # Filter variants
-      #
-      # Merge variants
-      #
-      # Build table
     end
 
     def header

@@ -92,8 +92,8 @@ module OpenFoodNetwork
       describe "Filtering variants" do
         let(:variants) { Spree::Variant.scoped.joins(:product) }
         it "should return unfiltered variants sans-params" do
-          product1 = create(:simple_product, supplier: supplier, on_hand: 99)
-          product2 = create(:simple_product, supplier: supplier, on_hand: 0)
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier)
           subject.filter(Spree::Variant.scoped).should == [product1.master, product2.master]
         end
         describe "based on report type" do
