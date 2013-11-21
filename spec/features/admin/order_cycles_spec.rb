@@ -36,8 +36,8 @@ feature %q{
     oc.suppliers.each    { |s| page.should have_content s.name }
     oc.distributors.each { |d| page.should have_content d.name }
 
-    # And I should see a thumbnail image for each product
-    all('td.products img').count.should == 2
+    # And I should see the number of variants
+    page.should have_selector 'td.products', text: '2 variants'
   end
 
   scenario "creating an order cycle", js: true do
