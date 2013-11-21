@@ -19,12 +19,11 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
   } } }
 
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:payments => {:name => "Payment Reports", :description => "Reports for Payments"}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''}})
-  Spree::Admin::ReportsController::AVAILABLE_REPORTS.merge!({:products_and_inventory => {:name => "Products & Inventory", :description => ''}})
-
+  # OVERRIDING THIS so we use a method not a constant for available reports
+  def index
+    @reports = available_reports
+    respond_with(@reports)
+  end
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
@@ -568,5 +567,19 @@ Spree::Admin::ReportsController.class_eval do
     suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @suppliers = my_suppliers | suppliers_of_products_I_distribute 
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+  end
+
+  def available_reports
+    reports = {
+      :orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"},
+      :bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"},
+      :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
+      :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
+      :products_and_inventory => {:name => "Products & Inventory", :description => ''}
+    }
+    if spree_current_user.has_spree_role? 'admin'
+      reports[:sales_total] = { :name => "Sales Total", :description => "Sales Total For All Orders" }
+    end
+    reports
   end
 end

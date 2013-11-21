@@ -7,6 +7,27 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
+  context "Permissions for different reports" do
+    context "As an enterprise user" do
+      let(:user) do
+        create_enterprise_user([
+          create(:distributor_enterprise) 
+        ])
+      end
+      it "should not show the Sales Total report" do
+        login_to_admin_as user
+        click_link "Reports"
+        page.should_not have_content "Sales Total"
+      end
+    end
+    context "As an admin user" do
+      it "shows the Sales Total report" do
+        login_to_admin_section
+        click_link "Reports"
+        page.should have_content "Sales Total"
+      end
+    end
+  end
 
   scenario "orders and distributors report" do
     login_to_admin_section

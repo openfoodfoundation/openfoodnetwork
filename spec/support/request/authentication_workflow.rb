@@ -14,9 +14,12 @@ module AuthenticationWorkflow
     login_to_admin_as admin_user
   end
 
-  def create_enterprise_user
+  def create_enterprise_user(enterprises = [])
     new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah', :password_confirmation => 'blahblah', )
     new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
+    for enterprise in enterprises do
+      new_user.enterprise_roles.build(enterprise: enterprise).save
+    end
     new_user.save
     new_user
   end
