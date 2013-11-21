@@ -1,4 +1,4 @@
-/ insert_top "[data-hook='admin_payment_methods_index_headers']" 
+/ insert_after "[data-hook='admin_payment_methods_index_headers'] th:first-child"
 
 %th
   Distributors
