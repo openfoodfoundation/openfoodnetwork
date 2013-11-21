@@ -77,16 +77,6 @@ describe Spree::Admin::ReportsController do
       end
     end
 
-    describe 'Group Buys' do
-      it "only shows orders that I have access to" do
-        spree_get :group_buys
-        
-        assigns(:search).result.should include(orderA1, orderB1)
-        assigns(:search).result.should_not include(orderA2)
-        assigns(:search).result.should_not include(orderB2)
-      end
-    end
-
     describe 'Bulk Coop' do
       it "only shows orders that I have access to" do
         spree_get :bulk_coop
