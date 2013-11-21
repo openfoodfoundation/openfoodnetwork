@@ -6,13 +6,13 @@ Spree::Admin::PaymentMethodsController.class_eval do
     collection = if model_class.respond_to?(:accessible_by) &&
                      !current_ability.has_block?(params[:action], model_class)
 
-                   model_class.accessible_by(current_ability, action).
-                     managed_by(spree_current_user).by_distributor # This line added
+                   model_class.accessible_by(current_ability, action)
 
                  else
-                   model_class.scoped.
-                     managed_by(spree_current_user).by_distributor # This line added
+                   model_class.scoped
                  end
+
+    collection = collection.managed_by(spree_current_user).by_name # This line added
 
     # This block added
     if params.key? :enterprise_id

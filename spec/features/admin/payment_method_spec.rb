@@ -35,8 +35,10 @@ feature %q{
     let(:enterprise_user) { create_enterprise_user }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
+    let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
     let(:pm1) { create(:payment_method, name: 'One', distributors: [distributor1]) }
-    let(:pm2) { create(:payment_method, name: 'Two', distributors: [distributor2]) }
+    let(:pm2) { create(:payment_method, name: 'Two', distributors: [distributor1, distributor2]) }
+    let(:pm3) { create(:payment_method, name: 'Three', distributors: [distributor3]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
@@ -60,6 +62,27 @@ feature %q{
       payment_method.distributors.should == [distributor1]
     end
 
+    it "shows me only payment methods I have access to" do
+      pm1
+      pm2
+      pm3
+
+      visit spree.admin_payment_methods_path
+
+      page.should     have_content pm1.name
+      page.should     have_content pm2.name
+      page.should_not have_content pm3.name
+    end
+
+    it "does not show duplicates of payment methods" do
+      pm1
+      pm2
+
+      visit spree.admin_payment_methods_path
+      page.all('td', text: 'Two').count.should == 1
+    end
+
+
     it "shows me only payment methods for the enterprise I select" do
       pm1
       pm2
@@ -67,7 +90,7 @@ feature %q{
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Payment Methods' }
       page.should     have_content pm1.name
-      page.should_not have_content pm2.name
+      page.should     have_content pm2.name
 
       click_link 'Enterprises'
       within(".enterprise-#{distributor2.id}") { click_link 'Payment Methods' }

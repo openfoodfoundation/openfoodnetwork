@@ -19,11 +19,7 @@ Spree::PaymentMethod.class_eval do
     where('enterprises.id = ?', distributor)
   }
 
-  scope :by_distributor, lambda {
-    joins(:distributors).
-    order('enterprises.name, spree_payment_methods.name').
-    select('enterprises.*, spree_payment_methods.*')
-  }
+  scope :by_name, order('spree_payment_methods.name ASC')
 
   def has_distributor?(distributor)
     self.distributors.include?(distributor)
