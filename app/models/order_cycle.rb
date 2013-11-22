@@ -111,6 +111,14 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
+  def upcoming?
+    Time.now < self.orders_open_at
+  end
+
+  def open?
+    Time.now > self.orders_open_at && Time.now < self.orders_close_at
+  end
+
   def closed?
     Time.now > self.orders_close_at
   end

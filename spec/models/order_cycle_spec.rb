@@ -246,13 +246,25 @@ describe OrderCycle do
   describe "checking status" do
     let(:oc) { create(:order_cycle) }
 
-    it "returns false when not closed" do
-      oc.closed?.should be_false
+    it "reports status when an order cycle is upcoming" do
+      Timecop.freeze(oc.orders_open_at - 1.second) do
+        oc.should     be_upcoming
+        oc.should_not be_open
+        oc.should_not be_closed
+      end
     end
 
-    it "returns true when closed" do
+    it "reports status when an order cycle is open" do
+      oc.should_not be_upcoming
+      oc.should     be_open
+      oc.should_not be_closed
+    end
+
+    it "reports status when an order cycle has closed" do
       Timecop.freeze(oc.orders_close_at + 1.second) do
-        oc.closed?.should be_true
+        oc.should_not be_upcoming
+        oc.should_not be_open
+        oc.should     be_closed
       end
     end
   end
