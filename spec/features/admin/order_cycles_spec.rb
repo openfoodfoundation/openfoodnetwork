@@ -18,26 +18,50 @@ feature %q{
 
 
   scenario "listing order cycles" do
-    # Given an order cycle
-    oc = create(:order_cycle)
+    # Given some order cycles (created in an arbitrary order)
+    oc4 = create(:simple_order_cycle, name: '4',
+                 orders_open_at: 2.day.from_now, orders_close_at: 1.month.from_now)
+    oc2 = create(:simple_order_cycle, name: '2', orders_close_at: 1.month.from_now)
+    oc6 = create(:simple_order_cycle, name: '6',
+                 orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
+    oc3 = create(:simple_order_cycle, name: '3',
+                 orders_open_at: 1.day.from_now, orders_close_at: 1.month.from_now)
+    oc5 = create(:simple_order_cycle, name: '5',
+                 orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
+    oc1 = create(:order_cycle, name: '1')
 
     # When I go to the admin order cycles page
     login_to_admin_section
     click_link 'Order Cycles'
 
-    # Then I should see the basic fields
-    page.should have_selector 'a', text: oc.name
+    # Then the order cycles should be ordered correctly
+    page.all('#listing_order_cycles tr td:first-child').map(&:text).should ==
+      ['1', '2', '3', '4', '5', '6']
 
-    page.should have_selector "input[value='#{oc.orders_open_at}']"
-    page.should have_selector "input[value='#{oc.orders_close_at}']"
-    page.should have_content oc.coordinator.name
+    # And the rows should have the correct classes
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}.open"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}.open"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}.upcoming"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc4.id}.upcoming"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc5.id}.closed"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
-    # And I should see the suppliers and distributors
-    oc.suppliers.each    { |s| page.should have_content s.name }
-    oc.distributors.each { |d| page.should have_content d.name }
+    # And I should see all the details for an order cycle
+    within('table#listing_order_cycles tbody tr:first-child') do
+      # Then I should see the basic fields
+      page.should have_selector 'a', text: oc1.name
 
-    # And I should see the number of variants
-    page.should have_selector 'td.products', text: '2 variants'
+      page.should have_selector "input[value='#{oc1.orders_open_at}']"
+      page.should have_selector "input[value='#{oc1.orders_close_at}']"
+      page.should have_content oc1.coordinator.name
+
+      # And I should see the suppliers and distributors
+      oc1.suppliers.each    { |s| page.should have_content s.name }
+      oc1.distributors.each { |d| page.should have_content d.name }
+
+      # And I should see the number of variants
+      page.should have_selector 'td.products', text: '2 variants'
+    end
   end
 
   scenario "creating an order cycle", js: true do

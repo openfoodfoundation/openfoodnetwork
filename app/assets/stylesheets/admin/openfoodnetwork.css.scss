@@ -98,6 +98,20 @@ form.order_cycle {
   */
 }
 
+table#listing_order_cycles {
+  tr.open td {
+    background-color: #d9fccb;
+  }
+
+  tr.upcoming td {
+    background-color: #fbfccb;
+  }
+
+  tr.closed td {
+    background-color: #eee;
+  }
+}
+
 table#listing_payment_methods {
   table-layout: fixed;
 

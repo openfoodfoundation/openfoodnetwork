@@ -70,7 +70,11 @@ module Admin
 
     protected
     def collection
-      OrderCycle.managed_by(spree_current_user)
+      ocs = OrderCycle.managed_by(spree_current_user)
+
+      ocs.soonest_closing +
+        ocs.soonest_opening +
+        ocs.most_recently_closed
     end
 
     private

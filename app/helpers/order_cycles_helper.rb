@@ -17,6 +17,17 @@ module OrderCyclesHelper
     end
   end
 
+  def order_cycle_status_class(order_cycle)
+    if order_cycle.upcoming?
+      'upcoming'
+    elsif order_cycle.open?
+      'open'
+    elsif order_cycle.closed?
+      'closed'
+    end
+  end
+
+
   def distributor_options(distributors, current_distributor, order_cycle)
     options = distributors.map { |d| [d.name, d.id, {:class => order_cycle_local_remote_class(d, order_cycle).strip}] }
     options_for_select(options, current_distributor)
