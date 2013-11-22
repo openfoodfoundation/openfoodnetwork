@@ -44,7 +44,7 @@ describe Spree::HomeController do
     end
 
     it "destroys the incomplete order when there is a current order" do
-      oc = double(:order_cycle, expired?: false)
+      oc = double(:order_cycle, closed?: false)
       incomplete_order = double(:order, distributor: 1, order_cycle: oc)
       current_order = double(:order, distributor: 1, order_cycle: oc)
 
@@ -64,7 +64,7 @@ describe Spree::HomeController do
 
   context "StoreController: handling order cycles expiring mid-order" do
     it "clears the order and displays an expiry message" do
-      oc = double(:order_cycle, id: 123, expired?: true)
+      oc = double(:order_cycle, id: 123, closed?: true)
       controller.stub(:current_order_cycle) { oc }
 
       order = double(:order)

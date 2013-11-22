@@ -111,7 +111,7 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
-  def expired?
+  def closed?
     Time.now > self.orders_close_at
   end
 

@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_order_cycle_expiry
-    if current_order_cycle.andand.expired?
+    if current_order_cycle.andand.closed?
       session[:expired_order_cycle_id] = current_order_cycle.id
       current_order.empty!
       current_order.set_order_cycle! nil
