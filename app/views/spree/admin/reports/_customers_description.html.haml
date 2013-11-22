@@ -1,0 +1,4 @@
+%ul{style: "margin-left: 12pt"}
+  - report_types.each do |report_type|
+    %li 
+      = link_to report_type[0], "#{customers_admin_reports_url}?report_type=#{report_type[1]}"

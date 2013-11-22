@@ -18,6 +18,8 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
     @reports[:products_and_inventory][:description] =
       render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
+    @reports[:customers][:description] =
+      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
   } } }
 
   # OVERRIDING THIS so we use a method not a constant for available reports

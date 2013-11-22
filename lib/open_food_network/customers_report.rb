@@ -23,15 +23,15 @@ module OpenFoodNetwork
            order.billing_address.city]
         else
           ba = order.billing_address
-          da = order.distributor.address
+          da = order.distributor.andand.address
           [ba.firstname,
             ba.lastname,
             [ba.address1, ba.address2, ba.city].join(" "),
             order.email,
             ba.phone,
-            order.distributor.name,
-            [da.address1, da.address2, da.city].join(" "),
-            order.shipping_method.name 
+            order.distributor.andand.name,
+            [da.andand.address1, da.andand.address2, da.andand.city].join(" "),
+            order.shipping_method.andand.name 
           ]
         end
       end
