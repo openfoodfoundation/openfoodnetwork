@@ -29,6 +29,20 @@ feature %q{
     end
   end
 
+  describe "Customers report" do
+    before do
+      login_to_admin_section
+      click_link "Reports"
+    end
+    scenario "customers report" do
+      click_link "Mailing List"
+    end
+
+    scenario "customers report" do
+      click_link "Addresses"
+    end
+  end
+
   scenario "orders and distributors report" do
     login_to_admin_section
     click_link 'Reports'

@@ -3,13 +3,14 @@ require 'open_food_network/order_and_distributor_report'
 require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
+require 'open_food_network/customers_report'
 require 'open_food_network/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
   include OpenFoodNetwork::ModelClassFromControllerName
   
   # Fetches user's distributors, suppliers and order_cycles 
-  before_filter :load_data, only: :products_and_inventory
+  before_filter :load_data, only: [:customers, :products_and_inventory]
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -17,6 +18,8 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
     @reports[:products_and_inventory][:description] =
       render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
+    @reports[:customers][:description] =
+      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
   } } }
 
   # OVERRIDING THIS so we use a method not a constant for available reports
@@ -35,8 +38,18 @@ Spree::Admin::ReportsController.class_eval do
     products_and_inventory: [
       ['All products', :all_products],
       ['Inventory (on hand)', :inventory]
+    ],
+    customers: [
+      ["Mailing List", :mailing_list],
+      ["Addresses", :addresses]
     ]
   }
+
+  def customers
+    @search = Spree::Order.search
+    @report_types = REPORT_TYPES[:customers]
+    @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
+  end
 
   def orders_and_distributors
     params[:q] = {} unless params[:q]
@@ -541,8 +554,8 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:products_and_inventory]
 
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
-    @table = @report.table
-    @header = @report.header
+    #@table = @report.table
+    #@header = @report.header
   end
 
   def render_report (header, table, create_csv, csv_file_name)
@@ -575,6 +588,7 @@ Spree::Admin::ReportsController.class_eval do
       :bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"},
       :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
+      :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''}
     }
     if spree_current_user.has_spree_role? 'admin'
