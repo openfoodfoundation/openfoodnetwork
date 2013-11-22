@@ -29,6 +29,14 @@ feature %q{
     end
   end
 
+  scenario "customers report" do
+    login_to_admin_section
+    click_link "Reports"
+    click_link "Customers"
+    page.should have_content "Customers"
+    page.should have_content "Mailing List"
+  end
+
   scenario "orders and distributors report" do
     login_to_admin_section
     click_link 'Reports'
