@@ -33,13 +33,13 @@
 %table#listing_products.index
   %thead
     %tr{'data-hook' => "products_header"}
-      - @header.each do |heading|
+      - @report.header.each do |heading|
         %th=heading
   %tbody
-    - @table.each do |row|
+    - @report.table.each do |row|
       %tr
         - row.each do |column|
           %td= column
-    - if @table.empty?
+    - if @report.table.empty?
       %tr
         %td{:colspan => "2"}= t(:none)
