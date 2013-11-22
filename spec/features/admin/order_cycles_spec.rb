@@ -347,19 +347,30 @@ feature %q{
 
   scenario "updating many order cycle opening/closing times at once" do
     # Given three order cycles
-    3.times { create(:order_cycle) }
+    oc1 = create(:order_cycle)
+    oc2 = create(:order_cycle)
+    oc3 = create(:order_cycle)
 
     # When I go to the order cycles page
     login_to_admin_section
     click_link 'Order Cycles'
 
     # And I fill in some new opening/closing times and save them
-    fill_in 'order_cycle_set_collection_attributes_0_orders_open_at', :with => '2012-12-01 12:00:00'
-    fill_in 'order_cycle_set_collection_attributes_0_orders_close_at', :with => '2012-12-01 12:00:01'
-    fill_in 'order_cycle_set_collection_attributes_1_orders_open_at', :with => '2012-12-01 12:00:02'
-    fill_in 'order_cycle_set_collection_attributes_1_orders_close_at', :with => '2012-12-01 12:00:03'
-    fill_in 'order_cycle_set_collection_attributes_2_orders_open_at', :with => '2012-12-01 12:00:04'
-    fill_in 'order_cycle_set_collection_attributes_2_orders_close_at', :with => '2012-12-01 12:00:05'
+    within("tr.order-cycle-#{oc1.id}") do
+      all('input').first.set '2012-12-01 12:00:00'
+      all('input').last.set '2012-12-01 12:00:01'
+    end
+
+    within("tr.order-cycle-#{oc2.id}") do
+      all('input').first.set '2012-12-01 12:00:02'
+      all('input').last.set '2012-12-01 12:00:03'
+    end
+
+    within("tr.order-cycle-#{oc3.id}") do
+      all('input').first.set '2012-12-01 12:00:04'
+      all('input').last.set '2012-12-01 12:00:05'
+    end
+
     click_button 'Update'
 
     # Then my times should have been saved

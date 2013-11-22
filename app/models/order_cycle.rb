@@ -27,9 +27,9 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).merge(Exchange.outgoing).where('exchanges.receiver_id = ?', distributor)
   }
 
-  scope :soonest_closing,      active.order('order_cycles.orders_close_at ASC')
-  scope :most_recently_closed, closed.order('order_cycles.orders_close_at DESC')
-  scope :soonest_opening,      upcoming.order('order_cycles.orders_open_at ASC')
+  scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
+  scope :most_recently_closed, lambda { closed.order('order_cycles.orders_close_at DESC') }
+  scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
 
   scope :managed_by, lambda { |user|
