@@ -153,6 +153,15 @@ FactoryGirl.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     on_hand 3
+
+    variant_unit 'weight'
+    variant_unit_scale 1
+    variant_unit_name ''
+  end
+
+  factory :base_variant do
+    unit_value 1
+    unit_description ''
   end
 
   factory :shipping_method do

@@ -14,7 +14,7 @@ module Spree
       end
 
       it "requires a supplier" do
-        product = create(:product)
+        product = create(:simple_product)
         product.supplier = nil
         product.should_not be_valid
       end
@@ -23,6 +23,73 @@ module Spree
         Timecop.freeze
         product = Product.new
         product.available_on.should == Time.now
+      end
+
+      context "when the product has variants" do
+        let(:product) do
+          product = create(:simple_product)
+          create(:variant, product: product)
+          product
+        end
+
+        it "requires a unit" do
+          product.variant_unit = nil
+          product.should_not be_valid
+        end
+
+        %w(weight volume).each do |unit|
+          context "when unit is #{unit}" do
+            it "is valid when unit scale is set and unit name is not" do
+              product.variant_unit = unit
+              product.variant_unit_scale = 1
+              product.variant_unit_name = nil
+              product.should be_valid
+            end
+
+            it "is invalid when unit scale is not set" do
+              product.variant_unit = unit
+              product.variant_unit_scale = nil
+              product.variant_unit_name = nil
+              product.should_not be_valid
+            end
+          end
+        end
+
+        context "when the unit is items" do
+          it "is valid when unit name is set and unit scale is not" do
+            product.variant_unit = 'items'
+            product.variant_unit_name = 'loaf'
+            product.variant_unit_scale = nil
+            product.should be_valid
+          end
+
+          it "is invalid when unit name is not set" do
+            product.variant_unit = 'items'
+            product.variant_unit_name = nil
+            product.variant_unit_scale = nil
+            product.should_not be_valid
+          end
+        end
+      end
+
+      context "when product does not have variants" do
+        let(:product) { create(:simple_product) }
+
+        it "does not require any variant unit fields" do
+          product.variant_unit = nil
+          product.variant_unit_name = nil
+          product.variant_unit_scale = nil
+
+          product.should be_valid
+        end
+
+        it "requires a unit scale when variant unit is weight" do
+          product.variant_unit = 'weight'
+          product.variant_unit_scale = nil
+          product.variant_unit_name = nil
+
+          product.should_not be_valid
+        end
       end
     end
     

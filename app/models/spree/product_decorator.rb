@@ -10,6 +10,12 @@ Spree::Product.class_eval do
 
   validates_presence_of :supplier
 
+  validates_presence_of :variant_unit, if: :has_variants?
+  validates_presence_of :variant_unit_scale,
+                        if: -> p { %w(weight volume).include? p.variant_unit }
+  validates_presence_of :variant_unit_name,
+                        if: -> p { p.variant_unit == 'items' }
+
   after_initialize :set_available_on_to_now, :if => :new_record?
 
 
