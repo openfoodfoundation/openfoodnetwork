@@ -30,6 +30,7 @@ module OpenFoodNetwork
       Spree::Variant.where(:is_master => false)
       .joins(:product)
       .merge(Spree::Product.managed_by(@user))
+      .order("spree_products.name")
     end
 
     def master_variants
@@ -39,6 +40,7 @@ module OpenFoodNetwork
                   WHERE other_spree_variants.product_id = spree_variants.product_id
                  AND other_spree_variants.is_master = 'f' LIMIT 1) IS NULL")
       .merge(Spree::Product.managed_by(@user))
+      .order("spree_products.name")
     end
 
     def filter(variants)
