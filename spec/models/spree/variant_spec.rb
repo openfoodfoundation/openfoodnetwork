@@ -10,6 +10,7 @@ module Spree
         context "when the product's unit is #{unit}" do
           before do
             product.update_attribute :variant_unit, unit
+            product.reload
           end
 
           it "is valid when unit value is set and unit description is not" do
@@ -22,12 +23,17 @@ module Spree
             variant.unit_value = nil
             variant.should_not be_valid
           end
+
+          it "has a valid master variant" do
+            product.master.should be_valid
+          end
         end
       end
 
       context "when the product's unit is items" do
         before do
           product.update_attribute :variant_unit, 'items'
+          product.reload
         end
 
         it "is valid with only unit value set" do
@@ -46,6 +52,10 @@ module Spree
           variant.unit_value = nil
           variant.unit_description = nil
           variant.should_not be_valid
+        end
+
+        it "has a valid master variant" do
+          product.master.should be_valid
         end
       end
     end

@@ -29,7 +29,7 @@ module Spree
         let(:product) do
           product = create(:simple_product)
           create(:variant, product: product)
-          product
+          product.reload
         end
 
         it "requires a unit" do
