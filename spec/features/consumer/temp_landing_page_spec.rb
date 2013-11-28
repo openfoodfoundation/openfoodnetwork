@@ -34,16 +34,18 @@ feature %q{
 
   describe "account links" do
     it "should display log in and sign up links when signed out" do
-      page.should have_link 'Log in'
-      page.should have_link 'Sign up'
+      page.should have_link 'Login'
+      page.should have_link 'Sign Up'
     end
 
     it "should not display links when signed in" do
       login_to_consumer_section
       visit root_path
 
-      page.should_not have_link 'Log in'
-      page.should_not have_link 'Sign up'
+      #page.should_not have_link 'Login'
+      page.should_not have_selector('#sidebarLoginButton', visible: true)
+      page.should_not have_selector('#sidebarSignUpButton', visible: true)
+      #page.should_not have_link 'Sign Up'
     end
   end
 
