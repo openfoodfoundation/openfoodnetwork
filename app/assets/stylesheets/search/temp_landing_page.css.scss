@@ -48,3 +48,10 @@ a.inactive {
     min-height: 0px;
   }
 }
+.top-bar-section ul li {
+    float: left;
+}
+.top-bar-section .divider, .top-bar-section [role="separator"] {
+  clear: none;
+  width: 0px;
+}
