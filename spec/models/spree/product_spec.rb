@@ -8,7 +8,7 @@ module Spree
       it { should have_many(:product_distributions) }
     end
 
-    describe "validations" do
+    describe "validations and defaults" do
       it "is valid when created from factory" do
         create(:product).should be_valid
       end
@@ -18,7 +18,14 @@ module Spree
         product.supplier = nil
         product.should_not be_valid
       end
+
+      it "should default available_on to now" do
+        Timecop.freeze
+        product = Product.new
+        product.available_on.should == Time.now
+      end
     end
+    
 
     describe "scopes" do
       describe "in_supplier" do

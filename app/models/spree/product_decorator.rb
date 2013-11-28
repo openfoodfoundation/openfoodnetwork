@@ -10,6 +10,8 @@ Spree::Product.class_eval do
 
   validates_presence_of :supplier
 
+  after_initialize :set_available_on_to_now, :if => :new_record?
+
 
   # -- Joins
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
@@ -91,5 +93,11 @@ Spree::Product.class_eval do
         self.product_distributions.build(:distributor => distributor)
       end
     end
+  end
+
+  private
+
+  def set_available_on_to_now
+    self.available_on ||= Time.now
   end
 end
