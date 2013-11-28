@@ -14,7 +14,6 @@ setup_offcanvas_panel = ->
     events = 'click.fndtn'
     $("#sidebarLoginButton").on events, (e) ->
         e.preventDefault()
-
         if $("#sign-up-content").is(':visible') && $("body").hasClass("active")
             $("#login-content").show()
             $("#sign-up-content").hide()
@@ -29,9 +28,7 @@ setup_offcanvas_panel = ->
 
     $("#sidebarSignUpButton").on events, (e) ->
         e.preventDefault()
-
         if $("#login-content").is(':visible') && $("body").hasClass("active")
-
             $("#login-content").hide()
             $("#sign-up-content").show()
         else if $("body").hasClass("active")
@@ -58,7 +55,7 @@ setup_login_handlers = ->
         $("#login-name").show()
         $("#sign-out-link").show()
 
-        $("#sidebarButton").trigger("click")
+        $("#sidebarLoginButton").trigger("click")
 
 setup_suburbs_autocomplete = ->
     spinner = new Spinner({length: 10, width: 10, color: '#000'})

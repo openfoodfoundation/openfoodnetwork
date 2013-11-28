@@ -27,7 +27,7 @@
             %li#sign-up-link= link_to "Sign Up", "#sidebar", id: "sidebarSignUpButton", class: "sidebar-button"
             %li#sign-out-link.hide= link_to "Sign Out", "/logout"
           - else
-            %li#login-link.hide= link_to "Login", "#sidebar", id: "sidebarButton", class: "sidebar-button"
+            %li#login-link.hide= link_to "Login", "#sidebar", id: "sidebarLoginButton", class: "sidebar-button"
             %li#login-name= link_to "#{spree_current_user.email}", "#"
             %li.divider
             %li#sign-up-link.hide= link_to "Sign Up", "#"

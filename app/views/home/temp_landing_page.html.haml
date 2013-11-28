@@ -12,41 +12,54 @@
     = render "layouts/bugherd_script"
 
     = csrf_meta_tags
-  %body
-    - unless spree_current_user
-      %nav.top-bar
-        %ul.title-area
-          %li.name
-        %section.top-bar-section
-          %ul.right
-            %li= link_to 'Log in', spree.login_path
-            %li= link_to 'Sign up', spree.signup_path
+  %body.off-canvas
+    %nav.top-bar
+      %ul.title-area
+        %li.name
+      %section.top-bar-section
+        %ul.left
+          %li= link_to image_tag("ofn_logo_small.png"), new_landing_page_path
+          %li.divider
+          - if spree_current_user.nil?
+            %li#login-link= link_to "Login", "#sidebar", id: "sidebarLoginButton", class: "sidebar-button"
+            %li#login-name.hide
+            %li.divider
+            %li#sign-up-link= link_to "Sign Up", "#sidebar", id: "sidebarSignUpButton", class: "sidebar-button"
+            %li#sign-out-link.hide= link_to "Sign Out", "/logout"
+          - else
+            %li#login-link.hide= link_to "Login", "#sidebar", id: "sidebarLoginButton", class: "sidebar-button"
+            %li#login-name= link_to "#{spree_current_user.email}", "#"
+            %li.divider
+            %li#sign-up-link.hide= link_to "Sign Up", "#"
+            %li#sign-out-link= link_to "Sign Out", "/logout"
 
-    .row.landing-page-row.with-bottom-border
-      .large-12.columns.centered
-        = image_tag "ofn_logo_black.png"
-    .row.landing-page-row.with-bottom-border.with-pin-bg
-      .large-12.columns.centered
-        %h3 WHERE WOULD YOU LIKE TO SHOP?
-        %p.secondary Select your hub from the list below
+    %section{ role: "main" }
+      .row.landing-page-row.with-bottom-border
+        .large-12.columns.centered
+          = image_tag "ofn_logo_black.png"
+      .row.landing-page-row.with-bottom-border.with-pin-bg
+        .large-12.columns.centered
+          %h3 WHERE WOULD YOU LIKE TO SHOP?
+          %p.secondary Select your hub from the list below
 
-    - @groups.in_groups_of(4, false) do |row|
-      .row.landing-page-row.hub_group{:class => (row.last == @groups.last ? "with-bottom-border" : "")}
-        - row.each do |group|
-          .large-3.columns
-            .group-header
-              %h5= group.name.upcase
-            - group.enterprises.is_distributor.by_name.each do |distributor|
-              .row.distributor-link-row
-                .large-12.columns
-                  = render partial: "shared/distributor", object: distributor
+      - @groups.in_groups_of(4, false) do |row|
+        .row.landing-page-row.hub_group{:class => (row.last == @groups.last ? "with-bottom-border" : "")}
+          - row.each do |group|
+            .large-3.columns
+              .group-header
+                %h5= group.name.upcase
+              - group.enterprises.is_distributor.by_name.each do |distributor|
+                .row.distributor-link-row
+                  .large-12.columns
+                    = render partial: "shared/distributor", object: distributor
 
-    = render partial: "shared/footer"
-    -#%footer
-      -#.row.landing-page-row
-        -#.large-6.columns.text-left
-          -#%strong
-            -#%span.has-tip.tip-top{"data-tooltip" => "", "data-options" => "disable-for-touch:true", title: "Open Food Network is a marketplace connecting you to local producers and food hubs"} 
-              -#= link_to "WHAT IS OPEN FOOD NETWORK?", "http://openfoodnetwork.org"
+      = render partial: "shared/footer"
 
-        -#.large-6.columns.text-right.secondary All rights reserved. &copy; 2013 Open Food Foundation
+
+
+    %section#sidebar{ role: "complementary" }
+      .login-panel
+        #login-content.hide
+          = render "home/login"
+        #sign-up-content.hide
+          = render "home/signup"
