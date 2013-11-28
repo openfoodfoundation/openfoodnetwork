@@ -1,13 +1,13 @@
-<div class="toolbar" data-hook="toolbar">
-  <ul class="actions">
-    <li>
-      <%= button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'add', :id => 'admin_new_enterprise_link' %>
-    </li>
-  </ul>
-  <br class="clear" />
-</div>
+<% content_for :page_title do %>
+  Enterprises 
+<% end %>
 
-<h1>Enterprises</h1>
+<% content_for :page_actions do %>
+  <li id="new_product_link">
+    <%= button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'add', :id => 'admin_new_enterprise_link' %>
+  </li>
+<% end %>
+
 
 <%= form_for @enterprise_set, :url => main_app.bulk_update_admin_enterprises_path do |f| %>
   <table class="index" id="listing_enterprises">
