@@ -36,10 +36,24 @@ feature %q{
     end
     scenario "customers report" do
       click_link "Mailing List"
+      expect(page).to have_select('report_type', selected: 'Mailing List')
+
+      rows = find("table#listing_customers").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["Email", "First Name", "Last Name", "Suburb"]
+      ].sort
     end
 
     scenario "customers report" do
       click_link "Addresses"
+      expect(page).to have_select('report_type', selected: 'Addresses')
+
+      rows = find("table#listing_customers").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"]
+      ].sort
     end
   end
 
@@ -128,12 +142,12 @@ feature %q{
       rows = find("table#listing_products").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
 
-      table.should == [
+      table.sort.should == [
         ["Supplier",    "Product",      "SKU",    "Variant",              "On Hand",    "Price"],
         [product_1.supplier.name,  "Product Name", variant_1.sku,         "Size: Test", "10",       "100.0"],
         [product_1.supplier.name,  "Product Name", variant_2.sku,         "Size: S",    "20",       "80.0"],
         [product_2.supplier.name,  "Product 2",    product_2.master.sku,  "",           "9",       "99.0"]
-      ]
+      ].sort
     end
   end
 

@@ -45,9 +45,10 @@ Spree::Admin::ReportsController.class_eval do
     ]
   }
 
+  # This action is short because we refactored it like bosses
   def customers
-    @search = Spree::Order.search
     @report_types = REPORT_TYPES[:customers]
+    @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
   end
 

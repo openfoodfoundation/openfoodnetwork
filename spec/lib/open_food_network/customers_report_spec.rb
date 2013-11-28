@@ -88,7 +88,50 @@ module OpenFoodNetwork
           o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
 
+          subject.should_receive(:filter).with([o1]).and_return([o1])
           subject.orders.should == [o1]
+        end
+      end
+
+      describe "Filtering orders" do
+        let(:orders) { Spree::Order.scoped }
+        let(:supplier) { create(:supplier_enterprise) }
+        it "should return all orders sans-params" do
+          subject.filter(orders).should == orders
+        end
+
+        it "should return orders with a specific supplier" do
+          supplier = create(:supplier_enterprise)
+          supplier2 = create(:supplier_enterprise)
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier2)
+          order1 = create(:order)
+          order2 = create(:order)
+          order1.line_items << create(:line_item, product: product1)
+          order2.line_items << create(:line_item, product: product2)
+
+          subject.stub(:params).and_return(supplier_id: supplier.id)
+          subject.filter(orders).sort.should == [order1]
+        end
+
+        it "filters to a specific distributor" do
+          d1 = create(:distributor_enterprise)
+          d2 = create(:distributor_enterprise)
+          order1 = create(:order, distributor: d1)
+          order2 = create(:order, distributor: d2)
+
+          subject.stub(:params).and_return(distributor_id: d1.id)
+          subject.filter(orders).sort.should == [order1]
+        end
+
+        it "filters to a specific cycle" do
+          oc1 = create(:simple_order_cycle)
+          oc2 = create(:simple_order_cycle)
+          order1 = create(:order, order_cycle: oc1)
+          order2 = create(:order, order_cycle: oc2)
+
+          subject.stub(:params).and_return(order_cycle_id: oc1.id)
+          subject.filter(orders).sort.should == [order1]
         end
       end
     end
