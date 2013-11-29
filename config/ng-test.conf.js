@@ -8,7 +8,7 @@ files = [
   'app/assets/javascripts/shared/angular-*.js',
 
   'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
-  'app/assets/javascripts/admin/bulk_product_update.js',
+  'app/assets/javascripts/admin/bulk_product_update.js.coffee',
 
   'spec/javascripts/unit/**/*.js*'
 ];
