@@ -12,3 +12,19 @@ $(document).ready(function() {
     stepMinute: 15
   });
 });
+
+// Overriding a broken function in Spree. Bug report at
+// https://github.com/spree/spree/issues/4032
+show_flash_error = function(message) {
+  error_div = $('.flash.error');
+  if (error_div.length > 0) {
+    error_div.html(message);
+    error_div.show();
+  } else {
+    if ($("#content .toolbar").length > 0) {
+      $("#content .toolbar").before('<div class="flash error">' + message + '</div>');
+    } else {
+      $("#progress").before('<div class="flash error">' + message + '</div>');
+    }
+  }
+}
