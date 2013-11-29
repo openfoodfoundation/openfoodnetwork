@@ -8,3 +8,25 @@
     = favicon_link_tag "favicon.png"
 
     = stylesheet_link_tag "darkswarm/all"
+    = javascript_include_tag "darkswarm/all"
+
+    = render "layouts/bugherd_script"
+    = csrf_meta_tags
+
+
+  %body.off-canvas
+    = render partial: "shared/menu"
+
+    %section{ role: "main" }
+      = yield
+
+    %section#sidebar{ role: "complementary" }
+      .login-panel
+        #login-content.hide
+          = render "home/login"
+        #sign-up-content.hide
+          = render "home/signup"
+
+
+    = yield :scripts
+
