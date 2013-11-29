@@ -86,4 +86,9 @@ end
 group :development do
   gem 'pry-debugger'
   gem 'debugger-linecache'
+  gem 'guard'
+  gem 'guard-livereload'
+  gem 'guard-rails'
+  gem 'guard-zeus'
+  gem 'guard-rspec'
 end
