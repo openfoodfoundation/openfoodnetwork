@@ -181,7 +181,17 @@ productsApp.controller "AdminBulkProductsCtrl", [
           break
 
     $scope.updateOnHand = (product) ->
-      product.on_hand = onHand(product)
+      product.on_hand = $scope.onHand(product)
+
+    $scope.onHand = (product) ->
+      onHand = 0
+      if product.hasOwnProperty("variants") and product.variants instanceof Object
+        angular.forEach product.variants, (variant) ->
+          onHand = parseInt(onHand) + parseInt((if variant.on_hand > 0 then variant.on_hand else 0))
+      else
+        onHand = "error"
+      onHand
+
 
     $scope.editWarn = (product, variant) ->
       window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"  if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() is 0)
@@ -296,17 +306,6 @@ productsApp.factory "dataFetcher", [
 
       deferred.promise
 ]
-
-
-onHand = (product) ->
-  onHand = 0
-  if product.hasOwnProperty("variants") and product.variants instanceof Object
-    angular.forEach product.variants, (variant) ->
-      onHand = parseInt(onHand) + parseInt((if variant.on_hand > 0 then variant.on_hand else 0))
-
-  else
-    onHand = "error"
-  onHand
 
 
 filterSubmitProducts = (productsToFilter) ->

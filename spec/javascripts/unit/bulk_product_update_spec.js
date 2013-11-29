@@ -266,6 +266,17 @@ describe("AdminBulkProductsCtrl", function(){
 	});
 
 	describe("getting on_hand counts when products have variants", function(){		
+		beforeEach(function(){
+			module('bulk_product_update');
+		});
+
+		beforeEach(inject(function($controller,$rootScope) {
+			scope = $rootScope.$new();
+			ctrl = $controller;
+
+			ctrl('AdminBulkProductsCtrl', { $scope: scope } );
+		}));
+
 		var p1, p2, p3;
 		beforeEach(function(){
 			p1 = { variants: { 1: { id: 1, on_hand: 1 }, 2: { id: 2, on_hand: 2 }, 3: { id: 3, on_hand: 3 } } };
@@ -274,20 +285,20 @@ describe("AdminBulkProductsCtrl", function(){
 		});
 
 		it("sums variant on_hand properties", function(){
-			expect(onHand(p1)).toEqual(6);
+			expect(scope.onHand(p1)).toEqual(6);
 		});
 
 		it("ignores items in variants without an on_hand property (adds 0)", function(){
-			expect(onHand(p2)).toEqual(5);
+			expect(scope.onHand(p2)).toEqual(5);
 		});
 
 		it("ignores on_hand properties of objects in arrays which are not named 'variants' (adds 0)", function(){
-			expect(onHand(p3)).toEqual(3);
+			expect(scope.onHand(p3)).toEqual(3);
 		});
 
 		it("returns 'error' if not given an object with a variants property that is an object", function(){
-			expect( onHand([]) ).toEqual('error');
-			expect( onHand( { not_variants: [] } ) ).toEqual('error');
+			expect( scope.onHand([]) ).toEqual('error');
+			expect( scope.onHand( { not_variants: [] } ) ).toEqual('error');
 		});
 	});
 
