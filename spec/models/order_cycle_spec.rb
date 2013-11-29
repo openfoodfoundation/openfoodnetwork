@@ -280,8 +280,13 @@ describe OrderCycle do
     occ.coordinator.should == oc.coordinator
 
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
-
-    (0..occ.exchanges.count).all? { |i| occ.exchanges[i].eql? oc.exchanges[i] }.should be_true
+    
+    #(0..occ.exchanges.count).all? { |i| occ.exchanges[i].eql? oc.exchanges[i] }.should be_true
+    
+    # to_h gives us a unique hash for each exchange
+    occ.exchanges.map(&:to_h).all? do |ex|
+      oc.exchanges.map(&:to_h).include? ex
+    end
   end
 
   describe "creating adjustments for a line item" do
