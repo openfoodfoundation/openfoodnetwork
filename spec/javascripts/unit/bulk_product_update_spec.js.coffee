@@ -128,9 +128,21 @@ describe "filtering products", ->
       price: 10
     ]
 
+  it 'returns variant_unit_with_scale as variant_unit and variant_unit_scale', ->
+    testProduct =
+      id: 1
+      variant_unit: 'weight'
+      variant_unit_scale: 1
+      variant_unit_with_scale: 'volume_1000'
+
+    expect(filterSubmitProducts([testProduct])).toEqual [
+      id: 1
+      variant_unit: 'volume'
+      variant_unit_scale: 1000
+    ]
   
   # TODO Not an exhaustive test, is there a better way to do this?
-  it "only returns properties the properties of products which ought to be updated", ->
+  it "only returns the properties of products which ought to be updated", ->
     testProduct =
       id: 1
       name: "TestProduct"
@@ -158,11 +170,17 @@ describe "filtering products", ->
         on_hand: 2
         price: 10.0
       ]
+      variant_unit: 'volume'
+      variant_unit_scale: 1
+      variant_unit_name: null
+      variant_unit_with_scale: 'weight_1000'
 
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
       supplier_id: 5
+      variant_unit: 'weight'
+      variant_unit_scale: 1000
       available_on: new Date()
       variants_attributes: [
         id: 1
@@ -539,6 +557,23 @@ describe "AdminBulkProductsCtrl", ->
         httpBackend.flush()
         expect(scope.displayFailure).toHaveBeenCalled()
 
+
+  describe 'fetching products without derived attributes', ->
+    beforeEach ->
+      ctrl "AdminBulkProductsCtrl",
+        $scope: scope
+
+    it 'returns products without the variant_unit_with_scale field', ->
+      scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
+      expect(scope.productsWithoutDerivedAttributes()).toEqual([{id: 123}])
+
+    it 'returns an empty array when products are undefined', ->
+      expect(scope.productsWithoutDerivedAttributes()).toEqual([])
+
+    it 'does not alter products', ->
+      scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
+      scope.productsWithoutDerivedAttributes()
+      expect(scope.products).toEqual [{id: 123, variant_unit_with_scale: 'weight_1000'}]
 
 
   describe "deleting products", ->

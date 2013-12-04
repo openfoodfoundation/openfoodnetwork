@@ -252,7 +252,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         url: "/admin/products/bulk_update"
         data: productsToSubmit
       ).success((data) ->
-        if angular.toJson($scope.products) == angular.toJson(data)
+        if angular.toJson($scope.productsWithoutDerivedAttributes()) == angular.toJson(data)
           $scope.resetProducts data
           $scope.displaySuccess()
         else
@@ -265,6 +265,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
       $scope.updateProducts productsToSubmit
 
+
+    $scope.productsWithoutDerivedAttributes = ->
+      products = []
+      if $scope.products
+        products.push angular.extend {}, product for product in $scope.products
+        angular.forEach products, (product) ->
+          delete product.variant_unit_with_scale
+      products
 
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text
@@ -353,6 +361,11 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("variant_unit_with_scale")
+          match = product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
+          filteredProduct.variant_unit = match[1]
+          filteredProduct.variant_unit_scale = parseFloat(match[2])
           hasUpdatableProperty = true
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
