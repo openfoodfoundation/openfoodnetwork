@@ -21,12 +21,8 @@
       = yield
 
     %section#sidebar{ role: "complementary" }
-      .login-panel
-        #login-content.hide
-          = render "home/login"
-        #sign-up-content.hide
-          = render "home/signup"
-
+      = render partial: "shared/login_panel"
+      = yield :sidebar
 
     = yield :scripts
 

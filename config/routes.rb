@@ -1,6 +1,7 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#temp_landing_page'
 
+
   resources :enterprises do
     collection do
       get :suppliers
@@ -37,6 +38,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
+  get "darkswarm", controller: :darkswarm, action: :index
   get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do
