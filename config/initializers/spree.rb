@@ -37,3 +37,14 @@ module Spree
     end
   end
 end
+
+# Forcing spree to always allow SSL connections
+# Since we are using config.force_ssl = true 
+# Without this we get a redirect loop: see https://groups.google.com/forum/#!topic/spree-user/NwpqGxJ4klk
+SslRequirement.module_eval do
+  protected
+
+  def ssl_allowed?
+    true
+  end
+end
