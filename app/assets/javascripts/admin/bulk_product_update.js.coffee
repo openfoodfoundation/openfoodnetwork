@@ -16,7 +16,7 @@ productsApp.directive "ngDecimal", ->
       ngModel.$render()
 
     ngModel.$parsers.push (viewValue) ->
-      return viewValue + ".0"  if viewValue.indexOf(".") is -1  if angular.isString(viewValue) and numRegExp.test(viewValue)
+      return viewValue + ".0"  if viewValue.indexOf(".") == -1  if angular.isString(viewValue) and numRegExp.test(viewValue)
       viewValue
 
 
@@ -142,7 +142,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->
         authorise_api_reponse = data
-        $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] is "Use of API Authorised"
+        $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
@@ -201,7 +201,8 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.editWarn = (product, variant) ->
-      window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"  if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() is 0)
+      if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
+        window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
     $scope.deleteProduct = (product) ->
@@ -251,7 +252,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         url: "/admin/products/bulk_update"
         data: productsToSubmit
       ).success((data) ->
-        if angular.toJson($scope.products) is angular.toJson(data)
+        if angular.toJson($scope.products) == angular.toJson(data)
           $scope.resetProducts data
           $scope.displaySuccess()
         else
@@ -353,7 +354,7 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
           hasUpdatableProperty = true
-        if product.hasOwnProperty("on_hand") and filteredVariants.length is 0 #only update if no variants present
+        if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
