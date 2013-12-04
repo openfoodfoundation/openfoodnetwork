@@ -156,9 +156,9 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.resetProducts = (data) ->
       $scope.products = data
       $scope.dirtyProducts = {}
-      $scope.displayProperties = $scope.displayProperties or {}
+      $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
-        $scope.displayProperties[product.id] = $scope.displayProperties[product.id] or showVariants: false
+        $scope.displayProperties[product.id] ||= showVariants: false
         $scope.matchSupplier product
 
 
