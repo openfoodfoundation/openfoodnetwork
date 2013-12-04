@@ -98,6 +98,14 @@ feature %q{
       page.should have_selector "span[name='on_hand']", text: "4"
       page.should have_field "on_hand", with: "12"
     end
+
+    it "displays a select box for the unit of measure for the product's variants" do
+      p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Weight (g)"
+    end
   end
   
   describe "listing variants" do

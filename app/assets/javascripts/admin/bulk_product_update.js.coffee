@@ -129,11 +129,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
       available_on: {name: "Available On", visible: true}
 
     $scope.variant_unit_options = [
-      "Weight (g)", "Weight (kg)", "Weight (T)"
-      "Volume (mL)", "Volume (L)", "Volume (ML)"
-      "Items"
+      ["Weight (g)", "weight_1"],
+      ["Weight (kg)", "weight_1000"],
+      ["Weight (T)", "weight_1000000"],
+      ["Volume (mL)", "volume_0.001"],
+      ["Volume (L)", "volume_1"],
+      ["Volume (ML)", "volume_1000"],
+      ["Items", "items"]
     ]
-
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -158,8 +161,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
       $scope.dirtyProducts = {}
       $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
-        $scope.displayProperties[product.id] ||= showVariants: false
-        $scope.matchSupplier product
+        $scope.prepareProduct product
+
+
+    $scope.prepareProduct = (product) ->
+      $scope.displayProperties ||= {}
+      $scope.displayProperties[product.id] ||= showVariants: false
+      $scope.matchSupplier product
+      $scope.loadVariantUnit product
 
 
     $scope.matchSupplier = (product) ->
@@ -168,6 +177,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
         if angular.equals(supplier, product.supplier)
           product.supplier = supplier
           break
+
+
+    $scope.loadVariantUnit = (product) ->
+      product.variant_unit_with_scale = if product.variant_unit && product.variant_unit_scale
+        "#{product.variant_unit}_#{product.variant_unit_scale}"
+      else
+        null
 
 
     $scope.updateOnHand = (product) ->
@@ -220,7 +236,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         id = data.product.id
         dataFetcher("/api/products/" + id + "?template=bulk_show").then (data) ->
           newProduct = data
-          $scope.matchSupplier newProduct
+          $scope.prepareProduct newProduct
           $scope.products.push newProduct
 
 

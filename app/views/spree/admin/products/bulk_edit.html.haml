@@ -34,6 +34,7 @@
           %th{ 'ng-show' => 'columns.name.visible' } Name
           %th{ 'ng-show' => 'columns.supplier.visible' } Supplier
           %th{ 'ng-show' => 'columns.price.visible' } Price
+          %th{ 'ng-show' => 'columns.unit.visible' } Unit
           %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
           %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
@@ -47,6 +48,8 @@
             %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ng-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ng-decimal' => :true, :name => 'price', 'ng-track-product' => 'price', :type => 'text' }
+          %td{ 'ng-show' => 'columns.unit.visible' }
+            %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ng-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ng-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }

@@ -262,7 +262,7 @@ describe "AdminBulkProductsCtrl", ->
     beforeEach ->
       ctrl "AdminBulkProductsCtrl", {$scope: scope}
 
-      spyOn scope, "matchSupplier"
+      spyOn scope, "prepareProduct"
       scope.products = {}
       scope.resetProducts [
         {
@@ -290,8 +290,34 @@ describe "AdminBulkProductsCtrl", ->
     it "resets dirtyProducts", ->
       expect(scope.dirtyProducts).toEqual {}
 
-    it "calls match matchSupplier once for each product", ->
-      expect(scope.matchSupplier.calls.length).toEqual 2
+    it "calls prepareProduct once for each product", ->
+      expect(scope.prepareProduct.calls.length).toEqual 2
+
+
+  describe 'preparing products', ->
+    beforeEach ->
+      ctrl "AdminBulkProductsCtrl",
+        $scope: scope
+      spyOn scope, "matchSupplier"
+      spyOn scope, "loadVariantUnit"
+
+    it 'initialises display properties for the product', ->
+      product = {id: 123}
+      scope.displayProperties = {}
+      scope.prepareProduct product
+      expect(scope.displayProperties[123]).toEqual {showVariants: false}
+
+    it 'calls matchSupplier for the product', ->
+      product = {id: 123}
+      scope.displayProperties = {}
+      scope.prepareProduct product
+      expect(scope.matchSupplier.calls.length).toEqual 1
+
+    it 'calls loadVariantUnit for the product', ->
+      product = {id: 123}
+      scope.displayProperties = {}
+      scope.prepareProduct product
+      expect(scope.loadVariantUnit.calls.length).toEqual 1
 
 
   describe "matching supplier", ->
@@ -323,6 +349,29 @@ describe "AdminBulkProductsCtrl", ->
 
       scope.matchSupplier product
       expect(product.supplier).toEqual s1_s
+
+
+  describe 'loading variant unit', ->
+    beforeEach ->
+      ctrl "AdminBulkProductsCtrl",
+        $scope: scope
+
+    it 'sets variant_unit_with_scale by combining variant_unit and variant_unit_scale', ->
+      product =
+        variant_unit: "volume"
+        variant_unit_scale: .001
+      scope.loadVariantUnit product
+      expect(product.variant_unit_with_scale).toEqual "volume_0.001"
+
+    it 'sets variant_unit_with_scale to null when variant_unit is null', ->
+      product = {variant_unit: null, variant_unit_scale: 1000}
+      scope.loadVariantUnit product
+      expect(product.variant_unit_with_scale).toBeNull()
+
+    it 'sets variant_unit_with_scale to null when variant_unit_scale is null', ->
+      product = {variant_unit: 'weight', variant_unit_scale: null}
+      scope.loadVariantUnit product
+      expect(product.variant_unit_with_scale).toBeNull()
 
 
   describe "getting on_hand counts when products have variants", ->
@@ -659,7 +708,7 @@ describe "AdminBulkProductsCtrl", ->
       httpBackend.flush()
 
     it "adds the newly created product to scope.products and matches supplier", ->
-      spyOn(scope, "matchSupplier").andCallThrough()
+      spyOn(scope, "prepareProduct").andCallThrough()
       scope.products = [
         id: 13
         permalink_live: "oranges"
@@ -689,9 +738,10 @@ describe "AdminBulkProductsCtrl", ->
 
       scope.cloneProduct scope.products[0]
       httpBackend.flush()
-      expect(scope.matchSupplier).toHaveBeenCalledWith
+      expect(scope.prepareProduct).toHaveBeenCalledWith
         id: 17
         name: "new_product"
+        variant_unit_with_scale: null
         supplier:
           id: 6
 
@@ -708,6 +758,7 @@ describe "AdminBulkProductsCtrl", ->
         {
           id: 17
           name: "new_product"
+          variant_unit_with_scale: null
           supplier:
             id: 6
 
