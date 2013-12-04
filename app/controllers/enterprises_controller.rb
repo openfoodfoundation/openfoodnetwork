@@ -2,7 +2,6 @@ class EnterprisesController < BaseController
   helper Spree::ProductsHelper
   include OrderCyclesHelper
 
-
   def index
     @enterprises = Enterprise.all
   end
