@@ -114,35 +114,26 @@ productsApp.directive "datetimepicker", [
 
 
 productsApp.controller "AdminBulkProductsCtrl", [
-  "$scope"
-  "$timeout"
-  "$http"
-  "dataFetcher"
+  "$scope", "$timeout", "$http", "dataFetcher"
   ($scope, $timeout, $http, dataFetcher) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
 
     $scope.columns =
-      name:
-        name: "Name"
-        visible: true
+      name:         {name: "Name",         visible: true}
+      supplier:     {name: "Supplier",     visible: true}
+      price:        {name: "Price",        visible: true}
+      unit:         {name: "Unit",         visible: true}
+      on_hand:      {name: "On Hand",      visible: true}
+      available_on: {name: "Available On", visible: true}
 
-      supplier:
-        name: "Supplier"
-        visible: true
+    $scope.variant_unit_options = [
+      "Weight (g)", "Weight (kg)", "Weight (T)"
+      "Volume (mL)", "Volume (L)", "Volume (ML)"
+      "Items"
+    ]
 
-      price:
-        name: "Price"
-        visible: true
-
-      on_hand:
-        name: "On Hand"
-        visible: true
-
-      available_on:
-        name: "Available On"
-        visible: true
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -156,8 +147,6 @@ productsApp.controller "AdminBulkProductsCtrl", [
             # Need to have suppliers before we get products so we can match suppliers to product.supplier
             dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500").then (data) ->
               $scope.resetProducts data
-
-
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
@@ -180,8 +169,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
           product.supplier = supplier
           break
 
+
     $scope.updateOnHand = (product) ->
       product.on_hand = $scope.onHand(product)
+
 
     $scope.onHand = (product) ->
       onHand = 0
@@ -195,6 +186,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
     $scope.editWarn = (product, variant) ->
       window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"  if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() is 0)
+
 
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
@@ -232,9 +224,9 @@ productsApp.controller "AdminBulkProductsCtrl", [
           $scope.products.push newProduct
 
 
-
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0
+
 
     $scope.updateProducts = (productsToSubmit) ->
       $scope.displayUpdating()
@@ -256,6 +248,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
       $scope.updateProducts productsToSubmit
 
+
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text
       model.style = style
@@ -265,20 +258,24 @@ productsApp.controller "AdminBulkProductsCtrl", [
           $scope.setMessage model, "", {}, false
         , timeout, true)
 
+
     $scope.displayUpdating = ->
       $scope.setMessage $scope.updateStatusMessage, "Updating...",
         color: "orange"
       , false
+
 
     $scope.displaySuccess = ->
       $scope.setMessage $scope.updateStatusMessage, "Update complete",
         color: "green"
       , 3000
 
+
     $scope.displayFailure = (failMessage) ->
       $scope.setMessage $scope.updateStatusMessage, "Updating failed. " + failMessage,
         color: "red"
       , 10000
+
 
     $scope.displayDirtyProducts = ->
       if $scope.dirtyProductCount() > 0
@@ -288,14 +285,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
       else
         $scope.setMessage $scope.updateStatusMessage, "", {}, false
 
+
     $scope.dirtyProductCount = ->
       Object.keys($scope.dirtyProducts).length
 ]
 
 
 productsApp.factory "dataFetcher", [
-  "$http"
-  "$q"
+  "$http", "$q"
   ($http, $q) ->
     return (dataLocation) ->
       deferred = $q.defer()
