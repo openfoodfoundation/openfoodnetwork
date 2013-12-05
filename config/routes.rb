@@ -2,6 +2,8 @@ Openfoodnetwork::Application.routes.draw do
   root :to => 'home#temp_landing_page'
 
 
+  resources :shop
+
   resources :enterprises do
     collection do
       get :suppliers
