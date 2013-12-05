@@ -7,7 +7,7 @@ productsApp.config [
 ]
 
 
-productsApp.directive "ngDecimal", ->
+productsApp.directive "ofnDecimal", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     numRegExp = /^\d+(\.\d+)?$/
@@ -20,7 +20,7 @@ productsApp.directive "ngDecimal", ->
       viewValue
 
 
-productsApp.directive "ngTrackProduct", ->
+productsApp.directive "ofnTrackProduct", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     property_name = attrs.ngTrackProduct
@@ -31,7 +31,7 @@ productsApp.directive "ngTrackProduct", ->
       viewValue
 
 
-productsApp.directive "ngTrackVariant", ->
+productsApp.directive "ofnTrackVariant", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     property_name = attrs.ngTrackVariant
@@ -45,7 +45,7 @@ productsApp.directive "ngTrackVariant", ->
       viewValue
 
 
-productsApp.directive "ngToggleVariants", ->
+productsApp.directive "ofnToggleVariants", ->
   link: (scope, element, attrs) ->
     if scope.displayProperties[scope.product.id].showVariants
       element.removeClass "icon-chevron-right"
@@ -65,7 +65,7 @@ productsApp.directive "ngToggleVariants", ->
           element.addClass "icon-chevron-down"
 
 
-productsApp.directive "ngToggleColumn", ->
+productsApp.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->
     element.addClass "unselected"  unless scope.column.visible
     element.click "click", ->
@@ -78,7 +78,7 @@ productsApp.directive "ngToggleColumn", ->
           element.removeClass "unselected"
 
 
-productsApp.directive "ngToggleColumnList", [
+productsApp.directive "ofnToggleColumnList", [
   "$compile"
   ($compile) ->
     return link: (scope, element, attrs) ->
