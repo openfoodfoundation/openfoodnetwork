@@ -257,13 +257,11 @@ describe "AdminBulkProductsCtrl", ->
     ctrl = $controller
     timeout = $timeout
     httpBackend = $httpBackend
+
+    ctrl "AdminBulkProductsCtrl", {$scope: scope, $timeout: timeout}
   )
 
   describe "loading data upon initialisation", ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     it "gets a list of suppliers and then resets products with a list of data", ->
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
@@ -278,8 +276,6 @@ describe "AdminBulkProductsCtrl", ->
 
   describe "resetting products", ->
     beforeEach ->
-      ctrl "AdminBulkProductsCtrl", {$scope: scope}
-
       spyOn scope, "unpackProduct"
       scope.products = {}
       scope.resetProducts [
@@ -314,8 +310,6 @@ describe "AdminBulkProductsCtrl", ->
 
   describe 'preparing products', ->
     beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
       spyOn scope, "matchSupplier"
       spyOn scope, "loadVariantUnit"
 
@@ -339,10 +333,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "matching supplier", ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     it "changes the supplier of the product to the one which matches it from the suppliers list", ->
       s1_s =
         id: 1
@@ -370,10 +360,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe 'loading variant unit', ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     it 'sets variant_unit_with_scale by combining variant_unit and variant_unit_scale', ->
       product =
         variant_unit: "volume"
@@ -393,10 +379,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "getting on_hand counts when products have variants", ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     p1 = undefined
     p2 = undefined
     p3 = undefined
@@ -458,10 +440,6 @@ describe "AdminBulkProductsCtrl", ->
 
   describe "submitting products to be updated", ->
     describe 'packing products', ->
-      beforeEach ->
-        ctrl "AdminBulkProductsCtrl",
-          $scope: scope
-
       it 'extracts variant_unit_with_scale into variant_unit and variant_unit_scale', ->
         testProduct =
           id: 1
@@ -480,9 +458,6 @@ describe "AdminBulkProductsCtrl", ->
 
     describe "filtering products", ->
       beforeEach ->
-        ctrl "AdminBulkProductsCtrl",
-          $scope: scope
-
         spyOn scope, "packProduct"
         spyOn(window, "filterSubmitProducts").andReturn [
           {
@@ -533,11 +508,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
     describe "updating products", ->
-      beforeEach ->
-        ctrl "AdminBulkProductsCtrl",
-          $scope: scope
-          $timeout: timeout
-
       it "submits products to be updated with a http post request to /admin/products/bulk_update", ->
         httpBackend.expectPOST("/admin/products/bulk_update").respond "list of products"
         scope.updateProducts "list of products"
@@ -587,10 +557,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe 'fetching products without derived attributes', ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     it 'returns products without the variant_unit_with_scale field', ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
       expect(scope.productsWithoutDerivedAttributes()).toEqual([{id: 123}])
@@ -605,10 +571,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "deleting products", ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
     it "deletes products with a http delete request to /api/products/id", ->
       spyOn(window, "confirm").andReturn true
       scope.products = [
@@ -661,12 +623,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "deleting variants", ->
-    beforeEach ->
-      scope = {}
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
-
     it "deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", ->
       spyOn(window, "confirm").andReturn true
       scope.products = [
@@ -748,11 +704,6 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "cloning products", ->
-    beforeEach ->
-      ctrl "AdminBulkProductsCtrl",
-        $scope: scope
-
-
     it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
       scope.products = [
         id: 13
