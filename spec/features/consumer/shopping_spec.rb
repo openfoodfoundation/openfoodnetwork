@@ -31,6 +31,21 @@ feature "As a consumer I want to shop with a distributor" do
         # (Should also render products)
       end
 
+      it "shows a select with all order cycles" do
+        oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor])
+        oc2 = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor])
+
+        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
+        exchange.update_attribute :pickup_time, "frogs" 
+        exchange = Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) 
+        exchange.update_attribute :pickup_time, "turtles" 
+
+        visit shop_index_path
+        page.should have_selector "option", text: 'frogs'
+        page.should have_selector "option", text: 'turtles'
+        page.should_not have_selector "option[selected]"
+      end
+
       context "when no order cycles are available" do
         it "shows the last order cycle, if any"
         it "shows the next order cycle, if any"

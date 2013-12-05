@@ -1,7 +1,7 @@
 = @distributor.name
 
 Ready for:
-= select_tag :order_cycle_id, options_for_select(order_cycles_name_and_pickup_times(@order_cycles), current_order_cycle.id)
+= select_tag :order_cycle_id, options_for_select(order_cycles_name_and_pickup_times(@order_cycles), current_order_cycle.andand.id), :prompt => "Select an Order Cycle!"
 
 %description
   = @distributor.long_description.andand.html_safe
