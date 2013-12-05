@@ -48,12 +48,31 @@ feature "As a consumer I want to shop with a distributor" do
           page.should_not have_selector "option[selected]"
         end
 
-        it "allows the user to select an order cycle" do
-          visit shop_index_path
+        describe "with products in our order cycle" do
+          let(:product) { create(:simple_product) }
+          before do
+            exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
+            exchange.variants << product.master
 
-          select "frogs", :from => "order_cycle_id"
-          page.should have_content "Products"
+            visit shop_index_path
+          end
+          
+          it "allows us to select an order cycle" do
+            select "frogs", :from => "order_cycle_id"
+            page.should have_selector "products"
+            Spree::Order.last.order_cycle.should == oc1
+          end
+
+          it "doesn't show products before an order cycle is selected" do
+            page.should_not have_content product.name 
+          end
+
+          it "shows products when an order cycle has been selected" do
+            select "frogs", :from => "order_cycle_id"
+            page.should have_content product.name 
+          end
         end
+
       end
 
       context "when no order cycles are available" do

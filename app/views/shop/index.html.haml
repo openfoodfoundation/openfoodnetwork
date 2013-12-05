@@ -5,7 +5,7 @@
 %description
   = @distributor.long_description.andand.html_safe
 
-%div{"ng-app" => "Shop", "ng-controller" => "ProductsCtrl"}
+%products{"ng-app" => "Shop", "ng-controller" => "ProductsCtrl"}
   {{ products | json }}
 
 = render partial: "enterprises/contact_us"
