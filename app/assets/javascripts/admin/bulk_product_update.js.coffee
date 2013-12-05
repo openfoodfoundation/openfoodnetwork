@@ -182,6 +182,8 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.loadVariantUnit = (product) ->
       product.variant_unit_with_scale = if product.variant_unit && product.variant_unit_scale
         "#{product.variant_unit}_#{product.variant_unit_scale}"
+      else if product.variant_unit
+        product.variant_unit
       else
         null
 

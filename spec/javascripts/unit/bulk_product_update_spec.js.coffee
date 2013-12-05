@@ -386,10 +386,10 @@ describe "AdminBulkProductsCtrl", ->
       scope.loadVariantUnit product
       expect(product.variant_unit_with_scale).toBeNull()
 
-    it 'sets variant_unit_with_scale to null when variant_unit_scale is null', ->
-      product = {variant_unit: 'weight', variant_unit_scale: null}
+    it 'sets variant_unit_with_scale to variant_unit when variant_unit_scale is null', ->
+      product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
       scope.loadVariantUnit product
-      expect(product.variant_unit_with_scale).toBeNull()
+      expect(product.variant_unit_with_scale).toEqual "items"
 
 
   describe "getting on_hand counts when products have variants", ->
