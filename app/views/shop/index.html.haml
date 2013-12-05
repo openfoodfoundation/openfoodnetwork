@@ -1,11 +1,12 @@
 = @distributor.name
 
-Ready for:
-= select_tag :order_cycle_id, options_for_select(order_cycles_name_and_pickup_times(@order_cycles), current_order_cycle.andand.id), :prompt => "Select an Order Cycle!"
+= render partial: "shop/order_cycles"
 
 %description
   = @distributor.long_description.andand.html_safe
 
+%div{"ng-app" => "Shop", "ng-controller" => "ProductsCtrl"}
+  {{ products | json }}
 
 = render partial: "enterprises/contact_us"
 = render partial: "enterprises/about_us"
