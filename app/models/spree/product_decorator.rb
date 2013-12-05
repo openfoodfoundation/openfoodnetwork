@@ -6,7 +6,7 @@ Spree::Product.class_eval do
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
 
-  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
+  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name
 
   validates_presence_of :supplier
 
