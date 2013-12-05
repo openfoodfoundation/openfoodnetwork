@@ -180,7 +180,7 @@ feature %q{
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1)
     p.price = 10.0
     p.on_hand = 6;
     p.save!
@@ -193,12 +193,14 @@ feature %q{
     page.should have_select "supplier", selected: s1.name
     page.should have_field "available_on", with: p.available_on.strftime("%F %T")
     page.should have_field "price", with: "10.0"
+    page.should have_select "variant_unit_with_scale", selected: "Volume (L)"
     page.should have_field "on_hand", with: "6"
 
     fill_in "product_name", with: "Big Bag Of Potatoes"
     select(s2.name, :from => 'supplier')
     fill_in "available_on", with: (Date.today-3).strftime("%F %T")
     fill_in "price", with: "20"
+    select "Weight (kg)", from: "variant_unit_with_scale"
     fill_in "on_hand", with: "18"
 
     click_button 'Update'
@@ -210,6 +212,7 @@ feature %q{
     page.should have_select "supplier", selected: s2.name
     page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
     page.should have_field "price", with: "20.0"
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "on_hand", with: "18"
   end
   

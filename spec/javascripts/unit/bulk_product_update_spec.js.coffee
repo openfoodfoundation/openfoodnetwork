@@ -133,12 +133,12 @@ describe "filtering products", ->
       id: 1
       variant_unit: 'weight'
       variant_unit_scale: 1
-      variant_unit_with_scale: 'volume_1000'
+      variant_unit_with_scale: 'weight_1'
 
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
-      variant_unit: 'volume'
-      variant_unit_scale: 1000
+      variant_unit: 'weight'
+      variant_unit_scale: 1
     ]
   
   # TODO Not an exhaustive test, is there a better way to do this?
@@ -173,14 +173,14 @@ describe "filtering products", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: null
-      variant_unit_with_scale: 'weight_1000'
+      variant_unit_with_scale: 'volume_1'
 
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
       supplier_id: 5
-      variant_unit: 'weight'
-      variant_unit_scale: 1000
+      variant_unit: 'volume'
+      variant_unit_scale: 1
       available_on: new Date()
       variants_attributes: [
         id: 1
@@ -280,7 +280,7 @@ describe "AdminBulkProductsCtrl", ->
     beforeEach ->
       ctrl "AdminBulkProductsCtrl", {$scope: scope}
 
-      spyOn scope, "prepareProduct"
+      spyOn scope, "unpackProduct"
       scope.products = {}
       scope.resetProducts [
         {
@@ -308,8 +308,8 @@ describe "AdminBulkProductsCtrl", ->
     it "resets dirtyProducts", ->
       expect(scope.dirtyProducts).toEqual {}
 
-    it "calls prepareProduct once for each product", ->
-      expect(scope.prepareProduct.calls.length).toEqual 2
+    it "calls unpackProduct once for each product", ->
+      expect(scope.unpackProduct.calls.length).toEqual 2
 
 
   describe 'preparing products', ->
@@ -322,19 +322,19 @@ describe "AdminBulkProductsCtrl", ->
     it 'initialises display properties for the product', ->
       product = {id: 123}
       scope.displayProperties = {}
-      scope.prepareProduct product
+      scope.unpackProduct product
       expect(scope.displayProperties[123]).toEqual {showVariants: false}
 
     it 'calls matchSupplier for the product', ->
       product = {id: 123}
       scope.displayProperties = {}
-      scope.prepareProduct product
+      scope.unpackProduct product
       expect(scope.matchSupplier.calls.length).toEqual 1
 
     it 'calls loadVariantUnit for the product', ->
       product = {id: 123}
       scope.displayProperties = {}
-      scope.prepareProduct product
+      scope.unpackProduct product
       expect(scope.loadVariantUnit.calls.length).toEqual 1
 
 
@@ -457,11 +457,33 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "submitting products to be updated", ->
-    describe "preparing products for submit", ->
+    describe 'packing products', ->
       beforeEach ->
         ctrl "AdminBulkProductsCtrl",
           $scope: scope
 
+      it 'extracts variant_unit_with_scale into variant_unit and variant_unit_scale', ->
+        testProduct =
+          id: 1
+          variant_unit: 'weight'
+          variant_unit_scale: 1
+          variant_unit_with_scale: 'volume_1000'
+
+        scope.packProduct(testProduct)
+
+        expect(testProduct).toEqual
+          id: 1
+          variant_unit: 'volume'
+          variant_unit_scale: 1000
+          variant_unit_with_scale: 'volume_1000'
+
+
+    describe "filtering products", ->
+      beforeEach ->
+        ctrl "AdminBulkProductsCtrl",
+          $scope: scope
+
+        spyOn scope, "packProduct"
         spyOn(window, "filterSubmitProducts").andReturn [
           {
             id: 1
@@ -476,17 +498,23 @@ describe "AdminBulkProductsCtrl", ->
         scope.dirtyProducts =
           1:
             id: 1
-
+          2:
+            id: 2
+        scope.products =
+          1:
+            id: 1
           2:
             id: 2
 
         scope.submitProducts()
 
+      it 'packs all products and all dirty products', ->
+        expect(scope.packProduct.calls.length).toEqual 4
+
       it "filters returned dirty products", ->
         expect(filterSubmitProducts).toHaveBeenCalledWith
           1:
             id: 1
-
           2:
             id: 2
 
@@ -743,7 +771,7 @@ describe "AdminBulkProductsCtrl", ->
       httpBackend.flush()
 
     it "adds the newly created product to scope.products and matches supplier", ->
-      spyOn(scope, "prepareProduct").andCallThrough()
+      spyOn(scope, "unpackProduct").andCallThrough()
       scope.products = [
         id: 13
         permalink_live: "oranges"
@@ -773,7 +801,7 @@ describe "AdminBulkProductsCtrl", ->
 
       scope.cloneProduct scope.products[0]
       httpBackend.flush()
-      expect(scope.prepareProduct).toHaveBeenCalledWith
+      expect(scope.unpackProduct).toHaveBeenCalledWith
         id: 17
         name: "new_product"
         variant_unit_with_scale: null

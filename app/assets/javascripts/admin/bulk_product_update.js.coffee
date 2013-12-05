@@ -161,10 +161,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
       $scope.dirtyProducts = {}
       $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
-        $scope.prepareProduct product
+        $scope.unpackProduct product
 
 
-    $scope.prepareProduct = (product) ->
+    $scope.unpackProduct = (product) ->
       $scope.displayProperties ||= {}
       $scope.displayProperties[product.id] ||= showVariants: false
       $scope.matchSupplier product
@@ -237,7 +237,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         id = data.product.id
         dataFetcher("/api/products/" + id + "?template=bulk_show").then (data) ->
           newProduct = data
-          $scope.prepareProduct newProduct
+          $scope.unpackProduct newProduct
           $scope.products.push newProduct
 
 
@@ -262,8 +262,22 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.submitProducts = ->
+      # Pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server,
+      # then pack $scope.products, so they will match the list returned from the server
+      angular.forEach $scope.dirtyProducts, (product) ->
+        $scope.packProduct product
+      angular.forEach $scope.products, (product) ->
+        $scope.packProduct product
+
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
       $scope.updateProducts productsToSubmit
+
+
+    $scope.packProduct = (product) ->
+      if product.hasOwnProperty 'variant_unit_with_scale'
+        match = product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
+        product.variant_unit = match[1]
+        product.variant_unit_scale = parseFloat(match[2])
 
 
     $scope.productsWithoutDerivedAttributes = ->
@@ -363,9 +377,8 @@ filterSubmitProducts = (productsToFilter) ->
           filteredProduct.price = product.price
           hasUpdatableProperty = true
         if product.hasOwnProperty("variant_unit_with_scale")
-          match = product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
-          filteredProduct.variant_unit = match[1]
-          filteredProduct.variant_unit_scale = parseFloat(match[2])
+          filteredProduct.variant_unit       = product.variant_unit
+          filteredProduct.variant_unit_scale = product.variant_unit_scale
           hasUpdatableProperty = true
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
