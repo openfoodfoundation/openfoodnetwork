@@ -261,7 +261,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         $scope.displayFailure "Server returned with error status: " + status
 
 
-    $scope.prepareProductsForSubmit = ->
+    $scope.submitProducts = ->
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
       $scope.updateProducts productsToSubmit
 

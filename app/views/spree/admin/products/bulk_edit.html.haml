@@ -77,6 +77,6 @@
           %td.actions
           %td.actions
             %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
-    %input{ :type => 'button', :value => 'Update', 'ng-click' => 'prepareProductsForSubmit()'}
+    %input{ :type => 'button', :value => 'Update', 'ng-click' => 'submitProducts()'}
     %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
       {{ updateStatusMessage.text }}

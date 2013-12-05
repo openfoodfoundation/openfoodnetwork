@@ -480,7 +480,7 @@ describe "AdminBulkProductsCtrl", ->
           2:
             id: 2
 
-        scope.prepareProductsForSubmit()
+        scope.submitProducts()
 
       it "filters returned dirty products", ->
         expect(filterSubmitProducts).toHaveBeenCalledWith
