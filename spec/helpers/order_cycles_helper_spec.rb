@@ -32,4 +32,17 @@ describe OrderCyclesHelper do
       helper.stub!(:current_distributor).and_return d
       helper.pickup_time.should == "turtles"
   end
+
+  it "should give me the pickup time for any order cycle" do
+      d = create(:distributor_enterprise, name: 'Green Grass')
+      oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d])
+      oc2= create(:simple_order_cycle, name: 'oc 1', distributors: [d])
+
+      exchange = Exchange.find(oc2.exchanges.to_enterprises(d).outgoing.first.id) 
+      exchange.update_attribute :pickup_time, "turtles" 
+
+      helper.stub!(:current_order_cycle).and_return oc1
+      helper.stub!(:current_distributor).and_return d
+      helper.pickup_time(oc2).should == "turtles"
+  end
 end

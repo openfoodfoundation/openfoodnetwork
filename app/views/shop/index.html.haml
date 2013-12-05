@@ -1,8 +1,10 @@
 = @distributor.name
 
+Ready for:
+= select_tag :order_cycle_id, options_for_select(order_cycles_name_and_pickup_times(@order_cycles), current_order_cycle.id)
+
 %description
   = @distributor.long_description.andand.html_safe
-
 
 
 = render partial: "enterprises/contact_us"

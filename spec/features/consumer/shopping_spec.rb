@@ -21,11 +21,11 @@ feature "As a consumer I want to shop with a distributor" do
       it "selects an order cycle if only one is open" do
         # create order cycle
         oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor])
-        exchange = Exchange.find(oc1.exchanges.to_enterprises(d).outgoing.first.id) 
+        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
         exchange.update_attribute :pickup_time, "turtles" 
         
         visit shop_index_path
-        page.should have_selector "option[selected]", text: 'Packing'
+        page.should have_selector "option[selected]", text: 'turtles'
         
         # Should see order cycle selected in dropdown
         # (Should also render products)
