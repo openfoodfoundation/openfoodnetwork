@@ -128,7 +128,7 @@ describe "filtering products", ->
       price: 10
     ]
 
-  it 'returns variant_unit_with_scale as variant_unit and variant_unit_scale', ->
+  it "returns variant_unit_with_scale as variant_unit and variant_unit_scale", ->
     testProduct =
       id: 1
       variant_unit: 'weight'
@@ -308,24 +308,24 @@ describe "AdminBulkProductsCtrl", ->
       expect(scope.unpackProduct.calls.length).toEqual 2
 
 
-  describe 'preparing products', ->
+  describe "preparing products", ->
     beforeEach ->
       spyOn scope, "matchSupplier"
       spyOn scope, "loadVariantUnit"
 
-    it 'initialises display properties for the product', ->
+    it "initialises display properties for the product", ->
       product = {id: 123}
       scope.displayProperties = {}
       scope.unpackProduct product
       expect(scope.displayProperties[123]).toEqual {showVariants: false}
 
-    it 'calls matchSupplier for the product', ->
+    it "calls matchSupplier for the product", ->
       product = {id: 123}
       scope.displayProperties = {}
       scope.unpackProduct product
       expect(scope.matchSupplier.calls.length).toEqual 1
 
-    it 'calls loadVariantUnit for the product', ->
+    it "calls loadVariantUnit for the product", ->
       product = {id: 123}
       scope.displayProperties = {}
       scope.unpackProduct product
@@ -359,20 +359,20 @@ describe "AdminBulkProductsCtrl", ->
       expect(product.supplier).toEqual s1_s
 
 
-  describe 'loading variant unit', ->
-    it 'sets variant_unit_with_scale by combining variant_unit and variant_unit_scale', ->
+  describe "loading variant unit", ->
+    it "sets variant_unit_with_scale by combining variant_unit and variant_unit_scale", ->
       product =
         variant_unit: "volume"
         variant_unit_scale: .001
       scope.loadVariantUnit product
       expect(product.variant_unit_with_scale).toEqual "volume_0.001"
 
-    it 'sets variant_unit_with_scale to null when variant_unit is null', ->
+    it "sets variant_unit_with_scale to null when variant_unit is null", ->
       product = {variant_unit: null, variant_unit_scale: 1000}
       scope.loadVariantUnit product
       expect(product.variant_unit_with_scale).toBeNull()
 
-    it 'sets variant_unit_with_scale to variant_unit when variant_unit_scale is null', ->
+    it "sets variant_unit_with_scale to variant_unit when variant_unit_scale is null", ->
       product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
       scope.loadVariantUnit product
       expect(product.variant_unit_with_scale).toEqual "items"
@@ -439,8 +439,8 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "submitting products to be updated", ->
-    describe 'packing products', ->
-      it 'extracts variant_unit_with_scale into variant_unit and variant_unit_scale', ->
+    describe "packing products", ->
+      it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
         testProduct =
           id: 1
           variant_unit: 'weight'
@@ -483,7 +483,7 @@ describe "AdminBulkProductsCtrl", ->
 
         scope.submitProducts()
 
-      it 'packs all products and all dirty products', ->
+      it "packs all products and all dirty products", ->
         expect(scope.packProduct.calls.length).toEqual 4
 
       it "filters returned dirty products", ->
@@ -556,15 +556,15 @@ describe "AdminBulkProductsCtrl", ->
         expect(scope.displayFailure).toHaveBeenCalled()
 
 
-  describe 'fetching products without derived attributes', ->
-    it 'returns products without the variant_unit_with_scale field', ->
+  describe "fetching products without derived attributes", ->
+    it "returns products without the variant_unit_with_scale field", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
       expect(scope.productsWithoutDerivedAttributes()).toEqual([{id: 123}])
 
-    it 'returns an empty array when products are undefined', ->
+    it "returns an empty array when products are undefined", ->
       expect(scope.productsWithoutDerivedAttributes()).toEqual([])
 
-    it 'does not alter products', ->
+    it "does not alter products", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
       scope.productsWithoutDerivedAttributes()
       expect(scope.products).toEqual [{id: 123, variant_unit_with_scale: 'weight_1000'}]
