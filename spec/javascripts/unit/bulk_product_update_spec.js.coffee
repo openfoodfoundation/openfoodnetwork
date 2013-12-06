@@ -172,7 +172,7 @@ describe "filtering products", ->
       ]
       variant_unit: 'volume'
       variant_unit_scale: 1
-      variant_unit_name: null
+      variant_unit_name: 'loaf'
       variant_unit_with_scale: 'volume_1'
 
     expect(filterSubmitProducts([testProduct])).toEqual [
@@ -181,6 +181,7 @@ describe "filtering products", ->
       supplier_id: 5
       variant_unit: 'volume'
       variant_unit_scale: 1
+      variant_unit_name: 'loaf'
       available_on: new Date()
       variants_attributes: [
         id: 1
@@ -377,6 +378,11 @@ describe "AdminBulkProductsCtrl", ->
       scope.loadVariantUnit product
       expect(product.variant_unit_with_scale).toEqual "items"
 
+    it "sets variant_unit_with_scale to variant_unit when variant_unit is 'items'", ->
+      product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
+      scope.loadVariantUnit product
+      expect(product.variant_unit_with_scale).toEqual "items"
+
 
   describe "getting on_hand counts when products have variants", ->
     p1 = undefined
@@ -454,6 +460,21 @@ describe "AdminBulkProductsCtrl", ->
           variant_unit: 'volume'
           variant_unit_scale: 1000
           variant_unit_with_scale: 'volume_1000'
+
+      it "extracts when variant_unit_with_scale is 'items'", ->
+        testProduct =
+          id: 1
+          variant_unit: 'weight'
+          variant_unit_scale: 1
+          variant_unit_with_scale: 'items'
+
+        scope.packProduct(testProduct)
+
+        expect(testProduct).toEqual
+          id: 1
+          variant_unit: 'items'
+          variant_unit_scale: null
+          variant_unit_with_scale: 'items'
 
 
     describe "filtering products", ->

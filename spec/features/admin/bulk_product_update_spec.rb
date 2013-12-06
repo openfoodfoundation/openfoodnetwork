@@ -225,6 +225,28 @@ feature %q{
     page.should have_field "on_hand", with: "18"
   end
   
+  scenario "updating a product with an items variant unit" do
+    p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+
+    select "Items", from: "variant_unit_with_scale"
+    fill_in "variant_unit_name", with: "loaf"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    visit '/admin/products/bulk_edit'
+
+    page.should have_select "variant_unit_with_scale", selected: "Items"
+    page.should have_field "variant_unit_name", with: "loaf"
+  end
+
+
   scenario "updating a product with variants" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)

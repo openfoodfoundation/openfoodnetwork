@@ -180,12 +180,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.loadVariantUnit = (product) ->
-      product.variant_unit_with_scale = if product.variant_unit && product.variant_unit_scale
-        "#{product.variant_unit}_#{product.variant_unit_scale}"
-      else if product.variant_unit
-        product.variant_unit
-      else
-        null
+      product.variant_unit_with_scale =
+        if product.variant_unit && product.variant_unit_scale && product.variant_unit != 'items'
+          "#{product.variant_unit}_#{product.variant_unit_scale}"
+        else if product.variant_unit
+          product.variant_unit
+        else
+          null
 
 
     $scope.updateOnHand = (product) ->
@@ -276,10 +277,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.packProduct = (product) ->
-      if product.hasOwnProperty 'variant_unit_with_scale'
+      if product.variant_unit_with_scale
         match = product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
-        product.variant_unit = match[1]
-        product.variant_unit_scale = parseFloat(match[2])
+        if match
+          product.variant_unit = match[1]
+          product.variant_unit_scale = parseFloat(match[2])
+        else
+          product.variant_unit = product.variant_unit_with_scale
+          product.variant_unit_scale = null
 
 
     $scope.productsWithoutDerivedAttributes = ->
@@ -381,6 +386,9 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("variant_unit_with_scale")
           filteredProduct.variant_unit       = product.variant_unit
           filteredProduct.variant_unit_scale = product.variant_unit_scale
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("variant_unit_name")
+          filteredProduct.variant_unit_name = product.variant_unit_name
           hasUpdatableProperty = true
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
