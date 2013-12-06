@@ -23,7 +23,7 @@ productsApp.directive "ofnDecimal", ->
 productsApp.directive "ofnTrackProduct", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ngTrackProduct
+    property_name = attrs.ofnTrackProduct
     ngModel.$parsers.push (viewValue) ->
       if ngModel.$dirty
         addDirtyProperty scope.dirtyProducts, scope.product.id, property_name, viewValue
@@ -34,7 +34,7 @@ productsApp.directive "ofnTrackProduct", ->
 productsApp.directive "ofnTrackVariant", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ngTrackVariant
+    property_name = attrs.ofnTrackVariant
     ngModel.$parsers.push (viewValue) ->
       dirtyVariants = {}
       dirtyVariants = scope.dirtyProducts[scope.product.id].variants  if scope.dirtyProducts.hasOwnProperty(scope.product.id) and scope.dirtyProducts[scope.product.id].hasOwnProperty("variants")
