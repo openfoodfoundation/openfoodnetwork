@@ -106,6 +106,15 @@ feature %q{
 
       page.should have_select "variant_unit_with_scale", selected: "Weight (g)"
     end
+
+    it "displays a text field for the item name when unit is set to 'Items'" do
+      p = FactoryGirl.create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Items"
+      page.should have_field "variant_unit_name", with: "packet"
+    end
   end
   
   describe "listing variants" do
