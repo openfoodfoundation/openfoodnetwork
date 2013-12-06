@@ -50,7 +50,7 @@
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-            %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ng-track-product' => 'variant_unit_name', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
+            %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
