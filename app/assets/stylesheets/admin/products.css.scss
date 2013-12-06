@@ -47,3 +47,14 @@ ul.column-list{
   border: solid 1px darkgray;
   list-style:none
 }
+
+table#listing_products.bulk {
+  td.unit {
+    input, select {
+      width: 100%;
+    }
+    select {
+      margin-bottom: 0.5em;
+    }
+  }
+}

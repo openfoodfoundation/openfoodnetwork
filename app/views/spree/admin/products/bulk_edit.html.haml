@@ -27,7 +27,7 @@
             {{ column.name }}
     %br.clear
     %br.clear
-    %table.index#listing_products
+    %table.index#listing_products.bulk
       %thead
         %tr
           %th.left-actions
@@ -48,7 +48,7 @@
             %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ofn-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
-          %td{ 'ng-show' => 'columns.unit.visible' }
+          %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
