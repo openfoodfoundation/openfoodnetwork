@@ -1,25 +1,35 @@
-basePath = '../';
+module.exports = function(config) {
+  config.set({
+    basePath: '../',
 
-files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'app/assets/javascripts/shared/jquery-1.8.0.js', // TODO: Can we link to Rails' jquery?
-  'app/assets/javascripts/shared/angular.js',
-  'app/assets/javascripts/shared/angular-*.js',
+    frameworks: ['jasmine'],
 
-  'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
-  'app/assets/javascripts/admin/bulk_product_update.js',
+    files: [
+      'app/assets/javascripts/shared/jquery-1.8.0.js', // TODO: Can we link to Rails' jquery?
+      'app/assets/javascripts/shared/angular.js',
+      'app/assets/javascripts/shared/angular-*.js',
 
-  'spec/javascripts/unit/**/*.js*'
-];
+      'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
+      'app/assets/javascripts/admin/bulk_product_update.js',
 
-exclude = ['**/.#*']
+      'spec/javascripts/unit/**/*.js*'
+    ],
 
-autoWatch = true;
+    exclude: ['**/.#*'],
 
-browsers = ['Chrome'];
+    coffeePreprocessor: {
+      options: {
+        sourceMap: true
+      }
+    },
 
-junitReporter = {
-  outputFile: 'log/testacular-unit.xml',
-  suite: 'unit'
+    autoWatch: true,
+
+    browsers: ['Chrome'],
+
+    junitReporter: {
+      outputFile: 'log/testacular-unit.xml',
+      suite: 'unit'
+    }
+  });
 };
