@@ -160,6 +160,18 @@ feature %q{
       page.should have_field "variant_price", with: "12.75"
       page.should have_field "variant_price", with: "2.5"
     end
+
+    it "displays a unit value field (for each variant) for each product" do
+      p1 = FactoryGirl.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1.2, unit_description: "(small bag)")
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4.8, unit_description: "(large bag)")
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field "price", with: "2.0"
+      page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
+      page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
+    end
   end
 
   scenario "create a new product" do

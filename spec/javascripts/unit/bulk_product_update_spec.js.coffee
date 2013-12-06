@@ -361,27 +361,51 @@ describe "AdminBulkProductsCtrl", ->
 
 
   describe "loading variant unit", ->
-    it "sets variant_unit_with_scale by combining variant_unit and variant_unit_scale", ->
-      product =
-        variant_unit: "volume"
-        variant_unit_scale: .001
-      scope.loadVariantUnit product
-      expect(product.variant_unit_with_scale).toEqual "volume_0.001"
+    describe "setting product variant_unit_with_scale field", ->
+      it "sets by combining variant_unit and variant_unit_scale", ->
+        product =
+          variant_unit: "volume"
+          variant_unit_scale: .001
+        scope.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "volume_0.001"
 
-    it "sets variant_unit_with_scale to null when variant_unit is null", ->
-      product = {variant_unit: null, variant_unit_scale: 1000}
-      scope.loadVariantUnit product
-      expect(product.variant_unit_with_scale).toBeNull()
+      it "sets to null when variant_unit is null", ->
+        product = {variant_unit: null, variant_unit_scale: 1000}
+        scope.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toBeNull()
 
-    it "sets variant_unit_with_scale to variant_unit when variant_unit_scale is null", ->
-      product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
-      scope.loadVariantUnit product
-      expect(product.variant_unit_with_scale).toEqual "items"
+      it "sets to variant_unit when variant_unit_scale is null", ->
+        product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
+        scope.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "items"
 
-    it "sets variant_unit_with_scale to variant_unit when variant_unit is 'items'", ->
-      product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
-      scope.loadVariantUnit product
-      expect(product.variant_unit_with_scale).toEqual "items"
+      it "sets to variant_unit when variant_unit is 'items'", ->
+        product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
+        scope.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "items"
+
+    describe "setting variant unit_value_with_description", ->
+      it "sets by combining unit_value and unit_description", ->
+        product =
+          variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
+        scope.loadVariantUnit product
+        expect(product.variants[0]).toEqual
+          id: 1
+          unit_value: 1
+          unit_description: '(bottle)'
+          unit_value_with_description: '1 (bottle)'
+
+      it "uses unit_value when description is missing", ->
+        product =
+          variants: [{id: 1, unit_value: 1}]
+        scope.loadVariantUnit product
+        expect(product.variants[0].unit_value_with_description).toEqual '1'
+
+      it "uses unit_description when value is missing", ->
+        product =
+          variants: [{id: 1, unit_description: 'Small'}]
+        scope.loadVariantUnit product
+        expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
 
   describe "getting on_hand counts when products have variants", ->
@@ -585,10 +609,20 @@ describe "AdminBulkProductsCtrl", ->
     it "returns an empty array when products are undefined", ->
       expect(scope.productsWithoutDerivedAttributes()).toEqual([])
 
-    it "does not alter products", ->
+    it "does not alter original products", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
       scope.productsWithoutDerivedAttributes()
       expect(scope.products).toEqual [{id: 123, variant_unit_with_scale: 'weight_1000'}]
+
+    describe "updating variants", ->
+      it "returns variants without the unit_value_with_description field", ->
+        scope.products = [{id: 123, variants: [{id: 234, unit_value_with_description: 'foo'}]}]
+        expect(scope.productsWithoutDerivedAttributes()).toEqual [
+          {
+            id: 123
+            variants: [{id: 234}]
+          }
+        ]
 
 
   describe "deleting products", ->
@@ -783,6 +817,7 @@ describe "AdminBulkProductsCtrl", ->
         variants: [
           id: 3
           name: "V1"
+          unit_value_with_description: ""
         ]
 
       expect(scope.products).toEqual [
@@ -800,6 +835,7 @@ describe "AdminBulkProductsCtrl", ->
           variants: [
             id: 3
             name: "V1"
+            unit_value_with_description: ""
           ]
         }
       ]

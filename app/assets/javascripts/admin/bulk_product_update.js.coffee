@@ -188,6 +188,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
         else
           null
 
+      if product.variants
+        for variant in product.variants
+          variant.unit_value_with_description = "#{variant.unit_value || ''} #{variant.unit_description || ''}".trim()
+
 
     $scope.updateOnHand = (product) ->
       product.on_hand = $scope.onHand(product)
@@ -291,8 +295,11 @@ productsApp.controller "AdminBulkProductsCtrl", [
       products = []
       if $scope.products
         products.push angular.extend {}, product for product in $scope.products
-        angular.forEach products, (product) ->
+        for product in products
           delete product.variant_unit_with_scale
+          if product.variants
+            for variant in product.variants
+              delete variant.unit_value_with_description
       products
 
     $scope.setMessage = (model, text, style, timeout) ->
