@@ -1,0 +1,14 @@
+%shop{"ng-app" => "Shop"}
+  = @distributor.name
+
+  = render partial: "shop/order_cycles"
+
+  %description
+    = @distributor.long_description.andand.html_safe
+
+  %products{"ng-controller" => "ProductsCtrl"}
+    {{ products }}
+
+  = render partial: "enterprises/contact_us"
+  = render partial: "enterprises/about_us"
+

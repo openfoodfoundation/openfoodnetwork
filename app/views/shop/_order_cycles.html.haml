@@ -1,10 +1,14 @@
-- if @order_cycles.empty?
-  Orders are currently closed for this hub
-  %p Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
+%ordercycle
+  - if @order_cycles.empty?
+    Orders are currently closed for this hub
+    %p Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
 
-  = render partial: "shop/next_order_cycle"
-  = render partial: "shop/last_order_cycle"
+    = render partial: "shop/next_order_cycle"
+    = render partial: "shop/last_order_cycle"
 
-- else
-  Ready for:
-  = select_tag :order_cycle_id, options_for_select(order_cycles_name_and_pickup_times(@order_cycles), current_order_cycle.andand.id), :prompt => "Select an Order Cycle!"
+  - else
+    Ready for:
+    = select_tag  :order_cycle_id, 
+      options_for_select(order_cycles_name_and_pickup_times(@order_cycles), 
+      current_order_cycle.andand.id), :prompt => "Select an Order Cycle!"
+

@@ -4,7 +4,15 @@ class ShopController < BaseController
   before_filter :set_distributor
   before_filter :set_order_cycles
 
-  def index
+  def show
+  end
+  
+  def products
+    if current_order_cycle
+      render json: Spree::Product.all.to_json
+    else
+      render json: "", status: 404 
+    end
   end
 
   private
