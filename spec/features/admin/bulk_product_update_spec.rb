@@ -262,8 +262,8 @@ feature %q{
   scenario "updating a product with variants" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
-    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 0.001)
+    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9, unit_value: 250, unit_description: '(bottle)')
 
     login_to_admin_section
 
@@ -272,11 +272,13 @@ feature %q{
     first("a.view-variants").click
 
     page.should have_field "variant_price", with: "3.0"
+    page.should have_field "variant_unit_value_with_description", with: "250 (bottle)"
     page.should have_field "variant_on_hand", with: "9"
     page.should have_selector "span[name='on_hand']", text: "9"
 
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
+    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
 
     page.should have_selector "span[name='on_hand']", text: "10"
 
@@ -289,6 +291,7 @@ feature %q{
 
     page.should have_field "variant_price", with: "4.0"
     page.should have_field "variant_on_hand", with: "10"
+    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
   end
 
   scenario "updating delegated attributes of variants in isolation" do

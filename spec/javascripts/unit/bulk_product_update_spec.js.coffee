@@ -76,6 +76,8 @@ describe "filtering products", ->
         id: 1
         on_hand: 5
         price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
       ]
 
     expect(filterSubmitProducts([testProduct])).toEqual [
@@ -84,6 +86,8 @@ describe "filtering products", ->
         id: 1
         on_hand: 5
         price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
       ]
     ]
 
@@ -169,6 +173,8 @@ describe "filtering products", ->
         id: 1
         on_hand: 2
         price: 10.0
+        unit_value: 250
+        unit_description: "(bottle)"
       ]
       variant_unit: 'volume'
       variant_unit_scale: 1
@@ -187,6 +193,8 @@ describe "filtering products", ->
         id: 1
         on_hand: 2
         price: 10.0
+        unit_value: 250
+        unit_description: "(bottle)"
       ]
     ]
 
@@ -499,6 +507,50 @@ describe "AdminBulkProductsCtrl", ->
           variant_unit: 'items'
           variant_unit_scale: null
           variant_unit_with_scale: 'items'
+
+      it "packs each variant", ->
+        spyOn scope, "packVariant"
+        testVariant = {id: 1}
+        testProduct =
+          id: 1
+          variants: {1: testVariant}
+
+        scope.packProduct(testProduct)
+
+        expect(scope.packVariant).toHaveBeenCalledWith(testVariant)
+
+    describe "packing variants", ->
+      it "extracts unit_value and unit_description from unit_value_with_description", ->
+        testVariant = {unit_value_with_description: "250.5 (bottle)"}
+        scope.packVariant(testVariant)
+        expect(testVariant).toEqual
+          unit_value: 250.5
+          unit_description: "(bottle)"
+          unit_value_with_description: "250.5 (bottle)"
+
+      it "extracts into unit_value when only a number is provided", ->
+        testVariant = {unit_value_with_description: "250.5"}
+        scope.packVariant(testVariant)
+        expect(testVariant).toEqual
+          unit_value: 250.5
+          unit_description: ''
+          unit_value_with_description: "250.5"
+
+      it "extracts into unit_description when only a string is provided", ->
+        testVariant = {unit_value_with_description: "Medium"}
+        scope.packVariant(testVariant)
+        expect(testVariant).toEqual
+          unit_value: null
+          unit_description: 'Medium'
+          unit_value_with_description: "Medium"
+
+      it "sets blank values when no value provided", ->
+        testVariant = {unit_value_with_description: ""}
+        scope.packVariant(testVariant)
+        expect(testVariant).toEqual
+          unit_value: null
+          unit_description: ''
+          unit_value_with_description: ""
 
 
     describe "filtering products", ->

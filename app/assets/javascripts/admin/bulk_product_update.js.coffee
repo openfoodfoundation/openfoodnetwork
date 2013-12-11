@@ -289,6 +289,16 @@ productsApp.controller "AdminBulkProductsCtrl", [
         else
           product.variant_unit = product.variant_unit_with_scale
           product.variant_unit_scale = null
+      if product.variants
+        for id, variant of product.variants
+          $scope.packVariant variant
+
+
+    $scope.packVariant = (variant) ->
+      match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
+      if match
+        variant.unit_value = parseFloat(match[1]) || null
+        variant.unit_description = match[3]
 
 
     $scope.productsWithoutDerivedAttributes = ->
@@ -376,6 +386,12 @@ filterSubmitProducts = (productsToFilter) ->
                 hasUpdatableProperty = true
               if variant.hasOwnProperty("price")
                 filteredVariant.price = variant.price
+                hasUpdatableProperty = true
+              if variant.hasOwnProperty("unit_value")
+                filteredVariant.unit_value = variant.unit_value
+                hasUpdatableProperty = true
+              if variant.hasOwnProperty("unit_description")
+                filteredVariant.unit_description = variant.unit_description
                 hasUpdatableProperty = true
               filteredVariants.push filteredVariant  if hasUpdatableProperty
 

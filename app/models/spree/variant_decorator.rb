@@ -1,4 +1,6 @@
 Spree::Variant.class_eval do
+  attr_accessible :unit_value, :unit_description
+
   validates_presence_of :unit_value,
                         if: -> v { %w(weight volume).include? v.product.variant_unit },
                         unless: :is_master
