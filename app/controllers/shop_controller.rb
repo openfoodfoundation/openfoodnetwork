@@ -27,7 +27,9 @@ class ShopController < BaseController
   private
 
   def set_distributor
-    @distributor = current_distributor 
+    unless @distributor = current_distributor 
+      redirect_to root_path
+    end
   end
 
   def set_order_cycles
