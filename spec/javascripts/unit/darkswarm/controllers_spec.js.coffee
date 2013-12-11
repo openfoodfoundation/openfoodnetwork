@@ -10,14 +10,16 @@ describe 'All controllers', ->
       module('Shop')
       Product = 
         all: ->
-          'testy mctest'
+        update: ->
+        data: "testy mctest"
+          
       inject ($controller, $rootScope) ->
         rootScope = $rootScope
         scope = $rootScope.$new()
         ctrl = $controller 'ProductsCtrl', {$scope: scope, Product : Product} 
 
     it 'Fetches products from Product', ->
-      expect(scope.products).toEqual 'testy mctest'
+      expect(scope.data).toEqual 'testy mctest'
 
     #it "updates products when the changeOrderCycle event is seen", ->
       #spyOn(scope, "updateProducts")

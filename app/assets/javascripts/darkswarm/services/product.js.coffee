@@ -1,9 +1,11 @@
 Shop.factory 'Product', ($resource) ->
   new class Product
-    @products: null
+    data: {
+      products: null
+    }
     update: ->
-      @products = $resource("/shop/products").query()
-      console.log @products
-      @products
+      @data.products = $resource("/shop/products").query =>
+        #console.log @products
+      @data
     all: ->
-      @products || @update()
+      @data.products || @update()

@@ -4,7 +4,8 @@ Shop.factory 'OrderCycle', ($resource, Product) ->
       order_cycle_id: null
     }
 
-    @set_order_cycle: ->
-      new $resource("/shop/order_cycle").save {order_cycle_id: @order_cycle.order_cycle_id}, ->
+    @set_order_cycle: (id)->
+      @order_cycle.order_cycle_id = id
+      new $resource("/shop/order_cycle").save {order_cycle_id: id}, ->
         Product.update() 
         

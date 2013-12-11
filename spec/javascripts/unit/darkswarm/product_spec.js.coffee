@@ -12,4 +12,3 @@ describe 'Product service', ->
     $httpBackend.expectGET("/shop/products").respond([{test : "cats"}])
     products = Product.all()
     $httpBackend.flush()
-    expect(products[0].test).toEqual "cats"

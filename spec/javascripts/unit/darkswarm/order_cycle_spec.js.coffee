@@ -21,3 +21,5 @@ describe 'OrderCycle service', ->
     OrderCycle.set_order_cycle(10)
     $httpBackend.flush()
     expect(mockProduct.update).toHaveBeenCalled()
+
+

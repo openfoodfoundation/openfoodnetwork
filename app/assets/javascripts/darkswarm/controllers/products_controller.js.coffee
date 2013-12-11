@@ -1,5 +1,6 @@
 angular.module("Shop").controller "ProductsCtrl", ($scope, $rootScope, Product) ->
-  $scope.products = Product.all()
+  $scope.data = Product.data
+  Product.update()
 
 
   #$scope.order_cycle = OrderCycle.order_cycle
