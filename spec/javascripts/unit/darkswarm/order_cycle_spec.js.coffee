@@ -18,7 +18,8 @@ describe 'OrderCycle service', ->
   it "posts the order_cycle ID and tells product to update", ->
     $httpBackend.expectPOST("/shop/order_cycle", {"order_cycle_id" : 10}).respond(200)
     spyOn(mockProduct, "update")
-    OrderCycle.set_order_cycle(10)
+    OrderCycle.order_cycle.order_cycle_id = 10
+    OrderCycle.push_order_cycle()
     $httpBackend.flush()
     expect(mockProduct.update).toHaveBeenCalled()
 
