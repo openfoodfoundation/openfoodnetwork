@@ -28,13 +28,23 @@
     %br.clear
     %br.clear
     %table.index#listing_products.bulk
+      %colgroup
+        %col
+        %col
+        %col{'style' => 'width: 20%;'}
+        %col{'style' => 'width: 12%;'}
+        %col
+        %col
+        %col
+        %col
+
       %thead
         %tr
           %th.left-actions
-          %th{ 'ng-show' => 'columns.name.visible' } Name
           %th{ 'ng-show' => 'columns.supplier.visible' } Supplier
-          %th{ 'ng-show' => 'columns.price.visible' } Price
+          %th{ 'ng-show' => 'columns.name.visible' } Name
           %th{ 'ng-show' => 'columns.unit.visible' } Unit / Value
+          %th{ 'ng-show' => 'columns.price.visible' } Price
           %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
           %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
@@ -42,15 +52,15 @@
         %tr.product
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
+          %td.supplier{ 'ng-show' => 'columns.supplier.visible' }
+            %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ofn-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
           %td{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
-          %td{ 'ng-show' => 'columns.supplier.visible' }
-            %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ofn-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
-          %td{ 'ng-show' => 'columns.price.visible' }
-            %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
+          %td{ 'ng-show' => 'columns.price.visible' }
+            %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
@@ -65,13 +75,13 @@
         %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
           %td.left-actions
             %a{ :class => "variant-item icon-caret-right" }
+          %td{ 'ng-show' => 'columns.supplier.visible' }
           %td{ 'ng-show' => 'columns.name.visible' }
             {{ variant.options_text }}
-          %td{ 'ng-show' => 'columns.supplier.visible' }
-          %td{ 'ng-show' => 'columns.price.visible' }
-            %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.unit.visible' }
             %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text' }
+          %td{ 'ng-show' => 'columns.price.visible' }
+            %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
           %td{ 'ng-show' => 'columns.available_on.visible' }

@@ -41,7 +41,7 @@ li.column-list-item.unselected {
   font-size: 100%;
 }
 
-ul.column-list{
+ul.column-list {
   padding: 5px 8px;
   border-radius: 3px;
   border: solid 1px darkgray;
@@ -49,6 +49,12 @@ ul.column-list{
 }
 
 table#listing_products.bulk {
+  td.supplier {
+    select {
+      width: 125px;
+    }
+  }
+
   td.unit {
     input, select {
       width: 100%;

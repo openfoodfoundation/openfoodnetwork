@@ -121,10 +121,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
       style: {}
 
     $scope.columns =
-      name:         {name: "Name",         visible: true}
       supplier:     {name: "Supplier",     visible: true}
-      price:        {name: "Price",        visible: true}
+      name:         {name: "Name",         visible: true}
       unit:         {name: "Unit",         visible: true}
+      price:        {name: "Price",        visible: true}
       on_hand:      {name: "On Hand",      visible: true}
       available_on: {name: "Available On", visible: true}
 
