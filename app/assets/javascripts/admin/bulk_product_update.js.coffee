@@ -295,10 +295,11 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.packVariant = (variant) ->
-      match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
-      if match
-        variant.unit_value = parseFloat(match[1]) || null
-        variant.unit_description = match[3]
+      if variant.hasOwnProperty("unit_value_with_description")
+        match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
+        if match
+          variant.unit_value = parseFloat(match[1]) || null
+          variant.unit_description = match[3]
 
 
     $scope.productsWithoutDerivedAttributes = ->

@@ -552,6 +552,11 @@ describe "AdminBulkProductsCtrl", ->
           unit_description: ''
           unit_value_with_description: ""
 
+      it "sets nothing when the field is undefined", ->
+        testVariant = {}
+        scope.packVariant(testVariant)
+        expect(testVariant).toEqual {}
+
 
     describe "filtering products", ->
       beforeEach ->
