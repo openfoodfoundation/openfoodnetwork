@@ -7,8 +7,9 @@
     = @distributor.long_description.andand.html_safe
 
   %products{"ng-controller" => "ProductsCtrl"}
-    {{ products }}
+    %pre {{ products | json }}
 
   = render partial: "enterprises/contact_us"
   = render partial: "enterprises/about_us"
+
 

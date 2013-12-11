@@ -1,5 +1,7 @@
 Shop.factory 'Product', ($resource) ->
-  class Product
-    @all: ->
-      response = $resource("/shop/products").query()
-
+  new class Product
+    @products: null
+    update: ->
+      @products = $resource("/shop/products").query()
+    all: ->
+      @products || @update()

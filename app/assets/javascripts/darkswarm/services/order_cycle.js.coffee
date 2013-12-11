@@ -1,6 +1,10 @@
-Shop.factory 'OrderCycle', ($resource) ->
-  class OrderCycle
-    @set_order_cycle: (id)->
-      new $resource("/shop/order_cycle").$save () ->
-        console.log "pushed"
-      # Push id to endpoint
+Shop.factory 'OrderCycle', ($resource, Product) ->
+  new class OrderCycle
+    @order_cycle = {
+      order_cycle_id: null
+    }
+
+    set_order_cycle: (id = null)->
+      new $resource("/shop/order_cycle").save {order_cycle_id: id}, ->
+        Product.update() 
+        

@@ -1,4 +1,4 @@
-%ordercycle
+%ordercycle{"ng-controller" => "OrderCycleCtrl"}
   - if @order_cycles.empty?
     Orders are currently closed for this hub
     %p Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens.
@@ -8,7 +8,7 @@
 
   - else
     Ready for:
-    = select_tag  :order_cycle_id, 
-      options_for_select(order_cycles_name_and_pickup_times(@order_cycles), 
-      current_order_cycle.andand.id), :prompt => "Select an Order Cycle!"
+    %select{"ng-model" => "order_cycle.order_cycle_id", 
+            "ng-change" => "changeOrderCycle()",
+            "ng-options" => "c for c in #{@order_cycles.map {|oc| oc.id}.to_json}"}
 

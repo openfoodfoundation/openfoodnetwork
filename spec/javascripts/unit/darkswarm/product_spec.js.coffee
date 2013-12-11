@@ -8,7 +8,7 @@ describe 'Product service', ->
       Product = $injector.get("Product")
       $httpBackend = _$httpBackend_
 
-  it "Fetches products from the backend", ->
+  it "Fetches products from the backend on init", ->
     $httpBackend.expectGET("/shop/products").respond([{test : "cats"}])
     products = Product.all()
     $httpBackend.flush()
