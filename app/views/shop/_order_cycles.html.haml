@@ -11,6 +11,6 @@
   - else
     Ready for:
     %select{"ng-model" => "order_cycle.order_cycle_id", 
-            "ng-init" => "order_cycle.order_cycle_id = #{current_order_cycle.id}",
+            "ng-init" => "order_cycle.order_cycle_id = #{current_order_cycle.andand.id}",
             "ng-change" => "changeOrderCycle()",
             "ng-options" => "c for c in #{@order_cycles.map {|oc| oc.id}.to_json}"}

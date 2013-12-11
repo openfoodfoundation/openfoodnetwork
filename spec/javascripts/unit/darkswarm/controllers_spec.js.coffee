@@ -21,10 +21,6 @@ describe 'All controllers', ->
     it 'Fetches products from Product', ->
       expect(scope.data).toEqual 'testy mctest'
 
-    #it "updates products when the changeOrderCycle event is seen", ->
-      #spyOn(scope, "updateProducts")
-      #rootScope.$emit "changeOrderCycle"
-      #expect(scope.updateProducts).toHaveBeenCalled()
   
   describe 'OrderCycleCtrl', ->
     ctrl = null
@@ -42,7 +38,3 @@ describe 'All controllers', ->
         scope = $rootScope.$new()
         ctrl = $controller 'OrderCycleCtrl', {$scope: scope}
 
-    #it "triggers an event when the order cycle changes", ->
-      #spyOn(rootScope, "$emit")
-      #scope.changeOrderCycle()
-      #expect(scope.$emit).toHaveBeenCalledWith "changeOrderCycle"

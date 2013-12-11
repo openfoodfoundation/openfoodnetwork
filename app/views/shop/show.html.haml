@@ -7,6 +7,10 @@
     = @distributor.long_description.andand.html_safe
 
   %products{"ng-controller" => "ProductsCtrl"}
+    %product{"ng-repeat" => "product in data.products "}
+      {{ product.product.name }}
+      {{ product.product.description }}
+
     %pre {{ data.products | json }}
 
   = render partial: "enterprises/contact_us"
