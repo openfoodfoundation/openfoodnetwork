@@ -13,6 +13,13 @@ describe ShopController do
       controller.stub(:current_distributor).and_return d
     end
 
+    describe "Fetching products" do
+      it "should return products for the current order cycle" do
+        spree_get :products
+      end
+      it "should not return other products"
+    end
+
     describe "Selecting order cycles" do
       it "should select an order cycle when only one order cycle is open" do
         oc1 = create(:order_cycle, distributors: [d])
