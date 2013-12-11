@@ -19,7 +19,28 @@ describe ShopController do
       spree_get :show
       controller.current_order_cycle.should == nil
     end
+    
+    it "should allow the user to post to select the current order cycle" do
+      oc1 = create(:order_cycle, distributors: [d])
+      oc2 = create(:order_cycle, distributors: [d])
+      
+      spree_post :order_cycle, order_cycle_id: oc2.id
+      response.should be_success
+      controller.current_order_cycle.should == oc2
+    end
+
+    it "should not allow the user to select an invalid order cycle" do
+      oc1 = create(:order_cycle, distributors: [d])
+      oc2 = create(:order_cycle, distributors: [d])
+      oc3 = create(:order_cycle, distributors: [create(:distributor_enterprise)])
+      
+      spree_post :order_cycle, order_cycle_id: oc3.id
+      response.status.should == 404
+      controller.current_order_cycle.should == nil
+
+    end
   end
+
 
   describe "returning products" do
     let(:product) { create(:product) }
