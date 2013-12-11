@@ -8,8 +8,8 @@ class ShopController < BaseController
   end
   
   def products
-    if current_order_cycle
-      render json: Spree::Product.all.to_json
+    if products = current_order_cycle.andand.products_distributed_by(@distributor)
+      render json: products.to_json 
     else
       render json: "", status: 404 
     end

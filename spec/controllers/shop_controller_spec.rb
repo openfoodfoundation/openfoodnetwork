@@ -13,13 +13,6 @@ describe ShopController do
       controller.stub(:current_distributor).and_return d
     end
 
-    describe "Fetching products" do
-      it "should return products for the current order cycle" do
-        spree_get :products
-      end
-      it "should not return other products"
-    end
-
     describe "Selecting order cycles" do
       it "should select an order cycle when only one order cycle is open" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -57,24 +50,31 @@ describe ShopController do
 
     describe "returning products" do
       let(:product) { create(:product) }
-      let(:order_cycle) { create(:order_cycle, distributors: [d]) }
+      let(:order_cycle) { create(:order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
+
       before do
-        Spree::Product.stub(:all).and_return([product])
+        exchange = Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) 
+        exchange.variants << product.master
       end
 
       it "returns products via json" do
         controller.stub(:current_order_cycle).and_return order_cycle
         xhr :get, :products
         response.should be_success
-        response.body.should_not be_empty
       end
 
       it "does not return products if no order_cycle is selected" do
+        controller.stub(:current_order_cycle).and_return nil
         xhr :get, :products
         response.status.should == 404
         response.body.should be_empty
       end
-    end
 
+      it "only returns products for the current order cycle" do
+        controller.stub(:current_order_cycle).and_return order_cycle
+        xhr :get, :products
+        response.body.should == [product].to_json
+      end
+    end
   end
 end

@@ -65,7 +65,6 @@ class EnterprisesController < BaseController
 
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
-
     order.save!
 
     redirect_to main_app.enterprise_path(distributor)
