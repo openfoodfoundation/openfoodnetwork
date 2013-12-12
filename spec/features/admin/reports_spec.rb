@@ -150,6 +150,5 @@ feature %q{
       ].sort
     end
   end
-
 end
 
