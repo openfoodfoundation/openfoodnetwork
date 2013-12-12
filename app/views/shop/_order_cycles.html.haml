@@ -9,8 +9,14 @@
     = render partial: "shop/last_order_cycle"
 
   - else
-    Ready for:
-    %select{"ng-model" => "order_cycle.order_cycle_id", 
-            "ng-init" => "order_cycle.order_cycle_id = #{current_order_cycle.andand.id}",
-            "ng-change" => "changeOrderCycle()",
-            "ng-options" => "c for c in #{@order_cycles.map {|oc| oc.id}.to_json}"}
+    %form.custom
+      %strong Ready for:
+      %select{"ng-model" => "order_cycle.order_cycle_id", 
+              "ng-init" => "order_cycle.order_cycle_id = #{current_order_cycle.andand.id}",
+              "ng-change" => "changeOrderCycle()",
+              "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}"}
+
+      %closing
+        %img{src: "/icon/goes/here"}
+        Orders close
+        %strong= current_order_cycle.orders_close_at.strftime "%A %m"

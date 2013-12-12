@@ -1,17 +1,17 @@
 %shop{"ng-app" => "Shop"}
-  = @distributor.name
+  %navigation
+    %distributor.details.row
+      %img{src: "/route/to/distributor/icon"}
+      %h3
+        = @distributor.name
+      %location= @distributor.address.city
+      = render partial: "shop/order_cycles"
 
-  = render partial: "shop/order_cycles"
-
-  %description
-    = @distributor.long_description.andand.html_safe
-
-  %products{"ng-controller" => "ProductsCtrl"}
-    %product{"ng-repeat" => "product in data.products "}
-      {{ product.product.name }}
-      {{ product.product.description }}
-
-    %pre {{ data.products | json }}
+      %description
+        = @distributor.long_description.andand.html_safe
+    
+  %products.row
+    = render partial: "shop/products"
 
   = render partial: "enterprises/contact_us"
   = render partial: "enterprises/about_us"
