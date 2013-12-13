@@ -13,16 +13,14 @@ class Spree::ProductSet < ModelSet
     if e.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      e.update_attributes(attributes.except(:id,:variants_attributes)) and (attributes[:variants_attributes] ? update_variants_attributes(e,attributes[:variants_attributes]) : true )
+      e.update_attributes(attributes.except(:id, :variants_attributes)) and (attributes[:variants_attributes] ? update_variants_attributes(e, attributes[:variants_attributes]) : true )
     end
   end
 
   def update_variants_attributes(product,variants_attributes)
     variants_attributes.each do |attributes|
       e = product.variants.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
-      if !e.nil?
-        e.update_attributes(attributes.except(:id))
-      end
+      e.update_attributes(attributes.except(:id)) if e.present?
     end
   end
 
