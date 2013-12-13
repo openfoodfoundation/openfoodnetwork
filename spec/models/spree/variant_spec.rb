@@ -70,5 +70,18 @@ module Spree
         variant.should be_valid
       end
     end
+
+    describe "deleting unit option values" do
+      it "deletes option values for unit option types" do
+        p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
+        ot = Spree::OptionType.find_by_name 'unit_weight'
+        ov = create(:option_value, option_type: ot, name: '1 kg', presentation: '1 kg')
+        v = create(:variant, product: p, option_values: [ov])
+
+        expect {
+          v.delete_unit_option_values
+        }.to change(Spree::OptionValue, :count).by(-1)
+      end
+    end
   end
 end

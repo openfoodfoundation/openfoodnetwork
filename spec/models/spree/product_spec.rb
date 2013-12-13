@@ -374,13 +374,25 @@ module Spree
           p.option_types.should == [ot_volume]
         end
 
-        it "removes the related option values from all its variants"
-
-        it "leaves option type unassigned if none is provided"
+        it "leaves option type unassigned if none is provided" do
+          p.update_attributes!(variant_unit: nil, variant_unit_scale: nil)
+          p.option_types.should == []
+        end
 
         it "does not remove and re-add the option type if it is not changed" do
           p.option_types.should_receive(:delete).never
           p.update_attributes!(name: 'foo')
+        end
+
+        it "removes the related option values from all its variants" do
+          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ov = create(:option_value, option_type: ot, name: '1 kg', presentation: '1 kg')
+          v = create(:variant, product: p, option_values: [ov])
+          p.reload
+
+          expect {
+            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          }.to change(v.option_values(true), :count).by(-1)
         end
       end
 
