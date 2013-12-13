@@ -137,6 +137,10 @@ class OrderCycle < ActiveRecord::Base
     exchange_for_distributor(distributor).andand.pickup_time || distributor.next_collection_at
   end
 
+  def pickup_instructions_for(distributor)
+    exchange_for_distributor(distributor).andand.pickup_instructions
+  end
+
 
   # -- Fees
   def create_adjustments_for(line_item)

@@ -225,7 +225,7 @@ describe OrderCycle do
       @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
 
       @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday')
+      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
       @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, pickup_time: nil)
     end
 
@@ -241,6 +241,12 @@ describe OrderCycle do
 
       it "returns the distributor's default collection time otherwise" do
         @oc.pickup_time_for(@d2).should == '2-8pm Friday'
+      end
+    end
+    
+    describe "finding pickup instructions for a distributor" do
+      it "returns the pickup instructions" do
+        @oc.pickup_instructions_for(@d1).should == "Come get it!"
       end
     end
   end
