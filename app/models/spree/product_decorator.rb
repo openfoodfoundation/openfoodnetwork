@@ -17,6 +17,7 @@ Spree::Product.class_eval do
                         if: -> p { p.variant_unit == 'items' }
 
   after_initialize :set_available_on_to_now, :if => :new_record?
+  after_save :update_units
 
 
   # -- Joins
@@ -106,4 +107,25 @@ Spree::Product.class_eval do
   def set_available_on_to_now
     self.available_on ||= Time.now
   end
+
+
+  def update_units
+    if variant_unit_changed?
+      option_types.delete self.class.all_variant_unit_option_types
+      option_types << option_type_for_variant_unit if variant_unit.present?
+    end
+  end
+
+  def option_type_for_variant_unit
+    option_type_name = "unit_#{variant_unit}"
+    option_type_presentation = variant_unit.capitalize
+
+    Spree::OptionType.find_by_name(option_type_name) ||
+      Spree::OptionType.create!(name: option_type_name, presentation: option_type_presentation)
+  end
+
+  def self.all_variant_unit_option_types
+    Spree::OptionType.where('name LIKE ?', 'unit_%%')
+  end
+
 end
