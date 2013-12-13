@@ -348,7 +348,7 @@ feature %q{
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution \$12.00/
+    email.body.should =~ /Distribution[\s+]\$12.00/
   end
 
   scenario "buying a product from an order cycle", :js => true do
@@ -414,7 +414,7 @@ feature %q{
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution \$54.00/
+    email.body.should =~ /Distribution[\s+]\$54.00/
   end
 
   scenario "when I have past orders, it fills in my address", :js => true do
@@ -497,7 +497,7 @@ feature %q{
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution \$54.00/
+    email.body.should =~ /Distribution[\s+]\$54.00/
   end
 
 

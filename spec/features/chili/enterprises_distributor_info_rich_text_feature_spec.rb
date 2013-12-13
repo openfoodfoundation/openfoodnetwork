@@ -10,9 +10,16 @@ feature "enterprises distributor info as rich text" do
                                                            enterprises_distributor_info_rich_text: true})
 
 
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
     # The deployment is not set to local_organics on Rails init, so these
+    #
     # initializers won't run. Re-call them now that the deployment is set.
-    EnterprisesDistributorInfoRichTextFeature::Engine.initializers.each &:run
+  end
+
+  after do
+    ActionMailer::Base.deliveries.clear
   end
 
 

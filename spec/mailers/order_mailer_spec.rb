@@ -20,17 +20,17 @@ describe Spree::OrderMailer do
   end
 
   it "should send an email when given an order" do
-    Spree::OrderMailer.confirm_email(@order1).deliver
+    Spree::OrderMailer.confirm_email(@order1.id).deliver
     ActionMailer::Base.deliveries.count.should == 1
   end
 
   it "should send the email from the enterprise email" do
-    Spree::OrderMailer.confirm_email(@order1).deliver
+    Spree::OrderMailer.confirm_email(@order1.id).deliver
     ActionMailer::Base.deliveries.first.from.should == [@distributor.email]
   end
 
   it "should cc orders" do
-    Spree::OrderMailer.confirm_email(@order1).deliver
+    Spree::OrderMailer.confirm_email(@order1.id).deliver
     ActionMailer::Base.deliveries.first.cc.should == ["orders@openfoodnetwork.org"]
   end
 end
