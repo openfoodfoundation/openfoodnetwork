@@ -18,7 +18,9 @@ module OrderCyclesHelper
   end
 
   def order_cycle_status_class(order_cycle)
-    if order_cycle.upcoming?
+    if order_cycle.undated?
+      'undated'
+    elsif order_cycle.upcoming?
       'upcoming'
     elsif order_cycle.open?
       'open'
