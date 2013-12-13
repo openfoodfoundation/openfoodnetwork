@@ -8,17 +8,29 @@ module OpenFoodNetwork
     end
 
     def header
-      ["Supplier", "Product", "SKU", "Variant", "On Hand", "Price"]
+      [
+          "Supplier", 
+          "Producer Suburb",
+          "Product",
+          "Product Properties",
+          "Variant Value",
+          "Price",
+          "Group Buy Unit Quantity",
+          "Amount"
+        ]
     end
 
     def table
       variants.map do |variant|
         [variant.product.supplier.name,
-         variant.product.name,
-         variant.sku,
-         variant.options_text,
-         variant.count_on_hand,
-         variant.price]
+        variant.product.supplier.address.city,
+        variant.product.name,
+        variant.product.properties.map(&:name).join(", "),
+        variant.options_text,
+        variant.price,
+        variant.product.group_buy_unit_size,
+        ""
+        ]
       end
     end
 

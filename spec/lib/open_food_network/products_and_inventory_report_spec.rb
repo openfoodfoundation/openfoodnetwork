@@ -13,24 +13,40 @@ module OpenFoodNetwork
       end
 
       it "Should return headers" do
-        subject.header.should == ["Supplier", "Product", "SKU", "Variant", "On Hand", "Price"]
+        subject.header.should == [
+          "Supplier", 
+          "Producer Suburb",
+          "Product",
+          "Product Properties",
+          "Variant Value",
+          "Price",
+          "Group Buy Unit Quantity",
+          "Amount"
+        ]
       end
 
       it "should build a table from a list of variants" do
         variant = double(:variant, sku: "sku",
-                         options_text: "Variant Name",
-                         count_on_hand: 10,
-                         price: 100)
+                        options_text: "Variant Name",
+                        count_on_hand: 10,
+                        price: 100)
         variant.stub_chain(:product, :supplier, :name).and_return("Supplier")
+        variant.stub_chain(:product, :supplier, :address, :city).and_return("A city")
         variant.stub_chain(:product, :name).and_return("Product Name")
+        variant.stub_chain(:product, :properties).and_return [double(name: "test"), double(name: "foo")]
+        variant.stub_chain(:product, :group_buy_unit_size).and_return(21)
         subject.stub(:variants).and_return [variant]
+
         subject.table.should == [[
           "Supplier",
+          "A city",
           "Product Name",
-          "sku",
+          "test, foo",
           "Variant Name",
-          10,
-          100]]
+          100,
+          21,
+          ""
+          ]]
       end
 
       it "fetches variants for some params" do
