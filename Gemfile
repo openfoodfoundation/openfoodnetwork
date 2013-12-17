@@ -34,6 +34,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
+gem "active_model_serializers"
 
 # Gems used only for assets and not required
 # in production environments by default.

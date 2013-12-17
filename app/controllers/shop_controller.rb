@@ -9,7 +9,7 @@ class ShopController < BaseController
   
   def products
     if products = current_order_cycle.andand.products_distributed_by(@distributor)
-      render json: products.to_json 
+      render json: products, root: false 
     else
       render json: "", status: 404 
     end

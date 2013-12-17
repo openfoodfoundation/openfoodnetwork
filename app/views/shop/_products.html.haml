@@ -8,9 +8,9 @@
       %th Bulk
       %th Price
     %tr.product{"ng-repeat" => "product in data.products "}
-      %td {{ product.product.name }}
-      %td {{ product.product.description }}
-      %td {{ product.master.options_text }}
+      %td {{ product.name }}
+      %td {{ product.description }}
+      %td {{ product.master.id }}
       %td Quantity thing
       %td.group_buy{"ng-class" => "{enabled: product.group_buy}"} 
         Not available
