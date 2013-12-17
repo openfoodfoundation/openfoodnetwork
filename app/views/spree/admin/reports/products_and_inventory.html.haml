@@ -20,7 +20,7 @@
 
   %br
   = label_tag nil, "Report Type: "
-  = select_tag(:report_type, options_for_select(@report_types, @report_type))
+  = select_tag(:report_type, options_for_select(@report_types, params[:report_type]))
 
   %br
   %br

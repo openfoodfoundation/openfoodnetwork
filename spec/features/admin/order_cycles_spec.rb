@@ -29,6 +29,8 @@ feature %q{
     oc5 = create(:simple_order_cycle, name: '5',
                  orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
     oc1 = create(:order_cycle, name: '1')
+    oc0 = create(:simple_order_cycle, name: '0',
+                 orders_open_at: nil, orders_close_at: nil)
 
     # When I go to the admin order cycles page
     login_to_admin_section
@@ -36,9 +38,10 @@ feature %q{
 
     # Then the order cycles should be ordered correctly
     page.all('#listing_order_cycles tr td:first-child').map(&:text).should ==
-      ['1', '2', '3', '4', '5', '6']
+      ['0', '1', '2', '3', '4', '5', '6']
 
     # And the rows should have the correct classes
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}.undated"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}.open"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}.open"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}.upcoming"
@@ -47,7 +50,8 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
     # And I should see all the details for an order cycle
-    within('table#listing_order_cycles tbody tr:first-child') do
+    # (the table includes a hidden field between each row, making this nth-child(3) instead of 2)
+    within('table#listing_order_cycles tbody tr:nth-child(3)') do
       # Then I should see the basic fields
       page.should have_selector 'a', text: oc1.name
 

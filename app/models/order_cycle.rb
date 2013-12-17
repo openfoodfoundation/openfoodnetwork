@@ -16,6 +16,7 @@ class OrderCycle < ActiveRecord::Base
   scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.now, Time.now) }
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.now) }
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.now) }
+  scope :undated, where(orders_open_at: nil, orders_close_at: nil)
 
   scope :distributing_product, lambda { |product|
     joins(:exchanges => :variants).
@@ -111,16 +112,21 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
+  def undated?
+    self.orders_open_at.nil? && self.orders_close_at.nil?
+  end
+
   def upcoming?
-    Time.now < self.orders_open_at
+    self.orders_open_at && Time.now < self.orders_open_at
   end
 
   def open?
-    Time.now > self.orders_open_at && Time.now < self.orders_close_at
+    self.orders_open_at && self.orders_close_at &&
+      Time.now > self.orders_open_at && Time.now < self.orders_close_at
   end
 
   def closed?
-    Time.now > self.orders_close_at
+    self.orders_close_at && Time.now > self.orders_close_at
   end
 
   def exchange_for_distributor(distributor)
@@ -129,6 +135,10 @@ class OrderCycle < ActiveRecord::Base
 
   def pickup_time_for(distributor)
     exchange_for_distributor(distributor).andand.pickup_time || distributor.next_collection_at
+  end
+
+  def pickup_instructions_for(distributor)
+    exchange_for_distributor(distributor).andand.pickup_instructions
   end
 
 

@@ -79,7 +79,6 @@ group :test do
 end
 
 group :chili do
-  gem 'enterprises_distributor_info_rich_text_feature', path: 'lib/chili/enterprises_distributor_info_rich_text_feature'
   gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
   gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
 end

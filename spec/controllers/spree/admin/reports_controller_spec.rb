@@ -190,6 +190,8 @@ describe Spree::Admin::ReportsController do
       OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
       .with(user, {"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"products_and_inventory"})
       .and_return(report = double(:report))
+      report.stub(:header).and_return []
+      report.stub(:table).and_return []
       spree_get :products_and_inventory, :test => "foo"
       assigns(:report).should == report
     end
@@ -236,6 +238,8 @@ describe Spree::Admin::ReportsController do
       OpenFoodNetwork::CustomersReport.should_receive(:new)
       .with(user, {"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"customers"})
       .and_return(report = double(:report))
+      report.stub(:header).and_return []
+      report.stub(:table).and_return []
       spree_get :customers, :test => "foo"
       assigns(:report).should == report
     end

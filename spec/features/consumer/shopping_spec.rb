@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "As a consumer I want to shop with a distributor" do
+feature "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -13,7 +13,7 @@ feature "As a consumer I want to shop with a distributor" do
       click_link distributor.name
     end
     it "shows a distributor" do
-      visit shop_index_path
+      visit shop_path
       page.should have_text distributor.name
     end
 
@@ -24,11 +24,11 @@ feature "As a consumer I want to shop with a distributor" do
         exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
         exchange.update_attribute :pickup_time, "turtles" 
         
-        visit shop_index_path
+        visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
         
         # Should see order cycle selected in dropdown
-        # (Should also render products)
+        # (Should also render productspath
       end
 
       describe "with multiple order cycles" do
@@ -42,7 +42,7 @@ feature "As a consumer I want to shop with a distributor" do
         end
 
         it "shows a select with all order cycles" do
-          visit shop_index_path
+          visit shop_path
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
           page.should_not have_selector "option[selected]"
@@ -54,7 +54,7 @@ feature "As a consumer I want to shop with a distributor" do
             exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
             exchange.variants << product.master
 
-            visit shop_index_path
+            visit shop_path
           end
           
           it "allows us to select an order cycle" do
@@ -77,17 +77,17 @@ feature "As a consumer I want to shop with a distributor" do
 
       context "when no order cycles are available" do
         it "tells us orders are closed" do
-          visit shop_index_path
+          visit shop_path
           page.should have_content "Orders are currently closed for this hub"
         end
         it "shows the last order cycle" do
           oc1 = create(:simple_order_cycle, distributors: [distributor], orders_close_at: 10.days.ago)
-          visit shop_index_path
+          visit shop_path
           page.should have_content "The last cycle closed 10 days ago"
         end
         it "shows the next order cycle" do
           oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 10.days.from_now)
-          visit shop_index_path
+          visit shop_path
           page.should have_content "The next cycle opens in 10 days"
         end
       end
