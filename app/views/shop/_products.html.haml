@@ -1,14 +1,17 @@
 %products{"ng-controller" => "ProductsCtrl"}
   %table
     %thead
-      %th Item
+      %th{colspan: 2} Item
       %th Description
       %th Variant
       %th QTY
       %th Bulk
       %th Price
     %tr.product{"ng-repeat" => "product in data.products "}
-      %td {{ product.name }}
+      %td
+        %img{src: "{{ product.master.images[0].mini_url }}", alt: "{{product.master.images[0].alt}}"}
+      %td
+        {{ product.name }}
       %td {{ product.description }}
       %td {{ product.master.id }}
       %td Quantity thing
@@ -17,6 +20,5 @@
       %td.price
         %small from
         $ {{ product.price }}
-
 
   %pre {{ data.products | json }}
