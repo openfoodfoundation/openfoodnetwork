@@ -1,2 +1,0 @@
-<!-- insert_bottom 'head' -->
-<%= stylesheet_link_tag 'enterprises_distributor_info_rich_text_feature/application' %>
