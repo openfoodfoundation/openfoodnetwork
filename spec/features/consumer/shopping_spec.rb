@@ -49,7 +49,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           before do
             exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
             exchange.variants << product.master
-
             visit shop_path
           end
           
@@ -68,9 +67,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             select "frogs", :from => "order_cycle_id"
             page.should have_content product.name 
           end
-
         end
-
       end
 
       context "when no order cycles are available" do
@@ -89,7 +86,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "The next cycle opens in 10 days"
         end
       end
-
     end
   end
 end
