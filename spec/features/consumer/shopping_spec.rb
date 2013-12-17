@@ -26,9 +26,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         
         visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
-        
-        # Should see order cycle selected in dropdown
-        # (Should also render productspath
       end
 
       describe "with multiple order cycles" do
@@ -45,7 +42,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
-          page.should_not have_selector "option[selected]"
         end
 
         describe "with products in our order cycle" do
@@ -60,6 +56,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           it "allows us to select an order cycle" do
             select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
+            sleep 5
             Spree::Order.last.order_cycle.should == oc1
           end
 
@@ -71,6 +68,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             select "frogs", :from => "order_cycle_id"
             page.should have_content product.name 
           end
+
         end
 
       end

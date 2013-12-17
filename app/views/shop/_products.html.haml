@@ -9,7 +9,6 @@
       %th Price
     %tr.product{"ng-repeat" => "product in data.products "}
       %td
-        %img{src: "{{ product.master.images[0].mini_url }}", alt: "{{product.master.images[0].alt}}"}
       %td
         {{ product.name }}
       %td {{ product.description }}
