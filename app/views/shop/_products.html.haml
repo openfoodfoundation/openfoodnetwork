@@ -17,11 +17,11 @@
         %td {{ product.description }}
         %td {{ product.master.options_text }}
         %td 
-          %input{type: :number, id: "quantity_product_{{product.id}}"}
+          %input{type: :number, value: 0, id: "quantity_product_{{product.id}}"}
         %td.group_buy
-          %span{"ng-show" => "{enabled: product.group_buy}"} 
+          %span{"ng-show" => "product.group_buy"} 
             Available
-          %span{"ng-hide" => "{enabled: product.group_buy}"} 
+          %span{"ng-hide" => "product.group_buy"} 
             Not available
         %td.price
           %small from
