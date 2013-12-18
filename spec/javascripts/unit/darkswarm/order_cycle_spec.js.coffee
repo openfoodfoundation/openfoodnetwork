@@ -32,4 +32,3 @@ describe 'OrderCycle service', ->
     $httpBackend.flush()
     expect(OrderCycle.order_cycle.orders_close_at).toEqual(datestring)
 
-

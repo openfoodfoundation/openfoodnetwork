@@ -55,7 +55,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           it "allows us to select an order cycle" do
             select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
-            sleep 5
             Spree::Order.last.order_cycle.should == oc1
           end
 
