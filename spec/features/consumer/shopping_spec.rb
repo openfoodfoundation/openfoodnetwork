@@ -68,8 +68,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
             page.should have_content product.name 
           end
 
-          it "shows variants when an order cycle has been selected" do
-            #create(:variant, :
+          it "updates the orders close note when order cycle is changed" do
+            select "frogs", :from => "order_cycle_id"
+            page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
           end
         end
       end

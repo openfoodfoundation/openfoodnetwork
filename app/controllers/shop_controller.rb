@@ -18,7 +18,7 @@ class ShopController < BaseController
   def order_cycle
     if oc = OrderCycle.with_distributor(@distributor).active.find_by_id(params[:order_cycle_id])
       current_order(true).set_order_cycle! oc
-      render status: 200, json: ""
+      render status: 200, json: oc
     else
       render status: 404, json: ""
     end

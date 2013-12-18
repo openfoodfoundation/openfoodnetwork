@@ -36,6 +36,14 @@ describe ShopController do
         controller.current_order_cycle.should == oc2
       end
 
+      it "should return the order cycle details when the oc is selected" do
+        oc1 = create(:order_cycle, distributors: [d])
+        oc2 = create(:order_cycle, distributors: [d])
+        
+        spree_post :order_cycle, order_cycle_id: oc2.id
+        response.body.should have_content OrderCycleSerializer.new(oc2).to_json
+      end
+
       it "should not allow the user to select an invalid order cycle" do
         oc1 = create(:order_cycle, distributors: [d])
         oc2 = create(:order_cycle, distributors: [d])
