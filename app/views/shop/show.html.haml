@@ -1,19 +1,20 @@
 %shop{"ng-app" => "Shop"}
   %navigation
     %distributor.details.row
-      -#%img{src: "/route/to/distributor/icon"}
-      %h3
+      %img.left{src: ""}
+      %h4
         = @distributor.name
       %location= @distributor.address.city
+      %small Change location
       = render partial: "shop/order_cycles"
 
-      %description
-        = @distributor.long_description.andand.html_safe
+      -#%description
+        -#= @distributor.long_description.andand.html_safe
     
   %products.row
     = render partial: "shop/products"
 
-  = render partial: "enterprises/contact_us"
-  = render partial: "enterprises/about_us"
+  -#= render partial: "enterprises/contact_us"
+  -#= render partial: "enterprises/about_us"
 
 

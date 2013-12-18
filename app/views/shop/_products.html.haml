@@ -21,7 +21,7 @@
           %td {{ product.description }}
           %td {{ product.master.options_text }}
           %td 
-            %input{type: :number, value: 0, id: "quantity_variant_{{product.master.id}}"}
+            %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{product.master.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
@@ -34,7 +34,7 @@
           %td{colspan: 3}
           %td {{variant.options_text}}
           %td 
-            %input{type: :number, value: 0, id: "quantity_variant_{{variant.id}}"}
+            %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{variant.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
@@ -44,4 +44,4 @@
             %small from
             ${{ variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
-  %pre {{ data.products | json }}
+  -#%pre {{ data.products | json }}
