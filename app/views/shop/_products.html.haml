@@ -8,23 +8,37 @@
         %th QTY
         %th Bulk
         %th Price
-      %tr.product{"ng-repeat" => "product in data.products "}
-        %td
-          {{ product.master.images[0].mini_url }} 
-          {{product.master.images[0].alt}}
-        %td
-          {{ product.name }}
-        %td {{ product.description }}
-        %td {{ product.master.options_text }}
-        %td 
-          %input{type: :number, value: 0, id: "quantity_product_{{product.id}}"}
-        %td.group_buy
-          %span{"ng-show" => "product.group_buy"} 
-            Available
-          %span{"ng-hide" => "product.group_buy"} 
-            Not available
-        %td.price
-          %small from
-          $ {{ product.price }}
+      %tbody{"ng-repeat" => "product in data.products "}
+        %tr.product
+          %td
+            {{ product.master.images[0].mini_url }} 
+            {{product.master.images[0].alt}}
+          %td
+            {{ product.name }}
+          %td {{ product.description }}
+          %td {{ product.master.options_text }}
+          %td 
+            %input{type: :number, value: 0, id: "quantity_variant_{{product.master.id}}"}
+          %td.group_buy
+            %span{"ng-show" => "product.group_buy"} 
+              Available
+            %span{"ng-hide" => "product.group_buy"} 
+              Not available
+          %td.price
+            %small from
+            $ {{ product.price }}
+        %tr{"ng-repeat" => "variant in product.variants"}
+          %td{colspan: 3}
+          %td {{variant.options_text}}
+          %td 
+            %input{type: :number, value: 0, id: "quantity_variant_{{variant.id}}"}
+          %td.group_buy
+            %span{"ng-show" => "product.group_buy"} 
+              Available
+            %span{"ng-hide" => "product.group_buy"} 
+              Not available
+          %td.price
+            %small from
+            $ {{ variant.price }}
 
   %pre {{ data.products | json }}
