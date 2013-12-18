@@ -81,7 +81,7 @@ describe ShopController do
       it "only returns products for the current order cycle" do
         controller.stub(:current_order_cycle).and_return order_cycle
         xhr :get, :products
-        response.body.should == [product].to_json
+        response.body.should == [Spree::ProductSerializer.new(product)].to_json
       end
     end
   end
