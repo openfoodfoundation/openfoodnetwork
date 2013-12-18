@@ -6,10 +6,12 @@ describe 'OrderCycle service', ->
   }
 
   beforeEach ->
+    angular.module('Shop').value('orderCycleData', {})
     module 'Shop', ($provide)->
       $provide.value "Product", mockProduct
       null # IMPORTANT
       # You must return null because module() is a bit dumb
+      
     inject (_OrderCycle_, _$httpBackend_)->
       $httpBackend = _$httpBackend_
       OrderCycle = _OrderCycle_
@@ -22,5 +24,12 @@ describe 'OrderCycle service', ->
     OrderCycle.push_order_cycle()
     $httpBackend.flush()
     expect(mockProduct.update).toHaveBeenCalled()
+
+  it "updates the orders_close_at attr after update", ->
+    datestring = "2013-12-20T00:00:00+11:00" 
+    $httpBackend.expectPOST("/shop/order_cycle").respond({orders_close_at: datestring})
+    OrderCycle.push_order_cycle()
+    $httpBackend.flush()
+    expect(OrderCycle.order_cycle.orders_close_at).toEqual(datestring)
 
 
