@@ -1,9 +1,10 @@
 %products{"ng-controller" => "ProductsCtrl"}
   %form.custom
+    %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
         %th{colspan: 2} Item
-        %th Description
+        %th Notes
         %th Variant
         %th QTY
         %th Bulk
@@ -11,10 +12,12 @@
       %tbody{"ng-repeat" => "product in data.products "}
         %tr.product
           %td
-            {{ product.master.images[0].mini_url }} 
-            {{product.master.images[0].alt}}
+            -#{{ product.master.images[0].mini_url }} 
+            -#{{product.master.images[0].alt}}
           %td
-            {{ product.name }}
+            %h5
+              {{ product.name }}
+            {{ product.supplier.name }}
           %td {{ product.description }}
           %td {{ product.master.options_text }}
           %td 
@@ -39,6 +42,6 @@
               Not available
           %td.price
             %small from
-            $ {{ variant.price }}
-
+            ${{ variant.price }}
+    %input.button.right{type: :submit, value: "Check Out"}
   %pre {{ data.products | json }}

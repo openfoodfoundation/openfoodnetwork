@@ -67,6 +67,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
             select "frogs", :from => "order_cycle_id"
             page.should have_content product.name 
           end
+
+          it "shows variants when an order cycle has been selected" do
+            #create(:variant, :
+          end
         end
       end
 
