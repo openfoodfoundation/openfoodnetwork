@@ -1,10 +1,10 @@
 %products{"ng-controller" => "ProductsCtrl"}
-  %form.custom
+  = form_for :order, :url => populate_orders_path, :class => "custom" do
     %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
         %th{colspan: 2} Item
-        %th Notes
+        %th.notes Notes
         %th Variant
         %th QTY
         %th Bulk
@@ -18,7 +18,7 @@
             %h5
               {{ product.name }}
             {{ product.supplier.name }}
-          %td {{ product.description | truncate:250 }}
+          %td.notes {{ product.description | truncate:250 }}
           %td {{ product.master.options_text }}
           %td 
             %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{product.master.id}}"}
@@ -29,7 +29,7 @@
               Not available
           %td.price
             %small from
-            $ {{ product.price }}
+            ${{ product.price }}
         %tr{"ng-repeat" => "variant in product.variants"}
           %td{colspan: 3}
           %td {{variant.options_text}}
@@ -41,7 +41,6 @@
             %span{"ng-hide" => "product.group_buy"} 
               Not available
           %td.price
-            %small from
-            ${{ variant.price }}
+            %small from ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
