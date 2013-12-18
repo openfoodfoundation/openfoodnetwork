@@ -18,7 +18,7 @@
             %h5
               {{ product.name }}
             {{ product.supplier.name }}
-          %td {{ product.description }}
+          %td {{ product.description | truncate:250 }}
           %td {{ product.master.options_text }}
           %td 
             %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{product.master.id}}"}
