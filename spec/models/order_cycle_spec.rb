@@ -32,7 +32,7 @@ describe OrderCycle do
 
   it "gives me the outgoing exchange" do
     d = create(:distributor_enterprise)
-    oc = create(:simple_order_cycle), distributors: [d])
+    oc = create(:simple_order_cycle, distributors: [d])
     
     oc.sender.should == d
   end
