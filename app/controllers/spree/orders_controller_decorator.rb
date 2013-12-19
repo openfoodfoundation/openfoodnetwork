@@ -12,6 +12,8 @@ Spree::OrdersController.class_eval do
     end
 
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
+    params[:distributor_id] = current_order.distributor.id
+    params[:order_cycle_id] = current_order_cycle.id
     if populator.populate(params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id))
       fire_event('spree.cart.add')
       fire_event('spree.order.contents_changed')

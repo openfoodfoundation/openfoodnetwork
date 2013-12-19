@@ -54,6 +54,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           
           it "allows us to select an order cycle" do
             select "frogs", :from => "order_cycle_id"
+            Spree::Order.last.order_cycle.should == nil
             page.should have_selector "products"
             page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
             Spree::Order.last.order_cycle.should == oc1
@@ -76,8 +77,23 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "adding products to cart" do
-        it "should let us add products to our cart"
-        it "should redirect to the checkout page"
+        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
+        let(:product) { create(:simple_product) }
+        let(:variant) { create(:variant, product: product) }
+        before do
+          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+          exchange.update_attribute :pickup_time, "frogs" 
+          exchange.variants << product.master
+          exchange.variants << variant 
+          visit shop_path
+          select "frogs", :from => "order_cycle_id"
+        end
+        it "should let us add products to our cart" do
+          fill_in "quantity_variant_#{variant.id}", with: "1"
+          find("form.custom > input.button.right:first-child").click
+          current_path.should == "/cart" 
+          page.should have_content product.name
+        end
       end
 
       context "when no order cycles are available" do

@@ -141,6 +141,28 @@ describe Spree::OrdersController do
     end
   end
 
+  context "#populate" do
+    let(:user) { create(:user) }
+    let(:order) { mock_model(Spree::Order, :number => "R123", :reload => nil, :save! => true, :coupon_code => nil, :user => user, :completed? => false, :currency => "USD", :token => 'a1b2c3d4')}
+    let(:populator) { double('OrderPopulator') }
+    before do
+        order.stub(:last_ip_address=)
+        Spree::Order.stub(:find).and_return(order)
+        Spree::OrderPopulator.should_receive(:new).and_return(populator)
+        Spree::Order.stub(:new).and_return(order)
+        if Spree::BaseController.spree_responders[:OrdersController].present?
+          Spree::BaseController.spree_responders[:OrdersController].clear
+        end
+    end
+
+    context "with Variant" do
+      it "should handle multiple variants, each with their own quantity" do
+        populator.should_receive(:populate).with("variants" => { 1 => "10", 3 => "7" }).and_return(true)
+        spree_post :populate, { order_id: order.id, :variants => {1 => 10, 3 => 7} }
+      end
+    end
+  end
+
   private
 
   def num_items_in_cart

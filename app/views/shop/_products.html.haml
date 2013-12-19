@@ -1,5 +1,5 @@
 %products{"ng-controller" => "ProductsCtrl"}
-  = form_for :order, :url => populate_orders_path, :class => "custom" do
+  = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
     %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
@@ -21,7 +21,7 @@
           %td.notes {{ product.description | truncate:250 }}
           %td {{ product.master.options_text }}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{product.master.id}}"}
+            %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
@@ -34,7 +34,7 @@
           %td{colspan: 3}
           %td {{variant.options_text}}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "quantity_variant_{{variant.id}}"}
+            %input{type: :number, value: 0, min: 0, name: "variants[{{variant.id}}]"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
