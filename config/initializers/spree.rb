@@ -22,6 +22,7 @@ Spree.config do |config|
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
+  config.override_actionmailer_config = false
 end
 
 
