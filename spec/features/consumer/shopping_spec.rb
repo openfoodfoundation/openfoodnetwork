@@ -55,6 +55,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           it "allows us to select an order cycle" do
             select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
+            page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
             Spree::Order.last.order_cycle.should == oc1
           end
 
@@ -72,6 +73,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
             page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
           end
         end
+      end
+
+      describe "adding products to cart" do
+        it "should let us add products to our cart"
+        it "should redirect to the checkout page"
       end
 
       context "when no order cycles are available" do
