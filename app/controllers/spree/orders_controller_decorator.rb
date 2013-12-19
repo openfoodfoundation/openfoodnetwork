@@ -10,11 +10,8 @@ Spree::OrdersController.class_eval do
     if OpenFoodNetwork::FeatureToggle.enabled? :multi_cart
       populate_cart params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id)
     end
-
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
-    params[:distributor_id] = current_order.distributor.id
-    params[:order_cycle_id] = current_order_cycle.id
-    if populator.populate(params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id))
+    if populator.populate(params.slice(:products, :variants))
       fire_event('spree.cart.add')
       fire_event('spree.order.contents_changed')
       respond_with(@order) do |format|

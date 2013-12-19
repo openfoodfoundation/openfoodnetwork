@@ -37,7 +37,7 @@ describe Spree::OrdersController do
       @request.env["HTTP_REFERER"] = 'http://test.host/'
     end
 
-    it "errors when an invalid distributor is selected" do
+    pending "errors when an invalid distributor is selected" do
       # Given a product and some distributors
       d1 = create(:distributor_enterprise)
       d2 = create(:distributor_enterprise)
@@ -54,7 +54,7 @@ describe Spree::OrdersController do
       flash[:error].should == "That product is not available from the chosen distributor or order cycle."
     end
 
-    it "errors when an invalid order cycle is selected" do
+    pending "errors when an invalid order cycle is selected" do
       # Given a product and some order cycles
       d = create(:distributor_enterprise)
       p = create(:product, :price => 12.34)
@@ -71,7 +71,7 @@ describe Spree::OrdersController do
       flash[:error].should == "That product is not available from the chosen distributor or order cycle."
     end
 
-    it "errors when distribution is valid for the new product but does not cover the cart" do
+    pending "errors when distribution is valid for the new product but does not cover the cart" do
       # Given two products with different distributors
       d1 = create(:distributor_enterprise)
       d2 = create(:distributor_enterprise)
