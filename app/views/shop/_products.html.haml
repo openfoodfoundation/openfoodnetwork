@@ -12,7 +12,7 @@
       %tbody{"ng-repeat" => "product in data.products "}
         %tr.product
           %td
-            -#{{ product.master.images[0].mini_url }} 
+            %img{src: "{{ product.master.images[0].small_url }}"}
             -#{{product.master.images[0].alt}}
           %td
             %h5

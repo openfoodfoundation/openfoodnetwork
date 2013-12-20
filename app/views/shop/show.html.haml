@@ -1,7 +1,7 @@
 %shop{"ng-app" => "Shop"}
   %navigation
     %distributor.details.row
-      %img.left{src: ""}
+      -#%img.left{src: @distributor.}
       %h4
         = @distributor.name
       %location= @distributor.address.city
