@@ -1,7 +1,7 @@
 %shop{"ng-app" => "Shop"}
   %navigation
     %distributor.details.row
-      -#%img.left{src: @distributor.}
+      %img.left{src: ""}
       %h4
         = @distributor.name
       %location= @distributor.address.city
@@ -9,12 +9,37 @@
       = render partial: "shop/order_cycles"
 
       -#%description
-        -#= @distributor.long_description.andand.html_safe
+  
+  %tabs
+    .row
+      .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#about"} About Us 
+          .content{"data-section-content" => ""}
+            %p= @distributor.long_description.andand.html_safe
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#producers"} Our Producers 
+          .content{"data-section-content" => ""}
+            %p Content of section 2.
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#groups"} Our Groups 
+          .content{"data-section-content" => ""}
+            %p Groups 
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#contact"} Contact 
+          .content{"data-section-content" => ""}
+            %p Contact 
+    
     
   %products.row
     = render partial: "shop/products"
 
   -#= render partial: "enterprises/contact_us"
   -#= render partial: "enterprises/about_us"
-
-

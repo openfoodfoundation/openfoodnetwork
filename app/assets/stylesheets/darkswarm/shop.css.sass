@@ -46,9 +46,122 @@ shop
             margin-bottom: 0
         closing
           font-size: 0.875em
+product
+  display: block 
+
+
+shop
+  color: #666
+  display: block
+  navigation
+    display: block
+    background: #f6efe5
+    distributor.details
+      box-sizing: border-box
+      display: block
+      height: 150px
+      padding: 40px 0px 0px
+      select
+        width: 200px
+      position: relative
+      img
+        display: block
+        height: 100px
+        width: 100px
+        margin-right: 12px
+      location
+        font-family: "AvenirBla_IE", "AvenirBla"
+        padding-right: 16px
+      ordercycle
+        display: block
+        position: absolute
+        right: 0px
+        top: 40px
+        form.custom 
+          width: 400px
+          text-align: right
+          & > strong
+            line-height: 2.5
+            font-size: 1.29em
+            padding-right: 14px
+          .custom.dropdown
+            width: 280px
+            display: inline-block
+            background: transparent
+            border-width: 2px
+            border-color: #666666
+            font-size: 1.28em 
+            margin-bottom: 0
+        closing
+          font-size: 0.875em
           display: block
           float: right
           padding-top: 14px
+
+  tabs
+    background: url("/assets/matte.png") top left repeat
+    display: block
+    .section-container.auto
+      margin-bottom: 0
+      & > section 
+        transition:height 0s linear 0.5s
+        & > .content
+          background: none
+          border: none
+        & > .title, &.active > .title
+          text-transform: uppercase
+          line-height: 50px
+          border: none
+          &, &:hover
+            background: none
+          a
+            padding: 0px 2.2em
+
+  products
+    display: block
+    padding-top: 36px
+    table
+      width: 100%
+      border-collapse: collapse
+      border: none
+      th
+        line-height: 50px
+      .notes
+        max-width: 300px
+      td, th
+        background: #fff
+        border: 1px solid #cccccc
+        border-left: 0px
+        border-right: 0px
+      td
+        padding: 20px 0px
+      input[type=number]
+        width: 60px
+        margin: 0px
+      
+
+
+          display: block
+          float: right
+          padding-top: 14px
+
+  tabs
+    background: url("/assets/matte.png") top left repeat
+    display: block
+    .section-container.auto
+      margin-bottom: 0
+      & > section 
+        & > .content
+          background: none
+          border: none
+        & > .title, &.active > .title
+          text-transform: uppercase
+          line-height: 50px
+          border: none
+          &, &:hover
+            background: none
+          a
+            padding: 0px 2.2em
 
   products
     display: block

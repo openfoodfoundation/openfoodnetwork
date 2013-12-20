@@ -31,7 +31,6 @@ describe Spree::OrdersController do
     order.distributor.should be_nil
   end
 
-
   describe "adding a product to the cart with a distribution combination that can't service the existing cart" do
     before do
       @request.env["HTTP_REFERER"] = 'http://test.host/'
