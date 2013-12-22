@@ -27,6 +27,8 @@
             {{ column.name }}
     %br.clear
     %br.clear
+    %div{ :class => 'five columns' }
+      %span Displaying {{firstVisibleProduct()}}-{{lastVisibleProduct()}} of {{totalCount()}} products
     %table.index#listing_products.bulk
       %colgroup
         %col

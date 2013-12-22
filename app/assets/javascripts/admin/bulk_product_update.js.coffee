@@ -138,6 +138,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ["Items", "items"]
     ]
 
+    $scope.perPage = 25
+    $scope.currentPage = 1
+    $scope.products = []
+    $scope.totalCount = -> $scope.products.length
+    $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
+    $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
+
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->

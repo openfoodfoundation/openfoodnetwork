@@ -31,6 +31,15 @@ feature %q{
       page.should have_field "product_name", with: p2.name
     end
 
+    it "displays pagination information" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Displaying 1-2 of 2 products"
+    end
+
     it "displays a select box for suppliers, with the appropriate supplier selected" do
       s1 = FactoryGirl.create(:supplier_enterprise)
       s2 = FactoryGirl.create(:supplier_enterprise)
