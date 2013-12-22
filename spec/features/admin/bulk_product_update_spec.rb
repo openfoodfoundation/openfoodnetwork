@@ -497,6 +497,28 @@ feature %q{
         page.should have_selector "th", :text => "AV. ON"
       end
     end
+
+    describe "using pagination controls" do
+      it "shows pagination controls" do
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        page.should have_select 'perPage', :selected => '25'
+      end
+
+      it "allows the number of visible products to be altered" do
+        27.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{|e| e.visible?}.length.should == 25
+        select '50', :from => 'perPage'
+        page.all("input[name='product_name']").select{|e| e.visible?}.length.should == 27
+      end
+    end
   end
 
   context "as an enterprise manager" do
