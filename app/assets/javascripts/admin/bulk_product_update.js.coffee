@@ -288,8 +288,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
         $scope.packProduct product
 
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
-      $scope.updateProducts productsToSubmit
-
+      if productsToSubmit.length > 0
+        $scope.updateProducts productsToSubmit # Don't submit an empty list
+      else
+        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
 
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale

@@ -351,6 +351,33 @@ feature %q{
     page.find("span#update-status-message").should have_content "Update complete"
   end
 
+  scenario "updating a product after cloning a product" do
+    FactoryGirl.create(:product, :name => "product 1")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    first("a.clone-product").click
+
+    fill_in "product_name", :with => "new product name"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
+  scenario "updating when no changes have been made" do
+    Capybara.default_wait_time = 2
+    FactoryGirl.create(:product, :name => "product 1")
+    FactoryGirl.create(:product, :name => "product 2")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "No changes to update."
+    Capybara.default_wait_time = 5
+  end
+
   scenario "updating a product when there are more products than the default API page size" do
     26.times { FactoryGirl.create(:simple_product) }
     login_to_admin_section

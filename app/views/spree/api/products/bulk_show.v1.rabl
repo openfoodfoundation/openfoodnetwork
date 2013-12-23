@@ -1,5 +1,5 @@
 object @product
-attributes :id, :name, :price, :on_hand
+attributes :id, :name, :price, :on_hand, :variant_unit, :variant_unit_scale, :variant_unit_name
 
 node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }
 node( :permalink_live ) { |p| p.permalink }
