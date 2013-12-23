@@ -520,9 +520,22 @@ feature %q{
         visit '/admin/products/bulk_edit'
 
         select '25', :from => 'perPage'
-        page.all("input[name='product_name']").select{|e| e.visible?}.length.should == 25
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 25
         select '50', :from => 'perPage'
-        page.all("input[name='product_name']").select{|e| e.visible?}.length.should == 27
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 27
+      end
+
+      it "displays the correct products when changing pages" do
+        25.times { FactoryGirl.create(:product, :name => "page1product") }
+        5.times { FactoryGirl.create(:product, :name => "page2product") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page1product" }.should == true
+        click_link "2"
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
       end
     end
   end

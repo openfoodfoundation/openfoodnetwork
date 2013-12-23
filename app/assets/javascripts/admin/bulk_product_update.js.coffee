@@ -145,6 +145,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
     $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
     $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
+    $scope.setPage = (page) -> $scope.currentPage = page
     $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
     $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
 
