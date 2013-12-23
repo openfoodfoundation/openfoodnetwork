@@ -142,8 +142,11 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.currentPage = 1
     $scope.products = []
     $scope.totalCount = -> $scope.products.length
+    $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
     $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
     $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
+    $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
+    $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -375,6 +378,10 @@ productsApp.factory "dataFetcher", [
       deferred.promise
 ]
 
+productsApp.filter "rangeArray", ->
+  return (input,start,end) ->
+    input.push(i) for i in [start..end]
+    input
 
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []

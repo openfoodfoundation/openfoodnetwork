@@ -500,11 +500,17 @@ feature %q{
 
     describe "using pagination controls" do
       it "shows pagination controls" do
+        27.times { FactoryGirl.create(:product) }
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
 
         page.should have_select 'perPage', :selected => '25'
+        within '.pagination' do
+          page.should have_text "1 2"
+          page.should have_text "Next"
+          page.should have_text "Last"
+        end
       end
 
       it "allows the number of visible products to be altered" do

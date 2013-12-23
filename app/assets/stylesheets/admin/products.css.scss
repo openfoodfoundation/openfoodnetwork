@@ -2,6 +2,16 @@
   display: block;
 }
 
+div.pagination {
+	div.pagenav {
+		margin: 0px;
+		span.first, span.prev, span.next, span.last {
+			padding: 5px 0px;
+			display:inline-block;
+		}
+	}
+}
+
 tbody.odd {
 	tr.product { td { background-color: white; } }
 	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }

@@ -33,6 +33,26 @@
       &nbsp;per page
       %br
       %span Displaying {{firstVisibleProduct()}}-{{lastVisibleProduct()}} of {{totalCount()}} products
+    %div.pagination{ :class => "seven columns" }
+      %div.pagenav{ :class => "two columns alpha" }
+        %span.first
+          %a{ 'ng-click' => "currentPage = 1", 'ng-show' => "currentPage > 1" }
+            &laquo;&nbsp;First
+        %span.prev
+          %a{ 'ng-click' => "currentPage = currentPage - 1", 'ng-show' => "currentPage > 1" }
+            &lsaquo;&nbsp;Prev
+      %div.pagenav{ :class => "columns omega" }
+        %span.page{ 'ng-repeat' => "page in [] | rangeArray:minPage():maxPage()", 'ng-class' => "{current: currentPage==page}" }
+          %a{ 'ng-click' => "setPage(page)" }
+            {{page}}
+        %span{ 'ng-show' => "maxPage() < totalPages()" } ...
+      %div.pagenav{ :class => "two columns omega" }
+        %span.next
+          %a{ 'ng-click' => "currentPage = currentPage + 1", 'ng-show' => "currentPage < totalPages()" }
+            Next&nbsp;&rsaquo;
+        %span.last
+          %a{ 'ng-click' => "currentPage = totalPages()", 'ng-show' => "currentPage < totalPages()" }
+            Last&nbsp;&raquo;
     %table.index#listing_products.bulk
       %colgroup
         %col
