@@ -149,6 +149,9 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
     $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
 
+    $scope.$watch 'perPage', (newVal, oldVal) ->
+      $scope.currentPage = $scope.totalPages() if newVal != oldVal && $scope.totalPages() < $scope.currentPage
+
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->

@@ -564,6 +564,19 @@ feature %q{
         click_link "2"
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
       end
+
+      it "moves the user to the last available page when changing perPage value causes user to become orphaned" do
+        51.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        click_link "3"
+        select '50', :from => 'perPage'
+        page.first("div.pagenav span.page.current").should have_text "2"
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 1
+      end
     end
   end
 
