@@ -141,7 +141,8 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.perPage = 25
     $scope.currentPage = 1
     $scope.products = []
-    $scope.totalCount = -> $scope.products.length
+    $scope.filteredProducts = []
+    $scope.totalCount = -> $scope.filteredProducts.length
     $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
     $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
     $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
@@ -149,7 +150,9 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
     $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
 
-    $scope.$watch 'perPage', (newVal, oldVal) ->
+    $scope.$watch ->
+      $scope.totalPages()
+    , (newVal, oldVal) ->
       $scope.currentPage = $scope.totalPages() if newVal != oldVal && $scope.totalPages() < $scope.currentPage
 
     $scope.initialise = (spree_api_key) ->

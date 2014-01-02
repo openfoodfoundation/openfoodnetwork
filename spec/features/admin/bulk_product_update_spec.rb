@@ -565,8 +565,9 @@ feature %q{
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
       end
 
-      it "moves the user to the last available page when changing perPage value causes user to become orphaned" do
-        51.times { FactoryGirl.create(:product) }
+      it "moves the user to the last available page when changing the number of pages in any way causes user to become orphaned" do
+        50.times { FactoryGirl.create(:product) }
+        FactoryGirl.create(:product, :name => "fancy_product_name")
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
@@ -575,7 +576,28 @@ feature %q{
         click_link "3"
         select '50', :from => 'perPage'
         page.first("div.pagenav span.page.current").should have_text "2"
-        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 1
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+
+        select '25', :from => 'perPage'
+        fill_in "quick_filter", :with => "fancy_product_name"
+        page.first("div.pagenav span.page.current").should have_text "1"
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+      end
+
+      it "paginates the filtered product list rather than all products" do
+        25.times { FactoryGirl.create(:product, :name => "product_name") }
+        3.times { FactoryGirl.create(:product, :name => "test_product_name") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.should have_text "1 2"
+        fill_in "quick_filter", :with => "test_product_name"
+        page.all("input[name='product_name']", :visible => true).length.should == 3
+        page.all("input[name='product_name']", :visible => true).all?{ |e| e.value == "test_product_name" }.should == true
+        page.should_not have_text "1 2"
+        page.should have_text "1"
       end
     end
   end

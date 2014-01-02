@@ -19,7 +19,7 @@
   %div
     %div.options
       Filter Results:
-      %input.search{ 'ng-model' => 'query', :type => 'text', 'placeholder' => 'Search Value' }
+      %input.search{ 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Search Value' }
       %input{ :type => 'button', :value => 'Toggle Columns', 'ofn-toggle-column-list' => true }
       %div{ :style => 'display: none;' }
         %ul.column-list{ style: 'border: 1px solid darkgray; background-color: white;' }
@@ -74,7 +74,7 @@
           %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
           %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
-      %tbody{ 'ng-repeat' => 'product in products | filter:query', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", 'ng-show' => "$index >= perPage*(currentPage-1) && $index < perPage*currentPage" }
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = (products | filter:query)', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", 'ng-show' => "$index >= perPage*(currentPage-1) && $index < perPage*currentPage" }
         %tr.product
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
