@@ -275,7 +275,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ).success((data) ->
         if angular.toJson($scope.productsWithoutDerivedAttributes()) == angular.toJson(data)
           $scope.resetProducts data
-          $scope.displaySuccess()
+          $timeout -> $scope.displaySuccess()
         else
           $scope.displayFailure "Product lists do not match."
       ).error (data, status) ->
