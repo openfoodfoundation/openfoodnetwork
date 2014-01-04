@@ -16,9 +16,8 @@
 %div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  %div.filters{ :class => "fourteen columns alpha" }
-    %h3 Filter Products
-    %br.clear
+  %div.filters{ :class => "sixteen columns alpha" }
+    %h5 Filter Products
     %div{ :class => "four columns alpha" }
       Column:
       %br.clear
@@ -27,42 +26,35 @@
       Filter Type:
       %br.clear
       %select.select2.fullwidth{ 'ng-model' => 'filterPredicate', :name => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes' }
-    %div{ :class => "four columns omega" }
+    %div{ :class => "six columns omega" }
       Value:
       %br.clear
-      %input.fullwidth{ 'ng-model' => 'filterValue', :name => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
+      %input{ :class => "four columns alpha", 'ng-model' => 'filterValue', :name => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
     %div{ :class => "two columns omega" }
       &nbsp;
-      %input{ :name => "add_filter", :value => "Apply Filter", :type => "button", "ng-click" => "addFilter({property:filterProperty,predicate:filterPredicate,value:filterValue})" }
-  %div.applied_filter{ :class => "fourteen columns alpha", 'ng-repeat' => 'filter in currentFilters' }
+      %input.fullwidth{ :name => "add_filter", :value => "Apply Filter", :type => "button", "ng-click" => "addFilter({property:filterProperty,predicate:filterPredicate,value:filterValue})" }
+  %div.applied_filter{ :class => "sixteen columns alpha", 'ng-repeat' => 'filter in currentFilters' }
     %div{ :class => "four columns alpha" }
       {{ filter.property.name }}
     %div{ :class => "four columns omega" }
       {{ filter.predicate.name }}
-    %div{ :class => "four columns omega" }
+    %div{ :class => "six columns omega" }
       {{ filter.value }}
-  %br.clear
   %hr
   %div.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
   %div{ 'ng-hide' => 'loading' }
-    %div.options
-      Filter Results:
-      %input.search{ 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Search Value' }
+    %div.column_toggle
+      %h5 Toggle Columns
       %input{ :type => 'button', :value => 'Toggle Columns', 'ofn-toggle-column-list' => true }
       %div{ :style => 'display: none;' }
         %ul.column-list{ style: 'border: 1px solid darkgray; background-color: white;' }
           %li.column-list-item{ 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
             {{ column.name }}
-    %br.clear
-    %br.clear
-    %div{ :class => 'five columns' }
-      Show&nbsp;
-      %select{ 'ng-model' => 'perPage', :name => 'perPage', 'ng-options' => 'pp for pp in [25,50,100,200]'}
-      &nbsp;per page
-      %br
-      %span Displaying {{firstVisibleProduct()}}-{{lastVisibleProduct()}} of {{totalCount()}} products
-    %div.pagination{ :class => "seven columns" }
+    %hr
+    %div.quick_search{ :class => "five columns omega" }
+      %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
+    %div.pagination{ :class => "seven columns omega" }
       %div.pagenav{ :class => "two columns alpha" }
         %span.first
           %a{ 'ng-click' => "currentPage = 1", 'ng-show' => "currentPage > 1" }
@@ -82,6 +74,12 @@
         %span.last
           %a{ 'ng-click' => "currentPage = totalPages()", 'ng-show' => "currentPage < totalPages()" }
             Last&nbsp;&raquo;
+    %div.pagination_info{ :class => 'four columns alpha' }
+      Show&nbsp;
+      %select{ 'ng-model' => 'perPage', :name => 'perPage', 'ng-options' => 'pp for pp in [25,50,100,200]'}
+      &nbsp;per page
+      %br
+      %span Displaying {{firstVisibleProduct()}}-{{lastVisibleProduct()}} of {{totalCount()}} products
     %table.index#listing_products.bulk
       %colgroup
         %col
