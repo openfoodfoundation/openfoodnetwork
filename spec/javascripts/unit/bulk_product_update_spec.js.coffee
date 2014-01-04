@@ -1,4 +1,4 @@
-describe "filtering products", ->
+describe "filtering products for submission to database", ->
   it "accepts an object or an array and only returns an array", ->
     expect(filterSubmitProducts([])).toEqual []
     expect(filterSubmitProducts({})).toEqual []
@@ -639,6 +639,7 @@ describe "AdminBulkProductsCtrl", ->
         ]
         scope.updateProducts "list of dirty products"
         httpBackend.flush()
+        timeout.flush()
         expect(scope.displaySuccess).toHaveBeenCalled()
 
       it "runs displayFailure() when post return data does not match $scope.products", ->
@@ -897,6 +898,33 @@ describe "AdminBulkProductsCtrl", ->
         }
       ]
 
+
+  describe "filtering products", ->
+    describe "adding a filter to the filter list", ->
+      it "adds objects sent to addFilter() to $scope.currentFilters", ->
+        filterObject1 = {property: "name", ransack_predicate: "eq", value: "Product1"}
+        filterObject2 = {property: "name", ransack_predicate: "eq", value: "Product2"}
+        scope.addFilter(filterObject1)
+        scope.addFilter(filterObject2)
+        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+
+      it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in $scope.columns", ->
+        filterObject1 = {property: Object.keys(scope.columns)[0], ransack_predicate: "eq", value: "value1"}
+        filterObject2 = {property: Object.keys(scope.columns)[2], ransack_predicate: "eq", value: "value2"}
+        filterObject3 = {property: "some_random_property", ransack_predicate: "eq", value: "value3"}
+        scope.addFilter(filterObject1)
+        scope.addFilter(filterObject2)
+        scope.addFilter(filterObject3)
+        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+
+      it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in ", ->
+        filterObject1 = {property: Object.keys(scope.columns)[0], ransack_predicate: "eq", value: "value1"}
+        filterObject2 = {property: Object.keys(scope.columns)[2], ransack_predicate: "eq", value: "value2"}
+        filterObject3 = {property: Object.keys(scope.columns)[4], ransack_predicate: "something", value: "value3"}
+        scope.addFilter(filterObject1)
+        scope.addFilter(filterObject2)
+        scope.addFilter(filterObject3)
+        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

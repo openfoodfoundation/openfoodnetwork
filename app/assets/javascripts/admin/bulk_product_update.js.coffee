@@ -138,10 +138,15 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ["Items", "items"]
     ]
 
+    $scope.filterTypes = [
+      { name: "Equals",    ransack_predicate: "eq" }
+    ]
+
     $scope.perPage = 25
     $scope.currentPage = 1
     $scope.products = []
     $scope.filteredProducts = []
+    $scope.currentFilters = []
     $scope.totalCount = -> $scope.filteredProducts.length
     $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
     $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
@@ -223,6 +228,12 @@ productsApp.controller "AdminBulkProductsCtrl", [
       else
         onHand = "error"
       onHand
+
+
+    $scope.addFilter = (filter) ->
+      if Object.keys($scope.columns).indexOf(filter.property) >= 0
+        if $scope.filterTypes.map( (filter_type) -> filter_type.ransack_predicate ).indexOf(filter.ransack_predicate) >= 0
+          $scope.currentFilters.push filter
 
 
     $scope.editWarn = (product, variant) ->
