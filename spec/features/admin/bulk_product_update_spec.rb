@@ -21,14 +21,22 @@ feature %q{
       login_to_admin_section
     end
 
+    it "displays a 'loading' splash for products" do
+      101.times{ FactoryGirl.create(:product) }
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_selector "div.loading", :text => "Loading Products..."
+    end
+
     it "displays a list of products" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "product_name", with: p1.name
-      page.should have_field "product_name", with: p2.name
+      page.should have_field "product_name", with: p1.name, :visible => true
+      page.should have_field "product_name", with: p2.name, :visible => true
     end
 
     it "displays pagination information" do

@@ -167,6 +167,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
             # Need to have suppliers before we get products so we can match suppliers to product.supplier
             dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500").then (data) ->
               $scope.resetProducts data
+              $scope.loading = false
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else

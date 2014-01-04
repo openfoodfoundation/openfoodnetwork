@@ -13,10 +13,12 @@
 
 
 
-%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => "initialise('#{@spree_api_key}');" }
+%div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  %div
+  %div.loading{ 'ng-show' => 'loading' }
+    %h2 Loading Products...
+  %div{ 'ng-hide' => 'loading' }
     %div.options
       Filter Results:
       %input.search{ 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Search Value' }
