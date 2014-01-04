@@ -138,9 +138,16 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ["Items", "items"]
     ]
 
-    $scope.filterTypes = [
-      { name: "Equals",    ransack_predicate: "eq" }
+    $scope.filterableColumns = [
+      { name: "Supplier",       db_column: "supplier" },
+      { name: "Name",           db_column: "name" }
     ]
+
+    $scope.filterTypes = [
+      { name: "Equals",         predicate: "eq" },
+      { name: "Contains",       predicate: "eq" }
+    ]
+
 
     $scope.perPage = 25
     $scope.currentPage = 1
@@ -231,8 +238,8 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.addFilter = (filter) ->
-      if Object.keys($scope.columns).indexOf(filter.property) >= 0
-        if $scope.filterTypes.map( (filter_type) -> filter_type.ransack_predicate ).indexOf(filter.ransack_predicate) >= 0
+      if $scope.filterableColumns.indexOf(filter.property) >= 0
+        if $scope.filterTypes.indexOf(filter.predicate) >= 0
           $scope.currentFilters.push filter
 
 

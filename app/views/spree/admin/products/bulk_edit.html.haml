@@ -16,8 +16,35 @@
 %div{ 'ng-app' => 'bulk_product_update', 'ng-controller' => 'AdminBulkProductsCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
+  %div.filters{ :class => "fourteen columns alpha" }
+    %h3 Filter Products
+    %br.clear
+    %div{ :class => "four columns alpha" }
+      Column:
+      %br.clear
+      %select.select2.fullwidth{ 'ng-model' => 'filterProperty', :name => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns' }
+    %div{ :class => "four columns omega" }
+      Filter Type:
+      %br.clear
+      %select.select2.fullwidth{ 'ng-model' => 'filterPredicate', :name => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes' }
+    %div{ :class => "four columns omega" }
+      Value:
+      %br.clear
+      %input.fullwidth{ 'ng-model' => 'filterValue', :name => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
+    %div{ :class => "two columns omega" }
+      &nbsp;
+      %input{ :name => "add_filter", :value => "Apply Filter", :type => "button", "ng-click" => "addFilter({property:filterProperty,predicate:filterPredicate,value:filterValue})" }
+  %div.applied_filter{ :class => "fourteen columns alpha", 'ng-repeat' => 'filter in currentFilters' }
+    %div{ :class => "four columns alpha" }
+      {{ filter.property.name }}
+    %div{ :class => "four columns omega" }
+      {{ filter.predicate.name }}
+    %div{ :class => "four columns omega" }
+      {{ filter.value }}
+  %br.clear
+  %hr
   %div.loading{ 'ng-show' => 'loading' }
-    %h2 Loading Products...
+    %h4 Loading Products...
   %div{ 'ng-hide' => 'loading' }
     %div.options
       Filter Results:

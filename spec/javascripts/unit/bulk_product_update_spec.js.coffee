@@ -902,25 +902,25 @@ describe "AdminBulkProductsCtrl", ->
   describe "filtering products", ->
     describe "adding a filter to the filter list", ->
       it "adds objects sent to addFilter() to $scope.currentFilters", ->
-        filterObject1 = {property: "name", ransack_predicate: "eq", value: "Product1"}
-        filterObject2 = {property: "name", ransack_predicate: "eq", value: "Product2"}
+        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
+        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
         scope.addFilter(filterObject1)
         scope.addFilter(filterObject2)
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
-      it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in $scope.columns", ->
-        filterObject1 = {property: Object.keys(scope.columns)[0], ransack_predicate: "eq", value: "value1"}
-        filterObject2 = {property: Object.keys(scope.columns)[2], ransack_predicate: "eq", value: "value2"}
-        filterObject3 = {property: "some_random_property", ransack_predicate: "eq", value: "value3"}
+      it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
+        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
+        filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[0], value: "value2"}
+        filterObject3 = {property: "some_random_property", predicate: scope.filterTypes[0], value: "value3"}
         scope.addFilter(filterObject1)
         scope.addFilter(filterObject2)
         scope.addFilter(filterObject3)
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
-      it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in ", ->
-        filterObject1 = {property: Object.keys(scope.columns)[0], ransack_predicate: "eq", value: "value1"}
-        filterObject2 = {property: Object.keys(scope.columns)[2], ransack_predicate: "eq", value: "value2"}
-        filterObject3 = {property: Object.keys(scope.columns)[4], ransack_predicate: "something", value: "value3"}
+      it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
+        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
+        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value2"}
+        filterObject3 = {property: scope.filterableColumns[0], predicate: "something", value: "value3"}
         scope.addFilter(filterObject1)
         scope.addFilter(filterObject2)
         scope.addFilter(filterObject3)

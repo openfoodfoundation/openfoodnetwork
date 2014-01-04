@@ -608,6 +608,34 @@ feature %q{
         page.should have_text "1"
       end
     end
+
+    describe "using filtering controls" do
+      it "displays basic filtering controls" do
+        FactoryGirl.create(:simple_product)
+
+        login_to_admin_section
+        visit '/admin/products/bulk_edit'
+
+        page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
+        page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
+        page.should have_field "filter_value"
+      end
+
+      it "adds a new filter when the 'Apply Filter' button is clicked" do
+        FactoryGirl.create(:simple_product, :name => "Product1")
+        FactoryGirl.create(:simple_product, :name => "Product2")
+
+        login_to_admin_section
+        visit '/admin/products/bulk_edit'
+
+        select "Name", :from => "filter_property"
+        select "Equals", :from => "filter_predicate"
+        fill_in "filter_value", :with => "Product1"
+        click_button "Apply Filter"
+
+        page.should have_text "Name Equals Product1"
+      end
+    end
   end
 
   context "as an enterprise manager" do

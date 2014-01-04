@@ -12,6 +12,20 @@ div.pagination {
 	}
 }
 
+div.filters {
+	margin-bottom: 10px;
+}
+
+div.applied_filter {
+	margin-bottom: 5px;
+	border: solid 2px grey;
+	padding: 5px 0px;
+	border-radius: 5px;
+	div.four.columns {
+		padding-left: 10px;
+	}
+}
+
 tbody.odd {
 	tr.product { td { background-color: white; } }
 	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }
