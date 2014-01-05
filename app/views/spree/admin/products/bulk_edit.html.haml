@@ -45,7 +45,11 @@
   %hr
   %div.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
-  %div{ 'ng-hide' => 'loading' }
+  %div{ 'ng-show' => '!loading && products.length == 0' }
+    %h4{ :style => 'color:red;' } No matching products found.
+  %div{ 'ng-show' => 'products.length == 500' }
+    %h6 Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products
+  %div{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
     %div.column_toggle
       %h5 Toggle Columns
       %input{ :type => 'button', :value => 'Toggle Columns', 'ofn-toggle-column-list' => true }

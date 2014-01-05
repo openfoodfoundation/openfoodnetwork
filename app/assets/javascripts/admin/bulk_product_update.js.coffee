@@ -185,7 +185,6 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.fetchProducts = -> # WARNING: returns a promise
-      #apply current filters
       $scope.loading = true
       queryString = $scope.currentFilters.reduce (qs,f) ->
         return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"

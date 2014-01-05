@@ -39,6 +39,20 @@ feature %q{
       page.should have_field "product_name", with: p2.name, :visible => true
     end
 
+    it "displays a message when number of products is zero" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "No matching products found."
+    end
+
+    it "displays a message when number of products is too great" do
+      501.times{ FactoryGirl.create(:simple_product) }
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products"
+    end
+
     it "displays pagination information" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
@@ -508,6 +522,7 @@ feature %q{
   describe "using the page" do
     describe "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
+        FactoryGirl.create(:simple_product)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
