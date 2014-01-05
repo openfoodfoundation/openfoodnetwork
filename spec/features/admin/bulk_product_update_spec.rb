@@ -647,6 +647,25 @@ feature %q{
           page.should have_field "product_name", :with => "Product1"
           page.should_not have_field "product_name", :with => "Product2"
         end
+
+        describe "clicking the 'Remove Filter' link" do
+          before(:each) do
+            click_link "Remove Filter"
+          end
+
+          it "removes the filter from the list of applied filters" do
+            page.should_not have_text "Name Equals Product1"
+          end
+
+          it "displays the 'loading' splash" do
+            page.should have_selector "div.loading", :text => "Loading Products..."
+          end
+
+          it "loads appropriate products" do
+            page.should have_field "product_name", :with => "Product1"
+            page.should have_field "product_name", :with => "Product2"
+          end
+        end
       end
     end
   end

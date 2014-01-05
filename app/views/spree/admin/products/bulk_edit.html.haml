@@ -40,6 +40,8 @@
       {{ filter.predicate.name }}
     %div{ :class => "six columns omega" }
       {{ filter.value }}
+    %div{ :class => "two columns omega" }
+      %a{ 'ng-click' => "removeFilter(filter)" } Remove Filter
   %hr
   %div.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...

@@ -165,7 +165,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.$watch ->
       $scope.totalPages()
     , (newVal, oldVal) ->
-      $scope.currentPage = $scope.totalPages() if newVal != oldVal && $scope.totalPages() < $scope.currentPage
+      $scope.currentPage = Math.max $scope.totalPages(), 1  if newVal != oldVal && $scope.totalPages() < $scope.currentPage
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -251,6 +251,12 @@ productsApp.controller "AdminBulkProductsCtrl", [
         if $scope.filterTypes.indexOf(filter.predicate) >= 0
           $scope.currentFilters.push filter
           $scope.fetchProducts()
+
+    $scope.removeFilter = (filter) ->
+      index = $scope.currentFilters.indexOf(filter)
+      if index != -1
+        $scope.currentFilters.splice index, 1
+        $scope.fetchProducts()
 
 
     $scope.editWarn = (product, variant) ->

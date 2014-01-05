@@ -931,8 +931,8 @@ describe "AdminBulkProductsCtrl", ->
         spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
         filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
-        scope.addFilter(filterObject1)
-        scope.addFilter(filterObject2)
+        scope.addFilter filterObject1
+        scope.addFilter filterObject2
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
@@ -940,9 +940,9 @@ describe "AdminBulkProductsCtrl", ->
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
         filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[0], value: "value2"}
         filterObject3 = {property: "some_random_property", predicate: scope.filterTypes[0], value: "value3"}
-        scope.addFilter(filterObject1)
-        scope.addFilter(filterObject2)
-        scope.addFilter(filterObject3)
+        scope.addFilter filterObject1
+        scope.addFilter filterObject2
+        scope.addFilter filterObject3
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
@@ -950,15 +950,36 @@ describe "AdminBulkProductsCtrl", ->
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
         filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value2"}
         filterObject3 = {property: scope.filterableColumns[0], predicate: "something", value: "value3"}
-        scope.addFilter(filterObject1)
-        scope.addFilter(filterObject2)
-        scope.addFilter(filterObject3)
+        scope.addFilter filterObject1
+        scope.addFilter filterObject2
+        scope.addFilter filterObject3
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "calls fetchProducts when adding a new filter", ->
         spyOn(scope, "fetchProducts").andReturn "nothing"
         scope.addFilter( { property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1" } )
         expect(scope.fetchProducts.calls.length).toEqual(1)
+
+    describe "removing a filter from the filter list", ->
+      filterObject1 = filterObject2 = null
+
+      beforeEach ->
+        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
+        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
+        scope.currentFilters = [ filterObject1, filterObject2 ]
+
+      it "removes the specified filter from $scope.currentFilters and calls fetchProducts", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
+        scope.removeFilter filterObject1
+        expect(scope.currentFilters).toEqual [ filterObject2 ]
+        expect(scope.fetchProducts.calls.length).toEqual 1
+
+      it "ignores filters which do not exist in currentFilters", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
+        filterObject3 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[1], value: "SomethingElse"}
+        scope.removeFilter filterObject3
+        expect(scope.currentFilters).toEqual [ filterObject1, filterObject2 ]
+        expect(scope.fetchProducts.calls.length).toEqual 0
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->
