@@ -274,13 +274,39 @@ describe "AdminBulkProductsCtrl", ->
     it "gets a list of suppliers and then resets products with a list of data", ->
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
-      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500").respond "list of products"
-      spyOn scope, "resetProducts"
+      spyOn(scope, "fetchProducts").andReturn "nothing"
       scope.initialise "api_key"
       httpBackend.flush()
       expect(scope.suppliers).toEqual "list of suppliers"
-      expect(scope.resetProducts).toHaveBeenCalledWith "list of products"
+      expect(scope.fetchProducts.calls.length).toEqual 1
       expect(scope.spree_api_key_ok).toEqual true
+
+
+  describe "fetching products", ->
+    it "makes a standard call to dataFetcher when no filters exist", ->
+      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      scope.fetchProducts()
+
+    it "calls resetProducts after data has been received", ->
+      spyOn scope, "resetProducts"
+      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      scope.fetchProducts()
+      httpBackend.flush()
+      expect(scope.resetProducts).toHaveBeenCalledWith "list of products"
+
+    it "applies filters when they are present", ->
+      filter = {property: scope.filterableColumns[1], predicate:scope.filterTypes[0], value:"Product1"}
+      scope.currentFilters.push filter # Don't use addFilter as that is not what we are testing
+      expect(scope.currentFilters).toEqual [filter]
+      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;q[name_eq]=Product1;").respond "list of products"
+      scope.fetchProducts()
+
+    it "sets the loading property to true before fetching products and unsets it when loading is complete", ->
+      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      scope.fetchProducts()
+      expect(scope.loading).toEqual true
+      httpBackend.flush()
+      expect(scope.loading).toEqual false
 
 
   describe "resetting products", ->
@@ -902,6 +928,7 @@ describe "AdminBulkProductsCtrl", ->
   describe "filtering products", ->
     describe "adding a filter to the filter list", ->
       it "adds objects sent to addFilter() to $scope.currentFilters", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
         filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
         scope.addFilter(filterObject1)
@@ -909,6 +936,7 @@ describe "AdminBulkProductsCtrl", ->
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
         filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[0], value: "value2"}
         filterObject3 = {property: "some_random_property", predicate: scope.filterTypes[0], value: "value3"}
@@ -918,6 +946,7 @@ describe "AdminBulkProductsCtrl", ->
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
         filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value2"}
         filterObject3 = {property: scope.filterableColumns[0], predicate: "something", value: "value3"}
@@ -925,6 +954,11 @@ describe "AdminBulkProductsCtrl", ->
         scope.addFilter(filterObject2)
         scope.addFilter(filterObject3)
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+
+      it "calls fetchProducts when adding a new filter", ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
+        scope.addFilter( { property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1" } )
+        expect(scope.fetchProducts.calls.length).toEqual(1)
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

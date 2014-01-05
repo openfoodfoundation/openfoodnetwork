@@ -621,19 +621,32 @@ feature %q{
         page.should have_field "filter_value"
       end
 
-      it "adds a new filter when the 'Apply Filter' button is clicked" do
-        FactoryGirl.create(:simple_product, :name => "Product1")
-        FactoryGirl.create(:simple_product, :name => "Product2")
+      describe "clicking the 'Apply Filter' Button" do
+        before(:each) do
+          FactoryGirl.create(:simple_product, :name => "Product1")
+          FactoryGirl.create(:simple_product, :name => "Product2")
 
-        login_to_admin_section
-        visit '/admin/products/bulk_edit'
+          login_to_admin_section
+          visit '/admin/products/bulk_edit'
 
-        select "Name", :from => "filter_property"
-        select "Equals", :from => "filter_predicate"
-        fill_in "filter_value", :with => "Product1"
-        click_button "Apply Filter"
+          select "Name", :from => "filter_property"
+          select "Equals", :from => "filter_predicate"
+          fill_in "filter_value", :with => "Product1"
+          click_button "Apply Filter"
+        end
 
-        page.should have_text "Name Equals Product1"
+        it "adds a new filter to the list of applied filters" do
+          page.should have_text "Name Equals Product1"
+        end
+
+        it "displays the 'loading' splash" do
+          page.should have_selector "div.loading", :text => "Loading Products..."
+        end
+
+        it "loads appropriate products" do
+          page.should have_field "product_name", :with => "Product1"
+          page.should_not have_field "product_name", :with => "Product2"
+        end
       end
     end
   end

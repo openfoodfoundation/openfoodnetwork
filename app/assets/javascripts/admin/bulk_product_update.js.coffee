@@ -139,13 +139,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
     ]
 
     $scope.filterableColumns = [
-      { name: "Supplier",       db_column: "supplier" },
+      { name: "Supplier",       db_column: "supplier_name" },
       { name: "Name",           db_column: "name" }
     ]
 
     $scope.filterTypes = [
       { name: "Equals",         predicate: "eq" },
-      { name: "Contains",       predicate: "eq" }
+      { name: "Contains",       predicate: "cont" }
     ]
 
 
@@ -177,13 +177,22 @@ productsApp.controller "AdminBulkProductsCtrl", [
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             # Need to have suppliers before we get products so we can match suppliers to product.supplier
-            dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500").then (data) ->
-              $scope.resetProducts data
-              $scope.loading = false
+            $scope.fetchProducts()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
+
+
+    $scope.fetchProducts = -> # WARNING: returns a promise
+      #apply current filters
+      $scope.loading = true
+      queryString = $scope.currentFilters.reduce (qs,f) ->
+        return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
+      , ""
+      return dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500;#{queryString}").then (data) ->
+        $scope.resetProducts data
+        $scope.loading = false
 
 
     $scope.resetProducts = (data) ->
@@ -241,6 +250,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       if $scope.filterableColumns.indexOf(filter.property) >= 0
         if $scope.filterTypes.indexOf(filter.predicate) >= 0
           $scope.currentFilters.push filter
+          $scope.fetchProducts()
 
 
     $scope.editWarn = (product, variant) ->
