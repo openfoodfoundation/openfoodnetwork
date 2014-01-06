@@ -1,56 +1,12 @@
+@import mixins
+
 product
   display: block 
 
-
 shop
-  color: #666
-  display: block
-  navigation
-    display: block
-    background: #f6efe5
-    distributor.details
-      box-sizing: border-box
-      display: block
-      height: 150px
-      padding: 40px 0px 0px
-      select
-        width: 200px
-      position: relative
-      img
-        display: block
-        height: 100px
-        width: 100px
-        margin-right: 12px
-      location
-        font-family: "AvenirBla_IE", "AvenirBla"
-        padding-right: 16px
-      ordercycle
-        display: block
-        position: absolute
-        right: 0px
-        top: 40px
-        form.custom 
-          width: 400px
-          text-align: right
-          & > strong
-            line-height: 2.5
-            font-size: 1.29em
-            padding-right: 14px
-          .custom.dropdown
-            width: 280px
-            display: inline-block
-            background: transparent
-            border-width: 2px
-            border-color: #666666
-            font-size: 1.28em 
-            margin-bottom: 0
-        closing
-          font-size: 0.875em
-product
-  display: block 
-
-
-shop
+  #search
+    font-size: 2em
+    @include big-input
   color: #666
   display: block
   navigation

@@ -1,5 +1,6 @@
 %products{"ng-controller" => "ProductsCtrl"}
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
+    %input#search.text{"ng-model" => "query", placeholder: "Search"}
     %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
@@ -9,11 +10,11 @@
         %th QTY
         %th Bulk
         %th Price
-      %tbody{"ng-repeat" => "product in data.products "}
+      %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr.product
           %td
-            -#%img{src: "{{ product.master.images[0].small_url }}"}
-            -#{{product.master.images[0].alt}}
+            %img{src: "{{ product.master.images[0].small_url }}"}
+            {{product.master.images[0].alt}}
           %td
             %h5
               {{ product.name }}
