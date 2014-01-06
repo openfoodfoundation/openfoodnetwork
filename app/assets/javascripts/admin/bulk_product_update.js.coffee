@@ -308,9 +308,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
       $http(
         method: "POST"
         url: "/admin/products/bulk_update"
-        data: productsToSubmit
+        data:
+          products: productsToSubmit
+          filters: $scope.currentFilters
       ).success((data) ->
-        if angular.toJson($scope.productsWithoutDerivedAttributes()) == angular.toJson(data)
+        #if angular.toJson($scope.productsWithoutDerivedAttributes()) == angular.toJson(data)
+        # TODO: remove this check altogether, need to write controller tests if we want to test this behaviour properly
+        if subset($scope.productsWithoutDerivedAttributes(),data)
           $scope.resetProducts data
           $timeout -> $scope.displaySuccess()
         else
@@ -508,3 +512,11 @@ toObjectWithIDKeys = (array) ->
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
   
   object
+
+subset = (bigArray,smallArray) ->
+  if smallArray instanceof Array && bigArray instanceof Array && smallArray.length > 0
+    for item in smallArray
+      return false if angular.toJson(bigArray).indexOf(angular.toJson(item)) == -1
+    return true
+  else
+    return false
