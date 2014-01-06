@@ -74,25 +74,59 @@ module Spree
     describe "unit value/description" do
       context "when the variant initially has no value" do
         context "when the required option value does not exist" do
-          it "creates the option value and assigns it to the variant" do
-            p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
-            v = create(:variant, product: p, unit_value: nil, unit_description: nil)
-            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
-            ot = Spree::OptionType.find_by_name 'unit_weight'
+          let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }
+          let!(:v) { create(:variant, product: p, unit_value: nil, unit_description: nil) }
 
+          before do
+            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
+            @ot = Spree::OptionType.find_by_name 'unit_weight'
+          end
+
+          it "creates the option value and assigns it to the variant" do
             expect {
               v.update_attributes!(unit_value: 10, unit_description: 'foo')
             }.to change(Spree::OptionValue, :count).by(1)
 
             ov = Spree::OptionValue.last
-            ov.option_type.should == ot
+            ov.option_type.should == @ot
             ov.name.should == '10 g foo'
             ov.presentation.should == '10 g foo'
 
             v.option_values.should include ov
           end
 
-          it "correctly generates option value name and presentation"
+          describe "generating option value name and presentation" do
+            let(:ov) { Spree::OptionValue.last }
+
+            it "generates values within the unit range" do
+              v.update_attributes!(unit_value: 100, unit_description: 'bar')
+
+              ov.name.should == '100 g bar'
+              ov.presentation.should == '100 g bar'
+            end
+
+            it "generates values when unit value is non-integer" do
+              v.update_attributes!(unit_value: 123.45, unit_description: 'bar')
+
+              ov.name.should == '123.45 g bar'
+              ov.presentation.should == '123.45 g bar'
+            end
+
+            it "generates values without a unit description" do
+              v.update_attributes!(unit_value: 100, unit_description: '')
+
+              ov.name.should == '100 g'
+              ov.presentation.should == '100 g'
+            end
+
+            it "generates values for differing scales"
+
+            it "generates values for volume units"
+            it "generates values for item units"
+
+            it "switches units upwards when outside the base scale"
+            it "switches units downwards when outside the base scale"
+          end
         end
 
         context "when the required option value already exists" do

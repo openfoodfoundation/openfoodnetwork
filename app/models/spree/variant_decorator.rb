@@ -31,7 +31,12 @@ Spree::Variant.class_eval do
   end
 
   def option_value_name
-    '10 g foo'
+    value = unit_value
+    value = value.to_i if value == value.to_i
+
+    name  = "#{value} g"
+    name += " #{unit_description}" if unit_description.present?
+    name
   end
 
 end
