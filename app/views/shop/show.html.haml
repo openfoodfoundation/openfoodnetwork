@@ -5,7 +5,8 @@
       %h4
         = @distributor.name
       %location= @distributor.address.city
-      %small Change location
+      %small
+        %a{href: "/"} Change location
       = render partial: "shop/order_cycles"
 
       -#%description
@@ -23,7 +24,9 @@
           %p.title.avenir{"data-section-title" => ""}
             %a{href: "#producers"} Our Producers 
           .content{"data-section-content" => ""}
-            %p Content of section 2.
+            %ul
+              - for producer in @producers
+                %li= producer.name
 
         %section
           %p.title.avenir{"data-section-title" => ""}

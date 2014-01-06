@@ -8,6 +8,7 @@ describe ShopController do
     response.should redirect_to root_path
   end
 
+
   describe "with a distributor in place" do
     before do
       controller.stub(:current_distributor).and_return d
@@ -55,6 +56,22 @@ describe ShopController do
       end
     end
 
+
+    describe "producers/suppliers" do
+      let(:supplier) { create(:supplier_enterprise) }
+      let(:product) { create(:product, supplier: supplier) }
+      let(:order_cycle) { create(:order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
+
+      before do
+        exchange = Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) 
+        exchange.variants << product.master
+      end
+
+      it "builds a list of producers/suppliers" do
+        spree_get :show
+        assigns[:producers].should == [supplier]
+      end
+    end
 
     describe "returning products" do
       let(:product) { create(:product) }

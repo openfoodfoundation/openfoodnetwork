@@ -17,6 +17,25 @@ feature "As a consumer I want to shop with a distributor", js: true do
       page.should have_text distributor.name
     end
 
+    describe "With products in order cycles" do
+      let(:supplier) { create(:supplier_enterprise) }
+      let(:product) { create(:product, supplier: supplier) }
+      let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+
+      before do
+        exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
+        exchange.variants << product.master
+      end
+
+      it "shows the suppliers/producers for a distributor" do
+        visit shop_path
+        click_link "Our Producers"
+        page.should have_content supplier.name 
+      end
+
+    end
+
+
     describe "selecting an order cycle" do
       it "selects an order cycle if only one is open" do
         # create order cycle

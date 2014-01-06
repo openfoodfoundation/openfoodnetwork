@@ -5,6 +5,8 @@ class ShopController < BaseController
   before_filter :set_order_cycles
 
   def show
+    # All suppliers of all our products
+    @producers = Exchange.where(receiver_id: @distributor.id).map{ |ex| ex.variants.map {|v| v.product.supplier }}.flatten.uniq 
   end
   
   def products
