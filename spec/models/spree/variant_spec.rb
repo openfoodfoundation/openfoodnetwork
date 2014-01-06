@@ -71,16 +71,59 @@ module Spree
       end
     end
 
+    describe "unit value/description" do
+      context "when the variant initially has no value" do
+        context "when the required option value does not exist" do
+          it "creates the option value and assigns it to the variant" do
+            p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+            v = create(:variant, product: p, unit_value: nil, unit_description: nil)
+            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
+            ot = Spree::OptionType.find_by_name 'unit_weight'
+
+            expect {
+              v.update_attributes!(unit_value: 10, unit_description: 'foo')
+            }.to change(Spree::OptionValue, :count).by(1)
+
+            ov = Spree::OptionValue.last
+            ov.option_type.should == ot
+            ov.name.should == '10 g foo'
+            ov.presentation.should == '10 g foo'
+
+            v.option_values.should include ov
+          end
+
+          it "correctly generates option value name and presentation"
+        end
+
+        context "when the required option value already exists" do
+          it "looks up the option value and assigns it to the variant"
+        end
+
+        context "when the variant already has a value set (and all required option values exist)" do
+          it "removes the old option value and assigns the new one"
+          it "leaves option value unassigned if none is provided"
+          it "does not remove and re-add the option value if it is not changed"
+        end
+      end
+    end
+
     describe "deleting unit option values" do
-      it "deletes option values for unit option types" do
+      before do
         p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
         ot = Spree::OptionType.find_by_name 'unit_weight'
-        ov = create(:option_value, option_type: ot, name: '1 kg', presentation: '1 kg')
-        v = create(:variant, product: p, option_values: [ov])
+        @v = create(:variant, product: p)
+      end
 
+      it "removes option value associations for unit option types" do
         expect {
-          v.delete_unit_option_values
-        }.to change(Spree::OptionValue, :count).by(-1)
+          @v.delete_unit_option_values
+        }.to change(@v.option_values, :count).by(-1)
+      end
+
+      it "does not delete option values" do
+        expect {
+          @v.delete_unit_option_values
+        }.to change(Spree::OptionValue, :count).by(0)
       end
     end
   end

@@ -386,8 +386,7 @@ module Spree
 
         it "removes the related option values from all its variants" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
-          ov = create(:option_value, option_type: ot, name: '1 kg', presentation: '1 kg')
-          v = create(:variant, product: p, option_values: [ov])
+          v = create(:variant, product: p)
           p.reload
 
           expect {
