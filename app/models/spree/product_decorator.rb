@@ -102,27 +102,30 @@ Spree::Product.class_eval do
     end
   end
 
+  def variant_unit_option_type
+    if variant_unit.present?
+      option_type_name = "unit_#{variant_unit}"
+      option_type_presentation = variant_unit.capitalize
+
+      Spree::OptionType.find_by_name(option_type_name) ||
+        Spree::OptionType.create!(name: option_type_name,
+                                  presentation: option_type_presentation)
+    end
+  end
+
+
   private
 
   def set_available_on_to_now
     self.available_on ||= Time.now
   end
 
-
   def update_units
     if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
-      option_types << option_type_for_variant_unit if variant_unit.present?
+      option_types << variant_unit_option_type if variant_unit.present?
       variants.each { |v| v.delete_unit_option_values }
     end
-  end
-
-  def option_type_for_variant_unit
-    option_type_name = "unit_#{variant_unit}"
-    option_type_presentation = variant_unit.capitalize
-
-    Spree::OptionType.find_by_name(option_type_name) ||
-      Spree::OptionType.create!(name: option_type_name, presentation: option_type_presentation)
   end
 
   def self.all_variant_unit_option_types

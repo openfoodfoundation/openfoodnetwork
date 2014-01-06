@@ -396,6 +396,13 @@ module Spree
         end
       end
 
+      describe "returning the variant unit option type" do
+        it "returns nil when variant_unit is not set" do
+          p = create(:simple_product, variant_unit: nil)
+          p.variant_unit_option_type.should be_nil
+        end
+      end
+
       it "finds all variant unit option types" do
         ot1 = create(:option_type, name: 'unit_weight', presentation: 'Weight')
         ot2 = create(:option_type, name: 'unit_volume', presentation: 'Volume')
