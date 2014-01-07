@@ -120,7 +120,11 @@ module Spree
           v.send(:option_value_name).should == "value unit desc"
         end
 
-        it "when value is blank and description is present"
+        it "when value is blank and description is present" do
+          v = Spree::Variant.new unit_description: 'desc'
+          v.stub(:option_value_value_unit) { [nil, nil] }
+          v.send(:option_value_name).should == "desc"
+        end
       end
 
       describe "generating option value's value and unit" do
@@ -176,6 +180,12 @@ module Spree
           v.send(:option_value_value_unit).should == [1, 'packet']
         end
 
+        it "returns [nil, nil] when unit value is not set" do
+          p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'foo')
+          v.stub(:product) { p }
+          v.stub(:unit_value) { nil }
+          v.send(:option_value_value_unit).should == [nil, nil]
+        end
 
         it "switches units upwards when outside the base scale"
         it "switches units downwards when outside the base scale"

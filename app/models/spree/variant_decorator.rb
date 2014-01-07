@@ -33,23 +33,28 @@ Spree::Variant.class_eval do
   def option_value_name
     value, unit = option_value_value_unit
 
-    name  = "#{value} #{unit}"
-    name += " #{unit_description}" if unit_description.present?
-    name
+    name_fields = []
+    name_fields << "#{value} #{unit}" if value.present? && unit.present?
+    name_fields << unit_description   if unit_description.present?
+    name_fields.join ' '
   end
 
   def option_value_value_unit
     units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
              'volume' => {0.001 => 'mL', 1.0 => 'L', 1000000.0 => 'ML'}}
 
-    value = unit_value
-    value = value.to_i if value == value.to_i
+    if unit_value.present?
+      value = unit_value
+      value = value.to_i if value == value.to_i
 
-    if %w(weight volume).include? self.product.variant_unit
-      unit = units[self.product.variant_unit][self.product.variant_unit_scale]
+      if %w(weight volume).include? self.product.variant_unit
+        unit = units[self.product.variant_unit][self.product.variant_unit_scale]
+      else
+        unit = self.product.variant_unit_name
+        unit = unit.pluralize if value > 1
+      end
     else
-      unit = self.product.variant_unit_name
-      unit = unit.pluralize if value > 1
+      value = unit = nil
     end
 
     [value, unit]
