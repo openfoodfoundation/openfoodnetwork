@@ -134,7 +134,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ["Weight (T)", "weight_1000000"],
       ["Volume (mL)", "volume_0.001"],
       ["Volume (L)", "volume_1"],
-      ["Volume (ML)", "volume_1000"],
+      ["Volume (ML)", "volume_1000000"],
       ["Items", "items"]
     ]
 
