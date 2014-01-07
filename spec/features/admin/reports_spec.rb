@@ -143,13 +143,12 @@ feature %q{
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
 
       table.sort.should == [
-        ["Supplier",    "Product",      "SKU",    "Variant",              "On Hand",    "Price"],
-        [product_1.supplier.name,  "Product Name", variant_1.sku,         "Size: Test", "10",       "100.0"],
-        [product_1.supplier.name,  "Product Name", variant_2.sku,         "Size: S",    "20",       "80.0"],
-        [product_2.supplier.name,  "Product 2",    product_2.master.sku,  "",           "9",       "99.0"]
+        ["Supplier",              "Producer Suburb",                "Product",      "Product Properties",             "Variant Value",  "Price",  "Group Buy Unit Quantity",      "Amount"],
+        [product_1.supplier.name, product_1.supplier.address.city,  "Product Name", product_1.properties.join(", "),  "Size: Test",     "100.0",  product_1.group_buy_unit_size.to_s,  ""],
+        [product_1.supplier.name, product_1.supplier.address.city,  "Product Name", product_1.properties.join(", "),  "Size: S",        "80.0",   product_1.group_buy_unit_size.to_s,  ""],
+        [product_2.supplier.name, product_1.supplier.address.city,  "Product 2",    product_1.properties.join(", "),  "",                "99.0",  product_1.group_buy_unit_size.to_s,  ""]
       ].sort
     end
   end
-
 end
 

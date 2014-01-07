@@ -81,12 +81,12 @@ describe Exchange do
 
     it "finds exchanges going to any of a number of enterprises" do
       Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
-      Exchange.to_enterprises([coordinator, distributor]).should == [incoming_exchange, outgoing_exchange]
+      Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
     end
 
     it "finds exchanges coming from any of a number of enterprises" do
       Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
-      Exchange.from_enterprises([supplier, coordinator]).should == [incoming_exchange, outgoing_exchange]
+      Exchange.from_enterprises([supplier, coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
     end
 
     it "finds exchanges with a particular variant" do

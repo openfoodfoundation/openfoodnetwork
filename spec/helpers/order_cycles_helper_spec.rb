@@ -32,4 +32,5 @@ describe OrderCyclesHelper do
       helper.stub!(:current_distributor).and_return d
       helper.pickup_time.should == "turtles"
   end
+
 end

@@ -14,7 +14,7 @@ class AbilityDecorator
         user.enterprises.include? product.supplier
       end
 
-      can [:admin, :index, :read, :create, :edit, :update, :search], Spree::Variant
+      can [:admin, :index, :read, :create, :edit, :update, :search, :destroy], Spree::Variant
       can [:admin, :index, :read, :create, :edit], Spree::ProductProperty
       can [:admin, :index, :read, :create, :edit], Spree::Image
 

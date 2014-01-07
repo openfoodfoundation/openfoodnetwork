@@ -1,3 +1,0 @@
-EnterprisesDistributorInfoRichTextFeature::Engine.automount!
-EnterprisesDistributorInfoRichTextFeature::Engine.routes.draw do
-end

@@ -34,11 +34,13 @@ describe OrderCycle do
     oc_active = create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.week.from_now)
     oc_not_yet_open = create(:simple_order_cycle, orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
     oc_already_closed = create(:simple_order_cycle, orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
+    oc_undated = create(:simple_order_cycle, orders_open_at: nil, orders_close_at: nil)
 
     OrderCycle.active.should == [oc_active]
     OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
+    OrderCycle.undated.should == [oc_undated]
   end
 
   it "finds order cycles accessible by a user" do
@@ -223,7 +225,7 @@ describe OrderCycle do
       @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
 
       @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday')
+      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
       @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, pickup_time: nil)
     end
 
@@ -241,6 +243,12 @@ describe OrderCycle do
         @oc.pickup_time_for(@d2).should == '2-8pm Friday'
       end
     end
+    
+    describe "finding pickup instructions for a distributor" do
+      it "returns the pickup instructions" do
+        @oc.pickup_instructions_for(@d1).should == "Come get it!"
+      end
+    end
   end
 
   describe "checking status" do
@@ -248,6 +256,7 @@ describe OrderCycle do
 
     it "reports status when an order cycle is upcoming" do
       Timecop.freeze(oc.orders_open_at - 1.second) do
+        oc.should_not be_undated
         oc.should     be_upcoming
         oc.should_not be_open
         oc.should_not be_closed
@@ -255,6 +264,7 @@ describe OrderCycle do
     end
 
     it "reports status when an order cycle is open" do
+      oc.should_not be_undated
       oc.should_not be_upcoming
       oc.should     be_open
       oc.should_not be_closed
@@ -262,10 +272,20 @@ describe OrderCycle do
 
     it "reports status when an order cycle has closed" do
       Timecop.freeze(oc.orders_close_at + 1.second) do
+        oc.should_not be_undated
         oc.should_not be_upcoming
         oc.should_not be_open
         oc.should     be_closed
       end
+    end
+
+    it "reports status when an order cycle is undated" do
+      oc.update_attributes!(orders_open_at: nil, orders_close_at: nil)
+
+      oc.should be_undated
+      oc.should_not be_upcoming
+      oc.should_not be_open
+      oc.should_not be_closed
     end
   end
 

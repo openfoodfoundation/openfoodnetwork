@@ -72,7 +72,8 @@ module Admin
     def collection
       ocs = OrderCycle.managed_by(spree_current_user)
 
-      ocs.soonest_closing +
+      ocs.undated +
+        ocs.soonest_closing +
         ocs.soonest_opening +
         ocs.most_recently_closed
     end
