@@ -5,6 +5,7 @@ Openfoodnetwork::Application.routes.draw do
   resource :shop, controller: :shop do
     get :products
     post :order_cycle
+    get :order_cycle
   end
 
   resources :enterprises do

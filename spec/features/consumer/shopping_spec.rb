@@ -108,8 +108,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           select "frogs", :from => "order_cycle_id"
         end
         it "should let us add products to our cart" do
-          fill_in "quantity_variant_#{variant.id}", with: "1"
-          find("form.custom > input.button.right:first-child").click
+          fill_in "variants[#{variant.id}]", with: "1"
+          first("form.custom > input.button.right").click
           current_path.should == "/cart" 
           page.should have_content product.name
         end

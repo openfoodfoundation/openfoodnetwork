@@ -1,7 +1,7 @@
 %ordercycle{"ng-controller" => "OrderCycleCtrl"}
 
   :javascript
-    angular.module('Shop').value('orderCycleData', #{OrderCycleSerializer.new(current_order_cycle).to_json})
+    angular.module('Shop').value('orderCycleData', #{render "shop/order_cycle"})
 
 
   - if @order_cycles.empty?

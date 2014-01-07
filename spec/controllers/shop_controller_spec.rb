@@ -37,13 +37,26 @@ describe ShopController do
         controller.current_order_cycle.should == oc2
       end
 
-      it "should return the order cycle details when the oc is selected" do
-        oc1 = create(:order_cycle, distributors: [d])
-        oc2 = create(:order_cycle, distributors: [d])
-        
-        spree_post :order_cycle, order_cycle_id: oc2.id
-        response.body.should have_content OrderCycleSerializer.new(oc2).to_json
+      context "RABL tests" do
+        render_views 
+        it "should return the order cycle details when the oc is selected" do
+          oc1 = create(:order_cycle, distributors: [d])
+          oc2 = create(:order_cycle, distributors: [d])
+          
+          spree_post :order_cycle, order_cycle_id: oc2.id
+          response.should be_success
+          response.body.should have_content oc2.id 
+        end
+
+        it "should return the current order cycle when hit with GET" do
+          oc1 = create(:order_cycle, distributors: [d])
+          controller.stub(:current_order_cycle).and_return oc1
+          spree_get :order_cycle
+          response.body.should have_content oc1.id
+        end
+
       end
+
 
       it "should not allow the user to select an invalid order cycle" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -95,11 +108,15 @@ describe ShopController do
         response.body.should be_empty
       end
 
-      it "only returns products for the current order cycle" do
-        controller.stub(:current_order_cycle).and_return order_cycle
-        xhr :get, :products
-        response.body.should == [Spree::ProductSerializer.new(product)].to_json
+      context "RABL tests" do
+        render_views
+        it "only returns products for the current order cycle" do
+          controller.stub(:current_order_cycle).and_return order_cycle
+          xhr :get, :products
+          response.body.should have_content product.name
+        end
       end
+
     end
   end
 end
