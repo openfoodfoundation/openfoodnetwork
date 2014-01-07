@@ -94,39 +94,6 @@ module Spree
 
             v.option_values.should include ov
           end
-
-          describe "generating option value name and presentation" do
-            let(:ov) { Spree::OptionValue.last }
-
-            it "generates values within the unit range" do
-              v.update_attributes!(unit_value: 100, unit_description: 'bar')
-
-              ov.name.should == '100 g bar'
-              ov.presentation.should == '100 g bar'
-            end
-
-            it "generates values when unit value is non-integer" do
-              v.update_attributes!(unit_value: 123.45, unit_description: 'bar')
-
-              ov.name.should == '123.45 g bar'
-              ov.presentation.should == '123.45 g bar'
-            end
-
-            it "generates values without a unit description" do
-              v.update_attributes!(unit_value: 100, unit_description: '')
-
-              ov.name.should == '100 g'
-              ov.presentation.should == '100 g'
-            end
-
-            it "generates values for differing scales"
-
-            it "generates values for volume units"
-            it "generates values for item units"
-
-            it "switches units upwards when outside the base scale"
-            it "switches units downwards when outside the base scale"
-          end
         end
 
         context "when the required option value already exists" do
@@ -138,6 +105,80 @@ module Spree
           it "leaves option value unassigned if none is provided"
           it "does not remove and re-add the option value if it is not changed"
         end
+      end
+
+      describe "generating option value name" do
+        it "when description is blank" do
+          v = Spree::Variant.new unit_description: nil
+          v.stub(:option_value_value_unit) { %w(value unit) }
+          v.send(:option_value_name).should == "value unit"
+        end
+
+        it "when description is present" do
+          v = Spree::Variant.new unit_description: 'desc'
+          v.stub(:option_value_value_unit) { %w(value unit) }
+          v.send(:option_value_name).should == "value unit desc"
+        end
+
+        it "when value is blank and description is present"
+      end
+
+      describe "generating option value's value and unit" do
+        let(:v) { Spree::Variant.new }
+
+        it "generates simple values" do
+          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
+          v.stub(:product) { p }
+          v.stub(:unit_value) { 100 }
+
+          v.send(:option_value_value_unit).should == [100, 'g']
+        end
+
+        it "generates values when unit value is non-integer" do
+          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
+          v.stub(:product) { p }
+          v.stub(:unit_value) { 123.45 }
+
+          v.send(:option_value_value_unit).should == [123.45, 'g']
+        end
+
+        it "generates values for all weight scales" do
+          [[1.0, 'g'], [1000.0, 'kg'], [1000000.0, 'T']].each do |scale, unit|
+            p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
+            v.stub(:product) { p }
+            v.stub(:unit_value) { 100 }
+            v.send(:option_value_value_unit).should == [100, unit]
+          end
+        end
+
+        it "generates values for all volume scales" do
+          [[0.001, 'mL'], [1.0, 'L'], [1000000.0, 'ML']].each do |scale, unit|
+            p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
+            v.stub(:product) { p }
+            v.stub(:unit_value) { 100 }
+            v.send(:option_value_value_unit).should == [100, unit]
+          end
+        end
+
+        it "generates values for item units" do
+          %w(packet box).each do |unit|
+            p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: unit)
+            v.stub(:product) { p }
+            v.stub(:unit_value) { 100 }
+            v.send(:option_value_value_unit).should == [100, unit.pluralize]
+          end
+        end
+
+        it "generates singular values for item units when value is 1" do
+          p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
+          v.stub(:product) { p }
+          v.stub(:unit_value) { 1 }
+          v.send(:option_value_value_unit).should == [1, 'packet']
+        end
+
+
+        it "switches units upwards when outside the base scale"
+        it "switches units downwards when outside the base scale"
       end
     end
 
