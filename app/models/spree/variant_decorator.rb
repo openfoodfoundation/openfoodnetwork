@@ -11,6 +11,7 @@ Spree::Variant.class_eval do
 
   after_save :update_units
 
+
   def delete_unit_option_values
     ovs = self.option_values.where('option_type_id IN (?)',
                                    Spree::Product.all_variant_unit_option_types)
@@ -40,21 +41,9 @@ Spree::Variant.class_eval do
   end
 
   def option_value_value_unit
-    units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
-             'volume' => {0.001 => 'mL', 1.0 => 'L', 1000000.0 => 'ML'}}
-
     if unit_value.present?
-
       if %w(weight volume).include? self.product.variant_unit
-        unit = units[self.product.variant_unit].select { |scale, unit_name|
-          unit_value / scale > 1
-        }.to_a.last
-        unit = units[self.product.variant_unit].first if unit.nil?
-
-        unit_scale = unit[0]
-        unit_name = unit[1]
-
-        value = unit_value / unit_scale
+        value, unit_name = option_value_value_unit_scaled
 
       else
         value = unit_value
@@ -69,6 +58,28 @@ Spree::Variant.class_eval do
     end
 
     [value, unit_name]
+  end
+
+  def option_value_value_unit_scaled
+    unit_scale, unit_name = scale_for_unit_value
+
+    value = unit_value / unit_scale
+
+    [value, unit_name]
+  end
+
+  def scale_for_unit_value
+    units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
+             'volume' => {0.001 => 'mL', 1.0 => 'L',  1000000.0 => 'ML'}}
+
+    # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
+    # If there is none available where this is true, use the smallest available unit.
+    unit = units[self.product.variant_unit].select { |scale, unit_name|
+      unit_value / scale > 1
+    }.to_a.last
+    unit = units[self.product.variant_unit].first if unit.nil?
+
+    unit
   end
 
 end
