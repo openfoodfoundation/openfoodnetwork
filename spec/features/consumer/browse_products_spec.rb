@@ -137,32 +137,4 @@ feature %q{
       end
     end
   end
-
-  describe "selecting an order cycle" do
-
-    before(:each) do
-      OrderCyclesHelper.class_eval do
-        def order_cycles_enabled?
-          true
-        end
-      end
-    end
-
-    it "displays the distributor and order cycle name on the home page when an order cycle is selected" do
-      # Given a distributor with a product
-      d = create(:distributor_enterprise, :name => 'Melb Uni Co-op')
-      p = create(:product)
-      oc = create(:simple_order_cycle, :name => 'Bulk Foods', :distributors => [d], :variants => [p.master])
-
-      # When I select the distributor and order cycle
-      visit spree.product_path p
-      select d.name, :from => 'distributor_id'
-      select oc.name, :from => 'order_cycle_id'
-      click_button 'Add To Cart'
-
-      # Then I should see the name of the distributor and order cycle that I've selected
-      page.should have_content 'Melb Uni Co-op'
-      page.should_not have_selector 'div.distributor-description'
-    end
-  end
 end
