@@ -164,6 +164,13 @@ module Spree
           end
         end
 
+        it "chooses the correct scale when value is very small" do
+          p = double(:product, variant_unit: 'volume', variant_unit_scale: 0.001)
+          v.stub(:product) { p }
+          v.stub(:unit_value) { 0.0001 }
+          v.send(:option_value_value_unit).should == [0.1, 'mL']
+        end
+
         it "generates values for item units" do
           %w(packet box).each do |unit|
             p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: unit)
