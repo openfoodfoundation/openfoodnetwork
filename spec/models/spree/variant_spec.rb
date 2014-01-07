@@ -97,7 +97,29 @@ module Spree
         end
 
         context "when the required option value already exists" do
-          it "looks up the option value and assigns it to the variant"
+          let!(:p_orig) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+          let!(:v_orig) { create(:variant, product: p_orig, unit_value: 10, unit_description: 'foo') }
+
+          let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }
+          let!(:v) { create(:variant, product: p, unit_value: nil, unit_description: nil) }
+
+          before do
+            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
+            @ot = Spree::OptionType.find_by_name 'unit_weight'
+          end
+
+          it "looks up the option value and assigns it to the variant" do
+            expect {
+              v.update_attributes!(unit_value: 10, unit_description: 'foo')
+            }.to change(Spree::OptionValue, :count).by(0)
+
+            ov = v.option_values.last
+            ov.option_type.should == @ot
+            ov.name.should == '10 g foo'
+            ov.presentation.should == '10 g foo'
+
+            v_orig.option_values.should include ov
+          end
         end
 
         context "when the variant already has a value set (and all required option values exist)" do
