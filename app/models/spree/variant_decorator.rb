@@ -44,20 +44,31 @@ Spree::Variant.class_eval do
              'volume' => {0.001 => 'mL', 1.0 => 'L', 1000000.0 => 'ML'}}
 
     if unit_value.present?
-      value = unit_value
-      value = value.to_i if value == value.to_i
 
       if %w(weight volume).include? self.product.variant_unit
-        unit = units[self.product.variant_unit][self.product.variant_unit_scale]
+        unit = units[self.product.variant_unit].select { |scale, unit_name|
+          unit_value / scale > 1
+        }.to_a.last
+        unit = units[self.product.variant_unit].first if unit.nil?
+
+        unit_scale = unit[0]
+        unit_name = unit[1]
+
+        value = unit_value / unit_scale
+
       else
-        unit = self.product.variant_unit_name
-        unit = unit.pluralize if value > 1
+        value = unit_value
+        unit_name = self.product.variant_unit_name
+        unit_name = unit_name.pluralize if value > 1
       end
+
+      value = value.to_i if value == value.to_i
+
     else
-      value = unit = nil
+      value = unit_name = nil
     end
 
-    [value, unit]
+    [value, unit_name]
   end
 
 end
