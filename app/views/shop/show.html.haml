@@ -43,6 +43,8 @@
     
   %products.row
     = render partial: "shop/products"
-
-  -#= render partial: "enterprises/contact_us"
-  -#= render partial: "enterprises/about_us"
+  #footer
+    %section.row
+      = render partial: "shop/contact_us"
+      = render partial: "shop/about_us"
+      = render partial: "shared/copyright"

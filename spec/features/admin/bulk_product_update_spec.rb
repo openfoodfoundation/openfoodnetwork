@@ -390,7 +390,7 @@ feature %q{
         page.should have_selector "a.clone-product", :count => 3
 
         first("a.clone-product").click
-
+        sleep 5
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
         page.should have_select "supplier", selected: "#{p1.supplier.name}"

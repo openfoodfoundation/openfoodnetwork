@@ -1,13 +1,12 @@
 module AuthenticationWorkflow
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
-    admin_user = Spree::User.create!({
-      :email => 'admin@ofn.org',
+    admin_user = create(:user, 
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
       :remember_me => false,
       :persistence_token => 'pass',
-      :login => 'admin@ofn.org'})
+      :login => 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
 
