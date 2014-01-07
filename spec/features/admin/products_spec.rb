@@ -104,6 +104,9 @@ feature %q{
         product = create(:simple_product, supplier: @supplier2)
 
         click_link 'Products'
+        within "#sub_nav" do
+          click_link 'Products'
+        end
         click_link product.name
         within('#sidebar') { click_link 'Product Distributions' }
 

@@ -122,6 +122,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
+
     checkout_fees_table.should ==
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
@@ -565,7 +566,7 @@ feature %q{
   end
 
   def checkout_fees_table
-    table = page.find 'tbody#cart_adjustments'
+    table = page.find 'tbody'
     rows = table.all 'tr'
     rows.map { |row| row.all('td').map { |cell| cell.text.strip } }
   end
