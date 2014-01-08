@@ -89,6 +89,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
+  config.include OpenFoodNetwork::DistributionHelper
   config.include ActionView::Helpers::DateHelper
 
   # Factory girl
