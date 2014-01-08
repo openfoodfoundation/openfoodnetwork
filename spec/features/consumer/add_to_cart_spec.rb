@@ -27,44 +27,7 @@ feature %q{
       Spree::Order.last.line_items.should be_empty
     end
 
-    scenario "adding the first product to the cart", :future => true do
-      # Given a product, some distributors and a defined shipping cost
-      d1 = create(:distributor_enterprise, :name => "Green Grass")
-      d2 = create(:distributor_enterprise, :name => "AusFarmers United")
-      create(:product, :distributors => [d2])
-      p = create(:product, :price => 12.34)
-      create(:product_distribution, :product => p, :distributor => d1)
-
-      # ... with a flat rate distribution fee of $1.23
-      ef = p.product_distributions.first.enterprise_fee
-      ef.calculator = Spree::Calculator::FlatRate.new preferred_amount: 1.23
-      ef.calculator.save!
-
-      # When I choose a distributor
-      visit spree.root_path
-      click_on "AusFarmers United"
-
-      # And I add an item to my cart from a different distributor
-      visit spree.product_path p
-      select(d1.name, :from => 'distributor_id')
-      click_button 'Add To Cart'
-
-      # Then the correct totals should be displayed
-      page.should have_selector 'span.item-total', :text => '$12.34'
-      page.should have_selector 'span.distribution-total', :text => '$1.23'
-      page.should have_selector 'span.grand-total', :text => '$13.57'
-
-      # And the item should be in my cart
-      order = Spree::Order.last
-      line_item = order.line_items.first
-      line_item.product.should == p
-
-      # And my order should have its distributor set to the chosen distributor
-      order.distributor.should == d1
-    end
-
     context "adding a subsequent product to the cart" do
-
       it "does not allow the user to add a product from a distributor that cannot supply the cart's products" do
         # Given two products, each at a different distributor
         d1 = create(:distributor_enterprise)
