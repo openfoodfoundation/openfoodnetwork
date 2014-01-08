@@ -566,7 +566,7 @@ feature %q{
   end
 
   def checkout_fees_table
-    table = page.find 'tbody'
+    table = page.find 'tbody#cart_adjustments'
     rows = table.all 'tr'
     rows.map { |row| row.all('td').map { |cell| cell.text.strip } }
   end
