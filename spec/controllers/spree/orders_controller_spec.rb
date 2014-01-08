@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Spree::OrdersController do
-  def current_user
-    controller.current_user
-  end
-
   it "selects distributors" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])

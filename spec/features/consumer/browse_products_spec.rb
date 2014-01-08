@@ -90,51 +90,5 @@ feature %q{
         page.all('#product-variants li input').count.should == 1
       end
     end
-
-    context "viewing a product, it provides a choice of distributor when adding to cart" do
-      it "works when no distributor is chosen" do
-        # Given a distributor and a product under it
-        distributor = create(:distributor_enterprise)
-        product = create(:product, :distributors => [distributor])
-
-        # When we view the product
-        visit spree.product_path(product)
-
-        # Then we should see a choice of distributor, with no default
-        page.should have_selector "select#distributor_id option", :text => distributor.name
-        page.should_not have_selector "select#distributor_id option[selected='selected']"
-      end
-
-      it "displays the local distributor as the default choice when available for the current product" do
-        # Given a distributor and a product under it
-        distributor1 = create(:distributor_enterprise)
-        distributor2 = create(:distributor_enterprise)
-        product = create(:product, :distributors => [distributor1,distributor2])
-
-        # When we select the distributor and view the product
-        visit spree.select_distributor_order_path(distributor1)
-        visit spree.product_path(product)
-
-        # Then we should see our distributor as the default option when adding the item to our cart
-        page.should have_selector "select#distributor_id option[value='#{distributor1.id}'][selected='selected']"
-      end
-
-      it "works when viewing a product from a remote distributor" do
-        # Given two distributors and our product under one
-        distributor_product = create(:distributor_enterprise)
-        distributor_no_product = create(:distributor_enterprise)
-        product = create(:product, :distributors => [distributor_product])
-        create(:product, :distributors => [distributor_no_product])
-
-        # When we select the distributor without the product and then view the product
-        visit spree.select_distributor_order_path(distributor_no_product)
-        visit spree.root_path
-        visit spree.product_path(product)
-
-        # Then we should be told that our distributor will be set to the one with the product
-        page.should_not have_selector "select#distributor_id"
-        page.should have_content "our distributor for this order will be changed to #{distributor_product.name} if you add this product to your cart."
-      end
-    end
   end
 end
