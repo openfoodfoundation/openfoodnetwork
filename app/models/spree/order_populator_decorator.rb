@@ -1,32 +1,21 @@
 Spree::OrderPopulator.class_eval do
   def populate_with_distribution_validation(from_hash)
-    @distributor, @order_cycle = load_distributor_and_order_cycle(from_hash)
+    @distributor, @order_cycle = orig_distributor_and_order_cycle
 
+    # Refactor: We may not need this validation - we can't change distribution here, so
+    # this validation probably can't fail
     if !distribution_can_supply_products_in_cart(@distributor, @order_cycle)
       errors.add(:base, "That distributor or order cycle can't supply all the products in your cart. Please choose another.")
     end
 
-    # Set order distributor and order cycle
-    @orig_distributor, @orig_order_cycle = orig_distributor_and_order_cycle
-    cart_distribution_set = false
-    if valid?
-      set_cart_distributor_and_order_cycle @distributor, @order_cycle
-      cart_distribution_set = true
-    end
-
     populate_without_distribution_validation(from_hash) if valid?
-
-    # Undo distribution setting if validation failed when adding a product
-    if !valid? && cart_distribution_set
-      set_cart_distributor_and_order_cycle @orig_distributor, @orig_order_cycle
-    end
 
     valid?
   end
   alias_method_chain :populate, :distribution_validation
 
 
-   Copied from Spree::OrderPopulator, with additional validations added
+  # Copied from Spree::OrderPopulator, with additional validations added
   def attempt_cart_add(variant_id, quantity)
     quantity = quantity.to_i
     variant = Spree::Variant.find(variant_id)

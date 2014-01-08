@@ -64,79 +64,6 @@ feature %q{
     end
 
     context "adding a subsequent product to the cart" do
-      it "when there are several valid distributors, allows a choice from these options" do
-        # Given two products, both distributed by two distributors
-        d1 = create(:distributor_enterprise)
-        d2 = create(:distributor_enterprise)
-        p1 = create(:product, :distributors => [d1, d2])
-        p2 = create(:product, :distributors => [d1, d2])
-
-        # When I add the first to my cart via d1
-        visit spree.product_path p1
-        select d1.name, :from => 'distributor_id'
-        click_button 'Add To Cart'
-
-        # And I go to add the second, I should have a choice of distributor
-        visit spree.product_path p2
-        page.should have_selector '#distributor_id option', :text => d1.name
-        page.should have_selector '#distributor_id option', :text => d2.name
-
-        # When I add the second, both should be in my cart, and my distributor should be the one chosen second
-        select d2.name, :from => 'distributor_id'
-        click_button 'Add To Cart'
-        visit spree.cart_path
-        page.should have_selector 'h4 a', :text => p1.name
-        page.should have_selector 'h4 a', :text => p2.name
-        page.should have_selector "#logo h1 a", :text => d2.name
-      end
-
-      it "when the only valid distributor is the chosen one, does not allow the user to choose a distributor" do
-        # Given two products, each at the same distributor
-        d = create(:distributor_enterprise)
-        p1 = create(:product, :distributors => [d])
-        p2 = create(:product, :distributors => [d])
-
-        # When I add the first to my cart
-        visit spree.product_path p1
-        select d.name, :from => 'distributor_id'
-        click_button 'Add To Cart'
-
-        # And I go to add the second, I should not have a choice of distributor
-        visit spree.product_path p2
-        page.should_not have_selector 'select#distributor_id'
-        page.should     have_selector '.distributor-fixed', :text => "Your distributor for this order is #{d.name}"
-
-        # When I add the second, both should be in my cart
-        click_button 'Add To Cart'
-        visit spree.cart_path
-        page.should have_selector 'h4 a', :text => p1.name
-        page.should have_selector 'h4 a', :text => p2.name
-      end
-
-      it "when the only valid distributor differs from the chosen one, alerts the user and changes distributor on add to cart" do
-        # Given two products, one available at only one distributor
-        d1 = create(:distributor_enterprise)
-        d2 = create(:distributor_enterprise)
-        p1 = create(:product, :distributors => [d1, d2])
-        p2 = create(:product, :distributors => [d2])
-
-        # When I add the first to my cart
-        visit spree.product_path p1
-        select d1.name, from: 'distributor_id'
-        click_button 'Add To Cart'
-
-        # And I go to add the second
-        visit spree.product_path p2
-
-        # Then I should see a message offering to change distributor for my order
-        page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
-
-        # When I add the second to my cart
-        click_button 'Add To Cart'
-
-        # Then My distributor should have changed
-        page.should have_selector "#logo h1 a", :text => d2.name
-      end
 
       it "does not allow the user to add a product from a distributor that cannot supply the cart's products" do
         # Given two products, each at a different distributor
@@ -146,8 +73,8 @@ feature %q{
         p2 = create(:product, :distributors => [d2])
 
         # When I add one of them to my cart
+        select_distribution d1
         visit spree.product_path p1
-        select d1.name, :from => 'distributor_id'
         click_button 'Add To Cart'
 
         # And I attempt to add the other
@@ -218,9 +145,8 @@ feature %q{
       oc = create(:simple_order_cycle, :distributors => [d], :variants => [p.master])
 
       # When I add an item to my cart
+      select_distribution d, oc
       visit spree.product_path p
-      select d.name, :from => 'distributor_id'
-      select oc.name, :from => 'order_cycle_id'
       click_button 'Add To Cart'
 
       # Then the correct totals should be displayed
@@ -239,144 +165,6 @@ feature %q{
       order.distributor.should == d
       order.order_cycle.should == oc
     end
-
-    scenario "adding a product to the cart with an invalid distribution combination" do
-      # Given a product and some distributors
-      d1 = create(:distributor_enterprise)
-      d2 = create(:distributor_enterprise)
-      p = create(:product, :price => 12.34)
-      oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p.master])
-      oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p.master])
-
-      # When I attempt to add the product to my cart with an invalid distribution
-      visit spree.product_path p
-      select d1.name, :from => 'distributor_id'
-      select oc2.name, :from => 'order_cycle_id'
-      click_button 'Add To Cart'
-
-      # Then I should see an error message
-      page.should have_content "That product is not available from the chosen distributor or order cycle."
-
-      # And the product should not be in my cart
-      Spree::Order.last.line_items.should be_empty
-    end
-
-
-    context "adding a subsequent product to the cart" do
-      it "when there are several valid order cycles, allows a choice from these options" do
-        # Given two products, both distributed by two distributors
-        d1 = create(:distributor_enterprise)
-        d2 = create(:distributor_enterprise)
-        p1 = create(:product)
-        p2 = create(:product)
-        oc1 = create(:simple_order_cycle,
-                     :distributors => [d1, d2], :variants => [p1.master, p2.master])
-        oc2 = create(:simple_order_cycle,
-                     :distributors => [d1, d2], :variants => [p1.master, p2.master])
-
-        # When I add the first to my cart via d1/oc1
-        visit spree.product_path p1
-        select d1.name, :from => 'distributor_id'
-        select oc1.name, :from => 'order_cycle_id'
-        click_button 'Add To Cart'
-
-        # And I go to add the second, I should have a choice of order cycle and distributor
-        visit spree.product_path p2
-        page.should have_selector '#distributor_id option', :text => d1.name
-        page.should have_selector '#distributor_id option', :text => d2.name
-        page.should have_selector '#order_cycle_id option', :text => oc1.name
-        page.should have_selector '#order_cycle_id option', :text => oc2.name
-
-        # When I add the second, both should be in my cart, and my
-        # distributor and order cycle should be the one chosen second
-        select d2.name, :from => 'distributor_id'
-        select oc2.name, :from => 'order_cycle_id'
-        click_button 'Add To Cart'
-        visit spree.cart_path
-        page.should have_selector 'h4 a', :text => p1.name
-        page.should have_selector 'h4 a', :text => p2.name
-        page.should have_selector "#logo h1 a", :text => d2.name
-      end
-
-      it "when the only valid order cycle is the chosen one, does not allow the user to choose an order cycle" do
-        # Given two products, each at the same distributor
-        d = create(:distributor_enterprise)
-        p1 = create(:product)
-        p2 = create(:product)
-        oc = create(:simple_order_cycle, :distributors => [d],
-                    :variants => [p1.master, p2.master])
-
-        # When I add the first to my cart
-        visit spree.product_path p1
-        select d.name, :from => 'distributor_id'
-        select oc.name, :from => 'order_cycle_id'
-        click_button 'Add To Cart'
-
-        # And I go to add the second, I should not have a choice of distributor or order cycle
-        visit spree.product_path p2
-        page.should_not have_selector 'select#distributor_id'
-        page.should     have_selector '.distributor-fixed', :text => "Your distributor for this order is #{d.name}"
-        page.should_not have_selector 'select#order_cycle_id'
-        page.should     have_selector '.order-cycle-fixed', :text => "Your order cycle for this order is #{oc.name}"
-
-        # When I add the second, both should be in my cart
-        click_button 'Add To Cart'
-        visit spree.cart_path
-        page.should have_selector 'h4 a', :text => p1.name
-        page.should have_selector 'h4 a', :text => p2.name
-      end
-
-      it "when the only valid distributor differs from the chosen one, alerts the user and changes distributor on add to cart" do
-        # Given two products, one available at only one distributor
-        d1 = create(:distributor_enterprise)
-        d2 = create(:distributor_enterprise)
-        p1 = create(:product)
-        p2 = create(:product)
-        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p1.master, p2.master])
-
-        # When I add the first to my cart
-        visit spree.product_path p1
-        select d1.name, from: 'distributor_id'
-        select oc1.name, from: 'order_cycle_id'
-
-        click_button 'Add To Cart'
-
-        # And I go to add the second
-        visit spree.product_path p2
-
-        # Then I should see a message offering to change distributor for my order
-        page.should have_content "Your distributor for this order will be changed to #{d2.name} if you add this product to your cart."
-
-        # When I add the second to my cart
-        click_button 'Add To Cart'
-
-        # Then my distributor should have changed
-        page.should have_selector "#logo h1 a", :text => d2.name
-      end
-
-      it "does not allow the user to add a product from an order cycle that cannot supply the cart's products" do
-        # Given two products, each at a different order cycle
-        d = create(:distributor_enterprise)
-        p1 = create(:product)
-        p2 = create(:product)
-        oc1 = create(:simple_order_cycle, :distributors => [d], :variants => [p1.master])
-        oc2 = create(:simple_order_cycle, :distributors => [d], :variants => [p2.master])
-
-        # When I add one of them to my cart
-        visit spree.product_path p1
-        select d.name, :from => 'distributor_id'
-        select oc1.name, :from => 'order_cycle_id'
-        click_button 'Add To Cart'
-
-        # And I attempt to add the other
-        visit spree.product_path p2
-
-        # Then I should not be allowed to add the product
-        page.should_not have_selector "button#add-to-cart-button"
-        page.should have_content "Please complete your order from #{oc1.name} before shopping in a different order cycle."
-      end
-    end
   end
 
   context "group buys" do
@@ -386,8 +174,8 @@ feature %q{
       p = create(:product, :distributors => [d], :group_buy => true)
 
       # When I add the item to my cart
+      select_distribution d
       visit spree.product_path p
-      select d.name, :from => 'distributor_id'
       fill_in "variants_#{p.master.id}", :with => 2
       fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 3
       click_button 'Add To Cart'
@@ -407,8 +195,8 @@ feature %q{
       create(:variant, :product => p)
 
       # When I add the item to my cart
+      select_distribution d
       visit spree.product_path p
-      select d.name, :from => 'distributor_id'
       fill_in "quantity", :with => 2
       fill_in "max_quantity", :with => 3
       click_button 'Add To Cart'
@@ -438,8 +226,8 @@ feature %q{
       p = create(:product, :distributors => [d], :group_buy => true)
 
       # When I add the item to my cart
+      select_distribution d
       visit spree.product_path p
-      select d.name, :from => 'distributor_id'
       fill_in "variants_#{p.master.id}", :with => 2
       fill_in "variant_attributes_#{p.master.id}_max_quantity", :with => 1
       click_button 'Add To Cart'
