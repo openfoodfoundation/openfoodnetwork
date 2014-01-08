@@ -8,7 +8,7 @@ class Cart < ActiveRecord::Base
     order = create_or_find_order_for_distributor distributor, order_cycle, currency
 
     @populator = Spree::OrderPopulator.new(order, currency)
-    @populator.populate({ :variants => { variant_id => quantity }, :distributor_id => distributor.id, :order_cycle_id => order_cycle })
+    @populator.populate({ :variants => { variant_id => quantity } })
   end
 
   def create_or_find_order_for_distributor distributor, order_cycle, currency
@@ -17,6 +17,7 @@ class Cart < ActiveRecord::Base
       order_for_distributor = Spree::Order.create(:currency => currency, :distributor => distributor)
       order_for_distributor.distributor = distributor
       order_for_distributor.order_cycle = order_cycle
+      order_for_distributor.save!
       orders << order_for_distributor
     end
 
