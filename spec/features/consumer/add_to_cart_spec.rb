@@ -21,7 +21,7 @@ feature %q{
       click_button 'Add To Cart'
 
       # Then I should see an error message
-      page.should have_content "Please choose a distributor for this order."
+      page.should have_content "That product is not available from the chosen distributor or order cycle"
 
       # And the product should not have been added to my cart
       Spree::Order.last.line_items.should be_empty
@@ -95,7 +95,7 @@ feature %q{
       click_button 'Add To Cart'
 
       # Then I should see an error message
-      page.should have_content "Please choose a distributor and order cycle for this order."
+      page.should have_content "Please choose an order cycle for this order."
 
       # And the product should not have been added to my cart
       Spree::Order.last.line_items.should be_empty
