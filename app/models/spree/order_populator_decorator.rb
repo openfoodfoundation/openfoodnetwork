@@ -1,6 +1,6 @@
 Spree::OrderPopulator.class_eval do
   def populate_with_distribution_validation(from_hash)
-    @distributor, @order_cycle = orig_distributor_and_order_cycle
+    @distributor, @order_cycle = distributor_and_order_cycle
 
     # Refactor: We may not need this validation - we can't change distribution here, so
     # this validation probably can't fail
@@ -32,7 +32,7 @@ Spree::OrderPopulator.class_eval do
 
   private
 
-  def orig_distributor_and_order_cycle
+  def distributor_and_order_cycle
     [@order.distributor, @order.order_cycle]
   end
 

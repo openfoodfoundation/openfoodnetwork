@@ -7,58 +7,19 @@ module Spree
     let(:params) { double(:params) }
     let(:distributor) { double(:distributor) }
     let(:order_cycle) { double(:order_cycle) }
-    let(:orig_distributor) { double(:distributor) }
-    let(:orig_order_cycle) { double(:order_cycle) }
     let(:op) { OrderPopulator.new(order, currency) }
 
     describe "populate" do
 
       it "checks that distribution can supply all products in the cart" do
-        op.should_receive(:load_distributor_and_order_cycle).with(params).
+        op.should_receive(:distributor_and_order_cycle).
           and_return([distributor, order_cycle])
         op.should_receive(:distribution_can_supply_products_in_cart).
           with(distributor, order_cycle).and_return(false)
-        op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
-                                                               orig_order_cycle])
         op.should_receive(:populate_without_distribution_validation).never
-        op.should_receive(:set_cart_distributor_and_order_cycle).never
 
         op.populate(params).should be_false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
-      end
-
-      it "resets cart distributor and order cycle if populate fails" do
-        op.should_receive(:load_distributor_and_order_cycle).with(params).
-          and_return([distributor, order_cycle])
-        op.should_receive(:distribution_can_supply_products_in_cart).
-          with(distributor, order_cycle).and_return(true)
-        op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
-                                                               orig_order_cycle])
-
-        op.class_eval do
-          def populate_without_distribution_validation(from_hash)
-            errors.add(:base, "Something went wrong.")
-          end
-        end
-
-        op.should_receive(:set_cart_distributor_and_order_cycle).with(distributor, order_cycle)
-        op.should_receive(:set_cart_distributor_and_order_cycle).with(orig_distributor, orig_order_cycle)
-
-        op.populate(params).should be_false
-        op.errors.to_a.should == ["Something went wrong."]
-      end
-
-      it "sets cart distributor and order cycle when populate succeeds" do
-        op.should_receive(:load_distributor_and_order_cycle).with(params).
-          and_return([distributor, order_cycle])
-        op.should_receive(:distribution_can_supply_products_in_cart).
-          with(distributor, order_cycle).and_return(true)
-        op.stub(:orig_distributor_and_order_cycle).and_return([orig_distributor,
-                                                               orig_order_cycle])
-        op.should_receive(:populate_without_distribution_validation).with(params)
-        op.should_receive(:set_cart_distributor_and_order_cycle).with(distributor, order_cycle)
-
-        op.populate(params).should be_true
       end
     end
 
@@ -210,11 +171,11 @@ module Spree
         end
       end
 
-      it "provides the original distributor and order cycle for the order" do
-        order.should_receive(:distributor).and_return(orig_distributor)
-        order.should_receive(:order_cycle).and_return(orig_order_cycle)
-        op.send(:orig_distributor_and_order_cycle).should == [orig_distributor,
-                                                              orig_order_cycle]
+      it "provides the distributor and order cycle for the order" do
+        order.should_receive(:distributor).and_return(distributor)
+        order.should_receive(:order_cycle).and_return(order_cycle)
+        op.send(:distributor_and_order_cycle).should == [distributor,
+                                                         order_cycle]
       end
     end
   end
