@@ -13,8 +13,8 @@
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr.product
           %td
-            -#%img{src: "{{ product.master.images[0].small_url }}"}
-            -#{{product.master.images[0].alt}}
+            %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
+            {{product.master.images[0].alt}}
           %td
             %h5
               {{ product.name }}
