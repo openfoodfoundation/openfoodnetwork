@@ -400,24 +400,22 @@ feature %q{
     Capybara.default_wait_time = 5
   end
 
-  describe "updating when a filter has been applied" do
-    it "works" do
-      p1 = FactoryGirl.create(:simple_product, :name => "product1")
-      p2 = FactoryGirl.create(:simple_product, :name => "product2")
-      login_to_admin_section
+  scenario "updating when a filter has been applied" do
+    p1 = FactoryGirl.create(:simple_product, :name => "product1")
+    p2 = FactoryGirl.create(:simple_product, :name => "product2")
+    login_to_admin_section
 
-      visit '/admin/products/bulk_edit'
+    visit '/admin/products/bulk_edit'
 
-      select "Name", :from => "filter_property"
-      select "Contains", :from => "filter_predicate"
-      fill_in "filter_value", :with => "1"
-      click_button "Apply Filter"
-      page.should_not have_field "product_name", with: p2.name
-      fill_in "product_name", :with => "new product1"
+    select "Name", :from => "filter_property"
+    select "Contains", :from => "filter_predicate"
+    fill_in "filter_value", :with => "1"
+    click_button "Apply Filter"
+    page.should_not have_field "product_name", with: p2.name
+    fill_in "product_name", :with => "new product1"
 
-      click_on 'Update'
-      page.find("span#update-status-message").should have_content "Update complete"
-    end
+    click_on 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
   end
 
   scenario "updating a product when there are more products than the default API page size" do
