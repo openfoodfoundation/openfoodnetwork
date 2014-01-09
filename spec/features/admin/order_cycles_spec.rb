@@ -379,8 +379,8 @@ feature %q{
 
     # Then my times should have been saved
     flash_message.should == 'Order cycles have been updated.'
-    OrderCycle.all.map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
-    OrderCycle.all.map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
+    OrderCycle.order('id ASC').map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
+    OrderCycle.order('id ASC').map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
   end
 
   scenario "cloning an order cycle" do
