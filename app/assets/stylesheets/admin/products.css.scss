@@ -2,6 +2,34 @@
   display: block;
 }
 
+div.pagination {
+	div.pagenav {
+		margin: 0px;
+		span.first, span.prev, span.next, span.last {
+			padding: 5px 0px;
+			display:inline-block;
+		}
+	}
+}
+
+div.pagination_info {
+	text-align: right;
+}
+
+div.filters {
+	margin-bottom: 10px;
+}
+
+div.applied_filter {
+	margin-bottom: 5px;
+	border: solid 2px #5498da;
+	padding: 5px 0px;
+	border-radius: 5px;
+	div.four.columns {
+		padding-left: 10px;
+	}
+}
+
 tbody.odd {
 	tr.product { td { background-color: white; } }
 	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }
@@ -41,9 +69,26 @@ li.column-list-item.unselected {
   font-size: 100%;
 }
 
-ul.column-list{
+ul.column-list {
   padding: 5px 8px;
   border-radius: 3px;
   border: solid 1px darkgray;
   list-style:none
+}
+
+table#listing_products.bulk {
+  td.supplier {
+    select {
+      width: 125px;
+    }
+  }
+
+  td.unit {
+    input, select {
+      width: 100%;
+    }
+    select {
+      margin-bottom: 0.5em;
+    }
+  }
 }

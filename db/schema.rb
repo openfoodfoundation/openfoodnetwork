@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030031125) do
+ActiveRecord::Schema.define(:version => 20131128034556) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -611,6 +611,9 @@ ActiveRecord::Schema.define(:version => 20131030031125) do
     t.boolean  "group_buy"
     t.float    "group_buy_unit_size"
     t.boolean  "on_demand",            :default => false
+    t.string   "variant_unit"
+    t.float    "variant_unit_scale"
+    t.string   "variant_unit_name"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
@@ -872,20 +875,22 @@ ActiveRecord::Schema.define(:version => 20131030031125) do
   add_index "spree_users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "spree_variants", :force => true do |t|
-    t.string   "sku",                                         :default => "",    :null => false
-    t.decimal  "weight",        :precision => 8, :scale => 2
-    t.decimal  "height",        :precision => 8, :scale => 2
-    t.decimal  "width",         :precision => 8, :scale => 2
-    t.decimal  "depth",         :precision => 8, :scale => 2
+    t.string   "sku",                                            :default => "",    :null => false
+    t.decimal  "weight",           :precision => 8, :scale => 2
+    t.decimal  "height",           :precision => 8, :scale => 2
+    t.decimal  "width",            :precision => 8, :scale => 2
+    t.decimal  "depth",            :precision => 8, :scale => 2
     t.datetime "deleted_at"
-    t.boolean  "is_master",                                   :default => false
+    t.boolean  "is_master",                                      :default => false
     t.integer  "product_id"
-    t.integer  "count_on_hand",                               :default => 0
-    t.decimal  "cost_price",    :precision => 8, :scale => 2
+    t.integer  "count_on_hand",                                  :default => 0
+    t.decimal  "cost_price",       :precision => 8, :scale => 2
     t.integer  "position"
-    t.integer  "lock_version",                                :default => 0
-    t.boolean  "on_demand",                                   :default => false
+    t.integer  "lock_version",                                   :default => 0
+    t.boolean  "on_demand",                                      :default => false
     t.string   "cost_currency"
+    t.float    "unit_value"
+    t.string   "unit_description"
   end
 
   add_index "spree_variants", ["product_id"], :name => "index_variants_on_product_id"

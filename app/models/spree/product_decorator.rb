@@ -6,11 +6,18 @@ Spree::Product.class_eval do
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
 
-  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
+  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name
 
   validates_presence_of :supplier
 
+  validates_presence_of :variant_unit, if: :has_variants?
+  validates_presence_of :variant_unit_scale,
+                        if: -> p { %w(weight volume).include? p.variant_unit }
+  validates_presence_of :variant_unit_name,
+                        if: -> p { p.variant_unit == 'items' }
+
   after_initialize :set_available_on_to_now, :if => :new_record?
+  after_save :update_units
 
 
   # -- Joins
@@ -100,4 +107,26 @@ Spree::Product.class_eval do
   def set_available_on_to_now
     self.available_on ||= Time.now
   end
+
+
+  def update_units
+    if variant_unit_changed?
+      option_types.delete self.class.all_variant_unit_option_types
+      option_types << option_type_for_variant_unit if variant_unit.present?
+      variants.each { |v| v.delete_unit_option_values }
+    end
+  end
+
+  def option_type_for_variant_unit
+    option_type_name = "unit_#{variant_unit}"
+    option_type_presentation = variant_unit.capitalize
+
+    Spree::OptionType.find_by_name(option_type_name) ||
+      Spree::OptionType.create!(name: option_type_name, presentation: option_type_presentation)
+  end
+
+  def self.all_variant_unit_option_types
+    Spree::OptionType.where('name LIKE ?', 'unit_%%')
+  end
+
 end

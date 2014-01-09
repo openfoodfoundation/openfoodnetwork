@@ -21,14 +21,45 @@ feature %q{
       login_to_admin_section
     end
 
+    it "displays a 'loading' splash for products" do
+      101.times{ FactoryGirl.create(:product) }
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_selector "div.loading", :text => "Loading Products..."
+    end
+
     it "displays a list of products" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "product_name", with: p1.name
-      page.should have_field "product_name", with: p2.name
+      page.should have_field "product_name", with: p1.name, :visible => true
+      page.should have_field "product_name", with: p2.name, :visible => true
+    end
+
+    it "displays a message when number of products is zero" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "No matching products found."
+    end
+
+    it "displays a message when number of products is too great" do
+      501.times{ FactoryGirl.create(:simple_product) }
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products"
+    end
+
+    it "displays pagination information" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Displaying 1-2 of 2 products"
     end
 
     it "displays a select box for suppliers, with the appropriate supplier selected" do
@@ -98,6 +129,23 @@ feature %q{
       page.should have_selector "span[name='on_hand']", text: "4"
       page.should have_field "on_hand", with: "12"
     end
+
+    it "displays a select box for the unit of measure for the product's variants" do
+      p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Weight (g)"
+    end
+
+    it "displays a text field for the item name when unit is set to 'Items'" do
+      p = FactoryGirl.create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Items"
+      page.should have_field "variant_unit_name", with: "packet"
+    end
   end
   
   describe "listing variants" do
@@ -143,6 +191,18 @@ feature %q{
       page.should have_field "variant_price", with: "12.75"
       page.should have_field "variant_price", with: "2.5"
     end
+
+    it "displays a unit value field (for each variant) for each product" do
+      p1 = FactoryGirl.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1.2, unit_description: "(small bag)")
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4.8, unit_description: "(large bag)")
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_field "price", with: "2.0"
+      page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
+      page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
+    end
   end
 
   scenario "create a new product" do
@@ -172,7 +232,7 @@ feature %q{
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1)
     p.price = 10.0
     p.on_hand = 6;
     p.save!
@@ -185,12 +245,14 @@ feature %q{
     page.should have_select "supplier", selected: s1.name
     page.should have_field "available_on", with: p.available_on.strftime("%F %T")
     page.should have_field "price", with: "10.0"
+    page.should have_select "variant_unit_with_scale", selected: "Volume (L)"
     page.should have_field "on_hand", with: "6"
 
     fill_in "product_name", with: "Big Bag Of Potatoes"
     select(s2.name, :from => 'supplier')
     fill_in "available_on", with: (Date.today-3).strftime("%F %T")
     fill_in "price", with: "20"
+    select "Weight (kg)", from: "variant_unit_with_scale"
     fill_in "on_hand", with: "18"
 
     click_button 'Update'
@@ -202,14 +264,37 @@ feature %q{
     page.should have_select "supplier", selected: s2.name
     page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
     page.should have_field "price", with: "20.0"
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "on_hand", with: "18"
   end
   
+  scenario "updating a product with an items variant unit" do
+    p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+
+    select "Items", from: "variant_unit_with_scale"
+    fill_in "variant_unit_name", with: "loaf"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    visit '/admin/products/bulk_edit'
+
+    page.should have_select "variant_unit_with_scale", selected: "Items"
+    page.should have_field "variant_unit_name", with: "loaf"
+  end
+
+
   scenario "updating a product with variants" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today)
-    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 0.001)
+    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9, unit_value: 250, unit_description: '(bottle)')
 
     login_to_admin_section
 
@@ -218,11 +303,13 @@ feature %q{
     first("a.view-variants").click
 
     page.should have_field "variant_price", with: "3.0"
+    page.should have_field "variant_unit_value_with_description", with: "250 (bottle)"
     page.should have_field "variant_on_hand", with: "9"
     page.should have_selector "span[name='on_hand']", text: "9"
 
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
+    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
 
     page.should have_selector "span[name='on_hand']", text: "10"
 
@@ -235,6 +322,7 @@ feature %q{
 
     page.should have_field "variant_price", with: "4.0"
     page.should have_field "variant_on_hand", with: "10"
+    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
   end
 
   scenario "updating delegated attributes of variants in isolation" do
@@ -282,6 +370,51 @@ feature %q{
     fill_in "product_name", with: "original name"
 
     click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
+  scenario "updating a product after cloning a product" do
+    FactoryGirl.create(:product, :name => "product 1")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    first("a.clone-product").click
+
+    fill_in "product_name", :with => "new product name"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
+  scenario "updating when no changes have been made" do
+    Capybara.default_wait_time = 2
+    FactoryGirl.create(:product, :name => "product 1")
+    FactoryGirl.create(:product, :name => "product 2")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "No changes to update."
+    Capybara.default_wait_time = 5
+  end
+
+  scenario "updating when a filter has been applied" do
+    p1 = FactoryGirl.create(:simple_product, :name => "product1")
+    p2 = FactoryGirl.create(:simple_product, :name => "product2")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    select "Name", :from => "filter_property"
+    select "Contains", :from => "filter_predicate"
+    fill_in "filter_value", :with => "1"
+    click_button "Apply Filter"
+    page.should_not have_field "product_name", with: p2.name
+    fill_in "product_name", :with => "new product1"
+
+    click_on 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
   end
 
@@ -407,6 +540,7 @@ feature %q{
   describe "using the page" do
     describe "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
+        FactoryGirl.create(:simple_product)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
@@ -429,6 +563,142 @@ feature %q{
         page.should have_selector "th", :text => "PRICE"
         page.should have_selector "th", :text => "ON HAND"
         page.should have_selector "th", :text => "AV. ON"
+      end
+    end
+
+    describe "using pagination controls" do
+      it "shows pagination controls" do
+        27.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        page.should have_select 'perPage', :selected => '25'
+        within '.pagination' do
+          page.should have_text "1 2"
+          page.should have_text "Next"
+          page.should have_text "Last"
+        end
+      end
+
+      it "allows the number of visible products to be altered" do
+        27.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 25
+        select '50', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 27
+      end
+
+      it "displays the correct products when changing pages" do
+        25.times { FactoryGirl.create(:product, :name => "page1product") }
+        5.times { FactoryGirl.create(:product, :name => "page2product") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page1product" }.should == true
+        click_link "2"
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
+      end
+
+      it "moves the user to the last available page when changing the number of pages in any way causes user to become orphaned" do
+        50.times { FactoryGirl.create(:product) }
+        FactoryGirl.create(:product, :name => "fancy_product_name")
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        click_link "3"
+        select '50', :from => 'perPage'
+        page.first("div.pagenav span.page.current").should have_text "2"
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+
+        select '25', :from => 'perPage'
+        fill_in "quick_filter", :with => "fancy_product_name"
+        page.first("div.pagenav span.page.current").should have_text "1"
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+      end
+
+      it "paginates the filtered product list rather than all products" do
+        25.times { FactoryGirl.create(:product, :name => "product_name") }
+        3.times { FactoryGirl.create(:product, :name => "test_product_name") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.should have_text "1 2"
+        fill_in "quick_filter", :with => "test_product_name"
+        page.all("input[name='product_name']", :visible => true).length.should == 3
+        page.all("input[name='product_name']", :visible => true).all?{ |e| e.value == "test_product_name" }.should == true
+        page.should_not have_text "1 2"
+        page.should have_text "1"
+      end
+    end
+
+    describe "using filtering controls" do
+      it "displays basic filtering controls" do
+        FactoryGirl.create(:simple_product)
+
+        login_to_admin_section
+        visit '/admin/products/bulk_edit'
+
+        page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
+        page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
+        page.should have_field "filter_value"
+      end
+
+      describe "clicking the 'Apply Filter' Button" do
+        before(:each) do
+          FactoryGirl.create(:simple_product, :name => "Product1")
+          FactoryGirl.create(:simple_product, :name => "Product2")
+
+          login_to_admin_section
+          visit '/admin/products/bulk_edit'
+
+          select "Name", :from => "filter_property"
+          select "Equals", :from => "filter_predicate"
+          fill_in "filter_value", :with => "Product1"
+          click_button "Apply Filter"
+        end
+
+        it "adds a new filter to the list of applied filters" do
+          page.should have_text "Name Equals Product1"
+        end
+
+        it "displays the 'loading' splash" do
+          page.should have_selector "div.loading", :text => "Loading Products..."
+        end
+
+        it "loads appropriate products" do
+          page.should have_field "product_name", :with => "Product1"
+          page.should_not have_field "product_name", :with => "Product2"
+        end
+
+        describe "clicking the 'Remove Filter' link" do
+          before(:each) do
+            click_link "Remove Filter"
+          end
+
+          it "removes the filter from the list of applied filters" do
+            page.should_not have_text "Name Equals Product1"
+          end
+
+          it "displays the 'loading' splash" do
+            page.should have_selector "div.loading", :text => "Loading Products..."
+          end
+
+          it "loads appropriate products" do
+            page.should have_field "product_name", :with => "Product1"
+            page.should have_field "product_name", :with => "Product2"
+          end
+        end
       end
     end
   end

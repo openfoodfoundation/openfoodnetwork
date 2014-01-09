@@ -11,11 +11,16 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def bulk_update
-    collection_hash = Hash[params[:_json].each_with_index.map { |p,i| [i,p] }]
+    collection_hash = Hash[params[:products].each_with_index.map { |p,i| [i,p] }]
     product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
 
+    params[:filters] ||= {}
+    bulk_index_query = params[:filters].reduce("") do |string, filter|
+      "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
+    end
+
     if product_set.save
-      redirect_to "/api/products/managed?template=bulk_index&page=1&per_page=500"
+      redirect_to "/api/products/managed?template=bulk_index;page=1;per_page=500;#{bulk_index_query}"
     else
       render :nothing => true, :status => 418
     end

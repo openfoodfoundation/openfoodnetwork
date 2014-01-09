@@ -14,7 +14,7 @@ module Spree
       end
 
       it "requires a supplier" do
-        product = create(:product)
+        product = create(:simple_product)
         product.supplier = nil
         product.should_not be_valid
       end
@@ -23,6 +23,73 @@ module Spree
         Timecop.freeze
         product = Product.new
         product.available_on.should == Time.now
+      end
+
+      context "when the product has variants" do
+        let(:product) do
+          product = create(:simple_product)
+          create(:variant, product: product)
+          product.reload
+        end
+
+        it "requires a unit" do
+          product.variant_unit = nil
+          product.should_not be_valid
+        end
+
+        %w(weight volume).each do |unit|
+          context "when unit is #{unit}" do
+            it "is valid when unit scale is set and unit name is not" do
+              product.variant_unit = unit
+              product.variant_unit_scale = 1
+              product.variant_unit_name = nil
+              product.should be_valid
+            end
+
+            it "is invalid when unit scale is not set" do
+              product.variant_unit = unit
+              product.variant_unit_scale = nil
+              product.variant_unit_name = nil
+              product.should_not be_valid
+            end
+          end
+        end
+
+        context "when the unit is items" do
+          it "is valid when unit name is set and unit scale is not" do
+            product.variant_unit = 'items'
+            product.variant_unit_name = 'loaf'
+            product.variant_unit_scale = nil
+            product.should be_valid
+          end
+
+          it "is invalid when unit name is not set" do
+            product.variant_unit = 'items'
+            product.variant_unit_name = nil
+            product.variant_unit_scale = nil
+            product.should_not be_valid
+          end
+        end
+      end
+
+      context "when product does not have variants" do
+        let(:product) { create(:simple_product) }
+
+        it "does not require any variant unit fields" do
+          product.variant_unit = nil
+          product.variant_unit_name = nil
+          product.variant_unit_scale = nil
+
+          product.should be_valid
+        end
+
+        it "requires a unit scale when variant unit is weight" do
+          product.variant_unit = 'weight'
+          product.variant_unit_scale = nil
+          product.variant_unit_name = nil
+
+          product.should_not be_valid
+        end
       end
     end
     
@@ -233,6 +300,109 @@ module Spree
 
         p1.should be_in_order_cycle oc1
         p1.should_not be_in_order_cycle oc2
+      end
+    end
+
+    describe "variant units" do
+      context "when the product initially has no variant unit" do
+        let!(:p) { create(:simple_product,
+                          variant_unit: nil,
+                          variant_unit_scale: nil,
+                          variant_unit_name: nil) }
+
+        context "when the required option type does not exist" do
+          it "creates the option type and assigns it to the product" do
+            expect {
+              p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1000)
+            }.to change(Spree::OptionType, :count).by(1)
+
+            ot = Spree::OptionType.last
+            ot.name.should == 'unit_weight'
+            ot.presentation.should == 'Weight'
+
+            p.option_types.should == [ot]
+          end
+
+          it "does the same with volume" do
+            expect {
+              p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 1000)
+            }.to change(Spree::OptionType, :count).by(1)
+
+            ot = Spree::OptionType.last
+            ot.name.should == 'unit_volume'
+            ot.presentation.should == 'Volume'
+
+            p.option_types.should == [ot]
+          end
+
+          it "does the same with items" do
+            expect {
+              p.update_attributes!(variant_unit: 'items', variant_unit_name: 'packet')
+            }.to change(Spree::OptionType, :count).by(1)
+
+            ot = Spree::OptionType.last
+            ot.name.should == 'unit_items'
+            ot.presentation.should == 'Items'
+
+            p.option_types.should == [ot]
+          end
+        end
+
+        context "when the required option type already exists" do
+          let!(:ot) { create(:option_type, name: 'unit_weight', presentation: 'Weight') }
+
+          it "looks up the option type and assigns it to the product" do
+            expect {
+              p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1000)
+            }.to change(Spree::OptionType, :count).by(0)
+
+            p.option_types.should == [ot]
+          end
+        end
+      end
+
+      context "when the product already has a variant unit set (and all required option types exist)" do
+        let!(:p) { create(:simple_product,
+                          variant_unit: 'weight',
+                          variant_unit_scale: 1,
+                          variant_unit_name: nil) }
+
+        let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }
+
+        it "removes the old option type and assigns the new one" do
+          p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          p.option_types.should == [ot_volume]
+        end
+
+        it "leaves option type unassigned if none is provided" do
+          p.update_attributes!(variant_unit: nil, variant_unit_scale: nil)
+          p.option_types.should == []
+        end
+
+        it "does not remove and re-add the option type if it is not changed" do
+          p.option_types.should_receive(:delete).never
+          p.update_attributes!(name: 'foo')
+        end
+
+        it "removes the related option values from all its variants" do
+          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ov = create(:option_value, option_type: ot, name: '1 kg', presentation: '1 kg')
+          v = create(:variant, product: p, option_values: [ov])
+          p.reload
+
+          expect {
+            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          }.to change(v.option_values(true), :count).by(-1)
+        end
+      end
+
+      it "finds all variant unit option types" do
+        ot1 = create(:option_type, name: 'unit_weight', presentation: 'Weight')
+        ot2 = create(:option_type, name: 'unit_volume', presentation: 'Volume')
+        ot3 = create(:option_type, name: 'unit_items', presentation: 'Items')
+        ot4 = create(:option_type, name: 'foo_unit_bar', presentation: 'Foo')
+
+        Spree::Product.all_variant_unit_option_types.sort.should == [ot1, ot2, ot3].sort
       end
     end
   end
