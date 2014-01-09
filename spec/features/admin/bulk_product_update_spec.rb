@@ -22,7 +22,7 @@ feature %q{
     end
 
     it "displays a 'loading' splash for products" do
-      101.times{ FactoryGirl.create(:product) }
+      FactoryGirl.create(:simple_product)
 
       visit '/admin/products/bulk_edit'
 
@@ -45,8 +45,8 @@ feature %q{
       page.should have_text "No matching products found."
     end
 
-    it "displays a message when number of products is too great" do
-      501.times{ FactoryGirl.create(:simple_product) }
+    pending "displays a message when number of products is too great" do
+      501.times { FactoryGirl.create(:simple_product) }
 
       visit '/admin/products/bulk_edit'
 
@@ -523,7 +523,6 @@ feature %q{
         page.should have_selector "a.clone-product", :count => 3
 
         first("a.clone-product").click
-        sleep 5
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
         page.should have_select "supplier", selected: "#{p1.supplier.name}"
