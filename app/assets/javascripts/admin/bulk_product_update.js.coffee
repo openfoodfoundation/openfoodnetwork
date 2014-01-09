@@ -78,24 +78,6 @@ productsApp.directive "ofnToggleColumn", ->
           scope.column.visible = true
           element.removeClass "unselected"
 
-
-productsApp.directive "ofnToggleColumnList", [
-  "$compile"
-  ($compile) ->
-    return link: (scope, element, attrs) ->
-      dialogDiv = element.next()
-      element.on "click", ->
-        pos = element.position()
-        height = element.outerHeight()
-        dialogDiv.css(
-          position: "absolute"
-          top: (pos.top + height) + "px"
-          left: pos.left + "px"
-        ).toggle()
-
-]
-
-
 productsApp.directive "datetimepicker", [
   "$parse"
   ($parse) ->
