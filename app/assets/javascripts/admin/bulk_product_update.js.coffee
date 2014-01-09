@@ -65,6 +65,7 @@ productsApp.directive "ofnToggleVariants", ->
           element.addClass "icon-chevron-down"
 
 
+
 productsApp.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->
     element.addClass "unselected"  unless scope.column.visible
@@ -148,7 +149,11 @@ productsApp.controller "AdminBulkProductsCtrl", [
       { name: "Contains",       predicate: "cont" }
     ]
 
+    $scope.optionTabs =
+      filters:        { title: "Filter Products",   visible: false }
+      column_toggle:  { title: "Toggle Columns",    visible: false }
 
+    $scope.visibleTab = { title: "Lala" }
     $scope.perPage = 25
     $scope.currentPage = 1
     $scope.products = []
@@ -244,6 +249,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
         onHand = "error"
       onHand
 
+    $scope.shiftTab = (tab) ->
+      $scope.visibleTab.visible = false unless $scope.visibleTab == tab
+      tab.visible = !tab.visible
+      $scope.visibleTab = tab
 
     $scope.addFilter = (filter) ->
       if $scope.filterableColumns.indexOf(filter.property) >= 0

@@ -16,9 +16,7 @@ div.pagination_info {
 	text-align: right;
 }
 
-div.filters {
-	margin-bottom: 10px;
-}
+
 
 div.applied_filter {
 	margin-bottom: 5px;
@@ -28,6 +26,33 @@ div.applied_filter {
 	div.four.columns {
 		padding-left: 10px;
 	}
+}
+
+div.option_tabs {
+	div.applied_filters, div.filters, div.column_toggle {
+		margin-bottom: 10px;
+	}
+}
+
+div.option_tab_titles {
+	h6 {
+		border-radius: 3px;
+		border: 1px solid #cee1f4;
+		padding: 3px;
+		text-align: center;
+		color: darken(#cee1f4, 3);
+		cursor: pointer;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	h6.selected {
+		border: 1px solid #5498da;
+		color: #5498da;
+	}
+	margin-bottom: 10px;
 }
 
 tbody.odd {
@@ -55,11 +80,18 @@ li.column-list-item {
   border-radius: 3px;
   padding: 2px 20px;
   margin: 2px 1px;
-  border: 2px solid darken(#5498da, 3);
+  border: 2px solid #5498da;
   background-color: #5498da;
   color: white;
   font-size: 100%;
   cursor: default;
+  text-align: center;
+  cursor: pointer;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 li.column-list-item.unselected {
@@ -70,10 +102,7 @@ li.column-list-item.unselected {
 }
 
 ul.column-list {
-  padding: 5px 8px;
-  border-radius: 3px;
-  border: solid 1px darkgray;
-  list-style:none
+  list-style: none;
 }
 
 table#listing_products.bulk {

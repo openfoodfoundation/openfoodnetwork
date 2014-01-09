@@ -407,6 +407,8 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
+    first("div.option_tab_titles h6", :text => "Filter Products").click
+
     select "Name", :from => "filter_property"
     select "Contains", :from => "filter_predicate"
     fill_in "filter_value", :with => "1"
@@ -537,6 +539,41 @@ feature %q{
   end
 
   describe "using the page" do
+    describe "using tabs to hide and display page controls" do
+      it "shows a column display toggle button, which shows a list of columns when clicked" do
+        FactoryGirl.create(:simple_product)
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        page.should have_selector "div.column_toggle", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Toggle Columns"
+        page.should have_selector "div.column_toggle", :visible => true
+        page.should have_selector "li.column-list-item", text: "Available On"
+
+        page.should have_selector "div.filters", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Products"
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Products"
+        page.should have_selector "div.filters", :visible => true
+        page.should have_selector "li.column-list-item", text: "Available On"
+
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Products"
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.filters", :visible => false
+        page.should have_selector "div.column_toggle", :visible => false
+      end
+    end
+
     describe "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         FactoryGirl.create(:simple_product)
@@ -550,9 +587,9 @@ feature %q{
         page.should have_selector "th", :text => "ON HAND"
         page.should have_selector "th", :text => "AV. ON"
 
-        page.should have_button "Toggle Columns"
+        page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
 
-        click_button "Toggle Columns"
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
 
         page.should have_selector "div ul.column-list li.column-list-item", text: "Supplier"
         all("div ul.column-list li.column-list-item").select{ |e| e.text == "Supplier" }.first.click
@@ -648,6 +685,9 @@ feature %q{
         login_to_admin_section
         visit '/admin/products/bulk_edit'
 
+        page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
         page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
         page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
         page.should have_field "filter_value"
@@ -660,6 +700,8 @@ feature %q{
 
           login_to_admin_section
           visit '/admin/products/bulk_edit'
+
+          first("div.option_tab_titles h6", :text => "Filter Products").click
 
           select "Name", :from => "filter_property"
           select "Equals", :from => "filter_predicate"
