@@ -240,6 +240,9 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
+    
+    first("div.option_tab_titles h6", :text => "Toggle Columns").click
+    first("li.column-list-item", text: "Available On").click
 
     page.should have_field "product_name", with: p.name
     page.should have_select "supplier", selected: s1.name
@@ -580,6 +583,9 @@ feature %q{
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
+        
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+        first("li.column-list-item", text: "Available On").click
 
         page.should have_selector "th", :text => "NAME"
         page.should have_selector "th", :text => "SUPPLIER"
@@ -589,10 +595,8 @@ feature %q{
 
         page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
 
-        first("div.option_tab_titles h6", :text => "Toggle Columns").click
-
         page.should have_selector "div ul.column-list li.column-list-item", text: "Supplier"
-        all("div ul.column-list li.column-list-item").select{ |e| e.text == "Supplier" }.first.click
+        first("li.column-list-item", text: "Supplier").click
 
         page.should_not have_selector "th", :text => "SUPPLIER"
         page.should have_selector "th", :text => "NAME"
@@ -789,6 +793,9 @@ feature %q{
       p = product_supplied
 
       visit '/admin/products/bulk_edit'
+      
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
       page.should have_field "product_name", with: p.name
       page.should have_select "supplier", selected: s1.name

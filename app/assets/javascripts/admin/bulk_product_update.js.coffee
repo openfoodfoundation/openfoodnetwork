@@ -127,7 +127,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       unit:         {name: "Unit",         visible: true}
       price:        {name: "Price",        visible: true}
       on_hand:      {name: "On Hand",      visible: true}
-      available_on: {name: "Available On", visible: true}
+      available_on: {name: "Available On", visible: false}
 
     $scope.variant_unit_options = [
       ["Weight (g)", "weight_1"],
