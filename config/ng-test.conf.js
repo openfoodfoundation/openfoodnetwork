@@ -17,7 +17,11 @@ module.exports = function(config) {
       'spec/javascripts/unit/**/*.js*'
     ],
 
-    exclude: ['**/.#*'],
+    exclude: [
+      '**/.#*',
+      'app/assets/javascripts/darkswarm/all.js.coffee',
+      'app/assets/javascripts/darkswarm/overrides.js.coffee'
+    ],
 
     coffeePreprocessor: {
       options: {
