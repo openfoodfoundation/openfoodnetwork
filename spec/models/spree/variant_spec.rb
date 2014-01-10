@@ -140,9 +140,6 @@ module Spree
             v.option_values.should_not include ov_orig
             v.option_values.should     include ov_new
           end
-
-          it "leaves option value unassigned if none is provided"
-          it "does not remove and re-add the option value if it is not changed"
         end
       end
 
