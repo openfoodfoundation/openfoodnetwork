@@ -259,7 +259,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
         url: "/admin/products/bulk_update"
         data: productsToSubmit
       ).success((data) ->
-        if angular.toJson($scope.productsWithoutDerivedAttributes()) == angular.toJson(data)
+        if angular.toJson($scope.productsWithoutDerivedAttributes($scope.products)) == angular.toJson($scope.productsWithoutDerivedAttributes(data))
           $scope.resetProducts data
           $scope.displaySuccess()
         else
@@ -302,16 +302,17 @@ productsApp.controller "AdminBulkProductsCtrl", [
           variant.unit_description = match[3]
 
 
-    $scope.productsWithoutDerivedAttributes = ->
-      products = []
-      if $scope.products
-        products.push angular.extend {}, product for product in $scope.products
-        for product in products
+    $scope.productsWithoutDerivedAttributes = (products) ->
+      products_filtered = []
+      if products
+        products_filtered.push angular.extend {}, product for product in products
+        for product in products_filtered
           delete product.variant_unit_with_scale
           if product.variants
             for variant in product.variants
               delete variant.unit_value_with_description
-      products
+              delete variant.options_text
+      products_filtered
 
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text

@@ -661,10 +661,10 @@ describe "AdminBulkProductsCtrl", ->
   describe "fetching products without derived attributes", ->
     it "returns products without the variant_unit_with_scale field", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
-      expect(scope.productsWithoutDerivedAttributes()).toEqual([{id: 123}])
+      expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual([{id: 123}])
 
     it "returns an empty array when products are undefined", ->
-      expect(scope.productsWithoutDerivedAttributes()).toEqual([])
+      expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual([])
 
     it "does not alter original products", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
@@ -674,7 +674,7 @@ describe "AdminBulkProductsCtrl", ->
     describe "updating variants", ->
       it "returns variants without the unit_value_with_description field", ->
         scope.products = [{id: 123, variants: [{id: 234, unit_value_with_description: 'foo'}]}]
-        expect(scope.productsWithoutDerivedAttributes()).toEqual [
+        expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
           {
             id: 123
             variants: [{id: 234}]

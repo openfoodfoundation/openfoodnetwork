@@ -122,10 +122,10 @@ feature %q{
 
   describe "products and inventory report" do
     it "shows products and inventory report" do
-      product_1 = create(:simple_product, name: "Product Name")
-      variant_1 = create(:variant, product: product_1,  price: 100.0)
-      variant_2 = create(:variant, product: product_1,  price: 80.0)
-      product_2 = create(:simple_product, name: "Product 2", price: 99.0)
+      product_1 = create(:simple_product, name: "Product Name", variant_unit: nil)
+      variant_1 = create(:variant, product: product_1, price: 100.0)
+      variant_2 = create(:variant, product: product_1, price: 80.0)
+      product_2 = create(:simple_product, name: "Product 2", price: 99.0, variant_unit: nil)
       variant_1.update_column(:count_on_hand, 10)
       variant_2.update_column(:count_on_hand, 20)
       product_2.master.update_column(:count_on_hand, 9)
