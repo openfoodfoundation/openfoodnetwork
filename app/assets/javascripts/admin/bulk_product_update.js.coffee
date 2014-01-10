@@ -311,6 +311,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
           if product.variants
             for variant in product.variants
               delete variant.unit_value_with_description
+              # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
       products_filtered
 
