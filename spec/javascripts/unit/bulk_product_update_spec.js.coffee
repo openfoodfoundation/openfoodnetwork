@@ -395,6 +395,7 @@ describe "AdminBulkProductsCtrl", ->
     describe "setting variant unit_value_with_description", ->
       it "sets by combining unit_value and unit_description", ->
         product =
+          variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
         scope.loadVariantUnit product
         expect(product.variants[0]).toEqual
@@ -405,15 +406,36 @@ describe "AdminBulkProductsCtrl", ->
 
       it "uses unit_value when description is missing", ->
         product =
+          variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1}]
         scope.loadVariantUnit product
         expect(product.variants[0].unit_value_with_description).toEqual '1'
 
       it "uses unit_description when value is missing", ->
         product =
+          variant_unit_scale: 1.0
           variants: [{id: 1, unit_description: 'Small'}]
         scope.loadVariantUnit product
         expect(product.variants[0].unit_value_with_description).toEqual 'Small'
+
+      it "converts values from base value to chosen unit", ->
+        product =
+          variant_unit_scale: 1000.0
+          variants: [{id: 1, unit_value: 2500}]
+        scope.loadVariantUnit product
+        expect(product.variants[0].unit_value_with_description).toEqual '2.5'
+
+
+  describe "calculating the scaled unit value for a variant", ->
+    it "returns the scaled value when variant has a unit_value", ->
+      product = {variant_unit_scale: 0.001}
+      variant = {unit_value: 5}
+      expect(scope.variantUnitValue(product, variant)).toEqual 5000
+
+    it "returns null when the variant has no unit_value", ->
+      product = {}
+      variant = {}
+      expect(scope.variantUnitValue(product, variant)).toEqual null
 
 
   describe "getting on_hand counts when products have variants", ->

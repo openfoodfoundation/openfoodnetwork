@@ -190,7 +190,15 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
       if product.variants
         for variant in product.variants
-          variant.unit_value_with_description = "#{variant.unit_value || ''} #{variant.unit_description || ''}".trim()
+          unit_value = $scope.variantUnitValue product, variant
+          variant.unit_value_with_description = "#{unit_value || ''} #{variant.unit_description || ''}".trim()
+
+
+    $scope.variantUnitValue = (product, variant) ->
+      if variant.unit_value
+        variant.unit_value / product.variant_unit_scale
+      else
+        null
 
 
     $scope.updateOnHand = (product) ->
