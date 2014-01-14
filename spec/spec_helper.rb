@@ -32,9 +32,12 @@ ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/cou
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
-# For debugging, extend poltergeist's timeout
+# For debugging:
+# - Extend poltergeist's timeout to allow ample time to use pry in browser thread
+# - Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
 # Capybara.register_driver :poltergeist do |app|
 #   Capybara::Poltergeist::Driver.new(app, timeout: 5.minutes)
+#   Capybara::Poltergeist::Driver.new(app, inspector: true)
 # end
 
 
