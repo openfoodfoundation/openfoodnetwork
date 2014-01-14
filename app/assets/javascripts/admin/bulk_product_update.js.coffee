@@ -299,14 +299,16 @@ productsApp.controller "AdminBulkProductsCtrl", [
           product.variant_unit_scale = null
       if product.variants
         for id, variant of product.variants
-          $scope.packVariant variant
+          $scope.packVariant product, variant
 
 
-    $scope.packVariant = (variant) ->
+    $scope.packVariant = (product, variant) ->
       if variant.hasOwnProperty("unit_value_with_description")
         match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
         if match
-          variant.unit_value = parseFloat(match[1]) || null
+          product = $scope.findProduct(product.id)
+          variant.unit_value  = parseFloat(match[1]) || null
+          variant.unit_value *= product.variant_unit_scale if variant.unit_value
           variant.unit_description = match[3]
 
 
@@ -322,6 +324,12 @@ productsApp.controller "AdminBulkProductsCtrl", [
               # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
       products_filtered
+
+
+    $scope.findProduct = (id) ->
+      products = (product for product in $scope.products when product.id == id)
+      if products.length == 0 then null else products[0]
+
 
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text

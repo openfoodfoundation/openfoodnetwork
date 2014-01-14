@@ -539,20 +539,28 @@ describe "AdminBulkProductsCtrl", ->
 
         scope.packProduct(testProduct)
 
-        expect(scope.packVariant).toHaveBeenCalledWith(testVariant)
+        expect(scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
     describe "packing variants", ->
+      testProduct = {id: 123}
+
+      beforeEach ->
+        scope.products = [testProduct]
+
       it "extracts unit_value and unit_description from unit_value_with_description", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5 (bottle)"}
-        scope.packVariant(testVariant)
+        scope.products = [testProduct]
+        scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: "(bottle)"
           unit_value_with_description: "250.5 (bottle)"
 
       it "extracts into unit_value when only a number is provided", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5"}
-        scope.packVariant(testVariant)
+        scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: ''
@@ -560,7 +568,7 @@ describe "AdminBulkProductsCtrl", ->
 
       it "extracts into unit_description when only a string is provided", ->
         testVariant = {unit_value_with_description: "Medium"}
-        scope.packVariant(testVariant)
+        scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
           unit_description: 'Medium'
@@ -568,7 +576,7 @@ describe "AdminBulkProductsCtrl", ->
 
       it "sets blank values when no value provided", ->
         testVariant = {unit_value_with_description: ""}
-        scope.packVariant(testVariant)
+        scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
           unit_description: ''
@@ -576,8 +584,18 @@ describe "AdminBulkProductsCtrl", ->
 
       it "sets nothing when the field is undefined", ->
         testVariant = {}
-        scope.packVariant(testVariant)
+        scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual {}
+
+      it "converts value from chosen unit to base unit", ->
+        testProduct = {id: 123, variant_unit_scale: 1000}
+        testVariant = {unit_value_with_description: "250.5"}
+        scope.products = [testProduct]
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 250500
+          unit_description: ''
+          unit_value_with_description: "250.5"
 
 
     describe "filtering products", ->
@@ -702,6 +720,17 @@ describe "AdminBulkProductsCtrl", ->
             variants: [{id: 234}]
           }
         ]
+
+
+  describe "fetching a product by id", ->
+    it "returns the product when it is present", ->
+      product = {id: 123}
+      scope.products = [product]
+      expect(scope.findProduct(123)).toEqual product
+
+    it "returns null when the product is not present", ->
+      scope.products = []
+      expect(scope.findProduct(123)).toBeNull()
 
 
   describe "deleting products", ->
