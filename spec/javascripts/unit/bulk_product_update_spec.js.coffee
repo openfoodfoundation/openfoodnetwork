@@ -707,9 +707,17 @@ describe "AdminBulkProductsCtrl", ->
       expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual([])
 
     it "does not alter original products", ->
-      scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
-      scope.productsWithoutDerivedAttributes()
-      expect(scope.products).toEqual [{id: 123, variant_unit_with_scale: 'weight_1000'}]
+      scope.products = [{
+        id: 123
+        variant_unit_with_scale: 'weight_1000'
+        variants: [{options_text: 'foo'}]
+      }]
+      scope.productsWithoutDerivedAttributes(scope.products)
+      expect(scope.products).toEqual [{
+        id: 123
+        variant_unit_with_scale: 'weight_1000'
+        variants: [{options_text: 'foo'}]
+      }]
 
     describe "updating variants", ->
       it "returns variants without the unit_value_with_description field", ->
@@ -720,6 +728,19 @@ describe "AdminBulkProductsCtrl", ->
             variants: [{id: 234}]
           }
         ]
+
+
+  describe "deep copying products", ->
+    it "copies products", ->
+      product = {id: 123}
+      copiedProducts = scope.deepCopyProducts [product]
+      expect(copiedProducts[0]).not.toBe(product)
+
+    it "copies variants", ->
+      variant = {id: 1}
+      product = {id: 123, variants: [variant]}
+      copiedProducts = scope.deepCopyProducts [product]
+      expect(copiedProducts[0].variants[0]).not.toBe(variant)
 
 
   describe "fetching a product by id", ->

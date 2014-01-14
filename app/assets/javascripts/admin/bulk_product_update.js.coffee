@@ -315,7 +315,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.productsWithoutDerivedAttributes = (products) ->
       products_filtered = []
       if products
-        products_filtered.push angular.extend {}, product for product in products
+        products_filtered = $scope.deepCopyProducts products
         for product in products_filtered
           delete product.variant_unit_with_scale
           if product.variants
@@ -324,6 +324,14 @@ productsApp.controller "AdminBulkProductsCtrl", [
               # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
       products_filtered
+
+
+    $scope.deepCopyProducts = (products) ->
+      copied_products = (angular.extend {}, product for product in products)
+      for product in copied_products
+        if product.variants
+          product.variants = (angular.extend {}, variant for variant in product.variants)
+      copied_products
 
 
     $scope.findProduct = (id) ->
