@@ -147,11 +147,13 @@ describe "filtering products", ->
   
   # TODO Not an exhaustive test, is there a better way to do this?
   it "only returns the properties of products which ought to be updated", ->
+    available_on = new Date()
+
     testProduct =
       id: 1
       name: "TestProduct"
       description: ""
-      available_on: new Date()
+      available_on: available_on
       deleted_at: null
       permalink: null
       meta_description: null
@@ -188,7 +190,7 @@ describe "filtering products", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
-      available_on: new Date()
+      available_on: available_on
       variants_attributes: [
         id: 1
         on_hand: 2
