@@ -1,0 +1,13 @@
+%table#product-list
+  %thead
+    %th Item
+    %th Description
+    %th Variant
+    %th Quantity
+    %th Available?
+    %th Price
+
+  - list.each do |product|
+    %tr
+      %td= product.name
+      %td= product.description

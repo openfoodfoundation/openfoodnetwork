@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+
+    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
+    = favicon_link_tag "favicon.png"
+
+    = stylesheet_link_tag "darkswarm/all"
+    = javascript_include_tag "darkswarm/all"
+    = render "layouts/bugherd_script"
+    = csrf_meta_tags
+
+  %body.off-canvas
+    = render partial: "shared/menu"
+
+    %section{ role: "main" }
+      = yield
+
+    %section#sidebar{ role: "complementary" }
+      = render partial: "shared/login_panel"
+      = yield :sidebar
+
+    = yield :scripts
+

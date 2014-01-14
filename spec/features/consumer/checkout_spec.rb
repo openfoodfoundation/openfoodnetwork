@@ -122,6 +122,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
+
     checkout_fees_table.should ==
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],

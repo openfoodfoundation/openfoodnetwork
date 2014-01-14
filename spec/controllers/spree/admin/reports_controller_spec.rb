@@ -168,7 +168,7 @@ describe Spree::Admin::ReportsController do
 
     it "should build distributors for the current user" do
       spree_get :products_and_inventory
-      assigns(:distributors).should == [d1, d2, d3]
+      assigns(:distributors).sort.should == [d1, d2, d3].sort
     end
 
     it "builds suppliers for the current user" do

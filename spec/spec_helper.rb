@@ -32,13 +32,15 @@ ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/cou
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
-# For debugging:
-# - Extend poltergeist's timeout to allow ample time to use pry in browser thread
-# - Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
-# Capybara.register_driver :poltergeist do |app|
-#   Capybara::Poltergeist::Driver.new(app, timeout: 5.minutes)
-#   Capybara::Poltergeist::Driver.new(app, inspector: true)
-# end
+Capybara.register_driver :poltergeist do |app|
+  options = {phantomjs_options: ['--load-images=no']}
+  # Extend poltergeist's timeout to allow ample time to use pry in browser thread
+  #options.merge! {timeout: 5.minutes}
+  # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
+  #options.merge! {inspector: true}
+
+  Capybara::Poltergeist::Driver.new(app, options)
+end
 
 
 require "paperclip/matchers"
@@ -92,6 +94,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
+  config.include OpenFoodNetwork::DistributionHelper
   config.include ActionView::Helpers::DateHelper
 
   # Factory girl

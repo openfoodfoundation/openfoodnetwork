@@ -21,14 +21,45 @@ feature %q{
       login_to_admin_section
     end
 
+    it "displays a 'loading' splash for products" do
+      FactoryGirl.create(:simple_product)
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_selector "div.loading", :text => "Loading Products..."
+    end
+
     it "displays a list of products" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "product_name", with: p1.name
-      page.should have_field "product_name", with: p2.name
+      page.should have_field "product_name", with: p1.name, :visible => true
+      page.should have_field "product_name", with: p2.name, :visible => true
+    end
+
+    it "displays a message when number of products is zero" do
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "No matching products found."
+    end
+
+    pending "displays a message when number of products is too great" do
+      501.times { FactoryGirl.create(:simple_product) }
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products"
+    end
+
+    it "displays pagination information" do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_text "Displaying 1-2 of 2 products"
     end
 
     it "displays a select box for suppliers, with the appropriate supplier selected" do
@@ -209,6 +240,9 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
+    
+    first("div.option_tab_titles h6", :text => "Toggle Columns").click
+    first("li.column-list-item", text: "Available On").click
 
     page.should have_field "product_name", with: p.name
     page.should have_select "supplier", selected: s1.name
@@ -342,6 +376,53 @@ feature %q{
     page.find("span#update-status-message").should have_content "Update complete"
   end
 
+  scenario "updating a product after cloning a product" do
+    FactoryGirl.create(:product, :name => "product 1")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    first("a.clone-product").click
+
+    fill_in "product_name", :with => "new product name"
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
+  scenario "updating when no changes have been made" do
+    Capybara.default_wait_time = 2
+    FactoryGirl.create(:product, :name => "product 1")
+    FactoryGirl.create(:product, :name => "product 2")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "No changes to update."
+    Capybara.default_wait_time = 5
+  end
+
+  scenario "updating when a filter has been applied" do
+    p1 = FactoryGirl.create(:simple_product, :name => "product1")
+    p2 = FactoryGirl.create(:simple_product, :name => "product2")
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    first("div.option_tab_titles h6", :text => "Filter Products").click
+
+    select "Name", :from => "filter_property"
+    select "Contains", :from => "filter_predicate"
+    fill_in "filter_value", :with => "1"
+    click_button "Apply Filter"
+    page.should_not have_field "product_name", with: p2.name
+    fill_in "product_name", :with => "new product1"
+
+    click_on 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+  end
+
   scenario "updating a product when there are more products than the default API page size" do
     26.times { FactoryGirl.create(:simple_product) }
     login_to_admin_section
@@ -447,7 +528,6 @@ feature %q{
         page.should have_selector "a.clone-product", :count => 3
 
         first("a.clone-product").click
-
         page.should have_selector "a.clone-product", :count => 4
         page.should have_field "product_name", with: "COPY OF #{p1.name}"
         page.should have_select "supplier", selected: "#{p1.supplier.name}"
@@ -462,11 +542,50 @@ feature %q{
   end
 
   describe "using the page" do
-    describe "using column display toggle" do
+    describe "using tabs to hide and display page controls" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
+        FactoryGirl.create(:simple_product)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
+
+        page.should have_selector "div.column_toggle", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Toggle Columns"
+        page.should have_selector "div.column_toggle", :visible => true
+        page.should have_selector "li.column-list-item", text: "Available On"
+
+        page.should have_selector "div.filters", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Products"
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Products"
+        page.should have_selector "div.filters", :visible => true
+        page.should have_selector "li.column-list-item", text: "Available On"
+
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Products"
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.filters", :visible => false
+        page.should have_selector "div.column_toggle", :visible => false
+      end
+    end
+
+    describe "using column display toggle" do
+      it "shows a column display toggle button, which shows a list of columns when clicked" do
+        FactoryGirl.create(:simple_product)
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+        
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+        first("li.column-list-item", text: "Available On").click
 
         page.should have_selector "th", :text => "NAME"
         page.should have_selector "th", :text => "SUPPLIER"
@@ -474,18 +593,157 @@ feature %q{
         page.should have_selector "th", :text => "ON HAND"
         page.should have_selector "th", :text => "AV. ON"
 
-        page.should have_button "Toggle Columns"
-
-        click_button "Toggle Columns"
+        page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
 
         page.should have_selector "div ul.column-list li.column-list-item", text: "Supplier"
-        all("div ul.column-list li.column-list-item").select{ |e| e.text == "Supplier" }.first.click
+        first("li.column-list-item", text: "Supplier").click
 
         page.should_not have_selector "th", :text => "SUPPLIER"
         page.should have_selector "th", :text => "NAME"
         page.should have_selector "th", :text => "PRICE"
         page.should have_selector "th", :text => "ON HAND"
         page.should have_selector "th", :text => "AV. ON"
+      end
+    end
+
+    describe "using pagination controls" do
+      it "shows pagination controls" do
+        27.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        page.should have_select 'perPage', :selected => '25'
+        within '.pagination' do
+          page.should have_text "1 2"
+          page.should have_text "Next"
+          page.should have_text "Last"
+        end
+      end
+
+      it "allows the number of visible products to be altered" do
+        27.times { FactoryGirl.create(:product) }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 25
+        select '50', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.length.should == 27
+      end
+
+      it "displays the correct products when changing pages" do
+        25.times { FactoryGirl.create(:product, :name => "page1product") }
+        5.times { FactoryGirl.create(:product, :name => "page2product") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page1product" }.should == true
+        click_link "2"
+        page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
+      end
+
+      it "moves the user to the last available page when changing the number of pages in any way causes user to become orphaned" do
+        50.times { FactoryGirl.create(:product) }
+        FactoryGirl.create(:product, :name => "fancy_product_name")
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        click_link "3"
+        select '50', :from => 'perPage'
+        page.first("div.pagenav span.page.current").should have_text "2"
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+
+        select '25', :from => 'perPage'
+        fill_in "quick_filter", :with => "fancy_product_name"
+        page.first("div.pagenav span.page.current").should have_text "1"
+        page.all("input[name='product_name']", :visible => true).length.should == 1
+      end
+
+      it "paginates the filtered product list rather than all products" do
+        25.times { FactoryGirl.create(:product, :name => "product_name") }
+        3.times { FactoryGirl.create(:product, :name => "test_product_name") }
+        login_to_admin_section
+
+        visit '/admin/products/bulk_edit'
+
+        select '25', :from => 'perPage'
+        page.should have_text "1 2"
+        fill_in "quick_filter", :with => "test_product_name"
+        page.all("input[name='product_name']", :visible => true).length.should == 3
+        page.all("input[name='product_name']", :visible => true).all?{ |e| e.value == "test_product_name" }.should == true
+        page.should_not have_text "1 2"
+        page.should have_text "1"
+      end
+    end
+
+    describe "using filtering controls" do
+      it "displays basic filtering controls" do
+        FactoryGirl.create(:simple_product)
+
+        login_to_admin_section
+        visit '/admin/products/bulk_edit'
+
+        page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
+        first("div.option_tab_titles h6", :text => "Filter Products").click
+
+        page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
+        page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
+        page.should have_field "filter_value"
+      end
+
+      describe "clicking the 'Apply Filter' Button" do
+        before(:each) do
+          FactoryGirl.create(:simple_product, :name => "Product1")
+          FactoryGirl.create(:simple_product, :name => "Product2")
+
+          login_to_admin_section
+          visit '/admin/products/bulk_edit'
+
+          first("div.option_tab_titles h6", :text => "Filter Products").click
+
+          select "Name", :from => "filter_property"
+          select "Equals", :from => "filter_predicate"
+          fill_in "filter_value", :with => "Product1"
+          click_button "Apply Filter"
+        end
+
+        it "adds a new filter to the list of applied filters" do
+          page.should have_text "Name Equals Product1"
+        end
+
+        it "displays the 'loading' splash" do
+          page.should have_selector "div.loading", :text => "Loading Products..."
+        end
+
+        it "loads appropriate products" do
+          page.should have_field "product_name", :with => "Product1"
+          page.should_not have_field "product_name", :with => "Product2"
+        end
+
+        describe "clicking the 'Remove Filter' link" do
+          before(:each) do
+            click_link "Remove Filter"
+          end
+
+          it "removes the filter from the list of applied filters" do
+            page.should_not have_text "Name Equals Product1"
+          end
+
+          it "displays the 'loading' splash" do
+            page.should have_selector "div.loading", :text => "Loading Products..."
+          end
+
+          it "loads appropriate products" do
+            page.should have_field "product_name", :with => "Product1"
+            page.should have_field "product_name", :with => "Product2"
+          end
+        end
       end
     end
   end
@@ -535,6 +793,9 @@ feature %q{
       p = product_supplied
 
       visit '/admin/products/bulk_edit'
+      
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
       page.should have_field "product_name", with: p.name
       page.should have_select "supplier", selected: s1.name

@@ -1,0 +1,50 @@
+%shop{"ng-app" => "Shop"}
+  %navigation
+    %distributor.details.row
+      %img.left{src: ""}
+      %h4
+        = @distributor.name
+      %location= @distributor.address.city
+      %small
+        %a{href: "/"} Change location
+      = render partial: "shop/order_cycles"
+
+      -#%description
+  
+  %tabs
+    .row
+      .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#about"} About Us 
+          .content{"data-section-content" => ""}
+            %p= @distributor.long_description.andand.html_safe
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#producers"} Our Producers 
+          .content{"data-section-content" => ""}
+            %ul
+              - for producer in @producers
+                %li= producer.name
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#groups"} Our Groups 
+          .content{"data-section-content" => ""}
+            %p Groups 
+
+        %section
+          %p.title.avenir{"data-section-title" => ""}
+            %a{href: "#contact"} Contact 
+          .content{"data-section-content" => ""}
+            %p Contact 
+    
+    
+  %products.row
+    = render partial: "shop/products"
+  #footer
+    %section.row
+      = render partial: "shop/contact_us"
+      = render partial: "shop/about_us"
+      = render partial: "shared/copyright"

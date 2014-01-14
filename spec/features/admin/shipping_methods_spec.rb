@@ -30,7 +30,7 @@ feature 'shipping methods' do
 
       sm = Spree::ShippingMethod.last
       sm.name.should == 'Carrier Pidgeon'
-      sm.distributors.should == [d1, d2]
+      sm.distributors.sort.should == [d1, d2].sort
     end
 
     it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"

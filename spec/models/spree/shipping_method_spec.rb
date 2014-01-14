@@ -15,7 +15,7 @@ module Spree
       sm.distributors << d1
       sm.distributors << d2
 
-      sm.reload.distributors.should == [d1, d2]
+      sm.reload.distributors.sort.should == [d1, d2].sort
     end
 
     it "finds shipping methods for a particular distributor" do

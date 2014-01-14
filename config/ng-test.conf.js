@@ -11,11 +11,17 @@ module.exports = function(config) {
 
       'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
       'app/assets/javascripts/admin/bulk_product_update.js.coffee',
+      'app/assets/javascripts/darkswarm/*.js*',
+      'app/assets/javascripts/darkswarm/**/*.js*',
 
       'spec/javascripts/unit/**/*.js*'
     ],
 
-    exclude: ['**/.#*'],
+    exclude: [
+      '**/.#*',
+      'app/assets/javascripts/darkswarm/all.js.coffee',
+      'app/assets/javascripts/darkswarm/overrides.js.coffee'
+    ],
 
     coffeePreprocessor: {
       options: {

@@ -65,6 +65,7 @@ productsApp.directive "ofnToggleVariants", ->
           element.addClass "icon-chevron-down"
 
 
+
 productsApp.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->
     element.addClass "unselected"  unless scope.column.visible
@@ -76,24 +77,6 @@ productsApp.directive "ofnToggleColumn", ->
         else
           scope.column.visible = true
           element.removeClass "unselected"
-
-
-productsApp.directive "ofnToggleColumnList", [
-  "$compile"
-  ($compile) ->
-    return link: (scope, element, attrs) ->
-      dialogDiv = element.next()
-      element.on "click", ->
-        pos = element.position()
-        height = element.outerHeight()
-        dialogDiv.css(
-          position: "absolute"
-          top: (pos.top + height) + "px"
-          left: pos.left + "px"
-        ).toggle()
-
-]
-
 
 productsApp.directive "datetimepicker", [
   "$parse"
@@ -126,7 +109,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       unit:         {name: "Unit",         visible: true}
       price:        {name: "Price",        visible: true}
       on_hand:      {name: "On Hand",      visible: true}
-      available_on: {name: "Available On", visible: true}
+      available_on: {name: "Available On", visible: false}
 
     $scope.variant_unit_options = [
       ["Weight (g)", "weight_1"],
@@ -138,6 +121,39 @@ productsApp.controller "AdminBulkProductsCtrl", [
       ["Items", "items"]
     ]
 
+    $scope.filterableColumns = [
+      { name: "Supplier",       db_column: "supplier_name" },
+      { name: "Name",           db_column: "name" }
+    ]
+
+    $scope.filterTypes = [
+      { name: "Equals",         predicate: "eq" },
+      { name: "Contains",       predicate: "cont" }
+    ]
+
+    $scope.optionTabs =
+      filters:        { title: "Filter Products",   visible: false }
+      column_toggle:  { title: "Toggle Columns",    visible: false }
+
+    $scope.visibleTab = { title: "Lala" }
+    $scope.perPage = 25
+    $scope.currentPage = 1
+    $scope.products = []
+    $scope.filteredProducts = []
+    $scope.currentFilters = []
+    $scope.totalCount = -> $scope.filteredProducts.length
+    $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
+    $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
+    $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
+    $scope.setPage = (page) -> $scope.currentPage = page
+    $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
+    $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
+
+    $scope.$watch ->
+      $scope.totalPages()
+    , (newVal, oldVal) ->
+      $scope.currentPage = Math.max $scope.totalPages(), 1  if newVal != oldVal && $scope.totalPages() < $scope.currentPage
+
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->
@@ -148,12 +164,21 @@ productsApp.controller "AdminBulkProductsCtrl", [
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             # Need to have suppliers before we get products so we can match suppliers to product.supplier
-            dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500").then (data) ->
-              $scope.resetProducts data
+            $scope.fetchProducts()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
+
+
+    $scope.fetchProducts = -> # WARNING: returns a promise
+      $scope.loading = true
+      queryString = $scope.currentFilters.reduce (qs,f) ->
+        return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
+      , ""
+      return dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500;#{queryString}").then (data) ->
+        $scope.resetProducts data
+        $scope.loading = false
 
 
     $scope.resetProducts = (data) ->
@@ -214,6 +239,23 @@ productsApp.controller "AdminBulkProductsCtrl", [
         onHand = "error"
       onHand
 
+    $scope.shiftTab = (tab) ->
+      $scope.visibleTab.visible = false unless $scope.visibleTab == tab
+      tab.visible = !tab.visible
+      $scope.visibleTab = tab
+
+    $scope.addFilter = (filter) ->
+      if $scope.filterableColumns.indexOf(filter.property) >= 0
+        if $scope.filterTypes.indexOf(filter.predicate) >= 0
+          $scope.currentFilters.push filter
+          $scope.fetchProducts()
+
+    $scope.removeFilter = (filter) ->
+      index = $scope.currentFilters.indexOf(filter)
+      if index != -1
+        $scope.currentFilters.splice index, 1
+        $scope.fetchProducts()
+
 
     $scope.editWarn = (product, variant) ->
       if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
@@ -265,11 +307,19 @@ productsApp.controller "AdminBulkProductsCtrl", [
       $http(
         method: "POST"
         url: "/admin/products/bulk_update"
-        data: productsToSubmit
+        data:
+          products: productsToSubmit
+          filters: $scope.currentFilters
       ).success((data) ->
+        # TODO: remove this check altogether, need to write controller tests if we want to test this behaviour properly
+        # Note: Rob implemented subset(), which is a simpler alternative to productsWithoutDerivedAttributes(). However, it
+        #       conflicted with some changes I made before merging my work, so for now I've reverted to the old way of
+        #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
+        #if subset($scope.productsWithoutDerivedAttributes(), data)
+
         if angular.toJson($scope.productsWithoutDerivedAttributes($scope.products)) == angular.toJson($scope.productsWithoutDerivedAttributes(data))
           $scope.resetProducts data
-          $scope.displaySuccess()
+          $timeout -> $scope.displaySuccess()
         else
           $scope.displayFailure "Product lists do not match."
       ).error (data, status) ->
@@ -285,8 +335,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
         $scope.packProduct product
 
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
-      $scope.updateProducts productsToSubmit
-
+      if productsToSubmit.length > 0
+        $scope.updateProducts productsToSubmit # Don't submit an empty list
+      else
+        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
 
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale
@@ -394,6 +446,10 @@ productsApp.factory "dataFetcher", [
       deferred.promise
 ]
 
+productsApp.filter "rangeArray", ->
+  return (input,start,end) ->
+    input.push(i) for i in [start..end]
+    input
 
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []
@@ -477,3 +533,11 @@ toObjectWithIDKeys = (array) ->
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
   
   object
+
+subset = (bigArray,smallArray) ->
+  if smallArray instanceof Array && bigArray instanceof Array && smallArray.length > 0
+    for item in smallArray
+      return false if angular.toJson(bigArray).indexOf(angular.toJson(item)) == -1
+    return true
+  else
+    return false
