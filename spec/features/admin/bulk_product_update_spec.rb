@@ -163,8 +163,8 @@ feature %q{
 
     it "displays a unit value field (for each variant) for each product" do
       p1 = FactoryGirl.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1.2, unit_description: "(small bag)")
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4.8, unit_description: "(large bag)")
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)")
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)")
 
       visit '/admin/products/bulk_edit'
 
@@ -263,7 +263,7 @@ feature %q{
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
     p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 0.001)
-    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9, unit_value: 250, unit_description: '(bottle)')
+    v = FactoryGirl.create(:variant, product: p, price: 3.0, on_hand: 9, unit_value: 0.25, unit_description: '(bottle)')
 
     login_to_admin_section
 
