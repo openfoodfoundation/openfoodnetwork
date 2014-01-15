@@ -135,7 +135,6 @@ productsApp.controller "AdminBulkProductsCtrl", [
       filters:        { title: "Filter Products",   visible: false }
       column_toggle:  { title: "Toggle Columns",    visible: false }
 
-    $scope.visibleTab = { title: "Lala" }
     $scope.perPage = 25
     $scope.currentPage = 1
     $scope.products = []
@@ -184,6 +183,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.resetProducts = (data) ->
       $scope.products = data
       $scope.dirtyProducts = {}
+      $scope.setMessage $scope.updateStatusMessage, "", {}, false
       $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
         $scope.unpackProduct product
@@ -240,13 +240,13 @@ productsApp.controller "AdminBulkProductsCtrl", [
       onHand
 
     $scope.shiftTab = (tab) ->
-      $scope.visibleTab.visible = false unless $scope.visibleTab == tab
+      $scope.visibleTab.visible = false unless $scope.visibleTab == tab || $scope.visibleTab == undefined
       tab.visible = !tab.visible
       $scope.visibleTab = tab
 
     $scope.addFilter = (filter) ->
-      if $scope.filterableColumns.indexOf(filter.property) >= 0
-        if $scope.filterTypes.indexOf(filter.predicate) >= 0
+      if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
+        if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
           $scope.currentFilters.push filter
           $scope.fetchProducts()
 

@@ -1001,55 +1001,69 @@ describe "AdminBulkProductsCtrl", ->
 
   describe "filtering products", ->
     describe "adding a filter to the filter list", ->
-      it "adds objects sent to addFilter() to $scope.currentFilters", ->
+      filterObject1 = filterObject2 = null
+
+      beforeEach ->
         spyOn(scope, "fetchProducts").andReturn "nothing"
-        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
-        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
+        spyOn(scope, "dirtyProductCount").andReturn 0
+        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
+        filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[1], value: "value2"}
         scope.addFilter filterObject1
         scope.addFilter filterObject2
+
+      it "adds objects sent to addFilter() to $scope.currentFilters", ->
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
-        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
-        filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[0], value: "value2"}
         filterObject3 = {property: "some_random_property", predicate: scope.filterTypes[0], value: "value3"}
-        scope.addFilter filterObject1
-        scope.addFilter filterObject2
         scope.addFilter filterObject3
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
-        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
-        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value2"}
         filterObject3 = {property: scope.filterableColumns[0], predicate: "something", value: "value3"}
-        scope.addFilter filterObject1
-        scope.addFilter filterObject2
+        scope.addFilter filterObject3
+        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+
+      it "ignores objects sent to addFilter() which have a blank 'value' property", ->
+        filterObject3 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: ""}
         scope.addFilter filterObject3
         expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "calls fetchProducts when adding a new filter", ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
-        scope.addFilter( { property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1" } )
-        expect(scope.fetchProducts.calls.length).toEqual(1)
+        expect(scope.fetchProducts.calls.length).toEqual(2)
+
+      describe "when unsaved products exist", ->
+        beforeEach ->
+          filterObject3 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value3"}
+          spyOn(window, "confirm").andReturn false
+          scope.dirtyProductCount.andReturn 1
+          scope.addFilter filterObject3
+
+        it "it does not call fetchProducts", ->
+          expect(scope.fetchProducts.calls.length).toEqual(2)
+
+        it "does not add the filter to $scope.currentFilters", ->
+          expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+
+        it "asks the user to save changes before proceeding", ->
+          expect(window.confirm).toHaveBeenCalledWith "Unsaved changes will be lost. Continue anyway?"
+
 
     describe "removing a filter from the filter list", ->
       filterObject1 = filterObject2 = null
 
       beforeEach ->
+        spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
         filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
         scope.currentFilters = [ filterObject1, filterObject2 ]
 
       it "removes the specified filter from $scope.currentFilters and calls fetchProducts", ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
         scope.removeFilter filterObject1
         expect(scope.currentFilters).toEqual [ filterObject2 ]
         expect(scope.fetchProducts.calls.length).toEqual 1
 
       it "ignores filters which do not exist in currentFilters", ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
         filterObject3 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[1], value: "SomethingElse"}
         scope.removeFilter filterObject3
         expect(scope.currentFilters).toEqual [ filterObject1, filterObject2 ]
