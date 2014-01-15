@@ -1048,6 +1048,26 @@ describe "AdminBulkProductsCtrl", ->
         it "asks the user to save changes before proceeding", ->
           expect(window.confirm).toHaveBeenCalledWith "Unsaved changes will be lost. Continue anyway?"
 
+      describe "when a filter on the same property and predicate already exists", ->
+        filterObject3 = null
+
+        beforeEach ->
+          filterObject3 = { property: filterObject2.property, predicate: filterObject2.predicate, value: "new value" }
+
+        it "asks the user for permission before proceeding", ->
+          spyOn(window, "confirm").andReturn true
+          scope.addFilter filterObject3
+          expect(window.confirm).toHaveBeenCalledWith "'#{filterObject3.predicate.name}' filter already exists on column '#{filterObject3.property.name}'. Replace it?"
+
+        it "replaces the filter in $scope.currentFilters when user clicks OK", ->
+          spyOn(window, "confirm").andReturn true
+          scope.addFilter filterObject3
+          expect(scope.currentFilters).toEqual [filterObject1, filterObject3]
+
+        it "does not add the filter to $scope.currentFilters when user clicks cancel", ->
+          spyOn(window, "confirm").andReturn false
+          scope.addFilter filterObject3
+          expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
 
     describe "removing a filter from the filter list", ->
       filterObject1 = filterObject2 = null

@@ -245,10 +245,15 @@ productsApp.controller "AdminBulkProductsCtrl", [
       $scope.visibleTab = tab
 
     $scope.addFilter = (filter) ->
+      existingfilterIndex = $scope.indexOfFilter filter
       if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
         if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
-          $scope.currentFilters.push filter
-          $scope.fetchProducts()
+          if existingfilterIndex == -1
+            $scope.currentFilters.push filter
+            $scope.fetchProducts()
+          else if confirm("'#{filter.predicate.name}' filter already exists on column '#{filter.property.name}'. Replace it?")
+            $scope.currentFilters[existingfilterIndex] = filter
+            $scope.fetchProducts()
 
     $scope.removeFilter = (filter) ->
       index = $scope.currentFilters.indexOf(filter)
@@ -256,6 +261,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
         $scope.currentFilters.splice index, 1
         $scope.fetchProducts()
 
+    $scope.indexOfFilter = (filter) ->
+      for existingFilter, i in $scope.currentFilters
+        return i if filter.property == existingFilter.property && filter.predicate == existingFilter.predicate
+      return -1
 
     $scope.editWarn = (product, variant) ->
       if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
