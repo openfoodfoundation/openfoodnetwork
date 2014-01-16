@@ -34,6 +34,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
+gem 'ngmin-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
