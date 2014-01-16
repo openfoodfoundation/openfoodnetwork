@@ -24,13 +24,13 @@ describe Spree::OrderMailer do
     ActionMailer::Base.deliveries.count.should == 1
   end
 
-  it "should send the email from the enterprise email" do
+  it "sets a reply-to of the enterprise email" do
     Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.first.from.should == [@distributor.email]
+    ActionMailer::Base.deliveries.first.reply_to.should == [@distributor.email]
   end
 
-  it "should cc orders" do
+  it "ccs the enterprise" do
     Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.first.cc.should == ["orders@openfoodnetwork.org"]
+    ActionMailer::Base.deliveries.first.cc.should == [@distributor.email]
   end
 end
