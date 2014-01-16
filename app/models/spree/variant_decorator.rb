@@ -75,7 +75,7 @@ Spree::Variant.class_eval do
     # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
     # If there is none available where this is true, use the smallest available unit.
     unit = units[self.product.variant_unit].select { |scale, unit_name|
-      unit_value / scale > 1
+      unit_value / scale >= 1
     }.to_a.last
     unit = units[self.product.variant_unit].first if unit.nil?
 
