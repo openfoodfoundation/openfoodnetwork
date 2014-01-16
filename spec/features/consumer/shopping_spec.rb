@@ -95,17 +95,26 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
+      describe "with products with variants" do
+        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
+        let(:product) { create(:simple_product) }
+        let(:variant) { create(:variant, product: product) }
+
+        before do
+          build_and_select_order_cycle
+        end
+
+        it "should not show quantity field for product with variants" do
+          page.should_not have_selector("#variants_#{product.master.id}", visible: true)
+        end
+      end
+
       describe "adding products to cart" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product) }
         let(:variant) { create(:variant, product: product) }
         before do
-          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "frogs" 
-          exchange.variants << product.master
-          exchange.variants << variant 
-          visit shop_path
-          select "frogs", :from => "order_cycle_id"
+          build_and_select_order_cycle
         end
         it "should let us add products to our cart" do
           fill_in "variants[#{variant.id}]", with: "1"
@@ -133,4 +142,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
     end
   end
+end
+
+def build_and_select_order_cycle
+  exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+  exchange.update_attribute :pickup_time, "frogs" 
+  exchange.variants << product.master
+  exchange.variants << variant 
+  visit shop_path
+  select "frogs", :from => "order_cycle_id"
 end

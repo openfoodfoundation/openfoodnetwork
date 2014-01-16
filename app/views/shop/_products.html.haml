@@ -24,7 +24,7 @@
           %td {{ product.master.options_text }}
           %td 
             %span{"ng-show" => "(product.variants.length == 0)"}
-              %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]"}
+              %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]", id: "variants_{{product.master.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
@@ -37,7 +37,7 @@
           %td{colspan: 3}
           %td {{variant.options_text}}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "variants[{{variant.id}}]"}
+            %input{type: :number, value: 0, min: 0, name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
