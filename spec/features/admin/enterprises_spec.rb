@@ -88,7 +88,6 @@ feature %q{
     fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
 
     click_button 'Create'
-
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
 

@@ -18,7 +18,6 @@ class Enterprise < ActiveRecord::Base
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
-  attr_accessible :logo
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
   validates_presence_of :name
