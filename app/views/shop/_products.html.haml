@@ -28,7 +28,7 @@
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
-            %span{"ng-hide" => "product.group_buy"} 
+            %span.light-grey{"ng-hide" => "product.group_buy"} 
               N/A 
           %td.price
             %small from
@@ -41,12 +41,14 @@
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
-            %span{"ng-hide" => "product.group_buy"} 
+            %span.light-grey{"ng-hide" => "product.group_buy"} 
               N/A 
           %td.price
             %small from ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
+
+
 
 
 
