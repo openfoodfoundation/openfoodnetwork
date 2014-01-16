@@ -23,7 +23,8 @@
 
           %td {{ product.master.options_text }}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]"}
+            %span{"ng-show" => "(product.variants.length == 0)"}
+              %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
               Available
@@ -46,3 +47,6 @@
             %small from ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
+
+
+
