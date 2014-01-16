@@ -336,12 +336,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.submitProducts = ->
-      # Pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server,
-      # then pack $scope.products, so they will match the list returned from the server
-      angular.forEach $scope.dirtyProducts, (product) ->
-        $scope.packProduct product
-      angular.forEach $scope.products, (product) ->
-        $scope.packProduct product
+      # Pack pack $scope.products, so they will match the list returned from the server,
+      # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
+      $scope.packProduct product for id, product of $scope.products
+      $scope.packProduct product for id, product of $scope.dirtyProducts
 
       productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
       if productsToSubmit.length > 0

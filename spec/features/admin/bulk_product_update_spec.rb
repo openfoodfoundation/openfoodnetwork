@@ -293,6 +293,30 @@ feature %q{
   end
 
 
+  scenario "setting a variant unit on a product that has none" do
+    p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+    v = FactoryGirl.create(:variant, product: p, unit_value: nil, unit_description: nil)
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+    first("a.view-variants").click
+
+    page.should have_select "variant_unit_with_scale", selected: ''
+
+    select "Weight (kg)", from: "variant_unit_with_scale"
+    fill_in "variant_unit_value_with_description", with: '123 abc'
+
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    visit '/admin/products/bulk_edit'
+
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+    page.should have_field "variant_unit_value_with_description", with: "123 abc"
+  end
+
+
   scenario "updating a product with variants" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
