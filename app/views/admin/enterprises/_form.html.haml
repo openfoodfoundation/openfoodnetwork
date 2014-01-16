@@ -41,6 +41,11 @@
   %tr{"data-hook" => "acn"}
     %td ACN:
     %td= f.text_field :acn
+  %tr{"data-hook" => "logo"}
+    %td Logo:
+    %td
+      = f.file_field :logo
+      = image_tag @object.logo.url
 %fieldset
   %legend Address
   %table

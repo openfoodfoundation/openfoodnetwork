@@ -18,6 +18,8 @@ class Enterprise < ActiveRecord::Base
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
+  attr_accessible :logo
+  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
   validates_presence_of :name
   validates_presence_of :address
@@ -40,6 +42,7 @@ class Enterprise < ActiveRecord::Base
       .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now)
       .uniq
   }
+
 
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').

@@ -224,5 +224,10 @@ feature %q{
       supplier2.reload.next_collection_at.should be_nil
       distributor2.reload.next_collection_at.should be_nil
     end
+
+    scenario "Editing images for an enterprise" do
+      click_link 'Enterprises'
+      page.should have_content "Logo"
+    end
   end
 end
