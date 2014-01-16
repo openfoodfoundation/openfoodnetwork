@@ -415,7 +415,7 @@ feature %q{
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.from.include?(@distributor_oc.email).should == true
+    email.reply_to.include?(@distributor_oc.email).should == true
     email.body.should =~ /Distribution[\s+]\$54.00/
   end
 
