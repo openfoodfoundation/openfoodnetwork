@@ -36,7 +36,7 @@
             %span.light-grey{"ng-hide" => "product.group_buy"} 
               N/A 
           %td.price
-            %small from
+            %small{"ng-show" => "(product.variants.length > 0)"} from
             ${{ product.price }}
         %tr{"ng-repeat" => "variant in product.variants"}
           %td{colspan: 3}
@@ -53,7 +53,7 @@
             %span.light-grey{"ng-hide" => "product.group_buy"} 
               N/A 
           %td.price
-            %small from ${{variant.price }}
+            %small ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
 
