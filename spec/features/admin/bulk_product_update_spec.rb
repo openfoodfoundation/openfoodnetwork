@@ -130,6 +130,30 @@ feature %q{
       page.should have_field "on_hand", with: "12"
     end
 
+    it "displays 'on demand' for the on hand count when the product is available on demand" do
+      p1 = FactoryGirl.create(:product, on_demand: true)
+      p1.master.on_demand = true; p1.master.save!
+
+      visit '/admin/products/bulk_edit'
+
+      page.should     have_selector "span[name='on_hand']", text: "On demand"
+      page.should_not have_field "on_hand", visible: true
+    end
+
+    it "displays 'on demand' for any variant that is available on demand" do
+      p1 = FactoryGirl.create(:product)
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 4)
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
+
+      visit '/admin/products/bulk_edit'
+      first("a.view-variants").click
+
+      page.should     have_selector "span[name='on_hand']", text: "On demand"
+      page.should     have_field "variant_on_hand", with: "4"
+      page.should_not have_field "variant_on_hand", with: "", visible: true
+      page.should     have_selector ".variant span[name='on_hand']", text: "On demand"
+    end
+
     it "displays a select box for the unit of measure for the product's variants" do
       p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
 
