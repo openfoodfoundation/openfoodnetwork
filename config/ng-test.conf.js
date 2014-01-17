@@ -9,6 +9,7 @@ module.exports = function(config) {
       'app/assets/javascripts/shared/angular.js',
       'app/assets/javascripts/shared/angular-*.js',
 
+      'app/assets/javascripts/admin/shared_services.js.coffee',
       'app/assets/javascripts/admin/order_cycle.js.erb.coffee',
       'app/assets/javascripts/admin/bulk_order_management.js.coffee',
       'app/assets/javascripts/admin/bulk_product_update.js.coffee',

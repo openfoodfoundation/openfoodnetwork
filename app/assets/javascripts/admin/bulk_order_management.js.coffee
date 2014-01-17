@@ -1,12 +1,12 @@
-ordersApp = angular.module("bulk_order_management", ["bulk_product_update"])
+orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services"])
 
-ordersApp.config [
+orderManagementModule.config [
   "$httpProvider"
   (provider) ->
     provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
 ]
 
-ordersApp.controller "AdminBulkOrdersCtrl", [
+orderManagementModule.controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher"
   ($scope, $http, dataFetcher) ->
     $scope.updateStatusMessage =

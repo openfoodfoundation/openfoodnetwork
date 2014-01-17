@@ -258,18 +258,18 @@ describe "Maintaining a live record of dirty products and properties", ->
 
 
 
-describe "AdminBulkProductsCtrl", ->
+describe "AdminProductEditCtrl", ->
   ctrl = scope = timeout = httpBackend = null
 
   beforeEach ->
-    module "bulk_product_update"
+    module "ofn.bulk_product_edit"
   beforeEach inject(($controller, $timeout, $rootScope, $httpBackend) ->
     scope = $rootScope.$new()
     ctrl = $controller
     timeout = $timeout
     httpBackend = $httpBackend
 
-    ctrl "AdminBulkProductsCtrl", {$scope: scope, $timeout: timeout}
+    ctrl "AdminProductEditCtrl", {$scope: scope, $timeout: timeout}
   )
 
   describe "loading data upon initialisation", ->

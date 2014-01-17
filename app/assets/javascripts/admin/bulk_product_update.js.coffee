@@ -1,13 +1,13 @@
-productsApp = angular.module("bulk_product_update", [])
+productEditModule = angular.module("ofn.bulk_product_edit", ["ofn.shared_services"])
 
-productsApp.config [
+productEditModule.config [
   "$httpProvider"
   (provider) ->
     provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
 ]
 
 
-productsApp.directive "ofnDecimal", ->
+productEditModule.directive "ofnDecimal", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     numRegExp = /^\d+(\.\d+)?$/
@@ -20,7 +20,7 @@ productsApp.directive "ofnDecimal", ->
       viewValue
 
 
-productsApp.directive "ofnTrackProduct", ->
+productEditModule.directive "ofnTrackProduct", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     property_name = attrs.ofnTrackProduct
@@ -31,7 +31,7 @@ productsApp.directive "ofnTrackProduct", ->
       viewValue
 
 
-productsApp.directive "ofnTrackVariant", ->
+productEditModule.directive "ofnTrackVariant", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     property_name = attrs.ofnTrackVariant
@@ -45,7 +45,7 @@ productsApp.directive "ofnTrackVariant", ->
       viewValue
 
 
-productsApp.directive "ofnToggleVariants", ->
+productEditModule.directive "ofnToggleVariants", ->
   link: (scope, element, attrs) ->
     if scope.displayProperties[scope.product.id].showVariants
       element.removeClass "icon-chevron-right"
@@ -66,7 +66,7 @@ productsApp.directive "ofnToggleVariants", ->
 
 
 
-productsApp.directive "ofnToggleColumn", ->
+productEditModule.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->
     element.addClass "unselected"  unless scope.column.visible
     element.click "click", ->
@@ -78,7 +78,7 @@ productsApp.directive "ofnToggleColumn", ->
           scope.column.visible = true
           element.removeClass "unselected"
 
-productsApp.directive "datetimepicker", [
+productEditModule.directive "datetimepicker", [
   "$parse"
   ($parse) ->
     return (
@@ -96,7 +96,7 @@ productsApp.directive "datetimepicker", [
 ]
 
 
-productsApp.controller "AdminBulkProductsCtrl", [
+productEditModule.controller "AdminProductEditCtrl", [
   "$scope", "$timeout", "$http", "dataFetcher"
   ($scope, $timeout, $http, dataFetcher) ->
     $scope.updateStatusMessage =
@@ -441,21 +441,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
       Object.keys($scope.dirtyProducts).length
 ]
 
-
-productsApp.factory "dataFetcher", [
-  "$http", "$q"
-  ($http, $q) ->
-    return (dataLocation) ->
-      deferred = $q.defer()
-      $http.get(dataLocation).success((data) ->
-        deferred.resolve data
-      ).error ->
-        deferred.reject()
-
-      deferred.promise
-]
-
-productsApp.filter "rangeArray", ->
+productEditModule.filter "rangeArray", ->
   return (input,start,end) ->
     input.push(i) for i in [start..end]
     input

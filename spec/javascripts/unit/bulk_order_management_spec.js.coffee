@@ -1,14 +1,14 @@
-describe "AdminBulkOrdersCtrl", ->
-  ctrl = scope = timeout = httpBackend = null
+describe "AdminOrderMgmtCtrl", ->
+  ctrl = scope = httpBackend = null
 
   beforeEach ->
-    module "bulk_order_management"
+    module "ofn.bulk_order_management"
   beforeEach inject(($controller, $rootScope, $httpBackend) ->
     scope = $rootScope.$new()
     ctrl = $controller
     httpBackend = $httpBackend
 
-    ctrl "AdminBulkOrdersCtrl", {$scope: scope, $timeout: timeout}
+    ctrl "AdminOrderMgmtCtrl", {$scope: scope}
   )
 
   describe "loading data upon initialisation", ->
