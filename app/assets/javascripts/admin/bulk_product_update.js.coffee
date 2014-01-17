@@ -316,6 +316,10 @@ productsApp.controller "AdminBulkProductsCtrl", [
       Object.keys(product.variants).length > 0
 
 
+    $scope.hasOnDemandVariants = (product) ->
+      (variant for id, variant of product.variants when variant.on_demand).length > 0
+
+
     $scope.updateProducts = (productsToSubmit) ->
       $scope.displayUpdating()
       $http(

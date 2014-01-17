@@ -555,6 +555,24 @@ describe "AdminBulkProductsCtrl", ->
       expect(scope.onHand(not_variants: [])).toEqual "error"
 
 
+  describe "determining whether a product has variants that are available on demand", ->
+    it "returns true when at least one variant does", ->
+      product =
+        variants: [
+          {on_demand: false}
+          {on_demand: true}
+        ]
+      expect(scope.hasOnDemandVariants(product)).toBe(true)
+
+    it "returns false otherwise", ->
+      product =
+        variants: [
+          {on_demand: false}
+          {on_demand: false}
+        ]
+      expect(scope.hasOnDemandVariants(product)).toBe(false)
+
+
   describe "submitting products to be updated", ->
     describe "packing products", ->
       it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
