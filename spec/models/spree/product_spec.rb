@@ -411,5 +411,13 @@ module Spree
         Spree::Product.all_variant_unit_option_types.sort.should == [ot1, ot2, ot3].sort
       end
     end
+
+    describe "Stock filtering" do
+      it "considers products that are on_demand as being in stock" do
+        product = create(:simple_product, on_demand: true)
+        product.master.update_attribute(:count_on_hand, 0)
+        product.has_stock?.should == true
+      end
+    end
   end
 end

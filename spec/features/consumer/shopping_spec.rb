@@ -95,7 +95,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
-      describe "with products with variants" do
+      describe "After selecting an order cycle with products visible" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product) }
         let(:variant) { create(:variant, product: product) }
@@ -106,6 +106,45 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         it "should not show quantity field for product with variants" do
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
+        end
+
+      end
+
+      describe "Filtering on hand and on demand products" do
+        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
+        let(:p1) { create(:simple_product, on_demand: false) }
+        let(:p2) { create(:simple_product, on_demand: true) }
+        let(:p3) { create(:simple_product, on_demand: false) }
+        let(:p4) { create(:simple_product, on_demand: false) }
+        let(:v1) { create(:variant, product: p4) }
+
+        before do
+          p1.master.count_on_hand = 1
+          p2.master.count_on_hand = 0
+          p1.master.update_attribute(:count_on_hand, 1)
+          p2.master.update_attribute(:count_on_hand, 0)
+          p3.master.update_attribute(:count_on_hand, 0)
+          v1.update_attribute(:count_on_hand, 1)
+          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+          exchange.update_attribute :pickup_time, "frogs" 
+          exchange.variants << p1.master
+          exchange.variants << p2.master
+          exchange.variants << p3.master
+          exchange.variants << v1 
+          visit shop_path
+          select "frogs", :from => "order_cycle_id"
+          exchange
+        end
+
+        it "shows on hand products" do
+          page.should have_content p1.name
+          page.should have_content p4.name
+        end
+        it "shows on demand products" do
+          page.should have_content p2.name
+        end
+        it "does not show products that are neither on hand or on demand" do
+          page.should_not have_content p3.name
         end
       end
 
@@ -151,4 +190,5 @@ def build_and_select_order_cycle
   exchange.variants << variant 
   visit shop_path
   select "frogs", :from => "order_cycle_id"
+  exchange
 end
