@@ -227,14 +227,19 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.updateOnHand = (product) ->
-      product.on_hand = $scope.onHand(product)
+      on_demand_variants = []
+      if product.variants
+        on_demand_variants = (variant for id, variant of product.variants when variant.on_demand)
+
+      unless product.on_demand || on_demand_variants.length > 0
+        product.on_hand = $scope.onHand(product)
 
 
     $scope.onHand = (product) ->
       onHand = 0
       if product.hasOwnProperty("variants") and product.variants instanceof Object
-        angular.forEach product.variants, (variant) ->
-          onHand = parseInt(onHand) + parseInt((if variant.on_hand > 0 then variant.on_hand else 0))
+        for id, variant of product.variants
+          onHand = onHand + parseInt(if variant.on_hand > 0 then variant.on_hand else 0)
       else
         onHand = "error"
       onHand

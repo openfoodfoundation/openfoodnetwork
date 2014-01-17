@@ -151,7 +151,7 @@ feature %q{
       page.should     have_selector "span[name='on_hand']", text: "On demand"
       page.should     have_field "variant_on_hand", with: "4"
       page.should_not have_field "variant_on_hand", with: "", visible: true
-      page.should     have_selector ".variant span[name='on_hand']", text: "On demand"
+      page.should     have_selector "span[name='variant_on_hand']", text: "On demand"
     end
 
     it "displays a select box for the unit of measure for the product's variants" do

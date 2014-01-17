@@ -466,6 +466,35 @@ describe "AdminBulkProductsCtrl", ->
       expect(scope.variantUnitValue(product, variant)).toEqual null
 
 
+  describe "updating the product on hand count", ->
+    it "updates when product is not available on demand", ->
+      spyOn(scope, "onHand").andReturn 123
+      product = {on_demand: false}
+      scope.updateOnHand(product)
+      expect(product.on_hand).toEqual 123
+
+    it "updates when product's variants are not available on demand", ->
+      spyOn(scope, "onHand").andReturn 123
+      product = {on_demand: false, variants: [{on_demand: false}]}
+      scope.updateOnHand(product)
+      expect(product.on_hand).toEqual 123
+
+    it "does nothing when the product is available on demand", ->
+      product = {on_demand: true}
+      scope.updateOnHand(product)
+      expect(product.on_hand).toBeUndefined()
+
+    it "does nothing when one of the variants is available on demand", ->
+      product =
+        on_demand: false
+        variants: [
+          {on_demand: false, on_hand: 10}
+          {on_demand: true, on_hand: Infinity}
+        ]
+      scope.updateOnHand(product)
+      expect(product.on_hand).toBeUndefined()
+
+
   describe "getting on_hand counts when products have variants", ->
     p1 = undefined
     p2 = undefined
