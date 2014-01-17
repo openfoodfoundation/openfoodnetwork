@@ -110,13 +110,21 @@ describe ShopController do
 
       context "RABL tests" do
         render_views
-        it "only returns products for the current order cycle" do
+        before do
           controller.stub(:current_order_cycle).and_return order_cycle
+        end
+        it "only returns products for the current order cycle" do
           xhr :get, :products
           response.body.should have_content product.name
         end
-      end
 
+        it "doesn't return products not in stock" do
+          product.update_attribute(:on_demand, false)
+          product.master.update_attribute(:count_on_hand, 0)
+          xhr :get, :products
+          response.body.should_not have_content product.name
+        end
+      end
     end
   end
 end
