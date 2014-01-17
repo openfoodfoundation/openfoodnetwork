@@ -59,8 +59,8 @@ feature %q{
 
       it "displays a column for producer" do
         page.should have_selector "th.producer", text: "PRODUCER", :visible => true
-        page.should have_selector "td.producer", text: li1.supplier.name, :visible => true
-        page.should have_selector "td.producer", text: li2.supplier.name, :visible => true
+        page.should have_selector "td.producer", text: li1.product.supplier.name, :visible => true
+        page.should have_selector "td.producer", text: li2.product.supplier.name, :visible => true
       end
     end
   end

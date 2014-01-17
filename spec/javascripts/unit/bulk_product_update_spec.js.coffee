@@ -393,7 +393,7 @@ describe "AdminProductEditCtrl", ->
         supplier: s1_p
 
       scope.matchSupplier product
-      expect(product.supplier).toEqual s1_s
+      expect(product.supplier is s1_s).toEqual true
 
 
   describe "loading variant unit", ->

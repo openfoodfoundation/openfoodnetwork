@@ -36,19 +36,21 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.resetOrders).toHaveBeenCalledWith "list of orders"
 
   describe "resetting orders", ->
-    it "sets the value of $scope.orders to the data received", ->
+    beforeEach ->
+      spyOn(scope, "resetLineItems").andReturn "nothing"
       scope.resetOrders "list of orders"
+
+    it "sets the value of $scope.orders to the data received", ->
       expect(scope.orders).toEqual "list of orders"
 
     it "makes a call to $scope.resetLineItems", ->
-      spyOn scope, "resetLineItems"
-      scope.resetOrders "list of orders"
       expect(scope.resetLineItems).toHaveBeenCalled()
 
   describe "resetting line items", ->
     order1 = order2 = order3 = null
 
     beforeEach ->
+      spyOn(scope, "matchSupplier").andReturn "nothing"
       order1 = { line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
       order2 = { line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
       order3 = { line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
@@ -65,3 +67,32 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.lineItems[0].order).toEqual order1
       expect(scope.lineItems[3].order).toEqual order2
       expect(scope.lineItems[6].order).toEqual order3
+
+    it "calls matchSupplier for each line item", ->
+      expect(scope.matchSupplier.calls.length).toEqual 9
+
+  describe "matching supplier", ->
+    it "changes the supplier of the line_item to the one which matches it from the suppliers list", ->
+      s1_s =
+        id: 1
+        name: "S1"
+
+      s2_s =
+        id: 2
+        name: "S2"
+
+      s1_l =
+        id: 1
+        name: "S1"
+
+      expect(s1_s is s1_l).not.toEqual true
+      scope.suppliers = [
+        s1_s
+        s2_s
+      ]
+      line_item =
+        id: 10
+        supplier: s1_l
+
+      scope.matchSupplier line_item
+      expect(line_item.supplier is s1_s).toEqual true

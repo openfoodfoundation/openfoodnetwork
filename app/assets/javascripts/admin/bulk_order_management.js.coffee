@@ -42,7 +42,15 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.resetLineItems = ->
       $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
         for i,line_item of order.line_items
+          $scope.matchSupplier line_item
           line_item.order = order
         lineItems.concat order.line_items
       , []
+
+    $scope.matchSupplier = (line_item) ->
+      for i of $scope.suppliers
+        supplier = $scope.suppliers[i]
+        if angular.equals(supplier, line_item.supplier)
+          line_item.supplier = supplier
+          break
 ]
