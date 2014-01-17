@@ -2,3 +2,15 @@
   = "Bulk Order Management"
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
+
+%div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');" }
+  %div{ 'ng-show' => '!spree_api_key_ok' }
+    {{ api_error_msg }}
+
+  %table.index#listing_orders.bulk
+    %thead
+      %tr
+        %th ID
+    %tbody{ 'ng-repeat' => 'order in orders', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tr.order
+        %td.id {{ order.id }}
