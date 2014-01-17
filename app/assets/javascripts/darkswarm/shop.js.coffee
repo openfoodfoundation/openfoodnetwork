@@ -1,7 +1,6 @@
 window.Shop = angular.module("Shop", ["ngResource", "filters"]).config ($httpProvider) ->
   $httpProvider.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
 
-#angular.module('Shop', ['filters'])
 
 angular.module("filters", []).filter "truncate", ->
   (text, length, end) ->
@@ -12,3 +11,8 @@ angular.module("filters", []).filter "truncate", ->
       text
     else
       String(text).substring(0, length - end.length) + end
+
+$.timeago.settings.allowFuture = true;
+angular.module("filters").filter "date_in_words", ->
+  (date) ->
+    $.timeago(date)

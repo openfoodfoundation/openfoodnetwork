@@ -4,6 +4,7 @@
 #= require spin
 #= require ../shared/angular
 #= require ../shared/angular-resource
+#= require ../shared/jquery.timeago
 #= require foundation
 #= require ./shop
 #= require_tree .
