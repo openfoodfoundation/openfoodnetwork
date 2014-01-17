@@ -32,27 +32,35 @@ feature %q{
     context "displaying individual columns" do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays a list of orders" do
-        page.should have_selector "th", text: "ID", :visible => true
-        page.should have_selector "td", text: o1.id.to_s, :visible => true
-        page.should have_selector "td", text: o2.id.to_s, :visible => true
+      it "displays a list of line items" do
+        page.should have_selector "th.id", text: "ID", :visible => true
+        page.should have_selector "td.id", text: li1.id.to_s, :visible => true
+        page.should have_selector "td.id", text: li2.id.to_s, :visible => true
       end
 
       it "displays a column for user email" do
-        page.should have_selector "th", text: "EMAIL", :visible => true
-        page.should have_selector "td", text: o1.email, :visible => true
-        page.should have_selector "td", text: o2.email, :visible => true
+        page.should have_selector "th.email", text: "EMAIL", :visible => true
+        page.should have_selector "td.email", text: o1.email, :visible => true
+        page.should have_selector "td.email", text: o2.email, :visible => true
       end
 
       it "displays a column for order date" do
-        page.should have_selector "th", text: "ORDER DATE", :visible => true
-        page.should have_selector "td", text: o1.completed_at.strftime("%F %T"), :visible => true
-        page.should have_selector "td", text: o2.completed_at.strftime("%F %T"), :visible => true
+        page.should have_selector "th,date", text: "ORDER DATE", :visible => true
+        page.should have_selector "td.date", text: o1.completed_at.strftime("%F %T"), :visible => true
+        page.should have_selector "td.date", text: o2.completed_at.strftime("%F %T"), :visible => true
+      end
+
+      it "displays a column for producer" do
+        page.should have_selector "th.producer", text: "PRODUCER", :visible => true
+        page.should have_selector "td.producer", text: li1.supplier.name, :visible => true
+        page.should have_selector "td.producer", text: li2.supplier.name, :visible => true
       end
     end
   end

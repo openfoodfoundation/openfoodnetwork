@@ -13,6 +13,8 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       text: ""
       style: {}
 
+    $scope.lineItems = []
+
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->
@@ -35,4 +37,12 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 
     $scope.resetOrders = (data) ->
       $scope.orders = data
+      $scope.resetLineItems()
+
+    $scope.resetLineItems = ->
+      $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
+        for i,line_item of order.line_items
+          line_item.order = order
+        lineItems.concat order.line_items
+      , []
 ]
