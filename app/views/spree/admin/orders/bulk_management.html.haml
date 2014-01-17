@@ -11,6 +11,10 @@
     %thead
       %tr
         %th ID
+        %th Email
+        %th Order Date
     %tbody{ 'ng-repeat' => 'order in orders', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
       %tr.order
         %td.id {{ order.id }}
+        %td.email {{ order.email }}
+        %td.date {{ order.completed_at }}
