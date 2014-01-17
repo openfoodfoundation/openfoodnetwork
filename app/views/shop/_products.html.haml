@@ -31,10 +31,11 @@
               name: "variants[{{product.master.id}}]", 
               id: "variants_{{product.master.id}}"}
           %td.group_buy
-            %span{"ng-show" => "product.group_buy"} 
-              Available
-            %span.light-grey{"ng-hide" => "product.group_buy"} 
-              N/A 
+            %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
+              %input{type: :number,
+              min: 0,
+              max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+              name: "variant_attributes[{{product.master.id}}][max_quantity]"} 
           %td.price
             %small{"ng-show" => "(product.variants.length > 0)"} from
             ${{ product.price }}
@@ -49,15 +50,11 @@
             name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
-              Available
-            %span.light-grey{"ng-hide" => "product.group_buy"} 
-              N/A 
+              %input{type: :number,
+              min: 0,
+              max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+              name: "variant_attributes[{{variant.id}}][max_quantity]"} 
           %td.price
             %small ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
-
-
-
-
-

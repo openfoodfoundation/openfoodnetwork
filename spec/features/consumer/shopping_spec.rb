@@ -101,13 +101,18 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:variant) { create(:variant, product: product) }
 
         before do
-          build_and_select_order_cycle
+          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+          exchange.update_attribute :pickup_time, "frogs" 
+          exchange.variants << product.master
+          exchange.variants << variant
+          visit shop_path
+          select "frogs", :from => "order_cycle_id"
+          exchange
         end
 
         it "should not show quantity field for product with variants" do
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
         end
-
       end
 
       describe "Filtering on hand and on demand products" do
@@ -148,12 +153,58 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
+      describe "group buy products" do
+        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
+        let(:product) { create(:simple_product, group_buy: true) }
+
+        describe "without variants" do
+          before do
+            build_and_select_order_cycle
+          end
+
+          it "should show group buy input" do
+            page.should have_field "variant_attributes[#{product.master.id}][max_quantity]", :visible => true
+          end
+          
+          it "should save group buy data to ze cart" do
+            fill_in "variants[#{product.master.id}]", with: 5
+            fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
+            first("form.custom > input.button.right").click 
+            page.should have_content product.name
+            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+            li.max_quantity.should == 9
+            li.quantity.should == 5
+          end
+        end
+
+        describe "with variants on the product" do
+          let(:variant) { create(:variant, product: product) }
+          before do
+            build_and_select_order_cycle_with_variants
+          end
+
+          it "should show group buy input" do
+            page.should have_field "variant_attributes[#{variant.id}][max_quantity]", :visible => true
+          end
+          
+          it "should save group buy data to ze cart" do
+            fill_in "variants[#{variant.id}]", with: 6
+            fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
+            first("form.custom > input.button.right").click 
+            page.should have_content product.name
+            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+            li.max_quantity.should == 7
+            li.quantity.should == 6
+          end
+        end
+      end
+
       describe "adding products to cart" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product) }
         let(:variant) { create(:variant, product: product) }
         before do
-          build_and_select_order_cycle
+          build_and_select_order_cycle_with_variants
         end
         it "should let us add products to our cart" do
           fill_in "variants[#{variant.id}]", with: "1"
@@ -184,6 +235,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
 end
 
 def build_and_select_order_cycle
+  exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+  exchange.update_attribute :pickup_time, "frogs" 
+  exchange.variants << product.master
+  visit shop_path
+  select "frogs", :from => "order_cycle_id"
+  exchange
+end
+
+
+def build_and_select_order_cycle_with_variants
   exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
   exchange.update_attribute :pickup_time, "frogs" 
   exchange.variants << product.master
