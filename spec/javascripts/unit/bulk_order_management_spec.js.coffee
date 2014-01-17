@@ -21,3 +21,20 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.suppliers).toEqual "list of suppliers"
       expect(scope.fetchOrders.calls.length).toEqual 1
       expect(scope.spree_api_key_ok).toEqual true
+
+  describe "fetching orders", ->
+    it "makes a standard call to dataFetcher", ->
+      httpBackend.expectGET("/api/orders?template=bulk_index").respond "list of orders"
+      scope.fetchOrders()
+
+    it "calls resetOrders after data has been received", ->
+      spyOn scope, "resetOrders"
+      httpBackend.expectGET("/api/orders?template=bulk_index").respond "list of orders"
+      scope.fetchOrders()
+      httpBackend.flush()
+      expect(scope.resetOrders).toHaveBeenCalledWith "list of orders"
+
+  describe "resetting orders", ->
+    it "sets the value of $scope.orders to the data received", ->
+      scope.resetOrders "list of orders"
+      expect(scope.orders).toEqual "list of orders"
