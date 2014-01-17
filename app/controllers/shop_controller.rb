@@ -11,7 +11,7 @@ class ShopController < BaseController
   
   def products
     unless @products = current_order_cycle.andand
-      .products_distributed_by(@distributor)
+      .products_distributed_by(@distributor).andand
       .select(&:has_stock?)
       render json: "", status: 404 
     end
