@@ -62,6 +62,12 @@ feature %q{
         page.should have_selector "td.producer", text: li1.product.supplier.name, :visible => true
         page.should have_selector "td.producer", text: li2.product.supplier.name, :visible => true
       end
+
+      it "displays a column for variant description" do
+        page.should have_selector "th.variant", text: "PRODUCT (UNIT): VAR", :visible => true
+        page.should have_selector "td.variant", text: li1.product.name, :visible => true
+        page.should have_selector "td.variant", text: li2.product.name, :visible => true
+      end
     end
   end
 end

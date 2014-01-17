@@ -14,8 +14,10 @@
         %th.email Email
         %th.date Order Date
         %th.producer Producer
+        %th.variant Product (Unit): Var
       %tr.line_item{ 'ng-repeat' => 'line_item in lineItems', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %td.id {{ line_item.id }}
         %td.email {{ line_item.order.email }}
         %td.date {{ line_item.order.completed_at }}
         %td.producer {{ line_item.supplier.name }}
+        %td.variant {{ line_item.variant_unit_text }}
