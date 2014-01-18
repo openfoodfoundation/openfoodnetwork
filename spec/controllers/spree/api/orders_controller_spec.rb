@@ -45,6 +45,19 @@ module Spree
       it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
         json_response.map{ |order| order['completed_at'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }.should == true
       end
+
+      it "returns an array for line_items" do
+        json_response.map{ |order| order['line_items'] }.all?{ |a| a.is_a? Array }.should == true
+      end
+
+      it "returns quantity and max quantity at integers" do
+        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['quantity'] }.all?{ |q| q.is_a? Fixnum }.should == true
+        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['max_quantity'] }.all?{ |mq| mq.nil? || mq.is_a?( Fixnum ) }.should == true
+      end
+
+      it "returns supplier object with id and name keys" do
+        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['supplier'] }.all?{ |s| s.has_key?('id') && s.has_key?('name') }.should == true
+      end
     end
   end
 end
