@@ -54,3 +54,9 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           line_item.supplier = supplier
           break
 ]
+
+orderManagementModule.filter "selectFilter", ->
+  return (lineItems,selectedSupplier) ->
+    filtered = []
+    filtered.push line_item for line_item in lineItems when selectedSupplier == undefined || line_item.supplier == selectedSupplier
+    filtered
