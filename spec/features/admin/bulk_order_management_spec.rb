@@ -108,6 +108,15 @@ feature %q{
           page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
         end
 
+        it "displays all line items when 'All' is selected from supplier filter" do
+          select s1.name, from: "supplier_filter"
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+          select "All", from: "supplier_filter"
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        end
+
         it "displays a select box for distributors, which filters line items by the selected distributor" do
           page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
           page.should have_selector "td.id", text: li1.id.to_s, visible: true
@@ -115,6 +124,15 @@ feature %q{
           select d1.name, from: "distributor_filter"
           page.should have_selector "td.id", text: li1.id.to_s, visible: true
           page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        end
+
+        it "displays all line items when 'All' is selected from distributor filter" do
+          select d1.name, from: "distributor_filter"
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+          select "All", from: "distributor_filter"
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should have_selector "td.id", text: li2.id.to_s, visible: true
         end
       end
     end

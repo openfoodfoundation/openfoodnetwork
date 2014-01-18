@@ -13,15 +13,21 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "loading data upon initialisation", ->
     it "gets a list of suppliers and a list of distributors and then calls fetchOrders", ->
+      returnedSuppliers = ["list of suppliers"]
+      returnedDistributors = ["list of distributors"]
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
-      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
-      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond "list of distributors"
+      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
+      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
       spyOn(scope, "fetchOrders").andReturn "nothing"
+      spyOn(returnedSuppliers, "unshift")
+      spyOn(returnedDistributors, "unshift")
       scope.initialise "api_key"
       httpBackend.flush()
-      expect(scope.suppliers).toEqual "list of suppliers"
-      expect(scope.distributors).toEqual "list of distributors"
+      expect(scope.suppliers).toEqual ["list of suppliers"]
+      expect(scope.distributors).toEqual ["list of distributors"]
       expect(scope.fetchOrders.calls.length).toEqual 1
+      expect(returnedSuppliers.unshift.calls.length).toEqual 1
+      expect(returnedDistributors.unshift.calls.length).toEqual 1
       expect(scope.spree_api_key_ok).toEqual true
 
   describe "fetching orders", ->

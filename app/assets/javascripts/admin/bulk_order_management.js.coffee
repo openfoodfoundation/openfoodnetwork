@@ -6,9 +6,12 @@ orderManagementModule.config [
     provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
 ]
 
+orderManagementModule.value "blankEnterprise", ->
+  { id: "", name: "All" }
+
 orderManagementModule.controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher"
-  ($scope, $http, dataFetcher) ->
+  "$scope", "$http", "dataFetcher", "blankEnterprise"
+  ($scope, $http, dataFetcher, blankEnterprise) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
@@ -24,8 +27,12 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
+            $scope.suppliers.unshift blankEnterprise()
+            $scope.supplierFilter = $scope.suppliers[0]
             dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
+              $scope.distributors.unshift blankEnterprise()
+              $scope.distributorFilter = $scope.distributors[0]
               $scope.fetchOrders()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
@@ -62,9 +69,12 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           break
 ]
 
-orderManagementModule.filter "selectFilter", ->
-  return (lineItems,selectedSupplier,selectedDistributor) ->
-    filtered = []
-    filtered.push line_item for line_item in lineItems when (selectedSupplier == undefined || line_item.supplier == selectedSupplier) &&
-      (selectedDistributor == undefined || line_item.order.distributor == selectedDistributor)
-    filtered
+orderManagementModule.filter "selectFilter", [
+  "blankEnterprise"
+  (blankEnterprise) ->
+    return (lineItems,selectedSupplier,selectedDistributor) ->
+      filtered = []
+      filtered.push line_item for line_item in lineItems when (angular.equals(selectedSupplier,blankEnterprise()) || line_item.supplier == selectedSupplier) &&
+        (angular.equals(selectedDistributor,blankEnterprise()) || line_item.order.distributor == selectedDistributor)
+      filtered
+]

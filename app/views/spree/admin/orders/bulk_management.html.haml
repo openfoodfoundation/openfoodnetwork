@@ -7,11 +7,14 @@
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
   .filter_selects{ :class => "four columns alpha" }
-    .supplier_filter{ :class => "four columns alpha" }
-      %select.select2{ :class => "three columns alpha", :name => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers'}
-    .distributor_filter{ :class => "four columns alpha" }
-      %select.select2{ :class => "three columns alpha", :name => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
-
+    .filter_select{ :class => "four columns alpha" }
+      Producer
+      %br
+      %select.select2{ :class => "four columns alpha", :id => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers' }
+    .filter_select{ :class => "four columns alpha" }
+      Hub
+      %br
+      %select.select2{ :class => "four columns alpha", :id => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
 
   %table.index#listing_orders.bulk
     %thead
