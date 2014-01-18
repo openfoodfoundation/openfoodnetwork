@@ -90,8 +90,8 @@ feature %q{
         let!(:d2) { FactoryGirl.create(:distributor_enterprise) }
         let!(:p1) { FactoryGirl.create(:product, supplier: s1 ) }
         let!(:p2) { FactoryGirl.create(:product, supplier: s2 ) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
 
@@ -104,6 +104,15 @@ feature %q{
           page.should have_selector "td.id", text: li1.id.to_s, visible: true
           page.should have_selector "td.id", text: li2.id.to_s, visible: true
           select s1.name, from: "supplier_filter"
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        end
+
+        it "displays a select box for distributors, which filters line items by the selected distributor" do
+          page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
+          page.should have_selector "td.id", text: li1.id.to_s, visible: true
+          page.should have_selector "td.id", text: li2.id.to_s, visible: true
+          select d1.name, from: "distributor_filter"
           page.should have_selector "td.id", text: li1.id.to_s, visible: true
           page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
         end

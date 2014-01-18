@@ -6,8 +6,12 @@
 %div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  %div.selectors{ :class => "four columns alpha" }
-    %select.select2{ :class => "three columns alpha", :name => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 'supplier.name for supplier in suppliers'}
+  .filter_selects{ :class => "four columns alpha" }
+    .supplier_filter{ :class => "four columns alpha" }
+      %select.select2{ :class => "three columns alpha", :name => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers'}
+    .distributor_filter{ :class => "four columns alpha" }
+      %select.select2{ :class => "three columns alpha", :name => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
+
 
   %table.index#listing_orders.bulk
     %thead
@@ -19,7 +23,7 @@
         %th.variant Product (Unit): Var
         %th.quantity Quantity
         %th.max Max
-      %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %td.id {{ line_item.id }}
         %td.email {{ line_item.order.email }}
         %td.date {{ line_item.order.completed_at }}

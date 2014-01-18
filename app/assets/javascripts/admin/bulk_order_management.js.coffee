@@ -24,8 +24,9 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
-            # Need to have suppliers before we get products so we can match suppliers to product.supplier
-            $scope.fetchOrders()
+            dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
+              $scope.distributors = data
+              $scope.fetchOrders()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
@@ -38,6 +39,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.resetOrders = (data) ->
       $scope.orders = data
       $scope.resetLineItems()
+      $scope.matchDistributor order for order in $scope.orders
 
     $scope.resetLineItems = ->
       $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
@@ -48,15 +50,21 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       , []
 
     $scope.matchSupplier = (line_item) ->
-      for i of $scope.suppliers
-        supplier = $scope.suppliers[i]
+      for i, supplier of $scope.suppliers
         if angular.equals(supplier, line_item.supplier)
           line_item.supplier = supplier
+          break
+
+    $scope.matchDistributor = (order) ->
+      for i, distributor of $scope.distributors
+        if angular.equals(distributor, order.distributor)
+          order.distributor = distributor
           break
 ]
 
 orderManagementModule.filter "selectFilter", ->
-  return (lineItems,selectedSupplier) ->
+  return (lineItems,selectedSupplier,selectedDistributor) ->
     filtered = []
-    filtered.push line_item for line_item in lineItems when selectedSupplier == undefined || line_item.supplier == selectedSupplier
+    filtered.push line_item for line_item in lineItems when (selectedSupplier == undefined || line_item.supplier == selectedSupplier) &&
+      (selectedDistributor == undefined || line_item.order.distributor == selectedDistributor)
     filtered
