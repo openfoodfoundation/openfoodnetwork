@@ -6,14 +6,15 @@ module Spree
     include Spree::Api::TestingSupport::Helpers
     render_views
     
-    let!(:order1) { FactoryGirl.create(:order, :state => 'complete', :completed_at => Time.now ) }
-    let!(:order2) { FactoryGirl.create(:order, :state => 'complete', :completed_at => Time.now ) }
-    let!(:order3) { FactoryGirl.create(:order, :state => 'complete', :completed_at => Time.now ) }
-    let!(:line_item1) { FactoryGirl.create(:line_item, :order => order1) }
-    let!(:line_item2) { FactoryGirl.create(:line_item, :order => order2) }
-    let!(:line_item3) { FactoryGirl.create(:line_item, :order => order2) }
-    let!(:line_item4) { FactoryGirl.create(:line_item, :order => order3) }
-    let(:order_attributes) { [:id, :email, :completed_at, :line_items] }
+    let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
+    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
+    let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
+    let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
+    let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
+    let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
+    let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
+    let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
+    let(:order_attributes) { [:id, :email, :completed_at, :line_items, :distributor] }
     let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :variant_unit_text] }
 
     before do
@@ -57,6 +58,10 @@ module Spree
 
       it "returns supplier object with id and name keys" do
         json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['supplier'] }.all?{ |s| s.has_key?('id') && s.has_key?('name') }.should == true
+      end
+
+      it "returns distributor object with id and name keys" do
+        json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') && d.has_key?('name') }.should == true
       end
     end
   end
