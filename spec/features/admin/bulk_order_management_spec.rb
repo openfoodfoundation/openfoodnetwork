@@ -81,58 +81,79 @@ feature %q{
         page.should have_selector "td.max", text: li2.max_quantity.to_s, :visible => true
       end
     end
+  end
 
-    context "using page page controls" do
-      context "using drop down seletors" do
-        let!(:s1) { FactoryGirl.create(:supplier_enterprise) }
-        let!(:s2) { FactoryGirl.create(:supplier_enterprise) }
-        let!(:d1) { FactoryGirl.create(:distributor_enterprise) }
-        let!(:d2) { FactoryGirl.create(:distributor_enterprise) }
-        let!(:p1) { FactoryGirl.create(:product, supplier: s1 ) }
-        let!(:p2) { FactoryGirl.create(:product, supplier: s2 ) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
-        let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
-        let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
+  context "using page page controls" do
+    before :each do
+      login_to_admin_section
+    end
+
+    context "using drop down seletors" do
+      let!(:s1) { FactoryGirl.create(:supplier_enterprise) }
+      let!(:s2) { FactoryGirl.create(:supplier_enterprise) }
+      let!(:d1) { FactoryGirl.create(:distributor_enterprise) }
+      let!(:d2) { FactoryGirl.create(:distributor_enterprise) }
+      let!(:p1) { FactoryGirl.create(:product, supplier: s1 ) }
+      let!(:p2) { FactoryGirl.create(:product, supplier: s2 ) }
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "displays a select box for producers, which filters line items by the selected supplier" do
+        page.should have_select "supplier_filter", with_options: [s1.name,s2.name]
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        select s1.name, from: "supplier_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+      end
+
+      it "displays all line items when 'All' is selected from supplier filter" do
+        select s1.name, from: "supplier_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        select "All", from: "supplier_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+      end
+
+      it "displays a select box for distributors, which filters line items by the selected distributor" do
+        page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        select d1.name, from: "distributor_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+      end
+
+      it "displays all line items when 'All' is selected from distributor filter" do
+        select d1.name, from: "distributor_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        select "All", from: "distributor_filter"
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+      end
+    end
+
+    context "using action buttons" do
+      context "using delete buttons" do
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
         end
 
-        it "displays a select box for producers, which filters line items by the selected supplier" do
-          page.should have_select "supplier_filter", with_options: [s1.name,s2.name]
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should have_selector "td.id", text: li2.id.to_s, visible: true
-          select s1.name, from: "supplier_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
-        end
-
-        it "displays all line items when 'All' is selected from supplier filter" do
-          select s1.name, from: "supplier_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
-          select "All", from: "supplier_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should have_selector "td.id", text: li2.id.to_s, visible: true
-        end
-
-        it "displays a select box for distributors, which filters line items by the selected distributor" do
-          page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should have_selector "td.id", text: li2.id.to_s, visible: true
-          select d1.name, from: "distributor_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
-        end
-
-        it "displays all line items when 'All' is selected from distributor filter" do
-          select d1.name, from: "distributor_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
-          select "All", from: "distributor_filter"
-          page.should have_selector "td.id", text: li1.id.to_s, visible: true
-          page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        it "shows a delete button for each line item" do
+          page.should have_selector "a.delete-line-item", :count => 2
         end
       end
     end

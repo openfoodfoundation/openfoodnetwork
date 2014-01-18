@@ -26,6 +26,7 @@
         %th.variant Product (Unit): Var
         %th.quantity Quantity
         %th.max Max
+        %th.actions
       %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %td.id {{ line_item.id }}
         %td.email {{ line_item.order.email }}
@@ -34,3 +35,5 @@
         %td.variant {{ line_item.variant_unit_text }}
         %td.quantity {{ line_item.quantity }}
         %td.max {{ line_item.max }}
+        %td.actions
+          %a{ :class => "delete-line-item icon-trash no-text" }
