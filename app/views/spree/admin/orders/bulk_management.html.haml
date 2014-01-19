@@ -27,6 +27,8 @@
         %th.quantity Quantity
         %th.max Max
         %th.actions
+          Ask?&nbsp;
+          %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
       %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %td.id {{ line_item.id }}
         %td.email {{ line_item.order.email }}

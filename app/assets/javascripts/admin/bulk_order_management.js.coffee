@@ -17,6 +17,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       style: {}
 
     $scope.lineItems = []
+    $scope.confirmDelete = true
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -69,16 +70,13 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           break
 
     $scope.deleteLineItem = (lineItem) ->
-      #if confirm("Are you sure?")
+      if ($scope.confirmDelete && confirm("Are you sure?")) || !$scope.confirmDelete
         $http(
           method: "DELETE"
           url: "/api/orders/" + lineItem.order.number + "/line_items/" + lineItem.id
         ).success (data) ->
           $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
           lineItem.order.line_items.splice lineItem.order.line_items.indexOf(lineItem), 1
-          #delete $scope.dirtyProducts[product.id]  if $scope.dirtyProducts.hasOwnProperty(product.id)
-          #$scope.displayDirtyProducts()
-
 ]
 
 orderManagementModule.filter "selectFilter", [
