@@ -155,6 +155,14 @@ feature %q{
         it "shows a delete button for each line item" do
           page.should have_selector "a.delete-line-item", :count => 2
         end
+
+        it "removes a line item when the relavent delete button is clicked" do
+          first("a.delete-line-item").click
+          page.should_not have_selector "a.delete-line-item", :count => 2
+          page.should have_selector "a.delete-line-item", :count => 1
+          visit '/admin/orders/bulk_management'
+          page.should have_selector "a.delete-line-item", :count => 1
+        end
       end
     end
   end

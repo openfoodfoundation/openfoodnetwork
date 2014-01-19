@@ -36,4 +36,4 @@
         %td.quantity {{ line_item.quantity }}
         %td.max {{ line_item.max }}
         %td.actions
-          %a{ :class => "delete-line-item icon-trash no-text" }
+          %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }

@@ -134,3 +134,28 @@ describe "AdminOrderMgmtCtrl", ->
 
       scope.matchDistributor order
       expect(order.distributor is distributor1_list).toEqual true
+
+  describe "deleting a line item", ->
+    order = line_item1 = line_item2 = null
+    beforeEach ->
+      order = { number: "R12345678", line_items: [] }
+      line_item1 = { id: 1, order: order }
+      line_item2 = { id: 2, order: order }
+      order.line_items = [ line_item1, line_item2 ]
+
+    it "sends a delete request via the API", ->
+      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond "nothing"
+      scope.deleteLineItem line_item1
+      httpBackend.flush()
+
+    it "removes line_item from the line_items array of the relevant order object when request is 204", ->
+      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond 204, "NO CONTENT"
+      scope.deleteLineItem line_item1
+      httpBackend.flush()
+      expect(order.line_items).toEqual [line_item2]
+
+    it "does not remove line_item from the line_items array when request is not successful", ->
+      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond 404, "NO CONTENT"
+      scope.deleteLineItem line_item1
+      httpBackend.flush()
+      expect(order.line_items).toEqual [line_item1, line_item2]

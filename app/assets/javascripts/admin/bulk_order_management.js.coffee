@@ -67,6 +67,18 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         if angular.equals(distributor, order.distributor)
           order.distributor = distributor
           break
+
+    $scope.deleteLineItem = (lineItem) ->
+      #if confirm("Are you sure?")
+        $http(
+          method: "DELETE"
+          url: "/api/orders/" + lineItem.order.number + "/line_items/" + lineItem.id
+        ).success (data) ->
+          $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
+          lineItem.order.line_items.splice lineItem.order.line_items.indexOf(lineItem), 1
+          #delete $scope.dirtyProducts[product.id]  if $scope.dirtyProducts.hasOwnProperty(product.id)
+          #$scope.displayDirtyProducts()
+
 ]
 
 orderManagementModule.filter "selectFilter", [
