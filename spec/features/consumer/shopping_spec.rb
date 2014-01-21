@@ -48,8 +48,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "with multiple order cycles" do
-        let(:oc1) {create(:simple_order_cycle, distributors: [distributor])} 
-        let(:oc2) {create(:simple_order_cycle, distributors: [distributor])} 
+        let(:oc1) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 2.days.from_now)} 
+        let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
         before do
           exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "frogs" 
@@ -75,7 +75,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             select "frogs", :from => "order_cycle_id"
             Spree::Order.last.order_cycle.should == nil
             page.should have_selector "products"
-            page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
+            page.should have_content "Orders close 2 days from now" 
             Spree::Order.last.order_cycle.should == oc1
           end
 
@@ -89,8 +89,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           end
 
           it "updates the orders close note when order cycle is changed" do
-            select "frogs", :from => "order_cycle_id"
-            page.should have_content "Orders close #{oc1.orders_close_at.strftime('%A %m')}"
+            oc1.stub(:orders_close_at).and_return 3.days.from_now
+            select "turtles", :from => "order_cycle_id"
+            page.should have_content "Orders close 3 days from now"
           end
         end
       end
