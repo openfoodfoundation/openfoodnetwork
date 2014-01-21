@@ -32,9 +32,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         click_link "Our Producers"
         page.should have_content supplier.name 
       end
-
     end
-
 
     describe "selecting an order cycle" do
       it "selects an order cycle if only one is open" do

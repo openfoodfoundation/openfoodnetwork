@@ -46,6 +46,11 @@
     %td
       = f.file_field :logo
       = image_tag @object.logo.url
+  %tr{"data-hook" => "promo"}
+    %td Promo Image:
+    %td
+      = f.file_field :promo_image
+      = image_tag @object.promo_image.url
 %fieldset
   %legend Address
   %table

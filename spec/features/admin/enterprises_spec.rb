@@ -226,7 +226,9 @@ feature %q{
 
     scenario "Editing images for an enterprise" do
       click_link 'Enterprises'
+      first(".edit").click
       page.should have_content "Logo"
+      page.should have_content "Promo"
     end
   end
 end

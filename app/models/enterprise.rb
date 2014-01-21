@@ -19,6 +19,7 @@ class Enterprise < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :promo_image, :styles => { :large => "570x380>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
   validates_presence_of :name
   validates_presence_of :address
