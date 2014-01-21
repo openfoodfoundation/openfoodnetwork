@@ -17,6 +17,12 @@ feature "As a consumer I want to shop with a distributor", js: true do
       page.should have_text distributor.name
     end
 
+    it "shows distributor images" do
+      visit shop_path
+      first("distributor img")['src'].should == distributor.logo.url(:thumb) 
+      first("#about img")['src'].should == distributor.promo_image.url(:large) 
+    end
+
     describe "With products in order cycles" do
       let(:supplier) { create(:supplier_enterprise) }
       let(:product) { create(:product, supplier: supplier) }
