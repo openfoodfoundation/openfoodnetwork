@@ -54,9 +54,7 @@ describe ShopController do
           spree_get :order_cycle
           response.body.should have_content oc1.id
         end
-
       end
-
 
       it "should not allow the user to select an invalid order cycle" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -123,6 +121,12 @@ describe ShopController do
           product.master.update_attribute(:count_on_hand, 0)
           xhr :get, :products
           response.body.should_not have_content product.name
+        end
+        it "strips html from description" do
+          product.update_attribute(:description, "<a href='44'>turtles</a> frogs")
+          xhr :get, :products
+          response.body.should have_content "frogs"
+          response.body.should_not have_content "<a href"
         end
       end
     end
