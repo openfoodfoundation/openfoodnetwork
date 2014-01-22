@@ -82,11 +82,18 @@ shop
     display: block
     padding-top: 36px
     table
+      table-layout: fixed
       width: 100%
       border-collapse: collapse
       border: none
       th
         line-height: 50px
+        &.name
+          width: 265px
+        &.notes
+          width: 280px
+        &.variant
+          width: 200px
       .notes
         max-width: 300px
       td, th
@@ -96,12 +103,12 @@ shop
         border-right: 0px
       td
         padding: 20px 0px
+        &.name img
+          float: left
+          margin-right: 20px
       input[type=number]
         width: 60px
         margin: 0px
-      
-
-
           display: block
           float: right
           padding-top: 14px

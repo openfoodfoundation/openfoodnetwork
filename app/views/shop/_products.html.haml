@@ -4,24 +4,33 @@
     %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
-        %th{colspan: 2} Item
+        %th.name Item
         %th.notes Notes
-        %th Variant
+        %th.variant Variant
         %th QTY
         %th Bulk
         %th Price
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr.product
-          %td
+          %td.name
             %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
-            {{product.master.images[0].alt}}
-          %td
-            %h5
-              {{ product.name }}
-            {{ product.supplier.name }}
+            %div
+              %h5
+                {{ product.name }}
+              {{ product.supplier.name }}
           %td.notes {{ product.description | truncate:80 }}
 
-          %td {{ product.master.options_text }}
+          %td 
+            {{ product.master.options_text }}
+
+            %span{"ng-show" => "product.variants.length > 0"}
+              %img.collapse{src: "/assets/collapse.png",
+              "ng-show" => "product.show_variants",
+              "ng-click" => "product.show_variants = !product.show_variants"}
+
+              %img.expand{src: "/assets/expand.png",
+              "ng-show" => "!product.show_variants",
+              "ng-click" => "product.show_variants = !product.show_variants"}
           %td 
             %span{"ng-show" => "(product.variants.length == 0)"}
               %input{type: :number, 
@@ -39,8 +48,8 @@
           %td.price
             %small{"ng-show" => "(product.variants.length > 0)"} from
             ${{ product.price }}
-        %tr{"ng-repeat" => "variant in product.variants"}
-          %td{colspan: 3}
+        %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
+          %td{colspan: 2}
           %td {{variant.options_text}}
           %td 
             %input{type: :number, 

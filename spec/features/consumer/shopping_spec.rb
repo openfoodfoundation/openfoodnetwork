@@ -46,7 +46,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         oc1 = create(:simple_order_cycle, distributors: [distributor])
         exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
         exchange.update_attribute :pickup_time, "turtles" 
-        
         visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
       end
@@ -118,6 +117,18 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should not show quantity field for product with variants" do
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
         end
+
+        it "collapses variants by default" do
+          page.should_not have_text variant.options_text
+        end
+
+        it "expands variants" do
+          find(".expand").trigger "click"
+          page.should have_text variant.options_text
+          find(".collapse").trigger "click"
+          page.should_not have_text variant.options_text
+        end
+        it "allows the user to expand variants"
       end
 
       describe "Filtering on hand and on demand products" do
