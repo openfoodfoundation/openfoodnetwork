@@ -138,6 +138,7 @@ describe "AdminOrderMgmtCtrl", ->
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
     beforeEach ->
+      spyOn(window,"confirm").andReturn true
       order = { number: "R12345678", line_items: [] }
       line_item1 = { id: 1, order: order }
       line_item2 = { id: 2, order: order }
