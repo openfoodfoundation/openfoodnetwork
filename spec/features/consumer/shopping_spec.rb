@@ -197,6 +197,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           let(:variant) { create(:variant, product: product) }
           before do
             build_and_select_order_cycle_with_variants
+            find(".expand").trigger "click"
           end
 
           it "should show group buy input" do
@@ -223,6 +224,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           build_and_select_order_cycle_with_variants
         end
         it "should let us add products to our cart" do
+          find(".expand").trigger "click"
           fill_in "variants[#{variant.id}]", with: "1"
           first("form.custom > input.button.right").click
           current_path.should == "/cart" 

@@ -1,12 +1,14 @@
 %shop{"ng-app" => "Shop"}
   %navigation
     %distributor.details.row
-      %img.left{src: @distributor.logo.url(:thumb)}
-      %h4
-        = @distributor.name
-      %location= @distributor.address.city
-      %small
-        %a{href: "/"} Change location
+      #distributor_title
+        %img.left{src: @distributor.logo.url(:thumb)}
+        %h4
+          = @distributor.name
+        %location= @distributor.address.city
+        %small
+          %a{href: "/"} Change location
+
       = render partial: "shop/order_cycles"
 
       -#%description

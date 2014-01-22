@@ -16,7 +16,7 @@ shop
     distributor.details
       box-sizing: border-box
       display: block
-      height: 150px
+      min-height: 150px
       padding: 40px 0px 0px
       select
         width: 200px
@@ -29,11 +29,18 @@ shop
       location
         font-family: "AvenirBla_IE", "AvenirBla"
         padding-right: 16px
-      ordercycle
+
+      #distributor_title
+        float: left
         display: block
-        position: absolute
-        right: 0px
-        top: 40px
+        min-width: 350px
+
+      ordercycle
+        @media all and (max-width: 768px)
+          float: left
+          padding-bottom: 12px
+        display: block
+        float: right
         form.custom 
           width: 400px
           text-align: right
