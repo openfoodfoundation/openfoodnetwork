@@ -12,11 +12,11 @@
       = render partial: "shop/order_cycles"
 
       -#%description
-  
+ 
   %tabs
     .row
       .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-        %section#about
+        %section#about{class: current_order_cycle ? nil : "active" }
           %p.title.avenir{"data-section-title" => ""}
             %a{href: "#about"} About Us 
           .content{"data-section-content" => ""}
@@ -43,9 +43,7 @@
           .content{"data-section-content" => ""}
             %p Contact 
     
-    
   %products.row
-    %h5 Check out when you have selected everything you want
     = render partial: "shop/products"
   #footer
     %section.row

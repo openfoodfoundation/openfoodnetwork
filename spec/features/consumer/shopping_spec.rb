@@ -58,14 +58,28 @@ feature "As a consumer I want to shop with a distributor", js: true do
           exchange.update_attribute :pickup_time, "frogs" 
           exchange = Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "turtles" 
+          visit shop_path
         end
 
         it "shows a select with all order cycles" do
-          visit shop_path
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
         end
 
+        it "shows the About Us by default if no order cycle is selected" do
+          page.should have_content "Hello, world!" 
+        end
+
+        it "doesn't show the table before an order cycle is selected" do
+          page.should_not have_button "Check Out"
+        end
+
+        it "shows the table after an order cycle is selected" do
+          select "frogs", :from => "order_cycle_id"
+          save_and_open_page
+          page.should have_button "Check Out"
+        end
+        
         describe "with products in our order cycle" do
           let(:product) { create(:simple_product) }
           before do

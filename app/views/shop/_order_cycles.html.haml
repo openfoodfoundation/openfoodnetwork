@@ -20,7 +20,6 @@
               "ng-change" => "changeOrderCycle()",
               "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}"}
 
-
       %closing
         -#%img{src: "/icon/goes/here"}
         Orders close
