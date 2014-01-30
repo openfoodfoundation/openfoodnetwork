@@ -24,7 +24,7 @@ feature %q{
 
     login_to_admin_section
 
-    click_link 'Orders'
+    visit '/admin/orders'
     click_link 'New Order'
 
     page.should have_content 'ADD PRODUCT'
@@ -45,7 +45,7 @@ feature %q{
 
   scenario "can't change distributor or order cycle once order has been finalized" do
     login_to_admin_section
-    click_link 'Orders'
+    visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
     page.should have_no_select 'order_distributor_id'
@@ -60,7 +60,7 @@ feature %q{
 
     login_to_admin_section
 
-    click_link 'Orders'
+    visit '/admin/orders'
     current_path.should == spree.admin_orders_path
 
     # click the 'capture' link for the order
@@ -98,7 +98,7 @@ feature %q{
     end
 
     scenario "creating an order with distributor and order cycle", js: true do
-      click_link 'Orders'
+      visit '/admin/orders'
       click_link 'New Order'
 
       page.should have_content 'ADD PRODUCT'
