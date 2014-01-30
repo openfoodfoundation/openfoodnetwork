@@ -262,3 +262,53 @@ describe "managing pending changes", ->
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
       expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
+
+describe "dataSubmitter service", ->
+  q_mock = http_mock = {}
+  resolve = reject = dataSubmitterService = null
+
+  beforeEach ->
+    resolve = jasmine.createSpy('resolve')
+    reject = jasmine.createSpy('reject')
+    q_mock.defer = ->
+      resolve: resolve
+      reject: reject
+      promise: "promise1"
+
+    # Can't use httpBackend because the q_mock interferes with it
+    http_mock.put = (url) ->
+      success: (successFn) ->
+        successFn("somedata") if url == "successURL"
+        error: (errorFn) ->
+          errorFn() if url == "errorURL"
+
+    spyOn(http_mock, "put").andCallThrough()
+    spyOn(q_mock, "defer").andCallThrough()
+
+  beforeEach ->
+    module "ofn.bulk_order_management" , ($provide) ->
+      $provide.value '$q', q_mock
+      $provide.value '$http', http_mock
+      return
+
+  beforeEach inject (dataSubmitter) ->
+    dataSubmitterService = dataSubmitter
+
+  it "returns a promise", ->
+    expect(dataSubmitterService( { url: "successURL" } )).toEqual "promise1"
+    expect(q_mock.defer).toHaveBeenCalled()
+
+  it "sends a PUT request with the url property of changeObj", ->
+    dataSubmitterService { url: "successURL" }
+    expect(http_mock.put).toHaveBeenCalledWith "successURL"
+
+  it "calls resolve on deferred object when request is successful", ->
+    dataSubmitterService { url: "successURL" }
+    expect(resolve.calls.length).toEqual 1
+    expect(reject.calls.length).toEqual 0
+    expect(resolve).toHaveBeenCalledWith "somedata"
+
+  it "calls reject on deferred object when request is erroneous", ->
+    dataSubmitterService { url: "errorURL" }
+    expect(resolve.calls.length).toEqual 0
+    expect(reject.calls.length).toEqual 1

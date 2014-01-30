@@ -115,3 +115,15 @@ orderManagementModule.filter "selectFilter", [
         (angular.equals(selectedDistributor,blankEnterprise()) || line_item.order.distributor == selectedDistributor)
       filtered
 ]
+
+orderManagementModule.factory "dataSubmitter", [
+  "$http", "$q"
+  ($http, $q) ->
+    return (changeObj) ->
+      deferred = $q.defer()
+      $http.put(changeObj.url).success((data) ->
+        deferred.resolve data
+      ).error ->
+        deferred.reject()
+      deferred.promise
+]
