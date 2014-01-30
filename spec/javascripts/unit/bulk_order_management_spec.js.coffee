@@ -264,31 +264,31 @@ describe "managing pending changes", ->
       expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
 
 describe "dataSubmitter service", ->
-  q_mock = http_mock = {}
+  qMock = httpMock = {}
   resolve = reject = dataSubmitterService = null
 
   beforeEach ->
     resolve = jasmine.createSpy('resolve')
     reject = jasmine.createSpy('reject')
-    q_mock.defer = ->
+    qMock.defer = ->
       resolve: resolve
       reject: reject
       promise: "promise1"
 
-    # Can't use httpBackend because the q_mock interferes with it
-    http_mock.put = (url) ->
+    # Can't use httpBackend because the qMock interferes with it
+    httpMock.put = (url) ->
       success: (successFn) ->
         successFn("somedata") if url == "successURL"
         error: (errorFn) ->
           errorFn() if url == "errorURL"
 
-    spyOn(http_mock, "put").andCallThrough()
-    spyOn(q_mock, "defer").andCallThrough()
+    spyOn(httpMock, "put").andCallThrough()
+    spyOn(qMock, "defer").andCallThrough()
 
   beforeEach ->
     module "ofn.bulk_order_management" , ($provide) ->
-      $provide.value '$q', q_mock
-      $provide.value '$http', http_mock
+      $provide.value '$q', qMock
+      $provide.value '$http', httpMock
       return
 
   beforeEach inject (dataSubmitter) ->
@@ -296,11 +296,11 @@ describe "dataSubmitter service", ->
 
   it "returns a promise", ->
     expect(dataSubmitterService( { url: "successURL" } )).toEqual "promise1"
-    expect(q_mock.defer).toHaveBeenCalled()
+    expect(qMock.defer).toHaveBeenCalled()
 
   it "sends a PUT request with the url property of changeObj", ->
     dataSubmitterService { url: "successURL" }
-    expect(http_mock.put).toHaveBeenCalledWith "successURL"
+    expect(httpMock.put).toHaveBeenCalledWith "successURL"
 
   it "calls resolve on deferred object when request is successful", ->
     dataSubmitterService { url: "successURL" }
@@ -312,3 +312,56 @@ describe "dataSubmitter service", ->
     dataSubmitterService { url: "errorURL" }
     expect(resolve.calls.length).toEqual 0
     expect(reject.calls.length).toEqual 1
+
+describe "switchClass service", ->
+  elementMock = timeoutMock = {}
+  removeClass = addClass = switchClassService = null
+
+  beforeEach ->
+    addClass = jasmine.createSpy('addClass')
+    removeClass = jasmine.createSpy('removeClass')
+    elementMock =
+      addClass: addClass
+      removeClass: removeClass
+    timeoutMock = jasmine.createSpy('timeout').andReturn "new timeout"
+    timeoutMock.cancel = jasmine.createSpy('timeout.cancel')
+
+  beforeEach ->
+    module "ofn.bulk_order_management" , ($provide) ->
+      $provide.value '$timeout', timeoutMock
+      return
+
+  beforeEach inject (switchClass) ->
+    switchClassService = switchClass
+
+  it "calls addClass on the element once", ->
+    switchClassService elementMock, "addClass", [], false
+    expect(addClass).toHaveBeenCalledWith "addClass"
+    expect(addClass.calls.length).toEqual 1
+
+  it "calls removeClass on the element for ", ->
+    switchClassService elementMock, "", ["remClass1", "remClass2", "remClass3"], false
+    expect(removeClass).toHaveBeenCalledWith "remClass1"
+    expect(removeClass).toHaveBeenCalledWith "remClass2"
+    expect(removeClass).toHaveBeenCalledWith "remClass3"
+    expect(removeClass.calls.length).toEqual 3
+
+  it "call cancel on element.timout only if it exists", ->
+    switchClassService elementMock, "", [], false
+    expect(timeoutMock.cancel).not.toHaveBeenCalled()
+    elementMock.timeout = true
+    switchClassService elementMock, "", [], false
+    expect(timeoutMock.cancel).toHaveBeenCalled()
+
+  it "doesn't set up a new timeout if 'timeout' is false", ->
+    switchClassService elementMock, "class1", ["class2"], false
+    expect(timeoutMock).not.toHaveBeenCalled()
+
+  it "doesn't set up a new timeout if 'timeout' is a string", ->
+    switchClassService elementMock, "class1", ["class2"], "string"
+    expect(timeoutMock).not.toHaveBeenCalled()
+
+  it "sets up a new timeout if 'timeout' parameter is an integer", ->
+    switchClassService elementMock, "class1", ["class2"], 1000
+    expect(timeoutMock).toHaveBeenCalled()
+    expect(elementMock.timeout).toEqual "new timeout"
