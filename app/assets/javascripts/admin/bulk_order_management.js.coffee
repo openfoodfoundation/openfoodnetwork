@@ -9,12 +9,39 @@ orderManagementModule.config [
 orderManagementModule.value "blankEnterprise", ->
   { id: "", name: "All" }
 
+orderManagementModule.factory "pendingChanges",[
+  "dataSubmitter"
+  (dataSubmitter) ->
+    pendingChanges: {}
+
+    add: (id, attrName, changeObj) ->
+      this.pendingChanges["#{id}"] = {} unless this.pendingChanges.hasOwnProperty("#{id}")
+      this.pendingChanges["#{id}"]["#{attrName}"] = changeObj
+
+    remove: (id, attrName) ->
+      if this.pendingChanges.hasOwnProperty("#{id}")
+        delete this.pendingChanges["#{id}"]["#{attrName}"]
+        delete this.pendingChanges["#{id}"] if this.changeCount( this.pendingChanges["#{id}"] ) < 1
+
+    submitAll: ->
+      for id,lineItem of this.pendingChanges
+        for attrName,changeObj of lineItem
+          this.submit id, attrName, changeObj
+
+    submit: (id, attrName, change) ->
+      factory = this
+      dataSubmitter(change).then (data) ->
+        factory.remove id, attrName
+        change.element.dbValue = data["#{attrName}"]
+
+    changeCount: (lineItem) ->
+      Object.keys(lineItem).length
+]
+
+
 orderManagementModule.controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher", "blankEnterprise"
   ($scope, $http, dataFetcher, blankEnterprise) ->
-    $scope.updateStatusMessage =
-      text: ""
-      style: {}
 
     $scope.lineItems = []
     $scope.confirmDelete = true

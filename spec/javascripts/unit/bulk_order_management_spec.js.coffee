@@ -160,3 +160,105 @@ describe "AdminOrderMgmtCtrl", ->
       scope.deleteLineItem line_item1
       httpBackend.flush()
       expect(order.line_items).toEqual [line_item1, line_item2]
+
+describe "managing pending changes", ->
+  dataSubmitter = pendingChangesService = null
+
+  beforeEach ->
+    dataSubmitter = jasmine.createSpy('dataSubmitter').andReturn {
+      then: (thenFn) ->
+        thenFn({propertyName: "new_value"})
+    }
+
+  beforeEach ->
+    module "ofn.bulk_order_management", ($provide) ->
+      $provide.value 'dataSubmitter', dataSubmitter
+      return
+
+  beforeEach inject (pendingChanges) ->
+    pendingChangesService = pendingChanges
+
+  describe "adding a new change", ->
+    it "adds a new object with key of id if it does not already exist", ->
+      expect(pendingChangesService.pendingChanges).toEqual {}
+      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
+      pendingChangesService.add 1, "propertyName", { a: 1 }
+      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
+
+    it "adds a new object with key of the altered attribute name if it does not already exist", ->
+      pendingChangesService.add 1, "propertyName", { a: 1 }
+      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
+      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
+
+    it "replaces the existing object when adding a change to an attribute which already exists", ->
+      pendingChangesService.add 1, "propertyName", { a: 1 }
+      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
+      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
+      pendingChangesService.add 1, "propertyName", { b: 2 }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { b: 2 }
+
+   it "adds an attribute to key to a line item object when one already exists", ->
+      pendingChangesService.add 1, "propertyName1", { a: 1 }
+      pendingChangesService.add 1, "propertyName2", { b: 2 }
+      expect(pendingChangesService.pendingChanges["1"]).toEqual { propertyName1: { a: 1}, propertyName2: { b: 2 } }
+
+  describe "removing an existing change", ->
+    it "deletes a change if it exists", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      pendingChangesService.remove 1, "propertyName1"
+      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).not.toBeDefined()
+
+    it "deletes a line item object if it is empty", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      pendingChangesService.remove 1, "propertyName1"
+      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
+
+    it "does nothing if key with specified attribute does not exist", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      pendingChangesService.remove 1, "propertyName2"
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toEqual { a: 1 }
+
+    it "does nothing if key with specified id does not exist", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      pendingChangesService.remove 2, "propertyName1"
+      expect(pendingChangesService.pendingChanges["1"]).toEqual { "propertyName1": { a: 1 } }
+
+  describe "submitting an individual change to the server", ->
+    it "sends the correct object to dataSubmitter", ->
+      changeObj = { element: {} }
+      pendingChangesService.submit 1, "propertyName", changeObj
+      expect(dataSubmitter.calls.length).toEqual 1
+      expect(dataSubmitter).toHaveBeenCalledWith changeObj
+
+    it "calls remove with id and attribute name", ->
+      changeObj = { element: {} }
+      spyOn(pendingChangesService, "remove").andCallFake(->)
+      pendingChangesService.submit 1, "propertyName", changeObj
+      expect(pendingChangesService.remove.calls.length).toEqual 1
+      expect(pendingChangesService.remove).toHaveBeenCalledWith 1, "propertyName"
+
+    it "resets the dbValue attribute of the element in question", ->
+      element = { dbValue: 2 }
+      changeObj = { element: element }
+      pendingChangesService.submit 1, "propertyName", changeObj
+      expect(element.dbValue).toEqual "new_value"
+
+  describe "cycling through all changes to submit to server", ->
+    it "sends the correct object to dataSubmitter", ->
+      spyOn(pendingChangesService, "submit").andCallFake(->)
+      pendingChangesService.pendingChanges =
+        1: { "prop1": 1, "prop2": 2 }
+        2: { "prop1": 2, "prop2": 4 }
+        7: { "prop2": 5 }
+      pendingChangesService.submitAll()
+      expect(pendingChangesService.submit.calls.length).toEqual 5
+      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop1", 1
+      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop2", 2
+      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
+      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
+      expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
