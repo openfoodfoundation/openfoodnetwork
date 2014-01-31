@@ -64,11 +64,12 @@ orderManagementModule.factory "pendingChanges",[
 
 
 orderManagementModule.controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankEnterprise"
-  ($scope, $http, dataFetcher, blankEnterprise) ->
+  "$scope", "$http", "dataFetcher", "blankEnterprise", "pendingChanges"
+  ($scope, $http, dataFetcher, blankEnterprise, pendingChanges) ->
 
     $scope.lineItems = []
     $scope.confirmDelete = true
+    $scope.pendingChanges = pendingChanges
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""

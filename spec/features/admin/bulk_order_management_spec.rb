@@ -110,6 +110,25 @@ feature %q{
         page.should_not have_css "input[name='quantity'].update-pending"
       end
     end
+
+    context "submitting data to the server" do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "displays an update button which submits pending changes" do
+        fill_in "quantity", :with => 2
+        page.should have_selector "input[name='quantity'].update-pending"
+        page.should_not have_selector "input[name='quantity'].update-success"
+        page.should have_button "Update"
+        click_button "Update"
+        page.should_not have_selector "input[name='quantity'].update-pending"
+        page.should have_selector "input[name='quantity'].update-success"
+      end
+    end
   end
 
   context "using page page controls" do

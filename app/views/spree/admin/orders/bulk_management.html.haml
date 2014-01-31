@@ -40,3 +40,4 @@
         %td.max {{ line_item.max }}
         %td.actions
           %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
+  %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
