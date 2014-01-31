@@ -69,10 +69,10 @@ feature %q{
         page.should have_selector "td.variant", text: li2.product.name, :visible => true
       end
 
-      it "displays a column for quantity" do
+      it "displays a field for quantity" do
         page.should have_selector "th.quantity", text: "QUANTITY", :visible => true
-        page.should have_selector "td.quantity", text: li1.quantity.to_s, :visible => true
-        page.should have_selector "td.quantity", text: li2.quantity.to_s, :visible => true
+        page.should have_field "quantity", with: li1.quantity.to_s, :visible => true
+        page.should have_field "quantity", with: li2.quantity.to_s, :visible => true
       end
 
       it "displays a column for max quantity" do
