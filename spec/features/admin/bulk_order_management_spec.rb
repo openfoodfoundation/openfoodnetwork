@@ -101,6 +101,14 @@ feature %q{
         fill_in "quantity", :with => 2
         page.should have_css "input[name='quantity'].update-pending"
       end
+
+      it "removes the class 'update-pending' from input elements when initial (DB) value is entered" do
+        page.should_not have_css "input[name='quantity'].update-pending"
+        fill_in "quantity", :with => 2
+        page.should have_css "input[name='quantity'].update-pending"
+        fill_in "quantity", :with => 5
+        page.should_not have_css "input[name='quantity'].update-pending"
+      end
     end
   end
 
