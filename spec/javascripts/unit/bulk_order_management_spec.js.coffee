@@ -265,14 +265,14 @@ describe "managing pending changes", ->
 
 describe "dataSubmitter service", ->
   qMock = httpMock = {}
-  resolve = reject = dataSubmitterService = null
+  switchClassSpy = resolveSpy = rejectSpy = dataSubmitterService = null
 
   beforeEach ->
-    resolve = jasmine.createSpy('resolve')
-    reject = jasmine.createSpy('reject')
+    resolveSpy = jasmine.createSpy('resolve')
+    rejectSpy = jasmine.createSpy('reject')
     qMock.defer = ->
-      resolve: resolve
-      reject: reject
+      resolve: resolveSpy
+      reject: rejectSpy
       promise: "promise1"
 
     # Can't use httpBackend because the qMock interferes with it
@@ -285,10 +285,13 @@ describe "dataSubmitter service", ->
     spyOn(httpMock, "put").andCallThrough()
     spyOn(qMock, "defer").andCallThrough()
 
+    switchClassSpy = jasmine.createSpy('switchClass')
+
   beforeEach ->
     module "ofn.bulk_order_management" , ($provide) ->
       $provide.value '$q', qMock
       $provide.value '$http', httpMock
+      $provide.value 'switchClass', switchClassSpy
       return
 
   beforeEach inject (dataSubmitter) ->
@@ -303,15 +306,19 @@ describe "dataSubmitter service", ->
     expect(httpMock.put).toHaveBeenCalledWith "successURL"
 
   it "calls resolve on deferred object when request is successful", ->
-    dataSubmitterService { url: "successURL" }
-    expect(resolve.calls.length).toEqual 1
-    expect(reject.calls.length).toEqual 0
-    expect(resolve).toHaveBeenCalledWith "somedata"
+    element = { a: 1 }
+    dataSubmitterService { url: "successURL", element: element }
+    expect(resolveSpy.calls.length).toEqual 1
+    expect(rejectSpy.calls.length).toEqual 0
+    expect(resolveSpy).toHaveBeenCalledWith "somedata"
+    expect(switchClassSpy).toHaveBeenCalledWith element, "update-success", ["update-pending", "update-error"], 3000
 
   it "calls reject on deferred object when request is erroneous", ->
-    dataSubmitterService { url: "errorURL" }
-    expect(resolve.calls.length).toEqual 0
-    expect(reject.calls.length).toEqual 1
+    element = { b: 2 }
+    dataSubmitterService { url: "errorURL", element: element  }
+    expect(resolveSpy.calls.length).toEqual 0
+    expect(rejectSpy.calls.length).toEqual 1
+    expect(switchClassSpy).toHaveBeenCalledWith element, "update-error", ["update-pending", "update-success"], false
 
 describe "switchClass service", ->
   elementMock = timeoutMock = {}

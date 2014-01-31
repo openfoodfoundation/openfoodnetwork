@@ -141,13 +141,15 @@ orderManagementModule.filter "selectFilter", [
 ]
 
 orderManagementModule.factory "dataSubmitter", [
-  "$http", "$q"
-  ($http, $q) ->
+  "$http", "$q", "switchClass"
+  ($http, $q, switchClass) ->
     return (changeObj) ->
       deferred = $q.defer()
       $http.put(changeObj.url).success((data) ->
+        switchClass changeObj.element, "update-success", ["update-pending", "update-error"], 3000
         deferred.resolve data
       ).error ->
+        switchClass changeObj.element, "update-error", ["update-pending", "update-success"], false
         deferred.reject()
       deferred.promise
 ]
