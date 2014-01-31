@@ -16,7 +16,7 @@ shop
     distributor.details
       box-sizing: border-box
       display: block
-      height: 150px
+      min-height: 150px
       padding: 40px 0px 0px
       select
         width: 200px
@@ -29,11 +29,18 @@ shop
       location
         font-family: "AvenirBla_IE", "AvenirBla"
         padding-right: 16px
-      ordercycle
+
+      #distributor_title
+        float: left
         display: block
-        position: absolute
-        right: 0px
-        top: 40px
+        min-width: 350px
+
+      ordercycle
+        @media all and (max-width: 768px)
+          float: left
+          padding-bottom: 12px
+        display: block
+        float: right
         form.custom 
           width: 400px
           text-align: right
@@ -65,6 +72,10 @@ shop
         & > .content
           background: none
           border: none
+          img
+            margin: 0px 0px 0px 40px
+          p
+            max-width: 555px
         & > .title, &.active > .title
           text-transform: uppercase
           line-height: 50px
@@ -78,11 +89,18 @@ shop
     display: block
     padding-top: 36px
     table
+      table-layout: fixed
       width: 100%
       border-collapse: collapse
       border: none
       th
         line-height: 50px
+        &.name
+          width: 265px
+        &.notes
+          width: 280px
+        &.variant
+          width: 150px
       .notes
         max-width: 300px
       td, th
@@ -92,12 +110,12 @@ shop
         border-right: 0px
       td
         padding: 20px 0px
+        &.name img
+          float: left
+          margin-right: 20px
       input[type=number]
         width: 60px
         margin: 0px
-      
-
-
           display: block
           float: right
           padding-top: 14px

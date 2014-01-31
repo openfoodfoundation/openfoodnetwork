@@ -1,11 +1,6 @@
 %nav.top-bar
   %section.top-bar-section
     %ul.left
-      %li= link_to image_tag("ofn_logo_small.png"), new_landing_page_path
+      %li= link_to image_tag("ofn_logo_small.png"), root_path
       %li.divider
       = render partial: "shared/login"
-
-    %ul.right
-      %li= link_to "Distributors", "#", :data => { "reveal-id" => "become-distributor" }
-      %li.divider
-      %li= link_to "Farmers", "#", :data => { "reveal-id" => "become-farmer" }

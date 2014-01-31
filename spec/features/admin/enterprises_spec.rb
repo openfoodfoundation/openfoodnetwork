@@ -88,7 +88,6 @@ feature %q{
     fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
 
     click_button 'Create'
-
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
 
@@ -223,6 +222,13 @@ feature %q{
       distributor1.reload.next_collection_at.should == 'Two'
       supplier2.reload.next_collection_at.should be_nil
       distributor2.reload.next_collection_at.should be_nil
+    end
+
+    scenario "Editing images for an enterprise" do
+      click_link 'Enterprises'
+      first(".edit").click
+      page.should have_content "Logo"
+      page.should have_content "Promo"
     end
   end
 end

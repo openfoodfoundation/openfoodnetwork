@@ -12,6 +12,15 @@ Spree::Variant.class_eval do
   after_save :update_units
 
 
+  # Copied and modified from Spree::Variant
+  def options_text
+    values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
+
+    values.map! &:presentation    # This line changed
+
+    values.to_sentence({ :words_connector => ", ", :two_words_connector => ", " })
+  end
+
   def delete_unit_option_values
     ovs = self.option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
     self.option_values.destroy ovs
@@ -75,7 +84,7 @@ Spree::Variant.class_eval do
     # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
     # If there is none available where this is true, use the smallest available unit.
     unit = units[self.product.variant_unit].select { |scale, unit_name|
-      unit_value / scale > 1
+      unit_value / scale >= 1
     }.to_a.last
     unit = units[self.product.variant_unit].first if unit.nil?
 

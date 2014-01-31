@@ -221,7 +221,7 @@ describe Spree::Admin::ReportsController do
 
     it "builds suppliers for the current user" do
       spree_get :customers
-      assigns(:suppliers).should == [s1, s2, s3]
+      assigns(:suppliers).sort.should == [s1, s2, s3].sort
     end
 
     it "builds order cycles for the current user" do

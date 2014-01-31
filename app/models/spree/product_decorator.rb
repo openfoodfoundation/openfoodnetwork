@@ -92,6 +92,11 @@ Spree::Product.class_eval do
   def product_distribution_for(distributor)
     self.product_distributions.find_by_distributor_id(distributor)
   end
+  
+  # overriding to check self.on_demand as well
+  def has_stock?
+    has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
+  end
 
   # Build a product distribution for each distributor
   def build_product_distributions_for_user user

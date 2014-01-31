@@ -54,9 +54,7 @@ describe ShopController do
           spree_get :order_cycle
           response.body.should have_content oc1.id
         end
-
       end
-
 
       it "should not allow the user to select an invalid order cycle" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -110,13 +108,27 @@ describe ShopController do
 
       context "RABL tests" do
         render_views
-        it "only returns products for the current order cycle" do
+        before do
           controller.stub(:current_order_cycle).and_return order_cycle
+        end
+        it "only returns products for the current order cycle" do
           xhr :get, :products
           response.body.should have_content product.name
         end
-      end
 
+        it "doesn't return products not in stock" do
+          product.update_attribute(:on_demand, false)
+          product.master.update_attribute(:count_on_hand, 0)
+          xhr :get, :products
+          response.body.should_not have_content product.name
+        end
+        it "strips html from description" do
+          product.update_attribute(:description, "<a href='44'>turtles</a> frogs")
+          xhr :get, :products
+          response.body.should have_content "frogs"
+          response.body.should_not have_content "<a href"
+        end
+      end
     end
   end
 end

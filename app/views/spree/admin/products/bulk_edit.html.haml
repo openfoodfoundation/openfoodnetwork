@@ -121,8 +121,8 @@
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
-            %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => 'hasVariants(product)' }
-            %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-show' => '!hasVariants(product)', :type => 'number' }
+            %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
+            %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
@@ -142,7 +142,8 @@
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
-            %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
+            %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-hide' => 'variant.on_demand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
+            %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }

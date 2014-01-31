@@ -1,23 +1,26 @@
 %shop{"ng-app" => "Shop"}
   %navigation
     %distributor.details.row
-      %img.left{src: ""}
-      %h4
-        = @distributor.name
-      %location= @distributor.address.city
-      %small
-        %a{href: "/"} Change location
+      #distributor_title
+        %img.left{src: @distributor.logo.url(:thumb)}
+        %h4
+          = @distributor.name
+        %location= @distributor.address.city
+        %small
+          %a{href: "/"} Change location
+
       = render partial: "shop/order_cycles"
 
       -#%description
-  
+ 
   %tabs
     .row
       .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-        %section
+        %section#about{class: current_order_cycle ? nil : "active" }
           %p.title.avenir{"data-section-title" => ""}
             %a{href: "#about"} About Us 
           .content{"data-section-content" => ""}
+            %img.about.right{src: @distributor.promo_image.url(:large)}
             %p= @distributor.long_description.andand.html_safe
 
         %section
@@ -39,7 +42,6 @@
             %a{href: "#contact"} Contact 
           .content{"data-section-content" => ""}
             %p Contact 
-    
     
   %products.row
     = render partial: "shop/products"

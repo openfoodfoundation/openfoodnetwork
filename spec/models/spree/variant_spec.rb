@@ -182,6 +182,14 @@ module Spree
           v.send(:option_value_value_unit).should == [123.45, 'g']
         end
 
+        it "returns a value of 1 when unit value equals the scale" do
+          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1000.0)
+          v.stub(:product) { p }
+          v.stub(:unit_value) { 1000.0 }
+
+          v.send(:option_value_value_unit).should == [1, 'kg']
+        end
+
         it "generates values for all weight scales" do
           [[1.0, 'g'], [1000.0, 'kg'], [1000000.0, 'T']].each do |scale, unit|
             p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)

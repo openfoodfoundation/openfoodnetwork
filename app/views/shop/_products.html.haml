@@ -1,48 +1,69 @@
-%products{"ng-controller" => "ProductsCtrl"}
+%products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null"}
+  %h5 Check out when you have selected everything you want
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
     %input#search.text{"ng-model" => "query", placeholder: "Search"}
     %input.button.right{type: :submit, value: "Check Out"}
     %table
       %thead
-        %th{colspan: 2} Item
+        %th.name Item
         %th.notes Notes
-        %th Variant
+        %th.variant Variant
         %th QTY
         %th Bulk
         %th Price
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr.product
-          %td
+          %td.name
             %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
-            {{product.master.images[0].alt}}
-          %td
-            %h5
-              {{ product.name }}
-            {{ product.supplier.name }}
+            %div
+              %h5
+                {{ product.name }}
+              {{ product.supplier.name }}
           %td.notes {{ product.description | truncate:80 }}
 
-          %td {{ product.master.options_text }}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "variants[{{product.master.id}}]"}
+            {{ product.master.options_text }}
+            %span{"ng-show" => "product.variants.length > 0"}
+              %img.collapse{src: "/assets/collapse.png",
+              "ng-show" => "product.show_variants",
+              "ng-click" => "product.show_variants = !product.show_variants"}
+
+              %img.expand{src: "/assets/expand.png",
+              "ng-show" => "!product.show_variants",
+              "ng-click" => "product.show_variants = !product.show_variants"}
+          %td 
+            %span{"ng-show" => "(product.variants.length == 0)"}
+              %input{type: :number, 
+              value: 0, 
+              min: 0,
+              max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+              name: "variants[{{product.master.id}}]", 
+              id: "variants_{{product.master.id}}"}
           %td.group_buy
-            %span{"ng-show" => "product.group_buy"} 
-              Available
-            %span{"ng-hide" => "product.group_buy"} 
-              Not available
+            %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
+              %input{type: :number,
+              min: 0,
+              max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+              name: "variant_attributes[{{product.master.id}}][max_quantity]"} 
           %td.price
-            %small from
+            %small{"ng-show" => "(product.variants.length > 0)"} from
             ${{ product.price }}
-        %tr{"ng-repeat" => "variant in product.variants"}
-          %td{colspan: 3}
+        %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
+          %td{colspan: 2}
           %td {{variant.options_text}}
           %td 
-            %input{type: :number, value: 0, min: 0, name: "variants[{{variant.id}}]"}
+            %input{type: :number, 
+            value: 0, 
+            min: 0, 
+            max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+            name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy"} 
-              Available
-            %span{"ng-hide" => "product.group_buy"} 
-              Not available
+              %input{type: :number,
+              min: 0,
+              max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+              name: "variant_attributes[{{variant.id}}][max_quantity]"} 
           %td.price
-            %small from ${{variant.price }}
+            %small ${{variant.price }}
     %input.button.right{type: :submit, value: "Check Out"}
   -#%pre {{ data.products | json }}
