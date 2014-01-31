@@ -36,7 +36,7 @@
         %td.producer {{ line_item.supplier.name }}
         %td.variant {{ line_item.variant_unit_text }}
         %td.quantity
-          %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity" }
+          %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
         %td.max {{ line_item.max }}
         %td.actions
           %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }

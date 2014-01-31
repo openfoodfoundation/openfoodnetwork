@@ -29,7 +29,7 @@ orderManagementModule.directive "ofnLineItemUpdAttr", [
               element: element
               attrName: attrName
               url: "/api/orders/#{scope.line_item.order.number}/line_items/#{scope.line_item.id}?line_item[#{attrName}]=#{value}"
-            pendingChanges.addItem(scope.line_item.id, attrName, changeObj)
+            pendingChanges.add(scope.line_item.id, attrName, changeObj)
             switchClass( element, "update-pending", ["update-error", "update-success"], false )
 ]
 

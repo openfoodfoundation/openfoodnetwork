@@ -83,6 +83,27 @@ feature %q{
     end
   end
 
+  context "altering line item properties" do
+    before :each do
+      login_to_admin_section
+    end
+
+    context "tracking changes" do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "adds the class 'update-pending' to input elements when value is altered" do
+        page.should_not have_css "input[name='quantity'].update-pending"
+        fill_in "quantity", :with => 2
+        page.should have_css "input[name='quantity'].update-pending"
+      end
+    end
+  end
+
   context "using page page controls" do
     before :each do
       login_to_admin_section
