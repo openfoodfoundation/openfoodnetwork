@@ -19,7 +19,7 @@
               %h5
                 {{ product.name }}
               {{ product.supplier.name }}
-          %td.notes {{ product.description | truncate:80 }}
+          %td.notes {{ product.notes | truncate:80 }}
 
           %td 
             {{ product.master.options_text }}

@@ -1,7 +1,8 @@
 collection @products
 attributes :id, :name, :price, :permalink, :count_on_hand, :on_demand, :group_buy
 node do |product|
-  {description: strip_tags(product.description)}
+  {notes: strip_tags(product.notes),
+  description: strip_tags(product.description)}
 end
 
 child :supplier => :supplier do
