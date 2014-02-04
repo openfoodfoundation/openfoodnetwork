@@ -32,3 +32,7 @@ end
 child :taxons => :taxons do |taxon|
   attributes :name 
 end
+
+child :properties => :properties do |property|
+  attributes :name, :presentation 
+end
