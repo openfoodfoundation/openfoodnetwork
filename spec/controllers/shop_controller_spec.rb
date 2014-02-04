@@ -87,9 +87,9 @@ describe ShopController do
     describe "returning products" do
       let(:product) { create(:product) }
       let(:order_cycle) { create(:order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
+      let(:exchange) { Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) } 
 
       before do
-        exchange = Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) 
         exchange.variants << product.master
       end
 
@@ -97,6 +97,16 @@ describe ShopController do
         controller.stub(:current_order_cycle).and_return order_cycle
         xhr :get, :products
         response.should be_success
+      end
+
+      it "alphabetizes products" do
+        p1 = create(:product, name: "abc")
+        p2 = create(:product, name: "def")
+        exchange.variants << p1.master
+        exchange.variants << p2.master
+        controller.stub(:current_order_cycle).and_return order_cycle
+        xhr :get, :products
+        assigns[:products].should == [p1, p2, product].sort_by{|p| p.name }
       end
 
       it "does not return products if no order_cycle is selected" do
