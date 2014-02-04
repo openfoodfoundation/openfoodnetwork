@@ -29,3 +29,6 @@ child :variants => :variants do |variant|
   end
 end
 
+child :taxons => :taxons do |taxon|
+  attributes :name 
+end
