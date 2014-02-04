@@ -78,6 +78,19 @@ feature %q{
         login_to_admin_as @new_user
       end
 
+
+      context "Additional fields" do
+        #let(:product) { create(:simple_product, supplier: @supplier2) }
+
+        it "should have a notes field" do
+          product = create(:simple_product, supplier: @supplier2)
+          click_link 'Products'
+          within('#sub_nav') { click_link 'Products' }
+          click_link product.name
+          page.should have_content "Notes"
+        end
+      end
+
       scenario "create new product" do
         click_link 'Products'
         click_link 'New Product'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140121050239) do
+ActiveRecord::Schema.define(:version => 20140204011203) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -622,6 +622,7 @@ ActiveRecord::Schema.define(:version => 20140121050239) do
     t.string   "variant_unit"
     t.float    "variant_unit_scale"
     t.string   "variant_unit_name"
+    t.text     "notes"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"

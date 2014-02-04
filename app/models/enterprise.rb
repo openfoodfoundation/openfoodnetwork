@@ -43,7 +43,6 @@ class Enterprise < ActiveRecord::Base
       .uniq
   }
 
-
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')

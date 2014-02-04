@@ -1,0 +1,7 @@
+/ insert_bottom "[data-hook='admin_product_form_additional_fields']"
+
+= f.field_container :notes do
+  = f.label :notes, t(:notes)
+  = f.text_area :notes, { :class => 'fullwidth', rows: 5 }
+  = f.error_message_on :notes
+
