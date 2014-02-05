@@ -20,7 +20,6 @@
                 {{ product.name }}
               {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
-
           %td 
             {{ product.master.options_text }}
             %span{"ng-show" => "product.variants.length > 0"}
@@ -48,6 +47,8 @@
           %td.price.text-right
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ product.price | currency }}
+        %tr.product-description
+          %td{colspan: 6}{{ product.notes | truncate:80 }}
         %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
           = render partial: "shop/variant"
     %input.button.right{type: :submit, value: "Check Out"}

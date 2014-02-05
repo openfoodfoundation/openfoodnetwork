@@ -96,15 +96,19 @@ shop
       th
         line-height: 50px
         &.name
-          width: 265px
-        &.notes
-          width: 280px
+          width: 300px
+        //&.notes
+          //width: 220px
         &.variant
-          width: 150px
+          max-width: 100px
       .notes
         max-width: 300px
       td, th
         background: #fff
+        > span
+          min-width: 50px
+          display: block
+      tbody
         border: 1px solid #cccccc
         border-left: 0px
         border-right: 0px
@@ -113,6 +117,23 @@ shop
         &.name img
           float: left
           margin-right: 20px
+      tr.product-description
+        display: none
+
+
+      // Responsive
+      @media all and (max-width: 768px)
+        td.notes, th.notes
+          display: none
+        img
+          width: 20px
+          height: auto
+        tr.product-description
+          display: table-row
+          td:empty
+            display: none
+            
+
       input[type=number]
         width: 60px
         margin: 0px
