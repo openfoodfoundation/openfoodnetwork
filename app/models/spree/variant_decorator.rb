@@ -12,6 +12,18 @@ Spree::Variant.class_eval do
   after_save :update_units
 
 
+  def price_with_fees(distributor, order_cycle)
+    price + fees_for(distributor, order_cycle)
+  end
+
+  # TODO: This method seems a little redundant. Though perhaps a useful interface.
+  # Consider removing.
+  def fees_for(distributor, order_cycle)
+    order_cycle.fees_for(self, distributor)
+  end
+
+
+
   # Copied and modified from Spree::Variant
   def options_text
     values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")

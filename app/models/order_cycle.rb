@@ -143,18 +143,27 @@ class OrderCycle < ActiveRecord::Base
 
 
   # -- Fees
+  def fees_for(variant, distributor)
+    enterprise_fees_for(variant, distributor).sum do |fee|
+      # Spree's Calculator interface accepts Orders or LineItems,
+      # so we meet that interface with a struct.
+      line_item = OpenStruct.new variant: variant, quantity: 1
+      fee[:enterprise_fee].compute_amount(line_item)
+    end
+  end
+
   def create_adjustments_for(line_item)
     variant = line_item.variant
     distributor = line_item.order.distributor
 
-    fees_for(variant, distributor).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
+    enterprise_fees_for(variant, distributor).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
   end
 
 
   private
 
   # -- Fees
-  def fees_for(variant, distributor)
+  def enterprise_fees_for(variant, distributor)
     fees = []
 
     exchanges_carrying(variant, distributor).each do |exchange|

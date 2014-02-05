@@ -2,6 +2,30 @@ require 'spec_helper'
 
 module Spree
   describe Variant do
+    describe "calculating the price with enterprise fees" do
+      it "returns the price plus the fees" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+
+        variant = Variant.new price: 100
+        variant.should_receive(:fees_for).with(distributor, order_cycle) { 23 }
+        variant.price_with_fees(distributor, order_cycle).should == 123
+      end
+    end
+
+
+    describe "calculating the fees" do
+      it "delegates to order cycle" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+        variant = Variant.new
+
+        order_cycle.should_receive(:fees_for).with(variant, distributor) { 23 }
+        variant.fees_for(distributor, order_cycle).should == 23
+      end
+    end
+
+
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }
       let!(:variant) { create(:variant, product: product) }

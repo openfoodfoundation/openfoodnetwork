@@ -309,6 +309,22 @@ describe OrderCycle do
     end
   end
 
+  describe "calculating fees for a variant via a particular distributor" do
+    it "sums all the fees for the variant in the specified hub + order cycle" do
+      coordinator = create(:distributor_enterprise)
+      distributor = create(:distributor_enterprise)
+      order_cycle = create(:simple_order_cycle)
+      enterprise_fee1 = create(:enterprise_fee, amount: 20)
+      enterprise_fee2 = create(:enterprise_fee, amount:  3)
+      product = create(:simple_product)
+
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+             enterprise_fees: [enterprise_fee1, enterprise_fee2], variants: [product.master])
+      
+      order_cycle.fees_for(product.master, distributor).should == 23
+    end
+  end
+
   describe "creating adjustments for a line item" do
     let(:oc) { OrderCycle.new }
     let(:variant) { double(:variant) }
@@ -318,7 +334,7 @@ describe OrderCycle do
 
     it "creates adjustment for each fee" do
       fee = {enterprise_fee: 'ef', label: 'label', role: 'role'}
-      oc.should_receive(:fees_for).with(variant, distributor) { [fee] }
+      oc.should_receive(:enterprise_fees_for).with(variant, distributor) { [fee] }
       oc.should_receive(:create_adjustment_for_fee).with(line_item, 'ef', 'label', 'role')
 
       oc.send(:create_adjustments_for, line_item)
@@ -335,7 +351,7 @@ describe OrderCycle do
       oc.stub(:coordinator_fees) { [ef3] }
       oc.stub(:adjustment_label_for) { 'label' }
 
-      oc.send(:fees_for, line_item.variant, distributor).should ==
+      oc.send(:enterprise_fees_for, line_item.variant, distributor).should ==
         [{enterprise_fee: ef1, label: 'label', role: 'supplier'},
          {enterprise_fee: ef2, label: 'label', role: 'distributor'},
          {enterprise_fee: ef3, label: 'label', role: 'coordinator'}]
