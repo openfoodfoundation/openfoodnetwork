@@ -412,6 +412,35 @@ module Spree
       end
     end
 
+    describe "option types" do
+      describe "removing an option type" do
+        it "removes the associated option values from all variants" do
+          # Given a product with a variant unit option type and values
+          p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
+          v1 = create(:variant, product: p, unit_value: 100, option_values: [])
+          v2 = create(:variant, product: p, unit_value: 200, option_values: [])
+
+          # And a custom option type and values
+          ot = create(:option_type, name: 'foo', presentation: 'foo')
+          p.option_types << ot
+          ov1 = create(:option_value, option_type: ot, name: 'One', presentation: 'One')
+          ov2 = create(:option_value, option_type: ot, name: 'Two', presentation: 'Two')
+          v1.option_values << ov1
+          v2.option_values << ov2
+
+          # When we remove the custom option type
+          p.option_type_ids = p.option_type_ids.reject { |id| id == ot.id }
+
+          # Then the associated option values should have been removed from the variants
+          v1.option_values(true).should_not include ov1
+          v2.option_values(true).should_not include ov2
+
+          # And the option values themselves should still exist
+          Spree::OptionValue.where(id: [ov1.id, ov2.id]).count.should == 2
+        end
+      end
+    end
+
     describe "Stock filtering" do
       it "considers products that are on_demand as being in stock" do
         product = create(:simple_product, on_demand: true)
