@@ -138,6 +138,12 @@ describe ShopController do
           response.body.should have_content "frogs"
           response.body.should_not have_content "<a href"
         end
+
+        it "returns price including fees" do
+          Spree::Variant.any_instance.stub(:price_with_fees).and_return 998.00
+          xhr :get, :products
+          response.body.should have_content "998.0"
+        end
       end
     end
   end
