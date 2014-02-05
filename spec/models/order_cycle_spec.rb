@@ -311,17 +311,21 @@ describe OrderCycle do
 
   describe "creating adjustments for a line item" do
     let(:oc) { OrderCycle.new }
-    let(:line_item) { double(:line_item, variant: 123) }
+    let(:variant) { double(:variant) }
+    let(:distributor) { double(:distributor) }
+    let(:order) { double(:order, distributor: distributor) }
+    let(:line_item) { double(:line_item, variant: variant, order: order) }
 
     it "creates adjustment for each fee" do
       fee = {enterprise_fee: 'ef', label: 'label', role: 'role'}
-      oc.stub(:fees_for) { [fee] }
+      oc.should_receive(:fees_for).with(variant, distributor) { [fee] }
       oc.should_receive(:create_adjustment_for_fee).with(line_item, 'ef', 'label', 'role')
 
       oc.send(:create_adjustments_for, line_item)
     end
 
     it "finds fees for a line item" do
+      distributor = double(:distributor)
       ef1 = double(:enterprise_fee)
       ef2 = double(:enterprise_fee)
       ef3 = double(:enterprise_fee)
@@ -331,7 +335,7 @@ describe OrderCycle do
       oc.stub(:coordinator_fees) { [ef3] }
       oc.stub(:adjustment_label_for) { 'label' }
 
-      oc.send(:fees_for, line_item).should ==
+      oc.send(:fees_for, line_item.variant, distributor).should ==
         [{enterprise_fee: ef1, label: 'label', role: 'supplier'},
          {enterprise_fee: ef2, label: 'label', role: 'distributor'},
          {enterprise_fee: ef3, label: 'label', role: 'coordinator'}]
@@ -358,10 +362,10 @@ describe OrderCycle do
     end
 
     it "makes adjustment labels" do
-      line_item = double(:line_item, variant: double(:variant, product: double(:product, name: 'Bananas')))
+      variant = double(:variant, product: double(:product, name: 'Bananas'))
       enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
 
-      oc.send(:adjustment_label_for, line_item, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
+      oc.send(:adjustment_label_for, variant, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
     end
   end
   

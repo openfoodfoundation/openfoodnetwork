@@ -144,33 +144,31 @@ class OrderCycle < ActiveRecord::Base
 
   # -- Fees
   def create_adjustments_for(line_item)
-    fees_for(line_item).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
+    variant = line_item.variant
+    distributor = line_item.order.distributor
+
+    fees_for(variant, distributor).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
   end
-
-
 
 
   private
 
   # -- Fees
-  def fees_for(line_item)
+  def fees_for(variant, distributor)
     fees = []
 
-    # If there are multiple distributors with this variant, won't this mean that we get a fee charged for each of them?
-    # We just want the one matching line_item.order.distributor
-
-    exchanges_carrying(line_item).each do |exchange|
+    exchanges_carrying(variant, distributor).each do |exchange|
       exchange.enterprise_fees.each do |enterprise_fee|
         role = exchange.incoming? ? 'supplier' : 'distributor'
         fees << {enterprise_fee: enterprise_fee,
-                 label: adjustment_label_for(line_item, enterprise_fee, role),
+                 label: adjustment_label_for(variant, enterprise_fee, role),
                  role: role}
       end
     end
 
     coordinator_fees.each do |enterprise_fee|
       fees << {enterprise_fee: enterprise_fee,
-               label: adjustment_label_for(line_item, enterprise_fee, 'coordinator'),
+               label: adjustment_label_for(variant, enterprise_fee, 'coordinator'),
                role: 'coordinator'}
     end
 
@@ -182,14 +180,11 @@ class OrderCycle < ActiveRecord::Base
     AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
   end
 
-  def adjustment_label_for(line_item, enterprise_fee, role)
-    "#{line_item.variant.product.name} - #{enterprise_fee.fee_type} fee by #{role} #{enterprise_fee.enterprise.name}"
+  def adjustment_label_for(variant, enterprise_fee, role)
+    "#{variant.product.name} - #{enterprise_fee.fee_type} fee by #{role} #{enterprise_fee.enterprise.name}"
   end
 
-  def exchanges_carrying(line_item)
-    coordinator = line_item.order.order_cycle.coordinator
-    distributor = line_item.order.distributor
-
-    exchanges.to_enterprises([coordinator, distributor]).with_variant(line_item.variant)
+  def exchanges_carrying(variant, distributor)
+    exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
   end
 end
