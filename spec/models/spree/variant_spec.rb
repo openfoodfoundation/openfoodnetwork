@@ -171,19 +171,47 @@ module Spree
         it "when description is blank" do
           v = Spree::Variant.new unit_description: nil
           v.stub(:option_value_value_unit) { %w(value unit) }
-          v.send(:option_value_name).should == "value unit"
+          v.stub(:value_scaled?) { true }
+          v.send(:option_value_name).should == "valueunit"
         end
 
         it "when description is present" do
           v = Spree::Variant.new unit_description: 'desc'
           v.stub(:option_value_value_unit) { %w(value unit) }
-          v.send(:option_value_name).should == "value unit desc"
+          v.stub(:value_scaled?) { true }
+          v.send(:option_value_name).should == "valueunit desc"
         end
 
         it "when value is blank and description is present" do
           v = Spree::Variant.new unit_description: 'desc'
           v.stub(:option_value_value_unit) { [nil, nil] }
+          v.stub(:value_scaled?) { true }
           v.send(:option_value_name).should == "desc"
+        end
+
+        it "spaces value and unit when value is unscaled" do
+          v = Spree::Variant.new unit_description: nil
+          v.stub(:option_value_value_unit) { %w(value unit) }
+          v.stub(:value_scaled?) { false }
+          v.send(:option_value_name).should == "value unit"
+        end
+      end
+
+      describe "determining if a variant's value is scaled" do
+        it "returns true when the product has a scale" do
+          p = Spree::Product.new variant_unit_scale: 1000
+          v = Spree::Variant.new
+          v.stub(:product) { p }
+
+          v.send(:value_scaled?).should be_true
+        end
+
+        it "returns false otherwise" do
+          p = Spree::Product.new
+          v = Spree::Variant.new
+          v.stub(:product) { p }
+
+          v.send(:value_scaled?).should be_false
         end
       end
 

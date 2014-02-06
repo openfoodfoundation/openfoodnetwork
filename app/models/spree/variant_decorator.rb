@@ -54,11 +54,16 @@ Spree::Variant.class_eval do
 
   def option_value_name
     value, unit = option_value_value_unit
+    separator = value_scaled? ? '' : ' '
 
     name_fields = []
-    name_fields << "#{value} #{unit}" if value.present? && unit.present?
+    name_fields << "#{value}#{separator}#{unit}" if value.present? && unit.present?
     name_fields << unit_description   if unit_description.present?
     name_fields.join ' '
+  end
+
+  def value_scaled?
+    self.product.variant_unit_scale.present?
   end
 
   def option_value_value_unit
