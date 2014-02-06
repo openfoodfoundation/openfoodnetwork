@@ -29,6 +29,9 @@ shop
       location
         font-family: "AvenirBla_IE", "AvenirBla"
         padding-right: 16px
+      @media all and (max-width: 768px)
+        location, location + small
+          display: block
 
       #distributor_title
         float: left
@@ -38,28 +41,37 @@ shop
       ordercycle
         @media all and (max-width: 768px)
           float: left
+          clear: left
           padding-bottom: 12px
         display: block
         float: right
         form.custom 
-          width: 400px
+          //width: 400px
           text-align: right
+          margin-right: 1em
+          @media all and (max-width: 768px)
+            padding-left: 1em
+            padding-top: 1em
           & > strong
             line-height: 2.5
             font-size: 1.29em
             padding-right: 14px
+            @media all and (max-width: 768px)
+              font-size: 1.2em
           .custom.dropdown
             width: 280px
             display: inline-block
             background: transparent
             border-width: 2px
             border-color: #666666
-            font-size: 1.28em 
+            font-size: 1em 
             margin-bottom: 0
+            @media all and (max-width: 768px)
+              font-size: 1.2em
+              width: 180px
         closing
           font-size: 0.875em
           display: block
-          float: right
           padding-top: 14px
 
   tabs
@@ -87,7 +99,11 @@ shop
 
   products
     display: block
-    padding-top: 36px
+    padding-top: 2.3em 
+    @media all and (max-width: 768px)
+      padding-top: 1em
+      input.button.right
+        float: left
     table
       table-layout: fixed
       width: 100%
@@ -96,9 +112,9 @@ shop
       th
         line-height: 50px
         &.name
-          //width: 300px
-        &.notes
-          width: 140px
+          width: 330px 
+        //&.notes
+          //width: 140px
         &.variant
           width: 100px
         &.quantity, &.bulk, &.price
@@ -116,9 +132,12 @@ shop
         border-right: 0px
       td
         padding: 20px 0px
-        &.name img
-          float: left
-          margin-right: 30px
+        &.name 
+          img
+            float: left
+            margin-right: 30px
+          div
+            min-width: 150px
       tr.product-description
         display: none
 
