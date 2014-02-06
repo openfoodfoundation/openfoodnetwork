@@ -147,7 +147,8 @@ class OrderCycle < ActiveRecord::Base
     enterprise_fees_for(variant, distributor).sum do |fee|
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
-      line_item = OpenStruct.new variant: variant, quantity: 1
+      # Amount is faked, this is a method on LineItem
+      line_item = OpenStruct.new variant: variant, quantity: 1, amount: (variant.price) 
       fee[:enterprise_fee].compute_amount(line_item)
     end
   end
@@ -158,7 +159,6 @@ class OrderCycle < ActiveRecord::Base
 
     enterprise_fees_for(variant, distributor).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
   end
-
 
   private
 

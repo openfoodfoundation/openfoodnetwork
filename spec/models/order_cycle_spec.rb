@@ -323,6 +323,9 @@ describe OrderCycle do
       
       order_cycle.fees_for(product.master, distributor).should == 23
     end
+
+
+    it "sums percentage fees for the variant"
   end
 
   describe "creating adjustments for a line item" do
