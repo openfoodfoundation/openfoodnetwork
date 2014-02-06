@@ -460,6 +460,11 @@ describe "AdminProductEditCtrl", ->
       variant = {unit_value: 5}
       expect(scope.variantUnitValue(product, variant)).toEqual 5000
 
+    it "returns the unscaled value when the product has no scale", ->
+      product = {}
+      variant = {unit_value: 5}
+      expect(scope.variantUnitValue(product, variant)).toEqual 5
+
     it "returns null when the variant has no unit_value", ->
       product = {}
       variant = {}
@@ -671,6 +676,16 @@ describe "AdminProductEditCtrl", ->
           unit_value: 250500
           unit_description: ''
           unit_value_with_description: "250.5"
+
+      it "does not convert value when using a non-scaled unit", ->
+        testProduct = {id: 123}
+        testVariant = {unit_value_with_description: "12"}
+        scope.products = [testProduct]
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 12
+          unit_description: ''
+          unit_value_with_description: "12"
 
 
     describe "filtering products", ->

@@ -221,7 +221,10 @@ productEditModule.controller "AdminProductEditCtrl", [
 
     $scope.variantUnitValue = (product, variant) ->
       if variant.unit_value
-        variant.unit_value / product.variant_unit_scale
+        if product.variant_unit_scale
+          variant.unit_value / product.variant_unit_scale
+        else
+          variant.unit_value
       else
         null
 
@@ -376,7 +379,7 @@ productEditModule.controller "AdminProductEditCtrl", [
         if match
           product = $scope.findProduct(product.id)
           variant.unit_value  = parseFloat(match[1]) || null
-          variant.unit_value *= product.variant_unit_scale if variant.unit_value
+          variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
 
 
