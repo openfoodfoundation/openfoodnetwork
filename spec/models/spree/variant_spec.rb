@@ -113,8 +113,8 @@ module Spree
 
             ov = Spree::OptionValue.last
             ov.option_type.should == @ot
-            ov.name.should == '10 g foo'
-            ov.presentation.should == '10 g foo'
+            ov.name.should == '10g foo'
+            ov.presentation.should == '10g foo'
 
             v.option_values.should include ov
           end
@@ -139,8 +139,8 @@ module Spree
 
             ov = v.option_values.last
             ov.option_type.should == @ot
-            ov.name.should == '10 g foo'
-            ov.presentation.should == '10 g foo'
+            ov.name.should == '10g foo'
+            ov.presentation.should == '10g foo'
 
             v_orig.option_values.should include ov
           end
