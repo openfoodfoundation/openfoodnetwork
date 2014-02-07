@@ -325,7 +325,19 @@ describe OrderCycle do
     end
 
 
-    it "sums percentage fees for the variant"
+    it "sums percentage fees for the variant" do
+      coordinator = create(:distributor_enterprise)
+      distributor = create(:distributor_enterprise)
+      order_cycle = create(:simple_order_cycle)
+      enterprise_fee1 = create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20))
+      product = create(:simple_product, price: 10.00)
+      
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+             enterprise_fees: [enterprise_fee1], variants: [product.master])
+
+      product.master.price.should == 10.00
+      order_cycle.fees_for(product.master, distributor).should == 2.00
+    end
   end
 
   describe "creating adjustments for a line item" do
@@ -350,6 +362,7 @@ describe OrderCycle do
       ef3 = double(:enterprise_fee)
       incoming_exchange = double(:exchange, enterprise_fees: [ef1], incoming?: true)
       outgoing_exchange = double(:exchange, enterprise_fees: [ef2], incoming?: false)
+
       oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
       oc.stub(:coordinator_fees) { [ef3] }
       oc.stub(:adjustment_label_for) { 'label' }
