@@ -50,5 +50,5 @@
         %tr.product-description
           %td{colspan: 2}{{ product.notes | truncate:80 }}
         %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
-          = render partial: "shop/variant"
+          = render partial: "shop/shop/variant"
     %input.button.right{type: :submit, value: "Check Out"}

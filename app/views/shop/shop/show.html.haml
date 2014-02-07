@@ -9,7 +9,7 @@
         %small
           %a{href: "/"} Change location
 
-      = render partial: "shop/order_cycles"
+      = render partial: "shop/shop/order_cycles"
 
       -#%description
  
@@ -44,9 +44,9 @@
             %p Contact 
     
   %products.row
-    = render partial: "shop/products"
+    = render partial: "shop/shop/products"
   #footer
     %section.row
-      = render partial: "shop/contact_us"
-      = render partial: "shop/about_us"
+      = render partial: "shop/shop/contact_us"
+      = render partial: "shop/shop/about_us"
       = render partial: "shared/copyright"
