@@ -32,7 +32,7 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "fetching orders", ->
     beforeEach ->
-      httpBackend.expectGET("/api/orders?template=bulk_index").respond "list of orders"
+      httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true").respond "list of orders"
 
     it "makes a standard call to dataFetcher", ->
       scope.fetchOrders()

@@ -29,6 +29,26 @@ feature %q{
       page.should have_selector "h1.page-title", text: "Bulk Order Management"
     end
 
+    context "displaying the list of line items " do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order, state: 'address', completed_at: nil ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "displays a list of line items" do
+        page.should have_selector "th.id", text: "ID", :visible => true
+        page.should have_selector "td.id", text: li1.id.to_s
+        page.should have_selector "td.id", text: li2.id.to_s
+        page.should_not have_selector "td.id", text: li3.id.to_s
+      end
+    end
+
     context "displaying individual columns" do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
@@ -37,12 +57,6 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
-      end
-
-      it "displays a list of line items" do
-        page.should have_selector "th.id", text: "ID", :visible => true
-        page.should have_selector "td.id", text: li1.id.to_s, :visible => true
-        page.should have_selector "td.id", text: li2.id.to_s, :visible => true
       end
 
       it "displays a column for user email" do

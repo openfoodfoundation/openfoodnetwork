@@ -93,7 +93,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
     $scope.fetchOrders = ->
-      dataFetcher("/api/orders?template=bulk_index").then (data) ->
+      dataFetcher("/api/orders?template=bulk_index&q[completed_at_not_null]=true").then (data) ->
         $scope.resetOrders data
 
     $scope.resetOrders = (data) ->
