@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
   before_filter :load_data_for_sidebar
   before_filter :require_certified_hostname
 
+
+  def after_sign_in_path_for(resource)
+    request.referer || root_path
+  end
+
   private
   def load_data_for_menu
     @cms_site = Cms::Site.where(:identifier => 'open-food-network').first

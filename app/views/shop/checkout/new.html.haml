@@ -1,3 +1,5 @@
 - unless spree_current_user
-  = render partial: "shop/checkout/login"
-  = render partial: "shop/checkout/signup"
+  %section#checkout_login
+    = render partial: "shop/checkout/login"
+  %section#checkout_signup
+    = render partial: "shop/checkout/signup"

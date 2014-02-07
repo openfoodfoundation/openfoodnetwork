@@ -14,7 +14,7 @@ describe Shop::CheckoutController do
 
   it "renders when both distributor and order cycle is selected" do
     controller.stub(:current_distributor).and_return(double(:distributor))
-    controller.stub(:order_cycle).and_return(double(:order_cycle))
+    controller.stub(:current_order_cycle).and_return(create(:order_cycle))
     get :new
     response.should be_success
   end

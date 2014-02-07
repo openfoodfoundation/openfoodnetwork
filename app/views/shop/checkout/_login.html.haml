@@ -1,6 +1,5 @@
 %h2 Login
-
-= form_for Spree::User.new, :remote => true, :html => {'data-type' => :json}, :as => :spree_user, :url => spree.spree_user_session_path do |f|
+= form_for Spree::User.new, :html => {'data-type' => :json}, :as => :spree_user, :url => spree.spree_user_session_path do |f|
   %p
     = f.label :email, t(:email)
     = f.email_field :email, :class => 'title', :tabindex => 1, :id => "login_spree_user_email"
