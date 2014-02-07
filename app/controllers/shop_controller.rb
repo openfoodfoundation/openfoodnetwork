@@ -34,7 +34,6 @@ class ShopController < BaseController
   private
 
   def set_distributor
-
     unless @distributor = current_distributor 
       redirect_to root_path
     end

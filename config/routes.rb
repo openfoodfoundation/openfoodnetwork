@@ -1,11 +1,16 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#temp_landing_page'
 
-
   resource :shop, controller: :shop do
     get :products
     post :order_cycle
     get :order_cycle
+  end
+
+  namespace :shop do
+    resource :checkout, controller: :checkout do
+      get :new
+    end
   end
 
   resources :enterprises do
