@@ -401,6 +401,9 @@ productEditModule.controller "AdminProductEditCtrl", [
               delete variant.unit_value_with_description
               # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
+          if product.master
+            delete product.master.unit_value_with_description
+            delete product.master.options_text
       products_filtered
 
 

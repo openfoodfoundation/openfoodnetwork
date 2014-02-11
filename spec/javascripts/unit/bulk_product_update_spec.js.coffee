@@ -850,6 +850,15 @@ describe "AdminProductEditCtrl", ->
           }
         ]
 
+      it "returns master variant without the unit_value_with_description field", ->
+        scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
+        expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
+          {
+            id: 123
+            master: {id: 234}
+          }
+        ]
+
 
   describe "deep copying products", ->
     it "copies products", ->
