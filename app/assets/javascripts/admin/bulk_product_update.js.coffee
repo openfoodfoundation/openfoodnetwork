@@ -466,6 +466,7 @@ productEditModule.filter "rangeArray", ->
     input.push(i) for i in [start..end]
     input
 
+
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []
   if productsToFilter instanceof Object
@@ -475,23 +476,16 @@ filterSubmitProducts = (productsToFilter) ->
         filteredVariants = []
         if product.hasOwnProperty("variants")
           angular.forEach product.variants, (variant) ->
-            if not variant.deleted_at? and variant.hasOwnProperty("id")
-              hasUpdateableProperty = false
-              filteredVariant = {}
-              filteredVariant.id = variant.id
-              if variant.hasOwnProperty("on_hand")
-                filteredVariant.on_hand = variant.on_hand
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("price")
-                filteredVariant.price = variant.price
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("unit_value")
-                filteredVariant.unit_value = variant.unit_value
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("unit_description")
-                filteredVariant.unit_description = variant.unit_description
-                hasUpdatableProperty = true
-              filteredVariants.push filteredVariant  if hasUpdatableProperty
+            result = filterSubmitVariant variant
+            filteredVariant = result.filteredVariant
+            hasUpdatableProperty = result.hasUpdatableProperty
+            filteredVariants.push filteredVariant  if hasUpdatableProperty
+
+        if product.hasOwnProperty("master")
+          result = filterSubmitVariant product.master
+          filteredMaster = result.filteredVariant
+          hasUpdatableProperty = result.hasUpdatableProperty
+          filteredProduct.master = filteredMaster if hasUpdatableProperty
 
         hasUpdatableProperty = false
         filteredProduct.id = product.id
@@ -523,6 +517,26 @@ filterSubmitProducts = (productsToFilter) ->
         filteredProducts.push filteredProduct  if hasUpdatableProperty
 
   filteredProducts
+
+
+filterSubmitVariant = (variant) ->
+  hasUpdatableProperty = false
+  filteredVariant = {}
+  if not variant.deleted_at? and variant.hasOwnProperty("id")
+    filteredVariant.id = variant.id
+    if variant.hasOwnProperty("on_hand")
+      filteredVariant.on_hand = variant.on_hand
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("price")
+      filteredVariant.price = variant.price
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("unit_value")
+      filteredVariant.unit_value = variant.unit_value
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("unit_description")
+      filteredVariant.unit_description = variant.unit_description
+      hasUpdatableProperty = true
+  {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
 
 
 addDirtyProperty = (dirtyObjects, objectID, parsedPropertyName, propertyValue) ->

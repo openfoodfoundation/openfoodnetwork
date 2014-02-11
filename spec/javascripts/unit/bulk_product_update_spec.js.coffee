@@ -171,6 +171,10 @@ describe "filtering products for submission to database", ->
       group_buy: null
       group_buy_unit_size: null
       on_demand: false
+      master:
+        id: 2
+        unit_value: 250
+        unit_description: "foo"
       variants: [
         id: 1
         on_hand: 2
@@ -191,6 +195,10 @@ describe "filtering products for submission to database", ->
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
       available_on: available_on
+      master:
+        id: 2
+        unit_value: 250
+        unit_description: "foo"
       variants_attributes: [
         id: 1
         on_hand: 2
