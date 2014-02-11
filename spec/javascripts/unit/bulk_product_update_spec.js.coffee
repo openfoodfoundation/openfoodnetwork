@@ -427,12 +427,24 @@ describe "AdminProductEditCtrl", ->
         scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "items"
 
+    it "loads data for variants (inc. master)", ->
+      spyOn scope, "loadVariantVariantUnit"
+
+      product =
+        variant_unit_scale: 1.0
+        master: {id: 1, unit_value: 1, unit_description: '(one)'}
+        variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
+      scope.loadVariantUnit product
+
+      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.variants[0]
+      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.master
+
     describe "setting variant unit_value_with_description", ->
       it "sets by combining unit_value and unit_description", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0]).toEqual
           id: 1
           unit_value: 1
@@ -443,21 +455,21 @@ describe "AdminProductEditCtrl", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '1'
 
       it "uses unit_description when value is missing", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_description: 'Small'}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
       it "converts values from base value to chosen unit", ->
         product =
           variant_unit_scale: 1000.0
           variants: [{id: 1, unit_value: 2500}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
 
@@ -616,6 +628,17 @@ describe "AdminProductEditCtrl", ->
           variant_unit: 'items'
           variant_unit_scale: null
           variant_unit_with_scale: 'items'
+
+      it "packs the master variant", ->
+        spyOn scope, "packVariant"
+        testVariant = {id: 1}
+        testProduct =
+          id: 1
+          master: testVariant
+
+        scope.packProduct(testProduct)
+
+        expect(scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
       it "packs each variant", ->
         spyOn scope, "packVariant"

@@ -216,8 +216,13 @@ productEditModule.controller "AdminProductEditCtrl", [
 
       if product.variants
         for variant in product.variants
-          unit_value = $scope.variantUnitValue product, variant
-          variant.unit_value_with_description = "#{unit_value || ''} #{variant.unit_description || ''}".trim()
+          $scope.loadVariantVariantUnit product, variant
+      $scope.loadVariantVariantUnit product, product.master if product.master
+
+
+    $scope.loadVariantVariantUnit = (product, variant) ->
+      unit_value = $scope.variantUnitValue product, variant
+      variant.unit_value_with_description = "#{unit_value || ''} #{variant.unit_description || ''}".trim()
 
 
     $scope.variantUnitValue = (product, variant) ->
@@ -369,6 +374,7 @@ productEditModule.controller "AdminProductEditCtrl", [
         else
           product.variant_unit = product.variant_unit_with_scale
           product.variant_unit_scale = null
+      $scope.packVariant product, product.master if product.master
       if product.variants
         for id, variant of product.variants
           $scope.packVariant product, variant
