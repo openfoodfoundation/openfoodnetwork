@@ -202,10 +202,17 @@ describe "filtering products for submission to database", ->
 
 
 describe "Maintaining a live record of dirty products and properties", ->
+  parse = null
+  beforeEach ->
+    module "ofn.bulk_product_edit"
+  beforeEach inject(($parse) ->
+    parse = $parse
+  )
+
   describe "adding product properties to the dirtyProducts object", -> # Applies to both products and variants
     it "adds the product and the property to the list if property is dirty", ->
       dirtyProducts = {}
-      addDirtyProperty dirtyProducts, 1, "name", "Product 1"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 1"
       expect(dirtyProducts).toEqual 1:
         id: 1
         name: "Product 1"
@@ -216,7 +223,7 @@ describe "Maintaining a live record of dirty products and properties", ->
         id: 1
         notaname: "something"
 
-      addDirtyProperty dirtyProducts, 1, "name", "Product 3"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 3"
       expect(dirtyProducts).toEqual 1:
         id: 1
         notaname: "something"
@@ -228,7 +235,7 @@ describe "Maintaining a live record of dirty products and properties", ->
         id: 1
         name: "Product 1"
 
-      addDirtyProperty dirtyProducts, 1, "name", "Product 2"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 2"
       expect(dirtyProducts).toEqual 1:
         id: 1
         name: "Product 2"

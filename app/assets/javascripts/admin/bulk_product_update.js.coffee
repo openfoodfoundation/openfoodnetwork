@@ -20,30 +20,31 @@ productEditModule.directive "ofnDecimal", ->
       viewValue
 
 
-productEditModule.directive "ofnTrackProduct", ->
+productEditModule.directive "ofnTrackProduct", ['$parse', ($parse) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ofnTrackProduct
     ngModel.$parsers.push (viewValue) ->
       if ngModel.$dirty
-        addDirtyProperty scope.dirtyProducts, scope.product.id, property_name, viewValue
+        parsedPropertyName = $parse(attrs.ofnTrackProduct)
+        addDirtyProperty scope.dirtyProducts, scope.product.id, parsedPropertyName, viewValue
         scope.displayDirtyProducts()
       viewValue
+  ]
 
 
-productEditModule.directive "ofnTrackVariant", ->
+productEditModule.directive "ofnTrackVariant", ['$parse', ($parse) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ofnTrackVariant
     ngModel.$parsers.push (viewValue) ->
       dirtyVariants = {}
       dirtyVariants = scope.dirtyProducts[scope.product.id].variants  if scope.dirtyProducts.hasOwnProperty(scope.product.id) and scope.dirtyProducts[scope.product.id].hasOwnProperty("variants")
       if ngModel.$dirty
-        addDirtyProperty dirtyVariants, scope.variant.id, property_name, viewValue
-        addDirtyProperty scope.dirtyProducts, scope.product.id, "variants", dirtyVariants
+        parsedPropertyName = $parse(attrs.ofnTrackVariant)
+        addDirtyProperty dirtyVariants, scope.variant.id, parsedPropertyName, viewValue
+        addDirtyProperty scope.dirtyProducts, scope.product.id, $parse("variants"), dirtyVariants
         scope.displayDirtyProducts()
       viewValue
-
+  ]
 
 productEditModule.directive "ofnToggleVariants", ->
   link: (scope, element, attrs) ->
@@ -515,13 +516,11 @@ filterSubmitProducts = (productsToFilter) ->
   filteredProducts
 
 
-addDirtyProperty = (dirtyObjects, objectID, propertyName, propertyValue) ->
-  if dirtyObjects.hasOwnProperty(objectID)
-    dirtyObjects[objectID][propertyName] = propertyValue
-  else
+addDirtyProperty = (dirtyObjects, objectID, parsedPropertyName, propertyValue) ->
+  if !dirtyObjects.hasOwnProperty(objectID)
     dirtyObjects[objectID] = {}
     dirtyObjects[objectID]["id"] = objectID
-    dirtyObjects[objectID][propertyName] = propertyValue
+  parsedPropertyName.assign(dirtyObjects[objectID], propertyValue)
 
 
 removeCleanProperty = (dirtyObjects, objectID, propertyName) ->
