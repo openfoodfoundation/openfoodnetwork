@@ -348,6 +348,10 @@ productEditModule.controller "AdminProductEditCtrl", [
           $scope.resetProducts data
           $timeout -> $scope.displaySuccess()
         else
+          # console.log angular.toJson($scope.productsWithoutDerivedAttributes($scope.products))
+          # console.log "---"
+          # console.log angular.toJson($scope.productsWithoutDerivedAttributes(data))
+          # console.log "---"
           $scope.displayFailure "Product lists do not match."
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status
@@ -364,6 +368,7 @@ productEditModule.controller "AdminProductEditCtrl", [
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
         $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
+
 
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale
@@ -401,9 +406,7 @@ productEditModule.controller "AdminProductEditCtrl", [
               delete variant.unit_value_with_description
               # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
-          if product.master
-            delete product.master.unit_value_with_description
-            delete product.master.options_text
+          delete product.master
       products_filtered
 
 
@@ -472,23 +475,24 @@ filterSubmitProducts = (productsToFilter) ->
   if productsToFilter instanceof Object
     angular.forEach productsToFilter, (product) ->
       if product.hasOwnProperty("id")
-        filteredProduct = {}
+        filteredProduct = {id: product.id}
         filteredVariants = []
+        hasUpdatableProperty = false
+
         if product.hasOwnProperty("variants")
           angular.forEach product.variants, (variant) ->
             result = filterSubmitVariant variant
             filteredVariant = result.filteredVariant
-            hasUpdatableProperty = result.hasUpdatableProperty
-            filteredVariants.push filteredVariant  if hasUpdatableProperty
+            variantHasUpdatableProperty = result.hasUpdatableProperty
+            filteredVariants.push filteredVariant  if variantHasUpdatableProperty
 
-        if product.hasOwnProperty("master")
-          result = filterSubmitVariant product.master
-          filteredMaster = result.filteredVariant
-          hasUpdatableProperty = result.hasUpdatableProperty
-          filteredProduct.master = filteredMaster if hasUpdatableProperty
+        if product.master?.hasOwnProperty("unit_value")
+          filteredProduct.unit_value = product.master.unit_value
+          hasUpdatableProperty = true
+        if product.master?.hasOwnProperty("unit_description")
+          filteredProduct.unit_description = product.master.unit_description
+          hasUpdatableProperty = true
 
-        hasUpdatableProperty = false
-        filteredProduct.id = product.id
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true

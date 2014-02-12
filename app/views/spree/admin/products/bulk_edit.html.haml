@@ -117,7 +117,9 @@
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-            %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
+              %option{'value' => '', 'ng-hide' => "hasVariants(product)"}
+            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-product' => 'master.unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "product.variant_unit_with_scale != undefined && !hasVariants(product)" }
+            %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }

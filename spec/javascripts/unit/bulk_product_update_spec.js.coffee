@@ -194,11 +194,9 @@ describe "filtering products for submission to database", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
+      unit_value: 250
+      unit_description: "foo"
       available_on: available_on
-      master:
-        id: 2
-        unit_value: 250
-        unit_description: "foo"
       variants_attributes: [
         id: 1
         on_hand: 2
@@ -858,12 +856,11 @@ describe "AdminProductEditCtrl", ->
           }
         ]
 
-      it "returns master variant without the unit_value_with_description field", ->
+      it "removes the master variant", ->
         scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
         expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
           {
             id: 123
-            master: {id: 234}
           }
         ]
 
