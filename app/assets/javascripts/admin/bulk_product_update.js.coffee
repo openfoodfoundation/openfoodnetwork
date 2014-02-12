@@ -285,6 +285,17 @@ productEditModule.controller "AdminProductEditCtrl", [
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
+    $scope.addVariant = (product) ->
+      product.variants.push {id: $scope.nextVariantId()}
+      $scope.displayProperties[product.id].showVariants = true
+
+
+    $scope.nextVariantId = ->
+      $scope.variantIdCounter = 0 unless $scope.variantIdCounter?
+      $scope.variantIdCounter -= 1
+      $scope.variantIdCounter
+
+
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
         $http(
@@ -297,14 +308,20 @@ productEditModule.controller "AdminProductEditCtrl", [
 
 
     $scope.deleteVariant = (product, variant) ->
-      if confirm("Are you sure?")
-        $http(
-          method: "DELETE"
-          url: "/api/products/" + product.id + "/variants/" + variant.id
-        ).success (data) ->
-          product.variants.splice product.variants.indexOf(variant), 1
-          delete $scope.dirtyProducts[product.id].variants[variant.id]  if $scope.dirtyProducts.hasOwnProperty(product.id) and $scope.dirtyProducts[product.id].hasOwnProperty("variants") and $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)
-          $scope.displayDirtyProducts()
+      if !$scope.variantSaved(variant)
+        $scope.removeVariant(product, variant)
+      else
+        if confirm("Are you sure?")
+          $http(
+            method: "DELETE"
+            url: "/api/products/" + product.id + "/variants/" + variant.id
+          ).success (data) ->
+            $scope.removeVariant(product, variant)
+
+    $scope.removeVariant = (product, variant) ->
+      product.variants.splice product.variants.indexOf(variant), 1
+      delete $scope.dirtyProducts[product.id].variants[variant.id]  if $scope.dirtyProducts.hasOwnProperty(product.id) and $scope.dirtyProducts[product.id].hasOwnProperty("variants") and $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)
+      $scope.displayDirtyProducts()
 
 
     $scope.cloneProduct = (product) ->
@@ -323,6 +340,14 @@ productEditModule.controller "AdminProductEditCtrl", [
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0
+
+
+    $scope.hasUnit = (product) ->
+      product.variant_unit_with_scale?
+
+
+    $scope.variantSaved = (variant) ->
+      variant.hasOwnProperty('id') && variant.id > 0
 
 
     $scope.hasOnDemandVariants = (product) ->

@@ -111,6 +111,7 @@
         %tr.product
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
+            %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
           %td.supplier{ 'ng-show' => 'columns.supplier.visible' }
             %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ofn-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
           %td{ 'ng-show' => 'columns.name.visible' }
@@ -118,7 +119,7 @@
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
               %option{'value' => '', 'ng-hide' => "hasVariants(product)"}
-            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-product' => 'master.unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "product.variant_unit_with_scale != undefined && !hasVariants(product)" }
+            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-product' => 'master.unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text' }
@@ -135,7 +136,8 @@
             %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
         %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
           %td.left-actions
-            %a{ :class => "variant-item icon-caret-right" }
+            %a{ :class => "variant-item icon-caret-right", 'ng-hide' => "$last" }
+            %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
           %td{ 'ng-show' => 'columns.supplier.visible' }
           %td{ 'ng-show' => 'columns.name.visible' }
             {{ variant.options_text }}
@@ -148,7 +150,7 @@
             %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
           %td.actions
-            %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text" }
+            %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
           %td.actions
           %td.actions
             %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }

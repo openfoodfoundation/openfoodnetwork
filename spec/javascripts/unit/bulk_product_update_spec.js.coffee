@@ -603,6 +603,43 @@ describe "AdminProductEditCtrl", ->
       expect(scope.hasOnDemandVariants(product)).toBe(false)
 
 
+  describe "determining whether a product has variants", ->
+    it "returns true when it does", ->
+      product =
+        variants: [{id: 1}, {id: 2}]
+      expect(scope.hasVariants(product)).toBe(true)
+
+    it "returns false when it does not", ->
+      product =
+        variants: []
+      expect(scope.hasVariants(product)).toBe(false)
+
+
+  describe "determining whether a product has a unit", ->
+    it "returns true when it does", ->
+      product =
+        variant_unit_with_scale: 'weight_1000'
+      expect(scope.hasUnit(product)).toBe(true)
+
+    it "returns false when its unit is undefined", ->
+      product = {}
+      expect(scope.hasUnit(product)).toBe(false)
+
+
+  describe "determining whether a variant has been saved", ->
+    it "returns true when it has a positive id", ->
+      variant = {id: 1}
+      expect(scope.variantSaved(variant)).toBe(true)
+
+    it "returns false when it has no id", ->
+      variant = {}
+      expect(scope.variantSaved(variant)).toBe(false)
+
+    it "returns false when it has a negative id", ->
+      variant = {id: -1}
+      expect(scope.variantSaved(variant)).toBe(false)
+
+
   describe "submitting products to be updated", ->
     describe "packing products", ->
       it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
@@ -889,6 +926,31 @@ describe "AdminProductEditCtrl", ->
       expect(scope.findProduct(123)).toBeNull()
 
 
+  describe "adding variants", ->
+    beforeEach ->
+      scope.displayProperties ||= {123: {}}
+
+    it "adds the first variant", ->
+      product = {id: 123, variants: []}
+      scope.addVariant(product)
+      expect(product).toEqual
+        id: 123
+        variants: [{id: -1}]
+
+    it "adds subsequent variants", ->
+      product = {id: 123, variants: []}
+      scope.addVariant(product)
+      scope.addVariant(product)
+      expect(product).toEqual
+        id: 123
+        variants: [{id: -1}, {id: -2}]
+
+    it "shows the variant(s)", ->
+      product = {id: 123, variants: []}
+      scope.addVariant(product)
+      expect(scope.displayProperties[123].showVariants).toBe(true)
+
+
   describe "deleting products", ->
     it "deletes products with a http delete request to /api/products/id", ->
       spyOn(window, "confirm").andReturn true
@@ -942,83 +1004,100 @@ describe "AdminProductEditCtrl", ->
 
 
   describe "deleting variants", ->
-    it "deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", ->
-      spyOn(window, "confirm").andReturn true
-      scope.products = [
-        {
-          id: 9
-          permalink_live: "apples"
-          variants: [
-            id: 3
-            price: 12
-          ]
-        }
-        {
-          id: 13
-          permalink_live: "oranges"
-        }
-      ]
-      scope.dirtyProducts = {}
-      httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
-      scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-      httpBackend.flush()
+    describe "when the variant has not been saved", ->
+      it "removes the variant from products and dirtyProducts", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {id: 1, variants: [{id: -1}]}
+        ]
+        scope.dirtyProducts =
+          1: {id: 1, variants: {'-1': {id: -1}}}
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        expect(scope.products).toEqual([
+          {id: 1, variants: []}
+        ])
+        expect(scope.dirtyProducts).toEqual
+          1: {id: 1, variants: {}}
 
-    it "removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", ->
-      spyOn(window, "confirm").andReturn true
-      scope.products = [
-        {
-          id: 9
-          permalink_live: "apples"
-          variants: [
-            {
+  
+    describe "when the variant has been saved", ->
+      it "deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {
+            id: 9
+            permalink_live: "apples"
+            variants: [
               id: 3
-              price: 12.0
-            }
-            {
-              id: 4
-              price: 6.0
-            }
-          ]
-        }
-        {
-          id: 13
-          permalink_live: "oranges"
-        }
-      ]
-      scope.dirtyProducts =
-        9:
-          id: 9
-          variants:
-            3:
-              id: 3
-              price: 12.0
+              price: 12
+            ]
+          }
+          {
+            id: 13
+            permalink_live: "oranges"
+          }
+        ]
+        scope.dirtyProducts = {}
+        httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        httpBackend.flush()
 
-            4:
-              id: 4
-              price: 6.0
+      it "removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {
+            id: 9
+            permalink_live: "apples"
+            variants: [
+              {
+                id: 3
+                price: 12.0
+              }
+              {
+                id: 4
+                price: 6.0
+              }
+            ]
+          }
+          {
+            id: 13
+            permalink_live: "oranges"
+          }
+        ]
+        scope.dirtyProducts =
+          9:
+            id: 9
+            variants:
+              3:
+                id: 3
+                price: 12.0
+  
+              4:
+                id: 4
+                price: 6.0
+  
+          13:
+            id: 13
+            name: "P1"
 
-        13:
-          id: 13
-          name: "P1"
+        httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        httpBackend.flush()
+        expect(scope.products[0].variants).toEqual [
+          id: 4
+          price: 6.0
+        ]
+        expect(scope.dirtyProducts).toEqual
+          9:
+            id: 9
+            variants:
+              4:
+                id: 4
+                price: 6.0
 
-      httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
-      scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-      httpBackend.flush()
-      expect(scope.products[0].variants).toEqual [
-        id: 4
-        price: 6.0
-      ]
-      expect(scope.dirtyProducts).toEqual
-        9:
-          id: 9
-          variants:
-            4:
-              id: 4
-              price: 6.0
-
-        13:
-          id: 13
-          name: "P1"
+          13:
+            id: 13
+            name: "P1"
 
 
 

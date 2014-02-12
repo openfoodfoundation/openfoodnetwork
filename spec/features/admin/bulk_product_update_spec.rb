@@ -229,7 +229,8 @@ feature %q{
     end
   end
 
-  scenario "create a new product" do
+
+  scenario "creating a new product" do
     s = FactoryGirl.create(:supplier_enterprise)
     d = FactoryGirl.create(:distributor_enterprise)
 
@@ -252,6 +253,44 @@ feature %q{
     flash_message.should == 'Product "Big Bag Of Apples" has been successfully created!'
     page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
+
+
+  scenario "creating new variants" do
+    # Given a product without variants or a unit
+    p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+    login_to_admin_section
+    visit '/admin/products/bulk_edit'
+
+    # I should not see an add variant button
+    page.should_not have_selector 'a.add-variant', visible: true
+
+    # When I set the unit
+    select "Weight (kg)", from: "variant_unit_with_scale"
+
+    # I should see an add variant button
+    page.should have_selector 'a.add-variant', visible: true
+
+    # When I add three variants
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+
+    # They should be added, and should see no edit buttons
+    page.all("tr.variant").count.should == 3
+    page.should_not have_selector "a.edit-variant", visible: true
+
+    # When I remove one, it should be removed
+    page.all('a.delete-variant').first.click
+    page.all("tr.variant").count.should == 2
+
+    # When I fill out variant details and hit update
+
+    # Then the variants should be saved
+
+    # And I should see edit buttons for the new variants
+
+  end
+
 
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
@@ -339,6 +378,7 @@ feature %q{
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "variant_unit_value_with_description", with: "123 abc"
   end
+
 
   describe "setting the master unit value for a product without variants" do
     it "sets the master unit value" do
