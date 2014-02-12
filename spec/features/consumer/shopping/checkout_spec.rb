@@ -5,10 +5,14 @@ include WebHelper
 
 feature "As a consumer I want to check out my cart", js: true do
   let(:distributor) { create(:distributor_enterprise) }
+  let(:supplier) { create(:supplier_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let(:product) { create(:simple_product, supplier: supplier) }
 
   before do
     create_enterprise_group_for distributor
+    exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
+    exchange.variants << product.master
   end
 
   describe "Attempting to access checkout without meeting the preconditions" do
@@ -23,10 +27,17 @@ feature "As a consumer I want to check out my cart", js: true do
       current_path.should == shop_path
     end
 
+    it "redirects to the shop page if the current order is empty" do
+      select_distributor
+      select_order_cycle
+      visit "/shop/checkout"
+      current_path.should == shop_path
+    end
 
     it "renders checkout if we have distributor and order cycle selected" do
       select_distributor
       select_order_cycle
+      add_product_to_cart
       visit "/shop/checkout"
       current_path.should == "/shop/checkout"
     end
@@ -37,6 +48,7 @@ feature "As a consumer I want to check out my cart", js: true do
     before do
       select_distributor
       select_order_cycle
+      add_product_to_cart
     end
 
     it "renders the login form if user is logged out" do
@@ -107,4 +119,9 @@ def select_order_cycle
   exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
   visit "/shop"
   select exchange.pickup_time, from: "order_cycle_id"
+end
+
+def add_product_to_cart
+  fill_in "variants[#{product.master.id}]", with: 5
+  first("form.custom > input.button.right").click 
 end

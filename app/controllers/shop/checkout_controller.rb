@@ -3,6 +3,7 @@ class Shop::CheckoutController < BaseController
 
   before_filter :set_distributor
   before_filter :require_order_cycle
+  before_filter :require_line_items
   
   def new
 
@@ -18,6 +19,14 @@ class Shop::CheckoutController < BaseController
 
   def require_order_cycle
     unless current_order_cycle
+      redirect_to shop_path
+    end
+  end
+  
+  # Y U LOOK AT CART? CART IS EMPTY!
+  # NO CAN HAZ!
+  def require_line_items
+    if current_order.line_items.empty?
       redirect_to shop_path
     end
   end
