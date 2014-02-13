@@ -6,7 +6,8 @@ class Shop::CheckoutController < BaseController
   before_filter :require_line_items
   
   def new
-
+    @order = current_order
+    @order.bill_address = Spree::Address.new
   end
 
   private
