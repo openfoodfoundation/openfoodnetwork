@@ -108,6 +108,40 @@ feature "As a consumer I want to check out my cart", js: true do
       end
     end
   end
+
+  describe "logged in, distributor selected, order cycle selected, product in cart" do
+    let(:user) { create_enterprise_user }
+    before do
+      login_to_consumer_section
+      select_distributor
+      select_order_cycle
+      add_product_to_cart
+    end
+
+    describe "with shipping methods" do
+      let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
+      let(:sm2) { create(:shipping_method, require_ship_address: true, name: "Donkeys", description: "blue") }
+      before do
+        distributor.shipping_methods << sm1 
+        distributor.shipping_methods << sm2 
+        visit "/shop/checkout"
+      end
+      it "shows all shipping methods" do
+        page.should have_content "Frogs"
+        page.should have_content "Donkeys"
+      end
+
+      it "doesn't show ship address forms by default" do
+        find("#ship_address").visible?.should be_false
+      end
+
+      it "shows ship address forms when selected shipping method requires one" do
+        # Fancy Foundation Forms are weird
+        find("#order_shipping_method_#{sm1.id} + span").click
+        find("#ship_address").visible?.should be_true
+      end
+    end
+  end
 end
 
 def select_distributor
@@ -122,6 +156,7 @@ def select_order_cycle
 end
 
 def add_product_to_cart
+
   fill_in "variants[#{product.master.id}]", with: 5
   first("form.custom > input.button.right").click 
 end
