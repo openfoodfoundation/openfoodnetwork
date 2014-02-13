@@ -286,7 +286,13 @@ productEditModule.controller "AdminProductEditCtrl", [
 
 
     $scope.addVariant = (product) ->
-      product.variants.push {id: $scope.nextVariantId()}
+      product.variants.push
+        id: $scope.nextVariantId()
+        price: null
+        unit_value: null
+        unit_description: null
+        on_demand: false
+        on_hand: null
       $scope.displayProperties[product.id].showVariants = true
 
 
@@ -354,6 +360,19 @@ productEditModule.controller "AdminProductEditCtrl", [
       (variant for id, variant of product.variants when variant.on_demand).length > 0
 
 
+    $scope.submitProducts = ->
+      # Pack pack $scope.products, so they will match the list returned from the server,
+      # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
+      $scope.packProduct product for id, product of $scope.products
+      $scope.packProduct product for id, product of $scope.dirtyProducts
+
+      productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
+      if productsToSubmit.length > 0
+        $scope.updateProducts productsToSubmit # Don't submit an empty list
+      else
+        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
+
+
     $scope.updateProducts = (productsToSubmit) ->
       $scope.displayUpdating()
       $http(
@@ -369,7 +388,7 @@ productEditModule.controller "AdminProductEditCtrl", [
         #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
         #if subset($scope.productsWithoutDerivedAttributes(), data)
 
-        if angular.toJson($scope.productsWithoutDerivedAttributes($scope.products)) == angular.toJson($scope.productsWithoutDerivedAttributes(data))
+        if $scope.productListsMatch $scope.products, data
           $scope.resetProducts data
           $timeout -> $scope.displaySuccess()
         else
@@ -380,19 +399,6 @@ productEditModule.controller "AdminProductEditCtrl", [
           $scope.displayFailure "Product lists do not match."
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status
-
-
-    $scope.submitProducts = ->
-      # Pack pack $scope.products, so they will match the list returned from the server,
-      # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
-      $scope.packProduct product for id, product of $scope.products
-      $scope.packProduct product for id, product of $scope.dirtyProducts
-
-      productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
-      if productsToSubmit.length > 0
-        $scope.updateProducts productsToSubmit # Don't submit an empty list
-      else
-        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
 
 
     $scope.packProduct = (product) ->
@@ -418,6 +424,24 @@ productEditModule.controller "AdminProductEditCtrl", [
           variant.unit_value  = parseFloat(match[1]) || null
           variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
+
+
+    $scope.productListsMatch = (clientProducts, serverProducts) ->
+      $scope.copyNewVariantIds clientProducts, serverProducts
+      angular.toJson($scope.productsWithoutDerivedAttributes(clientProducts)) == angular.toJson($scope.productsWithoutDerivedAttributes(serverProducts))
+
+
+    # When variants are created clientside, they are given a negative id. The server
+    # responds with a real id, which would cause the productListsMatch() check to fail.
+    # To avoid that false negative, we copy the server variant id to the client for any
+    # negative ids.
+    $scope.copyNewVariantIds = (clientProducts, serverProducts) ->
+      if clientProducts?
+        for product, i in clientProducts
+          if product.variants?
+            for variant, j in product.variants
+              if variant.id < 0
+                variant.id = serverProducts[i].variants[j].id
 
 
     $scope.productsWithoutDerivedAttributes = (products) ->
@@ -552,7 +576,7 @@ filterSubmitVariant = (variant) ->
   hasUpdatableProperty = false
   filteredVariant = {}
   if not variant.deleted_at? and variant.hasOwnProperty("id")
-    filteredVariant.id = variant.id
+    filteredVariant.id = variant.id unless variant.id <= 0
     if variant.hasOwnProperty("on_hand")
       filteredVariant.on_hand = variant.on_hand
       hasUpdatableProperty = true

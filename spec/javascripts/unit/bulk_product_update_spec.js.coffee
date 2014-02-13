@@ -121,6 +121,27 @@ describe "filtering products for submission to database", ->
       ]
     ]
 
+  it "returns variants with a negative id without that id", ->
+    testProduct =
+      id: 1
+      variants: [
+        id: -1
+        on_hand: 5
+        price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
+      ]
+
+    expect(filterSubmitProducts([testProduct])).toEqual [
+      id: 1
+      variants_attributes: [
+        on_hand: 5
+        price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
+      ]
+    ]
+
   it "does not return variants_attributes property if variants is an empty array", ->
     testProduct =
       id: 1
@@ -862,6 +883,24 @@ describe "AdminProductEditCtrl", ->
         expect(scope.displayFailure).toHaveBeenCalled()
 
 
+  describe "copying new variant ids from server to client", ->
+    it "copies server ids to the client where the client id is negative", ->
+      clientProducts = [
+        {
+          id: 123
+          variants: [{id: 1}, {id: -2}, {id: -3}]
+        }
+      ]
+      serverProducts = [
+        {
+          id: 123
+          variants: [{id: 1}, {id: 4534}, {id: 3453}]
+        }
+      ]
+      scope.copyNewVariantIds(clientProducts, serverProducts)
+      expect(clientProducts).toEqual(serverProducts)
+
+
   describe "fetching products without derived attributes", ->
     it "returns products without the variant_unit_with_scale field", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
@@ -930,20 +969,16 @@ describe "AdminProductEditCtrl", ->
     beforeEach ->
       scope.displayProperties ||= {123: {}}
 
-    it "adds the first variant", ->
-      product = {id: 123, variants: []}
-      scope.addVariant(product)
-      expect(product).toEqual
-        id: 123
-        variants: [{id: -1}]
-
-    it "adds subsequent variants", ->
+    it "adds first and subsequent variants", ->
       product = {id: 123, variants: []}
       scope.addVariant(product)
       scope.addVariant(product)
       expect(product).toEqual
         id: 123
-        variants: [{id: -1}, {id: -2}]
+        variants: [
+          {id: -1, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
+          {id: -2, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
+        ]
 
     it "shows the variant(s)", ->
       product = {id: 123, variants: []}

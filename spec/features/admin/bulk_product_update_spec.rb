@@ -279,16 +279,29 @@ feature %q{
     page.all("tr.variant").count.should == 3
     page.should_not have_selector "a.edit-variant", visible: true
 
-    # When I remove one, it should be removed
+    # When I remove two, they should be removed
     page.all('a.delete-variant').first.click
-    page.all("tr.variant").count.should == 2
+    page.all('a.delete-variant').first.click
+    page.all("tr.variant").count.should == 1
 
     # When I fill out variant details and hit update
+    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_price", with: "4.0"
+    fill_in "variant_on_hand", with: "10"
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
 
-    # Then the variants should be saved
+    # Then I should see edit buttons for the new variant
+    page.should have_selector "a.edit-variant", visible: true
 
-    # And I should see edit buttons for the new variants
+    # And the variants should be saved
+    visit '/admin/products/bulk_edit'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
 
+    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    page.should have_field "variant_price", with: "4.0"
+    page.should have_field "variant_on_hand", with: "10"
   end
 
 
