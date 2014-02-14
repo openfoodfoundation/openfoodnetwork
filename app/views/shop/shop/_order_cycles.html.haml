@@ -12,4 +12,5 @@
     = render partial: "shop/shop/last_order_cycle"
 
   - else
-    = yield :order_cycle_form
+    %form.custom
+      = yield :order_cycle_form
