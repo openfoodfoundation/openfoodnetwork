@@ -5,9 +5,9 @@ class Shop::CheckoutController < BaseController
   before_filter :require_order_cycle
   before_filter :require_line_items
   
-  def new
+  def edit
     @order = current_order
-    @order.bill_address = Spree::Address.new
+    @order.bill_address ||= Spree::Address.new
   end
 
   private

@@ -8,9 +8,11 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   namespace :shop do
-    resource :checkout, controller: :checkout do
-      get :new
-    end
+    #resource :checkout, only: :edit, controller: :checkout do
+      #get '', to: ""
+    #end
+    get '/checkout', :to => 'checkout#edit' , :as => :checkout
+    post '/checkout', :to => 'checkout#update' , :as => :update_checkout
   end
 
   resources :enterprises do
