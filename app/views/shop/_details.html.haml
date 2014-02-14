@@ -1,0 +1,11 @@
+%navigation
+  %distributor.details.row
+    #distributor_title
+      %img.left{src: current_distributor.logo.url(:thumb)}
+      %h4
+        = current_distributor.name
+      %location= current_distributor.address.city
+      %small
+        %a{href: "/"} Change location
+
+    = render partial: "shop/shop/order_cycles"

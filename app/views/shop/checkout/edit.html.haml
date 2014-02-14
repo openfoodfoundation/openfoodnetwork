@@ -1,15 +1,22 @@
-- unless spree_current_user
+%checkout.darkswarm
+  - content_for :order_cycle_form do
+    %form.custom
+      %strong.avenir
+        Order ready on
+        = pickup_time current_order_cycle
+  = render partial: "shop/details"
+   
+  - unless spree_current_user
+    .row
+      %section#checkout_login
+        .large-4.columns
+          = render partial: "shop/checkout/login"
+      %section#checkout_signup
+        .large-4.columns
+          = render partial: "shop/checkout/signup"
+      .large-2.columns
+        Cart bitches!
+
 
   .row
-    %section#checkout_login
-      .large-4.columns
-        = render partial: "shop/checkout/login"
-    %section#checkout_signup
-      .large-4.columns
-        = render partial: "shop/checkout/signup"
-    .large-2.columns
-      Cart bitches!
-
-
-.row
-  = render partial: "shop/checkout/form"
+    = render partial: "shop/checkout/form"

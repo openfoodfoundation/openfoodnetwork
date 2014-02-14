@@ -1,8 +1,6 @@
 %ordercycle{"ng-controller" => "OrderCycleCtrl"}
-
   :javascript
     angular.module('Shop').value('orderCycleData', #{render "shop/shop/order_cycle"})
-
 
   - if @order_cycles.empty?
     Orders are currently closed for this hub
@@ -14,14 +12,4 @@
     = render partial: "shop/shop/last_order_cycle"
 
   - else
-    %form.custom
-      %strong.avenir Ready for
-      %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
-              "ng-change" => "changeOrderCycle()",
-              "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}"}
-
-      %closing
-        -#%img{src: "/icon/goes/here"}
-        Orders close
-        %strong {{ order_cycle.orders_close_at | date_in_words }} 
-
+    = yield :order_cycle_form
