@@ -54,7 +54,7 @@ feature "As a consumer I want to check out my cart", js: true do
     it "renders the login form if user is logged out" do
       visit "/shop/checkout"
       within "section[role='main']" do
-        page.should have_content "Login"
+        page.should have_content "I HAVE AN OFN ACCOUNT"
       end
     end
 
@@ -62,14 +62,14 @@ feature "As a consumer I want to check out my cart", js: true do
       login_to_consumer_section
       visit "/shop/checkout"
       within "section[role='main']" do
-        page.should_not have_content "Login"
+        page.should_not have_content "I HAVE AN OFN ACCOUNT"
       end
     end
 
     it "renders the signup link if user is logged out" do
       visit "/shop/checkout"
       within "section[role='main']" do
-        page.should have_content "Sign Up"
+        page.should have_content "NEW TO OFN"
       end
     end
 
@@ -77,7 +77,7 @@ feature "As a consumer I want to check out my cart", js: true do
       login_to_consumer_section
       visit "/shop/checkout"
       within "section[role='main']" do
-        page.should_not have_content "Sign Up"
+        page.should_not have_content "NEW TO OFN"
       end
     end
 
@@ -88,9 +88,10 @@ feature "As a consumer I want to check out my cart", js: true do
         fill_in "spree_user[password]", with: user.password 
         click_button "Login"
       end
+
       current_path.should == "/shop/checkout"
       within "section[role='main']" do
-        page.should_not have_content "Login"
+        page.should_not have_content "I have an OFN Account"
       end
     end
 
