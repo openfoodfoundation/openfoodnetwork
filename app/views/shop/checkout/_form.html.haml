@@ -1,5 +1,5 @@
 %checkout{"ng-app" => "Checkout", "ng-controller" => "CheckoutCtrl"}
-  = form_for @order, url: "test", html: { class: "custom" } do |f|
+  = form_for @order, url: "test" do |f|
     .large-8.columns
       %fieldset#details
         %legend Customer Details
@@ -50,13 +50,14 @@
           .row
             .large-12.columns
               %label
-                = f.radio_button :shipping_method, ship_method.id, 
+                = f.radio_button :shipping_method, ship_method.id,
+                  "ng-model" => "shipping_method",
+                  "ng-change" => "shippingMethodChanged()",
                   "data-require-ship-address" => ship_method.require_ship_address
-                %span.custom.radio
                 = ship_method.name
 
         = fields_for @order.ship_address do |sa|
-          #ship_address{"ng-show" => "require_ship_method"}
+          #ship_address{"ng-show" => "require_ship_address"}
             .row
               .large-12.columns
                 = sa.label :address1
