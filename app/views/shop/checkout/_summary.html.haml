@@ -1,0 +1,27 @@
+%form
+  %fieldset
+    %legend Your Order
+
+    %table
+      %tr
+        %th Cart subtotal
+        %td= @order.display_item_total
+
+      - checkout_adjustments_for_summary(@order).each do |adjustment|
+        %tr
+          %th= adjustment.label 
+          %td= adjustment.display_amount.to_html
+
+      %tr
+        %th Cart total 
+        %td= @order.display_total.to_html
+    
+
+      - if @order.price_adjustment_totals.present?
+        - @order.price_adjustment_totals.each do |label, total|
+          %tr
+            %th= label
+            %td= total
+
+    %a.button Purchase
+
