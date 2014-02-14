@@ -137,8 +137,21 @@ feature "As a consumer I want to check out my cart", js: true do
 
       it "shows ship address forms when selected shipping method requires one" do
         # Fancy Foundation Forms are weird
-        find("#order_shipping_method_#{sm1.id} + span").click
+        choose(sm1.name)
         find("#ship_address").visible?.should be_true
+      end
+    end
+
+    describe "with payment methods" do
+      let(:pm1) { create(:payment_method, distributors: [distributor]) }
+      let(:pm2) { create(:payment_method, distributors: [distributor]) }
+
+      it "shows all available payment methods" do
+        pm1 # Lazy evaluation of ze create()s
+        pm2
+        visit "/shop/checkout"
+        page.should have_content pm1.name
+        page.should have_content pm2.name
       end
     end
   end
