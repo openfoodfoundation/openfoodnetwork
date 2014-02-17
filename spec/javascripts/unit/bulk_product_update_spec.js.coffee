@@ -499,6 +499,13 @@ describe "AdminProductEditCtrl", ->
         scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
+      it "displays a unit_value of zero", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_value: 0}]
+        scope.loadVariantVariantUnit product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '0'
+
 
   describe "calculating the scaled unit value for a variant", ->
     it "returns the scaled value when variant has a unit_value", ->
@@ -510,6 +517,11 @@ describe "AdminProductEditCtrl", ->
       product = {}
       variant = {unit_value: 5}
       expect(scope.variantUnitValue(product, variant)).toEqual 5
+
+    it "returns zero when the value is zero", ->
+      product = {}
+      variant = {unit_value: 0}
+      expect(scope.variantUnitValue(product, variant)).toEqual 0
 
     it "returns null when the variant has no unit_value", ->
       product = {}
@@ -760,6 +772,15 @@ describe "AdminProductEditCtrl", ->
         testVariant = {}
         scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual {}
+
+      it "sets zero when the field is zero", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
+        testVariant = {unit_value_with_description: "0"}
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 0
+          unit_description: ''
+          unit_value_with_description: "0"
 
       it "converts value from chosen unit to base unit", ->
         testProduct = {id: 123, variant_unit_scale: 1000}

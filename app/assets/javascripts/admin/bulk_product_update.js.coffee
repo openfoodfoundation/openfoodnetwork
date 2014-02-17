@@ -222,11 +222,12 @@ productEditModule.controller "AdminProductEditCtrl", [
 
     $scope.loadVariantVariantUnit = (product, variant) ->
       unit_value = $scope.variantUnitValue product, variant
-      variant.unit_value_with_description = "#{unit_value || ''} #{variant.unit_description || ''}".trim()
+      unit_value = if unit_value? then unit_value else ''
+      variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
 
 
     $scope.variantUnitValue = (product, variant) ->
-      if variant.unit_value
+      if variant.unit_value?
         if product.variant_unit_scale
           variant.unit_value / product.variant_unit_scale
         else
@@ -421,7 +422,8 @@ productEditModule.controller "AdminProductEditCtrl", [
         match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
         if match
           product = $scope.findProduct(product.id)
-          variant.unit_value  = parseFloat(match[1]) || null
+          variant.unit_value  = parseFloat(match[1])
+          variant.unit_value  = null if isNaN(variant.unit_value)
           variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
 
