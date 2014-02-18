@@ -169,7 +169,6 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 end
 
-
 def select_distributor
   visit "/"
   click_link distributor.name
