@@ -1,5 +1,6 @@
 %checkout{"ng-controller" => "CheckoutCtrl"}
-  = form_for @order, url: "test" do |f|
+  = form_for @order, url: shop_update_checkout_path, html: {name: "checkout", id: "checkout_form"} do |f|
+    {{ checkout.$valid }}
     .large-12.columns
       %fieldset#details
         %legend Customer Details

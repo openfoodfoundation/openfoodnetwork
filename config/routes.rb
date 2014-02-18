@@ -12,7 +12,7 @@ Openfoodnetwork::Application.routes.draw do
       #get '', to: ""
     #end
     get '/checkout', :to => 'checkout#edit' , :as => :checkout
-    post '/checkout', :to => 'checkout#update' , :as => :update_checkout
+    put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   end
 
   resources :enterprises do
