@@ -147,16 +147,28 @@ feature "As a consumer I want to check out my cart", js: true do
       let(:pm1) { create(:payment_method, distributors: [distributor]) }
       let(:pm2) { create(:payment_method, distributors: [distributor]) }
 
-      it "shows all available payment methods" do
+      before do
         pm1 # Lazy evaluation of ze create()s
         pm2
         visit "/shop/checkout"
+      end
+
+      it "shows all available payment methods" do
         page.should have_content pm1.name
         page.should have_content pm2.name
+      end
+
+      describe "Purchase" do
+        it "re-renders with errors when we submit the incomplete form" do
+          click_button "Purchase"
+          current_path.should == "/shop/checkout"
+          page.should have_content "We could not process your order"
+        end
       end
     end
   end
 end
+
 
 def select_distributor
   visit "/"
