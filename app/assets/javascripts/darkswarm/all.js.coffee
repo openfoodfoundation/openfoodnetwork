@@ -2,8 +2,10 @@
 #= require jquery_ujs
 #= require jquery-ui
 #= require spin
-#= require ../shared/angular
-#= require ../shared/angular-resource
+#
+#= require angular
+#= require angular-resource
+#
 #= require ../shared/jquery.timeago
 #= require foundation
 #= require ./shop
@@ -11,5 +13,3 @@
 
 $ ->
   $(document).foundation()
-
-
