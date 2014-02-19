@@ -419,7 +419,7 @@ productEditModule.controller "AdminProductEditCtrl", [
 
     $scope.packVariant = (product, variant) ->
       if variant.hasOwnProperty("unit_value_with_description")
-        match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
+        match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
         if match
           product = $scope.findProduct(product.id)
           variant.unit_value  = parseFloat(match[1])

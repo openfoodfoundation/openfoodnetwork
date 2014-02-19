@@ -760,6 +760,14 @@ describe "AdminProductEditCtrl", ->
           unit_description: 'Medium'
           unit_value_with_description: "Medium"
 
+      it "extracts into unit_description when a string starting with a number is provided", ->
+        testVariant = {unit_value_with_description: "1kg"}
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: null
+          unit_description: '1kg'
+          unit_value_with_description: "1kg"
+
       it "sets blank values when no value provided", ->
         testVariant = {unit_value_with_description: ""}
         scope.packVariant(testProduct, testVariant)
