@@ -189,24 +189,20 @@ feature %q{
     end
 
     # And the suppliers should have fees
-    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.suppliers.first.name
-    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.suppliers.first.enterprise_fees.first.name
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: oc.suppliers.first.name
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: oc.suppliers.first.enterprise_fees.first.name
 
-    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.suppliers.last.name
-    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.suppliers.last.enterprise_fees.first.name
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: oc.suppliers.last.name
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: oc.suppliers.last.enterprise_fees.first.name
 
     # And I should see the distributors
     page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
     page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
 
-    page.find('#order_cycle_outgoing_exchange_0_pickup_time').value.should == 'time 0'
-    page.find('#order_cycle_outgoing_exchange_0_pickup_instructions').value.should == 'instructions 0'
-    page.find('#order_cycle_outgoing_exchange_1_pickup_time').value.should == 'time 1'
-    page.find('#order_cycle_outgoing_exchange_1_pickup_instructions').value.should == 'instructions 1'
+    page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
+    page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'
+    page.should have_field 'order_cycle_outgoing_exchange_1_pickup_time', with: 'time 1'
+    page.should have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
 
     # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each do |row|
@@ -219,15 +215,11 @@ feature %q{
     end
 
     # And the distributors should have fees
-    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.distributors.first.name
-    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.distributors.first.enterprise_fees.first.name
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: oc.distributors.first.name
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: oc.distributors.first.enterprise_fees.first.name
 
-    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.distributors.last.name
-    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.distributors.last.enterprise_fees.first.name
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: oc.distributors.last.name
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: oc.distributors.last.enterprise_fees.first.name
   end
 
 
