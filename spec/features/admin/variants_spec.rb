@@ -42,5 +42,24 @@ feature %q{
     v.unit_description.should == 'bar'
   end
 
-  it "should not show unit value or description fields when the product does not have a unit-related option type"
+  it "does not show unit value or description fields when the product does not have a unit-related option type" do
+    # Given a product without unit-related option types, with a variant
+    p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+    v = create(:variant, product: p, unit_value: nil, unit_description: nil)
+
+    # And the product has option types for the variant's option values
+    p.option_types << v.option_values.first.option_type
+
+    # When I view the variant
+    login_to_admin_section
+    click_link 'Products'
+    within('#sub_nav') { click_link 'Products' }
+    click_link p.name
+    click_link 'Variants'
+    page.find('table.index .icon-edit').click
+
+    # Then I should not see unit value and description fields
+    page.should_not have_field "variant_unit_value"
+    page.should_not have_field "variant_unit_description"
+  end
 end
