@@ -16,12 +16,9 @@ Spree::Variant.class_eval do
     price + fees_for(distributor, order_cycle)
   end
 
-  # TODO: This method seems a little redundant. Though perhaps a useful interface.
-  # Consider removing.
   def fees_for(distributor, order_cycle)
     order_cycle.fees_for(self, distributor)
   end
-
 
 
   # Copied and modified from Spree::Variant
