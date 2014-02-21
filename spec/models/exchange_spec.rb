@@ -62,6 +62,20 @@ describe Exchange do
     end
   end
 
+  describe "reporting its role" do
+    it "returns 'supplier' when it is an incoming exchange" do
+      e = Exchange.new
+      e.stub(:incoming?) { true }
+      e.role.should == 'supplier'
+    end
+
+    it "returns 'distributor' when it is an outgoing exchange" do
+      e = Exchange.new
+      e.stub(:incoming?) { false }
+      e.role.should == 'distributor'
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
