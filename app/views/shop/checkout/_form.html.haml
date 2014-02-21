@@ -19,7 +19,7 @@
 
         %fieldset
           %legend Billing Address
-          = f.fields_for current_order.bill_address do |ba|
+          = f.fields_for :bill_address do |ba|
             .row
               .large-12.columns
                 = ba.text_field :address1
