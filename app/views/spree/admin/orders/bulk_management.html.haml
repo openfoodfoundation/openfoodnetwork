@@ -15,7 +15,18 @@
       Hub
       %br
       %select.select2{ :class => "four columns alpha", :id => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
-
+  .spacer{ :class => "one column alpha" }
+    &nbsp;
+  .date_filters{ :class => "four columns alpha" }
+    .date_filter{ :class => "four columns alpha" }
+      Start Date
+      %br
+      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate" }
+    .date_filter{ :class => "four columns alpha" }
+      End Date
+      %br
+      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate" }
+  %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %table.index#listing_orders.bulk
     %thead
       %tr

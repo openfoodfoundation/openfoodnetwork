@@ -372,3 +372,26 @@ describe "switchClass service", ->
     switchClassService elementMock, "class1", ["class2"], 1000
     expect(timeoutMock).toHaveBeenCalled()
     expect(elementMock.timeout).toEqual "new timeout"
+
+describe "Auxiliary functions", ->
+  describe "getting a zero filled two digit number", ->
+    it "returns the number as a string if its value is greater than or equal to 10", ->
+      expect(twoDigitNumber(10)).toEqual "10"
+      expect(twoDigitNumber(15)).toEqual "15"
+      expect(twoDigitNumber(99)).toEqual "99"
+
+    it "returns the number formatted as a zero filled string if its value is less than 10", ->
+      expect(twoDigitNumber(0)).toEqual "00"
+      expect(twoDigitNumber(1)).toEqual "01"
+      expect(twoDigitNumber(9)).toEqual "09"
+
+  describe "formatting a date", ->
+    it "returns a date formatted as yyyy-mm-dd hh-MM:ss", ->
+      date = new Date
+      date.setYear(2010)
+      date.setMonth(5) # Zero indexed, so 5 is June
+      date.setDate(15)
+      date.setHours(5)
+      date.setMinutes(10)
+      date.setSeconds(30)
+      expect(formatDate(date)).toEqual "2010-06-15 05:10:30"

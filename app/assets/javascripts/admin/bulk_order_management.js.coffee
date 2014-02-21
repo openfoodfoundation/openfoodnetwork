@@ -1,4 +1,4 @@
-orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services"])
+orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services", "ofn.shared_directives"])
 
 orderManagementModule.config [
   "$httpProvider"
@@ -67,8 +67,13 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher", "blankEnterprise", "pendingChanges"
   ($scope, $http, dataFetcher, blankEnterprise, pendingChanges) ->
 
+    now = new Date
+    start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - ( now.getTime() % ( 1440 * 60 * 1000 ) - now.getTimezoneOffset() * 60 * 1000 ) )
+    end = new Date( now.getTime() - ( now.getTime() % ( 1440 * 60 * 1000 ) - now.getTimezoneOffset() * 60 * 1000 ) + ( 1 * ( 1440 * 60 * 1000 ) ) )
     $scope.lineItems = []
     $scope.confirmDelete = true
+    $scope.startDate = formatDate start
+    $scope.endDate = formatDate end
     $scope.pendingChanges = pendingChanges
 
     $scope.initialise = (spree_api_key) ->
@@ -168,3 +173,17 @@ orderManagementModule.factory "switchClass", [
           element.removeClass classToAdd
         , timeout, true)
 ]
+
+formatDate = (date) ->
+  year = date.getFullYear()
+  month = twoDigitNumber date.getMonth() + 1
+  day = twoDigitNumber date.getDate()
+  hours = twoDigitNumber date.getHours()
+  mins = twoDigitNumber date.getMinutes()
+  secs = twoDigitNumber date.getSeconds()
+  return year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + secs
+
+twoDigitNumber = (number) ->
+  twoDigits =  "" + number
+  twoDigits = ("0" + number) if number < 10
+  twoDigits
