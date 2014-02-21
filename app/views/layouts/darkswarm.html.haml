@@ -14,6 +14,7 @@
 
   %body.off-canvas
     = render partial: "shared/menu"
+    = display_flash_messages
 
     %section{ role: "main" }
       = yield

@@ -51,6 +51,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'zurb-foundation', :github => 'zurb/foundation'
 end
+gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
 

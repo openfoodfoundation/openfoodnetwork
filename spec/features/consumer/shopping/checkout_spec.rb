@@ -158,11 +158,12 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content pm2.name
       end
 
-      describe "Purchase" do
+      describe "Purchasing" do
         it "re-renders with errors when we submit the incomplete form" do
           click_button "Purchase"
           current_path.should == "/shop/checkout"
-          page.should have_content "We could not process your order"
+          save_and_open_page
+          page.should have_content "can't be blank"
         end
       end
     end

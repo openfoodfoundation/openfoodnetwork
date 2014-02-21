@@ -1,24 +1,20 @@
 %checkout{"ng-controller" => "CheckoutCtrl"}
-  = form_for current_order, url: shop_update_checkout_path, html: {name: "checkout", id: "checkout_form"} do |f|
+  = f_form_for current_order, url: main_app.shop_update_checkout_path, html: {name: "checkout", id: "checkout_form"} do |f|
     {{ checkout.$valid }}
     .large-12.columns
       %fieldset#details
         %legend Customer Details
         .row
           .large-6.columns
-            = f.label :email, "Email Address"
             = f.text_field :email 
           = f.fields_for current_order.bill_address do |ba|
             .large-6.columns
-              = ba.label :phone
               = ba.text_field :phone 
         = f.fields_for current_order.bill_address do |ba|
           .row
             .large-6.columns
-              = ba.label :firstname
               = ba.text_field :firstname
             .large-6.columns
-              = ba.label :lastname
               = ba.text_field :lastname
 
         %fieldset
@@ -26,22 +22,17 @@
           = f.fields_for current_order.bill_address do |ba|
             .row
               .large-12.columns
-                = ba.label :address1
                 = ba.text_field :address1
             .row
               .large-12.columns
-                = ba.label :address2
                 = ba.text_field :address2
             .row
               .large-6.columns
-                = ba.label :city
                 = ba.text_field :city
               .large-6.columns
-                = ba.label :country
                 = ba.text_field :country
             .row
               .large-6.columns.right
-                = ba.label :zipcode
                 = ba.text_field :zipcode
 
       %fieldset#shipping
@@ -61,30 +52,23 @@
           #ship_address{"ng-show" => "require_ship_address"}
             .row
               .large-12.columns
-                = sa.label :address1
                 = sa.text_field :address1
             .row
               .large-12.columns
-                = sa.label :address2
                 = sa.text_field :address2
 
             .row
               .large-6.columns
-                = sa.label :city
                 = sa.text_field :city
               .large-6.columns
-                = sa.label :country
                 = sa.text_field :country
             .row
               .large-6.columns.right
-                = sa.label :zipcode
                 = sa.text_field :zipcode
             .row
               .large-6.columns
-                = sa.label :firstname
                 = sa.text_field :firstname
               .large-6.columns
-                = sa.label :lastname
                 = sa.text_field :lastname
       %fieldset#payment
         %legend Payment Details
