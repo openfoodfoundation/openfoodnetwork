@@ -350,7 +350,7 @@ describe OrderCycle do
     it "creates adjustment for each fee" do
       applicator = double(:enterprise_fee_applicator)
       applicator.should_receive(:create_line_item_adjustment).with(line_item)
-      oc.should_receive(:enterprise_fees_for).with(variant, distributor) { [applicator] }
+      oc.should_receive(:per_item_enterprise_fee_applicators_for).with(variant, distributor) { [applicator] }
 
       oc.send(:create_adjustments_for, line_item)
     end
@@ -366,7 +366,7 @@ describe OrderCycle do
       oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
       oc.stub(:coordinator_fees) { [ef3] }
 
-      oc.send(:enterprise_fees_for, line_item.variant, distributor).should ==
+      oc.send(:per_item_enterprise_fee_applicators_for, line_item.variant, distributor).should ==
         [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
          OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
          OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]

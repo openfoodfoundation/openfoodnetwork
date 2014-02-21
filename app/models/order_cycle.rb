@@ -146,7 +146,7 @@ class OrderCycle < ActiveRecord::Base
 
   # -- Fees
   def fees_for(variant, distributor)
-    enterprise_fees_for(variant, distributor).sum do |applicator|
+    per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
       # Amount is faked, this is a method on LineItem
@@ -159,13 +159,13 @@ class OrderCycle < ActiveRecord::Base
     variant = line_item.variant
     distributor = line_item.order.distributor
 
-    enterprise_fees_for(variant, distributor).each { |applicator| applicator.create_line_item_adjustment(line_item) }
+    per_item_enterprise_fee_applicators_for(variant, distributor).each { |applicator| applicator.create_line_item_adjustment(line_item) }
   end
 
   private
 
   # -- Fees
-  def enterprise_fees_for(variant, distributor)
+  def per_item_enterprise_fee_applicators_for(variant, distributor)
     fees = []
 
     exchanges_carrying(variant, distributor).each do |exchange|
