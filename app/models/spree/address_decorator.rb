@@ -1,5 +1,6 @@
 Spree::Address.class_eval do
   has_one :enterprise
+  belongs_to :country, class_name: "Spree::Country"
 
   geocoded_by :full_address
 
