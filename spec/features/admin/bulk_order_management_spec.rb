@@ -29,9 +29,9 @@ feature %q{
       page.should have_selector "h1.page-title", text: "Bulk Order Management"
     end
 
-    it "displays a message when number of products is zero" do
+    it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
-      page.should have_text "No matching orders found."
+      page.should have_text "No matching line items found."
     end
 
     context "displaying the list of line items " do
@@ -44,6 +44,10 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+      end
+
+      it "displays a 'loading' splash for line items" do
+        page.should have_selector "div.loading", :text => "Loading Line Items..."
       end
 
       it "displays a list of line items" do

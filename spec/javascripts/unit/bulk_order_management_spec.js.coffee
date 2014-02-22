@@ -44,6 +44,14 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
       expect(scope.resetOrders).toHaveBeenCalledWith "list of orders"
 
+    it "sets the loading property to true before fetching orders and unsets it when loading is complete", ->
+      spyOn scope, "resetOrders"
+      scope.fetchOrders()
+      expect(scope.loading).toEqual true
+      httpBackend.flush()
+      expect(scope.loading).toEqual false
+
+
   describe "resetting orders", ->
     beforeEach ->
       spyOn(scope, "matchDistributor").andReturn "nothing"
