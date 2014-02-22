@@ -236,6 +236,18 @@ feature %q{
         page.should have_selector "td.id", text: li2.id.to_s, visible: true
         page.should_not have_selector "td.id", text: li3.id.to_s, visible: true
       end
+
+      it "displays only line items whose orders meet the date restriction criteria, when changed" do
+        fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li3.id.to_s, visible: true
+
+        fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F %T")
+        page.should have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "td.id", text: li3.id.to_s, visible: true
+      end
     end
 
     context "using action buttons" do

@@ -21,11 +21,11 @@
     .date_filter{ :class => "four columns alpha" }
       Start Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate" }
+      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ng-change' => "fetchOrders()" }
     .date_filter{ :class => "four columns alpha" }
       End Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate" }
+      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ng-change' => "fetchOrders()" }
   .spacer{ :class => "seven columns alpha" }
     &nbsp;
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
