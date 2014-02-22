@@ -7,6 +7,7 @@ describe "AdminOrderMgmtCtrl", ->
     scope = $rootScope.$new()
     ctrl = $controller
     httpBackend = $httpBackend
+    spyOn(window, "formatDate").andReturn "SomeDate"
 
     ctrl "AdminOrderMgmtCtrl", {$scope: scope}
   )
@@ -32,9 +33,9 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "fetching orders", ->
     beforeEach ->
-      httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true").respond "list of orders"
+      httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
 
-    it "makes a standard call to dataFetcher", ->
+    it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()
 
     it "calls resetOrders after data has been received", ->

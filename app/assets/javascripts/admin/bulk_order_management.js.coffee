@@ -68,8 +68,8 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
   ($scope, $http, dataFetcher, blankEnterprise, pendingChanges) ->
 
     now = new Date
-    start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - ( now.getTime() % ( 1440 * 60 * 1000 ) - now.getTimezoneOffset() * 60 * 1000 ) )
-    end = new Date( now.getTime() - ( now.getTime() % ( 1440 * 60 * 1000 ) - now.getTimezoneOffset() * 60 * 1000 ) + ( 1 * ( 1440 * 60 * 1000 ) ) )
+    start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
+    end = new Date( now.getTime() - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) + ( 1 * ( 1440 * 60 * 1000 ) ) )
     $scope.lineItems = []
     $scope.confirmDelete = true
     $scope.startDate = formatDate start
@@ -98,7 +98,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
     $scope.fetchOrders = ->
-      dataFetcher("/api/orders?template=bulk_index&q[completed_at_not_null]=true").then (data) ->
+      dataFetcher("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=#{$scope.startDate}&q[completed_at_lt]=#{$scope.endDate}").then (data) ->
         $scope.resetOrders data
 
     $scope.resetOrders = (data) ->

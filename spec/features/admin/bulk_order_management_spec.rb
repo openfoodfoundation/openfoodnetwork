@@ -204,10 +204,12 @@ feature %q{
     end
 
     context "using date restriction controls" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today - 8).strftime("%F %T") ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today + 2).strftime("%F %T") ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -218,6 +220,12 @@ feature %q{
         tonight = Date.tomorrow.strftime("%F %T")
         page.should have_field "start_date_filter", with: one_week_ago
         page.should have_field "end_date_filter", with: tonight
+      end
+
+      it "only loads line items whose orders meet the date restriction criteria" do
+        page.should_not have_selector "td.id", text: li1.id.to_s, visible: true
+        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should_not have_selector "td.id", text: li3.id.to_s, visible: true
       end
     end
 
