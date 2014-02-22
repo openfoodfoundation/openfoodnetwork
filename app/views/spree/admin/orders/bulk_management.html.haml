@@ -26,29 +26,34 @@
       End Date
       %br
       %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate" }
+  .spacer{ :class => "seven columns alpha" }
+    &nbsp;
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
-  %table.index#listing_orders.bulk
-    %thead
-      %tr
-        %th.id ID
-        %th.email Email
-        %th.date Order Date
-        %th.producer Producer
-        %th.variant Product (Unit): Var
-        %th.quantity Quantity
-        %th.max Max
-        %th.actions
-          Ask?&nbsp;
-          %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-      %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
-        %td.id {{ line_item.id }}
-        %td.email {{ line_item.order.email }}
-        %td.date {{ line_item.order.completed_at }}
-        %td.producer {{ line_item.supplier.name }}
-        %td.variant {{ line_item.variant_unit_text }}
-        %td.quantity
-          %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
-        %td.max {{ line_item.max }}
-        %td.actions
-          %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
-  %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
+  %div{ :class => "sixteen columns alpha", 'ng-show' => 'lineItems.length == 0'}
+    %h4{ :style => 'color:red;' } No matching orders found.
+  %div{ 'ng-hide' => 'lineItems.length == 0' }
+    %table.index#listing_orders.bulk
+      %thead
+        %tr
+          %th.id ID
+          %th.email Email
+          %th.date Order Date
+          %th.producer Producer
+          %th.variant Product (Unit): Var
+          %th.quantity Quantity
+          %th.max Max
+          %th.actions
+            Ask?&nbsp;
+            %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
+        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+          %td.id {{ line_item.id }}
+          %td.email {{ line_item.order.email }}
+          %td.date {{ line_item.order.completed_at }}
+          %td.producer {{ line_item.supplier.name }}
+          %td.variant {{ line_item.variant_unit_text }}
+          %td.quantity
+            %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
+          %td.max {{ line_item.max }}
+          %td.actions
+            %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
+    %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }

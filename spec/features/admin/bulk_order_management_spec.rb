@@ -29,6 +29,11 @@ feature %q{
       page.should have_selector "h1.page-title", text: "Bulk Order Management"
     end
 
+    it "displays a message when number of products is zero" do
+      visit '/admin/orders/bulk_management'
+      page.should have_text "No matching orders found."
+    end
+
     context "displaying the list of line items " do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
