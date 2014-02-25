@@ -9,6 +9,26 @@ describe EnterpriseFee do
     it { should validate_presence_of(:name) }
   end
 
+  describe "scopes" do
+    describe "finding per-item enterprise fees" do
+      it "does not return fees with FlatRate and FlexiRate calculators" do
+        create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+        create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+
+        EnterpriseFee.per_item.should be_empty
+      end
+
+      it "returns fees with any other calculator" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+
+        EnterpriseFee.per_item.sort.should == [ef1, ef2, ef3, ef4].sort
+      end
+    end
+  end
+
   describe "clearing all enterprise fee adjustments for a line item" do
     it "clears adjustments originating from many different enterprise fees" do
       p = create(:simple_product)

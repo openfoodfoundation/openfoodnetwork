@@ -21,6 +21,10 @@ class EnterpriseFee < ActiveRecord::Base
     end
   }
 
+  scope :per_item, lambda {
+    joins(:calculator).where('spree_calculators.type NOT IN (?)', ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate'])
+  }
+
   def self.clear_all_adjustments_for(line_item)
     line_item.order.adjustments.where(originator_type: 'EnterpriseFee', source_id: line_item, source_type: 'Spree::LineItem').destroy_all
   end
