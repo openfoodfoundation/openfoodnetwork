@@ -9,6 +9,44 @@ describe EnterpriseFee do
     it { should validate_presence_of(:name) }
   end
 
+  describe "scopes" do
+    describe "finding per-item enterprise fees" do
+      it "does not return fees with FlatRate and FlexiRate calculators" do
+        create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+        create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+
+        EnterpriseFee.per_item.should be_empty
+      end
+
+      it "returns fees with any other calculator" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+
+        EnterpriseFee.per_item.sort.should == [ef1, ef2, ef3, ef4].sort
+      end
+    end
+
+    describe "finding per-order enterprise fees" do
+      it "returns fees with FlatRate and FlexiRate calculators" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+
+        EnterpriseFee.per_order.sort.should == [ef1, ef2].sort
+      end
+
+      it "does not return fees with any other calculator" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+
+        EnterpriseFee.per_order.should be_empty
+      end
+    end
+  end
+
   describe "clearing all enterprise fee adjustments for a line item" do
     it "clears adjustments originating from many different enterprise fees" do
       p = create(:simple_product)
@@ -38,7 +76,7 @@ describe EnterpriseFee do
   end
 
   describe "clearing all enterprise fee adjustments on an order" do
-    it "clears adjustments from many fees and one all line items" do
+    it "clears adjustments from many fees and on all line items" do
       order = create(:order)
 
       p1 = create(:simple_product)
@@ -58,6 +96,17 @@ describe EnterpriseFee do
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
       end.to change(order.adjustments, :count).by(-4)
+    end
+
+    it "clears adjustments from per-order fees" do
+      order = create(:order)
+      ef = create(:enterprise_fee)
+      efa = OpenFoodNetwork::EnterpriseFeeApplicator.new(ef, nil, 'coordinator')
+      efa.create_order_adjustment(order)
+
+      expect do
+        EnterpriseFee.clear_all_adjustments_on_order order
+      end.to change(order.adjustments, :count).by(-1)
     end
 
     it "does not clear adjustments from another originator" do

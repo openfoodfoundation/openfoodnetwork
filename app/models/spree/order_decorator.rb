@@ -80,13 +80,15 @@ Spree::Order.class_eval do
 
     line_items.each do |line_item|
       if provided_by_order_cycle? line_item
-        order_cycle.create_adjustments_for line_item
+        order_cycle.create_line_item_adjustments_for line_item
 
       else
         pd = product_distribution_for line_item
         pd.create_adjustment_for line_item if pd
       end
     end
+
+    order_cycle.create_order_adjustments_for self if order_cycle
   end
 
   def set_variant_attributes(variant, attributes)

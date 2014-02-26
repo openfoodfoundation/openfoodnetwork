@@ -62,6 +62,20 @@ describe Exchange do
     end
   end
 
+  describe "reporting its role" do
+    it "returns 'supplier' when it is an incoming exchange" do
+      e = Exchange.new
+      e.stub(:incoming?) { true }
+      e.role.should == 'supplier'
+    end
+
+    it "returns 'distributor' when it is an outgoing exchange" do
+      e = Exchange.new
+      e.stub(:incoming?) { false }
+      e.role.should == 'distributor'
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
@@ -95,6 +109,15 @@ describe Exchange do
       ex.variants << v
 
       Exchange.with_variant(v).should == [ex]
+    end
+
+    it "finds exchanges with any of a number of variants" do
+      v1 = create(:variant)
+      v2 = create(:variant)
+      ex = create(:exchange)
+      ex.variants << v1
+
+      Exchange.any_variant([v1, v2]).should == [ex]
     end
 
     it "finds exchanges with a particular product's master variant" do

@@ -1,3 +1,5 @@
+require 'open_food_network/enterprise_fee_applicator'
+
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
   has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
@@ -144,56 +146,72 @@ class OrderCycle < ActiveRecord::Base
 
   # -- Fees
   def fees_for(variant, distributor)
-    enterprise_fees_for(variant, distributor).sum do |fee|
+    per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
       # Amount is faked, this is a method on LineItem
-      line_item = OpenStruct.new variant: variant, quantity: 1, amount: (variant.price) 
-      fee[:enterprise_fee].compute_amount(line_item)
+      line_item = OpenStruct.new variant: variant, quantity: 1, amount: variant.price
+      applicator.enterprise_fee.compute_amount(line_item)
     end
   end
 
-  def create_adjustments_for(line_item)
+  def create_line_item_adjustments_for(line_item)
     variant = line_item.variant
     distributor = line_item.order.distributor
 
-    enterprise_fees_for(variant, distributor).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
+    per_item_enterprise_fee_applicators_for(variant, distributor).each do |applicator|
+      applicator.create_line_item_adjustment(line_item)
+    end
   end
+
+  def create_order_adjustments_for(order)
+    per_order_enterprise_fee_applicators_for(order).each do |applicator|
+      applicator.create_order_adjustment(order)
+    end
+  end
+
 
   private
 
   # -- Fees
-  def enterprise_fees_for(variant, distributor)
+  def per_item_enterprise_fee_applicators_for(variant, distributor)
     fees = []
 
     exchanges_carrying(variant, distributor).each do |exchange|
-      exchange.enterprise_fees.each do |enterprise_fee|
-        role = exchange.incoming? ? 'supplier' : 'distributor'
-        fees << {enterprise_fee: enterprise_fee,
-                 label: adjustment_label_for(variant, enterprise_fee, role),
-                 role: role}
+      exchange.enterprise_fees.per_item.each do |enterprise_fee|
+        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
       end
     end
 
-    coordinator_fees.each do |enterprise_fee|
-      fees << {enterprise_fee: enterprise_fee,
-               label: adjustment_label_for(variant, enterprise_fee, 'coordinator'),
-               role: 'coordinator'}
+    coordinator_fees.per_item.each do |enterprise_fee|
+      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
     end
 
     fees
   end
 
-  def create_adjustment_for_fee(line_item, enterprise_fee, label, role)
-    a = enterprise_fee.create_locked_adjustment(label, line_item.order, line_item, true)
-    AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
-  end
+  def per_order_enterprise_fee_applicators_for(order)
+    fees = []
 
-  def adjustment_label_for(variant, enterprise_fee, role)
-    "#{variant.product.name} - #{enterprise_fee.fee_type} fee by #{role} #{enterprise_fee.enterprise.name}"
+    exchanges_supplying(order).each do |exchange|
+      exchange.enterprise_fees.per_order.each do |enterprise_fee|
+        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
+      end
+    end
+
+    coordinator_fees.per_order.each do |enterprise_fee|
+      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+    end
+
+    fees
   end
 
   def exchanges_carrying(variant, distributor)
     exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
+  end
+
+  def exchanges_supplying(order)
+    variants = order.line_items.map(&:variant)
+    exchanges.to_enterprises([coordinator, order.distributor]).any_variant(variants)
   end
 end
