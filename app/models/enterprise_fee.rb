@@ -35,7 +35,7 @@ class EnterpriseFee < ActiveRecord::Base
   end
 
   def self.clear_all_adjustments_on_order(order)
-    order.adjustments.where(originator_type: 'EnterpriseFee', source_type: 'Spree::LineItem').destroy_all
+    order.adjustments.where(originator_type: 'EnterpriseFee').destroy_all
   end
 
   # Create an adjustment that starts as locked. Preferable to making an adjustment and locking it since

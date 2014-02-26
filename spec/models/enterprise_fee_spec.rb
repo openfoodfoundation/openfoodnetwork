@@ -76,7 +76,7 @@ describe EnterpriseFee do
   end
 
   describe "clearing all enterprise fee adjustments on an order" do
-    it "clears adjustments from many fees and one all line items" do
+    it "clears adjustments from many fees and on all line items" do
       order = create(:order)
 
       p1 = create(:simple_product)
@@ -96,6 +96,17 @@ describe EnterpriseFee do
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
       end.to change(order.adjustments, :count).by(-4)
+    end
+
+    it "clears adjustments from per-order fees" do
+      order = create(:order)
+      ef = create(:enterprise_fee)
+      efa = OpenFoodNetwork::EnterpriseFeeApplicator.new(ef, nil, 'coordinator')
+      efa.create_order_adjustment(order)
+
+      expect do
+        EnterpriseFee.clear_all_adjustments_on_order order
+      end.to change(order.adjustments, :count).by(-1)
     end
 
     it "does not clear adjustments from another originator" do
