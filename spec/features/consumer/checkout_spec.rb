@@ -128,16 +128,14 @@ feature %q{
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
        ["Bananas - packing fee by distributor FruitAndVeg", "$7.00", ""],
        ["Bananas - transport fee by distributor FruitAndVeg", "$8.00", ""],
-       ["Bananas - admin fee by coordinator My coordinator", "$1.00", ""],
-       ["Bananas - sales fee by coordinator My coordinator", "$2.00", ""],
        ["Zucchini - admin fee by supplier Supplier 2", "$5.00", ""],
        ["Zucchini - sales fee by supplier Supplier 2", "$6.00", ""],
        ["Zucchini - packing fee by distributor FruitAndVeg", "$7.00", ""],
        ["Zucchini - transport fee by distributor FruitAndVeg", "$8.00", ""],
-       ["Zucchini - admin fee by coordinator My coordinator", "$1.00", ""],
-       ["Zucchini - sales fee by coordinator My coordinator", "$2.00", ""]]
+       ["Whole order - admin fee by coordinator My coordinator", "$1.00", ""],
+       ["Whole order - sales fee by coordinator My coordinator", "$2.00", ""]]
 
-    page.should have_selector 'span.distribution-total', :text => '$54.00'
+    page.should have_selector 'span.distribution-total', :text => '$51.00'
   end
 
   scenario "attempting to purchase products that mix product and order cycle distribution", future: true do
@@ -396,7 +394,7 @@ feature %q{
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
     order_charges.should == [["Delivery:", "$0.00"],
-                             ["Distribution:", "$54.00"]]
+                             ["Distribution:", "$51.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment
@@ -411,12 +409,12 @@ feature %q{
     page.should have_selector 'figure#logo h1', text: @distributor_oc.name 
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '54.00'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
     email.reply_to.include?(@distributor_oc.email).should == true
-    email.body.should =~ /Distribution[\s+]\$54.00/
+    email.body.should =~ /Distribution[\s+]\$51.00/
   end
 
   scenario "when I have past orders, it fills in my address", :js => true do
@@ -481,7 +479,7 @@ feature %q{
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
     order_charges.should == [["Delivery:", "$0.00"],
-                             ["Distribution:", "$54.00"]]
+                             ["Distribution:", "$51.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment
@@ -495,11 +493,11 @@ feature %q{
     page.should have_content @payment_method_distributor_oc.description
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '54.00'
+    page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution[\s+]\$54.00/
+    email.body.should =~ /Distribution[\s+]\$51.00/
   end
 
 
@@ -509,8 +507,8 @@ feature %q{
     @order_cycle = oc = create(:simple_order_cycle, coordinator: create(:distributor_enterprise, name: 'My coordinator'))
 
     # Coordinator
-    coordinator_fee1 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'admin', amount: 1)
-    coordinator_fee2 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'sales', amount: 2)
+    coordinator_fee1 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'admin', calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1))
+    coordinator_fee2 = create(:enterprise_fee, enterprise: oc.coordinator, fee_type: 'sales', calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2))
     oc.coordinator_fees << coordinator_fee1
     oc.coordinator_fees << coordinator_fee2
 

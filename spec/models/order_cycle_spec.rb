@@ -347,7 +347,7 @@ describe OrderCycle do
     let(:order) { double(:order, distributor: distributor) }
     let(:line_item) { double(:line_item, variant: variant, order: order) }
 
-    it "creates adjustment for each fee" do
+    it "creates an adjustment for each fee" do
       applicator = double(:enterprise_fee_applicator)
       applicator.should_receive(:create_line_item_adjustment).with(line_item)
       oc.should_receive(:per_item_enterprise_fee_applicators_for).with(variant, distributor) { [applicator] }
@@ -355,7 +355,7 @@ describe OrderCycle do
       oc.send(:create_line_item_adjustments_for, line_item)
     end
 
-    it "finds fees for a line item" do
+    it "makes fee applicators for a line item" do
       distributor = double(:distributor)
       ef1 = double(:enterprise_fee)
       ef2 = double(:enterprise_fee)
@@ -374,7 +374,40 @@ describe OrderCycle do
          OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
     end
   end
-  
+
+  describe "creating adjustments for an order" do
+    let(:oc) { OrderCycle.new }
+    let(:distributor) { double(:distributor) }
+    let(:order) { double(:order, distributor: distributor) }
+
+    it "creates an adjustment for each fee" do
+      applicator = double(:enterprise_fee_applicator)
+      applicator.should_receive(:create_order_adjustment).with(order)
+      oc.should_receive(:per_order_enterprise_fee_applicators_for).with(order) { [applicator] }
+
+      oc.send(:create_order_adjustments_for, order)
+    end
+
+    it "makes fee applicators for an order" do
+      distributor = double(:distributor)
+      ef1 = double(:enterprise_fee)
+      ef2 = double(:enterprise_fee)
+      ef3 = double(:enterprise_fee)
+      incoming_exchange = double(:exchange, role: 'supplier')
+      outgoing_exchange = double(:exchange, role: 'distributor')
+      incoming_exchange.stub_chain(:enterprise_fees, :per_order) { [ef1] }
+      outgoing_exchange.stub_chain(:enterprise_fees, :per_order) { [ef2] }
+
+      oc.stub(:exchanges_supplying) { [incoming_exchange, outgoing_exchange] }
+      oc.stub_chain(:coordinator_fees, :per_order) { [ef3] }
+
+      oc.send(:per_order_enterprise_fee_applicators_for, order).should ==
+        [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+    end
+  end
+
   describe "finding recently closed order cycles" do
     it "should give the most recently closed order cycle for a distributor" do
       distributor = create(:distributor_enterprise)

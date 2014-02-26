@@ -159,8 +159,17 @@ class OrderCycle < ActiveRecord::Base
     variant = line_item.variant
     distributor = line_item.order.distributor
 
-    per_item_enterprise_fee_applicators_for(variant, distributor).each { |applicator| applicator.create_line_item_adjustment(line_item) }
+    per_item_enterprise_fee_applicators_for(variant, distributor).each do |applicator|
+      applicator.create_line_item_adjustment(line_item)
+    end
   end
+
+  def create_order_adjustments_for(order)
+    per_order_enterprise_fee_applicators_for(order).each do |applicator|
+      applicator.create_order_adjustment(order)
+    end
+  end
+
 
   private
 
@@ -181,7 +190,28 @@ class OrderCycle < ActiveRecord::Base
     fees
   end
 
+  def per_order_enterprise_fee_applicators_for(order)
+    fees = []
+
+    exchanges_supplying(order).each do |exchange|
+      exchange.enterprise_fees.per_order.each do |enterprise_fee|
+        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
+      end
+    end
+
+    coordinator_fees.per_order.each do |enterprise_fee|
+      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+    end
+
+    fees
+  end
+
   def exchanges_carrying(variant, distributor)
     exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
+  end
+
+  def exchanges_supplying(order)
+    variants = order.line_items.map(&:variant)
+    exchanges.to_enterprises([coordinator, order.distributor]).any_variant(variants)
   end
 end

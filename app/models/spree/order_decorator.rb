@@ -87,6 +87,8 @@ Spree::Order.class_eval do
         pd.create_adjustment_for line_item if pd
       end
     end
+
+    order_cycle.create_order_adjustments_for self if order_cycle
   end
 
   def set_variant_attributes(variant, attributes)
