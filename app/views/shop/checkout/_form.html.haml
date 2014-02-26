@@ -38,17 +38,17 @@
                 = ba.text_field :zipcode
 
       %fieldset#shipping
-        %legend Shipping 
-
-        - for ship_method in current_distributor.shipping_methods.uniq
+        %legend Shipping
+        - checked_id = @order.shipping_method_id || current_distributor.shipping_methods.first.id 
+        - for ship_method, i in current_distributor.shipping_methods.uniq
           .row
             .large-12.columns
-              %label
-                = f.radio_button :shipping_method_id, ship_method.id,
-                  text: ship_method.name,
-                  "ng-model" => "shipping_method",
-                  "ng-change" => "shippingMethodChanged()",
-                  "data-require-ship-address" => ship_method.require_ship_address
+              = f.radio_button :shipping_method_id, ship_method.id,
+                text: ship_method.name,
+                "ng-init" => "shipping_method = #{checked_id}",
+                "ng-model" => "shipping_method",
+                "ng-change" => "shippingMethodChanged()",
+                "data-require-ship-address" => ship_method.require_ship_address
 
         = fields_for current_order.ship_address do |sa|
           #ship_address{"ng-show" => "require_ship_address"}
