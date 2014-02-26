@@ -1,0 +1,10 @@
+/ insert_top "[data-hook='admin_variant_form_fields']"
+
+- if product_has_variant_unit_option_type?(@product)
+  .field{"data-hook" => "unit_value"}
+    = f.label :unit_value, "Unit Value"
+    = f.text_field :unit_value, class: "fullwidth"
+
+  .field{"data-hook" => "unit_description"}
+    = f.label :unit_description, "Unit Description"
+    = f.text_field :unit_description, class: "fullwidth"

@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature %q{
-    As a supplier
-    I want set a supplier and distributor(s) for a product
+    As an admin
+    I want to set a supplier and distributor(s) for a product
 } do
   include AuthenticationWorkflow
   include WebHelper

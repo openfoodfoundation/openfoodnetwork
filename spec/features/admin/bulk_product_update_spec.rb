@@ -229,7 +229,8 @@ feature %q{
     end
   end
 
-  scenario "create a new product" do
+
+  scenario "creating a new product" do
     s = FactoryGirl.create(:supplier_enterprise)
     d = FactoryGirl.create(:distributor_enterprise)
 
@@ -252,6 +253,57 @@ feature %q{
     flash_message.should == 'Product "Big Bag Of Apples" has been successfully created!'
     page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
+
+
+  scenario "creating new variants" do
+    # Given a product without variants or a unit
+    p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+    login_to_admin_section
+    visit '/admin/products/bulk_edit'
+
+    # I should not see an add variant button
+    page.should_not have_selector 'a.add-variant', visible: true
+
+    # When I set the unit
+    select "Weight (kg)", from: "variant_unit_with_scale"
+
+    # I should see an add variant button
+    page.should have_selector 'a.add-variant', visible: true
+
+    # When I add three variants
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+
+    # They should be added, and should see no edit buttons
+    page.all("tr.variant").count.should == 3
+    page.should_not have_selector "a.edit-variant", visible: true
+
+    # When I remove two, they should be removed
+    page.all('a.delete-variant').first.click
+    page.all('a.delete-variant').first.click
+    page.all("tr.variant").count.should == 1
+
+    # When I fill out variant details and hit update
+    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_price", with: "4.0"
+    fill_in "variant_on_hand", with: "10"
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    # Then I should see edit buttons for the new variant
+    page.should have_selector "a.edit-variant", visible: true
+
+    # And the variants should be saved
+    visit '/admin/products/bulk_edit'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
+
+    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    page.should have_field "variant_price", with: "4.0"
+    page.should have_field "variant_on_hand", with: "10"
+  end
+
 
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
@@ -295,7 +347,7 @@ feature %q{
     page.should have_field "on_hand", with: "18"
   end
   
-  scenario "updating a product with an items variant unit" do
+  scenario "updating a product with a variant unit of 'items'" do
     p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
     login_to_admin_section
@@ -338,6 +390,49 @@ feature %q{
 
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "variant_unit_value_with_description", with: "123 abc"
+  end
+
+
+  describe "setting the master unit value for a product without variants" do
+    it "sets the master unit value" do
+      p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+
+      login_to_admin_section
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: ''
+      page.should_not have_field "master_unit_value_with_description", visible: true
+
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      fill_in "master_unit_value_with_description", with: '123 abc'
+
+      click_button 'Update'
+      page.find("span#update-status-message").should have_content "Update complete"
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+      page.should have_field "master_unit_value_with_description", with: "123 abc"
+
+      p.reload
+      p.variant_unit.should == 'weight'
+      p.variant_unit_scale.should == 1000
+      p.master.unit_value.should == 123000
+      p.master.unit_description.should == 'abc'
+    end
+
+    it "does not show the field when the product has variants" do
+      p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+      v = FactoryGirl.create(:variant, product: p, unit_value: nil, unit_description: nil)
+
+      login_to_admin_section
+
+      visit '/admin/products/bulk_edit'
+
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      page.should_not have_field "master_unit_value_with_description", visible: true
+    end
   end
 
 
