@@ -8,6 +8,7 @@ module Admin
     def index
       @include_calculators = params[:include_calculators].present?
       @enterprise = current_enterprise
+      @enterprises = Enterprise.managed_by(spree_current_user).by_name
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
