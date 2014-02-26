@@ -310,16 +310,18 @@ describe OrderCycle do
   end
 
   describe "calculating fees for a variant via a particular distributor" do
-    it "sums all the fees for the variant in the specified hub + order cycle" do
+    it "sums all the per-item fees for the variant in the specified hub + order cycle" do
       coordinator = create(:distributor_enterprise)
       distributor = create(:distributor_enterprise)
       order_cycle = create(:simple_order_cycle)
       enterprise_fee1 = create(:enterprise_fee, amount: 20)
       enterprise_fee2 = create(:enterprise_fee, amount:  3)
+      enterprise_fee3 = create(:enterprise_fee,
+                               calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2))
       product = create(:simple_product)
 
       create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
-             enterprise_fees: [enterprise_fee1, enterprise_fee2], variants: [product.master])
+             enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product.master])
       
       order_cycle.fees_for(product.master, distributor).should == 23
     end
