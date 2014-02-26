@@ -27,6 +27,24 @@ describe EnterpriseFee do
         EnterpriseFee.per_item.sort.should == [ef1, ef2, ef3, ef4].sort
       end
     end
+
+    describe "finding per-order enterprise fees" do
+      it "returns fees with FlatRate and FlexiRate calculators" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+
+        EnterpriseFee.per_order.sort.should == [ef1, ef2].sort
+      end
+
+      it "does not return fees with any other calculator" do
+        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+
+        EnterpriseFee.per_order.should be_empty
+      end
+    end
   end
 
   describe "clearing all enterprise fee adjustments for a line item" do
