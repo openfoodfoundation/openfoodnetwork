@@ -7,10 +7,10 @@
         .row
           .large-6.columns
             = f.text_field :email 
-          = f.fields_for current_order.bill_address do |ba|
+          = f.fields_for :bill_address do |ba|
             .large-6.columns
               = ba.text_field :phone 
-        = f.fields_for current_order.bill_address do |ba|
+        = f.fields_for :bill_address do |ba|
           .row
             .large-6.columns
               = ba.text_field :firstname
@@ -22,7 +22,7 @@
           = f.fields_for :bill_address do |ba|
             .row
               .large-12.columns
-                = ba.text_field :address1
+                = ba.text_field :address1, label: "Billing Address"
             .row
               .large-12.columns
                 = ba.text_field :address2
@@ -30,8 +30,10 @@
               .large-6.columns
                 = ba.text_field :city
               .large-6.columns
-                = ba.text_field :country
+                = ba.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
             .row
+              .large-6.columns
+                = ba.select :state_id, Spree::State.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
               .large-6.columns.right
                 = ba.text_field :zipcode
 
@@ -42,11 +44,11 @@
           .row
             .large-12.columns
               %label
-                = f.radio_button :shipping_method, ship_method.id,
+                = f.radio_button :shipping_method_id, ship_method.id,
+                  text: ship_method.name,
                   "ng-model" => "shipping_method",
                   "ng-change" => "shippingMethodChanged()",
                   "data-require-ship-address" => ship_method.require_ship_address
-                = ship_method.name
 
         = fields_for current_order.ship_address do |sa|
           #ship_address{"ng-show" => "require_ship_address"}

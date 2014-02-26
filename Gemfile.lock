@@ -95,7 +95,7 @@ GIT
 
 GIT
   remote: git://github.com/willrjmarshall/foundation_rails_helper.git
-  revision: 61ca053cea97c611dfd546bf7fcd846b98abd401
+  revision: 4d5d53fdc4b1fb71e66524d298c5c635de82cfbb
   branch: rails3
   specs:
     foundation_rails_helper (0.4)

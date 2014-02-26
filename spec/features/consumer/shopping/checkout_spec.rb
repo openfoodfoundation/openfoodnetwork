@@ -141,28 +141,44 @@ feature "As a consumer I want to check out my cart", js: true do
         choose(sm1.name)
         find("#ship_address").visible?.should be_true
       end
-    end
 
-    describe "with payment methods" do
-      let(:pm1) { create(:payment_method, distributors: [distributor]) }
-      let(:pm2) { create(:payment_method, distributors: [distributor]) }
+      describe "with payment methods" do
+        let(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
+        let(:pm2) { create(:payment_method, distributors: [distributor]) }
 
-      before do
-        pm1 # Lazy evaluation of ze create()s
-        pm2
-        visit "/shop/checkout"
-      end
+        before do
+          pm1 # Lazy evaluation of ze create()s
+          pm2
+          visit "/shop/checkout"
+        end
 
-      it "shows all available payment methods" do
-        page.should have_content pm1.name
-        page.should have_content pm2.name
-      end
+        it "shows all available payment methods" do
+          page.should have_content pm1.name
+          page.should have_content pm2.name
+        end
 
-      describe "Purchasing" do
-        it "re-renders with errors when we submit the incomplete form" do
-          click_button "Purchase"
-          current_path.should == "/shop/checkout"
-          page.should have_content "can't be blank"
+        describe "Purchasing" do
+          it "re-renders with errors when we submit the incomplete form" do
+            click_button "Purchase"
+            current_path.should == "/shop/checkout"
+            page.should have_content "can't be blank"
+          end
+
+          it "takes us to the order confirmation page when we submit a complete form" do
+            fill_in "Customer E-Mail", with: "test@test.com"
+            fill_in "Phone", with: "0468363090"
+            fill_in "First Name", with: "Will"
+            fill_in "Last Name", with: "Marshall"
+            fill_in "Billing Address", with: "123 Your Face"
+            select "Australia", from: "Country"
+            select "Victoria", from: "State"
+            fill_in "City", with: "Melbourne"
+            fill_in "Zip Code", with: "3066"
+            choose sm1.name
+            choose pm1.name
+            click_button "Purchase"
+            page.should have_content "Your order has been processed successfully"
+          end
         end
       end
     end
