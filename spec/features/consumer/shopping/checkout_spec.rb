@@ -161,7 +161,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
         describe "Purchasing" do
           it "re-renders with errors when we submit the incomplete form" do
-            save_and_open_page
             click_button "Purchase"
             current_path.should == "/shop/checkout"
             page.should have_content "can't be blank"
