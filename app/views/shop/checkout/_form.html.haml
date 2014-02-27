@@ -36,7 +36,9 @@
               .large-6.columns.right
                 = ba.text_field :zipcode
 
+      {{ require_ship_address }}
       %fieldset#shipping
+
         %legend Shipping
         - checked_id = @order.shipping_method_id || current_distributor.shipping_methods.first.andand.id 
         - for ship_method, i in current_distributor.shipping_methods.uniq
@@ -44,7 +46,7 @@
             .large-12.columns
               = f.radio_button :shipping_method_id, ship_method.id,
                 text: ship_method.name,
-                "ng-init" => "shipping_method = #{checked_id}",
+                "ng-init" => "shipping_method = #{checked_id}; shippingMethodChanged()",
                 "ng-model" => "shipping_method",
                 "ng-change" => "shippingMethodChanged()",
                 "data-require-ship-address" => ship_method.require_ship_address
