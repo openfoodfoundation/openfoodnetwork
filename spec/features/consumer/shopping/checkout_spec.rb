@@ -160,11 +160,14 @@ feature "As a consumer I want to check out my cart", js: true do
         end
 
         describe "Purchasing" do
-          it "re-renders with errors when we submit the incomplete form" do
+          pending "re-renders with errors when we submit the incomplete form" do
+            choose sm2.name
             click_button "Purchase"
             current_path.should == "/shop/checkout"
             page.should have_content "can't be blank"
           end
+
+          it "renders errors on the shipping method where appropriate"
 
           it "takes us to the order confirmation page when we submit a complete form" do
             fill_in "Customer E-Mail", with: "test@test.com"
