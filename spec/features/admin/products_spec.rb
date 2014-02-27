@@ -14,15 +14,18 @@ feature %q{
   end
 
   context "creating a product" do
-    scenario "assigning a supplier and distributors to the product" do
+    scenario "assigning a supplier, distributors and units to the product" do
       login_to_admin_section
 
       click_link 'Products'
       click_link 'New Product'
 
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
-      select 'New supplier', :from => 'product_supplier_id'
+      fill_in 'product_name', with: 'A new product !!!'
+      fill_in 'product_price', with: '19.99'
+      select 'New supplier', from: 'product_supplier_id'
+      select 'Weight', from: 'product_variant_unit'
+      fill_in 'product_variant_unit_scale', with: 1000
+      fill_in 'product_variant_unit_name', with: ''
 
       click_button 'Create'
 
@@ -30,6 +33,11 @@ feature %q{
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
       product.group_buy.should be_false
+
+      product.variant_unit.should == 'weight'
+      product.variant_unit_scale.should == 1000
+      product.variant_unit_name.should == ''
+      product.option_types.first.name.should == 'unit_weight'
 
       # Distributors
       within('#sidebar') { click_link 'Product Distributions' }
@@ -46,7 +54,8 @@ feature %q{
       product.product_distributions.map { |pd| pd.enterprise_fee }.should == [@enterprise_fees[0], @enterprise_fees[2]]
     end
 
-    scenario "making a group buy product" do
+
+    scenario "creating a group buy product" do
       login_to_admin_section
 
       click_link 'Products'
