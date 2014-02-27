@@ -122,7 +122,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
     describe "with shipping methods" do
       let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
-      let(:sm2) { create(:shipping_method, require_ship_address: true, name: "Donkeys", description: "blue") }
+      let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
       before do
         distributor.shipping_methods << sm1 
         distributor.shipping_methods << sm2 
@@ -133,12 +133,14 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content "Donkeys"
       end
 
-      it "doesn't show ship address forms by default" do
+      it "doesn't show ship address forms " do
+        choose(sm2.name)
         find("#ship_address").visible?.should be_false
       end
 
       it "shows ship address forms when selected shipping method requires one" do
         choose(sm1.name)
+        save_and_open_page
         find("#ship_address").visible?.should be_true
       end
 
@@ -159,6 +161,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
         describe "Purchasing" do
           it "re-renders with errors when we submit the incomplete form" do
+            save_and_open_page
             click_button "Purchase"
             current_path.should == "/shop/checkout"
             page.should have_content "can't be blank"
