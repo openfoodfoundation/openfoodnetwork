@@ -138,7 +138,6 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "shows ship address forms when selected shipping method requires one" do
-        # Fancy Foundation Forms are weird
         choose(sm1.name)
         find("#ship_address").visible?.should be_true
       end
