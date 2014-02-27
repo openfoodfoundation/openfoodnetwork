@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-include AuthenticationWorkflow
-include WebHelper
 
 feature "As a consumer I want to check out my cart", js: true do
+  include AuthenticationWorkflow
+  include WebHelper
+
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
