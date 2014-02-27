@@ -28,8 +28,8 @@ describe OrderCyclesHelper do
       exchange = Exchange.find(oc1.exchanges.to_enterprises(d).outgoing.first.id) 
       exchange.update_attribute :pickup_time, "turtles" 
 
-      helper.stub!(:current_order_cycle).and_return oc1
-      helper.stub!(:current_distributor).and_return d
+      helper.stub(:current_order_cycle).and_return oc1
+      helper.stub(:current_distributor).and_return d
       helper.pickup_time.should == "turtles"
   end
 
@@ -41,8 +41,8 @@ describe OrderCyclesHelper do
       exchange = Exchange.find(oc2.exchanges.to_enterprises(d).outgoing.first.id) 
       exchange.update_attribute :pickup_time, "turtles" 
 
-      helper.stub!(:current_order_cycle).and_return oc1
-      helper.stub!(:current_distributor).and_return d
+      helper.stub(:current_order_cycle).and_return oc1
+      helper.stub(:current_distributor).and_return d
       helper.pickup_time(oc2).should == "turtles"
   end
 end
