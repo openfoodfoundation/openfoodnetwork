@@ -38,7 +38,7 @@
 
       %fieldset#shipping
         %legend Shipping
-        - checked_id = @order.shipping_method_id || current_distributor.shipping_methods.first.id 
+        - checked_id = @order.shipping_method_id || current_distributor.shipping_methods.first.andand.id 
         - for ship_method, i in current_distributor.shipping_methods.uniq
           .row
             .large-12.columns
