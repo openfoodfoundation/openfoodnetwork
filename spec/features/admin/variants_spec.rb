@@ -7,6 +7,27 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
+  scenario "creating a new variant" do
+    # Given a product with a unit-related option type
+    p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
+
+    # When I create a variant on the product
+    login_to_admin_section
+    click_link 'Products'
+    within('#sub_nav') { click_link 'Products' }
+    click_link p.name
+    click_link 'Variants'
+    click_link 'New Variant'
+
+    fill_in 'variant_unit_value', with: '1'
+    fill_in 'variant_unit_description', with: 'foo'
+    click_button 'Create'
+
+    # Then the variant should have been created
+    page.should have_content "Variant \"#{p.name}\" has been successfully created!"
+  end
+
+
   scenario "editing unit value and description for a variant" do
     # Given a product with unit-related option types, with a variant
     p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")

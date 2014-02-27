@@ -1,0 +1,16 @@
+/ insert_top "[data-hook='admin_product_form_right']"
+
+= f.field_container :variant_unit do
+  = f.label :variant_unit, 'Variant unit'
+  = f.select :variant_unit, product_variant_unit_options, {:include_blank => true}, {:class => "select2 fullwidth"}
+  = f.error_message_on :variant_unit
+
+= f.field_container :variant_unit_scale do
+  = f.label :variant_unit_scale, 'Variant unit scale'
+  = f.text_field :variant_unit_scale
+  = f.error_message_on :variant_unit_scale
+
+= f.field_container :variant_unit_name do
+  = f.label :variant_unit_name, 'Variant unit name'
+  = f.text_field :variant_unit_name
+  = f.error_message_on :variant_unit_name
