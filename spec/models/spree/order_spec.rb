@@ -262,6 +262,7 @@ describe Spree::Order do
     let(:order) { build(:order, distributor: distributor) }
 
     before do
+      order.ship_address = distributor.address.clone
       order.save # just to trigger our autopopulate the first time ;)
     end
 
@@ -274,7 +275,7 @@ describe Spree::Order do
       order.shipping_method = create(:shipping_method, require_ship_address: false)
       order.ship_address.update_attribute :firstname, "will"
       order.save
-      order.ship_address.firstname.shoul == distributor.address.firstname
+      order.ship_address.firstname.should == distributor.address.firstname
     end
 
     it "does not populate the shipping address if the shipping method requires a delivery address" do
@@ -285,6 +286,7 @@ describe Spree::Order do
     end
 
     it "doesn't attempt to create a shipment if the order is not yet valid" do
+      order.shipping_method = create(:shipping_method, require_ship_address: false)
       #Shipment.should_not_r
       order.create_shipment!
     end
