@@ -11,27 +11,31 @@ class Shop::CheckoutController < Spree::CheckoutController
   end
 
   def update
-    if @order.update_attributes(params[:order])
-      fire_event('spree.checkout.update')
+    begin
+      if @order.update_attributes(params[:order])
+        fire_event('spree.checkout.update')
 
-      while @order.state != "complete"
-        if @order.next
-          state_callback(:after)
-        else
-          flash[:error] = t(:payment_processing_failed)
-          respond_with @order, location: main_app.shop_checkout_path
-          return
+        while @order.state != "complete"
+          if @order.next
+            state_callback(:after)
+          else
+            flash[:error] = t(:payment_processing_failed)
+            respond_with @order, location: main_app.shop_checkout_path
+            return
+          end
         end
-      end
 
-      if @order.state == "complete" ||  @order.completed?
-        flash.notice = t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
-        respond_with(@order, :location => order_path(@order))
+        if @order.state == "complete" ||  @order.completed?
+          flash.notice = t(:order_processed_successfully)
+          flash[:commerce_tracking] = "nothing special"
+          respond_with(@order, :location => order_path(@order))
+        else
+          respond_with @order, location: main_app.shop_checkout_path
+        end
       else
         respond_with @order, location: main_app.shop_checkout_path
       end
-    else
+    rescue ActiveRecord::RecordInvalid
       respond_with @order, location: main_app.shop_checkout_path
     end
   end

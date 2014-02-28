@@ -118,7 +118,7 @@ Spree::Order.class_eval do
   private
 
   def shipping_address_from_distributor
-    if distributor
+    if distributor and (shipping_method.andand.require_ship_address == false)
       self.ship_address = distributor.address.clone
 
       if bill_address

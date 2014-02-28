@@ -50,7 +50,7 @@
                 "ng-change" => "shippingMethodChanged()",
                 "data-require-ship-address" => ship_method.require_ship_address
 
-        = fields_for current_order.ship_address do |sa|
+        = f.fields_for :ship_address do |sa|
           #ship_address{"ng-show" => "require_ship_address"}
             .row
               .large-12.columns
@@ -63,7 +63,7 @@
               .large-6.columns
                 = sa.text_field :city
               .large-6.columns
-                = sa.text_field :country
+                = sa.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
             .row
               .large-6.columns.right
                 = sa.text_field :zipcode

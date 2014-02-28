@@ -254,7 +254,33 @@ describe Spree::Order do
 
         Spree::Order.not_state(:canceled).should_not include o
       end
+    end
+  end
 
+  describe "shipping address prepopulation" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { build(:order, distributor: distributor) }
+
+    before do
+      order.save # just to trigger our autopopulate the first time ;)
+    end
+
+    it "autopopulates the shipping address on save" do
+      order.should_receive(:shipping_address_from_distributor).and_return true
+      order.save
+    end
+
+    it "populates the shipping address if the shipping method doesn't require a delivery address" do
+      order.shipping_method = create(:shipping_method, require_ship_address: false)
+      order.ship_address.update_attribute :firstname, "will"
+      order.save
+      order.ship_address.firstname.should == distributor.address.firstname
+    end
+    it "does not populate the shipping address if the shipping method requires a delivery address" do
+      order.shipping_method = create(:shipping_method, require_ship_address: true)
+      order.ship_address.update_attribute :firstname, "will"
+      order.save
+      order.ship_address.firstname.should == "will"
     end
   end
 
