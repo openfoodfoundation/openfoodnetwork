@@ -175,7 +175,6 @@ feature "As a consumer I want to check out my cart", js: true do
             within "#details" do
               fill_in "First Name", with: "Will"
               fill_in "Last Name", with: "Marshall"
-              save_and_open_page
               fill_in "Billing Address", with: "123 Your Face"
               select "Australia", from: "Country"
               select "Victoria", from: "State"
