@@ -101,7 +101,7 @@ Spree::Product.class_eval do
   end
 
   def variants_for(order_cycle, distributor)
-    self.variants_including_master.where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+    self.variants.where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
   end
 
   # overriding to check self.on_demand as well

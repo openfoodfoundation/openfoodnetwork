@@ -304,48 +304,39 @@ module Spree
     end
 
     describe "finding variants for an order cycle and hub" do
-      it "returns variants in the order cycle and distributor" do
-        # Given a product and a distributor in an order cycle
-        oc = create(:order_cycle)
-        ex = oc.exchanges.outgoing.first
-        p = ex.variants.first.product
-        d = ex.receiver
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s) { create(:supplier_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
 
-        p.variants_for(oc, d).should == [p.master]
+      let(:p1) { create(:simple_product) }
+      let(:p2) { create(:simple_product) }
+      let(:v1) { create(:variant, product: p1) }
+      let(:v2) { create(:variant, product: p2) }
+
+      let(:p_external) { create(:simple_product) }
+      let(:v_external) { create(:variant, product: p_external) }
+
+      let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
+                           variants: [v1, v2]) }
+      let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
+                             variants: [v1]) }
+      let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
+                             variants: [v2]) }
+
+      it "returns variants in the order cycle and distributor" do
+        p1.variants_for(oc, d1).should == [v1]
+        p2.variants_for(oc, d2).should == [v2]
       end
 
       it "does not return variants in the order cycle but not the distributor" do
-        oc = create(:simple_order_cycle)
-        s = create(:supplier_enterprise)
-        d1 = create(:distributor_enterprise)
-        d2 = create(:distributor_enterprise)
-
-        p1 = create(:simple_product)
-        p2 = create(:simple_product)
-
-        ex_in = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
-                       variants: [p1.master, p2.master])
-        ex_out1 = create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
-                         variants: [p1.master])
-        ex_out1 = create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
-                         variants: [p2.master])
-
-        p1.variants_for(oc, d1).should == [p1.master]
         p1.variants_for(oc, d2).should be_empty
         p2.variants_for(oc, d1).should be_empty
-        p2.variants_for(oc, d2).should == [p2.master]
       end
 
       it "does not return variants not in the order cycle" do
-        oc = create(:simple_order_cycle)
-        d = create(:distributor_enterprise)
-
-        p = create(:simple_product)
-        v = create(:variant, product: p)
-
-        p.variants_for(oc, d).should be_empty
+        p_external.variants_for(oc, d1).should be_empty
       end
-
     end
 
     describe "variant units" do
