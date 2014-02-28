@@ -1,4 +1,7 @@
 Spree::Variant.class_eval do
+  has_many :exchange_variants
+  has_many :exchanges, through: :exchange_variants
+
   attr_accessible :unit_value, :unit_description
 
   validates_presence_of :unit_value,

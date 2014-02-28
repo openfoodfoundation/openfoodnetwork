@@ -14,6 +14,7 @@ class Shop::ShopController < BaseController
       .products_distributed_by(@distributor).andand
       .select(&:has_stock?).andand
       .sort_by {|p| p.name }
+
       render json: "", status: 404 
     end
   end
