@@ -274,13 +274,19 @@ describe Spree::Order do
       order.shipping_method = create(:shipping_method, require_ship_address: false)
       order.ship_address.update_attribute :firstname, "will"
       order.save
-      order.ship_address.firstname.should == distributor.address.firstname
+      order.ship_address.firstname.shoul == distributor.address.firstname
     end
+
     it "does not populate the shipping address if the shipping method requires a delivery address" do
       order.shipping_method = create(:shipping_method, require_ship_address: true)
       order.ship_address.update_attribute :firstname, "will"
       order.save
       order.ship_address.firstname.should == "will"
+    end
+
+    it "doesn't attempt to create a shipment if the order is not yet valid" do
+      #Shipment.should_not_r
+      order.create_shipment!
     end
   end
 

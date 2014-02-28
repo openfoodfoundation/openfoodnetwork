@@ -160,7 +160,7 @@ feature "As a consumer I want to check out my cart", js: true do
         end
 
         describe "Purchasing" do
-          pending "re-renders with errors when we submit the incomplete form" do
+          it "re-renders with errors when we submit the incomplete form" do
             choose sm2.name
             click_button "Purchase"
             current_path.should == "/shop/checkout"
@@ -170,17 +170,20 @@ feature "As a consumer I want to check out my cart", js: true do
           it "renders errors on the shipping method where appropriate"
 
           it "takes us to the order confirmation page when we submit a complete form" do
-            fill_in "Customer E-Mail", with: "test@test.com"
-            fill_in "Phone", with: "0468363090"
-            fill_in "First Name", with: "Will"
-            fill_in "Last Name", with: "Marshall"
-            fill_in "Billing Address", with: "123 Your Face"
-            select "Australia", from: "Country"
-            select "Victoria", from: "State"
-            fill_in "City", with: "Melbourne"
-            fill_in "Zip Code", with: "3066"
-            choose sm1.name
+            choose sm2.name
             choose pm1.name
+            within "#details" do
+              fill_in "First Name", with: "Will"
+              fill_in "Last Name", with: "Marshall"
+              save_and_open_page
+              fill_in "Billing Address", with: "123 Your Face"
+              select "Australia", from: "Country"
+              select "Victoria", from: "State"
+              fill_in "Customer E-Mail", with: "test@test.com"
+              fill_in "Phone", with: "0468363090"
+              fill_in "City", with: "Melbourne"
+              fill_in "Zip Code", with: "3066"
+            end
             click_button "Purchase"
             page.should have_content "Your order has been processed successfully"
           end
