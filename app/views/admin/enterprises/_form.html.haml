@@ -36,5 +36,52 @@
       %td
         = af.collection_select(:state_id, af.object.country.states, :id, :name)
         = af.collection_select(:country_id, available_countries, :id, :name)
+  %tr
+    %th Contact Details
+    %th
+    %th Enterprise Details
+    %th
+  %tr
+    %td Name
+    %td= f.text_field :contact
+    %td ABN / ACN
+    %td= f.text_field :abn
+  %tr
+    %td Email
+    %td= f.text_field :email
+    %td Website
+    %td= f.text_field :website
+  %tr
+    %td Phone
+    %td= f.text_field :phone
+    %td Facebook
+    %td= f.text_field :twitter
+    / TODO: facebook data field
+  %tr
+    %td
+    %td
+    %td Twitter
+    %td= f.text_field :twitter
+  %tr
+    %th About Us
+  %tr
+    %td Short Description
+    %td= f.text_field :description
+  %tr
+    %td About Us
+    %td= f.text_area :long_description, :class => 'rich_text'
+  %tr
+    %td How does it work?
+    %td= f.text_area :long_description, :class => 'rich_text'
+    / TODO: hub explanation data field
+  %tr
+    %td Logo
+    %td
+      = f.file_field :logo
+      = image_tag @object.logo.url
+    %td Promo
+    %td
+      = f.file_field :promo_image
+      = image_tag @object.promo_image.url
 
 
