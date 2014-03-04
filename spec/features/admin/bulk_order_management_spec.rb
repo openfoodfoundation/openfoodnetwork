@@ -51,10 +51,9 @@ feature %q{
       end
 
       it "displays a list of line items" do
-        page.should have_selector "th.id", text: "ID", :visible => true
-        page.should have_selector "td.id", text: li1.id.to_s
-        page.should have_selector "td.id", text: li2.id.to_s
-        page.should_not have_selector "td.id", text: li3.id.to_s
+        page.should have_selector "tr#li_#{li1.id}"
+        page.should have_selector "tr#li_#{li2.id}"
+        page.should_not have_selector "tr#li_#{li3.id}"
       end
     end
 
@@ -177,38 +176,38 @@ feature %q{
 
       it "displays a select box for producers, which filters line items by the selected supplier" do
         page.should have_select "supplier_filter", with_options: [s1.name,s2.name]
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
         select s1.name, from: "supplier_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays all line items when 'All' is selected from supplier filter" do
         select s1.name, from: "supplier_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
         select "All", from: "supplier_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays a select box for distributors, which filters line items by the selected distributor" do
         page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
         select d1.name, from: "distributor_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays all line items when 'All' is selected from distributor filter" do
         select d1.name, from: "distributor_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
         select "All", from: "distributor_filter"
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
       end
     end
 
@@ -216,9 +215,9 @@ feature %q{
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today - 8).strftime("%F %T") ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today + 2).strftime("%F %T") ) }
-      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
-      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
-      let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2, :quantity => 2 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3, :quantity => 3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -232,21 +231,57 @@ feature %q{
       end
 
       it "only loads line items whose orders meet the date restriction criteria" do
-        page.should_not have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li3.id.to_s, visible: true
+        page.should_not have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+        page.should_not have_selector "tr#li_#{li3.id}", visible: true
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
         fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
-        page.should_not have_selector "td.id", text: li3.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+        page.should_not have_selector "tr#li_#{li3.id}", visible: true
 
         fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F %T")
-        page.should have_selector "td.id", text: li1.id.to_s, visible: true
-        page.should have_selector "td.id", text: li2.id.to_s, visible: true
-        page.should have_selector "td.id", text: li3.id.to_s, visible: true
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+        page.should have_selector "tr#li_#{li3.id}", visible: true
+      end
+
+      context "when pending changes exist" do
+        it "alerts the user when dates are altered" do
+          li2_quantity_column = find("tr#li_#{li2.id} td.quantity")
+          li2_quantity_column.fill_in "quantity", :with => li2.quantity + 1
+          page.should_not have_button "IGNORE"
+          page.should_not have_button "SAVE"
+          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+          page.should have_button "IGNORE"
+          page.should have_button "SAVE"
+        end
+
+        it "saves pendings changes when 'SAVE' button is clicked" do
+          within("tr#li_#{li2.id} td.quantity") do
+            page.fill_in "quantity", :with => (li2.quantity + 1).to_s
+          end
+          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+          click_button "SAVE"
+          page.should_not have_selector "input[name='quantity'].update-pending"
+          within("tr#li_#{li2.id} td.quantity") do
+            page.should have_field "quantity", :with => ( li2.quantity + 1 ).to_s
+          end
+        end
+
+        it "ignores pending changes when 'IGNORE' button is clicked" do
+          within("tr#li_#{li2.id} td.quantity") do
+            page.fill_in "quantity", :with => (li2.quantity + 1).to_s
+          end
+          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+          click_button "IGNORE"
+          page.should_not have_selector "input[name='quantity'].update-pending"
+          within("tr#li_#{li2.id} td.quantity") do
+            page.should have_field "quantity", :with => ( li2.quantity ).to_s
+          end
+        end
       end
     end
 

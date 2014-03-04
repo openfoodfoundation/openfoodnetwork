@@ -51,7 +51,6 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
       expect(scope.loading).toEqual false
 
-
   describe "resetting orders", ->
     beforeEach ->
       spyOn(scope, "matchDistributor").andReturn "nothing"
@@ -211,6 +210,15 @@ describe "managing pending changes", ->
       pendingChangesService.add 1, "propertyName2", { b: 2 }
       expect(pendingChangesService.pendingChanges["1"]).toEqual { propertyName1: { a: 1}, propertyName2: { b: 2 } }
 
+  describe "removing all existing changes", ->
+    it "resets pendingChanges object", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      expect(pendingChangesService.pendingChanges["1"]["propertyName2"]).toBeDefined()
+      pendingChangesService.removeAll()
+      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
+      expect(pendingChangesService.pendingChanges).toEqual {}
+
   describe "removing an existing change", ->
     it "deletes a change if it exists", ->
       pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
@@ -271,6 +279,14 @@ describe "managing pending changes", ->
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
       expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
+
+    it "returns an array of promises representing all sumbit requests", ->
+      spyOn(pendingChangesService, "submit").andCallFake (id,attrName,changeObj) ->
+        id
+      pendingChangesService.pendingChanges =
+        1: { "prop1": 1 }
+        2: { "prop1": 2, "prop2": 4 }
+      expect(pendingChangesService.submitAll()).toEqual [ '1','2','2' ]
 
 describe "dataSubmitter service", ->
   qMock = httpMock = {}

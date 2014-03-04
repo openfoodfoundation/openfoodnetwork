@@ -33,6 +33,40 @@ orderManagementModule.directive "ofnLineItemUpdAttr", [
             switchClass( element, "update-pending", ["update-error", "update-success"], false )
 ]
 
+orderManagementModule.directive "ofnConfirmChange", [
+  "pendingChanges", "$compile", "$q"
+  (pendingChanges, $compile, $q) ->
+    require: "ngModel"
+    link: (scope, element, attrs, ngModel) ->
+      modelName = attrs.ofnConfirmChange
+      template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
+      dialogDiv = $compile(template)(scope)
+      ngModel.$parsers.unshift (newValue) ->
+        if pendingChanges.changeCount(pendingChanges.pendingChanges) > 0
+          dialogDiv.dialog
+            dialogClass: "no-close"
+            resizable: false
+            height: 140
+            modal: true
+            buttons:
+              "SAVE": ->
+                dialogDiv = $(this)
+                $q.all(pendingChanges.submitAll()).then ->
+                  scope.$evalAsync ->
+                    scope.fetchOrders()
+                  dialogDiv.dialog "close"
+              "IGNORE": ->
+                scope.$evalAsync ->
+                  scope.fetchOrders()
+                $(this).dialog "close"
+                scope.$apply()
+          dialogDiv.dialog "open"
+        else
+          scope.$evalAsync ->
+            scope.fetchOrders()
+        newValue
+]
+
 orderManagementModule.factory "pendingChanges",[
   "dataSubmitter"
   (dataSubmitter) ->
@@ -42,15 +76,20 @@ orderManagementModule.factory "pendingChanges",[
       this.pendingChanges["#{id}"] = {} unless this.pendingChanges.hasOwnProperty("#{id}")
       this.pendingChanges["#{id}"]["#{attrName}"] = changeObj
 
+    removeAll: ->
+      this.pendingChanges = {}
+
     remove: (id, attrName) ->
       if this.pendingChanges.hasOwnProperty("#{id}")
         delete this.pendingChanges["#{id}"]["#{attrName}"]
         delete this.pendingChanges["#{id}"] if this.changeCount( this.pendingChanges["#{id}"] ) < 1
 
     submitAll: ->
+      all = []
       for id,lineItem of this.pendingChanges
         for attrName,changeObj of lineItem
-          this.submit id, attrName, changeObj
+          all.push this.submit(id, attrName, changeObj)
+      all
 
     submit: (id, attrName, change) ->
       factory = this
@@ -106,6 +145,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.resetOrders = (data) ->
       $scope.orders = data
       $scope.resetLineItems()
+      pendingChanges.removeAll()
       $scope.matchDistributor order for order in $scope.orders
 
     $scope.resetLineItems = ->

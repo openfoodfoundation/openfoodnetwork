@@ -21,11 +21,11 @@
     .date_filter{ :class => "four columns alpha" }
       Start Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ng-change' => "fetchOrders()" }
+      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
     .date_filter{ :class => "four columns alpha" }
       End Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ng-change' => "fetchOrders()" }
+      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
   .spacer{ :class => "seven columns alpha" }
     &nbsp;
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
@@ -37,7 +37,6 @@
     %table.index#listing_orders.bulk
       %thead
         %tr
-          %th.id ID
           %th.email Email
           %th.date Order Date
           %th.producer Producer
@@ -47,8 +46,7 @@
           %th.actions
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
-          %td.id {{ line_item.id }}
+        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.email {{ line_item.order.email }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}
