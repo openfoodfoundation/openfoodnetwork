@@ -310,18 +310,35 @@ describe OrderCycle do
   end
 
   describe "calculating fees for a variant via a particular distributor" do
-    it "sums all the fees for the variant in the specified hub + order cycle" do
+    it "sums all the per-item fees for the variant in the specified hub + order cycle" do
       coordinator = create(:distributor_enterprise)
       distributor = create(:distributor_enterprise)
       order_cycle = create(:simple_order_cycle)
       enterprise_fee1 = create(:enterprise_fee, amount: 20)
       enterprise_fee2 = create(:enterprise_fee, amount:  3)
+      enterprise_fee3 = create(:enterprise_fee,
+                               calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2))
       product = create(:simple_product)
 
       create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
-             enterprise_fees: [enterprise_fee1, enterprise_fee2], variants: [product.master])
+             enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product.master])
       
       order_cycle.fees_for(product.master, distributor).should == 23
+    end
+
+
+    it "sums percentage fees for the variant" do
+      coordinator = create(:distributor_enterprise)
+      distributor = create(:distributor_enterprise)
+      order_cycle = create(:simple_order_cycle)
+      enterprise_fee1 = create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20))
+      product = create(:simple_product, price: 10.00)
+      
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+             enterprise_fees: [enterprise_fee1], variants: [product.master])
+
+      product.master.price.should == 10.00
+      order_cycle.fees_for(product.master, distributor).should == 2.00
     end
   end
 
@@ -332,59 +349,67 @@ describe OrderCycle do
     let(:order) { double(:order, distributor: distributor) }
     let(:line_item) { double(:line_item, variant: variant, order: order) }
 
-    it "creates adjustment for each fee" do
-      fee = {enterprise_fee: 'ef', label: 'label', role: 'role'}
-      oc.should_receive(:enterprise_fees_for).with(variant, distributor) { [fee] }
-      oc.should_receive(:create_adjustment_for_fee).with(line_item, 'ef', 'label', 'role')
+    it "creates an adjustment for each fee" do
+      applicator = double(:enterprise_fee_applicator)
+      applicator.should_receive(:create_line_item_adjustment).with(line_item)
+      oc.should_receive(:per_item_enterprise_fee_applicators_for).with(variant, distributor) { [applicator] }
 
-      oc.send(:create_adjustments_for, line_item)
+      oc.send(:create_line_item_adjustments_for, line_item)
     end
 
-    it "finds fees for a line item" do
+    it "makes fee applicators for a line item" do
       distributor = double(:distributor)
       ef1 = double(:enterprise_fee)
       ef2 = double(:enterprise_fee)
       ef3 = double(:enterprise_fee)
-      incoming_exchange = double(:exchange, enterprise_fees: [ef1], incoming?: true)
-      outgoing_exchange = double(:exchange, enterprise_fees: [ef2], incoming?: false)
+      incoming_exchange = double(:exchange, role: 'supplier')
+      outgoing_exchange = double(:exchange, role: 'distributor')
+      incoming_exchange.stub_chain(:enterprise_fees, :per_item) { [ef1] }
+      outgoing_exchange.stub_chain(:enterprise_fees, :per_item) { [ef2] }
+
       oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
-      oc.stub(:coordinator_fees) { [ef3] }
-      oc.stub(:adjustment_label_for) { 'label' }
+      oc.stub_chain(:coordinator_fees, :per_item) { [ef3] }
 
-      oc.send(:enterprise_fees_for, line_item.variant, distributor).should ==
-        [{enterprise_fee: ef1, label: 'label', role: 'supplier'},
-         {enterprise_fee: ef2, label: 'label', role: 'distributor'},
-         {enterprise_fee: ef3, label: 'label', role: 'coordinator'}]
-    end
-
-    it "creates an adjustment for a fee" do
-      line_item = create(:line_item)
-      enterprise_fee = create(:enterprise_fee)
-
-      oc.send(:create_adjustment_for_fee, line_item, enterprise_fee, 'label', 'role')
-
-      adjustment = Spree::Adjustment.last
-      adjustment.label.should == 'label'
-      adjustment.adjustable.should == line_item.order
-      adjustment.source.should == line_item
-      adjustment.originator.should == enterprise_fee
-      adjustment.should be_mandatory
-
-      md = adjustment.metadata
-      md.enterprise.should == enterprise_fee.enterprise
-      md.fee_name.should == enterprise_fee.name
-      md.fee_type.should == enterprise_fee.fee_type
-      md.enterprise_role.should == 'role'
-    end
-
-    it "makes adjustment labels" do
-      variant = double(:variant, product: double(:product, name: 'Bananas'))
-      enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
-
-      oc.send(:adjustment_label_for, variant, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
+      oc.send(:per_item_enterprise_fee_applicators_for, line_item.variant, distributor).should ==
+        [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
     end
   end
-  
+
+  describe "creating adjustments for an order" do
+    let(:oc) { OrderCycle.new }
+    let(:distributor) { double(:distributor) }
+    let(:order) { double(:order, distributor: distributor) }
+
+    it "creates an adjustment for each fee" do
+      applicator = double(:enterprise_fee_applicator)
+      applicator.should_receive(:create_order_adjustment).with(order)
+      oc.should_receive(:per_order_enterprise_fee_applicators_for).with(order) { [applicator] }
+
+      oc.send(:create_order_adjustments_for, order)
+    end
+
+    it "makes fee applicators for an order" do
+      distributor = double(:distributor)
+      ef1 = double(:enterprise_fee)
+      ef2 = double(:enterprise_fee)
+      ef3 = double(:enterprise_fee)
+      incoming_exchange = double(:exchange, role: 'supplier')
+      outgoing_exchange = double(:exchange, role: 'distributor')
+      incoming_exchange.stub_chain(:enterprise_fees, :per_order) { [ef1] }
+      outgoing_exchange.stub_chain(:enterprise_fees, :per_order) { [ef2] }
+
+      oc.stub(:exchanges_supplying) { [incoming_exchange, outgoing_exchange] }
+      oc.stub_chain(:coordinator_fees, :per_order) { [ef3] }
+
+      oc.send(:per_order_enterprise_fee_applicators_for, order).should ==
+        [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+    end
+  end
+
   describe "finding recently closed order cycles" do
     it "should give the most recently closed order cycle for a distributor" do
       distributor = create(:distributor_enterprise)

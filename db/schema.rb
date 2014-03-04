@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204011203) do
+ActiveRecord::Schema.define(:version => 20140213003443) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -744,14 +744,16 @@ ActiveRecord::Schema.define(:version => 20140204011203) do
   create_table "spree_shipping_methods", :force => true do |t|
     t.string   "name"
     t.integer  "zone_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "display_on"
     t.integer  "shipping_category_id"
     t.boolean  "match_none"
     t.boolean  "match_all"
     t.boolean  "match_one"
     t.datetime "deleted_at"
+    t.boolean  "require_ship_address", :default => true
+    t.text     "description"
   end
 
   create_table "spree_skrill_transactions", :force => true do |t|

@@ -121,6 +121,27 @@ describe "filtering products for submission to database", ->
       ]
     ]
 
+  it "returns variants with a negative id without that id", ->
+    testProduct =
+      id: 1
+      variants: [
+        id: -1
+        on_hand: 5
+        price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
+      ]
+
+    expect(filterSubmitProducts([testProduct])).toEqual [
+      id: 1
+      variants_attributes: [
+        on_hand: 5
+        price: 12.0
+        unit_value: 250
+        unit_description: "(bottle)"
+      ]
+    ]
+
   it "does not return variants_attributes property if variants is an empty array", ->
     testProduct =
       id: 1
@@ -171,6 +192,10 @@ describe "filtering products for submission to database", ->
       group_buy: null
       group_buy_unit_size: null
       on_demand: false
+      master:
+        id: 2
+        unit_value: 250
+        unit_description: "foo"
       variants: [
         id: 1
         on_hand: 2
@@ -190,6 +215,8 @@ describe "filtering products for submission to database", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
+      unit_value: 250
+      unit_description: "foo"
       available_on: available_on
       variants_attributes: [
         id: 1
@@ -202,10 +229,17 @@ describe "filtering products for submission to database", ->
 
 
 describe "Maintaining a live record of dirty products and properties", ->
+  parse = null
+  beforeEach ->
+    module "ofn.bulk_product_edit"
+  beforeEach inject(($parse) ->
+    parse = $parse
+  )
+
   describe "adding product properties to the dirtyProducts object", -> # Applies to both products and variants
     it "adds the product and the property to the list if property is dirty", ->
       dirtyProducts = {}
-      addDirtyProperty dirtyProducts, 1, "name", "Product 1"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 1"
       expect(dirtyProducts).toEqual 1:
         id: 1
         name: "Product 1"
@@ -216,7 +250,7 @@ describe "Maintaining a live record of dirty products and properties", ->
         id: 1
         notaname: "something"
 
-      addDirtyProperty dirtyProducts, 1, "name", "Product 3"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 3"
       expect(dirtyProducts).toEqual 1:
         id: 1
         notaname: "something"
@@ -228,7 +262,7 @@ describe "Maintaining a live record of dirty products and properties", ->
         id: 1
         name: "Product 1"
 
-      addDirtyProperty dirtyProducts, 1, "name", "Product 2"
+      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 2"
       expect(dirtyProducts).toEqual 1:
         id: 1
         name: "Product 2"
@@ -420,12 +454,24 @@ describe "AdminProductEditCtrl", ->
         scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "items"
 
+    it "loads data for variants (inc. master)", ->
+      spyOn scope, "loadVariantVariantUnit"
+
+      product =
+        variant_unit_scale: 1.0
+        master: {id: 1, unit_value: 1, unit_description: '(one)'}
+        variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
+      scope.loadVariantUnit product
+
+      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.variants[0]
+      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.master
+
     describe "setting variant unit_value_with_description", ->
       it "sets by combining unit_value and unit_description", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0]).toEqual
           id: 1
           unit_value: 1
@@ -436,22 +482,29 @@ describe "AdminProductEditCtrl", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '1'
 
       it "uses unit_description when value is missing", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_description: 'Small'}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
       it "converts values from base value to chosen unit", ->
         product =
           variant_unit_scale: 1000.0
           variants: [{id: 1, unit_value: 2500}]
-        scope.loadVariantUnit product
+        scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
+
+      it "displays a unit_value of zero", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_value: 0}]
+        scope.loadVariantVariantUnit product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '0'
 
 
   describe "calculating the scaled unit value for a variant", ->
@@ -459,6 +512,16 @@ describe "AdminProductEditCtrl", ->
       product = {variant_unit_scale: 0.001}
       variant = {unit_value: 5}
       expect(scope.variantUnitValue(product, variant)).toEqual 5000
+
+    it "returns the unscaled value when the product has no scale", ->
+      product = {}
+      variant = {unit_value: 5}
+      expect(scope.variantUnitValue(product, variant)).toEqual 5
+
+    it "returns zero when the value is zero", ->
+      product = {}
+      variant = {unit_value: 0}
+      expect(scope.variantUnitValue(product, variant)).toEqual 0
 
     it "returns null when the variant has no unit_value", ->
       product = {}
@@ -573,6 +636,43 @@ describe "AdminProductEditCtrl", ->
       expect(scope.hasOnDemandVariants(product)).toBe(false)
 
 
+  describe "determining whether a product has variants", ->
+    it "returns true when it does", ->
+      product =
+        variants: [{id: 1}, {id: 2}]
+      expect(scope.hasVariants(product)).toBe(true)
+
+    it "returns false when it does not", ->
+      product =
+        variants: []
+      expect(scope.hasVariants(product)).toBe(false)
+
+
+  describe "determining whether a product has a unit", ->
+    it "returns true when it does", ->
+      product =
+        variant_unit_with_scale: 'weight_1000'
+      expect(scope.hasUnit(product)).toBe(true)
+
+    it "returns false when its unit is undefined", ->
+      product = {}
+      expect(scope.hasUnit(product)).toBe(false)
+
+
+  describe "determining whether a variant has been saved", ->
+    it "returns true when it has a positive id", ->
+      variant = {id: 1}
+      expect(scope.variantSaved(variant)).toBe(true)
+
+    it "returns false when it has no id", ->
+      variant = {}
+      expect(scope.variantSaved(variant)).toBe(false)
+
+    it "returns false when it has a negative id", ->
+      variant = {id: -1}
+      expect(scope.variantSaved(variant)).toBe(false)
+
+
   describe "submitting products to be updated", ->
     describe "packing products", ->
       it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
@@ -604,6 +704,17 @@ describe "AdminProductEditCtrl", ->
           variant_unit: 'items'
           variant_unit_scale: null
           variant_unit_with_scale: 'items'
+
+      it "packs the master variant", ->
+        spyOn scope, "packVariant"
+        testVariant = {id: 1}
+        testProduct =
+          id: 1
+          master: testVariant
+
+        scope.packProduct(testProduct)
+
+        expect(scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
       it "packs each variant", ->
         spyOn scope, "packVariant"
@@ -649,6 +760,14 @@ describe "AdminProductEditCtrl", ->
           unit_description: 'Medium'
           unit_value_with_description: "Medium"
 
+      it "extracts into unit_description when a string starting with a number is provided", ->
+        testVariant = {unit_value_with_description: "1kg"}
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: null
+          unit_description: '1kg'
+          unit_value_with_description: "1kg"
+
       it "sets blank values when no value provided", ->
         testVariant = {unit_value_with_description: ""}
         scope.packVariant(testProduct, testVariant)
@@ -662,6 +781,15 @@ describe "AdminProductEditCtrl", ->
         scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual {}
 
+      it "sets zero when the field is zero", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
+        testVariant = {unit_value_with_description: "0"}
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 0
+          unit_description: ''
+          unit_value_with_description: "0"
+
       it "converts value from chosen unit to base unit", ->
         testProduct = {id: 123, variant_unit_scale: 1000}
         testVariant = {unit_value_with_description: "250.5"}
@@ -671,6 +799,16 @@ describe "AdminProductEditCtrl", ->
           unit_value: 250500
           unit_description: ''
           unit_value_with_description: "250.5"
+
+      it "does not convert value when using a non-scaled unit", ->
+        testProduct = {id: 123}
+        testVariant = {unit_value_with_description: "12"}
+        scope.products = [testProduct]
+        scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 12
+          unit_description: ''
+          unit_value_with_description: "12"
 
 
     describe "filtering products", ->
@@ -774,6 +912,24 @@ describe "AdminProductEditCtrl", ->
         expect(scope.displayFailure).toHaveBeenCalled()
 
 
+  describe "copying new variant ids from server to client", ->
+    it "copies server ids to the client where the client id is negative", ->
+      clientProducts = [
+        {
+          id: 123
+          variants: [{id: 1}, {id: -2}, {id: -3}]
+        }
+      ]
+      serverProducts = [
+        {
+          id: 123
+          variants: [{id: 1}, {id: 4534}, {id: 3453}]
+        }
+      ]
+      scope.copyNewVariantIds(clientProducts, serverProducts)
+      expect(clientProducts).toEqual(serverProducts)
+
+
   describe "fetching products without derived attributes", ->
     it "returns products without the variant_unit_with_scale field", ->
       scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
@@ -805,6 +961,14 @@ describe "AdminProductEditCtrl", ->
           }
         ]
 
+      it "removes the master variant", ->
+        scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
+        expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
+          {
+            id: 123
+          }
+        ]
+
 
   describe "deep copying products", ->
     it "copies products", ->
@@ -828,6 +992,27 @@ describe "AdminProductEditCtrl", ->
     it "returns null when the product is not present", ->
       scope.products = []
       expect(scope.findProduct(123)).toBeNull()
+
+
+  describe "adding variants", ->
+    beforeEach ->
+      scope.displayProperties ||= {123: {}}
+
+    it "adds first and subsequent variants", ->
+      product = {id: 123, variants: []}
+      scope.addVariant(product)
+      scope.addVariant(product)
+      expect(product).toEqual
+        id: 123
+        variants: [
+          {id: -1, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
+          {id: -2, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
+        ]
+
+    it "shows the variant(s)", ->
+      product = {id: 123, variants: []}
+      scope.addVariant(product)
+      expect(scope.displayProperties[123].showVariants).toBe(true)
 
 
   describe "deleting products", ->
@@ -883,83 +1068,100 @@ describe "AdminProductEditCtrl", ->
 
 
   describe "deleting variants", ->
-    it "deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", ->
-      spyOn(window, "confirm").andReturn true
-      scope.products = [
-        {
-          id: 9
-          permalink_live: "apples"
-          variants: [
-            id: 3
-            price: 12
-          ]
-        }
-        {
-          id: 13
-          permalink_live: "oranges"
-        }
-      ]
-      scope.dirtyProducts = {}
-      httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
-      scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-      httpBackend.flush()
+    describe "when the variant has not been saved", ->
+      it "removes the variant from products and dirtyProducts", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {id: 1, variants: [{id: -1}]}
+        ]
+        scope.dirtyProducts =
+          1: {id: 1, variants: {'-1': {id: -1}}}
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        expect(scope.products).toEqual([
+          {id: 1, variants: []}
+        ])
+        expect(scope.dirtyProducts).toEqual
+          1: {id: 1, variants: {}}
 
-    it "removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", ->
-      spyOn(window, "confirm").andReturn true
-      scope.products = [
-        {
-          id: 9
-          permalink_live: "apples"
-          variants: [
-            {
+  
+    describe "when the variant has been saved", ->
+      it "deletes variants with a http delete request to /api/products/product_id/variants/(variant_id)", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {
+            id: 9
+            permalink_live: "apples"
+            variants: [
               id: 3
-              price: 12.0
-            }
-            {
-              id: 4
-              price: 6.0
-            }
-          ]
-        }
-        {
-          id: 13
-          permalink_live: "oranges"
-        }
-      ]
-      scope.dirtyProducts =
-        9:
-          id: 9
-          variants:
-            3:
-              id: 3
-              price: 12.0
+              price: 12
+            ]
+          }
+          {
+            id: 13
+            permalink_live: "oranges"
+          }
+        ]
+        scope.dirtyProducts = {}
+        httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        httpBackend.flush()
 
-            4:
-              id: 4
-              price: 6.0
+      it "removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", ->
+        spyOn(window, "confirm").andReturn true
+        scope.products = [
+          {
+            id: 9
+            permalink_live: "apples"
+            variants: [
+              {
+                id: 3
+                price: 12.0
+              }
+              {
+                id: 4
+                price: 6.0
+              }
+            ]
+          }
+          {
+            id: 13
+            permalink_live: "oranges"
+          }
+        ]
+        scope.dirtyProducts =
+          9:
+            id: 9
+            variants:
+              3:
+                id: 3
+                price: 12.0
+  
+              4:
+                id: 4
+                price: 6.0
+  
+          13:
+            id: 13
+            name: "P1"
 
-        13:
-          id: 13
-          name: "P1"
+        httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
+        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
+        httpBackend.flush()
+        expect(scope.products[0].variants).toEqual [
+          id: 4
+          price: 6.0
+        ]
+        expect(scope.dirtyProducts).toEqual
+          9:
+            id: 9
+            variants:
+              4:
+                id: 4
+                price: 6.0
 
-      httpBackend.expectDELETE("/api/products/9/variants/3").respond 200, "data"
-      scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-      httpBackend.flush()
-      expect(scope.products[0].variants).toEqual [
-        id: 4
-        price: 6.0
-      ]
-      expect(scope.dirtyProducts).toEqual
-        9:
-          id: 9
-          variants:
-            4:
-              id: 4
-              price: 6.0
-
-        13:
-          id: 13
-          name: "P1"
+          13:
+            id: 13
+            name: "P1"
 
 
 

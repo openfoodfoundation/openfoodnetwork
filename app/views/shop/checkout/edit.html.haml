@@ -1,0 +1,25 @@
+.darkswarm
+  - content_for :order_cycle_form do
+    %strong.avenir
+      Order ready on
+      = pickup_time current_order_cycle
+
+  = render partial: "shop/details"
+   
+  %checkout{"ng-app" => "Checkout"}
+    .row
+      .large-9.columns
+        - unless spree_current_user
+          .row
+            %section#checkout_login
+              .large-6.columns
+                = render partial: "shop/checkout/login"
+            %section#checkout_signup
+              .large-6.columns
+                = render partial: "shop/checkout/signup"
+        .row
+          = render partial: "shop/checkout/form"
+
+      .large-3.columns
+        .row
+          = render partial: "shop/checkout/summary"

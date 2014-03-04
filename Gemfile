@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.14'
+gem 'rails', '3.2.17'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
@@ -16,6 +16,7 @@ gem 'comfortable_mexican_sofa'
 gem 'simple_form', :github => 'RohanM/simple_form'
 
 gem 'unicorn'
+gem 'angularjs-rails'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
@@ -50,6 +51,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'zurb-foundation', :github => 'zurb/foundation'
 end
+gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
 

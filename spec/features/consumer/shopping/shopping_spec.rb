@@ -116,9 +116,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product) }
         let(:variant) { create(:variant, product: product) }
+        let(:exchange) { Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) } 
 
         before do
-          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << product.master
           exchange.variants << variant
@@ -141,7 +141,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
           find(".collapse").trigger "click"
           page.should_not have_text variant.options_text
         end
-        it "allows the user to expand variants"
+
+        it "uses the adjusted price" do
+          enterprise_fee1 = create(:enterprise_fee, amount: 20)
+          enterprise_fee2 = create(:enterprise_fee, amount:  3)
+          exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
+          exchange.save
+
+          visit shop_path
+          select "frogs", :from => "order_cycle_id"
+          page.should have_content "$#{(product.price + 23.00)}"
+        end
       end
 
       describe "Filtering on hand and on demand products" do

@@ -20,7 +20,11 @@ class Spree::ProductSet < ModelSet
   def update_variants_attributes(product, variants_attributes)
     variants_attributes.each do |attributes|
       e = product.variants.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
-      e.update_attributes(attributes.except(:id)) if e.present?
+      if e.present?
+        e.update_attributes(attributes.except(:id))
+      else
+        product.variants.create attributes
+      end
     end
   end
 

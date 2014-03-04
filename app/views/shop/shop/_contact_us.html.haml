@@ -1,0 +1,18 @@
+.contact.small-2.large-3.columns
+  %h3 Contact
+
+  %p
+    %strong E
+    %a{href: "mailto:#{@distributor.email}"}= @distributor.email
+  
+  - unless @distributor.website.blank?
+    %p
+      %strong W
+      %a{href: @distributor.website}= @distributor.website
+
+  %p
+    = @distributor.address.address1
+    %br
+    = @distributor.address.address2
+    %br
+    = @distributor.address.city

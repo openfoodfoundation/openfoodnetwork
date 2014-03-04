@@ -21,7 +21,7 @@
               {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
           %td 
-            {{ product.master.options_text }}
+            %span{"ng-hide" => "product.variants.length > 0"} {{ product.master.options_text }}
             %span{"ng-show" => "product.variants.length > 0"}
               %img.collapse{src: "/assets/collapse.png",
               "ng-show" => "product.show_variants",
@@ -48,7 +48,7 @@
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ product.price | currency }}
         %tr.product-description
-          %td{colspan: 6}{{ product.notes | truncate:80 }}
+          %td{colspan: 2}{{ product.notes | truncate:80 }}
         %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
-          = render partial: "shop/variant"
+          = render partial: "shop/shop/variant"
     %input.button.right{type: :submit, value: "Check Out"}

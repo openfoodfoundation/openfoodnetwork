@@ -5,6 +5,15 @@ class ApplicationController < ActionController::Base
   before_filter :load_data_for_sidebar
   before_filter :require_certified_hostname
 
+
+  def after_sign_in_path_for(resource)
+    if request.referer and referer_path = URI(request.referer).path
+      [main_app.shop_checkout_path].include?(referer_path) ? referer_path : root_path
+    else
+      root_path
+    end
+  end
+
   private
   def load_data_for_menu
     @cms_site = Cms::Site.where(:identifier => 'open-food-network').first

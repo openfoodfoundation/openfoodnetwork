@@ -1,0 +1,16 @@
+%ordercycle{"ng-controller" => "OrderCycleCtrl"}
+  :javascript
+    angular.module('Shop').value('orderCycleData', #{render "shop/shop/order_cycle"})
+
+  - if @order_cycles.empty?
+    Orders are currently closed for this hub
+    %p 
+      Please contact your hub directly to see if they accept late orders, 
+      or wait until the next cycle opens.
+
+    = render partial: "shop/shop/next_order_cycle"
+    = render partial: "shop/shop/last_order_cycle"
+
+  - else
+    %form.custom
+      = yield :order_cycle_form

@@ -54,6 +54,15 @@ describe Spree::Order do
       subject.update_distribution_charge!
     end
 
+    it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
+      EnterpriseFee.stub(:clear_all_adjustments_on_order)
+      subject.stub(:line_items) { [] }
+
+      subject.stub(:order_cycle) { nil }
+
+      subject.update_distribution_charge!
+    end
+
     it "ensures the correct adjustment(s) are created for order cycles" do
       EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
@@ -61,7 +70,19 @@ describe Spree::Order do
       subject.stub(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
-      order_cycle.should_receive(:create_adjustments_for).with(line_item)
+      order_cycle.should_receive(:create_line_item_adjustments_for).with(line_item)
+      order_cycle.stub(:create_order_adjustments_for)
+      subject.stub(:order_cycle) { order_cycle }
+
+      subject.update_distribution_charge!
+    end
+
+    it "ensures the correct per-order adjustment(s) are created for order cycles" do
+      EnterpriseFee.stub(:clear_all_adjustments_on_order)
+      subject.stub(:line_items) { [] }
+
+      order_cycle = double(:order_cycle)
+      order_cycle.should_receive(:create_order_adjustments_for).with(subject)
       subject.stub(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
@@ -233,7 +254,41 @@ describe Spree::Order do
 
         Spree::Order.not_state(:canceled).should_not include o
       end
+    end
+  end
 
+  describe "shipping address prepopulation" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { build(:order, distributor: distributor) }
+
+    before do
+      order.ship_address = distributor.address.clone
+      order.save # just to trigger our autopopulate the first time ;)
+    end
+
+    it "autopopulates the shipping address on save" do
+      order.should_receive(:shipping_address_from_distributor).and_return true
+      order.save
+    end
+
+    it "populates the shipping address if the shipping method doesn't require a delivery address" do
+      order.shipping_method = create(:shipping_method, require_ship_address: false)
+      order.ship_address.update_attribute :firstname, "will"
+      order.save
+      order.ship_address.firstname.should == distributor.address.firstname
+    end
+
+    it "does not populate the shipping address if the shipping method requires a delivery address" do
+      order.shipping_method = create(:shipping_method, require_ship_address: true)
+      order.ship_address.update_attribute :firstname, "will"
+      order.save
+      order.ship_address.firstname.should == "will"
+    end
+
+    it "doesn't attempt to create a shipment if the order is not yet valid" do
+      order.shipping_method = create(:shipping_method, require_ship_address: false)
+      #Shipment.should_not_r
+      order.create_shipment!
     end
   end
 

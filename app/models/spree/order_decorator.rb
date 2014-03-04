@@ -14,6 +14,26 @@ Spree::Order.class_eval do
 
   before_validation :shipping_address_from_distributor
 
+  checkout_flow do
+    go_to_state :address
+    go_to_state :delivery
+    go_to_state :payment, :if => lambda { |order|
+      if order.ship_address.andand.valid?
+        # Fix for #2191
+        if order.shipping_method
+          order.create_shipment!
+          order.update_totals
+        end
+        order.payment_required?
+      else
+        false
+      end
+    }
+    go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
+    go_to_state :complete, :if => lambda { |order| (order.payment_required? && order.has_unprocessed_payments?) || !order.payment_required? }
+    remove_transition :from => :delivery, :to => :confirm
+  end
+
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -80,13 +100,15 @@ Spree::Order.class_eval do
 
     line_items.each do |line_item|
       if provided_by_order_cycle? line_item
-        order_cycle.create_adjustments_for line_item
+        order_cycle.create_line_item_adjustments_for line_item
 
       else
         pd = product_distribution_for line_item
         pd.create_adjustment_for line_item if pd
       end
     end
+
+    order_cycle.create_order_adjustments_for self if order_cycle
   end
 
   def set_variant_attributes(variant, attributes)
@@ -117,12 +139,17 @@ Spree::Order.class_eval do
 
   def shipping_address_from_distributor
     if distributor
-      self.ship_address = distributor.address.clone
+      # This method is confusing to conform to the vagaries of the multi-step checkout
+      # We copy over the shipping address when we have no shipping method selected
+      # We can refactor this when we drop the multi-step checkout option
+      if shipping_method.nil? or shipping_method.andand.require_ship_address == false
+        self.ship_address = distributor.address.clone
 
-      if bill_address
-        self.ship_address.firstname = bill_address.firstname
-        self.ship_address.lastname = bill_address.lastname
-        self.ship_address.phone = bill_address.phone
+        if bill_address
+          self.ship_address.firstname = bill_address.firstname
+          self.ship_address.lastname = bill_address.lastname
+          self.ship_address.phone = bill_address.phone
+        end
       end
     end
   end
@@ -135,5 +162,4 @@ Spree::Order.class_eval do
   def product_distribution_for(line_item)
     line_item.variant.product.product_distribution_for self.distributor
   end
-
 end

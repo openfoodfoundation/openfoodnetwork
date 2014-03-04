@@ -1,12 +1,19 @@
 Spree::Product.class_eval do
+  # We have an after_destroy callback on Spree::ProductOptionType. However, if we
+  # don't specify dependent => destroy on this association, it is not called. See:
+  # https://github.com/rails/rails/issues/7618
+  has_many :option_types, :through => :product_option_types, :dependent => :destroy
+
+
   belongs_to :supplier, :class_name => 'Enterprise'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
+  delegate_belongs_to :master, :unit_value, :unit_description
 
-  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :notes
+  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes
 
   validates_presence_of :supplier
 

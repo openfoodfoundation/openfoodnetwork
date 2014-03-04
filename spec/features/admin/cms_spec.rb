@@ -31,5 +31,4 @@ feature %q{
     page.should_not have_content "ComfortableMexicanSofa"
     page.should have_content "WHERE WOULD YOU LIKE TO SHOP?"
   end
-
 end
