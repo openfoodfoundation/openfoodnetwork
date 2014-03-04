@@ -68,7 +68,7 @@ feature %q{
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
-    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new)
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, require_ship_address: false)
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
 
     @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributors => [@distributor])
@@ -388,13 +388,11 @@ feature %q{
 
     # Disabled until this form takes order cycles into account
     # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
-
     click_checkout_continue_button
 
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Delivery:", "$0.00"],
-                             ["Distribution:", "$51.00"]]
+    order_charges.should == [["Delivery:", "$0.00"], ["Distribution:", "$51.00"]] 
     click_checkout_continue_button
 
     # -- Checkout: Payment
@@ -410,6 +408,7 @@ feature %q{
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
     page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
+
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
@@ -559,7 +558,7 @@ feature %q{
     ex4.variants << @product_4.master
 
     # Shipping method and payment method
-    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributors: [@distributor_oc])
+    sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributors: [@distributor_oc], require_ship_address: false)
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
     @payment_method_distributor_oc = create(:payment_method, :name => 'FruitAndVeg payment method', :distributors => [@distributor_oc])
   end

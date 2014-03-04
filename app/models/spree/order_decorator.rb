@@ -138,13 +138,18 @@ Spree::Order.class_eval do
   private
 
   def shipping_address_from_distributor
-    if distributor and (shipping_method.andand.require_ship_address == false)
-      self.ship_address = distributor.address.clone
+    if distributor
+      # This method is confusing to conform to the vagaries of the multi-step checkout
+      # We copy over the shipping address when we have no shipping method selected
+      # We can refactor this when we drop the multi-step checkout option
+      if shipping_method.nil? or shipping_method.andand.require_ship_address == false
+        self.ship_address = distributor.address.clone
 
-      if bill_address
-        self.ship_address.firstname = bill_address.firstname
-        self.ship_address.lastname = bill_address.lastname
-        self.ship_address.phone = bill_address.phone
+        if bill_address
+          self.ship_address.firstname = bill_address.firstname
+          self.ship_address.lastname = bill_address.lastname
+          self.ship_address.phone = bill_address.phone
+        end
       end
     end
   end
@@ -157,5 +162,4 @@ Spree::Order.class_eval do
   def product_distribution_for(line_item)
     line_item.variant.product.product_distribution_for self.distributor
   end
-
 end
