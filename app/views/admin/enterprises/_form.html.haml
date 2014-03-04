@@ -1,23 +1,57 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
+%style
+  div.enterprise-form {
+  border: 1px dashed grey;
+  margin-bottom: 1em;
+  padding: 1em;
+  }
+  fieldset {
+  font-size: 100%;
+  }
+  label {
+  text-transform:none;
+  margin-right: 1em;
+  }
+  input {
+  margin: 0.5em 0em;
+  }
+  label.leftcol {
+  display: inline-block;
+  width: 10em;
+  }
+  label.leftcol+input {
+  margin-right: 3em;
+  }
+  input#enterprise_is_primary_producer {
+  margin-left: 10em;
+  }
+  div.input-compound {
+  display: inline-block;
+  }
+
+%div.enterprise-form{data-hook: "distributors"}
+  %label.leftcol{for: "enterprise_name", 'data-hook' => "name"} Name
+  = f.text_field :name
+  %div
+    = f.check_box :is_primary_producer
+    %label{for: "enterprise_is_primary_producer", 'data-hook' => "is_primary_producer"} Producer
+    = f.check_box :is_distributor
+    %label{for: "enterprise_is_distributor", 'data-hook' => "is_distributor"} Hub
+    %a Tell me more?
+  = f.fields_for :address do |af|
+    %fieldset
+      %legend Address
+      %label.leftcol{for: "enterprise_address_attributes_address1"} Address
+      = af.text_field :address1
+      %div.input-compound
+        %label.leftcol{for: "enterprise_address_attributes_address2"} Address (cont.)
+        = af.text_field :address2
+    
+    
+
 %table{"data-hook" => "distributors"}
-  %tr{"data-hook" => "name"}
-    %td Name:
-    %td= f.text_field :name
-  %tr
-    %td
-    %td
-      / what about the data-hook?
-      / {'data-hook' => "is_primary_producer"}
-      = f.check_box :is_primary_producer
-      Producer
-      / %tr{'data-hook' => "is_distributor"}
-      / here should be a gap
-      = f.check_box :is_distributor
-      Distributor
-      / this should be at the right side
-      %a Tell me more?
   %tr
     %th Address
   = f.fields_for :address do |af|
