@@ -8,7 +8,7 @@ module Api
 
     let!(:oc1) { FactoryGirl.create(:order_cycle) }
     let!(:oc2) { FactoryGirl.create(:order_cycle) }
-    let(:attributes) { [:id, :name] }
+    let(:attributes) { [:id, :name, :suppliers, :distributors] }
 
     before do
       stub_authentication!
