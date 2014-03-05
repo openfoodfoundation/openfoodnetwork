@@ -1,6 +1,7 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
+/ TODO move this CSS
 %style
   div.row input[type=text], div.row select {
   width: 100%;
@@ -23,8 +24,8 @@
         = f.check_box :is_distributor
         = f.label :is_distributor, 'Hub'
       .omega.two.columns
-        %a Tell me more?
-        / TODO: link for Tell me more
+        %span.with-tip{'data-powertip' => "Select 'Producer' if you are producing food like a farmer. And select 'Hub' if you are selling to end customers. You can do both."}
+          %a Tell me more?
   = f.fields_for :address do |af|
     %fieldset
       %legend Address
@@ -82,12 +83,17 @@
           %legend Enterprise Details
           .row
             .alpha.two.columns
-              = f.label :abn, 'ABN / ACN'
+              = f.label :abn, 'ABN'
               / TODO: figure out how to work with one field for both
               / ABN has 11 digits
               / ACN has 9 digits
             .omega.four.columns
               = f.text_field :abn
+          .row
+            .alpha.two.columns
+              = f.label :acn, 'ACN'
+            .omega.four.columns
+              = f.text_field :acn
           .row
             .alpha.two.columns
               = f.label :website
