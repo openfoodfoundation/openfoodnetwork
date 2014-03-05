@@ -150,12 +150,20 @@ feature "As a consumer I want to check out my cart", js: true do
             check "Shipping address same as billing address?"
             find("#ship_address_hidden").visible?.should be_true
             find("#ship_address > div.visible").visible?.should be_false
+
+            # Check it keeps state
+            click_button "Purchase"
+            find_field("Shipping address same as billing address?").should be_checked
           end
 
           it "shows ship address forms when 'same as billing address' is unchecked" do
             uncheck "Shipping address same as billing address?"
             find("#ship_address_hidden").visible?.should be_false
             find("#ship_address > div.visible").visible?.should be_true
+
+            # Check it keeps state
+            click_button "Purchase"
+            find_field("Shipping address same as billing address?").should_not be_checked
           end
         end
 
