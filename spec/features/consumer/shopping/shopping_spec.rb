@@ -196,30 +196,25 @@ feature "As a consumer I want to shop with a distributor", js: true do
           exchange
         end
 
-        it "shows on hand products" do
+        it "filters products based on availability" do
+          # It shows on hand products
           page.should have_content p1.name
           page.should have_content p4.name
-        end
 
-        it "shows on demand products" do
+          # It shows on demand products
           page.should have_content p2.name
-        end
 
-        it "does not show products that are neither on hand or on demand" do
+          # It does not show products that are neither on hand or on demand
           page.should_not have_content p3.name
-        end
 
-        it "shows on demand variants" do
+          # It shows on demand variants
           within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
           page.should have_content v3.options_text
-        end
 
-        it "does not show variants that are neither on hand or on demand" do
-          within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
+          # It does not show variants that are neither on hand or on demand
           page.should_not have_content v2.options_text
-        end
 
-        it "does not show products that have no available variants in this distribution" do
+          # It does not show products that have no available variants in this distribution
           page.should_not have_content p5.name
         end
       end
