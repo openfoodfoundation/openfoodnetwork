@@ -12,7 +12,7 @@
         %th.bulk Bulk
         %th.price.text-right Price
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
-        %tr.product
+        %tr{"class" => "product product-{{ product.id }}"}
           %td.name
             %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
             %div

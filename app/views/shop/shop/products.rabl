@@ -23,7 +23,7 @@ child :master => :master do
 end
 
 node :variants do |product|
-  product.variants_for(current_order_cycle, current_distributor).map do |v|
+  product.variants_for(current_order_cycle, current_distributor).in_stock.map do |v|
     {id: v.id,
      is_master: v.is_master,
      count_on_hand: v.count_on_hand,

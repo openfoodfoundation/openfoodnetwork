@@ -12,6 +12,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       visit "/"
       click_link distributor.name
     end
+
     it "shows a distributor" do
       visit shop_path
       page.should have_text distributor.name
@@ -23,7 +24,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       first("#about img")['src'].should == distributor.promo_image.url(:large) 
     end
 
-    describe "With products in order cycles" do
+    describe "with products in order cycles" do
       let(:supplier) { create(:supplier_enterprise) }
       let(:product) { create(:product, supplier: supplier) }
       let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
@@ -112,7 +113,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
-      describe "After selecting an order cycle with products visible" do
+      describe "after selecting an order cycle with products visible" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product) }
         let(:variant) { create(:variant, product: product) }
@@ -154,13 +155,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
-      describe "Filtering on hand and on demand products" do
+      describe "filtering on hand and on demand products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:p1) { create(:simple_product, on_demand: false) }
         let(:p2) { create(:simple_product, on_demand: true) }
         let(:p3) { create(:simple_product, on_demand: false) }
         let(:p4) { create(:simple_product, on_demand: false) }
-        let(:v1) { create(:variant, product: p4) }
+        let(:p5) { create(:simple_product, on_demand: false) }
+        let(:v1) { create(:variant, product: p4, unit_value: 2) }
+        let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
+        let(:v3) { create(:variant, product: p5) }
+        let(:v4) { create(:variant, product: p5) }
 
         before do
           p1.master.count_on_hand = 1
@@ -169,12 +174,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
           p2.master.update_attribute(:count_on_hand, 0)
           p3.master.update_attribute(:count_on_hand, 0)
           v1.update_attribute(:count_on_hand, 1)
+          v2.update_attribute(:count_on_hand, 0)
+          v3.update_attribute(:count_on_hand, 1)
+          v4.update_attribute(:count_on_hand, 0)
           exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << p1.master
           exchange.variants << p2.master
           exchange.variants << p3.master
-          exchange.variants << v1 
+          exchange.variants << v1
+          exchange.variants << v2
+          exchange.variants << v4
           visit shop_path
           select "frogs", :from => "order_cycle_id"
           exchange
@@ -189,6 +199,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
         it "does not show products that are neither on hand or on demand" do
           page.should_not have_content p3.name
+        end
+
+        it "does not show variants that are neither on hand or on demand" do
+          within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
+          page.should_not have_content v2.options_text
         end
       end
 

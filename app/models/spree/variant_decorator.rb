@@ -14,6 +14,8 @@ Spree::Variant.class_eval do
 
   after_save :update_units
 
+  scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
+
 
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)

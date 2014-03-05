@@ -2,6 +2,25 @@ require 'spec_helper'
 
 module Spree
   describe Variant do
+    describe "scopes" do
+      describe "finding variants in stock" do
+        before do
+          p = create(:product)
+          @v_in_stock = create(:variant, product: p)
+          @v_on_demand = create(:variant, product: p, on_demand: true)
+          @v_no_stock = create(:variant, product: p)
+
+          @v_in_stock.update_attribute(:count_on_hand, 1)
+          @v_on_demand.update_attribute(:count_on_hand, 0)
+          @v_no_stock.update_attribute(:count_on_hand, 0)
+        end
+
+        it "returns variants in stock or on demand, but not those that are neither" do
+          Variant.where(is_master: false).in_stock.should == [@v_in_stock, @v_on_demand]
+        end
+      end
+    end
+
     describe "calculating the price with enterprise fees" do
       it "returns the price plus the fees" do
         distributor = double(:distributor)
