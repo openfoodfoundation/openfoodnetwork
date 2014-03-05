@@ -2,120 +2,141 @@
   = render 'shared/cms_elrte_head'
 
 %style
-  div.enterprise-form {
-  border: 1px dashed grey;
-  margin-bottom: 1em;
-  padding: 1em;
-  }
-  fieldset {
-  font-size: 100%;
-  }
-  label {
-  text-transform:none;
-  margin-right: 1em;
-  }
-  input {
-  margin: 0.5em 0em;
-  }
-  label.leftcol {
-  display: inline-block;
-  width: 10em;
-  }
-  label.leftcol+input {
-  margin-right: 3em;
-  }
-  input#enterprise_is_primary_producer {
-  margin-left: 10em;
-  }
-  div.input-compound {
-  display: inline-block;
+  div.row input[type=text], div.row select {
+  width: 100%;
   }
 
-%div.enterprise-form{data-hook: "distributors"}
-  %label.leftcol{for: "enterprise_name", 'data-hook' => "name"} Name
-  = f.text_field :name
-  %div
-    = f.check_box :is_primary_producer
-    %label{for: "enterprise_is_primary_producer", 'data-hook' => "is_primary_producer"} Producer
-    = f.check_box :is_distributor
-    %label{for: "enterprise_is_distributor", 'data-hook' => "is_distributor"} Hub
-    %a Tell me more?
+.enterprise-form
+  .row
+    .alpha.six.columns
+      .two.columns.alpha
+        = f.label :name
+      .four.columns.omega
+        = f.text_field :name
+  .row
+    .alpha.two.columns &nbsp;
+    .omega.ten.columns
+      .alpha.two.columns
+        = f.check_box :is_primary_producer
+        = f.label :is_primary_producer, 'Producer'
+      .omega.two.columns
+        = f.check_box :is_distributor
+        = f.label :is_distributor, 'Hub'
+      .omega.two.columns
+        %a Tell me more?
+        / TODO: link for Tell me more
   = f.fields_for :address do |af|
     %fieldset
       %legend Address
-      %label.leftcol{for: "enterprise_address_attributes_address1"} Address
-      = af.text_field :address1
-      %div.input-compound
-        %label.leftcol{for: "enterprise_address_attributes_address2"} Address (cont.)
-        = af.text_field :address2
+      .row
+        .six.columns.alpha
+          .alpha.two.columns
+            = af.label :address1
+          .omega.four.columns
+            = af.text_field :address1
+        .six.columns.omega
+          .alpha.two.columns
+            = af.label :address2
+          .omega.four.columns
+            = af.text_field :address2
+      .row
+        .six.columns.alpha
+          .alpha.two.columns
+            = af.label :city, 'Suburb'
+          .omega.four.columns
+            = af.text_field :city
+        .six.columns.omega
+          .alpha.two.columns
+            = af.label :zipcode, 'Postcode'
+          .omega.four.columns
+            = af.text_field :zipcode
+      .row
+        .alpha.two.columns &nbsp;
+        .omega.three.columns
+          = af.collection_select(:state_id, af.object.country.states, :id, :name)
+      .row
+        .alpha.two.columns &nbsp;
+        .omega.three.columns
+          = af.collection_select(:country_id, available_countries, :id, :name)
+    .row
+      .alpha.six.columns
+        %fieldset
+          %legend Contact Details
+          .row
+            .alpha.two.columns
+              = f.label :contact, 'Name'
+            .omega.four.columns
+              = f.text_field :contact
+          .row
+            .alpha.two.columns
+              = f.label :email
+            .omega.four.columns
+              = f.text_field :email
+          .row
+            .alpha.two.columns
+              = f.label :phone
+            .omega.four.columns
+              = f.text_field :phone
+      .omega.six.columns
+        %fieldset
+          %legend Enterprise Details
+          .row
+            .alpha.two.columns
+              = f.label :abn, 'ABN / ACN'
+              / TODO: figure out how to work with one field for both
+              / ABN has 11 digits
+              / ACN has 9 digits
+            .omega.four.columns
+              = f.text_field :abn
+          .row
+            .alpha.two.columns
+              = f.label :website
+            .omega.four.columns
+              = f.text_field :website
+          /.row
+          /  .alpha.two.columns
+          /    = f.label :twitter, 'Facebook'
+          /    / TODO: facebook data field
+          /  .omega.four.columns
+          /    = f.text_field :twitter
+          .row
+            .alpha.two.columns
+              = f.label :twitter
+            .omega.four.columns
+              = f.text_field :twitter
+  %fieldset
+    %legend About Us
+    .row
+      .alpha.two.columns
+        = f.label :description, 'Short Description'
+      .omega.four.columns
+        = f.text_field :description
+    .row
+      .alpha.two.columns
+        = f.label :long_description, 'About Us'
+        %br
+        Tell us about yourself. This information appears on your public profile (under "About Us")
+      .omega.eight.columns
+        = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
+    .row
+      .alpha.two.columns
+        = f.label :distributor_info, 'How does it work?'
+        %br
+        Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"
+      .omega.eight.columns
+        = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
+        / TODO: how to use placeholder with richt text?
+        / TODO: editor breaks scrolling with arrow keys
+    .row
+      .alpha.two.columns
+        = f.label :logo
+      .omega.four.columns
+        = image_tag @object.logo.url
+        = f.file_field :logo
+      .omega.two.columns
+        = f.label :promo_image
+      .omega.four.columns
+        = image_tag @object.promo_image.url
+        = f.file_field :pro_image
     
-    
-
-%table{"data-hook" => "distributors"}
-  %tr
-    %th Address
-  = f.fields_for :address do |af|
-    %tr
-      %td Address
-      %td= af.text_field :address1
-      %td Address (cont.)
-      %td= af.text_field :address2
-    %tr
-      %td Suburb
-      %td= af.text_field :city
-      %td Postcode
-      %td= af.text_field :zipcode
-    %tr
-      %td
-      %td
-        = af.collection_select(:state_id, af.object.country.states, :id, :name)
-        = af.collection_select(:country_id, available_countries, :id, :name)
-  %tr
-    %th Contact Details
-    %th
-    %th Enterprise Details
-    %th
-  %tr
-    %td Name
-    %td= f.text_field :contact
-    %td ABN / ACN
-    %td= f.text_field :abn
-  %tr
-    %td Email
-    %td= f.text_field :email
-    %td Website
-    %td= f.text_field :website
-  %tr
-    %td Phone
-    %td= f.text_field :phone
-    %td Facebook
-    %td= f.text_field :twitter
-    / TODO: facebook data field
-  %tr
-    %td
-    %td
-    %td Twitter
-    %td= f.text_field :twitter
-  %tr
-    %th About Us
-  %tr
-    %td Short Description
-    %td= f.text_field :description
-  %tr
-    %td About Us
-    %td= f.text_area :long_description, :class => 'rich_text'
-  %tr
-    %td How does it work?
-    %td= f.text_area :long_description, :class => 'rich_text'
-    / TODO: hub explanation data field
-  %tr
-    %td Logo
-    %td
-      = f.file_field :logo
-      = image_tag @object.logo.url
-    %td Promo
-    %td
-      = f.file_field :promo_image
-      = image_tag @object.promo_image.url
-
 
