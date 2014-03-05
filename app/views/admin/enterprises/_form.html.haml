@@ -1,13 +1,7 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
-/ TODO move this CSS
-%style
-  div.row input[type=text], div.row select {
-  width: 100%;
-  }
-
-.enterprise-form
+.fullwidth_inputs
   .row
     .alpha.six.columns
       .two.columns.alpha
@@ -30,12 +24,12 @@
     %fieldset
       %legend Address
       .row
-        .six.columns.alpha
+        .alpha.six.columns
           .alpha.two.columns
             = af.label :address1
           .omega.four.columns
             = af.text_field :address1
-        .six.columns.omega
+        .omega.six.columns
           .alpha.two.columns
             = af.label :address2
           .omega.four.columns

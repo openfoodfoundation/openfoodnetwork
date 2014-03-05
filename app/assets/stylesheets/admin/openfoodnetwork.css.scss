@@ -126,3 +126,10 @@ table#listing_enterprise_groups {
     text-align: left;
   }
 }
+
+.fullwidth_inputs {
+  input[type=text], select {
+    width: 100%;
+  }
+}
+
