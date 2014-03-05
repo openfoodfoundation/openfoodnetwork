@@ -151,7 +151,7 @@ class OrderCycle < ActiveRecord::Base
 
   # TODO: The boundary of this class is ill-defined here. OrderCycle should not know about
   # EnterpriseFeeApplicator. Clients should be able to query it for relevant EnterpriseFees.
-  # This logic should be in another service object.
+  # This logic would fit better in another service object.
 
   def fees_for(variant, distributor)
     per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|

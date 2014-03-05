@@ -164,8 +164,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:p5) { create(:simple_product, on_demand: false) }
         let(:v1) { create(:variant, product: p4, unit_value: 2) }
         let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
-        let(:v3) { create(:variant, product: p5) }
+        let(:v3) { create(:variant, product: p4, unit_value: 4, on_demand: true) }
         let(:v4) { create(:variant, product: p5) }
+        let(:v5) { create(:variant, product: p5) }
 
         before do
           p1.master.count_on_hand = 1
@@ -175,8 +176,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           p3.master.update_attribute(:count_on_hand, 0)
           v1.update_attribute(:count_on_hand, 1)
           v2.update_attribute(:count_on_hand, 0)
-          v3.update_attribute(:count_on_hand, 1)
-          v4.update_attribute(:count_on_hand, 0)
+          v3.update_attribute(:count_on_hand, 0)
+          v4.update_attribute(:count_on_hand, 1)
+          v5.update_attribute(:count_on_hand, 0)
           exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << p1.master
@@ -184,7 +186,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
           exchange.variants << p3.master
           exchange.variants << v1
           exchange.variants << v2
-          exchange.variants << v4
+          exchange.variants << v3
+          # v4 is in stock but not in distribution
+          # v5 is out of stock and in the distribution
+          # Neither should display, nor should their product, p5
+          exchange.variants << v5
           visit shop_path
           select "frogs", :from => "order_cycle_id"
           exchange
@@ -194,16 +200,27 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content p1.name
           page.should have_content p4.name
         end
+
         it "shows on demand products" do
           page.should have_content p2.name
         end
+
         it "does not show products that are neither on hand or on demand" do
           page.should_not have_content p3.name
+        end
+
+        it "shows on demand variants" do
+          within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
+          page.should have_content v3.options_text
         end
 
         it "does not show variants that are neither on hand or on demand" do
           within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
           page.should_not have_content v2.options_text
+        end
+
+        it "does not show products that have no available variants in this distribution" do
+          page.should_not have_content p5.name
         end
       end
 
