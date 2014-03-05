@@ -6,7 +6,7 @@ orderManagementModule.config [
     provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
 ]
 
-orderManagementModule.value "blankEnterprise", ->
+orderManagementModule.value "blankOption", ->
   { id: "", name: "All" }
 
 orderManagementModule.directive "ofnLineItemUpdAttr", [
@@ -103,8 +103,8 @@ orderManagementModule.factory "pendingChanges",[
 
 
 orderManagementModule.controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankEnterprise", "pendingChanges"
-  ($scope, $http, dataFetcher, blankEnterprise, pendingChanges) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
+  ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
 
     now = new Date
     start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
@@ -124,13 +124,18 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
-            $scope.suppliers.unshift blankEnterprise()
+            $scope.suppliers.unshift blankOption()
             $scope.supplierFilter = $scope.suppliers[0]
             dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
-              $scope.distributors.unshift blankEnterprise()
+              $scope.distributors.unshift blankOption()
               $scope.distributorFilter = $scope.distributors[0]
-              $scope.fetchOrders()
+              dataFetcher("/api/order_cycles/managed").then (data) ->
+                $scope.orderCycles = data
+                $scope.matchOrderCycleEnterprises orderCycle for orderCycle in $scope.orderCycles
+                $scope.orderCycles.unshift blankOption()
+                $scope.orderCycleFilter = $scope.orderCycles[0]
+                $scope.fetchOrders()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
@@ -146,27 +151,30 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.orders = data
       $scope.resetLineItems()
       pendingChanges.removeAll()
-      $scope.matchDistributor order for order in $scope.orders
+      for i,order of $scope.orders
+        order.distributor = $scope.matchObject $scope.distributors, order.distributor, null
+        order.order_cycle = $scope.matchObject $scope.orderCycles, order.order_cycle, null
 
     $scope.resetLineItems = ->
       $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
         for i,line_item of order.line_items
-          $scope.matchSupplier line_item
+          line_item.supplier = $scope.matchObject $scope.suppliers, line_item.supplier, null
           line_item.order = order
         lineItems.concat order.line_items
       , []
 
-    $scope.matchSupplier = (line_item) ->
-      for i, supplier of $scope.suppliers
-        if angular.equals(supplier, line_item.supplier)
-          line_item.supplier = supplier
-          break
+    $scope.matchOrderCycleEnterprises = (orderCycle) ->
+      for i,distributor of orderCycle.distributors
+        orderCycle.distributors[i] = $scope.matchObject $scope.distributors, distributor, null
+      for i,supplier of orderCycle.suppliers
+        orderCycle.suppliers[i] = $scope.matchObject $scope.suppliers, supplier, null
 
-    $scope.matchDistributor = (order) ->
-      for i, distributor of $scope.distributors
-        if angular.equals(distributor, order.distributor)
-          order.distributor = distributor
-          break
+    $scope.matchObject = (list, testObject, noMatch) ->
+      for i, object of list
+        if angular.equals(object, testObject)
+          return object
+        else
+      return noMatch
 
     $scope.deleteLineItem = (lineItem) ->
       if ($scope.confirmDelete && confirm("Are you sure?")) || !$scope.confirmDelete
@@ -179,12 +187,13 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 ]
 
 orderManagementModule.filter "selectFilter", [
-  "blankEnterprise"
-  (blankEnterprise) ->
-    return (lineItems,selectedSupplier,selectedDistributor) ->
+  "blankOption"
+  (blankOption) ->
+    return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
-      filtered.push line_item for line_item in lineItems when (angular.equals(selectedSupplier,blankEnterprise()) || line_item.supplier == selectedSupplier) &&
-        (angular.equals(selectedDistributor,blankEnterprise()) || line_item.order.distributor == selectedDistributor)
+      filtered.push line_item for line_item in lineItems when (angular.equals(selectedSupplier,blankOption()) || line_item.supplier == selectedSupplier) &&
+        (angular.equals(selectedDistributor,blankOption()) || line_item.order.distributor == selectedDistributor) &&
+        (angular.equals(selectedOrderCycle,blankOption()) || line_item.order.order_cycle == selectedOrderCycle)
       filtered
 ]
 

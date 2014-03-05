@@ -159,14 +159,16 @@ feature %q{
     end
 
     context "using drop down seletors" do
-      let!(:s1) { FactoryGirl.create(:supplier_enterprise) }
-      let!(:s2) { FactoryGirl.create(:supplier_enterprise) }
-      let!(:d1) { FactoryGirl.create(:distributor_enterprise) }
-      let!(:d2) { FactoryGirl.create(:distributor_enterprise) }
-      let!(:p1) { FactoryGirl.create(:product, supplier: s1 ) }
-      let!(:p2) { FactoryGirl.create(:product, supplier: s2 ) }
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+      let!(:oc1) { FactoryGirl.create(:order_cycle) }
+      let!(:oc2) { FactoryGirl.create(:order_cycle) }
+      let!(:s1) { oc1.suppliers.first }
+      let!(:s2) { oc2.suppliers.last }
+      let!(:d1) { oc1.distributors.first }
+      let!(:d2) { oc2.distributors.last }
+      let!(:p1) { FactoryGirl.create(:product, supplier: s1) }
+      let!(:p2) { FactoryGirl.create(:product, supplier: s2) }
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: oc1 ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: oc2 ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
 
@@ -206,6 +208,24 @@ feature %q{
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
         select "All", from: "distributor_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+      end
+
+      it "displays a select box for order cycles, which filters line items by the selected order cycle" do
+        page.should have_select "order_cycle_filter", with_options: [oc1.name,oc2.name]
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+        select oc1.name, from: "order_cycle_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+      end
+
+      it "displays all line items when 'All' is selected from order_cycle filter" do
+        select oc1.name, from: "order_cycle_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        select "All", from: "order_cycle_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end

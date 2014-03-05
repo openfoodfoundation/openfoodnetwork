@@ -13,22 +13,29 @@ describe "AdminOrderMgmtCtrl", ->
   )
 
   describe "loading data upon initialisation", ->
-    it "gets a list of suppliers and a list of distributors and then calls fetchOrders", ->
+    it "gets a list of suppliers, a list of distributors and a list of Order Cycles and then calls fetchOrders", ->
       returnedSuppliers = ["list of suppliers"]
       returnedDistributors = ["list of distributors"]
+      returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
+      httpBackend.expectGET("/api/order_cycles/managed").respond returnedOrderCycles
       spyOn(scope, "fetchOrders").andReturn "nothing"
       spyOn(returnedSuppliers, "unshift")
       spyOn(returnedDistributors, "unshift")
+      spyOn(returnedOrderCycles, "unshift")
+      spyOn(scope, "matchOrderCycleEnterprises")
       scope.initialise "api_key"
       httpBackend.flush()
       expect(scope.suppliers).toEqual ["list of suppliers"]
       expect(scope.distributors).toEqual ["list of distributors"]
+      expect(scope.orderCycles).toEqual [ "oc1", "oc2", "oc3" ]
       expect(scope.fetchOrders.calls.length).toEqual 1
       expect(returnedSuppliers.unshift.calls.length).toEqual 1
       expect(returnedDistributors.unshift.calls.length).toEqual 1
+      expect(returnedOrderCycles.unshift.calls.length).toEqual 1
+      expect(scope.matchOrderCycleEnterprises.calls.length).toEqual returnedOrderCycles.length
       expect(scope.spree_api_key_ok).toEqual true
 
   describe "fetching orders", ->
@@ -53,7 +60,7 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "resetting orders", ->
     beforeEach ->
-      spyOn(scope, "matchDistributor").andReturn "nothing"
+      spyOn(scope, "matchObject").andReturn "nothing"
       spyOn(scope, "resetLineItems").andReturn "nothing"
       scope.resetOrders [ "order1", "order2", "order3" ]
 
@@ -63,14 +70,14 @@ describe "AdminOrderMgmtCtrl", ->
     it "makes a call to $scope.resetLineItems", ->
       expect(scope.resetLineItems).toHaveBeenCalled()
 
-    it "calls matchDistributor for each line item", ->
-      expect(scope.matchDistributor.calls.length).toEqual 3
+    it "calls matchObject twice for each order (once for distributor and once for order cycle)", ->
+      expect(scope.matchObject.calls.length).toEqual scope.orders.length * 2
 
   describe "resetting line items", ->
     order1 = order2 = order3 = null
 
     beforeEach ->
-      spyOn(scope, "matchSupplier").andReturn "nothing"
+      spyOn(scope, "matchObject").andReturn "nothing"
       order1 = { line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
       order2 = { line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
       order3 = { line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
@@ -88,60 +95,78 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.lineItems[3].order).toEqual order2
       expect(scope.lineItems[6].order).toEqual order3
 
-    it "calls matchSupplier for each line item", ->
-      expect(scope.matchSupplier.calls.length).toEqual 9
+    it "calls matchObject once for each line item", ->
+      expect(scope.matchObject.calls.length).toEqual scope.lineItems.length
 
-  describe "matching supplier", ->
-    it "changes the supplier of the line_item to the one which matches it from the suppliers list", ->
-      supplier1_list =
+  describe "matching objects", ->
+    it "returns the first matching object in the list", ->
+      list_item1 =
         id: 1
-        name: "S1"
+        name: "LI1"
 
-      supplier2_list =
+      list_item2 =
         id: 2
-        name: "S2"
+        name: "LI2"
 
-      supplier1_line_item =
-        id: 1
-        name: "S1"
-
-      expect(supplier1_list is supplier1_line_item).not.toEqual true
-      scope.suppliers = [
-        supplier1_list
-        supplier2_list
-      ]
-      line_item =
-        id: 10
-        supplier: supplier1_line_item
-
-      scope.matchSupplier line_item
-      expect(line_item.supplier is supplier1_list).toEqual true
-
-  describe "matching distributor", ->
-    it "changes the distributor of the order to the one which matches it from the distributors list", ->
-      distributor1_list =
-        id: 1
-        name: "D1"
-
-      distributor2_list =
+      test_item =
         id: 2
-        name: "D2"
+        name: "LI2"
 
-      distributor1_order =
-        id: 1
-        name: "D1"
-
-      expect(distributor1_list is distributor1_order).not.toEqual true
-      scope.distributors = [
-        distributor1_list
-        distributor2_list
+      expect(list_item2 is test_item).not.toEqual true
+      list = [
+        list_item1
+        list_item2
       ]
-      order =
-        id: 10
-        distributor: distributor1_order
 
-      scope.matchDistributor order
-      expect(order.distributor is distributor1_list).toEqual true
+      returned_item = scope.matchObject list, test_item, null
+      expect(returned_item is list_item2).toEqual true
+
+    it "returns the default provided if no matching item is found", ->
+      list_item1 =
+        id: 1
+        name: "LI1"
+
+      list_item2 =
+        id: 2
+        name: "LI2"
+
+      test_item =
+        id: 1
+        name: "LI2"
+
+      expect(list_item2 is test_item).not.toEqual true
+      list = [
+        list_item1
+        list_item2
+      ]
+
+      returned_item = scope.matchObject list, test_item, null
+      expect(returned_item is null).toEqual true
+
+  describe "matching order cycles enterprises", ->
+    it "calls matchDistributor once for each distributor associated with an order cycle", ->
+      spyOn(scope, "matchObject")
+      distributors = [
+        "distributor1"
+        "distributor2"
+        "distributor3"
+      ]
+      suppliers = []
+      orderCycle = { distributors: distributors }
+      scope.matchOrderCycleEnterprises orderCycle
+      expect(scope.matchObject.calls.length).toEqual 3
+
+    it "calls matchSupplier once for each distributor associated with an order cycle", ->
+      spyOn(scope, "matchObject")
+      distributors = []
+      suppliers = [
+        "supplier1"
+        "supplier2"
+        "supplier3"
+      ]
+      orderCycle = { suppliers: suppliers }
+      scope.matchOrderCycleEnterprises orderCycle
+      expect(scope.matchObject.calls.length).toEqual 3
 
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
