@@ -83,4 +83,34 @@ feature %q{
     page.should_not have_field "variant_unit_value"
     page.should_not have_field "variant_unit_description"
   end
+
+
+  context "as an enterprise user" do
+    before(:each) do
+      @new_user = create_enterprise_user
+      @supplier = create(:supplier_enterprise)
+      @new_user.enterprise_roles.build(enterprise: @supplier).save
+
+      login_to_admin_as @new_user
+    end
+
+    scenario "deleting product properties", js: true do
+      # Given a product with a property
+      p = create(:simple_product, supplier: @supplier)
+      p.set_property('fooprop', 'fooval')
+
+      # When I navigate to the product properties page
+      visit spree.admin_product_product_properties_path(p)
+      page.should have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
+      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+
+      # And I delete the property
+      page.all('a.remove_fields').first.click
+
+      # Then the property should have been deleted
+      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
+      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+      p.reload.property('fooprop').should be_nil
+    end
+  end
 end
