@@ -8,6 +8,11 @@
         = f.label :name
       .four.columns.omega
         = f.text_field :name
+    .omega.six.columns
+      .two.columns.alpha
+        = f.label :group_ids, 'Groups'
+      .four.columns.omega
+        = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
   .row
     .alpha.two.columns &nbsp;
     .omega.ten.columns
@@ -139,4 +144,19 @@
         = image_tag @object.promo_image.url
         = f.file_field :pro_image
     
+  %fieldset
+    %legend Pickup details
+    .row
+    .alpha.six.columns
+      .alpha.two.columns
+        = f.label :next_collection_at, 'Next collection date/time'
+      .omega.four.columns
+        = f.text_field :next_collection_at
+    .omega.six.columns
+      .alpha.two.columns
+        = f.label :pickup_times, 'Regular pickup times'
+      .omega.four.columns
+        = f.text_field :pickup_times
+
+
 
