@@ -106,11 +106,11 @@ feature %q{
 
       # And I delete the property
       page.all('a.remove_fields').first.click
+      wait_until { p.reload.property('fooprop').nil? }
 
       # Then the property should have been deleted
       page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
-      p.reload.property('fooprop').should be_nil
     end
   end
 end
