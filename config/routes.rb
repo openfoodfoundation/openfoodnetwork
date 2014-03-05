@@ -50,6 +50,12 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :order_cycles do
+      get :managed, on: :collection
+    end
+  end
+
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
   get "darkswarm", controller: :darkswarm, action: :index
   get "about_us", :controller => 'home', :action => "about_us"
