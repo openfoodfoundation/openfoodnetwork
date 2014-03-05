@@ -85,18 +85,21 @@ feature %q{
       page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
     end
 
-    it "displays a price input for each product (ie. for master variant)" do
+    it "displays a price input for each product without variants (ie. for master variant)" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
-      p1.price = 22.00
-      p2.price = 44.00
-      p1.save!
-      p2.save!
+      p3 = FactoryGirl.create(:product)
+      v = FactoryGirl.create(:variant, product: p3)
+
+      p1.update_attribute :price, 22.0
+      p2.update_attribute :price, 44.0
+      p3.update_attribute :price, 66.0
 
       visit '/admin/products/bulk_edit'
 
       page.should have_field "price", with: "22.0"
       page.should have_field "price", with: "44.0"
+      page.should_not have_field "price", with: "66.0", visible: true
     end
     
     it "displays an on hand count input for each product (ie. for master variant) if no regular variants exist" do
