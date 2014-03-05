@@ -115,8 +115,8 @@
     .row
       .alpha.two.columns
         = f.label :description, 'Short Description'
-      .omega.four.columns
-        = f.text_field :description
+      .omega.ten.columns
+        = f.text_field :description, placeholder: 'Just one or two sentences'
     .row
       .alpha.two.columns
         = f.label :long_description, 'About Us'
@@ -140,7 +140,7 @@
         = image_tag @object.logo.url
         = f.file_field :logo
       .omega.two.columns
-        = f.label :promo_image
+        = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
       .omega.four.columns
         = image_tag @object.promo_image.url
         = f.file_field :pro_image
