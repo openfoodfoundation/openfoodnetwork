@@ -115,14 +115,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       describe "after selecting an order cycle with products visible" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
-        let(:product) { create(:simple_product) }
-        let(:variant) { create(:variant, product: product) }
+        let(:product) { create(:simple_product, price: 10) }
+        let(:variant1) { create(:variant, product: product, price: 20) }
+        let(:variant2) { create(:variant, product: product, price: 30) }
         let(:exchange) { Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) } 
 
         before do
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << product.master
-          exchange.variants << variant
+          exchange.variants << variant1
+          exchange.variants << variant2
           visit shop_path
           select "frogs", :from => "order_cycle_id"
           exchange
@@ -133,14 +135,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         it "collapses variants by default" do
-          page.should_not have_text variant.options_text
+          page.should_not have_text variant1.options_text
         end
 
         it "expands variants" do
           find(".expand").trigger "click"
-          page.should have_text variant.options_text
+          page.should have_text variant1.options_text
           find(".collapse").trigger "click"
-          page.should_not have_text variant.options_text
+          page.should_not have_text variant1.options_text
         end
 
         it "uses the adjusted price" do
@@ -151,7 +153,20 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           visit shop_path
           select "frogs", :from => "order_cycle_id"
-          page.should have_content "$#{(product.price + 23.00)}"
+
+          # All prices are as above plus $23 in fees
+
+          # Page should not have product.price (with or without fee)
+          page.should_not have_selector 'tr.product > td', text: "from $10.00"
+          page.should_not have_selector 'tr.product > td', text: "from $33.00"
+
+          # Page should have variant prices (with fee)
+          find(".expand").trigger 'click'
+          page.should have_selector 'tr.variant > td.price', text: "$43.00"
+          page.should have_selector 'tr.variant > td.price', text: "$53.00"
+
+          # Product price should be listed as the lesser of these
+          page.should have_selector 'tr.product > td', text: "from $43.00"
         end
       end
 
