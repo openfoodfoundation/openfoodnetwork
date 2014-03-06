@@ -229,6 +229,23 @@ feature %q{
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
+
+      it "allows filters to be used in combination" do
+        select oc1.name, from: "order_cycle_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        select d1.name, from: "distributor_filter"
+        select s1.name, from: "supplier_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        select d2.name, from: "distributor_filter"
+        select s2.name, from: "supplier_filter"
+        page.should_not have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        select oc2.name, from: "order_cycle_filter"
+        page.should_not have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+      end
     end
 
     context "using date restriction controls" do
