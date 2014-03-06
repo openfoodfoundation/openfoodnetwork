@@ -144,6 +144,21 @@ feature %q{
 
         product.distributors.should == [@distributors[0]]
       end
+
+      scenario "deleting product images", js: true do
+        product = create(:simple_product, supplier: @supplier2)
+        image = File.open(File.expand_path('../../../../app/assets/images/logo.jpg', __FILE__))
+        Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+
+        visit spree.admin_product_images_path(product)
+        page.should have_selector "table[data-hook='images_table'] td img", visible: true
+        product.reload.images.count.should == 1
+
+        page.find('a.delete-resource').click
+        wait_until { product.reload.images.count == 0 }
+
+        page.should_not have_selector "table[data-hook='images_table'] td img", visible: true
+      end
     end
   end
 end
