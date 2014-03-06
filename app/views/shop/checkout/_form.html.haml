@@ -37,11 +37,11 @@
                   "ng-model" => "order.bill_address.city"
 
               .large-6.columns
-                = ba.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]},
-                  {}, "ng-model" => "order.bill_address.country_id"
+                = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
+                  {include_blank: false}, "ng-model" => "order.bill_address.country_id"
             .row
               .large-6.columns
-                = ba.select :state_id, Spree::State.order(:name).select([:id, :name]).map{|c| [c.name, c.id]},
+                = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]},
                   "ng-model" => "order.bill_address.state_id"
               .large-6.columns.right
                 = ba.text_field :zipcode,
@@ -70,6 +70,7 @@
                 .large-12.columns
                   = sa.text_field :address1
               .row
+
                 .large-12.columns
                   = sa.text_field :address2
 
@@ -77,8 +78,11 @@
                 .large-6.columns
                   = sa.text_field :city
                 .large-6.columns
-                  = sa.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
+                  = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
+                    {include_blank: false}
               .row
+                .large-6.columns
+                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}
                 .large-6.columns.right
                   = sa.text_field :zipcode
               .row
