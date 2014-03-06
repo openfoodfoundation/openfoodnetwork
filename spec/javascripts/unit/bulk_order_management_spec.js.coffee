@@ -70,17 +70,15 @@ describe "AdminOrderMgmtCtrl", ->
     it "makes a call to $scope.resetLineItems", ->
       expect(scope.resetLineItems).toHaveBeenCalled()
 
-    it "calls matchObject twice for each order (once for distributor and once for order cycle)", ->
-      expect(scope.matchObject.calls.length).toEqual scope.orders.length * 2
-
   describe "resetting line items", ->
     order1 = order2 = order3 = null
 
     beforeEach ->
       spyOn(scope, "matchObject").andReturn "nothing"
-      order1 = { line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
-      order2 = { line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
-      order3 = { line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
+      spyOn(scope, "lineItemOrder").andReturn "copied order"
+      order1 = { name: "order1", line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
+      order2 = { name: "order2", line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
+      order3 = { name: "order3", line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
       scope.orders = [ order1, order2, order3 ]
       scope.resetLineItems()
 
@@ -90,13 +88,30 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.lineItems[3].name).toEqual "line_item2.1"
       expect(scope.lineItems[6].name).toEqual "line_item3.1"
 
-    it "adds a reference to the parent order to each line item", ->
-      expect(scope.lineItems[0].order).toEqual order1
-      expect(scope.lineItems[3].order).toEqual order2
-      expect(scope.lineItems[6].order).toEqual order3
+    it "adds a reference to a modified parent order object to each line item", ->
+      expect(scope.lineItemOrder.calls.length).toEqual scope.orders.length
+      expect("copied order").toEqual line_item.order for line_item in scope.lineItems
 
     it "calls matchObject once for each line item", ->
       expect(scope.matchObject.calls.length).toEqual scope.lineItems.length
+
+  describe "copying orders", ->
+    order1copy = null
+
+    beforeEach ->
+      spyOn(scope, "lineItemOrder").andCallThrough()
+      spyOn(scope, "matchObject").andReturn "matched object"
+      order1 = { name: "order1", line_items: [  ] }
+      scope.orders = [ order1 ]
+      order1copy = scope.lineItemOrder order1
+
+    it "calls removes the line_items attribute of the order, in order to avoid circular referencing)", ->
+      expect(order1copy.hasOwnProperty("line_items")).toEqual false
+
+    it "calls matchObject twice for each order (once for distributor and once for order cycle)", ->
+      expect(scope.matchObject.calls.length).toEqual scope.lineItemOrder.calls.length * 2
+      expect(order1copy.distributor).toEqual "matched object"
+      expect(order1copy.distributor).toEqual "matched object"
 
   describe "matching objects", ->
     it "returns the first matching object in the list", ->

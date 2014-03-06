@@ -6,30 +6,34 @@
 %div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  .filter_selects{ :class => "four columns alpha" }
-    .filter_select{ :class => "four columns alpha" }
+  .filter_selects{ :class => "three columns alpha" }
+    .filter_select{ :class => "three columns alpha" }
       %label{ :for => 'supplier_filter' }Producer
       %br
-      %select.select2{ :class => "four columns alpha", :id => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers' }
-    .filter_select{ :class => "four columns alpha" }
+      %select.select2{ :class => "three columns alpha", :id => 'supplier_filter', 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers' }
+    .filter_select{ :class => "three columns alpha" }
       %label{ :for => 'distributor_filter' }Hub
       %br
-      %select.select2{ :class => "four columns alpha", :id => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
-    .filter_select{ :class => "four columns alpha" }
+      %select.select2{ :class => "three columns alpha", :id => 'distributor_filter', 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
+    .filter_select{ :class => "three columns alpha" }
       %label{ :for => 'order_cycle_filter' }Order Cycle
       %br
-      %select.select2{ :class => "four columns alpha", :id => 'order_cycle_filter', 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
+      %select.select2{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
   .spacer{ :class => "one column alpha" }
     &nbsp;
-  .date_filters{ :class => "four columns alpha" }
-    .date_filter{ :class => "four columns alpha" }
+  .date_filters{ :class => "three columns alpha" }
+    .date_filter{ :class => "three columns alpha" }
       %label{ :for => 'start_date_filter' }Start Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
-    .date_filter{ :class => "four columns alpha" }
+      %input{ :class => "three columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
+    .date_filter{ :class => "three columns alpha" }
       %label{ :for => 'end_date_filter' }End Date
       %br
-      %input{ :class => "four columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
+      %input{ :class => "three columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
+    .quick_search{ :class => "three columns alpha"}
+      %label{ :for => 'quick_search' }Quick Search
+      %br
+      %input{ :class => "three columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
   .spacer{ :class => "seven columns alpha" }
     &nbsp;
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
@@ -50,7 +54,7 @@
           %th.actions
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | selectFilter:supplierFilter:distributorFilter:orderCycleFilter', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:quickSearch', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.email {{ line_item.order.email }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}

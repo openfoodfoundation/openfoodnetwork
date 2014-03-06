@@ -248,6 +248,33 @@ feature %q{
       end
     end
 
+    context "using quick search" do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "displays a quick search input" do
+        page.should have_field "quick_search"
+      end
+
+      it "filters line items based on their attributes and the contents of the quick search input" do
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+        page.should have_selector "tr#li_#{li3.id}", visible: true
+        fill_in "quick_search", :with => o1.email
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        page.should_not have_selector "tr#li_#{li3.id}", visible: true
+      end
+    end
+
     context "using date restriction controls" do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today - 8).strftime("%F %T") ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }

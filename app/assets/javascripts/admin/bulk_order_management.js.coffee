@@ -114,6 +114,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.startDate = formatDate start
     $scope.endDate = formatDate end
     $scope.pendingChanges = pendingChanges
+    $scope.quickSearch = ""
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -151,17 +152,22 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.orders = data
       $scope.resetLineItems()
       pendingChanges.removeAll()
-      for i,order of $scope.orders
-        order.distributor = $scope.matchObject $scope.distributors, order.distributor, null
-        order.order_cycle = $scope.matchObject $scope.orderCycles, order.order_cycle, null
 
     $scope.resetLineItems = ->
       $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
+        orderWithoutLineItems = $scope.lineItemOrder order
         for i,line_item of order.line_items
           line_item.supplier = $scope.matchObject $scope.suppliers, line_item.supplier, null
-          line_item.order = order
+          line_item.order = orderWithoutLineItems
         lineItems.concat order.line_items
       , []
+
+    $scope.lineItemOrder = (order) ->
+      lineItemOrder = angular.copy(order)
+      delete lineItemOrder.line_items
+      lineItemOrder.distributor = $scope.matchObject $scope.distributors, order.distributor, null
+      lineItemOrder.order_cycle = $scope.matchObject $scope.orderCycles, order.order_cycle, null
+      lineItemOrder
 
     $scope.matchOrderCycleEnterprises = (orderCycle) ->
       for i,distributor of orderCycle.distributors
