@@ -20,9 +20,11 @@ Spree::Order.class_eval do
     go_to_state :delivery
     go_to_state :payment, :if => lambda { |order|
       # Fix for #2191
-      if order.shipping_method.andand.require_ship_address and order.ship_address
-        order.create_shipment!
-        order.update_totals
+      if order.shipping_method.andand.require_ship_address and 
+        if order.ship_address.andand.valid?
+          order.create_shipment!
+          order.update_totals
+        end
       end
       order.payment_required?
     }

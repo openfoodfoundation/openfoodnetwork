@@ -12,7 +12,7 @@
             = f.text_field :email 
           = f.fields_for :bill_address, @order.bill_address do |ba|
             .large-6.columns
-              = ba.text_field :phone 
+              = ba.text_field :phone, "ng-model" => "order.bill_address.phone"
         = f.fields_for :bill_address, @order.bill_address do |ba|
           .row
             .large-6.columns
@@ -99,6 +99,7 @@
               = sa.hidden_field :zipcode, "ng-value" => "order.bill_address.zipcode"
               = sa.hidden_field :firstname, "ng-value" => "order.bill_address.firstname"
               = sa.hidden_field :lastname, "ng-value" => "order.bill_address.lastname"
+              = sa.hidden_field :phone, "ng-value" => "order.bill_address.phone"
 
       %fieldset#payment
         %legend Payment Details
