@@ -236,7 +236,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       describe "group buy products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
-        let(:product) { create(:simple_product, group_buy: true) }
+        let(:product) { create(:simple_product, group_buy: true, on_hand: 15) }
 
         describe "without variants" do
           before do
@@ -259,7 +259,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         describe "with variants on the product" do
-          let(:variant) { create(:variant, product: product) }
+          let(:variant) { create(:variant, product: product, on_hand: 10 ) }
           before do
             build_and_select_order_cycle_with_variants
             find(".expand").trigger "click"

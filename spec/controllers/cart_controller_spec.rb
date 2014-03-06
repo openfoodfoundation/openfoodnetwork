@@ -76,7 +76,7 @@ module OpenFoodNetwork
             product1.distributors << distributor
             product1.save
 
-            put :add_variant, { cart_id: cart, variant_id: product1.master.id, quantity: 4, distributor_id: distributor, order_cycle_id: nil, max_quantity: nil }
+            put :add_variant, { cart_id: cart, variant_id: product1.master.id, quantity: (product1.master.on_hand-1), distributor_id: distributor, order_cycle_id: nil, max_quantity: nil }
 
             cart.orders.size.should == 1
             cart.orders.first.line_items.size.should == 1
