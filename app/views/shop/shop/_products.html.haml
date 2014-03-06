@@ -12,7 +12,7 @@
         %th.bulk Bulk
         %th.price.text-right Price
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
-        %tr.product
+        %tr{"class" => "product product-{{ product.id }}"}
           %td.name
             %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
             %div
@@ -46,9 +46,9 @@
               name: "variant_attributes[{{product.master.id}}][max_quantity]"} 
           %td.price.text-right
             %small{"ng-show" => "(product.variants.length > 0)"} from
-            {{ product.price | currency }}
+            {{ productPrice(product) | currency }}
         %tr.product-description
           %td{colspan: 2}{{ product.notes | truncate:80 }}
-        %tr{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
+        %tr.variant{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
           = render partial: "shop/shop/variant"
     %input.button.right{type: :submit, value: "Check Out"}

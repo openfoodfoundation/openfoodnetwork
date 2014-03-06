@@ -15,7 +15,7 @@ class AbilityDecorator
       end
 
       can [:admin, :index, :read, :create, :edit, :update, :search, :destroy], Spree::Variant
-      can [:admin, :index, :read, :create, :edit], Spree::ProductProperty
+      can [:admin, :index, :read, :create, :edit, :destroy], Spree::ProductProperty
       can [:admin, :index, :read, :create, :edit], Spree::Image
 
       can [:admin, :index, :read, :search], Spree::Taxon

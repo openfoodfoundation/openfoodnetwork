@@ -21,20 +21,27 @@
           = f.fields_for :bill_address do |ba|
             .row
               .large-12.columns
-                = ba.text_field :address1, label: "Billing Address"
+                = ba.text_field :address1, label: "Billing Address",
+                  "ng-model" => "billing_address1"
             .row
               .large-12.columns
-                = ba.text_field :address2
+                = ba.text_field :address2,
+                  "ng-model" => "billing_address2"
             .row
               .large-6.columns
-                = ba.text_field :city
+                = ba.text_field :city,
+                  "ng-model" => "billing_city"
+
               .large-6.columns
-                = ba.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
+                = ba.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]},
+                  "ng-model" => "billing_country_id"
             .row
               .large-6.columns
-                = ba.select :state_id, Spree::State.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
+                = ba.select :state_id, Spree::State.order(:name).select([:id, :name]).map{|c| [c.name, c.id]},
+                  "ng-model" => "billing_state_id"
               .large-6.columns.right
-                = ba.text_field :zipcode
+                = ba.text_field :zipcode,
+                  "ng-model" => "billing_zipcode"
 
       %fieldset#shipping
 
@@ -52,26 +59,42 @@
 
         = f.fields_for :ship_address do |sa|
           #ship_address{"ng-show" => "require_ship_address"}
-            .row
-              .large-12.columns
-                = sa.text_field :address1
-            .row
-              .large-12.columns
-                = sa.text_field :address2
+            %label
+              = check_box_tag :same_as_billing, true, true, 
+                "ng-model" => "same_as_billing" 
+              Shipping address same as billing address?
 
-            .row
-              .large-6.columns
-                = sa.text_field :city
-              .large-6.columns
-                = sa.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
-            .row
-              .large-6.columns.right
-                = sa.text_field :zipcode
-            .row
-              .large-6.columns
-                = sa.text_field :firstname
-              .large-6.columns
-                = sa.text_field :lastname
+            %div.visible{"ng-show" => "!same_as_billing"}
+              .row
+                .large-12.columns
+                  = sa.text_field :address1
+              .row
+                .large-12.columns
+                  = sa.text_field :address2
+
+              .row
+                .large-6.columns
+                  = sa.text_field :city
+                .large-6.columns
+                  = sa.select :country_id, Spree::Country.order(:name).select([:id, :name]).map{|c| [c.name, c.id]}
+              .row
+                .large-6.columns.right
+                  = sa.text_field :zipcode
+              .row
+                .large-6.columns
+                  = sa.text_field :firstname
+                .large-6.columns
+                  = sa.text_field :lastname
+
+            #ship_address_hidden{"ng-show" => "same_as_billing"}
+              = sa.hidden_field :address1, "ng-value" => "billing_address1"
+              = sa.hidden_field :address2, "ng-value" => "billing_address2"
+              = sa.hidden_field :city, "ng-value" => "billing_city"
+              = sa.hidden_field :country_id, "ng-value" => "billing_country_id"
+              = sa.hidden_field :zipcode, "ng-value" => "billing_zipcode"
+              = sa.hidden_field :firstname, "ng-value" => "billing_firstname"
+              = sa.hidden_field :lastname, "ng-value" => "billing_lastname"
+
       %fieldset#payment
         %legend Payment Details
         - current_order.available_payment_methods.each do |method|

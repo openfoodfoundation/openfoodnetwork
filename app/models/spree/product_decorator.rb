@@ -99,10 +99,25 @@ Spree::Product.class_eval do
   def product_distribution_for(distributor)
     self.product_distributions.find_by_distributor_id(distributor)
   end
-  
+
+  def variants_for(order_cycle, distributor)
+    self.variants.where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+  end
+
   # overriding to check self.on_demand as well
   def has_stock?
     has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
+  end
+
+  def has_stock_for_distribution?(order_cycle, distributor)
+    # This product has stock for a distribution if it is available on-demand
+    # or if one of its variants in the distribution is in stock
+    (!has_variants? && on_demand) ||
+      variants_distributed_by(order_cycle, distributor).any? { |v| v.in_stock? }
+  end
+
+  def variants_distributed_by(order_cycle, distributor)
+    order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
 
   # Build a product distribution for each distributor

@@ -3,7 +3,6 @@ describe 'All controllers', ->
     ctrl = null
     scope = null
     event = null
-    rootScope = null
     Product = null
 
     beforeEach ->
@@ -12,29 +11,38 @@ describe 'All controllers', ->
         all: ->
         update: ->
         data: "testy mctest"
+      OrderCycle =
+        order_cycle: {}
           
-      inject ($controller, $rootScope) ->
-        rootScope = $rootScope
-        scope = $rootScope.$new()
-        ctrl = $controller 'ProductsCtrl', {$scope: scope, Product : Product} 
+      inject ($controller) ->
+        scope = {}
+        ctrl = $controller 'ProductsCtrl', {$scope: scope, Product: Product, OrderCycle: OrderCycle}
 
-    it 'Fetches products from Product', ->
+    it 'fetches products from Product', ->
       expect(scope.data).toEqual 'testy mctest'
 
+    describe "determining the price to display for a product", ->
+      it "displays the product price when the product does not have variants", ->
+        product = {variants: [], price: 12.34}
+        expect(scope.productPrice(product)).toEqual 12.34
+
+      it "displays the minimum variant price when the product has variants", ->
+        product =
+          price: 11
+          variants: [{price: 22}, {price: 33}]
+        expect(scope.productPrice(product)).toEqual 22
   
   describe 'OrderCycleCtrl', ->
     ctrl = null
     scope = null
     event = null
-    rootScope = null
     product_ctrl = null
     OrderCycle = null
 
     beforeEach ->
       module 'Shop'
       scope = {}
-      inject ($controller, $rootScope) ->
-        rootScope = $rootScope
-        scope = $rootScope.$new()
+      inject ($controller) ->
+        scope = {}
         ctrl = $controller 'OrderCycleCtrl', {$scope: scope}
 

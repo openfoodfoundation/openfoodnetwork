@@ -133,15 +133,35 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content "Donkeys"
       end
 
-      it "doesn't show ship address forms " do
+      it "doesn't show ship address forms when a shipping method wants no address" do
         choose(sm2.name)
         find("#ship_address").visible?.should be_false
       end
 
-      it "shows ship address forms when selected shipping method requires one" do
+      context "When shipping method requires an address" do
+        before do
+          choose(sm1.name)
+        end
+        it "shows the hidden ship address fields by default" do
+          check "Shipping address same as billing address?"
+          find("#ship_address_hidden").visible?.should be_true
+          find("#ship_address > div.visible").visible?.should be_false
+        end
+
+        it "shows ship address forms when 'same as billing address' is unchecked" do
+          uncheck "Shipping address same as billing address?"
+          find("#ship_address_hidden").visible?.should be_false
+          find("#ship_address > div.visible").visible?.should be_true
+        end
+      end
+
+      it "copies billing address to hidden shipping address fields" do
         choose(sm1.name)
-        save_and_open_page
-        find("#ship_address").visible?.should be_true
+        check "Shipping address same as billing address?"
+        fill_in "Billing Address", with: "testy"
+        within "#ship_address_hidden" do
+          find("#order_ship_address_attributes_address1").value.should == "testy"
+        end
       end
 
       describe "with payment methods" do
@@ -204,7 +224,6 @@ def select_order_cycle
 end
 
 def add_product_to_cart
-
-  fill_in "variants[#{product.master.id}]", with: 5
+  fill_in "variants[#{product.master.id}]", with: product.master.on_hand - 1
   first("form.custom > input.button.right").click 
 end

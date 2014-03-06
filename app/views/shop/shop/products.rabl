@@ -22,18 +22,16 @@ child :master => :master do
   end
 end
 
-child :variants => :variants do |variant|
-  attributes :id, :is_master, :count_on_hand, :options_text, :count_on_hand, :on_demand, :group_buy
-  node do |variant|
-    {
-      price: variant.price_with_fees(current_distributor, current_order_cycle)  
+node :variants do |product|
+  product.variants_for(current_order_cycle, current_distributor).in_stock.map do |v|
+    {id: v.id,
+     is_master: v.is_master,
+     count_on_hand: v.count_on_hand,
+     options_text: v.options_text,
+     on_demand: v.on_demand,
+     price: v.price_with_fees(current_distributor, current_order_cycle),
+     images: v.images.map { |i| {id: i.id, alt: i.alt, small_url: i.attachment.url(:small, false)} }
     }
-  end
-  child :images => :images do
-    attributes :id, :alt
-    node do |img|
-      {:small_url => img.attachment.url(:small, false)}
-    end
   end
 end
 
