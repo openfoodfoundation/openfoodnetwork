@@ -25,6 +25,14 @@ Spree::ShippingMethod.class_eval do
   end
   alias_method_chain :available_to_order?, :distributor_check
 
+  def within_zone?(order)
+    if order.ship_address
+      zone && zone.include?(order.ship_address)
+    else
+      true # Shipping methods are available before we've selected an address
+    end
+  end
+
   def adjustment_label
     'Delivery'
   end

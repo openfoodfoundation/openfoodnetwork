@@ -36,4 +36,16 @@ describe Shop::CheckoutController do
     get :edit
     response.should be_success
   end
+
+  describe "building the order" do
+    before do
+      controller.stub(:current_distributor).and_return(distributor)
+      controller.stub(:current_order_cycle).and_return(order_cycle)
+      controller.stub(:current_order).and_return(order)
+    end
+    it "does not clone the ship address from distributor" do
+      get :edit
+      assigns[:order].ship_address.address1.should be_nil
+    end
+  end
 end

@@ -297,7 +297,7 @@ feature %q{
 
     click_link 'Garlic'
     click_button 'Add To Cart'
-    click_link 'Checkout'
+    find('#checkout-link').click
 
     # -- Checkout: Address
     fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
@@ -362,7 +362,7 @@ feature %q{
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
-    click_link 'Checkout'
+    find('#checkout-link').click
 
     # -- Checkout: Address
     fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
@@ -391,12 +391,15 @@ feature %q{
     click_checkout_continue_button
 
     # -- Checkout: Delivery
+    page.should have_content "DELIVERY METHOD"
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Delivery:", "$0.00"], ["Distribution:", "$51.00"]] 
+    order_charges.should == [["Distribution:", "$51.00"]] 
+
     click_checkout_continue_button
 
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
+    page.should have_content "PAYMENT INFORMATION"
     page.should have_selector     'label', :text => @payment_method_distributor_oc.name
     page.should_not have_selector 'label', :text => @payment_method_alternative.name
     click_checkout_continue_button
@@ -439,7 +442,7 @@ feature %q{
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
-    click_link 'Checkout'
+    find('#checkout-link').click
 
     # -- Login
     # We perform login inline because:
@@ -477,8 +480,7 @@ feature %q{
 
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Delivery:", "$0.00"],
-                             ["Distribution:", "$51.00"]]
+    order_charges.should == [["Distribution:", "$51.00"]]
     click_checkout_continue_button
 
     # -- Checkout: Payment
