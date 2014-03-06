@@ -1,4 +1,4 @@
-productEditModule = angular.module("ofn.bulk_product_edit", ["ofn.shared_services"])
+productEditModule = angular.module("ofn.bulk_product_edit", ["ofn.shared_services", "ofn.shared_directives"])
 
 productEditModule.config [
   "$httpProvider"
@@ -78,23 +78,6 @@ productEditModule.directive "ofnToggleColumn", ->
         else
           scope.column.visible = true
           element.removeClass "unselected"
-
-productEditModule.directive "datetimepicker", [
-  "$parse"
-  ($parse) ->
-    return (
-      require: "ngModel"
-      link: (scope, element, attrs, ngModel) ->
-        element.datetimepicker
-          dateFormat: "yy-mm-dd"
-          timeFormat: "HH:mm:ss"
-          stepMinute: 15
-          onSelect: (dateText, inst) ->
-            scope.$apply (scope) ->
-              # Fires ngModel.$parsers
-              ngModel.$setViewValue dateText
-    )
-]
 
 
 productEditModule.controller "AdminProductEditCtrl", [

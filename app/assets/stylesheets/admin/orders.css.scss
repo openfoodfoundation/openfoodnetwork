@@ -1,4 +1,4 @@
-.filter_select {
+.filter_select, .date_filter {
 	margin-bottom: 10px;
 }
 
@@ -12,4 +12,8 @@ input.update-error {
 
 input.update-success {
 	border: solid 1px #9fc820;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
 }

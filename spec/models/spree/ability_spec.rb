@@ -48,7 +48,7 @@ module Spree
         end
 
         it "should be able to read/write their enterprises' product properties" do
-          should have_ability([:admin, :index, :read, :create, :edit], for: Spree::ProductProperty)
+          should have_ability([:admin, :index, :read, :create, :edit, :destroy], for: Spree::ProductProperty)
         end
 
         it "should be able to read/write their enterprises' product images" do

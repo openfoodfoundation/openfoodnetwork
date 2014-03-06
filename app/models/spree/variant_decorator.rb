@@ -1,4 +1,7 @@
 Spree::Variant.class_eval do
+  has_many :exchange_variants
+  has_many :exchanges, through: :exchange_variants
+
   attr_accessible :unit_value, :unit_description
 
   validates_presence_of :unit_value,
@@ -10,6 +13,8 @@ Spree::Variant.class_eval do
                         unless: :is_master
 
   after_save :update_units
+
+  scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
 
 
   def price_with_fees(distributor, order_cycle)

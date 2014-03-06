@@ -14,7 +14,7 @@ module Spree
     let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
     let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
     let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
-    let(:order_attributes) { [:id, :email, :completed_at, :line_items, :distributor, :number] }
+    let(:order_attributes) { [:id, :email, :completed_at, :line_items, :distributor, :order_cycle, :number] }
     let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :variant_unit_text] }
 
     before do

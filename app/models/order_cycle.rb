@@ -94,8 +94,11 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def variants_distributed_by(distributor)
-    self.exchanges.where(:sender_id => self.coordinator, :receiver_id => distributor).
-      map(&:variants).flatten.uniq
+    Spree::Variant.
+      joins(:exchanges).
+      merge(Exchange.outgoing).
+      where('exchanges.order_cycle_id = ?', self).
+      where('exchanges.receiver_id = ?', distributor)
   end
 
   def products_distributed_by(distributor)
@@ -145,6 +148,11 @@ class OrderCycle < ActiveRecord::Base
 
 
   # -- Fees
+
+  # TODO: The boundary of this class is ill-defined here. OrderCycle should not know about
+  # EnterpriseFeeApplicator. Clients should be able to query it for relevant EnterpriseFees.
+  # This logic would fit better in another service object.
+
   def fees_for(variant, distributor)
     per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|
       # Spree's Calculator interface accepts Orders or LineItems,

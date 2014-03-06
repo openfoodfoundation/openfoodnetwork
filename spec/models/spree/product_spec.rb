@@ -303,6 +303,42 @@ module Spree
       end
     end
 
+    describe "finding variants for an order cycle and hub" do
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s) { create(:supplier_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+
+      let(:p1) { create(:simple_product) }
+      let(:p2) { create(:simple_product) }
+      let(:v1) { create(:variant, product: p1) }
+      let(:v2) { create(:variant, product: p2) }
+
+      let(:p_external) { create(:simple_product) }
+      let(:v_external) { create(:variant, product: p_external) }
+
+      let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
+                           variants: [v1, v2]) }
+      let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
+                             variants: [v1]) }
+      let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
+                             variants: [v2]) }
+
+      it "returns variants in the order cycle and distributor" do
+        p1.variants_for(oc, d1).should == [v1]
+        p2.variants_for(oc, d2).should == [v2]
+      end
+
+      it "does not return variants in the order cycle but not the distributor" do
+        p1.variants_for(oc, d2).should be_empty
+        p2.variants_for(oc, d1).should be_empty
+      end
+
+      it "does not return variants not in the order cycle" do
+        p_external.variants_for(oc, d1).should be_empty
+      end
+    end
+
     describe "variant units" do
       context "when the product initially has no variant unit" do
         let!(:p) { create(:simple_product,
@@ -441,11 +477,64 @@ module Spree
       end
     end
 
-    describe "Stock filtering" do
+    describe "stock filtering" do
       it "considers products that are on_demand as being in stock" do
         product = create(:simple_product, on_demand: true)
         product.master.update_attribute(:count_on_hand, 0)
         product.has_stock?.should == true
+      end
+
+      describe "finding products in stock for a particular distribution" do
+        it "returns in-stock products without variants" do
+          p = create(:simple_product)
+          p.master.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << p.master
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns on-demand products" do
+          p = create(:simple_product, on_demand: true)
+          p.master.update_attribute(:count_on_hand, 0)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << p.master
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns products with in-stock variants" do
+          p = create(:simple_product)
+          v = create(:variant, product: p)
+          v.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << v
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns products with on-demand variants" do
+          p = create(:simple_product)
+          v = create(:variant, product: p, on_demand: true)
+          v.update_attribute(:count_on_hand, 0)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << v
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "does not return products that have stock not in the distribution" do
+          p = create(:simple_product)
+          p.master.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+
+          p.should_not have_stock_for_distribution(oc, d)
+        end
       end
     end
   end

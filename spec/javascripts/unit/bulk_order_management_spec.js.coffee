@@ -7,34 +7,42 @@ describe "AdminOrderMgmtCtrl", ->
     scope = $rootScope.$new()
     ctrl = $controller
     httpBackend = $httpBackend
+    spyOn(window, "formatDate").andReturn "SomeDate"
 
     ctrl "AdminOrderMgmtCtrl", {$scope: scope}
   )
 
   describe "loading data upon initialisation", ->
-    it "gets a list of suppliers and a list of distributors and then calls fetchOrders", ->
+    it "gets a list of suppliers, a list of distributors and a list of Order Cycles and then calls fetchOrders", ->
       returnedSuppliers = ["list of suppliers"]
       returnedDistributors = ["list of distributors"]
+      returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
+      httpBackend.expectGET("/api/order_cycles/managed").respond returnedOrderCycles
       spyOn(scope, "fetchOrders").andReturn "nothing"
       spyOn(returnedSuppliers, "unshift")
       spyOn(returnedDistributors, "unshift")
+      spyOn(returnedOrderCycles, "unshift")
+      spyOn(scope, "matchOrderCycleEnterprises")
       scope.initialise "api_key"
       httpBackend.flush()
       expect(scope.suppliers).toEqual ["list of suppliers"]
       expect(scope.distributors).toEqual ["list of distributors"]
+      expect(scope.orderCycles).toEqual [ "oc1", "oc2", "oc3" ]
       expect(scope.fetchOrders.calls.length).toEqual 1
       expect(returnedSuppliers.unshift.calls.length).toEqual 1
       expect(returnedDistributors.unshift.calls.length).toEqual 1
+      expect(returnedOrderCycles.unshift.calls.length).toEqual 1
+      expect(scope.matchOrderCycleEnterprises.calls.length).toEqual returnedOrderCycles.length
       expect(scope.spree_api_key_ok).toEqual true
 
   describe "fetching orders", ->
     beforeEach ->
-      httpBackend.expectGET("/api/orders?template=bulk_index").respond "list of orders"
+      httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
 
-    it "makes a standard call to dataFetcher", ->
+    it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()
 
     it "calls resetOrders after data has been received", ->
@@ -43,9 +51,16 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
       expect(scope.resetOrders).toHaveBeenCalledWith "list of orders"
 
+    it "sets the loading property to true before fetching orders and unsets it when loading is complete", ->
+      spyOn scope, "resetOrders"
+      scope.fetchOrders()
+      expect(scope.loading).toEqual true
+      httpBackend.flush()
+      expect(scope.loading).toEqual false
+
   describe "resetting orders", ->
     beforeEach ->
-      spyOn(scope, "matchDistributor").andReturn "nothing"
+      spyOn(scope, "matchObject").andReturn "nothing"
       spyOn(scope, "resetLineItems").andReturn "nothing"
       scope.resetOrders [ "order1", "order2", "order3" ]
 
@@ -55,17 +70,15 @@ describe "AdminOrderMgmtCtrl", ->
     it "makes a call to $scope.resetLineItems", ->
       expect(scope.resetLineItems).toHaveBeenCalled()
 
-    it "calls matchDistributor for each line item", ->
-      expect(scope.matchDistributor.calls.length).toEqual 3
-
   describe "resetting line items", ->
     order1 = order2 = order3 = null
 
     beforeEach ->
-      spyOn(scope, "matchSupplier").andReturn "nothing"
-      order1 = { line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
-      order2 = { line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
-      order3 = { line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
+      spyOn(scope, "matchObject").andReturn "nothing"
+      spyOn(scope, "lineItemOrder").andReturn "copied order"
+      order1 = { name: "order1", line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
+      order2 = { name: "order2", line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
+      order3 = { name: "order3", line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
       scope.orders = [ order1, order2, order3 ]
       scope.resetLineItems()
 
@@ -75,65 +88,100 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.lineItems[3].name).toEqual "line_item2.1"
       expect(scope.lineItems[6].name).toEqual "line_item3.1"
 
-    it "adds a reference to the parent order to each line item", ->
-      expect(scope.lineItems[0].order).toEqual order1
-      expect(scope.lineItems[3].order).toEqual order2
-      expect(scope.lineItems[6].order).toEqual order3
+    it "adds a reference to a modified parent order object to each line item", ->
+      expect(scope.lineItemOrder.calls.length).toEqual scope.orders.length
+      expect("copied order").toEqual line_item.order for line_item in scope.lineItems
 
-    it "calls matchSupplier for each line item", ->
-      expect(scope.matchSupplier.calls.length).toEqual 9
+    it "calls matchObject once for each line item", ->
+      expect(scope.matchObject.calls.length).toEqual scope.lineItems.length
 
-  describe "matching supplier", ->
-    it "changes the supplier of the line_item to the one which matches it from the suppliers list", ->
-      supplier1_list =
+  describe "copying orders", ->
+    order1copy = null
+
+    beforeEach ->
+      spyOn(scope, "lineItemOrder").andCallThrough()
+      spyOn(scope, "matchObject").andReturn "matched object"
+      order1 = { name: "order1", line_items: [  ] }
+      scope.orders = [ order1 ]
+      order1copy = scope.lineItemOrder order1
+
+    it "calls removes the line_items attribute of the order, in order to avoid circular referencing)", ->
+      expect(order1copy.hasOwnProperty("line_items")).toEqual false
+
+    it "calls matchObject twice for each order (once for distributor and once for order cycle)", ->
+      expect(scope.matchObject.calls.length).toEqual scope.lineItemOrder.calls.length * 2
+      expect(order1copy.distributor).toEqual "matched object"
+      expect(order1copy.distributor).toEqual "matched object"
+
+  describe "matching objects", ->
+    it "returns the first matching object in the list", ->
+      list_item1 =
         id: 1
-        name: "S1"
+        name: "LI1"
 
-      supplier2_list =
+      list_item2 =
         id: 2
-        name: "S2"
+        name: "LI2"
 
-      supplier1_line_item =
-        id: 1
-        name: "S1"
-
-      expect(supplier1_list is supplier1_line_item).not.toEqual true
-      scope.suppliers = [
-        supplier1_list
-        supplier2_list
-      ]
-      line_item =
-        id: 10
-        supplier: supplier1_line_item
-
-      scope.matchSupplier line_item
-      expect(line_item.supplier is supplier1_list).toEqual true
-
-  describe "matching distributor", ->
-    it "changes the distributor of the order to the one which matches it from the distributors list", ->
-      distributor1_list =
-        id: 1
-        name: "D1"
-
-      distributor2_list =
+      test_item =
         id: 2
-        name: "D2"
+        name: "LI2"
 
-      distributor1_order =
-        id: 1
-        name: "D1"
-
-      expect(distributor1_list is distributor1_order).not.toEqual true
-      scope.distributors = [
-        distributor1_list
-        distributor2_list
+      expect(list_item2 is test_item).not.toEqual true
+      list = [
+        list_item1
+        list_item2
       ]
-      order =
-        id: 10
-        distributor: distributor1_order
 
-      scope.matchDistributor order
-      expect(order.distributor is distributor1_list).toEqual true
+      returned_item = scope.matchObject list, test_item, null
+      expect(returned_item is list_item2).toEqual true
+
+    it "returns the default provided if no matching item is found", ->
+      list_item1 =
+        id: 1
+        name: "LI1"
+
+      list_item2 =
+        id: 2
+        name: "LI2"
+
+      test_item =
+        id: 1
+        name: "LI2"
+
+      expect(list_item2 is test_item).not.toEqual true
+      list = [
+        list_item1
+        list_item2
+      ]
+
+      returned_item = scope.matchObject list, test_item, null
+      expect(returned_item is null).toEqual true
+
+  describe "matching order cycles enterprises", ->
+    it "calls matchDistributor once for each distributor associated with an order cycle", ->
+      spyOn(scope, "matchObject")
+      distributors = [
+        "distributor1"
+        "distributor2"
+        "distributor3"
+      ]
+      suppliers = []
+      orderCycle = { distributors: distributors }
+      scope.matchOrderCycleEnterprises orderCycle
+      expect(scope.matchObject.calls.length).toEqual 3
+
+    it "calls matchSupplier once for each distributor associated with an order cycle", ->
+      spyOn(scope, "matchObject")
+      distributors = []
+      suppliers = [
+        "supplier1"
+        "supplier2"
+        "supplier3"
+      ]
+      orderCycle = { suppliers: suppliers }
+      scope.matchOrderCycleEnterprises orderCycle
+      expect(scope.matchObject.calls.length).toEqual 3
 
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
@@ -202,6 +250,15 @@ describe "managing pending changes", ->
       pendingChangesService.add 1, "propertyName2", { b: 2 }
       expect(pendingChangesService.pendingChanges["1"]).toEqual { propertyName1: { a: 1}, propertyName2: { b: 2 } }
 
+  describe "removing all existing changes", ->
+    it "resets pendingChanges object", ->
+      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
+      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
+      expect(pendingChangesService.pendingChanges["1"]["propertyName2"]).toBeDefined()
+      pendingChangesService.removeAll()
+      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
+      expect(pendingChangesService.pendingChanges).toEqual {}
+
   describe "removing an existing change", ->
     it "deletes a change if it exists", ->
       pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
@@ -262,6 +319,14 @@ describe "managing pending changes", ->
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
       expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
       expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
+
+    it "returns an array of promises representing all sumbit requests", ->
+      spyOn(pendingChangesService, "submit").andCallFake (id,attrName,changeObj) ->
+        id
+      pendingChangesService.pendingChanges =
+        1: { "prop1": 1 }
+        2: { "prop1": 2, "prop2": 4 }
+      expect(pendingChangesService.submitAll()).toEqual [ '1','2','2' ]
 
 describe "dataSubmitter service", ->
   qMock = httpMock = {}
@@ -372,3 +437,26 @@ describe "switchClass service", ->
     switchClassService elementMock, "class1", ["class2"], 1000
     expect(timeoutMock).toHaveBeenCalled()
     expect(elementMock.timeout).toEqual "new timeout"
+
+describe "Auxiliary functions", ->
+  describe "getting a zero filled two digit number", ->
+    it "returns the number as a string if its value is greater than or equal to 10", ->
+      expect(twoDigitNumber(10)).toEqual "10"
+      expect(twoDigitNumber(15)).toEqual "15"
+      expect(twoDigitNumber(99)).toEqual "99"
+
+    it "returns the number formatted as a zero filled string if its value is less than 10", ->
+      expect(twoDigitNumber(0)).toEqual "00"
+      expect(twoDigitNumber(1)).toEqual "01"
+      expect(twoDigitNumber(9)).toEqual "09"
+
+  describe "formatting a date", ->
+    it "returns a date formatted as yyyy-mm-dd hh-MM:ss", ->
+      date = new Date
+      date.setYear(2010)
+      date.setMonth(5) # Zero indexed, so 5 is June
+      date.setDate(15)
+      date.setHours(5)
+      date.setMinutes(10)
+      date.setSeconds(30)
+      expect(formatDate(date)).toEqual "2010-06-15 05:10:30"
