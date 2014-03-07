@@ -61,7 +61,7 @@ feature %q{
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: FactoryGirl.create(:address) ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: nil ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
-      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: FactoryGirl.create(:product_with_option_types) ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -85,10 +85,10 @@ feature %q{
         page.should have_selector "td.producer", text: li2.product.supplier.name, :visible => true
       end
 
-      it "displays a column for variant description" do
+      it "displays a column for variant description, which shows only product name when options text is blank" do
         page.should have_selector "th.variant", text: "PRODUCT (UNIT): VAR", :visible => true
         page.should have_selector "td.variant", text: li1.product.name, :visible => true
-        page.should have_selector "td.variant", text: li2.product.name, :visible => true
+        page.should have_selector "td.variant", text: (li2.product.name + ": " + li2.variant.options_text), :visible => true
       end
 
       it "displays a field for quantity" do
