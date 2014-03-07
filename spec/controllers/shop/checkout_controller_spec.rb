@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Shop::CheckoutController do
-  render_views
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:order_cycle) }
   let(:order) { create(:order) }
@@ -51,18 +50,16 @@ describe Shop::CheckoutController do
   end
 
   describe "Paypal routing" do
-
     let(:payment_method) { create(:payment_method) }
     before do
       controller.stub(:current_distributor).and_return(distributor)
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
-
     end
 
     it "should check the payment method for Paypalness if we've selected one" do
-      Spree::PaymentMethod.should_receive(:find).with(payment_method.id).and_return payment_method
-      post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
+      Spree::PaymentMethod.should_receive(:find).with(payment_method.id.to_s).and_return payment_method
+      spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
     end
   end
 end

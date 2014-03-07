@@ -19,7 +19,7 @@ class Shop::CheckoutController < Spree::CheckoutController
           state_callback(:after)
         else
           flash[:error] = t(:payment_processing_failed)
-          respond_with @order, location: main_app.shop_checkout_path
+          render :edit
           return
         end
       end
@@ -29,10 +29,10 @@ class Shop::CheckoutController < Spree::CheckoutController
         flash[:commerce_tracking] = "nothing special"
         respond_with(@order, :location => order_path(@order))
       else
-        respond_with @order, location: main_app.shop_checkout_path
+        render :edit
       end
     else
-      respond_with @order, location: main_app.shop_checkout_path
+      render :edit
     end
   end
 
@@ -75,5 +75,27 @@ class Shop::CheckoutController < Spree::CheckoutController
   def raise_insufficient_quantity
     flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
     redirect_to main_app.shop_path
+  end
+
+  # Overriding from github.com/spree/spree_paypal_express
+  def redirect_to_paypal_express_form_if_needed
+    return unless params[:order][:payments_attributes]
+
+    payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
+    return unless payment_method.kind_of?(Spree::BillingIntegration::PaypalExpress) || payment_method.kind_of?(Spree::BillingIntegration::PaypalExpressUk)
+
+    update_params = object_params.dup
+    update_params.delete(:payments_attributes)
+    if @order.update_attributes(update_params)
+      fire_event('spree.checkout.update')
+      render :edit and return unless apply_coupon_code
+    end
+
+    load_order
+    if not @order.errors.empty?
+       render :edit and return
+    end
+
+    redirect_to(paypal_payment_order_checkout_url(@order, :payment_method_id => payment_method.id)) and return
   end
 end
