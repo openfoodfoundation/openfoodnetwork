@@ -34,7 +34,7 @@ feature %q{
       page.should have_text "No matching line items found."
     end
 
-    context "displaying the list of line items " do
+    context "displaying the list of line items" do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o3) { FactoryGirl.create(:order, state: 'address', completed_at: nil ) }

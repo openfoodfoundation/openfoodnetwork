@@ -97,8 +97,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "price", with: "22.0"
-      page.should have_field "price", with: "44.0"
+      page.should     have_field "price", with: "22.0"
+      page.should     have_field "price", with: "44.0"
       page.should_not have_field "price", with: "66.0", visible: true
     end
     
