@@ -4,6 +4,14 @@
 .landing-page-row {
   padding-top: emCalc(40);
   padding-bottom: emCalc(30);
+
+  #environment {
+    font-size: 110%;
+    font-weight: bold;
+    padding: emCalc(5);
+    border-radius: emCalc(5);
+    background-color: #98ca45;
+  }
 }
 
 .distributor-link-row {
@@ -49,7 +57,7 @@ a.inactive {
   }
 }
 .top-bar-section ul li {
-    float: left;
+  float: left;
 }
 .top-bar-section .divider, .top-bar-section [role="separator"] {
   clear: none;
