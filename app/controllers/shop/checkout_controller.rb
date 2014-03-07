@@ -4,6 +4,7 @@ class Shop::CheckoutController < Spree::CheckoutController
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
   skip_before_filter :check_registration
+  skip_before_filter :redirect_to_paypal_express_form_if_needed
 
   include EnterprisesHelper
    
@@ -14,7 +15,12 @@ class Shop::CheckoutController < Spree::CheckoutController
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
 
+
       while @order.state != "complete"
+        if @order.state == "payment"
+          return if redirect_to_paypal_express_form_if_needed
+        end
+
         if @order.next
           state_callback(:after)
         else
@@ -96,6 +102,15 @@ class Shop::CheckoutController < Spree::CheckoutController
        render :edit and return
     end
 
-    redirect_to(paypal_payment_order_checkout_url(@order, :payment_method_id => payment_method.id)) and return
+    redirect_to(paypal_payment_order_checkout_url(@order, :payment_method_id => payment_method.id))
+    true
+
   end
+
+  def order_opts_with_new_cancel_return_url(order, payment_method_id, stage)
+    opts = order_opts_without_new_cancel_return_url(order, payment_method_id, stage)
+    opts[:cancel_return_url] = main_app.shop_checkout_url
+    opts
+  end
+  alias_method_chain :order_opts, :new_cancel_return_url
 end
