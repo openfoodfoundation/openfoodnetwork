@@ -48,4 +48,20 @@ describe Shop::CheckoutController do
       assigns[:order].ship_address.address1.should be_nil
     end
   end
+
+  describe "Paypal routing" do
+
+    let(:payment_method) { create(:payment_method) }
+    before do
+      controller.stub(:current_distributor).and_return(distributor)
+      controller.stub(:current_order_cycle).and_return(order_cycle)
+      controller.stub(:current_order).and_return(order)
+
+    end
+
+    it "should check the payment method for Paypalness if we've selected one" do
+      Spree::PaymentMethod.should_receive(:find).with(payment_method.id).and_return payment_method
+      post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
+    end
+  end
 end
