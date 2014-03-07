@@ -58,8 +58,8 @@ feature %q{
     end
 
     context "displaying individual columns" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: FactoryGirl.create(:address) ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: nil ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -67,10 +67,10 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays a column for user email" do
-        page.should have_selector "th.email", text: "EMAIL", :visible => true
-        page.should have_selector "td.email", text: o1.email, :visible => true
-        page.should have_selector "td.email", text: o2.email, :visible => true
+      it "displays a column for user's full name, returns email if no billing address exists" do
+        page.should have_selector "th.full_name", text: "NAME", :visible => true
+        page.should have_selector "td.full_name", text: o1.bill_address.full_name, :visible => true
+        page.should have_selector "td.full_name", text: o2.email, :visible => true
       end
 
       it "displays a column for order date" do

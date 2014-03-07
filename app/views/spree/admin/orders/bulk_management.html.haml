@@ -45,7 +45,7 @@
     %table.index#listing_orders.bulk
       %thead
         %tr
-          %th.email Email
+          %th.full_name Name
           %th.date Order Date
           %th.producer Producer
           %th.variant Product (Unit): Var
@@ -55,7 +55,7 @@
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
         %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:quickSearch', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
-          %td.email {{ line_item.order.email }}
+          %td.full_name {{ line_item.order.full_name }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}
           %td.variant {{ line_item.variant_unit_text }}

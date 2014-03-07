@@ -7,14 +7,14 @@ module Spree
     render_views
     
     let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
-    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
-    let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
-    let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1 ) }
+    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+    let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+    let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
     let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
     let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
     let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
     let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
-    let(:order_attributes) { [:id, :email, :completed_at, :line_items, :distributor, :order_cycle, :number] }
+    let(:order_attributes) { [:id, :full_name, :completed_at, :line_items, :distributor, :order_cycle, :number] }
     let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :variant_unit_text] }
 
     before do
