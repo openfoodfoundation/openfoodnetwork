@@ -100,7 +100,7 @@ class Shop::CheckoutController < Spree::CheckoutController
        render :edit and return
     end
 
-    redirect_to(paypal_payment_order_checkout_url(@order, :payment_method_id => payment_method.id))
+    redirect_to(main_app.shop_paypal_payment_url(@order, :payment_method_id => payment_method.id))
     true
 
   end
