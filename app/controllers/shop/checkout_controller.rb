@@ -14,8 +14,6 @@ class Shop::CheckoutController < Spree::CheckoutController
   def update
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
-
-
       while @order.state != "complete"
         if @order.state == "payment"
           return if redirect_to_paypal_express_form_if_needed
@@ -106,7 +104,8 @@ class Shop::CheckoutController < Spree::CheckoutController
     true
 
   end
-
+  
+  # Overriding to customize the cancel url
   def order_opts_with_new_cancel_return_url(order, payment_method_id, stage)
     opts = order_opts_without_new_cancel_return_url(order, payment_method_id, stage)
     opts[:cancel_return_url] = main_app.shop_checkout_url

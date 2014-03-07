@@ -60,6 +60,7 @@ describe Shop::CheckoutController do
     it "should check the payment method for Paypalness if we've selected one" do
       Spree::PaymentMethod.should_receive(:find).with(payment_method.id.to_s).and_return payment_method
       order.stub(:update_attributes).and_return true
+      order.stub(:state).and_return "payment"
       spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
     end
 
