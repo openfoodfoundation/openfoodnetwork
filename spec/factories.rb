@@ -82,7 +82,7 @@ FactoryGirl.define do
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'
-    address { Spree::Address.first || FactoryGirl.create(:address) }
+    address { FactoryGirl.create(:address) }
   end
 
   factory :supplier_enterprise, :parent => :enterprise do
