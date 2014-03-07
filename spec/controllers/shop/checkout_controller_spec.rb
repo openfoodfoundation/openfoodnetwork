@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Shop::CheckoutController do
+  render_views
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:order_cycle) }
   let(:order) { create(:order) }
