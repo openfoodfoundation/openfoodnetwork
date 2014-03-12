@@ -394,7 +394,11 @@ productEditModule.controller "AdminProductEditCtrl", [
         else
           product.variant_unit = product.variant_unit_with_scale
           product.variant_unit_scale = null
+      else
+        product.variant_unit = product.variant_unit_scale = null
+
       $scope.packVariant product, product.master if product.master
+
       if product.variants
         for id, variant of product.variants
           $scope.packVariant product, variant
