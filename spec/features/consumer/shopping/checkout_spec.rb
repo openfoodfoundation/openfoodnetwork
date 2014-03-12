@@ -257,7 +257,6 @@ def select_order_cycle
 end
 
 def add_product_to_cart
-
-  fill_in "variants[#{product.master.id}]", with: 5
+  fill_in "variants[#{product.master.id}]", with: product.master.on_hand - 1
   first("form.custom > input.button.right").click 
 end
