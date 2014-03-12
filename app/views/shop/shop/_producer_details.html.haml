@@ -1,0 +1,9 @@
+- for producer in @producers
+  .reveal-modal{id: "producer_details_#{producer.id}"}
+    %h2
+      %img.left{src: producer.logo.url(:thumb)}
+      = producer.name
+    %img.about.right{src: producer.promo_image.url(:large)}
+    = producer.description.andand.html_safe
+    %a.close-reveal-modal &#215;
+
