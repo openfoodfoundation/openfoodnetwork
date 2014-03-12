@@ -63,6 +63,8 @@ describe OrderCycle do
       p = create(:product)
       d = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+      p.reload
+
       OrderCycle.distributing_product(p).should == [oc]
     end
 
@@ -71,6 +73,8 @@ describe OrderCycle do
       v = create(:variant, product: p)
       d = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, distributors: [d], variants: [v])
+      p.reload
+
       OrderCycle.distributing_product(p).should == [oc]
     end
 
@@ -80,6 +84,7 @@ describe OrderCycle do
       oc = create(:simple_order_cycle)
       ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator)
       ex.variants << p.master
+      p.reload
 
       OrderCycle.distributing_product(p).should == []
     end

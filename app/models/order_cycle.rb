@@ -23,7 +23,7 @@ class OrderCycle < ActiveRecord::Base
   scope :distributing_product, lambda { |product|
     joins(:exchanges => :variants).
     merge(Exchange.outgoing).
-    where('spree_variants.id IN (?)', product.variants_including_master.map(&:id)).
+    where('spree_variants.id IN (?)', product.variants_including_master.pluck(:id)).
     select('DISTINCT order_cycles.*') }
 
   scope :with_distributor, lambda { |distributor|

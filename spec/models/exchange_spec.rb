@@ -124,6 +124,7 @@ describe Exchange do
       p = create(:simple_product)
       ex = create(:exchange)
       ex.variants << p.master
+      p.reload
 
       Exchange.with_product(p).should == [ex]
     end
@@ -133,6 +134,7 @@ describe Exchange do
       v = create(:variant, product: p)
       ex = create(:exchange)
       ex.variants << v
+      p.reload
 
       Exchange.with_product(p).should == [ex]
     end
