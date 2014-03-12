@@ -1,5 +1,4 @@
 %shop.darkswarm{"ng-app" => "Shop"}
-
   - content_for :order_cycle_form do
     %strong.avenir Ready for
     %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
@@ -12,6 +11,8 @@
       %strong {{ order_cycle.orders_close_at | date_in_words }} 
   = render partial: "shop/details"
 
+  -# This partial generates the producer detail popovers
+  = render partial: "shop/shop/producer_details"
  
   %tabs
     .row
@@ -23,13 +24,7 @@
             %img.about.right{src: @distributor.promo_image.url(:large)}
             %p= @distributor.long_description.andand.html_safe
 
-        %section
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#producers"} Our Producers 
-          .content{"data-section-content" => ""}
-            %ul
-              - for producer in @producers
-                %li= producer.name
+        = render 'shop/shop/producers'
 
         %section
           %p.title.avenir{"data-section-title" => ""}
@@ -45,6 +40,7 @@
     
   %products.row
     = render partial: "shop/shop/products"
+
   #footer
     %section.row
       = render partial: "shop/shop/contact_us"

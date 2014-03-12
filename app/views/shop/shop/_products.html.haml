@@ -18,7 +18,8 @@
             %div
               %h5
                 {{ product.name }}
-              {{ product.supplier.name }}
+              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}"}
+                {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
           %td 
             %span{"ng-hide" => "product.variants.length > 0"} {{ product.master.options_text }}
