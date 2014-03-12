@@ -157,6 +157,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.lineItems = $scope.orders.reduce (lineItems,order) ->
         orderWithoutLineItems = $scope.lineItemOrder order
         for i,line_item of order.line_items
+          line_item.checked = false
           line_item.supplier = $scope.matchObject $scope.suppliers, line_item.supplier, null
           line_item.order = orderWithoutLineItems
         lineItems.concat order.line_items
@@ -190,6 +191,16 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         ).success (data) ->
           $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
           lineItem.order.line_items.splice lineItem.order.line_items.indexOf(lineItem), 1
+
+    $scope.allBoxesChecked = ->
+      checkedCount = $scope.lineItems.reduce (count,lineItem) ->
+        count + (if lineItem.checked then 1 else 0 )
+      , 0
+      checkedCount == $scope.lineItems.length
+
+    $scope.toggleAllCheckboxes = ->
+      changeTo = !$scope.allBoxesChecked()
+      lineItem.checked = changeTo for lineItem in $scope.lineItems
 ]
 
 orderManagementModule.filter "selectFilter", [

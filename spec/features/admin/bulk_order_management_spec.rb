@@ -86,7 +86,7 @@ feature %q{
       end
 
       it "displays a column for variant description, which shows only product name when options text is blank" do
-        page.should have_selector "th.variant", text: "PRODUCT (UNIT): VAR", :visible => true
+        page.should have_selector "th.variant", text: "PRODUCT: UNIT", :visible => true
         page.should have_selector "td.variant", text: li1.product.name, :visible => true
         page.should have_selector "td.variant", text: (li2.product.name + ": " + li2.variant.options_text), :visible => true
       end
@@ -346,6 +346,29 @@ feature %q{
             page.should have_field "quantity", :with => ( li2.quantity ).to_s
           end
         end
+      end
+    end
+
+    context "bulk actions" do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+      end
+
+      it "displays a checkbox for each line item in the list" do
+        page.should have_selector "tr#li_#{li1.id} input[type='checkbox'].bulk"
+        page.should have_selector "tr#li_#{li2.id} input[type='checkbox'].bulk"
+      end
+
+      it "displays a checkbox to which toggles the 'checked' state of all checkboxes" do
+        check "toggle_bulk"
+        page.all("input[type='checkbox'].bulk").each{ |checkbox| checkbox.checked?.should == true }
+        uncheck "toggle_bulk"
+        page.all("input[type='checkbox'].bulk").each{ |checkbox| checkbox.checked?.should == false }
       end
     end
 

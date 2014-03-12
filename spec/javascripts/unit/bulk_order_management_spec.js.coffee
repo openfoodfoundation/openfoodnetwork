@@ -209,6 +209,33 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
       expect(order.line_items).toEqual [line_item1, line_item2]
 
+  describe "check boxes for line items", ->
+    line_item1 = line_item2 = null
+
+    beforeEach ->
+      line_item1 = { name: "line item 1", checked: false }
+      line_item2 = { name: "line item 2", checked: false }
+      scope.lineItems = [ line_item1, line_item2 ]
+
+    it "keeps track of whether all lines items are 'checked' or not", ->
+      expect(scope.allBoxesChecked()).toEqual false
+      line_item1.checked = true
+      expect(scope.allBoxesChecked()).toEqual false
+      line_item2.checked = true
+      expect(scope.allBoxesChecked()).toEqual true
+      line_item1.checked = false
+      expect(scope.allBoxesChecked()).toEqual false
+
+    it "toggles the 'checked' attribute of all line items based to the value of allBoxesChecked", ->
+      scope.toggleAllCheckboxes()
+      expect(scope.allBoxesChecked()).toEqual true
+      line_item1.checked = false
+      expect(scope.allBoxesChecked()).toEqual false
+      scope.toggleAllCheckboxes()
+      expect(scope.allBoxesChecked()).toEqual true
+      scope.toggleAllCheckboxes()
+      expect(scope.allBoxesChecked()).toEqual false
+
 describe "managing pending changes", ->
   dataSubmitter = pendingChangesService = null
 

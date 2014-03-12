@@ -45,6 +45,8 @@
     %table.index#listing_orders.bulk
       %thead
         %tr
+          %th.bulk
+            %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
           %th.full_name Name
           %th.date Order Date
           %th.producer Producer
@@ -55,6 +57,8 @@
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
         %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:quickSearch', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+          %td.bulk
+            %input.bulk{ :type => "checkbox", 'ng-model' => 'line_item.checked' }
           %td.full_name {{ line_item.order.full_name }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}
