@@ -42,7 +42,7 @@
                   "ng-model" => "order.bill_address.state_id"
             .row
               .large-6.columns
-                = ba.text_field :zipcode,
+                = ba.text_field :zipcode, label: "Postcode",
                   "ng-model" => "order.bill_address.zipcode"
               .large-6.columns.right
                 = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
@@ -53,10 +53,15 @@
         - for ship_method, i in current_distributor.shipping_methods.uniq
           .row
             .large-12.columns
-              = f.radio_button :shipping_method_id, ship_method.id,
-                text: ship_method.name,
-                "ng-change" => "shippingMethodChanged()",
-                "ng-model" => "order.shipping_method_id"
+              -#= f.radio_button :shipping_method_id, ship_method.id,
+                -#text: ship_method.name,
+                -#"ng-change" => "shippingMethodChanged()",
+                -#"ng-model" => "order.shipping_method_id"
+              %label
+                = radio_button_tag "order[shipping_method_id]", ship_method.id, false,
+                  "ng-change" => "shippingMethodChanged()",
+                  "ng-model" => "order.shipping_method_id"
+                = ship_method.name
 
         #distributor_address.panel{"ng-show" => "!require_ship_address"}
           = @order.distributor.distributor_info.andand.html_safe
@@ -84,13 +89,13 @@
                 .large-6.columns
                   = sa.text_field :city
                 .large-6.columns
-                  = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
-                    {include_blank: false}
+                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}
               .row
                 .large-6.columns
-                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}
+                  = sa.text_field :zipcode, label: "Postcode"
                 .large-6.columns.right
-                  = sa.text_field :zipcode
+                  = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
+                    {include_blank: false}
               .row
                 .large-6.columns
                   = sa.text_field :firstname
