@@ -57,11 +57,16 @@
                 "ng-change" => "shippingMethodChanged()",
                 "ng-model" => "order.shipping_method_id"
 
+        #distributor_address.panel{"ng-show" => "!require_ship_address"}
+          = @order.distributor.distributor_info.andand.html_safe
+          = @order.order_cycle.pickup_time_for(@order.distributor)
+          = @order.order_cycle.pickup_instructions_for(@order.distributor) 
+
         = f.fields_for :ship_address, @order.ship_address do |sa|
+
           #ship_address{"ng-show" => "require_ship_address"}
             %label
               = check_box_tag "order[ship_address_same_as_billing]", true, @order.ship_address_same_as_billing, 
-                "ng-checked" => "order.ship_address_same_as_billing == 'true'", 
                 "ng-model" => "order.ship_address_same_as_billing"
               Shipping address same as billing address?
 
