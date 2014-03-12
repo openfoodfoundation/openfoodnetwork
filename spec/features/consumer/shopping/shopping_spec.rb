@@ -134,13 +134,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
         end
 
-        it "collapses variants by default" do
-          page.should_not have_text variant1.options_text
+        it "expands variants by default" do
+          page.should have_text variant1.options_text
         end
 
         it "expands variants" do
-          find(".expand").trigger "click"
-          page.should have_text variant1.options_text
           find(".collapse").trigger "click"
           page.should_not have_text variant1.options_text
         end
@@ -161,7 +159,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_selector 'tr.product > td', text: "from $33.00"
 
           # Page should have variant prices (with fee)
-          find(".expand").trigger 'click'
           page.should have_selector 'tr.variant > td.price', text: "$43.00"
           page.should have_selector 'tr.variant > td.price', text: "$53.00"
 
@@ -223,7 +220,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_content p3.name
 
           # It shows on demand variants
-          within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
           page.should have_content v3.options_text
 
           # It does not show variants that are neither on hand or on demand
@@ -262,7 +258,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           let(:variant) { create(:variant, product: product, on_hand: 10 ) }
           before do
             build_and_select_order_cycle_with_variants
-            find(".expand").trigger "click"
           end
 
           it "should show group buy input" do
@@ -289,7 +284,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           build_and_select_order_cycle_with_variants
         end
         it "should let us add products to our cart" do
-          find(".expand").trigger "click"
           fill_in "variants[#{variant.id}]", with: "1"
           first("form.custom > input.button.right").click
           current_path.should == "/cart" 

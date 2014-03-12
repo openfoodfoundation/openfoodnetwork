@@ -119,7 +119,7 @@ feature "As a consumer I want to check out my cart", js: true do
                 fill_in "Customer E-Mail", with: "test@test.com"
                 fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
-                fill_in "Zip Code", with: "3066"
+                fill_in "Postcode", with: "3066"
               end
               click_button "Purchase"
               page.should have_content "Your order has been processed successfully"
@@ -137,7 +137,7 @@ feature "As a consumer I want to check out my cart", js: true do
                 fill_in "Customer E-Mail", with: "test@test.com"
                 fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
-                fill_in "Zip Code", with: "3066"
+                fill_in "Postcode", with: "3066"
               end
               check "Shipping address same as billing address?"
               click_button "Purchase"
