@@ -17,13 +17,8 @@
   %tabs
     .row
       .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-        %section#about{class: current_order_cycle ? nil : "active" }
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#about"} About Us 
-          .content{"data-section-content" => ""}
-            %img.about.right{src: @distributor.promo_image.url(:large)}
-            %p= @distributor.long_description.andand.html_safe
 
+        = render 'shop/shop/about_us'
         = render 'shop/shop/producers'
 
         %section
@@ -40,9 +35,3 @@
     
   %products.row
     = render partial: "shop/shop/products"
-
-  #footer
-    %section.row
-      = render partial: "shop/shop/contact_us"
-      = render partial: "shop/shop/about_us"
-      = render partial: "shared/copyright"
