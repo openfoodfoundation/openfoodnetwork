@@ -33,19 +33,20 @@
                   "ng-model" => "order.bill_address.address2"
             .row
               .large-6.columns
+
                 = ba.text_field :city,
                   "ng-model" => "order.bill_address.city"
 
               .large-6.columns
-                = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
-                  {include_blank: false}, "ng-model" => "order.bill_address.country_id"
-            .row
-              .large-6.columns
                 = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]},
                   "ng-model" => "order.bill_address.state_id"
-              .large-6.columns.right
+            .row
+              .large-6.columns
                 = ba.text_field :zipcode,
                   "ng-model" => "order.bill_address.zipcode"
+              .large-6.columns.right
+                = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
+                  {include_blank: false}, "ng-model" => "order.bill_address.country_id"
 
       %fieldset#shipping
         %legend Shipping
