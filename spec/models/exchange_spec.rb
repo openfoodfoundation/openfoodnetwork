@@ -111,7 +111,7 @@ describe Exchange do
       Exchange.with_variant(v).should == [ex]
     end
 
-    it "finds exchanges with any of a number of variants" do
+    it "finds exchanges with any of a number of variants, without returning duplicates" do
       v1 = create(:variant)
       v2 = create(:variant)
       v3 = create(:variant)
@@ -119,7 +119,7 @@ describe Exchange do
       ex.variants << v1
       ex.variants << v2
 
-      Exchange.any_variant([v1, v2, v3]).should == [ex]
+      Exchange.with_any_variant([v1, v2, v3]).should == [ex]
     end
 
     it "finds exchanges with a particular product's master variant" do

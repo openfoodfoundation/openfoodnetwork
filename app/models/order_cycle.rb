@@ -220,6 +220,6 @@ class OrderCycle < ActiveRecord::Base
 
   def exchanges_supplying(order)
     variants = order.line_items.map(&:variant)
-    exchanges.to_enterprises([coordinator, order.distributor]).any_variant(variants)
+    exchanges.to_enterprises([coordinator, order.distributor]).with_any_variant(variants)
   end
 end
