@@ -14,6 +14,18 @@ describe Shop::ShopController do
       controller.stub(:current_distributor).and_return d
     end
 
+    describe "Tabs and plumbing" do
+      it "builds a list of sibling distributors" do
+        sibling1 = create(:distributor_enterprise)
+        sibling2 = create(:distributor_enterprise)
+        g1 = create(:enterprise_group, on_front_page: true, enterprises: [d, sibling1])
+        g2 = create(:enterprise_group, on_front_page: true, enterprises: [d, sibling2])
+
+        spree_get :show
+        assigns[:groups].sort.should == [g1, g2].sort
+      end
+    end
+
     describe "Selecting order cycles" do
       it "should select an order cycle when only one order cycle is open" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -42,7 +54,7 @@ describe Shop::ShopController do
         it "should return the order cycle details when the oc is selected" do
           oc1 = create(:order_cycle, distributors: [d])
           oc2 = create(:order_cycle, distributors: [d])
-          
+         
           spree_post :order_cycle, order_cycle_id: oc2.id
           response.should be_success
           response.body.should have_content oc2.id 

@@ -7,6 +7,7 @@ class Shop::ShopController < BaseController
   def show
     # All suppliers of all our products
     @producers = Exchange.where(receiver_id: @distributor.id).map{ |ex| ex.variants.map {|v| v.product.supplier }}.flatten.uniq 
+    @groups = current_distributor.groups
   end
   
   def products
@@ -14,7 +15,6 @@ class Shop::ShopController < BaseController
       .products_distributed_by(current_distributor).andand
       .select { |p| p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
       .sort_by {|p| p.name }
-
       render json: "", status: 404
     end
   end

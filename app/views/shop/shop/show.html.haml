@@ -11,8 +11,8 @@
       %strong {{ order_cycle.orders_close_at | date_in_words }} 
   = render partial: "shop/details"
 
-  -# This partial generates the producer detail popovers
-  = render partial: "shop/shop/producer_details"
+  -# This partial generates the producer and group sibling modals 
+  = render partial: "shop/shop/modals"
  
   %tabs
     .row
@@ -20,12 +20,7 @@
 
         = render 'shop/shop/about_us'
         = render 'shop/shop/producers'
-
-        %section
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#groups"} Our Groups 
-          .content{"data-section-content" => ""}
-            %p Coming Soon 
+        = render 'shop/shop/groups'
 
         %section
           %p.title.avenir{"data-section-title" => ""}
