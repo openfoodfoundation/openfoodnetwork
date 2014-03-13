@@ -114,10 +114,12 @@ describe Exchange do
     it "finds exchanges with any of a number of variants" do
       v1 = create(:variant)
       v2 = create(:variant)
+      v3 = create(:variant)
       ex = create(:exchange)
       ex.variants << v1
+      ex.variants << v2
 
-      Exchange.any_variant([v1, v2]).should == [ex]
+      Exchange.any_variant([v1, v2, v3]).should == [ex]
     end
 
     it "finds exchanges with a particular product's master variant" do
