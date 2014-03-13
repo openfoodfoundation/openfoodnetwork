@@ -7,6 +7,7 @@ angular.module("Checkout").controller "CheckoutCtrl", ($scope, $rootScope, order
   # Here we default to the first shipping method if none is selected
   $scope.order.shipping_method_id ||= Object.keys(order.shipping_methods)[0]
   $scope.order.ship_address_same_as_billing = true if $scope.order.ship_address_same_as_billing == null
+
   $scope.require_ship_address = $scope.order.shipping_methods[$scope.order.shipping_method_id]
  
   $scope.shippingMethodChanged = ->

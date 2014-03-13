@@ -65,6 +65,12 @@ Spree::Order.class_eval do
     where("state != ?", state)
   }
 
+  # Accessors
+  #
+  def ship_address_same_as_billing=(string_value)
+    @ship_address_same_as_billing = (string_value == "true")
+  end
+
 
   # -- Methods
   def products_available_from_new_distribution

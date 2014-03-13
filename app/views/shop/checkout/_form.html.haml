@@ -73,6 +73,7 @@
 
           #ship_address{"ng-show" => "require_ship_address"}
             %label
+              = hidden_field_tag "order[ship_address_same_as_billing]", "false"
               = check_box_tag "order[ship_address_same_as_billing]", true, @order.ship_address_same_as_billing, 
                 "ng-model" => "order.ship_address_same_as_billing"
               Shipping address same as billing address?

@@ -1,8 +1,5 @@
 object current_order
-attributes :id, :email, :shipping_method_id
-node :ship_address_same_as_billing do
-  current_order.ship_address_same_as_billing == "true"
-end
+attributes :id, :email, :shipping_method_id, :ship_address_same_as_billing
 
 child current_order.bill_address => :bill_address do
   attributes :phone, :firstname, :lastname, :address1, :address2, :city, :country_id, :state_id, :zipcode
