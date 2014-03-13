@@ -1,5 +1,4 @@
 %products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null"}
-  %h5 Check out when you have selected everything you want
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
     %input#search.text{"ng-model" => "query", placeholder: "Search"}
     %input.button.right{type: :submit, value: "Add to Cart"}
