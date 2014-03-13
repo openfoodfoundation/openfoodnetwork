@@ -1,19 +1,31 @@
 - for producer in @producers
   .reveal-modal{id: "producer_details_#{producer.id}"}
-    %h2
-      %img.left{src: producer.logo.url(:thumb)}
-      = producer.name
-    %img.about.right{src: producer.promo_image.url(:large)}
-    = producer.description.andand.html_safe
+    .row
+      .large-1.columns
+        %img.left{src: producer.logo.url(:thumb)}
+      .large-11.columns
+        %h2
+          = producer.name
+    .row
+      .large-8.columns
+        = producer.long_description.andand.html_safe
+      .large-4.columns
+        %img.about.right{src: producer.promo_image.url(:large)}
     %a.close-reveal-modal &#215;
 
 - for group in @groups
   - for sibling in group.enterprises.except(current_distributor)
     .reveal-modal{id: "sibling_details_#{sibling.id}"}
-      %h2
-        %img.left{src: sibling.logo.url(:thumb)}
-        = sibling.name
-      %img.about.right{src: sibling.promo_image.url(:large)}
-      = sibling.description.andand.html_safe
+      .row
+        .large-1.columns
+          %img.left{src: sibling.logo.url(:thumb)}
+        .large-11.columns
+          %h2
+            = sibling.name
+      .row
+        .large-8.columns
+          = sibling.long_description.andand.html_safe
+        .large-4.columns
+          %img.about.right{src: sibling.promo_image.url(:large)}
       %a.close-reveal-modal &#215;
 
