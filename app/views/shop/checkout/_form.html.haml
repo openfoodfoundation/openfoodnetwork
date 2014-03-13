@@ -121,9 +121,9 @@
             .large-12.columns
               %label
                 = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
-                  "ng-model" => "payment_method"
+                  "ng-model" => "order.payment_method_id"
                 = method.name
-          .row{"ng-show" => "payment_method == #{method.id}"}
+          .row{"ng-show" => "order.payment_method_id == #{method.id}"}
             .large-12.columns
               = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
 
