@@ -106,17 +106,21 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
   ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
 
-    now = new Date
-    start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
-    end = new Date( now.getTime() - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) + ( 1 * ( 1440 * 60 * 1000 ) ) )
-    $scope.lineItems = []
-    $scope.confirmDelete = true
-    $scope.startDate = formatDate start
-    $scope.endDate = formatDate end
-    $scope.pendingChanges = pendingChanges
-    $scope.quickSearch = ""
+    $scope.initialiseVariables = ->
+      now = new Date
+      start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
+      end = new Date( now.getTime() - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) + ( 1 * ( 1440 * 60 * 1000 ) ) )
+      $scope.lineItems = []
+      $scope.confirmDelete = true
+      $scope.startDate = formatDate start
+      $scope.endDate = formatDate end
+      $scope.pendingChanges = pendingChanges
+      $scope.quickSearch = ""
+      $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteSelected } ]
+      $scope.selectedBulkAction = $scope.bulkActions[0]
 
     $scope.initialise = (spree_api_key) ->
+      $scope.initialiseVariables()
       authorise_api_reponse = ""
       dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->
         authorise_api_reponse = data
@@ -190,7 +194,12 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           url: "/api/orders/" + lineItem.order.number + "/line_items/" + lineItem.id
         ).success (data) ->
           $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
-          lineItem.order.line_items.splice lineItem.order.line_items.indexOf(lineItem), 1
+
+    $scope.deleteSelected = ->
+      existingState = $scope.confirmDelete
+      $scope.confirmDelete = false
+      $scope.deleteLineItem lineItem for lineItem in $scope.lineItems when lineItem.checked
+      $scope.confirmDelete = existingState
 
     $scope.allBoxesChecked = ->
       checkedCount = $scope.lineItems.reduce (count,lineItem) ->
@@ -208,9 +217,9 @@ orderManagementModule.filter "selectFilter", [
   (blankOption) ->
     return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
-      filtered.push line_item for line_item in lineItems when (angular.equals(selectedSupplier,blankOption()) || line_item.supplier == selectedSupplier) &&
-        (angular.equals(selectedDistributor,blankOption()) || line_item.order.distributor == selectedDistributor) &&
-        (angular.equals(selectedOrderCycle,blankOption()) || line_item.order.order_cycle == selectedOrderCycle)
+      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier == selectedSupplier) &&
+        (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor == selectedDistributor) &&
+        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle)
       filtered
 ]
 

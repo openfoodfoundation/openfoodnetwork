@@ -21,6 +21,7 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
       httpBackend.expectGET("/api/order_cycles/managed").respond returnedOrderCycles
+      spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
       spyOn(returnedSuppliers, "unshift")
       spyOn(returnedDistributors, "unshift")
@@ -31,6 +32,7 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.suppliers).toEqual ["list of suppliers"]
       expect(scope.distributors).toEqual ["list of distributors"]
       expect(scope.orderCycles).toEqual [ "oc1", "oc2", "oc3" ]
+      expect(scope.initialiseVariables.calls.length).toEqual 1
       expect(scope.fetchOrders.calls.length).toEqual 1
       expect(returnedSuppliers.unshift.calls.length).toEqual 1
       expect(returnedDistributors.unshift.calls.length).toEqual 1
@@ -40,6 +42,7 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "fetching orders", ->
     beforeEach ->
+      scope.initialiseVariables()
       httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
 
     it "makes a call to dataFetcher, with current start and end date parameters", ->
@@ -185,7 +188,9 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
+
     beforeEach ->
+      scope.initialiseVariables()
       spyOn(window,"confirm").andReturn true
       order = { number: "R12345678", line_items: [] }
       line_item1 = { id: 1, order: order }
@@ -197,17 +202,29 @@ describe "AdminOrderMgmtCtrl", ->
       scope.deleteLineItem line_item1
       httpBackend.flush()
 
-    it "removes line_item from the line_items array of the relevant order object when request is 204", ->
-      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond 204, "NO CONTENT"
-      scope.deleteLineItem line_item1
-      httpBackend.flush()
-      expect(order.line_items).toEqual [line_item2]
-
     it "does not remove line_item from the line_items array when request is not successful", ->
       httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond 404, "NO CONTENT"
       scope.deleteLineItem line_item1
       httpBackend.flush()
       expect(order.line_items).toEqual [line_item1, line_item2]
+
+  describe "deleting 'checked' line items", ->
+    line_item1 = line_item2 = line_item3 = line_item4 = null
+
+    beforeEach ->
+      line_item1 = { name: "line item 1", checked: false }
+      line_item2 = { name: "line item 2", checked: true }
+      line_item3 = { name: "line item 3", checked: false }
+      line_item4 = { name: "line item 4", checked: true }
+      scope.lineItems = [ line_item1, line_item2, line_item3, line_item4 ]
+
+    it "calls deletedLineItem for each 'checked' line item", ->
+      spyOn(scope, "deleteLineItem")
+      scope.deleteSelected()
+      expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
+      expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
+      expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)
+      expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item3)
 
   describe "check boxes for line items", ->
     line_item1 = line_item2 = null

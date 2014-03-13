@@ -34,7 +34,18 @@
       %label{ :for => 'quick_search' }Quick Search
       %br
       %input{ :class => "three columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-  .spacer{ :class => "seven columns alpha" }
+  .spacer{ :class => "one columns alpha" }
+    &nbsp;
+  .bulk_actions{ :class => "three columns alpha" }
+    %div{ :class => "three columns alpha" }
+      %label{ :for => 'bulk_actions' }Bulk Action
+      %br
+      %select.select2{ :class => "three columns alpha", :id => 'bulk_actions', 'ng-model' => 'selectedBulkAction', 'ng-options' => 'a as a.name for a in bulkActions' }
+    %div{ :class => "three columns alpha" }
+      %label{ :for => 'bulk_execute' }
+      %br
+      %input{ :class => "three columns alpha", :value => "Run", :type => "button", :id => 'bulk_execute', 'ng-click' => 'selectedBulkAction.callback()' }
+  .spacer{ :class => "three columns alpha" }
     &nbsp;
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
@@ -58,7 +69,7 @@
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
         %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:quickSearch', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
-            %input.bulk{ :type => "checkbox", 'ng-model' => 'line_item.checked' }
+            %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
           %td.full_name {{ line_item.order.full_name }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}

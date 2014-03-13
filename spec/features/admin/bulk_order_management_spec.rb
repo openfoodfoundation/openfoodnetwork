@@ -349,7 +349,7 @@ feature %q{
       end
     end
 
-    context "bulk actions" do
+    context "bulk action controls" do
       let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
@@ -360,15 +360,37 @@ feature %q{
       end
 
       it "displays a checkbox for each line item in the list" do
-        page.should have_selector "tr#li_#{li1.id} input[type='checkbox'].bulk"
-        page.should have_selector "tr#li_#{li2.id} input[type='checkbox'].bulk"
+        page.should have_selector "tr#li_#{li1.id} input[type='checkbox'][name='bulk']"
+        page.should have_selector "tr#li_#{li2.id} input[type='checkbox'][name='bulk']"
       end
 
       it "displays a checkbox to which toggles the 'checked' state of all checkboxes" do
         check "toggle_bulk"
-        page.all("input[type='checkbox'].bulk").each{ |checkbox| checkbox.checked?.should == true }
+        page.all("input[type='checkbox'][name='bulk']").each{ |checkbox| checkbox.checked?.should == true }
         uncheck "toggle_bulk"
-        page.all("input[type='checkbox'].bulk").each{ |checkbox| checkbox.checked?.should == false }
+        page.all("input[type='checkbox'][name='bulk']").each{ |checkbox| checkbox.checked?.should == false }
+      end
+
+      it "displays a bulk action select box with a list of actions" do
+        page.should have_select "bulk_actions", :options => ["Delete"]
+      end
+
+      it "displays a bulk action button" do
+        page.should have_button "bulk_execute"
+      end
+
+      context "performing actions" do
+        it "deletes selected items" do
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+          within("tr#li_#{li2.id} td.bulk") do
+            check "bulk"
+          end
+          select "Delete", :from => "bulk_actions"
+          click_button "bulk_execute"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        end
       end
     end
 
