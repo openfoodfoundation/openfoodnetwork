@@ -1,4 +1,9 @@
-/ insert_bottom "[data-hook='cart_buttons']"
+/ replace_contents "[data-hook='cart_buttons']"
 
-%div
-  = link_to "Quick Checkout", main_app.shop_checkout_path
+= button_tag :class => 'primary', :id => 'update-button' do
+  = t(:update)
+
+= link_to "Quick Checkout", main_app.shop_checkout_path, class: "button checkout primary"
+
+= button_tag :class => 'button checkout gray', :id => 'checkout-link', :name => 'checkout' do
+  Old Checkout 
