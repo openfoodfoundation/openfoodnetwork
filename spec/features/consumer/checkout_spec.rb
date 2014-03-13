@@ -92,7 +92,7 @@ feature %q{
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
     click_button 'Add To Cart'
-    click_link 'Continue shopping'
+    visit enterprise_path @distributor1
 
     click_link 'Garlic'
     click_button 'Add To Cart'
@@ -112,11 +112,12 @@ feature %q{
     # And I am logged in
     login_to_consumer_section
     click_link "FruitAndVeg"
+    visit enterprise_path @distributor1
 
     # When I add some bananas and zucchini to my cart
     click_link 'Bananas'
     click_button 'Add To Cart'
-    click_link 'Continue shopping'
+    visit enterprise_path @distributor1
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
@@ -355,10 +356,11 @@ feature %q{
 
     login_to_consumer_section
     click_link 'FruitAndVeg'
+    visit enterprise_path @distributor1 
 
     click_link 'Bananas'
     click_button 'Add To Cart'
-    click_link 'Continue shopping'
+    visit enterprise_path @distributor1 
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
@@ -433,12 +435,13 @@ feature %q{
                                     country: Spree::Country.find_by_name('Australia')))
 
     click_link 'FruitAndVeg'
-    click_link 'Logout'
+    click_link 'Sign Out'
     click_link 'FruitAndVeg'
+    visit enterprise_path @distributor1
 
     click_link 'Bananas'
     click_button 'Add To Cart'
-    click_link 'Continue shopping'
+    visit enterprise_path @distributor1
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
@@ -529,6 +532,7 @@ feature %q{
 
     # Distributors
     distributor1 = FactoryGirl.create(:distributor_enterprise, name: "FruitAndVeg")
+    @distributor1 = distributor1
     distributor2 = FactoryGirl.create(:distributor_enterprise, name: "MoreFreshStuff")
     create_enterprise_group_for distributor1
     distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)

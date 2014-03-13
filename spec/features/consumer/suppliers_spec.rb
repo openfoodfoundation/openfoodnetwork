@@ -30,10 +30,7 @@ feature %q{
     click_link d.name
 
     # Then that hub should be selected
-    page.should have_selector 'h1', text: d.name
-
-    # And I should be on the hub page
-    within('#products') { page.should have_content p.name }
+    page.should have_content d.name
   end
 
   scenario "viewing a list of suppliers (with active products) in the sidebar when there's 5 or fewer", :future => true do

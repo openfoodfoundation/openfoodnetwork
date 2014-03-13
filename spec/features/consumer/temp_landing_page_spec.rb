@@ -74,7 +74,7 @@ feature %q{
 
     it "should link to the hub page" do
       click_on 'Murandaka'
-      page.should have_content 'CART'
+      current_path.should == "/shop"
     end
   end
 

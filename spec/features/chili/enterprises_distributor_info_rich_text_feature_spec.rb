@@ -111,6 +111,7 @@ feature "enterprises distributor info as rich text" do
 
     login_to_consumer_section
     click_link 'Green Grass'
+    visit enterprise_path d
 
     # -- Product details page
     click_link p.name

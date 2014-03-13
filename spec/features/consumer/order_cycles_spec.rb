@@ -44,6 +44,7 @@ feature %q{
       
       visit spree.root_path
       click_link d.name
+      visit enterprise_path d
 
       page.should have_select 'order_order_cycle_id'
       select_by_value oc1.id, from: 'order_order_cycle_id'
@@ -63,9 +64,10 @@ feature %q{
           oc1 = create(:simple_order_cycle, name: 'oc 1', distributors: [d1], orders_close_at: 5.minutes.ago)
           oc2 = create(:simple_order_cycle, name: 'oc 1', distributors: [d2], orders_close_at: 3.minutes.ago)
           click_link d1.name
+          visit enterprise_path d1
 
           page.should have_content "Orders are currently closed for this hub"
-          page.should have_content "The last cycle closed 5 minutes ago."
+          page.should have_content "The last cycle closed 5 minutes ago"
           page.should have_content "Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens."
           page.should have_content d1.email
           page.should have_content d1.phone
@@ -77,11 +79,14 @@ feature %q{
           create(:simple_order_cycle, name: 'oc 1', distributors: [d1], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
 
           click_link d1.name
+          visit enterprise_path d1
+
           page.should have_content "The next order cycle opens in 10 days" 
         end
 
         it "should show nothing when there is no next order cycle" do
           click_link d1.name
+          visit enterprise_path d1
           page.should_not have_content "The next order cycle opens" 
           page.should_not have_content "No products found"
         end
@@ -97,6 +102,7 @@ feature %q{
 
       visit spree.root_path
       click_link d.name
+      visit enterprise_path d
 
       click_link p.name
       click_button 'Add To Cart'
@@ -148,6 +154,7 @@ feature %q{
       # When I select an order cycle and add a product to my cart
       visit spree.root_path
       click_link 'Green Grass'
+      visit enterprise_path d
       click_link p.name
       click_button 'Add To Cart'
 

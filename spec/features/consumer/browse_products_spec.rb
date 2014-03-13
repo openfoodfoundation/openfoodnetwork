@@ -82,6 +82,7 @@ feature %q{
         # When I am in that order cycle
         visit root_path
         click_link d.name
+        visit enterprise_path d
 
         # And I view the product
         click_link p.name

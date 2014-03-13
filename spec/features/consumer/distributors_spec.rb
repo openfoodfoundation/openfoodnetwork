@@ -101,8 +101,7 @@ feature %q{
     click_link d1.name
 
     # Then I should see the distributor details
-    page.should have_selector 'h1', :text => d1.name
-    page.should have_selector 'div.enterprise-description', :text => 'Hello, world!'
+    page.should have_content d1.name
 
     # And I should see the first, but not the second product
     page.should have_content p1.name
