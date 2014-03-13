@@ -106,8 +106,8 @@ feature %q{
 
       click_link p.name
       click_button 'Add To Cart'
+      visit enterprise_path d
 
-      click_link 'Continue shopping'
       click_link 'Change Collection Date'
       
 
@@ -160,7 +160,8 @@ feature %q{
 
       # And the order cycle expires and I load a page
       Timecop.travel(oc.orders_close_at + 1.day) do
-        click_link 'Continue shopping'
+
+        visit enterprise_path d
 
         # Then I should see an expiry message
         page.should have_content "Sorry, orders for this order cycle closed 1 day ago! Please contact your hub directly to see if they can accept late orders."
