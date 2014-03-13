@@ -2,8 +2,8 @@
 
 = button_tag :class => 'primary', :id => 'update-button' do
   = t(:update)
+&nbsp;
+= link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary"
 
-= link_to "Quick Checkout", main_app.shop_checkout_path, class: "button checkout primary"
-
-= button_tag :class => 'button checkout gray', :id => 'checkout-link', :name => 'checkout' do
-  Old Checkout 
+%div
+  = link_to "Old Checkout", "/checkout", :id => 'checkout-link'
