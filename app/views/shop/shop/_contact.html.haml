@@ -1,0 +1,18 @@
+%section
+  %p.title.avenir{"data-section-title" => ""}
+    %a{href: "#contact"} Contact 
+  .content{"data-section-content" => ""}
+    .panel
+      %p
+        %strong E
+        %a{href: "mailto:#{@distributor.email}"}= @distributor.email
+      
+        - unless @distributor.website.blank?
+          %strong W
+          %a{href: @distributor.website}= @distributor.website
+
+        = [@distributor.address.address1, @distributor.address.address2].join ", "
+        %br
+        = @distributor.address.city
+        = @distributor.address.state
+        = @distributor.address.zipcode
