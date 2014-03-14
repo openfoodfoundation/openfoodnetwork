@@ -19,7 +19,7 @@ angular.module("Checkout").controller "CheckoutCtrl", ($scope, $rootScope, order
     $scope.order.shipping_methods[$scope.order.shipping_method_id]
 
   $scope.shippingMethodChanged = ->
-    $scope.require_ship_address = $scope.shippingMethod().require_ship_address
+    $scope.require_ship_address = $scope.shippingMethod().require_ship_address if $scope.shippingMethod()
 
   $scope.purchase = (event)->
     event.preventDefault()

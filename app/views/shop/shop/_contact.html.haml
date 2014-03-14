@@ -6,11 +6,11 @@
       %p
         %strong E
         %a{href: "mailto:#{@distributor.email}"}= @distributor.email
-      
         - unless @distributor.website.blank?
+          %br 
           %strong W
           %a{href: @distributor.website}= @distributor.website
-
+        %br 
         = [@distributor.address.address1, @distributor.address.address2].join ", "
         %br
         = @distributor.address.city
