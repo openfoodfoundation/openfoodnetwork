@@ -5,6 +5,9 @@
     :javascript
       angular.module('Checkout').value('order', #{render "shop/checkout/order"})
 
+    -#%pre
+      -#{{ order | json }}
+
     .large-12.columns
       %fieldset#details
         %legend Customer Details

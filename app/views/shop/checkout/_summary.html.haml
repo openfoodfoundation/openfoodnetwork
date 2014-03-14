@@ -12,6 +12,9 @@
             %th= adjustment.label 
             %td= adjustment.display_amount.to_html
         %tr
+          %th Shipping cost
+          %td {{ shippingPrice() | currency }}
+        %tr
           %th Cart total 
           %td= current_order.display_total.to_html
         - if current_order.price_adjustment_totals.present?

@@ -15,5 +15,10 @@ end
 
 # Format here is {id: require_ship_address}
 node :shipping_methods do
-  Hash[current_order.distributor.shipping_methods.collect { |method| [method.id, method.require_ship_address] }]
+  Hash[current_order.distributor.shipping_methods.collect { 
+    |method| [method.id, {
+      require_ship_address: method.require_ship_address,
+      price: method.compute_amount(current_order)
+    }] 
+  }]
 end
