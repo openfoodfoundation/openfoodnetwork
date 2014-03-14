@@ -23,6 +23,7 @@ class Shop::CheckoutController < Spree::CheckoutController
           state_callback(:after)
         else
           flash[:error] = t(:payment_processing_failed)
+          clear_ship_address
           render :edit
           return
         end
@@ -33,14 +34,24 @@ class Shop::CheckoutController < Spree::CheckoutController
         flash[:commerce_tracking] = "nothing special"
         respond_with(@order, :location => order_path(@order))
       else
+        clear_ship_address
         render :edit
       end
     else
+      clear_ship_address
       render :edit
     end
   end
 
   private
+
+  # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
+  # We don't want this data in the form, so we clear it out
+  def clear_ship_address
+    unless current_order.shipping_method.andand.require_ship_address
+      current_order.ship_address = Spree::Address.default
+    end
+  end
 
   def skip_state_validation?
     true

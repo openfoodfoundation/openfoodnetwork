@@ -43,9 +43,28 @@ describe Shop::CheckoutController do
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
     end
-    it "does not clone the ship address from distributor" do
+    it "does not clone the ship address from distributor when shipping method requires address" do
       get :edit
       assigns[:order].ship_address.address1.should be_nil
+    end
+    
+    it "clears the ship address when re-rendering edit" do
+      controller.should_receive(:clear_ship_address).and_return true
+      order.stub(:update_attributes).and_return false
+      spree_post :update, order: {}
+    end
+
+    it "clears the ship address when the order state cannot be advanced" do
+      controller.should_receive(:clear_ship_address).and_return true
+      order.stub(:update_attributes).and_return true
+      order.stub(:next).and_return false
+      spree_post :update, order: {}
+    end
+
+    it "only clears the ship address with a pickup shipping method" do
+      order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
+      order.should_receive(:ship_address=)
+      controller.send(:clear_ship_address)
     end
   end
 

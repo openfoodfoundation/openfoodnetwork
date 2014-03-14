@@ -105,14 +105,22 @@
                   = sa.text_field :lastname
 
             #ship_address_hidden{"ng-show" => "order.ship_address_same_as_billing"}
-              = sa.hidden_field :address1, "ng-value" => "order.bill_address.address1"
-              = sa.hidden_field :address2, "ng-value" => "order.bill_address.address2"
-              = sa.hidden_field :city, "ng-value" => "order.bill_address.city"
-              = sa.hidden_field :country_id, "ng-value" => "order.bill_address.country_id"
-              = sa.hidden_field :zipcode, "ng-value" => "order.bill_address.zipcode"
-              = sa.hidden_field :firstname, "ng-value" => "order.bill_address.firstname"
-              = sa.hidden_field :lastname, "ng-value" => "order.bill_address.lastname"
-              = sa.hidden_field :phone, "ng-value" => "order.bill_address.phone"
+              = sa.hidden_field :address1, "ng-value" => "order.bill_address.address1", 
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :address2, "ng-value" => "order.bill_address.address2",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :city, "ng-value" => "order.bill_address.city",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :country_id, "ng-value" => "order.bill_address.country_id",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :zipcode, "ng-value" => "order.bill_address.zipcode",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :firstname, "ng-value" => "order.bill_address.firstname",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :lastname, "ng-value" => "order.bill_address.lastname",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
+              = sa.hidden_field :phone, "ng-value" => "order.bill_address.phone",
+                "ng-disabled" => "!order.ship_address_same_as_billing"
 
       %fieldset#payment
         %legend Payment Details
