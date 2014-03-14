@@ -6,7 +6,7 @@ node :display_total do
 end
 
 node :payment_method_id do
-  current_order.payments.first.andand.payment_method_id
+  current_order.payments.first.andand.payment_method_id || current_order.distributor.payment_methods.first.andand.id
 end
 
 child current_order.bill_address => :bill_address do
