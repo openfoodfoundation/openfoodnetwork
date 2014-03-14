@@ -14,18 +14,6 @@ describe Shop::ShopController do
       controller.stub(:current_distributor).and_return d
     end
 
-    describe "Tabs and plumbing" do
-      it "builds a list of sibling distributors" do
-        sibling1 = create(:distributor_enterprise)
-        sibling2 = create(:distributor_enterprise)
-        g1 = create(:enterprise_group, on_front_page: true, enterprises: [d, sibling1])
-        g2 = create(:enterprise_group, on_front_page: true, enterprises: [d, sibling2])
-
-        spree_get :show
-        assigns[:groups].sort.should == [g1, g2].sort
-      end
-    end
-
     describe "Selecting order cycles" do
       it "should select an order cycle when only one order cycle is open" do
         oc1 = create(:order_cycle, distributors: [d])
@@ -88,11 +76,6 @@ describe Shop::ShopController do
       before do
         exchange = Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) 
         exchange.variants << product.master
-      end
-
-      it "builds a list of producers/suppliers" do
-        spree_get :show
-        assigns[:producers].should == [supplier]
       end
     end
 
