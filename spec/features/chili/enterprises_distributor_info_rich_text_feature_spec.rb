@@ -85,7 +85,7 @@ feature "enterprises distributor info as rich text" do
 
     # -- Confirmation
     complete_purchase_from_checkout_address_page
-    page.should have_content 'Thursday 2nd May'
+    #page.should have_content 'Thursday 2nd May'
 
     # -- Purchase email
     wait_until { ActionMailer::Base.deliveries.length == 1 }

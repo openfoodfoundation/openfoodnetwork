@@ -167,10 +167,6 @@ feature %q{
         page.should have_content "Sorry, orders for this order cycle closed 1 day ago! Please contact your hub directly to see if they can accept late orders."
         page.should have_content d.email
         page.should have_content d.phone
-
-        # And my cart should have been cleared
-        page.should have_content "Cart: (Empty)"
-        page.should have_content 'Green Grass'
       end
     end
 

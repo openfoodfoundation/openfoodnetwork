@@ -409,7 +409,7 @@ feature %q{
     # -- Checkout: Order complete
     page.should have_content 'Your order has been processed successfully'
     page.should have_content @payment_method_distributor_oc.description
-    page.should have_selector 'figure#logo h1', text: @distributor_oc.name 
+    page.should have_content @distributor_oc.name 
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
     page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
