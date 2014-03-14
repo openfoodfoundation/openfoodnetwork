@@ -12,6 +12,9 @@ angular.module("Checkout").controller "CheckoutCtrl", ($scope, $rootScope, order
   $scope.shippingPrice = ->
     $scope.shippingMethod().price
 
+  $scope.cartTotal = ->
+    $scope.shippingPrice() + $scope.order.display_total
+
   $scope.shippingMethod = ->
     $scope.order.shipping_methods[$scope.order.shipping_method_id]
 
