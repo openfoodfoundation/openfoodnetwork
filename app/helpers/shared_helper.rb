@@ -8,5 +8,10 @@ module SharedHelper
     klass += @active_distributors.include?(distributor) ? ' active' : ' inactive'
     klass
   end
+
+  # all suppliers of current distributor's products
+  def current_producers
+    Exchange.where(receiver_id: current_distributor.id).map{ |ex| ex.variants.map {|v| v.product.supplier }}.flatten.uniq 
+  end
 end
 

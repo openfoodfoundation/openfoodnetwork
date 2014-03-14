@@ -11,18 +11,5 @@
       %strong {{ order_cycle.orders_close_at | date_in_words }} 
   = render partial: "shop/details"
 
-  -# This partial generates the producer and group sibling modals 
-  = render partial: "shop/shop/modals"
- 
-  %tabs
-    .row
-      .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-
-        = render 'shop/shop/about_us'
-        = render 'shop/shop/producers'
-        = render 'shop/shop/groups'
-        = render 'shop/shop/contact'
-
-    
   %products.row
     = render partial: "shop/shop/products"

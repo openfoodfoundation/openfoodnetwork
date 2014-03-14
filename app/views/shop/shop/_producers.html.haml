@@ -3,7 +3,7 @@
     %a{href: "#producers"} Our Producers 
   .content{"data-section-content" => ""}
     %ul
-      - for producer in @producers
+      - for producer in current_producers
         %li
           %a{"data-reveal-id" => "producer_details_#{producer.id}"}
             = producer.name

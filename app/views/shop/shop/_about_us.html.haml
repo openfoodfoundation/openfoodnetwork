@@ -3,8 +3,8 @@
     %a{href: "#about"} About Us 
 
   .content{"data-section-content" => ""}
-    %img.about.right{src: @distributor.promo_image.url(:large)}
-    %p= @distributor.long_description.andand.html_safe
+    %img.about.right{src: current_distributor.promo_image.url(:large)}
+    %p= current_distributor.long_description.andand.html_safe
     
     -#.panel
       -#= @distributor.distributor_info.andand.html_safe

@@ -5,14 +5,14 @@
     .panel
       %p
         %strong E
-        %a{href: "mailto:#{@distributor.email}"}= @distributor.email
-        - unless @distributor.website.blank?
+        %a{href: "mailto:#{current_distributor.email}"}= current_distributor.email
+        - unless current_distributor.website.blank?
           %br 
           %strong W
-          %a{href: @distributor.website}= @distributor.website
+          %a{href: current_distributor.website}= current_distributor.website
         %br 
-        = [@distributor.address.address1, @distributor.address.address2].join ", "
+        = [current_distributor.address.address1, current_distributor.address.address2].join ", "
         %br
-        = @distributor.address.city
-        = @distributor.address.state
-        = @distributor.address.zipcode
+        = current_distributor.address.city
+        = current_distributor.address.state
+        = current_distributor.address.zipcode

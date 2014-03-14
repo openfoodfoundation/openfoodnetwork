@@ -3,7 +3,7 @@
     %a{href: "#groups"} Our Groups 
   .content{"data-section-content" => ""}
     %ul
-      - for group in @groups
+      - for group in current_distributor.groups
         %li
           %h4= group.name 
           %ul
