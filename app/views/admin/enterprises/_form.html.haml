@@ -83,9 +83,6 @@
           .row
             .alpha.two.columns
               = f.label :abn, 'ABN'
-              / TODO: figure out how to work with one field for both
-              / ABN has 11 digits
-              / ACN has 9 digits
             .omega.four.columns
               = f.text_field :abn
           .row
@@ -130,7 +127,6 @@
         Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"
       .omega.eight.columns
         = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
-        / TODO: how to use placeholder with richt text?
         / TODO: editor breaks scrolling with arrow keys
     .row
       .alpha.two.columns
@@ -144,19 +140,3 @@
         = image_tag @object.promo_image.url
         = f.file_field :pro_image
     
-  %fieldset
-    %legend Pickup details
-    .row
-    .alpha.six.columns
-      .alpha.two.columns
-        = f.label :next_collection_at, 'Next collection date/time'
-      .omega.four.columns
-        = f.text_field :next_collection_at
-    .omega.six.columns
-      .alpha.two.columns
-        = f.label :pickup_times, 'Regular pickup times'
-      .omega.four.columns
-        = f.text_field :pickup_times
-
-
-
