@@ -45,7 +45,7 @@ Spree::CheckoutController.class_eval do
     past = Spree::Order.order("id desc").where(:email => email).where("state != 'cart'").limit(8)
     if order = past.detect(&:bill_address)
       bill_address = order.bill_address.clone if order.bill_address
-      ship_address = order.ship_address.clone if order.ship_address
+      ship_address = order.ship_address.clone if order.ship_address if order.shipping_method.require_ship_address
     end
 
     [bill_address, ship_address]

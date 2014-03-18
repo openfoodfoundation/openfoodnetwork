@@ -106,6 +106,9 @@
                   = sa.text_field :firstname
                 .large-6.columns
                   = sa.text_field :lastname
+              .row
+                .large-6.columns
+                  = sa.text_field :phone
 
             #ship_address_hidden{"ng-show" => "order.ship_address_same_as_billing"}
               = sa.hidden_field :address1, "ng-value" => "order.bill_address.address1", 
