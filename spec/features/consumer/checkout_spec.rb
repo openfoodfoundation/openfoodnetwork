@@ -365,6 +365,9 @@ feature %q{
     click_link 'Zucchini'
     click_button 'Add To Cart'
     find('#checkout-link').click
+    
+    # And manually visit the old checkout
+    visit "/checkout"
 
     # -- Checkout: Address
     fill_in_fields('order_bill_address_attributes_firstname' => 'Joe',
@@ -451,9 +454,11 @@ feature %q{
     # We perform login inline because:
     # a) It's a common user flow
     # b) It has been known to trigger errors with spree_last_address
-    fill_in 'spree_user_email', :with => 'someone@ofn.org'
-    fill_in 'spree_user_password', :with => 'passw0rd'
-    click_button 'Login'
+    within "#checkout_login" do
+      fill_in 'login_spree_user_email', :with => 'someone@ofn.org'
+      fill_in 'login_spree_user_password', :with => 'passw0rd'
+      click_button 'Login'
+    end
 
     # -- Checkout: Address
     page.should have_field 'order_bill_address_attributes_firstname', with: 'Joe'
@@ -464,44 +469,6 @@ feature %q{
     page.should have_field 'order_bill_address_attributes_phone', with: '12999911111'
     page.should have_select 'order_bill_address_attributes_state_id', selected: 'Victoria'
     page.should have_select 'order_bill_address_attributes_country_id', selected: 'Australia'
-
-    # Distributor details should be displayed
-    within('fieldset#shipping') do
-      [@distributor_oc.name,
-       @distributor_oc.distributor_info,
-       @distributor_oc.next_collection_at
-      ].each do |value|
-
-        page.should have_content value
-      end
-    end
-
-    # Disabled until this form takes order cycles into account
-    # page.should have_selector "select#order_distributor_id option[value='#{@distributor_alternative.id}']"
-
-    click_checkout_continue_button
-
-    # -- Checkout: Delivery
-    order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Distribution:", "$51.00"]]
-    click_checkout_continue_button
-
-    # -- Checkout: Payment
-    # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
-    page.should have_selector     'label', :text => @payment_method_distributor_oc.name
-    page.should_not have_selector 'label', :text => @payment_method_alternative.name
-    click_checkout_continue_button
-
-    # -- Checkout: Order complete
-    page.should have_content 'Your order has been processed successfully'
-    page.should have_content @payment_method_distributor_oc.description
-
-    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
-
-    # -- Checkout: Email
-    email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution[\s+]\$51.00/
   end
 
 

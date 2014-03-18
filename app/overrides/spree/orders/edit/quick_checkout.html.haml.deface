@@ -1,9 +1,0 @@
-/ replace_contents "[data-hook='cart_buttons']"
-
-= button_tag :class => 'primary', :id => 'update-button' do
-  = t(:update)
-&nbsp;
-= link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary"
-
-%div
-  = link_to "Old Checkout", "/checkout", :id => 'checkout-link'

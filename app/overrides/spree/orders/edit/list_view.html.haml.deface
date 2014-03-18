@@ -1,6 +1,0 @@
-/ replace_contents "[id='clear_cart_link']"
-
-%p
-  = link_to "Continue Shopping", main_app.shop_path, class: "button primary checkout"
-  = t(:or)
-  = submit_tag t(:empty_cart), :class => 'button gray'

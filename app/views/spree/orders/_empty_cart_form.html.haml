@@ -1,6 +1,0 @@
-#empty-cart{'data-hook' => ""}
-  = form_tag empty_cart_path, :method => :put do
-    %p#clear_cart_link{'data-hook' => ""}
-      = link_to t(:continue_shopping), products_path, :class => 'continue button'
-      = t(:or)
-      = submit_tag t(:empty_cart), :class => 'button'

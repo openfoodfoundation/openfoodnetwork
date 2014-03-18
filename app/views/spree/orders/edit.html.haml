@@ -1,0 +1,57 @@
+- @body_id = 'cart'
+.darkswarm
+  - content_for :order_cycle_form do
+    %strong.avenir
+      Order ready on
+      - if @order.order_cycle
+        = pickup_time @order.order_cycle 
+      - else
+        = @order.distributor.next_collection_at
+
+  = render partial: "shop/details"
+  
+  %fieldset{"ng-app" => "Cart"}
+    - if @order.line_items.empty?
+      %div.row{"data-hook" => "empty_cart"}
+        %p= t(:your_cart_is_empty)
+        %p= link_to t(:continue_shopping), main_app.shop_path, :class => 'button continue'
+
+    - else
+      %div{"data-hook" => "outside_cart_form"}
+        = form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form|
+          %div{"data-hook" => "inside_cart_form"}
+            %div{"data-hook" => "cart_items"}
+              .row
+                = render :partial => 'form', :locals => { :order_form => order_form }
+
+            #subtotal.row{'data-hook' => ""}
+              .columns.large-5
+                %h5
+                  Item total
+                  \:
+                  %span.order-total.item-total= number_to_currency @order.item_total
+              .columns.large-5
+                %h5
+                  Distribution total
+                  \:
+                  %span.order-total.distribution-total= order_distribution_subtotal(@order)
+              .columns.large-2
+                %h4
+                  Total
+                  \:
+                  %span.order-total.grand-total= @order.display_total
+
+            .links{'data-hook' => "cart_buttons"}
+              .row
+                .columns.large-1
+                  = button_tag :class => 'primary', :id => 'update-button' do
+                    = t(:update)
+                .columns.large-2
+                  = link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary", id: "checkout-link"
+
+                #empty-cart.columns.large-4{"data-hook" => ""}
+                  = form_tag empty_cart_path, :method => :put do
+                    #clear_cart_link{"data-hook" => ""}
+                      = link_to "Continue Shopping", main_app.shop_path, class: "button primary checkout"
+                      = t(:or)
+                      = submit_tag t(:empty_cart), :class => 'button gray'
