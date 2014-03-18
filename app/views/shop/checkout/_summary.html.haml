@@ -4,7 +4,7 @@
       %legend Your Order
       %table
         %tr
-          %th Produce cost 
+          %th Produce 
           %td= current_order.display_item_total
 
         - checkout_adjustments_for_summary(current_order).each do |adjustment|
@@ -12,7 +12,7 @@
             %th= adjustment.label 
             %td= adjustment.display_amount.to_html
         %tr
-          %th Shipping cost
+          %th Shipping
           %td {{ shippingPrice() | currency }}
         %tr
           %th Cart total 
