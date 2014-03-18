@@ -27,17 +27,17 @@
             #subtotal.row{'data-hook' => ""}
               .columns.large-5
                 %h5
-                  Item total
+                  Product 
                   \:
                   %span.order-total.item-total= number_to_currency @order.item_total
-              .columns.large-5
+              .columns.large-4
                 %h5
-                  Distribution total
+                  Distribution
                   \:
                   %span.order-total.distribution-total= order_distribution_subtotal(@order)
-              .columns.large-2
+              .columns.large-3
                 %h4
-                  Total
+                  Cart Total
                   \:
                   %span.order-total.grand-total= @order.display_total
 
