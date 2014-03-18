@@ -449,16 +449,16 @@ feature %q{
     click_link 'Zucchini'
     click_button 'Add To Cart'
     find('#checkout-link').click
+    visit "/checkout" # Force to old checkout
 
     # -- Login
     # We perform login inline because:
     # a) It's a common user flow
     # b) It has been known to trigger errors with spree_last_address
-    within "#checkout_login" do
-      fill_in 'login_spree_user_email', :with => 'someone@ofn.org'
-      fill_in 'login_spree_user_password', :with => 'passw0rd'
-      click_button 'Login'
-    end
+    fill_in 'spree_user_email', :with => 'someone@ofn.org'
+    fill_in 'spree_user_password', :with => 'passw0rd'
+    click_button 'Login'
+    visit "/checkout" # Force to old checkout
 
     # -- Checkout: Address
     page.should have_field 'order_bill_address_attributes_firstname', with: 'Joe'
