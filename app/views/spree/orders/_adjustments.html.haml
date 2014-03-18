@@ -1,0 +1,11 @@
+%thead
+  %tr{"data-hook" => "cart_adjustments_headers"}
+    %th.cart-adjustment-header{colspan: "6"}
+      Distribution Fees
+
+%tbody#cart_adjustments{"data-hook" => ""}
+  - @order.adjustments.eligible.each do |adjustment|
+    %tr
+      %td{colspan: "4"}= adjustment.label
+      %td= adjustment.display_amount.to_html
+      %td

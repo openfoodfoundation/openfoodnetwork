@@ -14,7 +14,9 @@
       %th.cart-item-quantity-header= t(:qty)
       %th.cart-item-total-header= t(:total)
       %th.cart-item-delete-header
+
   %tbody#line_items{"data-hook" => ""}
     = order_form.fields_for :line_items do |item_form|
       = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
+
   = render "spree/orders/adjustments" unless @order.adjustments.eligible.blank?
