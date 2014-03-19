@@ -306,6 +306,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
           page.should have_content "The next cycle opens in 10 days"
         end
+
+        it "shows nothing when there is no future order cycle"
       end
     end
   end
