@@ -1,7 +1,9 @@
 %products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null"}
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
-    %input#search.text{"ng-model" => "query", placeholder: "Search"}
+
+    %input#search.text{"ng-model" => "query", placeholder: "Search", "ng-keypress" => "searchKeypress($event)"}
     %input.button.right{type: :submit, value: "Add to Cart"}
+
     %table
       %thead
         %th.name Item
