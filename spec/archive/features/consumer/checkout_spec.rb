@@ -4,7 +4,7 @@ feature %q{
     As a consumer
     I want to select a distributor for collection
     So that I can pick up orders from the closest possible location
-} do
+}, skip: true do
   include AuthenticationWorkflow
   include WebHelper
   
