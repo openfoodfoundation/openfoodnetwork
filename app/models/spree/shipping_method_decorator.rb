@@ -35,6 +35,6 @@ Spree::ShippingMethod.class_eval do
   end
 
   def adjustment_label
-    'Delivery'
+    'Shipping'
   end
 end

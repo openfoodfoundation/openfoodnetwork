@@ -16,6 +16,7 @@
       .columns.large-2
         %h6
           = t(:shipping_method)
+          \:
           = link_to "(#{t(:edit)})", checkout_state_path(:delivery) unless @order.completed?
         .delivery
           = order.shipping_method.name
@@ -58,6 +59,7 @@
         %td{"data-hook" => "order_item_qty"}= item.quantity
         %td.total{"data-hook" => "order_item_total"}
           %span= item.display_amount.to_html
+
   %tfoot#order-total{"data-hook" => "order_details_total"}
     %tr.total
       %td{colspan: "4"}
@@ -66,27 +68,30 @@
           \:
       %td.total
         %span#order_total= @order.display_total.to_html
+
   - if order.price_adjustment_totals.present?
     %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
       - @order.price_adjustment_totals.each do |key, total|
         %tr.total
           %td{colspan: "4"}
-            %strong= key
+            %strong
+              = key
+              \:
           %td.total
             %span= total
+
   %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
     %tr#subtotal-row.total
       %td{colspan: "4"}
         %b
-          = t(:subtotal)
-          \:
+          Produce: 
       %td.total
         %span= @order.display_item_total.to_html
+
   %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-    - @order.adjustments.eligible.each do |adjustment|
-      - next if (adjustment.originator_type == 'Spree::TaxRate') and (adjustment.amount == 0)
+    - checkout_adjustments_for_summary(@order).reverse_each do |adjustment|
       %tr.total
-        %td{colspan: "4"}
-          %strong= adjustment.label
+        %td{:colspan => "4"}
+          %strong= adjustment.label + ":"
         %td.total
           %span= adjustment.display_amount.to_html
