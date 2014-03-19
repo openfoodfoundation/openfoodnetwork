@@ -133,10 +133,10 @@ Spree::Order.class_eval do
     line_items.map { |li| li.variant }
   end
 
-  # Show payment methods with no distributor or for this distributor
+  # Show payment methods for this distributor
   def available_payment_methods
     @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm| 
-      (self.distributor && (pm.distributors.include? self.distributor)) || pm.distributors.empty?
+      (self.distributor && (pm.distributors.include? self.distributor))
     end
   end
 
