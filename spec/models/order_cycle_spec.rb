@@ -222,6 +222,58 @@ describe OrderCycle do
     end
   end
 
+  describe "finding valid products distributed by a particular distributor" do
+    it "returns valid products but not invalid products" do
+      p_valid = create(:product)
+      p_invalid = create(:product)
+      v = create(:variant, product: p_invalid)
+
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, distributors: [d], variants: [p_valid.master, p_invalid.master])
+      oc.valid_products_distributed_by(d).should == [p_valid]
+    end
+
+    describe "checking if a product has only an obsolete master variant in a distributution" do
+      it "returns true when so" do
+        master = double(:master)
+        unassociated_variant = double(:variant)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        distributed_variants = [master, unassociated_variant]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_true
+      end
+
+      it "returns false when the product doesn't have variants" do
+        master = double(:master)
+        product = double(:product, :has_variants? => false, :master => master, :variants => [])
+        distributed_variants = [master]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+
+      it "returns false when the master isn't distributed" do
+        master = double(:master)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        distributed_variants = []
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+
+      it "returns false when the product has other variants distributed" do
+        master = double(:master)
+        variant = double(:variant)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [variant])
+        distributed_variants = [master, variant]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+    end
+  end
+
   describe "exchanges" do
     before(:each) do
       @oc = create(:simple_order_cycle)

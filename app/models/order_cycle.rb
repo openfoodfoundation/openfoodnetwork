@@ -105,6 +105,16 @@ class OrderCycle < ActiveRecord::Base
     variants_distributed_by(distributor).map(&:product).uniq
   end
 
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method filters out such products so that the customer cannot purchase them.
+  def valid_products_distributed_by(distributor)
+    variants = variants_distributed_by(distributor)
+    products = variants.map(&:product).uniq
+    products.reject { |p| product_has_only_obsolete_master_in_distribution?(p, variants) }
+  end
+
   def products
     self.variants.map(&:product).uniq
   end
@@ -212,6 +222,20 @@ class OrderCycle < ActiveRecord::Base
     end
 
     fees
+  end
+
+
+  # -- Misc
+
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method is used by #valid_products_distributed_by to filter out such products so that
+  # the customer cannot purchase them.
+  def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
+    product.has_variants? &&
+      distributed_variants.include?(product.master) &&
+      (product.variants & distributed_variants).empty?
   end
 
   def exchanges_carrying(variant, distributor)
