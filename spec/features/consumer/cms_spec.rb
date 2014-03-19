@@ -4,7 +4,7 @@ feature %q{
     In order to learn about food
     As a user of the site
     I want to see static content pages
-} do
+}, skip: true do
   include AuthenticationWorkflow
   include WebHelper
   let(:d) { create(:distributor_enterprise, :name => 'Edible garden') } 
