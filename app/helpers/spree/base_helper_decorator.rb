@@ -1,5 +1,9 @@
 module Spree
   BaseHelper.class_eval do
+    
+    # TODO can we delete this?
+    # Spree code we are overriding to render sidebar
+    # No longer rendering sidebar
     def taxons_tree(root_taxon, current_taxon, max_level = 1)
       return '' if max_level < 1 || root_taxon.children.empty?
       content_tag :ul, :class => 'taxons-list' do
