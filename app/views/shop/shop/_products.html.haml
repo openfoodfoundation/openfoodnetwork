@@ -46,7 +46,8 @@
               %input{type: :number,
               min: 0,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
-              name: "variant_attributes[{{product.master.id}}][max_quantity]"} 
+              name: "variant_attributes[{{product.master.id}}][max_quantity]",
+              "ng-model" => "product.max_quantity"}
           %td.price.text-right
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ productPrice(product) | currency }}
