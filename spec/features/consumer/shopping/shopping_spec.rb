@@ -233,6 +233,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       describe "group buy products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product, group_buy: true, on_hand: 15) }
+        let(:product2) { create(:simple_product, group_buy: false) }
 
         describe "without variants" do
           before do
@@ -241,6 +242,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           it "should show group buy input" do
             page.should have_field "variant_attributes[#{product.master.id}][max_quantity]", :visible => true
+            page.should_not have_field "variant_attributes[#{product2.master.id}][max_quantity]", :visible => true
           end
           
           it "should save group buy data to ze cart" do
@@ -250,6 +252,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
             page.should have_content product.name
             li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
             li.max_quantity.should == 9
+            li.quantity.should == 5
+          end
+
+          scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
+            fill_in "variants[#{product.master.id}]", with: 5
+            fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 1
+            first("form.custom > input.button.right").click 
+            page.should have_content product.name
+            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+            li.max_quantity.should == 5
             li.quantity.should == 5
           end
         end

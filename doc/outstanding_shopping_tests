@@ -13,15 +13,6 @@ Shop:
   scenario "order cycle expires mid-order" (see below)
 
   it "does not allow the user to add a product from a distributor that cannot supply the cart's products"
-  
-  add_to_cart_spec:
-  AFTER DONE remove add_to_cart spec
-  MOVE to shopping_group_buy_spec.rb
-    adapt: scenario "adding a product to the cart for a group buy"
-    adapt: scenario "adding a product with variants to the cart for a group buy"
-    adapt: scenario "adding a product to cart that is not a group buy does not show max quantity field" do
-    adapt: scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
-
 
 
 scenario "order cycle expires mid-order" do
