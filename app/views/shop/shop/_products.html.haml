@@ -39,7 +39,8 @@
               min: 0,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variants[{{product.master.id}}]", 
-              id: "variants_{{product.master.id}}"}
+              id: "variants_{{product.master.id}}",
+              "ng-model" => "product.quantity"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
               %input{type: :number,
