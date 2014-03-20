@@ -244,7 +244,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 
     $scope.formattedValueWithUnitName = (value, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
-      if unitsVariant.hasOwnProperty("variant_unit") && unitsVariant.variant_unit == "weight" || unitsVariant.variant_unit == "volume"
+      if unitsVariant.hasOwnProperty("variant_unit") && (unitsVariant.variant_unit == "weight" || unitsVariant.variant_unit == "volume") && value > 0
         scale = $scope.getScale(value, unitsVariant.variant_unit)
         Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsVariant.variant_unit)
       else
@@ -252,8 +252,10 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 
     $scope.fulfilled = ->
       # A Units Variant is an API object which holds unit properies of a variant
-      if $scope.selectedUnitsVariant.hasOwnProperty("variant_unit") && ( $scope.selectedUnitsVariant.variant_unit == "weight" || $scope.selectedUnitsVariant.variant_unit == "volume" )
-        Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsVariant.group_buy_unit_size * 1000)/1000
+      if $scope.selectedUnitsVariant.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsVariant.group_buy_unit_size > 0 &&
+        $scope.selectedUnitsVariant.hasOwnProperty("variant_unit") &&
+        ( $scope.selectedUnitsVariant.variant_unit == "weight" || $scope.selectedUnitsVariant.variant_unit == "volume" )
+          Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsVariant.group_buy_unit_size * 1000)/1000
       else
         ''
 
