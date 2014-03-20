@@ -16,14 +16,18 @@
     = render partial: "shared/menu"
     = display_flash_messages
 
+    %section#sidebar{ role: "complementary", "ng-controller" => "SidebarCtrl", "ng-show" => "visible()"}
+      {{ active_sidebar }}
+      TEST ME
+      %a{href: "#"} close
+      = render partial: "shared/login_panel"
+      = yield :sidebar
+
     %section{ role: "main" }
       = yield
       
       #footer
 
-    %section#sidebar{ role: "complementary" }
-      = render partial: "shared/login_panel"
-      = yield :sidebar
 
     = yield :scripts
 
