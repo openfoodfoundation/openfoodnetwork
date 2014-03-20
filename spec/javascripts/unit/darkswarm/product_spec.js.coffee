@@ -3,7 +3,7 @@ describe 'Product service', ->
   Product = null
 
   beforeEach ->
-    module 'Shop'
+    module 'Darkswarm'
     inject ($injector, _$httpBackend_)->
       Product = $injector.get("Product")
       $httpBackend = _$httpBackend_
