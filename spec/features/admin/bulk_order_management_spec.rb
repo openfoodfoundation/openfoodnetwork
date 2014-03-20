@@ -153,7 +153,7 @@ feature %q{
     end
   end
 
-  context "using page page controls" do
+  context "using page controls" do
     before :each do
       login_to_admin_section
     end
@@ -415,6 +415,59 @@ feature %q{
           page.should have_selector "a.delete-line-item", :count => 1
           visit '/admin/orders/bulk_management'
           page.should have_selector "a.delete-line-item", :count => 1
+        end
+      end
+    end
+
+    context "clicking the link on variant name" do
+      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+      let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+      let!(:p3) { FactoryGirl.create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [FactoryGirl.create(:variant, unit_value: 1000)] ) }
+      let!(:v3) { p3.variants.first }
+      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3 ) }
+      let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1 ) }
+
+      before :each do
+        visit '/admin/orders/bulk_management'
+        within "tr#li_#{li3.id}" do
+          click_link li3.variant.options_text
+        end
+      end
+
+      it "displays group buy calc box" do
+        page.should have_selector "div#group_buy_calculation", :visible => true
+
+        within "div#group_buy_calculation" do
+          page.should have_text "Group Buy Unit"
+          page.should have_text "5 kg"
+          page.should have_text "Fulfilled Units"
+          page.should have_text "0.8"
+          page.should have_text "Total Units Ordered"
+          page.should have_text "4 kg"
+        end
+      end
+
+      it "all line items of the same variant" do
+        page.should_not have_selector "tr#li_#{li1.id}", :visible => true
+        page.should_not have_selector "tr#li_#{li2.id}", :visible => true
+        page.should have_selector "tr#li_#{li3.id}", :visible => true
+        page.should have_selector "tr#li_#{li4.id}", :visible => true
+      end
+
+      context "clicking 'Clear' in group buy box" do
+        before :each do
+          click_link 'Clear'
+        end
+
+        it "shows all products and clears group buy box" do
+          page.should_not have_selector "div#group_buy_calculation", :visible => true
+          page.should have_selector "tr#li_#{li1.id}", :visible => true
+          page.should have_selector "tr#li_#{li2.id}", :visible => true
+          page.should have_selector "tr#li_#{li3.id}", :visible => true
+          page.should have_selector "tr#li_#{li4.id}", :visible => true
         end
       end
     end

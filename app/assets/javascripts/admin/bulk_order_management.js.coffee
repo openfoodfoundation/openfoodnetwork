@@ -111,6 +111,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
       end = new Date( now.getTime() - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) + ( 1 * ( 1440 * 60 * 1000 ) ) )
       $scope.lineItems = []
+      $scope.filteredLineItems = []
       $scope.confirmDelete = true
       $scope.startDate = formatDate start
       $scope.endDate = formatDate end
@@ -118,6 +119,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.quickSearch = ""
       $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteSelected } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
+      $scope.selectedUnitsVariant = {};
 
     $scope.initialise = (spree_api_key) ->
       $scope.initialiseVariables()
@@ -210,16 +212,62 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.toggleAllCheckboxes = ->
       changeTo = !$scope.allBoxesChecked()
       lineItem.checked = changeTo for lineItem in $scope.lineItems
+
+    $scope.setSelectedUnitsVariant = (unitsVariant) ->
+      $scope.selectedUnitsVariant = unitsVariant
+
+    $scope.sumUnitValues = (lineItems) ->
+      sum = lineItems.reduce (sum,lineItem) ->
+        sum = sum + lineItem.quantity * lineItem.units_variant.unit_value
+      , 0
+
+    $scope.getScale = (value, unitType) ->
+      scaledValue = null
+      validScales = []
+      unitScales =
+        'weight': [1.0, 1000.0, 1000000.0]
+        'volume': [0.001, 1.0, 1000000.0]
+
+      validScales.unshift scale for scale in unitScales[unitType] when value/scale >= 1
+      if validScales.length > 0
+        validScales[0]
+      else
+        unitScales[unitType][0]
+
+    $scope.getUnitName = (scale, unitType) ->
+      unitNames =
+        'weight': {1.0: 'g', 1000.0: 'kg', 1000000.0: 'T'}
+        'volume': {0.001: 'mL', 1.0: 'L',  1000000.0: 'ML'}
+      unitNames[unitType][scale]
+
+    $scope.formattedValueWithUnitName = (value, unitsVariant) ->
+      # A Units Variant is an API object which holds unit properies of a variant
+      if unitsVariant.hasOwnProperty("variant_unit") && unitsVariant.variant_unit == "weight" || unitsVariant.variant_unit == "volume"
+        scale = $scope.getScale(value, unitsVariant.variant_unit)
+        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsVariant.variant_unit)
+      else
+        ''
+
+    $scope.fulfilled = ->
+      # A Units Variant is an API object which holds unit properies of a variant
+      if $scope.selectedUnitsVariant.hasOwnProperty("variant_unit") && ( $scope.selectedUnitsVariant.variant_unit == "weight" || $scope.selectedUnitsVariant.variant_unit == "volume" )
+        Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsVariant.group_buy_unit_size * 1000)/1000
+      else
+        ''
+
+    $scope.unitsVariantSelected = ->
+      angular.equals($scope.selectedUnitsVariant,{})
 ]
 
 orderManagementModule.filter "selectFilter", [
   "blankOption"
   (blankOption) ->
-    return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
+    return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle,selectedUnitsVariant) ->
       filtered = []
       filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier == selectedSupplier) &&
         (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor == selectedDistributor) &&
-        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle)
+        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle) &&
+        (angular.equals(selectedUnitsVariant,{}) || lineItem.units_variant.unit_text == selectedUnitsVariant.unit_text )
       filtered
 ]
 

@@ -19,8 +19,6 @@
       %label{ :for => 'order_cycle_filter' }Order Cycle
       %br
       %select.select2{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
-  .spacer{ :class => "one column alpha" }
-    &nbsp;
   .date_filters{ :class => "three columns alpha" }
     .date_filter{ :class => "three columns alpha" }
       %label{ :for => 'start_date_filter' }Start Date
@@ -34,8 +32,6 @@
       %label{ :for => 'quick_search' }Quick Search
       %br
       %input{ :class => "three columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-  .spacer{ :class => "one columns alpha" }
-    &nbsp;
   .bulk_actions{ :class => "three columns alpha" }
     %div{ :class => "three columns alpha" }
       %label{ :for => 'bulk_actions' }Bulk Action
@@ -45,8 +41,26 @@
       %label{ :for => 'bulk_execute' }
       %br
       %input{ :class => "three columns alpha", :value => "Run", :type => "button", :id => 'bulk_execute', 'ng-click' => 'selectedBulkAction.callback()' }
-  .spacer{ :class => "three columns alpha" }
-    &nbsp;
+  %div#group_buy_calculation{ :class => "seven columns alpha", 'ng-hide' => 'unitsVariantSelected()' }
+    %div{ :class => "seven columns alpha" }
+      %h6{ :class => "five columns alpha" } {{ selectedUnitsVariant.unit_text }}
+      %h6{ :class => "two column omega" }
+        %a{ 'ng-click' => 'selectedUnitsVariant = {}' } Clear
+    %div{ :class => "seven columns alpha" }
+      %span{ :class => "five columns alpha" }
+        Group Buy Unit
+      %span{ :class => "two columns omega" }
+        {{ formattedValueWithUnitName( selectedUnitsVariant.group_buy_unit_size, selectedUnitsVariant ) }}
+    %div{ :class => "seven columns alpha" }
+      %span{ :class => "five columns alpha" }
+        Fulfilled Units
+      %span{ :class => "two columns omega" }
+        {{ fulfilled() }}
+    %div{ :class => "seven columns alpha" }
+      %span{ :class => "five columns alpha" }
+        Total Units Ordered
+      %span{ :class => "two columns omega" }
+        {{ formattedValueWithUnitName( sumUnitValues( filteredLineItems ), selectedUnitsVariant ) }}
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
     %h4 Loading Line Items...
@@ -67,13 +81,14 @@
           %th.actions
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => 'line_item in lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:quickSearch', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+        %tr.line_item{ 'ng-repeat' => 'line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:selectedUnitsVariant )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
           %td.full_name {{ line_item.order.full_name }}
           %td.date {{ line_item.order.completed_at }}
           %td.producer {{ line_item.supplier.name }}
-          %td.variant {{ line_item.variant_unit_text }}
+          %td.variant
+            %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
           %td.quantity
             %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
           %td.max {{ line_item.max }}

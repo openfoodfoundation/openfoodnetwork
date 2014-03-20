@@ -253,6 +253,101 @@ describe "AdminOrderMgmtCtrl", ->
       scope.toggleAllCheckboxes()
       expect(scope.allBoxesChecked()).toEqual false
 
+  describe "unit calculations", ->
+    beforeEach ->
+      scope.initialiseVariables()
+
+    describe "fulfilled()", ->
+      it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
+        expect(scope.fulfilled()).toEqual ''
+
+      it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+        spyOn(Math,"round")
+        scope.selectedUnitsVariant = { variant_unit: "items" }
+        expect(scope.fulfilled()).toEqual ''
+        expect(Math.round).not.toHaveBeenCalled()
+
+      it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
+        spyOn(Math,"round")
+        scope.selectedUnitsVariant = { variant_unit: "weight" }
+        scope.fulfilled()
+        expect(Math.round).toHaveBeenCalled()
+        scope.selectedUnitsVariant = { variant_unit: "volume" }
+        scope.fulfilled()
+        expect(Math.round).toHaveBeenCalled()
+
+      it "returns the correct quantity of fulfilled group buy units", ->
+        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 1000 }
+        spyOn(scope,"sumUnitValues").andReturn 1500
+        expect(scope.fulfilled()).toEqual 1.5
+        expect(scope.sumUnitValues).toHaveBeenCalled()
+
+    describe "sumUnitValues()", ->
+      it "returns the sum of the product of unit_value and quantity for specified line_items", ->
+        line_items = [
+          { units_variant: { unit_value: 1 }, quantity: 2 }
+          { units_variant: { unit_value: 2 }, quantity: 3 }
+          { units_variant: { unit_value: 3 }, quantity: 7 }
+        ]
+        sp0 = line_items[0].units_variant.unit_value * line_items[0].quantity
+        sp1 = line_items[1].units_variant.unit_value * line_items[1].quantity
+        sp2 = line_items[2].units_variant.unit_value * line_items[2].quantity
+        expect(scope.sumUnitValues(line_items)).toEqual (sp0 + sp1 + sp2)
+
+    describe "formatting a value based upon the properties of a specified Units Variant", ->
+      # A Units Variant is an API object which holds unit properies of a variant
+
+      beforeEach ->
+        spyOn(Math,"round").andCallThrough()
+
+      it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
+        expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
+
+      it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+        unitsVariant = { variant_unit: "items" }
+        expect(scope.formattedValueWithUnitName(1,unitsVariant)).toEqual ''
+        expect(Math.round).not.toHaveBeenCalled()
+
+      it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
+        unitsVariant = { variant_unit: "weight" }
+        scope.formattedValueWithUnitName(1,unitsVariant)
+        expect(Math.round).toHaveBeenCalled()
+        scope.selectedUnitsVariant = { variant_unit: "volume" }
+        scope.formattedValueWithUnitName(1,unitsVariant)
+        expect(Math.round).toHaveBeenCalled()
+
+      it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
+        unitsVariant = { variant_unit: "weight" }
+        spyOn(scope,"getScale").andReturn 5
+        scope.formattedValueWithUnitName(10,unitsVariant)
+        expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
+
+      it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
+        unitsVariant = { variant_unit: "weight" }
+        spyOn(scope,"getScale").andReturn 1000
+        spyOn(scope,"getUnitName").andReturn "kg"
+        expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
+
+    describe "getScale", ->
+      it "returns the largest scale for which value/scale is greater than 1", ->
+        expect(scope.getScale(1.2,"weight")).toEqual 1.0
+        expect(scope.getScale(1000,"weight")).toEqual 1000.0
+        expect(scope.getScale(0.0012,"volume")).toEqual 0.001
+        expect(scope.getScale(1001,"volume")).toEqual 1.0
+
+      it "returns the smallest unit available when value is smaller", ->
+        expect(scope.getScale(0.4,"weight")).toEqual 1
+        expect(scope.getScale(0.0004,"volume")).toEqual 0.001
+
+    describe "getUnitName", ->
+      it "returns the unit name based on the scale and unit type (weight/volume) provided", ->
+        expect(scope.getUnitName(1,"weight")).toEqual "g"
+        expect(scope.getUnitName(1000,"weight")).toEqual "kg"
+        expect(scope.getUnitName(1000000,"weight")).toEqual "T"
+        expect(scope.getUnitName(0.001,"volume")).toEqual "mL"
+        expect(scope.getUnitName(1,"volume")).toEqual "L"
+        expect(scope.getUnitName(1000000,"volume")).toEqual "ML"
+
 describe "managing pending changes", ->
   dataSubmitter = pendingChangesService = null
 

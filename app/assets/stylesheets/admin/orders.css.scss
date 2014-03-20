@@ -17,3 +17,15 @@ input.update-success {
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
+div#group_buy_calculation {
+    border-radius: 3px;
+	border:1px solid #5498da;
+	background-color: #eff5fc;
+	div {
+		margin-bottom: 5px;
+		span, h6 {
+			padding: 5px;
+		}
+	}
+}
