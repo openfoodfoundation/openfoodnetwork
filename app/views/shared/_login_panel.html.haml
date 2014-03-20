@@ -1,7 +1,6 @@
 .login-panel
   %a{href: "#"} Close
-
-  #login-content{"ng-show" => "active_sidebar == '/login'"}
+  #login-content{"ng-controller" => "LoginSidebarCtrl", "ng-show" => "active()"}
     = render "home/login"
-  #sign-up-content{"ng-show" => "active_sidebar == '/signup'"}
+  #sign-up-content{"ng-controller" => "SignupSidebarCtrl", "ng-show" => "active()"}
     = render "home/signup"
