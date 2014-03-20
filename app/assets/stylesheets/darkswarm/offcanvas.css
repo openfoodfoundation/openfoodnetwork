@@ -1,5 +1,5 @@
 /* Off canvas layout CSS/JS provided by or adapted from work by Jason Weaver and Luke Wroblewski Requires globals.css grid.css */
-body.off-canvas { padding: 0; margin: 0; overflow: hidden}
+body.off-canvas { padding: 0; margin: 0;}
 
 .container { width: 100%; }
 
