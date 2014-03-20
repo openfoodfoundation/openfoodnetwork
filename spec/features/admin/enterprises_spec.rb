@@ -84,9 +84,6 @@ feature %q{
     select('Australia', :from => 'enterprise_address_attributes_country_id')
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
 
-    fill_in 'enterprise_pickup_times', :with => 'Thursday, 22nd Feb, 6 - 9 PM. Friday, 23nd Feb, 6 - 9 PM'
-    fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
-
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
@@ -123,9 +120,6 @@ feature %q{
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select('Australia', :from => 'enterprise_address_attributes_country_id')
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
-
-    fill_in 'enterprise_pickup_times', :with => 'Thursday, 22nd Feb, 6 - 9 PM. Friday, 23nd Feb, 6 - 9 PM'
-    fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
 
     click_button 'Update'
 

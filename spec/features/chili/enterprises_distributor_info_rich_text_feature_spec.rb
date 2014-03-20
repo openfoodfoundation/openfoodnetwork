@@ -32,8 +32,8 @@ feature "enterprises distributor info as rich text" do
     click_link 'New Enterprise'
 
     # Then I should see fields 'Profile Info' and 'Distributor Info'
-    page.should have_selector 'td', text: 'Profile Info:'
-    page.should have_selector 'td', text: 'Distributor Info:'
+    page.should have_content 'About Us'
+    page.should have_content 'How does it work'
 
     # When I fill out the form and create the enterprise
     fill_in 'enterprise_name', :with => 'Eaterprises'
