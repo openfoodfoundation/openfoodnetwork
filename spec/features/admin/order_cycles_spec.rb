@@ -269,7 +269,7 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
+    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
