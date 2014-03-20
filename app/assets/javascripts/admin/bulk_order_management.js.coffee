@@ -202,18 +202,18 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.deleteSelected = ->
       existingState = $scope.confirmDelete
       $scope.confirmDelete = false
-      $scope.deleteLineItem lineItem for lineItem in $scope.lineItems when lineItem.checked
+      $scope.deleteLineItem lineItem for lineItem in $scope.filteredLineItems when lineItem.checked
       $scope.confirmDelete = existingState
 
     $scope.allBoxesChecked = ->
-      checkedCount = $scope.lineItems.reduce (count,lineItem) ->
+      checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->
         count + (if lineItem.checked then 1 else 0 )
       , 0
-      checkedCount == $scope.lineItems.length
+      checkedCount == $scope.filteredLineItems.length
 
     $scope.toggleAllCheckboxes = ->
       changeTo = !$scope.allBoxesChecked()
-      lineItem.checked = changeTo for lineItem in $scope.lineItems
+      lineItem.checked = changeTo for lineItem in $scope.filteredLineItems
 
     $scope.setSelectedUnitsVariant = (unitsVariant) ->
       $scope.selectedUnitsVariant = unitsVariant

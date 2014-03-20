@@ -392,6 +392,27 @@ feature %q{
           page.should_not have_selector "tr#li_#{li2.id}", visible: true
         end
       end
+
+      context "when a filter has been applied" do
+        it "only toggles checkboxes which are in filteredLineItems" do
+          fill_in "quick_search", with: o1.number
+          check "toggle_bulk"
+          fill_in "quick_search", with: ''
+          find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?.should == true
+          find("tr#li_#{li2.id} input[type='checkbox'][name='bulk']").checked?.should == false
+          find("input[type='checkbox'][name='toggle_bulk']").checked?.should == false
+        end
+
+        it "only applies the delete action to filteredLineItems" do
+          check "toggle_bulk"
+          fill_in "quick_search", with: o1.number
+          select "Delete", :from => "bulk_actions"
+          click_button "bulk_execute"
+          fill_in "quick_search", with: ''
+          page.should_not have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
+      end
     end
 
     context "using action buttons" do
@@ -409,7 +430,7 @@ feature %q{
           page.should have_selector "a.delete-line-item", :count => 2
         end
 
-        it "removes a line item when the relavent delete button is clicked" do
+        it "removes a line item when the relevant delete button is clicked" do
           first("a.delete-line-item").click
           page.should_not have_selector "a.delete-line-item", :count => 2
           page.should have_selector "a.delete-line-item", :count => 1
