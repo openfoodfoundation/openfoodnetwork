@@ -1,6 +1,13 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
+- content_for :page_title do
+  New Enterprise
+
+- content_for :page_actions do
+  %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
+
+
 .fullwidth_inputs
   .row
     .alpha.six.columns
@@ -11,22 +18,25 @@
     .omega.six.columns
       .two.columns.alpha
         = f.label :group_ids, 'Groups'
+        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+          %a What's this?
+
       .four.columns.omega
         = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
   .row
     .alpha.two.columns &nbsp;
     .omega.ten.columns
-      .alpha.two.columns
-        = f.check_box :is_primary_producer
-        = f.label :is_primary_producer, 'Producer'
-      .omega.two.columns
-        = f.check_box :is_distributor
-        = f.label :is_distributor, 'Hub'
-      .omega.two.columns
-        %span.with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. And select 'Hub' if you are selling to end customers. You can do both."}
-          %a Tell me more?
+      = f.check_box :is_primary_producer
+      = f.label :is_primary_producer, 'Producer'
+      &nbsp;
+      = f.check_box :is_distributor
+      = f.label :is_distributor, 'Hub'
+
+      .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
+        %a What's this?
+
   = f.fields_for :address do |af|
-    %fieldset
+    %fieldset.no-border-bottom
       %legend Address
       .row
         .alpha.six.columns
@@ -60,7 +70,7 @@
           = af.collection_select(:country_id, available_countries, :id, :name)
     .row
       .alpha.six.columns
-        %fieldset
+        %fieldset.no-border-bottom
           %legend Contact Details
           .row
             .alpha.two.columns
@@ -78,7 +88,7 @@
             .omega.four.columns
               = f.text_field :phone
       .omega.six.columns
-        %fieldset
+        %fieldset.no-border-bottom
           %legend Enterprise Details
           .row
             .alpha.two.columns
@@ -95,24 +105,24 @@
               = f.label :website
             .omega.four.columns
               = f.text_field :website
-          /.row
-          /  .alpha.two.columns
-          /    = f.label :twitter, 'Facebook'
-          /    / TODO: facebook data field
-          /  .omega.four.columns
-          /    = f.text_field :twitter
+          -# TODO: Facebook model field
+          -#.row
+          -#  .alpha.two.columns
+          -#    = f.label :facebook, 'Facebook'
+          -#  .omega.four.columns
+          -#    = f.text_field :facebook
           .row
             .alpha.two.columns
               = f.label :twitter
             .omega.four.columns
               = f.text_field :twitter
-  %fieldset
+  %fieldset.no-border-bottom
     %legend About Us
     .row
       .alpha.two.columns
         = f.label :description, 'Short Description'
       .omega.ten.columns
-        = f.text_field :description, placeholder: 'Just one or two sentences'
+        = f.text_field :description, placeholder: 'Tell us about your enterprise in one or two sentences'
     .row
       .alpha.two.columns
         = f.label :long_description, 'About Us'
@@ -122,21 +132,27 @@
         = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
     .row
       .alpha.two.columns
-        = f.label :distributor_info, 'How does it work?'
+        = f.label :distributor_info, 'How does your hub work?'
         %br
-        Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"
+        %em (Hub only)
+        %br
+        Explain your distribution offer/s - this information appears on your public profile (under "How does it work?")
       .omega.eight.columns
         = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
         / TODO: editor breaks scrolling with arrow keys
     .row
       .alpha.two.columns
         = f.label :logo
+        %br
+        100 x 100 pixels
       .omega.four.columns
-        = image_tag @object.logo.url
+        = image_tag @object.logo.url if @object.logo.present?
         = f.file_field :logo
       .omega.two.columns
         = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
+        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
+          %a What's this?
+
       .omega.four.columns
-        = image_tag @object.promo_image.url
+        = image_tag @object.promo_image.url if @object.promo_image.present?
         = f.file_field :pro_image
-    
