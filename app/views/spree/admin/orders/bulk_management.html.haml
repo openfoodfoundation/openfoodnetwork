@@ -72,16 +72,20 @@
         %tr
           %th.bulk
             %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
-          %th.full_name Name
-          %th.date Order Date
-          %th.producer Producer
-          %th.variant Product: Unit
+          %th.full_name
+            %a{ :href => '', 'ng-click' => "predicate = 'order.full_name'; reverse = !reverse" } Name
+          %th.date
+            %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
+          %th.producer
+            %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
+          %th.variant
+            %a{ :href => '', 'ng-click' => "predicate = 'units_variant.unit_text'; reverse = !reverse" } Product: Unit
           %th.quantity Quantity
           %th.max Max
           %th.actions
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => 'line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:selectedUnitsVariant )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+        %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:selectedUnitsVariant | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
           %td.full_name {{ line_item.order.full_name }}

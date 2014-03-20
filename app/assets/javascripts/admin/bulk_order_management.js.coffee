@@ -120,6 +120,8 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteSelected } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
       $scope.selectedUnitsVariant = {};
+      $scope.predicate = ""
+      $scope.reverse = false
 
     $scope.initialise = (spree_api_key) ->
       $scope.initialiseVariables()
