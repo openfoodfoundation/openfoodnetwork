@@ -1,4 +1,4 @@
-angular.module("Checkout").controller "CheckoutCtrl", ($scope, $rootScope, order) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order) ->
   $scope.require_ship_address = false
   $scope.order = order
 

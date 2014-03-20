@@ -10,7 +10,7 @@
 
   = render partial: "shop/details"
   
-  %fieldset{"ng-app" => "Cart"}
+  %fieldset
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}
         %p= t(:your_cart_is_empty)

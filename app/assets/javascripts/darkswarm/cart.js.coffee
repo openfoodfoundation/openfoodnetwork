@@ -1,8 +1,3 @@
-window.Cart = angular.module("Cart", ["ngResource"]).config ($httpProvider) ->
-  $httpProvider.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
-
-
-# TEMPORARILY handles the deletetion
 $ ->
   if ($ 'form#update-cart').is('*')
     ($ 'form#update-cart a.delete').show().one 'click', ->

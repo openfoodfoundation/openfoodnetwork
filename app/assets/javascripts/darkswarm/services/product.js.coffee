@@ -1,4 +1,4 @@
-Shop.factory 'Product', ($resource) ->
+Darkswarm.factory 'Product', ($resource) ->
   new class Product
     data: {
       products: null

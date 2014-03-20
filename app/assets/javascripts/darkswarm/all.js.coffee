@@ -8,7 +8,7 @@
 #
 #= require ../shared/jquery.timeago
 #= require foundation
-#= require ./shop
+#= require ./darkswarm
 #= require_tree .
 
 $ ->

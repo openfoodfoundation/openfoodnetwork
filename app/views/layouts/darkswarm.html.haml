@@ -12,7 +12,7 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas
+  %body.off-canvas{"ng-app" => "Darkswarm"}
     = render partial: "shared/menu"
     = display_flash_messages
 
