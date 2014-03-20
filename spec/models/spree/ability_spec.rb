@@ -48,11 +48,11 @@ module Spree
         end
 
         it "should be able to read/write their enterprises' product properties" do
-          should have_ability([:admin, :index, :read, :create, :edit, :destroy], for: Spree::ProductProperty)
+          should have_ability([:admin, :index, :read, :create, :edit, :update_positions, :destroy], for: Spree::ProductProperty)
         end
 
         it "should be able to read/write their enterprises' product images" do
-          should have_ability([:admin, :index, :read, :create, :edit, :destroy], for: Spree::Image)
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :destroy], for: Spree::Image)
         end
 
         it "should be able to read Taxons (in order to create classifications)" do
