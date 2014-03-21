@@ -17,7 +17,9 @@
     = display_flash_messages
 
     %section#sidebar{ role: "complementary", "ng-controller" => "SidebarCtrl", "ng-class" => "active()"}
-      = render partial: "shared/login_panel"
+      %a{href: "#"} Close
+      = render partial: "shared/login_sidebar"
+      = render partial: "shared/signup_sidebar"
       = yield :sidebar
 
     %section{ role: "main" }

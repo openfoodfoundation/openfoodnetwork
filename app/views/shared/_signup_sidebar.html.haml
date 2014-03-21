@@ -1,0 +1,34 @@
+#sign-up-content{"ng-controller" => "SignupSidebarCtrl", "ng-show" => "active()"}
+  %h2 Signup
+  %form{"ng-submit" => "submit()"}
+    .alert-box.alert{"ng-show" => "errors != null"}
+      {{ errors }}
+    .row
+      .large-12.columns
+        %label{for: "email"} Email
+        %input.title.input-text{name: "email", 
+          type: "email",
+          tabindex: 1,
+          "ng-model" => "spree_user.email"}
+    .row
+      .large-12.columns
+        %label{for: "password"} Password
+        %input.title.input-text{name: "password", 
+          type: "password",
+          autocomplete: "off",
+          tabindex: 2,
+          "ng-model" => "spree_user.password"}
+    .row
+      .large-12.columns
+        %label{for: "password"} Password Confirmation
+        %input.title.input-text{name: "password_confirmation", 
+          type: "password",
+          autocomplete: "off",
+          tabindex: 2,
+          "ng-model" => "spree_user.password_confirmation"}
+    .row
+      .large-12.columns
+        %input.button.primary{name: "commit", 
+          tabindex: "3", 
+          type: "submit", 
+          value: "Signup"}
