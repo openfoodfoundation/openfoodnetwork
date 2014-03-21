@@ -77,7 +77,6 @@ feature "enterprises distributor info as rich text" do
 
     # -- Checkout
     click_button 'Add To Cart'
-    find('#checkout-link').click
     visit "/checkout"
     within 'fieldset#shipping' do
       page.should have_content 'Chu ge sai yubi dan bisento tobi ashi yubi ge omote.'
