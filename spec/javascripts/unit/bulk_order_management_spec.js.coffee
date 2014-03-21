@@ -220,7 +220,7 @@ describe "AdminOrderMgmtCtrl", ->
 
     it "calls deletedLineItem for each 'checked' line item", ->
       spyOn(scope, "deleteLineItem")
-      scope.deleteSelected()
+      scope.deleteLineItems(scope.lineItems)
       expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
       expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
       expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)
@@ -232,9 +232,9 @@ describe "AdminOrderMgmtCtrl", ->
     beforeEach ->
       line_item1 = { name: "line item 1", checked: false }
       line_item2 = { name: "line item 2", checked: false }
-      scope.lineItems = [ line_item1, line_item2 ]
+      scope.filteredLineItems = [ line_item1, line_item2 ]
 
-    it "keeps track of whether all lines items are 'checked' or not", ->
+    it "keeps track of whether all filtered lines items are 'checked' or not", ->
       expect(scope.allBoxesChecked()).toEqual false
       line_item1.checked = true
       expect(scope.allBoxesChecked()).toEqual false
@@ -261,18 +261,24 @@ describe "AdminOrderMgmtCtrl", ->
       it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
         expect(scope.fulfilled()).toEqual ''
 
+      it "returns '' if selectedUnitsVariant has no property 'group_buy_unit_size' or group_buy_unit_size is 0", ->
+        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 0 }
+        expect(scope.fulfilled()).toEqual ''
+        scope.selectedUnitsVariant = { variant_unit: "weight" }
+        expect(scope.fulfilled()).toEqual ''
+
       it "returns '', and does not call Math.round if variant_unit is 'items'", ->
         spyOn(Math,"round")
-        scope.selectedUnitsVariant = { variant_unit: "items" }
+        scope.selectedUnitsVariant = { variant_unit: "items", group_buy_unit_size: 10 }
         expect(scope.fulfilled()).toEqual ''
         expect(Math.round).not.toHaveBeenCalled()
 
       it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
         spyOn(Math,"round")
-        scope.selectedUnitsVariant = { variant_unit: "weight" }
+        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 10 }
         scope.fulfilled()
         expect(Math.round).toHaveBeenCalled()
-        scope.selectedUnitsVariant = { variant_unit: "volume" }
+        scope.selectedUnitsVariant = { variant_unit: "volume", group_buy_unit_size: 10 }
         scope.fulfilled()
         expect(Math.round).toHaveBeenCalled()
 

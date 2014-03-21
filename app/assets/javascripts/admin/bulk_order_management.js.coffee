@@ -117,7 +117,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.endDate = formatDate end
       $scope.pendingChanges = pendingChanges
       $scope.quickSearch = ""
-      $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteSelected } ]
+      $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteLineItems } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
       $scope.selectedUnitsVariant = {};
       $scope.predicate = ""
@@ -213,10 +213,10 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         ).success (data) ->
           $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
 
-    $scope.deleteSelected = ->
+    $scope.deleteLineItems = (lineItems) ->
       existingState = $scope.confirmDelete
       $scope.confirmDelete = false
-      $scope.deleteLineItem lineItem for lineItem in $scope.filteredLineItems when lineItem.checked
+      $scope.deleteLineItem lineItem for lineItem in lineItems when lineItem.checked
       $scope.confirmDelete = existingState
 
     $scope.allBoxesChecked = ->
