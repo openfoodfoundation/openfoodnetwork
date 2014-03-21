@@ -65,21 +65,6 @@ productEditModule.directive "ofnToggleVariants", ->
           element.removeClass "icon-chevron-right"
           element.addClass "icon-chevron-down"
 
-
-
-productEditModule.directive "ofnToggleColumn", ->
-  link: (scope, element, attrs) ->
-    element.addClass "unselected"  unless scope.column.visible
-    element.click "click", ->
-      scope.$apply ->
-        if scope.column.visible
-          scope.column.visible = false
-          element.addClass "unselected"
-        else
-          scope.column.visible = true
-          element.removeClass "unselected"
-
-
 productEditModule.controller "AdminProductEditCtrl", [
   "$scope", "$timeout", "$http", "dataFetcher"
   ($scope, $timeout, $http, dataFetcher) ->

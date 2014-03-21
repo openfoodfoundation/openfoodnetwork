@@ -158,6 +158,68 @@ feature %q{
       login_to_admin_section
     end
 
+    let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+    let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
+
+    context "using tabs to hide and display page controls" do
+      it "shows a column display toggle button, which shows a list of columns when clicked" do
+        visit '/admin/orders/bulk_management'
+
+        page.should have_selector "div.column_toggle", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Toggle Columns"
+        page.should have_selector "div.column_toggle", :visible => true
+        page.should have_selector "li.column-list-item", text: "Producer"
+
+        page.should have_selector "div.filters", :visible => false
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
+        first("div.option_tab_titles h6", :text => "Filter Line Items").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Line Items"
+        page.should have_selector "div.filters", :visible => true
+        page.should have_selector "li.column-list-item", text: "Producer"
+
+        first("div.option_tab_titles h6", :text => "Filter Line Items").click
+
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
+        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
+        page.should have_selector "div.filters", :visible => false
+        page.should have_selector "div.column_toggle", :visible => false
+      end
+    end
+
+    context "using column display toggle" do
+      it "shows a column display toggle button, which shows a list of columns when clicked" do
+        visit '/admin/orders/bulk_management'
+
+        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+
+        page.should have_selector "th", :text => "NAME"
+        page.should have_selector "th", :text => "ORDER DATE"
+        page.should have_selector "th", :text => "PRODUCER"
+        page.should have_selector "th", :text => "PRODUCT: UNIT"
+        page.should have_selector "th", :text => "QUANTITY"
+        page.should have_selector "th", :text => "MAX"
+
+        page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
+
+        page.should have_selector "div ul.column-list li.column-list-item", text: "Producer"
+        first("li.column-list-item", text: "Producer").click
+
+        page.should_not have_selector "th", :text => "PRODUCER"
+        page.should have_selector "th", :text => "NAME"
+        page.should have_selector "th", :text => "ORDER DATE"
+        page.should have_selector "th", :text => "PRODUCT: UNIT"
+        page.should have_selector "th", :text => "QUANTITY"
+        page.should have_selector "th", :text => "MAX"
+      end
+    end
+
     context "using drop down seletors" do
       let!(:oc1) { FactoryGirl.create(:order_cycle) }
       let!(:oc2) { FactoryGirl.create(:order_cycle) }
@@ -301,6 +363,7 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
+        first("div.option_tab_titles h6", :text => "Filter Line Items").click
         fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
@@ -318,6 +381,7 @@ feature %q{
           li2_quantity_column.fill_in "quantity", :with => li2.quantity + 1
           page.should_not have_button "IGNORE"
           page.should_not have_button "SAVE"
+          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           page.should have_button "IGNORE"
           page.should have_button "SAVE"
@@ -327,6 +391,7 @@ feature %q{
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
+          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           click_button "SAVE"
           page.should_not have_selector "input[name='quantity'].update-pending"
@@ -339,6 +404,7 @@ feature %q{
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
+          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           click_button "IGNORE"
           page.should_not have_selector "input[name='quantity'].update-pending"

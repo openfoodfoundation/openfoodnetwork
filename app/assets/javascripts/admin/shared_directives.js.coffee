@@ -16,3 +16,24 @@ sharedDirectivesModule.directive "datetimepicker", [
               ngModel.$setViewValue dateText
     )
 ]
+
+sharedDirectivesModule.directive "ofnSelect2MinSearch", [
+  ->
+    return (
+      link: (scope, element, attrs) ->
+        element.select2
+          minimumResultsForSearch: attrs.ofnSelect2MinSearch
+    )
+]
+
+sharedDirectivesModule.directive "ofnToggleColumn", ->
+  link: (scope, element, attrs) ->
+    element.addClass "unselected"  unless scope.column.visible
+    element.click "click", ->
+      scope.$apply ->
+        if scope.column.visible
+          scope.column.visible = false
+          element.addClass "unselected"
+        else
+          scope.column.visible = true
+          element.removeClass "unselected"
