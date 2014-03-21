@@ -1,8 +1,6 @@
 #sign-up-content{"ng-controller" => "SignupSidebarCtrl", "ng-show" => "active()"}
   %h2 Signup
   %form{"ng-submit" => "submit()"}
-    .alert-box.alert{"ng-show" => "errors != null"}
-      {{ errors }}
     .row
       .large-12.columns
         %label{for: "email"} Email
@@ -10,6 +8,8 @@
           type: "email",
           tabindex: 1,
           "ng-model" => "spree_user.email"}
+        %span.error{"ng-show" => "errors.email != null"}
+          {{ errors.email.join(' ') }}
     .row
       .large-12.columns
         %label{for: "password"} Password
@@ -18,6 +18,8 @@
           autocomplete: "off",
           tabindex: 2,
           "ng-model" => "spree_user.password"}
+        %span.error{"ng-show" => "errors.password != null"}
+          {{ errors.password.join(' ') }}
     .row
       .large-12.columns
         %label{for: "password"} Password Confirmation
