@@ -1,4 +1,0 @@
-/ insert_bottom "[id='clear_cart_link']"
-
-%div
-  = link_to "Shop in List View", main_app.shop_path

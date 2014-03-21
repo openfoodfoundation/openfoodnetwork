@@ -1,4 +1,0 @@
-/ insert_bottom "[data-hook='cart_buttons']"
-
-%div
-  = link_to "Quick Checkout", main_app.shop_checkout_path

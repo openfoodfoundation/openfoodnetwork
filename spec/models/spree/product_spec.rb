@@ -429,6 +429,16 @@ module Spree
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(v.option_values(true), :count).by(-1)
         end
+
+        it "removes the related option values from its master variant" do
+          ot = Spree::OptionType.find_by_name 'unit_weight'
+          p.master.update_attributes!(unit_value: 1)
+          p.reload
+
+          expect {
+            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          }.to change(p.master.option_values(true), :count).by(-1)
+        end
       end
 
       describe "returning the variant unit option type" do

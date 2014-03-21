@@ -1,5 +1,4 @@
-%shop.darkswarm{"ng-app" => "Shop"}
-
+%shop.darkswarm
   - content_for :order_cycle_form do
     %strong.avenir Ready for
     %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
@@ -12,41 +11,5 @@
       %strong {{ order_cycle.orders_close_at | date_in_words }} 
   = render partial: "shop/details"
 
- 
-  %tabs
-    .row
-      .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-        %section#about{class: current_order_cycle ? nil : "active" }
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#about"} About Us 
-          .content{"data-section-content" => ""}
-            %img.about.right{src: @distributor.promo_image.url(:large)}
-            %p= @distributor.long_description.andand.html_safe
-
-        %section
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#producers"} Our Producers 
-          .content{"data-section-content" => ""}
-            %ul
-              - for producer in @producers
-                %li= producer.name
-
-        %section
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#groups"} Our Groups 
-          .content{"data-section-content" => ""}
-            %p Coming Soon 
-
-        %section
-          %p.title.avenir{"data-section-title" => ""}
-            %a{href: "#contact"} Contact 
-          .content{"data-section-content" => ""}
-            %p Contact 
-    
   %products.row
     = render partial: "shop/shop/products"
-  #footer
-    %section.row
-      = render partial: "shop/shop/contact_us"
-      = render partial: "shop/shop/about_us"
-      = render partial: "shared/copyright"

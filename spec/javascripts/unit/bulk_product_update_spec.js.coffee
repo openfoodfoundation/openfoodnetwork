@@ -690,6 +690,21 @@ describe "AdminProductEditCtrl", ->
           variant_unit_scale: 1000
           variant_unit_with_scale: 'volume_1000'
 
+      it "extracts a null value into null variant_unit and variant_unit_scale", ->
+        testProduct =
+          id: 1
+          variant_unit: 'weight'
+          variant_unit_scale: 1
+          variant_unit_with_scale: null
+
+        scope.packProduct(testProduct)
+
+        expect(testProduct).toEqual
+          id: 1
+          variant_unit: null
+          variant_unit_scale: null
+          variant_unit_with_scale: null
+
       it "extracts when variant_unit_with_scale is 'items'", ->
         testProduct =
           id: 1

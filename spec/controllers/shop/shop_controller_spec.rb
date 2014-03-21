@@ -42,7 +42,7 @@ describe Shop::ShopController do
         it "should return the order cycle details when the oc is selected" do
           oc1 = create(:order_cycle, distributors: [d])
           oc2 = create(:order_cycle, distributors: [d])
-          
+         
           spree_post :order_cycle, order_cycle_id: oc2.id
           response.should be_success
           response.body.should have_content oc2.id 
@@ -76,11 +76,6 @@ describe Shop::ShopController do
       before do
         exchange = Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) 
         exchange.variants << product.master
-      end
-
-      it "builds a list of producers/suppliers" do
-        spree_get :show
-        assigns[:producers].should == [supplier]
       end
     end
 

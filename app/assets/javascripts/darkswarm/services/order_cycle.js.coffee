@@ -1,4 +1,4 @@
-Shop.factory 'OrderCycle', ($resource, Product, orderCycleData) ->
+Darkswarm.factory 'OrderCycle', ($resource, Product, orderCycleData) ->
   class OrderCycle
     @order_cycle = orderCycleData || {orders_close_at: ""}
     @push_order_cycle: ->

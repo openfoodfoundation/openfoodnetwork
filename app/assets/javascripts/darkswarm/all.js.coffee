@@ -8,8 +8,9 @@
 #
 #= require ../shared/jquery.timeago
 #= require foundation
-#= require ./shop
+#= require ./darkswarm
 #= require_tree .
 
 $ ->
   $(document).foundation()
+  $(document).foundation('reveal', {animation: 'fade'})

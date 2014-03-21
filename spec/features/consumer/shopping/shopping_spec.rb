@@ -134,13 +134,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
         end
 
-        it "collapses variants by default" do
-          page.should_not have_text variant1.options_text
+        it "expands variants by default" do
+          page.should have_text variant1.options_text
         end
 
         it "expands variants" do
-          find(".expand").trigger "click"
-          page.should have_text variant1.options_text
           find(".collapse").trigger "click"
           page.should_not have_text variant1.options_text
         end
@@ -161,7 +159,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_selector 'tr.product > td', text: "from $33.00"
 
           # Page should have variant prices (with fee)
-          find(".expand").trigger 'click'
           page.should have_selector 'tr.variant > td.price', text: "$43.00"
           page.should have_selector 'tr.variant > td.price', text: "$53.00"
 
@@ -223,7 +220,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_content p3.name
 
           # It shows on demand variants
-          within(".product-#{p4.id}") { find(".expand", visible: true).trigger "click" }
           page.should have_content v3.options_text
 
           # It does not show variants that are neither on hand or on demand
@@ -237,6 +233,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       describe "group buy products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product, group_buy: true, on_hand: 15) }
+        let(:product2) { create(:simple_product, group_buy: false) }
 
         describe "without variants" do
           before do
@@ -245,6 +242,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           it "should show group buy input" do
             page.should have_field "variant_attributes[#{product.master.id}][max_quantity]", :visible => true
+            page.should_not have_field "variant_attributes[#{product2.master.id}][max_quantity]", :visible => true
           end
           
           it "should save group buy data to ze cart" do
@@ -256,13 +254,22 @@ feature "As a consumer I want to shop with a distributor", js: true do
             li.max_quantity.should == 9
             li.quantity.should == 5
           end
+
+          scenario "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
+            fill_in "variants[#{product.master.id}]", with: 5
+            fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 1
+            first("form.custom > input.button.right").click 
+            page.should have_content product.name
+            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+            li.max_quantity.should == 5
+            li.quantity.should == 5
+          end
         end
 
         describe "with variants on the product" do
           let(:variant) { create(:variant, product: product, on_hand: 10 ) }
           before do
             build_and_select_order_cycle_with_variants
-            find(".expand").trigger "click"
           end
 
           it "should show group buy input" do
@@ -289,7 +296,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           build_and_select_order_cycle_with_variants
         end
         it "should let us add products to our cart" do
-          find(".expand").trigger "click"
           fill_in "variants[#{variant.id}]", with: "1"
           first("form.custom > input.button.right").click
           current_path.should == "/cart" 
@@ -312,6 +318,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
           page.should have_content "The next cycle opens in 10 days"
         end
+
+        it "shows nothing when there is no future order cycle"
       end
     end
   end

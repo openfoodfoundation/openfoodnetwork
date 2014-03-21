@@ -4,12 +4,12 @@ feature %q{
     In order to learn about food
     As a user of the site
     I want to see static content pages
-} do
+}, skip: true do
   include AuthenticationWorkflow
   include WebHelper
+  let(:d) { create(:distributor_enterprise, :name => 'Edible garden') } 
 
   background do
-    d = create(:distributor_enterprise, :name => 'Edible garden')
     create_enterprise_group_for d
   end
 
@@ -22,6 +22,7 @@ feature %q{
 
     # and proceed to the shop front
     click_on 'Edible garden'
+    visit enterprise_path d
 
     # Then I should not see the home page content
     page.should_not have_content 'Home page content'
@@ -36,9 +37,10 @@ feature %q{
 
     # When I visit the home page
     visit spree.root_path
-
     # and proceed to the shop front
     click_on "Edible garden"
+    visit enterprise_path d
+
 
     # Then I should see a menu with these pages
     page.should have_selector 'ul#main-nav-bar li', :text => 'One'
@@ -56,6 +58,7 @@ feature %q{
     # When I go to one of the pages
     visit spree.root_path
     click_on "Edible garden"
+    visit enterprise_path d
     click_link 'Two'
 
     # Then I should see the page

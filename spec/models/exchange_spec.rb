@@ -111,19 +111,22 @@ describe Exchange do
       Exchange.with_variant(v).should == [ex]
     end
 
-    it "finds exchanges with any of a number of variants" do
+    it "finds exchanges with any of a number of variants, without returning duplicates" do
       v1 = create(:variant)
       v2 = create(:variant)
+      v3 = create(:variant)
       ex = create(:exchange)
       ex.variants << v1
+      ex.variants << v2
 
-      Exchange.any_variant([v1, v2]).should == [ex]
+      Exchange.with_any_variant([v1, v2, v3]).should == [ex]
     end
 
     it "finds exchanges with a particular product's master variant" do
       p = create(:simple_product)
       ex = create(:exchange)
       ex.variants << p.master
+      p.reload
 
       Exchange.with_product(p).should == [ex]
     end
@@ -133,6 +136,7 @@ describe Exchange do
       v = create(:variant, product: p)
       ex = create(:exchange)
       ex.variants << v
+      p.reload
 
       Exchange.with_product(p).should == [ex]
     end

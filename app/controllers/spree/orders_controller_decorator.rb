@@ -5,6 +5,8 @@ Spree::OrdersController.class_eval do
   before_filter :update_distribution, :only => :update
   before_filter :filter_order_params, :only => :update
 
+  layout 'darkswarm'
+
   # Patch Orders#populate to populate multi_cart (if enabled)
   def populate
     if OpenFoodNetwork::FeatureToggle.enabled? :multi_cart

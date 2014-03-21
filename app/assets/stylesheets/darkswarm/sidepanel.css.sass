@@ -1,0 +1,13 @@
+@import "foundation/variables"
+@import "foundation/components/global"
+@import "foundation/components/buttons"
+@import "foundation/components/panels"
+
+
+#sidebar
+  margin-top: 1.875em
+  .login-panel
+    $bg: #222
+    $padding: emCalc(20)
+    $adjust: true
+    @include panel($bg, $padding, $adjust)

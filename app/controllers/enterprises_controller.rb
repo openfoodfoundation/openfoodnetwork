@@ -67,7 +67,7 @@ class EnterprisesController < BaseController
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
     order.save!
 
-    redirect_to main_app.enterprise_path(distributor)
+    redirect_to main_app.shop_path
   end
 
   # essentially the new 'show' action that renders non-spree view

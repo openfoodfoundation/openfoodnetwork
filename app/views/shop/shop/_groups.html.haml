@@ -1,0 +1,13 @@
+%section
+  %p.title.avenir{"data-section-title" => ""}
+    %a{href: "#groups"} Our Groups 
+  .content{"data-section-content" => ""}
+    %ul
+      - for group in current_distributor.groups
+        %li
+          %h4= group.name 
+          %ul
+            - for sibling in group.enterprises.except(current_distributor)
+              %li
+                %a{"data-reveal-id" => "sibling_details_#{sibling.id}"}
+                  = sibling.name 

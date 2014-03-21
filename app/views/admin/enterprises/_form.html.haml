@@ -1,67 +1,158 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
-%table{"data-hook" => "distributors"}
-  %tr{"data-hook" => "name"}
-    %td Name:
-    %td= f.text_field :name
-  %tr{"data-hook" => "description"}
-    %td Description:
-    %td= f.text_field :description
-  %tr{'data-hook' => "long_description"}
-    %td Extended Description:
-    %td= f.text_area :long_description, :class => 'rich_text'
-  %tr{'data-hook' => "is_primary_producer"}
-    %td Primary Producer?
-    %td= f.check_box :is_primary_producer
-  %tr{'data-hook' => "is_distributor"}
-    %td Distributor?
-    %td= f.check_box :is_distributor
-  %tr{'data-hook' => "enterprise_group_ids"}
-    %td Groups
-    %td= f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
-  %tr{"data-hook" => "contact"}
-    %td Contact Person:
-    %td= f.text_field :contact
-  %tr{"data-hook" => "phone"}
-    %td Phone:
-    %td= f.text_field :phone
-  %tr{"data-hook" => "email"}
-    %td Email:
-    %td= f.text_field :email
-  %tr{"data-hook" => "website"}
-    %td Website:
-    %td= f.text_field :website
-  %tr{"data-hook" => "twitter"}
-    %td Twitter:
-    %td= f.text_field :twitter
-  %tr{"data-hook" => "abn"}
-    %td ABN:
-    %td= f.text_field :abn
-  %tr{"data-hook" => "acn"}
-    %td ACN:
-    %td= f.text_field :acn
-  %tr{"data-hook" => "logo"}
-    %td Logo:
-    %td
-      = f.file_field :logo
-      = image_tag @object.logo.url
-  %tr{"data-hook" => "promo"}
-    %td Promo Image:
-    %td
-      = f.file_field :promo_image
-      = image_tag @object.promo_image.url
-%fieldset
-  %legend Address
-  %table
-    = f.fields_for :address do |address_form|
-      = render 'spree/admin/shared/address_form_simple', :f => address_form
-%fieldset
-  %legend Pickup details
-  %table{"data-hook" => "distributors_pickup_details"}
-    %tr{"data-hook" => "next_collection_at"}
-      %td Next collection date/time:
-      %td= f.text_field :next_collection_at
-    %tr{"data-hook" => "pickup_times"}
-      %td Regular pickup times:
-      %td= f.text_field :pickup_times
+- content_for :page_title do
+  New Enterprise
+
+- content_for :page_actions do
+  %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
+
+
+.fullwidth_inputs
+  .row
+    .alpha.six.columns
+      .two.columns.alpha
+        = f.label :name
+      .four.columns.omega
+        = f.text_field :name
+    .omega.six.columns
+      .two.columns.alpha
+        = f.label :group_ids, 'Groups'
+        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+          %a What's this?
+
+      .four.columns.omega
+        = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
+  .row
+    .alpha.two.columns &nbsp;
+    .omega.ten.columns
+      = f.check_box :is_primary_producer
+      = f.label :is_primary_producer, 'Producer'
+      &nbsp;
+      = f.check_box :is_distributor
+      = f.label :is_distributor, 'Hub'
+
+      .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
+        %a What's this?
+
+  = f.fields_for :address do |af|
+    %fieldset.no-border-bottom
+      %legend Address
+      .row
+        .alpha.six.columns
+          .alpha.two.columns
+            = af.label :address1
+          .omega.four.columns
+            = af.text_field :address1
+        .omega.six.columns
+          .alpha.two.columns
+            = af.label :address2
+          .omega.four.columns
+            = af.text_field :address2
+      .row
+        .six.columns.alpha
+          .alpha.two.columns
+            = af.label :city, 'Suburb'
+          .omega.four.columns
+            = af.text_field :city
+        .six.columns.omega
+          .alpha.two.columns
+            = af.label :zipcode, 'Postcode'
+          .omega.four.columns
+            = af.text_field :zipcode
+      .row
+        .alpha.two.columns &nbsp;
+        .omega.three.columns
+          = af.collection_select(:state_id, af.object.country.states, :id, :name)
+      .row
+        .alpha.two.columns &nbsp;
+        .omega.three.columns
+          = af.collection_select(:country_id, available_countries, :id, :name)
+    .row
+      .alpha.six.columns
+        %fieldset.no-border-bottom
+          %legend Contact Details
+          .row
+            .alpha.two.columns
+              = f.label :contact, 'Name'
+            .omega.four.columns
+              = f.text_field :contact
+          .row
+            .alpha.two.columns
+              = f.label :email
+            .omega.four.columns
+              = f.text_field :email
+          .row
+            .alpha.two.columns
+              = f.label :phone
+            .omega.four.columns
+              = f.text_field :phone
+      .omega.six.columns
+        %fieldset.no-border-bottom
+          %legend Enterprise Details
+          .row
+            .alpha.two.columns
+              = f.label :abn, 'ABN'
+            .omega.four.columns
+              = f.text_field :abn
+          .row
+            .alpha.two.columns
+              = f.label :acn, 'ACN'
+            .omega.four.columns
+              = f.text_field :acn
+          .row
+            .alpha.two.columns
+              = f.label :website
+            .omega.four.columns
+              = f.text_field :website
+          -# TODO: Facebook model field
+          -#.row
+          -#  .alpha.two.columns
+          -#    = f.label :facebook, 'Facebook'
+          -#  .omega.four.columns
+          -#    = f.text_field :facebook
+          .row
+            .alpha.two.columns
+              = f.label :twitter
+            .omega.four.columns
+              = f.text_field :twitter
+  %fieldset.no-border-bottom
+    %legend About Us
+    .row
+      .alpha.two.columns
+        = f.label :description, 'Short Description'
+      .omega.ten.columns
+        = f.text_field :description, placeholder: 'Tell us about your enterprise in one or two sentences'
+    .row
+      .alpha.two.columns
+        = f.label :long_description, 'About Us'
+        %br
+        Tell us about yourself. This information appears on your public profile (under "About Us")
+      .omega.eight.columns
+        = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
+    .row
+      .alpha.two.columns
+        = f.label :distributor_info, 'How does your hub work?'
+        %br
+        %em (Hub only)
+        %br
+        Explain your distribution offer/s - this information appears on your public profile (under "How does it work?")
+      .omega.eight.columns
+        = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
+        / TODO: editor breaks scrolling with arrow keys
+    .row
+      .alpha.two.columns
+        = f.label :logo
+        %br
+        100 x 100 pixels
+      .omega.four.columns
+        = image_tag @object.logo.url if @object.logo.present?
+        = f.file_field :logo
+      .omega.two.columns
+        = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
+        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
+          %a What's this?
+
+      .omega.four.columns
+        = image_tag @object.promo_image.url if @object.promo_image.present?
+        = f.file_field :pro_image

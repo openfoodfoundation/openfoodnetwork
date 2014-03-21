@@ -12,16 +12,19 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas
+  %body.off-canvas{"ng-app" => "Darkswarm"}
     = render partial: "shared/menu"
     = display_flash_messages
 
-    %section{ role: "main" }
-      = yield
-
-    %section#sidebar{ role: "complementary" }
+    %section#sidebar{ role: "complementary", "ng-controller" => "SidebarCtrl", "ng-class" => "active()"}
       = render partial: "shared/login_panel"
       = yield :sidebar
+
+    %section{ role: "main" }
+      = yield
+      
+      #footer
+
 
     = yield :scripts
 

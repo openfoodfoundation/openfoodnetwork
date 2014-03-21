@@ -13,6 +13,8 @@ Openfoodnetwork::Application.routes.draw do
     #end
     get '/checkout', :to => 'checkout#edit' , :as => :checkout
     put '/checkout', :to => 'checkout#update' , :as => :update_checkout
+
+    get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
   end
 
   resources :enterprises do

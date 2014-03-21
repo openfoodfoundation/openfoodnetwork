@@ -6,8 +6,8 @@ describe 'OrderCycle service', ->
   }
 
   beforeEach ->
-    angular.module('Shop').value('orderCycleData', {})
-    module 'Shop', ($provide)->
+    angular.module('Darkswarm').value('orderCycleData', {})
+    module 'Darkswarm', ($provide)->
       $provide.value "Product", mockProduct
       null # IMPORTANT
       # You must return null because module() is a bit dumb

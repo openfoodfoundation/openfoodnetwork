@@ -1,8 +1,9 @@
 %products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null"}
-  %h5 Check out when you have selected everything you want
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
-    %input#search.text{"ng-model" => "query", placeholder: "Search"}
-    %input.button.right{type: :submit, value: "Check Out"}
+
+    %input#search.text{"ng-model" => "query", placeholder: "Search", "ng-keypress" => "searchKeypress($event)"}
+    %input.button.right{type: :submit, value: "Add to Cart"}
+
     %table
       %thead
         %th.name Item
@@ -18,7 +19,8 @@
             %div
               %h5
                 {{ product.name }}
-              {{ product.supplier.name }}
+              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}"}
+                {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
           %td 
             %span{"ng-hide" => "product.variants.length > 0"} {{ product.master.options_text }}
@@ -37,13 +39,15 @@
               min: 0,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variants[{{product.master.id}}]", 
-              id: "variants_{{product.master.id}}"}
+              id: "variants_{{product.master.id}}",
+              "ng-model" => "product.quantity"}
           %td.group_buy
             %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
               %input{type: :number,
               min: 0,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
-              name: "variant_attributes[{{product.master.id}}][max_quantity]"} 
+              name: "variant_attributes[{{product.master.id}}][max_quantity]",
+              "ng-model" => "product.max_quantity"}
           %td.price.text-right
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ productPrice(product) | currency }}
@@ -51,4 +55,6 @@
           %td{colspan: 2}{{ product.notes | truncate:80 }}
         %tr.variant{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
           = render partial: "shop/shop/variant"
-    %input.button.right{type: :submit, value: "Check Out"}
+    %input.button.right{type: :submit, value: "Add to Cart"}
+
+

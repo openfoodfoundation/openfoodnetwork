@@ -6,7 +6,7 @@ describe 'All controllers', ->
     Product = null
 
     beforeEach ->
-      module('Shop')
+      module('Darkswarm')
       Product = 
         all: ->
         update: ->
@@ -40,9 +40,8 @@ describe 'All controllers', ->
     OrderCycle = null
 
     beforeEach ->
-      module 'Shop'
+      module 'Darkswarm'
       scope = {}
       inject ($controller) ->
         scope = {}
         ctrl = $controller 'OrderCycleCtrl', {$scope: scope}
-

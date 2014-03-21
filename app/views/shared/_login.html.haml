@@ -1,8 +1,8 @@
 - if spree_current_user.nil?
-  %li#login-link= link_to "Login", "#sidebar", id: "sidebarLoginButton", class: "sidebar-button"
+  %li#login-link= link_to "Login", "#login", id: "sidebarLoginButton", class: "sidebar-button"
   %li#login-name.hide
   %li.divider
-  %li#sign-up-link= link_to "Sign Up", "#sidebar", id: "sidebarSignUpButton", class: "sidebar-button"
+  %li#sign-up-link= link_to "Sign Up", "#signup", id: "sidebarSignUpButton", class: "sidebar-button"
   %li#sign-out-link.hide= link_to "Sign Out", "/logout"
 - else
   %li#login-link.hide= link_to "Login", "#sidebar", id: "sidebarLoginButton", class: "sidebar-button"

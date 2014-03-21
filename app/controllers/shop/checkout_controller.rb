@@ -4,6 +4,7 @@ class Shop::CheckoutController < Spree::CheckoutController
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
   skip_before_filter :check_registration
+  skip_before_filter :redirect_to_paypal_express_form_if_needed
 
   include EnterprisesHelper
    
@@ -13,13 +14,17 @@ class Shop::CheckoutController < Spree::CheckoutController
   def update
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
-
       while @order.state != "complete"
+        if @order.state == "payment"
+          return if redirect_to_paypal_express_form_if_needed
+        end
+
         if @order.next
           state_callback(:after)
         else
           flash[:error] = t(:payment_processing_failed)
-          respond_with @order, location: main_app.shop_checkout_path
+          clear_ship_address
+          render :edit
           return
         end
       end
@@ -29,14 +34,24 @@ class Shop::CheckoutController < Spree::CheckoutController
         flash[:commerce_tracking] = "nothing special"
         respond_with(@order, :location => order_path(@order))
       else
-        respond_with @order, location: main_app.shop_checkout_path
+        clear_ship_address
+        render :edit
       end
     else
-      respond_with @order, location: main_app.shop_checkout_path
+      clear_ship_address
+      render :edit
     end
   end
 
   private
+
+  # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
+  # We don't want this data in the form, so we clear it out
+  def clear_ship_address
+    unless current_order.shipping_method.andand.require_ship_address
+      current_order.ship_address = Spree::Address.default
+    end
+  end
 
   def skip_state_validation?
     true
@@ -76,4 +91,36 @@ class Shop::CheckoutController < Spree::CheckoutController
     flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
     redirect_to main_app.shop_path
   end
+
+  # Overriding from github.com/spree/spree_paypal_express
+  def redirect_to_paypal_express_form_if_needed
+    return unless params[:order][:payments_attributes]
+
+    payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
+    return unless payment_method.kind_of?(Spree::BillingIntegration::PaypalExpress) || payment_method.kind_of?(Spree::BillingIntegration::PaypalExpressUk)
+
+    update_params = object_params.dup
+    update_params.delete(:payments_attributes)
+    if @order.update_attributes(update_params)
+      fire_event('spree.checkout.update')
+      render :edit and return unless apply_coupon_code
+    end
+
+    load_order
+    if not @order.errors.empty?
+       render :edit and return
+    end
+
+    redirect_to(main_app.shop_paypal_payment_url(@order, :payment_method_id => payment_method.id))
+    true
+
+  end
+  
+  # Overriding to customize the cancel url
+  def order_opts_with_new_cancel_return_url(order, payment_method_id, stage)
+    opts = order_opts_without_new_cancel_return_url(order, payment_method_id, stage)
+    opts[:cancel_return_url] = main_app.shop_checkout_url
+    opts
+  end
+  alias_method_chain :order_opts, :new_cancel_return_url
 end

@@ -23,7 +23,7 @@ class OrderCycle < ActiveRecord::Base
   scope :distributing_product, lambda { |product|
     joins(:exchanges => :variants).
     merge(Exchange.outgoing).
-    where('spree_variants.id IN (?)', product.variants_including_master.map(&:id)).
+    where('spree_variants.id IN (?)', product.variants_including_master.pluck(:id)).
     select('DISTINCT order_cycles.*') }
 
   scope :with_distributor, lambda { |distributor|
@@ -103,6 +103,16 @@ class OrderCycle < ActiveRecord::Base
 
   def products_distributed_by(distributor)
     variants_distributed_by(distributor).map(&:product).uniq
+  end
+
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method filters out such products so that the customer cannot purchase them.
+  def valid_products_distributed_by(distributor)
+    variants = variants_distributed_by(distributor)
+    products = variants.map(&:product).uniq
+    products.reject { |p| product_has_only_obsolete_master_in_distribution?(p, variants) }
   end
 
   def products
@@ -214,12 +224,26 @@ class OrderCycle < ActiveRecord::Base
     fees
   end
 
+
+  # -- Misc
+
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method is used by #valid_products_distributed_by to filter out such products so that
+  # the customer cannot purchase them.
+  def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
+    product.has_variants? &&
+      distributed_variants.include?(product.master) &&
+      (product.variants & distributed_variants).empty?
+  end
+
   def exchanges_carrying(variant, distributor)
     exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
   end
 
   def exchanges_supplying(order)
     variants = order.line_items.map(&:variant)
-    exchanges.to_enterprises([coordinator, order.distributor]).any_variant(variants)
+    exchanges.to_enterprises([coordinator, order.distributor]).with_any_variant(variants)
   end
 end

@@ -3,4 +3,7 @@
     %ul.left
       %li= link_to image_tag("ofn_logo_small.png"), root_path
       %li.divider
-      = render partial: "shared/login"
+      - if spree_current_user.nil?
+        = render 'shared/signed_out'
+      - else
+        = render 'shared/signed_in'

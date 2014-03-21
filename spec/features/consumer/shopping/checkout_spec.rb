@@ -16,101 +16,6 @@ feature "As a consumer I want to check out my cart", js: true do
     exchange.variants << product.master
   end
 
-  describe "Attempting to access checkout without meeting the preconditions" do
-    it "redirects to the homepage if no distributor is selected" do
-      visit "/shop/checkout"
-      current_path.should == root_path
-    end
-
-    it "redirects to the shop page if we have a distributor but no order cycle selected" do
-      select_distributor
-      visit "/shop/checkout"
-      current_path.should == shop_path
-    end
-
-    it "redirects to the shop page if the current order is empty" do
-      select_distributor
-      select_order_cycle
-      visit "/shop/checkout"
-      current_path.should == shop_path
-    end
-
-    it "renders checkout if we have distributor and order cycle selected" do
-      select_distributor
-      select_order_cycle
-      add_product_to_cart
-      visit "/shop/checkout"
-      current_path.should == "/shop/checkout"
-    end
-  end
-
-  describe "Login behaviour" do
-    let(:user) { create_enterprise_user }
-    before do
-      select_distributor
-      select_order_cycle
-      add_product_to_cart
-    end
-
-    it "renders the login form if user is logged out" do
-      visit "/shop/checkout"
-      within "section[role='main']" do
-        page.should have_content "I HAVE AN OFN ACCOUNT"
-      end
-    end
-
-    it "does not not render the login form if user is logged in" do
-      login_to_consumer_section
-      visit "/shop/checkout"
-      within "section[role='main']" do
-        page.should_not have_content "I HAVE AN OFN ACCOUNT"
-      end
-    end
-
-    it "renders the signup link if user is logged out" do
-      visit "/shop/checkout"
-      within "section[role='main']" do
-        page.should have_content "NEW TO OFN"
-      end
-    end
-
-    it "does not not render the signup form if user is logged in" do
-      login_to_consumer_section
-      visit "/shop/checkout"
-      within "section[role='main']" do
-        page.should_not have_content "NEW TO OFN"
-      end
-    end
-
-    it "redirects to the checkout page when logging in from the checkout page" do
-      visit "/shop/checkout"
-      within "#checkout_login" do
-        fill_in "spree_user[email]", with: user.email 
-        fill_in "spree_user[password]", with: user.password 
-        click_button "Login"
-      end
-
-      current_path.should == "/shop/checkout"
-      within "section[role='main']" do
-        page.should_not have_content "I have an OFN Account"
-      end
-    end
-
-    it "redirects to the checkout page when signing up from the checkout page" do
-      visit "/shop/checkout"
-      within "#checkout_signup" do
-        fill_in "spree_user[email]", with: "test@gmail.com" 
-        fill_in "spree_user[password]", with: "password" 
-        fill_in "spree_user[password_confirmation]", with: "password" 
-        click_button "Sign Up"
-      end
-      current_path.should == "/shop/checkout"
-      within "section[role='main']" do
-        page.should_not have_content "Sign Up"
-      end
-    end
-  end
-
   # Run these tests both logged in and logged out!
   [:in, :out].each do |auth_state|
     describe "logged #{auth_state.to_s}, distributor selected, order cycle selected, product in cart" do
@@ -179,6 +84,7 @@ feature "As a consumer I want to check out my cart", js: true do
         describe "with payment methods" do
           let(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
           let(:pm2) { create(:payment_method, distributors: [distributor]) }
+          let(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
 
           before do
             pm1 # Lazy evaluation of ze create()s
@@ -213,7 +119,7 @@ feature "As a consumer I want to check out my cart", js: true do
                 fill_in "Customer E-Mail", with: "test@test.com"
                 fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
-                fill_in "Zip Code", with: "3066"
+                fill_in "Postcode", with: "3066"
               end
               click_button "Purchase"
               page.should have_content "Your order has been processed successfully"
@@ -231,7 +137,7 @@ feature "As a consumer I want to check out my cart", js: true do
                 fill_in "Customer E-Mail", with: "test@test.com"
                 fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
-                fill_in "Zip Code", with: "3066"
+                fill_in "Postcode", with: "3066"
               end
               check "Shipping address same as billing address?"
               click_button "Purchase"

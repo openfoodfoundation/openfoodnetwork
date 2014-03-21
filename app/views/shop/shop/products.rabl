@@ -1,5 +1,10 @@
 collection @products
 attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy
+
+node :show_variants do
+  true
+end
+
 node do |product|
   {
     notes: strip_tags(product.notes),

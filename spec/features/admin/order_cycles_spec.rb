@@ -269,7 +269,7 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
+    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
@@ -391,7 +391,33 @@ feature %q{
   end
 
 
-  context 'as an Enterprise user' do
+  scenario "removing a master variant from an order cycle when further variants have been added" do
+    # Given a product with a variant, with its master variant included in the order cycle
+    # (this usually happens when a product is added to an order cycle, then variants are added
+    #  to the product after the fact)
+    s = create(:supplier_enterprise)
+    p = create(:simple_product, supplier: s)
+    v = create(:variant, product: p)
+    d = create(:distributor_enterprise)
+    oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+    exchange_ids = oc.exchanges.pluck :id
+    ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should_not be_empty
+
+    # When I go to the order cycle page and remove the obsolete master
+    login_to_admin_section
+    click_link 'Order Cycles'
+    click_link oc.name
+    within("table.exchanges tbody tr.supplier") { page.find('td.products input').click }
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).click # uncheck
+    click_button "Update"
+
+    # Then the master variant should have been removed from all exchanges
+    page.should have_content "Your order cycle has been updated."
+    ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should be_empty
+  end
+
+
+  context "as an enterprise user" do
 
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
