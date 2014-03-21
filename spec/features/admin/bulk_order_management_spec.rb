@@ -67,10 +67,10 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays a column for user's full name, returns email if no billing address exists" do
+      it "displays a column for user's full name" do
         page.should have_selector "th.full_name", text: "NAME", :visible => true
         page.should have_selector "td.full_name", text: o1.bill_address.full_name, :visible => true
-        page.should have_selector "td.full_name", text: o2.email, :visible => true
+        page.should have_selector "td.full_name", text: "", :visible => true
       end
 
       it "displays a column for order date" do

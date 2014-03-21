@@ -126,13 +126,13 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         filters:        { title: "Filter Line Items",   visible: false }
         column_toggle:  { title: "Toggle Columns",    visible: false }
       $scope.columns =
-        #order_no:     { name: "Order No.",    visible: false }
+        order_no:     { name: "Order No.",    visible: false }
         full_name:    { name: "Name",         visible: true }
-        #email:        { name: "Email",        visible: false }
-        #phone:        { name: "Phone",        visible: false }
+        email:        { name: "Email",        visible: false }
+        phone:        { name: "Phone",        visible: false }
         order_date:   { name: "Order Date",   visible: true }
         producer:     { name: "Producer",     visible: true }
-        #hub:          { name: "Hub",          visible: false }
+        hub:          { name: "Hub",          visible: false }
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
