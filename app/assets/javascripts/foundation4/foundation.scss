@@ -1,0 +1,43 @@
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// This includes all of the foundation global elements that are needed to work with any of the other files.
+@import "foundation4/foundation/variables";
+
+// Foundation Components
+@import
+  "foundation4/foundation/components/global",
+  "foundation4/foundation/components/grid",
+  "foundation4/foundation/components/visibility",
+  "foundation4/foundation/components/block-grid",
+  "foundation4/foundation/components/type",
+  "foundation4/foundation/components/buttons",
+  "foundation4/foundation/components/forms",
+  "foundation4/foundation/components/button-groups",
+  "foundation4/foundation/components/dropdown-buttons",
+  "foundation4/foundation/components/split-buttons",
+  "foundation4/foundation/components/flex-video",
+  "foundation4/foundation/components/section",
+  "foundation4/foundation/components/top-bar",
+  "foundation4/foundation/components/orbit",
+  "foundation4/foundation/components/reveal",
+  "foundation4/foundation/components/joyride",
+  "foundation4/foundation/components/clearing",
+  "foundation4/foundation/components/alert-boxes",
+  "foundation4/foundation/components/breadcrumbs",
+  "foundation4/foundation/components/custom-forms",
+  "foundation4/foundation/components/keystrokes",
+  "foundation4/foundation/components/labels",
+  "foundation4/foundation/components/inline-lists",
+  "foundation4/foundation/components/pagination",
+  "foundation4/foundation/components/panels",
+  "foundation4/foundation/components/pricing-tables",
+  "foundation4/foundation/components/progress-bars",
+  "foundation4/foundation/components/side-nav",
+  "foundation4/foundation/components/sub-nav",
+  "foundation4/foundation/components/switch",
+  "foundation4/foundation/components/magellan",
+  "foundation4/foundation/components/tables",
+  "foundation4/foundation/components/thumbs",
+  "foundation4/foundation/components/tooltips",
+  "foundation4/foundation/components/dropdown";
