@@ -1,9 +1,6 @@
-%section
-  %p.title.avenir{"data-section-title" => ""}
-    %a{href: "#producers"} Our Producers 
-  .content{"data-section-content" => ""}
-    %ul
-      - for producer in current_producers
-        %li
-          %a{"data-reveal-id" => "producer_details_#{producer.id}"}
-            = producer.name
+.content#producers
+  %ul
+    - for producer in current_producers
+      %li
+        %a{"data-reveal-id" => "producer_details_#{producer.id}"}
+          = producer.name
