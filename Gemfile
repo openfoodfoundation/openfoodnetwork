@@ -50,8 +50,8 @@ group :assets do
 
   gem 'turbo-sprockets-rails3'
 
-  gem "foundation-rails"
 end
+gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
