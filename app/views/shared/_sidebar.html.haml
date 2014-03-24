@@ -1,0 +1,6 @@
+%section#sidebar{ role: "complementary", "ng-controller" => "SidebarCtrl", 
+"ng-class" => "{'active' : active()}"}
+  %a{href: "#"} Close
+  = render partial: "shared/login_sidebar"
+  = render partial: "shared/signup_sidebar"
+  = yield :sidebar

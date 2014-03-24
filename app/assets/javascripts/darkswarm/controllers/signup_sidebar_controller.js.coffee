@@ -1,11 +1,11 @@
-window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $http) ->
+window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $http, $location) ->
   $scope.spree_user = {}
   $scope.errors =
     email: null
     password: null
 
   $scope.active = ->
-    $scope.active_sidebar == '/signup'
+    $location.path() == '/signup'
 
   $scope.submit = ->
     $http.post("/user/spree_user", {spree_user: $scope.spree_user}).success (data)->
