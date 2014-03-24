@@ -10,8 +10,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
     before do #temporarily using the old way to select distributor
       create_enterprise_group_for distributor
       visit "/"
-      save_and_open_page
-      binding.pry
       click_link distributor.name
     end
 
