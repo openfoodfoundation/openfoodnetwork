@@ -44,7 +44,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
         it "doesn't show ship address forms when a shipping method wants no address" do
           choose(sm2.name)
-          find("#ship_address").visible?.should be_false
+          find("#ship_address", visible: false).visible?.should be_false
         end
 
         context "When shipping method requires an address" do
@@ -54,7 +54,7 @@ feature "As a consumer I want to check out my cart", js: true do
           it "shows the hidden ship address fields by default" do
             check "Shipping address same as billing address?"
             find("#ship_address_hidden").visible?.should be_true
-            find("#ship_address > div.visible").visible?.should be_false
+            find("#ship_address > div.visible", visible: false).visible?.should be_false
 
             # Check it keeps state
             click_button "Purchase"
@@ -63,7 +63,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
           it "shows ship address forms when 'same as billing address' is unchecked" do
             uncheck "Shipping address same as billing address?"
-            find("#ship_address_hidden").visible?.should be_false
+            find("#ship_address_hidden", visible: false).visible?.should be_false
             find("#ship_address > div.visible").visible?.should be_true
 
             # Check it keeps state
@@ -77,7 +77,7 @@ feature "As a consumer I want to check out my cart", js: true do
           check "Shipping address same as billing address?"
           fill_in "Billing Address", with: "testy"
           within "#ship_address_hidden" do
-            find("#order_ship_address_attributes_address1").value.should == "testy"
+            find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
           end
         end
 
