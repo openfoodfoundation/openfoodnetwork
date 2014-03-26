@@ -1,23 +1,18 @@
 Darkswarm.controller "TabsCtrl", ($scope, $rootScope, $location) ->
-  $scope.active = (tab)->
-    $location.path() == tab
+  $scope.active = (path)->
+    $location.path() == path
 
   $scope.tabs = ["contact", "about", "groups", "producers"]
   for tab in $scope.tabs 
     $scope[tab] =
-      active: false #$scope.active("/" + tab)
       path: "/" + tab 
 
-  $scope.$watch ->
-    $location.path() 
-  , (path)->
-    for tab in $scope.tabs
-      $scope[tab].active = $scope.active($scope[tab].path) 
+  $scope.select = (tab)->
+    if $scope.active(tab.path)
+      $location.path "/"
+    else
+      $location.path tab.path
 
-  #$scope.select = (tab)->
-    #$location.path tab.path
-    #
-    #
     
 # directive -> ng-click -> scope method (not isolated) -> toggle active | change location
 # watch active expression -> change tab appearance
