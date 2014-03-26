@@ -106,7 +106,6 @@ describe Enterprise do
         create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master], orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
         Enterprise.active_distributors.should be_empty
       end
-
     end
 
     describe "with_distributed_active_products_on_hand" do
