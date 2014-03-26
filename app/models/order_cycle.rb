@@ -78,11 +78,11 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def suppliers
-    self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
+    self.exchanges.incoming.map(&:sender).uniq
   end
 
   def distributors
-    self.exchanges.where(:sender_id => self.coordinator).map(&:receiver).uniq
+    self.exchanges.outgoing.map(&:receiver).uniq
   end
 
   def variants
@@ -90,7 +90,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
-    self.exchanges.where(:sender_id => self.coordinator).map(&:variants).flatten.uniq
+    self.exchanges.outgoing.map(&:variants).flatten.uniq
   end
 
   def variants_distributed_by(distributor)
@@ -239,11 +239,10 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def exchanges_carrying(variant, distributor)
-    exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
+    exchanges.supplying_to(distributor).with_variant(variant)
   end
 
   def exchanges_supplying(order)
-    variants = order.line_items.map(&:variant)
-    exchanges.to_enterprises([coordinator, order.distributor]).with_any_variant(variants)
+    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 end

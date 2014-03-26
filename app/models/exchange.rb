@@ -15,10 +15,11 @@ class Exchange < ActiveRecord::Base
 
   accepts_nested_attributes_for :variants
 
-  scope :incoming, joins(:order_cycle).where('exchanges.receiver_id = order_cycles.coordinator_id')
-  scope :outgoing, joins(:order_cycle).where('exchanges.sender_id   = order_cycles.coordinator_id')
+  scope :incoming, where(incoming: true)
+  scope :outgoing, where(incoming: false)
   scope :from_enterprises, lambda { |enterprises| where('exchanges.sender_id IN (?)', enterprises) }
   scope :to_enterprises, lambda { |enterprises| where('exchanges.receiver_id IN (?)', enterprises) }
+  scope :supplying_to, lambda { |distributor| where('exchanges.incoming OR exchanges.receiver_id = ?', distributor) }
   scope :with_variant, lambda { |variant| joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant) }
   scope :with_any_variant, lambda { |variants| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', variants).select('DISTINCT exchanges.*') }
   scope :with_product, lambda { |product| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', product.variants_including_master) }
@@ -30,10 +31,6 @@ class Exchange < ActiveRecord::Base
     exchange.variant_ids = self.variant_ids
     exchange.save!
     exchange
-  end
-
-  def incoming?
-    receiver == order_cycle.coordinator
   end
 
   def role

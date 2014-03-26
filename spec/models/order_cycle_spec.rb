@@ -82,7 +82,7 @@ describe OrderCycle do
       p = create(:product)
       s = create(:supplier_enterprise)
       oc = create(:simple_order_cycle)
-      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator)
+      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator, incoming: true)
       ex.variants << p.master
       p.reload
 
@@ -137,9 +137,9 @@ describe OrderCycle do
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
     oc.suppliers.sort.should == [e1.sender, e2.sender].sort
@@ -148,9 +148,9 @@ describe OrderCycle do
   it "reports its distributors" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
     oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
@@ -182,11 +182,11 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise)
 
-      @e0 = create(:exchange,
+      @e0 = create(:exchange, incoming: true,
                   order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange,
+      @e1 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d1)
-      @e2 = create(:exchange,
+      @e2 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
       @p0 = create(:simple_product)
