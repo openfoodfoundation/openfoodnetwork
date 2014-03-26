@@ -119,7 +119,9 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.quickSearch = ""
       $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteLineItems } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
+      $scope.selectedUnitsProduct = {};
       $scope.selectedUnitsVariant = {};
+      $scope.sharedResource = false
       $scope.predicate = ""
       $scope.reverse = false
       $scope.optionTabs =
@@ -229,7 +231,8 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       changeTo = !$scope.allBoxesChecked()
       lineItem.checked = changeTo for lineItem in $scope.filteredLineItems
 
-    $scope.setSelectedUnitsVariant = (unitsVariant) ->
+    $scope.setSelectedUnitsVariant = (unitsProduct,unitsVariant) ->
+      $scope.selectedUnitsProduct = unitsProduct
       $scope.selectedUnitsVariant = unitsVariant
 
     $scope.sumUnitValues = (lineItems) ->
@@ -256,25 +259,25 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         'volume': {0.001: 'mL', 1.0: 'L',  1000000.0: 'ML'}
       unitNames[unitType][scale]
 
-    $scope.formattedValueWithUnitName = (value, unitsVariant) ->
+    $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
-      if unitsVariant.hasOwnProperty("variant_unit") && (unitsVariant.variant_unit == "weight" || unitsVariant.variant_unit == "volume") && value > 0
-        scale = $scope.getScale(value, unitsVariant.variant_unit)
-        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsVariant.variant_unit)
+      if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
+        scale = $scope.getScale(value, unitsProduct.variant_unit)
+        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsProduct.variant_unit)
       else
         ''
 
     $scope.fulfilled = ->
       # A Units Variant is an API object which holds unit properies of a variant
-      if $scope.selectedUnitsVariant.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsVariant.group_buy_unit_size > 0 &&
-        $scope.selectedUnitsVariant.hasOwnProperty("variant_unit") &&
-        ( $scope.selectedUnitsVariant.variant_unit == "weight" || $scope.selectedUnitsVariant.variant_unit == "volume" )
-          Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsVariant.group_buy_unit_size * 1000)/1000
+      if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
+        $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
+        ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
+          Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsProduct.group_buy_unit_size * 1000)/1000
       else
         ''
 
     $scope.unitsVariantSelected = ->
-      angular.equals($scope.selectedUnitsVariant,{})
+      !angular.equals($scope.selectedUnitsVariant,{})
 
     $scope.shiftTab = (tab) ->
       $scope.visibleTab.visible = false unless $scope.visibleTab == tab || $scope.visibleTab == undefined
@@ -282,17 +285,21 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.visibleTab = tab
 ]
 
-orderManagementModule.filter "selectFilter", [
-  "blankOption"
-  (blankOption) ->
-    return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle,selectedUnitsVariant) ->
+orderManagementModule.filter "selectFilter", (blankOption) ->
+    return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
       filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier == selectedSupplier) &&
         (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor == selectedDistributor) &&
-        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle) &&
-        (angular.equals(selectedUnitsVariant,{}) || lineItem.units_variant.unit_text == selectedUnitsVariant.unit_text )
+        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle)
       filtered
-]
+
+orderManagementModule.filter "variantFilter", ->
+    return (lineItems,selectedUnitsProduct,selectedUnitsVariant,sharedResource) ->
+      filtered = []
+      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedUnitsProduct,{}) ||
+        (lineItem.units_product.id == selectedUnitsProduct.id && (sharedResource || lineItem.units_variant.id == selectedUnitsVariant.id ) ) )
+      filtered
+
 
 orderManagementModule.factory "dataSubmitter", [
   "$http", "$q", "switchClass"

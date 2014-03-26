@@ -6,7 +6,7 @@
 %div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  .option_tab_titles{ :class => "nine columns alpha" }
+  .option_tab_titles{ :class => "sixteen columns alpha" }
     %h6{ :class => "three columns alpha", 'ng-repeat' => "tab in optionTabs", "ng-click" => "shiftTab(tab)", "ng-class" => "tab.visible && 'selected' || !tab.visible && 'unselected'"}
       {{ tab.title }}
   .filters{ :class => "nine columns alpha", 'ng-show' => 'optionTabs.filters.visible' }
@@ -36,16 +36,18 @@
     %ul.column-list{ :class => "nine columns alpha" }
       %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
         {{ column.name }}
-  %div#group_buy_calculation{ :class => "seven columns alpha", 'ng-hide' => 'unitsVariantSelected()' }
+  %div{ :class => "nine columns alpha", 'ng-show' => '!optionTabs.filters.visible && !optionTabs.column_toggle.visible && unitsVariantSelected()' } &nbsp;.
+  %div#group_buy_calculation{ :class => "seven columns alpha", 'ng-show' => 'unitsVariantSelected()' }
     %div{ :class => "seven columns alpha" }
-      %h6{ :class => "five columns alpha" } {{ selectedUnitsVariant.unit_text }}
+      %h6{ :class => "five columns alpha", 'ng-show' => 'sharedResource' } {{ selectedUnitsProduct.name + ": ALL" }}
+      %h6{ :class => "five columns alpha", 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.unit_text }}
       %h6{ :class => "two column omega" }
-        %a{ 'ng-click' => 'selectedUnitsVariant = {}' } Clear
+        %a{ 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {}' } Clear
     %div{ :class => "seven columns alpha" }
       %span{ :class => "five columns alpha" }
-        Group Buy Unit
+        Group Buy Unit Size
       %span{ :class => "two columns omega" }
-        {{ formattedValueWithUnitName( selectedUnitsVariant.group_buy_unit_size, selectedUnitsVariant ) }}
+        {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
     %div{ :class => "seven columns alpha" }
       %span{ :class => "five columns alpha" }
         Fulfilled Units
@@ -55,7 +57,11 @@
       %span{ :class => "five columns alpha" }
         Total Units Ordered
       %span{ :class => "two columns omega" }
-        {{ formattedValueWithUnitName( sumUnitValues( filteredLineItems ), selectedUnitsVariant ) }}
+        {{ formattedValueWithUnitName( sumUnitValues( filteredLineItems ), selectedUnitsProduct, selectedUnitsVariant ) }}
+    %div.shared_resource{ :class => "seven columns alpha" }
+      %span{ :class => "five columns alpha" } Shared Resource?
+      %span{ :class => 'two columns omega' }
+        %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
     %h4 Loading Line Items...
@@ -94,7 +100,7 @@
           %th.actions
             Ask?&nbsp;
             %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter:selectedUnitsVariant | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+        %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
           %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
@@ -105,7 +111,7 @@
           %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
           %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
-            %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
+            %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
             %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max }}

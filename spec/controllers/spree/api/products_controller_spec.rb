@@ -10,6 +10,7 @@ module Spree
     let!(:product2) { FactoryGirl.create(:product) }
     let!(:product3) { FactoryGirl.create(:product) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
+    let(:unit_attributes) { [:id, :name, :group_buy_unit_size, :variant_unit] }
 
     before do
       stub_authentication!
@@ -21,6 +22,12 @@ module Spree
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
         attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+
+      it "retrieves a list of products with attributes relating to units" do
+        spree_get :show, { :id => product1.id, :template => "units_show", :format => :json }
+        keys = json_response.keys.map{ |key| key.to_sym }
+        unit_attributes.all?{ |attr| keys.include? attr }.should == true
       end
 
       it "sorts products in ascending id order" do

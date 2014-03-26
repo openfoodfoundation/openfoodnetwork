@@ -262,28 +262,28 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.fulfilled()).toEqual ''
 
       it "returns '' if selectedUnitsVariant has no property 'group_buy_unit_size' or group_buy_unit_size is 0", ->
-        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 0 }
+        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 0 }
         expect(scope.fulfilled()).toEqual ''
-        scope.selectedUnitsVariant = { variant_unit: "weight" }
+        scope.selectedUnitsProduct = { variant_unit: "weight" }
         expect(scope.fulfilled()).toEqual ''
 
       it "returns '', and does not call Math.round if variant_unit is 'items'", ->
         spyOn(Math,"round")
-        scope.selectedUnitsVariant = { variant_unit: "items", group_buy_unit_size: 10 }
+        scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
         expect(scope.fulfilled()).toEqual ''
         expect(Math.round).not.toHaveBeenCalled()
 
       it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
         spyOn(Math,"round")
-        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 10 }
+        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 10 }
         scope.fulfilled()
         expect(Math.round).toHaveBeenCalled()
-        scope.selectedUnitsVariant = { variant_unit: "volume", group_buy_unit_size: 10 }
+        scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 10 }
         scope.fulfilled()
         expect(Math.round).toHaveBeenCalled()
 
-      it "returns the correct quantity of fulfilled group buy units", ->
-        scope.selectedUnitsVariant = { variant_unit: "weight", group_buy_unit_size: 1000 }
+      it "returns the quantity of fulfilled group buy units", ->
+        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
         spyOn(scope,"sumUnitValues").andReturn 1500
         expect(scope.fulfilled()).toEqual 1.5
         expect(scope.sumUnitValues).toHaveBeenCalled()

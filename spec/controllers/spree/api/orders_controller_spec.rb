@@ -15,7 +15,7 @@ module Spree
     let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
     let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
     let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :line_items, :distributor, :order_cycle, :number] }
-    let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_variant] }
+    let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
 
     before do
       stub_authentication!

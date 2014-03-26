@@ -534,6 +534,11 @@ feature %q{
           page.should have_text "0.8"
           page.should have_text "Total Units Ordered"
           page.should have_text "4 kg"
+          page.should have_selector "div.shared_resource", :visible => true
+          within "div.shared_resource" do
+            page.should have_selector "span", :text => "Shared Resource?"
+            page.should have_selector "input#shared_resource"
+          end
         end
       end
 
