@@ -17,11 +17,11 @@ module OpenFoodNetwork
         variant_ids = exchange_variant_ids(exchange)
         enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
-        if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id)
-          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id,
+        if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id, true)
+          update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
                           {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
         else
-          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id,
+          add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
                        {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
         end
       end
@@ -31,12 +31,12 @@ module OpenFoodNetwork
         variant_ids = exchange_variant_ids(exchange)
         enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
-        if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id])
-          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id],
+        if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id], false)
+          update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
                           {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
                            pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         else
-          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id],
+          add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
                        {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
                         pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
         end
@@ -50,18 +50,18 @@ module OpenFoodNetwork
 
     attr_accessor :touched_exchanges
 
-    def exchange_exists?(sender_id, receiver_id)
-      @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id).present?
+    def exchange_exists?(sender_id, receiver_id, incoming)
+      @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).present?
     end
 
-    def add_exchange(sender_id, receiver_id, attrs={})
-      attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id)
+    def add_exchange(sender_id, receiver_id, incoming, attrs={})
+      attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming)
       exchange = @order_cycle.exchanges.create! attrs
       @touched_exchanges << exchange
     end
 
-    def update_exchange(sender_id, receiver_id, attrs={})
-      exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id).first
+    def update_exchange(sender_id, receiver_id, incoming, attrs={})
+      exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
       exchange.update_attributes!(attrs)
 
       @touched_exchanges << exchange
