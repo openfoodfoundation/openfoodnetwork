@@ -2,17 +2,16 @@
 // We can't import foundation components?
 // See https://github.com/zurb/foundation/issues/3855#issuecomment-30372252
 
-//@import "foundation/variables"
+@import "variables"
+@import "components/global"
+@import "components/buttons"
+@import "components/panels"
 
-//@import "foundation/components/global"
-//@import "foundation/components/buttons"
-//@import "foundation/components/panels"
 
-
-//#sidebar
-  //margin-top: 1.875em
-  //$bg: #222
-  //$padding: emCalc(20)
-  //$adjust: true
-  //$adjust: true
-  //@include panel($bg, $padding, $adjust)
+#sidebar
+  margin-top: 1.875em
+  $bg: #222
+  $padding: emCalc(20)
+  $adjust: true
+  $adjust: true
+  @include panel($bg, $padding, $adjust)
