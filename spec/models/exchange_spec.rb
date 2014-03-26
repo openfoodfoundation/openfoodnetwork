@@ -81,6 +81,11 @@ describe Exchange do
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
 
+    it "finds exchanges in a particular order cycle" do
+      ex = create(:exchange, order_cycle: oc)
+      Exchange.in_order_cycle(oc).should == [ex]
+    end
+
     describe "finding exchanges by direction" do
       let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator, incoming: true }
       let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false }
@@ -100,14 +105,24 @@ describe Exchange do
         Exchange.outgoing.should == [outgoing_exchange]
       end
 
-      it "finds exchanges going to any of a number of enterprises" do
-        Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
-        Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
+      it "finds exchanges coming from an enterprise" do
+        Exchange.from_enterprise(supplier).should    == [incoming_exchange]
+        Exchange.from_enterprise(coordinator).should == [outgoing_exchange]
+      end
+
+      it "finds exchanges going to an enterprise" do
+        Exchange.to_enterprise(coordinator).should == [incoming_exchange]
+        Exchange.to_enterprise(distributor).should == [outgoing_exchange]
       end
 
       it "finds exchanges coming from any of a number of enterprises" do
         Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
         Exchange.from_enterprises([supplier, coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+      end
+
+      it "finds exchanges going to any of a number of enterprises" do
+        Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
+        Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
       end
     end
 
