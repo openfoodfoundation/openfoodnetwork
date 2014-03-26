@@ -5,6 +5,7 @@
 #
 #= require angular
 #= require angular-resource
+#= require mm-foundation-tpls-0.1.0.min.js
 #
 #= require ../shared/jquery.timeago
 #= require foundation

@@ -1,16 +1,12 @@
-%dl.tabs{"data-tab" => ""}
-  %dd
-    %a{href: "#about"} About Us
-  %dd
-    %a{href: "#producers"} Our Producers
-  %dd
-    %a{href: "#groups"} Our Groups
-  %dd
-    %a{href: "#contact"} Contact
+#tabs{"ng-controller" => "TabsCtrl"}
+  .row
+    %tabset
+      - for name, heading in { about: "About Us", 
+        producers: "Producers", 
+        groups: "Groups", 
+        contact: "Contact"} 
 
-.tabs-content
-  -#.section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-  = render 'shop/shop/about_us'
-  = render 'shop/shop/producers'
-  = render 'shop/shop/groups'
-  = render 'shop/shop/contact'
+        %tab{heading: heading, 
+        active: "#{name}.active",
+        select: "select(#{name})"}
+          = render "shop/shop/#{name}"
