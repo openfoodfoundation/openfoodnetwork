@@ -403,8 +403,8 @@ describe 'OrderCycle services', ->
           coordinator_id: 456
           coordinator_fees: []
           exchanges: [
-            {sender_id: 1, receiver_id: 456}
-            {sender_id: 456, receiver_id: 2}
+            {sender_id: 1, receiver_id: 456, incoming: true}
+            {sender_id: 456, receiver_id: 2, incoming: false}
             ]
 
     it 'initialises order cycle', ->
@@ -456,7 +456,7 @@ describe 'OrderCycle services', ->
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+          {enterprise_id: '123', incoming: true, active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'adding distributors', ->
@@ -465,7 +465,7 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'removing exchanges', ->
@@ -630,12 +630,14 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
           sender_id: 1
           enterprise_id: 1
+          incoming: true
           active: true
           ]
 
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
           receiver_id: 2
           enterprise_id: 2
+          incoming: false
           active: true
           ]
 

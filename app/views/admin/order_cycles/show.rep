@@ -13,6 +13,7 @@ r.element :order_cycle, @order_cycle do
     r.element :id
     r.element :sender_id
     r.element :receiver_id
+    r.element :incoming
 
     r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
 
