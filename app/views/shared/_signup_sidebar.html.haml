@@ -1,5 +1,8 @@
 #sign-up-content{"ng-controller" => "SignupSidebarCtrl", "ng-show" => "active()"}
-  %h2 Signup
+%tab#sign-up-content{"ng-controller" => "SignupSidebarCtrl", 
+  header: "Signup", 
+  active: "active()", 
+  select: "select()"}
   %form{"ng-submit" => "submit()"}
     .row
       .large-12.columns

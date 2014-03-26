@@ -1,5 +1,7 @@
-#login-content{"ng-controller" => "LoginSidebarCtrl", "ng-show" => "active()"}
-  %h2 Login
+%tab#login-content{"ng-controller" => "LoginSidebarCtrl", 
+  header: "Login", 
+  active: "active()", 
+  select: "select()"}
   %form{"ng-submit" => "submit()"}
     .alert-box.alert{"ng-show" => "errors != null"}
       {{ errors }}

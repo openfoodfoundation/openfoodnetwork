@@ -7,6 +7,9 @@ window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $h
   $scope.active = ->
     $location.path() == '/signup'
 
+  $scope.select = ->
+    $location.path("/signup")
+
   $scope.submit = ->
     $http.post("/user/spree_user", {spree_user: $scope.spree_user}).success (data)->
       location.href = location.origin + location.pathname  # Strips out hash fragments

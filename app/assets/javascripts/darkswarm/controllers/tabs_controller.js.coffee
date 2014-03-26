@@ -8,6 +8,7 @@ Darkswarm.controller "TabsCtrl", ($scope, $rootScope, $location) ->
       path: "/" + tab 
 
   $scope.select = (tab)->
+    console.log tab
     if $scope.active(tab.path)
       $location.path "/"
     else
