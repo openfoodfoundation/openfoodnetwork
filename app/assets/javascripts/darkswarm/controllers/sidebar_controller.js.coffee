@@ -1,3 +1,3 @@
 window.SidebarCtrl = Darkswarm.controller "SidebarCtrl", ($scope, $location) ->
   $scope.active = ->
-    $location.hash() == "sidebar"
+    $location.path() == "/login" || $location.path() == "/signup"
