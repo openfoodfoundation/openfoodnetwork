@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
+
 # Open Food Network
 
 Connect suppliers (ie. farmers), distributors (ie. co-ops) and
