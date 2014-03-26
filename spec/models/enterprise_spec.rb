@@ -159,6 +159,40 @@ describe Enterprise do
       end
     end
 
+    describe "supplying_variant_in" do
+      it "finds producers by supply of master variant" do
+        s = create(:supplier_enterprise)
+        p = create(:simple_product, supplier: s)
+
+        Enterprise.supplying_variant_in([p.master]).should == [s]
+      end
+
+      it "finds producers by supply of variant" do
+        s = create(:supplier_enterprise)
+        p = create(:simple_product, supplier: s)
+        v = create(:variant, product: p)
+
+        Enterprise.supplying_variant_in([v]).should == [s]
+      end
+
+      it "returns multiple enterprises when given multiple variants" do
+        s1 = create(:supplier_enterprise)
+        s2 = create(:supplier_enterprise)
+        p1 = create(:simple_product, supplier: s1)
+        p2 = create(:simple_product, supplier: s2)
+
+        Enterprise.supplying_variant_in([p1.master, p2.master]).sort.should == [s1, s2].sort
+      end
+
+      it "does not return duplicates" do
+        s = create(:supplier_enterprise)
+        p1 = create(:simple_product, supplier: s)
+        p2 = create(:simple_product, supplier: s)
+
+        Enterprise.supplying_variant_in([p1.master, p2.master]).should == [s]
+      end
+    end
+
     describe "distributing_product" do
       it "returns enterprises distributing via a product distribution" do
         d = create(:distributor_enterprise)
