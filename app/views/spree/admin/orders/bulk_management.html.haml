@@ -62,6 +62,9 @@
       %span{ :class => "five columns alpha" } Shared Resource?
       %span{ :class => 'two columns omega' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
+    %div{ :class => "seven columns alpha", 'ng-hide' => 'allUnitValuesPresent()' }
+      %span{ :class => "seven columns alpha", style: 'color:red' }
+        WARNING: Some variants do not have a unit value
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
     %h4 Loading Line Items...
