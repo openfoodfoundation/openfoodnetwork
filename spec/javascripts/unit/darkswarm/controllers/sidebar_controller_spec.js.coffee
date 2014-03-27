@@ -6,8 +6,8 @@ describe "SidebarCtrl", ->
   beforeEach ->
     module("Darkswarm")
     location =
-      hash: ->
-        "sidebar"
+      path: ->
+        "/login"
     inject ($controller, $rootScope) ->
       scope = $rootScope
       ctrl = $controller 'SidebarCtrl', {$scope: scope, $location: location}
@@ -17,6 +17,6 @@ describe "SidebarCtrl", ->
     expect(scope.active()).toEqual true
 
   it 'is inactive no location is set', ->
-    location.hash = ->
+    location.path = ->
       null 
     expect(scope.active()).toEqual false

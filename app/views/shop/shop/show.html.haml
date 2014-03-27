@@ -8,7 +8,7 @@
     %closing
       -#%img{src: "/icon/goes/here"}
       Orders close
-      %strong {{ order_cycle.orders_close_at | date_in_words }} 
+      %strong {{ order_cycle.orders_close_at() | date_in_words }} 
   = render partial: "shop/details"
 
   %products.row
