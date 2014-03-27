@@ -19,6 +19,7 @@ describe 'OrderCycle controllers', ->
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
+        setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
         removeExchange: jasmine.createSpy('removeExchange')
@@ -31,6 +32,7 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
+        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
@@ -63,9 +65,17 @@ describe 'OrderCycle controllers', ->
         EnterpriseFee.loaded = false
         expect(scope.loaded()).toBe(false)
 
+    it "delegates suppliedVariants to Enterprise", ->
+      expect(scope.suppliedVariants('enterprise_id')).toEqual('supplied variants')
+      expect(Enterprise.suppliedVariants).toHaveBeenCalledWith('enterprise_id')
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+
+    it "delegates setExchangeVariants to OrderCycle", ->
+      scope.setExchangeVariants('exchange', 'variants', 'selected')
+      expect(OrderCycle.setExchangeVariants).toHaveBeenCalledWith('exchange', 'variants', 'selected')
 
     it 'Delegates enterpriseTotalVariants to Enterprise', ->
       expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
@@ -169,6 +179,7 @@ describe 'OrderCycle controllers', ->
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
+        setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
         removeExchange: jasmine.createSpy('removeExchange')
@@ -181,6 +192,7 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
+        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
@@ -213,9 +225,17 @@ describe 'OrderCycle controllers', ->
         OrderCycle.loaded = false
         expect(scope.loaded()).toBe(false)
 
+    it "delegates suppliedVariants to Enterprise", ->
+      expect(scope.suppliedVariants('enterprise_id')).toEqual('supplied variants')
+      expect(Enterprise.suppliedVariants).toHaveBeenCalledWith('enterprise_id')
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+
+    it "delegates setExchangeVariants to OrderCycle", ->
+      scope.setExchangeVariants('exchange', 'variants', 'selected')
+      expect(OrderCycle.setExchangeVariants).toHaveBeenCalledWith('exchange', 'variants', 'selected')
 
     it 'Delegates totalVariants to Enterprise', ->
       expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
@@ -331,6 +351,25 @@ describe 'OrderCycle services', ->
       enterprises = Enterprise.index()
       $httpBackend.flush()
       expect(Enterprise.supplied_products).toEqual [1, 2, 3, 4, 5, 6]
+
+    it "finds supplied variants for an enterprise", ->
+      spyOn(Enterprise, 'variantsOf').andReturn(10)
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
+
+    describe "finding the variants of a product", ->
+      it "returns the master for products without variants", ->
+        p =
+          master_id: 1
+          variants: []
+        expect(Enterprise.variantsOf(p)).toEqual [1]
+
+      it "returns the variant ids for products with variants", ->
+        p =
+          master_id: 1
+          variants: [{id: 2}, {id: 3}]
+        expect(Enterprise.variantsOf(p)).toEqual [2, 3]
 
     it 'counts total variants supplied by an enterprise', ->
       enterprise =
@@ -449,6 +488,12 @@ describe 'OrderCycle services', ->
         exchange.showProducts = false
         OrderCycle.toggleProducts(exchange)
         expect(exchange.showProducts).toEqual(true)
+
+    describe "setting exchange variants", ->
+      it "sets all variants to the provided value", ->
+        exchange = {variants: {2: false}}
+        OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
+        expect(exchange.variants).toEqual {1: true, 2: true, 3: true}
 
     describe 'adding suppliers', ->
       exchange = null

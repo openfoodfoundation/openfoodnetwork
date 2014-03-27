@@ -9,8 +9,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded
 
+    $scope.suppliedVariants = (enterprise_id) ->
+      Enterprise.suppliedVariants(enterprise_id)
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
+
+    $scope.setExchangeVariants = (exchange, variants, selected) ->
+      OrderCycle.setExchangeVariants(exchange, variants, selected)
 
     $scope.enterpriseTotalVariants = (enterprise) ->
       Enterprise.totalVariants(enterprise)
@@ -83,8 +89,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
+    $scope.suppliedVariants = (enterprise_id) ->
+      Enterprise.suppliedVariants(enterprise_id)
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
+
+    $scope.setExchangeVariants = (exchange, variants, selected) ->
+      OrderCycle.setExchangeVariants(exchange, variants, selected)
 
     $scope.enterpriseTotalVariants = (enterprise) ->
       Enterprise.totalVariants(enterprise)
@@ -174,6 +186,9 @@ angular.module('order_cycle', ['ngResource'])
 
       toggleProducts: (exchange) ->
       	exchange.showProducts = !exchange.showProducts
+
+      setExchangeVariants: (exchange, variants, selected) ->
+        exchange.variants[variant] = selected for variant in variants
 
       addSupplier: (new_supplier_id) ->
       	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
@@ -321,6 +336,16 @@ angular.module('order_cycle', ['ngResource'])
           service.loaded = true
 
       	this.enterprises
+
+      suppliedVariants: (enterprise_id) ->
+        vs = (this.variantsOf(product) for product in this.enterprises[enterprise_id].supplied_products)
+        [].concat vs...
+
+      variantsOf: (product) ->
+        if product.variants.length > 0
+          variant.id for variant in product.variants
+        else
+          [product.master_id]
 
       totalVariants: (enterprise) ->
         numVariants = 0
