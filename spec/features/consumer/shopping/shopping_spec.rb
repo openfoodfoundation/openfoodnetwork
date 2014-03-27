@@ -68,10 +68,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector "option", text: 'turtles'
         end
 
-        it "shows the About Us by default if no order cycle is selected" do
-          page.should have_content "Hello, world!" 
-        end
-
         it "doesn't show the table before an order cycle is selected" do
           page.should_not have_selector("input.button.right", visible: true)
         end
