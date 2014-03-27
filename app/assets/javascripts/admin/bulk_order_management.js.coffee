@@ -157,7 +157,6 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
               $scope.distributorFilter = $scope.distributors[0]
               dataFetcher("/api/order_cycles/managed").then (data) ->
                 $scope.orderCycles = data
-                $scope.matchOrderCycleEnterprises orderCycle for orderCycle in $scope.orderCycles
                 $scope.orderCycles.unshift blankOption()
                 $scope.orderCycleFilter = $scope.orderCycles[0]
                 $scope.fetchOrders()
@@ -194,17 +193,10 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       lineItemOrder.order_cycle = $scope.matchObject $scope.orderCycles, order.order_cycle, null
       lineItemOrder
 
-    $scope.matchOrderCycleEnterprises = (orderCycle) ->
-      for i,distributor of orderCycle.distributors
-        orderCycle.distributors[i] = $scope.matchObject $scope.distributors, distributor, null
-      for i,supplier of orderCycle.suppliers
-        orderCycle.suppliers[i] = $scope.matchObject $scope.suppliers, supplier, null
-
     $scope.matchObject = (list, testObject, noMatch) ->
       for i, object of list
         if angular.equals(object, testObject)
           return object
-        else
       return noMatch
 
     $scope.deleteLineItem = (lineItem) ->
@@ -288,9 +280,9 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 orderManagementModule.filter "selectFilter", (blankOption) ->
     return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
-      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier == selectedSupplier) &&
-        (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor == selectedDistributor) &&
-        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle == selectedOrderCycle)
+      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier.id == selectedSupplier.id) &&
+        (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor.id == selectedDistributor.id) &&
+        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle.id == selectedOrderCycle.id)
       filtered
 
 orderManagementModule.filter "variantFilter", ->

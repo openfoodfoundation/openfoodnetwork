@@ -26,7 +26,6 @@ describe "AdminOrderMgmtCtrl", ->
       spyOn(returnedSuppliers, "unshift")
       spyOn(returnedDistributors, "unshift")
       spyOn(returnedOrderCycles, "unshift")
-      spyOn(scope, "matchOrderCycleEnterprises")
       scope.initialise "api_key"
       httpBackend.flush()
       expect(scope.suppliers).toEqual ["list of suppliers"]
@@ -37,7 +36,6 @@ describe "AdminOrderMgmtCtrl", ->
       expect(returnedSuppliers.unshift.calls.length).toEqual 1
       expect(returnedDistributors.unshift.calls.length).toEqual 1
       expect(returnedOrderCycles.unshift.calls.length).toEqual 1
-      expect(scope.matchOrderCycleEnterprises.calls.length).toEqual returnedOrderCycles.length
       expect(scope.spree_api_key_ok).toEqual true
 
   describe "fetching orders", ->
@@ -160,31 +158,6 @@ describe "AdminOrderMgmtCtrl", ->
 
       returned_item = scope.matchObject list, test_item, null
       expect(returned_item is null).toEqual true
-
-  describe "matching order cycles enterprises", ->
-    it "calls matchDistributor once for each distributor associated with an order cycle", ->
-      spyOn(scope, "matchObject")
-      distributors = [
-        "distributor1"
-        "distributor2"
-        "distributor3"
-      ]
-      suppliers = []
-      orderCycle = { distributors: distributors }
-      scope.matchOrderCycleEnterprises orderCycle
-      expect(scope.matchObject.calls.length).toEqual 3
-
-    it "calls matchSupplier once for each distributor associated with an order cycle", ->
-      spyOn(scope, "matchObject")
-      distributors = []
-      suppliers = [
-        "supplier1"
-        "supplier2"
-        "supplier3"
-      ]
-      orderCycle = { suppliers: suppliers }
-      scope.matchOrderCycleEnterprises orderCycle
-      expect(scope.matchObject.calls.length).toEqual 3
 
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
