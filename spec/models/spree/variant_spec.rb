@@ -115,6 +115,41 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "setting the variant's weight from the unit value" do
+        it "sets the variant's weight when unit is weight" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: nil)
+
+          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
+          v.update_attributes! unit_value: 10, unit_description: 'foo'
+
+          v.reload.weight.should == 0.01
+        end
+
+        it "does nothing when unit is not weight" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: 123)
+
+          p.update_attributes! variant_unit: 'volume', variant_unit_scale: 1
+          v.update_attributes! unit_value: 10, unit_description: 'foo'
+
+          v.reload.weight.should == 123
+        end
+
+        it "does nothing when unit_value is not set" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: 123)
+
+          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
+
+          # Although invalid, this calls the before_validation callback, which would
+          # error if not handling unit_value == nil case
+          v.update_attributes(unit_value: nil, unit_description: 'foo').should be_false
+
+          v.reload.weight.should == 123
+        end
+      end
+
       context "when the variant initially has no value" do
         context "when the required option value does not exist" do
           let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }

@@ -12,6 +12,7 @@ Spree::Variant.class_eval do
                         if: -> v { v.product.variant_unit.present? && v.unit_value.nil? },
                         unless: :is_master
 
+  before_validation :update_weight_from_unit_value
   after_save :update_units
 
   scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
@@ -42,6 +43,10 @@ Spree::Variant.class_eval do
 
 
   private
+
+  def update_weight_from_unit_value
+    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
+  end
 
   def update_units
     delete_unit_option_values
