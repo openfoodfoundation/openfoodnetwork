@@ -227,10 +227,15 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.selectedUnitsProduct = unitsProduct
       $scope.selectedUnitsVariant = unitsVariant
 
-    $scope.sumUnitValues = (lineItems) ->
-      sum = lineItems.reduce (sum,lineItem) ->
+    $scope.sumUnitValues = ->
+      sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
         sum = sum + lineItem.quantity * lineItem.units_variant.unit_value
       , 0
+
+    $scope.allUnitValuesPresent = ->
+      for i,lineItem of $scope.filteredLineItems
+        return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
+      true
 
     $scope.getScale = (value, unitType) ->
       scaledValue = null
@@ -264,7 +269,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
         $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
         ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-          Math.round( $scope.sumUnitValues( $scope.filteredLineItems ) / $scope.selectedUnitsProduct.group_buy_unit_size * 1000)/1000
+          Math.round( $scope.sumUnitValues() / $scope.selectedUnitsProduct.group_buy_unit_size * 1000)/1000
       else
         ''
 

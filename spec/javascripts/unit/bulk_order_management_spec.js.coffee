@@ -261,17 +261,48 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.fulfilled()).toEqual 1.5
         expect(scope.sumUnitValues).toHaveBeenCalled()
 
+    describe "allUnitValuesPresent()", ->
+      it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 1000 } }
+          { units_variant: { unit_value: 2000 } }
+          { units_variant: { unit_yayay: 1000 } }
+        ]
+        expect(scope.allUnitValuesPresent()).toEqual false
+
+      it "returns false if the unit_value of any item in filteredLineItems is not a number greater than 0", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 0 } }
+          { units_variant: { unit_value: 2000 } }
+          { units_variant: { unit_value: 1000 } }
+        ]
+        expect(scope.allUnitValuesPresent()).toEqual false
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 'lala' } }
+          { units_variant: { unit_value: 2000 } }
+          { units_variant: { unit_value: 1000 } }
+        ]
+        expect(scope.allUnitValuesPresent()).toEqual false
+
+      it "returns true if the unit_value of all items in filteredLineItems are numbers greater than 0", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 } }
+          { units_variant: { unit_value: 2000 } }
+          { units_variant: { unit_value: 1000 } }
+        ]
+        expect(scope.allUnitValuesPresent()).toEqual true
+
     describe "sumUnitValues()", ->
       it "returns the sum of the product of unit_value and quantity for specified line_items", ->
-        line_items = [
+        scope.filteredLineItems = [
           { units_variant: { unit_value: 1 }, quantity: 2 }
           { units_variant: { unit_value: 2 }, quantity: 3 }
           { units_variant: { unit_value: 3 }, quantity: 7 }
         ]
-        sp0 = line_items[0].units_variant.unit_value * line_items[0].quantity
-        sp1 = line_items[1].units_variant.unit_value * line_items[1].quantity
-        sp2 = line_items[2].units_variant.unit_value * line_items[2].quantity
-        expect(scope.sumUnitValues(line_items)).toEqual (sp0 + sp1 + sp2)
+        sp0 = scope.filteredLineItems[0].units_variant.unit_value * scope.filteredLineItems[0].quantity
+        sp1 = scope.filteredLineItems[1].units_variant.unit_value * scope.filteredLineItems[1].quantity
+        sp2 = scope.filteredLineItems[2].units_variant.unit_value * scope.filteredLineItems[2].quantity
+        expect(scope.sumUnitValues()).toEqual (sp0 + sp1 + sp2)
 
     describe "formatting a value based upon the properties of a specified Units Variant", ->
       # A Units Variant is an API object which holds unit properies of a variant
