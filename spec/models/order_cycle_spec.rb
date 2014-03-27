@@ -82,7 +82,7 @@ describe OrderCycle do
       p = create(:product)
       s = create(:supplier_enterprise)
       oc = create(:simple_order_cycle)
-      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator)
+      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator, incoming: true)
       ex.variants << p.master
       p.reload
 
@@ -137,9 +137,9 @@ describe OrderCycle do
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
     oc.suppliers.sort.should == [e1.sender, e2.sender].sort
@@ -148,9 +148,9 @@ describe OrderCycle do
   it "reports its distributors" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
     oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
@@ -160,7 +160,7 @@ describe OrderCycle do
     oc = create(:simple_order_cycle)
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
-    create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1)
+    create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1, incoming: false)
 
     oc.should have_distributor(d1)
     oc.should_not have_distributor(d2)
@@ -182,11 +182,11 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise)
 
-      @e0 = create(:exchange,
+      @e0 = create(:exchange, incoming: true,
                   order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange,
+      @e1 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d1)
-      @e2 = create(:exchange,
+      @e2 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
       @p0 = create(:simple_product)
@@ -281,9 +281,9 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
 
-      @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
-      @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, pickup_time: nil)
+      @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator, incoming: true)
+      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, incoming: false, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
+      @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, incoming: false, pickup_time: nil)
     end
 
     it "finds the exchange for a distributor" do
@@ -377,7 +377,7 @@ describe OrderCycle do
                                calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2))
       product = create(:simple_product)
 
-      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
              enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product.master])
       
       order_cycle.fees_for(product.master, distributor).should == 23
@@ -391,7 +391,7 @@ describe OrderCycle do
       enterprise_fee1 = create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20))
       product = create(:simple_product, price: 10.00)
       
-      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
              enterprise_fees: [enterprise_fee1], variants: [product.master])
 
       product.master.price.should == 10.00

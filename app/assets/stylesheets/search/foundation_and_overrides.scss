@@ -380,6 +380,7 @@ $default-float: left;
 // $button-radius: $global-radius;
 // $button-round: $global-rounded;
 
+
 // We use this to set default opacity for disabled buttons.
 
 // $button-disabled-opacity: 0.6;
@@ -1301,7 +1302,7 @@ $topbar-link-font-size: emCalc(16);
 // $topbar-sticky-class: ".sticky";
 
 
-@import 'foundation';
+@import 'foundation4/foundation';
 
 textarea {
   min-height: emCalc(120) !important;

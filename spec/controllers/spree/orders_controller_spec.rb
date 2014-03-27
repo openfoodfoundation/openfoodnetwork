@@ -1,6 +1,19 @@
 require 'spec_helper'
 
 describe Spree::OrdersController do
+  let(:distributor) { double(:distributor) }
+
+  it "redirects home when no distributor is selected" do
+    spree_get :edit
+    response.should redirect_to root_path
+  end
+
+  it "redirects to the shop when no order cycle is selected" do
+    controller.stub(:current_distributor).and_return(distributor)
+    spree_get :edit
+    response.should redirect_to shop_path
+  end
+
   it "selects distributors" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])

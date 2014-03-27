@@ -20,19 +20,19 @@ class OrderCycle < ActiveRecord::Base
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.now) }
   scope :undated, where(orders_open_at: nil, orders_close_at: nil)
 
-  scope :distributing_product, lambda { |product|
-    joins(:exchanges => :variants).
-    merge(Exchange.outgoing).
-    where('spree_variants.id IN (?)', product.variants_including_master.pluck(:id)).
-    select('DISTINCT order_cycles.*') }
-
-  scope :with_distributor, lambda { |distributor|
-    joins(:exchanges).merge(Exchange.outgoing).where('exchanges.receiver_id = ?', distributor)
-  }
-
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   scope :most_recently_closed, lambda { closed.order('order_cycles.orders_close_at DESC') }
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
+
+  scope :distributing_product, lambda { |product|
+    joins(:exchanges).
+    merge(Exchange.outgoing).
+    merge(Exchange.with_product(product)).
+    select('DISTINCT order_cycles.*') }
+
+  scope :with_distributor, lambda { |distributor|
+    joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
+  }
 
 
   scope :managed_by, lambda { |user|
@@ -43,7 +43,7 @@ class OrderCycle < ActiveRecord::Base
     end
   }
 
-  # Order cycles that user coordinates, sends to or receives from
+  # Return order cycles that user coordinates, sends to or receives from
   scope :accessible_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -59,12 +59,13 @@ class OrderCycle < ActiveRecord::Base
     joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
+
   def self.first_opening_for(distributor)
     with_distributor(distributor).soonest_opening.first
   end
 
   def self.most_recently_closed_for(distributor)
-    OrderCycle.with_distributor(distributor).most_recently_closed.first
+    with_distributor(distributor).most_recently_closed.first
   end
 
   def clone!
@@ -78,11 +79,11 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def suppliers
-    self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
+    self.exchanges.incoming.map(&:sender).uniq
   end
 
   def distributors
-    self.exchanges.where(:sender_id => self.coordinator).map(&:receiver).uniq
+    self.exchanges.outgoing.map(&:receiver).uniq
   end
 
   def variants
@@ -90,15 +91,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
-    self.exchanges.where(:sender_id => self.coordinator).map(&:variants).flatten.uniq
+    self.exchanges.outgoing.map(&:variants).flatten.uniq
   end
 
   def variants_distributed_by(distributor)
     Spree::Variant.
       joins(:exchanges).
+      merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).
-      where('exchanges.order_cycle_id = ?', self).
-      where('exchanges.receiver_id = ?', distributor)
+      merge(Exchange.to_enterprise(distributor))
   end
 
   def products_distributed_by(distributor)
@@ -239,11 +240,10 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def exchanges_carrying(variant, distributor)
-    exchanges.to_enterprises([coordinator, distributor]).with_variant(variant)
+    exchanges.supplying_to(distributor).with_variant(variant)
   end
 
   def exchanges_supplying(order)
-    variants = order.line_items.map(&:variant)
-    exchanges.to_enterprises([coordinator, order.distributor]).with_any_variant(variants)
+    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 end

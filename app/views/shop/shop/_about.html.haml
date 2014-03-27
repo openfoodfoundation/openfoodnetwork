@@ -1,0 +1,3 @@
+.content#about
+  %img.about.right{src: current_distributor.promo_image.url(:large)}
+  %p= current_distributor.long_description.andand.html_safe

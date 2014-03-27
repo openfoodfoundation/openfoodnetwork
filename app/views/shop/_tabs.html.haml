@@ -1,7 +1,13 @@
-%tabs
+#tabs{"ng-controller" => "TabsCtrl"}
   .row
-    .section-container.auto{"data-section" => "", "data-options" => "one_up: false"}
-      = render 'shop/shop/about_us'
-      = render 'shop/shop/producers'
-      = render 'shop/shop/groups'
-      = render 'shop/shop/contact'
+    %tabset
+      - for name, heading in { about: "About Us", 
+        producers: "Producers", 
+        groups: "Groups", 
+        contact: "Contact"} 
+
+        %tab{heading: heading, 
+        id: "tab_#{name}",
+        active: "active(#{name}.path)",
+        select: "select(#{name})"}
+          = render "shop/shop/#{name}"

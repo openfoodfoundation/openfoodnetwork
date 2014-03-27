@@ -49,9 +49,8 @@ describe Exchange do
     let(:coordinator) { create(:distributor_enterprise) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
-
-    let(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
-    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
+    let(:incoming_exchange) { oc.exchanges.create! sender: supplier, receiver: coordinator, incoming: true }
+    let(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false }
 
     it "returns true for incoming exchanges" do
       incoming_exchange.should be_incoming
@@ -78,29 +77,77 @@ describe Exchange do
 
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
-    let(:coordinator) { create(:distributor_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise, is_primary_producer: true) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
 
-    let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator }
-    let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor }
-
-    it "finds incoming exchanges" do
-      Exchange.incoming.should == [incoming_exchange]
+    it "finds exchanges in a particular order cycle" do
+      ex = create(:exchange, order_cycle: oc)
+      Exchange.in_order_cycle(oc).should == [ex]
     end
 
-    it "finds outgoing exchanges" do
-      Exchange.outgoing.should == [outgoing_exchange]
+    describe "finding exchanges by direction" do
+      let!(:incoming_exchange) { oc.exchanges.create! sender: supplier,    receiver: coordinator, incoming: true }
+      let!(:outgoing_exchange) { oc.exchanges.create! sender: coordinator, receiver: distributor, incoming: false }
+
+      it "finds incoming exchanges" do
+        Exchange.incoming.should == [incoming_exchange]
+      end
+
+      it "finds outgoing exchanges" do
+        Exchange.outgoing.should == [outgoing_exchange]
+      end
+
+      it "correctly determines direction of exchanges between the same enterprise" do
+        incoming_exchange.update_attributes sender: coordinator, incoming: true
+        outgoing_exchange.update_attributes receiver: coordinator, incoming: false
+        Exchange.incoming.should == [incoming_exchange]
+        Exchange.outgoing.should == [outgoing_exchange]
+      end
+
+      it "finds exchanges coming from an enterprise" do
+        Exchange.from_enterprise(supplier).should    == [incoming_exchange]
+        Exchange.from_enterprise(coordinator).should == [outgoing_exchange]
+      end
+
+      it "finds exchanges going to an enterprise" do
+        Exchange.to_enterprise(coordinator).should == [incoming_exchange]
+        Exchange.to_enterprise(distributor).should == [outgoing_exchange]
+      end
+
+      it "finds exchanges coming from any of a number of enterprises" do
+        Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
+        Exchange.from_enterprises([supplier, coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+      end
+
+      it "finds exchanges going to any of a number of enterprises" do
+        Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
+        Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
+      end
     end
 
-    it "finds exchanges going to any of a number of enterprises" do
-      Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
-      Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
-    end
+    describe "finding exchanges supplying to a distributor" do
+      it "returns incoming exchanges" do
+        d = create(:distributor_enterprise)
+        ex = create(:exchange, order_cycle: oc, incoming: true)
 
-    it "finds exchanges coming from any of a number of enterprises" do
-      Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
-      Exchange.from_enterprises([supplier, coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+        oc.exchanges.supplying_to(d).should == [ex]
+      end
+
+      it "returns outgoing exchanges to the distributor" do
+        d = create(:distributor_enterprise)
+        ex = create(:exchange, order_cycle: oc, receiver: d, incoming: false)
+
+        oc.exchanges.supplying_to(d).should == [ex]
+      end
+
+      it "does not return outgoing exchanges to a different distributor" do
+        d1 = create(:distributor_enterprise)
+        d2 = create(:distributor_enterprise)
+        ex = create(:exchange, order_cycle: oc, receiver: d1, incoming: false)
+
+        oc.exchanges.supplying_to(d2).should be_empty
+      end
     end
 
     it "finds exchanges with a particular variant" do
@@ -167,6 +214,7 @@ describe Exchange do
       exchange.to_h.should ==
         {'id' => exchange.id, 'order_cycle_id' => oc.id,
         'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+        'incoming' => exchange.incoming,
         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
@@ -176,6 +224,7 @@ describe Exchange do
     it "converts to a hash of core attributes only" do
       exchange.to_h(true).should ==
         {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+         'incoming' => exchange.incoming,
          'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
          'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
          'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions}

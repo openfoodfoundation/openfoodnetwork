@@ -151,7 +151,7 @@ describe Spree::Order do
     it "keeps the order cycle when it is available at the new distributor" do
       d = create(:distributor_enterprise)
       oc = create(:simple_order_cycle)
-      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.order_cycle = oc
       subject.set_distributor! d
@@ -190,7 +190,7 @@ describe Spree::Order do
     it "keeps the distributor when it is available in the new order cycle" do
       oc = create(:simple_order_cycle)
       d = create(:distributor_enterprise)
-      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.distributor = d
       subject.set_order_cycle! oc

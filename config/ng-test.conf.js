@@ -9,6 +9,7 @@ module.exports = function(config) {
       'app/assets/javascripts/shared/angular.js',
       'app/assets/javascripts/shared/angular-*.js',
       'app/assets/javascripts/shared/jquery.timeago.js',
+      'app/assets/javascripts/shared/mm-foundation-tpls-0.2.0-SNAPSHOT.js',
 
       'app/assets/javascripts/admin/shared_directives.js.coffee',
       'app/assets/javascripts/admin/shared_services.js.coffee',

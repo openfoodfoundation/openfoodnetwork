@@ -20,8 +20,8 @@ feature %q{
       click_link 'New Payment Method'
 
       fill_in 'payment_method_name', :with => 'Cheque payment method'
-
-      select @distributors[0].name, :from => 'payment_method_distributor_ids'
+      
+      select @distributors[0].name, :from => 'payment_method_distributor_ids', visible: false
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'

@@ -20,7 +20,7 @@ gem 'angularjs-rails'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
-gem 'sass'
+gem 'sass', "~> 3.2"
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -49,8 +49,9 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
-  gem 'zurb-foundation', :github => 'zurb/foundation'
+
 end
+gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'

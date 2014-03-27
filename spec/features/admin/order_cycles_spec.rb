@@ -223,6 +223,28 @@ feature %q{
   end
 
 
+  scenario "editing an order cycle with an exchange between the same enterprise" do
+    c = create(:distributor_enterprise, is_primary_producer: true)
+    login_to_admin_section
+
+    # Given two order cycles, one with a mono-enterprise incoming exchange...
+    oc_incoming = create(:simple_order_cycle, suppliers: [c], coordinator: c)
+
+    # And the other with a mono-enterprise outgoing exchange
+    oc_outgoing = create(:simple_order_cycle, coordinator: c, distributors: [c])
+
+    # When I edit the first order cycle, the exchange should appear as incoming
+    visit edit_admin_order_cycle_path(oc_incoming)
+    page.should     have_selector 'table.exchanges tr.supplier'
+    page.should_not have_selector 'table.exchanges tr.distributor'
+
+    # And when I edit the second order cycle, the exchange should appear as outgoing
+    visit edit_admin_order_cycle_path(oc_outgoing)
+    page.should     have_selector 'table.exchanges tr.distributor'
+    page.should_not have_selector 'table.exchanges tr.supplier'
+  end
+
+
   scenario "updating an order cycle", js: true do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)

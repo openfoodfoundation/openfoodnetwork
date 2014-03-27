@@ -20,6 +20,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     it "shows distributor images" do
       visit shop_path
+      find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
       first("#about img")['src'].should == distributor.promo_image.url(:large) 
     end
@@ -36,7 +37,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "shows the suppliers/producers for a distributor" do
         visit shop_path
-        click_link "Our Producers"
+        find("#tab_producers a").click
         page.should have_content supplier.name 
       end
     end
@@ -65,10 +66,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "shows a select with all order cycles" do
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
-        end
-
-        it "shows the About Us by default if no order cycle is selected" do
-          page.should have_content "Hello, world!" 
         end
 
         it "doesn't show the table before an order cycle is selected" do

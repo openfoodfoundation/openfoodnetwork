@@ -8,12 +8,8 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   namespace :shop do
-    #resource :checkout, only: :edit, controller: :checkout do
-      #get '', to: ""
-    #end
     get '/checkout', :to => 'checkout#edit' , :as => :checkout
     put '/checkout', :to => 'checkout#update' , :as => :update_checkout
-
     get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
   end
 
@@ -71,6 +67,20 @@ Openfoodnetwork::Application.routes.draw do
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
 end
+
+
+# Overriding Devise routes to use our own controller
+Spree::Core::Engine.routes.draw do
+  devise_for :spree_user,
+             :class_name => 'Spree::User',
+             :controllers => { :sessions => 'spree/user_sessions',
+                               :registrations => 'user_registrations',
+                               :passwords => 'spree/user_passwords' },
+             :skip => [:unlocks, :omniauth_callbacks],
+             :path_names => { :sign_out => 'logout' },
+             :path_prefix => :user
+end
+
 
 
 Spree::Core::Engine.routes.prepend do

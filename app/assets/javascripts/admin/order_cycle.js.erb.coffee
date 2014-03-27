@@ -176,10 +176,10 @@ angular.module('order_cycle', ['ngResource'])
       	exchange.showProducts = !exchange.showProducts
 
       addSupplier: (new_supplier_id) ->
-      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}, enterprise_fees: []})
+      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
 
       addDistributor: (new_distributor_id) ->
-      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}, enterprise_fees: []})
+      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
 
       removeExchange: (exchange) ->
         incoming_index = this.order_cycle.incoming_exchanges.indexOf exchange
@@ -239,18 +239,15 @@ angular.module('order_cycle', ['ngResource'])
       	  service.order_cycle.incoming_exchanges = []
       	  service.order_cycle.outgoing_exchanges = []
       	  for exchange in service.order_cycle.exchanges
-      	    if exchange.sender_id == service.order_cycle.coordinator_id
-      	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
-      	      delete(exchange.sender_id)
-      	      service.order_cycle.outgoing_exchanges.push(exchange)
-      
-      	    else if exchange.receiver_id == service.order_cycle.coordinator_id
+      	    if exchange.incoming
       	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true})
       	      delete(exchange.receiver_id)
       	      service.order_cycle.incoming_exchanges.push(exchange)
       
       	    else
-      	      console.log('Exchange between two enterprises, neither of which is coordinator!')
+      	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
+      	      delete(exchange.sender_id)
+      	      service.order_cycle.outgoing_exchanges.push(exchange)
       
           delete(service.order_cycle.exchanges)
           service.loaded = true

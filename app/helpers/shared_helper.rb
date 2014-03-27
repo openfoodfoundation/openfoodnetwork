@@ -11,7 +11,11 @@ module SharedHelper
 
   # all suppliers of current distributor's products
   def current_producers
-    Exchange.where(receiver_id: current_distributor.id).map{ |ex| ex.variants.map {|v| v.product.supplier }}.flatten.uniq 
+    if current_distributor && current_order_cycle
+      variants = current_order_cycle.variants_distributed_by(current_distributor)
+      Enterprise.supplying_variant_in(variants)
+    else
+      []
+    end
   end
 end
-

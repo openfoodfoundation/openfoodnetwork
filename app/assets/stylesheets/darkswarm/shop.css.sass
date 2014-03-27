@@ -58,7 +58,7 @@ product
             padding-right: 14px
             @media all and (max-width: 768px)
               font-size: 1.2em
-          .custom.dropdown
+          select
             width: 280px
             display: inline-block
             background: transparent
@@ -66,6 +66,7 @@ product
             border-color: #666666
             font-size: 1em 
             margin-bottom: 0
+            padding: 8px 0px 8px 12px
             @media all and (max-width: 768px)
               font-size: 1.2em
               width: 180px
@@ -73,41 +74,6 @@ product
           font-size: 0.875em
           display: block
           padding-top: 14px
-
-  tabs
-    background: url("/assets/matte.png") top left repeat
-    display: block
-    .section-container.auto
-      margin-bottom: 0
-      & > section 
-        transition:height 0s linear 0.5s
-        & > .content
-          background: none
-          border: none
-          img
-            margin: 0px 0px 0px 40px
-          p
-            max-width: 555px
-            @media all and (max-width: 768px)
-              height: auto !important
-          ul
-            list-style-type: none
-            padding-left: none
-          .panel
-            padding-bottom: 1.25em
-
-        & > .title, &.active > .title
-          text-transform: uppercase
-          line-height: 50px
-          @media all and (max-width: 768px)
-            line-height: 30px !important
-          border: none
-          &, &:hover
-            background: none
-          a
-            padding: 0px 2.2em
-            @media all and (max-width: 768px)
-              line-height: inherit !important
 
   products
     display: block

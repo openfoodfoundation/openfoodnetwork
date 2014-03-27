@@ -32,3 +32,13 @@ describe 'OrderCycle service', ->
     $httpBackend.flush()
     expect(OrderCycle.order_cycle.orders_close_at).toEqual(datestring)
 
+  it "tells us when the order cycle closes", ->
+    OrderCycle.order_cycle.orders_close_at = "test"
+    expect(OrderCycle.orders_close_at()).toEqual "test"
+
+  it "tells us when no order cycle is selected", ->
+    OrderCycle.order_cycle = null 
+    expect(OrderCycle.selected()).toEqual false
+    OrderCycle.order_cycle = {test: "blah"}
+    expect(OrderCycle.selected()).toEqual true
+

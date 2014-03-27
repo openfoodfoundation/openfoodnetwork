@@ -1,0 +1,37 @@
+@import "darkswarm/typography"
+
+#tabs
+  background: url("/assets/matte.png") top left repeat
+  display: block
+  dl dd a
+    @include avenir
+    background: transparent
+    text-transform: uppercase
+    line-height: 50px
+    font-size: 0.875em
+    @media all and (max-width: 768px)
+      line-height: 30px !important
+    border: none
+    &, &:hover
+      background: none
+    padding: 0px 2.2em
+    @media all and (max-width: 768px)
+      line-height: inherit !important
+
+  .tabs-content
+    margin-bottom: 0
+    & > .content
+      background: none
+      border: none
+      img
+        margin: 0px 0px 0px 40px
+      p
+        max-width: 555px
+        @media all and (max-width: 768px)
+          height: auto !important
+      ul
+        list-style-type: none
+        padding-left: none
+      .panel
+        padding-bottom: 1.25em
+

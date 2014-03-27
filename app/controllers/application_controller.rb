@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_data_for_sidebar
   before_filter :require_certified_hostname
 
+  include EnterprisesHelper
 
   def after_sign_in_path_for(resource)
     if request.referer and referer_path = URI(request.referer).path
@@ -41,6 +42,12 @@ class ApplicationController < ActionController::Base
     unless current_distributor
       redirect_to spree.root_path
       false
+    end
+  end
+
+  def require_order_cycle
+    unless current_order_cycle
+      redirect_to main_app.shop_path
     end
   end
 

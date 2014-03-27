@@ -1,8 +1,9 @@
 object @product
-attributes :id, :name, :price, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand
+attributes :id, :name, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand
 
 # Infinity is not a valid JSON object, but Rails encodes it anyway
-node( :on_hand ) { |p| p.on_hand.to_f.finite? ? p.on_hand : "On demand" }
+node( :on_hand ) { |p| p.on_hand.nil? ? 0 : p.on_hand.to_f.finite? ? p.on_hand : "On demand" }
+node( :price ) { |p| p.price.nil? ? '0.0' : p.price }
 
 node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }
 node( :permalink_live ) { |p| p.permalink }

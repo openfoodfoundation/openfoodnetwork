@@ -1,18 +1,15 @@
-%section
-  %p.title.avenir{"data-section-title" => ""}
-    %a{href: "#contact"} Contact 
-  .content{"data-section-content" => ""}
-    .panel
-      %p
-        %strong E
-        %a{href: "mailto:#{current_distributor.email}"}= current_distributor.email
-        - unless current_distributor.website.blank?
-          %br 
-          %strong W
-          %a{href: current_distributor.website}= current_distributor.website
+.content#contact
+  .panel
+    %p
+      %strong E
+      %a{href: "mailto:#{current_distributor.email}"}= current_distributor.email
+      - unless current_distributor.website.blank?
         %br 
-        = [current_distributor.address.address1, current_distributor.address.address2].join ", "
-        %br
-        = current_distributor.address.city
-        = current_distributor.address.state
-        = current_distributor.address.zipcode
+        %strong W
+        %a{href: current_distributor.website}= current_distributor.website
+      %br 
+      = [current_distributor.address.address1, current_distributor.address.address2].join ", "
+      %br
+      = current_distributor.address.city
+      = current_distributor.address.state
+      = current_distributor.address.zipcode

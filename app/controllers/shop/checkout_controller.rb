@@ -1,6 +1,5 @@
 class Shop::CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
-
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
   skip_before_filter :check_registration
@@ -60,12 +59,6 @@ class Shop::CheckoutController < Spree::CheckoutController
   def set_distributor
     unless @distributor = current_distributor 
       redirect_to main_app.root_path
-    end
-  end
-
-  def require_order_cycle
-    unless current_order_cycle
-      redirect_to main_app.shop_path
     end
   end
   

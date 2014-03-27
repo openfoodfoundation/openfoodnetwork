@@ -2,10 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "foundation/variables";
-@import "foundation/components/global";
-@import "foundation/components/buttons";
-@import "foundation/components/panels";
+@import "foundation4/foundation/variables";
+@import "foundation4/foundation/components/global";
+@import "foundation4/foundation/components/buttons";
+@import "foundation4/foundation/components/panels";
 
 #postcode_select_box {
   text-align: center;

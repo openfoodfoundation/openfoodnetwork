@@ -237,6 +237,8 @@ productEditModule.controller "AdminProductEditCtrl", [
           else if confirm("'#{filter.predicate.name}' filter already exists on column '#{filter.property.name}'. Replace it?")
             $scope.currentFilters[existingfilterIndex] = filter
             $scope.fetchProducts()
+      else
+        alert("Please ensure all filter fields are filled in before adding a filter.")
 
     $scope.removeFilter = (filter) ->
       index = $scope.currentFilters.indexOf(filter)

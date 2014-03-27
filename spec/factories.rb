@@ -7,9 +7,9 @@ FactoryGirl.define do
 
     after(:create) do |oc|
       # Suppliers
-      ex1 = create(:exchange, :order_cycle => oc,
+      ex1 = create(:exchange, :order_cycle => oc, :incoming => true,
                    :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
-      ex2 = create(:exchange, :order_cycle => oc,
+      ex2 = create(:exchange, :order_cycle => oc, :incoming => true,
                    :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
@@ -17,10 +17,10 @@ FactoryGirl.define do
                           enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
       # Distributors
-      ex3 = create(:exchange, :order_cycle => oc,
+      ex3 = create(:exchange, :order_cycle => oc, :incoming => false,
                    :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
                    :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
-      ex4 = create(:exchange, :order_cycle => oc,
+      ex4 = create(:exchange, :order_cycle => oc, :incoming => false,
                    :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
                    :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
       ExchangeFee.create!(exchange: ex3,
@@ -60,12 +60,12 @@ FactoryGirl.define do
 
     after(:create) do |oc, proxy|
       proxy.suppliers.each do |supplier|
-        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :pickup_time => 'time', :pickup_instructions => 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
 
       proxy.distributors.each do |distributor|
-        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
     end
@@ -75,6 +75,7 @@ FactoryGirl.define do
     order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
     sender      { FactoryGirl.create(:enterprise) }
     receiver    { FactoryGirl.create(:enterprise) }
+    incoming    false
   end
 
   factory :enterprise, :class => Enterprise do
