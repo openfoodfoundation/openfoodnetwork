@@ -26,7 +26,7 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_selector "div.loading", :text => "Loading Products..."
+      page.should have_selector "div.loading", :text => "Loading Products...", visible: false
     end
 
     it "displays a list of products" do
@@ -81,8 +81,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "available_on", with: p1.available_on.strftime("%F %T")
-      page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
+      page.should have_field "available_on", with: p1.available_on.strftime("%F %T"), visible: false
+      page.should have_field "available_on", with: p2.available_on.strftime("%F %T"), visible: false
     end
 
     it "displays a price input for each product without variants (ie. for master variant)" do
@@ -344,10 +344,10 @@ feature %q{
 
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
     page.should have_select "supplier", selected: s2.name
-    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
-    page.should have_field "price", with: "20.0"
-    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
-    page.should have_field "on_hand", with: "18"
+    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T"), visible: false
+    page.should have_field "price", with: "20.0", visible: false
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)", visible: false
+    page.should have_field "on_hand", with: "18", visible: false
   end
   
   scenario "updating a product with a variant unit of 'items'" do
@@ -558,9 +558,9 @@ feature %q{
 
     first("div.option_tab_titles h6", :text => "Filter Products").click
 
-    select "Name", :from => "filter_property"
-    select "Contains", :from => "filter_predicate"
-    fill_in "filter_value", :with => "1"
+    select "Name", :from => "filter_property", visible: false
+    select "Contains", :from => "filter_predicate", visible: false
+    fill_in "filter_value", :with => "1", visible: false
     click_button "Apply Filter"
     page.should_not have_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
@@ -654,7 +654,7 @@ feature %q{
         page.should have_selector "a.view-variants"
         first("a.view-variants").click
 
-        page.should have_selector "a.edit-variant", :count => 3
+        page.should have_selector "a.edit-variant", :count => 3, visible: false
 
         first("a.edit-variant").click
 
@@ -712,7 +712,7 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Products"
         page.should have_selector "div.filters", :visible => true
-        page.should have_selector "li.column-list-item", text: "Available On"
+        page.should have_selector "li.column-list-item", text: "Available On", visible: false
 
         first("div.option_tab_titles h6", :text => "Filter Products").click
 
