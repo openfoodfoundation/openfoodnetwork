@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/openfoodfoundation/openfoodnetwork.svg?branch=master)](https://travis-ci.org/openfoodfoundation/openfoodnetwork)
+[![Build Status](http://198.199.107.16:8080/buildStatus/icon?job=openfoodweb - tests)](http://198.199.107.16:8080/job/openfoodweb%20-%20tests/)
 [![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
