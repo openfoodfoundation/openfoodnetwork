@@ -16,8 +16,7 @@ feature "As a consumer I want to check out my cart", js: true do
     exchange.variants << product.master
   end
 
-  # Run these tests both logged in and logged out!
-  [:in, :out].each do |auth_state|
+  [:out].each do |auth_state|
     describe "logged #{auth_state.to_s}, distributor selected, order cycle selected, product in cart" do
       let(:user) { create_enterprise_user }
       before do

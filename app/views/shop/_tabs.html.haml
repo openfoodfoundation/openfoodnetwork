@@ -7,6 +7,7 @@
         contact: "Contact"} 
 
         %tab{heading: heading, 
+        id: "tab_#{name}",
         active: "active(#{name}.path)",
         select: "select(#{name})"}
           = render "shop/shop/#{name}"
