@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 describe UserPasswordsController do
+  let(:user) { create(:user) }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
@@ -15,9 +16,14 @@ describe UserPasswordsController do
   end
 
   it "redirects to login when data is valid" do
-    user = create(:user)
     spree_post :create, spree_user: { email: user.email}
     response.should be_redirect
+  end
+
+  it "renders Darkswarm" do
+    user.send_reset_password_instructions
+    spree_get :edit, reset_password_token: user.reset_password_token
+    response.should render_template "user_passwords/edit"
   end
 
   describe "via ajax" do

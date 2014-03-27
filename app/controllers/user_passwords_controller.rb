@@ -1,4 +1,5 @@
 class UserPasswordsController < Spree::UserPasswordsController
+  layout 'darkswarm'
 
   def create
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
