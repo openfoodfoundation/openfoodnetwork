@@ -7,3 +7,10 @@ window.AccountSidebarCtrl = Darkswarm.controller "AccountSidebarCtrl", ($scope, 
 
   $scope.select = ->
     Navigation.navigate($scope.path)
+
+  $scope.emptyCart = (href, ev)->
+    console.log href
+    if $(ev.delegateTarget).hasClass "empties-cart"
+      location.href = href if confirm "Changing your collection date will clear your cart."
+    else
+      location.href = href
