@@ -9,5 +9,13 @@
   - else
     #account{"ng-controller" => "AccountSidebarCtrl"}
       .row
-        You have an account! Well done
+        .panel
+          %p
+            %strong= link_to "Manage my account", account_path 
+          - if order = spree_current_user.orders.last
+            %dl
+              %dt Last distributor:
+              %dd
+                = link_to "#{order.distributor.name}".html_safe, shop_enterprise_path(order.distributor), {class: distributor_link_class(order.distributor)}
+            
   = yield :sidebar

@@ -6,5 +6,8 @@ window.MenuCtrl = Darkswarm.controller "MenuCtrl", ($scope, Navigation) ->
   $scope.toggleSignup = ->
     Navigation.navigate "/signup"
 
-  $scope.toggle = ->
-    Navigation.navigate()
+  $scope.toggleSignup = ->
+    Navigation.navigate "/signup"
+
+  $scope.toggle = (path = null)->
+    Navigation.navigate(path)
