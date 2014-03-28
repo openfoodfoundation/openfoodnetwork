@@ -18,5 +18,9 @@ module Spree
     def last_completed_order
       spree_current_user.orders.complete.last
     end
+
+    def cart_count
+      current_order.andand.line_items.count || 0
+    end
   end
 end
