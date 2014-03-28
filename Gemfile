@@ -49,6 +49,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
+  gem 'foundation-icons-sass-rails'
 
 end
 gem "foundation-rails"
