@@ -1,5 +1,5 @@
-window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $http, $location) ->
-  $scope.spree_user = {}
+window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $http, $location, SpreeUser) ->
+  $scope.spree_user = SpreeUser.spree_user
   $scope.errors =
     email: null
     password: null

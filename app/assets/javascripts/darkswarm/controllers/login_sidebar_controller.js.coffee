@@ -1,7 +1,5 @@
-window.LoginSidebarCtrl = Darkswarm.controller "LoginSidebarCtrl", ($scope, $http, $location) ->
-  $scope.spree_user = {
-    remember_me: 0
-  }
+window.LoginSidebarCtrl = Darkswarm.controller "LoginSidebarCtrl", ($scope, $http, $location, SpreeUser) ->
+  $scope.spree_user = SpreeUser.spree_user
 
   $scope.active = ->
     $location.path() == '/login'
