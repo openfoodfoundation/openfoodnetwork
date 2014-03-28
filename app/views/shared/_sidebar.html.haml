@@ -16,8 +16,11 @@
             %dl
               %dt Last hub:
               %dd
-                = link_to "#{order.distributor.name}".html_safe, "", 
-                  {class: distributor_link_class(order.distributor),
-                  "ng-click" => "emptyCart('#{main_app.shop_enterprise_path(order.distributor)}', $event)"}
+                - if order.distributor != current_distributor
+                  = link_to "#{order.distributor.name}".html_safe, "", 
+                    {class: distributor_link_class(order.distributor),
+                    "ng-click" => "emptyCart('#{main_app.shop_enterprise_path(order.distributor)}', $event)"}
+                - else
+                  = order.distributor.name
             
   = yield :sidebar
