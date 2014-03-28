@@ -24,15 +24,15 @@
       %div{ :class => "four columns alpha" }
         Column:
         %br.clear
-        %select.select2.fullwidth{ 'ng-model' => 'filterProperty', :name => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns' }
+        %select.select2.fullwidth{ 'ng-model' => 'filterProperty', :id => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns' }
       %div{ :class => "four columns omega" }
         Filter Type:
         %br.clear
-        %select.select2.fullwidth{ 'ng-model' => 'filterPredicate', :name => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes' }
+        %select.select2.fullwidth{ 'ng-model' => 'filterPredicate', :id => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes' }
       %div{ :class => "six columns omega" }
         Value:
         %br.clear
-        %input{ :class => "four columns alpha", 'ng-model' => 'filterValue', :name => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
+        %input{ :class => "four columns alpha", 'ng-model' => 'filterValue', :id => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
       %div{ :class => "two columns omega" }
         &nbsp;
         %input.fullwidth{ :name => "add_filter", :value => "Apply Filter", :type => "button", "ng-click" => "addFilter({property:filterProperty,predicate:filterPredicate,value:filterValue})" }
@@ -108,7 +108,7 @@
           %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
       %tbody{ 'ng-repeat' => 'product in filteredProducts = (products | filter:query)', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", 'ng-show' => "$index >= perPage*(currentPage-1) && $index < perPage*currentPage" }
-        %tr.product
+        %tr.product{ :id => "p_{{product.id}}" }
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
@@ -118,7 +118,7 @@
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-              %option{'value' => '', 'ng-hide' => "hasVariants(product)"}
+              %option{'value' => '', 'ng-hide' => "hasVariants(product) && hasUnit(product)"}
             %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-product' => 'master.unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td{ 'ng-show' => 'columns.price.visible' }

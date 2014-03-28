@@ -2,4 +2,21 @@
   heading: "Forgot Password?",
   active: "active()",
   select: "select()"}
-  Well you're a bit stupid then
+
+  {{ spree_user.email }}
+  %form{"ng-submit" => "submit()"}
+    .alert-box.alert{"ng-show" => "errors != null"}
+      {{ errors }}
+    .row
+      .large-12.columns
+        %label{for: "email"} Email
+        %input.title.input-text{name: "email", 
+          type: "email",
+          tabindex: 1,
+          "ng-model" => "spree_user.email"}
+    .row
+      .large-12.columns
+        %input.button.primary{name: "commit", 
+          tabindex: "3", 
+          type: "submit", 
+          value: "Reset password"}

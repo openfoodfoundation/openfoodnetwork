@@ -46,9 +46,9 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays a 'loading' splash for line items" do
-        page.should have_selector "div.loading", :text => "Loading Line Items..."
-      end
+      #it "displays a 'loading' splash for line items" do
+      #  page.should have_selector "div.loading", :text => "Loading Line Items..."
+      #end
 
       it "displays a list of line items" do
         page.should have_selector "tr#li_#{li1.id}"
@@ -182,7 +182,6 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Line Items"
         page.should have_selector "div.filters", :visible => true
-        page.should have_selector "li.column-list-item", text: "Producer"
 
         first("div.option_tab_titles h6", :text => "Filter Line Items").click
 
@@ -236,75 +235,88 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays a select box for producers, which filters line items by the selected supplier" do
-        page.should have_select "supplier_filter", with_options: [s1.name,s2.name]
+        supplier_names = ["All"]
+        Enterprise.is_primary_producer.each{ |e| supplier_names << e.name }
+        find("div.select2-container#s2id_supplier_filter").click
+        supplier_names.each { |sn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: sn }
+        find("div.select2-container#s2id_supplier_filter").click
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
-        select s1.name, from: "supplier_filter"
+        select2_select s1.name, from: "supplier_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays all line items when 'All' is selected from supplier filter" do
-        select s1.name, from: "supplier_filter"
+        select2_select s1.name, from: "supplier_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select "All", from: "supplier_filter"
+        select2_select "All", from: "supplier_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays a select box for distributors, which filters line items by the selected distributor" do
-        page.should have_select "distributor_filter", with_options: [d1.name,d2.name]
+        distributor_names = ["All"]
+        Enterprise.is_distributor.each{ |e| distributor_names << e.name }
+        find("div.select2-container#s2id_distributor_filter").click
+        distributor_names.each { |dn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: dn }
+        find("div.select2-container#s2id_distributor_filter").click
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
-        select d1.name, from: "distributor_filter"
+        select2_select d1.name, from: "distributor_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays all line items when 'All' is selected from distributor filter" do
-        select d1.name, from: "distributor_filter"
+        select2_select d1.name, from: "distributor_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select "All", from: "distributor_filter"
+        select2_select "All", from: "distributor_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays a select box for order cycles, which filters line items by the selected order cycle" do
-        page.should have_select "order_cycle_filter", with_options: [oc1.name,oc2.name]
+        order_cycle_names = ["All"]
+        OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
+        find("div.select2-container#s2id_order_cycle_filter").click
+        order_cycle_names.each { |ocn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
+        find("div.select2-container#s2id_order_cycle_filter").click
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
-        select oc1.name, from: "order_cycle_filter"
+        select2_select oc1.name, from: "order_cycle_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "displays all line items when 'All' is selected from order_cycle filter" do
-        select oc1.name, from: "order_cycle_filter"
+        select2_select oc1.name, from: "order_cycle_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select "All", from: "order_cycle_filter"
+        select2_select "All", from: "order_cycle_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
 
       it "allows filters to be used in combination" do
-        select oc1.name, from: "order_cycle_filter"
+        select2_select oc1.name, from: "order_cycle_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select d1.name, from: "distributor_filter"
-        select s1.name, from: "supplier_filter"
+        select2_select d1.name, from: "distributor_filter"
+        select2_select s1.name, from: "supplier_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select d2.name, from: "distributor_filter"
-        select s2.name, from: "supplier_filter"
+        select2_select d2.name, from: "distributor_filter"
+        select2_select s2.name, from: "supplier_filter"
         page.should_not have_selector "tr#li_#{li1.id}", visible: true
         page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select oc2.name, from: "order_cycle_filter"
+        select2_select oc2.name, from: "order_cycle_filter"
         page.should_not have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
@@ -347,6 +359,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays date fields for filtering orders, with default values set" do
@@ -363,7 +376,6 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
         fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
@@ -381,7 +393,6 @@ feature %q{
           li2_quantity_column.fill_in "quantity", :with => li2.quantity + 1
           page.should_not have_button "IGNORE"
           page.should_not have_button "SAVE"
-          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           page.should have_button "IGNORE"
           page.should have_button "SAVE"
@@ -391,7 +402,6 @@ feature %q{
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
-          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           click_button "SAVE"
           page.should_not have_selector "input[name='quantity'].update-pending"
@@ -404,7 +414,6 @@ feature %q{
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
-          first("div.option_tab_titles h6", :text => "Filter Line Items").click
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           click_button "IGNORE"
           page.should_not have_selector "input[name='quantity'].update-pending"
@@ -438,7 +447,9 @@ feature %q{
       end
 
       it "displays a bulk action select box with a list of actions" do
-        page.should have_select "bulk_actions", :options => ["Delete"]
+        list_of_actions = ['Delete']
+        find("div.select2-container#s2id_bulk_actions").click
+        list_of_actions.each { |a| page.should have_selector "div.select2-drop-active ul.select2-results li", text: a }
       end
 
       it "displays a bulk action button" do
@@ -452,7 +463,7 @@ feature %q{
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          select "Delete", :from => "bulk_actions"
+          select2_select "Delete", :from => "bulk_actions"
           click_button "bulk_execute"
           page.should have_selector "tr#li_#{li1.id}", visible: true
           page.should_not have_selector "tr#li_#{li2.id}", visible: true
@@ -472,7 +483,7 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
-          select "Delete", :from => "bulk_actions"
+          select2_select "Delete", :from => "bulk_actions"
           click_button "bulk_execute"
           fill_in "quick_search", with: ''
           page.should_not have_selector "tr#li_#{li1.id}", visible: true
