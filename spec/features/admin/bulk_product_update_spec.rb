@@ -21,14 +21,6 @@ feature %q{
       login_to_admin_section
     end
 
-    it "displays a 'loading' splash for products" do
-      FactoryGirl.create(:simple_product)
-
-      visit '/admin/products/bulk_edit'
-
-      page.should have_selector "div.loading", :text => "Loading Products...", visible: false
-    end
-
     it "displays a list of products" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
@@ -80,9 +72,11 @@ feature %q{
       p2 = FactoryGirl.create(:product, available_on: Date.today-1)
 
       visit '/admin/products/bulk_edit'
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
-      page.should have_field "available_on", with: p1.available_on.strftime("%F %T"), visible: false
-      page.should have_field "available_on", with: p2.available_on.strftime("%F %T"), visible: false
+      page.should have_field "available_on", with: p1.available_on.strftime("%F %T")
+      page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
     end
 
     it "displays a price input for each product without variants (ie. for master variant)" do
@@ -186,7 +180,7 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
       page.should have_selector "a.view-variants"
-      first("a.view-variants").click
+      all("a.view-variants").each{ |e| e.click }
 
       page.should have_field "product_name", with: v1.product.name
       page.should have_field "product_name", with: v2.product.name
@@ -200,6 +194,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
       page.should have_selector "span[name='on_hand']", text: "21"
       page.should have_field "variant_on_hand", with: "15"
@@ -213,8 +208,9 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
-      page.should have_field "price", with: "2.0"
+      page.should have_field "price", with: "2.0", visible: false
       page.should have_field "variant_price", with: "12.75"
       page.should have_field "variant_price", with: "2.5"
     end
@@ -225,8 +221,8 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)")
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
-      page.should have_field "price", with: "2.0"
       page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
       page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
     end
@@ -345,9 +341,9 @@ feature %q{
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
     page.should have_select "supplier", selected: s2.name
     page.should have_field "available_on", with: (Date.today-3).strftime("%F %T"), visible: false
-    page.should have_field "price", with: "20.0", visible: false
-    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)", visible: false
-    page.should have_field "on_hand", with: "18", visible: false
+    page.should have_field "price", with: "20.0"
+    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+    page.should have_field "on_hand", with: "18"
   end
   
   scenario "updating a product with a variant unit of 'items'" do
@@ -371,7 +367,6 @@ feature %q{
     page.should have_field "variant_unit_name", with: "loaf"
   end
 
-
   scenario "setting a variant unit on a product that has none" do
     p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
     v = FactoryGirl.create(:variant, product: p, unit_value: nil, unit_description: nil)
@@ -379,22 +374,22 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
-    first("a.view-variants").click
 
     page.should have_select "variant_unit_with_scale", selected: ''
 
     select "Weight (kg)", from: "variant_unit_with_scale"
+    first("a.view-variants").click
     fill_in "variant_unit_value_with_description", with: '123 abc'
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
     visit '/admin/products/bulk_edit'
+    first("a.view-variants").click
 
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "variant_unit_value_with_description", with: "123 abc"
   end
-
 
   describe "setting the master unit value for a product without variants" do
     it "sets the master unit value" do
@@ -556,11 +551,12 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
+    page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
     first("div.option_tab_titles h6", :text => "Filter Products").click
 
-    select "Name", :from => "filter_property", visible: false
-    select "Contains", :from => "filter_predicate", visible: false
-    fill_in "filter_value", :with => "1", visible: false
+    select2_select "Name", from: "filter_property"
+    select2_select "Contains", from: "filter_predicate"
+    fill_in "filter_value", :with => "1"
     click_button "Apply Filter"
     page.should_not have_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
@@ -652,9 +648,9 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        first("a.view-variants").click
+        all("a.view-variants").each { |e| e.click }
 
-        page.should have_selector "a.edit-variant", :count => 3, visible: false
+        page.should have_selector "a.edit-variant", :count => 3
 
         first("a.edit-variant").click
 
@@ -712,7 +708,6 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Products"
         page.should have_selector "div.filters", :visible => true
-        page.should have_selector "li.column-list-item", text: "Available On", visible: false
 
         first("div.option_tab_titles h6", :text => "Filter Products").click
 
@@ -838,8 +833,8 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
         first("div.option_tab_titles h6", :text => "Filter Products").click
 
-        page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
-        page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
+        page.should have_select "filter_property", visible: false
+        page.should have_select "filter_predicate", visible: false
         page.should have_field "filter_value"
       end
 
@@ -853,8 +848,8 @@ feature %q{
 
           first("div.option_tab_titles h6", :text => "Filter Products").click
 
-          select "Name", :from => "filter_property"
-          select "Equals", :from => "filter_predicate"
+          select2_select "Name", :from => "filter_property"
+          select2_select "Equals", :from => "filter_predicate"
           fill_in "filter_value", :with => "Product1"
           click_button "Apply Filter"
         end
@@ -879,10 +874,6 @@ feature %q{
 
           it "removes the filter from the list of applied filters" do
             page.should_not have_text "Name Equals Product1"
-          end
-
-          it "displays the 'loading' splash" do
-            page.should have_selector "div.loading", :text => "Loading Products..."
           end
 
           it "loads appropriate products" do
@@ -939,7 +930,6 @@ feature %q{
       p = product_supplied
 
       visit '/admin/products/bulk_edit'
-      
       first("div.option_tab_titles h6", :text => "Toggle Columns").click
       first("li.column-list-item", text: "Available On").click
 
@@ -959,6 +949,8 @@ feature %q{
       page.find("span#update-status-message").should have_content "Update complete"
 
       visit '/admin/products/bulk_edit'
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
       page.should have_field "product_name", with: "Big Bag Of Potatoes"
       page.should have_select "supplier", selected: s2.name

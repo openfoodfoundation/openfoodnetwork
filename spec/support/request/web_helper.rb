@@ -105,6 +105,12 @@ module WebHelper
     end
   end
 
+  def select2_select(value, options)
+    id = options[:from]
+    options[:from] = "#s2id_#{id}"
+    targetted_select2(value, options)
+  end
+
   private
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
