@@ -7,6 +7,7 @@
 #= require angular-resource
 #= require ../shared/mm-foundation-tpls-0.2.0-SNAPSHOT
 #= require ../shared/bindonce.min.js
+#= require ../shared/ng-infinite-scroll.min.js
 #
 #= require ../shared/jquery.timeago
 #= require foundation
