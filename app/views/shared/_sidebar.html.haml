@@ -7,20 +7,6 @@
       = render partial: "shared/signup_sidebar"
       = render partial: "shared/forgot_sidebar"
   - else
-    #account{"ng-controller" => "AccountSidebarCtrl"}
-      .row
-        .panel
-          %p
-            %strong= link_to "Manage my account", account_path 
-          - if order = last_completed_order
-            %dl
-              %dt Last hub:
-              %dd
-                - if order.distributor != current_distributor
-                  = link_to "#{order.distributor.name}".html_safe, "", 
-                    {class: distributor_link_class(order.distributor),
-                    "ng-click" => "emptyCart('#{main_app.shop_enterprise_path(order.distributor)}', $event)"}
-                - else
-                  = order.distributor.name
+    = render partial: "shared/account_sidebar"
             
   = yield :sidebar
