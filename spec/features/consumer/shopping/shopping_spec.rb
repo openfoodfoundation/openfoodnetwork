@@ -13,13 +13,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
       click_link distributor.name
     end
 
-    it "shows a distributor" do
+    it "shows a distributor with images" do
       visit shop_path
       page.should have_text distributor.name
-    end
 
-    it "shows distributor images" do
-      visit shop_path
       find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
       first("#about img")['src'].should == distributor.promo_image.url(:large) 
