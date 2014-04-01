@@ -19,8 +19,8 @@
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr{"class" => "product product-{{ product.id }}"}
 
-          %td.name{bindonce: ""}
-            %img{"bo-src" => "{{ product.master.images[0].small_url }}"}
+          %td.name{bindonce: "product"}
+            %img{"bo-src" => "product.master.images[0].small_url"}
             %div
               %h5
                 {{ product.name }}
