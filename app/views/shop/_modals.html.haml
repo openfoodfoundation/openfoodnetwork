@@ -17,7 +17,6 @@
     %a.close-reveal-modal &#215;
 
 
-
 - for group in current_distributor.groups
   - for sibling in group.enterprises.except(current_distributor)
     .reveal-modal{id: "sibling_details_#{sibling.id}", "data-reveal" => ""}
@@ -35,4 +34,3 @@
           .large-4.columns
             %img.about.right{src: sibling.promo_image.url(:large)}
       %a.close-reveal-modal &#215;
-

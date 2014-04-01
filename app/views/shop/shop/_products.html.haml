@@ -12,6 +12,10 @@
         %th.quantity QTY
         %th.bulk Bulk
         %th.price.text-right Price
+      %tbody{"ng-show" => "data.loading"}
+        %tr
+          %td{colspan: 6}
+            %h3.text-center Loading Products
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr{"class" => "product product-{{ product.id }}"}
           %td.name
