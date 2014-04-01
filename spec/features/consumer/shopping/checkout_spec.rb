@@ -37,12 +37,9 @@ feature "As a consumer I want to check out my cart", js: true do
           distributor.shipping_methods << sm2 
           visit "/shop/checkout"
         end
-        it "shows all shipping methods" do
+        it "shows all shipping methods, but doesn't show ship address when not needed" do
           page.should have_content "Frogs"
           page.should have_content "Donkeys"
-        end
-
-        it "doesn't show ship address forms when a shipping method wants no address" do
           choose(sm2.name)
           find("#ship_address", visible: false).visible?.should be_false
         end
