@@ -6,5 +6,5 @@
         %ul
           - for sibling in group.enterprises.except(current_distributor)
             %li
-              %a{"data-reveal-id" => "sibling_details_#{sibling.id}"}
+              %a{"data-reveal-id" => "sibling_details_#{sibling.id}", "data-reveal" => ""}
                 = sibling.name 

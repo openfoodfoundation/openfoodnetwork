@@ -2,5 +2,5 @@
   %ul
     - for producer in current_producers
       %li
-        %a{"data-reveal-id" => "producer_details_#{producer.id}"}
+        %a{"data-reveal-id" => "producer_details_#{producer.id}", "data-reveal" => ""}
           = producer.name

@@ -19,7 +19,7 @@
             %div
               %h5
                 {{ product.name }}
-              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}"}
+              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}", "data-reveal" => ""}
                 {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
           %td 
