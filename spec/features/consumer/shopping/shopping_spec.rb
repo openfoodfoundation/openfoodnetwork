@@ -40,32 +40,27 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     describe "selecting an order cycle" do
+      let(:oc1) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 2.days.from_now)} 
+      let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
+      let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
       it "selects an order cycle if only one is open" do
         # create order cycle
-        oc1 = create(:simple_order_cycle, distributors: [distributor])
-        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-        exchange.update_attribute :pickup_time, "turtles" 
+        exchange1.update_attribute :pickup_time, "turtles" 
         visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
       end
 
       describe "with multiple order cycles" do
-        let(:oc1) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 2.days.from_now)} 
-        let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
         before do
-          exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "frogs" 
-          exchange = Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "turtles" 
+          exchange1.update_attribute :pickup_time, "frogs" 
+          exchange2.update_attribute :pickup_time, "turtles" 
           visit shop_path
         end
 
-        it "shows a select with all order cycles" do
+        it "shows a select with all order cycles, but doesn't show the products by default" do
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
-        end
-
-        it "doesn't show the table before an order cycle is selected" do
           page.should_not have_selector("input.button.right", visible: true)
         end
 
@@ -77,32 +72,19 @@ feature "As a consumer I want to shop with a distributor", js: true do
         describe "with products in our order cycle" do
           let(:product) { create(:simple_product) }
           before do
-            exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-            exchange.variants << product.master
+            exchange1.variants << product.master
             visit shop_path
           end
           
-          it "allows us to select an order cycle" do
-            select "frogs", :from => "order_cycle_id"
+          it "allows us to select an order cycle, thus showing products" do
+            page.should_not have_content product.name 
             Spree::Order.last.order_cycle.should == nil
+
+            select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
             page.should have_content "Orders close 2 days from now" 
             Spree::Order.last.order_cycle.should == oc1
-          end
-
-          it "doesn't show products before an order cycle is selected" do
-            page.should_not have_content product.name 
-          end
-
-          it "shows products when an order cycle has been selected" do
-            select "frogs", :from => "order_cycle_id"
             page.should have_content product.name 
-          end
-
-          it "updates the orders close note when order cycle is changed" do
-            oc1.stub(:orders_close_at).and_return 3.days.from_now
-            select "turtles", :from => "order_cycle_id"
-            page.should have_content "Orders close 3 days from now"
           end
         end
       end
