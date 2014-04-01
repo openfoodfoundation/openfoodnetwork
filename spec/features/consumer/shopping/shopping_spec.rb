@@ -6,6 +6,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
   describe "Viewing a distributor" do
     let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { Spree::Order.last }
 
     before do #temporarily using the old way to select distributor
       create_enterprise_group_for distributor
@@ -326,8 +327,9 @@ def build_and_select_order_cycle
   exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
   exchange.update_attribute :pickup_time, "frogs" 
   exchange.variants << product.master
+  order.update_attribute :order_cycle, oc
+  #select "frogs", :from => "order_cycle_id"
   visit shop_path
-  select "frogs", :from => "order_cycle_id"
   exchange
 end
 
@@ -337,7 +339,8 @@ def build_and_select_order_cycle_with_variants
   exchange.update_attribute :pickup_time, "frogs" 
   exchange.variants << product.master
   exchange.variants << variant 
+  #select "frogs", :from => "order_cycle_id"
+  order.update_attribute :order_cycle, oc
   visit shop_path
-  select "frogs", :from => "order_cycle_id"
   exchange
 end
