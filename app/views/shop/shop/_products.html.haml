@@ -18,15 +18,18 @@
             %h3.text-center Loading Products
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr{"class" => "product product-{{ product.id }}"}
-          %td.name
-            %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
+
+          %td.name{bindonce: ""}
+            %img{"bo-src" => "{{ product.master.images[0].small_url }}"}
             %div
               %h5
                 {{ product.name }}
               %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}", "data-reveal" => ""}
                 {{ product.supplier.name }}
-          %td.notes {{ product.notes | truncate:80 }}
-          %td 
+
+          %td.notes{bindonce: ""} {{ product.notes | truncate:80 }}
+
+          %td{bindonce: ""} 
             %span{"ng-hide" => "product.variants.length > 0"} {{ product.master.options_text }}
             %span{"ng-show" => "product.variants.length > 0"}
               %img.collapse{src: "/assets/collapse.png",
@@ -45,6 +48,7 @@
               name: "variants[{{product.master.id}}]", 
               id: "variants_{{product.master.id}}",
               "ng-model" => "product.quantity"}
+
           %td.group_buy
             %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
               %input{type: :number,
@@ -52,13 +56,18 @@
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variant_attributes[{{product.master.id}}][max_quantity]",
               "ng-model" => "product.max_quantity"}
-          %td.price.text-right
+
+          %td.price.text-right{bindonce: ""}
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ productPrice(product) | currency }}
-        %tr.product-description
+
+        %tr.product-description{bindonce: ""}
           %td{colspan: 2}{{ product.notes | truncate:80 }}
+
         %tr.variant{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
+
           = render partial: "shop/shop/variant"
+
     %input.button.right{type: :submit, value: "Add to Cart"}
 
 

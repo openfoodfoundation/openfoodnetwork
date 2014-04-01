@@ -1,7 +1,7 @@
 
 %td
 %td.notes
-%td {{variant.options_text}}
+%td{bindonce: ""} {{variant.options_text}}
 %td 
   %input{type: :number, 
   value: nil, 
@@ -16,5 +16,5 @@
     max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
     name: "variant_attributes[{{variant.id}}][max_quantity]",
     "ng-model" => "variant.max_quantity"}
-%td.price.text-right
+%td.price.text-right{bindonce: ""}
   {{ variant.price | currency }}
