@@ -3,12 +3,14 @@ require 'spec_helper'
 
 feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationWorkflow
+  include ShopWorkflow
   include WebHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
+  let(:order) { Spree::Order.last }
 
   before do
     create_enterprise_group_for distributor
