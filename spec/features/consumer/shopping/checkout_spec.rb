@@ -14,8 +14,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
   before do
     create_enterprise_group_for distributor
-    exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
-    exchange.variants << product.master
   end
 
   # Disabled :in for performance reasons
