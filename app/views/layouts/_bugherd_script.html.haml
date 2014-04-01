@@ -1,4 +1,4 @@
-- if Rails.env.staging? 
+- if Rails.env.staging? or Rails.env.production?
   :javascript
     (function (d, t) {
       var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -7,11 +7,12 @@
       s.parentNode.insertBefore(bh, s);
     })(document, 'script');
 
-- elsif Rails.env.production?
-  :javascript
-    (function (d, t) {
-      var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      bh.type = 'text/javascript';
-      bh.src = '//www.bugherd.com/sidebarv2.js?apikey=xro3uv55objies58o2wrua';
-      s.parentNode.insertBefore(bh, s);
-      })(document, 'script');
+
+-#- elsif Rails.env.production?
+  -#:javascript
+    -#(function (d, t) {
+      -#var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      -#bh.type = 'text/javascript';
+      -#bh.src = '//www.bugherd.com/sidebarv2.js?apikey=xro3uv55objies58o2wrua';
+      -#s.parentNode.insertBefore(bh, s);
+      -#})(document, 'script');
