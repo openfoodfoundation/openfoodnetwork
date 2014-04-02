@@ -10,7 +10,7 @@ class Shop::ShopController < BaseController
   def products
     unless @products = current_order_cycle.andand
       .valid_products_distributed_by(current_distributor).andand
-      .select { |p| p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
+      .select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
       .sort_by {|p| p.name }
 
       render json: "", status: 404

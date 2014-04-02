@@ -143,13 +143,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
-      describe "filtering on hand and on demand products" do
+      describe "filtering products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:p1) { create(:simple_product, on_demand: false) }
         let(:p2) { create(:simple_product, on_demand: true) }
         let(:p3) { create(:simple_product, on_demand: false) }
         let(:p4) { create(:simple_product, on_demand: false) }
         let(:p5) { create(:simple_product, on_demand: false) }
+        let(:p6) { create(:simple_product, on_demand: false) }
         let(:v1) { create(:variant, product: p4, unit_value: 2) }
         let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
         let(:v3) { create(:variant, product: p4, unit_value: 4, on_demand: true) }
@@ -162,6 +163,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           p1.master.update_attribute(:count_on_hand, 1)
           p2.master.update_attribute(:count_on_hand, 0)
           p3.master.update_attribute(:count_on_hand, 0)
+          p6.master.update_attribute(:count_on_hand, 1)
+          p6.delete
           v1.update_attribute(:count_on_hand, 1)
           v2.update_attribute(:count_on_hand, 0)
           v3.update_attribute(:count_on_hand, 0)
@@ -172,6 +175,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           exchange.variants << p1.master
           exchange.variants << p2.master
           exchange.variants << p3.master
+          exchange.variants << p6.master
           exchange.variants << v1
           exchange.variants << v2
           exchange.variants << v3
@@ -203,6 +207,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           # It does not show products that have no available variants in this distribution
           page.should_not have_content p5.name
+
+          # It does not show deleted products
+          page.should_not have_content p6.name
         end
       end
 
