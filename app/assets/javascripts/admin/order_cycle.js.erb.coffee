@@ -286,10 +286,25 @@ angular.module('order_cycle', ['ngResource'])
             console.log('Failed to update order cycle')
 
       dataForSubmit: ->
-        data = angular.extend({}, this.order_cycle)
+        data = this.deepCopy()
         data = this.removeInactiveExchanges(data)
         data = this.translateCoordinatorFees(data)
         data = this.translateExchangeFees(data)
+        data
+
+      deepCopy: ->
+        data = angular.extend({}, this.order_cycle)
+
+        # Copy exchanges
+        data.incoming_exchanges = (angular.extend {}, exchange for exchange in this.order_cycle.incoming_exchanges) if this.order_cycle.incoming_exchanges?
+        data.outgoing_exchanges = (angular.extend {}, exchange for exchange in this.order_cycle.outgoing_exchanges) if this.order_cycle.outgoing_exchanges?
+
+        # Copy exchange fees
+        all_exchanges = (data.incoming_exchanges || []) + (data.outgoing_exchanges || [])
+        for exchange in all_exchanges
+          if exchange.enterprise_fees?
+            exchange.enterprise_fees = (angular.extend {}, fee for fee in exchange.enterprise_fees)
+
         data
 
       removeInactiveExchanges: (order_cycle) ->

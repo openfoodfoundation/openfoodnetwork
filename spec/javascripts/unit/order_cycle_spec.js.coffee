@@ -770,35 +770,62 @@ describe 'OrderCycle services', ->
           ]
 
       it 'converts coordinator fees into a list of ids', ->
-        data =
+        order_cycle =
           coordinator_fees: [
             {id: 1}
             {id: 2}
             ]
 
-        data = OrderCycle.translateCoordinatorFees(data)
+        data = OrderCycle.translateCoordinatorFees(order_cycle)
 
         expect(data.coordinator_fees).toBeUndefined()
         expect(data.coordinator_fee_ids).toEqual [1, 2]
 
-      it 'converts exchange fees into a list of ids', ->
-        data =
-          incoming_exchanges: [
-            enterprise_fees: [
-              {id: 1}
-              {id: 2}
+      it "preserves original data when converting coordinator fees", ->
+       OrderCycle.order_cycle =
+          coordinator_fees: [
+            {id: 1}
+            {id: 2}
             ]
-          ]
-          outgoing_exchanges: [
-            enterprise_fees: [
-              {id: 3}
-              {id: 4}
+
+        data = OrderCycle.deepCopy()
+        data = OrderCycle.translateCoordinatorFees(data)
+
+        expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{id: 1}, {id: 2}]
+        expect(OrderCycle.order_cycle.coordinator_fee_ids).toBeUndefined()
+
+      describe "converting exchange fees into a list of ids", ->
+        order_cycle = null
+        data = null
+
+        beforeEach ->
+          order_cycle =
+            incoming_exchanges: [
+              enterprise_fees: [
+                {id: 1}
+                {id: 2}
+              ]
             ]
-          ]
+            outgoing_exchanges: [
+              enterprise_fees: [
+                {id: 3}
+                {id: 4}
+              ]
+            ]
+          OrderCycle.order_cycle = order_cycle
 
-        data = OrderCycle.translateExchangeFees(data)
+          data = OrderCycle.deepCopy()
+          data = OrderCycle.translateExchangeFees(data)
 
-        expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
-        expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
-        expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
-        expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]
+        it 'converts exchange fees into a list of ids', ->
+          expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
+          expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
+          expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
+          expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]
+
+        it "preserves original data when converting exchange fees", ->
+          expect(order_cycle.incoming_exchanges[0].enterprise_fees).toEqual [{id: 1}, {id: 2}]
+          expect(order_cycle.outgoing_exchanges[0].enterprise_fees).toEqual [{id: 3}, {id: 4}]
+          expect(order_cycle.incoming_exchanges[0].enterprise_fee_ids).toBeUndefined()
+          expect(order_cycle.outgoing_exchanges[0].enterprise_fee_ids).toBeUndefined()
+  
