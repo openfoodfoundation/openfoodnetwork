@@ -13,12 +13,16 @@ describe Exchange do
     end
   end
 
-  it "should not be valid when sender and receiver pair are not unique for its order cycle" do
+  it "should not be valid when (sender, receiver, direction) set are not unique for its order cycle" do
     e1 = create(:exchange)
 
     e2 = build(:exchange,
-               :order_cycle => e1.order_cycle, :sender => e1.sender, :receiver => e1.receiver)
+               :order_cycle => e1.order_cycle, :sender => e1.sender, :receiver => e1.receiver, :incoming => e1.incoming)
     e2.should_not be_valid
+
+    e2.incoming = !e2.incoming
+    e2.should be_valid
+    e2.incoming = !e2.incoming
 
     e2.receiver = create(:enterprise)
     e2.should be_valid
