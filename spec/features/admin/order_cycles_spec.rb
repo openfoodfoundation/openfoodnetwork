@@ -141,9 +141,9 @@ feature %q{
     page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some fees
-    OrderCycle.last.exchanges.first.enterprise_fees.should == [supplier_fee]
-    OrderCycle.last.coordinator_fees.should                == [coordinator_fee]
-    OrderCycle.last.exchanges.last.enterprise_fees.should  == [distributor_fee]
+    OrderCycle.last.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
+    OrderCycle.last.coordinator_fees.should                         == [coordinator_fee]
+    OrderCycle.last.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
 
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
