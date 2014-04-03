@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140324025840) do
+ActiveRecord::Schema.define(:version => 20140402032034) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -22,10 +22,13 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
   end
 
   add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
+  add_index "adjustment_metadata", ["enterprise_id"], :name => "index_adjustment_metadata_on_enterprise_id"
 
   create_table "carts", :force => true do |t|
     t.integer "user_id"
   end
+
+  add_index "carts", ["user_id"], :name => "index_carts_on_user_id"
 
   create_table "cms_blocks", :force => true do |t|
     t.integer  "page_id",    :null => false
@@ -149,10 +152,16 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.integer "enterprise_fee_id"
   end
 
+  add_index "coordinator_fees", ["enterprise_fee_id"], :name => "index_coordinator_fees_on_enterprise_fee_id"
+  add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
+
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
     t.integer "payment_method_id"
   end
+
+  add_index "distributors_payment_methods", ["distributor_id"], :name => "index_distributors_payment_methods_on_distributor_id"
+  add_index "distributors_payment_methods", ["payment_method_id"], :name => "index_distributors_payment_methods_on_payment_method_id"
 
   create_table "distributors_shipping_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
@@ -170,6 +179,8 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.datetime "updated_at",    :null => false
   end
 
+  add_index "enterprise_fees", ["enterprise_id"], :name => "index_enterprise_fees_on_enterprise_id"
+
   create_table "enterprise_groups", :force => true do |t|
     t.string  "name"
     t.boolean "on_front_page"
@@ -181,10 +192,16 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.integer "enterprise_id"
   end
 
+  add_index "enterprise_groups_enterprises", ["enterprise_group_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_group_id"
+  add_index "enterprise_groups_enterprises", ["enterprise_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_id"
+
   create_table "enterprise_roles", :force => true do |t|
     t.integer "user_id"
     t.integer "enterprise_id"
   end
+
+  add_index "enterprise_roles", ["enterprise_id"], :name => "index_enterprise_roles_on_enterprise_id"
+  add_index "enterprise_roles", ["user_id"], :name => "index_enterprise_roles_on_user_id"
 
   create_table "enterprises", :force => true do |t|
     t.string   "name"
@@ -215,6 +232,8 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.datetime "promo_image_updated_at"
   end
 
+  add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"
     t.integer  "enterprise_fee_id"
@@ -222,12 +241,18 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.datetime "updated_at",        :null => false
   end
 
+  add_index "exchange_fees", ["enterprise_fee_id"], :name => "index_exchange_fees_on_enterprise_fee_id"
+  add_index "exchange_fees", ["exchange_id"], :name => "index_exchange_fees_on_exchange_id"
+
   create_table "exchange_variants", :force => true do |t|
     t.integer  "exchange_id"
     t.integer  "variant_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "exchange_variants", ["exchange_id"], :name => "index_exchange_variants_on_exchange_id"
+  add_index "exchange_variants", ["variant_id"], :name => "index_exchange_variants_on_variant_id"
 
   create_table "exchanges", :force => true do |t|
     t.integer  "order_cycle_id"
@@ -240,6 +265,11 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.datetime "updated_at",                               :null => false
     t.boolean  "incoming",              :default => false, :null => false
   end
+
+  add_index "exchanges", ["order_cycle_id"], :name => "index_exchanges_on_order_cycle_id"
+  add_index "exchanges", ["payment_enterprise_id"], :name => "index_exchanges_on_payment_enterprise_id"
+  add_index "exchanges", ["receiver_id"], :name => "index_exchanges_on_receiver_id"
+  add_index "exchanges", ["sender_id"], :name => "index_exchanges_on_sender_id"
 
   create_table "landing_page_images", :force => true do |t|
     t.datetime "created_at",         :null => false
@@ -266,6 +296,10 @@ ActiveRecord::Schema.define(:version => 20140324025840) do
     t.datetime "updated_at"
     t.integer  "enterprise_fee_id"
   end
+
+  add_index "product_distributions", ["distributor_id"], :name => "index_product_distributions_on_distributor_id"
+  add_index "product_distributions", ["enterprise_fee_id"], :name => "index_product_distributions_on_enterprise_fee_id"
+  add_index "product_distributions", ["product_id"], :name => "index_product_distributions_on_product_id"
 
   create_table "spree_activators", :force => true do |t|
     t.string   "description"
