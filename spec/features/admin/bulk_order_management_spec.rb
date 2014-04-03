@@ -575,4 +575,30 @@ feature %q{
       end
     end
   end
+
+  context "as an enterprise manager" do
+    let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:s2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+    let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+    let!(:line_item_distributed) { FactoryGirl.create(:line_item, order: o1 ) }
+    let!(:line_item_not_distributed) { FactoryGirl.create(:line_item, order: o2 ) }
+
+    before(:each) do
+      @enterprise_user = create_enterprise_user
+      @enterprise_user.enterprise_roles.build(enterprise: s1).save
+      @enterprise_user.enterprise_roles.build(enterprise: d1).save
+
+      login_to_admin_as @enterprise_user
+    end
+
+    it "shows only line item from orders that I supply" do
+      visit '/admin/orders/bulk_management'
+
+      page.should have_selector "tr#li_#{line_item_distributed.id}", :visible => true
+      page.should_not have_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
+    end
+  end
 end

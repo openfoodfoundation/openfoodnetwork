@@ -167,7 +167,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 
     $scope.fetchOrders = ->
       $scope.loading = true
-      dataFetcher("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=#{$scope.startDate}&q[completed_at_lt]=#{$scope.endDate}").then (data) ->
+      dataFetcher("/api/orders/managed?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=#{$scope.startDate}&q[completed_at_lt]=#{$scope.endDate}").then (data) ->
         $scope.resetOrders data
         $scope.loading = false
 

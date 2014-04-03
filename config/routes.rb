@@ -104,6 +104,10 @@ Spree::Core::Engine.routes.prepend do
       get :managed, on: :collection
     end
 
+    resources :orders do
+      get :managed, on: :collection
+    end
+
     resources :enterprises do
       get :managed, on: :collection
     end
