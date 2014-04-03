@@ -72,7 +72,9 @@ feature "As a consumer I want to check out my cart", js: true do
         it "copies billing address to hidden shipping address fields" do
           choose(sm1.name)
           check "Shipping address same as billing address?"
-          fill_in "Billing Address", with: "testy"
+          within "#billing" do
+            fill_in "Address", with: "testy"
+          end
           within "#ship_address_hidden" do
             find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
           end
