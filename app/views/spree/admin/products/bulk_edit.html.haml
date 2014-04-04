@@ -24,11 +24,11 @@
       %div{ :class => "four columns alpha" }
         Column:
         %br.clear
-        %select.select2.fullwidth{ 'ng-model' => 'filterProperty', :id => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns' }
+        %select.fullwidth{ 'ng-model' => 'filterProperty', :id => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns', 'ofn-select2-min-search' => 10 }
       %div{ :class => "four columns omega" }
         Filter Type:
         %br.clear
-        %select.select2.fullwidth{ 'ng-model' => 'filterPredicate', :id => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes' }
+        %select.fullwidth{ 'ng-model' => 'filterPredicate', :id => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes', 'ofn-select2-min-search' => 10 }
       %div{ :class => "six columns omega" }
         Value:
         %br.clear
