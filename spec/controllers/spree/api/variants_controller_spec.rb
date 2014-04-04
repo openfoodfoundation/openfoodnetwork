@@ -1,11 +1,9 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 module Spree
   describe Spree::Api::VariantsController do
-    include Spree::Api::TestingSupport::Helpers
     render_views
-    
+
     let!(:variant1) { FactoryGirl.create(:variant) }
     let!(:variant2) { FactoryGirl.create(:variant) }
     let!(:variant3) { FactoryGirl.create(:variant) }
@@ -29,12 +27,27 @@ module Spree
         keys = json_response.keys.map{ |key| key.to_sym }
         unit_attributes.all?{ |attr| keys.include? attr }.should == true
       end
+
       #it "sorts variants in ascending id order" do
       #  spree_get :index, { :template => 'bulk_index', :format => :json }
       #  ids = json_response.map{ |variant| variant['id'] }
       #  ids[0].should < ids[1]
       #  ids[1].should < ids[2]
       #end
+    end
+
+    context "as an administrator" do
+      sign_in_as_admin!
+
+      it "soft deletes a variant" do
+        product = create(:product)
+        variant = product.master
+
+        spree_delete :soft_delete, {id: variant.to_param, product_id: product.to_param, format: :json}
+        response.status.should == 204
+        lambda { variant.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        variant.deleted_at.should_not be_nil
+      end
     end
   end
 end
