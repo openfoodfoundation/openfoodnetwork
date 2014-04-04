@@ -77,6 +77,14 @@
         %select{ :class => "three columns alpha", :id => 'bulk_actions', 'ofn-select2-min-search' => 10, 'ng-model' => 'selectedBulkAction', 'ng-options' => 'a as a.name for a in bulkActions' }
       %div{ :class => "three columns alpha" }
         %input{ :class => "three columns alpha", :value => "Run", :type => "button", :id => 'bulk_execute', 'ng-click' => 'selectedBulkAction.callback(filteredLineItems)' }
+      %div{ :class => "five columns omega" } &nbsp;
+      %div.ofn_drop_down{ :class => "two columns omega", 'ofn-drop-down' => true }
+        %span Columns
+        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+        %div.menu{ 'ng-show' => "expanded" }
+          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+            %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+            %span{ :class => 'two columns omega' } {{column.name }}
     %table.index#listing_orders.bulk
       %thead
         %tr

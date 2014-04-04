@@ -28,12 +28,12 @@ sharedDirectivesModule.directive "ofnSelect2MinSearch", [
 
 sharedDirectivesModule.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->
-    element.addClass "unselected"  unless scope.column.visible
+    element.addClass "selected" if scope.column.visible
     element.click "click", ->
       scope.$apply ->
         if scope.column.visible
           scope.column.visible = false
-          element.addClass "unselected"
+          element.removeClass "selected"
         else
           scope.column.visible = true
-          element.removeClass "unselected"
+          element.addClass "selected"

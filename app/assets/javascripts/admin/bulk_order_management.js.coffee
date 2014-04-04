@@ -1,4 +1,4 @@
-orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services", "ofn.shared_directives"])
+orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services", "ofn.shared_directives", "ofn.dropdown"])
 
 orderManagementModule.config [
   "$httpProvider"
