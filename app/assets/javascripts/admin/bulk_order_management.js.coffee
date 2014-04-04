@@ -126,7 +126,6 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.reverse = false
       $scope.optionTabs =
         filters:        { title: "Filter Line Items",   visible: false }
-        column_toggle:  { title: "Toggle Columns",    visible: false }
       $scope.columns =
         order_no:     { name: "Order No.",    visible: false }
         full_name:    { name: "Name",         visible: true }

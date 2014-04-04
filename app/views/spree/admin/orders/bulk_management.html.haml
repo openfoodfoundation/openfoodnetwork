@@ -32,10 +32,6 @@
         %label{ :for => 'order_cycle_filter' }Order Cycle
         %br
         %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
-  .column_toggle{ :class => "nine columns alpha", "ng-show" => 'optionTabs.column_toggle.visible' }
-    %ul.column-list{ :class => "nine columns alpha" }
-      %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
-        {{ column.name }}
   %div{ :class => "nine columns alpha", 'ng-show' => '!optionTabs.filters.visible && !optionTabs.column_toggle.visible && unitsVariantSelected()' } &nbsp;.
   %div#group_buy_calculation{ :class => "seven columns alpha", 'ng-show' => 'unitsVariantSelected()' }
     %div{ :class => "seven columns alpha" }
@@ -78,7 +74,7 @@
       %div{ :class => "three columns alpha" }
         %input{ :class => "three columns alpha", :value => "Run", :type => "button", :id => 'bulk_execute', 'ng-click' => 'selectedBulkAction.callback(filteredLineItems)' }
       %div{ :class => "five columns omega" } &nbsp;
-      %div.ofn_drop_down{ :class => "two columns omega", 'ofn-drop-down' => true }
+      %div.ofn_drop_down{ :class => "two columns omega", :id => "columns_dropdown", 'ofn-drop-down' => true }
         %span Columns
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
         %div.menu{ 'ng-show' => "expanded" }

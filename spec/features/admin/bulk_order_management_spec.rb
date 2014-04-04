@@ -165,38 +165,34 @@ feature %q{
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         visit '/admin/orders/bulk_management'
 
-        page.should have_selector "div.column_toggle", :visible => false
+        page.should_not have_selector "div#columns_dropdown.expanded"
+        page.should have_selector "div#columns_dropdown div.menu", :visible => false
 
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
-        first("div.option_tab_titles h6", :text => "Toggle Columns").click
+        page.should have_selector "div#columns_dropdown", :text => "COLUMNS"
+        first("div#columns_dropdown", :text => "COLUMNS").click
 
-        page.should have_selector "div.option_tab_titles h6.selected", :text => "Toggle Columns"
-        page.should have_selector "div.column_toggle", :visible => true
-        page.should have_selector "li.column-list-item", text: "Producer"
+        page.should have_selector "div#columns_dropdown.expanded"
+        page.should have_selector "div#columns_dropdown div.menu", :visible => true
+        page.should have_selector "div#columns_dropdown div.menu div.menu_item", text: "Producer"
 
         page.should have_selector "div.filters", :visible => false
 
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
         first("div.option_tab_titles h6", :text => "Filter Line Items").click
 
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Line Items"
         page.should have_selector "div.filters", :visible => true
 
         first("div.option_tab_titles h6", :text => "Filter Line Items").click
 
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.filters", :visible => false
-        page.should have_selector "div.column_toggle", :visible => false
       end
     end
 
     context "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         visit '/admin/orders/bulk_management'
-
-        first("div.option_tab_titles h6", :text => "Toggle Columns").click
 
         page.should have_selector "th", :text => "NAME"
         page.should have_selector "th", :text => "ORDER DATE"
@@ -205,10 +201,8 @@ feature %q{
         page.should have_selector "th", :text => "QUANTITY"
         page.should have_selector "th", :text => "MAX"
 
-        page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
-
-        page.should have_selector "div ul.column-list li.column-list-item", text: "Producer"
-        first("li.column-list-item", text: "Producer").click
+        first("div#columns_dropdown", :text => "COLUMNS").click
+        first("div#columns_dropdown div.menu div.menu_item", text: "Producer").click
 
         page.should_not have_selector "th", :text => "PRODUCER"
         page.should have_selector "th", :text => "NAME"
