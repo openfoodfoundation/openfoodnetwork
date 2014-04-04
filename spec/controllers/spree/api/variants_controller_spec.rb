@@ -43,7 +43,7 @@ module Spree
         product = create(:product)
         variant = product.master
 
-        spree_delete :soft_delete, {id: variant.to_param, product_id: product.to_param, format: :json}
+        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
         response.status.should == 204
         lambda { variant.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
         variant.deleted_at.should_not be_nil

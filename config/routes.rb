@@ -108,10 +108,10 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
-    end
 
-    resources :variants do
-      delete :soft_delete
+      resources :variants do
+        delete :soft_delete
+      end
     end
 
     resources :orders do

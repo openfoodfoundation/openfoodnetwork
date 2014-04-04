@@ -1,6 +1,6 @@
 Spree::Api::VariantsController.class_eval do
   def soft_delete
-    @variant = scope.find(params[:id])
+    @variant = scope.find(params[:variant_id])
     authorize! :delete, @variant
 
     @variant.deleted_at = Time.now()
