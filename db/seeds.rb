@@ -35,5 +35,5 @@ unless LandingPageImage.find_by_photo_file_name("potatoes.jpg")
 end
 
 # -- Seeding suburbs
-require_relative './suburb_seeds'
+require File.expand_path('../suburb_seeds', __FILE__)
 SuburbSeeder.seed_suburbs unless Suburb.find_by_name("Dayton")
