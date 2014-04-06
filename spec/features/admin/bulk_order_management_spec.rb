@@ -161,35 +161,6 @@ feature %q{
     let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
     let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
-    context "using tabs to hide and display page controls" do
-      it "shows a column display toggle button, which shows a list of columns when clicked" do
-        visit '/admin/orders/bulk_management'
-
-        page.should_not have_selector "div#columns_dropdown.expanded"
-        page.should have_selector "div#columns_dropdown div.menu", :visible => false
-
-        page.should have_selector "div#columns_dropdown", :text => "COLUMNS"
-        first("div#columns_dropdown", :text => "COLUMNS").click
-
-        page.should have_selector "div#columns_dropdown.expanded"
-        page.should have_selector "div#columns_dropdown div.menu", :visible => true
-        page.should have_selector "div#columns_dropdown div.menu div.menu_item", text: "Producer"
-
-        page.should have_selector "div.filters", :visible => false
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
-
-        page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Line Items"
-        page.should have_selector "div.filters", :visible => true
-
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
-        page.should have_selector "div.filters", :visible => false
-      end
-    end
-
     context "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         visit '/admin/orders/bulk_management'
@@ -229,7 +200,6 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays a select box for producers, which filters line items by the selected supplier" do
@@ -353,7 +323,6 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays date fields for filtering orders, with default values set" do

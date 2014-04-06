@@ -6,34 +6,29 @@
 %div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  .option_tab_titles{ :class => "sixteen columns alpha" }
-    %h6{ :class => "three columns alpha", 'ng-repeat' => "tab in optionTabs", "ng-click" => "shiftTab(tab)", "ng-class" => "tab.visible && 'selected' || !tab.visible && 'unselected'"}
-      {{ tab.title }}
-  .filters{ :class => "nine columns alpha", 'ng-show' => 'optionTabs.filters.visible' }
-    .row{ :class => "six columns alpha" }
-      .date_filter{ :class => "three columns alpha" }
-        %label{ :for => 'start_date_filter' }Start Date
-        %br
-        %input{ :class => "three columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
-      .date_filter{ :class => "three columns alpha" }
-        %label{ :for => 'end_date_filter' }End Date
-        %br
-        %input{ :class => "three columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
-    .row{ :class => "nine columns alpha" }
-      .filter_select{ :class => "three columns alpha" }
-        %label{ :for => 'supplier_filter' }Producer
-        %br
-        %select{ :class => "three columns alpha", :id => 'supplier_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers' }
-      .filter_select{ :class => "three columns alpha" }
-        %label{ :for => 'distributor_filter' }Hub
-        %br
-        %select{ :class => "three columns alpha", :id => 'distributor_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
-      .filter_select{ :class => "three columns alpha" }
-        %label{ :for => 'order_cycle_filter' }Order Cycle
-        %br
-        %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
-  %div{ :class => "nine columns alpha", 'ng-show' => '!optionTabs.filters.visible && !optionTabs.column_toggle.visible && unitsVariantSelected()' } &nbsp;.
-  %div#group_buy_calculation{ :class => "seven columns alpha", 'ng-show' => 'unitsVariantSelected()' }
+  .filters{ :class => "sixteen columns alpha" }
+    .date_filter{ :class => "three columns alpha" }
+      %label{ :for => 'start_date_filter' }Start Date
+      %br
+      %input{ :class => "three columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
+    .date_filter{ :class => "three columns omega" }
+      %label{ :for => 'end_date_filter' }End Date
+      %br
+      %input{ :class => "three columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
+    .one.column.omega &nbsp;
+    .filter_select{ :class => "three columns omega" }
+      %label{ :for => 'supplier_filter' }Producer
+      %br
+      %select{ :class => "three columns alpha", :id => 'supplier_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.name for s in suppliers' }
+    .filter_select{ :class => "three columns omega" }
+      %label{ :for => 'distributor_filter' }Hub
+      %br
+      %select{ :class => "three columns alpha", :id => 'distributor_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.name for d in distributors'}
+    .filter_select{ :class => "three columns omega" }
+      %label{ :for => 'order_cycle_filter' }Order Cycle
+      %br
+      %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
+  %div#group_buy_calculation{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
     %div{ :class => "seven columns alpha" }
       %h6{ :class => "five columns alpha", 'ng-show' => 'sharedResource' } {{ selectedUnitsProduct.name + ": ALL" }}
       %h6{ :class => "five columns alpha", 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.unit_text }}
@@ -64,26 +59,29 @@
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
     %h4 Loading Line Items...
-  %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && lineItems.length == 0'}
+  %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && filteredLineItems.length == 0'}
     %h4{ :style => 'color:red;' } No matching line items found.
   %div{ 'ng-hide' => 'loading || lineItems.length == 0' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
-      %input{ :class => "two columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :class => "two columns omega", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
-        %span Actions
-        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-        %div.menu{ 'ng-show' => "expanded" }
-          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredLineItems)", 'ofn-close-on-click' => true }
-            %span{ :class => 'three columns omega' } {{action.name }}
-      %div{ :class => "ten columns omega" } &nbsp;
-      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :class => "two columns omega", :id => "columns_dropdown", 'ofn-drop-down' => true }
-        %span Columns
-        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-        %div.menu{ 'ng-show' => "expanded" }
-          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
-            %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
-            %span{ :class => 'two columns omega' } {{column.name }}
-    %table.index#listing_orders.bulk
+      %div{ :class => "three columns alpha" }
+        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+      %div{ :class => "three columns omega" }
+        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
+          %span{ :class => 'icon-check' } &nbsp; Actions
+          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+          %div.menu{ 'ng-show' => "expanded" }
+            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredLineItems)", 'ofn-close-on-click' => true }
+              %span{ :class => 'three columns omega' } {{action.name }}
+      %div{ :class => "seven columns omega" } &nbsp;
+      %div{ :class => "three columns omega" }
+        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true }
+          %span{ :class => 'icon-reorder' } &nbsp; Columns
+          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+          %div.menu{ 'ng-show' => "expanded" }
+            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+              %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+              %span{ :class => 'two columns omega' } {{column.name }}
+    %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
       %thead
         %tr
           %th.bulk

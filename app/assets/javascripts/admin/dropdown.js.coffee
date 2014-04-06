@@ -2,12 +2,12 @@ dropDownModule = angular.module("ofn.dropdown", [])
 
 dropDownModule.directive "ofnDropDown", ($document) ->
   link: (scope, element, attrs) ->
-    outsideClickListener = ->
+    outsideClickListener = (event) ->
       unless $(event.target).is("div.ofn_drop_down##{attrs.id} div.menu") ||
         $(event.target).parents("div.ofn_drop_down##{attrs.id} div.menu").length > 0
           scope.$emit "offClick"
 
-    element.click ->
+    element.click (event) ->
       if !scope.expanded
         event.stopPropagation()
         scope.deregistrationCallback = scope.$on "offClick", ->
@@ -23,7 +23,7 @@ dropDownModule.directive "ofnDropDown", ($document) ->
 
 dropDownModule.directive "ofnCloseOnClick", ($document) ->
   link: (scope, element, attrs) ->
-    element.click ->
+    element.click (event) ->
       event.stopPropagation()
       scope.$emit "offClick"
 
