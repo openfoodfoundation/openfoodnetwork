@@ -107,9 +107,8 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
   ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
 
     $scope.initialiseVariables = ->
-      now = new Date
-      start = new Date( now.getTime() - ( 7 * (1440 * 60 * 1000) ) - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) )
-      end = new Date( now.getTime() - (now.getTime() - now.getTimezoneOffset() * 60 * 1000) % (1440 * 60 * 1000) + ( 1 * ( 1440 * 60 * 1000 ) ) )
+      start = daysFromToday -7
+      end = daysFromToday 1
       $scope.lineItems = []
       $scope.filteredLineItems = []
       $scope.confirmDelete = true
@@ -117,7 +116,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.endDate = formatDate end
       $scope.pendingChanges = pendingChanges
       $scope.quickSearch = ""
-      $scope.bulkActions = [ { name: "Delete", callback: $scope.deleteLineItems } ]
+      $scope.bulkActions = [ { name: "Delete Selected", callback: $scope.deleteLineItems } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
       $scope.selectedUnitsProduct = {};
       $scope.selectedUnitsVariant = {};
@@ -324,6 +323,14 @@ orderManagementModule.factory "switchClass", [
           element.removeClass classToAdd
         , timeout, true)
 ]
+
+daysFromToday = (days) ->
+  now = new Date
+  now.setHours(0)
+  now.setMinutes(0)
+  now.setSeconds(0)
+  now.setDate( now.getDate() + days )
+  now
 
 formatDate = (date) ->
   year = date.getFullYear()

@@ -68,13 +68,15 @@
     %h4{ :style => 'color:red;' } No matching line items found.
   %div{ 'ng-hide' => 'loading || lineItems.length == 0' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
-      %input{ :class => "three columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-      %div{ :class => "three columns alpha" }
-        %select{ :class => "three columns alpha", :id => 'bulk_actions', 'ofn-select2-min-search' => 10, 'ng-model' => 'selectedBulkAction', 'ng-options' => 'a as a.name for a in bulkActions' }
-      %div{ :class => "three columns alpha" }
-        %input{ :class => "three columns alpha", :value => "Run", :type => "button", :id => 'bulk_execute', 'ng-click' => 'selectedBulkAction.callback(filteredLineItems)' }
-      %div{ :class => "five columns omega" } &nbsp;
-      %div.ofn_drop_down{ :class => "two columns omega", :id => "columns_dropdown", 'ofn-drop-down' => true }
+      %input{ :class => "two columns alpha", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :class => "two columns omega", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
+        %span Actions
+        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+        %div.menu{ 'ng-show' => "expanded" }
+          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredLineItems)", 'ofn-close-on-click' => true }
+            %span{ :class => 'three columns omega' } {{action.name }}
+      %div{ :class => "ten columns omega" } &nbsp;
+      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :class => "two columns omega", :id => "columns_dropdown", 'ofn-drop-down' => true }
         %span Columns
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
         %div.menu{ 'ng-show' => "expanded" }

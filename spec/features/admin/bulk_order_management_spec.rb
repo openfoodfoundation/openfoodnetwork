@@ -357,7 +357,7 @@ feature %q{
       end
 
       it "displays date fields for filtering orders, with default values set" do
-        one_week_ago = (Date.today - 7).strftime("%F %T")
+        one_week_ago = Date.today.prev_day(7).strftime("%F %T")
         tonight = Date.tomorrow.strftime("%F %T")
         page.should have_field "start_date_filter", with: one_week_ago
         page.should have_field "end_date_filter", with: tonight
@@ -441,13 +441,11 @@ feature %q{
       end
 
       it "displays a bulk action select box with a list of actions" do
-        list_of_actions = ['Delete']
-        find("div.select2-container#s2id_bulk_actions").click
-        list_of_actions.each { |a| page.should have_selector "div.select2-drop-active ul.select2-results li", text: a }
-      end
-
-      it "displays a bulk action button" do
-        page.should have_button "bulk_execute"
+        list_of_actions = ['Delete Selected']
+        find("div#bulk_actions_dropdown").click
+        within("div#bulk_actions_dropdown") do
+          list_of_actions.each { |action_name| page.should have_selector "div.menu_item", text: action_name }
+        end
       end
 
       context "performing actions" do
@@ -457,8 +455,8 @@ feature %q{
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          select2_select "Delete", :from => "bulk_actions"
-          click_button "bulk_execute"
+          find("div#bulk_actions_dropdown").click
+          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
           page.should have_selector "tr#li_#{li1.id}", visible: true
           page.should_not have_selector "tr#li_#{li2.id}", visible: true
         end
@@ -477,8 +475,8 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
-          select2_select "Delete", :from => "bulk_actions"
-          click_button "bulk_execute"
+          find("div#bulk_actions_dropdown").click
+          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
           fill_in "quick_search", with: ''
           page.should_not have_selector "tr#li_#{li1.id}", visible: true
           page.should have_selector "tr#li_#{li2.id}", visible: true
