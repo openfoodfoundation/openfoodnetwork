@@ -5,11 +5,12 @@
     %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
             "ng-change" => "changeOrderCycle()",
             "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
-            step: "Please select an order cycle", "step-index" => "1","step-placement" => "bottom", "step-append-to-body" => "true"}
+            "popover-placement" => "bottom", "popover" => "testy", "popover-trigger" => "openTrigger"}
 
     %closing{"ng-if" => "OrderCycle.selected()"}
       Orders close
       %strong {{ OrderCycle.orders_close_at() | date_in_words }} 
+
   = render partial: "shop/details"
 
   %products.row
