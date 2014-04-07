@@ -112,7 +112,7 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
-                fill_in "Billing Address", with: "123 Your Face"
+                fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
                 fill_in "Customer E-Mail", with: "test@test.com"
@@ -130,7 +130,7 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
-                fill_in "Billing Address", with: "123 Your Face"
+                fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
                 fill_in "Customer E-Mail", with: "test@test.com"
