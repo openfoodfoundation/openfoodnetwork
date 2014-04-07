@@ -13,10 +13,10 @@
             %td= adjustment.display_amount.to_html
         %tr
           %th Shipping
-          %td {{ shippingPrice() | currency }}
+          %td {{ Order.shippingPrice() | currency }}
         %tr
           %th Cart total 
-          %td {{ cartTotal() | currency }}
+          %td {{ Order.cartTotal() | currency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
             %tr
@@ -25,3 +25,4 @@
 
       = f.submit "Purchase", class: "button"
       %a.button.secondary{href: cart_url} Back to Cart
+

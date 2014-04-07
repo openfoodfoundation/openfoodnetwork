@@ -35,53 +35,60 @@ feature "As a consumer I want to check out my cart", js: true do
         before do
           distributor.shipping_methods << sm1 
           distributor.shipping_methods << sm2 
-          visit "/shop/checkout"
-          click_link "USER"
-          click_link "CUSTOMER DETAILS"
-          click_link "BILLING"
-          click_link "SHIPPING"
-          click_link "PAYMENT DETAILS"
-        end
-        it "shows all shipping methods, but doesn't show ship address when not needed" do
-          page.should have_content "Frogs"
-          page.should have_content "Donkeys"
-          choose(sm2.name)
-          find("#ship_address", visible: false).visible?.should be_false
         end
 
-        context "When shipping method requires an address" do
+        context "on the checkout page" do
           before do
+            visit "/shop/checkout"
+            toggle_accordion "User"
+            toggle_accordion "Customer Details"
+            toggle_accordion "Billing"
+            toggle_accordion "Shipping"
+            toggle_accordion "Payment Details"
+          end
+          it "shows all shipping methods, but doesn't show ship address when not needed" do
+            page.should have_content "Frogs"
+            page.should have_content "Donkeys"
+            choose(sm2.name)
+            find("#ship_address", visible: false).visible?.should be_false
+          end
+
+          context "When shipping method requires an address" do
+            before do
+              choose(sm1.name)
+            end
+            it "shows the hidden ship address fields by default" do
+              check "Shipping address same as billing address?"
+              find("#ship_address_hidden").visible?.should be_true
+              find("#ship_address > div.visible", visible: false).visible?.should be_false
+
+              # Check it keeps state
+              click_button "Purchase"
+              toggle_accordion "Shipping"
+              find_field("Shipping address same as billing address?").should be_checked
+            end
+
+            it "shows ship address forms when 'same as billing address' is unchecked" do
+              uncheck "Shipping address same as billing address?"
+              find("#ship_address_hidden", visible: false).visible?.should be_false
+              find("#ship_address > div.visible").visible?.should be_true
+
+              # Check it keeps state
+              click_button "Purchase"
+              toggle_accordion "Shipping"
+              find_field("Shipping address same as billing address?").should_not be_checked
+            end
+          end
+
+          it "copies billing address to hidden shipping address fields" do
             choose(sm1.name)
-          end
-          it "shows the hidden ship address fields by default" do
             check "Shipping address same as billing address?"
-            find("#ship_address_hidden").visible?.should be_true
-            find("#ship_address > div.visible", visible: false).visible?.should be_false
-
-            # Check it keeps state
-            click_button "Purchase"
-            find_field("Shipping address same as billing address?").should be_checked
-          end
-
-          it "shows ship address forms when 'same as billing address' is unchecked" do
-            uncheck "Shipping address same as billing address?"
-            find("#ship_address_hidden", visible: false).visible?.should be_false
-            find("#ship_address > div.visible").visible?.should be_true
-
-            # Check it keeps state
-            click_button "Purchase"
-            find_field("Shipping address same as billing address?").should_not be_checked
-          end
-        end
-
-        it "copies billing address to hidden shipping address fields" do
-          choose(sm1.name)
-          check "Shipping address same as billing address?"
-          within "#billing" do
-            fill_in "Address", with: "testy"
-          end
-          within "#ship_address_hidden" do
-            find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
+            within "#billing" do
+              fill_in "Address", with: "testy"
+            end
+            within "#ship_address_hidden" do
+              find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
+            end
           end
         end
 
@@ -94,6 +101,11 @@ feature "As a consumer I want to check out my cart", js: true do
             pm1 # Lazy evaluation of ze create()s
             pm2
             visit "/shop/checkout"
+            toggle_accordion "User"
+            toggle_accordion "Customer Details"
+            toggle_accordion "Billing"
+            toggle_accordion "Shipping"
+            toggle_accordion "Payment Details"
           end
 
           it "shows all available payment methods" do
@@ -106,6 +118,7 @@ feature "As a consumer I want to check out my cart", js: true do
               choose sm2.name
               click_button "Purchase"
               current_path.should == "/shop/checkout"
+              toggle_accordion "Customer Details"
               page.should have_content "can't be blank"
             end
 
@@ -117,11 +130,13 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
+                fill_in "Customer E-Mail", with: "test@test.com"
+                fill_in "Phone", with: "0468363090"
+              end
+              within "#billing" do
                 fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
-                fill_in "Customer E-Mail", with: "test@test.com"
-                fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
                 fill_in "Postcode", with: "3066"
               end
@@ -135,13 +150,15 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
+                fill_in "Customer E-Mail", with: "test@test.com"
+                fill_in "Phone", with: "0468363090"
+              end
+              within "#billing" do
+                fill_in "City", with: "Melbourne"
+                fill_in "Postcode", with: "3066"
                 fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
-                fill_in "Customer E-Mail", with: "test@test.com"
-                fill_in "Phone", with: "0468363090"
-                fill_in "City", with: "Melbourne"
-                fill_in "Postcode", with: "3066"
               end
               check "Shipping address same as billing address?"
               click_button "Purchase"
