@@ -1,0 +1,21 @@
+%fieldset#details
+  %accordion-group
+    %accordion-heading
+      .row
+        .large-6.columns
+          Customer Details
+        .large-6.columns.text-right
+          {{ order.bill_address.firstname }}
+          {{ order.bill_address.lastname }}
+    .row
+      .large-6.columns
+        = f.text_field :email 
+      = f.fields_for :bill_address, @order.bill_address do |ba|
+        .large-6.columns
+          = ba.text_field :phone, "ng-model" => "order.bill_address.phone"
+    = f.fields_for :bill_address, @order.bill_address do |ba|
+      .row
+        .large-6.columns
+          = ba.text_field :firstname, "ng-model" => "order.bill_address.firstname"
+        .large-6.columns
+          = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"
