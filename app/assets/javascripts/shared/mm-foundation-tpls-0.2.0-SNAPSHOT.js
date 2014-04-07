@@ -2058,7 +2058,7 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
   };
 }])
 
-.directive( 'stepText', [ '$position', '$tooltip', '$tour', '$window', function ( $position, $tooltip, $tour, $window ) {
+.directive( 'step', [ '$position', '$tooltip', '$tour', '$window', function ( $position, $tooltip, $tour, $window ) {
   function isElementInViewport( element ) {
     var rect = element[0].getBoundingClientRect();
 
@@ -2091,6 +2091,7 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
 
   return $tooltip( 'step', 'step', show );
 }]);
+
 
 angular.module('mm.foundation.typeahead', ['mm.foundation.position', 'mm.foundation.bindHtml'])
 
@@ -2602,7 +2603,7 @@ angular.module("template/tour/tour.html", []).run(["$templateCache", function($t
     "    <h4 ng-bind=\"title\" ng-show=\"title\"></h4>\n" +
     "    <p ng-bind=\"content\"></p>\n" +
     "    <a class=\"small button joyride-next-tip\" ng-show=\"!isLastStep()\" ng-click=\"nextStep()\">Next</a>\n" +
-    "    <a class=\"small button joyride-next-tip\" ng-show=\"isLastStep()\" ng-click=\"endTour()\">End</a>\n" +
+    //"    <a class=\"small button joyride-next-tip\" ng-show=\"isLastStep()\" ng-click=\"endTour()\">Close</a>\n" +
     "    <a class=\"joyride-close-tip\" ng-click=\"endTour()\">&times;</a>\n" +
     "  </div>\n" +
     "</div>\n" +
