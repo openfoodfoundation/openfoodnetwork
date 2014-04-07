@@ -18,6 +18,9 @@ Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order) ->
   $scope.shippingMethod = ->
     $scope.order.shipping_methods[$scope.order.shipping_method_id]
 
+  $scope.paymentMethod = ->
+    $scope.order.payment_methods[$scope.order.payment_method_id]
+
   $scope.shippingMethodChanged = ->
     $scope.require_ship_address = $scope.shippingMethod().require_ship_address if $scope.shippingMethod()
 

@@ -36,6 +36,11 @@ feature "As a consumer I want to check out my cart", js: true do
           distributor.shipping_methods << sm1 
           distributor.shipping_methods << sm2 
           visit "/shop/checkout"
+          click_link "USER"
+          click_link "CUSTOMER DETAILS"
+          click_link "BILLING"
+          click_link "SHIPPING"
+          click_link "PAYMENT DETAILS"
         end
         it "shows all shipping methods, but doesn't show ship address when not needed" do
           page.should have_content "Frogs"
