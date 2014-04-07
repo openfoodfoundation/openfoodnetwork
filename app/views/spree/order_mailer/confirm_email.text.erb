@@ -23,6 +23,15 @@ Payment Details
 <%= @order.payments.first.andand.payment_method.andand.description.andand.html_safe %>
 
 <% end %>
+
+<%- if @order.shipping_method.require_ship_address %>
+============================================================
+Shipping Details
+============================================================
+Your order will be shipped to: 
+<%= @order.ship_address.to_s %>
+<% else %>
+
 ============================================================
 Collection / Delivery Details
 ============================================================
@@ -34,8 +43,10 @@ Collection / Delivery Details
 <% else %>
 <%= @order.distributor.next_collection_at %>
 <% end %>
+<% end %>
 
 Thanks for your support.
+
 
 <%= @order.distributor.contact %>,
 <%= @order.distributor.name %>
