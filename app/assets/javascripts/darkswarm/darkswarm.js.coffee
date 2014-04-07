@@ -3,4 +3,5 @@ window.Darkswarm = angular.module("Darkswarm", ["ngResource", "filters", 'mm.fou
   $httpProvider.defaults.headers['common']['X-Requested-With'] = 'XMLHttpRequest' 
   $httpProvider.defaults.headers.common.Accept = "application/json, text/javascript, */*"
 
+  # This allows us to trigger these two events on tooltips
   $tooltipProvider.setTriggers( 'openTrigger': 'closeTrigger' )
