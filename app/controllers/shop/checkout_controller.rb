@@ -30,7 +30,6 @@ class Shop::CheckoutController < Spree::CheckoutController
 
       if @order.state == "complete" ||  @order.completed?
         flash.notice = t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
         respond_with(@order, :location => order_path(@order))
       else
         clear_ship_address
