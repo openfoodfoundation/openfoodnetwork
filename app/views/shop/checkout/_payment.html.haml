@@ -5,7 +5,7 @@
         .large-6.columns
           Payment Details 
         .large-6.columns.text-right
-          {{ paymentMethod().name }}
+          {{ Order.paymentMethod().name }}
     - current_order.available_payment_methods.each do |method|
       .row
         .large-12.columns

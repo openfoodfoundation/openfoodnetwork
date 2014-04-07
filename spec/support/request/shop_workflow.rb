@@ -18,6 +18,6 @@ module ShopWorkflow
   end
 
   def toggle_accordion(name)
-      find("dd[heading='#{name}'] > a").click
+    find("dd a", text: name.upcase).click
   end
 end
