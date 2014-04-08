@@ -1,12 +1,11 @@
-%fieldset{"ng-controller" => "CheckoutCtrl"}
+%fieldset
   %accordion-group{heading: "User", "is-open" => "user"}
     .row
       .large-12.columns
-        .div{"ng-controller" => "AuthenticationActionsCtrl"}
+        .span{"ng-controller" => "AuthenticationActionsCtrl"}
           %button{"ng-click" => "toggle('/login')"} Login
           %button{"ng-click" => "toggle('/signup')"} Signup
         %button{"ng-click" => "disable()"} Checkout as guest
-
 
       -#%section#checkout_login
         -#.large-6.columns
