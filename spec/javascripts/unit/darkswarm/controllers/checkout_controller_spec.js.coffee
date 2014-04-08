@@ -11,4 +11,4 @@ describe "CheckoutCtrl", ->
       ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: order}
 
   it "defaults the user accordion to visible", ->
-    expect(scope.userpanel).toEqual true
+    expect(scope.user).toEqual true
