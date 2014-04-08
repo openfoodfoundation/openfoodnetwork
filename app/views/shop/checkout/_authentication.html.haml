@@ -1,9 +1,12 @@
 %fieldset
-  %accordion-group{heading: "User"}
-    .row
-      %section#checkout_login
-        .large-6.columns
-          = render partial: "shop/checkout/login"
-      %section#checkout_signup
-        .large-6.columns
-          = render partial: "shop/checkout/signup"
+  %accordion-group{heading: "User", "is-open" => "user"}
+    .row{"ng-controller" => "AuthenticationActionsCtrl"}
+      .large-12.columns
+        %button{"ng-click" => "toggle('/login')"} Login
+        %button{"ng-click" => "toggle('/signup')"} Signup
+      -#%section#checkout_login
+        -#.large-6.columns
+          -#= render partial: "shop/checkout/login"
+      -#%section#checkout_signup
+        -#.large-6.columns
+          -#= render partial: "shop/checkout/signup"

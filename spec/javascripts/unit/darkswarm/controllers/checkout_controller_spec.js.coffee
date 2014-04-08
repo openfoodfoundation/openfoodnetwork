@@ -6,6 +6,9 @@ describe "CheckoutCtrl", ->
   beforeEach ->
     module("Darkswarm")
     order = {} 
-    inject ($controller) ->
-      scope = {}
+    inject ($controller, $rootScope) ->
+      scope = $rootScope.$new() 
       ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: order}
+
+  it "defaults the user accordion to visible", ->
+    expect(scope.user).toEqual true
