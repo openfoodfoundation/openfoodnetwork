@@ -24,7 +24,7 @@ Payment Details
 
 <% end %>
 
-<%- if @order.shipping_method.require_ship_address %>
+<%- if @order.shipping_method.andand.require_ship_address %>
 ============================================================
 Shipping Details
 ============================================================
