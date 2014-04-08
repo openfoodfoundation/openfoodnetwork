@@ -1,16 +1,18 @@
 Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   window.tmp = $scope
   $scope.order = $scope.Order = Order
+  $scope.accordion = {}
 
   storage.bind $scope, "user", { defaultValue: true}
   $scope.disable = ->
     $scope.user = false
     $scope.details = true
 
-  storage.bind $scope, "details"
-  storage.bind $scope, "billing"
-  storage.bind $scope, "shipping"
-  storage.bind $scope, "payment"
+
+  storage.bind $scope, "accordion.details"
+  storage.bind $scope, "accordion.billing"
+  storage.bind $scope, "accordion.shipping"
+  storage.bind $scope, "accordion.payment"
 
   # Validation utilities to keep things DRY
   $scope.dirtyValid = (name)->
@@ -28,10 +30,21 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   $scope.number = (name)->
     $scope.error(name).number
 
+
+# READ THIS FIRST
+# https://github.com/angular/angular.js/wiki/Understanding-Scopes
+
 Darkswarm.controller "DetailsSubCtrl", ($scope) ->
   $scope.detailsValid = ->
     $scope.detailsFields().every (field)->
       $scope.checkout[field].$valid
+  
+  $scope.$watch ->
+    $scope.detailsValid()
+  , (valid)->
+    if valid
+      $scope.accordion.details = false
+      $scope.accordion.billing = true
     
   $scope.detailsFields = ->
     ["order[email]",
