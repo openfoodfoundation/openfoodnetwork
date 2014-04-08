@@ -1,4 +1,4 @@
-window.MenuCtrl = Darkswarm.controller "MenuCtrl", ($scope, Navigation) ->
+window.AuthenticationActionsCtrl = Darkswarm.controller "AuthenticationActionsCtrl", ($scope, Navigation) ->
 
   $scope.toggleLogin = ->
     Navigation.navigate "/login"
