@@ -35,3 +35,4 @@ config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
 libpeerconnection.log
+open_food_network.rb

@@ -1,0 +1,33 @@
+---
+- name: Tasmania
+  country_id: "12"
+  id: "101"
+  abbr: Tas
+- name: Victoria
+  country_id: "12"
+  id: "102"
+  abbr: Vic
+- name: New South Wales
+  country_id: "12"
+  id: "103"
+  abbr: NSW
+- name: ACT
+  country_id: "12"
+  id: "104"
+  abbr: ACT
+- name: Queensland
+  country_id: "12"
+  id: "105"
+  abbr: QLD
+- name: South Australia
+  country_id: "12"
+  id: "106"
+  abbr: SA
+- name: Northern Territory
+  country_id: "12"
+  id: "107"
+  abbr: NT
+- name: Western Australia
+  country_id: "12"
+  id: "108"
+  abbr: WA
