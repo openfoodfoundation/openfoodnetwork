@@ -1,15 +1,13 @@
-%checkout{"ng-controller" => "CheckoutCtrl"}
+= f_form_for current_order, url: main_app.shop_update_checkout_path, html: {name: "checkout", id: "checkout_form"} do |f|
 
-  = f_form_for current_order, url: main_app.shop_update_checkout_path, html: {name: "checkout", id: "checkout_form"} do |f|
+  :javascript
+    angular.module('Darkswarm').value('order', #{render "shop/checkout/order"})
 
-    :javascript
-      angular.module('Darkswarm').value('order', #{render "shop/checkout/order"})
+  -#%pre
+    -#{{ order | json }}
 
-    -#%pre
-      -#{{ order | json }}
-
-    .large-12.columns
-      = render partial: "shop/checkout/details", locals: {f: f}
-      = render partial: "shop/checkout/billing", locals: {f: f}
-      = render partial: "shop/checkout/shipping", locals: {f: f}
-      = render partial: "shop/checkout/payment", locals: {f: f}
+  .large-12.columns
+    = render partial: "shop/checkout/details", locals: {f: f}
+    = render partial: "shop/checkout/billing", locals: {f: f}
+    = render partial: "shop/checkout/shipping", locals: {f: f}
+    = render partial: "shop/checkout/payment", locals: {f: f}

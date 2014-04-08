@@ -1,4 +1,4 @@
-%orderdetails{"ng-controller" => "CheckoutCtrl"}
+%orderdetails
   = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
     %fieldset
       %legend Your Order
