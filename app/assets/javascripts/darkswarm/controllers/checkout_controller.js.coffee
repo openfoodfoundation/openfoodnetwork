@@ -4,6 +4,8 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   storage.bind $scope, "user", { defaultValue: true}
   $scope.disable = ->
     $scope.user = false
+    $scope.details = true
+    console.log $scope.details
 
   storage.bind $scope, "details"
   storage.bind $scope, "billing"
