@@ -1,4 +1,4 @@
-window.AuthenticationActionsCtrl = Darkswarm.controller "AuthenticationActionsCtrl", ($scope, Navigation) ->
+window.AuthenticationActionsCtrl = Darkswarm.controller "AuthenticationActionsCtrl", ($scope, Navigation, storage) ->
 
   $scope.toggleLogin = ->
     Navigation.navigate "/login"

@@ -127,11 +127,12 @@
 
 				// If a value doesn't already exist store it as is
 				if (!publicMethods.get(storeName)) {
-					publicMethods.set(storeName, opts.defaultValue);
-				}
+          publicMethods.set(storeName, $parse(key)($scope) || opts.defaultValue);
+				} else {
+          // If it does exist assign it to the $scope value
+          $parse(key).assign($scope, publicMethods.get(storeName));
+        }
 
-				// If it does exist assign it to the $scope value
-				$parse(key).assign($scope, publicMethods.get(storeName));
 
 				// Register a listener for changes on the $scope value
 				// to update the localStorage value
