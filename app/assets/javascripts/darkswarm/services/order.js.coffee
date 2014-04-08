@@ -11,10 +11,10 @@ Darkswarm.factory 'Order', ($resource, Product, order)->
       @shipping_methods[@shipping_method_id]
 
     requireShipAddress: ->
-      @shippingMethod().require_ship_address
+      @shippingMethod()?.require_ship_address
 
     shippingPrice: ->
-      @shippingMethod().price
+      @shippingMethod()?.price
     
     paymentMethod: ->
       @payment_methods[@payment_method_id]
