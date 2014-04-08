@@ -23,7 +23,6 @@ feature "As a consumer I want to check out my cart", js: true do
       add_product_to_cart
     end
 
-
     context "logged in" do
       before do
         login_to_consumer_section
@@ -39,7 +38,6 @@ feature "As a consumer I want to check out my cart", js: true do
     context "logged out" do
       before do
         visit "/shop/checkout"
-        save_and_open_page
         toggle_accordion "User"
       end
 

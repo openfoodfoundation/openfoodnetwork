@@ -39,6 +39,6 @@ describe 'OrderCycle service', ->
   it "tells us when no order cycle is selected", ->
     OrderCycle.order_cycle = null 
     expect(OrderCycle.selected()).toEqual false
-    OrderCycle.order_cycle = {test: "blah"}
+    OrderCycle.order_cycle = {orders_close_at: "10 days ago"}
     expect(OrderCycle.selected()).toEqual true
 

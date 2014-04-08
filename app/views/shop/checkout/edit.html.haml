@@ -10,15 +10,7 @@
     %accordion.row{"close-others" => "false"}
       .large-9.columns
         - unless spree_current_user
-          %fieldset
-            %accordion-group{heading: "User"}
-              .row
-                %section#checkout_login
-                  .large-6.columns
-                    = render partial: "shop/checkout/login"
-                %section#checkout_signup
-                  .large-6.columns
-                    = render partial: "shop/checkout/signup"
+          = render partial: "shop/checkout/authentication"
         .row
           = render partial: "shop/checkout/form"
 
