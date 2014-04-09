@@ -1,7 +1,6 @@
 %fieldset#details
   %accordion-group{"is-open" => "accordion.details"}
     %div{"ng-controller" => "DetailsSubCtrl"}
-      {{ detailsValid() }}
       %accordion-heading
         .row
           .large-6.columns
@@ -12,8 +11,8 @@
       .row
         .large-6.columns
           = f.email_field :email, required: "", "ng-model" => "order.email",
-            "ng-change" => "next()",
             "ng-class" => "{error: '!emailValid()'}"
+          
           %small.error.medium.input-text{"ng-show" => "emailValid()"}
             {{ emailError() }}
 
@@ -31,4 +30,3 @@
 
           .large-6.columns
             = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"
-

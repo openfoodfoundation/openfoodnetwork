@@ -8,6 +8,7 @@ describe Shop::CheckoutController do
     order.stub(:checkout_allowed?).and_return true
     controller.stub(:check_authorization).and_return true
   end
+
   it "redirects home when no distributor is selected" do
     get :edit
     response.should redirect_to root_path
@@ -46,6 +47,7 @@ describe Shop::CheckoutController do
   end
 
   describe "building the order" do
+    
     before do
       controller.stub(:current_distributor).and_return(distributor)
       controller.stub(:current_order_cycle).and_return(order_cycle)

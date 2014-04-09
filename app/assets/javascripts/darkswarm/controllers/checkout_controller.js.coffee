@@ -3,24 +3,24 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   $scope.order = $scope.Order = Order
   $scope.accordion = {}
 
-  storage.bind $scope, "user", { defaultValue: true}
-  $scope.disable = ->
-    $scope.user = false
-    $scope.details = true
+  $scope.show = (name)->
+    $scope.accordion[name] = true
 
-
+  storage.bind $scope, "accordion.user", { defaultValue: true}
   storage.bind $scope, "accordion.details"
   storage.bind $scope, "accordion.billing"
   storage.bind $scope, "accordion.shipping"
   storage.bind $scope, "accordion.payment"
 
   # Validation utilities to keep things DRY
-  $scope.dirtyValid = (name)->
-    $scope.dirty(name) and $scope.valid(name) 
+  $scope.dirtyInvalid = (name)->
+    $scope.dirty(name) and $scope.invalid(name) 
   $scope.dirty = (name)->
     $scope.checkout[name].$dirty
-  $scope.valid = (name)->
+  $scope.invalid = (name)->
     $scope.checkout[name].$invalid
+
+  # Validations
   $scope.error = (name)->
     $scope.checkout[name].$error
   $scope.required = (name)->
@@ -43,10 +43,12 @@ Darkswarm.controller "DetailsSubCtrl", ($scope) ->
     $scope.detailsValid()
   , (valid)->
     if valid
-      $scope.accordion.details = false
-      $scope.accordion.billing = true
+      $scope.show("billing")
     
   $scope.detailsFields = ->
+
+    {"order[email]" : {email: "must be email", required: "field required"}}
+
     ["order[email]",
       "order[bill_address_attributes][phone]",
       "order[bill_address_attributes][firstname]",
@@ -54,14 +56,14 @@ Darkswarm.controller "DetailsSubCtrl", ($scope) ->
   
   $scope.emailName = 'order[email]' 
   $scope.emailValid = ->
-    $scope.dirtyValid($scope.emailName)
+    $scope.dirtyInvalid($scope.emailName)
   $scope.emailError = ->
     return "can't be blank" if $scope.required($scope.emailName)
     return "must be valid" if $scope.email($scope.emailName)
 
   $scope.phoneName = "order[bill_address_attributes][phone]"
   $scope.phoneValid = ->
-    $scope.dirtyValid($scope.phoneName)
+    $scope.dirtyInvalid($scope.phoneName)
   $scope.phoneError = ->
     "must be a number"
 
