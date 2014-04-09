@@ -181,14 +181,19 @@ describe Spree::Order do
   end
 
   describe "setting the order cycle" do
+    let(:oc) { create(:simple_order_cycle) }
+
+    it "empties the cart when changing the order cycle" do
+      subject.should_receive(:empty!)
+      subject.set_order_cycle! oc
+    end
+  
     it "sets the order cycle when no distributor is set" do
-      oc = create(:simple_order_cycle)
       subject.set_order_cycle! oc
       subject.order_cycle.should == oc
     end
 
     it "keeps the distributor when it is available in the new order cycle" do
-      oc = create(:simple_order_cycle)
       d = create(:distributor_enterprise)
       create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
@@ -200,7 +205,6 @@ describe Spree::Order do
     end
 
     it "clears the distributor if it is not available at that order cycle" do
-      oc = create(:simple_order_cycle)
       d = create(:distributor_enterprise)
 
       subject.distributor = d
@@ -211,7 +215,6 @@ describe Spree::Order do
     end
 
     it "clears the order cycle when setting to nil" do
-      oc = create(:simple_order_cycle)
       d = create(:distributor_enterprise)
       subject.set_order_cycle! oc
       subject.distributor = d
