@@ -81,7 +81,6 @@ describe Shop::CheckoutController do
   context "via xhr" do
     before do
       controller.stub(:current_distributor).and_return(distributor)
-
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
     end
@@ -90,6 +89,16 @@ describe Shop::CheckoutController do
       xhr :post, :update, order: {}, use_route: :spree
       response.status.should == 400
       response.body.should == assigns[:order].errors.to_json
+    end
+
+    it "returns order confirmation url on success" do
+      order.stub(:update_attributes).and_return true
+      order.stub(:state).and_return "complete"
+      #order.stub(:completed?).and_return true
+
+      xhr :post, :update, order: {}, use_route: :spree
+      response.status.should == 200
+      response.body.should == {path: spree.order_path(order)}.to_json
     end
   end
 

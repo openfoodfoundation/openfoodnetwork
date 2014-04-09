@@ -7,6 +7,8 @@ describe 'Order service', ->
     orderData = {
       id: 3102
       payment_method_id: null
+      bill_address: {}
+      ship_address: {}
       shipping_methods:
         7:
           require_ship_address: true
@@ -52,3 +54,8 @@ describe 'Order service', ->
     Order.submit()
     $httpBackend.flush()
 
+  it "Munges the order attributes to add _attributes as Rails needs", ->
+    expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)
+    expect(Order.preprocess().bill_address).toBe(undefined)
+    expect(Order.preprocess().ship_address_attributes).not.toBe(undefined)
+    expect(Order.preprocess().ship_address).toBe(undefined)

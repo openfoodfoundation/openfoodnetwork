@@ -26,10 +26,16 @@ class Shop::CheckoutController < Spree::CheckoutController
           return
         end
       end
-
       if @order.state == "complete" ||  @order.completed?
         flash.notice = t(:order_processed_successfully)
-        respond_with(@order, :location => order_path(@order))
+          respond_to do |format|
+            format.html do
+              respond_with(@order, :location => order_path(@order))
+            end
+            format.js do
+              render json: {path: order_path(@order)}, status: 200
+            end
+          end
       else
         update_failed
       end

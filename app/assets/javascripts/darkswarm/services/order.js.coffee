@@ -8,15 +8,24 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
       @order.ship_address_same_as_billing ?= true
 
     submit: ->
-      $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)->
-        console.log "success"
+      $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)=>
         console.log data
-      .error (data, status)->
+        # Navigate to order confirmation
+      .error (errors, status)=>
         console.log "error"
-        console.log data
+        @errors = errors
     
+    # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
-      @order
+      munged_order = {}
+      for name, value of @order # Clone all data from the order JSON object
+        if name == "bill_address"
+          munged_order["bill_address_attributes"] = value
+        else if name == "ship_address"
+          munged_order["ship_address_attributes"] = value
+        else
+          munged_order[name] = value
+      munged_order
 
     shippingMethod: ->
       @order.shipping_methods[@order.shipping_method_id]
