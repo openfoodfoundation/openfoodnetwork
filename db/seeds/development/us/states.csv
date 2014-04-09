@@ -1,0 +1,56 @@
+id,name,abbr,country_id
+
+1,Michigan,MI,49
+2,"South Dakota",SD,49
+3,Washington,WA,49
+4,Wisconsin,WI,49
+5,Arizona,AZ,49
+6,Illinois,IL,49
+7,"New Hampshire",NH,49
+8,"North Carolina",NC,49
+9,Kansas,KS,49
+10,Missouri,MO,49
+11,Arkansas,AR,49
+12,Nevada,NV,49
+13,"District of Columbia",DC,49
+14,Idaho,ID,49
+15,Nebraska,NE,49
+16,Pennsylvania,PA,49
+17,Hawaii,HI,49
+18,Utah,UT,49
+19,Vermont,VT,49
+20,Delaware,DE,49
+21,"Rhode Island",RI,49
+22,Oklahoma,OK,49
+23,Louisiana,LA,49
+24,Montana,MT,49
+25,Tennessee,TN,49
+26,Maryland,MD,49
+27,Florida,FL,49
+28,Virginia,VA,49
+29,Minnesota,MN,49
+30,"New Jersey",NJ,49
+31,Ohio,OH,49
+32,California,CA,49
+33,"North Dakota",ND,49
+34,Maine,ME,49
+35,Indiana,IN,49
+36,Texas,TX,49
+37,Oregon,OR,49
+38,Wyoming,WY,49
+39,Alabama,AL,49
+40,Iowa,IA,49
+41,Mississippi,MS,49
+42,Kentucky,KY,49
+43,"New Mexico",NM,49
+44,Georgia,GA,49
+45,Colorado,CO,49
+46,Massachusetts,MA,49
+47,Connecticut,CT,49
+48,"New York",NY,49
+49,"South Carolina",SC,49
+50,Alaska,AK,49
+51,"West Virginia",WV,49
+52,"U.S. Armed Forces – Americas",AA,49
+53,"U.S. Armed Forces – Europe",AE,49
+54,"U.S. Armed Forces – Pacific",AP,49
