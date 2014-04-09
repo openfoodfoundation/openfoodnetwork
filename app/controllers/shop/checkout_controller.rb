@@ -22,8 +22,7 @@ class Shop::CheckoutController < Spree::CheckoutController
           state_callback(:after)
         else
           flash[:error] = t(:payment_processing_failed)
-          clear_ship_address
-          render :edit
+          update_failed
           return
         end
       end
@@ -32,16 +31,26 @@ class Shop::CheckoutController < Spree::CheckoutController
         flash.notice = t(:order_processed_successfully)
         respond_with(@order, :location => order_path(@order))
       else
-        clear_ship_address
-        render :edit
+        update_failed
       end
     else
-      clear_ship_address
-      render :edit
+      update_failed
     end
   end
 
   private
+  
+  def update_failed
+    clear_ship_address
+    respond_to do |format|
+      format.html do
+        render :edit
+      end
+      format.js do
+        render json: @order.errors.to_json, status: 400
+      end
+    end
+  end
 
   # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
   # We don't want this data in the form, so we clear it out

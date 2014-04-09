@@ -1,14 +1,25 @@
-Darkswarm.factory 'Order', ($resource, Product, order)->
+Darkswarm.factory 'Order', ($resource, Product, order, $http)->
   new class Order
+    errors: {}
     constructor: ->
-      @[name] = method for name, method of order # Clone all data from the order JSON object
-
+      @order = order
       # Here we default to the first shipping method if none is selected
-      @shipping_method_id ||= parseInt(Object.keys(@shipping_methods)[0])
-      @ship_address_same_as_billing ?= true
+      @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
+      @order.ship_address_same_as_billing ?= true
+
+    submit: ->
+      $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)->
+        console.log "success"
+        console.log data
+      .error (data, status)->
+        console.log "error"
+        console.log data
+    
+    preprocess: ->
+      @order
 
     shippingMethod: ->
-      @shipping_methods[@shipping_method_id]
+      @order.shipping_methods[@order.shipping_method_id]
 
     requireShipAddress: ->
       @shippingMethod()?.require_ship_address
@@ -17,8 +28,8 @@ Darkswarm.factory 'Order', ($resource, Product, order)->
       @shippingMethod()?.price
     
     paymentMethod: ->
-      @payment_methods[@payment_method_id]
+      @order.payment_methods[@order.payment_method_id]
 
     cartTotal: ->
-      @shippingPrice() + @display_total
+      @shippingPrice() + @order.display_total
     

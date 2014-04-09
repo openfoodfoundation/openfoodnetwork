@@ -5,10 +5,20 @@ describe "CheckoutCtrl", ->
 
   beforeEach ->
     module("Darkswarm")
-    order = {} 
+    order = {
+      submit: ->
+    } 
     inject ($controller, $rootScope) ->
       scope = $rootScope.$new() 
       ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: order}
 
   it "defaults the user accordion to visible", ->
-    expect(scope.user).toEqual true
+    expect(scope.accordion.user).toEqual true
+  
+  it "delegates to the service on submit", ->
+    event = {
+      preventDefault: ->
+    }
+    spyOn(order, "submit")
+    scope.purchase(event)
+    expect(order.submit).toHaveBeenCalled()

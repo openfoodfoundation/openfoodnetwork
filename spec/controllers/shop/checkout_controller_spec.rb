@@ -47,12 +47,12 @@ describe Shop::CheckoutController do
   end
 
   describe "building the order" do
-    
     before do
       controller.stub(:current_distributor).and_return(distributor)
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
     end
+
     it "does not clone the ship address from distributor when shipping method requires address" do
       get :edit
       assigns[:order].ship_address.address1.should be_nil
@@ -75,6 +75,21 @@ describe Shop::CheckoutController do
       order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
       order.should_receive(:ship_address=)
       controller.send(:clear_ship_address)
+    end
+  end
+
+  context "via xhr" do
+    before do
+      controller.stub(:current_distributor).and_return(distributor)
+
+      controller.stub(:current_order_cycle).and_return(order_cycle)
+      controller.stub(:current_order).and_return(order)
+    end
+
+    it "returns errors" do
+      xhr :post, :update, order: {}, use_route: :spree
+      response.status.should == 400
+      response.body.should == assigns[:order].errors.to_json
     end
   end
 

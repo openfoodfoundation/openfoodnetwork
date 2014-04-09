@@ -1,6 +1,7 @@
 Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   window.tmp = $scope
-  $scope.order = $scope.Order = Order
+  $scope.Order = Order
+  $scope.order = Order.order 
   $scope.accordion = {}
 
   $scope.show = (name)->
@@ -29,6 +30,10 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
     $scope.error(name).email
   $scope.number = (name)->
     $scope.error(name).number
+
+  $scope.purchase = (event)->
+    event.preventDefault()
+    $scope.Order.submit()
 
 
 # READ THIS FIRST
@@ -67,8 +72,5 @@ Darkswarm.controller "DetailsSubCtrl", ($scope) ->
   $scope.phoneError = ->
     "must be a number"
 
-  $scope.purchase = (event)->
-    event.preventDefault()
-    checkout.submit()
 
 
