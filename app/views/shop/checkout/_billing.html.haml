@@ -23,7 +23,7 @@
             "ng-model" => "order.bill_address.city"
 
         .large-6.columns
-          = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]},
+          = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
             "ng-model" => "order.bill_address.state_id"
       .row
         .large-6.columns

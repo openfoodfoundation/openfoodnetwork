@@ -94,7 +94,6 @@ describe Shop::CheckoutController do
     it "returns order confirmation url on success" do
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "complete"
-      #order.stub(:completed?).and_return true
 
       xhr :post, :update, order: {}, use_route: :spree
       response.status.should == 200

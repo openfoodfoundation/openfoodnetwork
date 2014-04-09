@@ -10,7 +10,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
     submit: ->
       $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)=>
         console.log data
-        # Navigate to order confirmation
+        window.location.pathname = data.path
       .error (errors, status)=>
         console.log "error"
         @errors = errors
@@ -23,6 +23,8 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
           munged_order["bill_address_attributes"] = value
         else if name == "ship_address"
           munged_order["ship_address_attributes"] = value
+        else if name == "payment_method_id"
+          munged_order["payments_attributes"] = [{payment_method_id: value}]
         else
           munged_order[name] = value
       munged_order
