@@ -13,18 +13,28 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   storage.bind $scope, "accordion.shipping"
   storage.bind $scope, "accordion.payment"
 
+  $scope.purchase = (event)->
+    event.preventDefault()
+    $scope.Order.submit()
+
+FieldsetController = ($scope)->
+  $scope.field = (path)->
+    $scope[$scope.name][path]
 
   $scope.fieldValid = (path)->
     not ($scope.dirty(path) and $scope.invalid(path))
-  $scope.field = (path)->
-    $scope.checkout[path]
+
   $scope.dirty = (name)->
     $scope.field(name).$dirty
+
   $scope.invalid = (name)->
     $scope.field(name).$invalid
+
   $scope.error = (name)->
-    $scope.checkout[name].$error
+    $scope.field(name).$error
+
   $scope.fieldErrors = (path)->
+    # TODO: display server errors
     errors = for error, invalid of $scope.error(path)
       if invalid
         switch error
@@ -33,12 +43,11 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
           when "email"    then "must be email address"
     (errors.filter (error) -> error?).join ", "
 
-  $scope.purchase = (event)->
-    event.preventDefault()
-    $scope.Order.submit()
 
 
 Darkswarm.controller "DetailsSubCtrl", ($scope) ->
+  angular.extend(this, new FieldsetController($scope))
+  $scope.name = "details"
   #$scope.detailsValid = ->
     #$scope.detailsFields().every (field)->
       #$scope.checkout[field].$valid
@@ -48,4 +57,4 @@ Darkswarm.controller "DetailsSubCtrl", ($scope) ->
   #, (valid)->
     #if valid
       #$scope.show("billing")
-    
+  

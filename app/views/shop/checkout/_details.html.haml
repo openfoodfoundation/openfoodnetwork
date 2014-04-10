@@ -1,43 +1,44 @@
 %fieldset#details
   %accordion-group{"is-open" => "accordion.details"}
-    %div{"ng-controller" => "DetailsSubCtrl"}
-      %accordion-heading
+    %div{"ng-controller" => "DetailsCtrl"}
+      %ng-form{name: "details"}
+        %accordion-heading
+          .row
+            .large-6.columns
+              Customer Details
+            .large-6.columns.text-right
+              {{ order.bill_address.firstname }}
+              {{ order.bill_address.lastname }}
         .row
           .large-6.columns
-            Customer Details
-          .large-6.columns.text-right
-            {{ order.bill_address.firstname }}
-            {{ order.bill_address.lastname }}
-      .row
-        .large-6.columns
 
-          - path = "order.email"
-          %label{for: path} Email
-          %input.medium.input-text{name: path,
-            "ng-model" => path,
-            required: true,
-            type: :email,
-            "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
-          %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
-            = "{{ fieldErrors('#{path}') }}"
-
-        = f.fields_for :bill_address, @order.bill_address do |ba|
-          .large-6.columns
-
-            - path = "order.bill_address.phone"
-            %label{for: path} Phone
+            - path = "order.email"
+            %label{for: path} Email
             %input.medium.input-text{name: path,
               "ng-model" => path,
               required: true,
-              type: :text,
+              type: :email,
               "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
             %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
               = "{{ fieldErrors('#{path}') }}"
 
-      = f.fields_for :bill_address, @order.bill_address do |ba|
-        .row
-          .large-6.columns
-            = ba.text_field :firstname, "ng-model" => "order.bill_address.firstname"
+          = f.fields_for :bill_address, @order.bill_address do |ba|
+            .large-6.columns
 
-          .large-6.columns
-            = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"
+              - path = "order.bill_address.phone"
+              %label{for: path} Phone
+              %input.medium.input-text{name: path,
+                "ng-model" => path,
+                required: true,
+                type: :text,
+                "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
+              %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
+                = "{{ fieldErrors('#{path}') }}"
+
+        = f.fields_for :bill_address, @order.bill_address do |ba|
+          .row
+            .large-6.columns
+              = ba.text_field :firstname, "ng-model" => "order.bill_address.firstname"
+
+            .large-6.columns
+              = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"

@@ -14,6 +14,7 @@
 #= require ../shared/jquery.timeago
 #= require foundation
 #= require ./darkswarm
+#= require_tree ./mixins
 #= require_tree .
 
 $ ->
