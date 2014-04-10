@@ -5,5 +5,4 @@ require 'open_food_network/config'
 
 # Define OpenFoodNetwork sitewide preferences
 OpenFoodNetwork::Config[:country_code] = 'au'
-OpenFoodNetwork::Config[:country] = 'Australia'
 

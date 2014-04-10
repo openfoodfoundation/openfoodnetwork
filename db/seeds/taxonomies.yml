@@ -1,0 +1,9 @@
+---
+- name: Products
+  terms:
+    - Vegetables
+    - Fruit
+    - Oils
+    - Preserves and Sauces
+    - Dairy
+    - Meat and Fish
