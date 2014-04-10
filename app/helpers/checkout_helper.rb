@@ -10,4 +10,12 @@ module CheckoutHelper
 
     adjustments
   end
+
+  def validated_input(name, path, args = {})
+    defaults = {
+      required: true,
+      type: :text
+    }.merge args
+    render partial: "shared/validated_input", locals: {name: name, path: path}.merge(defaults)
+  end
 end

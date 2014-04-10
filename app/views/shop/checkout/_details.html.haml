@@ -11,29 +11,10 @@
               {{ order.bill_address.lastname }}
         .row
           .large-6.columns
-
-            - path = "order.email"
-            %label{for: path} Email
-            %input.medium.input-text{name: path,
-              "ng-model" => path,
-              required: true,
-              type: :email,
-              "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
-            %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
-              = "{{ fieldErrors('#{path}') }}"
-
+            = validated_input('Email', 'order.email', type: :email)
           = f.fields_for :bill_address, @order.bill_address do |ba|
             .large-6.columns
-
-              - path = "order.bill_address.phone"
-              %label{for: path} Phone
-              %input.medium.input-text{name: path,
-                "ng-model" => path,
-                required: true,
-                type: :text,
-                "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
-              %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
-                = "{{ fieldErrors('#{path}') }}"
+              = validated_input 'Phone', 'order.bill_address.phone'
 
         = f.fields_for :bill_address, @order.bill_address do |ba|
           .row
