@@ -21,11 +21,14 @@ window.FieldsetMixin = ($scope)->
     $scope.field(name).$error
 
   $scope.fieldErrors = (path)->
-    # TODO: display server errors
     errors = for error, invalid of $scope.error(path)
       if invalid
         switch error
-          when "required" then "must not be blank"
+          when "required" then "can't be blank"
           when "number"   then "must be number"
           when "email"    then "must be email address"
-    (errors.filter (error) -> error?).join ", "
+
+    server_errors = $scope.Order.errors[path.replace('order.', '')] 
+    errors.push server_errors if server_errors? 
+    (errors.filter (error) -> error?).unique().join ", "
+    
