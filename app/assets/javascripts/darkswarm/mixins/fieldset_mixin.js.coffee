@@ -1,6 +1,12 @@
 window.FieldsetMixin = ($scope)->
+  $scope.valid = ->
+    $scope.form().$valid
+
+  $scope.form = ->
+    $scope[$scope.name]
+
   $scope.field = (path)->
-    $scope[$scope.name][path]
+    $scope.form()[path]
 
   $scope.fieldValid = (path)->
     not ($scope.dirty(path) and $scope.invalid(path))
@@ -23,6 +29,3 @@ window.FieldsetMixin = ($scope)->
           when "number"   then "must be number"
           when "email"    then "must be email address"
     (errors.filter (error) -> error?).join ", "
-
-
-

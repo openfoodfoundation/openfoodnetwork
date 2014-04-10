@@ -1,34 +1,32 @@
 %fieldset#billing
-  %accordion-group{"is-open" => "accordion.billing"}
-    %accordion-heading
-      .row
-        .large-6.columns
-          Billing
-        .large-6.columns.text-right
-          {{ order.bill_address.address1 }}
-          {{ order.bill_address.city }}
-    = f.fields_for :bill_address, @order.bill_address do |ba|
-      .row
-        .large-12.columns
-          = ba.text_field :address1,
-            "ng-model" => "order.bill_address.address1"
-      .row
-        .large-12.columns
-          = ba.text_field :address2,
-            "ng-model" => "order.bill_address.address2"
-      .row
-        .large-6.columns
+  %ng-form{"ng-controller" => "BillingCtrl", name: "billing"}
+    %accordion-group{"is-open" => "accordion.billing",
+      "ng-class" => "{valid: billing.$valid}"}
+      %accordion-heading
+        .row
+          .large-6.columns
+            Billing
+          .large-6.columns.text-right
+            {{ order.bill_address.address1 }}
+            {{ order.bill_address.city }}
+      = f.fields_for :bill_address, @order.bill_address do |ba|
+        .row
+          .large-12.columns
+            = validated_input "Address", "order.bill_address.address1"
+        .row
+          .large-12.columns
+            = validated_input "Address (contd.)", "order.bill_address.address2", required: false
+        .row
+          .large-6.columns
+            = validated_input "City", "order.bill_address.city"
 
-          = ba.text_field :city,
-            "ng-model" => "order.bill_address.city"
+          .large-6.columns
+            = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
+              "ng-model" => "order.bill_address.state_id"
+        .row
+          .large-6.columns
+            = validated_input "Postcode", "order.bill_address.zipcode"
 
-        .large-6.columns
-          = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
-            "ng-model" => "order.bill_address.state_id"
-      .row
-        .large-6.columns
-          = ba.text_field :zipcode, label: "Postcode",
-            "ng-model" => "order.bill_address.zipcode"
-        .large-6.columns.right
-          = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
-            {include_blank: false}, "ng-model" => "order.bill_address.country_id"
+          .large-6.columns.right
+            = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
+              {include_blank: false}, "ng-model" => "order.bill_address.country_id"

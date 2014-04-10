@@ -8,9 +8,7 @@
    
   %accordion.row{"close-others" => "true"}
     %checkout{"ng-controller" => "CheckoutCtrl"}
-
-      %pre
-        {{ Order.errors | json }}
+      {{ order }}
       .large-9.columns
         - unless spree_current_user
           = render partial: "shop/checkout/authentication"

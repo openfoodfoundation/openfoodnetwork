@@ -1,25 +1,26 @@
 %fieldset#details
-  %accordion-group{"is-open" => "accordion.details"}
-    %div{"ng-controller" => "DetailsCtrl"}
-      %ng-form{name: "details"}
-        %accordion-heading
-          .row
-            .large-6.columns
-              Customer Details
-            .large-6.columns.text-right
-              {{ order.bill_address.firstname }}
-              {{ order.bill_address.lastname }}
+  %ng-form{"ng-controller" => "DetailsCtrl", name: "details"}
+    %accordion-group{"is-open" => "accordion.details", 
+      "ng-class" => "{valid: details.$valid}"}
+      %accordion-heading
         .row
           .large-6.columns
-            = validated_input('Email', 'order.email', type: :email)
-          = f.fields_for :bill_address, @order.bill_address do |ba|
-            .large-6.columns
-              = validated_input 'Phone', 'order.bill_address.phone'
+            Customer Details
+          .large-6.columns.text-right
+            {{ order.bill_address.firstname }}
+            {{ order.bill_address.lastname }}
+      .row
+        .large-6.columns
+          = validated_input('Email', 'order.email', type: :email)
 
         = f.fields_for :bill_address, @order.bill_address do |ba|
-          .row
-            .large-6.columns
-              = ba.text_field :firstname, "ng-model" => "order.bill_address.firstname"
+          .large-6.columns
+            = validated_input 'Phone', 'order.bill_address.phone'
 
-            .large-6.columns
-              = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"
+      = f.fields_for :bill_address, @order.bill_address do |ba|
+        .row
+          .large-6.columns
+            = validated_input "First Name", "order.bill_address.firstname"
+
+          .large-6.columns
+            = validated_input "Last Name", "order.bill_address.lastname"
