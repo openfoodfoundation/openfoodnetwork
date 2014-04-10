@@ -56,7 +56,7 @@ Spree::Variant.class_eval do
     if option_type
       name = option_value_name
       ov = Spree::OptionValue.where(option_type_id: option_type, name: name, presentation: name).first || Spree::OptionValue.create!({option_type: option_type, name: name, presentation: name}, without_protection: true)
-      option_values << ov #unless option_values.include? ov
+      option_values << ov
     end
   end
 
