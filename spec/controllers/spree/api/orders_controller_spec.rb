@@ -5,24 +5,23 @@ module Spree
   describe Spree::Api::OrdersController do
     include Spree::Api::TestingSupport::Helpers
     render_views
-    
-    let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
-    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-    let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-    let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-    let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
-    let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
-    let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
-    let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
-    let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :line_items, :distributor, :order_cycle, :number] }
-    let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
-
-    before do
-      stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
-    end
-
     context "as a normal user" do
+      let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
+      let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+      let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+      let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+      let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
+      let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
+      let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
+      let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
+      let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :line_items, :distributor, :order_cycle, :number] }
+      let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
+    
+      before do
+        stub_authentication!
+        Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      end
+
       before :each do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
       end
@@ -66,6 +65,31 @@ module Spree
 
       it "retrieves the order number" do
         json_response.map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }.should == true
+      end
+    end
+
+    context "As a supplier enterprise user" do
+      let(:supplier) { create(:supplier_enterprise) }
+      let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, billing_address: FactoryGirl.create(:address) ) }
+      let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
+      let!(:line_item2) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: FactoryGirl.create(:supplier_enterprise))) }
+      let(:enterprise_user) do
+        user = create(:user)
+        user.enterprise_roles.create(enterprise: supplier)
+        user.spree_roles = []
+        user.save!
+        user
+      end
+
+      before :each do
+        stub_authentication!
+        Spree.user_class.stub :find_by_spree_api_key => enterprise_user
+        spree_get :managed, { :template => 'bulk_index', :format => :json }
+      end
+
+      it "returns a list of orders with only managed line items shown" do
+        json_response.map{ |order| order['line_items'] }.flatten.length.should == 1
+        json_response[0]['line_items'][0]['id'].should == line_item1.id
       end
     end
   end
