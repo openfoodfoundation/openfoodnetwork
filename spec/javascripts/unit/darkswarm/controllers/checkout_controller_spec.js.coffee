@@ -1,7 +1,7 @@
 describe "CheckoutCtrl", ->
   ctrl = null
   scope = null
-  order = null 
+  order = null
 
   beforeEach ->
     module("Darkswarm")
@@ -22,3 +22,23 @@ describe "CheckoutCtrl", ->
     spyOn(order, "submit")
     scope.purchase(event)
     expect(order.submit).toHaveBeenCalled()
+
+  it "finds a field by path", ->
+    scope.checkout = 
+      path: "test"
+    expect(scope.field('path')).toEqual "test"
+
+  it "tests validity", ->
+    scope.checkout =
+      path: 
+        $dirty: true
+        $invalid: true
+    expect(scope.fieldValid('path')).toEqual false
+
+  it "returns errors by path", ->
+    scope.checkout =
+      path: 
+        $error: 
+          email: true
+          required: true
+    expect(scope.fieldErrors('path')).toEqual ["must be email address", "must not be blank"].join ", "

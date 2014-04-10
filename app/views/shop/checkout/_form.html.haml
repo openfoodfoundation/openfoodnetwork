@@ -1,7 +1,7 @@
 = f_form_for current_order, url: main_app.shop_update_checkout_path, 
   html: {name: "checkout", 
     id: "checkout_form",
-    novalidate: "",
+    novalidate: true,
     name: "checkout"} do |f|
 
   :javascript

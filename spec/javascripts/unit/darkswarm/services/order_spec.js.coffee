@@ -50,7 +50,7 @@ describe 'Order service', ->
     expect(Order.paymentMethod()).toEqual {test: "foo"}
 
   it "Posts the Order to the server", ->
-    $httpBackend.expectPUT("/shop/checkout", {order: Order.preprocess()}).respond 200
+    $httpBackend.expectPUT("/shop/checkout", {order: Order.preprocess()}).respond 200, {path: "test"}
     Order.submit()
     $httpBackend.flush()
 
