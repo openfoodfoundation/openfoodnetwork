@@ -257,9 +257,7 @@ describe "AdminOrderMgmtCtrl", ->
 
       it "returns the quantity of fulfilled group buy units", ->
         scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
-        spyOn(scope,"sumUnitValues").andReturn 1500
-        expect(scope.fulfilled()).toEqual 1.5
-        expect(scope.sumUnitValues).toHaveBeenCalled()
+        expect(scope.fulfilled(1500)).toEqual 1.5
 
     describe "allUnitValuesPresent()", ->
       it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
@@ -303,6 +301,18 @@ describe "AdminOrderMgmtCtrl", ->
         sp1 = scope.filteredLineItems[1].units_variant.unit_value * scope.filteredLineItems[1].quantity
         sp2 = scope.filteredLineItems[2].units_variant.unit_value * scope.filteredLineItems[2].quantity
         expect(scope.sumUnitValues()).toEqual (sp0 + sp1 + sp2)
+
+    describe "sumMaxUnitValues()", ->
+      it "returns the sum of the product of unit_value and maxOf(max_quantity,quantity) for specified line_items", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 1 }, quantity: 2, max_quantity: 5 }
+          { units_variant: { unit_value: 2 }, quantity: 3, max_quantity: 1 }
+          { units_variant: { unit_value: 3 }, quantity: 7, max_quantity: 10 }
+        ]
+        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].quantity, scope.filteredLineItems[0].max_quantity)
+        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].quantity, scope.filteredLineItems[1].max_quantity)
+        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].quantity, scope.filteredLineItems[2].max_quantity)
+        expect(scope.sumMaxUnitValues()).toEqual (sp0 + sp1 + sp2)
 
     describe "formatting a value based upon the properties of a specified Units Variant", ->
       # A Units Variant is an API object which holds unit properies of a variant

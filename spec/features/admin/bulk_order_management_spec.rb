@@ -486,8 +486,8 @@ feature %q{
       let!(:p3) { FactoryGirl.create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [FactoryGirl.create(:variant, unit_value: 1000)] ) }
       let!(:v3) { p3.variants.first }
       let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3 ) }
-      let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3, max_quantity: 6 ) }
+      let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -500,12 +500,16 @@ feature %q{
         page.should have_selector "div#group_buy_calculation", :visible => true
 
         within "div#group_buy_calculation" do
-          page.should have_text "Group Buy Unit"
+          page.should have_text "Group Buy Unit Size"
           page.should have_text "5 kg"
+          page.should have_text "Total Quantity Ordered"
+          page.should have_text "4 kg"
+          page.should have_text "Max Quantity Ordered"
+          page.should have_text "9 kg"
           page.should have_text "Fulfilled Units"
           page.should have_text "0.8"
-          page.should have_text "Total Units Ordered"
-          page.should have_text "4 kg"
+          page.should have_text "Max Fulfilled Units"
+          page.should have_text "1.8"
           page.should have_selector "div.shared_resource", :visible => true
           within "div.shared_resource" do
             page.should have_selector "span", :text => "Shared Resource?"

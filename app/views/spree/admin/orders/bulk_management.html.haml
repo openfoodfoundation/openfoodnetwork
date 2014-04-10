@@ -28,33 +28,42 @@
       %label{ :for => 'order_cycle_filter' }Order Cycle
       %br
       %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.name for oc in orderCycles'}
-  %div#group_buy_calculation{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
-    %div{ :class => "seven columns alpha" }
-      %h6{ :class => "five columns alpha", 'ng-show' => 'sharedResource' } {{ selectedUnitsProduct.name + ": ALL" }}
-      %h6{ :class => "five columns alpha", 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.unit_text }}
-      %h6{ :class => "two column omega" }
-        %a{ 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {}' } Clear
-    %div{ :class => "seven columns alpha" }
-      %span{ :class => "five columns alpha" }
-        Group Buy Unit Size
-      %span{ :class => "two columns omega" }
-        {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
-    %div{ :class => "seven columns alpha" }
-      %span{ :class => "five columns alpha" }
-        Fulfilled Units
-      %span{ :class => "two columns omega" }
-        {{ fulfilled() }}
-    %div{ :class => "seven columns alpha" }
-      %span{ :class => "five columns alpha" }
-        Total Units Ordered
-      %span{ :class => "two columns omega" }
-        {{ formattedValueWithUnitName( sumUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
-    %div.shared_resource{ :class => "seven columns alpha" }
-      %span{ :class => "five columns alpha" } Shared Resource?
-      %span{ :class => 'two columns omega' }
+  %div#group_buy_calculation{ :class => "fifteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
+    %div.shared_resource{ :class => "four columns alpha" }
+      %span{ :class => 'three columns omega' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
-    %div{ :class => "seven columns alpha", 'ng-hide' => 'allUnitValuesPresent()' }
-      %span{ :class => "seven columns alpha", style: 'color:red' }
+        Shared Resource?
+    %div{ :class => "seven columns omega" }
+      %h6{ :class => "seven columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsProduct.name + ": ALL" }}
+      %h6{ :class => "seven columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.unit_text }}
+    %div{ :class => "four columns alpha" }
+      %h6{ :class => "four columns alpha", :style => 'text-align: right;' }
+        %a{ 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' } Clear
+    %hr
+    .row{ :style => 'font-weight: bold'}
+      %span{ :class => "three columns omega" }
+        Group Buy Unit Size
+      %span{ :class => "three columns omega" }
+        Total Quantity Ordered
+      %span{ :class => "three columns omega" }
+        Max Quantity Ordered
+      %span{ :class => "three columns omega" }
+        Fulfilled Units
+      %span{ :class => "three columns alpha" }
+        Max Fulfilled Units
+    .row
+      %span{ :class => "three columns omega" }
+        {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
+      %span{ :class => "three columns omega" }
+        {{ formattedValueWithUnitName( sumUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
+      %span{ :class => "three columns omega" }
+        {{ formattedValueWithUnitName( sumMaxUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
+      %span{ :class => "three columns omega" }
+        {{ fulfilled(sumUnitValues()) }}
+      %span{ :class => "three columns alpha" }
+        {{ fulfilled(sumMaxUnitValues()) }}
+    %div{ :class => "eight columns alpha", 'ng-hide' => 'allUnitValuesPresent()' }
+      %span{ :class => "eight columns alpha", style: 'color:red' }
         WARNING: Some variants do not have a unit value
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
   %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
@@ -121,7 +130,7 @@
             %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
             %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
-          %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max }}
+          %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
     %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
