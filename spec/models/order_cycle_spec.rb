@@ -191,6 +191,7 @@ describe OrderCycle do
 
       @p0 = create(:simple_product)
       @p1 = create(:simple_product)
+      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.now)
       @p2 = create(:simple_product)
       @p2_v = create(:variant, product: @p2)
 
@@ -199,6 +200,7 @@ describe OrderCycle do
       @e1.variants << @p2.master
       @e1.variants << @p2_v
       @e2.variants << @p1.master
+      @e2.variants << @p1_v_deleted
     end
 
     it "reports on the variants exchanged" do

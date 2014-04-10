@@ -15,6 +15,7 @@ Spree::Variant.class_eval do
   before_validation :update_weight_from_unit_value
   after_save :update_units
 
+  scope :not_deleted, where(deleted_at: nil)
   scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
 
 
