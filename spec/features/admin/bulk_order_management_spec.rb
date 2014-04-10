@@ -284,6 +284,21 @@ feature %q{
         page.should_not have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
+
+      it "displays a 'Clear All' button which sets all select filters to 'All'" do
+        select2_select oc1.name, from: "order_cycle_filter"
+        select2_select d1.name, from: "distributor_filter"
+        select2_select s1.name, from: "supplier_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        page.should have_button "Clear All"
+        click_button "Clear All"
+        page.should have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
+        page.should have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
+        page.should have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+      end
     end
 
     context "using quick search" do
@@ -506,7 +521,7 @@ feature %q{
           page.should have_text "4 kg"
           page.should have_text "Max Quantity Ordered"
           page.should have_text "9 kg"
-          page.should have_text "Fulfilled Units"
+          page.should have_text "Current Fulfilled Units"
           page.should have_text "0.8"
           page.should have_text "Max Fulfilled Units"
           page.should have_text "1.8"

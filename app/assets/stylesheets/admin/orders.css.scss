@@ -2,6 +2,12 @@
 	margin-bottom: 10px;
 }
 
+.filter_clear {
+	input {
+		background-color: #DA5354;
+	}
+}
+
 input.update-pending {
 	border: solid 1px orange;
 }
@@ -20,7 +26,6 @@ input.update-success {
 
 div#group_buy_calculation {
     border-radius: 3px;
-	border:1px solid #5498da;
 	background-color: #eff5fc;
 	div {
 		margin-bottom: 5px;

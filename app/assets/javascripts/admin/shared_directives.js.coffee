@@ -22,14 +22,15 @@ sharedDirectivesModule.directive "datepicker", ->
           # Fires ngModel.$parsers
           ngModel.$setViewValue dateText
 
-sharedDirectivesModule.directive "ofnSelect2MinSearch", [
-  ->
-    return (
-      link: (scope, element, attrs) ->
-        element.select2
-          minimumResultsForSearch: attrs.ofnSelect2MinSearch
-    )
-]
+sharedDirectivesModule.directive "ofnSelect2MinSearch", ->
+  require: 'ngModel'
+  link: (scope, element, attrs, ngModel) ->
+    element.select2
+      minimumResultsForSearch: attrs.ofnSelect2MinSearch
+
+    ngModel.$formatters.push (value) ->
+      if (value)
+        element.select2('val', value);
 
 sharedDirectivesModule.directive "ofnToggleColumn", ->
   link: (scope, element, attrs) ->

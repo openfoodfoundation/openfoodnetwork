@@ -7,7 +7,7 @@ orderManagementModule.config [
 ]
 
 orderManagementModule.value "blankOption", ->
-  { id: "", name: "All" }
+  { id: "0", name: "All" }
 
 orderManagementModule.directive "ofnLineItemUpdAttr", [
   "switchClass", "pendingChanges"
@@ -123,8 +123,6 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.sharedResource = false
       $scope.predicate = ""
       $scope.reverse = false
-      $scope.optionTabs =
-        filters:        { title: "Filter Line Items",   visible: false }
       $scope.columns =
         order_no:     { name: "Order No.",    visible: false }
         full_name:    { name: "Name",         visible: true }
@@ -148,16 +146,15 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             $scope.suppliers.unshift blankOption()
-            $scope.supplierFilter = $scope.suppliers[0]
             dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
-              $scope.distributorFilter = $scope.distributors[0]
-              dataFetcher("/api/order_cycles/managed").then (data) ->
+              ocFetcher = dataFetcher("/api/order_cycles/managed").then (data) ->
                 $scope.orderCycles = data
                 $scope.orderCycles.unshift blankOption()
-                $scope.orderCycleFilter = $scope.orderCycles[0]
                 $scope.fetchOrders()
+              ocFetcher.then ->
+                $scope.resetSelectFilters()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
@@ -279,18 +276,19 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
     $scope.unitsVariantSelected = ->
       !angular.equals($scope.selectedUnitsVariant,{})
 
-    $scope.shiftTab = (tab) ->
-      $scope.visibleTab.visible = false unless $scope.visibleTab == tab || $scope.visibleTab == undefined
-      tab.visible = !tab.visible
-      $scope.visibleTab = tab
+    $scope.resetSelectFilters = ->
+      $scope.distributorFilter = $scope.distributors[0].id
+      $scope.supplierFilter = $scope.suppliers[0].id
+      $scope.orderCycleFilter = $scope.orderCycles[0].id
+      $scope.quickSearch = ""
 ]
 
 orderManagementModule.filter "selectFilter", (blankOption) ->
     return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
-      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,blankOption()) || lineItem.supplier.id == selectedSupplier.id) &&
-        (angular.equals(selectedDistributor,blankOption()) || lineItem.order.distributor.id == selectedDistributor.id) &&
-        (angular.equals(selectedOrderCycle,blankOption()) || lineItem.order.order_cycle.id == selectedOrderCycle.id)
+      filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,"0") || lineItem.supplier.id == selectedSupplier) &&
+        (angular.equals(selectedDistributor,"0") || lineItem.order.distributor.id == selectedDistributor) &&
+        (angular.equals(selectedOrderCycle,"0") || lineItem.order.order_cycle.id == selectedOrderCycle)
       filtered
 
 orderManagementModule.filter "variantFilter", ->
