@@ -609,8 +609,10 @@ describe "Auxiliary functions", ->
       expect(twoDigitNumber(1)).toEqual "01"
       expect(twoDigitNumber(9)).toEqual "09"
 
-  describe "formatting a date", ->
-    it "returns a date formatted as yyyy-mm-dd hh-MM:ss", ->
+  describe "formatting dates and times", ->
+    date = null
+
+    beforeEach ->
       date = new Date
       date.setYear(2010)
       date.setMonth(5) # Zero indexed, so 5 is June
@@ -618,4 +620,9 @@ describe "Auxiliary functions", ->
       date.setHours(5)
       date.setMinutes(10)
       date.setSeconds(30)
-      expect(formatDate(date)).toEqual "2010-06-15 05:10:30"
+
+    it "returns a date formatted as yyyy-mm-dd", ->
+      expect(formatDate(date)).toEqual "2010-06-15"
+
+    it "returns a time formatted as hh-MM:ss", ->
+      expect(formatTime(date)).toEqual "05:10:30"

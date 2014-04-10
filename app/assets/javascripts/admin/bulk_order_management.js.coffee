@@ -341,10 +341,13 @@ formatDate = (date) ->
   year = date.getFullYear()
   month = twoDigitNumber date.getMonth() + 1
   day = twoDigitNumber date.getDate()
+  return year + "-" + month + "-" + day
+
+formatTime = (date) ->
   hours = twoDigitNumber date.getHours()
   mins = twoDigitNumber date.getMinutes()
   secs = twoDigitNumber date.getSeconds()
-  return year + "-" + month + "-" + day + " " + hours + ":" + mins + ":" + secs
+  return hours + ":" + mins + ":" + secs
 
 twoDigitNumber = (number) ->
   twoDigits =  "" + number

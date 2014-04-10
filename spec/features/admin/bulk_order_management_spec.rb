@@ -326,8 +326,8 @@ feature %q{
       end
 
       it "displays date fields for filtering orders, with default values set" do
-        one_week_ago = Date.today.prev_day(7).strftime("%F %T")
-        tonight = Date.tomorrow.strftime("%F %T")
+        one_week_ago = Date.today.prev_day(7).strftime("%F")
+        tonight = Date.tomorrow.strftime("%F")
         page.should have_field "start_date_filter", with: one_week_ago
         page.should have_field "end_date_filter", with: tonight
       end
@@ -339,12 +339,12 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+        fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
         page.should_not have_selector "tr#li_#{li3.id}", visible: true
 
-        fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F %T")
+        fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
         page.should have_selector "tr#li_#{li3.id}", visible: true

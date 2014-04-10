@@ -7,14 +7,14 @@
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
   .filters{ :class => "sixteen columns alpha" }
-    .date_filter{ :class => "three columns alpha" }
+    .date_filter{ :class => "two columns alpha" }
       %label{ :for => 'start_date_filter' }Start Date
       %br
-      %input{ :class => "three columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datetimepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
-    .date_filter{ :class => "three columns omega" }
+      %input{ :class => "two columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'ofn-confirm-change' => "startDate" }
+    .date_filter{ :class => "two columns omega" }
       %label{ :for => 'end_date_filter' }End Date
       %br
-      %input{ :class => "three columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datetimepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
+      %input{ :class => "two columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'ofn-confirm-change' => "endDate" }
     .one.column.omega &nbsp;
     .filter_select{ :class => "three columns omega" }
       %label{ :for => 'supplier_filter' }Producer
