@@ -1,7 +1,12 @@
 %section#sidebar{ role: "complementary", "ng-controller" => "SidebarCtrl", 
 "ng-class" => "{'active' : active()}"}
-  %tabset
-    = render partial: "shared/login_sidebar"
-    = render partial: "shared/signup_sidebar"
-    = render partial: "shared/forgot_sidebar"
+
+  - if spree_current_user.nil?
+    %tabset
+      = render partial: "shared/login_sidebar"
+      = render partial: "shared/signup_sidebar"
+      = render partial: "shared/forgot_sidebar"
+  - else
+    = render partial: "shared/account_sidebar"
+            
   = yield :sidebar

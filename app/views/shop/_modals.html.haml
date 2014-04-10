@@ -1,5 +1,5 @@
 - for producer in current_producers
-  .reveal-modal{id: "producer_details_#{producer.id}"}
+  .reveal-modal{id: "producer_details_#{producer.id}", "data-reveal" => ""}
     .row
       - if producer.logo.exists?
         .large-1.columns
@@ -17,10 +17,9 @@
     %a.close-reveal-modal &#215;
 
 
-
 - for group in current_distributor.groups
   - for sibling in group.enterprises.except(current_distributor)
-    .reveal-modal{id: "sibling_details_#{sibling.id}"}
+    .reveal-modal{id: "sibling_details_#{sibling.id}", "data-reveal" => ""}
       .row
         - if sibling.logo.exists?
           .large-1.columns
@@ -35,4 +34,3 @@
           .large-4.columns
             %img.about.right{src: sibling.promo_image.url(:large)}
       %a.close-reveal-modal &#215;
-

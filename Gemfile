@@ -21,6 +21,7 @@ gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.2"
+gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -39,7 +40,6 @@ gem 'rack-ssl', :require => 'rack/ssl'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
@@ -49,6 +49,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
+  gem 'foundation-icons-sass-rails'
 
 end
 gem "foundation-rails"

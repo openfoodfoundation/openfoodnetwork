@@ -18,4 +18,8 @@ module SharedHelper
       []
     end
   end
+  
+  def enterprise_user?
+    spree_current_user.andand.enterprises.count > 0
+  end
 end

@@ -2,6 +2,8 @@
 // We can't import foundation components?
 // See https://github.com/zurb/foundation/issues/3855#issuecomment-30372252
 
+
+@import "foundation"
 @import "variables"
 @import "components/global"
 @import "components/buttons"
@@ -20,3 +22,12 @@
 
   .tabs dd a
     padding: 0.5em 1em
+  
+  #account
+    dl
+      @include clearfix
+    dt, dd
+      display: inline-block
+    
+    p > strong
+      display: block

@@ -1,8 +1,5 @@
 %li#login-link
-  %a.sidebar-button{"ng-click" => "toggleLogin()"} Login
-
-%li#login-name.hide
+  %a.sidebar-button{"ng-click" => "toggle('/login')"} Login
 %li.divider
-
 %li#sign-up-link
-  %a.sidebar-button{"ng-click" => "toggleSignup()"} Sign Up
+  %a.sidebar-button{"ng-click" => "toggle('/signup')"} Sign Up

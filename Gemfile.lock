@@ -262,6 +262,9 @@ GEM
       nokogiri (~> 1.5)
       ruby-hmac
     formatador (0.2.4)
+    foundation-icons-sass-rails (3.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     foundation-rails (5.2.1.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
@@ -509,6 +512,7 @@ DEPENDENCIES
   eaterprises_feature!
   factory_girl_rails
   faker
+  foundation-icons-sass-rails
   foundation-rails
   foundation_rails_helper!
   geocoder

@@ -12,6 +12,10 @@
         %th.quantity QTY
         %th.bulk Bulk
         %th.price.text-right Price
+      %tbody{"ng-show" => "data.loading"}
+        %tr
+          %td{colspan: 6}
+            %h3.text-center Loading Products
       %tbody{"ng-repeat" => "product in data.products | filter:query"}
         %tr{"class" => "product product-{{ product.id }}"}
           %td.name
@@ -19,7 +23,7 @@
             %div
               %h5
                 {{ product.name }}
-              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}"}
+              %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}", "data-reveal" => ""}
                 {{ product.supplier.name }}
           %td.notes {{ product.notes | truncate:80 }}
           %td 

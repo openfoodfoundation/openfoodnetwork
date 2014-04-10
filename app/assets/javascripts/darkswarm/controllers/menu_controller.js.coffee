@@ -1,12 +1,13 @@
-window.MenuCtrl = Darkswarm.controller "MenuCtrl", ($scope, $location) ->
+window.MenuCtrl = Darkswarm.controller "MenuCtrl", ($scope, Navigation) ->
+
   $scope.toggleLogin = ->
-    if $location.path() == "/login"
-      $location.path("/")
-    else
-      $location.path("login")
+    Navigation.navigate "/login"
 
   $scope.toggleSignup = ->
-    if $location.path() == "/signup"
-      $location.path("/")
-    else
-      $location.path("signup")
+    Navigation.navigate "/signup"
+
+  $scope.toggleSignup = ->
+    Navigation.navigate "/signup"
+
+  $scope.toggle = (path = null)->
+    Navigation.navigate(path)

@@ -41,18 +41,18 @@
                   \:
                   %span.order-total.grand-total= @order.display_total
 
-            .links{'data-hook' => "cart_buttons"}
-              .row
-                #empty-cart.columns.large-9{"data-hook" => ""}
-                  = form_tag empty_cart_path, :method => :put do
-                    #clear_cart_link{"data-hook" => ""}
-                      = link_to "Continue Shopping", main_app.shop_path, class: "button secondary"
-                      = t(:or)
-                      = submit_tag t(:empty_cart), :class => 'button secondary'
+        .links{'data-hook' => "cart_buttons"}
+          .row
+            #empty-cart.columns.large-8{"data-hook" => ""}
+              = form_tag empty_cart_path, :method => :put do
+                #clear_cart_link{"data-hook" => ""}
+                  = link_to "Continue Shopping", main_app.shop_path, class: "button secondary"
+                  = t(:or)
+                  = submit_tag t(:empty_cart), :class => 'button secondary'
 
-                .columns.large-1
-                  = button_tag :class => 'secondary', :id => 'update-button' do
-                    = t(:update)
-                .columns.large-2
-                  = link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary", id: "checkout-link"
+            .columns.large-4.text-right
+              = button_tag :class => 'secondary', :id => 'update-button' do
+                = t(:update)
+              = t(:or)
+              = link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary", id: "checkout-link"
 

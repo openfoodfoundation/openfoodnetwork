@@ -6,6 +6,7 @@ Spree.user_class.class_eval do
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes
+  after_create :send_signup_confirmation
 
   def build_enterprise_roles
     Enterprise.all.each do |enterprise|
@@ -13,5 +14,9 @@ Spree.user_class.class_eval do
         self.enterprise_roles.build(:enterprise => enterprise)
       end
     end
+  end
+
+  def send_signup_confirmation
+    Spree::UserMailer.signup_confirmation(self).deliver
   end
 end

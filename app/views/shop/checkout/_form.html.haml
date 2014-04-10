@@ -24,12 +24,12 @@
             .large-6.columns
               = ba.text_field :lastname, "ng-model" => "order.bill_address.lastname"
 
-        %fieldset
+        %fieldset#billing
           %legend Billing Address
           = f.fields_for :bill_address, @order.bill_address do |ba|
             .row
               .large-12.columns
-                = ba.text_field :address1, label: "Billing Address",
+                = ba.text_field :address1,
                   "ng-model" => "order.bill_address.address1"
             .row
               .large-12.columns

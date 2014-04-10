@@ -1,0 +1,16 @@
+= f_form_for @spree_user, :as => :spree_user, :url => spree.spree_user_password_path, :method => :put do |f|
+  = render :partial => 'spree/shared/error_messages', :locals => { :target => @spree_user }
+  %fieldset
+    .row
+      .small-12.medium-6.large-4.columns.medium-centered.large-centered
+        %legend= t(:change_my_password)
+    .row
+      .small-12.medium-6.large-4.columns.medium-centered.large-centered
+        = f.password_field :password
+    .row
+      .small-12.medium-6.large-4.columns.medium-centered.large-centered
+        = f.password_field :password_confirmation
+    = f.hidden_field :reset_password_token
+    .row
+      .small-10.medium-6.large-4.columns.small-centered
+        = f.submit t(:update_password), :class => 'button primary'

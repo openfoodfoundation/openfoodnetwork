@@ -3,19 +3,20 @@ require 'spec_helper'
 
 feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationWorkflow
+  include ShopWorkflow
   include WebHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
+  let(:order) { Spree::Order.last }
 
   before do
     create_enterprise_group_for distributor
-    exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
-    exchange.variants << product.master
   end
 
+  # Disabled :in for performance reasons
   [:out].each do |auth_state|
     describe "logged #{auth_state.to_s}, distributor selected, order cycle selected, product in cart" do
       let(:user) { create_enterprise_user }
@@ -36,12 +37,9 @@ feature "As a consumer I want to check out my cart", js: true do
           distributor.shipping_methods << sm2 
           visit "/shop/checkout"
         end
-        it "shows all shipping methods" do
+        it "shows all shipping methods, but doesn't show ship address when not needed" do
           page.should have_content "Frogs"
           page.should have_content "Donkeys"
-        end
-
-        it "doesn't show ship address forms when a shipping method wants no address" do
           choose(sm2.name)
           find("#ship_address", visible: false).visible?.should be_false
         end
@@ -74,7 +72,9 @@ feature "As a consumer I want to check out my cart", js: true do
         it "copies billing address to hidden shipping address fields" do
           choose(sm1.name)
           check "Shipping address same as billing address?"
-          fill_in "Billing Address", with: "testy"
+          within "#billing" do
+            fill_in "Address", with: "testy"
+          end
           within "#ship_address_hidden" do
             find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
           end
@@ -112,7 +112,7 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
-                fill_in "Billing Address", with: "123 Your Face"
+                fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
                 fill_in "Customer E-Mail", with: "test@test.com"
@@ -130,7 +130,7 @@ feature "As a consumer I want to check out my cart", js: true do
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
-                fill_in "Billing Address", with: "123 Your Face"
+                fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
                 fill_in "Customer E-Mail", with: "test@test.com"
@@ -148,20 +148,4 @@ feature "As a consumer I want to check out my cart", js: true do
     end
     
   end
-end
-
-def select_distributor
-  visit "/"
-  click_link distributor.name
-end
-
-def select_order_cycle
-  exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
-  visit "/shop"
-  select exchange.pickup_time, from: "order_cycle_id"
-end
-
-def add_product_to_cart
-  fill_in "variants[#{product.master.id}]", with: product.master.on_hand - 1
-  first("form.custom > input.button.right").click 
 end

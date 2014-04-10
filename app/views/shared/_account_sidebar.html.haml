@@ -1,0 +1,20 @@
+#account{"ng-controller" => "AccountSidebarCtrl"}
+  .row
+    .panel
+      %p
+        %strong= link_to "Manage my account", account_path 
+        - if enterprise_user?
+          %strong= link_to "Enterprise admin", admin_path 
+      - if order = last_completed_order
+        %dl
+          %dt Current Hub:
+          %dd= link_to current_distributor.name, main_app.shop_path
+          %br
+          %dt Last hub:
+          %dd
+            - if order.distributor != current_distributor
+              = link_to "#{order.distributor.name}".html_safe, "", 
+                {class: distributor_link_class(order.distributor),
+                "ng-click" => "emptyCart('#{main_app.shop_enterprise_path(order.distributor)}', $event)"}
+            - else
+              = order.distributor.name

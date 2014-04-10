@@ -3,8 +3,10 @@
   active: "active()", 
   select: "select()"}
   %form{"ng-submit" => "submit()"}
-    .alert-box.alert{"ng-show" => "errors != null"}
-      {{ errors }}
+    .row
+      .large-12.columns
+        .alert-box.alert{"ng-show" => "errors != null"}
+          {{ errors }}
     .row
       .large-12.columns
         %label{for: "email"} Email

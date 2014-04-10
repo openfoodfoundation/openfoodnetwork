@@ -7,9 +7,8 @@ Darkswarm.factory 'OrderCycle', ($resource, Product, orderCycleData) ->
         Product.update()
 
     @orders_close_at: ->
-      if @order_cycle
+      if @selected()
         @order_cycle.orders_close_at
-      else
-        ""
+
     @selected: ->
-      @order_cycle != null
+      @order_cycle != null and !$.isEmptyObject(@order_cycle) and @order_cycle.orders_close_at != undefined

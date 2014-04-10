@@ -1,10 +1,17 @@
 %td{:colspan => 3}
+  .exchange-select-all-variants
+    %label
+      = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants', 1, 1, 'ng-model' => 'exchange.select_all_variants', 'ng-click' => 'setExchangeVariants(exchange, incomingExchangesVariants(), exchange.select_all_variants)', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants'
+      Select all
+
   .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle'}
     .exchange-product-details
       .supplier {{ product.supplier_name }}
-      = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
-      %img{'ng-src' => '{{ product.image_url }}'}
-      {{ product.name }}
+      %label
+        = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-disabled' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
+        %img{'ng-src' => '{{ product.image_url }}'}
+        {{ product.name }}
     .exchange-product-variant{'ng-repeat' => 'variant in product.variants | filter:variantSuppliedToOrderCycle'}
-      = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}'
-      {{ variant.label }}
+      %label
+        = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}'
+        {{ variant.label }}

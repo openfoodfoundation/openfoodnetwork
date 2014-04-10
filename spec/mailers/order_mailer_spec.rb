@@ -17,6 +17,7 @@ describe Spree::OrderMailer do
     product_distribution = create(:product_distribution, :product => product, :distributor => @distributor)
     @shipping_instructions = "pick up on thursday please!"
     @order1 = create(:order, :distributor => @distributor, :bill_address => @bill_address, :special_instructions => @shipping_instructions)
+    ActionMailer::Base.deliveries = []
   end
 
   it "should send an email when given an order" do

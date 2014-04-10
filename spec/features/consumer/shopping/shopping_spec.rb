@@ -13,13 +13,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
       click_link distributor.name
     end
 
-    it "shows a distributor" do
+    it "shows a distributor with images" do
       visit shop_path
       page.should have_text distributor.name
-    end
 
-    it "shows distributor images" do
-      visit shop_path
       find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
       first("#about img")['src'].should == distributor.promo_image.url(:large) 
@@ -43,32 +40,27 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     describe "selecting an order cycle" do
+      let(:oc1) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 2.days.from_now)} 
+      let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
+      let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
       it "selects an order cycle if only one is open" do
         # create order cycle
-        oc1 = create(:simple_order_cycle, distributors: [distributor])
-        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-        exchange.update_attribute :pickup_time, "turtles" 
+        exchange1.update_attribute :pickup_time, "turtles" 
         visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
       end
 
       describe "with multiple order cycles" do
-        let(:oc1) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 2.days.from_now)} 
-        let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
         before do
-          exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "frogs" 
-          exchange = Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "turtles" 
+          exchange1.update_attribute :pickup_time, "frogs" 
+          exchange2.update_attribute :pickup_time, "turtles" 
           visit shop_path
         end
 
-        it "shows a select with all order cycles" do
+        it "shows a select with all order cycles, but doesn't show the products by default" do
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
-        end
-
-        it "doesn't show the table before an order cycle is selected" do
           page.should_not have_selector("input.button.right", visible: true)
         end
 
@@ -80,32 +72,19 @@ feature "As a consumer I want to shop with a distributor", js: true do
         describe "with products in our order cycle" do
           let(:product) { create(:simple_product) }
           before do
-            exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-            exchange.variants << product.master
+            exchange1.variants << product.master
             visit shop_path
           end
           
-          it "allows us to select an order cycle" do
-            select "frogs", :from => "order_cycle_id"
+          it "allows us to select an order cycle, thus showing products" do
+            page.should_not have_content product.name 
             Spree::Order.last.order_cycle.should == nil
+
+            select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
             page.should have_content "Orders close 2 days from now" 
             Spree::Order.last.order_cycle.should == oc1
-          end
-
-          it "doesn't show products before an order cycle is selected" do
-            page.should_not have_content product.name 
-          end
-
-          it "shows products when an order cycle has been selected" do
-            select "frogs", :from => "order_cycle_id"
             page.should have_content product.name 
-          end
-
-          it "updates the orders close note when order cycle is changed" do
-            oc1.stub(:orders_close_at).and_return 3.days.from_now
-            select "turtles", :from => "order_cycle_id"
-            page.should have_content "Orders close 3 days from now"
           end
         end
       end
@@ -164,13 +143,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
-      describe "filtering on hand and on demand products" do
+      describe "filtering products" do
         let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:p1) { create(:simple_product, on_demand: false) }
         let(:p2) { create(:simple_product, on_demand: true) }
         let(:p3) { create(:simple_product, on_demand: false) }
         let(:p4) { create(:simple_product, on_demand: false) }
         let(:p5) { create(:simple_product, on_demand: false) }
+        let(:p6) { create(:simple_product, on_demand: false) }
         let(:v1) { create(:variant, product: p4, unit_value: 2) }
         let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
         let(:v3) { create(:variant, product: p4, unit_value: 4, on_demand: true) }
@@ -183,6 +163,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           p1.master.update_attribute(:count_on_hand, 1)
           p2.master.update_attribute(:count_on_hand, 0)
           p3.master.update_attribute(:count_on_hand, 0)
+          p6.master.update_attribute(:count_on_hand, 1)
+          p6.delete
           v1.update_attribute(:count_on_hand, 1)
           v2.update_attribute(:count_on_hand, 0)
           v3.update_attribute(:count_on_hand, 0)
@@ -193,6 +175,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           exchange.variants << p1.master
           exchange.variants << p2.master
           exchange.variants << p3.master
+          exchange.variants << p6.master
           exchange.variants << v1
           exchange.variants << v2
           exchange.variants << v3
@@ -224,6 +207,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           # It does not show products that have no available variants in this distribution
           page.should_not have_content p5.name
+
+          # It does not show deleted products
+          page.should_not have_content p6.name
         end
       end
 
