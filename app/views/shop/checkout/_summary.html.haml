@@ -1,7 +1,5 @@
 %orderdetails
   = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
-
-    {{ Order.errors }}
     %fieldset
       %legend Your Order
       %table
