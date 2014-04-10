@@ -113,6 +113,8 @@
             %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
           %th.producer{ 'ng-show' => 'columns.producer.visible' }
             %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
+          %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
+            %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" } Order Cycle
           %th.hub{ 'ng-show' => 'columns.hub.visible' }
             %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" } Hub
           %th.variant{ 'ng-show' => 'columns.variant.visible' }
@@ -131,6 +133,7 @@
           %td.phone{ 'ng-show' => 'columns.phone.visible' } {{ line_item.order.phone }}
           %td.date{ 'ng-show' => 'columns.order_date.visible' } {{ line_item.order.completed_at }}
           %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
+          %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
           %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
             %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}

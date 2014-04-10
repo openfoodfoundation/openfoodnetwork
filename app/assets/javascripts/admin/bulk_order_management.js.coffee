@@ -130,6 +130,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         phone:        { name: "Phone",        visible: false }
         order_date:   { name: "Order Date",   visible: true }
         producer:     { name: "Producer",     visible: true }
+        order_cycle:  { name: "Order Cycle",  visible: false }
         hub:          { name: "Hub",          visible: false }
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
