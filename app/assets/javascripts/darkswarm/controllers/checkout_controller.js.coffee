@@ -27,9 +27,10 @@ Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order, $location, $anc
     checkout.submit()
 
    $scope.scrollTo = (name)->
+      #$scope.userOpen = false
+      $("#order_email").focus()
       $location.hash(name);
       $anchorScroll();
-      $scope.userOpen = false
 
   $scope.initialize()
 
