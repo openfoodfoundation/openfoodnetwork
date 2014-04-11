@@ -1,6 +1,7 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order, $location, $anchorScroll) ->
   $scope.require_ship_address = false
   $scope.order = order
+  $scope.userOpen = true
 
   $scope.initialize = ->
     # Our shipping_methods comes through as a hash like so: {id: requires_shipping_address}
@@ -24,6 +25,11 @@ Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order) ->
   $scope.purchase = (event)->
     event.preventDefault()
     checkout.submit()
+
+   $scope.scrollTo = (name)->
+      $location.hash(name);
+      $anchorScroll();
+      $scope.userOpen = false
 
   $scope.initialize()
 

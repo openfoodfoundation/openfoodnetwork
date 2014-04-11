@@ -4,8 +4,10 @@
 #= require spin
 #
 #= require angular
+#= require angular-cookies
 #= require angular-resource
 #= require ../shared/mm-foundation-tpls-0.2.0-SNAPSHOT
+#= require ../shared/angular-local-storage.js
 #
 #= require ../shared/jquery.timeago
 #= require foundation
