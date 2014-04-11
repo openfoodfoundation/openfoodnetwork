@@ -16,12 +16,7 @@ module Spree
     end
 
     context "as a normal user" do
-      let!(:current_api_user) do
-        user = stub_model(Spree::LegacyUser)
-        user.stub(:has_spree_role?).with("admin").and_return(false)
-        user.stub(:enterprises) { [] }
-        user
-      end
+      sign_in_as_user!
 
       it "retrieves a list of variants with appropriate attributes" do
         spree_get :index, { :template => 'bulk_index', :format => :json }

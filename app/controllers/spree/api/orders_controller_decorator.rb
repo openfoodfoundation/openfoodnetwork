@@ -7,6 +7,8 @@ Spree::Api::OrdersController.class_eval do
   before_filter :authorize_read!, :except => [:managed]
 
   def managed
+    authorize! :admin, Spree::Order
+    authorize! :read, Spree::Order
     @orders = Spree::Order.ransack(params[:q]).result.distributed_by_user(current_api_user).page(params[:page]).per(params[:per_page])
     respond_with(@orders, default_template: :index)
   end
