@@ -8,7 +8,7 @@
     angular.module('Darkswarm').value('order', #{render "shop/checkout/order"})
 
   -#%pre
-    -#{{ order | json }}
+    -#{{ Order.order == order }}
 
   .large-12.columns
     = render partial: "shop/checkout/details", locals: {f: f}
