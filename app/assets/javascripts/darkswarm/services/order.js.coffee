@@ -1,10 +1,12 @@
-Darkswarm.factory 'Order', ($resource, Product, order, $http)->
+Darkswarm.factory 'Order', ($resource, Product, order, $http, storage)->
   new class Order
     errors: {}
+    form_state: {}
+
     constructor: ->
-      @order = order
+      @[key] = val for key, val of order # zip the order data into our service
       # Default to first shipping method if none selected
-      @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
+      @shipping_method_id ||= parseInt(Object.keys(@shipping_methods)[0])
 
     navigate: (path)->
       window.location.pathname = path
@@ -18,7 +20,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
       munged_order = {}
-      for name, value of @order # Clone all data from the order JSON object
+      for name, value of @ # Clone all data from the order JSON object
         switch name
           when "bill_address"
             munged_order["bill_address_attributes"] = value
@@ -34,7 +36,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
       munged_order
 
     shippingMethod: ->
-      @order.shipping_methods[@order.shipping_method_id]
+      @shipping_methods[@shipping_method_id]
 
     requireShipAddress: ->
       @shippingMethod()?.require_ship_address
@@ -43,7 +45,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http)->
       @shippingMethod()?.price
     
     paymentMethod: ->
-      @order.payment_methods[@order.payment_method_id]
+      @payment_methods[@payment_method_id]
 
     cartTotal: ->
-      @shippingPrice() + @order.display_total
+      @shippingPrice() + @display_total

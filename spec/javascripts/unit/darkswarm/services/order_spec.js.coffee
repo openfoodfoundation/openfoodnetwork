@@ -29,26 +29,26 @@ describe 'Order service', ->
       spyOn(Order, "navigate") # Stubbing out writes to window.location
 
   it "defaults the shipping method to the first", ->
-    expect(Order.order.shipping_method_id).toEqual 7
+    expect(Order.shipping_method_id).toEqual 7
     expect(Order.shippingMethod()).toEqual { require_ship_address : true, price : 0 }
 
   # This is now handled via localStorage defaults
   xit "defaults to 'same as billing' for address", ->
-    expect(Order.order.ship_address_same_as_billing).toEqual true
+    expect(Order.ship_address_same_as_billing).toEqual true
 
   it 'Tracks whether a ship address is required', ->
     expect(Order.requireShipAddress()).toEqual true
-    Order.order.shipping_method_id = 25
+    Order.shipping_method_id = 25
     expect(Order.requireShipAddress()).toEqual false
 
   it 'Gets the current shipping price', ->
     expect(Order.shippingPrice()).toEqual 0.0
-    Order.order.shipping_method_id = 25
+    Order.shipping_method_id = 25
     expect(Order.shippingPrice()).toEqual 13
 
   it 'Gets the current payment method', ->
     expect(Order.paymentMethod()).toEqual null
-    Order.order.payment_method_id = 99
+    Order.payment_method_id = 99
     expect(Order.paymentMethod()).toEqual {test: "foo"}
 
   it "Posts the Order to the server", ->
@@ -63,7 +63,7 @@ describe 'Order service', ->
     expect(Order.preprocess().ship_address).toBe(undefined)
 
   it "Munges the order attributes to clone ship address from bill address", ->
-    Order.order.ship_address_same_as_billing = false
+    Order.ship_address_same_as_billing = false
     expect(Order.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
-    Order.order.ship_address_same_as_billing = true
+    Order.ship_address_same_as_billing = true
     expect(Order.preprocess().ship_address_attributes).toEqual(orderData.bill_address)

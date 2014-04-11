@@ -23,9 +23,13 @@ describe "DetailsCtrl", ->
     expect(scope.fieldValid('path')).toEqual false
 
   it "returns errors by path", ->
+    scope.Order = 
+      errors: ->
     scope.details =
       path: 
         $error: 
           email: true
           required: true
-    expect(scope.fieldErrors('path')).toEqual ["must be email address", "must not be blank"].join ", "
+    expect(scope.fieldErrors('path')).toEqual ["must be email address", "can't be blank"].join ", "
+
+

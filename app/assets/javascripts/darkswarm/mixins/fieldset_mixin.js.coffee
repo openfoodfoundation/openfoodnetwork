@@ -1,4 +1,8 @@
 window.FieldsetMixin = ($scope)->
+  $scope.next = (event)->
+    event.preventDefault()
+    $scope.show $scope.nextPanel 
+
   $scope.valid = ->
     $scope.form().$valid
 
@@ -28,7 +32,7 @@ window.FieldsetMixin = ($scope)->
           when "number"   then "must be number"
           when "email"    then "must be email address"
 
-    server_errors = $scope.Order.errors[path.replace('order.', '')] 
-    errors.push server_errors if server_errors? 
-    (errors.filter (error) -> error?).unique().join ", "
+    #server_errors = $scope.Order.errors[path.replace('order.', '')] 
+    #errors.push server_errors if server_errors? 
+    (errors.filter (error) -> error?).join ", "
     

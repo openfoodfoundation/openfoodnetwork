@@ -24,3 +24,7 @@
 
           .large-6.columns
             = validated_input "Last Name", "order.bill_address.lastname"
+
+      .row
+        .large-12.columns.text-right
+          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next

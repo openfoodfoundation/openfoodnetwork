@@ -1,6 +1,6 @@
 Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
-  $scope.Order = Order
-  $scope.order = Order.order 
+  $scope.order = $scope.Order = Order
+  #$scope.order = Order.order 
   $scope.accordion = {}
 
   $scope.show = (name)->
@@ -11,8 +11,9 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage) ->
   storage.bind $scope, "accordion.billing"
   storage.bind $scope, "accordion.shipping"
   storage.bind $scope, "accordion.payment"
-  storage.bind $scope, "order.ship_address_same_as_billing", { defaultValue: true}
-  storage.bind $scope, "order.shipping_method_id"
+
+  storage.bind $scope, "Order.formstate.ship_address_same_as_billing", { defaultValue: true}
+  storage.bind $scope, "order", {storeName: "order_#{$scope.order.id}"}
 
   $scope.purchase = (event)->
     event.preventDefault()

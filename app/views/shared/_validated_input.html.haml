@@ -3,6 +3,6 @@
   "ng-model" => path,
   required: required,
   type: type,
-  "ng-class" => "{error: '!fieldValid(\"#{path}\")'}"}
+  "ng-class" => "{error: !fieldValid('#{path}')}"}
 %small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
   = "{{ fieldErrors('#{path}') }}"

@@ -30,3 +30,7 @@
           .large-6.columns.right
             = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
               {include_blank: false}, "ng-model" => "order.bill_address.country_id"
+
+      .row
+        .large-12.columns.text-right
+          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
