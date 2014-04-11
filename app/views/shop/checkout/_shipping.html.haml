@@ -1,5 +1,4 @@
 %fieldset#shipping
-  %pre
   %ng-form{"ng-controller" => "ShippingCtrl", name: "shipping"}
     %accordion-group{"is-open" => "accordion.shipping",
       "ng-class" => "{valid: shipping.$valid}"}
@@ -36,7 +35,7 @@
                 = validated_input "Address", "order.ship_address.address1"
             .row
               .large-12.columns
-                = validated_input "Address (contd.)", "order.ship_address.address2"
+                = validated_input "Address (contd.)", "order.ship_address.address2", required: false
             .row
               .large-6.columns
                 = validated_input "City", "order.ship_address.city"
@@ -56,3 +55,6 @@
             .row
               .large-6.columns
                 = validated_input "Phone", "order.ship_address.phone"
+      .row
+        .large-12.columns.text-right
+          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next

@@ -1,6 +1,7 @@
 %fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
-    %accordion-group
+    %accordion-group{"is-open" => "accordion.payment",
+      "ng-class" => "{valid: payment.$valid}"}
       %accordion-heading
         .row
           .large-6.columns
