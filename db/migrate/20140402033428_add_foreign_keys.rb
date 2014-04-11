@@ -36,7 +36,6 @@ class AddForeignKeys < ActiveRecord::Migration
     orphaned_inventory_units = Spree::InventoryUnit.joins('LEFT OUTER JOIN spree_variants ON spree_variants.id=spree_inventory_units.variant_id').where('spree_variants.id IS NULL')
     say "Destroying #{orphaned_inventory_units.count} orphaned InventoryUnits (of total #{Spree::InventoryUnit.count})"
     orphaned_inventory_units.destroy_all
-    # TODO: Need a dependent destroy for variant -> inventory unit?
     
     # Remove orphaned Spree::LineItems
     orphaned_line_items = Spree::LineItem.
@@ -49,12 +48,7 @@ class AddForeignKeys < ActiveRecord::Migration
     # Give all orders a distributor
     address = Spree::Address.create!(firstname: 'Dummy distributor', lastname: 'Dummy distributor', phone: '12345678', state: Spree::State.first,
                                      address1: 'Dummy distributor', city: 'Dummy distributor', zipcode: '1234', country: Spree::State.first.country)
-    no_distributor = Enterprise.create!(name: "No distributor", address: address)
     deleted_distributor = Enterprise.create!(name: "Deleted distributor", address: address)
-
-    orders = Spree::Order.where(distributor_id: nil)
-    say "Assigning a dummy distributor to #{orders.count} orders which lack one (of total #{Spree::Order.count})"
-    orders.update_all distributor_id: no_distributor.id
 
     orphaned_orders = Spree::Order.joins('LEFT OUTER JOIN enterprises ON enterprises.id=spree_orders.distributor_id').where('enterprises.id IS NULL')
     say "Assigning a dummy distributor to #{orphaned_orders.count} orders with a deleted distributor (of total #{Spree::Order.count})"
