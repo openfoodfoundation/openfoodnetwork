@@ -1,4 +1,5 @@
 %fieldset#shipping
+  %pre
   %ng-form{"ng-controller" => "ShippingCtrl", name: "shipping"}
     %accordion-group{"is-open" => "accordion.shipping",
       "ng-class" => "{valid: shipping.$valid}"}
@@ -12,8 +13,10 @@
         .row
           .large-12.columns
             %label
-              = radio_button_tag "order[shipping_method_id]", ship_method.id, false,
-                "ng-model" => "order.shipping_method_id"
+              -#= radio_button_tag "order[shipping_method_id]", ship_method.id, false,
+                -#"ng-model" => "order.shipping_method_id"
+              %input{type: :radio, value: ship_method.id,
+                "ng-model" => "order.shipping_method_id"}
               = ship_method.name
 
       #distributor_address.panel{"ng-show" => "!Order.requireShipAddress()"}
@@ -24,12 +27,10 @@
       = f.fields_for :ship_address, @order.ship_address do |sa|
         #ship_address{"ng-if" => "Order.requireShipAddress()"}
           %label
-            = hidden_field_tag "order[ship_address_same_as_billing]", "false"
-            = check_box_tag "order[ship_address_same_as_billing]", true, @order.ship_address_same_as_billing, 
-              "ng-model" => "order.ship_address_same_as_billing"
+            %input{type: :checkbox, "ng-model" => "CheckoutFormState.ship_address_same_as_billing"}
             Shipping address same as billing address?
 
-          %div.visible{"ng-if" => "!order.ship_address_same_as_billing"}
+          %div.visible{"ng-if" => "!CheckoutFormState.ship_address_same_as_billing"}
             .row
               .large-12.columns
                 = validated_input "Address", "order.ship_address.address1"

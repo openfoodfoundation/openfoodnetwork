@@ -1,17 +1,19 @@
 describe "CheckoutCtrl", ->
   ctrl = null
   scope = null
-  order = null
+  Order = null
 
   beforeEach ->
     module("Darkswarm")
-    order = {
+    Order = {
       submit: ->
       navigate: ->
+      order:
+        id: 1
     } 
     inject ($controller, $rootScope) ->
       scope = $rootScope.$new() 
-      ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: order}
+      ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: Order}
 
   it "defaults the user accordion to visible", ->
     expect(scope.accordion.user).toEqual true
@@ -20,6 +22,6 @@ describe "CheckoutCtrl", ->
     event = {
       preventDefault: ->
     }
-    spyOn(order, "submit")
+    spyOn(Order, "submit")
     scope.purchase(event)
-    expect(order.submit).toHaveBeenCalled()
+    expect(Order.submit).toHaveBeenCalled()
