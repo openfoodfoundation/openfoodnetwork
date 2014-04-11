@@ -1,0 +1,9 @@
+%fieldset
+  %accordion-group{heading: "User", "is-open" => "accordion.user"}
+    .row
+      .large-4.columns.text-center{"ng-controller" => "AuthenticationActionsCtrl"}
+        %button{"ng-click" => "toggle('/login')"} Login
+      .large-4.columns.text-center{"ng-controller" => "AuthenticationActionsCtrl"}
+        %button{"ng-click" => "toggle('/signup')"} Signup
+      .large-4.columns.text-center
+        %button{"ng-click" => "show('details')"} Checkout as guest
