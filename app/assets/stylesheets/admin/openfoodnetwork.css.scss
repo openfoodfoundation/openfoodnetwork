@@ -138,3 +138,55 @@ table#listing_enterprise_groups {
   }
 }
 
+.ofn_drop_down {
+	padding: 7px 15px;
+	border-radius: 3px;
+	border: 1px solid #d4d4d4;
+	background-color: #f5f5f5;
+	position: relative;
+	display: block;
+	float: left;
+	color: #828282;
+	cursor: pointer;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	text-align: center;
+
+	> span {
+		text-transform: uppercase;
+		font-size: 85%;
+		font-weight: 600;
+	}
+
+	.menu {
+		margin-top: 1px;
+		position: absolute;
+		float: none;
+		top:100%;
+		left: 0px;
+		padding: 5px 0px;
+		border: 1px solid #adadad;
+		background-color: #ffffff;
+		box-shadow: 1px 3px 10px #888888;
+
+		.menu_item {
+			margin: 0px;
+			padding: 2px 0px;
+			color: #454545;
+			text-align: left;
+		}
+
+		.menu_item:hover {
+			background-color: #ededed;
+		}
+	}
+}
+
+.ofn_drop_down:hover, .ofn_drop_down.expanded {
+	border: 1px solid #adadad;
+	color: #575757;
+}
+

@@ -24,7 +24,7 @@ module Spree
 
     context "as a normal user" do
       before :each do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
+        spree_get :managed, { :template => 'bulk_index', :format => :json }
       end
 
       it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do

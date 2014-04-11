@@ -40,7 +40,7 @@ describe "AdminOrderMgmtCtrl", ->
   describe "fetching orders", ->
     beforeEach ->
       scope.initialiseVariables()
-      httpBackend.expectGET("/api/orders?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
+      httpBackend.expectGET("/api/orders/managed?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
 
     it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()
@@ -256,9 +256,7 @@ describe "AdminOrderMgmtCtrl", ->
 
       it "returns the quantity of fulfilled group buy units", ->
         scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
-        spyOn(scope,"sumUnitValues").andReturn 1500
-        expect(scope.fulfilled()).toEqual 1.5
-        expect(scope.sumUnitValues).toHaveBeenCalled()
+        expect(scope.fulfilled(1500)).toEqual 1.5
 
     describe "allUnitValuesPresent()", ->
       it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
@@ -302,6 +300,18 @@ describe "AdminOrderMgmtCtrl", ->
         sp1 = scope.filteredLineItems[1].units_variant.unit_value * scope.filteredLineItems[1].quantity
         sp2 = scope.filteredLineItems[2].units_variant.unit_value * scope.filteredLineItems[2].quantity
         expect(scope.sumUnitValues()).toEqual (sp0 + sp1 + sp2)
+
+    describe "sumMaxUnitValues()", ->
+      it "returns the sum of the product of unit_value and maxOf(max_quantity,quantity) for specified line_items", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 1 }, quantity: 2, max_quantity: 5 }
+          { units_variant: { unit_value: 2 }, quantity: 3, max_quantity: 1 }
+          { units_variant: { unit_value: 3 }, quantity: 7, max_quantity: 10 }
+        ]
+        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].quantity, scope.filteredLineItems[0].max_quantity)
+        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].quantity, scope.filteredLineItems[1].max_quantity)
+        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].quantity, scope.filteredLineItems[2].max_quantity)
+        expect(scope.sumMaxUnitValues()).toEqual (sp0 + sp1 + sp2)
 
     describe "formatting a value based upon the properties of a specified Units Variant", ->
       # A Units Variant is an API object which holds unit properies of a variant
@@ -598,8 +608,10 @@ describe "Auxiliary functions", ->
       expect(twoDigitNumber(1)).toEqual "01"
       expect(twoDigitNumber(9)).toEqual "09"
 
-  describe "formatting a date", ->
-    it "returns a date formatted as yyyy-mm-dd hh-MM:ss", ->
+  describe "formatting dates and times", ->
+    date = null
+
+    beforeEach ->
       date = new Date
       date.setYear(2010)
       date.setMonth(5) # Zero indexed, so 5 is June
@@ -607,4 +619,9 @@ describe "Auxiliary functions", ->
       date.setHours(5)
       date.setMinutes(10)
       date.setSeconds(30)
-      expect(formatDate(date)).toEqual "2010-06-15 05:10:30"
+
+    it "returns a date formatted as yyyy-mm-dd", ->
+      expect(formatDate(date)).toEqual "2010-06-15"
+
+    it "returns a time formatted as hh-MM:ss", ->
+      expect(formatTime(date)).toEqual "05:10:30"

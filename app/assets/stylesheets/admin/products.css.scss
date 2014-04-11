@@ -80,9 +80,9 @@ li.column-list-item {
   border-radius: 3px;
   padding: 2px 20px;
   margin: 2px 1px;
-  border: 2px solid #5498da;
-  background-color: #5498da;
-  color: white;
+  background-color: white;
+  border: 2px solid lightgray;
+  color: darkgray;
   font-size: 100%;
   cursor: default;
   text-align: center;
@@ -94,10 +94,10 @@ li.column-list-item {
   user-select: none;
 }
 
-li.column-list-item.unselected {
-  background-color: white;
-  border: 2px solid lightgray;
-  color: darkgray;
+li.column-list-item.selected {
+  border: 2px solid #5498da;
+  background-color: #5498da;
+  color: white;
   font-size: 100%;
 }
 

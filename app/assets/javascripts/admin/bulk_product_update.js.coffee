@@ -259,11 +259,11 @@ productEditModule.controller "AdminProductEditCtrl", [
     $scope.addVariant = (product) ->
       product.variants.push
         id: $scope.nextVariantId()
-        price: null
         unit_value: null
         unit_description: null
         on_demand: false
         on_hand: null
+        price: null
       $scope.displayProperties[product.id].showVariants = true
 
 
@@ -358,7 +358,6 @@ productEditModule.controller "AdminProductEditCtrl", [
         #       conflicted with some changes I made before merging my work, so for now I've reverted to the old way of
         #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
         #if subset($scope.productsWithoutDerivedAttributes(), data)
-
         if $scope.productListsMatch $scope.products, data
           $scope.resetProducts data
           $timeout -> $scope.displaySuccess()

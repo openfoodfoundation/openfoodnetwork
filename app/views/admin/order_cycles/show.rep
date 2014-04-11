@@ -9,7 +9,7 @@ r.element :order_cycle, @order_cycle do
     r.element :id
   end
 
-  r.list_of :exchanges do |exchange|
+  r.list_of :exchanges, @order_cycle.exchanges.order('id ASC') do |exchange|
     r.element :id
     r.element :sender_id
     r.element :receiver_id

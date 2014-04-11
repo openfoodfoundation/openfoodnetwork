@@ -58,7 +58,6 @@ feature "enterprises distributor info as rich text" do
   end
 
   scenario "viewing distributor info with product distribution", js: true do
-    ActionMailer::Base.deliveries.clear
 
     d = create(:distributor_enterprise, distributor_info: 'Chu ge sai yubi dan <strong>bisento</strong> tobi ashi yubi ge omote.', next_collection_at: 'Thursday 2nd May')
     p = create(:product, :distributors => [d])
@@ -67,6 +66,7 @@ feature "enterprises distributor info as rich text" do
 
     login_to_consumer_section
     visit spree.select_distributor_order_path(d)
+    ActionMailer::Base.deliveries.clear
 
     # -- Product details page
     visit spree.product_path p
@@ -110,6 +110,7 @@ feature "enterprises distributor info as rich text" do
     setup_shipping_details d
 
     login_to_consumer_section
+    ActionMailer::Base.deliveries.clear
     click_link 'Green Grass'
     visit enterprise_path d
 
@@ -146,7 +147,7 @@ feature "enterprises distributor info as rich text" do
     zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
     Spree::ZoneMember.create(:zoneable => c, :zone => zone)
-    create(:shipping_method, zone: zone)
+    create(:shipping_method, zone: zone, require_ship_address: false)
     create(:payment_method, :description => 'Cheque payment method', distributors: [distributor])
   end
 

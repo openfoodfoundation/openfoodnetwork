@@ -161,42 +161,9 @@ feature %q{
     let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
     let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
-    context "using tabs to hide and display page controls" do
-      it "shows a column display toggle button, which shows a list of columns when clicked" do
-        visit '/admin/orders/bulk_management'
-
-        page.should have_selector "div.column_toggle", :visible => false
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
-        first("div.option_tab_titles h6", :text => "Toggle Columns").click
-
-        page.should have_selector "div.option_tab_titles h6.selected", :text => "Toggle Columns"
-        page.should have_selector "div.column_toggle", :visible => true
-        page.should have_selector "li.column-list-item", text: "Producer"
-
-        page.should have_selector "div.filters", :visible => false
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
-        page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Line Items"
-        page.should have_selector "div.filters", :visible => true
-
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
-
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Filter Line Items"
-        page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
-        page.should have_selector "div.filters", :visible => false
-        page.should have_selector "div.column_toggle", :visible => false
-      end
-    end
-
     context "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         visit '/admin/orders/bulk_management'
-
-        first("div.option_tab_titles h6", :text => "Toggle Columns").click
 
         page.should have_selector "th", :text => "NAME"
         page.should have_selector "th", :text => "ORDER DATE"
@@ -205,10 +172,8 @@ feature %q{
         page.should have_selector "th", :text => "QUANTITY"
         page.should have_selector "th", :text => "MAX"
 
-        page.should have_selector "div.option_tab_titles h6", :text => "Toggle Columns"
-
-        page.should have_selector "div ul.column-list li.column-list-item", text: "Producer"
-        first("li.column-list-item", text: "Producer").click
+        first("div#columns_dropdown", :text => "COLUMNS").click
+        first("div#columns_dropdown div.menu div.menu_item", text: "Producer").click
 
         page.should_not have_selector "th", :text => "PRODUCER"
         page.should have_selector "th", :text => "NAME"
@@ -235,7 +200,6 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays a select box for producers, which filters line items by the selected supplier" do
@@ -320,6 +284,21 @@ feature %q{
         page.should_not have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
       end
+
+      it "displays a 'Clear All' button which sets all select filters to 'All'" do
+        select2_select oc1.name, from: "order_cycle_filter"
+        select2_select d1.name, from: "distributor_filter"
+        select2_select s1.name, from: "supplier_filter"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        page.should have_button "Clear All"
+        click_button "Clear All"
+        page.should have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
+        page.should have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
+        page.should have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
+        page.should have_selector "tr#li_#{li1.id}", visible: true
+        page.should have_selector "tr#li_#{li2.id}", visible: true
+      end
     end
 
     context "using quick search" do
@@ -359,12 +338,11 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
-        first("div.option_tab_titles h6", :text => "Filter Line Items").click
       end
 
       it "displays date fields for filtering orders, with default values set" do
-        one_week_ago = (Date.today - 7).strftime("%F %T")
-        tonight = Date.tomorrow.strftime("%F %T")
+        one_week_ago = Date.today.prev_day(7).strftime("%F")
+        tonight = Date.tomorrow.strftime("%F")
         page.should have_field "start_date_filter", with: one_week_ago
         page.should have_field "end_date_filter", with: tonight
       end
@@ -376,12 +354,12 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+        fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
         page.should_not have_selector "tr#li_#{li3.id}", visible: true
 
-        fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F %T")
+        fill_in "end_date_filter", :with => (Date.today + 3).strftime("%F")
         page.should have_selector "tr#li_#{li1.id}", visible: true
         page.should have_selector "tr#li_#{li2.id}", visible: true
         page.should have_selector "tr#li_#{li3.id}", visible: true
@@ -447,13 +425,11 @@ feature %q{
       end
 
       it "displays a bulk action select box with a list of actions" do
-        list_of_actions = ['Delete']
-        find("div.select2-container#s2id_bulk_actions").click
-        list_of_actions.each { |a| page.should have_selector "div.select2-drop-active ul.select2-results li", text: a }
-      end
-
-      it "displays a bulk action button" do
-        page.should have_button "bulk_execute"
+        list_of_actions = ['Delete Selected']
+        find("div#bulk_actions_dropdown").click
+        within("div#bulk_actions_dropdown") do
+          list_of_actions.each { |action_name| page.should have_selector "div.menu_item", text: action_name }
+        end
       end
 
       context "performing actions" do
@@ -463,8 +439,8 @@ feature %q{
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          select2_select "Delete", :from => "bulk_actions"
-          click_button "bulk_execute"
+          find("div#bulk_actions_dropdown").click
+          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
           page.should have_selector "tr#li_#{li1.id}", visible: true
           page.should_not have_selector "tr#li_#{li2.id}", visible: true
         end
@@ -483,8 +459,8 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
-          select2_select "Delete", :from => "bulk_actions"
-          click_button "bulk_execute"
+          find("div#bulk_actions_dropdown").click
+          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
           fill_in "quick_search", with: ''
           page.should_not have_selector "tr#li_#{li1.id}", visible: true
           page.should have_selector "tr#li_#{li2.id}", visible: true
@@ -525,8 +501,8 @@ feature %q{
       let!(:p3) { FactoryGirl.create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [FactoryGirl.create(:variant, unit_value: 1000)] ) }
       let!(:v3) { p3.variants.first }
       let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3 ) }
-      let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1 ) }
+      let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3, max_quantity: 6 ) }
+      let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -539,12 +515,16 @@ feature %q{
         page.should have_selector "div#group_buy_calculation", :visible => true
 
         within "div#group_buy_calculation" do
-          page.should have_text "Group Buy Unit"
+          page.should have_text "Group Buy Unit Size"
           page.should have_text "5 kg"
-          page.should have_text "Fulfilled Units"
-          page.should have_text "0.8"
-          page.should have_text "Total Units Ordered"
+          page.should have_text "Total Quantity Ordered"
           page.should have_text "4 kg"
+          page.should have_text "Max Quantity Ordered"
+          page.should have_text "9 kg"
+          page.should have_text "Current Fulfilled Units"
+          page.should have_text "0.8"
+          page.should have_text "Max Fulfilled Units"
+          page.should have_text "1.8"
           page.should have_selector "div.shared_resource", :visible => true
           within "div.shared_resource" do
             page.should have_selector "span", :text => "Shared Resource?"
@@ -573,6 +553,32 @@ feature %q{
           page.should have_selector "tr#li_#{li4.id}", :visible => true
         end
       end
+    end
+  end
+
+  context "as an enterprise manager" do
+    let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let(:s2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+    let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+    let!(:line_item_distributed) { FactoryGirl.create(:line_item, order: o1 ) }
+    let!(:line_item_not_distributed) { FactoryGirl.create(:line_item, order: o2 ) }
+
+    before(:each) do
+      @enterprise_user = create_enterprise_user
+      @enterprise_user.enterprise_roles.build(enterprise: s1).save
+      @enterprise_user.enterprise_roles.build(enterprise: d1).save
+
+      login_to_admin_as @enterprise_user
+    end
+
+    it "shows only line item from orders that I supply" do
+      visit '/admin/orders/bulk_management'
+
+      page.should have_selector "tr#li_#{line_item_distributed.id}", :visible => true
+      page.should_not have_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
     end
   end
 end
