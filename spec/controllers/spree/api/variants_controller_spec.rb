@@ -4,6 +4,7 @@ module Spree
   describe Spree::Api::VariantsController do
     render_views
 
+    let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
     let!(:variant1) { FactoryGirl.create(:variant) }
     let!(:variant2) { FactoryGirl.create(:variant) }
     let!(:variant3) { FactoryGirl.create(:variant) }
@@ -39,13 +40,29 @@ module Spree
         lambda { variant.reload }.should_not raise_error
         variant.deleted_at.should be_nil
       end
+    end
 
-      #it "sorts variants in ascending id order" do
-      #  spree_get :index, { :template => 'bulk_index', :format => :json }
-      #  ids = json_response.map{ |variant| variant['id'] }
-      #  ids[0].should < ids[1]
-      #  ids[1].should < ids[2]
-      #end
+    context "as an enterprise user" do
+      sign_in_as_enterprise_user! [:supplier]
+      let(:supplier_other) { create(:supplier_enterprise) }
+      let(:product) { create(:product, supplier: supplier) }
+      let(:variant) { product.master }
+      let(:product_other) { create(:product, supplier: supplier_other) }
+      let(:variant_other) { product_other.master }
+
+      it "soft deletes a variant" do
+        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
+        response.status.should == 204
+        lambda { variant.reload }.should_not raise_error
+        variant.deleted_at.should_not be_nil
+      end
+
+      it "is denied access to soft deleting another enterprises' variant" do
+        spree_delete :soft_delete, {variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json}
+        assert_unauthorized!
+        lambda { variant.reload }.should_not raise_error
+        variant.deleted_at.should be_nil
+      end
     end
 
     context "as an administrator" do
