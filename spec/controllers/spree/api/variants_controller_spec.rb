@@ -16,6 +16,13 @@ module Spree
     end
 
     context "as a normal user" do
+      let!(:current_api_user) do
+        user = stub_model(Spree::LegacyUser)
+        user.stub(:has_spree_role?).with("admin").and_return(false)
+        user.stub(:enterprises) { [] }
+        user
+      end
+
       it "retrieves a list of variants with appropriate attributes" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
@@ -26,6 +33,16 @@ module Spree
         spree_get :show, { :id => variant1.id, :template => "units_show", :format => :json }
         keys = json_response.keys.map{ |key| key.to_sym }
         unit_attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+
+      it "is denied access when trying to delete a variant" do
+        product = create(:product)
+        variant = product.master
+
+        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
+        assert_unauthorized!
+        lambda { variant.reload }.should_not raise_error
+        variant.deleted_at.should be_nil
       end
 
       #it "sorts variants in ascending id order" do
@@ -45,7 +62,7 @@ module Spree
 
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
         response.status.should == 204
-        lambda { variant.reload }.should_not raise_error(ActiveRecord::RecordNotFound)
+        lambda { variant.reload }.should_not raise_error
         variant.deleted_at.should_not be_nil
       end
     end
