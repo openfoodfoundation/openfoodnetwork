@@ -5,7 +5,7 @@
     %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
             "ng-change" => "changeOrderCycle()",
             "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
-            "popover-placement" => "bottom", "popover" => "Select an order cycle", "popover-trigger" => "openTrigger"}
+            "popover-placement" => "bottom", "popover" => "When do you want to get your order?", "popover-trigger" => "openTrigger"}
 
     %closing{"ng-if" => "OrderCycle.selected()"}
       Orders close
