@@ -73,28 +73,27 @@ orderManagementModule.factory "pendingChanges",[
     pendingChanges: {}
 
     add: (id, attrName, changeObj) ->
-      this.pendingChanges["#{id}"] = {} unless this.pendingChanges.hasOwnProperty("#{id}")
-      this.pendingChanges["#{id}"]["#{attrName}"] = changeObj
+      @pendingChanges["#{id}"] = {} unless @pendingChanges.hasOwnProperty("#{id}")
+      @pendingChanges["#{id}"]["#{attrName}"] = changeObj
 
     removeAll: ->
-      this.pendingChanges = {}
+      @pendingChanges = {}
 
     remove: (id, attrName) ->
-      if this.pendingChanges.hasOwnProperty("#{id}")
-        delete this.pendingChanges["#{id}"]["#{attrName}"]
-        delete this.pendingChanges["#{id}"] if this.changeCount( this.pendingChanges["#{id}"] ) < 1
+      if @pendingChanges.hasOwnProperty("#{id}")
+        delete @pendingChanges["#{id}"]["#{attrName}"]
+        delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
 
     submitAll: ->
       all = []
-      for id,lineItem of this.pendingChanges
+      for id,lineItem of @pendingChanges
         for attrName,changeObj of lineItem
-          all.push this.submit(id, attrName, changeObj)
+          all.push @submit(id, attrName, changeObj)
       all
 
     submit: (id, attrName, change) ->
-      factory = this
-      dataSubmitter(change).then (data) ->
-        factory.remove id, attrName
+      dataSubmitter(change).then (data) =>
+        @remove id, attrName
         change.element.dbValue = data["#{attrName}"]
 
     changeCount: (lineItem) ->
