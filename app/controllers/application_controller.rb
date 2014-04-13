@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   def require_certified_hostname
     certified_host = "vic.openfoodnetwork.org"
 
-    if Rails.env.production? && request.host != certified_host
+    if OpenFoodNetwork::Config.country_code == 'au' && Rails.env.production? && request.host != certified_host
       redirect_to "http://#{certified_host}#{request.fullpath}"
     end
   end
