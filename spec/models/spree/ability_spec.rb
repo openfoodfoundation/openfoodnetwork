@@ -39,6 +39,10 @@ module Spree
           should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
         end
 
+        it "should not be able to access admin actions on orders" do
+          should_not have_ability([:admin], for: Spree::Order)
+        end
+
         it "should be able to create a new product" do
           should have_ability(:create, for: Spree::Product)
         end

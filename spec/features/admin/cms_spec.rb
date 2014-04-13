@@ -16,7 +16,7 @@ feature %q{
     page.should have_content "ComfortableMexicanSofa"
 
     click_link 'Spree Admin'
-    current_path.should == spree.admin_path
+    current_path.should == spree.admin_orders_path
   end
 
   scenario "anonymous user can't access CMS admin" do
