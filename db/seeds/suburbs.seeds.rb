@@ -8,8 +8,9 @@ require File.expand_path('../../../spec/support/spree/init', __FILE__)
 suburbs_file = File.join ['db', 'seeds', OpenFoodNetwork::Config.country_code.downcase, 'suburbs.csv']
 states = YAML::load_file File.join ['db', 'seeds', OpenFoodNetwork::Config.country_code.downcase, 'states.yml']
 
+country = Spree::Country.where(iso: OpenFoodNetwork::Config.country_code.upcase!).first
 states_ids = {}
-states.each { |s| states_ids[s['abbr']] = Spree::State.where(abbr: s['abbr']).first.id }
+states.each { |s| states_ids[s['abbr']] = Spree::State.where(abbr: s['abbr']).where(country_id: country.id).first.id }
 
 name = ''
 statement = "INSERT INTO suburbs (postcode,name,state_id,latitude,longitude) VALUES\n"
