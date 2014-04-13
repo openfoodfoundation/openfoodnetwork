@@ -1,70 +1,70 @@
 ---
 addresses:
   - address1: 25 Myrtle Street
-    zipcode: 3153
+    zipcode: '3153'
     city: Bayswater
   - address1: 6 Rollings Road
-    zipcode: 3156
+    zipcode: '3156'
     city: Upper Ferntree Gully
   - address1: 72 Lake Road
-    zipcode: 3130
+    zipcode: '3130'
     city: Blackburn
   - address1: 7 Verbena Street
-    zipcode: 3195
+    zipcode: '3195'
     city: Mordialloc
   - address1: 20 Galvin Street
-    zipcode: 3018
+    zipcode: '3018'
     city: Altona
   - address1: 59 Websters Road
-    zipcode: 3106
+    zipcode: '3106'
     city: Templestowe
   - address1: 17 Torresdale Drive
-    zipcode: 3155
+    zipcode: '3155'
     city: Boronia
   - address1: 21 Robina CRT
-    zipcode: 3764
+    zipcode: '3764'
     city: Kilmore
   - address1: 25 Kendall Street
-    zipcode: 3134
+    zipcode: '3134'
     city: Ringwood
   - address1: 2 Mines Road
-    zipcode: 3135
+    zipcode: '3135'
     city: Ringwood East
   - address1: 183 Millers Road
-    zipcode: 3025
+    zipcode: '3025'
     city: Altona North
   - address1: 310 Pascoe Vale Road
-    zipcode: 3040
+    zipcode: '3040'
     city: Essendon
   - address1: 6 Martin Street
-    zipcode: 3160
+    zipcode: '3160'
     city: Belgrave
 
 enterprises:
   - name: Green Grass
-    address: 3153
+    address: '3153'
   - name: AusFarmers United
-    address: 3156
+    address: '3156'
   - name: Blackburn FreeGrossers
-    address: 3130
+    address: '3130'
   - name: MegaFoods
-    address: 3195
+    address: '3195'
   - name: Eco Butchers
-    address: 3018
+    address: '3018'
   - name: Western Wines
-    address: 3106
+    address: '3106'
   - name: QuickFresh
-    address: 3155
+    address: '3155'
   - name: Fooderers
-    address: 3764
+    address: '3764'
   - name: Food Local
-    address: 3134
+    address: '3134'
   - name: Green Food Trading Corporation
-    address: 3135
+    address: '3135'
   - name: Better Food
-    address: 3025
+    address: '3025'
   - name: Gippsland Poultry
-    address: 3040
+    address: '3040'
 
 users:
   - name: Bob
