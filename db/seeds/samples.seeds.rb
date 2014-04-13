@@ -45,16 +45,16 @@ unless Spree::User.count > 1
 end
 
 # -- Enterprise fees
-puts "[db:seed] Seeding enterprise fees"
 unless EnterpriseFee.count > 1
+  puts "[db:seed] Seeding enterprise fees"
   Enterprise.is_distributor.each do |distributor|
     FactoryGirl.create(:enterprise_fee, enterprise: distributor)
   end
 end
 
 # -- Enterprise Payment Methods
-puts "[db:seed] Seeding payment methods"
 unless Spree::PaymentMethod.count > 1
+  puts "[db:seed] Seeding payment methods"
   Enterprise.is_distributor.each do |distributor|
     FactoryGirl.create(:payment_method, distributors: [distributor], name: "Cheque (#{distributor.name})", :environment => 'development')
   end
