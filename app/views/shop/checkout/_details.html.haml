@@ -6,11 +6,11 @@
         .row
           .large-6.columns
             Customer Details
+            %i.fi-x
+            %i.fi-check
           .large-6.columns.text-right
             {{ order.bill_address.firstname }}
             {{ order.bill_address.lastname }}
-            %i.fi-x
-            %i.fi-check
       .row
         .large-6.columns
           = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"

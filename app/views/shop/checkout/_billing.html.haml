@@ -6,11 +6,11 @@
         .row
           .large-6.columns
             Billing
+            %i.fi-x
+            %i.fi-check
           .large-6.columns.text-right
             {{ order.bill_address.address1 }}
             {{ order.bill_address.city }}
-            %i.fi-x
-            %i.fi-check
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .large-12.columns
