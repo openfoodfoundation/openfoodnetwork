@@ -12,10 +12,14 @@ module CheckoutHelper
   end
 
   def validated_input(name, path, args = {})
-    defaults = {
+    attributes = {
       required: true,
-      type: :text
+      type: :text,
+      name: path,
+      "ng-model" => path,
+      "ng-class" => "{error: !fieldValid('#{path}')}" 
     }.merge args
-    render partial: "shared/validated_input", locals: {name: name, path: path}.merge(defaults)
+    
+    render partial: "shared/validated_input", locals: {name: name, path: path, attributes: attributes}
   end
 end

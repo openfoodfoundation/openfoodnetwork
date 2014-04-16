@@ -8,6 +8,8 @@
             Shipping 
           .large-6.columns.text-right
             {{ Order.shippingMethod().name }}
+            %i.fi-x
+            %i.fi-check
       - for ship_method, i in current_distributor.shipping_methods.uniq
         .row
           .large-12.columns

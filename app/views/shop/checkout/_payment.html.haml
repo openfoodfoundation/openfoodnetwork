@@ -8,6 +8,8 @@
             Payment Details 
           .large-6.columns.text-right
             {{ Order.paymentMethod().name }}
+            %i.fi-x
+            %i.fi-check
       - current_order.available_payment_methods.each do |method|
         .row
           .large-12.columns

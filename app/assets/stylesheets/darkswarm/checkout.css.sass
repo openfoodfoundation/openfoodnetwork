@@ -5,5 +5,8 @@ checkout
     .button, table
       width: 100%
 
-  dd.valid
-    background: green
+  dd
+    i.fi-check, &.valid i.fi-x
+      display: none
+    &.valid i.fi-check
+      display: inline

@@ -16,6 +16,7 @@
 #= require ./darkswarm
 #= require ./overrides
 #= require_tree ./mixins
+#= require_tree ./directives
 #= require_tree .
 
 $ ->
