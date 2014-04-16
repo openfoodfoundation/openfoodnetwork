@@ -151,11 +151,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:p4) { create(:simple_product, on_demand: false) }
         let(:p5) { create(:simple_product, on_demand: false) }
         let(:p6) { create(:simple_product, on_demand: false) }
+        let(:p7) { create(:simple_product, on_demand: false) }
         let(:v1) { create(:variant, product: p4, unit_value: 2) }
         let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
         let(:v3) { create(:variant, product: p4, unit_value: 4, on_demand: true) }
         let(:v4) { create(:variant, product: p5) }
         let(:v5) { create(:variant, product: p5) }
+        let(:v6) { create(:variant, product: p7) }
 
         before do
           p1.master.count_on_hand = 1
@@ -165,11 +167,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
           p3.master.update_attribute(:count_on_hand, 0)
           p6.master.update_attribute(:count_on_hand, 1)
           p6.delete
+          p7.master.update_attribute(:count_on_hand, 1)
           v1.update_attribute(:count_on_hand, 1)
           v2.update_attribute(:count_on_hand, 0)
           v3.update_attribute(:count_on_hand, 0)
           v4.update_attribute(:count_on_hand, 1)
           v5.update_attribute(:count_on_hand, 0)
+          v6.update_attribute(:count_on_hand, 1)
+          v6.update_attribute(:deleted_at, Time.now)
           exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << p1.master
@@ -183,6 +188,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           # v5 is out of stock and in the distribution
           # Neither should display, nor should their product, p5
           exchange.variants << v5
+          exchange.variants << v6
           visit shop_path
           select "frogs", :from => "order_cycle_id"
           exchange
@@ -210,6 +216,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           # It does not show deleted products
           page.should_not have_content p6.name
+
+          # It does not show deleted variants
+          page.should_not have_content v6.name
+          page.should_not have_content p7.name
         end
       end
 

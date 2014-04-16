@@ -16,4 +16,8 @@ module ShopWorkflow
   def add_product_to_cart
     create(:line_item, variant: product.master, order: order)
   end
+
+  def toggle_accordion(name)
+    find("dd a", text: name.upcase).click
+  end
 end

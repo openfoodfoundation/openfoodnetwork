@@ -49,6 +49,9 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   namespace :api do
+    resources :enterprises do
+      get :managed, on: :collection
+    end
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
@@ -107,10 +110,6 @@ Spree::Core::Engine.routes.prepend do
     end
 
     resources :orders do
-      get :managed, on: :collection
-    end
-
-    resources :enterprises do
       get :managed, on: :collection
     end
   end

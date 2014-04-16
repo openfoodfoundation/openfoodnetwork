@@ -189,11 +189,13 @@ feature %q{
     end
 
     # And the suppliers should have fees
-    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: oc.suppliers.first.name
-    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: oc.suppliers.first.enterprise_fees.first.name
+    supplier = oc.suppliers.sort_by(&:name).first
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: supplier.name
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
-    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: oc.suppliers.last.name
-    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: oc.suppliers.last.enterprise_fees.first.name
+    supplier = oc.suppliers.sort_by(&:name).last
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: supplier.name
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
     # And I should see the distributors
     page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
@@ -215,11 +217,13 @@ feature %q{
     end
 
     # And the distributors should have fees
-    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: oc.distributors.first.name
-    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: oc.distributors.first.enterprise_fees.first.name
+    distributor = oc.distributors.sort_by(&:name).first
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
 
-    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: oc.distributors.last.name
-    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: oc.distributors.last.enterprise_fees.first.name
+    distributor = oc.distributors.sort_by(&:name).last
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
   end
 
 

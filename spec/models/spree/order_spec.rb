@@ -187,6 +187,11 @@ describe Spree::Order do
       subject.should_receive(:empty!)
       subject.set_order_cycle! oc
     end
+
+    it "doesn't empty the cart if the order cycle is not different" do
+      subject.should_not_receive(:empty!)
+      subject.set_order_cycle! subject.order_cycle
+    end
   
     it "sets the order cycle when no distributor is set" do
       subject.set_order_cycle! oc

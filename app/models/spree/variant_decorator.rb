@@ -15,6 +15,7 @@ Spree::Variant.class_eval do
   before_validation :update_weight_from_unit_value
   after_save :update_units
 
+  scope :not_deleted, where(deleted_at: nil)
   scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
 
 
@@ -55,7 +56,7 @@ Spree::Variant.class_eval do
     if option_type
       name = option_value_name
       ov = Spree::OptionValue.where(option_type_id: option_type, name: name, presentation: name).first || Spree::OptionValue.create!({option_type: option_type, name: name, presentation: name}, without_protection: true)
-      option_values << ov #unless option_values.include? ov
+      option_values << ov
     end
   end
 

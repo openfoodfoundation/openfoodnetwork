@@ -6,21 +6,13 @@
 
   = render partial: "shop/details"
    
-  %checkout
-    .row
+  %accordion.row{"close-others" => "true"}
+    %checkout{"ng-controller" => "CheckoutCtrl"}
       .large-9.columns
         - unless spree_current_user
-          .row
-            %section#checkout_login
-              .large-6.columns
-                = render partial: "shop/checkout/login"
-            %section#checkout_signup
-              .large-6.columns
-                = render partial: "shop/checkout/signup"
+          = render partial: "shop/checkout/authentication"
         .row
           = render partial: "shop/checkout/form"
-
       .large-3.columns
-        .row
-          = render partial: "shop/checkout/summary"
+        = render partial: "shop/checkout/summary"
 

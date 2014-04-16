@@ -87,15 +87,16 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def variants
-    self.exchanges.map(&:variants).flatten.uniq
+    self.exchanges.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def distributed_variants
-    self.exchanges.outgoing.map(&:variants).flatten.uniq
+    self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
     Spree::Variant.
+      not_deleted.
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).
