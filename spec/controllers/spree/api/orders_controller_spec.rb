@@ -78,19 +78,22 @@ module Spree
       let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: distributor2, billing_address: FactoryGirl.create(:address) ) }
       let!(:line_item3) { FactoryGirl.create(:line_item, order: order2, product: FactoryGirl.create(:product, supplier: supplier)) }
       let(:supplier_user) do
-        user = create(:user, spree_roles: [])
+        user = create(:user)
+        user.spree_roles = []
         user.enterprise_roles.create(enterprise: supplier)
         user.save!
         user
       end
       let(:distributor1_user) do
-        user = create(:user, spree_roles: [])
+        user = create(:user)
+        user.spree_roles = []
         user.enterprise_roles.create(enterprise: distributor1)
         user.save!
         user
       end
       let(:distributor2_user) do
-        user = create(:user, spree_roles: [])
+        user = create(:user)
+        user.spree_roles = []
         user.enterprise_roles.create(enterprise: distributor2)
         user.save!
         user
@@ -113,7 +116,6 @@ module Spree
           stub_authentication!
           Spree.user_class.stub :find_by_spree_api_key => distributor1_user
           spree_get :managed, { :template => 'bulk_index', :format => :json }
-          binding.pry
         end
 
         it "only displays line items from orders for which my enterprise is a distributor" do
