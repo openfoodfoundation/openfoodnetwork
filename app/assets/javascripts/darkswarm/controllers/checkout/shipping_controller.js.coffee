@@ -3,4 +3,3 @@ Darkswarm.controller "ShippingCtrl", ($scope) ->
   $scope.name = "shipping"
   $scope.nextPanel = "payment"
   
-  window.tmp = $scope
