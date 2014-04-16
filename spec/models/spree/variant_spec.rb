@@ -3,6 +3,14 @@ require 'spec_helper'
 module Spree
   describe Variant do
     describe "scopes" do
+      it "finds non-deleted variants" do
+        v_not_deleted = create(:variant)
+        v_deleted = create(:variant, deleted_at: Time.now)
+
+        Spree::Variant.not_deleted.should     include v_not_deleted
+        Spree::Variant.not_deleted.should_not include v_deleted
+      end
+
       describe "finding variants in stock" do
         before do
           p = create(:product)

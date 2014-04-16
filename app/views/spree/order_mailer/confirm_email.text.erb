@@ -30,12 +30,20 @@ Shipping Details
 ============================================================
 Your order will be shipped to: 
 <%= @order.ship_address.to_s %>
+
+
+<% if @order.order_cycle %>
+Delivery on: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
+<% else %>
+<%= @order.distributor.next_collection_at %>
+<% end %>
 <% else %>
 
 ============================================================
-Collection / Delivery Details
+Collection Details
 ============================================================
 <%= raw strip_html @order.distributor.distributor_info %>
+
 
 <% if @order.order_cycle %>
 <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
@@ -44,6 +52,7 @@ Collection / Delivery Details
 <%= @order.distributor.next_collection_at %>
 <% end %>
 <% end %>
+
 
 Thanks for your support.
 

@@ -8,7 +8,7 @@ node( :price ) { |p| p.price.nil? ? '0.0' : p.price }
 node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }
 node( :permalink_live ) { |p| p.permalink }
 node( :supplier ) do |p|
-  partial 'spree/api/enterprises/bulk_show', :object => p.supplier
+  partial 'api/enterprises/bulk_show', :object => p.supplier
 end
 node( :variants ) do |p|
   partial 'spree/api/variants/bulk_index', :object => p.variants.reorder('spree_variants.id ASC')
