@@ -51,6 +51,7 @@ Openfoodnetwork::Application.routes.draw do
   namespace :api do
     resources :order_cycles do
       get :managed, on: :collection
+      get :accessible, on: :collection
     end
   end
 

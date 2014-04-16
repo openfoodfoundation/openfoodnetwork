@@ -149,7 +149,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
             dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
-              ocFetcher = dataFetcher("/api/order_cycles/managed").then (data) ->
+              ocFetcher = dataFetcher("/api/order_cycles/accessible").then (data) ->
                 $scope.orderCycles = data
                 $scope.orderCycles.unshift blankOption()
                 $scope.fetchOrders()
