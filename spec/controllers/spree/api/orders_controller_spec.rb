@@ -68,28 +68,57 @@ module Spree
       end
     end
 
-    context "As a supplier enterprise user" do
+    context "As an enterprise user" do
       let(:supplier) { create(:supplier_enterprise) }
-      let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, billing_address: FactoryGirl.create(:address) ) }
+      let(:distributor1) { create(:distributor_enterprise) }
+      let(:distributor2) { create(:distributor_enterprise) }
+      let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: distributor1, billing_address: FactoryGirl.create(:address) ) }
       let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: FactoryGirl.create(:supplier_enterprise))) }
-      let(:enterprise_user) do
-        user = create(:user)
+      let!(:line_item2) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
+      let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: distributor2, billing_address: FactoryGirl.create(:address) ) }
+      let!(:line_item3) { FactoryGirl.create(:line_item, order: order2, product: FactoryGirl.create(:product, supplier: supplier)) }
+      let(:supplier_user) do
+        user = create(:user, spree_roles: [])
         user.enterprise_roles.create(enterprise: supplier)
-        user.spree_roles = []
+        user.save!
+        user
+      end
+      let(:distributor1_user) do
+        user = create(:user, spree_roles: [])
+        user.enterprise_roles.create(enterprise: distributor1)
+        user.save!
+        user
+      end
+      let(:distributor2_user) do
+        user = create(:user, spree_roles: [])
+        user.enterprise_roles.create(enterprise: distributor2)
         user.save!
         user
       end
 
-      before :each do
-        stub_authentication!
-        Spree.user_class.stub :find_by_spree_api_key => enterprise_user
-        spree_get :managed, { :template => 'bulk_index', :format => :json }
+      context "producer enterprise" do
+        before :each do
+          stub_authentication!
+          Spree.user_class.stub :find_by_spree_api_key => supplier_user
+          spree_get :managed, { :template => 'bulk_index', :format => :json }
+        end
+
+        it "does not display line item for which my enteprise is a supplier" do
+          json_response.map{ |order| order['line_items'] }.flatten.length.should == 0
+        end
       end
 
-      it "returns a list of orders with only managed line items shown" do
-        json_response.map{ |order| order['line_items'] }.flatten.length.should == 1
-        json_response[0]['line_items'][0]['id'].should == line_item1.id
+      context "hub enterprise" do
+        before :each do
+          stub_authentication!
+          Spree.user_class.stub :find_by_spree_api_key => distributor1_user
+          spree_get :managed, { :template => 'bulk_index', :format => :json }
+          binding.pry
+        end
+
+        it "only displays line items from orders for which my enterprise is a distributor" do
+          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.should == [line_item1.id, line_item2.id]
+        end
       end
     end
   end
