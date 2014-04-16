@@ -34,7 +34,7 @@
           %div.visible{"ng-if" => "!CheckoutFormState.ship_address_same_as_billing"}
             .row
               .large-12.columns
-                = validated_input "Address", "order.ship_address.address1"
+                = validated_input "Address", "order.ship_address.address1", "ofn-focus" => "accordion['shipping']"
             .row
               .large-12.columns
                 = validated_input "Address (contd.)", "order.ship_address.address2", required: false

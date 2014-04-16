@@ -23,6 +23,6 @@
               %th= label
               %td= total
 
-      = f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid"
+      = f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url} Back to Cart
 

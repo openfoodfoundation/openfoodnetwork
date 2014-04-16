@@ -13,7 +13,7 @@
             %i.fi-check
       .row
         .large-6.columns
-          = validated_input('Email', 'order.email', type: :email)
+          = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"
 
         = f.fields_for :bill_address, @order.bill_address do |ba|
           .large-6.columns
