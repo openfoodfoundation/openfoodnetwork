@@ -5,7 +5,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState)
     constructor: ->
       @order = order
       # Default to first shipping method if none selected
-      #@order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
+      @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
 
     navigate: (path)->
       window.location.pathname = path
