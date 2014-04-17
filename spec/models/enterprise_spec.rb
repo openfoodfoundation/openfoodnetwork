@@ -254,6 +254,35 @@ describe Enterprise do
         enterprises.should include e2
       end
     end
+
+    describe "accessible_by" do
+      it "shows only enterprises that are invloved in order cycles which are common to those managed by the given user" do
+        user = create(:user)
+        user.spree_roles = []
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+        e3 = create(:enterprise)
+        e4 = create(:enterprise)
+        e1.enterprise_roles.build(user: user).save
+        oc = create(:simple_order_cycle, coordinator: e2, suppliers: [e1], distributors: [e3])
+
+        enterprises = Enterprise.accessible_by user
+        enterprises.length.should == 3
+        enterprises.should include e1, e2, e3
+        enterprises.should_not include e4
+      end
+
+      it "shows all enterprises for admin user" do
+        user = create(:admin_user)
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+
+        enterprises = Enterprise.managed_by user
+        enterprises.length.should == 2
+        enterprises.should include e1
+        enterprises.should include e2
+      end
+    end
   end
 
   describe "has_supplied_products_on_hand?" do

@@ -143,10 +143,10 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
-          dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
+          dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             $scope.suppliers.unshift blankOption()
-            dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
+            dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
               ocFetcher = dataFetcher("/api/order_cycles/accessible").then (data) ->
