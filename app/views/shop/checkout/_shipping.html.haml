@@ -59,4 +59,4 @@
                 = validated_input "Phone", "order.ship_address.phone"
       .row
         .large-12.columns.text-right
-          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
+          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next
