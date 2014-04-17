@@ -88,7 +88,14 @@ describe Shop::CheckoutController do
     it "returns errors" do
       xhr :post, :update, order: {}, use_route: :spree
       response.status.should == 400
-      response.body.should == assigns[:order].errors.to_json
+      response.body.should == {errors: assigns[:order].errors, flash: []}.to_json
+    end
+
+    it "returns flash" do
+      order.stub(:update_attributes).and_return true
+      order.stub(:next).and_return false
+      xhr :post, :update, order: {}, use_route: :spree
+      response.body.should == {errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json
     end
 
     it "returns order confirmation url on success" do

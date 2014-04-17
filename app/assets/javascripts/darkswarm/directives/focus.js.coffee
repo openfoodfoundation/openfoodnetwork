@@ -7,4 +7,3 @@ Darkswarm.directive "ofnFocus", ->
     ), true
 
     return
-

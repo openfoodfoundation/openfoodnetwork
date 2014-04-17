@@ -3,6 +3,7 @@ describe 'Order service', ->
   orderData = null
   $httpBackend = null
   CheckoutFormState = null
+  flash = null
 
   beforeEach ->
     orderData = {
@@ -27,6 +28,7 @@ describe 'Order service', ->
     inject ($injector, _$httpBackend_)->
       $httpBackend = _$httpBackend_
       Order = $injector.get("Order")
+      flash = $injector.get("flash")
       CheckoutFormState = $injector.get("CheckoutFormState")
       spyOn(Order, "navigate") # Stubbing out writes to window.location
 
@@ -57,6 +59,19 @@ describe 'Order service', ->
     $httpBackend.expectPUT("/shop/checkout", {order: Order.preprocess()}).respond 200, {path: "test"}
     Order.submit()
     $httpBackend.flush()
+
+  it "sends flash messages to the flash service", ->
+    $httpBackend.expectPUT("/shop/checkout").respond 400, {flash: {error: "frogs"}}
+    Order.submit()
+    $httpBackend.flush()
+    expect(flash.error).toEqual "frogs"
+
+  it "puts errors into the scope", ->
+    $httpBackend.expectPUT("/shop/checkout").respond 400, {errors: {error: "frogs"}}
+    Order.submit()
+    $httpBackend.flush()
+    expect(Order.errors).toEqual {error: "frogs"}
+
 
   it "Munges the order attributes to add _attributes as Rails needs", ->
     expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)

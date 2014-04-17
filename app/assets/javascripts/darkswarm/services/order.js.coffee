@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState)->
+Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState, flash)->
   new class Order
     errors: {}
 
@@ -13,9 +13,11 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState)
     submit: ->
       $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)=>
         @navigate(data.path)
-      .error (errors, status)=>
-        @errors = errors
-
+      .error (response, status)=>
+        @errors = response.errors
+        flash.error = response.flash?.error
+        flash.success = response.flash?.notice
+        
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
       munged_order = {}
