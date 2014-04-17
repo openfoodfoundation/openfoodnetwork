@@ -16,6 +16,7 @@ module CheckoutHelper
       required: true,
       type: :text,
       name: path,
+      id: path,
       "ng-model" => path,
       "ng-class" => "{error: !fieldValid('#{path}')}" 
     }.merge args
