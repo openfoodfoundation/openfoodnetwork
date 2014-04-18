@@ -7,4 +7,3 @@ Darkswarm.filter 'filterHubs', ->
 
     hubs.filter (hub)->
       match(hub.name) or match(hub.address.zipcode) or match(hub.address.city)
-      

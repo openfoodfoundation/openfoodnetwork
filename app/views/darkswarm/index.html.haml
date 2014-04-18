@@ -17,7 +17,6 @@
             %h2 Ready to shop?
             %p Select a food hub from the list below:
 #hubs{"ng-controller" => "HubsCtrl"}
-
   :javascript
     angular.module('Darkswarm').value('hubs', #{render "shared/hubs"})
 
@@ -27,8 +26,36 @@
       "ofn-disable-enter" => true}
     .large-3.columns
       Advanced search
-  .row
+
+  .row{bindonce: true}
     .large-12.columns
-      %ul
-        %li{"ng-repeat" => "hub in hubs | filterHubs:query"} 
-          %pre {{ hub | json }}
+
+      %hub{"ng-repeat" => "hub in (hubs | filterHubs:query)",
+      "ng-class" => "{'open' : open}"} 
+
+        %a.row{"ng-click" => "open = !open"}
+          .columns.large-4
+            %strong {{ hub.name }}
+          .columns.large-3
+            {{ hub.address.city }}
+          .columns.large-1
+            {{ hub.address.state }}
+          .columns.large-3
+            Orders closing when?
+          .columns.large-1
+            %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
+
+        .row{"ng-if" => "open"}
+          .columns.large-4
+            %strong Shop for
+          .columns.large-4
+            %strong Delivery options
+            .pickup{"bo-if" => "hub.pickup"} Pickup
+            .delivery{"bo-if" => "hub.delivery"} Delivery
+          .columns.large-4
+            %strong Our producers
+        .row{"ng-if" => "open"}
+          .columns.large-12
+            %a{"bo-href" => "hub.path"} 
+              Go to 
+              %strong {{ hub.name }}
