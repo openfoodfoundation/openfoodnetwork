@@ -20,6 +20,10 @@ node :path do |hub|
   shop_enterprise_path(hub) 
 end
 
+#node :active do |hub|
+  ##@active_distributors.include?(hub)
+#end
+
 #child :shipping_methods do
   #attributes :name, :require_ship_address
 #end

@@ -1,5 +1,5 @@
 %div#image-url-container{backstretch: true,
-  "background-url" => "#{LandingPageImage.random.photo.url(:max_common_res)}" }
+  "background-url" => "#{LandingPageImage.random.andand.photo.andand.url(:max_common_res)}" }
   .row
     .large-10.large-centered.columns
       #postcode_select_box
@@ -16,6 +16,7 @@
           .large-12.columns.text-center
             %h2 Ready to shop?
             %p Select a food hub from the list below:
+
 #hubs{"ng-controller" => "HubsCtrl"}
   :javascript
     angular.module('Darkswarm').value('hubs', #{render "shared/hubs"})
@@ -56,7 +57,7 @@
         .row{"ng-if" => "open"}
           .columns.large-12
             %a{"bo-href" => "hub.path"} 
-              Go to 
+              Shop at 
               %strong {{ hub.name }}
 
     .large-12.columns
