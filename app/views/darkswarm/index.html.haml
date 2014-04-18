@@ -29,8 +29,7 @@
 
   .row{bindonce: true}
     .large-12.columns
-
-      %hub{"ng-repeat" => "hub in (hubs | filterHubs:query)",
+      %hub{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
       "ng-class" => "{'open' : open}"} 
 
         %a.row{"ng-click" => "open = !open"}
@@ -59,3 +58,8 @@
             %a{"bo-href" => "hub.path"} 
               Go to 
               %strong {{ hub.name }}
+
+    .large-12.columns
+      .row{"ng-show" => "filteredHubs.length == 0"}
+        .columns.large-12.text-center
+          No results
