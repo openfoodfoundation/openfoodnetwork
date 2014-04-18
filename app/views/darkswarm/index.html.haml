@@ -30,5 +30,5 @@
   .row
     .large-12.columns
       %ul
-        %li{"ng-repeat" => "hub in hubs | filter:query"} 
+        %li{"ng-repeat" => "hub in hubs | filterHubs:query"} 
           %pre {{ hub | json }}
