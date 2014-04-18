@@ -1,4 +1,4 @@
-window.AccountSidebarCtrl = Darkswarm.controller "AccountSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
+Darkswarm.controller "AccountSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
   $scope.path = "/account"
   Navigation.paths.push $scope.path
 

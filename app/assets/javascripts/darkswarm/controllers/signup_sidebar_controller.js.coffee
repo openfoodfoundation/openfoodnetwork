@@ -1,4 +1,4 @@
-window.SignupSidebarCtrl = Darkswarm.controller "SignupSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
+Darkswarm.controller "SignupSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
   $scope.spree_user = SpreeUser.spree_user
   $scope.path = "/signup"
   Navigation.paths.push $scope.path

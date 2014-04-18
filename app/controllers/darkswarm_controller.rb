@@ -1,5 +1,6 @@
-class DarkswarmController < ApplicationController
-  def index
+class DarkswarmController < BaseController
+  layout 'darkswarm'
 
+  def index
   end
 end

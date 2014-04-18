@@ -1,4 +1,4 @@
-window.SidebarCtrl = Darkswarm.controller "SidebarCtrl", ($scope, $location) ->
+Darkswarm.controller "SidebarCtrl", ($scope, $location) ->
   $scope.sidebarPaths = ["/login", "/signup", "/forgot", "/account"] 
 
   $scope.active = ->

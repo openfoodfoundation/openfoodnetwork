@@ -1,1 +1,34 @@
-TESTING
+%div#image-url-container{backstretch: true,
+  "background-url" => "#{LandingPageImage.random.photo.url(:max_common_res)}" }
+  .row
+    .large-10.large-centered.columns
+      #postcode_select_box
+        .row
+          .large-12.columns
+            #logo-container= image_tag "ofn_logo.png"
+        .row
+          .large-12.large-centered.columns
+            = link_to about_us_path do
+              %strong
+                %i What is open food network?
+
+        .row
+          .large-12.columns.text-center
+            %h2 Ready to shop?
+            %p Select a food hub from the list below:
+#hubs{"ng-controller" => "HubsCtrl"}
+
+  :javascript
+    angular.module('Darkswarm').value('hubs', #{render "shared/hubs"})
+
+  .row
+    .large-9.columns
+      %input{type: :text, "ng-model" => "query", value: "Search postcode, suburb or hub name...",
+      "ofn-disable-enter" => true}
+    .large-3.columns
+      Advanced search
+  .row
+    .large-12.columns
+      %ul
+        %li{"ng-repeat" => "hub in hubs | filter:query"} 
+          %pre {{ hub | json }}

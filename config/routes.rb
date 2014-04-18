@@ -1,5 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
-  root :to => 'home#temp_landing_page'
+  root :to => 'darkswarm#index'
 
   resource :shop, controller: "shop/shop" do
     get :products

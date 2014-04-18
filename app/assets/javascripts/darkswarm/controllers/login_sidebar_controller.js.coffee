@@ -1,4 +1,4 @@
-window.LoginSidebarCtrl = Darkswarm.controller "LoginSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
+Darkswarm.controller "LoginSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
   $scope.spree_user = SpreeUser.spree_user
   $scope.path = "/login"
   Navigation.paths.push $scope.path
