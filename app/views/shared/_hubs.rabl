@@ -2,7 +2,7 @@ collection Enterprise.is_distributor
 attributes :name, :id
 
 child :address do
-  attributes :city
+  attributes :city, :zipcode
   node :state do |address|
     address.state.abbr
   end

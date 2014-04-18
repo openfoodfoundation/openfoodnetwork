@@ -5,5 +5,3 @@ Darkswarm.directive "ofnDisableEnter", ()->
       code = e.keyCode || e.which
       if code == 13
         e.preventDefault()
-      
-
