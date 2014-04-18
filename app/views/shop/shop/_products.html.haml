@@ -3,7 +3,10 @@
 
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
 
-    %input#search.text{"ng-model" => "query", placeholder: "Search", "ng-keypress" => "searchKeypress($event)"}
+    %input#search.text{"ng-model" => "query", 
+    placeholder: "Search",
+    "ng-debounce" => "150",
+    "ng-keypress" => "searchKeypress($event)"}
     %input.button.right{type: :submit, value: "Add to Cart"}
 
     %table

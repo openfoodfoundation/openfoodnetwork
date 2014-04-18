@@ -6,7 +6,7 @@ Darkswarm.directive "ngDebounce", ($timeout) ->
     return  if attr.type is "radio" or attr.type is "checkbox"
     elm.unbind "input"
     debounce = undefined
-    elm.bind "keyup paste", ->
+    elm.bind "keydown paste", ->
       $timeout.cancel debounce
       debounce = $timeout(->
         scope.$apply ->
