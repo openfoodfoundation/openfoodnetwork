@@ -1,68 +1,66 @@
-%div#image-url-container{backstretch: true,
-  "background-url" => "#{LandingPageImage.random.andand.photo.andand.url(:max_common_res)}" }
+#tagline
   .row
-    .large-10.large-centered.columns
-      #postcode_select_box
-        .row
-          .large-12.columns
-            #logo-container= image_tag "ofn_logo.png"
-        .row
-          .large-12.large-centered.columns
-            = link_to about_us_path do
-              %strong
-                %i What is open food network?
+    .small-12.text-center.columns
+      %h1 Open Food Network
+      %h2 An open marketplace that makes it easy to find, buy, sell and move sustainable local food.
+      %a Learn more (modal)
 
-        .row
-          .large-12.columns.text-center
-            %h2 Ready to shop?
-            %p Select a food hub from the list below:
 
 #hubs{"ng-controller" => "HubsCtrl"}
   :javascript
     angular.module('Darkswarm').value('hubs', #{render "shared/hubs"})
 
   .row
-    .large-9.columns
-      %input{type: :text, "ng-model" => "query", 
+    .small-12.columns.text-center
+      %h1 Ready to shop?
+      %p 
+        Select a 
+        %a food hub (modal)
+        from the list below:
+  #hub-search.row
+    .small-9.columns
+      %input{type: :text, 
+      "ng-model" => "query", 
       placeholder: "Search postcode, suburb or hub name...",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
-    .large-3.columns
+    .small-3.columns.advanced
       Advanced search
 
   .row{bindonce: true}
-    .large-12.columns
-      %hub{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
-      "ng-class" => "{'open' : open}"} 
-
-        %a.row{"ng-click" => "open = !open"}
-          .columns.large-4
-            %strong {{ hub.name }}
-          .columns.large-3
-            {{ hub.address.city }}
-          .columns.large-1
-            {{ hub.address.state }}
-          .columns.large-3
-            Orders closing when?
-          .columns.large-1
-            %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
-
-        .row{"ng-if" => "open"}
-          .columns.large-4
-            %strong Shop for
-          .columns.large-4
-            %strong Delivery options
-            .pickup{"bo-if" => "hub.pickup"} Pickup
-            .delivery{"bo-if" => "hub.delivery"} Delivery
-          .columns.large-4
-            %strong Our producers
-        .row{"ng-if" => "open"}
-          .columns.large-12
-            %a{"bo-href" => "hub.path"} 
-              Shop at 
+    .small-12.columns
+      .active_table
+        %hub.active_table_row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
+        "ng-class" => "{'open' : open}"} 
+          %a.row{"ng-click" => "open = !open"}
+            .columns.small-4
               %strong {{ hub.name }}
+            .columns.small-3
+              {{ hub.address.city }}
+            .columns.small-1
+              {{ hub.address.state }}
+            .columns.small-3
+              Orders closing when?
+            .columns.small-1
+              %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
 
-    .large-12.columns
+          .row{"ng-if" => "open"}
+            .columns.small-4
+              %strong Shop for
+            .columns.small-4
+              %strong Delivery options
+              .pickup{"bo-if" => "hub.pickup"} Pickup
+              .delivery{"bo-if" => "hub.delivery"} Delivery
+            .columns.small-4
+              %strong Our producers
+
+          .row{"ng-if" => "open"}
+            .columns.small-12
+              %a{"bo-href" => "hub.path"} 
+                Shop at 
+                %strong {{ hub.name }}
+
+    .small-12.columns
       .row{"ng-show" => "filteredHubs.length == 0"}
-        .columns.large-12.text-center
+        .columns.small-12.text-center
           No results
