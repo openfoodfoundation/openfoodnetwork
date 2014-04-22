@@ -4,6 +4,8 @@
   margin: 2em 0em
   .active_table_row
     padding: 0.8em 0.5em  
-    &:hover, &:active, &:focus
-      background: white
-      border: 1px solid $clr-strong
+    display: block
+    &.closed
+      &:hover, &:active, &:focus
+        background: white
+        border: 1px solid $clr-strong

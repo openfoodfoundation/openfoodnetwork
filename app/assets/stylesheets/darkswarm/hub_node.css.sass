@@ -1,12 +1,29 @@
-hub.active_table_row // Inherits from active_table
-  border: 1px solid transparent
+@import 'branding'
+
+hub
   display: block
-  & > .row
-    //padding-top: 12px
-    //padding-bottom: 12px
-  &, & > a.row
-    display: block
   &.open
-    border: 1px solid pink
-    a.row .columns
-      border-bottom: 1px solid pink
+    border: 1px solid $clr-strong
+    p
+      padding-top: 1em
+    .active_table_row:first-child
+      border-bottom: 1px solid $clr-strong
+    .active_table_row:last-child
+      padding: 0
+      background-color: $clr-strong
+      &:hover
+        background-color: $clr-bright
+      a
+        display: block
+        padding: 0.8em 0.5em
+        margin: 0 -0.9375rem
+        &, & * 
+          color: white
+
+  .active_table_row // Inherits from active_table
+    border: 1px solid transparent
+    &, & > a.row
+      display: block
+      //border: 1px solid pink
+      //a.row .columns
+        //border-bottom: 1px solid pink

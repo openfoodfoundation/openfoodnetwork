@@ -30,35 +30,48 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
+
+        %hub.row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
         "ng-class" => "{'open' : open}"} 
-          %a.row{"ng-click" => "open = !open"}
-            .columns.small-4
-              %strong {{ hub.name }}
-            .columns.small-3
-              {{ hub.address.city }}
-            .columns.small-1
-              {{ hub.address.state }}
-            .columns.small-3
-              Orders closing when?
-            .columns.small-1
-              %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
-
-          .row{"ng-if" => "open"}
-            .columns.small-4
-              %strong Shop for
-            .columns.small-4
-              %strong Delivery options
-              .pickup{"bo-if" => "hub.pickup"} Pickup
-              .delivery{"bo-if" => "hub.delivery"} Delivery
-            .columns.small-4
-              %strong Our producers
-
-          .row{"ng-if" => "open"}
-            .columns.small-12
-              %a{"bo-href" => "hub.path"} 
-                Shop at 
+          .small-12.columns
+            .row.active_table_row{"ng-click" => "open = !open", "ng-class" => "{'closed' : !open}"}
+              .columns.small-4
                 %strong {{ hub.name }}
+              .columns.small-3
+                {{ hub.address.city }}
+              .columns.small-1
+                {{ hub.address.state | uppercase }}
+              .columns.small-3
+                Orders closing when?
+              .columns.small-1.text-right
+                %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
+
+            .row.active_table_row{"ng-if" => "open"}
+              .columns.small-4
+                %strong Shop for
+                %p
+                  Organics, Test data, Food boxes, fruit, kittens, Meat &amp; Fish, Drinks 
+              .columns.small-4
+                %strong Delivery options
+                %ol
+                  %li.pickup{"bo-if" => "hub.pickup"} Pickup
+                  %li.delivery{"bo-if" => "hub.delivery"} Delivery
+              .columns.small-4
+                %strong Our producers
+                %ol
+                  %li Fake Name Forever
+                  %li The Constant Gardener
+                  %li Shiny Olives
+                  %li Love in a Time of War
+
+            .row.active_table_row{"ng-if" => "open"}
+              .columns.small-11
+                %a{"bo-href" => "hub.path"} 
+                  Shop at 
+                  %strong {{ hub.name }}
+              .columns.small-1.text-right
+                %a{"bo-href" => "hub.path"} 
+                  %i.fi-arrow-right
 
     .small-12.columns
       .row{"ng-show" => "filteredHubs.length == 0"}
