@@ -8,3 +8,6 @@ OpenFoodNetwork.config do |config|
   config.country_code = 'au'
 end
 
+
+# Define an override for the timezone
+Openfoodnetwork::Application.config.time_zone = 'Melbourne'

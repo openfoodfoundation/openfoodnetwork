@@ -1,7 +1,7 @@
 
-require 'open_food_network/config'
+require_relative 'config'
 
-puts 'OpenFoodNetwork!'
+
 module OpenFoodNetwork
 
   def self.config(&block)

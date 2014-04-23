@@ -5,7 +5,6 @@ require File.expand_path('../../../spec/factories', __FILE__)
 require File.expand_path('../../../spec/support/spree/init', __FILE__)
 
 taxonomies = YAML::load_file File.join ['db', 'seeds', 'taxonomies.yml']
-print taxonomies
 
 unless Spree::Taxonomy.find_by_name(taxonomies[0]['name'])
   puts "[db:seed] Seeding taxonomies"
