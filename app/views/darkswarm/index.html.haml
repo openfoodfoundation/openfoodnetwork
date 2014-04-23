@@ -8,7 +8,7 @@
 
 #hubs{"ng-controller" => "HubsCtrl"}
   :javascript
-    angular.module('Darkswarm').value('hubs', #{render "shared/hubs"})
+    angular.module('Darkswarm').value('hubs', #{render "json/hubs"})
 
   .row
     .small-12.columns.text-center
@@ -31,11 +31,11 @@
     .small-12.columns
       .active_table
         %hub.row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
-        "ng-class" => "{'closed' : !active(), 'open' : active()}",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active}",
         "ng-controller" => "HubNodeCtrl",
         id: "{{hub.path}}"} 
           .small-12.columns
-            .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !active()}"}
+            .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
               .columns.small-4
                 %strong {{ hub.name }}
               .columns.small-3
@@ -45,9 +45,9 @@
               .columns.small-3
                 Orders closing when?
               .columns.small-1.text-right
-                %i{"ng-class" => "{'fi-arrow-down' : !open, 'fi-arrow-up' : open}"} 
+                %i{"ng-class" => "{'fi-arrow-down' : !open(), 'fi-arrow-up' : open()}"} 
 
-            .row.active_table_row{"ng-show" => "active()"}
+            .row.active_table_row{"ng-show" => "open()"}
               .columns.small-4
                 %strong Shop for
                 %p
@@ -66,7 +66,7 @@
                   %li Shiny Olives
                   %li Love in the Time of Cholera 
 
-            .row.active_table_row{"ng-show" => "active()"}
+            .row.active_table_row{"ng-show" => "open()"}
               .columns.small-11
                 %a{"bo-href" => "hub.path"} 
                   Shop at 

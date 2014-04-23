@@ -2,10 +2,9 @@ Darkswarm.controller "HubNodeCtrl", ($scope, Navigation, $location, $anchorScrol
   $scope.toggle = ->
     Navigation.navigate $scope.hub.path
 
-  $scope.active = ->
+  $scope.open = ->
     $location.path() == $scope.hub.path
 
-  if $scope.active()
-    console.log "scrolling baby"
+  if $scope.open()
     $anchorScroll()
 

@@ -1,19 +1,22 @@
 @import 'branding'
+@import 'mixins'
 
 hub
   display: block
+  border: 1px solid transparent 
+
+  .active_table_row // Inherits from active_table
+    border: 1px solid transparent
+    &, & > a.row
+      display: block
+
   strong
     color: $clr-strong
-  border: 1px solid transparent 
-  &.closed
-    &:hover, &:active, &:focus
-      background: white
-      border: 1px solid $clr-strong
+  &.inactive, &.inactive strong
+    color: $disabled-dark
 
   &.open
     border: 1px solid $clr-strong
-    p
-      padding-top: 1em
     .active_table_row:first-child
       border-bottom: 1px solid $clr-strong
     .active_table_row:last-child
@@ -27,11 +30,10 @@ hub
         margin: 0 -0.9375rem
         &, & * 
           color: white
+    p
+      padding-top: 1em
 
-  .active_table_row // Inherits from active_table
-    border: 1px solid transparent
-    &, & > a.row
-      display: block
-      //border: 1px solid pink
-      //a.row .columns
-        //border-bottom: 1px solid pink
+  &.closed
+    &:hover, &:active, &:focus
+      background: white
+      border: 1px solid $clr-strong

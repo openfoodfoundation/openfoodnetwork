@@ -1,4 +1,4 @@
-Darkswarm.factory 'Hubs', ($location, hubs) ->
+Darkswarm.factory 'Hubs', ($location, hubs, $filter) ->
   new class Hubs
     constructor: ->
-      @hubs = hubs
+      @hubs = $filter('orderBy')(hubs, 'active', true)
