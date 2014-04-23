@@ -8,7 +8,7 @@ module Api
 
     def accessible
       @order_cycles = OrderCycle.ransack(params[:q]).result.accessible_by(current_api_user)
-      render :bulk_index
+      render params[:template] || :bulk_index
     end
   end
 end

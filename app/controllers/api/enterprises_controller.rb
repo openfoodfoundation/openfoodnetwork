@@ -9,7 +9,7 @@ module Api
 
     def accessible
       @enterprises = Enterprise.ransack(params[:q]).result.accessible_by(current_api_user)
-      respond_with(@enterprises)
+      render params[:template] || :bulk_index
     end
   end
 end
