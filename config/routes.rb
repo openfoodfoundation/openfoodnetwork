@@ -51,9 +51,11 @@ Openfoodnetwork::Application.routes.draw do
   namespace :api do
     resources :enterprises do
       get :managed, on: :collection
+      get :accessible, on: :collection
     end
     resources :order_cycles do
       get :managed, on: :collection
+      get :accessible, on: :collection
     end
   end
 
@@ -96,6 +98,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
+  match '/admin', :to => 'admin/overview#index', :as => :admin
 
 
   namespace :api, :defaults => { :format => 'json' } do

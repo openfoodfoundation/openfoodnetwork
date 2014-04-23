@@ -73,28 +73,27 @@ orderManagementModule.factory "pendingChanges",[
     pendingChanges: {}
 
     add: (id, attrName, changeObj) ->
-      this.pendingChanges["#{id}"] = {} unless this.pendingChanges.hasOwnProperty("#{id}")
-      this.pendingChanges["#{id}"]["#{attrName}"] = changeObj
+      @pendingChanges["#{id}"] = {} unless @pendingChanges.hasOwnProperty("#{id}")
+      @pendingChanges["#{id}"]["#{attrName}"] = changeObj
 
     removeAll: ->
-      this.pendingChanges = {}
+      @pendingChanges = {}
 
     remove: (id, attrName) ->
-      if this.pendingChanges.hasOwnProperty("#{id}")
-        delete this.pendingChanges["#{id}"]["#{attrName}"]
-        delete this.pendingChanges["#{id}"] if this.changeCount( this.pendingChanges["#{id}"] ) < 1
+      if @pendingChanges.hasOwnProperty("#{id}")
+        delete @pendingChanges["#{id}"]["#{attrName}"]
+        delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
 
     submitAll: ->
       all = []
-      for id,lineItem of this.pendingChanges
+      for id,lineItem of @pendingChanges
         for attrName,changeObj of lineItem
-          all.push this.submit(id, attrName, changeObj)
+          all.push @submit(id, attrName, changeObj)
       all
 
     submit: (id, attrName, change) ->
-      factory = this
-      dataSubmitter(change).then (data) ->
-        factory.remove id, attrName
+      dataSubmitter(change).then (data) =>
+        @remove id, attrName
         change.element.dbValue = data["#{attrName}"]
 
     changeCount: (lineItem) ->
@@ -144,13 +143,13 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
         $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
-          dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
+          dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             $scope.suppliers.unshift blankOption()
-            dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
+            dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
-              ocFetcher = dataFetcher("/api/order_cycles/managed").then (data) ->
+              ocFetcher = dataFetcher("/api/order_cycles/accessible").then (data) ->
                 $scope.orderCycles = data
                 $scope.orderCycles.unshift blankOption()
                 $scope.fetchOrders()
@@ -163,7 +162,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
 
     $scope.fetchOrders = ->
       $scope.loading = true
-      dataFetcher("/api/orders/managed?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=#{$scope.startDate}&q[completed_at_lt]=#{$scope.endDate}").then (data) ->
+      dataFetcher("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[completed_at_not_null]=true;q[completed_at_gt]=#{$scope.startDate};q[completed_at_lt]=#{$scope.endDate}").then (data) ->
         $scope.resetOrders data
         $scope.loading = false
 

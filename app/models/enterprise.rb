@@ -47,24 +47,26 @@ class Enterprise < ActiveRecord::Base
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
-
-  scope :with_order_cycles_outer,
+  scope :with_order_cycles_as_distributor_outer,
     joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_outer,
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
   scope :with_order_cycles_and_exchange_variants_outer,
-    with_order_cycles_outer.
+    with_order_cycles_as_distributor_outer.
     joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
     joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
 
   scope :active_distributors, lambda {
-    with_distributed_products_outer.with_order_cycles_outer.
+    with_distributed_products_outer.with_order_cycles_as_distributor_outer.
     where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.now, Time.now, Time.now).
     select('DISTINCT enterprises.*')
   }
 
   scope :distributors_with_active_order_cycles, lambda {
-    with_order_cycles_outer.
+    with_order_cycles_as_distributor_outer.
     merge(OrderCycle.active).
     select('DISTINCT enterprises.*')
   }
@@ -84,6 +86,17 @@ class Enterprise < ActiveRecord::Base
       scoped
     else
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+    end
+  }
+
+  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
+  scope :accessible_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      with_order_cycles_outer.
+      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
+      select('DISTINCT enterprises.*')
     end
   }
 
