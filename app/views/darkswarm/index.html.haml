@@ -3,40 +3,8 @@
     .small-12.text-center.columns
       %h1 Open Food Network
       %h2 An open marketplace that makes it easy to find, buy, sell and move sustainable local food.
-      %a Learn more (modal)
+      
+      %ofn-modal{title: "Learn more"}
+        = render partial: "modals/learn_more"
 
-
-#hubs{"ng-controller" => "HubsCtrl"}
-  :javascript
-    angular.module('Darkswarm').value('hubs', #{render "json/hubs"})
-
-  .row
-    .small-12.columns.text-center
-      %h1 Ready to shop?
-      %p 
-        Select a 
-        %a food hub (modal)
-        from the list below:
-  #hub-search.row
-    .small-9.columns
-      %input{type: :text, 
-      "ng-model" => "query", 
-      placeholder: "Search postcode, suburb or hub name...",
-      "ng-debounce" => "150",
-      "ofn-disable-enter" => true}
-    .small-3.columns.advanced
-      Advanced search
-
-  .row{bindonce: true}
-    .small-12.columns
-      .active_table
-        %hub.row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
-        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active}",
-        "ng-controller" => "HubNodeCtrl",
-        id: "{{hub.path}}"} 
-          .small-12.columns
-            = render partial: 'darkswarm/skinny'
-            = render partial: 'darkswarm/fat'
-      .row{"ng-show" => "filteredHubs.length == 0"}
-        .columns.small-12.text-center
-          No results
+= render partial: "darkswarm/hubs"
