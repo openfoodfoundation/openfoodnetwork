@@ -14,10 +14,9 @@ describe DarkswarmController do
     assigns[:active_distributors].should == [distributor]
   end
   
-  # This is done inside RABL template
+  # This is done inside the json/hubs RABL template
   it "gets the next order cycle for each hub" do
-    OrderCycle.stub_chain(:with_distributor, :soonest_closing, :first)
-    OrderCycle.should_receive(:with_distributor).with(distributor)
+    OrderCycle.should_receive(:first_closing_for).with(distributor)
     get :index
   end
 end

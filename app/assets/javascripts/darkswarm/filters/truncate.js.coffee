@@ -1,4 +1,4 @@
-angular.module("filters", []).filter "truncate", ->
+Darkswarm.filter "truncate", ->
   (text, length, end) ->
     text = text || ""
     length = 10  if isNaN(length)
@@ -7,8 +7,3 @@ angular.module("filters", []).filter "truncate", ->
       text
     else
       String(text).substring(0, length - end.length) + end
-
-$.timeago.settings.allowFuture = true;
-angular.module("filters").filter "date_in_words", ->
-  (date) ->
-    $.timeago(date)

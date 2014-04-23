@@ -64,6 +64,11 @@ class OrderCycle < ActiveRecord::Base
     with_distributor(distributor).soonest_opening.first
   end
 
+  def self.first_closing_for(distributor)
+    with_distributor(distributor).soonest_closing.first
+  end
+
+
   def self.most_recently_closed_for(distributor)
     with_distributor(distributor).most_recently_closed.first
   end

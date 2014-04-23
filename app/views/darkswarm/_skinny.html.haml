@@ -6,7 +6,7 @@
   .columns.small-1
     {{ hub.address.state | uppercase }}
   .columns.small-3{"bo-if" => "hub.active"}
-    Orders closing when?
+    {{ hub.orders_close_at | sensible_timeframe }} 
   .columns.small-3{"bo-if" => "!hub.active"}
     Orders closed
   .columns.small-1.text-right

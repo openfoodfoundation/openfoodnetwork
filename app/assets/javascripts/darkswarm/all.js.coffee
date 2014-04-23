@@ -13,8 +13,8 @@
 #= require ../search/jquery.backstretch.js
 #= require angular-backstretch.js
 #= require angular-flash.min.js
+#= require moment
 #
-#= require ../shared/jquery.timeago
 #= require foundation
 #= require ./darkswarm
 #= require ./overrides
