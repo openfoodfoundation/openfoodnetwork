@@ -24,7 +24,6 @@ node :active do |hub|
   @active_distributors.include?(hub)
 end
 
-# ALL PRODUCERS
-#
-# Orders closing when?
-#   Current order_cycle + closing when?
+node :orders_close_at do |hub|
+  OrderCycle.with_distributor(hub).soonest_closing.first.andand.orders_close_at
+end

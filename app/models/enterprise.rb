@@ -47,6 +47,7 @@ class Enterprise < ActiveRecord::Base
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+
   scope :with_order_cycles_outer,
     joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')

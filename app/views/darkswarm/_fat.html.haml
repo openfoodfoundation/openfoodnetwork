@@ -1,0 +1,28 @@
+
+.row.active_table_row{"ng-show" => "open()"}
+  .columns.small-4
+    %strong Shop for
+    %p
+      Organics, Test data, Food boxes, fruit, 
+      kittens, Meat &amp; Fish, Drinks 
+  .columns.small-4
+    %strong Delivery options
+    %ol
+      %li.pickup{"bo-if" => "hub.pickup"} Pickup
+      %li.delivery{"bo-if" => "hub.delivery"} Delivery
+  .columns.small-4
+    %strong Our producers
+    %ol
+      %li Fake Name Forever
+      %li The Constant Gardener
+      %li Shiny Olives
+      %li Love in the Time of Cholera 
+
+.row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
+  .columns.small-11
+    %a{"bo-href" => "hub.path"} 
+      Shop at 
+      %strong {{ hub.name }}
+  .columns.small-1.text-right
+    %a{"bo-href" => "hub.path"} 
+      %i.fi-arrow-right
