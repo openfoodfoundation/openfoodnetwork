@@ -8,6 +8,7 @@ describe Shop::CheckoutController do
     order.stub(:checkout_allowed?).and_return true
     controller.stub(:check_authorization).and_return true
   end
+
   it "redirects home when no distributor is selected" do
     get :edit
     response.should redirect_to root_path
@@ -51,6 +52,7 @@ describe Shop::CheckoutController do
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
     end
+
     it "does not clone the ship address from distributor when shipping method requires address" do
       get :edit
       assigns[:order].ship_address.address1.should be_nil
@@ -73,6 +75,36 @@ describe Shop::CheckoutController do
       order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
       order.should_receive(:ship_address=)
       controller.send(:clear_ship_address)
+    end
+  end
+
+  context "via xhr" do
+    before do
+      controller.stub(:current_distributor).and_return(distributor)
+      controller.stub(:current_order_cycle).and_return(order_cycle)
+      controller.stub(:current_order).and_return(order)
+    end
+
+    it "returns errors" do
+      xhr :post, :update, order: {}, use_route: :spree
+      response.status.should == 400
+      response.body.should == {errors: assigns[:order].errors, flash: []}.to_json
+    end
+
+    it "returns flash" do
+      order.stub(:update_attributes).and_return true
+      order.stub(:next).and_return false
+      xhr :post, :update, order: {}, use_route: :spree
+      response.body.should == {errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json
+    end
+
+    it "returns order confirmation url on success" do
+      order.stub(:update_attributes).and_return true
+      order.stub(:state).and_return "complete"
+
+      xhr :post, :update, order: {}, use_route: :spree
+      response.status.should == 200
+      response.body.should == {path: spree.order_path(order)}.to_json
     end
   end
 

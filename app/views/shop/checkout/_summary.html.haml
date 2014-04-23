@@ -1,4 +1,4 @@
-%orderdetails{"ng-controller" => "CheckoutCtrl"}
+%orderdetails
   = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
     %fieldset
       %legend Your Order
@@ -13,15 +13,16 @@
             %td= adjustment.display_amount.to_html
         %tr
           %th Shipping
-          %td {{ shippingPrice() | currency }}
+          %td {{ Order.shippingPrice() | currency }}
         %tr
           %th Cart total 
-          %td {{ cartTotal() | currency }}
+          %td {{ Order.cartTotal() | currency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
             %tr
               %th= label
               %td= total
 
-      = f.submit "Purchase", class: "button"
+      = f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url} Back to Cart
+

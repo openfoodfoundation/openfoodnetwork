@@ -9,7 +9,6 @@ window.AccountSidebarCtrl = Darkswarm.controller "AccountSidebarCtrl", ($scope, 
     Navigation.navigate($scope.path)
 
   $scope.emptyCart = (href, ev)->
-    console.log href
     if $(ev.delegateTarget).hasClass "empties-cart"
       location.href = href if confirm "Changing your Hub will clear your cart."
     else

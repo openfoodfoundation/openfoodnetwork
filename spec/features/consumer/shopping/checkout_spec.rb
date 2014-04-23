@@ -35,48 +35,27 @@ feature "As a consumer I want to check out my cart", js: true do
         before do
           distributor.shipping_methods << sm1 
           distributor.shipping_methods << sm2 
-          visit "/shop/checkout"
-        end
-        it "shows all shipping methods, but doesn't show ship address when not needed" do
-          page.should have_content "Frogs"
-          page.should have_content "Donkeys"
-          choose(sm2.name)
-          find("#ship_address", visible: false).visible?.should be_false
         end
 
-        context "When shipping method requires an address" do
+        context "on the checkout page" do
           before do
-            choose(sm1.name)
+            visit "/shop/checkout"
           end
-          it "shows the hidden ship address fields by default" do
-            check "Shipping address same as billing address?"
-            find("#ship_address_hidden").visible?.should be_true
-            find("#ship_address > div.visible", visible: false).visible?.should be_false
-
-            # Check it keeps state
-            click_button "Purchase"
-            find_field("Shipping address same as billing address?").should be_checked
+          it "shows all shipping methods, but doesn't show ship address when not needed" do
+            toggle_accordion "Shipping"
+            page.should have_content "Frogs"
+            page.should have_content "Donkeys"
           end
 
-          it "shows ship address forms when 'same as billing address' is unchecked" do
-            uncheck "Shipping address same as billing address?"
-            find("#ship_address_hidden", visible: false).visible?.should be_false
-            find("#ship_address > div.visible").visible?.should be_true
-
-            # Check it keeps state
-            click_button "Purchase"
-            find_field("Shipping address same as billing address?").should_not be_checked
-          end
-        end
-
-        it "copies billing address to hidden shipping address fields" do
-          choose(sm1.name)
-          check "Shipping address same as billing address?"
-          within "#billing" do
-            fill_in "Address", with: "testy"
-          end
-          within "#ship_address_hidden" do
-            find("#order_ship_address_attributes_address1", visible: false).value.should == "testy"
+          context "When shipping method requires an address" do
+            before do
+              toggle_accordion "Shipping"
+              choose(sm1.name)
+            end
+            it "shows ship address forms when 'same as billing address' is unchecked" do
+              uncheck "Shipping address same as billing address?"
+              find("#ship_address > div.visible").visible?.should be_true
+            end
           end
         end
 
@@ -89,6 +68,7 @@ feature "As a consumer I want to check out my cart", js: true do
             pm1 # Lazy evaluation of ze create()s
             pm2
             visit "/shop/checkout"
+            toggle_accordion "Payment Details"
           end
 
           it "shows all available payment methods" do
@@ -97,49 +77,55 @@ feature "As a consumer I want to check out my cart", js: true do
           end
 
           describe "Purchasing" do
-            it "re-renders with errors when we submit the incomplete form" do
-              choose sm2.name
-              click_button "Purchase"
-              current_path.should == "/shop/checkout"
-              page.should have_content "can't be blank"
-            end
-
-            it "renders errors on the shipping method where appropriate"
-
             it "takes us to the order confirmation page when we submit a complete form" do
+              toggle_accordion "Shipping"
               choose sm2.name
+              toggle_accordion "Payment Details"
               choose pm1.name
+              toggle_accordion "Customer Details"
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
+                fill_in "Email", with: "test@test.com"
+                fill_in "Phone", with: "0468363090"
+              end
+              toggle_accordion "Billing"
+              within "#billing" do
                 fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
-                fill_in "Customer E-Mail", with: "test@test.com"
-                fill_in "Phone", with: "0468363090"
                 fill_in "City", with: "Melbourne"
                 fill_in "Postcode", with: "3066"
               end
               click_button "Purchase"
+              sleep 10
               page.should have_content "Your order has been processed successfully"
             end
 
             it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+              toggle_accordion "Shipping"
               choose sm1.name
+              toggle_accordion "Payment Details"
               choose pm1.name
+              toggle_accordion "Customer Details"
               within "#details" do
                 fill_in "First Name", with: "Will"
                 fill_in "Last Name", with: "Marshall"
+                fill_in "Email", with: "test@test.com"
+                fill_in "Phone", with: "0468363090"
+              end
+              toggle_accordion "Billing"
+              within "#billing" do
+                fill_in "City", with: "Melbourne"
+                fill_in "Postcode", with: "3066"
                 fill_in "Address", with: "123 Your Face"
                 select "Australia", from: "Country"
                 select "Victoria", from: "State"
-                fill_in "Customer E-Mail", with: "test@test.com"
-                fill_in "Phone", with: "0468363090"
-                fill_in "City", with: "Melbourne"
-                fill_in "Postcode", with: "3066"
               end
+              toggle_accordion "Shipping"
               check "Shipping address same as billing address?"
               click_button "Purchase"
+              sleep 10
               page.should have_content "Your order has been processed successfully"
             end
           end

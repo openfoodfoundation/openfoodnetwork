@@ -23,20 +23,19 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
       spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
-      spyOn(returnedSuppliers, "unshift")
-      spyOn(returnedDistributors, "unshift")
-      spyOn(returnedOrderCycles, "unshift")
+      #spyOn(returnedSuppliers, "unshift")
+      #spyOn(returnedDistributors, "unshift")
+      #spyOn(returnedOrderCycles, "unshift")
       scope.initialise "api_key"
       httpBackend.flush()
-      expect(scope.suppliers).toEqual ["list of suppliers"]
-      expect(scope.distributors).toEqual ["list of distributors"]
-      expect(scope.orderCycles).toEqual [ "oc1", "oc2", "oc3" ]
-      expect(scope.initialiseVariables.calls.length).toEqual 1
-      expect(scope.fetchOrders.calls.length).toEqual 1
-      expect(returnedSuppliers.unshift.calls.length).toEqual 1
-      expect(returnedDistributors.unshift.calls.length).toEqual 1
-      expect(returnedOrderCycles.unshift.calls.length).toEqual 1
-      expect(scope.spree_api_key_ok).toEqual true
+
+      expect(scope.suppliers).toEqual [{ id : '', name : 'All' }, 'list of suppliers']
+      expect(scope.distributors).toEqual [ { id : '', name : 'All' }, 'list of distributors' ] 
+      expect(scope.orderCycles).toEqual [ { id : '', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+
+      expect(scope.initialiseVariables.calls.length).toBe 1
+      expect(scope.fetchOrders.calls.length).toBe 1
+      expect(scope.spree_api_key_ok).toBe true
 
   describe "fetching orders", ->
     beforeEach ->
