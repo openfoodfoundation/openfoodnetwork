@@ -237,7 +237,9 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    find("a", text: "New Product").click
+    #save_screenshot "/Users/willmarshall/Desktop/foo.png"
+    #save_and_open_page
+    find("a", text: "NEW PRODUCT").click
 
     page.should have_content 'NEW PRODUCT'
 
