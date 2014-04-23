@@ -2,7 +2,14 @@
 
 hub
   display: block
+  strong
+    color: $clr-strong
   border: 1px solid transparent 
+  &.closed
+    &:hover, &:active, &:focus
+      background: white
+      border: 1px solid $clr-strong
+
   &.open
     border: 1px solid $clr-strong
     p
