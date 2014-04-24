@@ -39,10 +39,19 @@
             <%= link_to_delete_enterprise enterprise %><br />
 
             <% if enterprise.is_distributor %>
-              <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />
-              <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)<br />
+              <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)
+              <% if enterprise.payment_methods.count == 0 %>
+                <span class = "icon-info-sign with-tip" style = "color: #DA5354" data-powertip = "You have no payment methods!"></span>
+              <% end %><br />
+              <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)
+              <% if enterprise.shipping_methods.count == 0 %>
+                <span class = "icon-info-sign with-tip" style = "color: #DA5354" data-powertip = "You have no shipping methods!"></span>
+              <% end %><br />
             <% end %>
             <%= link_to_with_icon 'icon-money', 'Enterprise Fees', main_app.admin_enterprise_fees_path(enterprise_id: enterprise.id) %> (<%= enterprise.enterprise_fees.count %>)
+            <% if enterprise.enterprise_fees.count == 0 %>
+              <span class = "icon-warning-sign with-tip" style = "color: orange" data-powertip = "You have no enterprise fees!"></span>
+            <% end %>
           </td>
         </tr>
       <% end %>
