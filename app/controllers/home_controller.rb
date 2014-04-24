@@ -1,5 +1,9 @@
 class HomeController < BaseController
-  layout 'landing_page'
+  layout 'darkswarm'
+  
+  def index
+    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
+  end
 
   def new_landing_page
   end
@@ -9,7 +13,6 @@ class HomeController < BaseController
 
   def temp_landing_page
     @groups = EnterpriseGroup.on_front_page.by_position
-
     render layout: false
   end
 end

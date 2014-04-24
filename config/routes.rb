@@ -1,5 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
-  root :to => 'darkswarm#index'
+  root :to => 'home#index'
 
   resource :shop, controller: "shop/shop" do
     get :products
@@ -60,7 +60,6 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
-  get "darkswarm", controller: :darkswarm, action: :index
   get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do
@@ -71,6 +70,7 @@ Openfoodnetwork::Application.routes.draw do
 
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
+
 end
 
 
@@ -129,4 +129,5 @@ Spree::Core::Engine.routes.prepend do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end
+
 end
