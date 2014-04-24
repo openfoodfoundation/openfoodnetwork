@@ -27,8 +27,8 @@
         "ng-controller" => "HubNodeCtrl",
         id: "{{hub.path}}"} 
           .small-12.columns
-            = render partial: 'darkswarm/skinny'
-            = render partial: 'darkswarm/fat'
+            = render partial: 'home/skinny'
+            = render partial: 'home/fat'
 
       .row{"ng-show" => "filteredHubs.length == 0"}
         .columns.small-12.text-center
