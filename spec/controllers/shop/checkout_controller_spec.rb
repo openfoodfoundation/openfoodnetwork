@@ -88,7 +88,7 @@ describe Shop::CheckoutController do
     it "returns errors" do
       xhr :post, :update, order: {}, use_route: :spree
       response.status.should == 400
-      response.body.should == {errors: assigns[:order].errors, flash: []}.to_json
+      response.body.should == {errors: assigns[:order].errors, flash: {}}.to_json
     end
 
     it "returns flash" do
