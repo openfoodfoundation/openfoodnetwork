@@ -127,26 +127,6 @@ feature %q{
     page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
   end
 
-
-  scenario "updating many distributor next collection times at once" do
-    # Given three distributors
-    3.times { create(:distributor_enterprise) }
-
-    # When I go to the enterprises page
-    login_to_admin_section
-    click_link 'Enterprises'
-
-    # And I fill in some new collection times and save them
-    fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
-    fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
-    fill_in 'enterprise_set_collection_attributes_2_next_collection_at', :with => 'Three'
-    click_button 'Update'
-
-    # Then my times should have been saved
-    flash_message.should == 'Distributor collection times updated.'
-    Enterprise.is_distributor.map { |d| d.next_collection_at }.sort.should == %w(One Two Three).sort
-  end
-
   context 'as an Enterprise user' do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
@@ -201,21 +181,6 @@ feature %q{
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
       page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
-    end
-
-    scenario "can bulk edit enterprise collection dates/times for enterprises I have permission to" do
-      click_link 'Enterprises'
-
-      fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
-      fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
-      click_button 'Update'
-
-      flash_message.should == 'Distributor collection times updated.'
-
-      supplier1.reload.next_collection_at.should == 'One'
-      distributor1.reload.next_collection_at.should == 'Two'
-      supplier2.reload.next_collection_at.should be_nil
-      distributor2.reload.next_collection_at.should be_nil
     end
 
     scenario "Editing images for an enterprise" do
