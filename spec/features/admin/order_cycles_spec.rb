@@ -462,17 +462,22 @@ feature %q{
       login_to_admin_as @new_user
     end
 
-    scenario "can view products I am coordinating" do
-      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+    scenario "viewing a list of order cycles I am coordinating" do
+      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
       oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
 
       click_link "Order Cycles"
 
+      # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
+
+      # The order cycle should not show enterprises that I don't manage
+      page.should_not have_selector 'td.suppliers',    text: supplier2.name
+      page.should_not have_selector 'td.distributors', text: distributor2.name
     end
 
-    scenario "can create a new order cycle" do
+    scenario "creating a new order cycle" do
       click_link "Order Cycles"
       click_link 'New Order Cycle'
 
