@@ -1,8 +1,16 @@
+@import branding
+@import mixins
+
 #tagline
-  background: grey
+  background: black url("/assets/home/tagline-bg.jpg")
+  @include fullbg
   height: 400px
   padding: 40px 0px
   h1, h2, p
     color: white
+  h1
+    margin-bottom: 1em  
   h2
-    font-size: 1.6875rem  
+    font-size: 1.6875rem
+  a
+    color: $clr-bright
