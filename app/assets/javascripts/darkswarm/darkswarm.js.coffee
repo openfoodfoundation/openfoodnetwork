@@ -1,4 +1,11 @@
-window.Darkswarm = angular.module("Darkswarm", ["ngResource", 'mm.foundation', 'angularLocalStorage', 'pasvaz.bindonce', 'infinite-scroll', 'angular-flash.service', 'backstretch']).config ($httpProvider, $tooltipProvider) ->
+window.Darkswarm = angular.module("Darkswarm", ["ngResource", 
+  'mm.foundation', 
+  'angularLocalStorage', 
+  'pasvaz.bindonce', 
+  'infinite-scroll', 
+  'angular-flash.service', 
+  'templates',
+  'backstretch']).config ($httpProvider, $tooltipProvider) ->
   $httpProvider.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
   $httpProvider.defaults.headers.put['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
   $httpProvider.defaults.headers['common']['X-Requested-With'] = 'XMLHttpRequest' 
