@@ -1,7 +1,7 @@
 Darkswarm.factory 'Navigation', ($location) ->
   new class Navigation
     paths: []
-    path: $location.path()
+    path: null 
 
     navigate: (path = false)->
       @path = path || @path || @paths[0] 

@@ -27,4 +27,3 @@ $ ->
   Foundation.set_namespace = ->
     null
   $(document).foundation()
-  $(document).foundation({reveal: {animation: 'fade'}})
