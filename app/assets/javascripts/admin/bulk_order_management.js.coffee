@@ -33,39 +33,46 @@ orderManagementModule.directive "ofnLineItemUpdAttr", [
             switchClass( element, "update-pending", ["update-error", "update-success"], false )
 ]
 
-orderManagementModule.directive "ofnConfirmChange", [
-  "pendingChanges", "$compile", "$q"
-  (pendingChanges, $compile, $q) ->
-    require: "ngModel"
-    link: (scope, element, attrs, ngModel) ->
-      modelName = attrs.ofnConfirmChange
-      template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
-      dialogDiv = $compile(template)(scope)
-      ngModel.$parsers.unshift (newValue) ->
-        if pendingChanges.changeCount(pendingChanges.pendingChanges) > 0
-          dialogDiv.dialog
-            dialogClass: "no-close"
-            resizable: false
-            height: 140
-            modal: true
-            buttons:
-              "SAVE": ->
-                dialogDiv = $(this)
-                $q.all(pendingChanges.submitAll()).then ->
-                  scope.$evalAsync ->
-                    scope.fetchOrders()
-                  dialogDiv.dialog "close"
-              "IGNORE": ->
-                scope.$evalAsync ->
-                  scope.fetchOrders()
-                $(this).dialog "close"
-                scope.$apply()
-          dialogDiv.dialog "open"
-        else
-          scope.$evalAsync ->
-            scope.fetchOrders()
-        newValue
-]
+orderManagementModule.directive "ofnConfirmModelChange", (ofnConfirmHandler,$timeout) ->
+  restrict: "A"
+  require: "ngModel"
+  link: (scope, element, attrs, ngModel) ->
+    handler = ofnConfirmHandler scope, -> scope.fetchOrders()
+    scope.$watch attrs.ngModel, (oldValue,newValue) ->
+      handler() unless oldValue == undefined || newValue == oldValue
+
+orderManagementModule.directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
+  restrict: "A"
+  scope:
+    path: "@ofnConfirmLinkPath"
+  link: (scope, element, attrs) ->
+    element.click ofnConfirmHandler scope, ->
+      window.location = scope.path
+
+orderManagementModule.factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
+  return (scope, callback) ->
+    template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
+    dialogDiv = $compile(template)(scope)
+    return ->
+      if pendingChanges.changeCount(pendingChanges.pendingChanges) > 0
+        dialogDiv.dialog
+          dialogClass: "no-close"
+          resizable: false
+          height: 140
+          modal: true
+          buttons:
+            "SAVE": ->
+              dialogDiv = $(this)
+              $q.all(pendingChanges.submitAll()).then ->
+                callback()
+                dialogDiv.dialog "close"
+            "IGNORE": ->
+              callback()
+              $(this).dialog "close"
+              scope.$apply()
+        dialogDiv.dialog "open"
+      else
+        callback()
 
 orderManagementModule.factory "pendingChanges",[
   "dataSubmitter"

@@ -469,6 +469,25 @@ feature %q{
     end
 
     context "using action buttons" do
+      context "using edit buttons" do
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+
+        before :each do
+          visit '/admin/orders/bulk_management'
+        end
+
+        it "shows an edit button for line_items, which takes the user to the standard edit page for the order" do
+          page.should have_selector "a.edit-order", :count => 2
+
+          first("a.edit-order").click
+
+          URI.parse(current_url).path.should == "/admin/orders/#{o1.number}/edit"
+        end
+      end
+
       context "using delete buttons" do
         let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
         let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
