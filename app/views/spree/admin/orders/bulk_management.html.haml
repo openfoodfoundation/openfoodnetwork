@@ -1,5 +1,6 @@
 - content_for :page_title do
-  = "Bulk Order Management"
+  %h1.page-title Bulk Order Management
+  %a.with-tip{ 'data-powertip' => "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required." } What's this?
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
