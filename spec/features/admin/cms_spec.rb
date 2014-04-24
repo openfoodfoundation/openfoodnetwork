@@ -8,15 +8,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
   scenario "admin can access CMS admin and return to Spree admin" do
     login_to_admin_section
     click_link 'Configuration'
@@ -24,7 +15,7 @@ feature %q{
     page.should have_content "ComfortableMexicanSofa"
 
     click_link 'Spree Admin'
-    current_path.should == spree.admin_orders_path
+    current_path.should match(/^\/admin/)
   end
 
   scenario "anonymous user can't access CMS admin" do
