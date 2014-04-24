@@ -1,3 +1,5 @@
+@import branding
+
 @font-face
   font-family: 'AvenirBla_IE'
   src: url("/AveniBla.eot") format("opentype")
@@ -18,9 +20,10 @@
   //font-family: "AvenirBla_IE", "AvenirBla"
 
 a
-  color: #267D97
+  color: $clr-strong
   &:hover
-    text-decoration: underline
+    text-decoration: none
+    color: $clr-bright
 
 @mixin avenir
   color: #333333

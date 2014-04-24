@@ -10,13 +10,12 @@ hub
     &, & > a.row
       display: block
 
-  strong
-    color: $clr-strong
   &.inactive, &.inactive strong
     color: $disabled-dark
 
   &.open
     border: 1px solid $clr-strong
+    background: white
     .active_table_row:first-child
       border-bottom: 1px solid $clr-strong
     .active_table_row.link
@@ -34,6 +33,7 @@ hub
       padding-top: 1em
 
   &.closed
+    @include csstrans
     &:hover, &:active, &:focus
-      background: white
       border: 1px solid $clr-strong
+      color: $clr-strong
