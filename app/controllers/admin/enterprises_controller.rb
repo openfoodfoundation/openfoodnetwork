@@ -35,7 +35,7 @@ module Admin
     end
 
     def collection
-      Enterprise.managed_by(spree_current_user).order('is_primary_producer DESC, is_distributor ASC, name')
+      Enterprise.managed_by(spree_current_user).order('is_distributor DESC, is_primary_producer ASC, name')
     end
 
     def collection_actions
