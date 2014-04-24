@@ -85,6 +85,43 @@ describe Exchange do
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
 
+    describe "finding exchanges managed by a particular user" do
+      let(:user) do
+        user = create(:user)
+        user.spree_roles = []
+        user
+      end
+
+      before { Exchange.destroy_all }
+
+      it "returns exchanges where the user manages both the sender and the receiver" do
+        exchange = create(:exchange, order_cycle: oc)
+        exchange.sender.users << user
+        exchange.receiver.users << user
+
+        Exchange.managed_by(user).should == [exchange]
+      end
+
+      it "does not return exchanges where the user manages only the sender" do
+        exchange = create(:exchange, order_cycle: oc)
+        exchange.sender.users << user
+
+        Exchange.managed_by(user).should be_empty
+      end
+
+      it "does not return exchanges where the user manages only the receiver" do
+        exchange = create(:exchange, order_cycle: oc)
+        exchange.receiver.users << user
+
+        Exchange.managed_by(user).should be_empty
+      end
+
+      it "does not return exchanges where the user manages neither enterprise" do
+        exchange = create(:exchange, order_cycle: oc)
+        Exchange.managed_by(user).should be_empty
+      end
+    end
+
     it "finds exchanges in a particular order cycle" do
       ex = create(:exchange, order_cycle: oc)
       Exchange.in_order_cycle(oc).should == [ex]

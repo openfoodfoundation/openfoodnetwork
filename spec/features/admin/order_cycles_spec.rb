@@ -217,11 +217,11 @@ feature %q{
     end
 
     # And the distributors should have fees
-    distributor = oc.distributors.sort_by(&:name).first
+    distributor = oc.distributors.sort_by(&:id).first
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
 
-    distributor = oc.distributors.sort_by(&:name).last
+    distributor = oc.distributors.sort_by(&:id).last
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
   end
@@ -513,6 +513,16 @@ feature %q{
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
       order_cycle.coordinator.should == distributor1
+    end
+
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # I should not see exchanges for supplier2 or distributor2
+      page.all('tr.supplier').count.should == 1
+      page.all('tr.distributor').count.should == 1
     end
 
     scenario "cloning an order cycle" do
