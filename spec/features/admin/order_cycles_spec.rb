@@ -9,7 +9,7 @@ feature %q{
 
   before :all do
     @orig_default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
+    Capybara.default_wait_time = 10
   end
 
   after :all do
