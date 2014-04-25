@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140402032034) do
+ActiveRecord::Schema.define(:version => 20140425055718) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -219,8 +219,8 @@ ActiveRecord::Schema.define(:version => 20140402032034) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20140402032034) do
     t.string   "promo_image_content_type"
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
+    t.boolean  "active",                   :default => true
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"

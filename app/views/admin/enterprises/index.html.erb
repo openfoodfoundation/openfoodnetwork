@@ -14,7 +14,8 @@
     <colgroup>
       <col style="width: 20%;">
       <col style="width: 5%;">
-      <col style="width: 20%;">
+      <col style="width: 5%;">
+      <col style="width: 15%;">
       <col>
       <col style="width: 20%;">
     </colgroup>
@@ -23,6 +24,7 @@
       <tr data-hook="enterprises_header">
         <th>Name</th>
         <th>Role</th>
+        <th>Active?</th>
         <th>Next Collection Date/Time</th>
         <th>Description</th>
         <th></th>
@@ -34,6 +36,7 @@
         <tr class="enterprise-<%= enterprise.id %>">
           <td><%= link_to enterprise.name, main_app.admin_enterprise_path(enterprise) %></td>
           <td><%= 'PP ' if enterprise.is_primary_producer %><%= 'D' if enterprise.is_distributor %></td>
+          <td><%= enterprise.active ? 'Active' : 'Inactive' %></td>
           <td><%= enterprise_form.text_field :next_collection_at %></td>
           <td><%= enterprise.description %></td>
           <td data-hook="admin_users_index_row_actions">
