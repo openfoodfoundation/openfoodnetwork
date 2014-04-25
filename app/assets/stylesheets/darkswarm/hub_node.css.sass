@@ -2,6 +2,7 @@
 @import mixins
 
 hub
+  @include csstrans
   display: block
   border: 1px solid transparent 
 
@@ -14,13 +15,32 @@ hub
     color: $disabled-dark
 
   &.open
-    border: 1px solid $clr-strong
-    background: white
     .active_table_row:first-child
+      @include csstrans
+      border-top: 1px solid $clr-strong
+      border-left: 1px solid $clr-strong
+      border-right: 1px solid $clr-strong
+      border-bottom: none
+      -webkit-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
+      box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
+      background-color: rgba(0,0,0,0.15)
+      &:hover, &:active, &:focus
+        color: $clr-strong
+        background-color: rgba(0,0,0,0.05)
+
+    .active_table_row:nth-child(2)
+      border-left: 1px solid $clr-strong
+      border-right: 1px solid $clr-strong
       border-bottom: 1px solid $clr-strong
+      border-top: none
+      background-color: rgba(255,255,255,0.2)
+
     .active_table_row.link
+      @include csstrans
       padding: 0
       background-color: $clr-strong
+      -webkit-box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
+      box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
       &:hover
         background-color: $clr-bright
       a
@@ -29,11 +49,19 @@ hub
         margin: 0 -0.9375rem
         &, & * 
           color: white
+    
     p
       padding-top: 1em
-
+    
+    p.trans-sentence
+      text-transform: capitalize
+  
   &.closed
-    @include csstrans
     &:hover, &:active, &:focus
+      background-color: rgba(255,255,255,0.2)
       border: 1px solid $clr-strong
+      color: $clr-strong
+  
+  &.current
+    &, & *
       color: $clr-strong

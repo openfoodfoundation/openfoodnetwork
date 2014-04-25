@@ -1,4 +1,6 @@
 @import foundation/components/buttons
+@import branding
+@import mixins
 
 .neutral-btn
   @include button 
@@ -6,16 +8,26 @@
   border: 2px solid rgba(200, 200, 200, 1)
   color: #999
 
-.neutral-btn.hover, .neutral-btn:hover, .neutral-btn:active, .neutral-btn:focus 
-  background-color: rgba(200, 200, 200, 0.25)
-  border: 2px solid rgba(200, 200, 200, 0.85)
+.neutral-btn:hover, .neutral-btn:active, .neutral-btn:focus 
+  background-color: rgba(200, 200, 200, 0.2)
+  border: 2px solid rgba(200, 200, 200, 0.8)
 
 .neutral-btn.dark
   border-color: #000
   color: #000
 
+.neutral-btn.dark:hover, .neutral-btn.dark:active, .neutral-btn.dark:focus 
+  background-color: rgba(0, 0, 0, 0.1)
+  border: 2px solid rgba(0, 0, 0, 0.8)
+  text-shadow: 0 1px 0 #fff
+
 .neutral-btn.light
   border-color: #fff
   color: #fff
+
+.neutral-btn.light:hover, .neutral-btn.light:active, .neutral-btn.light:focus 
+  background-color: rgba(255, 255, 255, 0.2)
+  border: 2px solid rgba(255, 255, 255, 0.8)
+  text-shadow: 0 1px 0 $clr-strong
 
 

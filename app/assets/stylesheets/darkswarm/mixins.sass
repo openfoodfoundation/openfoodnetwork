@@ -15,8 +15,18 @@
   padding-top: 100px
   padding-bottom: 100px
 
+@mixin darkbg
+  background: $clr-strong
+  &, & *
+    color: white
+
+@mixin lightbg
+  background: $clr-blonde
+  &, & *
+    color: black
+
 @mixin fullbg
-  background-position: top center 
+  background-position: center center 
   background-repeat: no-repeat
   -webkit-background-size: cover
   -moz-background-size: cover
