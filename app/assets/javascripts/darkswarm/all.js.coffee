@@ -10,7 +10,6 @@
 #= require ../shared/bindonce.min.js
 #= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
-#= require ../search/jquery.backstretch.js
 #= require_tree ../../templates
 #= require angular-backstretch.js
 #= require angular-flash.min.js

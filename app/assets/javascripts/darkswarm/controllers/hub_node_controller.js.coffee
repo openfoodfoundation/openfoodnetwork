@@ -8,6 +8,9 @@ Darkswarm.controller "HubNodeCtrl", ($scope, Navigation, $location, $anchorScrol
   $scope.current = ->
     $scope.hub.id is CurrentHub.id
 
+  $scope.emptiesCart = ->
+    CurrentHub.id isnt undefined and !$scope.current() 
+
   if $scope.open()
     $anchorScroll()
 
