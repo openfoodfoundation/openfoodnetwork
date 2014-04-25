@@ -1,0 +1,21 @@
+@import foundation/components/buttons
+
+.neutral-btn
+  @include button 
+  background-color: transparent
+  border: 2px solid rgba(200, 200, 200, 1)
+  color: #999
+
+.neutral-btn.hover, .neutral-btn:hover, .neutral-btn:active, .neutral-btn:focus 
+  background-color: rgba(200, 200, 200, 0.25)
+  border: 2px solid rgba(200, 200, 200, 0.85)
+
+.neutral-btn.dark
+  border-color: #000
+  color: #000
+
+.neutral-btn.light
+  border-color: #fff
+  color: #fff
+
+
