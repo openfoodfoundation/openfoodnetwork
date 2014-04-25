@@ -1,4 +1,3 @@
-
 .row.active_table_row{"ng-show" => "open()"}
   .columns.small-4
     %strong Shop for
@@ -12,11 +11,8 @@
       %li.delivery{"bo-if" => "hub.delivery"} Delivery
   .columns.small-4
     %strong Our producers
-    %ol
-      %li Fake Name Forever
-      %li The Constant Gardener
-      %li Shiny Olives
-      %li Love in the Time of Cholera 
+    %p
+      Go to our shop to see our current producers
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
   .columns.small-11

@@ -23,7 +23,7 @@
     .small-12.columns
       .active_table
         %hub.row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
-        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active}",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "ng-controller" => "HubNodeCtrl",
         id: "{{hub.path}}"} 
           .small-12.columns
