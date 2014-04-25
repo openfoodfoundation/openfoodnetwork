@@ -45,9 +45,16 @@ class AddForeignKeys < ActiveRecord::Migration
     say "Destroying #{orphaned_line_items.count} orphaned LineItems (of total #{Spree::LineItem.count})"
     orphaned_line_items.each { |li| li.delete }
 
-    # Give all orders a distributor
-    address = Spree::Address.create!(firstname: 'Dummy distributor', lastname: 'Dummy distributor', phone: '12345678', state: Spree::State.first,
-                                     address1: 'Dummy distributor', city: 'Dummy distributor', zipcode: '1234', country: Spree::State.first.country)
+    # Update orders without a distributor with a dummy distributor
+    state = Spree::State.first
+    country = state.andand.country
+    unless country && state
+      country = Spree::Country.create! name: 'Australia', iso_name: 'AU'
+      state = country.states.create! name: 'Victoria'
+    end
+
+    address = Spree::Address.create!(firstname: 'Dummy distributor', lastname: 'Dummy distributor', phone: '12345678', state: state,
+                                     address1: 'Dummy distributor', city: 'Dummy distributor', zipcode: '1234', country: country)
     deleted_distributor = Enterprise.create!(name: "Deleted distributor", address: address)
 
     orphaned_orders = Spree::Order.joins('LEFT OUTER JOIN enterprises ON enterprises.id=spree_orders.distributor_id').where('enterprises.id IS NULL')
