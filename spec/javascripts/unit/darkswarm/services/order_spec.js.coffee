@@ -3,6 +3,7 @@ describe 'Order service', ->
   orderData = null
   $httpBackend = null
   CheckoutFormState = null
+  Navigation = null
   flash = null
 
   beforeEach ->
@@ -28,9 +29,10 @@ describe 'Order service', ->
     inject ($injector, _$httpBackend_)->
       $httpBackend = _$httpBackend_
       Order = $injector.get("Order")
+      Navigation = $injector.get("Navigation")
       flash = $injector.get("flash")
       CheckoutFormState = $injector.get("CheckoutFormState")
-      spyOn(Order, "navigate") # Stubbing out writes to window.location
+      spyOn(Navigation, "go") # Stubbing out writes to window.location
 
   it "defaults the shipping method to the first", ->
     expect(Order.order.shipping_method_id).toEqual 7

@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState, flash)->
+Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState, flash, Navigation)->
   new class Order
     errors: {}
 
@@ -7,12 +7,9 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState,
       # Default to first shipping method if none selected
       @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
 
-    navigate: (path)->
-      window.location.pathname = path
-
     submit: ->
       $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)=>
-        @navigate(data.path)
+        Navigation.go data.path
       .error (response, status)=>
         @errors = response.errors
         flash.error = response.flash?.error
