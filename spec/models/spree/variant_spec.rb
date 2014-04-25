@@ -374,4 +374,14 @@ module Spree
       end
     end
   end
+
+  describe "destruction" do
+    it "destroys exchange variants" do
+      v = create(:variant)
+      e = create(:exchange, variants: [v])
+
+      v.destroy
+      e.reload.variant_ids.should be_empty
+    end
+  end
 end

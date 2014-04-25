@@ -48,7 +48,12 @@ module Spree
         end
 
         it "should be able to read/write their enterprises' product variants" do
-          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: Spree::Variant)
+          should have_ability([:create], for: Spree::Variant)
+          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p1.master)
+        end
+
+        it "should not be able to read/write other enterprises' product variants" do
+          should_not have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p2.master)
         end
 
         it "should be able to read/write their enterprises' product properties" do

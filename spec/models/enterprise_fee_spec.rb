@@ -9,6 +9,25 @@ describe EnterpriseFee do
     it { should validate_presence_of(:name) }
   end
 
+  describe "callbacks" do
+    it "removes itself from order cycle coordinator fees when destroyed" do
+      ef = create(:enterprise_fee)
+      oc = create(:simple_order_cycle, coordinator_fees: [ef])
+
+      ef.destroy
+      oc.reload.coordinator_fee_ids.should be_empty
+    end
+
+    it "removes itself from order cycle exchange fees when destroyed" do
+      ef = create(:enterprise_fee)
+      oc = create(:simple_order_cycle)
+      ex = create(:exchange, order_cycle: oc, enterprise_fees: [ef])
+
+      ef.destroy
+      ex.reload.exchange_fee_ids.should be_empty
+    end
+  end
+
   describe "scopes" do
     describe "finding per-item enterprise fees" do
       it "does not return fees with FlatRate and FlexiRate calculators" do

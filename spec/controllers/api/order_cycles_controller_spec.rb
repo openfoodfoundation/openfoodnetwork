@@ -6,15 +6,37 @@ module Api
     include Spree::Api::TestingSupport::Helpers
     render_views
 
-    context "as a normal user" do
-      let!(:oc1) { FactoryGirl.create(:order_cycle) }
-      let!(:oc2) { FactoryGirl.create(:order_cycle) }
-      let(:attributes) { [:id, :name, :suppliers, :distributors] }
+    let!(:oc1) { FactoryGirl.create(:order_cycle) }
+    let!(:oc2) { FactoryGirl.create(:order_cycle) }
+    let(:coordinator) { oc1.coordinator }
+    let(:attributes) { [:id, :name, :suppliers, :distributors] }
 
-      before do
-        stub_authentication!
-        Spree.user_class.stub :find_by_spree_api_key => current_api_user
+    before do
+      stub_authentication!
+      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+    end
+
+    context "as a normal user" do
+      sign_in_as_user!
+
+      it "should deny me access to managed order cycles" do
+        spree_get :managed, { :format => :json }
+        assert_unauthorized!
       end
+    end
+
+    context "as an enterprise user" do
+      sign_in_as_enterprise_user! [:coordinator]
+
+      it "retrieves a list of variants with appropriate attributes" do
+        get :managed, { :format => :json }
+        keys = json_response.first.keys.map{ |key| key.to_sym }
+        attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+    end
+
+    context "as an administrator" do
+      sign_in_as_admin!
 
       it "retrieves a list of variants with appropriate attributes" do
         get :managed, { :format => :json }

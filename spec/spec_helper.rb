@@ -23,6 +23,9 @@ WebMock.disable_net_connect!(:allow_localhost => true)
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/core/testing_support/controller_requests'
 require 'spree/core/testing_support/capybara_ext'
+require 'spree/api/testing_support/setup'
+require 'spree/api/testing_support/helpers'
+require 'spree/api/testing_support/helpers_decorator'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
@@ -92,6 +95,8 @@ RSpec.configure do |config|
   config.include Spree::CheckoutHelpers
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
+  config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
+  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::DistributionHelper
