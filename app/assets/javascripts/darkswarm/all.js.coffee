@@ -14,6 +14,7 @@
 #= require angular-backstretch.js
 #= require angular-flash.min.js
 #= require moment
+#= require modernizr
 #
 #= require foundation
 #= require ./darkswarm
