@@ -15,13 +15,6 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage, CheckoutFormState)
     $scope.accordion[name] = true
 
   storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}"}
-  console.log "==============================="
-  console.log "Order.order.id"
-
-  #storage.bind $scope, "accordion.billing", {storeName: "billing_#{Order.order.id}"}
-  #storage.bind $scope, "accordion.shipping", {storeName: "shipping_#{Order.order.id}"}
-  #storage.bind $scope, "accordion.payment", {storeName: "payment_#{Order.order.id}"}
-
   storage.bind $scope, "CheckoutFormState.ship_address_same_as_billing", { defaultValue: true}
 
   $scope.purchase = (event)->
