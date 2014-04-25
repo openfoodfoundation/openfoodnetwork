@@ -1,5 +1,3 @@
-require 'open_food_network/foreign_keys_postgresql'
-
 Openfoodnetwork::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
