@@ -106,6 +106,7 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
+
   def self.find_near(suburb)
     enterprises = []
 
@@ -135,6 +136,13 @@ class Enterprise < ActiveRecord::Base
 
   def available_variants
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
+  end
+
+  # Return all taxons for all distributed products
+  def taxons
+    Spree::Product.in_distributor(self).map do |p|
+      p.taxons
+    end.flatten.uniq
   end
 
   private
