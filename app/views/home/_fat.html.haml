@@ -17,6 +17,7 @@
   .columns.small-11
     %a{"bo-href" => "hub.path", "ng-show" => "!emptiesCart()"} 
       Shop at 
+
       %strong {{ hub.name }}
     %a{"ng-click" => "changeHub()", "ng-show" => "emptiesCart()"} 
       Change hub to

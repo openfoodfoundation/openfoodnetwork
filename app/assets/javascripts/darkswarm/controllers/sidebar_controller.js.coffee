@@ -1,5 +1,2 @@
-Darkswarm.controller "SidebarCtrl", ($scope, $location) ->
-  $scope.sidebarPaths = ["/login", "/signup", "/forgot", "/account"] 
-
-  $scope.active = ->
-    $location.path() in $scope.sidebarPaths 
+Darkswarm.controller "SidebarCtrl", ($scope, $location, Sidebar) ->
+  $scope.Sidebar = Sidebar

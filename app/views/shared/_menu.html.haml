@@ -2,8 +2,9 @@
   %section.top-bar-section
     %ul.left{"ng-controller" => "AuthenticationActionsCtrl"}
       %li
-        %a.icon{"ng-click" => "toggle()"}
+        %a.icon{"ng-click" => "Sidebar.toggle()"}
           %i.fi-list
+
       %li= link_to image_tag("ofn_logo_small.png"), root_path
       %li.divider
       - if spree_current_user.nil?
