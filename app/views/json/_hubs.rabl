@@ -1,6 +1,10 @@
 collection Enterprise.is_distributor
 attributes :name, :id
 
+child :taxons do
+  attributes :name, :id
+end
+
 child :address do
   attributes :city, :zipcode
   node :state do |address|
