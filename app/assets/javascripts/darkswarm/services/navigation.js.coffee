@@ -9,3 +9,6 @@ Darkswarm.factory 'Navigation', ($location) ->
         $location.path("/")
       else
         $location.path(@path)
+
+    go: (path)->
+      window.location.pathname = path
