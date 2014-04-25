@@ -1,4 +1,4 @@
-Darkswarm.factory 'CurrentHub', ($location, hubs, $filter, currentHub) ->
+Darkswarm.factory 'CurrentHub', ($location, $filter, currentHub) ->
   new class CurrentHub
     hasHub: false
     constructor: ->
