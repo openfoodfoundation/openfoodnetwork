@@ -5,6 +5,7 @@ describe "CheckoutCtrl", ->
 
   beforeEach ->
     module("Darkswarm")
+    angular.module('Darkswarm').value('user', {})
     Order = {
       submit: ->
       navigate: ->

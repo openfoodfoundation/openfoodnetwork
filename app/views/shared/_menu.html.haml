@@ -15,7 +15,7 @@
   %section.top-bar-section
     %ul.right
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.id"}
-        %a{href: shop_path}
+        %a{href: main_app.shop_path}
           {{ CurrentHub.name }}
       %li.cart
         %a.icon{href: cart_url}

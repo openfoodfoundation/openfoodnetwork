@@ -1,4 +1,4 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage, CheckoutFormState) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage, CheckoutFormState, User) ->
 
   # We put Order.order into the scope for convenience
   # However, storage.bind replaces Order.order
@@ -9,12 +9,22 @@ Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage, CheckoutFormState)
 
   $scope.CheckoutFormState = CheckoutFormState
   #$scope.order = Order.order 
-  $scope.accordion = {user: true}
+  if User
+    $scope.accordion = {details: true}
+  else
+    $scope.accordion = {user: true}
+
 
   $scope.show = (name)->
     $scope.accordion[name] = true
 
   storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}"}
+
+  # If we are logged in, but the cached accordion panel is user, move to details
+  if User and $scope.accordion.user
+    $scope.accordion.user = false
+    $scope.accordion.details = true
+
   storage.bind $scope, "CheckoutFormState.ship_address_same_as_billing", { defaultValue: true}
 
   $scope.purchase = (event)->
