@@ -4,6 +4,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationWorkflow
   include WebHelper
   include ShopWorkflow
+  include UIComponentHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -12,13 +13,14 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:order) { Spree::Order.last }
 
   before do
+    order_cycle
     create_enterprise_group_for distributor
   end
 
   # This was refactored in the new checkout
   # We have monkey-patched in some of the new features
   # Test suite works in that branch
-  pending "Login behaviour" do
+  describe "Login behaviour" do
     let(:user) { create_enterprise_user }
     before do
       select_distributor
@@ -46,7 +48,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       it "renders the login form if user is logged out" do
         within "section[role='main']" do
-          page.should have_content "USER"
+          page.should have_content "User"
         end
       end
     end
