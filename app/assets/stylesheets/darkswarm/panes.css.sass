@@ -1,11 +1,32 @@
 @import branding
 @import mixins
+  
 
-#map, #producers, #groups, #beta
-  @include panepadding
-
-#map, #groups
-  @include darkbg
-
-#producers, #beta
+#beta
   @include lightbg
+  .row
+    @include panepadding
+
+#map
+  @include darkbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/maps-bg.png") 
+    background-repeat: no-repeat
+    background-position: left center
+  
+#producers
+  @include turqbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/producers-bg.png")
+    background-repeat: no-repeat
+    background-position: right center
+
+#groups
+  @include darkbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/groups-bg.png")
+    background-repeat: no-repeat
+    background-position: left center

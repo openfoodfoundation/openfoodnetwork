@@ -5,8 +5,8 @@
   border: 1px solid #999
   font-size: 18px
   @extend .avenir
-  padding: 18px
-  margin-bottom: 1.25em
+  padding: 30px 20px
+  margin-bottom: 1em
 
 @mixin disabled
   color: $disabled-bright
@@ -16,14 +16,19 @@
   padding-bottom: 100px
 
 @mixin darkbg
-  background: $clr-brick
+  background-color: $clr-brick
   &, & *
     color: white
 
 @mixin lightbg
-  background: $clr-brick-ultra-light
+  background-color: $clr-brick-ultra-light
   &, & *
     color: black
+
+@mixin turqbg
+  background-color: $clr-turquoise-light
+  &, & *
+    color: $clr-turquoise
 
 @mixin fullbg
   background-position: center center 
