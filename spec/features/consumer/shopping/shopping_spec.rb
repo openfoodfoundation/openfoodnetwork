@@ -3,14 +3,19 @@ require 'spec_helper'
 feature "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationWorkflow
   include WebHelper
+  include UIComponentHelper
 
   describe "Viewing a distributor" do
+    let(:supplier) { create(:supplier_enterprise) }
     let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
 
-    before do #temporarily using the old way to select distributor
+    before do 
+      order_cycle
       create_enterprise_group_for distributor
       visit "/"
-      click_link distributor.name
+      open_active_table_row
+      click_link "Shop at #{distributor.name}"
     end
 
     it "shows a distributor with images" do
@@ -23,9 +28,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     describe "with products in order cycles" do
-      let(:supplier) { create(:supplier_enterprise) }
       let(:product) { create(:product, supplier: supplier) }
-      let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
 
       before do
         exchange = Exchange.find(order_cycle.exchanges.to_enterprises(distributor).outgoing.first.id) 
