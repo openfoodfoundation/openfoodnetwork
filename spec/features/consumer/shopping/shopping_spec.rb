@@ -15,9 +15,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
     before do 
       oc1
       create_enterprise_group_for distributor
-      visit "/"
-      open_active_table_row
-      click_link "Shop at #{distributor.name}"
+      visit root_path
+      follow_active_table_node distributor.name
     end
 
     it "shows a distributor with images" do

@@ -16,7 +16,7 @@ feature 'Home', js: true do
 
   it "shows all hubs" do
     page.should have_content distributor.name
-    open_active_table_row
+    expand_active_table_node distributor.name
     page.should have_content "Shop at #{distributor.name}" 
   end
 
@@ -28,8 +28,7 @@ feature 'Home', js: true do
   end
 
   it "should link to the hub page" do
-    open_active_table_row
-    click_on "Shop at #{distributor.name}"
+    follow_active_table_node distributor.name
     current_path.should == "/shop"
   end
 end

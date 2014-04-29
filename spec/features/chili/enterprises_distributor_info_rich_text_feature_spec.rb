@@ -3,6 +3,7 @@ require 'spec_helper'
 feature "enterprises distributor info as rich text" do
   include AuthenticationWorkflow
   include WebHelper
+  include UIComponentHelper
 
   before(:each) do
     OpenFoodNetwork::FeatureToggle.stub(:features).and_return({eaterprises: false,
@@ -111,7 +112,7 @@ feature "enterprises distributor info as rich text" do
 
     login_to_consumer_section
     ActionMailer::Base.deliveries.clear
-    click_link 'Green Grass'
+    follow_active_table_node 'Green Grass'
     visit enterprise_path d
 
     # -- Product details page

@@ -2,8 +2,7 @@ module ShopWorkflow
   def select_distributor
     # If no order cycles are available this is much faster
     visit "/"
-    open_active_table_row
-    click_link "Shop at #{distributor.name}"
+    follow_active_table_node distributor.name
   end
 
   # These methods are naughty and write to the DB directly
