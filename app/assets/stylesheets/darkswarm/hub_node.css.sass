@@ -14,32 +14,32 @@ hub
   &.open
     .active_table_row:first-child
       @include csstrans
-      border-top: 1px solid $clr-strong
-      border-left: 1px solid $clr-strong
-      border-right: 1px solid $clr-strong
+      border-top: 1px solid $clr-brick
+      border-left: 1px solid $clr-brick
+      border-right: 1px solid $clr-brick
       border-bottom: none
       -webkit-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
       box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
       background-color: rgba(0,0,0,0.15)
       &:hover, &:active, &:focus
-        color: $clr-strong
+        color: $clr-brick
         background-color: rgba(0,0,0,0.05)
 
     .active_table_row:nth-child(2)
-      border-left: 1px solid $clr-strong
-      border-right: 1px solid $clr-strong
-      border-bottom: 1px solid $clr-strong
+      border-left: 1px solid $clr-brick
+      border-right: 1px solid $clr-brick
+      border-bottom: 1px solid $clr-brick
       border-top: none
       background-color: rgba(255,255,255,0.2)
 
     .active_table_row.link
       @include csstrans
       padding: 0
-      background-color: $clr-strong
+      background-color: $clr-brick
       -webkit-box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
       box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
       &:hover
-        background-color: $clr-bright
+        background-color: $clr-brick-bright
       a
         display: block
         padding: 0.8em 0.5em
@@ -56,8 +56,8 @@ hub
   &.closed
     &:hover, &:active, &:focus
       background-color: rgba(255,255,255,0.2)
-      border: 1px solid $clr-strong
-      color: $clr-strong
+      border: 1px solid $clr-brick
+      color: $clr-brick
 
   &.inactive, &.inactive strong
     color: $disabled-dark
@@ -79,5 +79,14 @@ hub
         border-bottom: 1px solid $disabled-dark
 
   &.current
-    &, & *
-      color: $clr-strong
+    &.closed
+      &, & *
+        color: $clr-brick
+    &.open
+      .active_table_row:first-child
+        &, & *
+        color: $clr-brick
+
+
+
+
