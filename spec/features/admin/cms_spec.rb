@@ -28,6 +28,6 @@ feature %q{
     login_to_consumer_section
     visit cms_admin_path
     page.should_not have_content "ComfortableMexicanSofa"
-    page.should have_content "WHERE WOULD YOU LIKE TO SHOP?"
+    current_path.should == root_path
   end
 end
