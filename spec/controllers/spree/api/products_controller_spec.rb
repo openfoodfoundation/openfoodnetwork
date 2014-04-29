@@ -6,9 +6,10 @@ module Spree
     include Spree::Api::TestingSupport::Helpers
     render_views
 
-    let!(:product1) { FactoryGirl.create(:product) }
-    let!(:product2) { FactoryGirl.create(:product) }
-    let!(:product3) { FactoryGirl.create(:product) }
+    let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
+    let!(:product1) { FactoryGirl.create(:product, supplier: supplier) }
+    let!(:product2) { FactoryGirl.create(:product, supplier: supplier) }
+    let!(:product3) { FactoryGirl.create(:product, supplier: supplier) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
     let(:unit_attributes) { [:id, :name, :group_buy_unit_size, :variant_unit] }
 
@@ -18,6 +19,37 @@ module Spree
     end
 
     context "as a normal user" do
+      sign_in_as_user!
+
+      it "should deny me access to managed products" do
+        spree_get :managed, { :template => 'bulk_index', :format => :json }
+        assert_unauthorized!
+      end
+    end
+
+    context "as an enterprise user" do
+      sign_in_as_enterprise_user! [:supplier]
+
+      before :each do
+        spree_get :index, { :template => 'bulk_index', :format => :json }
+      end
+
+      it "retrieves a list of managed products" do
+        spree_get :managed, { :template => 'bulk_index', :format => :json }
+        keys = json_response.first.keys.map{ |key| key.to_sym }
+        attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+    end
+
+    context "as an administrator" do
+      sign_in_as_admin!
+
+      it "retrieves a list of managed products" do
+        spree_get :managed, { :template => 'bulk_index', :format => :json }
+        keys = json_response.first.keys.map{ |key| key.to_sym }
+        attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+
       it "retrieves a list of products with appropriate attributes" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }

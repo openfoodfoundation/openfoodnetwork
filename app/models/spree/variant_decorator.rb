@@ -1,5 +1,5 @@
 Spree::Variant.class_eval do
-  has_many :exchange_variants
+  has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
 
   attr_accessible :unit_value, :unit_description

@@ -37,6 +37,9 @@ gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 
+gem 'foreigner'
+gem 'immigrant'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

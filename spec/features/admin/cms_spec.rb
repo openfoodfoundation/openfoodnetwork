@@ -8,7 +8,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   scenario "admin can access CMS admin and return to Spree admin" do
     login_to_admin_section
     click_link 'Configuration'
@@ -16,7 +15,7 @@ feature %q{
     page.should have_content "ComfortableMexicanSofa"
 
     click_link 'Spree Admin'
-    current_path.should == spree.admin_orders_path
+    current_path.should match(/^\/admin/)
   end
 
   scenario "anonymous user can't access CMS admin" do
