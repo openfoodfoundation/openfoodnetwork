@@ -19,16 +19,31 @@
   background-color: $clr-brick
   &, & *
     color: white
+  a
+    color: $clr-brick-ultra-light
+    &:hover
+      text-decoration: none
+      color: $clr-brick-light
 
 @mixin lightbg
   background-color: $clr-brick-ultra-light
   &, & *
     color: black
+  a
+    color: $clr-brick
+    &:hover
+      text-decoration: none
+      color: $clr-brick-bright
 
 @mixin turqbg
   background-color: $clr-turquoise-light
   &, & *
     color: $clr-turquoise
+  a
+    color: white
+    &:hover
+      text-decoration: none
+      color: $clr-turquoise-light
 
 @mixin fullbg
   background-position: center center 
