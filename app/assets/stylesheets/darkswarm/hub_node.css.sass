@@ -11,9 +11,6 @@ hub
     &, & > a.row
       display: block
 
-  &.inactive, &.inactive strong
-    color: $disabled-dark
-
   &.open
     .active_table_row:first-child
       @include csstrans
@@ -61,7 +58,26 @@ hub
       background-color: rgba(255,255,255,0.2)
       border: 1px solid $clr-strong
       color: $clr-strong
-  
+
+  &.inactive, &.inactive strong
+    color: $disabled-dark
+    &.closed
+      &:hover, &:active, &:focus
+        border: 1px solid $disabled-dark
+        color: $disabled-dark
+    &.open
+      .active_table_row:first-child
+        color: $dark-grey
+        border-top: 1px solid $disabled-dark
+        border-left: 1px solid $disabled-dark
+        border-right: 1px solid $disabled-dark
+        strong
+          color: $dark-grey
+      .active_table_row:nth-child(2)
+        border-left: 1px solid $disabled-dark
+        border-right: 1px solid $disabled-dark
+        border-bottom: 1px solid $disabled-dark
+
   &.current
     &, & *
       color: $clr-strong
