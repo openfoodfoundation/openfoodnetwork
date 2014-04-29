@@ -18,7 +18,7 @@ feature "As a consumer I want to check out my cart", js: true do
     create_enterprise_group_for distributor
   end
 
-  describe "logged #{auth_state.to_s}, distributor selected, order cycle selected, product in cart" do
+  describe "logged out, distributor selected, order cycle selected, product in cart" do
     let(:user) { create_enterprise_user }
     before do
       select_distributor
