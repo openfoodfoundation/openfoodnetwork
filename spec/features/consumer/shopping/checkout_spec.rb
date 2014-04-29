@@ -5,6 +5,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationWorkflow
   include ShopWorkflow
   include WebHelper
+  include UIComponentHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -13,6 +14,7 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:order) { Spree::Order.last }
 
   before do
+    order_cycle # force this to load
     create_enterprise_group_for distributor
   end
 
