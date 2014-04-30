@@ -69,7 +69,6 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
-  gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'simplecov', :require => false
