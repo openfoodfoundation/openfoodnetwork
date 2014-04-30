@@ -30,7 +30,7 @@ class Enterprise < ActiveRecord::Base
   after_validation :geocode_address
 
   scope :by_name, order('name')
-  scope :active, where(:active => true)
+  scope :visible, where(:visible => true)
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where(:is_distributor => true)
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }

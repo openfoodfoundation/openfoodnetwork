@@ -50,9 +50,9 @@ describe Enterprise do
 
     describe 'active' do
       it 'find active enterprises' do
-        d1 = create(:distributor_enterprise, active: false)
+        d1 = create(:distributor_enterprise, visible: false)
         s1 = create(:supplier_enterprise)
-        Enterprise.active.should == [s1]
+        Enterprise.visible.should == [s1]
       end
     end
     

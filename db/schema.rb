@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140425055718) do
+ActiveRecord::Schema.define(:version => 20140430020639) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(:version => 20140425055718) do
     t.string   "promo_image_content_type"
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
-    t.boolean  "active",                   :default => true
+    t.boolean  "visible",                  :default => true
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
