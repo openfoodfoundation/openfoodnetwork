@@ -1,0 +1,10 @@
+
+# Copy this file and remove the '.example' suffix to setup custom settings
+
+require 'open_food_network/core'
+
+# Define OpenFoodNetwork sitewide preferences
+OpenFoodNetwork.config do |config|
+  config.country_code = 'au'
+end
+

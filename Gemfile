@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 
+gem 'nokogiri'
 gem 'rails', '3.2.17'
 
 gem 'pg'
@@ -36,6 +37,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
+gem 'seedbank'
 
 gem 'foreigner'
 gem 'immigrant'

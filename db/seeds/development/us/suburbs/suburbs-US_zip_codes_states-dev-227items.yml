@@ -1,0 +1,1622 @@
+#  THIS FILE ONLY IS A SUBSET of the ORIGINAL file.  It is smaller so it makes testing easier.
+#
+# United States zip codes with city, state, county, and latitude and longitude
+# from http://notebook.gaslampmedia.com/download-zip-code-latitude-longitude-city-state-county-csv/
+#  retrieved on  2014-03-09
+#
+#  Ashley Engelund 2013-03-10 (ashley@ashleycaroline.com)
+#
+#  THIS FILE ONLY IS A SUBSET of the ORIGINAL file.  It is smaller so it makes testing easier.
+#  This file has 227 items.  They include entries for the following states, Federal Post Offices (for the Armed Forces [military]), and territories:
+#   New York (NY)
+#   Puerto Rico (PR)
+#   California (CA)
+#   Federal Post Offices (AP)
+#   Hawaii (HI)
+#   Oregon (OR)
+#
+#   These aren't necessarily all of the zip codes for a state/FPO/territory.
+---
+record_0:
+  zip_code: '00501'
+  latitude: '40.922326'
+  longitude: '-72.637078'
+  city: Holtsville
+  state: NY
+  county: Suffolk
+record_1:
+  zip_code: '00544'
+  latitude: '40.922326'
+  longitude: '-72.637078'
+  city: Holtsville
+  state: NY
+  county: Suffolk
+record_2:
+  zip_code: '00601'
+  latitude: '18.165273'
+  longitude: '-66.722583'
+  city: Adjuntas
+  state: PR
+  county: Adjuntas
+record_3:
+  zip_code: '00602'
+  latitude: '18.393103'
+  longitude: '-67.180953'
+  city: Aguada
+  state: PR
+  county: Aguada
+record_4:
+  zip_code: '00603'
+  latitude: '18.455913'
+  longitude: '-67.14578'
+  city: Aguadilla
+  state: PR
+  county: Aguadilla
+record_40876:
+  zip_code: '96116'
+  latitude: '41.232908'
+  longitude: '-120.507888'
+  city: Likely
+  state: CA
+  county: Modoc
+record_40877:
+  zip_code: '96117'
+  latitude: '40.407309'
+  longitude: '-120.409210'
+  city: Litchfield
+  state: CA
+  county: Lassen
+record_40878:
+  zip_code: '96118'
+  latitude: '39.613008'
+  longitude: '-120.285676'
+  city: Loyalton
+  state: CA
+  county: Sierra
+record_40879:
+  zip_code: '96119'
+  latitude: '40.97664'
+  longitude: '-120.554754'
+  city: Madeline
+  state: CA
+  county: Lassen
+record_40880:
+  zip_code: '96120'
+  latitude: '38.771319'
+  longitude: '-119.832669'
+  city: Markleeville
+  state: CA
+  county: Alpine
+record_40881:
+  zip_code: '96121'
+  latitude: '40.196745'
+  longitude: '-120.367586'
+  city: Milford
+  state: CA
+  county: Lassen
+record_40882:
+  zip_code: '96122'
+  latitude: '39.800456'
+  longitude: '-120.542224'
+  city: Portola
+  state: CA
+  county: Plumas
+record_40883:
+  zip_code: '96123'
+  latitude: '40.776154'
+  longitude: '-120.326259'
+  city: Ravendale
+  state: CA
+  county: Lassen
+record_40884:
+  zip_code: '96124'
+  latitude: '39.613937'
+  longitude: '-120.404625'
+  city: Calpine
+  state: CA
+  county: Sierra
+record_40885:
+  zip_code: '96125'
+  latitude: '39.593596'
+  longitude: '-120.626908'
+  city: Sierra City
+  state: CA
+  county: Sierra
+record_40886:
+  zip_code: '96126'
+  latitude: '39.582462'
+  longitude: '-120.371073'
+  city: Sierraville
+  state: CA
+  county: Sierra
+record_40887:
+  zip_code: '96127'
+  latitude: '40.446063'
+  longitude: '-120.664132'
+  city: Susanville
+  state: CA
+  county: Lassen
+record_40888:
+  zip_code: '96128'
+  latitude: '40.341664'
+  longitude: '-120.423118'
+  city: Standish
+  state: CA
+  county: Lassen
+record_40889:
+  zip_code: '96129'
+  latitude: '39.772064'
+  longitude: '-120.405095'
+  city: Beckwourth
+  state: CA
+  county: Plumas
+record_40890:
+  zip_code: '96130'
+  latitude: '40.548881'
+  longitude: '-120.719159'
+  city: Susanville
+  state: CA
+  county: Lassen
+record_40891:
+  zip_code: '96132'
+  latitude: '40.950868'
+  longitude: '-120.612954'
+  city: Termo
+  state: CA
+  county: Lassen
+record_40892:
+  zip_code: '96133'
+  latitude: '38.617086'
+  longitude: '-119.506094'
+  city: Topaz
+  state: CA
+  county: Mono
+record_40893:
+  zip_code: '96134'
+  latitude: '41.93519'
+  longitude: '-121.588650'
+  city: Tulelake
+  state: CA
+  county: Siskiyou
+record_40894:
+  zip_code: '96135'
+  latitude: '40.02349'
+  longitude: '-120.798610'
+  city: Vinton
+  state: CA
+  county: Plumas
+record_41092:
+  zip_code: '96684'
+  latitude: 
+  longitude: 
+  city: FPO
+  state: AP
+  county: 
+record_41093:
+  zip_code: '96686'
+  latitude: 
+  longitude: 
+  city: FPO
+  state: AP
+  county: 
+record_41094:
+  zip_code: '96687'
+  latitude: 
+  longitude: 
+  city: FPO
+  state: AP
+  county: 
+record_41095:
+  zip_code: '96698'
+  latitude: 
+  longitude: 
+  city: FPO
+  state: AP
+  county: 
+record_41096:
+  zip_code: '96701'
+  latitude: '21.39065'
+  longitude: '-157.927829'
+  city: Aiea
+  state: HI
+  county: Honolulu
+record_41097:
+  zip_code: '96703'
+  latitude: '22.055787'
+  longitude: '-159.454519'
+  city: Anahola
+  state: HI
+  county: Kauai
+record_41098:
+  zip_code: '96704'
+  latitude: '19.269226'
+  longitude: '-155.757929'
+  city: Captain Cook
+  state: HI
+  county: Hawaii
+record_41099:
+  zip_code: '96705'
+  latitude: '21.937654'
+  longitude: '-159.645162'
+  city: Eleele
+  state: HI
+  county: Kauai
+record_41100:
+  zip_code: '96706'
+  latitude: '21.34455'
+  longitude: '-158.013950'
+  city: Ewa Beach
+  state: HI
+  county: Honolulu
+record_41101:
+  zip_code: '96707'
+  latitude: '21.341784'
+  longitude: '-158.091383'
+  city: Kapolei
+  state: HI
+  county: Honolulu
+record_41102:
+  zip_code: '96708'
+  latitude: '20.849675'
+  longitude: '-156.165622'
+  city: Haiku
+  state: HI
+  county: Maui
+record_41103:
+  zip_code: '96709'
+  latitude: '23.573339'
+  longitude: '-164.701172'
+  city: Kapolei
+  state: HI
+  county: Honolulu
+record_41104:
+  zip_code: '96710'
+  latitude: '19.911689'
+  longitude: '-155.148483'
+  city: Hakalau
+  state: HI
+  county: Hawaii
+record_41105:
+  zip_code: '96712'
+  latitude: '21.63185'
+  longitude: '-158.036450'
+  city: Haleiwa
+  state: HI
+  county: Honolulu
+record_41106:
+  zip_code: '96713'
+  latitude: '20.725172'
+  longitude: '-156.022930'
+  city: Hana
+  state: HI
+  county: Maui
+record_41107:
+  zip_code: '96714'
+  latitude: '22.213592'
+  longitude: '-159.482796'
+  city: Hanalei
+  state: HI
+  county: Kauai
+record_41108:
+  zip_code: '96715'
+  latitude: '21.979991'
+  longitude: '-159.512392'
+  city: Hanamaulu
+  state: HI
+  county: Kauai
+record_41109:
+  zip_code: '96716'
+  latitude: '22.020489'
+  longitude: '-159.617765'
+  city: Hanapepe
+  state: HI
+  county: Kauai
+record_41110:
+  zip_code: '96717'
+  latitude: '21.583507'
+  longitude: '-157.882511'
+  city: Hauula
+  state: HI
+  county: Honolulu
+record_41111:
+  zip_code: '96718'
+  latitude: '19.593456'
+  longitude: '-155.438015'
+  city: Hawaii National Park
+  state: HI
+  county: Hawaii
+record_41112:
+  zip_code: '96719'
+  latitude: '20.222737'
+  longitude: '-155.818291'
+  city: Hawi
+  state: HI
+  county: Hawaii
+record_41113:
+  zip_code: '96720'
+  latitude: '19.564519'
+  longitude: '-155.262030'
+  city: Hilo
+  state: HI
+  county: Hawaii
+record_41114:
+  zip_code: '96721'
+  latitude: '19.593456'
+  longitude: '-155.438015'
+  city: Hilo
+  state: HI
+  county: Hawaii
+record_41115:
+  zip_code: '96722'
+  latitude: '22.219231'
+  longitude: '-159.486562'
+  city: Princeville
+  state: HI
+  county: Kauai
+record_41116:
+  zip_code: '96725'
+  latitude: '19.618904'
+  longitude: '-155.948308'
+  city: Holualoa
+  state: HI
+  county: Hawaii
+record_41117:
+  zip_code: '96726'
+  latitude: '19.278298'
+  longitude: '-155.845329'
+  city: Honaunau
+  state: HI
+  county: Hawaii
+record_41118:
+  zip_code: '96727'
+  latitude: '20.079156'
+  longitude: '-155.507938'
+  city: Honokaa
+  state: HI
+  county: Hawaii
+record_41119:
+  zip_code: '96728'
+  latitude: '19.593456'
+  longitude: '-155.438015'
+  city: Honomu
+  state: HI
+  county: Hawaii
+record_41120:
+  zip_code: '96729'
+  latitude: '21.163056'
+  longitude: '-157.076600'
+  city: Hoolehua
+  state: HI
+  county: Maui
+record_41297:
+  zip_code: '97030'
+  latitude: '45.508117'
+  longitude: '-122.430233'
+  city: Gresham
+  state: OR
+  county: Multnomah
+record_41298:
+  zip_code: '97031'
+  latitude: '45.638312'
+  longitude: '-121.677126'
+  city: Hood River
+  state: OR
+  county: Hood River
+record_41299:
+  zip_code: '97032'
+  latitude: '45.1969'
+  longitude: '-122.812012'
+  city: Hubbard
+  state: OR
+  county: Marion
+record_41300:
+  zip_code: '97033'
+  latitude: '45.237277'
+  longitude: '-120.626298'
+  city: Kent
+  state: OR
+  county: Sherman
+record_41301:
+  zip_code: '97034'
+  latitude: '45.408374'
+  longitude: '-122.691388'
+  city: Lake Oswego
+  state: OR
+  county: Clackamas
+record_41302:
+  zip_code: '97035'
+  latitude: '45.408077'
+  longitude: '-122.723058'
+  city: Lake Oswego
+  state: OR
+  county: Clackamas
+record_41303:
+  zip_code: '97036'
+  latitude: '45.173284'
+  longitude: '-122.259861'
+  city: Marylhurst
+  state: OR
+  county: Clackamas
+record_41304:
+  zip_code: '97037'
+  latitude: '45.155868'
+  longitude: '-121.338132'
+  city: Maupin
+  state: OR
+  county: Wasco
+record_41305:
+  zip_code: '97038'
+  latitude: '45.078408'
+  longitude: '-122.565028'
+  city: Molalla
+  state: OR
+  county: Clackamas
+record_41306:
+  zip_code: '97039'
+  latitude: '45.502564'
+  longitude: '-120.684499'
+  city: Moro
+  state: OR
+  county: Sherman
+record_41307:
+  zip_code: '97040'
+  latitude: '45.65079'
+  longitude: '-121.379020'
+  city: Mosier
+  state: OR
+  county: Wasco
+record_41308:
+  zip_code: '97041'
+  latitude: '45.492879'
+  longitude: '-121.598308'
+  city: Mount Hood Parkdale
+  state: OR
+  county: Hood River
+record_41309:
+  zip_code: '97042'
+  latitude: '45.201439'
+  longitude: '-122.537939'
+  city: Mulino
+  state: OR
+  county: Clackamas
+record_41310:
+  zip_code: '97044'
+  latitude: '45.643738'
+  longitude: '-121.536658'
+  city: Odell
+  state: OR
+  county: Hood River
+record_41311:
+  zip_code: '97045'
+  latitude: '45.317893'
+  longitude: '-122.523602'
+  city: Oregon City
+  state: OR
+  county: Clackamas
+record_41312:
+  zip_code: '97048'
+  latitude: '46.038342'
+  longitude: '-122.972651'
+  city: Rainier
+  state: OR
+  county: Columbia
+record_41313:
+  zip_code: '97049'
+  latitude: '45.346537'
+  longitude: '-121.915134'
+  city: Rhododendron
+  state: OR
+  county: Clackamas
+record_41314:
+  zip_code: '97050'
+  latitude: '45.647067'
+  longitude: '-120.764130'
+  city: Rufus
+  state: OR
+  county: Sherman
+record_41315:
+  zip_code: '97051'
+  latitude: '45.887794'
+  longitude: '-122.919935'
+  city: Saint Helens
+  state: OR
+  county: Columbia
+record_41316:
+  zip_code: '97053'
+  latitude: '45.824213'
+  longitude: '-122.874601'
+  city: Warren
+  state: OR
+  county: Columbia
+record_41317:
+  zip_code: '97054'
+  latitude: '45.942286'
+  longitude: '-122.919248'
+  city: Deer Island
+  state: OR
+  county: Columbia
+record_41318:
+  zip_code: '97055'
+  latitude: '45.388551'
+  longitude: '-122.172544'
+  city: Sandy
+  state: OR
+  county: Clackamas
+record_41319:
+  zip_code: '97056'
+  latitude: '45.811578'
+  longitude: '-122.974184'
+  city: Scappoose
+  state: OR
+  county: Columbia
+record_41320:
+  zip_code: '97057'
+  latitude: '45.263301'
+  longitude: '-121.088513'
+  city: Shaniko
+  state: OR
+  county: Wasco
+record_41321:
+  zip_code: '97058'
+  latitude: '45.554978'
+  longitude: '-121.187030'
+  city: The Dalles
+  state: OR
+  county: Wasco
+record_41322:
+  zip_code: '97060'
+  latitude: '45.525007'
+  longitude: '-122.390049'
+  city: Troutdale
+  state: OR
+  county: Multnomah
+record_41323:
+  zip_code: '97062'
+  latitude: '45.366608'
+  longitude: '-122.783887'
+  city: Tualatin
+  state: OR
+  county: Washington
+record_41324:
+  zip_code: '97063'
+  latitude: '45.297105'
+  longitude: '-121.233727'
+  city: Tygh Valley
+  state: OR
+  county: Wasco
+record_41325:
+  zip_code: '97064'
+  latitude: '45.888246'
+  longitude: '-123.209056'
+  city: Vernonia
+  state: OR
+  county: Columbia
+record_41326:
+  zip_code: '97065'
+  latitude: '45.403298'
+  longitude: '-120.710276'
+  city: Wasco
+  state: OR
+  county: Sherman
+record_41327:
+  zip_code: '97067'
+  latitude: '45.327305'
+  longitude: '-121.973561'
+  city: Welches
+  state: OR
+  county: Clackamas
+record_41328:
+  zip_code: '97068'
+  latitude: '45.343615'
+  longitude: '-122.664926'
+  city: West Linn
+  state: OR
+  county: Clackamas
+record_41329:
+  zip_code: '97070'
+  latitude: '45.308493'
+  longitude: '-122.785518'
+  city: Wilsonville
+  state: OR
+  county: Clackamas
+record_41330:
+  zip_code: '97071'
+  latitude: '45.148007'
+  longitude: '-122.876205'
+  city: Woodburn
+  state: OR
+  county: Marion
+record_41331:
+  zip_code: '97075'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Beaverton
+  state: OR
+  county: Washington
+record_41332:
+  zip_code: '97076'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Beaverton
+  state: OR
+  county: Washington
+record_41333:
+  zip_code: '97077'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Beaverton
+  state: OR
+  county: Washington
+record_41334:
+  zip_code: '97078'
+  latitude: '45.451976'
+  longitude: '-122.789257'
+  city: Beaverton
+  state: OR
+  county: Washington
+record_41335:
+  zip_code: '97080'
+  latitude: '45.481252'
+  longitude: '-122.386750'
+  city: Gresham
+  state: OR
+  county: Multnomah
+record_41336:
+  zip_code: '97101'
+  latitude: '45.121454'
+  longitude: '-123.191368'
+  city: Amity
+  state: OR
+  county: Yamhill
+record_41337:
+  zip_code: '97102'
+  latitude: '45.810934'
+  longitude: '-123.962989'
+  city: Arch Cape
+  state: OR
+  county: Clatsop
+record_41338:
+  zip_code: '97103'
+  latitude: '46.142206'
+  longitude: '-123.795996'
+  city: Astoria
+  state: OR
+  county: Clatsop
+record_41339:
+  zip_code: '97106'
+  latitude: '45.594526'
+  longitude: '-123.138952'
+  city: Banks
+  state: OR
+  county: Washington
+record_41340:
+  zip_code: '97107'
+  latitude: '45.609399'
+  longitude: '-123.894297'
+  city: Bay City
+  state: OR
+  county: Tillamook
+record_41341:
+  zip_code: '97108'
+  latitude: '45.278621'
+  longitude: '-123.746717'
+  city: Beaver
+  state: OR
+  county: Tillamook
+record_41342:
+  zip_code: '97109'
+  latitude: '45.728555'
+  longitude: '-123.177864'
+  city: Buxton
+  state: OR
+  county: Washington
+record_41343:
+  zip_code: '97110'
+  latitude: '45.946617'
+  longitude: '-123.931458'
+  city: Cannon Beach
+  state: OR
+  county: Clatsop
+record_41344:
+  zip_code: '97111'
+  latitude: '45.282393'
+  longitude: '-123.218624'
+  city: Carlton
+  state: OR
+  county: Yamhill
+record_41345:
+  zip_code: '97112'
+  latitude: '45.21636'
+  longitude: '-123.876339'
+  city: Cloverdale
+  state: OR
+  county: Tillamook
+record_41346:
+  zip_code: '97113'
+  latitude: '45.600635'
+  longitude: '-122.920629'
+  city: Cornelius
+  state: OR
+  county: Washington
+record_41347:
+  zip_code: '97114'
+  latitude: '45.187141'
+  longitude: '-123.077797'
+  city: Dayton
+  state: OR
+  county: Yamhill
+record_41348:
+  zip_code: '97115'
+  latitude: '45.27237'
+  longitude: '-123.020670'
+  city: Dundee
+  state: OR
+  county: Yamhill
+record_41349:
+  zip_code: '97116'
+  latitude: '45.598052'
+  longitude: '-123.181800'
+  city: Forest Grove
+  state: OR
+  county: Washington
+record_41350:
+  zip_code: '97117'
+  latitude: '45.604204'
+  longitude: '-123.269580'
+  city: Gales Creek
+  state: OR
+  county: Washington
+record_41351:
+  zip_code: '97118'
+  latitude: '45.562572'
+  longitude: '-123.900072'
+  city: Garibaldi
+  state: OR
+  county: Tillamook
+record_41352:
+  zip_code: '97119'
+  latitude: '45.466171'
+  longitude: '-123.149974'
+  city: Gaston
+  state: OR
+  county: Washington
+record_41353:
+  zip_code: '97121'
+  latitude: '46.182894'
+  longitude: '-123.951350'
+  city: Hammond
+  state: OR
+  county: Clatsop
+record_41354:
+  zip_code: '97122'
+  latitude: '45.176795'
+  longitude: '-123.846000'
+  city: Hebo
+  state: OR
+  county: Tillamook
+record_41355:
+  zip_code: '97123'
+  latitude: '45.458397'
+  longitude: '-122.977963'
+  city: Hillsboro
+  state: OR
+  county: Washington
+record_41356:
+  zip_code: '97124'
+  latitude: '45.62337'
+  longitude: '-122.953316'
+  city: Hillsboro
+  state: OR
+  county: Washington
+record_41357:
+  zip_code: '97125'
+  latitude: '45.659193'
+  longitude: '-123.191739'
+  city: Manning
+  state: OR
+  county: Washington
+record_41358:
+  zip_code: '97127'
+  latitude: '45.232882'
+  longitude: '-123.110948'
+  city: Lafayette
+  state: OR
+  county: Yamhill
+record_41359:
+  zip_code: '97128'
+  latitude: '45.187444'
+  longitude: '-123.237145'
+  city: Mcminnville
+  state: OR
+  county: Yamhill
+record_41360:
+  zip_code: '97130'
+  latitude: '45.736552'
+  longitude: '-123.923108'
+  city: Manzanita
+  state: OR
+  county: Tillamook
+record_41361:
+  zip_code: '97131'
+  latitude: '45.651933'
+  longitude: '-123.853529'
+  city: Nehalem
+  state: OR
+  county: Tillamook
+record_41362:
+  zip_code: '97132'
+  latitude: '45.329475'
+  longitude: '-122.981045'
+  city: Newberg
+  state: OR
+  county: Yamhill
+record_41363:
+  zip_code: '97133'
+  latitude: '45.668573'
+  longitude: '-123.028124'
+  city: North Plains
+  state: OR
+  county: Washington
+record_41364:
+  zip_code: '97134'
+  latitude: '45.454855'
+  longitude: '-123.965029'
+  city: Oceanside
+  state: OR
+  county: Tillamook
+record_41365:
+  zip_code: '97135'
+  latitude: '45.204976'
+  longitude: '-123.958970'
+  city: Pacific City
+  state: OR
+  county: Tillamook
+record_41366:
+  zip_code: '97136'
+  latitude: '45.635205'
+  longitude: '-123.913048'
+  city: Rockaway Beach
+  state: OR
+  county: Tillamook
+record_41367:
+  zip_code: '97137'
+  latitude: '45.208263'
+  longitude: '-122.948636'
+  city: Saint Paul
+  state: OR
+  county: Marion
+record_41368:
+  zip_code: '97138'
+  latitude: '45.97677'
+  longitude: '-123.857394'
+  city: Seaside
+  state: OR
+  county: Clatsop
+record_41369:
+  zip_code: '97140'
+  latitude: '45.371478'
+  longitude: '-122.874613'
+  city: Sherwood
+  state: OR
+  county: Washington
+record_41370:
+  zip_code: '97141'
+  latitude: '45.461952'
+  longitude: '-123.740874'
+  city: Tillamook
+  state: OR
+  county: Tillamook
+record_41371:
+  zip_code: '97143'
+  latitude: '45.434049'
+  longitude: '-123.945785'
+  city: Netarts
+  state: OR
+  county: Tillamook
+record_41372:
+  zip_code: '97144'
+  latitude: '45.740988'
+  longitude: '-123.299311'
+  city: Timber
+  state: OR
+  county: Washington
+record_41373:
+  zip_code: '97145'
+  latitude: '45.866346'
+  longitude: '-123.959518'
+  city: Tolovana Park
+  state: OR
+  county: Clatsop
+record_41374:
+  zip_code: '97146'
+  latitude: '46.125267'
+  longitude: '-123.905174'
+  city: Warrenton
+  state: OR
+  county: Clatsop
+record_41375:
+  zip_code: '97147'
+  latitude: '45.397283'
+  longitude: '-123.916076'
+  city: Wheeler
+  state: OR
+  county: Tillamook
+record_41376:
+  zip_code: '97148'
+  latitude: '45.351892'
+  longitude: '-123.234840'
+  city: Yamhill
+  state: OR
+  county: Yamhill
+record_41377:
+  zip_code: '97149'
+  latitude: '45.097011'
+  longitude: '-123.943418'
+  city: Neskowin
+  state: OR
+  county: Tillamook
+record_41378:
+  zip_code: '97201'
+  latitude: '45.498931'
+  longitude: '-122.693157'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41379:
+  zip_code: '97202'
+  latitude: '45.48169'
+  longitude: '-122.637331'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41380:
+  zip_code: '97203'
+  latitude: '45.604838'
+  longitude: '-122.743737'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41381:
+  zip_code: '97204'
+  latitude: '45.51809'
+  longitude: '-122.675106'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41382:
+  zip_code: '97205'
+  latitude: '45.51949'
+  longitude: '-122.690157'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41383:
+  zip_code: '97206'
+  latitude: '45.483341'
+  longitude: '-122.596154'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41384:
+  zip_code: '97207'
+  latitude: '45.480324'
+  longitude: '-122.711117'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41385:
+  zip_code: '97208'
+  latitude: '45.532165'
+  longitude: '-122.564824'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41386:
+  zip_code: '97209'
+  latitude: '45.53199'
+  longitude: '-122.683826'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41387:
+  zip_code: '97210'
+  latitude: '45.547339'
+  longitude: '-122.732358'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41388:
+  zip_code: '97211'
+  latitude: '45.577289'
+  longitude: '-122.615906'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41389:
+  zip_code: '97212'
+  latitude: '45.54374'
+  longitude: '-122.643106'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41390:
+  zip_code: '97213'
+  latitude: '45.53909'
+  longitude: '-122.599751'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41391:
+  zip_code: '97214'
+  latitude: '45.51444'
+  longitude: '-122.642305'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41392:
+  zip_code: '97215'
+  latitude: '45.51894'
+  longitude: '-122.599104'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41393:
+  zip_code: '97216'
+  latitude: '45.515341'
+  longitude: '-122.558003'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41394:
+  zip_code: '97217'
+  latitude: '45.594589'
+  longitude: '-122.704308'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41395:
+  zip_code: '97218'
+  latitude: '45.575689'
+  longitude: '-122.605205'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41396:
+  zip_code: '97219'
+  latitude: '45.45509'
+  longitude: '-122.696724'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41397:
+  zip_code: '97220'
+  latitude: '45.55634'
+  longitude: '-122.556104'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41398:
+  zip_code: '97221'
+  latitude: '45.50655'
+  longitude: '-122.733888'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41399:
+  zip_code: '97222'
+  latitude: '45.437341'
+  longitude: '-122.614703'
+  city: Portland
+  state: OR
+  county: Clackamas
+record_41400:
+  zip_code: '97223'
+  latitude: '45.44739'
+  longitude: '-122.795294'
+  city: Portland
+  state: OR
+  county: Washington
+record_41401:
+  zip_code: '97224'
+  latitude: '45.409448'
+  longitude: '-122.801400'
+  city: Portland
+  state: OR
+  county: Washington
+record_41402:
+  zip_code: '97225'
+  latitude: '45.498473'
+  longitude: '-122.778659'
+  city: Portland
+  state: OR
+  county: Washington
+record_41403:
+  zip_code: '97227'
+  latitude: '45.545039'
+  longitude: '-122.680007'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41404:
+  zip_code: '97228'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41405:
+  zip_code: '97229'
+  latitude: '45.548317'
+  longitude: '-122.827561'
+  city: Portland
+  state: OR
+  county: Washington
+record_41406:
+  zip_code: '97230'
+  latitude: '45.547173'
+  longitude: '-122.500053'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41407:
+  zip_code: '97231'
+  latitude: '45.652987'
+  longitude: '-122.839778'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41408:
+  zip_code: '97232'
+  latitude: '45.52369'
+  longitude: '-122.642655'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41409:
+  zip_code: '97233'
+  latitude: '45.515121'
+  longitude: '-122.496052'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41410:
+  zip_code: '97236'
+  latitude: '45.484594'
+  longitude: '-122.504175'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41411:
+  zip_code: '97238'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41412:
+  zip_code: '97240'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41413:
+  zip_code: '97242'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41414:
+  zip_code: '97251'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41415:
+  zip_code: '97253'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41416:
+  zip_code: '97254'
+  latitude: '45.596678'
+  longitude: '-122.594180'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41417:
+  zip_code: '97255'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41418:
+  zip_code: '97256'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41419:
+  zip_code: '97258'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41420:
+  zip_code: '97259'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41421:
+  zip_code: '97266'
+  latitude: '45.482949'
+  longitude: '-122.557502'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41422:
+  zip_code: '97267'
+  latitude: '45.402142'
+  longitude: '-122.614353'
+  city: Portland
+  state: OR
+  county: Clackamas
+record_41423:
+  zip_code: '97268'
+  latitude: '45.173284'
+  longitude: '-122.259861'
+  city: Portland
+  state: OR
+  county: Clackamas
+record_41424:
+  zip_code: '97269'
+  latitude: '45.173284'
+  longitude: '-122.259861'
+  city: Portland
+  state: OR
+  county: Clackamas
+record_41425:
+  zip_code: '97271'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41426:
+  zip_code: '97272'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41427:
+  zip_code: '97280'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41428:
+  zip_code: '97281'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Portland
+  state: OR
+  county: Washington
+record_41429:
+  zip_code: '97282'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41430:
+  zip_code: '97283'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41431:
+  zip_code: '97286'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41432:
+  zip_code: '97290'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41433:
+  zip_code: '97291'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Portland
+  state: OR
+  county: Washington
+record_41434:
+  zip_code: '97292'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41435:
+  zip_code: '97293'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41436:
+  zip_code: '97294'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41437:
+  zip_code: '97296'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41438:
+  zip_code: '97298'
+  latitude: '45.548616'
+  longitude: '-123.114725'
+  city: Portland
+  state: OR
+  county: Washington
+record_41439:
+  zip_code: '97299'
+  latitude: '45.580557'
+  longitude: '-122.374776'
+  city: Portland
+  state: OR
+  county: Multnomah
+record_41440:
+  zip_code: '97301'
+  latitude: '44.90472'
+  longitude: '-122.921721'
+  city: Salem
+  state: OR
+  county: Marion
+record_41441:
+  zip_code: '97302'
+  latitude: '44.890486'
+  longitude: '-123.082192'
+  city: Salem
+  state: OR
+  county: Marion
+record_41442:
+  zip_code: '97303'
+  latitude: '44.992731'
+  longitude: '-123.016720'
+  city: Salem
+  state: OR
+  county: Marion
+record_41443:
+  zip_code: '97304'
+  latitude: '44.99351'
+  longitude: '-123.107442'
+  city: Salem
+  state: OR
+  county: Polk
+record_41444:
+  zip_code: '97305'
+  latitude: '44.996133'
+  longitude: '-122.912390'
+  city: Salem
+  state: OR
+  county: Marion
+record_41445:
+  zip_code: '97306'
+  latitude: '44.856786'
+  longitude: '-123.088297'
+  city: Salem
+  state: OR
+  county: Marion
+record_41446:
+  zip_code: '97307'
+  latitude: '44.984465'
+  longitude: '-122.457024'
+  city: Keizer
+  state: OR
+  county: Marion
+record_41447:
+  zip_code: '97308'
+  latitude: '44.984465'
+  longitude: '-122.457024'
+  city: Salem
+  state: OR
+  county: Marion
+record_41448:
+  zip_code: '97309'
+  latitude: '44.984465'
+  longitude: '-122.457024'
+  city: Salem
+  state: OR
+  county: Marion
+record_41449:
+  zip_code: '97310'
+  latitude: '44.927141'
+  longitude: '-122.986105'
+  city: Salem
+  state: OR
+  county: Marion
+record_41450:
+  zip_code: '97311'
+  latitude: '44.943841'
+  longitude: '-123.028607'
+  city: Salem
+  state: OR
+  county: Marion
+record_41451:
+  zip_code: '97312'
+  latitude: '44.936357'
+  longitude: '-123.038116'
+  city: Salem
+  state: OR
+  county: Marion
+record_41452:
+  zip_code: '97313'
+  latitude: '44.984941'
+  longitude: '-122.998756'
+  city: Salem
+  state: OR
+  county: Marion
+record_41453:
+  zip_code: '97314'
+  latitude: '44.965541'
+  longitude: '-123.006606'
+  city: Salem
+  state: OR
+  county: Marion
+record_41454:
+  zip_code: '97321'
+  latitude: '44.594489'
+  longitude: '-122.581676'
+  city: Albany
+  state: OR
+  county: Linn
+record_41455:
+  zip_code: '97324'
+  latitude: '44.377113'
+  longitude: '-123.588271'
+  city: Alsea
+  state: OR
+  county: Benton
+record_41456:
+  zip_code: '97325'
+  latitude: '44.799503'
+  longitude: '-122.900739'
+  city: Aumsville
+  state: OR
+  county: Marion
+record_41457:
+  zip_code: '97326'
+  latitude: '44.638187'
+  longitude: '-123.538238'
+  city: Blodgett
+  state: OR
+  county: Benton
+record_41458:
+  zip_code: '97327'
+  latitude: '44.378703'
+  longitude: '-122.942438'
+  city: Brownsville
+  state: OR
+  county: Linn
+record_41459:
+  zip_code: '97329'
+  latitude: '44.399487'
+  longitude: '-122.363606'
+  city: Cascadia
+  state: OR
+  county: Linn
+record_41460:
+  zip_code: '97330'
+  latitude: '44.639931'
+  longitude: '-123.275969'
+  city: Corvallis
+  state: OR
+  county: Benton
+record_41461:
+  zip_code: '97331'
+  latitude: '44.565613'
+  longitude: '-123.278957'
+  city: Corvallis
+  state: OR
+  county: Benton
+record_41462:
+  zip_code: '97333'
+  latitude: '44.467218'
+  longitude: '-123.337762'
+  city: Corvallis
+  state: OR
+  county: Benton
+record_41463:
+  zip_code: '97335'
+  latitude: '44.634439'
+  longitude: '-122.893292'
+  city: Crabtree
+  state: OR
+  county: Linn
+record_41464:
+  zip_code: '97336'
+  latitude: '44.359301'
+  longitude: '-122.850752'
+  city: Crawfordsville
+  state: OR
+  county: Linn
+record_41465:
+  zip_code: '97338'
+  latitude: '44.928092'
+  longitude: '-123.337291'
+  city: Dallas
+  state: OR
+  county: Polk
+record_41466:
+  zip_code: '97339'
+  latitude: '44.49893'
+  longitude: '-123.445033'
+  city: Corvallis
+  state: OR
+  county: Benton
+record_41467:
+  zip_code: '97341'
+  latitude: '44.832205'
+  longitude: '-124.050272'
+  city: Depoe Bay
+  state: OR
+  county: Lincoln
+record_41468:
+  zip_code: '97342'
+  latitude: '44.735834'
+  longitude: '-122.066865'
+  city: Detroit
+  state: OR
+  county: Marion
+record_41469:
+  zip_code: '97343'
+  latitude: '44.604237'
+  longitude: '-123.736099'
+  city: Eddyville
+  state: OR
+  county: Lincoln
+record_41470:
+  zip_code: '97344'
+  latitude: '44.870977'
+  longitude: '-123.473276'
+  city: Falls City
+  state: OR
+  county: Polk
+record_41471:
+  zip_code: '97345'
+  latitude: '44.430866'
+  longitude: '-122.400143'
+  city: Foster
+  state: OR
+  county: Linn
+record_41472:
+  zip_code: '97346'
+  latitude: '44.762578'
+  longitude: '-122.372622'
+  city: Gates
+  state: OR
+  county: Marion
