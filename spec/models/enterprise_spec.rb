@@ -47,6 +47,14 @@ describe Enterprise do
   end
 
   describe "scopes" do
+
+    describe 'active' do
+      it 'find active enterprises' do
+        d1 = create(:distributor_enterprise, active: false)
+        s1 = create(:supplier_enterprise)
+        Enterprise.active.should == [s1]
+      end
+    end
     
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
