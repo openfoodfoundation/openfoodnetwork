@@ -1,5 +1,5 @@
 collection @producers
-attributes :name, :id
+extends 'json/enterprises'
 
 node :path do |producer|
   producer_path(producer) 

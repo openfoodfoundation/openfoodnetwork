@@ -1,16 +1,5 @@
 collection Enterprise.is_distributor
-attributes :name, :id
-
-child :taxons do
-  attributes :name, :id
-end
-
-child :address do
-  attributes :city, :zipcode
-  node :state do |address|
-    address.state.abbr
-  end
-end
+extends 'json/enterprises'
 
 node :pickup do |hub|
   not hub.shipping_methods.where(:require_ship_address => false).empty?

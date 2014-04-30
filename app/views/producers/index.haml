@@ -2,6 +2,8 @@
   :javascript
     angular.module('Darkswarm').value('producers', #{render partial: "json/producers", object: @producers})
   
+  -#%pre
+    -#{{ Producers.producers | json }}
   .row{bindonce: true}
     .small-12.columns
       .active_table
