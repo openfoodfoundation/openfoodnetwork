@@ -41,7 +41,6 @@ Capybara.register_driver :poltergeist do |app|
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
   #options.merge! {inspector: true}
-
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
