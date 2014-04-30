@@ -49,6 +49,7 @@
               %input{type: :number, 
               value: nil, 
               min: 0,
+              "ofn-disable-scroll" => true,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variants[{{product.master.id}}]", 
               id: "variants_{{product.master.id}}",
@@ -58,6 +59,7 @@
             %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
               %input{type: :number,
               min: 0,
+              "ofn-disable-scroll" => true,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variant_attributes[{{product.master.id}}][max_quantity]",
               "ng-model" => "product.max_quantity"}
