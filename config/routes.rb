@@ -7,6 +7,8 @@ Openfoodnetwork::Application.routes.draw do
     get :order_cycle
   end
 
+  resources :producers, only: :index
+
   namespace :shop do
     get '/checkout', :to => 'checkout#edit' , :as => :checkout
     put '/checkout', :to => 'checkout#update' , :as => :update_checkout
