@@ -1,0 +1,15 @@
+.producers{"ng-controller" => "ProducersCtrl"}
+  :javascript
+    angular.module('Darkswarm').value('producers', #{render partial: "json/producers", object: @producers})
+  
+  .row{bindonce: true}
+    .small-12.columns
+      .active_table
+        %producer.active_table_node.row{id: "{{producer.path}}",
+        "ng-repeat" => "producer in Producers.producers",
+        "ng-controller" => "ProducerNodeCtrl",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}"}
+
+          .small-12.columns
+            = render partial: 'producers/skinny'
+            = render partial: 'producers/fat'
