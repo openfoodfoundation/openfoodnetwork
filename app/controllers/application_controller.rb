@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   private
 
   def require_distributor_chosen
-    unless current_distributor
+    unless @distributor = current_distributor
       redirect_to spree.root_path
       false
     end

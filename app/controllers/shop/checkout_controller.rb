@@ -8,7 +8,6 @@ class Shop::CheckoutController < Spree::CheckoutController
   include EnterprisesHelper
    
   def edit
-    binding.pry
   end
 
   def update
@@ -69,12 +68,6 @@ class Shop::CheckoutController < Spree::CheckoutController
 
   def skip_state_validation?
     true
-  end
-
-  def set_distributor
-    unless @distributor = current_distributor 
-      redirect_to main_app.root_path
-    end
   end
   
   def load_order

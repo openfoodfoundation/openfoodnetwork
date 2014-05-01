@@ -18,12 +18,13 @@ feature "As a consumer I want to check out my cart", js: true do
     add_product_to_cart
   end
 
-  it "shows the current distributor" do
+  it "shows the current distributor oncheckout" do
     visit shop_checkout_path 
+    current_path.should == shop_checkout_path
     page.should have_content distributor.name
   end
 
-  pending "with shipping methods" do
+  describe "with shipping methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
     before do
@@ -33,8 +34,9 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "on the checkout page" do
       before do
-        visit "/shop/checkout"
+        visit shop_checkout_path
       end
+
       it "shows all shipping methods, but doesn't show ship address when not needed" do
         toggle_accordion "Shipping"
         page.should have_content "Frogs"
@@ -54,14 +56,12 @@ feature "As a consumer I want to check out my cart", js: true do
     end
 
     describe "with payment methods" do
-      let(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-      let(:pm2) { create(:payment_method, distributors: [distributor]) }
-      let(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
+      let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
+      let!(:pm2) { create(:payment_method, distributors: [distributor]) }
+      let!(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
 
       before do
-        pm1 # Lazy evaluation of ze create()s
-        pm2
-        visit "/shop/checkout"
+        visit shop_checkout_path
         toggle_accordion "Payment Details"
       end
 
@@ -92,8 +92,7 @@ feature "As a consumer I want to check out my cart", js: true do
             fill_in "Postcode", with: "3066"
           end
           click_button "Purchase"
-          sleep 10
-          page.should have_content "Your order has been processed successfully"
+          page.should have_content "Your order has been processed successfully", wait: 10
         end
 
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
@@ -119,8 +118,7 @@ feature "As a consumer I want to check out my cart", js: true do
           toggle_accordion "Shipping"
           check "Shipping address same as billing address?"
           click_button "Purchase"
-          sleep 10
-          page.should have_content "Your order has been processed successfully"
+          page.should have_content "Your order has been processed successfully", wait: 10
         end
       end
     end

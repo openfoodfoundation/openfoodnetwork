@@ -1,7 +1,6 @@
 class Shop::ShopController < BaseController
   layout "darkswarm"
-
-  before_filter :set_distributor
+  before_filter :require_distributor_chosen
   before_filter :set_order_cycles
 
   def show
@@ -31,12 +30,6 @@ class Shop::ShopController < BaseController
   end
 
   private
-
-  def set_distributor
-    unless @distributor = current_distributor 
-      redirect_to root_path
-    end
-  end
 
   def set_order_cycles
     @order_cycles = OrderCycle.with_distributor(@distributor).active
