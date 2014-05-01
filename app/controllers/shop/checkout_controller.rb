@@ -8,6 +8,7 @@ class Shop::CheckoutController < Spree::CheckoutController
   include EnterprisesHelper
    
   def edit
+    binding.pry
   end
 
   def update

@@ -1,4 +1,8 @@
 module ShopWorkflow
+  def set_order(order)
+    ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
+  end
+
   def select_distributor
     # If no order cycles are available this is much faster
     visit "/"
