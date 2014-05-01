@@ -20,11 +20,10 @@ feature "As a consumer I want to check out my cart", js: true do
 
   it "shows the current distributor oncheckout" do
     visit shop_checkout_path 
-    current_path.should == shop_checkout_path
     page.should have_content distributor.name
   end
 
-  describe "with shipping methods" do
+  pending "with shipping methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
     before do

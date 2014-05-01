@@ -8,49 +8,29 @@ feature "As a consumer I want to check out my cart", js: true do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
-  let(:order) { Spree::Order.last }
+  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+  let(:user) { create_enterprise_user }
 
   before do
-    order_cycle
-    create_enterprise_group_for distributor
+    set_order order
+    add_product_to_cart
   end
 
-  # This was refactored in the new checkout
-  # We have monkey-patched in some of the new features
-  # Test suite works in that branch
-  describe "Login behaviour" do
-    let(:user) { create_enterprise_user }
-    before do
-      select_distributor
-      select_order_cycle
-      add_product_to_cart
+  it "does not not render the login form when logged in" do
+    quick_login_as user
+    visit shop_checkout_path 
+    within "section[role='main']" do
+      page.should_not have_content "USER"
     end
+  end
 
-    context "logged in" do
-      before do
-        login_to_consumer_section
-        visit "/shop/checkout"
-      end
-      it "does not not render the login form" do
-        within "section[role='main']" do
-          page.should_not have_content "USER"
-        end
-      end
-    end
-
-    context "logged out" do
-      before do
-        visit "/shop/checkout"
-        toggle_accordion "User"
-      end
-
-      it "renders the login form if user is logged out" do
-        within "section[role='main']" do
-          page.should have_content "User"
-        end
-      end
+  it "renders the login form when logged out" do
+    visit shop_checkout_path 
+    toggle_accordion "User"
+    within "section[role='main']" do
+      page.should have_content "User"
     end
   end
 end

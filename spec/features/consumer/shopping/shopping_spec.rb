@@ -3,48 +3,42 @@ require 'spec_helper'
 feature "As a consumer I want to shop with a distributor", js: true do
   include AuthenticationWorkflow
   include WebHelper
+  include ShopWorkflow
   include UIComponentHelper
 
   describe "Viewing a distributor" do
-    let(:supplier) { create(:supplier_enterprise) }
+
     let(:distributor) { create(:distributor_enterprise) }
-    let(:oc1) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
-    let(:oc2) {create(:simple_order_cycle, distributors: [distributor], orders_close_at: 3.days.from_now)} 
-    let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
+    let(:oc2) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now) }
+    let(:product) { create(:simple_product, supplier: supplier) }
+    let(:order) { create(:order, distributor: distributor) }
 
     before do 
-      oc1
-      create_enterprise_group_for distributor
-      visit root_path
-      follow_active_table_node distributor.name
+      set_order order
     end
 
     it "shows a distributor with images" do
       visit shop_path
       page.should have_text distributor.name
-
       find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
       first("#about img")['src'].should == distributor.promo_image.url(:large) 
     end
 
-    describe "with products in order cycles" do
-      let(:product) { create(:product, supplier: supplier) }
-      before do
-        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
-        exchange.variants << product.master
-      end
+    it "shows the producers for a distributor" do
+      exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
+      exchange.variants << product.master
 
-      it "shows the suppliers/producers for a distributor" do
-        visit shop_path
-        find("#tab_producers a").click
-        page.should have_content supplier.name 
-      end
+      visit shop_path
+      find("#tab_producers a").click
+      page.should have_content supplier.name 
     end
 
-    # PENDING THIS because Capybara is the wrong tool to test Angular and these tests keep breaking
-    pending "selecting an order cycle" do
+    describe "selecting an order cycle" do
       let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles" 
@@ -56,18 +50,18 @@ feature "As a consumer I want to shop with a distributor", js: true do
         before do
           exchange1.update_attribute :pickup_time, "frogs" 
           exchange2.update_attribute :pickup_time, "turtles" 
-          visit shop_path
         end
 
         it "shows a select with all order cycles, but doesn't show the products by default" do
+          visit shop_path
           page.should have_selector "option", text: 'frogs'
           page.should have_selector "option", text: 'turtles'
-          page.should_not have_selector "option[selected]"
           page.should_not have_selector("input.button.right", visible: true)
         end
 
-        pending "shows the table after an order cycle is selected" do
-          select "frogs", :from => "order_cycle_id"
+        it "shows the table after an order cycle is selected" do
+          order.update_attribute(:order_cycle, oc1)
+          visit shop_path
           page.should have_selector("input.button.right", visible: true)
         end
         
@@ -84,7 +78,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             select "frogs", :from => "order_cycle_id"
             page.should have_selector "products"
-            page.should have_content "Orders close 2 days from now" 
+            page.should have_content "Orders close in 2 days" 
             Spree::Order.last.order_cycle.should == oc1
             page.should have_content product.name 
           end
@@ -92,31 +86,26 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "after selecting an order cycle with products visible" do
-        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
-        let(:product) { create(:simple_product, price: 10) }
         let(:variant1) { create(:variant, product: product, price: 20) }
         let(:variant2) { create(:variant, product: product, price: 30) }
-        let(:exchange) { Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) } 
+        let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) } 
 
         before do
           exchange.update_attribute :pickup_time, "frogs" 
           exchange.variants << product.master
           exchange.variants << variant1
           exchange.variants << variant2
-          visit shop_path
-          select "frogs", :from => "order_cycle_id"
-          exchange
+          order.order_cycle = oc1
         end
 
         it "should not show quantity field for product with variants" do
+          visit shop_path
           page.should_not have_selector("#variants_#{product.master.id}", visible: true)
-        end
 
-        it "expands variants by default" do
+          #it "expands variants by default" do
           page.should have_text variant1.options_text
-        end
 
-        it "expands variants" do
+          #it "expands variants" do
           find(".collapse").trigger "click"
           page.should_not have_text variant1.options_text
         end
@@ -126,11 +115,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           enterprise_fee2 = create(:enterprise_fee, amount:  3)
           exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
           exchange.save
-
           visit shop_path
-          select "frogs", :from => "order_cycle_id"
-
-          # All prices are as above plus $23 in fees
 
           # Page should not have product.price (with or without fee)
           page.should_not have_selector 'tr.product > td', text: "from $10.00"
@@ -144,95 +129,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector 'tr.product > td', text: "from $43.00"
         end
       end
-
-      describe "filtering products" do
-        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
-        let(:p1) { create(:simple_product, on_demand: false) }
-        let(:p2) { create(:simple_product, on_demand: true) }
-        let(:p3) { create(:simple_product, on_demand: false) }
-        let(:p4) { create(:simple_product, on_demand: false) }
-        let(:p5) { create(:simple_product, on_demand: false) }
-        let(:p6) { create(:simple_product, on_demand: false) }
-        let(:p7) { create(:simple_product, on_demand: false) }
-        let(:v1) { create(:variant, product: p4, unit_value: 2) }
-        let(:v2) { create(:variant, product: p4, unit_value: 3, on_demand: false) }
-        let(:v3) { create(:variant, product: p4, unit_value: 4, on_demand: true) }
-        let(:v4) { create(:variant, product: p5) }
-        let(:v5) { create(:variant, product: p5) }
-        let(:v6) { create(:variant, product: p7) }
-
-        before do
-          p1.master.count_on_hand = 1
-          p2.master.count_on_hand = 0
-          p1.master.update_attribute(:count_on_hand, 1)
-          p2.master.update_attribute(:count_on_hand, 0)
-          p3.master.update_attribute(:count_on_hand, 0)
-          p6.master.update_attribute(:count_on_hand, 1)
-          p6.delete
-          p7.master.update_attribute(:count_on_hand, 1)
-          v1.update_attribute(:count_on_hand, 1)
-          v2.update_attribute(:count_on_hand, 0)
-          v3.update_attribute(:count_on_hand, 0)
-          v4.update_attribute(:count_on_hand, 1)
-          v5.update_attribute(:count_on_hand, 0)
-          v6.update_attribute(:count_on_hand, 1)
-          v6.update_attribute(:deleted_at, Time.now)
-          exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
-          exchange.update_attribute :pickup_time, "frogs" 
-          exchange.variants << p1.master
-          exchange.variants << p2.master
-          exchange.variants << p3.master
-          exchange.variants << p6.master
-          exchange.variants << v1
-          exchange.variants << v2
-          exchange.variants << v3
-          # v4 is in stock but not in distribution
-          # v5 is out of stock and in the distribution
-          # Neither should display, nor should their product, p5
-          exchange.variants << v5
-          exchange.variants << v6
-          visit shop_path
-          select "frogs", :from => "order_cycle_id"
-          exchange
-        end
-
-        it "filters products based on availability" do
-          # It shows on hand products
-          page.should have_content p1.name
-          page.should have_content p4.name
-
-          # It shows on demand products
-          page.should have_content p2.name
-
-          # It does not show products that are neither on hand or on demand
-          page.should_not have_content p3.name
-
-          # It shows on demand variants
-          page.should have_content v3.options_text
-
-          # It does not show variants that are neither on hand or on demand
-          page.should_not have_content v2.options_text
-
-          # It does not show products that have no available variants in this distribution
-          page.should_not have_content p5.name
-
-          # It does not show deleted products
-          page.should_not have_content p6.name
-
-          # It does not show deleted variants
-          page.should_not have_content v6.name
-          page.should_not have_content p7.name
-        end
-      end
+      
 
       describe "group buy products" do
-        let(:oc) { create(:simple_order_cycle, distributors: [distributor]) }
         let(:product) { create(:simple_product, group_buy: true, on_hand: 15) }
         let(:product2) { create(:simple_product, group_buy: false) }
 
         describe "without variants" do
           before do
             build_and_select_order_cycle
+            visit shop_path
           end
 
           it "should show group buy input" do
@@ -265,6 +171,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           let(:variant) { create(:variant, product: product, on_hand: 10 ) }
           before do
             build_and_select_order_cycle_with_variants
+            visit shop_path
           end
 
           it "should show group buy input" do
@@ -289,6 +196,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:variant) { create(:variant, product: product) }
         before do
           build_and_select_order_cycle_with_variants
+          visit shop_path
         end
         it "should let us add products to our cart" do
           fill_in "variants[#{variant.id}]", with: "1"
@@ -321,21 +229,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
 end
 
 def build_and_select_order_cycle
-  exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+  exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
   exchange.update_attribute :pickup_time, "frogs" 
   exchange.variants << product.master
-  visit shop_path
-  select "frogs", :from => "order_cycle_id"
-  exchange
+  order.order_cycle = oc1
 end
 
 
 def build_and_select_order_cycle_with_variants
-  exchange = Exchange.find(oc.exchanges.to_enterprises(distributor).outgoing.first.id) 
+  exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
   exchange.update_attribute :pickup_time, "frogs" 
   exchange.variants << product.master
   exchange.variants << variant 
-  visit shop_path
-  select "frogs", :from => "order_cycle_id"
-  exchange
+  order.order_cycle = oc1
 end

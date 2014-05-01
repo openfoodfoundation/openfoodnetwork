@@ -1,4 +1,8 @@
 module AuthenticationWorkflow
+  def quick_login_as(user)
+    ApplicationController.any_instance.stub(:spree_current_user).and_return user
+  end
+
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = create(:user, 
