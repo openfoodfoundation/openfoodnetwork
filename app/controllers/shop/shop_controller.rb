@@ -1,7 +1,7 @@
 class Shop::ShopController < BaseController
   layout "darkswarm"
   before_filter :require_distributor_chosen
-  before_filter :set_order_cycles
+  before_filter :set_order_cycles, only: :show
 
   def show
   end

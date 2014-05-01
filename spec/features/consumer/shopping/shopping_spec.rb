@@ -60,8 +60,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         it "shows the table after an order cycle is selected" do
-          order.update_attribute(:order_cycle, oc1)
           visit shop_path
+          select "frogs", :from => "order_cycle_id"
+          page.should have_content distributor.name # This forces a wait, allowing the Ajax call to finish
           page.should have_selector("input.button.right", visible: true)
         end
         
