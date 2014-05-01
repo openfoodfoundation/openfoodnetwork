@@ -7,7 +7,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include WebHelper
   include UIComponentHelper
 
-  let(:distributor) { create(:distributor_enterprise) }
+  let(:distributor) { create(:distributor_enterprise, distributor_info: 'distributor info') }
   let(:supplier) { create(:supplier_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
@@ -97,6 +97,22 @@ feature "As a consumer I want to check out my cart", js: true do
             click_button "Purchase"
             sleep 10
             page.should have_content "Your order has been processed successfully"
+
+            # It sends a confirmation email containing the distributor info, pickup time and pickup instructions
+            distributor_info = distributor.distributor_info
+            pickup_time = order_cycle.pickup_time_for(distributor)
+            pickup_instructions = order_cycle.pickup_instructions_for(distributor)
+
+            distributor_info.should_not be_blank
+            pickup_time.should_not be_blank
+            pickup_instructions.should_not be_blank
+
+            wait_until { ActionMailer::Base.deliveries.length == 1 }
+            email = ActionMailer::Base.deliveries.last
+
+            email.body.should include distributor_info
+            email.body.should include pickup_time
+            email.body.should include pickup_instructions
           end
 
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do

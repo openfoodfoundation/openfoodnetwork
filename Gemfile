@@ -29,7 +29,6 @@ gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
 gem 'oj'
-gem 'chili', :github => 'openfoodfoundation/chili'
 gem 'deface', :github => 'spree/deface', :ref => '1110a13'
 gem 'paperclip'
 gem 'geocoder'
@@ -82,11 +81,6 @@ end
 
 group :test do
   gem 'webmock'
-end
-
-group :chili do
-  gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
-  gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
 end
 
 group :development do

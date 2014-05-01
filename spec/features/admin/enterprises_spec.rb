@@ -64,6 +64,7 @@ feature %q{
     fill_in 'enterprise_name', :with => 'Eaterprises'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
