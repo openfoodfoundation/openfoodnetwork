@@ -44,7 +44,7 @@
       %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.unit_text }}
     %div{ :class => "four columns omega" }
       %h6{ :class => "four columns alpha", :style => 'text-align: right;' }
-        %a{ 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' } Clear
+        %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' } Clear
     %hr
     .row
       .one.column.alpha &nbsp;
@@ -138,7 +138,7 @@
           %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
           %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
-            %a{ 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
+            %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
             %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}

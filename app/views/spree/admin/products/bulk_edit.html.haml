@@ -45,7 +45,7 @@
         %div{ :class => "six columns omega" }
           {{ filter.value }}
         %div{ :class => "two columns omega" }
-          %a{ 'ng-click' => "removeFilter(filter)" } Remove Filter
+          %a{ :href => "#", 'ng-click' => "removeFilter(filter)" } Remove Filter
     %div.column_toggle{ :class => "sixteen columns alpha", "ng-show" => 'optionTabs.column_toggle.visible' }
       %ul.column-list{ :class => "sixteen columns alpha" }
         %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
@@ -63,22 +63,22 @@
     %div.pagination{ :class => "seven columns omega" }
       %div.pagenav{ :class => "two columns alpha" }
         %span.first
-          %a{ 'ng-click' => "currentPage = 1", 'ng-show' => "currentPage > 1" }
+          %a{ :href => "#", 'ng-click' => "currentPage = 1", 'ng-show' => "currentPage > 1" }
             &laquo;&nbsp;First
         %span.prev
-          %a{ 'ng-click' => "currentPage = currentPage - 1", 'ng-show' => "currentPage > 1" }
+          %a{ :href => "#", 'ng-click' => "currentPage = currentPage - 1", 'ng-show' => "currentPage > 1" }
             &lsaquo;&nbsp;Prev
       %div.pagenav{ :class => "columns omega" }
         %span.page{ 'ng-repeat' => "page in [] | rangeArray:minPage():maxPage()", 'ng-class' => "{current: currentPage==page}" }
-          %a{ 'ng-click' => "setPage(page)" }
+          %a{ :href => "#", 'ng-click' => "setPage(page)" }
             {{page}}
         %span{ 'ng-show' => "maxPage() < totalPages()" } ...
       %div.pagenav{ :class => "two columns omega" }
         %span.next
-          %a{ 'ng-click' => "currentPage = currentPage + 1", 'ng-show' => "currentPage < totalPages()" }
+          %a{ :href => "#", 'ng-click' => "currentPage = currentPage + 1", 'ng-show' => "currentPage < totalPages()" }
             Next&nbsp;&rsaquo;
         %span.last
-          %a{ 'ng-click' => "currentPage = totalPages()", 'ng-show' => "currentPage < totalPages()" }
+          %a{ :href => "#", 'ng-click' => "currentPage = totalPages()", 'ng-show' => "currentPage < totalPages()" }
             Last&nbsp;&raquo;
     %div.pagination_info{ :class => 'four columns alpha' }
       Show&nbsp;
