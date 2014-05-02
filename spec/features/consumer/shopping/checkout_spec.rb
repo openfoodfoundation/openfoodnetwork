@@ -23,7 +23,7 @@ feature "As a consumer I want to check out my cart", js: true do
     page.should have_content distributor.name
   end
 
-  pending "with shipping methods" do
+  describe "with shipping methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
     before do
