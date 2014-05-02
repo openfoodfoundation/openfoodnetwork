@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Shop::ShopController do
+describe ShopController do
   let(:d) { create(:distributor_enterprise) }
 
   it "redirects to the home page if no distributor is selected" do

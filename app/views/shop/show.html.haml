@@ -11,7 +11,7 @@
       Orders close
       %strong {{ OrderCycle.orders_close_at() | date_in_words }} 
 
-  = render partial: "shop/details"
+  = render partial: "shopping_shared/details"
 
   %products.row
-    = render partial: "shop/shop/products"
+    = render partial: "shop/products"

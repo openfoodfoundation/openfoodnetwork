@@ -4,15 +4,15 @@
       Order ready on
       = pickup_time current_order_cycle
 
-  = render partial: "shop/details"
+  = render partial: "shopping_shared/details"
    
   %accordion.row{"close-others" => "true"}
     %checkout{"ng-controller" => "CheckoutCtrl"}
       .large-9.columns
         - unless spree_current_user
-          = render partial: "shop/checkout/authentication"
+          = render partial: "checkout/authentication"
         .row
-          = render partial: "shop/checkout/form"
+          = render partial: "checkout/form"
       .large-3.columns
-        = render partial: "shop/checkout/summary"
+        = render partial: "checkout/summary"
 

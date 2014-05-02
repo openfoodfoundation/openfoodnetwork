@@ -8,7 +8,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState,
       @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
 
     submit: ->
-      $http.put('/shop/checkout', {order: @preprocess()}).success (data, status)=>
+      $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>
         @errors = response.errors

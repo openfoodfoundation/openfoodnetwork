@@ -1,4 +1,4 @@
-class Shop::ShopController < BaseController
+class ShopController < BaseController
   layout "darkswarm"
   before_filter :require_distributor_chosen
   before_filter :set_order_cycles
@@ -19,12 +19,12 @@ class Shop::ShopController < BaseController
     if request.post?
       if oc = OrderCycle.with_distributor(@distributor).active.find_by_id(params[:order_cycle_id])
         current_order(true).set_order_cycle! oc
-        render partial: "shop/shop/order_cycle"
+        render partial: "json/order_cycle"
       else
         render status: 404, json: ""
       end
     else
-      render partial: "shop/shop/order_cycle"
+      render partial: "json/order_cycle"
     end
   end
 

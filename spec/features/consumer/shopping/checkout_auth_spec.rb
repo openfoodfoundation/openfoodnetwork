@@ -20,14 +20,14 @@ feature "As a consumer I want to check out my cart", js: true do
 
   it "does not not render the login form when logged in" do
     quick_login_as user
-    visit shop_checkout_path 
+    visit checkout_path 
     within "section[role='main']" do
       page.should_not have_content "USER"
     end
   end
 
   it "renders the login form when logged out" do
-    visit shop_checkout_path 
+    visit checkout_path 
     toggle_accordion "User"
     within "section[role='main']" do
       page.should have_content "User"

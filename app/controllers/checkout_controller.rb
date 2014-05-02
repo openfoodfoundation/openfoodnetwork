@@ -1,4 +1,4 @@
-class Shop::CheckoutController < Spree::CheckoutController
+class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen

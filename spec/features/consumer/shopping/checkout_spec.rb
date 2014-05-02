@@ -19,7 +19,7 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   it "shows the current distributor oncheckout" do
-    visit shop_checkout_path 
+    visit checkout_path 
     page.should have_content distributor.name
   end
 
@@ -33,7 +33,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "on the checkout page" do
       before do
-        visit shop_checkout_path
+        visit checkout_path
       end
 
       it "shows all shipping methods, but doesn't show ship address when not needed" do
@@ -60,7 +60,7 @@ feature "As a consumer I want to check out my cart", js: true do
       let!(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
 
       before do
-        visit shop_checkout_path
+        visit checkout_path
         toggle_accordion "Payment Details"
       end
 

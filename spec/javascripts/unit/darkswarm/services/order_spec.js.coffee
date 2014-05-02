@@ -58,18 +58,18 @@ describe 'Order service', ->
     expect(Order.paymentMethod()).toEqual {test: "foo"}
 
   it "Posts the Order to the server", ->
-    $httpBackend.expectPUT("/shop/checkout", {order: Order.preprocess()}).respond 200, {path: "test"}
+    $httpBackend.expectPUT("/checkout", {order: Order.preprocess()}).respond 200, {path: "test"}
     Order.submit()
     $httpBackend.flush()
 
   it "sends flash messages to the flash service", ->
-    $httpBackend.expectPUT("/shop/checkout").respond 400, {flash: {error: "frogs"}}
+    $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
     Order.submit()
     $httpBackend.flush()
     expect(flash.error).toEqual "frogs"
 
   it "puts errors into the scope", ->
-    $httpBackend.expectPUT("/shop/checkout").respond 400, {errors: {error: "frogs"}}
+    $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
     Order.submit()
     $httpBackend.flush()
     expect(Order.errors).toEqual {error: "frogs"}

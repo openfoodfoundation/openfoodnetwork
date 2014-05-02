@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if request.referer and referer_path = URI(request.referer).path
-      [main_app.shop_checkout_path].include?(referer_path) ? referer_path : root_path
+      [main_app.checkout_path].include?(referer_path) ? referer_path : root_path
     else
       root_path
     end

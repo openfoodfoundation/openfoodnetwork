@@ -1,0 +1,17 @@
+= f_form_for current_order, url: main_app.update_checkout_path, 
+  html: {name: "checkout", 
+    id: "checkout_form",
+    novalidate: true,
+    name: "checkout"} do |f|
+
+  :javascript
+    angular.module('Darkswarm').value('order', #{render "checkout/order"})
+
+  -#%pre
+    -#{{ Order.order == order }}
+
+  .large-12.columns
+    = render partial: "checkout/details", locals: {f: f}
+    = render partial: "checkout/billing", locals: {f: f}
+    = render partial: "checkout/shipping", locals: {f: f}
+    = render partial: "checkout/payment", locals: {f: f}
