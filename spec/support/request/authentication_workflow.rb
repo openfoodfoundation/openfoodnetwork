@@ -1,6 +1,22 @@
 module AuthenticationWorkflow
+
   def quick_login_as(user)
     ApplicationController.any_instance.stub(:spree_current_user).and_return user
+    ApplicationController.any_instance.stub(:current_api_user).and_return user
+  end
+
+  def quick_login_as_admin
+    admin_role = Spree::Role.find_or_create_by_name!('admin')
+    admin_user = create(:user, 
+      :password => 'passw0rd',
+      :password_confirmation => 'passw0rd',
+      :remember_me => false,
+      :persistence_token => 'pass',
+      :login => 'admin@ofn.org')
+
+    admin_user.spree_roles << admin_role
+    quick_login_as admin_user
+    admin_user
   end
 
   def login_to_admin_section
@@ -13,7 +29,6 @@ module AuthenticationWorkflow
       :login => 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
-
     login_to_admin_as admin_user
   end
 

@@ -26,6 +26,7 @@ require 'spree/core/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
 require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
+require 'spree/core/testing_support/authorization_helpers'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
