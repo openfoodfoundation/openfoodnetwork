@@ -1,36 +1,38 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, $rootScope, order, $location, $anchorScroll) ->
-  $scope.require_ship_address = false
-  $scope.order = order
-  $scope.userOpen = true
+Darkswarm.controller "CheckoutCtrl", ($scope, Order, storage, CheckoutFormState, User) ->
 
-  $scope.initialize = ->
-    # Our shipping_methods comes through as a hash like so: {id: requires_shipping_address}
-    # Here we default to the first shipping method if none is selected
-    $scope.order.shipping_method_id ||= Object.keys(order.shipping_methods)[0]
-    $scope.order.ship_address_same_as_billing = true if $scope.order.ship_address_same_as_billing == null
-    $scope.shippingMethodChanged()
-  
-  $scope.shippingPrice = ->
-    $scope.shippingMethod().price
+  # We put Order.order into the scope for convenience
+  # However, storage.bind replaces Order.order
+  # So we must put Order.order into the scope AFTER it's bound to localStorage
+  $scope.Order = Order
+  storage.bind $scope, "Order.order", {storeName: "order_#{Order.order.id}"}
+  $scope.order = Order.order
 
-  $scope.cartTotal = ->
-    $scope.shippingPrice() + $scope.order.display_total
+  if User
+    $scope.accordion = {details: true}
+  else
+    $scope.accordion = {user: true}
+  $scope.show = (name)->
+    $scope.accordion[name] = true
+  storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}"}
+  # If we are logged in, but the cached accordion panel is user, move to details
+  if User and $scope.accordion.user
+    $scope.accordion.user = false
+    $scope.accordion.details = true
 
-  $scope.shippingMethod = ->
-    $scope.order.shipping_methods[$scope.order.shipping_method_id]
+  # TODO MAKE THIS BETTER SOMEHOW
+  # if User
+  #   show details
+  # else
+  #   show user
+  #
+  # localStorage overrides above
+  #
+  # If localStorage set to user, but User exists
+  # Then default to details
 
-  $scope.shippingMethodChanged = ->
-    $scope.require_ship_address = $scope.shippingMethod().require_ship_address if $scope.shippingMethod()
+  $scope.CheckoutFormState = CheckoutFormState
+  storage.bind $scope, "CheckoutFormState.ship_address_same_as_billing", { defaultValue: true}
 
   $scope.purchase = (event)->
     event.preventDefault()
-    checkout.submit()
-
-   $scope.scrollTo = (name)->
-      #$scope.userOpen = false
-      $("#order_email").focus()
-      $location.hash(name);
-      $anchorScroll();
-
-  $scope.initialize()
-
+    $scope.Order.submit()

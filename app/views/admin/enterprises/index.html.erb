@@ -14,6 +14,7 @@
     <colgroup>
       <col style="width: 20%;">
       <col style="width: 10%;">
+      <col style="width: 5%;">
       <col>
       <col style="width: 20%;">
     </colgroup>
@@ -22,6 +23,7 @@
       <tr data-hook="enterprises_header">
         <th>Name</th>
         <th>Role</th>
+        <th>Active?</th>
         <th>Description</th>
         <th></th>
       </tr>
@@ -38,6 +40,7 @@
                 <h1 class = "icon-exclamation-sign with-tip" style = "text-align: center;color: #DA5354" data-powertip = "This enterprise does not have any roles"></h1>
             <% end %>
           </td>
+          <td><%= enterprise.visible ? 'Visible' : 'Invisible' %></td>
           <td><%= enterprise.description %></td>
           <td data-hook="admin_users_index_row_actions">
 

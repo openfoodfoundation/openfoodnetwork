@@ -1,7 +1,12 @@
-%products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null"}
+%products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
+"infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
+
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
 
-    %input#search.text{"ng-model" => "query", placeholder: "Search", "ng-keypress" => "searchKeypress($event)"}
+    %input#search.text{"ng-model" => "query", 
+    placeholder: "Search",
+    "ng-debounce" => "150",
+    "ng-keypress" => "searchKeypress($event)"}
     %input.button.right{type: :submit, value: "Add to Cart"}
 
     %table
@@ -16,17 +21,20 @@
         %tr
           %td{colspan: 6}
             %h3.text-center Loading Products
-      %tbody{"ng-repeat" => "product in data.products | filter:query"}
+      %tbody{"ng-repeat" => "product in data.products | filter:query | limitTo: limit track by product.id"}
         %tr{"class" => "product product-{{ product.id }}"}
-          %td.name
-            %img{"ng-src" => "{{ product.master.images[0].small_url }}"}
+
+          %td.name{bindonce: "product"}
+            %img{"bo-src" => "product.master.images[0].small_url"}
             %div
               %h5
                 {{ product.name }}
               %a{"data-reveal-id" => "producer_details_{{product.supplier.id}}", "data-reveal" => ""}
                 {{ product.supplier.name }}
-          %td.notes {{ product.notes | truncate:80 }}
-          %td 
+
+          %td.notes{bindonce: ""} {{ product.notes | truncate:80 }}
+
+          %td{bindonce: ""} 
             %span{"ng-hide" => "product.variants.length > 0"} {{ product.master.options_text }}
             %span{"ng-show" => "product.variants.length > 0"}
               %img.collapse{src: "/assets/collapse.png",
@@ -41,24 +49,31 @@
               %input{type: :number, 
               value: nil, 
               min: 0,
+              "ofn-disable-scroll" => true,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variants[{{product.master.id}}]", 
               id: "variants_{{product.master.id}}",
               "ng-model" => "product.quantity"}
+
           %td.group_buy
             %span{"ng-show" => "product.group_buy && (product.variants.length == 0)"} 
               %input{type: :number,
               min: 0,
+              "ofn-disable-scroll" => true,
               max: "{{product.on_demand && 9999 || product.count_on_hand }}",
               name: "variant_attributes[{{product.master.id}}][max_quantity]",
               "ng-model" => "product.max_quantity"}
-          %td.price.text-right
+
+          %td.price.text-right{bindonce: ""}
             %small{"ng-show" => "(product.variants.length > 0)"} from
             {{ productPrice(product) | currency }}
-        %tr.product-description
+
+        %tr.product-description{bindonce: ""}
           %td{colspan: 2}{{ product.notes | truncate:80 }}
-        %tr.variant{"ng-repeat" => "variant in product.variants", "ng-show" => "product.show_variants"}
+
+        %tr.variant{"ng-repeat" => "variant in product.variants", "ng-if" => "product.show_variants"}
           = render partial: "shop/shop/variant"
+
     %input.button.right{type: :submit, value: "Add to Cart"}
 
 

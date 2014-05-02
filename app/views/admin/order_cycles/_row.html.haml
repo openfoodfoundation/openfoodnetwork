@@ -1,0 +1,25 @@
+- order_cycle = order_cycle_form.object
+- klass = "order-cycle-#{order_cycle.id} #{order_cycle_status_class order_cycle}"
+%tr{class: klass}
+  %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
+  %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
+  %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
+  %td.suppliers
+    - order_cycle.suppliers.managed_by(spree_current_user).each do |s|
+      = s.name
+      %br/
+  %td= order_cycle.coordinator.name
+  %td.distributors
+    - order_cycle.distributors.managed_by(spree_current_user).each do |d|
+      = d.name
+      %br/
+
+  %td.products
+    - variant_images = capture do
+      - order_cycle.variants.each do |v|
+        = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
+        %br/
+    %span.with-tip{'data-powertip' => variant_images}= "#{order_cycle.variants.count} variants"
+
+  %td.actions
+    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'

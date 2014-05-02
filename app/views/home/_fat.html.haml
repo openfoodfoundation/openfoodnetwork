@@ -1,0 +1,28 @@
+.row.active_table_row{"ng-show" => "open()"}
+  .columns.small-4
+    %strong Shop for
+    %p.trans-sentence
+      {{ hub.taxons | printArray }}
+  .columns.small-4
+    %strong Delivery options
+    %ol
+      %li.pickup{"bo-if" => "hub.pickup"} Pickup
+      %li.delivery{"bo-if" => "hub.delivery"} Delivery
+  .columns.small-4
+    %strong Our producers
+    %p
+      Go to our shop to see our current producers
+
+.row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
+  .columns.small-11
+    %a{"bo-href" => "hub.path", "ng-show" => "!emptiesCart()"} 
+      Shop at 
+
+      %strong {{ hub.name }}
+    %a{"ng-click" => "changeHub()", "ng-show" => "emptiesCart()"} 
+      Change hub to
+      %strong {{ hub.name }}
+
+  .columns.small-1.text-right
+    %a{"bo-href" => "hub.path"} 
+      %i.fi-arrow-right

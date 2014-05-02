@@ -9,7 +9,7 @@
 //= require store/spree_core
 //= require store/spree_auth
 //= require store/spree_promo
-//= require shared/angular
-//= require shared/angular-resource
+//= require angular
+//= require angular-resource
 
 //= require_tree .

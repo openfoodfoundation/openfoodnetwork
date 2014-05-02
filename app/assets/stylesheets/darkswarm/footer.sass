@@ -1,16 +1,12 @@
-@import variables
+@import branding
+@import mixins
 
-#footer
-  padding: 74px 0px 0px
-  background: $fawn
-  margin-top: 85px
-
-  #copyright 
-    clear: both
-    img
-      display: block
-      margin: 0px auto 8px
-
-  .contact
-    strong
-      padding-right: 1em
+footer
+  background: $dark-grey
+  @include panepadding
+  .row
+    &, & *
+      color: white
+  span.email
+    direction: rtl
+    unicode-bidi: bidi-override

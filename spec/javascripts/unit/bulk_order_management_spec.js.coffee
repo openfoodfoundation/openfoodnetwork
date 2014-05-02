@@ -18,30 +18,29 @@ describe "AdminOrderMgmtCtrl", ->
       returnedDistributors = ["list of distributors"]
       returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
       httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
-      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
-      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
-      httpBackend.expectGET("/api/order_cycles/managed").respond returnedOrderCycles
+      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
+      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
+      httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
       spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
-      spyOn(returnedSuppliers, "unshift")
-      spyOn(returnedDistributors, "unshift")
-      spyOn(returnedOrderCycles, "unshift")
+      #spyOn(returnedSuppliers, "unshift")
+      #spyOn(returnedDistributors, "unshift")
+      #spyOn(returnedOrderCycles, "unshift")
       scope.initialise "api_key"
       httpBackend.flush()
-      expect(scope.suppliers).toEqual ["list of suppliers"]
-      expect(scope.distributors).toEqual ["list of distributors"]
-      expect(scope.orderCycles).toEqual [ "oc1", "oc2", "oc3" ]
-      expect(scope.initialiseVariables.calls.length).toEqual 1
-      expect(scope.fetchOrders.calls.length).toEqual 1
-      expect(returnedSuppliers.unshift.calls.length).toEqual 1
-      expect(returnedDistributors.unshift.calls.length).toEqual 1
-      expect(returnedOrderCycles.unshift.calls.length).toEqual 1
-      expect(scope.spree_api_key_ok).toEqual true
+
+      expect(scope.suppliers).toEqual [{ id : '', name : 'All' }, 'list of suppliers']
+      expect(scope.distributors).toEqual [ { id : '', name : 'All' }, 'list of distributors' ] 
+      expect(scope.orderCycles).toEqual [ { id : '', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+
+      expect(scope.initialiseVariables.calls.length).toBe 1
+      expect(scope.fetchOrders.calls.length).toBe 1
+      expect(scope.spree_api_key_ok).toBe true
 
   describe "fetching orders", ->
     beforeEach ->
       scope.initialiseVariables()
-      httpBackend.expectGET("/api/orders/managed?template=bulk_index&q[completed_at_not_null]=true&q[completed_at_gt]=SomeDate&q[completed_at_lt]=SomeDate").respond "list of orders"
+      httpBackend.expectGET("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[completed_at_not_null]=true;q[completed_at_gt]=SomeDate;q[completed_at_lt]=SomeDate").respond "list of orders"
 
     it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()

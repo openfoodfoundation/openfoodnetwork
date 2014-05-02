@@ -1,8 +1,67 @@
 @import typography
+@import branding
 
 @mixin big-input 
   border: 1px solid #999
   font-size: 18px
   @extend .avenir
-  padding: 18px
-  margin-bottom: 1.25em
+  padding: 30px 20px
+  margin-bottom: 1em
+
+@mixin disabled
+  color: $disabled-bright
+
+@mixin panepadding
+  padding-top: 100px
+  padding-bottom: 100px
+
+@mixin darkbg
+  background-color: $clr-brick
+  &, & *
+    color: white
+  a
+    color: $clr-brick-ultra-light
+    &:hover
+      text-decoration: none
+      color: $clr-brick-light
+
+@mixin lightbg
+  background-color: $clr-brick-ultra-light
+  &, & *
+    color: black
+  a
+    color: $clr-brick
+    &:hover
+      text-decoration: none
+      color: $clr-brick-bright
+
+@mixin turqbg
+  background-color: $clr-turquoise-light
+  &, & *
+    color: $clr-turquoise
+  a
+    color: white
+    &:hover
+      text-decoration: none
+      color: $clr-turquoise-light
+
+@mixin fullbg
+  background-position: center center 
+  background-repeat: no-repeat
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
+
+@mixin fullwidthbg
+  background-position: top center 
+  background-repeat: no-repeat
+  background-size: 100% auto
+
+@mixin csstrans
+  -webkit-transition: all 100ms ease-in-out
+  -moz-transition: all 100ms ease-in-out
+  -ms-transition: all 100ms ease-in-out
+  -o-transition: all 100ms ease-in-out
+  transition: all 100ms ease-in-out
+  -webkit-transform-style: preserve-3d

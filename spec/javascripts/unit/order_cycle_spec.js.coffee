@@ -401,10 +401,12 @@ describe 'OrderCycle services', ->
     it 'loads enterprise fees', ->
       enterprise_fees = EnterpriseFee.index()
       $httpBackend.flush()
-      expect(enterprise_fees).toEqual [
+      expected_fees = [
         new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
         new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo", enterprise_id: 2})
         ]
+      for fee, i in enterprise_fees
+        expect(fee.id).toEqual(expected_fees[i].id)
 
     it 'reports its loadedness', ->
       expect(EnterpriseFee.loaded).toBe(false)

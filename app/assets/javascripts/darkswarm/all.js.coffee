@@ -7,11 +7,20 @@
 #= require angular-cookies
 #= require angular-resource
 #= require ../shared/mm-foundation-tpls-0.2.0-SNAPSHOT
+#= require ../shared/bindonce.min.js
+#= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
+#= require_tree ../../templates
+#= require angular-backstretch.js
+#= require angular-flash.min.js
+#= require moment
+#= require modernizr
 #
-#= require ../shared/jquery.timeago
 #= require foundation
 #= require ./darkswarm
+#= require ./overrides
+#= require_tree ./mixins
+#= require_tree ./directives
 #= require_tree .
 
 $ ->
@@ -19,4 +28,3 @@ $ ->
   Foundation.set_namespace = ->
     null
   $(document).foundation()
-  $(document).foundation({reveal: {animation: 'fade'}})

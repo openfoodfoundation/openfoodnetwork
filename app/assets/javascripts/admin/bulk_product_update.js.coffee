@@ -328,7 +328,7 @@ productEditModule.controller "AdminProductEditCtrl", [
         if confirm("Are you sure?")
           $http(
             method: "DELETE"
-            url: "/api/products/" + product.id + "/variants/" + variant.id
+            url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
           ).success (data) ->
             $scope.removeVariant(product, variant)
 

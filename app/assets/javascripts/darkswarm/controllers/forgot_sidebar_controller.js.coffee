@@ -1,4 +1,4 @@
-window.ForgotSidebarCtrl = Darkswarm.controller "ForgotSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
+Darkswarm.controller "ForgotSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
   $scope.spree_user = SpreeUser.spree_user
   $scope.path = "/forgot"
   $scope.sent = false

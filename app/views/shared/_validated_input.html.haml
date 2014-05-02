@@ -1,0 +1,6 @@
+%label{for: path}= name
+
+%input.medium.input-text{attributes}
+
+%small.error.medium.input-text{"ng-show" => "!fieldValid('#{path}')"}
+  = "{{ fieldErrors('#{path}') }}"

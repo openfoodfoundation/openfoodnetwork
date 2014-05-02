@@ -8,13 +8,19 @@ class AbilityDecorator
       # when searching for variants to add to the order
       can [:create, :search, :bulk_update], nil
 
+      can [:admin, :index], :overview
+
       # Enterprise User can only access products that they are a supplier for
       can [:create], Spree::Product
-      can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product  do |product|
+      can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product do |product|
         user.enterprises.include? product.supplier
       end
 
-      can [:admin, :index, :read, :create, :edit, :update, :search, :destroy], Spree::Variant
+      can [:create], Spree::Variant
+      can [:admin, :index, :read, :edit, :update, :search, :destroy], Spree::Variant do |variant|
+        user.enterprises.include? variant.product.supplier
+      end
+
       can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
       can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
 
@@ -23,11 +29,12 @@ class AbilityDecorator
 
       # Enterprise User can only access orders that they are a distributor for
       can [:index, :create], Spree::Order
-      can [:admin, :read, :update, :bulk_management, :fire, :resend], Spree::Order do |order|
+      can [:read, :update, :bulk_management, :fire, :resend], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? || user.enterprises.include?(order.distributor)
       end
+      can [:admin], Spree::Order if user.admin? || user.enterprises.any?{ |e| e.is_distributor? }
       can [:admin, :create], Spree::LineItem
 
       can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment

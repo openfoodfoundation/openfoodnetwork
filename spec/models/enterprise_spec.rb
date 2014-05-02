@@ -47,6 +47,14 @@ describe Enterprise do
   end
 
   describe "scopes" do
+
+    describe 'active' do
+      it 'find active enterprises' do
+        d1 = create(:distributor_enterprise, visible: false)
+        s1 = create(:supplier_enterprise)
+        Enterprise.visible.should == [s1]
+      end
+    end
     
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
@@ -254,6 +262,35 @@ describe Enterprise do
         enterprises.should include e2
       end
     end
+
+    describe "accessible_by" do
+      it "shows only enterprises that are invloved in order cycles which are common to those managed by the given user" do
+        user = create(:user)
+        user.spree_roles = []
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+        e3 = create(:enterprise)
+        e4 = create(:enterprise)
+        e1.enterprise_roles.build(user: user).save
+        oc = create(:simple_order_cycle, coordinator: e2, suppliers: [e1], distributors: [e3])
+
+        enterprises = Enterprise.accessible_by user
+        enterprises.length.should == 3
+        enterprises.should include e1, e2, e3
+        enterprises.should_not include e4
+      end
+
+      it "shows all enterprises for admin user" do
+        user = create(:admin_user)
+        e1 = create(:enterprise)
+        e2 = create(:enterprise)
+
+        enterprises = Enterprise.managed_by user
+        enterprises.length.should == 2
+        enterprises.should include e1
+        enterprises.should include e2
+      end
+    end
   end
 
   describe "has_supplied_products_on_hand?" do
@@ -352,6 +389,19 @@ describe Enterprise do
 
     it "should not find hubs if not nearby " do
       Enterprise.find_near(@suburb_in_nsw).count.should eql(0)
+    end
+  end
+
+  describe "taxons" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:taxon1) { create(:taxon) }
+    let(:taxon2) { create(:taxon) }
+    let(:product1) { create(:simple_product, taxons: [taxon1]) }
+    let(:product2) { create(:simple_product, taxons: [taxon1, taxon2]) }
+
+    it "gets all taxons of all products" do
+      Spree::Product.stub(:in_distributor).and_return [product1, product2]
+      distributor.taxons.should == [taxon1, taxon2]
     end
   end
 end

@@ -494,4 +494,13 @@ describe OrderCycle do
       OrderCycle.first_opening_for(distributor).should == nil
     end
   end
+  
+  describe "finding open order cycles" do
+    it "should give the soonest closing order cycle for a distributor" do
+      distributor = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now) 
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now) 
+      OrderCycle.first_closing_for(distributor).should == oc
+    end
+  end
 end

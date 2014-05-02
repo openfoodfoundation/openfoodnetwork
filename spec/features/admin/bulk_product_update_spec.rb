@@ -237,7 +237,9 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    click_link 'New Product'
+    #save_screenshot "/Users/willmarshall/Desktop/foo.png"
+    #save_and_open_page
+    find("a", text: "NEW PRODUCT").click
 
     page.should have_content 'NEW PRODUCT'
 
@@ -607,7 +609,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each{ |e| e.click }
+        all("a.view-variants").each { |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 3
 
@@ -618,7 +620,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").select{ |e| e.visible? }.each{ |e| e.click }
+        all("a.view-variants").select { |e| e.visible? }.each { |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 2
       end
@@ -783,7 +785,7 @@ feature %q{
 
         select '25', :from => 'perPage'
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page1product" }.should == true
-        click_link "2"
+        find("a", text: "2").click
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
       end
 
@@ -795,7 +797,7 @@ feature %q{
         visit '/admin/products/bulk_edit'
 
         select '25', :from => 'perPage'
-        click_link "3"
+        find("a", text: "3").click
         select '50', :from => 'perPage'
         page.first("div.pagenav span.page.current").should have_text "2"
         page.all("input[name='product_name']", :visible => true).length.should == 1
@@ -869,7 +871,7 @@ feature %q{
 
         describe "clicking the 'Remove Filter' link" do
           before(:each) do
-            click_link "Remove Filter"
+            find("a", text: "Remove Filter").click
           end
 
           it "removes the filter from the list of applied filters" do

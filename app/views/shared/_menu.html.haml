@@ -2,8 +2,9 @@
   %section.top-bar-section
     %ul.left{"ng-controller" => "AuthenticationActionsCtrl"}
       %li
-        %a.icon{"ng-click" => "toggle()"}
+        %a.icon{"ng-click" => "Sidebar.toggle()"}
           %i.fi-list
+
       %li= link_to image_tag("ofn_logo_small.png"), root_path
       %li.divider
       - if spree_current_user.nil?
@@ -13,6 +14,9 @@
 
   %section.top-bar-section
     %ul.right
+      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.id"}
+        %a{href: main_app.shop_path}
+          {{ CurrentHub.name }}
       %li.cart
         %a.icon{href: cart_url}
           %i.fi-shopping-cart 

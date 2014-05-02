@@ -37,6 +37,9 @@ gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 
+gem 'foreigner'
+gem 'immigrant'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -50,7 +53,8 @@ group :assets do
 
   gem 'turbo-sprockets-rails3'
   gem 'foundation-icons-sass-rails'
-
+  gem 'momentjs-rails'
+  gem 'angular-rails-templates'
 end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"

@@ -2,7 +2,7 @@ module ShopWorkflow
   def select_distributor
     # If no order cycles are available this is much faster
     visit "/"
-    click_link distributor.name
+    follow_active_table_node distributor.name
   end
 
   # These methods are naughty and write to the DB directly
@@ -18,6 +18,6 @@ module ShopWorkflow
   end
 
   def toggle_accordion(name)
-    find("dd a", text: name.upcase).click
+    find("dd a", text: name).click
   end
 end

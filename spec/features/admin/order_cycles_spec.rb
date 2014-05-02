@@ -9,7 +9,7 @@ feature %q{
 
   before :all do
     @orig_default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
+    Capybara.default_wait_time = 10
   end
 
   after :all do
@@ -217,11 +217,11 @@ feature %q{
     end
 
     # And the distributors should have fees
-    distributor = oc.distributors.sort_by(&:name).first
+    distributor = oc.distributors.sort_by(&:id).first
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
 
-    distributor = oc.distributors.sort_by(&:name).last
+    distributor = oc.distributors.sort_by(&:id).last
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
   end
@@ -295,6 +295,7 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
+    wait_until { page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).present? }
     page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
@@ -462,17 +463,22 @@ feature %q{
       login_to_admin_as @new_user
     end
 
-    scenario "can view products I am coordinating" do
-      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+    scenario "viewing a list of order cycles I am coordinating" do
+      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
       oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
 
       click_link "Order Cycles"
 
+      # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
+
+      # The order cycle should not show enterprises that I don't manage
+      page.should_not have_selector 'td.suppliers',    text: supplier2.name
+      page.should_not have_selector 'td.distributors', text: distributor2.name
     end
 
-    scenario "can create a new order cycle" do
+    scenario "creating a new order cycle" do
       click_link "Order Cycles"
       click_link 'New Order Cycle'
 
@@ -508,6 +514,16 @@ feature %q{
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
       order_cycle.coordinator.should == distributor1
+    end
+
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # I should not see exchanges for supplier2 or distributor2
+      page.all('tr.supplier').count.should == 1
+      page.all('tr.distributor').count.should == 1
     end
 
     scenario "cloning an order cycle" do

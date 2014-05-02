@@ -1,12 +1,5 @@
-window.AuthenticationActionsCtrl = Darkswarm.controller "AuthenticationActionsCtrl", ($scope, Navigation, storage) ->
-  $scope.toggleLogin = ->
-    Navigation.navigate "/login"
+Darkswarm.controller "AuthenticationActionsCtrl", ($scope, Navigation, storage, Sidebar) ->
+  $scope.Sidebar = Sidebar
 
-  $scope.toggleSignup = ->
-    Navigation.navigate "/signup"
-
-  $scope.toggleSignup = ->
-    Navigation.navigate "/signup"
-
-  $scope.toggle = (path = null)->
+  $scope.toggle = (path)->
     Navigation.navigate(path)

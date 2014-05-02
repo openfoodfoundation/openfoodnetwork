@@ -9,7 +9,7 @@ feature %q{
 
   before :all do
     @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
+    Capybara.default_wait_time = 10
   end
 
   after :all do
@@ -526,7 +526,7 @@ feature %q{
       before :each do
         visit '/admin/orders/bulk_management'
         within "tr#li_#{li3.id}" do
-          click_link li3.variant.options_text
+          find("a", text: li3.product.name + ": " + li3.variant.options_text).click
         end
       end
 
@@ -561,7 +561,7 @@ feature %q{
 
       context "clicking 'Clear' in group buy box" do
         before :each do
-          click_link 'Clear'
+          find("a", text: "Clear").click
         end
 
         it "shows all products and clears group buy box" do

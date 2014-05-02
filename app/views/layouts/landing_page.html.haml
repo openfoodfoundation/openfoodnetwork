@@ -37,13 +37,16 @@
           %li= link_to "Distributors", "#", :data => { "reveal-id" => "become-distributor" }
           %li.divider
           %li= link_to "Farmers", "#", :data => { "reveal-id" => "become-farmer" }
+
     %section{ role: "main" }
       = yield
+
     %section#sidebar{ role: "complementary" }
       .login-panel
         #login-content.hide
           = render "home/login"
         #sign-up-content.hide
           = render "home/signup"
+
     = yield :scripts
 
