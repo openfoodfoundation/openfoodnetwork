@@ -1,4 +1,4 @@
-productEditModule = angular.module("ofn.bulk_product_edit", ["ofn.shared_services", "ofn.shared_directives"])
+productEditModule = angular.module("ofn.bulk_product_edit", ["ngResource", "ofn.shared_services", "ofn.shared_directives"])
 
 productEditModule.config [
   "$httpProvider"
@@ -7,6 +7,41 @@ productEditModule.config [
     provider.defaults.headers.common["Accept"] = "application/json"
 ]
 
+productEditModule.factory "Taxons", ($resource) ->
+  resource = $resource "/admin/taxons/search"
+
+  return {
+    findByIDs: (ids) ->
+      resource.get { ids: ids }
+
+    findByTerm: (term) ->
+      resource.get { q: term }
+
+    cleanTaxons: (data) ->
+      data['taxons'].map (result) -> result
+  }
+
+productEditModule.directive "ofnTaxonAutocomplete", (Taxons) ->
+  # Adapted from Spree's existing taxon autocompletion
+  require: "ngModel"
+  link: (scope,element,attrs,ngModel) ->
+    setTimeout ->
+      element.select2
+        placeholder: Spree.translations.taxon_placeholder
+        multiple: true
+        initSelection: (element, callback) ->
+          Taxons.findByIDs(element.val()).$promise.then (result) ->
+            callback Taxons.cleanTaxons(result)
+        query: (query) ->
+          Taxons.findByTerm(query.term).$promise.then (result) ->
+            query.callback { results: Taxons.cleanTaxons(result) }
+        formatResult: (taxon) ->
+          taxon.pretty_name
+        formatSelection: (taxon) ->
+          taxon.pretty_name
+    element.on "change", ->
+      scope.$apply ->
+        ngModel.$setViewValue element.val()
 
 productEditModule.directive "ofnDecimal", ->
   require: "ngModel"
@@ -74,12 +109,13 @@ productEditModule.controller "AdminProductEditCtrl", [
       style: {}
 
     $scope.columns =
-      supplier:     {name: "Supplier",     visible: true}
-      name:         {name: "Name",         visible: true}
-      unit:         {name: "Unit",         visible: true}
-      price:        {name: "Price",        visible: true}
-      on_hand:      {name: "On Hand",      visible: true}
-      available_on: {name: "Available On", visible: false}
+      supplier:     {name: "Supplier",      visible: true}
+      name:         {name: "Name",          visible: true}
+      unit:         {name: "Unit",          visible: true}
+      price:        {name: "Price",         visible: true}
+      on_hand:      {name: "On Hand",       visible: true}
+      taxons:       {name: "Taxons",        visible: false}
+      available_on: {name: "Available On",  visible: false}
 
     $scope.variant_unit_options = [
       ["Weight (g)", "weight_1"],
@@ -536,6 +572,9 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("taxon_ids")
+          filteredProduct.taxon_ids = product.taxon_ids
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on

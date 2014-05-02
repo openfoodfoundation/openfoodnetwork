@@ -92,6 +92,9 @@
         %col
         %col{'style' => 'width: 20%;'}
         %col{'style' => 'width: 12%;'}
+        %col{'style' => 'width: 12%;'}
+        %col
+        %col
         %col
         %col
         %col
@@ -105,7 +108,10 @@
           %th{ 'ng-show' => 'columns.unit.visible' } Unit / Value
           %th{ 'ng-show' => 'columns.price.visible' } Price
           %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
+          %th{ 'ng-show' => 'columns.taxons.visible' } Taxons
           %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
+          %th.actions
+          %th.actions
           %th.actions
       %tbody{ 'ng-repeat' => 'product in filteredProducts = (products | filter:query)', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", 'ng-show' => "$index >= perPage*(currentPage-1) && $index < perPage*currentPage" }
         %tr.product{ :id => "p_{{product.id}}" }
@@ -126,6 +132,8 @@
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
+          %td{ 'ng-show' => 'columns.taxons.visible' }
+            %input.fullwidth{ :type => 'text', 'ng-model' => 'product.taxon_ids', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'taxon_ids' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
@@ -148,6 +156,7 @@
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-hide' => 'variant.on_demand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
             %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
+          %td{ 'ng-show' => 'columns.taxons.visible' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }

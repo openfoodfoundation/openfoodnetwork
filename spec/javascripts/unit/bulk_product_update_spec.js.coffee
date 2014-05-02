@@ -1410,3 +1410,28 @@ describe "converting arrays of objects with ids to an object with ids as keys", 
 
     expect(toObjectWithIDKeys).toHaveBeenCalledWith [id: 17]
     expect(toObjectWithIDKeys).not.toHaveBeenCalledWith {12: {id: 12}}
+
+describe "Taxons service", ->
+  Taxons = $httpBackend = $resource = null
+
+  beforeEach ->
+    module "ofn.bulk_product_edit"
+
+  beforeEach inject (_Taxons_, _$resource_, _$httpBackend_) ->
+    Taxons = _Taxons_
+    $resource = _$resource_
+    $httpBackend = _$httpBackend_
+
+  it "calling findByIDs makes a http request", ->
+    response = { taxons: "list of taxons by id" }
+    $httpBackend.expectGET("/admin/taxons/search?ids=1,2").respond 200, response
+    taxons = Taxons.findByIDs("1,2")
+    $httpBackend.flush()
+    expect(angular.equals(taxons,response)).toBe true
+
+  it "calling findByTerm makes a http request", ->
+    response = { taxons: "list of taxons by term" }
+    $httpBackend.expectGET("/admin/taxons/search?q=lala").respond 200, response
+    taxons = Taxons.findByTerm("lala")
+    $httpBackend.flush()
+    expect(angular.equals(taxons,response)).toBe true
