@@ -120,7 +120,7 @@ class CheckoutController < Spree::CheckoutController
   # Overriding to customize the cancel url
   def order_opts_with_new_cancel_return_url(order, payment_method_id, stage)
     opts = order_opts_without_new_cancel_return_url(order, payment_method_id, stage)
-    opts[:cancel_return_url] = main_app.shop_checkout_url
+    opts[:cancel_return_url] = main_app.checkout_url
     opts
   end
   alias_method_chain :order_opts, :new_cancel_return_url

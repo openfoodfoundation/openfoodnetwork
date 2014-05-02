@@ -4,13 +4,12 @@ feature 'Home', js: true do
   include AuthenticationWorkflow
   include UIComponentHelper
 
-  let(:distributor) { create(:distributor_enterprise) }
+  let!(:distributor) { create(:distributor_enterprise) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }
-  let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+
   before do
-    distributor
-    order_cycle
     visit "/" 
   end
 

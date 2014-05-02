@@ -125,7 +125,7 @@ describe CheckoutController do
 
     it "should override the cancel return url" do
       controller.stub(:params).and_return({payment_method_id: payment_method.id})
-      controller.send(:order_opts, order, payment_method.id, 'payment')[:cancel_return_url].should == shop_checkout_url
+      controller.send(:order_opts, order, payment_method.id, 'payment')[:cancel_return_url].should == checkout_url
     end
   end
 end
