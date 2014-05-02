@@ -36,7 +36,7 @@
         <tr class="enterprise-<%= enterprise.id %>">
           <td><%= link_to enterprise.name, main_app.admin_enterprise_path(enterprise) %></td>
           <td><%= 'PP ' if enterprise.is_primary_producer %><%= 'D' if enterprise.is_distributor %></td>
-          <td><%= enterprise.active ? 'Active' : 'Inactive' %></td>
+          <td><%= enterprise.visible ? 'Visible' : 'Invisible' %></td>
           <td><%= enterprise_form.text_field :next_collection_at %></td>
           <td><%= enterprise.description %></td>
           <td data-hook="admin_users_index_row_actions">
