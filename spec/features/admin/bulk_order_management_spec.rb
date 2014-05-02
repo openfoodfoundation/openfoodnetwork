@@ -8,8 +8,7 @@ feature %q{
   include AuthorizationHelpers
   include WebHelper
 
-  before(:all) { Spree::Ability.register_ability(AuthorizationHelpers::Request::SuperAbility) }
-  after(:all) { Spree::Ability.remove_ability(AuthorizationHelpers::Request::SuperAbility) }
+  stub_authorization!
 
   before :all do
     @default_wait_time = Capybara.default_wait_time
@@ -36,6 +35,7 @@ feature %q{
     it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
       page.should have_text "No matching line items found."
+
     end
 
     context "displaying the list of line items" do

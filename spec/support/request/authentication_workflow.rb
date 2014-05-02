@@ -1,5 +1,4 @@
 module AuthenticationWorkflow
-
   def quick_login_as(user)
     ApplicationController.any_instance.stub(:spree_current_user).and_return user
     ApplicationController.any_instance.stub(:current_api_user).and_return user
@@ -17,6 +16,11 @@ module AuthenticationWorkflow
     admin_user.spree_roles << admin_role
     quick_login_as admin_user
     admin_user
+  end
+
+  def stub_authorization!
+    before(:all) { Spree::Ability.register_ability(AuthorizationHelpers::Request::SuperAbility) }
+    after(:all) { Spree::Ability.remove_ability(AuthorizationHelpers::Request::SuperAbility) }
   end
 
   def login_to_admin_section
@@ -69,4 +73,8 @@ module AuthenticationWorkflow
     fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
   end
+end
+
+RSpec.configure do |config|
+  config.extend AuthenticationWorkflow, :type => :feature
 end
