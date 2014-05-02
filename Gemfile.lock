@@ -166,6 +166,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (0.3.19)
+      capybara (>= 1.0, < 3)
+      launchy
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chunky_png (1.3.0)
@@ -488,6 +491,7 @@ DEPENDENCIES
   aws-sdk
   bugsnag
   capybara
+  capybara-screenshot
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
