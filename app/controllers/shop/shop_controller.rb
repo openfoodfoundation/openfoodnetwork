@@ -1,7 +1,7 @@
 class Shop::ShopController < BaseController
   layout "darkswarm"
   before_filter :require_distributor_chosen
-  before_filter :set_order_cycles, only: :show
+  before_filter :set_order_cycles
 
   def show
   end
@@ -11,7 +11,6 @@ class Shop::ShopController < BaseController
       .valid_products_distributed_by(current_distributor).andand
       .select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
       .sort_by {|p| p.name }
-
       render json: "", status: 404
     end
   end
@@ -35,7 +34,7 @@ class Shop::ShopController < BaseController
     @order_cycles = OrderCycle.with_distributor(@distributor).active
     
     # And default to the only order cycle if there's only the one
-    if @order_cycles.count == 1
+    if @order_cycles.count == 1 and current_order_cycle.nil?
       current_order(true).set_order_cycle! @order_cycles.first
     end
   end

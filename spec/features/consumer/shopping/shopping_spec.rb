@@ -115,7 +115,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         page.should have_selector 'tr.product > td', text: "from $43.00"
       end
     end
-    
 
     describe "group buy products" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
