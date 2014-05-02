@@ -13,7 +13,9 @@ namespace :karma  do
     Tempfile.open('karma_unit.js', Rails.root.join('tmp') ) do |f|
       f.write unit_js(application_spec_files)
       f.flush
-      system "karma #{command} #{f.path} #{args}"
+      trap('SIGINT') { puts "Killing Karma"; exit }
+      exec "karma #{command} #{f.path} #{args}"
+      #%x{karma #{command} #{f.path} #{args}}
     end
   end
 
