@@ -95,7 +95,6 @@ feature "As a consumer I want to check out my cart", js: true do
               fill_in "Postcode", with: "3066"
             end
             click_button "Purchase"
-            sleep 10
             page.should have_content "Your order has been processed successfully"
 
             # It sends a confirmation email containing the distributor info, pickup time and pickup instructions
@@ -138,7 +137,6 @@ feature "As a consumer I want to check out my cart", js: true do
             toggle_accordion "Shipping"
             check "Shipping address same as billing address?"
             click_button "Purchase"
-            sleep 10
             page.should have_content "Your order has been processed successfully"
           end
         end

@@ -584,7 +584,6 @@ feature %q{
 
         first("a.delete-product").click
 
-        sleep(0.5) if page.has_selector? "a.delete-product", :count => 3 # Wait for product to be removed from page
         page.should have_selector "a.delete-product", :count => 2
 
         visit '/admin/products/bulk_edit'
@@ -606,7 +605,6 @@ feature %q{
 
         first("a.delete-variant").click
         
-        sleep(0.5) if page.has_selector? "a.delete-variant", :count => 3 # Wait for variant to be removed from page
         page.should have_selector "a.delete-variant", :count => 2
 
         visit '/admin/products/bulk_edit'
