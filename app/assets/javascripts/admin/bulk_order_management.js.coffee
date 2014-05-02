@@ -1,16 +1,7 @@
-orderManagementModule = angular.module("ofn.bulk_order_management", ["ofn.shared_services", "ofn.shared_directives", "ofn.dropdown"])
-
-orderManagementModule.config [
-  "$httpProvider"
-  (provider) ->
-    provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
-    provider.defaults.headers.common["Accept"] = "application/json"
-]
-
-orderManagementModule.value "blankOption", ->
+Admin.value "blankOption", ->
   { id: "0", name: "All" }
 
-orderManagementModule.directive "ofnLineItemUpdAttr", [
+Admin.directive "ofnLineItemUpdAttr", [
   "switchClass", "pendingChanges"
   (switchClass, pendingChanges) ->
     require: "ngModel"
@@ -34,14 +25,14 @@ orderManagementModule.directive "ofnLineItemUpdAttr", [
             switchClass( element, "update-pending", ["update-error", "update-success"], false )
 ]
 
-orderManagementModule.directive "ofnConfirmModelChange", (ofnConfirmHandler,$timeout) ->
+Admin.directive "ofnConfirmModelChange", (ofnConfirmHandler,$timeout) ->
   restrict: "A"
   link: (scope, element, attrs) ->
     handler = ofnConfirmHandler scope, -> scope.fetchOrders()
     scope.$watch attrs.ngModel, (oldValue,newValue) ->
       handler() unless oldValue == undefined || newValue == oldValue
 
-orderManagementModule.directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
+Admin.directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
   restrict: "A"
   scope:
     path: "@ofnConfirmLinkPath"
@@ -49,7 +40,7 @@ orderManagementModule.directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
     element.click ofnConfirmHandler scope, ->
       window.location = scope.path
 
-orderManagementModule.factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
+Admin.factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
   return (scope, callback) ->
     template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
     dialogDiv = $compile(template)(scope)
@@ -74,7 +65,7 @@ orderManagementModule.factory "ofnConfirmHandler", (pendingChanges, $compile, $q
       else
         callback()
 
-orderManagementModule.factory "pendingChanges",[
+Admin.factory "pendingChanges",[
   "dataSubmitter"
   (dataSubmitter) ->
     pendingChanges: {}
@@ -108,7 +99,7 @@ orderManagementModule.factory "pendingChanges",[
 ]
 
 
-orderManagementModule.controller "AdminOrderMgmtCtrl", [
+Admin.controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
   ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
 
@@ -290,7 +281,7 @@ orderManagementModule.controller "AdminOrderMgmtCtrl", [
       $scope.quickSearch = ""
 ]
 
-orderManagementModule.filter "selectFilter", (blankOption) ->
+Admin.filter "selectFilter", (blankOption) ->
     return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
       filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedSupplier,"0") || lineItem.supplier.id == selectedSupplier) &&
@@ -298,7 +289,7 @@ orderManagementModule.filter "selectFilter", (blankOption) ->
         (angular.equals(selectedOrderCycle,"0") || lineItem.order.order_cycle.id == selectedOrderCycle)
       filtered
 
-orderManagementModule.filter "variantFilter", ->
+Admin.filter "variantFilter", ->
     return (lineItems,selectedUnitsProduct,selectedUnitsVariant,sharedResource) ->
       filtered = []
       filtered.push lineItem for lineItem in lineItems when (angular.equals(selectedUnitsProduct,{}) ||
@@ -306,7 +297,7 @@ orderManagementModule.filter "variantFilter", ->
       filtered
 
 
-orderManagementModule.factory "dataSubmitter", [
+Admin.factory "dataSubmitter", [
   "$http", "$q", "switchClass"
   ($http, $q, switchClass) ->
     return (changeObj) ->
@@ -320,7 +311,7 @@ orderManagementModule.factory "dataSubmitter", [
       deferred.promise
 ]
 
-orderManagementModule.factory "switchClass", [
+Admin.factory "switchClass", [
   "$timeout"
   ($timeout) ->
     return (element,classToAdd,removeClasses,timeout) ->

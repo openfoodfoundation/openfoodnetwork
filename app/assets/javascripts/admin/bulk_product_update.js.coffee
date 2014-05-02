@@ -1,13 +1,4 @@
-productEditModule = angular.module("ofn.bulk_product_edit", ["ngResource", "ofn.shared_services", "ofn.shared_directives"])
-
-productEditModule.config [
-  "$httpProvider"
-  (provider) ->
-    provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
-    provider.defaults.headers.common["Accept"] = "application/json"
-]
-
-productEditModule.factory "Taxons", ($resource) ->
+Admin.factory "Taxons", ($resource) ->
   resource = $resource "/admin/taxons/search"
 
   return {
@@ -21,7 +12,7 @@ productEditModule.factory "Taxons", ($resource) ->
       data['taxons'].map (result) -> result
   }
 
-productEditModule.directive "ofnTaxonAutocomplete", (Taxons) ->
+Admin.directive "ofnTaxonAutocomplete", (Taxons) ->
   # Adapted from Spree's existing taxon autocompletion
   require: "ngModel"
   link: (scope,element,attrs,ngModel) ->
@@ -43,7 +34,7 @@ productEditModule.directive "ofnTaxonAutocomplete", (Taxons) ->
       scope.$apply ->
         ngModel.$setViewValue element.val()
 
-productEditModule.directive "ofnDecimal", ->
+Admin.directive "ofnDecimal", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     numRegExp = /^\d+(\.\d+)?$/
@@ -56,7 +47,7 @@ productEditModule.directive "ofnDecimal", ->
       viewValue
 
 
-productEditModule.directive "ofnTrackProduct", ['$parse', ($parse) ->
+Admin.directive "ofnTrackProduct", ['$parse', ($parse) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->
@@ -68,7 +59,7 @@ productEditModule.directive "ofnTrackProduct", ['$parse', ($parse) ->
   ]
 
 
-productEditModule.directive "ofnTrackVariant", ['$parse', ($parse) ->
+Admin.directive "ofnTrackVariant", ['$parse', ($parse) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->
@@ -82,7 +73,7 @@ productEditModule.directive "ofnTrackVariant", ['$parse', ($parse) ->
       viewValue
   ]
 
-productEditModule.directive "ofnToggleVariants", ->
+Admin.directive "ofnToggleVariants", ->
   link: (scope, element, attrs) ->
     if scope.displayProperties[scope.product.id].showVariants
       element.removeClass "icon-chevron-right"
@@ -101,7 +92,7 @@ productEditModule.directive "ofnToggleVariants", ->
           element.removeClass "icon-chevron-right"
           element.addClass "icon-chevron-down"
 
-productEditModule.controller "AdminProductEditCtrl", [
+Admin.controller "AdminProductEditCtrl", [
   "$scope", "$timeout", "$http", "dataFetcher"
   ($scope, $timeout, $http, dataFetcher) ->
     $scope.updateStatusMessage =
@@ -525,7 +516,7 @@ productEditModule.controller "AdminProductEditCtrl", [
       Object.keys($scope.dirtyProducts).length
 ]
 
-productEditModule.filter "rangeArray", ->
+Admin.filter "rangeArray", ->
   return (input,start,end) ->
     input.push(i) for i in [start..end]
     input

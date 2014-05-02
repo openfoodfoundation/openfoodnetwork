@@ -2,7 +2,7 @@ describe "AdminOrderMgmtCtrl", ->
   ctrl = scope = httpBackend = null
 
   beforeEach ->
-    module "ofn.bulk_order_management"
+    module "ofn.admin"
   beforeEach inject(($controller, $rootScope, $httpBackend) ->
     scope = $rootScope.$new()
     ctrl = $controller
@@ -377,7 +377,7 @@ describe "managing pending changes", ->
     }
 
   beforeEach ->
-    module "ofn.bulk_order_management", ($provide) ->
+    module "ofn.admin", ($provide) ->
       $provide.value 'dataSubmitter', dataSubmitter
       return
 
@@ -511,7 +511,7 @@ describe "dataSubmitter service", ->
     switchClassSpy = jasmine.createSpy('switchClass')
 
   beforeEach ->
-    module "ofn.bulk_order_management" , ($provide) ->
+    module "ofn.admin" , ($provide) ->
       $provide.value '$q', qMock
       $provide.value '$http', httpMock
       $provide.value 'switchClass', switchClassSpy
@@ -557,7 +557,7 @@ describe "switchClass service", ->
     timeoutMock.cancel = jasmine.createSpy('timeout.cancel')
 
   beforeEach ->
-    module "ofn.bulk_order_management" , ($provide) ->
+    module "ofn.admin" , ($provide) ->
       $provide.value '$timeout', timeoutMock
       return
 

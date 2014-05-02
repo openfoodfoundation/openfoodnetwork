@@ -231,7 +231,7 @@ describe "filtering products for submission to database", ->
 describe "Maintaining a live record of dirty products and properties", ->
   parse = null
   beforeEach ->
-    module "ofn.bulk_product_edit"
+    module "ofn.admin"
   beforeEach inject(($parse) ->
     parse = $parse
   )
@@ -296,7 +296,7 @@ describe "AdminProductEditCtrl", ->
   ctrl = scope = timeout = httpBackend = null
 
   beforeEach ->
-    module "ofn.bulk_product_edit"
+    module "ofn.admin"
   beforeEach inject(($controller, $timeout, $rootScope, $httpBackend) ->
     scope = $rootScope.$new()
     ctrl = $controller
@@ -1415,7 +1415,7 @@ describe "Taxons service", ->
   Taxons = $httpBackend = $resource = null
 
   beforeEach ->
-    module "ofn.bulk_product_edit"
+    module "ofn.admin"
 
   beforeEach inject (_Taxons_, _$resource_, _$httpBackend_) ->
     Taxons = _Taxons_
