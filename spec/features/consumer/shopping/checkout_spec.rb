@@ -71,6 +71,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       describe "Purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
+          ActionMailer::Base.deliveries.clear
           toggle_accordion "Shipping"
           choose sm2.name
           toggle_accordion "Payment Details"
@@ -89,9 +90,13 @@ feature "As a consumer I want to check out my cart", js: true do
             select "Victoria", from: "State"
             fill_in "City", with: "Melbourne"
             fill_in "Postcode", with: "3066"
+
           end
           click_button "Purchase"
           page.should have_content "Your order has been processed successfully", wait: 10
+          ActionMailer::Base.deliveries.length.should == 1
+          email = ActionMailer::Base.deliveries.last
+          email.subject.should include "Spree Demo Site Order Confirmation"
         end
 
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
