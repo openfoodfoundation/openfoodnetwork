@@ -1,4 +1,4 @@
-require 'faker'
+require 'ffaker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do

@@ -1,2 +1,0 @@
-<!-- replace_contents 'figure#logo' -->
-<%= logo 'local_organics_feature/logo.png' %>

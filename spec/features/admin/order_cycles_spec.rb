@@ -7,16 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before :all do
-    @orig_default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 10
-  end
-
-  after :all do
-    Capybara.default_wait_time = @orig_default_wait_time
-  end
-
-
   scenario "listing order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: '4',

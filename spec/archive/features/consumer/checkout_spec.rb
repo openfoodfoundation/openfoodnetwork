@@ -8,15 +8,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
   
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-  
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
 
   background do
     set_feature_toggle :order_cycles, true

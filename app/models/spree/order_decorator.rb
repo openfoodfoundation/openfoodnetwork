@@ -1,3 +1,4 @@
+require 'open_food_network/feature_toggle'
 require 'open_food_network/distribution_change_validator'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|

@@ -18,7 +18,6 @@ feature %q{
   after :all do
     Capybara.default_wait_time = @default_wait_time
   end
-
   context "listing orders" do
     before :each do
       admin_user = quick_login_as_admin
