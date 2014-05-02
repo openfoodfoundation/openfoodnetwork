@@ -6,4 +6,4 @@ Darkswarm.filter 'filterHubs', ->
       matched.toLowerCase().indexOf(text.toLowerCase()) != -1
 
     hubs.filter (hub)->
-      match(hub.name) or match(hub.address.zipcode) or match(hub.address.city)
+      match(hub.name) or match(hub.address.zipcode) or match(hub.address.city) or match(hub.address.state)
