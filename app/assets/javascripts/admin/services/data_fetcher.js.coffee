@@ -1,6 +1,4 @@
-sharedServicesModule = angular.module("ofn.shared_services", [])
-
-sharedServicesModule.factory "dataFetcher", [
+Admin.factory "dataFetcher", [
   "$http", "$q"
   ($http, $q) ->
     return (dataLocation) ->

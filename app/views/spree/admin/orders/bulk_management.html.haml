@@ -4,7 +4,7 @@
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
-%div{ 'ng-app' => 'ofn.bulk_order_management', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
+%div{ 'ng-app' => 'ofn.admin', 'ng-controller' => 'AdminOrderMgmtCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
   .filters{ :class => "sixteen columns alpha" }
