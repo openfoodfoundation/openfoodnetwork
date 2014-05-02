@@ -106,12 +106,14 @@ feature "As a consumer I want to check out my cart", js: true do
             pickup_time.should_not be_blank
             pickup_instructions.should_not be_blank
 
-            wait_until { ActionMailer::Base.deliveries.length == 1 }
-            email = ActionMailer::Base.deliveries.last
+            Capybara.using_wait_time(60) do
+              wait_until { ActionMailer::Base.deliveries.length == 1 }
+              email = ActionMailer::Base.deliveries.last
 
-            email.body.should include distributor_info
-            email.body.should include pickup_time
-            email.body.should include pickup_instructions
+              email.body.should include distributor_info
+              email.body.should include pickup_time
+              email.body.should include pickup_instructions
+            end
           end
 
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
