@@ -7,15 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 10
-  end
-
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
   context "listing orders" do
     before :each do
       login_to_admin_section
