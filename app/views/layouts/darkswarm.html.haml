@@ -14,16 +14,18 @@
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
-    = render partial: "shared/current_hub"
-    = render partial: "shared/current_user"
-    = render partial: "shared/menu"
-    = display_flash_messages
-    %ofn-flash
+    .off-canvas-wrap
+      .inner-wrap
+        = render partial: "shared/current_hub"
+        = render partial: "shared/current_user"
+        = render partial: "shared/menu/menu"
+        = display_flash_messages
+        %ofn-flash
 
-    = render "shared/sidebar"
+        = render "shared/sidebar"
 
-    %section{ role: "main" }
-      = yield
-      
-      #footer
-    = yield :scripts
+        %section{ role: "main" }
+          = yield
+          
+          #footer
+        = yield :scripts
