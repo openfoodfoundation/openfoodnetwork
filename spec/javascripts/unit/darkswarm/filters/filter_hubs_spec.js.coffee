@@ -21,10 +21,10 @@ describe 'filtering Hubs', ->
     module 'Darkswarm'
     inject ($filter) ->
       filter = $filter
-      filterHubs = $filter('filterHubs')
+      filterHubs = $filter('hubs')
 
   it 'has a hub filter', ->
-    expect(filter('filterHubs')).not.toBeNull()
+    expect(filter('hubs')).not.toBeNull()
 
   it "filters by name", ->
     expect(filterHubs(hubs, 'donkeys').length).toEqual 1

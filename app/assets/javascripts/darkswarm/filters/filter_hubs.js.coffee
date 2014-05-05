@@ -1,9 +1,9 @@
-Darkswarm.filter 'filterHubs', -> 
+Darkswarm.filter 'hubs', (Matcher)-> 
   (hubs, text) ->
     hubs ||= []
     text ?= ""
-    match = (matched)->
-      matched.toLowerCase().indexOf(text.toLowerCase()) != -1
 
-    hubs.filter (hub)->
-      match(hub.name) or match(hub.address.zipcode) or match(hub.address.city) or match(hub.address.state)
+    hubs.filter (hub)=>
+      Matcher.match [
+        hub.name, hub.address.zipcode, hub.address.city, hub.address.state
+      ], text
