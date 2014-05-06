@@ -5,11 +5,12 @@ Darkswarm.factory 'Navigation', ($location) ->
     active: (path)->
       $location.path() == path 
 
-    navigate: (path)->
+    navigate: (path)=>
       @path = path
       $location.path(@path)
 
-    toggle: (path = false)->
+    toggle: (path = false)=>
+      console.log "toggling"
       @path = path || @path
       if $location.path() == @path
         $location.path("/")
