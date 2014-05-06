@@ -67,9 +67,18 @@
   transition: all 100ms ease-in-out
   -webkit-transform-style: preserve-3d
 
+@mixin box-shadow($box-shadow)
+  -moz-box-shadow: $box-shadow
+  -webkit-box-shadow: $box-shadow
+  box-shadow: $box-shadow
+
 @mixin avenir
   font-family: "AvenirBla_IE", "AvenirBla"
 
 @mixin textpress
   text-shadow: 0 -1px 1px #111111,  0 1px 2px #222222
+
+@mixin textsoftpress
+  text-shadow: 0 0 3px rgba(0,0,0,0.35)
+
 

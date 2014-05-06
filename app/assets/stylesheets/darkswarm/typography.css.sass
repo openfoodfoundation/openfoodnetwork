@@ -16,9 +16,9 @@
   font-family: 'AvenirMed'
   src: url("/AvenirLTStd-Medium.otf") format("opentype")
         
-//body 
-  //font-family: "AvenirBla_IE", "AvenirBla"
-
+body 
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  
 a
   color: $clr-brick
   &:hover
@@ -32,6 +32,19 @@ h1, h2, h3, h4, h5, h6, .avenir
   @include avenir
   padding: 0px
 
+ul.ofn-list
+  margin-left: 0.5em
+  li
+    list-style: none
+  li:before
+    content: "\f112"
+    font-family: "foundation-icons"
+    display: inline-block
+    font-weight: normal
+    font-style: normal
+    font-variant: normal
+    text-transform: none
+    font-size: 80%
 
 .light-grey
   color: #666666
