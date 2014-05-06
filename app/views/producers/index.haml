@@ -4,8 +4,16 @@
   -#%pre
     -#{{ Producers.producers | json }}
 
-  .row
-    .small-12.columns
+  #active-table-search.row
+    .small-12.columns.text-center
+      %h1 Producers
+      %div 
+        Select a 
+        %ofn-modal{title: "producer"}
+          = render partial: "modals/producers"
+        from the list below:
+        %p
+
       %input{type: :text, 
       "ng-model" => "query", 
       placeholder: "Search postcode, suburb or hub name...",
@@ -23,3 +31,5 @@
           .small-12.columns
             = render partial: 'producers/skinny'
             = render partial: 'producers/fat'
+
+= render partial: "shared/footer"
