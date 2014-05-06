@@ -8,7 +8,7 @@ module ShopWorkflow
   end
 
   def toggle_accordion(name)
-    find("dd a", text: name).click
+    find("dd a", text: name).trigger "click"
   end
 
   def add_product_to_order_cycle(exchange, product)
