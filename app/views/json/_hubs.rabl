@@ -13,6 +13,10 @@ node :path do |hub|
   shop_enterprise_path(hub) 
 end
 
+node :hash do |hub|
+  hub.to_param
+end
+
 node :active do |hub|
   @active_distributors.include?(hub)
 end

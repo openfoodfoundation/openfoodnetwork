@@ -1,0 +1,6 @@
+%div{"ng-controller" => "AuthenticationCtrl"}
+  %tabset
+    %ng-include{src: "'login.html'"}
+    %ng-include{src: "'signup.html'"}
+    %ng-include{src: "'forgot.html'"}
+%a.close-reveal-modal{"ng-click" => "$close()"} ×

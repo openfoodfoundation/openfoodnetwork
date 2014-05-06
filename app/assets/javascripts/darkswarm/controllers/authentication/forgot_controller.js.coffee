@@ -1,14 +1,6 @@
-Darkswarm.controller "ForgotSidebarCtrl", ($scope, $http, $location, SpreeUser, Navigation) ->
-  $scope.spree_user = SpreeUser.spree_user
+Darkswarm.controller "ForgotCtrl", ($scope, $http, $location, AuthenticationService) ->
   $scope.path = "/forgot"
   $scope.sent = false
-  Navigation.paths.push $scope.path
-
-  $scope.active = ->
-    $location.path() == $scope.path
-
-  $scope.select = ->
-    Navigation.navigate($scope.path)
 
   $scope.submit = ->
     if $scope.spree_user.email != null

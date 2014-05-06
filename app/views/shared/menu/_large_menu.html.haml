@@ -1,10 +1,13 @@
 %nav.top-bar.hide-for-small{'data' => 'topbar'}
   %section.top-bar-section
     %ul.left
+<<<<<<< HEAD
       -#%li
         -#%a.icon{"ng-click" => "Sidebar.toggle()"}
           -#%i.fi-list
       %li= link_to image_tag("ofn_logo_small.png"), root_path      
+=======
+>>>>>>> Removing pointless foundation crud, reworking the login
       %li.divider
       %li
         %a
@@ -16,14 +19,14 @@
       %li.divider
       %li
         %a
-          %span.nav-primary{href: producers_path} Producers
+          %span.nav-primary{href: main_app.producers_path} Producers
       %li.divider
       %li
         %a
           %span.nav-primary{href: ""} Groups
       %li.divider
   %section.top-bar-section
-    %ul.right{"ng-controller" => "AuthenticationActionsCtrl"}
+    %ul.right{"ng-controller" => "AuthenticationCtrl"}
       %li.divider
       - if spree_current_user.nil?
         = render 'shared/signed_out'

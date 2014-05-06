@@ -1,12 +1,12 @@
-%aside#sidebar.right-off-canvas-menu{ role: "complementary", "ng-controller" => "SidebarCtrl", 
-"ng-class" => "{'active' : Sidebar.active()}"}
+-#%aside#sidebar.right-off-canvas-menu{ role: "complementary", "ng-controller" => "SidebarCtrl", 
+-#"ng-class" => "{'active' : Sidebar.active()}"}
 
-  - if spree_current_user.nil?
-    %tabset
-      = render partial: "shared/login_sidebar"
-      = render partial: "shared/signup_sidebar"
-      = render partial: "shared/forgot_sidebar"
-  - else
-    = render partial: "shared/account_sidebar"
+  -#- if spree_current_user.nil?
+    -#%tabset
+      -#= render partial: "shared/login_sidebar"
+      -#= render partial: "shared/signup_sidebar"
+      -#= render partial: "shared/forgot_sidebar"
+  -#- else
+    -#= render partial: "shared/account_sidebar"
             
-  = yield :sidebar
+  -#= yield :sidebar
