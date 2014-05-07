@@ -96,7 +96,8 @@ feature "As a consumer I want to check out my cart", js: true do
           page.should have_content "Your order has been processed successfully", wait: 10
           ActionMailer::Base.deliveries.length.should == 1
           email = ActionMailer::Base.deliveries.last
-          email.subject.should include "Spree Demo Site Order Confirmation"
+          site_name = Spree::Config[:site_name]
+          email.subject.should include "#{site_name} Order Confirmation"
         end
 
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
