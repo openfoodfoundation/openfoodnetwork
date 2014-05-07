@@ -586,24 +586,23 @@ feature %q{
 
   context "as an enterprise manager" do
     let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
-    let(:s2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
     let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
-    let!(:line_item_distributed) { FactoryGirl.create(:line_item, order: o1 ) }
-    let!(:line_item_not_distributed) { FactoryGirl.create(:line_item, order: o2 ) }
+    let!(:line_item_distributed) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
+    let!(:line_item_not_distributed) { FactoryGirl.create(:line_item, order: o2, product: create(:product, supplier: s1) ) }
 
     before(:each) do
       @enterprise_user = create_enterprise_user
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      #login_to_admin_as 
+      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return @enterprise_user
       quick_login_as @enterprise_user
     end
 
-    it "shows only line item from orders that I supply" do
+    it "shows only line item from orders that I distribute, and not those that I supply" do
       visit '/admin/orders/bulk_management'
 
       page.should have_selector "tr#li_#{line_item_distributed.id}", :visible => true
