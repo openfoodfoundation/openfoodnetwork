@@ -15,7 +15,6 @@ namespace :karma  do
       f.flush
       trap('SIGINT') { puts "Killing Karma"; exit }
       exec "karma #{command} #{f.path} #{args}"
-      #%x{karma #{command} #{f.path} #{args}}
     end
   end
 

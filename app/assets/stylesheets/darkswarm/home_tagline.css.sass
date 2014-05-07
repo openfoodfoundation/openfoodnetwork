@@ -1,0 +1,20 @@
+@import branding
+@import mixins
+
+#tagline
+  background-color: black
+  background-image: url("/assets/home/tagline-bg.jpg")
+  @include fullbg
+  height: 400px
+  padding: 40px 0px
+  h1, h2, p
+    color: white
+  h1
+    margin-bottom: 1em  
+  h2
+    font-size: 1.6875rem
+  a
+    color: $clr-brick-bright
+    &:hover, &:active, &:focus
+      color: $clr-brick-light-bright
+      @include textsoftpress

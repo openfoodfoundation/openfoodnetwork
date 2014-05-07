@@ -1,0 +1,40 @@
+%nav.top-bar.hide-for-small{'data' => 'topbar'}
+  %section.top-bar-section
+    %ul.left
+      %li= link_to image_tag("ofn_logo_small.png"), root_path      
+      %li.divider
+      %li
+        %a
+          %span.nav-primary{href: ""} Shop
+      %li.divider
+      %li
+        %a
+          %span.nav-primary{href: ""} Map
+      %li.divider
+      %li
+        %a
+          %span.nav-primary{href: main_app.producers_path} Producers
+      %li.divider
+      %li
+        %a
+          %span.nav-primary{href: ""} Groups
+      %li.divider
+  %section.top-bar-section
+    %ul.right{"ng-controller" => "AuthenticationCtrl"}
+      %li.divider
+      - if spree_current_user.nil?
+        = render 'shared/signed_out'
+      - else
+        = render 'shared/signed_in'
+      %li.divider
+      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.id"}
+        %a{href: main_app.shop_path}
+          %em Shopping &#64; 
+          %span.nav-primary.nav-branded {{ CurrentHub.name }}
+      %li.divider
+      %li.cart
+        %a.icon{href: cart_url}
+          %i.fi-shopping-cart.nav-branded 
+            %span
+              = cart_count
+              items

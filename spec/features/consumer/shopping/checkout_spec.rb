@@ -9,122 +9,120 @@ feature "As a consumer I want to check out my cart", js: true do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
-  let(:order) { Spree::Order.last }
+  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
   before do
-    order_cycle # force this to load
-    create_enterprise_group_for distributor
+    set_order order
+    add_product_to_cart
   end
 
-  describe "logged out, distributor selected, order cycle selected, product in cart" do
-    let(:user) { create_enterprise_user }
+  it "shows the current distributor oncheckout" do
+    visit checkout_path 
+    page.should have_content distributor.name
+  end
+
+  describe "with shipping methods" do
+    let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
+    let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
     before do
-      select_distributor
-      select_order_cycle
-      add_product_to_cart
+      distributor.shipping_methods << sm1 
+      distributor.shipping_methods << sm2 
     end
 
-    describe "with shipping methods" do
-      let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
-      let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
+    context "on the checkout page" do
       before do
-        distributor.shipping_methods << sm1 
-        distributor.shipping_methods << sm2 
+        visit checkout_path
       end
 
-      context "on the checkout page" do
+      it "shows all shipping methods, but doesn't show ship address when not needed" do
+        toggle_accordion "Shipping"
+        page.should have_content "Frogs"
+        page.should have_content "Donkeys"
+      end
+
+      context "When shipping method requires an address" do
         before do
-          visit "/shop/checkout"
-        end
-        it "shows all shipping methods, but doesn't show ship address when not needed" do
           toggle_accordion "Shipping"
-          page.should have_content "Frogs"
-          page.should have_content "Donkeys"
+          find(:radio_button, sm1.name, {}).trigger "click"
         end
-
-        context "When shipping method requires an address" do
-          before do
-            toggle_accordion "Shipping"
-            choose(sm1.name)
-          end
-          it "shows ship address forms when 'same as billing address' is unchecked" do
-            uncheck "Shipping address same as billing address?"
-            find("#ship_address > div.visible").visible?.should be_true
-          end
+        it "shows ship address forms when 'same as billing address' is unchecked" do
+          uncheck "Shipping address same as billing address?"
+          find("#ship_address > div.visible").visible?.should be_true
         end
       end
+    end
 
-      describe "with payment methods" do
-        let(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-        let(:pm2) { create(:payment_method, distributors: [distributor]) }
-        let(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
+    describe "with payment methods" do
+      let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
+      let!(:pm2) { create(:payment_method, distributors: [distributor]) }
+      let!(:pm3) { create(:payment_method, distributors: [distributor], name: "Paypal", type: "Spree::BillingIntegration::PaypalExpress") }
 
-        before do
-          pm1 # Lazy evaluation of ze create()s
-          pm2
-          visit "/shop/checkout"
+      before do
+        visit checkout_path
+        toggle_accordion "Payment Details"
+      end
+
+      it "shows all available payment methods" do
+        page.should have_content pm1.name
+        page.should have_content pm2.name
+      end
+
+      describe "Purchasing" do
+        it "takes us to the order confirmation page when we submit a complete form" do
+          ActionMailer::Base.deliveries.clear
+          toggle_accordion "Shipping"
+          choose sm2.name
           toggle_accordion "Payment Details"
+          choose pm1.name
+          toggle_accordion "Customer Details"
+          within "#details" do
+            fill_in "First Name", with: "Will"
+            fill_in "Last Name", with: "Marshall"
+            fill_in "Email", with: "test@test.com"
+            fill_in "Phone", with: "0468363090"
+          end
+          toggle_accordion "Billing"
+          within "#billing" do
+            fill_in "Address", with: "123 Your Face"
+            select "Australia", from: "Country"
+            select "Victoria", from: "State"
+            fill_in "City", with: "Melbourne"
+            fill_in "Postcode", with: "3066"
+
+          end
+          click_button "Purchase"
+          page.should have_content "Your order has been processed successfully", wait: 10
+          ActionMailer::Base.deliveries.length.should == 1
+          email = ActionMailer::Base.deliveries.last
+          email.subject.should include "Spree Demo Site Order Confirmation"
         end
 
-        it "shows all available payment methods" do
-          page.should have_content pm1.name
-          page.should have_content pm2.name
-        end
-
-        describe "Purchasing" do
-          it "takes us to the order confirmation page when we submit a complete form" do
-            toggle_accordion "Shipping"
-            choose sm2.name
-            toggle_accordion "Payment Details"
-            choose pm1.name
-            toggle_accordion "Customer Details"
-            within "#details" do
-              fill_in "First Name", with: "Will"
-              fill_in "Last Name", with: "Marshall"
-              fill_in "Email", with: "test@test.com"
-              fill_in "Phone", with: "0468363090"
-            end
-            toggle_accordion "Billing"
-            within "#billing" do
-              fill_in "Address", with: "123 Your Face"
-              select "Australia", from: "Country"
-              select "Victoria", from: "State"
-              fill_in "City", with: "Melbourne"
-              fill_in "Postcode", with: "3066"
-            end
-            click_button "Purchase"
-            sleep 10
-            page.should have_content "Your order has been processed successfully"
+        it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+          toggle_accordion "Shipping"
+          choose sm1.name
+          toggle_accordion "Payment Details"
+          choose pm1.name
+          toggle_accordion "Customer Details"
+          within "#details" do
+            fill_in "First Name", with: "Will"
+            fill_in "Last Name", with: "Marshall"
+            fill_in "Email", with: "test@test.com"
+            fill_in "Phone", with: "0468363090"
           end
-
-          it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
-            toggle_accordion "Shipping"
-            choose sm1.name
-            toggle_accordion "Payment Details"
-            choose pm1.name
-            toggle_accordion "Customer Details"
-            within "#details" do
-              fill_in "First Name", with: "Will"
-              fill_in "Last Name", with: "Marshall"
-              fill_in "Email", with: "test@test.com"
-              fill_in "Phone", with: "0468363090"
-            end
-            toggle_accordion "Billing"
-            within "#billing" do
-              fill_in "City", with: "Melbourne"
-              fill_in "Postcode", with: "3066"
-              fill_in "Address", with: "123 Your Face"
-              select "Australia", from: "Country"
-              select "Victoria", from: "State"
-            end
-            toggle_accordion "Shipping"
-            check "Shipping address same as billing address?"
-            click_button "Purchase"
-            sleep 10
-            page.should have_content "Your order has been processed successfully"
+          toggle_accordion "Billing"
+          within "#billing" do
+            fill_in "City", with: "Melbourne"
+            fill_in "Postcode", with: "3066"
+            fill_in "Address", with: "123 Your Face"
+            select "Australia", from: "Country"
+            select "Victoria", from: "State"
           end
+          toggle_accordion "Shipping"
+          check "Shipping address same as billing address?"
+          click_button "Purchase"
+          page.should have_content "Your order has been processed successfully", wait: 10
         end
       end
     end

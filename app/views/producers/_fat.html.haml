@@ -1,0 +1,16 @@
+.row.active_table_row{"ng-show" => "open()"}
+  .columns.small-4
+    %strong Shop for
+    %p.trans-sentence
+      {{ producer.taxons | printArray }}
+  .columns.small-8
+    About Us
+
+.row.active_table_row.link{"ng-show" => "open()", "ng-repeat" => "hub in producer.hubs"}
+  .columns.small-11
+    %a{"bo-href" => "hub.path"} 
+      Shop at
+      %strong {{ hub.name }}
+  .columns.small-1.text-right
+    %a{"bo-href" => "hub.path"} 
+      %i.fi-arrow-right

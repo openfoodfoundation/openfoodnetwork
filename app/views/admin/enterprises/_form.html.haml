@@ -25,18 +25,18 @@
         = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
   .row
     .alpha.two.columns &nbsp;
-    .omega.ten.columns
+    .six.columns
       = f.check_box :is_primary_producer
       = f.label :is_primary_producer, 'Producer'
       &nbsp;
       = f.check_box :is_distributor
       = f.label :is_distributor, 'Hub'
-      &nbsp;
-      = f.check_box :visible
-      = f.label :visible, 'Visible in search?'
 
       .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
         %a What's this?
+    .omega.four.columns
+      = f.check_box :visible
+      = f.label :visible, 'Visible in search?'
 
   = f.fields_for :address do |af|
     %fieldset.no-border-bottom

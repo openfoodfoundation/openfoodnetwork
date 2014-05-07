@@ -1,40 +1,36 @@
 @import branding
 
-.active_table .active_table_node
+.hubs
+  .active_table .active_table_node
 
-  &.open
-    .active_table_row:first-child
-      border-top: 1px solid $clr-brick
-      border-left: 1px solid $clr-brick
-      border-right: 1px solid $clr-brick
-      &:hover, &:active, &:focus
-        color: $clr-brick
-
-    .active_table_row:nth-child(2)
-      border-left: 1px solid $clr-brick
-      border-right: 1px solid $clr-brick
-      border-bottom: 1px solid $clr-brick
-
-    .active_table_row.link
-      background-color: $clr-brick
-      &:hover
-        background-color: $clr-brick-bright
-  
-  
-  &.closed
-    &:hover, &:active, &:focus
-      border: 1px solid $clr-brick
-      color: $clr-brick
-
-  &.current
-    &.closed
-      &, & *
-        color: $clr-brick
     &.open
       .active_table_row:first-child
-        &, & *
+        border-top: 1px solid $clr-brick
+        border-left: 1px solid $clr-brick
+        border-right: 1px solid $clr-brick
+        &:hover, &:active, &:focus
+          color: $clr-brick
+
+      .active_table_row:nth-child(2)
+        border-left: 1px solid $clr-brick
+        border-right: 1px solid $clr-brick
+        border-bottom: 1px solid $clr-brick
+
+      .active_table_row.link
+        background-color: $clr-brick
+        &:hover
+          background-color: $clr-brick-bright
+    
+    &.closed
+      &:hover, &:active, &:focus
+        border: 1px solid $clr-brick
         color: $clr-brick
 
-
-
-
+    &.current
+      &.closed
+        &, & *
+          color: $clr-brick
+      &.open
+        .active_table_row:first-child
+          &, & *
+          color: $clr-brick

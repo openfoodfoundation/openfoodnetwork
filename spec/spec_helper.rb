@@ -11,6 +11,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
+require 'capybara-screenshot/rspec'
 require 'database_cleaner'
 
 # Allow connections to phantomjs/selenium whilst raising errors
@@ -26,6 +27,7 @@ require 'spree/core/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
 require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
+require 'spree/core/testing_support/authorization_helpers'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
@@ -41,9 +43,10 @@ Capybara.register_driver :poltergeist do |app|
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
   #options.merge! {inspector: true}
-
   Capybara::Poltergeist::Driver.new(app, options)
 end
+
+Capybara.default_wait_time = 30
 
 
 require "paperclip/matchers"

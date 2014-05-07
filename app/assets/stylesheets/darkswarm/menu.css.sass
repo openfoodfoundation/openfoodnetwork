@@ -1,0 +1,26 @@
+@import branding
+@import mixins
+
+.inner-wrap
+  padding-top: 45px
+
+.top-bar
+  @include box-shadow(0 2px 3px 0 rgba(0,0,0,0.25))
+
+nav
+  @include textpress
+  .top-bar-section ul li > a
+    font-size: 0.75rem
+    height: 45px
+    @include csstrans
+    opacity: 0.8
+    &:hover, &:focus, &:active
+      opacity: 1
+  .nav-branded
+    color: $clr-brick-light-bright
+  .nav-primary
+    @include avenir
+    font-size: 0.875rem
+
+nav.top-bar a.icon i
+  font-size: 22px

@@ -8,7 +8,7 @@
       - else
         = @order.distributor.next_collection_at
 
-  = render partial: "shop/details"
+  = render partial: "shopping_shared/details"
   
   %fieldset
     - if @order.line_items.empty?
@@ -54,5 +54,5 @@
               = button_tag :class => 'secondary', :id => 'update-button' do
                 = t(:update)
               = t(:or)
-              = link_to "Checkout", main_app.shop_checkout_path, class: "button checkout primary", id: "checkout-link"
+              = link_to "Checkout", main_app.checkout_path, class: "button checkout primary", id: "checkout-link"
 

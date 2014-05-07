@@ -3,10 +3,20 @@
 
 footer
   background: $dark-grey
+  border-top: 1px dotted white
   @include panepadding
   .row
     &, & *
       color: white
+    a, a > i
+      @include csstrans
+    a, a *  
+      color: $clr-brick-light-bright
+      &:hover, &:active, &:focus
+        color: $clr-brick-bright
+        @include textsoftpress
+  small
+    font-size: 0.75rem
   span.email
     direction: rtl
     unicode-bidi: bidi-override

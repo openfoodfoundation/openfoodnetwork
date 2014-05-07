@@ -5,7 +5,10 @@ feature %q{
   I want to be able to manage orders in bulk
 } , js: true do
   include AuthenticationWorkflow
+  include AuthorizationHelpers
   include WebHelper
+
+  stub_authorization!
 
   before :all do
     @default_wait_time = Capybara.default_wait_time
@@ -15,15 +18,14 @@ feature %q{
   after :all do
     Capybara.default_wait_time = @default_wait_time
   end
-
   context "listing orders" do
     before :each do
-      login_to_admin_section
+      admin_user = quick_login_as_admin
+      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     it "displays a Bulk Management Tab under the Orders item" do
       visit '/admin/orders'
-
       page.should have_link "Bulk Order Management"
       click_link "Bulk Order Management"
       page.should have_selector "h1.page-title", text: "Bulk Order Management"
@@ -32,6 +34,7 @@ feature %q{
     it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
       page.should have_text "No matching line items found."
+
     end
 
     context "displaying the list of line items" do
@@ -107,7 +110,10 @@ feature %q{
 
   context "altering line item properties" do
     before :each do
-      login_to_admin_section
+      #login_to_admin_section
+      #quick_login_as_admin
+      admin_user = quick_login_as_admin
+      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     context "tracking changes" do
@@ -155,7 +161,10 @@ feature %q{
 
   context "using page controls" do
     before :each do
-      login_to_admin_section
+      #login_to_admin_section
+      #quick_login_as_admin
+      admin_user = quick_login_as_admin
+      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
@@ -590,7 +599,8 @@ feature %q{
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      login_to_admin_as @enterprise_user
+      #login_to_admin_as 
+      quick_login_as @enterprise_user
     end
 
     it "shows only line item from orders that I supply" do

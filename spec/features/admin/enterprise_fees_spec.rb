@@ -7,15 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
   
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-  
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
   scenario "listing enterprise fees" do
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing')
     amount = fee.calculator.preferred_amount

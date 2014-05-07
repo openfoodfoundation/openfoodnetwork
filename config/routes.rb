@@ -1,19 +1,17 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
-  resource :shop, controller: "shop/shop" do
+  resource :shop, controller: "shop" do
     get :products
     post :order_cycle
     get :order_cycle
   end
 
-  resources :producers, only: :index
+  resources :producers
 
-  namespace :shop do
-    get '/checkout', :to => 'checkout#edit' , :as => :checkout
-    put '/checkout', :to => 'checkout#update' , :as => :update_checkout
-    get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
-  end
+  get '/checkout', :to => 'checkout#edit' , :as => :checkout
+  put '/checkout', :to => 'checkout#update' , :as => :update_checkout
+  get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
 
   resources :enterprises do
     collection do

@@ -7,16 +7,8 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/openfoodfoundation/chili.git
-  revision: b82608623d504eb39f852115b138a53af5f89505
-  specs:
-    chili (3.1.0)
-      deface (~> 1.0.0.rc2)
-      rails (~> 3.2)
-
-GIT
   remote: git://github.com/openfoodfoundation/spree.git
-  revision: 1c133672652e1ee8b6c8d694efe258e62378062e
+  revision: da651b40f5c6cdd32e00b060729eb9aefd4f615f
   branch: 1-3-stable
   specs:
     spree (1.3.3)
@@ -103,20 +95,6 @@ GIT
       activemodel (>= 3.0)
       railties (>= 3.0)
 
-PATH
-  remote: lib/chili/eaterprises_feature
-  specs:
-    eaterprises_feature (0.0.1)
-      chili (~> 3.1)
-      rails (~> 3.2.11)
-
-PATH
-  remote: lib/chili/local_organics_feature
-  specs:
-    local_organics_feature (0.0.1)
-      chili (~> 3.1)
-      rails (~> 3.2.11)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -134,16 +112,16 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_utils (2.0.1)
+    active_utils (2.0.2)
       activesupport (>= 2.3.11)
       i18n
-    activemerchant (1.40.0)
+    activemerchant (1.43.0)
       active_utils (~> 2.0, >= 2.0.1)
       activesupport (>= 2.3.14, < 5.0.0)
       builder (>= 2.1.2, < 4.0.0)
       i18n (~> 0.5)
       json (~> 1.7)
-      money (< 6.0.0)
+      money (< 7.0.0)
       nokogiri (~> 1.4)
     activemodel (3.2.17)
       activesupport (= 3.2.17)
@@ -162,9 +140,10 @@ GEM
     acts_as_list (0.1.4)
     addressable (2.3.3)
     andand (1.3.3)
-    angular-rails-templates (0.0.7)
+    angular-rails-templates (0.1.1)
       railties (>= 3.1)
       sprockets
+      tilt
     angularjs-rails (1.2.13)
     ansi (1.4.2)
     arel (3.0.3)
@@ -188,13 +167,16 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (0.3.19)
+      capybara (>= 1.0, < 3)
+      launchy
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chunky_png (1.3.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
-    cocaine (0.5.1)
+    cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -204,7 +186,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    colorize (0.6.0)
+    colorize (0.7.2)
     columnize (0.3.6)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
@@ -250,8 +232,6 @@ GEM
     factory_girl_rails (3.3.0)
       factory_girl (~> 3.3.0)
       railties (>= 3.0.0)
-    faker (1.0.1)
-      i18n (~> 0.4)
     ffaker (1.15.0)
     ffi (1.9.3)
     fog (1.14.0)
@@ -299,8 +279,8 @@ GEM
     highline (1.6.18)
     hike (1.2.3)
     http_parser.rb (0.5.3)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
+    httparty (0.13.1)
+      json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
     immigrant (0.1.6)
@@ -334,13 +314,13 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.5.3)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
     money (5.0.0)
       i18n (~> 0.4)
       json
-    multi_json (1.9.2)
+    multi_json (1.10.0)
     multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -399,7 +379,7 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.9.0)
-    rake (10.1.1)
+    rake (10.3.1)
     ransack (0.7.2)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
@@ -461,7 +441,7 @@ GEM
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.19.0)
+    thor (0.19.1)
     tilt (1.4.1)
     timecop (0.6.2.2)
     timers (1.1.0)
@@ -474,7 +454,7 @@ GEM
       sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
@@ -512,7 +492,7 @@ DEPENDENCIES
   aws-sdk
   bugsnag
   capybara
-  chili!
+  capybara-screenshot
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
@@ -520,9 +500,7 @@ DEPENDENCIES
   db2fog
   debugger-linecache
   deface!
-  eaterprises_feature!
   factory_girl_rails
-  faker
   foreigner
   foundation-icons-sass-rails
   foundation-rails
@@ -539,7 +517,6 @@ DEPENDENCIES
   jquery-rails
   json_spec
   letter_opener
-  local_organics_feature!
   momentjs-rails
   newrelic_rpm
   oj

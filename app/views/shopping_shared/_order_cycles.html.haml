@@ -1,0 +1,18 @@
+%ordercycle{"ng-controller" => "OrderCycleCtrl"}
+  :javascript
+    angular.module('Darkswarm').value('orderCycleData', #{render "json/order_cycle"})
+
+  - if @order_cycles and @order_cycles.empty?
+    Orders are currently closed for this hub
+    %p 
+      Please contact your hub directly to see if they accept late orders, 
+      or wait until the next cycle opens.
+
+    = render partial: "shopping_shared/next_order_cycle"
+    = render partial: "shopping_shared/last_order_cycle"
+
+  - else
+    %form.custom
+      = yield :order_cycle_form
+
+

@@ -1,4 +1,4 @@
-#hubs{"ng-controller" => "HubsCtrl"}
+#hubs.hubs{"ng-controller" => "HubsCtrl"}
   :javascript
     angular.module('Darkswarm').value('hubs', #{render "json/hubs"})
 
@@ -12,7 +12,7 @@
         from the list below:
         %p
 
-  #hub-search.row
+  #active-table-search.row
     .small-12.columns
       %input{type: :text, 
       "ng-model" => "query", 
@@ -23,7 +23,7 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row{"ng-repeat" => "hub in filteredHubs = (hubs | filterHubs:query)",
+        %hub.active_table_node.row{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query)",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "ng-controller" => "HubNodeCtrl",
         id: "{{hub.path}}"} 

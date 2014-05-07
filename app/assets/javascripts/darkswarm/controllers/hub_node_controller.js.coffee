@@ -1,9 +1,9 @@
-Darkswarm.controller "HubNodeCtrl", ($scope, Navigation, $location, $anchorScroll, $templateCache, CurrentHub) ->
+Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, $location, $anchorScroll, $templateCache, CurrentHub) ->
   $scope.toggle = ->
-    Navigation.navigate $scope.hub.path
+    HashNavigation.toggle $scope.hub.hash
 
   $scope.open = ->
-    $location.path() == $scope.hub.path
+    HashNavigation.active $scope.hub.hash
   
   $scope.current = ->
     $scope.hub.id is CurrentHub.id

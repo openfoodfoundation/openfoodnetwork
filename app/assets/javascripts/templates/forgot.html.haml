@@ -1,0 +1,29 @@
+%tab#forgot{"ng-controller" => "ForgotCtrl",
+  heading: "Forgot Password?",
+  active: "active(path)", 
+  select: "select(path)"}
+
+  %form{"ng-submit" => "submit()"}
+
+    .row
+      .large-12.columns
+        .alert-box.success.radius{"ng-show" => "sent"}
+          An email with instructions on resetting your password has been sent!
+
+    %div{"ng-show" => "!sent"}
+      .alert-box.alert{"ng-show" => "errors != null"}
+        {{ errors }}
+        
+      .row
+        .large-12.columns
+          %label{for: "email"} Email
+          %input.title.input-text{name: "email", 
+            type: "email",
+            tabindex: 1,
+            "ng-model" => "spree_user.email"}
+      .row
+        .large-12.columns
+          %input.button.primary{name: "commit", 
+            tabindex: "3", 
+            type: "submit", 
+            value: "Reset password"}
