@@ -227,129 +227,66 @@ describe "filtering products for submission to database", ->
       ]
     ]
 
-
-describe "Maintaining a live record of dirty products and properties", ->
-  parse = null
-  beforeEach ->
-    module "ofn.admin"
-  beforeEach inject(($parse) ->
-    parse = $parse
-  )
-
-  describe "adding product properties to the dirtyProducts object", -> # Applies to both products and variants
-    it "adds the product and the property to the list if property is dirty", ->
-      dirtyProducts = {}
-      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 1"
-      expect(dirtyProducts).toEqual 1:
-        id: 1
-        name: "Product 1"
-
-
-    it "adds the relevant property to a product that is already in the list but which does not yet possess it if the property is dirty", ->
-      dirtyProducts = 1:
-        id: 1
-        notaname: "something"
-
-      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 3"
-      expect(dirtyProducts).toEqual 1:
-        id: 1
-        notaname: "something"
-        name: "Product 3"
-
-
-    it "changes the relevant property of a product that is already in the list if the property is dirty", ->
-      dirtyProducts = 1:
-        id: 1
-        name: "Product 1"
-
-      addDirtyProperty dirtyProducts, 1, parse("name"), "Product 2"
-      expect(dirtyProducts).toEqual 1:
-        id: 1
-        name: "Product 2"
-
-
-
-  describe "removing properties of products which are clean", ->
-    it "removes the relevant property from a product if the property is clean and the product has that property", ->
-      dirtyProducts = 1:
-        id: 1
-        someProperty: "something"
-        name: "Product 1"
-
-      removeCleanProperty dirtyProducts, 1, "name", "Product 1"
-      expect(dirtyProducts).toEqual 1:
-        id: 1
-        someProperty: "something"
-
-
-    it "removes the product from dirtyProducts if the property is clean and by removing an existing property on an id is left", ->
-      dirtyProducts = 1:
-        id: 1
-        name: "Product 1"
-
-      removeCleanProperty dirtyProducts, 1, "name", "Product 1"
-      expect(dirtyProducts).toEqual {}
-
-
-
 describe "AdminProductEditCtrl", ->
-  ctrl = scope = timeout = httpBackend = null
+  $ctrl = $scope = $timeout = $httpBackend = DirtyProducts = null
 
   beforeEach ->
     module "ofn.admin"
-  beforeEach inject(($controller, $timeout, $rootScope, $httpBackend) ->
-    scope = $rootScope.$new()
-    ctrl = $controller
-    timeout = $timeout
-    httpBackend = $httpBackend
+  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _DirtyProducts_) ->
+    $scope = $rootScope.$new()
+    $ctrl = _$controller_
+    $timeout = _$timeout_
+    $httpBackend = _$httpBackend_
+    DirtyProducts = _DirtyProducts_
 
-    ctrl "AdminProductEditCtrl", {$scope: scope, $timeout: timeout}
+    $ctrl "AdminProductEditCtrl", {$scope: $scope, $timeout: $timeout}
   )
 
   describe "loading data upon initialisation", ->
     it "gets a list of suppliers and then resets products with a list of data", ->
-      httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
-      httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
-      spyOn(scope, "fetchProducts").andReturn "nothing"
-      scope.initialise "api_key"
-      httpBackend.flush()
-      expect(scope.suppliers).toEqual "list of suppliers"
-      expect(scope.fetchProducts.calls.length).toEqual 1
-      expect(scope.spree_api_key_ok).toEqual true
+      $httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
+      $httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
+      spyOn($scope, "fetchProducts").andReturn "nothing"
+      $scope.initialise "api_key"
+      $httpBackend.flush()
+      expect($scope.suppliers).toEqual "list of suppliers"
+      expect($scope.fetchProducts.calls.length).toEqual 1
+      expect($scope.spree_api_key_ok).toEqual true
 
 
   describe "fetching products", ->
     it "makes a standard call to dataFetcher when no filters exist", ->
-      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
-      scope.fetchProducts()
+      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $scope.fetchProducts()
 
     it "calls resetProducts after data has been received", ->
-      spyOn scope, "resetProducts"
-      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
-      scope.fetchProducts()
-      httpBackend.flush()
-      expect(scope.resetProducts).toHaveBeenCalledWith "list of products"
+      spyOn $scope, "resetProducts"
+      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $scope.fetchProducts()
+      $httpBackend.flush()
+      expect($scope.resetProducts).toHaveBeenCalledWith "list of products"
 
     it "applies filters when they are present", ->
-      filter = {property: scope.filterableColumns[1], predicate:scope.filterTypes[0], value:"Product1"}
-      scope.currentFilters.push filter # Don't use addFilter as that is not what we are testing
-      expect(scope.currentFilters).toEqual [filter]
-      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;q[name_eq]=Product1;").respond "list of products"
-      scope.fetchProducts()
+      filter = {property: $scope.filterableColumns[1], predicate:$scope.filterTypes[0], value:"Product1"}
+      $scope.currentFilters.push filter # Don't use addFilter as that is not what we are testing
+      expect($scope.currentFilters).toEqual [filter]
+      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;q[name_eq]=Product1;").respond "list of products"
+      $scope.fetchProducts()
 
     it "sets the loading property to true before fetching products and unsets it when loading is complete", ->
-      httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
-      scope.fetchProducts()
-      expect(scope.loading).toEqual true
-      httpBackend.flush()
-      expect(scope.loading).toEqual false
+      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $scope.fetchProducts()
+      expect($scope.loading).toEqual true
+      $httpBackend.flush()
+      expect($scope.loading).toEqual false
 
 
   describe "resetting products", ->
     beforeEach ->
-      spyOn scope, "unpackProduct"
-      scope.products = {}
-      scope.resetProducts [
+      spyOn $scope, "unpackProduct"
+      spyOn DirtyProducts, "clear"
+      $scope.products = {}
+      $scope.resetProducts [
         {
           id: 1
           name: "P1"
@@ -361,7 +298,7 @@ describe "AdminProductEditCtrl", ->
       ]
 
     it "sets products to the value of 'data'", ->
-      expect(scope.products).toEqual [
+      expect($scope.products).toEqual [
         {
           id: 1
           name: "P1"
@@ -373,34 +310,34 @@ describe "AdminProductEditCtrl", ->
       ]
 
     it "resets dirtyProducts", ->
-      expect(scope.dirtyProducts).toEqual {}
+      expect(DirtyProducts.clear).toHaveBeenCalled()
 
     it "calls unpackProduct once for each product", ->
-      expect(scope.unpackProduct.calls.length).toEqual 2
+      expect($scope.unpackProduct.calls.length).toEqual 2
 
 
   describe "preparing products", ->
     beforeEach ->
-      spyOn scope, "matchSupplier"
-      spyOn scope, "loadVariantUnit"
+      spyOn $scope, "matchSupplier"
+      spyOn $scope, "loadVariantUnit"
 
     it "initialises display properties for the product", ->
       product = {id: 123}
-      scope.displayProperties = {}
-      scope.unpackProduct product
-      expect(scope.displayProperties[123]).toEqual {showVariants: false}
+      $scope.displayProperties = {}
+      $scope.unpackProduct product
+      expect($scope.displayProperties[123]).toEqual {showVariants: false}
 
     it "calls matchSupplier for the product", ->
       product = {id: 123}
-      scope.displayProperties = {}
-      scope.unpackProduct product
-      expect(scope.matchSupplier.calls.length).toEqual 1
+      $scope.displayProperties = {}
+      $scope.unpackProduct product
+      expect($scope.matchSupplier.calls.length).toEqual 1
 
     it "calls loadVariantUnit for the product", ->
       product = {id: 123}
-      scope.displayProperties = {}
-      scope.unpackProduct product
-      expect(scope.loadVariantUnit.calls.length).toEqual 1
+      $scope.displayProperties = {}
+      $scope.unpackProduct product
+      expect($scope.loadVariantUnit.calls.length).toEqual 1
 
 
   describe "matching supplier", ->
@@ -418,7 +355,7 @@ describe "AdminProductEditCtrl", ->
         name: "S1"
 
       expect(s1_s is s1_p).not.toEqual true
-      scope.suppliers = [
+      $scope.suppliers = [
         s1_s
         s2_s
       ]
@@ -426,7 +363,7 @@ describe "AdminProductEditCtrl", ->
         id: 10
         supplier: s1_p
 
-      scope.matchSupplier product
+      $scope.matchSupplier product
       expect(product.supplier is s1_s).toEqual true
 
 
@@ -436,42 +373,42 @@ describe "AdminProductEditCtrl", ->
         product =
           variant_unit: "volume"
           variant_unit_scale: .001
-        scope.loadVariantUnit product
+        $scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "volume_0.001"
 
       it "sets to null when variant_unit is null", ->
         product = {variant_unit: null, variant_unit_scale: 1000}
-        scope.loadVariantUnit product
+        $scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toBeNull()
 
       it "sets to variant_unit when variant_unit_scale is null", ->
         product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
-        scope.loadVariantUnit product
+        $scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "items"
 
       it "sets to variant_unit when variant_unit is 'items'", ->
         product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
-        scope.loadVariantUnit product
+        $scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "items"
 
     it "loads data for variants (inc. master)", ->
-      spyOn scope, "loadVariantVariantUnit"
+      spyOn $scope, "loadVariantVariantUnit"
 
       product =
         variant_unit_scale: 1.0
         master: {id: 1, unit_value: 1, unit_description: '(one)'}
         variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
-      scope.loadVariantUnit product
+      $scope.loadVariantUnit product
 
-      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.variants[0]
-      expect(scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.master
+      expect($scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.variants[0]
+      expect($scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.master
 
     describe "setting variant unit_value_with_description", ->
       it "sets by combining unit_value and unit_description", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
-        scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0]).toEqual
           id: 1
           unit_value: 1
@@ -482,28 +419,28 @@ describe "AdminProductEditCtrl", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1}]
-        scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '1'
 
       it "uses unit_description when value is missing", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_description: 'Small'}]
-        scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
       it "converts values from base value to chosen unit", ->
         product =
           variant_unit_scale: 1000.0
           variants: [{id: 1, unit_value: 2500}]
-        scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
       it "displays a unit_value of zero", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 0}]
-        scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantVariantUnit product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '0'
 
 
@@ -511,40 +448,40 @@ describe "AdminProductEditCtrl", ->
     it "returns the scaled value when variant has a unit_value", ->
       product = {variant_unit_scale: 0.001}
       variant = {unit_value: 5}
-      expect(scope.variantUnitValue(product, variant)).toEqual 5000
+      expect($scope.variantUnitValue(product, variant)).toEqual 5000
 
     it "returns the unscaled value when the product has no scale", ->
       product = {}
       variant = {unit_value: 5}
-      expect(scope.variantUnitValue(product, variant)).toEqual 5
+      expect($scope.variantUnitValue(product, variant)).toEqual 5
 
     it "returns zero when the value is zero", ->
       product = {}
       variant = {unit_value: 0}
-      expect(scope.variantUnitValue(product, variant)).toEqual 0
+      expect($scope.variantUnitValue(product, variant)).toEqual 0
 
     it "returns null when the variant has no unit_value", ->
       product = {}
       variant = {}
-      expect(scope.variantUnitValue(product, variant)).toEqual null
+      expect($scope.variantUnitValue(product, variant)).toEqual null
 
 
   describe "updating the product on hand count", ->
     it "updates when product is not available on demand", ->
-      spyOn(scope, "onHand").andReturn 123
+      spyOn($scope, "onHand").andReturn 123
       product = {on_demand: false}
-      scope.updateOnHand(product)
+      $scope.updateOnHand(product)
       expect(product.on_hand).toEqual 123
 
     it "updates when product's variants are not available on demand", ->
-      spyOn(scope, "onHand").andReturn 123
+      spyOn($scope, "onHand").andReturn 123
       product = {on_demand: false, variants: [{on_demand: false}]}
-      scope.updateOnHand(product)
+      $scope.updateOnHand(product)
       expect(product.on_hand).toEqual 123
 
     it "does nothing when the product is available on demand", ->
       product = {on_demand: true}
-      scope.updateOnHand(product)
+      $scope.updateOnHand(product)
       expect(product.on_hand).toBeUndefined()
 
     it "does nothing when one of the variants is available on demand", ->
@@ -554,7 +491,7 @@ describe "AdminProductEditCtrl", ->
           {on_demand: false, on_hand: 10}
           {on_demand: true, on_hand: Infinity}
         ]
-      scope.updateOnHand(product)
+      $scope.updateOnHand(product)
       expect(product.on_hand).toBeUndefined()
 
 
@@ -605,17 +542,17 @@ describe "AdminProductEditCtrl", ->
             on_hand: 3
 
     it "sums variant on_hand properties", ->
-      expect(scope.onHand(p1)).toEqual 6
+      expect($scope.onHand(p1)).toEqual 6
 
     it "ignores items in variants without an on_hand property (adds 0)", ->
-      expect(scope.onHand(p2)).toEqual 5
+      expect($scope.onHand(p2)).toEqual 5
 
     it "ignores on_hand properties of objects in arrays which are not named 'variants' (adds 0)", ->
-      expect(scope.onHand(p3)).toEqual 3
+      expect($scope.onHand(p3)).toEqual 3
 
     it "returns 'error' if not given an object with a variants property that is an object", ->
-      expect(scope.onHand([])).toEqual "error"
-      expect(scope.onHand(not_variants: [])).toEqual "error"
+      expect($scope.onHand([])).toEqual "error"
+      expect($scope.onHand(not_variants: [])).toEqual "error"
 
 
   describe "determining whether a product has variants that are available on demand", ->
@@ -625,7 +562,7 @@ describe "AdminProductEditCtrl", ->
           {on_demand: false}
           {on_demand: true}
         ]
-      expect(scope.hasOnDemandVariants(product)).toBe(true)
+      expect($scope.hasOnDemandVariants(product)).toBe(true)
 
     it "returns false otherwise", ->
       product =
@@ -633,44 +570,44 @@ describe "AdminProductEditCtrl", ->
           {on_demand: false}
           {on_demand: false}
         ]
-      expect(scope.hasOnDemandVariants(product)).toBe(false)
+      expect($scope.hasOnDemandVariants(product)).toBe(false)
 
 
   describe "determining whether a product has variants", ->
     it "returns true when it does", ->
       product =
         variants: [{id: 1}, {id: 2}]
-      expect(scope.hasVariants(product)).toBe(true)
+      expect($scope.hasVariants(product)).toBe(true)
 
     it "returns false when it does not", ->
       product =
         variants: []
-      expect(scope.hasVariants(product)).toBe(false)
+      expect($scope.hasVariants(product)).toBe(false)
 
 
   describe "determining whether a product has a unit", ->
     it "returns true when it does", ->
       product =
         variant_unit_with_scale: 'weight_1000'
-      expect(scope.hasUnit(product)).toBe(true)
+      expect($scope.hasUnit(product)).toBe(true)
 
     it "returns false when its unit is undefined", ->
       product = {}
-      expect(scope.hasUnit(product)).toBe(false)
+      expect($scope.hasUnit(product)).toBe(false)
 
 
   describe "determining whether a variant has been saved", ->
     it "returns true when it has a positive id", ->
       variant = {id: 1}
-      expect(scope.variantSaved(variant)).toBe(true)
+      expect($scope.variantSaved(variant)).toBe(true)
 
     it "returns false when it has no id", ->
       variant = {}
-      expect(scope.variantSaved(variant)).toBe(false)
+      expect($scope.variantSaved(variant)).toBe(false)
 
     it "returns false when it has a negative id", ->
       variant = {id: -1}
-      expect(scope.variantSaved(variant)).toBe(false)
+      expect($scope.variantSaved(variant)).toBe(false)
 
 
   describe "submitting products to be updated", ->
@@ -682,7 +619,7 @@ describe "AdminProductEditCtrl", ->
           variant_unit_scale: 1
           variant_unit_with_scale: 'volume_1000'
 
-        scope.packProduct(testProduct)
+        $scope.packProduct(testProduct)
 
         expect(testProduct).toEqual
           id: 1
@@ -697,7 +634,7 @@ describe "AdminProductEditCtrl", ->
           variant_unit_scale: 1
           variant_unit_with_scale: null
 
-        scope.packProduct(testProduct)
+        $scope.packProduct(testProduct)
 
         expect(testProduct).toEqual
           id: 1
@@ -712,7 +649,7 @@ describe "AdminProductEditCtrl", ->
           variant_unit_scale: 1
           variant_unit_with_scale: 'items'
 
-        scope.packProduct(testProduct)
+        $scope.packProduct(testProduct)
 
         expect(testProduct).toEqual
           id: 1
@@ -721,38 +658,38 @@ describe "AdminProductEditCtrl", ->
           variant_unit_with_scale: 'items'
 
       it "packs the master variant", ->
-        spyOn scope, "packVariant"
+        spyOn $scope, "packVariant"
         testVariant = {id: 1}
         testProduct =
           id: 1
           master: testVariant
 
-        scope.packProduct(testProduct)
+        $scope.packProduct(testProduct)
 
-        expect(scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
+        expect($scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
       it "packs each variant", ->
-        spyOn scope, "packVariant"
+        spyOn $scope, "packVariant"
         testVariant = {id: 1}
         testProduct =
           id: 1
           variants: {1: testVariant}
 
-        scope.packProduct(testProduct)
+        $scope.packProduct(testProduct)
 
-        expect(scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
+        expect($scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
     describe "packing variants", ->
       testProduct = {id: 123}
 
       beforeEach ->
-        scope.products = [testProduct]
+        $scope.products = [testProduct]
 
       it "extracts unit_value and unit_description from unit_value_with_description", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5 (bottle)"}
-        scope.products = [testProduct]
-        scope.packVariant(testProduct, testVariant)
+        $scope.products = [testProduct]
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: "(bottle)"
@@ -761,7 +698,7 @@ describe "AdminProductEditCtrl", ->
       it "extracts into unit_value when only a number is provided", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5"}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: ''
@@ -769,7 +706,7 @@ describe "AdminProductEditCtrl", ->
 
       it "extracts into unit_description when only a string is provided", ->
         testVariant = {unit_value_with_description: "Medium"}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
           unit_description: 'Medium'
@@ -777,7 +714,7 @@ describe "AdminProductEditCtrl", ->
 
       it "extracts into unit_description when a string starting with a number is provided", ->
         testVariant = {unit_value_with_description: "1kg"}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
           unit_description: '1kg'
@@ -785,7 +722,7 @@ describe "AdminProductEditCtrl", ->
 
       it "sets blank values when no value provided", ->
         testVariant = {unit_value_with_description: ""}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
           unit_description: ''
@@ -793,13 +730,13 @@ describe "AdminProductEditCtrl", ->
 
       it "sets nothing when the field is undefined", ->
         testVariant = {}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual {}
 
       it "sets zero when the field is zero", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "0"}
-        scope.packVariant(testProduct, testVariant)
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 0
           unit_description: ''
@@ -808,8 +745,8 @@ describe "AdminProductEditCtrl", ->
       it "converts value from chosen unit to base unit", ->
         testProduct = {id: 123, variant_unit_scale: 1000}
         testVariant = {unit_value_with_description: "250.5"}
-        scope.products = [testProduct]
-        scope.packVariant(testProduct, testVariant)
+        $scope.products = [testProduct]
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250500
           unit_description: ''
@@ -818,8 +755,8 @@ describe "AdminProductEditCtrl", ->
       it "does not convert value when using a non-scaled unit", ->
         testProduct = {id: 123}
         testVariant = {unit_value_with_description: "12"}
-        scope.products = [testProduct]
-        scope.packVariant(testProduct, testVariant)
+        $scope.products = [testProduct]
+        $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 12
           unit_description: ''
@@ -828,7 +765,7 @@ describe "AdminProductEditCtrl", ->
 
     describe "filtering products", ->
       beforeEach ->
-        spyOn scope, "packProduct"
+        spyOn $scope, "packProduct"
         spyOn(window, "filterSubmitProducts").andReturn [
           {
             id: 1
@@ -839,33 +776,32 @@ describe "AdminProductEditCtrl", ->
             value: 4
           }
         ]
-        spyOn scope, "updateProducts"
-        scope.dirtyProducts =
-          1:
-            id: 1
-          2:
-            id: 2
-        scope.products =
+        spyOn $scope, "updateProducts"
+        DirtyProducts.addProductProperty 1, "propName", "something"
+        DirtyProducts.addProductProperty 2, "propName", "something"
+        $scope.products =
           1:
             id: 1
           2:
             id: 2
 
-        scope.submitProducts()
+        $scope.submitProducts()
 
       it "packs all products and all dirty products", ->
-        expect(scope.packProduct.calls.length).toEqual 4
+        expect($scope.packProduct.calls.length).toEqual 4
 
       it "filters returned dirty products", ->
         expect(filterSubmitProducts).toHaveBeenCalledWith
           1:
             id: 1
+            propName: "something"
           2:
             id: 2
+            propName: "something"
 
 
       it "sends dirty and filtered objects to submitProducts()", ->
-        expect(scope.updateProducts).toHaveBeenCalledWith [
+        expect($scope.updateProducts).toHaveBeenCalledWith [
           {
             id: 1
             value: 3
@@ -879,13 +815,13 @@ describe "AdminProductEditCtrl", ->
 
     describe "updating products", ->
       it "submits products to be updated with a http post request to /admin/products/bulk_update", ->
-        httpBackend.expectPOST("/admin/products/bulk_update").respond "list of products"
-        scope.updateProducts "list of products"
-        httpBackend.flush()
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond "list of products"
+        $scope.updateProducts "list of products"
+        $httpBackend.flush()
 
       it "runs displaySuccess() when post returns success", ->
-        spyOn scope, "displaySuccess"
-        scope.products = [
+        spyOn $scope, "displaySuccess"
+        $scope.products = [
           {
             id: 1
             name: "P1"
@@ -895,7 +831,7 @@ describe "AdminProductEditCtrl", ->
             name: "P2"
           }
         ]
-        httpBackend.expectPOST("/admin/products/bulk_update").respond 200, [
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond 200, [
           {
             id: 1
             name: "P1"
@@ -905,26 +841,26 @@ describe "AdminProductEditCtrl", ->
             name: "P2"
           }
         ]
-        scope.updateProducts "list of dirty products"
-        httpBackend.flush()
-        timeout.flush()
-        expect(scope.displaySuccess).toHaveBeenCalled()
+        $scope.updateProducts "list of dirty products"
+        $httpBackend.flush()
+        $timeout.flush()
+        expect($scope.displaySuccess).toHaveBeenCalled()
 
       it "runs displayFailure() when post return data does not match $scope.products", ->
-        spyOn scope, "displayFailure"
-        scope.products = "current list of products"
-        httpBackend.expectPOST("/admin/products/bulk_update").respond 200, "returned list of products"
-        scope.updateProducts "updated list of products"
-        httpBackend.flush()
-        expect(scope.displayFailure).toHaveBeenCalled()
+        spyOn $scope, "displayFailure"
+        $scope.products = "current list of products"
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond 200, "returned list of products"
+        $scope.updateProducts "updated list of products"
+        $httpBackend.flush()
+        expect($scope.displayFailure).toHaveBeenCalled()
 
       it "runs displayFailure() when post returns error", ->
-        spyOn scope, "displayFailure"
-        scope.products = "updated list of products"
-        httpBackend.expectPOST("/admin/products/bulk_update").respond 404, "updated list of products"
-        scope.updateProducts "updated list of products"
-        httpBackend.flush()
-        expect(scope.displayFailure).toHaveBeenCalled()
+        spyOn $scope, "displayFailure"
+        $scope.products = "updated list of products"
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond 404, "updated list of products"
+        $scope.updateProducts "updated list of products"
+        $httpBackend.flush()
+        expect($scope.displayFailure).toHaveBeenCalled()
 
 
   describe "copying new variant ids from server to client", ->
@@ -941,26 +877,26 @@ describe "AdminProductEditCtrl", ->
           variants: [{id: 1}, {id: 4534}, {id: 3453}]
         }
       ]
-      scope.copyNewVariantIds(clientProducts, serverProducts)
+      $scope.copyNewVariantIds(clientProducts, serverProducts)
       expect(clientProducts).toEqual(serverProducts)
 
 
   describe "fetching products without derived attributes", ->
     it "returns products without the variant_unit_with_scale field", ->
-      scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
-      expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual([{id: 123}])
+      $scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
+      expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual([{id: 123}])
 
     it "returns an empty array when products are undefined", ->
-      expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual([])
+      expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual([])
 
     it "does not alter original products", ->
-      scope.products = [{
+      $scope.products = [{
         id: 123
         variant_unit_with_scale: 'weight_1000'
         variants: [{options_text: 'foo'}]
       }]
-      scope.productsWithoutDerivedAttributes(scope.products)
-      expect(scope.products).toEqual [{
+      $scope.productsWithoutDerivedAttributes($scope.products)
+      expect($scope.products).toEqual [{
         id: 123
         variant_unit_with_scale: 'weight_1000'
         variants: [{options_text: 'foo'}]
@@ -968,8 +904,8 @@ describe "AdminProductEditCtrl", ->
 
     describe "updating variants", ->
       it "returns variants without the unit_value_with_description field", ->
-        scope.products = [{id: 123, variants: [{id: 234, unit_value_with_description: 'foo'}]}]
-        expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
+        $scope.products = [{id: 123, variants: [{id: 234, unit_value_with_description: 'foo'}]}]
+        expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual [
           {
             id: 123
             variants: [{id: 234}]
@@ -977,8 +913,8 @@ describe "AdminProductEditCtrl", ->
         ]
 
       it "removes the master variant", ->
-        scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
-        expect(scope.productsWithoutDerivedAttributes(scope.products)).toEqual [
+        $scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
+        expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual [
           {
             id: 123
           }
@@ -988,35 +924,35 @@ describe "AdminProductEditCtrl", ->
   describe "deep copying products", ->
     it "copies products", ->
       product = {id: 123}
-      copiedProducts = scope.deepCopyProducts [product]
+      copiedProducts = $scope.deepCopyProducts [product]
       expect(copiedProducts[0]).not.toBe(product)
 
     it "copies variants", ->
       variant = {id: 1}
       product = {id: 123, variants: [variant]}
-      copiedProducts = scope.deepCopyProducts [product]
+      copiedProducts = $scope.deepCopyProducts [product]
       expect(copiedProducts[0].variants[0]).not.toBe(variant)
 
 
   describe "fetching a product by id", ->
     it "returns the product when it is present", ->
       product = {id: 123}
-      scope.products = [product]
-      expect(scope.findProduct(123)).toEqual product
+      $scope.products = [product]
+      expect($scope.findProduct(123)).toEqual product
 
     it "returns null when the product is not present", ->
-      scope.products = []
-      expect(scope.findProduct(123)).toBeNull()
+      $scope.products = []
+      expect($scope.findProduct(123)).toBeNull()
 
 
   describe "adding variants", ->
     beforeEach ->
-      scope.displayProperties ||= {123: {}}
+      $scope.displayProperties ||= {123: {}}
 
     it "adds first and subsequent variants", ->
       product = {id: 123, variants: []}
-      scope.addVariant(product)
-      scope.addVariant(product)
+      $scope.addVariant(product)
+      $scope.addVariant(product)
       expect(product).toEqual
         id: 123
         variants: [
@@ -1026,14 +962,14 @@ describe "AdminProductEditCtrl", ->
 
     it "shows the variant(s)", ->
       product = {id: 123, variants: []}
-      scope.addVariant(product)
-      expect(scope.displayProperties[123].showVariants).toBe(true)
+      $scope.addVariant(product)
+      expect($scope.displayProperties[123].showVariants).toBe(true)
 
 
   describe "deleting products", ->
     it "deletes products with a http delete request to /api/products/id", ->
       spyOn(window, "confirm").andReturn true
-      scope.products = [
+      $scope.products = [
         {
           id: 9
           permalink_live: "apples"
@@ -1043,14 +979,14 @@ describe "AdminProductEditCtrl", ->
           permalink_live: "oranges"
         }
       ]
-      scope.dirtyProducts = {}
-      httpBackend.expectDELETE("/api/products/13").respond 200, "data"
-      scope.deleteProduct scope.products[1]
-      httpBackend.flush()
+      $scope.dirtyProducts = {}
+      $httpBackend.expectDELETE("/api/products/13").respond 200, "data"
+      $scope.deleteProduct $scope.products[1]
+      $httpBackend.flush()
 
-    it "removes the specified product from both scope.products and scope.dirtyProducts (if it exists there)", ->
+    it "removes the specified product from both $scope.products and $scope.dirtyProducts (if it exists there)", ->
       spyOn(window, "confirm").andReturn true
-      scope.products = [
+      $scope.products = [
         {
           id: 9
           permalink_live: "apples"
@@ -1060,23 +996,17 @@ describe "AdminProductEditCtrl", ->
           permalink_live: "oranges"
         }
       ]
-      scope.dirtyProducts =
-        9:
-          id: 9
-          someProperty: "something"
+      DirtyProducts.addProductProperty 9, "someProperty", "something"
+      DirtyProducts.addProductProperty 13, "name", "P1"
 
-        13:
-          id: 13
-          name: "P1"
-
-      httpBackend.expectDELETE("/api/products/13").respond 200, "data"
-      scope.deleteProduct scope.products[1]
-      httpBackend.flush()
-      expect(scope.products).toEqual [
+      $httpBackend.expectDELETE("/api/products/13").respond 200, "data"
+      $scope.deleteProduct $scope.products[1]
+      $httpBackend.flush()
+      expect($scope.products).toEqual [
         id: 9
         permalink_live: "apples"
       ]
-      expect(scope.dirtyProducts).toEqual 9:
+      expect(DirtyProducts.all()).toEqual 9:
         id: 9
         someProperty: "something"
 
@@ -1086,23 +1016,23 @@ describe "AdminProductEditCtrl", ->
     describe "when the variant has not been saved", ->
       it "removes the variant from products and dirtyProducts", ->
         spyOn(window, "confirm").andReturn true
-        scope.products = [
+        $scope.products = [
           {id: 1, variants: [{id: -1}]}
         ]
-        scope.dirtyProducts =
-          1: {id: 1, variants: {'-1': {id: -1}}}
-        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-        expect(scope.products).toEqual([
+        DirtyProducts.addVariantProperty 1, -1, "something", "something"
+        DirtyProducts.addProductProperty 1, "something", "something"
+        $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
+        expect($scope.products).toEqual([
           {id: 1, variants: []}
         ])
-        expect(scope.dirtyProducts).toEqual
-          1: {id: 1, variants: {}}
+        expect(DirtyProducts.all()).toEqual
+          1: { id: 1, something: 'something'}
 
   
     describe "when the variant has been saved", ->
       it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)", ->
         spyOn(window, "confirm").andReturn true
-        scope.products = [
+        $scope.products = [
           {
             id: 9
             permalink_live: "apples"
@@ -1116,14 +1046,14 @@ describe "AdminProductEditCtrl", ->
             permalink_live: "oranges"
           }
         ]
-        scope.dirtyProducts = {}
-        httpBackend.expectDELETE("/api/products/apples/variants/3/soft_delete").respond 200, "data"
-        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-        httpBackend.flush()
+        $scope.dirtyProducts = {}
+        $httpBackend.expectDELETE("/api/products/apples/variants/3/soft_delete").respond 200, "data"
+        $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
+        $httpBackend.flush()
 
-      it "removes the specified variant from both the variants object and scope.dirtyProducts (if it exists there)", ->
+      it "removes the specified variant from both the variants object and $scope.dirtyProducts (if it exists there)", ->
         spyOn(window, "confirm").andReturn true
-        scope.products = [
+        $scope.products = [
           {
             id: 9
             permalink_live: "apples"
@@ -1143,30 +1073,18 @@ describe "AdminProductEditCtrl", ->
             permalink_live: "oranges"
           }
         ]
-        scope.dirtyProducts =
-          9:
-            id: 9
-            variants:
-              3:
-                id: 3
-                price: 12.0
-  
-              4:
-                id: 4
-                price: 6.0
-  
-          13:
-            id: 13
-            name: "P1"
+        DirtyProducts.addVariantProperty 9, 3, "price", 12.0
+        DirtyProducts.addVariantProperty 9, 4, "price", 6.0
+        DirtyProducts.addProductProperty 13, "name", "P1"
 
-        httpBackend.expectDELETE("/api/products/apples/variants/3/soft_delete").respond 200, "data"
-        scope.deleteVariant scope.products[0], scope.products[0].variants[0]
-        httpBackend.flush()
-        expect(scope.products[0].variants).toEqual [
+        $httpBackend.expectDELETE("/api/products/apples/variants/3/soft_delete").respond 200, "data"
+        $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
+        $httpBackend.flush()
+        expect($scope.products[0].variants).toEqual [
           id: 4
           price: 6.0
         ]
-        expect(scope.dirtyProducts).toEqual
+        expect(DirtyProducts.all()).toEqual
           9:
             id: 9
             variants:
@@ -1182,29 +1100,29 @@ describe "AdminProductEditCtrl", ->
 
   describe "cloning products", ->
     it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
-      scope.products = [
+      $scope.products = [
         id: 13
         permalink_live: "oranges"
       ]
-      httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
         product:
           id: 17
           name: "new_product"
 
-      httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
+      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
         id: 17
         name: "new_product"
       ]
-      scope.cloneProduct scope.products[0]
-      httpBackend.flush()
+      $scope.cloneProduct $scope.products[0]
+      $httpBackend.flush()
 
-    it "adds the newly created product to scope.products and matches supplier", ->
-      spyOn(scope, "unpackProduct").andCallThrough()
-      scope.products = [
+    it "adds the newly created product to $scope.products and matches supplier", ->
+      spyOn($scope, "unpackProduct").andCallThrough()
+      $scope.products = [
         id: 13
         permalink_live: "oranges"
       ]
-      httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
         product:
           id: 17
           name: "new_product"
@@ -1216,7 +1134,7 @@ describe "AdminProductEditCtrl", ->
             name: "V1"
           ]
 
-      httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
+      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
         id: 17
         name: "new_product"
         supplier:
@@ -1227,9 +1145,9 @@ describe "AdminProductEditCtrl", ->
           name: "V1"
         ]
 
-      scope.cloneProduct scope.products[0]
-      httpBackend.flush()
-      expect(scope.unpackProduct).toHaveBeenCalledWith
+      $scope.cloneProduct $scope.products[0]
+      $httpBackend.flush()
+      expect($scope.unpackProduct).toHaveBeenCalledWith
         id: 17
         name: "new_product"
         variant_unit_with_scale: null
@@ -1242,7 +1160,7 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: ""
         ]
 
-      expect(scope.products).toEqual [
+      expect($scope.products).toEqual [
         {
           id: 13
           permalink_live: "oranges"
@@ -1268,46 +1186,46 @@ describe "AdminProductEditCtrl", ->
       filterObject1 = filterObject2 = null
 
       beforeEach ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
-        spyOn(scope, "dirtyProductCount").andReturn 0
-        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "value1"}
-        filterObject2 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[1], value: "value2"}
-        scope.addFilter filterObject1
-        scope.addFilter filterObject2
+        spyOn($scope, "fetchProducts").andReturn "nothing"
+        spyOn(DirtyProducts, "count").andReturn 0
+        filterObject1 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "value1"}
+        filterObject2 = {property: $scope.filterableColumns[1], predicate: $scope.filterTypes[1], value: "value2"}
+        $scope.addFilter filterObject1
+        $scope.addFilter filterObject2
 
       it "adds objects sent to addFilter() to $scope.currentFilters", ->
-        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
-        filterObject3 = {property: "some_random_property", predicate: scope.filterTypes[0], value: "value3"}
-        scope.addFilter filterObject3
-        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+        filterObject3 = {property: "some_random_property", predicate: $scope.filterTypes[0], value: "value3"}
+        $scope.addFilter filterObject3
+        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
-        filterObject3 = {property: scope.filterableColumns[0], predicate: "something", value: "value3"}
-        scope.addFilter filterObject3
-        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+        filterObject3 = {property: $scope.filterableColumns[0], predicate: "something", value: "value3"}
+        $scope.addFilter filterObject3
+        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "ignores objects sent to addFilter() which have a blank 'value' property", ->
-        filterObject3 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: ""}
-        scope.addFilter filterObject3
-        expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+        filterObject3 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[1], value: ""}
+        $scope.addFilter filterObject3
+        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
       it "calls fetchProducts when adding a new filter", ->
-        expect(scope.fetchProducts.calls.length).toEqual(2)
+        expect($scope.fetchProducts.calls.length).toEqual(2)
 
       describe "when unsaved products exist", ->
         beforeEach ->
-          filterObject3 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[1], value: "value3"}
+          filterObject3 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[1], value: "value3"}
           spyOn(window, "confirm").andReturn false
-          scope.dirtyProductCount.andReturn 1
-          scope.addFilter filterObject3
+          DirtyProducts.count.andReturn 1
+          $scope.addFilter filterObject3
 
         it "it does not call fetchProducts", ->
-          expect(scope.fetchProducts.calls.length).toEqual(2)
+          expect($scope.fetchProducts.calls.length).toEqual(2)
 
         it "does not add the filter to $scope.currentFilters", ->
-          expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+          expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
         it "asks the user to save changes before proceeding", ->
           expect(window.confirm).toHaveBeenCalledWith "Unsaved changes will be lost. Continue anyway?"
@@ -1320,38 +1238,38 @@ describe "AdminProductEditCtrl", ->
 
         it "asks the user for permission before proceeding", ->
           spyOn(window, "confirm").andReturn true
-          scope.addFilter filterObject3
+          $scope.addFilter filterObject3
           expect(window.confirm).toHaveBeenCalledWith "'#{filterObject3.predicate.name}' filter already exists on column '#{filterObject3.property.name}'. Replace it?"
 
         it "replaces the filter in $scope.currentFilters when user clicks OK", ->
           spyOn(window, "confirm").andReturn true
-          scope.addFilter filterObject3
-          expect(scope.currentFilters).toEqual [filterObject1, filterObject3]
+          $scope.addFilter filterObject3
+          expect($scope.currentFilters).toEqual [filterObject1, filterObject3]
 
         it "does not add the filter to $scope.currentFilters when user clicks cancel", ->
           spyOn(window, "confirm").andReturn false
-          scope.addFilter filterObject3
-          expect(scope.currentFilters).toEqual [filterObject1, filterObject2]
+          $scope.addFilter filterObject3
+          expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
 
     describe "removing a filter from the filter list", ->
       filterObject1 = filterObject2 = null
 
       beforeEach ->
-        spyOn(scope, "fetchProducts").andReturn "nothing"
-        filterObject1 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product1"}
-        filterObject2 = {property: scope.filterableColumns[0], predicate: scope.filterTypes[0], value: "Product2"}
-        scope.currentFilters = [ filterObject1, filterObject2 ]
+        spyOn($scope, "fetchProducts").andReturn "nothing"
+        filterObject1 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "Product1"}
+        filterObject2 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "Product2"}
+        $scope.currentFilters = [ filterObject1, filterObject2 ]
 
       it "removes the specified filter from $scope.currentFilters and calls fetchProducts", ->
-        scope.removeFilter filterObject1
-        expect(scope.currentFilters).toEqual [ filterObject2 ]
-        expect(scope.fetchProducts.calls.length).toEqual 1
+        $scope.removeFilter filterObject1
+        expect($scope.currentFilters).toEqual [ filterObject2 ]
+        expect($scope.fetchProducts.calls.length).toEqual 1
 
       it "ignores filters which do not exist in currentFilters", ->
-        filterObject3 = {property: scope.filterableColumns[1], predicate: scope.filterTypes[1], value: "SomethingElse"}
-        scope.removeFilter filterObject3
-        expect(scope.currentFilters).toEqual [ filterObject1, filterObject2 ]
-        expect(scope.fetchProducts.calls.length).toEqual 0
+        filterObject3 = {property: $scope.filterableColumns[1], predicate: $scope.filterTypes[1], value: "SomethingElse"}
+        $scope.removeFilter filterObject3
+        expect($scope.currentFilters).toEqual [ filterObject1, filterObject2 ]
+        expect($scope.fetchProducts.calls.length).toEqual 0
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

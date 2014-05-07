@@ -1,6 +1,6 @@
 Admin.controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher"
-  ($scope, $timeout, $http, dataFetcher) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts"
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
@@ -85,7 +85,7 @@ Admin.controller "AdminProductEditCtrl", [
 
     $scope.resetProducts = (data) ->
       $scope.products = data
-      $scope.dirtyProducts = {}
+      DirtyProducts.clear()
       $scope.setMessage $scope.updateStatusMessage, "", {}, false
       $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
@@ -164,7 +164,7 @@ Admin.controller "AdminProductEditCtrl", [
     $scope.addFilter = (filter) ->
       existingfilterIndex = $scope.indexOfFilter filter
       if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
-        if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
+        if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
           if existingfilterIndex == -1
             $scope.currentFilters.push filter
             $scope.fetchProducts()
@@ -186,7 +186,7 @@ Admin.controller "AdminProductEditCtrl", [
       return -1
 
     $scope.editWarn = (product, variant) ->
-      if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
+      if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
@@ -214,7 +214,7 @@ Admin.controller "AdminProductEditCtrl", [
           url: "/api/products/" + product.id
         ).success (data) ->
           $scope.products.splice $scope.products.indexOf(product), 1
-          delete $scope.dirtyProducts[product.id]  if $scope.dirtyProducts.hasOwnProperty(product.id)
+          DirtyProducts.deleteProduct product.id
           $scope.displayDirtyProducts()
 
 
@@ -231,7 +231,7 @@ Admin.controller "AdminProductEditCtrl", [
 
     $scope.removeVariant = (product, variant) ->
       product.variants.splice product.variants.indexOf(variant), 1
-      delete $scope.dirtyProducts[product.id].variants[variant.id]  if $scope.dirtyProducts.hasOwnProperty(product.id) and $scope.dirtyProducts[product.id].hasOwnProperty("variants") and $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)
+      DirtyProducts.deleteVariant product.id, variant.id
       $scope.displayDirtyProducts()
 
 
@@ -269,9 +269,9 @@ Admin.controller "AdminProductEditCtrl", [
       # Pack pack $scope.products, so they will match the list returned from the server,
       # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
       $scope.packProduct product for id, product of $scope.products
-      $scope.packProduct product for id, product of $scope.dirtyProducts
+      $scope.packProduct product for id, product of DirtyProducts.all()
 
-      productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
+      productsToSubmit = filterSubmitProducts(DirtyProducts.all())
       if productsToSubmit.length > 0
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
@@ -410,16 +410,12 @@ Admin.controller "AdminProductEditCtrl", [
 
 
     $scope.displayDirtyProducts = ->
-      if $scope.dirtyProductCount() > 0
-        $scope.setMessage $scope.updateStatusMessage, "Changes to " + $scope.dirtyProductCount() + " products remain unsaved.",
+      if DirtyProducts.count() > 0
+        $scope.setMessage $scope.updateStatusMessage, "Changes to " + DirtyProducts.count() + " products remain unsaved.",
           color: "gray"
         , false
       else
         $scope.setMessage $scope.updateStatusMessage, "", {}, false
-
-
-    $scope.dirtyProductCount = ->
-      Object.keys($scope.dirtyProducts).length
 ]
 
 filterSubmitProducts = (productsToFilter) ->
@@ -496,18 +492,6 @@ filterSubmitVariant = (variant) ->
       filteredVariant.unit_description = variant.unit_description
       hasUpdatableProperty = true
   {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
-
-
-addDirtyProperty = (dirtyObjects, objectID, parsedPropertyName, propertyValue) ->
-  if !dirtyObjects.hasOwnProperty(objectID)
-    dirtyObjects[objectID] = {}
-    dirtyObjects[objectID]["id"] = objectID
-  parsedPropertyName.assign(dirtyObjects[objectID], propertyValue)
-
-
-removeCleanProperty = (dirtyObjects, objectID, propertyName) ->
-  delete dirtyObjects[objectID][propertyName]  if dirtyObjects.hasOwnProperty(objectID) and dirtyObjects[objectID].hasOwnProperty(propertyName)
-  delete dirtyObjects[objectID]  if dirtyObjects.hasOwnProperty(objectID) and Object.keys(dirtyObjects[objectID]).length <= 1
 
 
 toObjectWithIDKeys = (array) ->
