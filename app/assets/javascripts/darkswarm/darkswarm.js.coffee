@@ -14,6 +14,3 @@ window.Darkswarm = angular.module("Darkswarm", ["ngResource",
   # This allows us to trigger these two events on tooltips
   $tooltipProvider.setTriggers( 'openTrigger': 'closeTrigger' )
 
-Darkswarm.run ($rootScope, $location, $anchorScroll) ->
-  $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
-    $anchorScroll()
