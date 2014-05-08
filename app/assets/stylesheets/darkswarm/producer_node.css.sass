@@ -9,26 +9,21 @@
         border-right: 1px solid $clr-turquoise
         &:hover, &:active, &:focus
           color: $clr-turquoise
-
+          strong
+            color: $clr-turquoise
       .active_table_row:nth-child(2)
         border-left: 1px solid $clr-turquoise
         border-right: 1px solid $clr-turquoise
         border-bottom: 1px solid $clr-turquoise
-
       .active_table_row.link
         background-color: $clr-turquoise
         &:hover
-          background-color: $clr-turquoise-bright
-    
+          background-color: $clr-turquoise-bright 
     &.closed
       &, & *
-        color: $clr-turquoise-bright
-    &.open
-      .active_table_row:first-child
+        color: $dark-grey
+      &:hover, &:active, &:focus
+        border: 1px solid $clr-turquoise
         &, & *
-          color: $clr-turquoise
-      &.open
-        .active_table_row:first-child
-          &, & *
-          color: $clr-turquoise
+          color: $clr-turquoise    
 
