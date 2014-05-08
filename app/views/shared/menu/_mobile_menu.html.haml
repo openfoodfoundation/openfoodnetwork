@@ -15,7 +15,7 @@
   %ul.off-canvas-list
     %li= link_to image_tag("ofn_logo_small.png"), root_path
     %li
-      %a{href: producers_path} Producers
+      %a{href: main_app.producers_path} Producers
     %li
     - if spree_current_user.nil?
       = render 'shared/signed_out'
