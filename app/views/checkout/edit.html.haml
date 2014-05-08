@@ -11,8 +11,7 @@
       .large-9.columns
         - unless spree_current_user
           = render partial: "checkout/authentication"
-        .row
+        .row{"ng-show" => "enabled", "ng-controller" => "AccordionCtrl"}
           = render partial: "checkout/form"
       .large-3.columns
         = render partial: "checkout/summary"
-

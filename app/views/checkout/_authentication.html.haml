@@ -1,9 +1,6 @@
-%fieldset
-  %accordion-group{heading: "User", "is-open" => "accordion.user"}
-    .row
-      .large-4.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
-        %button{"ng-click" => "open('/login')"} Login
-      .large-4.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
-        %button{"ng-click" => "open('/signup')"} Signup
-      .large-4.columns.text-center
-        %button{"ng-click" => "show('details')"} Checkout as guest
+#checkout_login.row{"ng-show" => "!enabled"}
+  .large-4.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
+    %button{"ng-click" => "open()"} Login
+
+  .large-4.columns.text-center
+    %button{"ng-click" => "enabled = true"} Checkout as guest
