@@ -1,28 +1,33 @@
 %nav.top-bar.show-for-large-only{'data' => 'topbar'}
   %section.top-bar-section
-    %ul.left
+    %ul.left{}
       %li= link_to image_tag("ofn_logo_small.png"), root_path      
       %li.divider
-      %li
-        %a
-          %span.nav-primary{href: ""} Hubs
+      - if current_page? root_path
+        %li
+          %a{href: "#hubs", "ofn-scroll-to" => true}
+            %span.nav-primary Hubs
+      - else
+        %li
+          %a{href: root_path + "#hubs"}
+            %span.nav-primary Hubs
       %li.divider
       %li
-        %a
-          %span.nav-primary{href: ""} Map
+        %a{href: ""}
+          %span.nav-primary Map
       %li.divider
       %li
-        %a
-          %span.nav-primary{href: main_app.producers_path} Producers
+        %a{href: main_app.producers_path}
+          %span.nav-primary Producers
       %li.divider
       %li
-        %a
-          %span.nav-primary{href: ""} Groups
+        %a{href: ""}
+          %span.nav-primary Groups
       %li.divider
       - if spree_current_user.andand.has_spree_role? 'admin'
         %li
-          %a
-            %span.nav-primary{href: spree_admin_path} Admin
+          %a{href: spree_admin_path}
+            %span.nav-primary Admin
       %li.divider
   %section.top-bar-section
     %ul.right{"ng-controller" => "AuthenticationCtrl"}
