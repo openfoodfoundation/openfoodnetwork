@@ -10,7 +10,7 @@
   -#%pre
     -#{{ Order.order == order }}
 
-  .large-12.columns
+  .small-12.columns
     = render partial: "checkout/details", locals: {f: f}
     = render partial: "checkout/billing", locals: {f: f}
     = render partial: "checkout/shipping", locals: {f: f}

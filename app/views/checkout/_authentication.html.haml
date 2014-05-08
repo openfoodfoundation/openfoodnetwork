@@ -1,6 +1,14 @@
-#checkout_login.row{"ng-show" => "!enabled"}
-  .large-4.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
-    %button{"ng-click" => "open()"} Login
-
-  .large-4.columns.text-center
-    %button{"ng-click" => "enabled = true"} Checkout as guest
+%section{"ng-show" => "!enabled"}
+  %p
+  %p
+  .row
+    .small-12.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
+      %h3 Ok, ready to checkout?
+  %p
+  .row
+    .small-5.columns.text-center
+      %button.primary.expand{"ng-click" => "open()"} Log in
+    .small-2.columns.text-center
+      %p.pad-top -OR-
+    .small-5.columns.text-center
+      %button.neutral-btn.dark.expand{"ng-click" => "enabled = true"} Checkout as guest

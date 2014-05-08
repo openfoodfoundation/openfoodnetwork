@@ -3,7 +3,7 @@
 @import mixins
 
 .neutral-btn
-  @include button 
+  @include button
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
   background-color: transparent
   border: 2px solid rgba(200, 200, 200, 1)
@@ -41,12 +41,12 @@
 
 //rewrite default primary style
 
-.button.primary
+.button.primary, button.primary
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
   background: $clr-brick
   color: white
 
-.button.primary:hover, .button.primary:active, .button.primary:focus 
+.button.primary:hover, .button.primary:active, .button.primary:focus, button.primary:hover, button.primary:active, button.primary:focus
   background: $clr-brick-bright
   text-shadow: 0 1px 0 $clr-brick
 

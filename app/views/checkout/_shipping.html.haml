@@ -1,22 +1,28 @@
 %fieldset#shipping
   %ng-form{"ng-controller" => "ShippingCtrl", name: "shipping"}
 
-    %legend{"ng-class" => "{valid: shipping.$valid}"}
-      Shipping
-      %i.fi-x
-      %i.fi-check
+    %h5{"ng-class" => "{valid: shipping.$valid}"}
+      %span.right
+        %i.fi-x.right
+        %i.fi-check.right
+      Shipping info
 
     %accordion-group{"is-open" => "accordion.shipping",
       "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
       %accordion-heading
         .row
-          .large-12.columns
-            {{ Order.shippingMethod().name }}
-            icon up / icon down
+          .small-11.columns
+            %em 
+              %small
+                {{ Order.shippingMethod().name }}
+          .small-1.columns.right
+            %span.right
+              %i.fi-arrow-up
+              %i.fi-arrow-down  
 
       - for ship_method, i in current_distributor.shipping_methods.uniq
         .row
-          .large-12.columns
+          .small-12.columns
             %label
               -#= radio_button_tag "order[shipping_method_id]", ship_method.id, false,
                 -#"ng-model" => "order.shipping_method_id"
@@ -37,30 +43,30 @@
 
           %div.visible{"ng-if" => "!CheckoutFormState.ship_address_same_as_billing"}
             .row
-              .large-12.columns
+              .small-12.columns
                 = validated_input "Address", "order.ship_address.address1", "ofn-focus" => "accordion['shipping']"
             .row
-              .large-12.columns
+              .small-12.columns
                 = validated_input "Address (contd.)", "order.ship_address.address2", required: false
             .row
-              .large-6.columns
+              .small-6.columns
                 = validated_input "City", "order.ship_address.city"
-              .large-6.columns
+              .small-6.columns
                 = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}
             .row
-              .large-6.columns
+              .small-6.columns
                 = validated_input "Postcode", "order.ship_address.zipcode"
-              .large-6.columns.right
+              .small-6.columns.right
                 = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
                   {include_blank: false}
             .row
-              .large-6.columns
+              .small-6.columns
                 = validated_input "First Name", "order.ship_address.firstname"
-              .large-6.columns
+              .small-6.columns
                 = validated_input "Last Name", "order.ship_address.lastname"
             .row
-              .large-6.columns
+              .small-6.columns
                 = validated_input "Phone", "order.ship_address.phone"
       .row
-        .large-12.columns.text-right
+        .small-12.columns.text-right
           %button{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next
