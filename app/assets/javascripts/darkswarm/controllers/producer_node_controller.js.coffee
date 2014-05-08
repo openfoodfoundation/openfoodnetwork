@@ -1,9 +1,9 @@
-Darkswarm.controller "ProducerNodeCtrl", ($scope, Navigation, $anchorScroll) ->
+Darkswarm.controller "ProducerNodeCtrl", ($scope, HashNavigation, $anchorScroll) ->
   $scope.toggle = ->
-    Navigation.navigate $scope.producer.path
+    HashNavigation.navigate $scope.producer.hash
 
   $scope.open = ->
-    Navigation.active($scope.producer.path)
+    HashNavigation.active($scope.producer.hash)
 
   if $scope.open()
     $anchorScroll()
