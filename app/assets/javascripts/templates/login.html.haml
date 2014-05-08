@@ -24,14 +24,14 @@
           "ng-model" => "spree_user.password"}
     .row
       .large-12.columns
-        %label{for: "remember_me"} Remember Me
         %input{name: "remember_me", 
         type: "checkbox", 
         value: "1",
         "ng-model" => "spree_user.remember_me"}
+        %label{for: "remember_me"} Remember Me
     .row
       .large-12.columns
         %input.button.primary{name: "commit", 
           tabindex: "3", 
           type: "submit", 
-          value: "Login"}
+          value: "Log in"}

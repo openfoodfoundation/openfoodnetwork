@@ -39,6 +39,16 @@
   background-color: rgba(0, 0, 0, 0.1)
   text-shadow: 0 1px 0 #fff
 
+//rewrite default primary style
+
+.button.primary
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  background: $clr-brick
+  color: white
+
+.button.primary:hover, .button.primary:active, .button.primary:focus 
+  background: $clr-brick-bright
+  text-shadow: 0 1px 0 $clr-brick
 
 // Responsive 
 @media screen and (min-width: 768px)
