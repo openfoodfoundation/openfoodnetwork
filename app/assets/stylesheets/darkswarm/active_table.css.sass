@@ -70,27 +70,6 @@
       border: 1px solid $dark-grey
       color: $dark-grey
 
-  &.inactive, &.inactive strong
-    color: $disabled-dark
-    &.closed
-      &:hover, &:active, &:focus
-        border: 1px solid $disabled-dark
-        color: $disabled-dark
-    &.open
-      .active_table_row:first-child
-        color: $dark-grey
-        border-top: 1px solid $disabled-dark
-        border-left: 1px solid $disabled-dark
-        border-right: 1px solid $disabled-dark
-        strong
-          color: $dark-grey
-        &:hover, &:active, &:focus
-          color: $dark-grey
-      .active_table_row:nth-child(2)
-        border-left: 1px solid $disabled-dark
-        border-right: 1px solid $disabled-dark
-        border-bottom: 1px solid $disabled-dark
-
   &.current
     &.closed
       &, & *

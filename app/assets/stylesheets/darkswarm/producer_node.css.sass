@@ -2,6 +2,7 @@
 
 .producers
   .active_table .active_table_node
+    //Open row
     &.open
       .active_table_row:first-child
         border-top: 1px solid $clr-turquoise
@@ -19,6 +20,7 @@
         background-color: $clr-turquoise
         &:hover
           background-color: $clr-turquoise-bright 
+    //Closed row
     &.closed
       &, & *
         color: $dark-grey
