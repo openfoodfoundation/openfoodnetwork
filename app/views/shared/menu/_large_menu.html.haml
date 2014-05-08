@@ -19,6 +19,11 @@
         %a
           %span.nav-primary{href: ""} Groups
       %li.divider
+      - if spree_current_user.andand.has_spree_role? 'admin'
+        %li
+          %a
+            %span.nav-primary{href: spree_admin_path} Admin
+      %li.divider
   %section.top-bar-section
     %ul.right{"ng-controller" => "AuthenticationCtrl"}
       %li.divider
