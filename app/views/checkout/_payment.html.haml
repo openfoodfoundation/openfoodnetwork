@@ -1,20 +1,26 @@
 %fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
+
+    %legend{"ng-class" => "{valid: payment.$valid}"}
+      Payment 
+      %i.fi-x
+      %i.fi-check
+
     %accordion-group{"is-open" => "accordion.payment",
-      "ng-class" => "{valid: payment.$valid}"}
+      "ng-class" => "{valid: payment.$valid, open: accordion.payment}"}
       %accordion-heading
         .row
-          .large-6.columns
-            Payment Details 
-            %i.fi-x
-            %i.fi-check
-          .large-6.columns.text-right
+          .large-12.columns
             {{ Order.paymentMethod().name }}
+
+            icon up / icon down
+
       - current_order.available_payment_methods.each do |method|
         .row
           .large-12.columns
             %label
               = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
+                required: true,
                 "ng-model" => "order.payment_method_id"
               = method.name
         .row{"ng-show" => "order.payment_method_id == #{method.id}"}

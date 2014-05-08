@@ -1,15 +1,19 @@
 %fieldset#shipping
   %ng-form{"ng-controller" => "ShippingCtrl", name: "shipping"}
+
+    %legend{"ng-class" => "{valid: shipping.$valid}"}
+      Shipping
+      %i.fi-x
+      %i.fi-check
+
     %accordion-group{"is-open" => "accordion.shipping",
-      "ng-class" => "{valid: shipping.$valid}"}
+      "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
       %accordion-heading
         .row
-          .large-6.columns
-            Shipping 
-            %i.fi-x
-            %i.fi-check
-          .large-6.columns.text-right
+          .large-12.columns
             {{ Order.shippingMethod().name }}
+            icon up / icon down
+
       - for ship_method, i in current_distributor.shipping_methods.uniq
         .row
           .large-12.columns
@@ -59,4 +63,4 @@
                 = validated_input "Phone", "order.ship_address.phone"
       .row
         .large-12.columns.text-right
-          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next
+          %button{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next

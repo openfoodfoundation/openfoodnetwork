@@ -3,10 +3,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, CheckoutFormState, Order,
   storage.bind $scope, "Order.order", {storeName: "order_#{Order.order.id}"}
   $scope.order = Order.order # Ordering is important
 
-  if CurrentUser
-    $scope.enabled = true 
-  else
-    $scope.enabled = false 
+  $scope.enabled = if CurrentUser then true else false
 
   $scope.purchase = (event)->
     event.preventDefault()
