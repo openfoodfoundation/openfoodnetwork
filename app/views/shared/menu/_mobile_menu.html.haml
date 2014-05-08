@@ -1,9 +1,9 @@
 %nav.tab-bar.show-for-medium-down
-  %section.left-small
+  %section.left
     %a.left-off-canvas-toggle.menu-icon
-      %span
-  %section.right-small
-    %a.icon{href: cart_url}
+      %span 
+  %section.right
+    %a.nav-branded.icon{href: cart_url}
       %i.fi-shopping-cart 
         %span
           = cart_count
@@ -14,6 +14,17 @@
 %aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
     %li= link_to image_tag("ofn_logo_small.png"), root_path
+
+    - if spree_current_user.andand.has_spree_role? 'admin'
+      %li
+        %a{href: spree_admin_path}
+          %span.nav-primary Admin
+    %li
+    - if spree_current_user.nil?
+      = render 'shared/signed_out'
+    - else
+      = render 'shared/signed_in'
+
     %li
       %a{href: main_app.producers_path} Producers
 
@@ -38,12 +49,4 @@
       %a{href: ""}
         %span.nav-primary Groups
 
-    - if spree_current_user.andand.has_spree_role? 'admin'
-      %li
-        %a{href: spree_admin_path}
-          %span.nav-primary Admin
-    %li
-    - if spree_current_user.nil?
-      = render 'shared/signed_out'
-    - else
-      = render 'shared/signed_in'
+    
