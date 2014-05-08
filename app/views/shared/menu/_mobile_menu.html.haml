@@ -17,7 +17,7 @@
 
     - if spree_current_user.andand.has_spree_role? 'admin'
       %li
-        %a{href: spree_admin_path}
+        %a{href: spree.admin_path}
           %span.nav-primary Admin
     %li
     - if spree_current_user.nil?
