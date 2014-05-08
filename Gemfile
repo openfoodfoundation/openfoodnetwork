@@ -69,7 +69,6 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
-  gem 'capybara-screenshot'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'simplecov', :require => false
   gem 'awesome_print'

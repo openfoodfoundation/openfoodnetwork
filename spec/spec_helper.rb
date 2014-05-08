@@ -11,7 +11,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
-require 'capybara-screenshot/rspec'
 require 'database_cleaner'
 
 # Allow connections to phantomjs/selenium whilst raising errors
