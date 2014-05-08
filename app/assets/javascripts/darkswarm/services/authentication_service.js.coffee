@@ -9,6 +9,7 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location)->
     open: (path = false)=>
       @modalInstance = $modal.open
         templateUrl: 'authentication.html'
+        windowClass: "login-modal"
       @modalInstance.result.then @close, @close
       @selectedPath = path || @selectedPath
       Navigation.navigate @selectedPath
