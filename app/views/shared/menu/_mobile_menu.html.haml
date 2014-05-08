@@ -16,6 +16,32 @@
     %li= link_to image_tag("ofn_logo_small.png"), root_path
     %li
       %a{href: main_app.producers_path} Producers
+
+    - if current_page? root_path
+      %li
+        %a{"ofn-scroll-to" => "hubs"}
+          %span.nav-primary Hubs
+    - else
+      %li
+        %a{href: root_path + "#/#hubs"}
+          %span.nav-primary Hubs
+
+    %li
+      %a{href: ""}
+        %span.nav-primary Map
+
+    %li
+      %a{href: main_app.producers_path}
+        %span.nav-primary Producers
+
+    %li
+      %a{href: ""}
+        %span.nav-primary Groups
+
+    - if spree_current_user.andand.has_spree_role? 'admin'
+      %li
+        %a{href: spree_admin_path}
+          %span.nav-primary Admin
     %li
     - if spree_current_user.nil?
       = render 'shared/signed_out'

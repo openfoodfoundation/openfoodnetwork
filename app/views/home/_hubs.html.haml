@@ -26,7 +26,7 @@
         %hub.active_table_node.row{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query)",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "ng-controller" => "HubNodeCtrl",
-        id: "{{hub.path}}"} 
+        id: "{{hub.hash}}"} 
           .small-12.columns
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
