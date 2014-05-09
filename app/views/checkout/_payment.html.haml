@@ -15,7 +15,8 @@
         .row
           .small-11.columns
             %em 
-              %small {{ Order.paymentMethod().name }}
+              %small
+                {{ Order.paymentMethod().name }}
           .small-1.columns.right
             %span.accordion-up.right
               %i.fi-arrow-up

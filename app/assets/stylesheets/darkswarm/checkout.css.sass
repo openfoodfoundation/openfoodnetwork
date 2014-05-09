@@ -1,6 +1,13 @@
 @import mixins
 @import branding
 
+@mixin h5-valid
+  h5
+    
+@mixin h5-invalid
+  h5
+    background: #ff0000
+
 checkout
   display: block
   
@@ -10,7 +17,7 @@ checkout
   
   #details, #billing, #shipping, #payment
     border: 0
-    margin: 2em 0
+    margin: 1em 0
     padding: 0
     .content
       border: 1px solid #efefef
@@ -18,23 +25,28 @@ checkout
   h5
     margin: 0
     padding: 0.65em
-    background: $clr-brick-light-bright
-    //color: white
-
+    background: #f7f7f7
+  
     label, label.alert, label.success, &.valid label.alert, &.dirty label.success 
       @include csstrans
       display: none
+
     &.dirty label.alert 
       display: inline
     &.dirty.valid label.alert 
-      display: none  
+      display: none 
     &.valid label.success
       display: inline
+      @include h5-valid
+
+  h5.dirty
+    background: #f7ccc5
+  h5.valid, h5.dirty.valid
+    background: #bfefd1
 
   orderdetails table tr th
     text-align: left
 
-  
 
   dd
     span.accordion-up

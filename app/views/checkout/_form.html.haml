@@ -11,7 +11,10 @@
     -#{{ Order.order == order }}
 
   .small-12.columns
+    %p
+    %h3.text-center Checkout from !hub_name!
     = render partial: "checkout/details", locals: {f: f}
     = render partial: "checkout/billing", locals: {f: f}
     = render partial: "checkout/shipping", locals: {f: f}
     = render partial: "checkout/payment", locals: {f: f}
+    %p
