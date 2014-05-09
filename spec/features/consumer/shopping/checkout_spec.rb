@@ -38,15 +38,14 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "shows all shipping methods, but doesn't show ship address when not needed" do
-        toggle_accordion "Shipping"
+        toggle_shipping
         page.should have_content "Frogs"
         page.should have_content "Donkeys"
       end
 
       context "When shipping method requires an address" do
         before do
-          toggle_accordion "Shipping"
-          #find(:radio_button, sm1.name, {}).trigger "click"
+          toggle_shipping
           choose sm1.name
         end
         it "shows ship address forms when 'same as billing address' is unchecked" do
@@ -63,7 +62,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       before do
         visit checkout_path
-        toggle_accordion "Payment Details"
+        toggle_payment
       end
 
       it "shows all available payment methods" do
@@ -74,18 +73,18 @@ feature "As a consumer I want to check out my cart", js: true do
       describe "Purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
           ActionMailer::Base.deliveries.clear
-          toggle_accordion "Shipping"
+          toggle_shipping
           choose sm2.name
-          toggle_accordion "Payment Details"
+          toggle_payment
           choose pm1.name
-          toggle_accordion "Customer Details"
+          toggle_details
           within "#details" do
             fill_in "First Name", with: "Will"
             fill_in "Last Name", with: "Marshall"
             fill_in "Email", with: "test@test.com"
             fill_in "Phone", with: "0468363090"
           end
-          toggle_accordion "Billing"
+          toggle_billing
           within "#billing" do
             fill_in "Address", with: "123 Your Face"
             select "Australia", from: "Country"
@@ -103,18 +102,18 @@ feature "As a consumer I want to check out my cart", js: true do
         end
 
         it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
-          toggle_accordion "Shipping"
+          toggle_shipping
           choose sm1.name
-          toggle_accordion "Payment Details"
+          toggle_payment
           choose pm1.name
-          toggle_accordion "Customer Details"
+          toggle_details
           within "#details" do
             fill_in "First Name", with: "Will"
             fill_in "Last Name", with: "Marshall"
             fill_in "Email", with: "test@test.com"
             fill_in "Phone", with: "0468363090"
           end
-          toggle_accordion "Billing"
+          toggle_billing
           within "#billing" do
             fill_in "City", with: "Melbourne"
             fill_in "Postcode", with: "3066"
@@ -122,7 +121,7 @@ feature "As a consumer I want to check out my cart", js: true do
             select "Australia", from: "Country"
             select "Victoria", from: "State"
           end
-          toggle_accordion "Shipping"
+          toggle_shipping
           check "Shipping address same as billing address?"
           click_button "Purchase"
           page.should have_content "Your order has been processed successfully", wait: 10
