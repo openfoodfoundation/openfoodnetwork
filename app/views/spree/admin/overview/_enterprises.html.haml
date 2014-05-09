@@ -2,42 +2,42 @@
   %div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
     %h3.five.columns.alpha My Enterprises
     %a.with-tip{ title: "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." } What's this?
-  %div.sixteen.columns.alpha.list
-    - if @enterprises.empty?
-      %div.sixteen.columns.alpha.list-item.red
-        %span.text.fifteen.columns.alpha You have no enterprises.
-        %span.one.columns.omega
-          %span.icon-remove-sign
-      %a.sixteen.columns.alpha.button.bottom.red{ href: "#{main_app.new_admin_enterprise_path}" }
-        CREATE NEW ENTERPRISE
-        %span.icon-arrow-right
-    - else
-      %div.sixteen.columns.alpha.list-title
-        %span.five.columns.alpha Name
-        %span.centered.three.columns Payment Methods
-        %span.centered.three.columns Shipping Methods
-        %span.centered.three.columns Enterprise Fees
+  - if @enterprises.empty?
+    %div.sixteen.columns.alpha.list-item.red
+      %span.text.fifteen.columns.alpha You have no enterprises.
+      %span.one.columns.omega
+        %span.icon-remove-sign
+    %a.sixteen.columns.alpha.button.bottom.red{ href: "#{main_app.new_admin_enterprise_path}" }
+      CREATE NEW ENTERPRISE
+      %span.icon-arrow-right
+  - else
+    %div.sixteen.columns.alpha.list-title
+      %span.five.columns.alpha Name
+      %span.centered.three.columns Payment Methods
+      %span.centered.three.columns Shipping Methods
+      %span.centered.three.columns Enterprise Fees
+    %div.sixteen.columns.alpha.list
       - @enterprises.each do |enterprise|
         %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
           %span.five.columns.alpha
             = enterprise.name
           %span.symbol.three.columns.centered
-            - if enterprise.payment_methods.count > 0
-              %span.icon-ok-sign
+            - if enterprise.payment_methods.count < 1 && enterprise.is_distributor
+              %span.icon-remove-sign.with-tip{ title: "This enterprise has no payment methods" }
             - else
-              %span.icon-remove-sign
+              %span.icon-ok-sign
           %span.symbol.three.columns.centered
-            - if enterprise.shipping_methods.count > 0
-              %span.icon-ok-sign
+            - if enterprise.shipping_methods.count < 1 && enterprise.is_distributor
+              %span.icon-remove-sign.with-tip{ title: "This enterprise has no shipping methods" }
             - else
-              %span.icon-remove-sign
+              %span.icon-ok-sign
           %span.symbol.three.columns.centered
             - if enterprise.enterprise_fees.count > 0
               %span.icon-ok-sign
             - else
-              %span.icon-warning-sign
+              %span.icon-warning-sign.with-tip{ title: "This enterprise has no enterprise fees" }
           %span.two.columns.omega.right
             %span.icon-arrow-right
-      %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
-        MANAGE MY ENTERPRISES
-        %span.icon-arrow-right
+    %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
+      MANAGE MY ENTERPRISES
+      %span.icon-arrow-right
