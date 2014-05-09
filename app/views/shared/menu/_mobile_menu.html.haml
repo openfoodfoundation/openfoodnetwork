@@ -1,23 +1,52 @@
-%aside.left-off-canvas-menu.show-for-small
+%nav.tab-bar.show-for-medium-down
+  %section.left
+    %a.left-off-canvas-toggle.menu-icon
+      %span 
+  %section.right
+    %a.nav-branded.icon{href: cart_url}
+      %i.fi-shopping-cart 
+        %span
+          = cart_count
+          items
+    %a{href: main_app.shop_path}
+      {{ CurrentHub.name }}
+
+%aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
     %li= link_to image_tag("ofn_logo_small.png"), root_path
-    %li
-      %a{href: main_app.producers_path} Producers
+
+    - if spree_current_user.andand.has_spree_role? 'admin'
+      %li
+        %a{href: spree.admin_path}
+          %span.nav-primary Admin
     %li
     - if spree_current_user.nil?
       = render 'shared/signed_out'
     - else
       = render 'shared/signed_in'
 
-%nav.tab-bar.show-for-small
-  %section.left-small
-    %a.left-off-canvas-toggle.menu-icon
-      %span
-    %a{href: main_app.shop_path}
-      {{ CurrentHub.name }}
-  %section.right-small
-    %a.icon{href: cart_url}
-      %i.fi-shopping-cart 
-        %span
-          = cart_count
-          items
+    %li
+      %a{href: main_app.producers_path} Producers
+
+    - if current_page? root_path
+      %li
+        %a{"ofn-scroll-to" => "hubs"}
+          %span.nav-primary Hubs
+    - else
+      %li
+        %a{href: root_path + "#/#hubs"}
+          %span.nav-primary Hubs
+
+    %li
+      %a{href: ""}
+        %span.nav-primary Map
+
+    %li
+      %a{href: main_app.producers_path}
+        %span.nav-primary Producers
+
+    %li
+      %a{href: ""}
+        %span.nav-primary Groups
+
+    

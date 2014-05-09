@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   # (vic.openfoodnetwork.org) that has the SSL certificate. Redirect all requests to this
   # domain to avoid showing customers a scary invalid certificate error.
   def require_certified_hostname
-    certified_host = "vic.openfoodnetwork.org"
+    certified_host = "openfoodnetwork.org.au"
 
     if Rails.env.production? && request.host != certified_host
       redirect_to "http://#{certified_host}#{request.fullpath}"

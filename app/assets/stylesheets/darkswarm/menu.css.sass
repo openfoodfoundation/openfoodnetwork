@@ -1,9 +1,6 @@
 @import branding
 @import mixins
 
-.inner-wrap
-  padding-top: 45px
-
 .top-bar
   @include box-shadow(0 2px 3px 0 rgba(0,0,0,0.25))
 
@@ -24,3 +21,12 @@ nav
 
 nav.top-bar a.icon i
   font-size: 22px
+
+// Responsive 
+@media screen and (min-width: 1025px)
+  body.off-canvas
+    padding-top: 45px
+@media screen and (max-width: 1025px)
+  section.right 
+    .nav-branded
+      padding: 0 1em

@@ -63,7 +63,10 @@ module Openfoodnetwork
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = 'en'
 
-    I18n.config.enforce_available_locales = true
+    # Setting this to true causes a performance regression in Rails 3.2.17
+    # When we're on a version with the fix below, we can set it to true
+    # https://github.com/svenfuchs/i18n/issues/230
+    I18n.config.enforce_available_locales = false
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
