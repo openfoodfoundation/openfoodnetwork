@@ -1,4 +1,4 @@
-Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, $location, $anchorScroll, $templateCache, CurrentHub) ->
+Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, Navigation, $location, $anchorScroll, $templateCache, CurrentHub) ->
   $scope.toggle = ->
     HashNavigation.toggle $scope.hub.hash
 
