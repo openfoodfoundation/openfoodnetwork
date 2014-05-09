@@ -7,7 +7,7 @@
           %i.fi-x
         %label.label.round.success
           %i.fi-check
-      Customer details
+      Your details
 
     %accordion-group{"is-open" => "accordion.details", 
       "ng-class" => "{valid: details.$valid, open: accordion.details}"}
@@ -28,20 +28,17 @@
 
       .row
         .small-6.columns
+          = validated_input "First Name", "order.bill_address.firstname"
+        .small-6.columns
+          = validated_input "Last Name", "order.bill_address.lastname"
+
+      .row
+        .small-6.columns
           = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"
-
-        = f.fields_for :bill_address, @order.bill_address do |ba|
-          .small-6.columns
-            = validated_input 'Phone', 'order.bill_address.phone'
-
-      = f.fields_for :bill_address, @order.bill_address do |ba|
-        .row
-          .small-6.columns
-            = validated_input "First Name", "order.bill_address.firstname"
-
-          .small-6.columns
-            = validated_input "Last Name", "order.bill_address.lastname"
-
+        
+        .small-6.columns
+          = validated_input 'Phone', 'order.bill_address.phone'
+        
       .row
         .small-12.columns.text-right
           %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
