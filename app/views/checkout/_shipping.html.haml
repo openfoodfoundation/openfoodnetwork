@@ -30,6 +30,7 @@
               -#= radio_button_tag "order[shipping_method_id]", ship_method.id, false,
                 -#"ng-model" => "order.shipping_method_id"
               %input{type: :radio, value: ship_method.id,
+                required: true,
                 "ng-model" => "order.shipping_method_id"}
               = ship_method.name
 

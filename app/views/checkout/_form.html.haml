@@ -7,8 +7,8 @@
   :javascript
     angular.module('Darkswarm').value('order', #{render "checkout/order"})
 
-  -#%pre
-    -#{{ Order.order == order }}
+  %pre
+    {{ Order.order}}
 
   .small-12.columns
     %h3.text-center.pad-top 
@@ -19,5 +19,8 @@
     = render partial: "checkout/billing", locals: {f: f}
     = render partial: "checkout/shipping", locals: {f: f}
     = render partial: "checkout/payment", locals: {f: f}
-
-    %input.button.primary{type: :submit, value: "Place order now", "ng-show" => "checkout.$valid"}
+    %p
+      %input.button.primary{type: :submit, 
+      value: "Place order now", 
+      "ng-click" => "purchase($event)", 
+      "ng-show" => "checkout.$valid"}

@@ -11,6 +11,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
+
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
       while @order.state != "complete"

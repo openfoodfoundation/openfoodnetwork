@@ -3,10 +3,17 @@ module CheckoutWorkflow
     have_content "Customer details"
   end
 
-  def toggle_accordion(id)
-    find("##{id} dd > a").click
+  def checkout_as_guest
+    find("button", text: "Checkout as guest").trigger "click"
   end
 
+  def place_order
+    click_button "Place order now"
+  end
+
+  def toggle_accordion(id)
+    find("##{id} dd a").trigger "click"
+  end
   def toggle_details
     toggle_accordion :details
   end

@@ -35,6 +35,7 @@ feature "As a consumer I want to check out my cart", js: true do
     context "on the checkout page" do
       before do
         visit checkout_path
+        checkout_as_guest
       end
 
       it "shows all shipping methods, but doesn't show ship address when not needed" do
@@ -62,6 +63,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
       before do
         visit checkout_path
+        checkout_as_guest
         toggle_payment
       end
 
@@ -93,7 +95,7 @@ feature "As a consumer I want to check out my cart", js: true do
             fill_in "Postcode", with: "3066"
 
           end
-          click_button "Purchase"
+          place_order
           page.should have_content "Your order has been processed successfully", wait: 10
           ActionMailer::Base.deliveries.length.should == 1
           email = ActionMailer::Base.deliveries.last
@@ -123,7 +125,7 @@ feature "As a consumer I want to check out my cart", js: true do
           end
           toggle_shipping
           check "Shipping address same as billing address?"
-          click_button "Purchase"
+          place_order
           page.should have_content "Your order has been processed successfully", wait: 10
         end
       end
