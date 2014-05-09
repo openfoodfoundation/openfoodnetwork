@@ -53,6 +53,26 @@ feature "Authentication", js: true do
             ActionMailer::Base.deliveries.last.subject.should =~ /Welcome to/
           end
         end
+
+        describe "forgetting passwords" do
+          before do
+            ActionMailer::Base.deliveries.clear
+            select_login_tab "Forgot Password?"
+          end
+          
+          scenario "failing to reset password" do
+            fill_in "Your email", with: "notanemail@myemail.com"
+            click_reset_password_button
+            page.should have_content "Email address not found"
+          end
+
+          scenario "resetting password" do
+            fill_in "Your email", with: user.email 
+            click_reset_password_button
+            page.should have_reset_password
+            ActionMailer::Base.deliveries.last.subject.should =~ /Password Reset/
+          end
+        end
       end
       describe "as medium" do
         before do

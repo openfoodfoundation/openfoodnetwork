@@ -16,6 +16,10 @@ module UIComponentHelper
     click_button "Sign up now"
   end
 
+  def click_reset_password_button
+    click_button "Reset password"
+  end
+
   def select_login_tab(text)
     within ".login-modal" do
       find("a", text: text).click
@@ -32,6 +36,10 @@ module UIComponentHelper
 
   def have_login_modal
     have_selector ".login-modal" 
+  end
+
+  def have_reset_password
+    have_content "An email with instructions on resetting your password has been sent!"
   end
 
   def be_logged_in_as(user_or_email)
