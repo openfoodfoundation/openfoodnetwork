@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication", js: true do
-  include MenuHelper
+  include UIComponentHelper
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
@@ -9,10 +9,26 @@ feature "Authentication", js: true do
       before do
         visit root_path
       end
-      scenario "showing modal" do
-        binding.pry
-        find(:link, text: "LOG IN").click
-        page.should have_content "Forgot Password?"
+      describe "as large" do
+        before do
+          browse_as_large
+        end
+        scenario "showing login" do
+          open_login_modal
+          page.should have_login_modal
+        end
+      end
+      describe "as medium" do
+        before do
+          browse_as_medium
+        end
+        scenario "showing login" do
+          open_off_canvas 
+          binding.pry
+          open_login_modal
+          save_screenshot "/Users/willmarshall/Desktop/modal.png", :full => true
+          page.should have_login_modal
+        end
       end
     end
 

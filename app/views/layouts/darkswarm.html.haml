@@ -14,7 +14,7 @@
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
-    .off-canvas-wrap
+    .off-canvas-wrap{offcanvas: true}
       .inner-wrap
         = render partial: "shared/current_hub"
         = render partial: "shared/current_user"

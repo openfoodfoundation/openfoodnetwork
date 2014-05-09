@@ -37,7 +37,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :poltergeist do |app|
-  options = {phantomjs_options: ['--load-images=no']}
+  options = {phantomjs_options: ['--load-images=no'], window_size: [1280, 800]}
   # Extend poltergeist's timeout to allow ample time to use pry in browser thread
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome

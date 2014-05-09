@@ -30,7 +30,7 @@
             %span.nav-primary Admin
       %li.divider
   %section.top-bar-section
-    %ul.right{"ng-controller" => "AuthenticationCtrl"}
+    %ul.right
       %li.divider
       - if spree_current_user.nil?
         = render 'shared/signed_out'
