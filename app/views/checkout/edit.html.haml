@@ -8,10 +8,12 @@
    
   %accordion.row{"close-others" => "true"}
     %checkout{"ng-controller" => "CheckoutCtrl"}
-      .large-9.columns
+      .small-9.columns
         - unless spree_current_user
           = render partial: "checkout/authentication"
         .row{"ng-show" => "enabled", "ng-controller" => "AccordionCtrl"}
           = render partial: "checkout/form"
-      .large-3.columns
+      .small-3.columns
         = render partial: "checkout/summary"
+
+= render partial: "shared/footer"

@@ -1,15 +1,48 @@
+@import mixins
+@import branding
+
 checkout
   display: block
   
   orderdetails
     .button, table
       width: 100%
+  
+  #details, #billing, #shipping, #payment
+    border: 0
+    margin: 2em 0
+    padding: 0
+    .content
+      border: 1px solid #efefef
 
-  dd
-    i.fi-check, &.valid i.fi-x
+  h5
+    margin: 0
+    padding: 0.65em
+    background: $clr-brick-light-bright
+    //color: white
+
+    label, label.alert, label.success, &.valid label.alert, &.dirty label.success 
+      @include csstrans
       display: none
-    &.valid i.fi-check
+    &.dirty label.alert 
+      display: inline
+    &.dirty.valid label.alert 
+      display: none  
+    &.valid label.success
       display: inline
 
   orderdetails table tr th
     text-align: left
+
+  
+
+  dd
+    span.accordion-up
+      display: none
+    span.accordion-down
+      display: inline
+    &.open
+      span.accordion-up
+        display: inline
+      span.accordion-down
+        display: none

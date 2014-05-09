@@ -1,10 +1,12 @@
 %fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
 
-    %h5{"ng-class" => "{valid: payment.$valid}"}
+    %h5{"ng-class" => "{valid: payment.$valid, dirty: details.$dirty}"} 
       %span.right
-        %i.fi-x.right
-        %i.fi-check.right
+        %label.label.round.alert
+          %i.fi-x
+        %label.label.round.success
+          %i.fi-check
       Payment
 
     %accordion-group{"is-open" => "accordion.payment",
@@ -15,8 +17,9 @@
             %em 
               %small {{ Order.paymentMethod().name }}
           .small-1.columns.right
-            %span.right
+            %span.accordion-up.right
               %i.fi-arrow-up
+            %span.accordion-down.right
               %i.fi-arrow-down  
 
       - current_order.available_payment_methods.each do |method|

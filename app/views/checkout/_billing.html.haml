@@ -1,10 +1,12 @@
 %fieldset#billing
   %ng-form{"ng-controller" => "BillingCtrl", name: "billing"}
 
-    %h5{"ng-class" => "{valid: billing.$valid}"}
+    %h5{"ng-class" => "{valid: billing.$valid, dirty: details.$dirty}"}
       %span.right
-        %i.fi-x.right
-        %i.fi-check.right
+        %label.label.round.alert
+          %i.fi-x
+        %label.label.round.success
+          %i.fi-check
       Billing info
 
     %accordion-group{"is-open" => "accordion.billing",
@@ -14,12 +16,14 @@
           .small-11.columns
             %em
               %small
-                {{ order.bill_address.address1 }}
+                {{ order.bill_address.address1 }},
                 {{ order.bill_address.city }}
+                {{ order.bill_address.zipcode }}
           .small-1.columns.right
-            %span.right
+            %span.accordion-up.right
               %i.fi-arrow-up
-              %i.fi-arrow-down  
+            %span.accordion-down.right
+              %i.fi-arrow-down   
 
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
@@ -45,4 +49,4 @@
 
       .row
         .small-12.columns.text-right
-          %button{"ng-disabled" => "billing.$invalid", "ng-click" => "next($event)"} Next
+          %button.primary{"ng-disabled" => "billing.$invalid", "ng-click" => "next($event)"} Next

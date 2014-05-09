@@ -3,8 +3,10 @@
 
     %h5{"ng-class" => "{valid: details.$valid, dirty: details.$dirty}"}
       %span.right
-        %i.fi-x.right
-        %i.fi-check.right
+        %label.label.round.alert
+          %i.fi-x
+        %label.label.round.success
+          %i.fi-check
       Customer details
 
     %accordion-group{"is-open" => "accordion.details", 
@@ -15,10 +17,13 @@
             %em 
               %small
                 {{ order.bill_address.firstname }}
-                {{ order.bill_address.lastname }}
+                {{ order.bill_address.lastname }},
+                {{ order.email }},
+                {{ order.bill_address.phone }}
           .small-1.columns.right
-            %span.right
+            %span.accordion-up.right
               %i.fi-arrow-up
+            %span.accordion-down.right
               %i.fi-arrow-down  
 
       .row
@@ -39,4 +44,4 @@
 
       .row
         .small-12.columns.text-right
-          %button{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
+          %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
