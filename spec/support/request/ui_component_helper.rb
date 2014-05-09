@@ -8,6 +8,20 @@ module UIComponentHelper
     page.driver.resize(1280, 800)
   end
 
+  def click_login_button
+    click_button "Log in"
+  end
+
+  def click_signup_button
+    click_button "Sign up now"
+  end
+
+  def select_login_tab(text)
+    within ".login-modal" do
+      find("a", text: text).click
+    end
+  end
+
   def open_login_modal
     find("a", text: "LOG IN").click
   end
@@ -19,6 +33,19 @@ module UIComponentHelper
   def have_login_modal
     have_selector ".login-modal" 
   end
+
+  def be_logged_in_as(user_or_email)
+    if user_or_email.is_a? Spree::User
+      have_content user_or_email.email
+    else
+      have_content user_or_email
+    end
+  end
+
+  def be_logged_out
+    have_content "LOG IN"
+  end
+
   def open_active_table_row
     find("hub:first-child .active_table_row:first-child").click()
   end
