@@ -26,7 +26,8 @@
     @media all and (max-width: 768px)
       line-height: inherit !important
   
-  // inactive link
+  // inactive nav link
+
   dl  
     dd
       border-top: 4px solid transparent
@@ -36,7 +37,8 @@
         visibility: hidden
         @include icon-font
   
-  // active link
+  // active nav link
+  
   dl
     dd.active
       border-top: 4px solid $clr-brick-bright
@@ -46,6 +48,8 @@
         content: "\f10c"
         visibility: visible
         @include icon-font
+
+  // content revealed in accordion
 
   .tabs-content
     margin-bottom: 0
