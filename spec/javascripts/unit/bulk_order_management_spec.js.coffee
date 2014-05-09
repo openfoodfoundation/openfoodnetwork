@@ -29,9 +29,9 @@ describe "AdminOrderMgmtCtrl", ->
       scope.initialise "api_key"
       httpBackend.flush()
 
-      expect(scope.suppliers).toEqual [{ id : '', name : 'All' }, 'list of suppliers']
-      expect(scope.distributors).toEqual [ { id : '', name : 'All' }, 'list of distributors' ] 
-      expect(scope.orderCycles).toEqual [ { id : '', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+      expect(scope.suppliers).toEqual [{ id : '0', name : 'All' }, 'list of suppliers']
+      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ] 
+      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
 
       expect(scope.initialiseVariables.calls.length).toBe 1
       expect(scope.fetchOrders.calls.length).toBe 1
