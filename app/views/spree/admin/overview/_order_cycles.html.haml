@@ -1,0 +1,22 @@
+%div.dashboard_item.seven.columns.omega
+  %div.header.seven.columns.alpha{ :class => "#{@order_cycle_count > 0 ? "" : "orange"}"}
+    %h3.five.columns.alpha Order Cycles
+    %a.with-tip{ title: "Order cycles determine when and where your products are available to customers." } What's this?
+  %div.seven.columns.alpha.list
+    - if @order_cycle_count > 0
+      %div.seven.columns.alpha.list-item
+        %span.six.columns.alpha
+          = "You have #{@order_cycle_count} active order cycle#{@order_cycle_count > 1 ? "s" : ""}."
+        %span.one.column.omega
+          %span.icon-ok-sign
+      %a.seven.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_order_cycles_path}" }
+        MANAGE ORDER CYCLES
+        %span.icon-arrow-right
+    - else
+      %div.seven.columns.alpha.list-item.orange
+        %span.six.columns.alpha You don't have any active order cycles.
+        %span.one.column.omega
+          %span.icon-warning-sign
+      %a.seven.columns.alpha.button.bottom.orange{ href: "#{main_app.admin_order_cycles_path}" }
+        MANAGE ORDER CYCLES
+        %span.icon-arrow-right

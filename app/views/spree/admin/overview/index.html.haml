@@ -1,0 +1,15 @@
+%h1{ :style => 'margin-bottom: 30px'} Dashboard
+
+- if @enterprises.empty?
+
+  = render partial: "spree/admin/overview/enterprises"
+
+- else
+  = render partial: "spree/admin/overview/products"
+
+  %div.two.columns
+    &nbsp;
+
+  = render partial: "spree/admin/overview/order_cycles"
+
+  = render partial: "spree/admin/overview/enterprises"
