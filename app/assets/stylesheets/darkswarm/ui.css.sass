@@ -2,6 +2,8 @@
 @import branding
 @import mixins
 
+// Button class extensions
+
 .neutral-btn
   @include button
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
@@ -39,10 +41,10 @@
   background-color: rgba(0, 0, 0, 0.1)
   text-shadow: 0 1px 0 #fff
 
-//rewrite default primary style
+// Rewrite foundation's .primary button style
 
 .button.primary, button.primary
-  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
   background: $clr-brick
   color: white
 
@@ -54,3 +56,5 @@
 @media screen and (min-width: 768px)
   [role="main"]
     padding: 0
+
+
