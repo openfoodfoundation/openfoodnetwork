@@ -40,7 +40,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
   it "allows user to checkout as guest" do
     visit checkout_path 
-    click_button "Checkout as guest"
+    checkout_as_guest
     page.should have_checkout_details 
   end
 end

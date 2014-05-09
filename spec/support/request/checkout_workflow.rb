@@ -1,6 +1,6 @@
 module CheckoutWorkflow
   def have_checkout_details
-    have_content "Customer details"
+    have_content "Your details"
   end
 
   def checkout_as_guest
