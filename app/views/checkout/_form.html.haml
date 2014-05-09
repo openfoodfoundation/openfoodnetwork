@@ -11,8 +11,13 @@
     -#{{ Order.order == order }}
 
   .small-12.columns
-    %h3.text-center.pad-top Checkout from !hub_name!
+    %h3.text-center.pad-top 
+      Checkout from 
+      = current_distributor.name
+
     = render partial: "checkout/details", locals: {f: f}
     = render partial: "checkout/billing", locals: {f: f}
     = render partial: "checkout/shipping", locals: {f: f}
     = render partial: "checkout/payment", locals: {f: f}
+
+    %input.button.primary{type: :submit, value: "Place order now", "ng-show" => "checkout.$valid"}

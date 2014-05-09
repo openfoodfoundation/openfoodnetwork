@@ -7,13 +7,12 @@ feature %q{
   include AuthenticationWorkflow
   include AuthorizationHelpers
   include WebHelper
-
+  after { Warden.test_reset! }
   stub_authorization!
 
   context "listing orders" do
     before :each do
       admin_user = quick_login_as_admin
-      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     it "displays a Bulk Management Tab under the Orders item" do
@@ -102,10 +101,7 @@ feature %q{
 
   context "altering line item properties" do
     before :each do
-      #login_to_admin_section
-      #quick_login_as_admin
       admin_user = quick_login_as_admin
-      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     context "tracking changes" do
@@ -153,10 +149,7 @@ feature %q{
 
   context "using page controls" do
     before :each do
-      #login_to_admin_section
-      #quick_login_as_admin
       admin_user = quick_login_as_admin
-      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return admin_user
     end
 
     let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
@@ -590,7 +583,6 @@ feature %q{
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      Spree::Admin::OrdersController.any_instance.stub(:spree_current_user).and_return @enterprise_user
       quick_login_as @enterprise_user
     end
 

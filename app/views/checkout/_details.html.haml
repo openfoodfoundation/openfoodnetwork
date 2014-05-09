@@ -16,10 +16,7 @@
           .small-11.columns
             %em 
               %small
-                {{ order.bill_address.firstname }}
-                {{ order.bill_address.lastname }},
-                {{ order.email }},
-                {{ order.bill_address.phone }}
+                {{ summary() | printArray }}
           .small-1.columns.right
             %span.accordion-up.right
               %i.fi-arrow-up

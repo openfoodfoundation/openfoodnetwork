@@ -4,6 +4,7 @@ require 'spec_helper'
 feature "As a consumer I want to check out my cart", js: true do
   include AuthenticationWorkflow
   include ShopWorkflow
+  include CheckoutWorkflow
   include WebHelper
   include UIComponentHelper
 
@@ -45,7 +46,8 @@ feature "As a consumer I want to check out my cart", js: true do
       context "When shipping method requires an address" do
         before do
           toggle_accordion "Shipping"
-          find(:radio_button, sm1.name, {}).trigger "click"
+          #find(:radio_button, sm1.name, {}).trigger "click"
+          choose sm1.name
         end
         it "shows ship address forms when 'same as billing address' is unchecked" do
           uncheck "Shipping address same as billing address?"

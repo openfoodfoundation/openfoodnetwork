@@ -34,23 +34,24 @@ describe 'Order service', ->
       CheckoutFormState = $injector.get("CheckoutFormState")
       spyOn(Navigation, "go") # Stubbing out writes to window.location
 
-  it "defaults the shipping method to the first", ->
-    expect(Order.order.shipping_method_id).toEqual 7
-    expect(Order.shippingMethod()).toEqual { require_ship_address : true, price : 0 }
+  it "defaults to no shipping method", ->
+    expect(Order.order.shipping_method_id).toEqual null
+    expect(Order.shippingMethod()).toEqual undefined
 
-  # This is now handled via localStorage defaults
-  xit "defaults to 'same as billing' for address", ->
-    expect(Order.order.ship_address_same_as_billing).toEqual true
 
-  it 'Tracks whether a ship address is required', ->
-    expect(Order.requireShipAddress()).toEqual true
-    Order.order.shipping_method_id = 25
-    expect(Order.requireShipAddress()).toEqual false
+  describe "with shipping method", ->
+    beforeEach ->
+      Order.order.shipping_method_id = 7
 
-  it 'Gets the current shipping price', ->
-    expect(Order.shippingPrice()).toEqual 0.0
-    Order.order.shipping_method_id = 25
-    expect(Order.shippingPrice()).toEqual 13
+    it 'Tracks whether a ship address is required', ->
+      expect(Order.requireShipAddress()).toEqual true
+      Order.order.shipping_method_id = 25
+      expect(Order.requireShipAddress()).toEqual false
+
+    it 'Gets the current shipping price', ->
+      expect(Order.shippingPrice()).toEqual 0.0
+      Order.order.shipping_method_id = 25
+      expect(Order.shippingPrice()).toEqual 13
 
   it 'Gets the current payment method', ->
     expect(Order.paymentMethod()).toEqual null
