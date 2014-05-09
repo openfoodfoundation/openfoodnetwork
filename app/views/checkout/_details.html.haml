@@ -1,7 +1,7 @@
 %fieldset#details
   %ng-form{"ng-controller" => "DetailsCtrl", name: "details"}
 
-    %h5{"ng-class" => "{valid: details.$valid}"}
+    %h5{"ng-class" => "{valid: details.$valid, dirty: details.$dirty}"}
       %span.right
         %i.fi-x.right
         %i.fi-check.right
