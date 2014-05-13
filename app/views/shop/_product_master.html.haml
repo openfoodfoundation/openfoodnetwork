@@ -1,0 +1,43 @@
+.small-1.column
+  %span.bulk{"bo-if" => "product.group_buy"} bulk
+  &nbsp;
+
+.small-5.columns
+  {{ product.name }}
+  ({{ product.master.options_text }})
+
+
+-# WITHOUT GROUP BUY
+.small-5.columns{"bo-if" => "!product.group_buy"}
+  %input{type: :number, 
+  min: 0,
+  "ofn-disable-scroll" => true,
+  max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+  name: "variants[{{product.master.id}}]", 
+  id: "variants_{{product.master.id}}",
+  "ng-model" => "product.quantity"}
+  {{ product.master.options_text }} 
+
+-# WITH GROUP BUY
+.small-2.columns{"bo-if" => "product.group_buy"}
+  %input{type: :number, 
+  min: 0,
+  "ofn-disable-scroll" => true,
+  max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+  name: "variants[{{product.master.id}}]", 
+  id: "variants_{{product.master.id}}",
+  "ng-model" => "product.quantity"}
+  {{ product.master.options_text }} 
+  (min)
+
+.small-3.columns{"bo-if" => "product.group_buy"}
+  %input{type: :number,
+  min: 0,
+  "ofn-disable-scroll" => true,
+  max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+  name: "variant_attributes[{{product.master.id}}][max_quantity]",
+  "ng-model" => "product.max_quantity"}
+  (max)
+
+.small-1.column
+  {{ product.price | currency }}
