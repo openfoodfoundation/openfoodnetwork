@@ -1,4 +1,4 @@
-collection Enterprise.is_distributor
+collection Enterprise.visible.is_distributor
 extends 'json/enterprises'
 
 node :pickup do |hub|
