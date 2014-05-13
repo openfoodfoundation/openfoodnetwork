@@ -3,7 +3,8 @@
     %img{"bo-src" => "product.master.images[0].small_url"}
     %img{name: "taxon icon here"}
   .small-5.columns
-    %strong {{ product.name }}
+    = render partial: "shop/products/modal"
+
   .small-4.columns
     {{ product.supplier.name }}
   .small-1.columns
