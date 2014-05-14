@@ -32,7 +32,8 @@ class ApplicationController < ActionController::Base
       session[:expired_order_cycle_id] = current_order_cycle.id
       current_order.empty!
       current_order.set_order_cycle! nil
-      redirect_to spree.order_cycle_expired_orders_path
+      flash[:notice] = "The order cycle you've selected has just closed. Please try again!"
+      redirect_to root_url
     end
   end
 
