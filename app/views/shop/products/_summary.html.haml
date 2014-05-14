@@ -1,7 +1,7 @@
 .row{bindonce: true}
   .small-1.column
     %img{"bo-src" => "product.master.images[0].small_url"}
-    %img{name: "taxon icon here"}
+    {{ product.primary_taxon.name }}
   .small-5.columns
     = render partial: "shop/products/modal"
 
