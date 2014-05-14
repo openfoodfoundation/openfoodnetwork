@@ -13,6 +13,10 @@ child :supplier => :supplier do
   attributes :id, :name, :description
 end
 
+child :primary_taxon => :primary_taxon do
+  attributes :id, :permalink, :name
+end
+
 child :master => :master do
   attributes :id, :is_master, :count_on_hand, :options_text, :count_on_hand, :on_demand
   child :images => :images do

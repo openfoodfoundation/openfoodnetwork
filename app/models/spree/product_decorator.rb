@@ -118,6 +118,10 @@ Spree::Product.class_eval do
     order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
 
+  def primary_taxon
+    self.taxons.order.first
+  end
+
   # Build a product distribution for each distributor
   def build_product_distributions_for_user user
     Enterprise.is_distributor.managed_by(user).each do |distributor|
