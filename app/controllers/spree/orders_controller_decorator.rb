@@ -8,6 +8,7 @@ Spree::OrdersController.class_eval do
   prepend_before_filter :require_order_cycle, only: [:edit]
   prepend_before_filter :require_distributor_chosen, only: [:edit]
 
+  include OrderCyclesHelper
   layout 'darkswarm'
 
   # Patch Orders#populate to populate multi_cart (if enabled)
