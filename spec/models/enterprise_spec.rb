@@ -26,6 +26,17 @@ describe Enterprise do
 
       Spree::Product.where(id: p.id).should be_empty
     end
+
+    describe "relationships to other enterprises" do
+      it "finds relatives" do
+        e, p, c = create(:enterprise), create(:enterprise), create(:enterprise)
+
+        EnterpriseRelationship.create! parent_id: p.id, child_id: e.id
+        EnterpriseRelationship.create! parent_id: e.id, child_id: c.id
+
+        e.relatives.sort.should == [p, c].sort
+      end
+    end
   end
 
   describe "validations" do

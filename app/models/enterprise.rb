@@ -127,6 +127,15 @@ class Enterprise < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
+  def relatives
+    Enterprise.where("
+      enterprises.id IN
+        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
+      OR enterprises.id IN
+        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
+    ", self.id, self.id)
+  end
+
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140430020639) do
+ActiveRecord::Schema.define(:version => 20140514044959) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -194,6 +194,15 @@ ActiveRecord::Schema.define(:version => 20140430020639) do
 
   add_index "enterprise_groups_enterprises", ["enterprise_group_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_group_id"
   add_index "enterprise_groups_enterprises", ["enterprise_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_id"
+
+  create_table "enterprise_relationships", :force => true do |t|
+    t.integer "parent_id"
+    t.integer "child_id"
+  end
+
+  add_index "enterprise_relationships", ["child_id"], :name => "index_enterprise_relationships_on_child_id"
+  add_index "enterprise_relationships", ["parent_id", "child_id"], :name => "index_enterprise_relationships_on_parent_id_and_child_id", :unique => true
+  add_index "enterprise_relationships", ["parent_id"], :name => "index_enterprise_relationships_on_parent_id"
 
   create_table "enterprise_roles", :force => true do |t|
     t.integer "user_id"
@@ -1004,6 +1013,9 @@ ActiveRecord::Schema.define(:version => 20140430020639) do
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"
+
+  add_foreign_key "enterprise_relationships", "enterprises", name: "enterprise_relationships_child_id_fk", column: "child_id"
+  add_foreign_key "enterprise_relationships", "enterprises", name: "enterprise_relationships_parent_id_fk", column: "parent_id"
 
   add_foreign_key "enterprise_roles", "enterprises", name: "enterprise_roles_enterprise_id_fk"
   add_foreign_key "enterprise_roles", "spree_users", name: "enterprise_roles_user_id_fk", column: "user_id"
