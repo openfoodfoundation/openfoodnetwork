@@ -5,10 +5,8 @@ div.dashboard_item
     text-align: center
 
   div.header
-    border: solid
-    border-color: #5498da
-    border-width: 1px
     border-radius: 6px 6px 0px 0px
+    border: 1px solid #5498da
     position: relative
 
     a.with-tip
@@ -29,7 +27,11 @@ div.dashboard_item
         color: #DA7F52
 
     h3
-      padding: 5px 5px 5px 3%
+      padding: 10px 5px 10px 3%
+
+    a
+      border-radius: 0px 4px 0px 0px
+      margin-left: 8px
 
   .list
     max-height: 250px
@@ -46,7 +48,7 @@ div.dashboard_item
       padding: 10px 2px 10px 5%
 
   .list-item
-    border: solid
+    border: solid #5498da
     border-width: 0px 1px 0px 1px
     span.alpha
       font-weight: bold
@@ -107,11 +109,5 @@ div.dashboard_item
       background-color: #DA5354
     &:hover
       background-color: #9fc820
-    &.top
-      border-radius: 6px 6px 0px 0px
     &.bottom
       border-radius: 0px 0px 6px 6px
-    &.top-right
-      border-radius: 0px 6px 0px 0px
-    &.top-left
-      border-radius: 6px 0px 0px 0px
