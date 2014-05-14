@@ -1,5 +1,5 @@
 object current_order
-attributes :id, :email, :shipping_method_id
+attributes :id, :email, :shipping_method_id, :user_id
 
 node :display_total do
   current_order.display_total.money.to_f
