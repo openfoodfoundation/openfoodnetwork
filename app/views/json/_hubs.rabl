@@ -2,7 +2,7 @@ collection Enterprise.visible.is_distributor
 extends 'json/enterprises'
 
 child distributed_taxons: :taxons do
-  attributes :name, :id
+  extends "json/taxon"
 end
 
 child suppliers: :producers do

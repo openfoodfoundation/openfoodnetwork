@@ -2,7 +2,8 @@
   .columns.small-4
     %strong Shop for
     %p.trans-sentence
-      {{ hub.taxons | printArrayOfObjects }}
+      %img{"ng-repeat" => "taxon in hub.taxons", "bo-src" => "taxon.icon",
+      name: "{{taxon.name}}", alt: "{{taxon.name}}"}
   .columns.small-4
     %strong Delivery options
     %ol
