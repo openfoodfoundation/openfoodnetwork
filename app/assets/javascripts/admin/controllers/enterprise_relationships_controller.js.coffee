@@ -1,2 +1,2 @@
-Admin.controller "AdminEnterpriseRelationshipsCtrl", ($scope) ->
-  $scope.hello = "Hello, angular."
+Admin.controller "AdminEnterpriseRelationshipsCtrl", ($scope, EnterpriseRelationships) ->
+  $scope.EnterpriseRelationships = EnterpriseRelationships

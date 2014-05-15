@@ -4,12 +4,16 @@
 = render 'admin/shared/enterprises_sub_menu'
 
 %div{"ng-app" => "ofn.admin", "ng-controller" => "AdminEnterpriseRelationshipsCtrl"}
+  :javascript
+    angular.module('ofn.admin').value('enterprise_relationships', #{render partial: "admin/json/enterprise_relationships", object: @enterprise_relationships})
+  -#%pre {{ EnterpriseRelationships.enterprise_relationships | json }}
+
   %table#enterprise-relationships
     %thead
       %tr
         %th Parent
         %th Child
     %tbody
-      %tr
-        %td {{ hello }}
-        %td {{ hello }}
+      %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships"}
+        %td {{ enterprise_relationship.parent_name }}
+        %td {{ enterprise_relationship.child_name }}
