@@ -1,6 +1,7 @@
 Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Product, OrderCycle) ->
   $scope.data = Product.data
   $scope.limit = 3
+  $scope.ordering = {order: "name"}
   $scope.order_cycle = OrderCycle.order_cycle
 
   $scope.incrementLimit = ->

@@ -14,7 +14,7 @@ child :supplier => :supplier do
 end
 
 child :primary_taxon => :primary_taxon do
-  attributes :id, :permalink, :name
+  extends 'json/taxon'
 end
 
 child :master => :master do

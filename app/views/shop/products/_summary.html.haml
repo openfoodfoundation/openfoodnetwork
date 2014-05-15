@@ -1,13 +1,12 @@
-.row{bindonce: true}
+.row
   .small-1.column
     %img{"bo-src" => "product.master.images[0].small_url"}
-    {{ product.primary_taxon.name }}
+    %img{"bo-src" => "product.primary_taxon.icon", "ng-click" => "ordering.order = 'primary_taxon'"}
+
   .small-5.columns
     = render partial: "shop/products/modal"
-
   .small-4.columns
     {{ product.supplier.name }}
   .small-1.columns
     %span{"ng-if" => "hasVariants"} from
     {{ price() | currency }}
-

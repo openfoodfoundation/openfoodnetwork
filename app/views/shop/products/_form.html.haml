@@ -13,7 +13,8 @@
       .small-12.columns
         .product_table{bindonce: true}
           %product.row{"ng-controller" => "ProductNodeCtrl",
-            "ng-repeat" => "product in data.products | filter:query | limitTo: limit track by product.id"}
+            "ng-repeat" => "product in data.products | filter:query | orderBy:order | limitTo: limit track by product.id"}
+
             = render partial: "shop/products/summary"
             
             %div{"bo-if" => "hasVariants"}
