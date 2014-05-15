@@ -5,8 +5,9 @@
   = @enterprise.name
 
 = form_for [main_app, :admin, @enterprise] do |f|
-  .twelve.columns.alpha
+  .eleven.columns.alpha
     = render :partial => 'form', :locals => { :f => f }
+  .one.column &nbsp;
   .four.columns.omega
     = render :partial => 'sidebar', :locals => { :f => f }
   .twelve.columns.alpha
