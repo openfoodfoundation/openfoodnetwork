@@ -15,13 +15,8 @@
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
   .columns.small-11
-    %a{"bo-href" => "hub.path", "ng-show" => "!emptiesCart()"} 
-      Shop at 
-
-      %strong {{ hub.name }}
-    %a{"ng-click" => "changeHub()", "ng-show" => "emptiesCart()"} 
-      Change hub to
-      %strong {{ hub.name }}
+    %a{"bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+    change: "Change hub to", shop: "Shop at"} 
 
   .columns.small-1.text-right
     %a{"bo-href" => "hub.path"} 
