@@ -27,6 +27,21 @@ feature %q{
   end
 
 
-  scenario "creating a relationship"
+  scenario "creating a relationship" do
+    e1 = create(:enterprise, name: 'One')
+    e2 = create(:enterprise, name: 'Two')
+
+    visit admin_enterprise_relationships_path
+    select 'One', from: 'enterprise_relationship_parent_name'
+    select 'Two', from: 'enterprise_relationship_child_name'
+    click_button 'Create'
+
+    page.should have_table_row [e1.name, e2.name]
+    EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
+  end
+
+
+  scenario "error when creating relationship"
+
   scenario "deleting a relationship"
 end

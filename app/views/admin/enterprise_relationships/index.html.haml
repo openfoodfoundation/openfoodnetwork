@@ -5,15 +5,24 @@
 
 %div{"ng-app" => "ofn.admin", "ng-controller" => "AdminEnterpriseRelationshipsCtrl"}
   :javascript
-    angular.module('ofn.admin').value('enterprise_relationships', #{render partial: "admin/json/enterprise_relationships", object: @enterprise_relationships})
-  -#%pre {{ EnterpriseRelationships.enterprise_relationships | json }}
+    angular.module('ofn.admin').value('enterprise_relationships', #{render partial: "admin/json/enterprise_relationships", object: @enterprise_relationships});
+    angular.module('ofn.admin').value('enterprises',              #{render partial: "admin/json/enterprises",              object: @enterprises});
 
   %table#enterprise-relationships
     %thead
       %tr
         %th Parent
         %th Child
+        %th.actions
     %tbody
+      %tr
+        %td
+          %select{name: "enterprise_relationship_parent_name", "ng-model" => "parent_id", "ng-options" => "e.id as e.name for e in Enterprises.enterprises"}
+        %td
+          %select{name: "enterprise_relationship_child_name", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.enterprises"}
+        %td.actions
+          %input{type: "button", value: "Create", "ng-click" => "create()"}
+
       %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships"}
         %td {{ enterprise_relationship.parent_name }}
         %td {{ enterprise_relationship.child_name }}
