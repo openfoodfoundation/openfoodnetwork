@@ -96,6 +96,9 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_relationship do
+  end
+
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
     description 'this is a group'
