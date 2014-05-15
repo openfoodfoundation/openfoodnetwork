@@ -2,6 +2,7 @@ module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
+    before_filter :load_methods_and_fees, :only => [:new, :edit]
     create.after :grant_management
 
     helper 'spree/products'
@@ -40,6 +41,12 @@ module Admin
 
     def collection_actions
       [:index, :bulk_update]
+    end
+
+    def load_methods_and_fees
+      @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
+      @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
+      @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
     end
   end
 end

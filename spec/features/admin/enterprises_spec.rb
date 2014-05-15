@@ -46,6 +46,9 @@ feature %q{
   scenario "creating a new enterprise" do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
+    payment_method = create(:payment_method)
+    shipping_method = create(:shipping_method)
+    enterprise_fee = create(:enterprise_fee)
 
     login_to_admin_section
 
@@ -61,6 +64,12 @@ feature %q{
     check 'enterprise_is_distributor'
 
     select eg1.name, from: 'enterprise_group_ids'
+
+    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+
+    check "enterprise_payment_method_ids_#{payment_method.id}"
+    check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -84,6 +93,9 @@ feature %q{
     @enterprise = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
+    payment_method = create(:payment_method, distributors: [])
+    shipping_method = create(:shipping_method, distributors: [])
+    enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
 
     login_to_admin_section
 
@@ -98,6 +110,12 @@ feature %q{
     check 'enterprise_is_distributor'
 
     select eg1.name, from: 'enterprise_group_ids'
+
+    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+
+    check "enterprise_payment_method_ids_#{payment_method.id}"
+    check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -117,6 +135,12 @@ feature %q{
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
     page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
+
+    click_link 'Edit Profile'
+
+    page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+    page.should have_selector "a.list-item", text: enterprise_fee.name
   end
 
   context 'as an Enterprise user' do

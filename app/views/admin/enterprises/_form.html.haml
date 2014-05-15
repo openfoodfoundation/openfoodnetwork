@@ -1,9 +1,6 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
-- content_for :page_title do
-  New Enterprise
-
 - content_for :page_actions do
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
@@ -39,7 +36,7 @@
       = f.label :visible, 'Visible in search?'
 
   = f.fields_for :address do |af|
-    %fieldset.no-border-bottom
+    %fieldset.twelve.columns.alpha.no-border-bottom
       %legend Address
       .row
         .alpha.six.columns
@@ -64,13 +61,16 @@
           .omega.four.columns
             = af.text_field :zipcode
       .row
-        .alpha.two.columns &nbsp;
-        .omega.three.columns
-          = af.collection_select(:state_id, af.object.country.states, :id, :name)
-      .row
-        .alpha.two.columns &nbsp;
-        .omega.three.columns
-          = af.collection_select(:country_id, available_countries, :id, :name)
+        .six.columns.alpha
+          .alpha.two.columns
+            = af.label :state_id, 'State'
+          .omega.four.columns
+            = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
+        .six.columns.omega
+          .alpha.two.columns
+            = af.label :countryid, 'Country'
+          .four.columns.omega
+            = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
     .row
       .alpha.six.columns
         %fieldset.no-border-bottom
@@ -119,7 +119,7 @@
               = f.label :twitter
             .omega.four.columns
               = f.text_field :twitter
-  %fieldset.no-border-bottom
+  %fieldset.twelve.columns.alpha.no-border-bottom
     %legend About Us
     .row
       .alpha.two.columns
@@ -131,7 +131,7 @@
         = f.label :long_description, 'About Us'
         %br
         Tell us about yourself. This information appears on your public profile (under "About Us")
-      .omega.eight.columns
+      .omega.ten.columns
         = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
     .row
       .alpha.two.columns
@@ -140,7 +140,7 @@
         %em (Hub only)
         %br
         Explain your distribution offer/s - this information appears on your public profile (under "How does it work?")
-      .omega.eight.columns
+      .omega.ten.columns
         = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
         / TODO: editor breaks scrolling with arrow keys
     .row

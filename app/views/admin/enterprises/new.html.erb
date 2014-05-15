@@ -1,7 +1,0 @@
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise } %>
-
-<%= form_for [main_app, :admin, @enterprise] do |f| %>
-  <%= render :partial => 'form', :locals => { :f => f } %>
-  <!-- Save, Save & Close and Cancel button -->
-  <%= render :partial => 'spree/admin/shared/new_resource_links' %>
-<% end %>
