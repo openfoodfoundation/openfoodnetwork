@@ -1,6 +1,17 @@
 collection Enterprise.visible.is_distributor
 extends 'json/enterprises'
 
+child distributed_taxons: :taxons do
+  attributes :name, :id
+end
+
+child producers: :producers do
+  attributes :name, :id
+  node :path do |producer|
+    producer_path(producer_path) 
+  end
+end
+
 node :pickup do |hub|
   not hub.shipping_methods.where(:require_ship_address => false).empty?
 end

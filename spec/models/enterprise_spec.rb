@@ -28,13 +28,27 @@ describe Enterprise do
     end
 
     describe "relationships to other enterprises" do
-      it "finds relatives" do
-        e, p, c = create(:enterprise), create(:enterprise), create(:enterprise)
-
+      let(:e) { create(:distributor_enterprise) }
+      let(:p) { create(:supplier_enterprise) }
+      let(:c) { create(:distributor_enterprise) }
+      before do
         EnterpriseRelationship.create! parent_id: p.id, child_id: e.id
         EnterpriseRelationship.create! parent_id: e.id, child_id: c.id
-
+      end
+      it "finds relatives" do
         e.relatives.sort.should == [p, c].sort
+      end
+
+      it "scopes relatives to distributors" do
+        e.should_receive(:relatives).and_return(relatives = [])
+        relatives.should_receive(:is_distributor)
+        e.distributors
+      end
+
+      it "scopes relatives to producers" do
+        e.should_receive(:relatives).and_return(relatives = [])
+        relatives.should_receive(:is_supplier)
+        e.suppliers
       end
     end
   end
@@ -405,14 +419,20 @@ describe Enterprise do
 
   describe "taxons" do
     let(:distributor) { create(:distributor_enterprise) }
+    let(:supplier) { create(:supplier_enterprise) }
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
     let(:product1) { create(:simple_product, taxons: [taxon1]) }
     let(:product2) { create(:simple_product, taxons: [taxon1, taxon2]) }
 
-    it "gets all taxons of all products" do
+    it "gets all taxons of all distributed products" do
       Spree::Product.stub(:in_distributor).and_return [product1, product2]
-      distributor.taxons.should == [taxon1, taxon2]
+      distributor.distributed_taxons.should == [taxon1, taxon2]
+    end
+
+    it "gets all taxons of all supplied products" do
+      Spree::Product.stub(:in_supplier).and_return [product1, product2]
+      supplier.supplied_taxons.should == [taxon1, taxon2]
     end
   end
 end
