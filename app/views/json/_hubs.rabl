@@ -6,7 +6,11 @@ child distributed_taxons: :taxons do
 end
 
 child suppliers: :producers do
-  attributes :name, :id
+  attributes :name, :id, :description, :long_description
+  
+  node :promo_image do |producer| 
+    producer.promo_image.url 
+  end
 end
 
 node :pickup do |hub|
