@@ -21,7 +21,6 @@
         %th Calculator values
         %th.actions
     %tbody
-      - binding.pry
       = enterprise_fee_set_form.ng_fields_for :collection do |f|
         %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees | filter:query'}
           %td
