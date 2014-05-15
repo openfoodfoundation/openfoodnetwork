@@ -15,6 +15,6 @@ feature %q{
   it "shows all producers with expandable details" do
     page.should have_content producer.name
     expand_active_table_node producer.name
-    page.should have_content producer.taxons.join(' ')
+    page.should have_content producer.supplied_taxons.join(', ')
   end
 end
