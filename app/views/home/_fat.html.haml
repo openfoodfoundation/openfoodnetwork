@@ -10,8 +10,10 @@
       %li.delivery{"bo-if" => "hub.delivery"} Delivery
   .columns.small-4
     %strong Our producers
-    %p
-      Go to our shop to see our current producers
+    %ul
+      %li{"ng-repeat" => "producer in hub.producers"}
+        %ofn-modal{title: "{{ producer.name }}"}
+          {{ producer || json }}
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
   .columns.small-11
