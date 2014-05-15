@@ -18,8 +18,8 @@ child current_order.ship_address => :ship_address do
 end
 
 node :shipping_methods do
-  Hash[current_order.distributor.shipping_methods.collect { 
-    |method| [method.id, {
+  Hash[current_order.available_shipping_methods("front_end").collect { |method| 
+    [method.id, {
       require_ship_address: method.require_ship_address,
       price: method.compute_amount(current_order).to_f,
       name: method.name
