@@ -2,7 +2,14 @@ RSpec::Matchers.define :have_table_row do |row|
 
   match do |node|
     @row = row
-    node.all('tr').map { |tr| tr.all('th, td').map(&:text) }.include? row
+
+    begin
+      wait_until { node.all('tr').map { |tr| tr.all('th, td').map(&:text) }.include? row }
+    rescue TimeoutError
+      false
+    else
+      true
+    end
   end
 
   failure_message_for_should do |text|
