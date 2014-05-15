@@ -1,7 +1,7 @@
 module AuthenticationWorkflow
+  include Warden::Test::Helpers
   def quick_login_as(user)
-    ApplicationController.any_instance.stub(:spree_current_user).and_return user
-    ApplicationController.any_instance.stub(:current_api_user).and_return user
+    login_as user
   end
 
   def quick_login_as_admin

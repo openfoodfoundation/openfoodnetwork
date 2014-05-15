@@ -1,16 +1,21 @@
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
+
+  prepend_before_filter :check_order_cycle_expiry
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
+
   skip_before_filter :check_registration
   skip_before_filter :redirect_to_paypal_express_form_if_needed
 
+  include OrderCyclesHelper
   include EnterprisesHelper
    
   def edit
   end
 
   def update
+
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
       while @order.state != "complete"

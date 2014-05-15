@@ -4,8 +4,6 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState,
 
     constructor: ->
       @order = order
-      # Default to first shipping method if none selected
-      @order.shipping_method_id ||= parseInt(Object.keys(@order.shipping_methods)[0])
 
     submit: ->
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
@@ -35,7 +33,7 @@ Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState,
       munged_order
 
     shippingMethod: ->
-      @order.shipping_methods[@order.shipping_method_id]
+      @order.shipping_methods[@order.shipping_method_id] if @order.shipping_method_id
 
     requireShipAddress: ->
       @shippingMethod()?.require_ship_address

@@ -1,9 +1,5 @@
 # DON'T USE DIRECTLY - for inheritance
-attributes :name, :id
-
-child :taxons => :taxons do
-  attributes :name, :id
-end
+attributes :name, :id, :description
 
 child :address do
   extends "json/partials/address"

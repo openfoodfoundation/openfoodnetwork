@@ -1,4 +1,4 @@
-%nav.top-bar.show-for-large-only{'data' => 'topbar'}
+%nav.top-bar.show-for-large-up{'data' => 'topbar'}
   %section.top-bar-section
     %ul.left{}
       %li= link_to image_tag("ofn_logo_small.png"), root_path      
@@ -30,7 +30,7 @@
             %span.nav-primary Admin
       %li.divider
   %section.top-bar-section
-    %ul.right{"ng-controller" => "AuthenticationCtrl"}
+    %ul.right
       %li.divider
       - if spree_current_user.nil?
         = render 'shared/signed_out'

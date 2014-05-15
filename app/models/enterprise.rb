@@ -127,6 +127,23 @@ class Enterprise < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
+  def relatives
+    Enterprise.where("
+      enterprises.id IN
+        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
+      OR enterprises.id IN
+        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
+    ", self.id, self.id)
+  end
+
+  def distributors
+    self.relatives.is_distributor
+  end
+
+  def suppliers
+    self.relatives.is_primary_producer
+  end
+
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end
@@ -140,8 +157,14 @@ class Enterprise < ActiveRecord::Base
   end
 
   # Return all taxons for all distributed products
-  def taxons
+  def distributed_taxons
     Spree::Product.in_distributor(self).map do |p|
+      p.taxons
+    end.flatten.uniq
+  end
+  # Return all taxons for all supplied products
+  def supplied_taxons
+    Spree::Product.in_supplier(self).map do |p|
       p.taxons
     end.flatten.uniq
   end

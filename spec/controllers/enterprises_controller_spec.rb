@@ -122,7 +122,7 @@ describe EnterprisesController do
 
       spree_get :index
       session[:expired_order_cycle_id].should == 123
-      response.should redirect_to spree.order_cycle_expired_orders_path
+      response.should redirect_to root_url
     end
   end
 end

@@ -12,6 +12,7 @@
         %label{for: "email"} Email
         %input.title.input-text{name: "email", 
           type: "email",
+          id: "email",
           tabindex: 1,
           "ng-model" => "spree_user.email"}
     .row
@@ -19,6 +20,7 @@
         %label{for: "password"} Password
         %input.title.input-text{name: "password", 
           type: "password",
+          id: "password",
           autocomplete: "off",
           tabindex: 2,
           "ng-model" => "spree_user.password"}
@@ -26,6 +28,7 @@
       .large-12.columns
         %input{name: "remember_me", 
         type: "checkbox", 
+        id: "remember_me", 
         value: "1",
         "ng-model" => "spree_user.remember_me"}
         %label{for: "remember_me"} Remember Me

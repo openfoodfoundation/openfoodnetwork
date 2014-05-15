@@ -6,6 +6,7 @@
 
     %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
     = favicon_link_tag "favicon.png"
+    %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
 
     = stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
@@ -14,7 +15,7 @@
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
-    .off-canvas-wrap
+    .off-canvas-wrap{offcanvas: true}
       .inner-wrap
         = render partial: "shared/current_hub"
         = render partial: "shared/current_user"

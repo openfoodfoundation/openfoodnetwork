@@ -1,13 +1,14 @@
 @import branding
 @import mixins
   
+// Styling for big panes on homepage
 
-#beta
+#beta.pane
   @include lightbg
   .row
     @include panepadding
 
-#map
+#map.pane
   @include darkbg
   .row
     @include panepadding
@@ -15,7 +16,7 @@
     background-repeat: no-repeat
     background-position: left center
 
-#groups
+#groups.pane
   @include darkbg
   .row
     @include panepadding
@@ -23,7 +24,7 @@
     background-repeat: no-repeat
     background-position: left center
 
-#producers
+#producers.pane
   @include turqbg
   .row
     @include panepadding
@@ -33,6 +34,6 @@
 
 // Responsive 
 @media all and (max-width: 768px)
-  #map, #groups, #producers
+  #map.pane, #groups.pane, #producers.pane
     .row
       background-position: center center

@@ -27,7 +27,8 @@
         %producer.active_table_node.row{id: "{{producer.path}}",
         "ng-repeat" => "producer in filteredProducers = (Producers.producers | filterProducers:query)",
         "ng-controller" => "ProducerNodeCtrl",
-        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}"}
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+        id: "{{producer.hash}}"}
 
           .small-12.columns
             = render partial: 'producers/skinny'
