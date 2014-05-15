@@ -4,4 +4,9 @@ class EnterpriseRelationship < ActiveRecord::Base
 
   validates_presence_of :parent_id, :child_id
   validates_uniqueness_of :child_id, scope: :parent_id
+
+  scope :with_enterprises,
+    joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
+    joins('LEFT JOIN enterprises AS child_enterprises ON child_enterprises.id = enterprise_relationships.child_id')
+  scope :by_name, with_enterprises.order('parent_enterprises.name, child_enterprises.name')
 end
