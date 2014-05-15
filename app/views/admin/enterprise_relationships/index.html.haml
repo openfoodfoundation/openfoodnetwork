@@ -3,6 +3,13 @@
 
 = render 'admin/shared/enterprises_sub_menu'
 
-%table#enterprise-relationships
-  %tr
-    %td Hello, world.
+%div{"ng-app" => "ofn.admin", "ng-controller" => "AdminEnterpriseRelationshipsCtrl"}
+  %table#enterprise-relationships
+    %thead
+      %tr
+        %th Parent
+        %th Child
+    %tbody
+      %tr
+        %td {{ hello }}
+        %td {{ hello }}
