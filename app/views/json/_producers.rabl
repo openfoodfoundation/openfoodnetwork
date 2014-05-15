@@ -8,7 +8,7 @@ end
 child distributors: :distributors do
   attributes :name, :id
   node :path do |distributor|
-    distributor_path(distributor) 
+    shop_enterprise_path(distributor) 
   end
 end
 

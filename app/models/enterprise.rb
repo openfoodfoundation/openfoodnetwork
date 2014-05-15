@@ -141,7 +141,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def suppliers
-    self.relatives.is_supplier
+    self.relatives.is_primary_producer
   end
 
   def distributed_variants

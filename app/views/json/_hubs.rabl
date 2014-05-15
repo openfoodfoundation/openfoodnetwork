@@ -5,11 +5,8 @@ child distributed_taxons: :taxons do
   attributes :name, :id
 end
 
-child producers: :producers do
+child suppliers: :producers do
   attributes :name, :id
-  node :path do |producer|
-    producer_path(producer_path) 
-  end
 end
 
 node :pickup do |hub|

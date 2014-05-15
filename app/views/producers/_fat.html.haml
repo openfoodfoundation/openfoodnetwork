@@ -5,9 +5,13 @@
       {{ producer.taxons | printArrayOfObjects }}
   .columns.small-4
     %strong About us
-    {{ producer.description }}
+    %p.trans-sentence
+      {{ producer.description }}
   .columns.small-4
     %strong Our distributors
+    %ul
+      %li{"ng-repeat" => "distributor in producer.distributors"}
+        %a{"bo-href" => "distributor.path"}{{ distributor.name }}
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-repeat" => "hub in producer.hubs"}
   .columns.small-11

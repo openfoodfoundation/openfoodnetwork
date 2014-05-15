@@ -47,7 +47,7 @@ describe Enterprise do
 
       it "scopes relatives to producers" do
         e.should_receive(:relatives).and_return(relatives = [])
-        relatives.should_receive(:is_supplier)
+        relatives.should_receive(:is_primary_producer)
         e.suppliers
       end
     end
