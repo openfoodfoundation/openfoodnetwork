@@ -1,8 +1,7 @@
 @import mixins
 @import variables
+@import branding
 
-product
-  display: block 
 
 .darkswarm
   #search
@@ -77,8 +76,36 @@ product
 
   products
     display: block
-    padding-top: 2.3em 
+    padding-top: 2.3em
     @media all and (max-width: 768px)
       padding-top: 1em
       input.button.right
         float: left
+    
+    product
+      border: 1px solid #ff0000
+      display: block 
+      margin-bottom: 1em !important
+
+      .row.summary, .row.variants
+        margin-left: 0
+        margin-right: 0
+
+      .row.summary
+        background: #ccc
+
+      .summary-header
+        &, & *
+          @include avenir
+          color: $clr-brick
+
+      .summary-price
+        &, & *
+          @include avenir
+      
+      
+
+
+
+
+

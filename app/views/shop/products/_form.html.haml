@@ -1,26 +1,29 @@
-%products{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
+%products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
 
-    %input#search.text{"ng-model" => "query", 
-    placeholder: "Search",
-    "ng-debounce" => "150",
-    "ofn-disable-enter" => true}
-    %input.button.right{type: :submit, value: "Add to Cart"}
+    .row
+      .small-6.columns
+        %input#search.text{"ng-model" => "query", 
+        placeholder: "Search",
+        "ng-debounce" => "150",
+        "ofn-disable-enter" => true}
+      .small-6.columns
+        %input.button.right{type: :submit, value: "Add to Cart"}
+    
+    %div{bindonce: true}
+      %product{"ng-controller" => "ProductNodeCtrl",
+        "ng-repeat" => "product in data.products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
+        %div
+          = render partial: "shop/products/summary"
+        
+          %div{"bo-if" => "hasVariants"}
+            = render partial: "shop/products/variants"
 
+        .variant.row{"bo-if" => "!hasVariants"}
+          = render partial: "shop/products/master"
+    
     .row
       .small-12.columns
-        .product_table{bindonce: true}
-          %product{"ng-controller" => "ProductNodeCtrl",
-            "ng-repeat" => "product in data.products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
-
-            = render partial: "shop/products/summary"
-            
-            %div{"bo-if" => "hasVariants"}
-              = render partial: "shop/products/variants"
-
-            .row.variant{"bo-if" => "!hasVariants"}
-              = render partial: "shop/products/master"
-
-    %input.button.right{type: :submit, value: "Add to Cart"}
+        %input.button.right{type: :submit, value: "Add to Cart"}

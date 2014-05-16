@@ -2,16 +2,17 @@
   .small-1.column
     %img{"bo-src" => "product.master.images[0].small_url"}
 
-  .small-4.columns
+  .small-4.columns.summary-header
     %img{"bo-src" => "product.primary_taxon.icon", 
     "ng-click" => "ordering.order = 'primary_taxon.name'",
     name: "{{product.primary_taxon.name}}"}
     {{ product.name}}
     -#= render partial: "shop/products/modal"
 
-  .small-5.columns
+  .small-5.columns.summary-header
     {{ product.supplier.name }}
 
-  .small-2.columns.text-right
-    %span{"ng-if" => "hasVariants"} from
-    {{ price() | currency }}
+  .small-2.columns.summary-price.text-right
+    %span{"ng-if" => "hasVariants"} 
+      %em from
+      {{ price() | currency }}
