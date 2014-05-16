@@ -22,7 +22,7 @@
           %select{name: "enterprise_relationship_child_name", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.enterprises"}
         %td.actions
           %input{type: "button", value: "Create", "ng-click" => "create()"}
-          .errors {{ errors }}
+          .errors {{ EnterpriseRelationships.create_errors }}
 
       %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships"}
         %td {{ enterprise_relationship.parent_name }}

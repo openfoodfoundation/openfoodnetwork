@@ -1,14 +1,9 @@
-Admin.controller "AdminEnterpriseRelationshipsCtrl", ($scope, $http, EnterpriseRelationships, Enterprises) ->
+Admin.controller "AdminEnterpriseRelationshipsCtrl", ($scope, EnterpriseRelationships, Enterprises) ->
   $scope.EnterpriseRelationships = EnterpriseRelationships
   $scope.Enterprises = Enterprises
 
   $scope.create = ->
-    $http.post('/admin/enterprise_relationships', {enterprise_relationship: {parent_id: $scope.parent_id, child_id: $scope.child_id}}).success (data, status) =>
-      $scope.EnterpriseRelationships.enterprise_relationships.unshift(data)
-      $scope.errors = ""
-
-    .error (response, status) =>
-      $scope.errors = response.errors
+    $scope.EnterpriseRelationships.create($scope.parent_id, $scope.child_id)
 
   $scope.delete = (enterprise_relationship) ->
     if confirm("Are you sure?")
