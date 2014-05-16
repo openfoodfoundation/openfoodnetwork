@@ -7,6 +7,7 @@ Openfoodnetwork::Application.routes.draw do
     get :order_cycle
   end
 
+  resources :groups
   resources :producers
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
