@@ -105,12 +105,12 @@
         .alpha.three.columns
           = f.label :abn, 'ABN'
         .omega.eight.columns
-          = f.text_field :abn
+          = f.text_field :abn, { placeholder: "eg. 99 123 456 789"}
       .row
         .alpha.three.columns
           = f.label :acn, 'ACN'
         .omega.eight.columns
-          = f.text_field :acn
+          = f.text_field :acn, { placeholder: "eg. 123 456 789"}
       .row
         .alpha.three.columns
           = f.label :website
