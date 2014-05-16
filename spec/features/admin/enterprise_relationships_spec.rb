@@ -9,6 +9,7 @@ feature %q{
 
   before { login_to_admin_section }
 
+
   scenario "listing relationships" do
     # Given some enterprises with relationships
     e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
@@ -41,7 +42,23 @@ feature %q{
   end
 
 
-  scenario "error when creating relationship"
+  scenario "attempting to create a relationship with invalid data" do
+    e1 = create(:enterprise, name: 'One')
+    e2 = create(:enterprise, name: 'Two')
+    create(:enterprise_relationship, parent: e1, child: e2)
+
+    expect do
+      # When I attempt to create a duplicate relationship
+      visit admin_enterprise_relationships_path
+      select 'One', from: 'enterprise_relationship_parent_name'
+      select 'Two', from: 'enterprise_relationship_child_name'
+      click_button 'Create'
+
+      # Then I should see an error message
+      page.should have_content "That relationship is already established."
+    end.to change(EnterpriseRelationship, :count).by(0)
+  end
+
 
   scenario "deleting a relationship"
 end
