@@ -3,7 +3,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   belongs_to :child, class_name: 'Enterprise'
 
   validates_presence_of :parent_id, :child_id
-  validates_uniqueness_of :child_id, scope: :parent_id
+  validates_uniqueness_of :child_id, scope: :parent_id, message: "^That relationship is already established."
 
   scope :with_enterprises,
     joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
