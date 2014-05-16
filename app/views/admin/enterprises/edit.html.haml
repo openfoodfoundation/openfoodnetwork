@@ -8,7 +8,7 @@
   .eleven.columns.alpha
     = render :partial => 'form', :locals => { :f => f }
   .one.column &nbsp;
-  .four.columns.omega
+  - content_for :sidebar do
     = render :partial => 'sidebar', :locals => { :f => f }
   .twelve.columns.alpha
     = render :partial => 'spree/admin/shared/edit_resource_links'
