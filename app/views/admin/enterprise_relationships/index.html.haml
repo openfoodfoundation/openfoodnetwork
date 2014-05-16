@@ -27,3 +27,5 @@
       %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships"}
         %td {{ enterprise_relationship.parent_name }}
         %td {{ enterprise_relationship.child_name }}
+        %td.actions
+          %a.delete-enterprise-relationship.icon-trash.no-text{'ng-click' => 'delete(enterprise_relationship)'}

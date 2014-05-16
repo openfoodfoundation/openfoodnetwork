@@ -1,6 +1,6 @@
 object @enterprise_relationship
 
-attributes :parent_id, :child_id
+attributes :id, :parent_id, :child_id
 
 node :parent_name do |enterprise_relationship|
   enterprise_relationship.parent.name
