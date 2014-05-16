@@ -4,10 +4,12 @@ class EnterpriseGroup < ActiveRecord::Base
   has_and_belongs_to_many :enterprises
 
   validates :name, presence: true
-  #validates :description, presence: true
+  validates :description, presence: true
+
+  attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
 
   attr_accessible :promo_image
-  has_attached_file :promo_image, styles: {medium: "1200x1200>"}
+  has_attached_file :promo_image, styles: {medium: "800>400"}
   validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
 
   attr_accessible :logo

@@ -62,9 +62,9 @@ feature %q{
     page.should have_select 'enterprise_group_enterprise_ids', selected: [e1.name, e2.name]
 
     fill_in 'enterprise_group_name', with: 'xyzzy'
-    fill_in 'enterprise_group_description', with: 'This is a description'
     uncheck 'enterprise_group_on_front_page'
     unselect e1.name, from: 'enterprise_group_enterprise_ids'
+
     select e2.name, from: 'enterprise_group_enterprise_ids'
     click_button 'Update'
 
@@ -72,7 +72,6 @@ feature %q{
 
     eg = EnterpriseGroup.last
     eg.name.should == 'xyzzy'
-    eg.description.should == 'This is a description'
     eg.on_front_page.should be_false
     eg.enterprises.should == [e2]
   end
