@@ -2,10 +2,8 @@
   %span.bulk{"bo-if" => "product.group_buy"} bulk
   &nbsp;
 
-.small-5.columns
-  {{ product.name }}
+.small-4.columns
   ({{ product.master.options_text }})
-
 
 -# WITHOUT GROUP BUY
 .small-5.columns{"bo-if" => "!product.group_buy"}
@@ -16,7 +14,6 @@
   name: "variants[{{product.master.id}}]", 
   id: "variants_{{product.master.id}}",
   "ng-model" => "product.quantity"}
-  {{ product.master.options_text }} 
 
 -# WITH GROUP BUY
 .small-2.columns{"bo-if" => "product.group_buy"}
@@ -27,7 +24,6 @@
   name: "variants[{{product.master.id}}]", 
   id: "variants_{{product.master.id}}",
   "ng-model" => "product.quantity"}
-  {{ product.master.options_text }} 
   (min)
 
 .small-3.columns{"bo-if" => "product.group_buy"}
@@ -39,5 +35,5 @@
   "ng-model" => "product.max_quantity"}
   (max)
 
-.small-1.column
+.small-2.columns.text-right
   {{ product.price | currency }}
