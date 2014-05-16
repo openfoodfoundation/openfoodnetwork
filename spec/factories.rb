@@ -98,6 +98,7 @@ FactoryGirl.define do
 
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
+    description 'this is a group'
     on_front_page false
   end
 

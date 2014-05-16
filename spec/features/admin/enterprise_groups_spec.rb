@@ -33,6 +33,7 @@ feature %q{
     click_link 'New Enterprise Group'
 
     fill_in 'enterprise_group_name', with: 'EGEGEG'
+    fill_in 'enterprise_group_description', with: 'This is a description'
     check 'enterprise_group_on_front_page'
     select e1.name, from: 'enterprise_group_enterprise_ids'
     select e2.name, from: 'enterprise_group_enterprise_ids'
@@ -42,6 +43,7 @@ feature %q{
 
     eg = EnterpriseGroup.last
     eg.name.should == 'EGEGEG'
+    eg.description.should == 'This is a description'
     eg.on_front_page.should be_true
     eg.enterprises.sort.should == [e1, e2].sort
   end
@@ -60,6 +62,7 @@ feature %q{
     page.should have_select 'enterprise_group_enterprise_ids', selected: [e1.name, e2.name]
 
     fill_in 'enterprise_group_name', with: 'xyzzy'
+    fill_in 'enterprise_group_description', with: 'This is a description'
     uncheck 'enterprise_group_on_front_page'
     unselect e1.name, from: 'enterprise_group_enterprise_ids'
     select e2.name, from: 'enterprise_group_enterprise_ids'
@@ -69,6 +72,7 @@ feature %q{
 
     eg = EnterpriseGroup.last
     eg.name.should == 'xyzzy'
+    eg.description.should == 'This is a description'
     eg.on_front_page.should be_false
     eg.enterprises.should == [e2]
   end
@@ -98,7 +102,6 @@ feature %q{
 
     EnterpriseGroup.all.should_not include eg
   end
-
 
   context "as an enterprise user" do
     xit "should show me only enterprises I manage when creating a new enterprise group"

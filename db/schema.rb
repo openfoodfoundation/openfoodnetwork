@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140514044959) do
+ActiveRecord::Schema.define(:version => 20140516045323) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -182,9 +182,19 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
   add_index "enterprise_fees", ["enterprise_id"], :name => "index_enterprise_fees_on_enterprise_id"
 
   create_table "enterprise_groups", :force => true do |t|
-    t.string  "name"
-    t.boolean "on_front_page"
-    t.integer "position"
+    t.string   "name"
+    t.boolean  "on_front_page"
+    t.integer  "position"
+    t.string   "promo_image_file_name"
+    t.string   "promo_image_content_type"
+    t.integer  "promo_image_file_size"
+    t.datetime "promo_image_updated_at"
+    t.text     "description"
+    t.text     "long_description"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|

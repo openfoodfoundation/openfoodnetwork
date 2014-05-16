@@ -1,0 +1,19 @@
+#groups{"ng-controller" => "GroupsCtrl"}
+  :javascript
+    angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
+  .row
+    .small-12.columns.text-center
+      %h1 Groups / Regions
+      %h3 Check out our food groups below
+
+      %input{type: :text, 
+      "ng-model" => "query", 
+      placeholder: "Search group name",
+      "ng-debounce" => "150",
+      "ofn-disable-enter" => true}
+
+  .row{bindonce: true}
+    .small.12.columns
+      .group_table
+        .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
+          {{ group.name }}
