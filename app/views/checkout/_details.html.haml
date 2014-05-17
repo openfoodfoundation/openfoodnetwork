@@ -1,0 +1,41 @@
+%fieldset#details
+  %ng-form{"ng-controller" => "DetailsCtrl", name: "details"}
+
+    %h5{"ng-class" => "{valid: details.$valid, dirty: details.$dirty}"}
+      %span.right
+        %label.label.round.alert
+          %i.fi-x
+        %label.label.round.success
+          %i.fi-check
+      Your details
+
+    %accordion-group{"is-open" => "accordion.details", 
+      "ng-class" => "{valid: details.$valid, open: accordion.details}"}
+      %accordion-heading
+        .row
+          .small-11.columns
+            %em 
+              %small
+                {{ summary() | printArray }}
+          .small-1.columns.right
+            %span.accordion-up.right
+              %i.fi-arrow-up
+            %span.accordion-down.right
+              %i.fi-arrow-down  
+
+      .row
+        .small-6.columns
+          = validated_input "First Name", "order.bill_address.firstname"
+        .small-6.columns
+          = validated_input "Last Name", "order.bill_address.lastname"
+
+      .row
+        .small-6.columns
+          = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"
+        
+        .small-6.columns
+          = validated_input 'Phone', 'order.bill_address.phone'
+        
+      .row
+        .small-12.columns.text-right
+          %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next

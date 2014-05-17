@@ -1,0 +1,36 @@
+#hubs.hubs{"ng-controller" => "HubsCtrl"}
+  :javascript
+    angular.module('Darkswarm').value('hubs', #{render "json/hubs"})
+
+  .row
+    .small-12.columns.text-center
+      %h1 Ready to shop?
+      %div 
+        Select a 
+        %ofn-modal{title: "food hub"}
+          = render partial: "modals/food_hub"
+        from the list below:
+        %p
+
+  #active-table-search.row
+    .small-12.columns
+      %input{type: :text, 
+      "ng-model" => "query", 
+      placeholder: "Search postcode, suburb or hub name...",
+      "ng-debounce" => "150",
+      "ofn-disable-enter" => true}
+
+  .row{bindonce: true}
+    .small-12.columns
+      .active_table
+        %hub.active_table_node.row{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query)",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+        "ng-controller" => "HubNodeCtrl",
+        id: "{{hub.hash}}"} 
+          .small-12.columns
+            = render partial: 'home/skinny'
+            = render partial: 'home/fat'
+
+      .row{"ng-show" => "filteredHubs.length == 0"}
+        .columns.small-12.text-center
+          No results

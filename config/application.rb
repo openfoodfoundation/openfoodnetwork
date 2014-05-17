@@ -63,6 +63,11 @@ module Openfoodnetwork
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = 'en'
 
+    # Setting this to true causes a performance regression in Rails 3.2.17
+    # When we're on a version with the fix below, we can set it to true
+    # https://github.com/svenfuchs/i18n/issues/230
+    I18n.config.enforce_available_locales = false
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
@@ -75,6 +80,11 @@ module Openfoodnetwork
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.sass.load_paths += [
+      "#{Gem.loaded_specs['foundation-rails'].full_gem_path}/vendor/assets/stylesheets/foundation/components",
+      "#{Gem.loaded_specs['foundation-rails'].full_gem_path}/vendor/assets/stylesheets/foundation/"
+    ]
+
     # css and js files other than application.* are not precompiled by default
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
@@ -85,5 +95,6 @@ module Openfoodnetwork
     config.assets.precompile += ['comfortable_mexican_sofa/*']
     config.assets.precompile += ['search/all.css', 'search/*.js']
     config.assets.precompile += ['shared/*']
+
   end
 end

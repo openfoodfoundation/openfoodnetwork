@@ -1,8 +1,107 @@
 @import typography
+@import branding
+
+
+// Generic \\
+
+@mixin panepadding
+  padding-top: 100px
+  padding-bottom: 100px
 
 @mixin big-input 
   border: 1px solid #999
   font-size: 18px
   @extend .avenir
-  padding: 18px
-  margin-bottom: 1.25em
+  padding: 22px 18px
+  height: auto
+  margin-bottom: 1em
+
+@mixin disabled
+  color: $disabled-bright
+
+@mixin csstrans
+  -webkit-transition: all 100ms ease-in-out
+  -moz-transition: all 100ms ease-in-out
+  -ms-transition: all 100ms ease-in-out
+  -o-transition: all 100ms ease-in-out
+  transition: all 100ms ease-in-out
+  -webkit-transform-style: preserve-3d
+
+@mixin box-shadow($box-shadow)
+  -moz-box-shadow: $box-shadow
+  -webkit-box-shadow: $box-shadow
+  box-shadow: $box-shadow
+
+
+// Typography \\
+
+@mixin avenir
+  font-family: "AvenirBla_IE", "AvenirBla"
+
+@mixin textpress
+  text-shadow: 0 -1px 1px #111111,  0 1px 2px #222222
+
+@mixin textsoftpress
+  text-shadow: 0 0 3px rgba(0,0,0,0.35)
+
+// TO USE icon-font
+// Assign to :before or :after element
+// Assign content: "string"
+
+@mixin icon-font
+  font-family: "foundation-icons"
+  display: inline-block
+  font-weight: normal
+  font-style: normal
+  font-variant: normal
+  text-transform: none
+  font-size: 80%
+
+
+// Background options \\
+
+@mixin darkbg
+  background-color: $clr-brick
+  &, & *
+    color: white
+  a
+    color: $clr-brick-ultra-light
+    &:hover
+      text-decoration: none
+      color: $clr-brick-light
+
+@mixin lightbg
+  background-color: $clr-brick-ultra-light
+  &, & *
+    color: black
+  a
+    color: $clr-brick
+    &:hover
+      text-decoration: none
+      color: $clr-brick-bright
+
+@mixin turqbg
+  background-color: $clr-turquoise-light
+  &, & *
+    color: $clr-turquoise
+  a
+    color: white
+    &:hover
+      text-decoration: none
+      color: $clr-turquoise-light
+
+@mixin fullbg
+  background-position: center center 
+  background-repeat: no-repeat
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
+
+@mixin fullwidthbg
+  background-position: center top 
+  background-repeat: no-repeat
+  background-size: 100% auto
+
+
+

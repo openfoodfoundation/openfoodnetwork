@@ -1,0 +1,25 @@
+.darkswarm
+  - content_for :order_cycle_form do
+    %strong.avenir
+      Order ready on
+      - if @order.order_cycle
+        = pickup_time @order.order_cycle 
+      - else
+        = @order.distributor.next_collection_at
+
+  = render partial: "shopping_shared/details"
+
+  .row
+    %fieldset#order_summary{"data-hook" => ""}
+      %legend{align: "center"}= t(:order) + " #" + @order.number
+
+      #order{"data-hook" => ""}
+        - if params.has_key? :checkout_complete
+          %h1= t(:thank_you_for_your_order)
+
+        = render :partial => 'spree/shared/order_details', :locals => { :order => @order }
+
+        = link_to t(:back_to_store), main_app.shop_path, :class => "button"
+        - unless params.has_key? :checkout_complete
+          - if try_spree_current_user && respond_to?(:spree_account_path)
+            = link_to t(:my_account), spree_account_path, :class => "button"

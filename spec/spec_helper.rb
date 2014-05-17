@@ -23,6 +23,10 @@ WebMock.disable_net_connect!(:allow_localhost => true)
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/core/testing_support/controller_requests'
 require 'spree/core/testing_support/capybara_ext'
+require 'spree/api/testing_support/setup'
+require 'spree/api/testing_support/helpers'
+require 'spree/api/testing_support/helpers_decorator'
+require 'spree/core/testing_support/authorization_helpers'
 
 require 'active_record/fixtures'
 fixtures_dir = File.expand_path('../../db/default', __FILE__)
@@ -33,15 +37,15 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :poltergeist do |app|
-  options = {phantomjs_options: ['--load-images=no']}
+  options = {phantomjs_options: ['--load-images=no'], window_size: [1280, 800]}
   # Extend poltergeist's timeout to allow ample time to use pry in browser thread
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
   #options.merge! {inspector: true}
-
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
+Capybara.default_wait_time = 30
 
 require "paperclip/matchers"
 
@@ -92,6 +96,8 @@ RSpec.configure do |config|
   config.include Spree::CheckoutHelpers
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
+  config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
+  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::DistributionHelper

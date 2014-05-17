@@ -4,7 +4,12 @@
    * the top of the compiled file, but it's generally better to create a new file per style scope.
    
    *= require_self
-    
    *= require foundation
    *= require_tree .
 */
+@import 'foundation-icons';
+
+ofn-modal {
+  display: block;
+}
+

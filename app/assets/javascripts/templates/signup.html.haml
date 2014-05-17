@@ -1,0 +1,41 @@
+%tab#sign-up-content{"ng-controller" => "SignupCtrl", 
+  heading: "Sign up", 
+  active: "active(path)",
+  select: "select(path)"}
+  %form{"ng-submit" => "submit()"}
+    .row
+      .large-12.columns
+        %label{for: "email"} Your email
+        %input.title.input-text{name: "email", 
+          type: "email",
+          id: "email",
+          tabindex: 1,
+          "ng-model" => "spree_user.email"}
+        %span.error{"ng-show" => "errors.email != null"}
+          {{ errors.email.join(' ') }}
+    .row
+      .large-12.columns
+        %label{for: "password"} Choose a password
+        %input.title.input-text{name: "password", 
+          type: "password",
+          id: "password",
+          autocomplete: "off",
+          tabindex: 2,
+          "ng-model" => "spree_user.password"}
+        %span.error{"ng-show" => "errors.password != null"}
+          {{ errors.password.join(' ') }}
+    .row
+      .large-12.columns
+        %label{for: "password_confirmation"} Confirm password
+        %input.title.input-text{name: "password_confirmation", 
+          type: "password",
+          id: "password_confirmation",
+          autocomplete: "off",
+          tabindex: 2,
+          "ng-model" => "spree_user.password_confirmation"}
+    .row
+      .large-12.columns
+        %input.button.primary{name: "commit", 
+          tabindex: "3", 
+          type: "submit", 
+          value: "Sign up now"}

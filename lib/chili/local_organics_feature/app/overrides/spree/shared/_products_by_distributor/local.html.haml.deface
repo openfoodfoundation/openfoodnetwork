@@ -1,3 +1,0 @@
-/ replace_contents '#products-local'
-%h5= "Products at #{current_distributor.name}"
-= render 'spree/shared/products', :products => @products_local, :taxon => @taxon

@@ -1,4 +1,28 @@
 module AuthenticationWorkflow
+  include Warden::Test::Helpers
+  def quick_login_as(user)
+    login_as user
+  end
+
+  def quick_login_as_admin
+    admin_role = Spree::Role.find_or_create_by_name!('admin')
+    admin_user = create(:user, 
+      :password => 'passw0rd',
+      :password_confirmation => 'passw0rd',
+      :remember_me => false,
+      :persistence_token => 'pass',
+      :login => 'admin@ofn.org')
+
+    admin_user.spree_roles << admin_role
+    quick_login_as admin_user
+    admin_user
+  end
+
+  def stub_authorization!
+    before(:all) { Spree::Ability.register_ability(AuthorizationHelpers::Request::SuperAbility) }
+    after(:all) { Spree::Ability.remove_ability(AuthorizationHelpers::Request::SuperAbility) }
+  end
+
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = create(:user, 
@@ -9,7 +33,6 @@ module AuthenticationWorkflow
       :login => 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
-
     login_to_admin_as admin_user
   end
 
@@ -50,4 +73,8 @@ module AuthenticationWorkflow
     fill_in 'spree_user_password', :with => 'passw0rd'
     click_button 'Login'
   end
+end
+
+RSpec.configure do |config|
+  config.extend AuthenticationWorkflow, :type => :feature
 end

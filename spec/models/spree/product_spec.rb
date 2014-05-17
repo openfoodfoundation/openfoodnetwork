@@ -303,6 +303,42 @@ module Spree
       end
     end
 
+    describe "finding variants for an order cycle and hub" do
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s) { create(:supplier_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+
+      let(:p1) { create(:simple_product) }
+      let(:p2) { create(:simple_product) }
+      let(:v1) { create(:variant, product: p1) }
+      let(:v2) { create(:variant, product: p2) }
+
+      let(:p_external) { create(:simple_product) }
+      let(:v_external) { create(:variant, product: p_external) }
+
+      let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
+                            incoming: true, variants: [v1, v2]) }
+      let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
+                              incoming: false, variants: [v1]) }
+      let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
+                              incoming: false, variants: [v2]) }
+
+      it "returns variants in the order cycle and distributor" do
+        p1.variants_for(oc, d1).should == [v1]
+        p2.variants_for(oc, d2).should == [v2]
+      end
+
+      it "does not return variants in the order cycle but not the distributor" do
+        p1.variants_for(oc, d2).should be_empty
+        p2.variants_for(oc, d1).should be_empty
+      end
+
+      it "does not return variants not in the order cycle" do
+        p_external.variants_for(oc, d1).should be_empty
+      end
+    end
+
     describe "variant units" do
       context "when the product initially has no variant unit" do
         let!(:p) { create(:simple_product,
@@ -393,6 +429,16 @@ module Spree
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(v.option_values(true), :count).by(-1)
         end
+
+        it "removes the related option values from its master variant" do
+          ot = Spree::OptionType.find_by_name 'unit_weight'
+          p.master.update_attributes!(unit_value: 1)
+          p.reload
+
+          expect {
+            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          }.to change(p.master.option_values(true), :count).by(-1)
+        end
       end
 
       describe "returning the variant unit option type" do
@@ -412,11 +458,93 @@ module Spree
       end
     end
 
-    describe "Stock filtering" do
+    describe "option types" do
+      describe "removing an option type" do
+        it "removes the associated option values from all variants" do
+          # Given a product with a variant unit option type and values
+          p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
+          v1 = create(:variant, product: p, unit_value: 100, option_values: [])
+          v2 = create(:variant, product: p, unit_value: 200, option_values: [])
+
+          # And a custom option type and values
+          ot = create(:option_type, name: 'foo', presentation: 'foo')
+          p.option_types << ot
+          ov1 = create(:option_value, option_type: ot, name: 'One', presentation: 'One')
+          ov2 = create(:option_value, option_type: ot, name: 'Two', presentation: 'Two')
+          v1.option_values << ov1
+          v2.option_values << ov2
+
+          # When we remove the custom option type
+          p.option_type_ids = p.option_type_ids.reject { |id| id == ot.id }
+
+          # Then the associated option values should have been removed from the variants
+          v1.option_values(true).should_not include ov1
+          v2.option_values(true).should_not include ov2
+
+          # And the option values themselves should still exist
+          Spree::OptionValue.where(id: [ov1.id, ov2.id]).count.should == 2
+        end
+      end
+    end
+
+    describe "stock filtering" do
       it "considers products that are on_demand as being in stock" do
         product = create(:simple_product, on_demand: true)
         product.master.update_attribute(:count_on_hand, 0)
         product.has_stock?.should == true
+      end
+
+      describe "finding products in stock for a particular distribution" do
+        it "returns in-stock products without variants" do
+          p = create(:simple_product)
+          p.master.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << p.master
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns on-demand products" do
+          p = create(:simple_product, on_demand: true)
+          p.master.update_attribute(:count_on_hand, 0)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << p.master
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns products with in-stock variants" do
+          p = create(:simple_product)
+          v = create(:variant, product: p)
+          v.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << v
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "returns products with on-demand variants" do
+          p = create(:simple_product)
+          v = create(:variant, product: p, on_demand: true)
+          v.update_attribute(:count_on_hand, 0)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+          oc.exchanges.outgoing.first.variants << v
+
+          p.should have_stock_for_distribution(oc, d)
+        end
+
+        it "does not return products that have stock not in the distribution" do
+          p = create(:simple_product)
+          p.master.update_attribute(:count_on_hand, 1)
+          d = create(:distributor_enterprise)
+          oc = create(:simple_order_cycle, distributors: [d])
+
+          p.should_not have_stock_for_distribution(oc, d)
+        end
       end
     end
   end

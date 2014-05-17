@@ -49,6 +49,11 @@ module Spree
                   distributor: build(:distributor_enterprise))
         sm.should_not be_available_to_order o
       end
+
+      it "is available to orders with no shipping address" do
+        o = build(:order, ship_address: nil, distributor: sm.distributors.first)
+        sm.should be_available_to_order o
+      end
     end
   end
 end

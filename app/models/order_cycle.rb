@@ -1,3 +1,5 @@
+require 'open_food_network/enterprise_fee_applicator'
+
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
   has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
@@ -18,19 +20,19 @@ class OrderCycle < ActiveRecord::Base
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.now) }
   scope :undated, where(orders_open_at: nil, orders_close_at: nil)
 
-  scope :distributing_product, lambda { |product|
-    joins(:exchanges => :variants).
-    merge(Exchange.outgoing).
-    where('spree_variants.id IN (?)', product.variants_including_master.map(&:id)).
-    select('DISTINCT order_cycles.*') }
-
-  scope :with_distributor, lambda { |distributor|
-    joins(:exchanges).merge(Exchange.outgoing).where('exchanges.receiver_id = ?', distributor)
-  }
-
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   scope :most_recently_closed, lambda { closed.order('order_cycles.orders_close_at DESC') }
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
+
+  scope :distributing_product, lambda { |product|
+    joins(:exchanges).
+    merge(Exchange.outgoing).
+    merge(Exchange.with_product(product)).
+    select('DISTINCT order_cycles.*') }
+
+  scope :with_distributor, lambda { |distributor|
+    joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
+  }
 
 
   scope :managed_by, lambda { |user|
@@ -41,7 +43,7 @@ class OrderCycle < ActiveRecord::Base
     end
   }
 
-  # Order cycles that user coordinates, sends to or receives from
+  # Return order cycles that user coordinates, sends to or receives from
   scope :accessible_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -57,12 +59,18 @@ class OrderCycle < ActiveRecord::Base
     joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
+
   def self.first_opening_for(distributor)
     with_distributor(distributor).soonest_opening.first
   end
 
+  def self.first_closing_for(distributor)
+    with_distributor(distributor).soonest_closing.first
+  end
+
+
   def self.most_recently_closed_for(distributor)
-    OrderCycle.with_distributor(distributor).most_recently_closed.first
+    with_distributor(distributor).most_recently_closed.first
   end
 
   def clone!
@@ -76,28 +84,44 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def suppliers
-    self.exchanges.where(:receiver_id => self.coordinator).map(&:sender).uniq
+    enterprise_ids = self.exchanges.incoming.pluck :sender_id
+    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
   end
 
   def distributors
-    self.exchanges.where(:sender_id => self.coordinator).map(&:receiver).uniq
+    enterprise_ids = self.exchanges.outgoing.pluck :receiver_id
+    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
   end
 
   def variants
-    self.exchanges.map(&:variants).flatten.uniq
+    self.exchanges.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def distributed_variants
-    self.exchanges.where(:sender_id => self.coordinator).map(&:variants).flatten.uniq
+    self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
-    self.exchanges.where(:sender_id => self.coordinator, :receiver_id => distributor).
-      map(&:variants).flatten.uniq
+    Spree::Variant.
+      not_deleted.
+      joins(:exchanges).
+      merge(Exchange.in_order_cycle(self)).
+      merge(Exchange.outgoing).
+      merge(Exchange.to_enterprise(distributor))
   end
 
   def products_distributed_by(distributor)
     variants_distributed_by(distributor).map(&:product).uniq
+  end
+
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method filters out such products so that the customer cannot purchase them.
+  def valid_products_distributed_by(distributor)
+    variants = variants_distributed_by(distributor)
+    products = variants.map(&:product).uniq
+    products.reject { |p| product_has_only_obsolete_master_in_distribution?(p, variants) }
   end
 
   def products
@@ -143,53 +167,91 @@ class OrderCycle < ActiveRecord::Base
 
 
   # -- Fees
-  def create_adjustments_for(line_item)
-    fees_for(line_item).each { |fee| create_adjustment_for_fee line_item, fee[:enterprise_fee], fee[:label], fee[:role] }
+
+  # TODO: The boundary of this class is ill-defined here. OrderCycle should not know about
+  # EnterpriseFeeApplicator. Clients should be able to query it for relevant EnterpriseFees.
+  # This logic would fit better in another service object.
+
+  def fees_for(variant, distributor)
+    per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|
+      # Spree's Calculator interface accepts Orders or LineItems,
+      # so we meet that interface with a struct.
+      # Amount is faked, this is a method on LineItem
+      line_item = OpenStruct.new variant: variant, quantity: 1, amount: variant.price
+      applicator.enterprise_fee.compute_amount(line_item)
+    end
   end
 
+  def create_line_item_adjustments_for(line_item)
+    variant = line_item.variant
+    distributor = line_item.order.distributor
 
+    per_item_enterprise_fee_applicators_for(variant, distributor).each do |applicator|
+      applicator.create_line_item_adjustment(line_item)
+    end
+  end
+
+  def create_order_adjustments_for(order)
+    per_order_enterprise_fee_applicators_for(order).each do |applicator|
+      applicator.create_order_adjustment(order)
+    end
+  end
 
 
   private
 
   # -- Fees
-  def fees_for(line_item)
+  def per_item_enterprise_fee_applicators_for(variant, distributor)
     fees = []
 
-    # If there are multiple distributors with this variant, won't this mean that we get a fee charged for each of them?
-    # We just want the one matching line_item.order.distributor
-
-    exchanges_carrying(line_item).each do |exchange|
-      exchange.enterprise_fees.each do |enterprise_fee|
-        role = exchange.incoming? ? 'supplier' : 'distributor'
-        fees << {enterprise_fee: enterprise_fee,
-                 label: adjustment_label_for(line_item, enterprise_fee, role),
-                 role: role}
+    exchanges_carrying(variant, distributor).each do |exchange|
+      exchange.enterprise_fees.per_item.each do |enterprise_fee|
+        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
       end
     end
 
-    coordinator_fees.each do |enterprise_fee|
-      fees << {enterprise_fee: enterprise_fee,
-               label: adjustment_label_for(line_item, enterprise_fee, 'coordinator'),
-               role: 'coordinator'}
+    coordinator_fees.per_item.each do |enterprise_fee|
+      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
     end
 
     fees
   end
 
-  def create_adjustment_for_fee(line_item, enterprise_fee, label, role)
-    a = enterprise_fee.create_locked_adjustment(label, line_item.order, line_item, true)
-    AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
+  def per_order_enterprise_fee_applicators_for(order)
+    fees = []
+
+    exchanges_supplying(order).each do |exchange|
+      exchange.enterprise_fees.per_order.each do |enterprise_fee|
+        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
+      end
+    end
+
+    coordinator_fees.per_order.each do |enterprise_fee|
+      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+    end
+
+    fees
   end
 
-  def adjustment_label_for(line_item, enterprise_fee, role)
-    "#{line_item.variant.product.name} - #{enterprise_fee.fee_type} fee by #{role} #{enterprise_fee.enterprise.name}"
+
+  # -- Misc
+
+  # If a product without variants is added to an order cycle, and then some variants are added
+  # to that product, then the master variant is still part of the order cycle, but customers
+  # should not be able to purchase it.
+  # This method is used by #valid_products_distributed_by to filter out such products so that
+  # the customer cannot purchase them.
+  def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
+    product.has_variants? &&
+      distributed_variants.include?(product.master) &&
+      (product.variants & distributed_variants).empty?
   end
 
-  def exchanges_carrying(line_item)
-    coordinator = line_item.order.order_cycle.coordinator
-    distributor = line_item.order.distributor
+  def exchanges_carrying(variant, distributor)
+    exchanges.supplying_to(distributor).with_variant(variant)
+  end
 
-    exchanges.to_enterprises([coordinator, distributor]).with_variant(line_item.variant)
+  def exchanges_supplying(order)
+    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 end

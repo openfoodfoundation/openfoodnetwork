@@ -39,20 +39,29 @@ module Spree
           should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
         end
 
+        it "should not be able to access admin actions on orders" do
+          should_not have_ability([:admin], for: Spree::Order)
+        end
+
         it "should be able to create a new product" do
           should have_ability(:create, for: Spree::Product)
         end
 
         it "should be able to read/write their enterprises' product variants" do
-          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: Spree::Variant)
+          should have_ability([:create], for: Spree::Variant)
+          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p1.master)
+        end
+
+        it "should not be able to read/write other enterprises' product variants" do
+          should_not have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p2.master)
         end
 
         it "should be able to read/write their enterprises' product properties" do
-          should have_ability([:admin, :index, :read, :create, :edit], for: Spree::ProductProperty)
+          should have_ability([:admin, :index, :read, :create, :edit, :update_positions, :destroy], for: Spree::ProductProperty)
         end
 
         it "should be able to read/write their enterprises' product images" do
-          should have_ability([:admin, :index, :read, :create, :edit], for: Spree::Image)
+          should have_ability([:admin, :index, :read, :create, :edit, :update, :destroy], for: Spree::Image)
         end
 
         it "should be able to read Taxons (in order to create classifications)" do

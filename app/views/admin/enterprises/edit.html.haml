@@ -1,0 +1,14 @@
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise }
+
+- content_for :page_title do
+  Editing:
+  = @enterprise.name
+
+= form_for [main_app, :admin, @enterprise] do |f|
+  .eleven.columns.alpha
+    = render :partial => 'form', :locals => { :f => f }
+  .one.column &nbsp;
+  .four.columns.omega
+    = render :partial => 'sidebar', :locals => { :f => f }
+  .twelve.columns.alpha
+    = render :partial => 'spree/admin/shared/edit_resource_links'

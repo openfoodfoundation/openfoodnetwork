@@ -20,8 +20,8 @@ describe EnterprisesController do
     let(:oc2) { create(:simple_order_cycle) }
 
     it "displays products for the selected (order_cycle -> outgoing exchange)" do
-      create(:exchange, order_cycle: oc1, sender: s, receiver: c, variants: [p.master])
-      create(:exchange, order_cycle: oc1, sender: c, receiver: d1, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: s, receiver: c, incoming: true, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: c, receiver: d1, incoming: false, variants: [p.master])
 
       controller.stub(:current_distributor) { d1 }
       controller.stub(:current_order_cycle) { oc1 }
@@ -33,12 +33,12 @@ describe EnterprisesController do
 
     it "does not display other products in the order cycle or in the distributor" do
       # Given a product that is in this order cycle on a different distributor
-      create(:exchange, order_cycle: oc1, sender: s, receiver: c, variants: [p.master])
-      create(:exchange, order_cycle: oc1, sender: c, receiver: d2, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: s, receiver: c, incoming: true, variants: [p.master])
+      create(:exchange, order_cycle: oc1, sender: c, receiver: d2, incoming: false, variants: [p.master])
 
       # And is also in this distributor in a different order cycle
-      create(:exchange, order_cycle: oc2, sender: s, receiver: c, variants: [p.master])
-      create(:exchange, order_cycle: oc2, sender: c, receiver: d1, variants: [p.master])
+      create(:exchange, order_cycle: oc2, sender: s, receiver: c, incoming: true, variants: [p.master])
+      create(:exchange, order_cycle: oc2, sender: c, receiver: d1, incoming: false, variants: [p.master])
 
       # When I view the enterprise page for d1 x oc1
       controller.stub(:current_distributor) { d1 }
@@ -122,7 +122,7 @@ describe EnterprisesController do
 
       spree_get :index
       session[:expired_order_cycle_id].should == 123
-      response.should redirect_to spree.order_cycle_expired_orders_path
+      response.should redirect_to root_url
     end
   end
 end

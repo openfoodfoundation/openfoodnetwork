@@ -1,0 +1,9 @@
+.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
+  .columns.small-4
+    %strong {{ producer.name }}
+  .columns.small-3
+    {{ producer.address.city }}
+  .columns.small-4
+    {{ producer.address.state | uppercase }}
+  .columns.small-1.text-right
+    %i{"ng-class" => "{'fi-arrow-down' : !open(), 'fi-arrow-up' : open()}"} 

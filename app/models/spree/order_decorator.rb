@@ -1,3 +1,4 @@
+require 'open_food_network/feature_toggle'
 require 'open_food_network/distribution_change_validator'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
@@ -13,6 +14,24 @@ Spree::Order.class_eval do
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
+
+  checkout_flow do
+    go_to_state :address
+    go_to_state :delivery
+    go_to_state :payment, :if => lambda { |order|
+      # Fix for #2191
+      if order.shipping_method.andand.require_ship_address and 
+        if order.ship_address.andand.valid?
+          order.create_shipment!
+          order.update_totals
+        end
+      end
+      order.payment_required?
+    }
+    go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
+    go_to_state :complete, :if => lambda { |order| (order.payment_required? && order.has_unprocessed_payments?) || !order.payment_required? }
+    remove_transition :from => :delivery, :to => :confirm
+  end
 
 
   # -- Scopes
@@ -58,9 +77,12 @@ Spree::Order.class_eval do
   end
 
   def set_order_cycle!(order_cycle)
-    self.order_cycle = order_cycle
-    self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
-    save!
+    unless self.order_cycle == order_cycle
+      self.order_cycle = order_cycle
+      self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
+      self.empty!
+      save!
+    end
   end
 
   def set_distributor!(distributor)
@@ -80,13 +102,15 @@ Spree::Order.class_eval do
 
     line_items.each do |line_item|
       if provided_by_order_cycle? line_item
-        order_cycle.create_adjustments_for line_item
+        order_cycle.create_line_item_adjustments_for line_item
 
       else
         pd = product_distribution_for line_item
         pd.create_adjustment_for line_item if pd
       end
     end
+
+    order_cycle.create_order_adjustments_for self if order_cycle
   end
 
   def set_variant_attributes(variant, attributes)
@@ -106,23 +130,32 @@ Spree::Order.class_eval do
     line_items.map { |li| li.variant }
   end
 
-  # Show payment methods with no distributor or for this distributor
+  # Show payment methods for this distributor
   def available_payment_methods
     @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm| 
-      (self.distributor && (pm.distributors.include? self.distributor)) || pm.distributors.empty?
+      (self.distributor && (pm.distributors.include? self.distributor))
     end
   end
 
+  def available_shipping_methods(display_on = nil)
+    Spree::ShippingMethod.all_available(self, display_on)
+  end
   private
 
   def shipping_address_from_distributor
     if distributor
-      self.ship_address = distributor.address.clone
+      # This method is confusing to conform to the vagaries of the multi-step checkout
+      # We copy over the shipping address when we have no shipping method selected
+      # We can refactor this when we drop the multi-step checkout option
+      #
+      if shipping_method.andand.require_ship_address == false
+        self.ship_address = distributor.address.clone
 
-      if bill_address
-        self.ship_address.firstname = bill_address.firstname
-        self.ship_address.lastname = bill_address.lastname
-        self.ship_address.phone = bill_address.phone
+        if bill_address
+          self.ship_address.firstname = bill_address.firstname
+          self.ship_address.lastname = bill_address.lastname
+          self.ship_address.phone = bill_address.phone
+        end
       end
     end
   end
@@ -135,5 +168,4 @@ Spree::Order.class_eval do
   def product_distribution_for(line_item)
     line_item.variant.product.product_distribution_for self.distributor
   end
-
 end

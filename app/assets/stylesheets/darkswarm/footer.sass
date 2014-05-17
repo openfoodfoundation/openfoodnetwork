@@ -1,12 +1,20 @@
-@import variables
+@import branding
+@import mixins
 
-#footer
-  padding: 74px 0px
-  background: $fawn
-  margin-top: 85px
-
-  #copyright 
-    clear: both
-    img
-      display: block
-      margin: 0px auto 8px
+footer
+  background: $dark-grey
+  border-top: 1px dotted white
+  @include panepadding
+  .row
+    &, & *
+      color: white
+    a, a > i
+      @include csstrans
+    a, a *  
+      color: $clr-brick-light-bright
+      &:hover, &:active, &:focus
+        color: $clr-brick-bright
+        @include textsoftpress
+  span.email
+    direction: rtl
+    unicode-bidi: bidi-override

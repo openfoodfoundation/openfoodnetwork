@@ -110,7 +110,7 @@ module OpenFoodNetwork
         it "should return unfiltered variants sans-params" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
-          subject.filter(Spree::Variant.scoped).should == [product1.master, product2.master]
+          subject.filter(Spree::Variant.scoped).sort.should == [product1.master, product2.master].sort
         end
         describe "based on report type" do
           it "returns only variants on hand" do

@@ -1,0 +1,40 @@
+%tab#login-content{"ng-controller" => "LoginCtrl", 
+  heading: "Log in", 
+  active: "active(path)", 
+  select: "select(path)"}
+  %form{"ng-submit" => "submit()"}
+    .row
+      .large-12.columns
+        .alert-box.alert{"ng-show" => "errors != null"}
+          {{ errors }}
+    .row
+      .large-12.columns
+        %label{for: "email"} Email
+        %input.title.input-text{name: "email", 
+          type: "email",
+          id: "email",
+          tabindex: 1,
+          "ng-model" => "spree_user.email"}
+    .row
+      .large-12.columns
+        %label{for: "password"} Password
+        %input.title.input-text{name: "password", 
+          type: "password",
+          id: "password",
+          autocomplete: "off",
+          tabindex: 2,
+          "ng-model" => "spree_user.password"}
+    .row
+      .large-12.columns
+        %input{name: "remember_me", 
+        type: "checkbox", 
+        id: "remember_me", 
+        value: "1",
+        "ng-model" => "spree_user.remember_me"}
+        %label{for: "remember_me"} Remember Me
+    .row
+      .large-12.columns
+        %input.button.primary{name: "commit", 
+          tabindex: "3", 
+          type: "submit", 
+          value: "Log in"}

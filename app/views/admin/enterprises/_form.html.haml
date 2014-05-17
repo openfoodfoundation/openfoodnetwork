@@ -1,62 +1,172 @@
 - content_for :head do
   = render 'shared/cms_elrte_head'
 
-%table{"data-hook" => "distributors"}
-  %tr{"data-hook" => "name"}
-    %td Name:
-    %td= f.text_field :name
-  %tr{"data-hook" => "description"}
-    %td Description:
-    %td= f.text_field :description
-  %tr{'data-hook' => "long_description"}
-    %td Extended Description:
-    %td= f.text_area :long_description, :class => 'rich_text'
-  %tr{'data-hook' => "is_primary_producer"}
-    %td Primary Producer?
-    %td= f.check_box :is_primary_producer
-  %tr{'data-hook' => "is_distributor"}
-    %td Distributor?
-    %td= f.check_box :is_distributor
-  %tr{'data-hook' => "enterprise_group_ids"}
-    %td Groups
-    %td= f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
-  %tr{"data-hook" => "contact"}
-    %td Contact Person:
-    %td= f.text_field :contact
-  %tr{"data-hook" => "phone"}
-    %td Phone:
-    %td= f.text_field :phone
-  %tr{"data-hook" => "email"}
-    %td Email:
-    %td= f.text_field :email
-  %tr{"data-hook" => "website"}
-    %td Website:
-    %td= f.text_field :website
-  %tr{"data-hook" => "twitter"}
-    %td Twitter:
-    %td= f.text_field :twitter
-  %tr{"data-hook" => "abn"}
-    %td ABN:
-    %td= f.text_field :abn
-  %tr{"data-hook" => "acn"}
-    %td ACN:
-    %td= f.text_field :acn
-  %tr{"data-hook" => "logo"}
-    %td Logo:
-    %td
-      = f.file_field :logo
-      = image_tag @object.logo.url
-%fieldset
-  %legend Address
-  %table
-    = f.fields_for :address do |address_form|
-      = render 'spree/admin/shared/address_form_simple', :f => address_form
-%fieldset
-  %legend Pickup details
-  %table{"data-hook" => "distributors_pickup_details"}
-    %tr{"data-hook" => "next_collection_at"}
-      %td Next collection date/time:
-      %td= f.text_field :next_collection_at
-    %tr{"data-hook" => "pickup_times"}
-      %td Regular pickup times:
-      %td= f.text_field :pickup_times
+- content_for :page_actions do
+  %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
+
+
+.fullwidth_inputs
+  %fieldset.eleven.columns.alpha.no-border-bottom
+    %legend Primary Details
+    .row
+      .alpha.eleven.columns
+        .three.columns.alpha
+          = f.label :name
+        .eight.columns.omega
+          = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
+    .row
+      .alpha.eleven.columns
+        .three.columns.alpha
+          = f.label :group_ids, 'Groups'
+          .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+            %a What's this?
+
+        .eight.columns.omega
+          = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+    .row
+      .three.columns.alpha
+        %label Enterprise Type(s)
+        .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
+          %a What's this?
+      .two.columns
+        = f.check_box :is_distributor
+        &nbsp;
+        = f.label :is_distributor, 'Hub'
+      .five.columns.omega
+        = f.check_box :is_primary_producer
+        &nbsp;
+        = f.label :is_primary_producer, 'Producer'
+    .row
+      .three.columns.alpha
+        %label Visible in search?
+        .with-tip{'data-powertip' => "Determines whether this enterprise will be visible to customers when searching the site."}
+          %a What's this?
+      .two.columns
+        = f.radio_button :visible, true
+        &nbsp;
+        = f.label :visible, "Visible", :value => "true"
+      .five.columns.omega
+        = f.radio_button :visible, false
+        &nbsp;
+        = f.label :visible, "Not Visible", :value => "false"
+
+
+  = f.fields_for :address do |af|
+    %fieldset.eleven.columns.alpha.no-border-bottom
+      %legend Address
+      .row
+        .three.columns.alpha
+          = af.label :address1
+        .eight.columns.omega
+          = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+      .row
+        .alpha.three.columns
+          = af.label :address2
+        .eight.columns.omega
+          = af.text_field :address2
+      .row
+        .three.columns.alpha
+          = af.label :city, 'Suburb'
+          \/
+          = af.label :zipcode, 'Postcode'
+        .four.columns
+          = af.text_field :city, { placeholder: "eg. Northcote"}
+        .four.columns.omega
+          = af.text_field :zipcode, { placeholder: "eg. 3070"}
+      .row
+        .three.columns.alpha
+          = af.label :state_id, 'State'
+          \/
+          = af.label :country_id, 'Country'
+        .four.columns
+          = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
+        .four.columns.omega
+          = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
+    %fieldset.eleven.columns.alpha.no-border-bottom
+      %legend Contact Details
+      .row
+        .alpha.three.columns
+          = f.label :contact, 'Name'
+        .omega.eight.columns
+          = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
+      .row
+        .alpha.three.columns
+          = f.label :email
+        .omega.eight.columns
+          = f.text_field :email, { placeholder: "eg. gustav@truffles.com"}
+      .row
+        .alpha.three.columns
+          = f.label :phone
+        .omega.eight.columns
+          = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+    %fieldset.eleven.columns.alpha.no-border-bottom
+      %legend Enterprise Details
+      .row
+        .alpha.three.columns
+          = f.label :abn, 'ABN'
+        .omega.eight.columns
+          = f.text_field :abn, { placeholder: "eg. 99 123 456 789"}
+      .row
+        .alpha.three.columns
+          = f.label :acn, 'ACN'
+        .omega.eight.columns
+          = f.text_field :acn, { placeholder: "eg. 123 456 789"}
+      .row
+        .alpha.three.columns
+          = f.label :website
+        .omega.eight.columns
+          = f.text_field :website, { placeholder: "eg. www.truffles.com"}
+      -# TODO: Facebook model field
+      -#.row
+      -#  .alpha.two.columns
+      -#    = f.label :facebook, 'Facebook'
+      -#  .omega.four.columns
+      -#    = f.text_field :facebook
+      .row
+        .alpha.three.columns
+          = f.label :twitter
+        .omega.eight.columns
+          = f.text_field :twitter, { placeholder: "eg. @the_prof" }
+  %fieldset.eleven.columns.alpha.no-border-bottom
+    %legend About Us
+    .row
+      .alpha.three.columns
+        = f.label :description, 'Short Description'
+      .omega.eight.columns
+        = f.text_field :description, placeholder: 'Tell us about your enterprise in one or two sentences'
+    .row
+      .alpha.three.columns
+        = f.label :long_description, 'About Us'
+        %br
+        Tell us about yourself. This information appears on your public profile (under "About Us")
+      .omega.eight.columns
+        = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
+    .row
+      .alpha.three.columns
+        = f.label :distributor_info, 'How does your hub work?'
+        %br
+        %em (Hub only)
+        %br
+        Explain your distribution offer/s - this information appears on your public profile (under "How does it work?")
+      .omega.eight.columns
+        = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
+        / TODO: editor breaks scrolling with arrow keys
+  %fieldset.eleven.columns.alpha.no-border-bottom
+    %legend IMAGES
+    .row
+      .alpha.three.columns
+        = f.label :logo
+        %br
+        100 x 100 pixels
+      .omega.eight.columns
+        = image_tag @object.logo.url if @object.logo.present?
+        = f.file_field :logo
+    .row
+      .alpha.three.columns
+        = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
+        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
+          %a What's this?
+
+      .omega.eight.columns
+        = image_tag @object.promo_image.url if @object.promo_image.present?
+        = f.file_field :promo_image

@@ -2,6 +2,57 @@ require 'spec_helper'
 
 module Spree
   describe Variant do
+    describe "scopes" do
+      it "finds non-deleted variants" do
+        v_not_deleted = create(:variant)
+        v_deleted = create(:variant, deleted_at: Time.now)
+
+        Spree::Variant.not_deleted.should     include v_not_deleted
+        Spree::Variant.not_deleted.should_not include v_deleted
+      end
+
+      describe "finding variants in stock" do
+        before do
+          p = create(:product)
+          @v_in_stock = create(:variant, product: p)
+          @v_on_demand = create(:variant, product: p, on_demand: true)
+          @v_no_stock = create(:variant, product: p)
+
+          @v_in_stock.update_attribute(:count_on_hand, 1)
+          @v_on_demand.update_attribute(:count_on_hand, 0)
+          @v_no_stock.update_attribute(:count_on_hand, 0)
+        end
+
+        it "returns variants in stock or on demand, but not those that are neither" do
+          Variant.where(is_master: false).in_stock.sort.should == [@v_in_stock, @v_on_demand].sort
+        end
+      end
+    end
+
+    describe "calculating the price with enterprise fees" do
+      it "returns the price plus the fees" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+
+        variant = Variant.new price: 100
+        variant.should_receive(:fees_for).with(distributor, order_cycle) { 23 }
+        variant.price_with_fees(distributor, order_cycle).should == 123
+      end
+    end
+
+
+    describe "calculating the fees" do
+      it "delegates to order cycle" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+        variant = Variant.new
+
+        order_cycle.should_receive(:fees_for).with(variant, distributor) { 23 }
+        variant.fees_for(distributor, order_cycle).should == 23
+      end
+    end
+
+
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }
       let!(:variant) { create(:variant, product: product) }
@@ -72,6 +123,41 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "setting the variant's weight from the unit value" do
+        it "sets the variant's weight when unit is weight" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: nil)
+
+          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
+          v.update_attributes! unit_value: 10, unit_description: 'foo'
+
+          v.reload.weight.should == 0.01
+        end
+
+        it "does nothing when unit is not weight" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: 123)
+
+          p.update_attributes! variant_unit: 'volume', variant_unit_scale: 1
+          v.update_attributes! unit_value: 10, unit_description: 'foo'
+
+          v.reload.weight.should == 123
+        end
+
+        it "does nothing when unit_value is not set" do
+          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          v = create(:variant, product: p, weight: 123)
+
+          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
+
+          # Although invalid, this calls the before_validation callback, which would
+          # error if not handling unit_value == nil case
+          v.update_attributes(unit_value: nil, unit_description: 'foo').should be_false
+
+          v.reload.weight.should == 123
+        end
+      end
+
       context "when the variant initially has no value" do
         context "when the required option value does not exist" do
           let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }
@@ -89,8 +175,8 @@ module Spree
 
             ov = Spree::OptionValue.last
             ov.option_type.should == @ot
-            ov.name.should == '10 g foo'
-            ov.presentation.should == '10 g foo'
+            ov.name.should == '10g foo'
+            ov.presentation.should == '10g foo'
 
             v.option_values.should include ov
           end
@@ -115,8 +201,8 @@ module Spree
 
             ov = v.option_values.last
             ov.option_type.should == @ot
-            ov.name.should == '10 g foo'
-            ov.presentation.should == '10 g foo'
+            ov.name.should == '10g foo'
+            ov.presentation.should == '10g foo'
 
             v_orig.option_values.should include ov
           end
@@ -147,19 +233,47 @@ module Spree
         it "when description is blank" do
           v = Spree::Variant.new unit_description: nil
           v.stub(:option_value_value_unit) { %w(value unit) }
-          v.send(:option_value_name).should == "value unit"
+          v.stub(:value_scaled?) { true }
+          v.send(:option_value_name).should == "valueunit"
         end
 
         it "when description is present" do
           v = Spree::Variant.new unit_description: 'desc'
           v.stub(:option_value_value_unit) { %w(value unit) }
-          v.send(:option_value_name).should == "value unit desc"
+          v.stub(:value_scaled?) { true }
+          v.send(:option_value_name).should == "valueunit desc"
         end
 
         it "when value is blank and description is present" do
           v = Spree::Variant.new unit_description: 'desc'
           v.stub(:option_value_value_unit) { [nil, nil] }
+          v.stub(:value_scaled?) { true }
           v.send(:option_value_name).should == "desc"
+        end
+
+        it "spaces value and unit when value is unscaled" do
+          v = Spree::Variant.new unit_description: nil
+          v.stub(:option_value_value_unit) { %w(value unit) }
+          v.stub(:value_scaled?) { false }
+          v.send(:option_value_name).should == "value unit"
+        end
+      end
+
+      describe "determining if a variant's value is scaled" do
+        it "returns true when the product has a scale" do
+          p = Spree::Product.new variant_unit_scale: 1000
+          v = Spree::Variant.new
+          v.stub(:product) { p }
+
+          v.send(:value_scaled?).should be_true
+        end
+
+        it "returns false otherwise" do
+          p = Spree::Product.new
+          v = Spree::Variant.new
+          v.stub(:product) { p }
+
+          v.send(:value_scaled?).should be_false
         end
       end
 
@@ -258,6 +372,16 @@ module Spree
           @v.delete_unit_option_values
         }.to change(Spree::OptionValue, :count).by(0)
       end
+    end
+  end
+
+  describe "destruction" do
+    it "destroys exchange variants" do
+      v = create(:variant)
+      e = create(:exchange, variants: [v])
+
+      v.destroy
+      e.reload.variant_ids.should be_empty
     end
   end
 end

@@ -1,0 +1,70 @@
+@import typography
+@import mixins
+@import branding
+
+#tabs
+  background: url("/assets/gray_jean.png") top left repeat
+  @include box-shadow(inset 0 2px 3px 0 rgba(0,0,0,0.15))
+  display: block
+
+  dl dd a
+    @include avenir
+    @include csstrans
+    background: transparent
+    text-transform: uppercase
+    line-height: 50px
+    font-size: 0.875em
+    text-shadow: 0 -1px 1px #ffffff
+    &:hover, &:focus, &:active
+      color: $clr-brick-bright
+    @media all and (max-width: 768px)
+      line-height: 30px !important
+    border: none
+    &, &:hover
+      background: none
+    padding: 0px 2.2em
+    @media all and (max-width: 768px)
+      line-height: inherit !important
+  
+  // inactive nav link
+
+  dl  
+    dd
+      border-top: 4px solid transparent
+      a:after
+        padding-left: 8px
+        content: "\f109"
+        visibility: hidden
+        @include icon-font
+  
+  // active nav link
+  
+  dl
+    dd.active
+      border-top: 4px solid $clr-brick-bright
+      a
+        color: $clr-brick-bright
+      a:after
+        content: "\f10c"
+        visibility: visible
+        @include icon-font
+
+  // content revealed in accordion
+
+  .tabs-content
+    margin-bottom: 0
+    & > .content
+      background: none
+      border: none
+      img
+        margin: 0px 0px 0px 40px
+      p
+        max-width: 555px
+        @media all and (max-width: 768px)
+          height: auto !important
+      ul
+        list-style-type: none
+        padding-left: none
+      .panel
+        padding-bottom: 1.25em
+

@@ -1,6 +1,19 @@
 require 'spec_helper'
 
 describe Spree::OrdersController do
+  let(:distributor) { double(:distributor) }
+
+  it "redirects home when no distributor is selected" do
+    spree_get :edit
+    response.should redirect_to root_path
+  end
+
+  it "redirects to the shop when no order cycle is selected" do
+    controller.stub(:current_distributor).and_return(distributor)
+    spree_get :edit
+    response.should redirect_to shop_path
+  end
+
   it "selects distributors" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])
@@ -47,7 +60,7 @@ describe Spree::OrdersController do
     describe "when I pass params that includes a line item no longer in our cart" do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)
-        li = order.add_variant(create(:simple_product).master)
+        li = order.add_variant(create(:simple_product, on_hand: 110).master)
         spree_get :update, order: { line_items_attributes: {
           "0" => {quantity: "0", id: "9999"},
           "1" => {quantity: "99", id: li.id}

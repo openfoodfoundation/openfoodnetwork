@@ -25,13 +25,13 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
 
-= select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer.managed_by(spree_current_user), :id, :name), {'ng-model' => 'new_supplier_id'}
+= select_tag :new_supplier_id, options_from_collection_for_select(Enterprise.is_primary_producer.managed_by(spree_current_user).by_name, :id, :name), {'ng-model' => 'new_supplier_id'}
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
 
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
+= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 = render 'coordinator_fees', f: f
 
 
@@ -50,7 +50,7 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 
-= select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor.managed_by(spree_current_user), :id, :name), {'ng-model' => 'new_distributor_id'}
+= select_tag :new_distributor_id, options_from_collection_for_select(Enterprise.is_distributor.managed_by(spree_current_user).by_name, :id, :name), {'ng-model' => 'new_distributor_id'}
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions

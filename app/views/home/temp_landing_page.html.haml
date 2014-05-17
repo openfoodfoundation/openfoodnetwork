@@ -39,6 +39,9 @@
         .large-12.columns.centered
           %h3 WHERE WOULD YOU LIKE TO SHOP?
           %p.secondary Select your hub from the list below
+        - if Rails.env.development? || Rails.env.staging?
+          .large-12.columns.centered
+            #environment= Rails.env.capitalize
 
       - @groups.in_groups_of(4, false) do |row|
         .row.landing-page-row.hub_group{:class => (row.last == @groups.last ? "with-bottom-border" : "")}

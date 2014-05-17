@@ -1,3 +1,0 @@
-= Local Organics Feature
-
-This feature is released under the AGPL licence.

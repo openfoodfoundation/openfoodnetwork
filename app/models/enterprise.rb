@@ -19,6 +19,7 @@ class Enterprise < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :promo_image, :styles => { :large => "570x380>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
   validates_presence_of :name
   validates_presence_of :address
@@ -29,8 +30,10 @@ class Enterprise < ActiveRecord::Base
   after_validation :geocode_address
 
   scope :by_name, order('name')
+  scope :visible, where(:visible => true)
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where(:is_distributor => true)
+  scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
       .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now)
@@ -42,27 +45,29 @@ class Enterprise < ActiveRecord::Base
       .uniq
   }
 
-
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+  scope :with_order_cycles_as_distributor_outer,
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
   scope :with_order_cycles_outer,
-    joins('LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id)').
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
   scope :with_order_cycles_and_exchange_variants_outer,
-    with_order_cycles_outer.
+    with_order_cycles_as_distributor_outer.
     joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
     joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
 
   scope :active_distributors, lambda {
-    with_distributed_products_outer.with_order_cycles_outer.
+    with_distributed_products_outer.with_order_cycles_as_distributor_outer.
     where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.now, Time.now, Time.now).
     select('DISTINCT enterprises.*')
   }
 
   scope :distributors_with_active_order_cycles, lambda {
-    with_order_cycles_outer.
+    with_order_cycles_as_distributor_outer.
     merge(OrderCycle.active).
     select('DISTINCT enterprises.*')
   }
@@ -85,11 +90,23 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
+  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
+  scope :accessible_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      with_order_cycles_outer.
+      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
+      select('DISTINCT enterprises.*')
+    end
+  }
+
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
     count(distinct: true)
   end
+
 
   def self.find_near(suburb)
     enterprises = []
@@ -110,6 +127,23 @@ class Enterprise < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
+  def relatives
+    Enterprise.where("
+      enterprises.id IN
+        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
+      OR enterprises.id IN
+        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
+    ", self.id, self.id)
+  end
+
+  def distributors
+    self.relatives.is_distributor
+  end
+
+  def suppliers
+    self.relatives.is_primary_producer
+  end
+
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end
@@ -120,6 +154,19 @@ class Enterprise < ActiveRecord::Base
 
   def available_variants
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
+  end
+
+  # Return all taxons for all distributed products
+  def distributed_taxons
+    Spree::Product.in_distributor(self).map do |p|
+      p.taxons
+    end.flatten.uniq
+  end
+  # Return all taxons for all supplied products
+  def supplied_taxons
+    Spree::Product.in_supplier(self).map do |p|
+      p.taxons
+    end.flatten.uniq
   end
 
   private

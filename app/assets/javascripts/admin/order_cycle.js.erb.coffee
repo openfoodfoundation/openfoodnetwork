@@ -9,8 +9,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded
 
+    $scope.suppliedVariants = (enterprise_id) ->
+      Enterprise.suppliedVariants(enterprise_id)
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
+
+    $scope.setExchangeVariants = (exchange, variants, selected) ->
+      OrderCycle.setExchangeVariants(exchange, variants, selected)
 
     $scope.enterpriseTotalVariants = (enterprise) ->
       Enterprise.totalVariants(enterprise)
@@ -83,8 +89,14 @@ angular.module('order_cycle', ['ngResource'])
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
+    $scope.suppliedVariants = (enterprise_id) ->
+      Enterprise.suppliedVariants(enterprise_id)
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
+
+    $scope.setExchangeVariants = (exchange, variants, selected) ->
+      OrderCycle.setExchangeVariants(exchange, variants, selected)
 
     $scope.enterpriseTotalVariants = (enterprise) ->
       Enterprise.totalVariants(enterprise)
@@ -175,11 +187,14 @@ angular.module('order_cycle', ['ngResource'])
       toggleProducts: (exchange) ->
       	exchange.showProducts = !exchange.showProducts
 
+      setExchangeVariants: (exchange, variants, selected) ->
+        exchange.variants[variant] = selected for variant in variants
+
       addSupplier: (new_supplier_id) ->
-      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, active: true, variants: {}, enterprise_fees: []})
+      	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
 
       addDistributor: (new_distributor_id) ->
-      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, active: true, variants: {}, enterprise_fees: []})
+      	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
 
       removeExchange: (exchange) ->
         incoming_index = this.order_cycle.incoming_exchanges.indexOf exchange
@@ -239,18 +254,15 @@ angular.module('order_cycle', ['ngResource'])
       	  service.order_cycle.incoming_exchanges = []
       	  service.order_cycle.outgoing_exchanges = []
       	  for exchange in service.order_cycle.exchanges
-      	    if exchange.sender_id == service.order_cycle.coordinator_id
-      	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
-      	      delete(exchange.sender_id)
-      	      service.order_cycle.outgoing_exchanges.push(exchange)
-      
-      	    else if exchange.receiver_id == service.order_cycle.coordinator_id
+      	    if exchange.incoming
       	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true})
       	      delete(exchange.receiver_id)
       	      service.order_cycle.incoming_exchanges.push(exchange)
       
       	    else
-      	      console.log('Exchange between two enterprises, neither of which is coordinator!')
+      	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
+      	      delete(exchange.sender_id)
+      	      service.order_cycle.outgoing_exchanges.push(exchange)
       
           delete(service.order_cycle.exchanges)
           service.loaded = true
@@ -274,10 +286,25 @@ angular.module('order_cycle', ['ngResource'])
             console.log('Failed to update order cycle')
 
       dataForSubmit: ->
-        data = angular.extend({}, this.order_cycle)
+        data = this.deepCopy()
         data = this.removeInactiveExchanges(data)
         data = this.translateCoordinatorFees(data)
         data = this.translateExchangeFees(data)
+        data
+
+      deepCopy: ->
+        data = angular.extend({}, this.order_cycle)
+
+        # Copy exchanges
+        data.incoming_exchanges = (angular.extend {}, exchange for exchange in this.order_cycle.incoming_exchanges) if this.order_cycle.incoming_exchanges?
+        data.outgoing_exchanges = (angular.extend {}, exchange for exchange in this.order_cycle.outgoing_exchanges) if this.order_cycle.outgoing_exchanges?
+
+        # Copy exchange fees
+        all_exchanges = (data.incoming_exchanges || []) + (data.outgoing_exchanges || [])
+        for exchange in all_exchanges
+          if exchange.enterprise_fees?
+            exchange.enterprise_fees = (angular.extend {}, fee for fee in exchange.enterprise_fees)
+
         data
 
       removeInactiveExchanges: (order_cycle) ->
@@ -324,6 +351,16 @@ angular.module('order_cycle', ['ngResource'])
           service.loaded = true
 
       	this.enterprises
+
+      suppliedVariants: (enterprise_id) ->
+        vs = (this.variantsOf(product) for product in this.enterprises[enterprise_id].supplied_products)
+        [].concat vs...
+
+      variantsOf: (product) ->
+        if product.variants.length > 0
+          variant.id for variant in product.variants
+        else
+          [product.master_id]
 
       totalVariants: (enterprise) ->
         numVariants = 0

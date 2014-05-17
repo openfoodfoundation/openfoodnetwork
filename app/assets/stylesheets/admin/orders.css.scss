@@ -1,0 +1,45 @@
+.filter_select, .date_filter {
+	margin-bottom: 10px;
+}
+
+.filter_clear {
+	input {
+		background-color: #DA5354;
+	}
+}
+
+input.update-pending {
+	border: solid 1px orange;
+}
+
+input.update-error {
+	border: solid 1px red;
+}
+
+input.update-success {
+	border: solid 1px #9fc820;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+div#group_buy_calculation {
+    border-radius: 3px;
+	background-color: #eff5fc;
+	div {
+		margin-bottom: 5px;
+		span, h6 {
+			padding: 5px;
+		}
+	}
+
+	hr {
+		width: 95%;
+		margin: 0 auto;
+	}
+
+	.row span {
+		text-align: center;
+	}
+}

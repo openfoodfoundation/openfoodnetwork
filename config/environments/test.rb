@@ -36,4 +36,8 @@ Openfoodnetwork::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  config.action_mailer.default_url_options = { :host => "test.host" }
 end
+
+# Allows us to use _url helpers in Rspec
+Rails.application.routes.default_url_options[:host] = 'test.host'

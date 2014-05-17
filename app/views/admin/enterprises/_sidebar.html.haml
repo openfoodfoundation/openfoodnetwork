@@ -1,0 +1,59 @@
+.sidebar_item.four.columns.alpha#payment_methods
+  .four.columns.alpha.header{ class: "#{@payment_methods.count > 0 ? "blue" : "red"}" }
+    %span.four.columns.alpha.centered Payment Methods
+  - if @payment_methods.count > 0
+    .four.columns.alpha.list
+      - @payment_methods.each do |payment_method|
+        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_payment_method_path(payment_method)}" }
+          %span.three.columns.alpha
+            = payment_method.name
+          %span.one.column.omega
+            = f.check_box :payment_method_ids, { :multiple => true }, payment_method.id, nil
+  - else
+    .four.columns.alpha.list-item.red
+      %span.three.columns.alpha None Available
+      %span.one.column.omega
+        %span.icon-remove-sign
+  %a.four.columns.alpha.button{ href: "#{new_admin_payment_method_path}", class: "#{@payment_methods.count > 0 ? "blue" : "red"}" }
+    CREATE NEW
+    %span.icon-arrow-right
+
+.sidebar_item.four.columns.alpha#shipping_methods
+  .four.columns.alpha.header{ class: "#{@shipping_methods.count > 0 ? "blue" : "red"}" }
+    %span.four.columns.alpha.centered Shipping Methods
+  - if @shipping_methods.count > 0
+    .four.columns.alpha.list
+      - @shipping_methods.each do |shipping_method|
+        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_shipping_method_path(shipping_method)}" }
+          %span.three.columns.alpha
+            = shipping_method.name
+          %span.one.column.omega
+            = f.check_box :shipping_method_ids, { :multiple => true }, shipping_method.id, nil
+  - else
+    .four.columns.alpha.list-item.red
+      %span.three.columns.alpha None Available
+      %span.one.column.omega
+        %span.icon-remove-sign
+  %a.four.columns.alpha.button{ href: "#{new_admin_shipping_method_path}", class: "#{@payment_methods.count > 0 ? "blue" : "red"}" }
+    CREATE NEW
+    %span.icon-arrow-right
+
+.sidebar_item.four.columns.alpha#enterprise_fees
+  .four.columns.alpha.header{ class: "#{@enterprise_fees.count > 0 ? "blue" : "red"}" }
+    %span.four.columns.alpha.centered Enterprise Fees
+  - if @enterprise_fees.count > 0
+    .four.columns.alpha.list
+      - @enterprise_fees.each do |enterprise_fee|
+        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.admin_enterprise_fees_path}" }
+          %span.three.columns.alpha
+            = enterprise_fee.name
+          %span.one.column.omega
+            &nbsp;
+  - else
+    .four.columns.alpha.list-item.red
+      %span.three.columns.alpha None Available
+      %span.one.column.omega
+        %span.icon-remove-sign
+  %a.four.columns.alpha.button{ href: "#{main_app.admin_enterprise_fees_path}", class: "#{@enterprise_fees.count > 0 ? "blue" : "red"}" }
+    CREATE NEW
+    %span.icon-arrow-right

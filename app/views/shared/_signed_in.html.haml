@@ -1,0 +1,6 @@
+%li#login-name
+  %a{"ng-click" => "toggle('/account')"}
+    = spree_current_user.email
+%li.divider
+  %li#sign-out-link
+    = link_to "Sign Out", "/logout"

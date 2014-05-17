@@ -1,0 +1,26 @@
+%div.dashboard_item.seven.columns.alpha#products
+  %div.header.seven.columns.alpha{ :class => "#{@product_count > 0 ? "" : "red"}"}
+    %h3.four.columns.alpha Products
+    - if @product_count > 0
+      %a.three.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
+        CREATE NEW
+    - else
+      %a.with-tip{ title: "The products that you sell through the Open Food Network." } What's this?
+  %div.seven.columns.alpha.list
+    - if @product_count > 0
+      %div.seven.columns.alpha.list-item
+        %span.six.columns.alpha
+          = "You have #{@product_count} active product#{@product_count > 1 ? "s" : ""}."
+        %span.one.column.omega
+          %span.icon-ok-sign
+      %a.seven.columns.alpha.button.bottom.blue{ href: "#{bulk_edit_admin_products_path}" }
+        MANAGE PRODUCTS
+        %span.icon-arrow-right
+    - else
+      %div.seven.columns.alpha.list-item.red
+        %span.six.columns.alpha You don't have any active products.
+        %span.one.column.omega
+          %span.icon-remove-sign
+      %a.seven.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }
+        CREATE A NEW PRODUCT
+        %span.icon-arrow-right

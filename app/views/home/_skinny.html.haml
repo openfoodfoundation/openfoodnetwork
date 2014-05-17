@@ -1,0 +1,13 @@
+.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
+  .columns.small-4
+    %strong {{ hub.name }}
+  .columns.small-3
+    {{ hub.address.city }}
+  .columns.small-1
+    {{ hub.address.state | uppercase }}
+  .columns.small-3{"bo-if" => "hub.active"}
+    {{ hub.orders_close_at | sensible_timeframe }} 
+  .columns.small-3{"bo-if" => "!hub.active"}
+    Orders closed
+  .columns.small-1.text-right
+    %i{"ng-class" => "{'fi-arrow-down' : !open(), 'fi-arrow-up' : open()}"} 

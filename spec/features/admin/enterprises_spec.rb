@@ -7,15 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
   scenario "listing enterprises" do
     s = create(:supplier_enterprise)
     d = create(:distributor_enterprise)
@@ -55,6 +46,9 @@ feature %q{
   scenario "creating a new enterprise" do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
+    payment_method = create(:payment_method)
+    shipping_method = create(:shipping_method)
+    enterprise_fee = create(:enterprise_fee)
 
     login_to_admin_section
 
@@ -64,11 +58,18 @@ feature %q{
     fill_in 'enterprise_name', :with => 'Eaterprises'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
 
     select eg1.name, from: 'enterprise_group_ids'
+
+    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+
+    check "enterprise_payment_method_ids_#{payment_method.id}"
+    check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -84,9 +85,6 @@ feature %q{
     select('Australia', :from => 'enterprise_address_attributes_country_id')
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
 
-    fill_in 'enterprise_pickup_times', :with => 'Thursday, 22nd Feb, 6 - 9 PM. Friday, 23nd Feb, 6 - 9 PM'
-    fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
-
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
@@ -95,6 +93,9 @@ feature %q{
     @enterprise = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
+    payment_method = create(:payment_method, distributors: [])
+    shipping_method = create(:shipping_method, distributors: [])
+    enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
 
     login_to_admin_section
 
@@ -110,6 +111,12 @@ feature %q{
 
     select eg1.name, from: 'enterprise_group_ids'
 
+    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+
+    check "enterprise_payment_method_ids_#{payment_method.id}"
+    check "enterprise_shipping_method_ids_#{shipping_method.id}"
+
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
@@ -124,33 +131,16 @@ feature %q{
     select('Australia', :from => 'enterprise_address_attributes_country_id')
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
 
-    fill_in 'enterprise_pickup_times', :with => 'Thursday, 22nd Feb, 6 - 9 PM. Friday, 23nd Feb, 6 - 9 PM'
-    fill_in 'enterprise_next_collection_at', :with => 'Thursday, 22nd Feb, 6 - 9 PM'
-
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
     page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
-  end
 
+    click_link 'Edit Profile'
 
-  scenario "updating many distributor next collection times at once" do
-    # Given three distributors
-    3.times { create(:distributor_enterprise) }
-
-    # When I go to the enterprises page
-    login_to_admin_section
-    click_link 'Enterprises'
-
-    # And I fill in some new collection times and save them
-    fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
-    fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
-    fill_in 'enterprise_set_collection_attributes_2_next_collection_at', :with => 'Three'
-    click_button 'Update'
-
-    # Then my times should have been saved
-    flash_message.should == 'Distributor collection times updated.'
-    Enterprise.is_distributor.map { |d| d.next_collection_at }.sort.should == %w(One Two Three).sort
+    page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+    page.should have_selector "a.list-item", text: enterprise_fee.name
   end
 
   context 'as an Enterprise user' do
@@ -209,24 +199,11 @@ feature %q{
       page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
     end
 
-    scenario "can bulk edit enterprise collection dates/times for enterprises I have permission to" do
-      click_link 'Enterprises'
-
-      fill_in 'enterprise_set_collection_attributes_0_next_collection_at', :with => 'One'
-      fill_in 'enterprise_set_collection_attributes_1_next_collection_at', :with => 'Two'
-      click_button 'Update'
-
-      flash_message.should == 'Distributor collection times updated.'
-
-      supplier1.reload.next_collection_at.should == 'One'
-      distributor1.reload.next_collection_at.should == 'Two'
-      supplier2.reload.next_collection_at.should be_nil
-      distributor2.reload.next_collection_at.should be_nil
-    end
-
     scenario "Editing images for an enterprise" do
       click_link 'Enterprises'
+      first(".edit").click
       page.should have_content "Logo"
+      page.should have_content "Promo"
     end
   end
 end

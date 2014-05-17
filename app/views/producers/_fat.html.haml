@@ -1,0 +1,18 @@
+.row.active_table_row{"ng-show" => "open()"}
+  .columns.small-4
+    %strong Shop for
+    %p.trans-sentence
+      {{ producer.taxons | printArrayOfObjects }}
+  .columns.small-8
+    %strong About us
+    %p.trans-sentence
+      {{ producer.description }}
+
+.row.active_table_row.link{"ng-show" => "open()", "ng-repeat" => "hub in producer.distributors"}
+  .columns.small-11
+    %a{"bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+    change: "Change hub to", shop: "Shop at"} 
+
+  .columns.small-1.text-right
+    %a{"bo-href" => "hub.path"} 
+      %i.fi-arrow-right

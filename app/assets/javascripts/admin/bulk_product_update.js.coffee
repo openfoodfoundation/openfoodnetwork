@@ -1,115 +1,18 @@
-productsApp = angular.module("bulk_product_update", [])
-
-productsApp.config [
-  "$httpProvider"
-  (provider) ->
-    provider.defaults.headers.common["X-CSRF-Token"] = $("meta[name=csrf-token]").attr("content")
-]
-
-
-productsApp.directive "ofnDecimal", ->
-  require: "ngModel"
-  link: (scope, element, attrs, ngModel) ->
-    numRegExp = /^\d+(\.\d+)?$/
-    element.bind "blur", ->
-      scope.$apply ngModel.$setViewValue(ngModel.$modelValue)
-      ngModel.$render()
-
-    ngModel.$parsers.push (viewValue) ->
-      return viewValue + ".0"  if viewValue.indexOf(".") == -1  if angular.isString(viewValue) and numRegExp.test(viewValue)
-      viewValue
-
-
-productsApp.directive "ofnTrackProduct", ->
-  require: "ngModel"
-  link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ofnTrackProduct
-    ngModel.$parsers.push (viewValue) ->
-      if ngModel.$dirty
-        addDirtyProperty scope.dirtyProducts, scope.product.id, property_name, viewValue
-        scope.displayDirtyProducts()
-      viewValue
-
-
-productsApp.directive "ofnTrackVariant", ->
-  require: "ngModel"
-  link: (scope, element, attrs, ngModel) ->
-    property_name = attrs.ofnTrackVariant
-    ngModel.$parsers.push (viewValue) ->
-      dirtyVariants = {}
-      dirtyVariants = scope.dirtyProducts[scope.product.id].variants  if scope.dirtyProducts.hasOwnProperty(scope.product.id) and scope.dirtyProducts[scope.product.id].hasOwnProperty("variants")
-      if ngModel.$dirty
-        addDirtyProperty dirtyVariants, scope.variant.id, property_name, viewValue
-        addDirtyProperty scope.dirtyProducts, scope.product.id, "variants", dirtyVariants
-        scope.displayDirtyProducts()
-      viewValue
-
-
-productsApp.directive "ofnToggleVariants", ->
-  link: (scope, element, attrs) ->
-    if scope.displayProperties[scope.product.id].showVariants
-      element.removeClass "icon-chevron-right"
-      element.addClass "icon-chevron-down"
-    else
-      element.removeClass "icon-chevron-down"
-      element.addClass "icon-chevron-right"
-    element.on "click", ->
-      scope.$apply ->
-        if scope.displayProperties[scope.product.id].showVariants
-          scope.displayProperties[scope.product.id].showVariants = false
-          element.removeClass "icon-chevron-down"
-          element.addClass "icon-chevron-right"
-        else
-          scope.displayProperties[scope.product.id].showVariants = true
-          element.removeClass "icon-chevron-right"
-          element.addClass "icon-chevron-down"
-
-
-
-productsApp.directive "ofnToggleColumn", ->
-  link: (scope, element, attrs) ->
-    element.addClass "unselected"  unless scope.column.visible
-    element.click "click", ->
-      scope.$apply ->
-        if scope.column.visible
-          scope.column.visible = false
-          element.addClass "unselected"
-        else
-          scope.column.visible = true
-          element.removeClass "unselected"
-
-productsApp.directive "datetimepicker", [
-  "$parse"
-  ($parse) ->
-    return (
-      require: "ngModel"
-      link: (scope, element, attrs, ngModel) ->
-        element.datetimepicker
-          dateFormat: "yy-mm-dd"
-          timeFormat: "HH:mm:ss"
-          stepMinute: 15
-          onSelect: (dateText, inst) ->
-            scope.$apply (scope) ->
-              # Fires ngModel.$parsers
-              ngModel.$setViewValue dateText
-    )
-]
-
-
-productsApp.controller "AdminBulkProductsCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher"
-  ($scope, $timeout, $http, dataFetcher) ->
+Admin.controller "AdminProductEditCtrl", [
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts"
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
 
     $scope.columns =
-      supplier:     {name: "Supplier",     visible: true}
-      name:         {name: "Name",         visible: true}
-      unit:         {name: "Unit",         visible: true}
-      price:        {name: "Price",        visible: true}
-      on_hand:      {name: "On Hand",      visible: true}
-      available_on: {name: "Available On", visible: false}
+      supplier:     {name: "Supplier",      visible: true}
+      name:         {name: "Name",          visible: true}
+      unit:         {name: "Unit",          visible: true}
+      price:        {name: "Price",         visible: true}
+      on_hand:      {name: "On Hand",       visible: true}
+      taxons:       {name: "Taxons",        visible: false}
+      available_on: {name: "Available On",  visible: false}
 
     $scope.variant_unit_options = [
       ["Weight (g)", "weight_1"],
@@ -182,7 +85,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
     $scope.resetProducts = (data) ->
       $scope.products = data
-      $scope.dirtyProducts = {}
+      DirtyProducts.clear()
       $scope.setMessage $scope.updateStatusMessage, "", {}, false
       $scope.displayProperties ||= {}
       angular.forEach $scope.products, (product) ->
@@ -215,13 +118,22 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
       if product.variants
         for variant in product.variants
-          unit_value = $scope.variantUnitValue product, variant
-          variant.unit_value_with_description = "#{unit_value || ''} #{variant.unit_description || ''}".trim()
+          $scope.loadVariantVariantUnit product, variant
+      $scope.loadVariantVariantUnit product, product.master if product.master
+
+
+    $scope.loadVariantVariantUnit = (product, variant) ->
+      unit_value = $scope.variantUnitValue product, variant
+      unit_value = if unit_value? then unit_value else ''
+      variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
 
 
     $scope.variantUnitValue = (product, variant) ->
-      if variant.unit_value
-        variant.unit_value / product.variant_unit_scale
+      if variant.unit_value?
+        if product.variant_unit_scale
+          variant.unit_value / product.variant_unit_scale
+        else
+          variant.unit_value
       else
         null
 
@@ -252,13 +164,15 @@ productsApp.controller "AdminBulkProductsCtrl", [
     $scope.addFilter = (filter) ->
       existingfilterIndex = $scope.indexOfFilter filter
       if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
-        if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
+        if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
           if existingfilterIndex == -1
             $scope.currentFilters.push filter
             $scope.fetchProducts()
           else if confirm("'#{filter.predicate.name}' filter already exists on column '#{filter.property.name}'. Replace it?")
             $scope.currentFilters[existingfilterIndex] = filter
             $scope.fetchProducts()
+      else
+        alert("Please ensure all filter fields are filled in before adding a filter.")
 
     $scope.removeFilter = (filter) ->
       index = $scope.currentFilters.indexOf(filter)
@@ -272,8 +186,25 @@ productsApp.controller "AdminBulkProductsCtrl", [
       return -1
 
     $scope.editWarn = (product, variant) ->
-      if ($scope.dirtyProductCount() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or ($scope.dirtyProductCount() == 0)
+      if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
+
+
+    $scope.addVariant = (product) ->
+      product.variants.push
+        id: $scope.nextVariantId()
+        unit_value: null
+        unit_description: null
+        on_demand: false
+        on_hand: null
+        price: null
+      $scope.displayProperties[product.id].showVariants = true
+
+
+    $scope.nextVariantId = ->
+      $scope.variantIdCounter = 0 unless $scope.variantIdCounter?
+      $scope.variantIdCounter -= 1
+      $scope.variantIdCounter
 
 
     $scope.deleteProduct = (product) ->
@@ -283,19 +214,25 @@ productsApp.controller "AdminBulkProductsCtrl", [
           url: "/api/products/" + product.id
         ).success (data) ->
           $scope.products.splice $scope.products.indexOf(product), 1
-          delete $scope.dirtyProducts[product.id]  if $scope.dirtyProducts.hasOwnProperty(product.id)
+          DirtyProducts.deleteProduct product.id
           $scope.displayDirtyProducts()
 
 
     $scope.deleteVariant = (product, variant) ->
-      if confirm("Are you sure?")
-        $http(
-          method: "DELETE"
-          url: "/api/products/" + product.id + "/variants/" + variant.id
-        ).success (data) ->
-          product.variants.splice product.variants.indexOf(variant), 1
-          delete $scope.dirtyProducts[product.id].variants[variant.id]  if $scope.dirtyProducts.hasOwnProperty(product.id) and $scope.dirtyProducts[product.id].hasOwnProperty("variants") and $scope.dirtyProducts[product.id].variants.hasOwnProperty(variant.id)
-          $scope.displayDirtyProducts()
+      if !$scope.variantSaved(variant)
+        $scope.removeVariant(product, variant)
+      else
+        if confirm("Are you sure?")
+          $http(
+            method: "DELETE"
+            url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
+          ).success (data) ->
+            $scope.removeVariant(product, variant)
+
+    $scope.removeVariant = (product, variant) ->
+      product.variants.splice product.variants.indexOf(variant), 1
+      DirtyProducts.deleteVariant product.id, variant.id
+      $scope.displayDirtyProducts()
 
 
     $scope.cloneProduct = (product) ->
@@ -316,8 +253,29 @@ productsApp.controller "AdminBulkProductsCtrl", [
       Object.keys(product.variants).length > 0
 
 
+    $scope.hasUnit = (product) ->
+      product.variant_unit_with_scale?
+
+
+    $scope.variantSaved = (variant) ->
+      variant.hasOwnProperty('id') && variant.id > 0
+
+
     $scope.hasOnDemandVariants = (product) ->
       (variant for id, variant of product.variants when variant.on_demand).length > 0
+
+
+    $scope.submitProducts = ->
+      # Pack pack $scope.products, so they will match the list returned from the server,
+      # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
+      $scope.packProduct product for id, product of $scope.products
+      $scope.packProduct product for id, product of DirtyProducts.all()
+
+      productsToSubmit = filterSubmitProducts(DirtyProducts.all())
+      if productsToSubmit.length > 0
+        $scope.updateProducts productsToSubmit # Don't submit an empty list
+      else
+        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
 
 
     $scope.updateProducts = (productsToSubmit) ->
@@ -334,27 +292,18 @@ productsApp.controller "AdminBulkProductsCtrl", [
         #       conflicted with some changes I made before merging my work, so for now I've reverted to the old way of
         #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
         #if subset($scope.productsWithoutDerivedAttributes(), data)
-
-        if angular.toJson($scope.productsWithoutDerivedAttributes($scope.products)) == angular.toJson($scope.productsWithoutDerivedAttributes(data))
+        if $scope.productListsMatch $scope.products, data
           $scope.resetProducts data
           $timeout -> $scope.displaySuccess()
         else
+          # console.log angular.toJson($scope.productsWithoutDerivedAttributes($scope.products))
+          # console.log "---"
+          # console.log angular.toJson($scope.productsWithoutDerivedAttributes(data))
+          # console.log "---"
           $scope.displayFailure "Product lists do not match."
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status
 
-
-    $scope.submitProducts = ->
-      # Pack pack $scope.products, so they will match the list returned from the server,
-      # then pack $scope.dirtyProducts, ensuring that the correct product info is sent to the server.
-      $scope.packProduct product for id, product of $scope.products
-      $scope.packProduct product for id, product of $scope.dirtyProducts
-
-      productsToSubmit = filterSubmitProducts($scope.dirtyProducts)
-      if productsToSubmit.length > 0
-        $scope.updateProducts productsToSubmit # Don't submit an empty list
-      else
-        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
 
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale
@@ -365,6 +314,11 @@ productsApp.controller "AdminBulkProductsCtrl", [
         else
           product.variant_unit = product.variant_unit_with_scale
           product.variant_unit_scale = null
+      else
+        product.variant_unit = product.variant_unit_scale = null
+
+      $scope.packVariant product, product.master if product.master
+
       if product.variants
         for id, variant of product.variants
           $scope.packVariant product, variant
@@ -372,12 +326,31 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
     $scope.packVariant = (product, variant) ->
       if variant.hasOwnProperty("unit_value_with_description")
-        match = variant.unit_value_with_description.match(/^([\d\.]+|)( |)(.*)$/)
+        match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
         if match
           product = $scope.findProduct(product.id)
-          variant.unit_value  = parseFloat(match[1]) || null
-          variant.unit_value *= product.variant_unit_scale if variant.unit_value
+          variant.unit_value  = parseFloat(match[1])
+          variant.unit_value  = null if isNaN(variant.unit_value)
+          variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
+
+
+    $scope.productListsMatch = (clientProducts, serverProducts) ->
+      $scope.copyNewVariantIds clientProducts, serverProducts
+      angular.toJson($scope.productsWithoutDerivedAttributes(clientProducts)) == angular.toJson($scope.productsWithoutDerivedAttributes(serverProducts))
+
+
+    # When variants are created clientside, they are given a negative id. The server
+    # responds with a real id, which would cause the productListsMatch() check to fail.
+    # To avoid that false negative, we copy the server variant id to the client for any
+    # negative ids.
+    $scope.copyNewVariantIds = (clientProducts, serverProducts) ->
+      if clientProducts?
+        for product, i in clientProducts
+          if product.variants?
+            for variant, j in product.variants
+              if variant.id < 0
+                variant.id = serverProducts[i].variants[j].id
 
 
     $scope.productsWithoutDerivedAttributes = (products) ->
@@ -391,6 +364,7 @@ productsApp.controller "AdminBulkProductsCtrl", [
               delete variant.unit_value_with_description
               # If we end up live-updating this field, we might want to reinstate its verification here
               delete variant.options_text
+          delete product.master
       products_filtered
 
 
@@ -436,66 +410,37 @@ productsApp.controller "AdminBulkProductsCtrl", [
 
 
     $scope.displayDirtyProducts = ->
-      if $scope.dirtyProductCount() > 0
-        $scope.setMessage $scope.updateStatusMessage, "Changes to " + $scope.dirtyProductCount() + " products remain unsaved.",
+      if DirtyProducts.count() > 0
+        $scope.setMessage $scope.updateStatusMessage, "Changes to " + DirtyProducts.count() + " products remain unsaved.",
           color: "gray"
         , false
       else
         $scope.setMessage $scope.updateStatusMessage, "", {}, false
-
-
-    $scope.dirtyProductCount = ->
-      Object.keys($scope.dirtyProducts).length
 ]
-
-
-productsApp.factory "dataFetcher", [
-  "$http", "$q"
-  ($http, $q) ->
-    return (dataLocation) ->
-      deferred = $q.defer()
-      $http.get(dataLocation).success((data) ->
-        deferred.resolve data
-      ).error ->
-        deferred.reject()
-
-      deferred.promise
-]
-
-productsApp.filter "rangeArray", ->
-  return (input,start,end) ->
-    input.push(i) for i in [start..end]
-    input
 
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []
   if productsToFilter instanceof Object
     angular.forEach productsToFilter, (product) ->
       if product.hasOwnProperty("id")
-        filteredProduct = {}
+        filteredProduct = {id: product.id}
         filteredVariants = []
+        hasUpdatableProperty = false
+
         if product.hasOwnProperty("variants")
           angular.forEach product.variants, (variant) ->
-            if not variant.deleted_at? and variant.hasOwnProperty("id")
-              hasUpdateableProperty = false
-              filteredVariant = {}
-              filteredVariant.id = variant.id
-              if variant.hasOwnProperty("on_hand")
-                filteredVariant.on_hand = variant.on_hand
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("price")
-                filteredVariant.price = variant.price
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("unit_value")
-                filteredVariant.unit_value = variant.unit_value
-                hasUpdatableProperty = true
-              if variant.hasOwnProperty("unit_description")
-                filteredVariant.unit_description = variant.unit_description
-                hasUpdatableProperty = true
-              filteredVariants.push filteredVariant  if hasUpdatableProperty
+            result = filterSubmitVariant variant
+            filteredVariant = result.filteredVariant
+            variantHasUpdatableProperty = result.hasUpdatableProperty
+            filteredVariants.push filteredVariant  if variantHasUpdatableProperty
 
-        hasUpdatableProperty = false
-        filteredProduct.id = product.id
+        if product.master?.hasOwnProperty("unit_value")
+          filteredProduct.unit_value = product.master.unit_value
+          hasUpdatableProperty = true
+        if product.master?.hasOwnProperty("unit_description")
+          filteredProduct.unit_description = product.master.unit_description
+          hasUpdatableProperty = true
+
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
@@ -515,6 +460,9 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
+        if product.hasOwnProperty("taxon_ids")
+          filteredProduct.taxon_ids = product.taxon_ids
+          hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on
           hasUpdatableProperty = true
@@ -526,18 +474,24 @@ filterSubmitProducts = (productsToFilter) ->
   filteredProducts
 
 
-addDirtyProperty = (dirtyObjects, objectID, propertyName, propertyValue) ->
-  if dirtyObjects.hasOwnProperty(objectID)
-    dirtyObjects[objectID][propertyName] = propertyValue
-  else
-    dirtyObjects[objectID] = {}
-    dirtyObjects[objectID]["id"] = objectID
-    dirtyObjects[objectID][propertyName] = propertyValue
-
-
-removeCleanProperty = (dirtyObjects, objectID, propertyName) ->
-  delete dirtyObjects[objectID][propertyName]  if dirtyObjects.hasOwnProperty(objectID) and dirtyObjects[objectID].hasOwnProperty(propertyName)
-  delete dirtyObjects[objectID]  if dirtyObjects.hasOwnProperty(objectID) and Object.keys(dirtyObjects[objectID]).length <= 1
+filterSubmitVariant = (variant) ->
+  hasUpdatableProperty = false
+  filteredVariant = {}
+  if not variant.deleted_at? and variant.hasOwnProperty("id")
+    filteredVariant.id = variant.id unless variant.id <= 0
+    if variant.hasOwnProperty("on_hand")
+      filteredVariant.on_hand = variant.on_hand
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("price")
+      filteredVariant.price = variant.price
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("unit_value")
+      filteredVariant.unit_value = variant.unit_value
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("unit_description")
+      filteredVariant.unit_description = variant.unit_description
+      hasUpdatableProperty = true
+  {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
 
 
 toObjectWithIDKeys = (array) ->

@@ -1,3 +1,6 @@
+@import branding
+//@import mixins
+
 @font-face
   font-family: 'AvenirBla_IE'
   src: url("/AveniBla.eot") format("opentype")
@@ -14,23 +17,48 @@
   font-family: 'AvenirMed'
   src: url("/AvenirLTStd-Medium.otf") format("opentype")
         
-//body 
-  //font-family: "AvenirBla_IE", "AvenirBla"
+body 
+  font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  
+a
+  color: $clr-brick
+  &:hover
+    text-decoration: none
+    color: $clr-brick-bright
+
+small
+  font-size: 0.75rem
+
+@mixin avenir
+  font-family: "AvenirBla_IE", "AvenirBla"
 
 h1, h2, h3, h4, h5, h6, .avenir
-  color: #333333
-  font-family: "AvenirBla_IE", "AvenirBla"
+  @include avenir
   padding: 0px
 
+ul.ofn-list
+  margin-left: 0.5em
+  li
+    list-style: none
+  li:before
+    content: "\f112"
+    font-family: "foundation-icons"
+    display: inline-block
+    font-weight: normal
+    font-style: normal
+    font-variant: normal
+    text-transform: none
+    font-size: 80%
 
 .light-grey
   color: #666666
 
+.pad-top
+  padding-top: 1em
+
 strong.avenir
   font-weight: normal // Avenir is basically bold anyway
 
-td
-  font-family: "helvetica"
   
 // These selectors match the default Foundation selectors
 // For clean overriden magic

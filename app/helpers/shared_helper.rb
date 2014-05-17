@@ -8,5 +8,18 @@ module SharedHelper
     klass += @active_distributors.include?(distributor) ? ' active' : ' inactive'
     klass
   end
-end
 
+  # all suppliers of current distributor's products
+  def current_producers
+    if current_distributor && current_order_cycle
+      variants = current_order_cycle.variants_distributed_by(current_distributor)
+      Enterprise.supplying_variant_in(variants)
+    else
+      []
+    end
+  end
+  
+  def enterprise_user?
+    spree_current_user.andand.enterprises.count > 0
+  end
+end

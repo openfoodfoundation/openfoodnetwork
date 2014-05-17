@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.14'
+gem 'rails', '3.2.17'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
@@ -16,10 +16,12 @@ gem 'comfortable_mexican_sofa'
 gem 'simple_form', :github => 'RohanM/simple_form'
 
 gem 'unicorn'
+gem 'angularjs-rails'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
-gem 'sass'
+gem 'sass', "~> 3.2"
+gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -27,7 +29,6 @@ gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
 gem 'oj'
-gem 'chili', :github => 'openfoodfoundation/chili'
 gem 'deface', :github => 'spree/deface', :ref => '1110a13'
 gem 'paperclip'
 gem 'geocoder'
@@ -35,10 +36,12 @@ gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 
+gem 'foreigner'
+gem 'immigrant'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
@@ -48,8 +51,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   gem 'turbo-sprockets-rails3'
-  gem 'zurb-foundation', :github => 'zurb/foundation'
+  gem 'foundation-icons-sass-rails'
+  gem 'momentjs-rails'
+  gem 'angular-rails-templates'
 end
+gem "foundation-rails"
+gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
 
@@ -61,7 +68,6 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
-  gem 'faker'
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'simplecov', :require => false
@@ -75,11 +81,6 @@ end
 
 group :test do
   gem 'webmock'
-end
-
-group :chili do
-  gem 'eaterprises_feature',    path: 'lib/chili/eaterprises_feature'
-  gem 'local_organics_feature', path: 'lib/chili/local_organics_feature'
 end
 
 group :development do

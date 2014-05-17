@@ -1,0 +1,39 @@
+@import branding
+@import mixins
+  
+// Styling for big panes on homepage
+
+#beta.pane
+  @include lightbg
+  .row
+    @include panepadding
+
+#map.pane
+  @include darkbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/maps-bg.svg") 
+    background-repeat: no-repeat
+    background-position: left center
+
+#groups.pane
+  @include darkbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/groups-bg.svg")
+    background-repeat: no-repeat
+    background-position: left center
+
+#producers.pane
+  @include turqbg
+  .row
+    @include panepadding
+    background-image: url("/assets/home/producers-bg.svg")
+    background-repeat: no-repeat
+    background-position: right center
+
+// Responsive 
+@media all and (max-width: 768px)
+  #map.pane, #groups.pane, #producers.pane
+    .row
+      background-position: center center

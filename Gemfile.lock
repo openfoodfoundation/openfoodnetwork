@@ -7,14 +7,6 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/openfoodfoundation/chili.git
-  revision: b82608623d504eb39f852115b138a53af5f89505
-  specs:
-    chili (3.1.0)
-      deface (~> 1.0.0.rc2)
-      rails (~> 3.2)
-
-GIT
   remote: git://github.com/openfoodfoundation/spree.git
   revision: 1c133672652e1ee8b6c8d694efe258e62378062e
   branch: 1-3-stable
@@ -94,35 +86,24 @@ GIT
       spree (~> 1.1)
 
 GIT
-  remote: git://github.com/zurb/foundation.git
-  revision: a81d639847ba5fc2e324b749b8e409e31e8d83c9
+  remote: git://github.com/willrjmarshall/foundation_rails_helper.git
+  revision: 4d5d53fdc4b1fb71e66524d298c5c635de82cfbb
+  branch: rails3
   specs:
-    zurb-foundation (4.3.1)
-      sass (>= 3.2.0)
-
-PATH
-  remote: lib/chili/eaterprises_feature
-  specs:
-    eaterprises_feature (0.0.1)
-      chili (~> 3.1)
-      rails (~> 3.2.11)
-
-PATH
-  remote: lib/chili/local_organics_feature
-  specs:
-    local_organics_feature (0.0.1)
-      chili (~> 3.1)
-      rails (~> 3.2.11)
+    foundation_rails_helper (0.4)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      railties (>= 3.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (3.2.14)
-      actionpack (= 3.2.14)
+    actionmailer (3.2.17)
+      actionpack (= 3.2.17)
       mail (~> 2.5.4)
-    actionpack (3.2.14)
-      activemodel (= 3.2.14)
-      activesupport (= 3.2.14)
+    actionpack (3.2.17)
+      activemodel (= 3.2.17)
+      activesupport (= 3.2.17)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -142,25 +123,30 @@ GEM
       json (~> 1.7)
       money (< 6.0.0)
       nokogiri (~> 1.4)
-    activemodel (3.2.14)
-      activesupport (= 3.2.14)
+    activemodel (3.2.17)
+      activesupport (= 3.2.17)
       builder (~> 3.0.0)
-    activerecord (3.2.14)
-      activemodel (= 3.2.14)
-      activesupport (= 3.2.14)
+    activerecord (3.2.17)
+      activemodel (= 3.2.17)
+      activesupport (= 3.2.17)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.14)
-      activemodel (= 3.2.14)
-      activesupport (= 3.2.14)
-    activesupport (3.2.14)
+    activeresource (3.2.17)
+      activemodel (= 3.2.17)
+      activesupport (= 3.2.17)
+    activesupport (3.2.17)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     acts_as_list (0.1.4)
     addressable (2.3.3)
     andand (1.3.3)
+    angular-rails-templates (0.1.1)
+      railties (>= 3.1)
+      sprockets
+      tilt
+    angularjs-rails (1.2.16)
     ansi (1.4.2)
-    arel (3.0.2)
+    arel (3.0.3)
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
     awesome_print (1.0.2)
@@ -245,8 +231,6 @@ GEM
     factory_girl_rails (3.3.0)
       factory_girl (~> 3.3.0)
       railties (>= 3.0.0)
-    faker (1.0.1)
-      i18n (~> 0.4)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
     ffaker (1.15.0)
@@ -261,7 +245,15 @@ GEM
       net-ssh (>= 2.1.3)
       nokogiri (~> 1.5)
       ruby-hmac
+    foreigner (1.6.1)
+      activerecord (>= 3.0.0)
     formatador (0.2.4)
+    foundation-icons-sass-rails (3.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
+    foundation-rails (5.2.2.0)
+      railties (>= 3.1.0)
+      sass (>= 3.2.0)
     fssm (0.2.10)
     geocoder (1.1.8)
     gmaps4rails (1.5.6)
@@ -291,7 +283,10 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    i18n (0.6.5)
+    i18n (0.6.9)
+    immigrant (0.1.8)
+      activerecord (>= 3.0)
+      foreigner (>= 1.2.1)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
@@ -319,12 +314,14 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.25)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
+    momentjs-rails (2.6.0)
+      railties (>= 3.1)
     money (5.0.0)
       i18n (~> 0.4)
       json
-    multi_json (1.8.2)
+    multi_json (1.10.0)
     multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -346,7 +343,7 @@ GEM
       http_parser.rb (~> 0.5.3)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
-    polyglot (0.3.3)
+    polyglot (0.3.4)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -362,32 +359,32 @@ GEM
       rack (>= 0.4)
     rack-livereload (0.3.15)
       rack
-    rack-ssl (1.3.3)
+    rack-ssl (1.3.4)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.14)
-      actionmailer (= 3.2.14)
-      actionpack (= 3.2.14)
-      activerecord (= 3.2.14)
-      activeresource (= 3.2.14)
-      activesupport (= 3.2.14)
+    rails (3.2.17)
+      actionmailer (= 3.2.17)
+      actionpack (= 3.2.17)
+      activerecord (= 3.2.17)
+      activeresource (= 3.2.17)
+      activesupport (= 3.2.17)
       bundler (~> 1.0)
-      railties (= 3.2.14)
+      railties (= 3.2.17)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
-    railties (3.2.14)
-      actionpack (= 3.2.14)
-      activesupport (= 3.2.14)
+    railties (3.2.17)
+      actionpack (= 3.2.17)
+      activesupport (= 3.2.17)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.9.0)
-    rake (10.1.0)
+    rake (10.3.2)
     ransack (0.7.2)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
@@ -455,7 +452,7 @@ GEM
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.18.1)
+    thor (0.19.1)
     tilt (1.4.1)
     timecop (0.6.2.2)
     timers (1.1.0)
@@ -468,7 +465,7 @@ GEM
       sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
@@ -500,11 +497,12 @@ PLATFORMS
 
 DEPENDENCIES
   andand
+  angular-rails-templates
+  angularjs-rails
   awesome_print
   aws-sdk
   bugsnag
   capybara
-  chili!
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
@@ -512,9 +510,11 @@ DEPENDENCIES
   db2fog
   debugger-linecache
   deface!
-  eaterprises_feature!
   factory_girl_rails
-  faker
+  foreigner
+  foundation-icons-sass-rails
+  foundation-rails
+  foundation_rails_helper!
   geocoder
   gmaps4rails
   guard
@@ -523,10 +523,11 @@ DEPENDENCIES
   guard-rspec
   guard-zeus
   haml
+  immigrant
   jquery-rails
   json_spec
   letter_opener
-  local_organics_feature!
+  momentjs-rails
   newrelic_rpm
   oj
   paperclip
@@ -536,11 +537,11 @@ DEPENDENCIES
   rabl
   rack-livereload
   rack-ssl
-  rails (= 3.2.14)
+  rails (= 3.2.17)
   rails_12factor
   representative_view
   rspec-rails
-  sass
+  sass (~> 3.2)
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
@@ -559,4 +560,3 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   webmock
-  zurb-foundation!

@@ -9,6 +9,7 @@ class Spree::ProductSet < ModelSet
   # and so an explicit call to update attributes on each individual variant was required. ie:
   # variant.update_attributes( { price: xx.x } )
   def update_attributes(attributes)
+    attributes[:taxon_ids] = attributes[:taxon_ids].split(',')  if attributes[:taxon_ids].present?
     e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
     if e.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
@@ -20,7 +21,11 @@ class Spree::ProductSet < ModelSet
   def update_variants_attributes(product, variants_attributes)
     variants_attributes.each do |attributes|
       e = product.variants.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
-      e.update_attributes(attributes.except(:id)) if e.present?
+      if e.present?
+        e.update_attributes(attributes.except(:id))
+      else
+        product.variants.create attributes
+      end
     end
   end
 

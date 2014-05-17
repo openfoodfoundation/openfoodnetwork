@@ -13,8 +13,8 @@
   <table class="index" id="listing_enterprises">
     <colgroup>
       <col style="width: 20%;">
+      <col style="width: 10%;">
       <col style="width: 5%;">
-      <col style="width: 20%;">
       <col>
       <col style="width: 20%;">
     </colgroup>
@@ -23,7 +23,7 @@
       <tr data-hook="enterprises_header">
         <th>Name</th>
         <th>Role</th>
-        <th>Next Collection Date/Time</th>
+        <th>Visible?</th>
         <th>Description</th>
         <th></th>
       </tr>
@@ -33,8 +33,14 @@
         <% enterprise = enterprise_form.object %>
         <tr class="enterprise-<%= enterprise.id %>">
           <td><%= link_to enterprise.name, main_app.admin_enterprise_path(enterprise) %></td>
-          <td><%= 'PP ' if enterprise.is_primary_producer %><%= 'D' if enterprise.is_distributor %></td>
-          <td><%= enterprise_form.text_field :next_collection_at %></td>
+          <td><% if enterprise.is_primary_producer && enterprise.is_distributor %> Producer &amp; Distributor
+            <% elsif enterprise.is_distributor %> Distributor
+            <% elsif enterprise.is_primary_producer %> Producer
+            <% else %>
+                <h1 class = "icon-exclamation-sign with-tip" style = "text-align: center;color: #DA5354" data-powertip = "This enterprise does not have any roles"></h1>
+            <% end %>
+          </td>
+          <td><%= enterprise.visible ? 'Visible' : 'Invisible' %></td>
           <td><%= enterprise.description %></td>
           <td data-hook="admin_users_index_row_actions">
 
@@ -42,10 +48,19 @@
             <%= link_to_delete_enterprise enterprise %><br />
 
             <% if enterprise.is_distributor %>
-              <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)<br />
-              <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)<br />
+              <%= link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.payment_methods.count %>)
+              <% if enterprise.payment_methods.count == 0 %>
+                <span class = "icon-exclamation-sign with-tip" style = "font-size: 16px;color: #DA5354" data-powertip = "This enterprise has no payment methods"></span>
+              <% end %><br />
+              <%= link_to_with_icon 'icon-plane', 'Shipping Methods', spree.admin_shipping_methods_path(enterprise_id: enterprise.id) %> (<%= enterprise.shipping_methods.count %>)
+              <% if enterprise.shipping_methods.count == 0 %>
+                <span class = "icon-exclamation-sign with-tip" style = "font-size: 16px;color: #DA5354" data-powertip = "This enterprise has shipping methods"></span>
+              <% end %><br />
             <% end %>
             <%= link_to_with_icon 'icon-money', 'Enterprise Fees', main_app.admin_enterprise_fees_path(enterprise_id: enterprise.id) %> (<%= enterprise.enterprise_fees.count %>)
+            <% if enterprise.enterprise_fees.count == 0 %>
+              <span class = "icon-warning-sign with-tip" style = "font-size: 16px;color: orange" data-powertip = "This enterprise has no fees"></span>
+            <% end %>
           </td>
         </tr>
       <% end %>

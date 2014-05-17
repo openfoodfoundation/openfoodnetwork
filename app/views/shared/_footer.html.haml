@@ -1,6 +1,52 @@
 %footer
   .row.landing-page-row
-    .large-6.columns.text-left
-      %strong
-        %span.has-tip.tip-top{"data-tooltip" => "", "data-options" => "disable-for-touch:true", title: "Open Food Network is a marketplace connecting you to local producers and food hubs"} 
-          = link_to "WHAT IS OPEN FOOD NETWORK?", "http://openfoodnetwork.org"
+    .small-12.medium-4.columns.text-left
+      %h4 Email us
+      %p
+        %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true} 
+          %span.email
+            = "hello@openfoodnetwork.org".reverse
+      %h4 Follow us
+      %p
+        %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/OpenFoodNet', target: '_blank'} 
+          %i.fi-social-facebook
+          Facebook &nbsp;&nbsp;
+        %a{title:'Follow us on Twitter', href: 'https://twitter.com/OpenFoodNet', target: '_blank'} 
+          %i.fi-social-twitter
+          Twitter &nbsp;&nbsp;
+        %a{title:'Join our group on LinkedIn', href: 'http://www.linkedin.com/groups/Open-Food-Foundation-4743336', target: '_blank'} 
+          %i.fi-social-linkedin
+          LinkedIn
+    .small-12.medium-4.columns.text-left
+      %h4 Getting around
+      %ul.ofn-list
+        %li
+          %a{href: ""} Shop
+        %li
+          %a{href: ""} Map
+        %li
+          %a{href: ""} Producers
+        %li
+          %a{href: ""} Groups
+    .small-12.medium-4.columns.text-left
+      %h4 About us
+      %p OFN is a network of independent online food stores that connect farmers and food hubs with individuals and local businesses.  It gives farmers and food hubs an easier and fairer way to distribute their food. 
+  .row.landing-page-row
+    .small-12.columns.text-center.pad-top 
+      %hr
+      %h5.pad-top
+        %a{title: 'Open Food Network', href:'http://www.openfoodnetwork.org', target: '_blank' } openfoodnetwork.org
+      %br
+      © Copyright 2014 Open Food Foundation
+      %p
+        %small 
+          %a{href:"https://creativecommons.org/licenses/by-sa/3.0/", target: "_blank" } Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+      %p
+        %small 
+          %a{href:'' } Site terms & conditions
+          |  
+          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank" } Open Source & developer info on Github
+        
+          // To be added when Guy's pretty landing page is up:
+          //| 
+          //%a{href:'' } Developers

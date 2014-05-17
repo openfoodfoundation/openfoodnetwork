@@ -7,26 +7,9 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
   
-  before :all do
-    @default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-  
-  after :all do
-    Capybara.default_wait_time = @default_wait_time
-  end
-
   describe "listing products" do
     before :each do
       login_to_admin_section
-    end
-
-    it "displays a 'loading' splash for products" do
-      FactoryGirl.create(:simple_product)
-
-      visit '/admin/products/bulk_edit'
-
-      page.should have_selector "div.loading", :text => "Loading Products..."
     end
 
     it "displays a list of products" do
@@ -80,23 +63,28 @@ feature %q{
       p2 = FactoryGirl.create(:product, available_on: Date.today-1)
 
       visit '/admin/products/bulk_edit'
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
       page.should have_field "available_on", with: p1.available_on.strftime("%F %T")
       page.should have_field "available_on", with: p2.available_on.strftime("%F %T")
     end
 
-    it "displays a price input for each product (ie. for master variant)" do
+    it "displays a price input for each product without variants (ie. for master variant)" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
-      p1.price = 22.00
-      p2.price = 44.00
-      p1.save!
-      p2.save!
+      p3 = FactoryGirl.create(:product)
+      v = FactoryGirl.create(:variant, product: p3)
+
+      p1.update_attribute :price, 22.0
+      p2.update_attribute :price, 44.0
+      p3.update_attribute :price, 66.0
 
       visit '/admin/products/bulk_edit'
 
-      page.should have_field "price", with: "22.0"
-      page.should have_field "price", with: "44.0"
+      page.should     have_field "price", with: "22.0"
+      page.should     have_field "price", with: "44.0"
+      page.should_not have_field "price", with: "66.0", visible: true
     end
     
     it "displays an on hand count input for each product (ie. for master variant) if no regular variants exist" do
@@ -183,7 +171,7 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
       page.should have_selector "a.view-variants"
-      first("a.view-variants").click
+      all("a.view-variants").each{ |e| e.click }
 
       page.should have_field "product_name", with: v1.product.name
       page.should have_field "product_name", with: v2.product.name
@@ -197,6 +185,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
       page.should have_selector "span[name='on_hand']", text: "21"
       page.should have_field "variant_on_hand", with: "15"
@@ -210,8 +199,9 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
-      page.should have_field "price", with: "2.0"
+      page.should have_field "price", with: "2.0", visible: false
       page.should have_field "variant_price", with: "12.75"
       page.should have_field "variant_price", with: "2.5"
     end
@@ -222,14 +212,15 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)")
 
       visit '/admin/products/bulk_edit'
+      all("a.view-variants").each{ |e| e.click }
 
-      page.should have_field "price", with: "2.0"
       page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
       page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
     end
   end
 
-  scenario "create a new product" do
+
+  scenario "creating a new product" do
     s = FactoryGirl.create(:supplier_enterprise)
     d = FactoryGirl.create(:distributor_enterprise)
 
@@ -237,7 +228,9 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    click_link 'New Product'
+    #save_screenshot "/Users/willmarshall/Desktop/foo.png"
+    #save_and_open_page
+    find("a", text: "NEW PRODUCT").click
 
     page.should have_content 'NEW PRODUCT'
 
@@ -252,6 +245,57 @@ feature %q{
     flash_message.should == 'Product "Big Bag Of Apples" has been successfully created!'
     page.should have_field "product_name", with: 'Big Bag Of Apples'
   end
+
+
+  scenario "creating new variants" do
+    # Given a product without variants or a unit
+    p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+    login_to_admin_section
+    visit '/admin/products/bulk_edit'
+
+    # I should not see an add variant button
+    page.should_not have_selector 'a.add-variant', visible: true
+
+    # When I set the unit
+    select "Weight (kg)", from: "variant_unit_with_scale"
+
+    # I should see an add variant button
+    page.should have_selector 'a.add-variant', visible: true
+
+    # When I add three variants
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
+
+    # They should be added, and should see no edit buttons
+    page.all("tr.variant").count.should == 3
+    page.should_not have_selector "a.edit-variant", visible: true
+
+    # When I remove two, they should be removed
+    page.all('a.delete-variant').first.click
+    page.all('a.delete-variant').first.click
+    page.all("tr.variant").count.should == 1
+
+    # When I fill out variant details and hit update
+    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_price", with: "4.0"
+    fill_in "variant_on_hand", with: "10"
+    click_button 'Update'
+    page.find("span#update-status-message").should have_content "Update complete"
+
+    # Then I should see edit buttons for the new variant
+    page.should have_selector "a.edit-variant", visible: true
+
+    # And the variants should be saved
+    visit '/admin/products/bulk_edit'
+    page.should have_selector "a.view-variants"
+    first("a.view-variants").click
+
+    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    page.should have_field "variant_price", with: "4.0"
+    page.should have_field "variant_on_hand", with: "10"
+  end
+
 
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
@@ -289,13 +333,13 @@ feature %q{
 
     page.should have_field "product_name", with: "Big Bag Of Potatoes"
     page.should have_select "supplier", selected: s2.name
-    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
+    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T"), visible: false
     page.should have_field "price", with: "20.0"
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "on_hand", with: "18"
   end
   
-  scenario "updating a product with an items variant unit" do
+  scenario "updating a product with a variant unit of 'items'" do
     p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
     login_to_admin_section
@@ -316,7 +360,6 @@ feature %q{
     page.should have_field "variant_unit_name", with: "loaf"
   end
 
-
   scenario "setting a variant unit on a product that has none" do
     p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
     v = FactoryGirl.create(:variant, product: p, unit_value: nil, unit_description: nil)
@@ -324,20 +367,63 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
-    first("a.view-variants").click
 
     page.should have_select "variant_unit_with_scale", selected: ''
 
     select "Weight (kg)", from: "variant_unit_with_scale"
+    first("a.view-variants").click
     fill_in "variant_unit_value_with_description", with: '123 abc'
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
     visit '/admin/products/bulk_edit'
+    first("a.view-variants").click
 
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "variant_unit_value_with_description", with: "123 abc"
+  end
+
+  describe "setting the master unit value for a product without variants" do
+    it "sets the master unit value" do
+      p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+
+      login_to_admin_section
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: ''
+      page.should_not have_field "master_unit_value_with_description", visible: true
+
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      fill_in "master_unit_value_with_description", with: '123 abc'
+
+      click_button 'Update'
+      page.find("span#update-status-message").should have_content "Update complete"
+
+      visit '/admin/products/bulk_edit'
+
+      page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
+      page.should have_field "master_unit_value_with_description", with: "123 abc"
+
+      p.reload
+      p.variant_unit.should == 'weight'
+      p.variant_unit_scale.should == 1000
+      p.master.unit_value.should == 123000
+      p.master.unit_description.should == 'abc'
+    end
+
+    it "does not show the field when the product has variants" do
+      p = FactoryGirl.create(:product, variant_unit: nil, variant_unit_scale: nil)
+      v = FactoryGirl.create(:variant, product: p, unit_value: nil, unit_description: nil)
+
+      login_to_admin_section
+
+      visit '/admin/products/bulk_edit'
+
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      page.should_not have_field "master_unit_value_with_description", visible: true
+    end
   end
 
 
@@ -439,16 +525,16 @@ feature %q{
   end
 
   scenario "updating when no changes have been made" do
-    Capybara.default_wait_time = 2
-    FactoryGirl.create(:product, :name => "product 1")
-    FactoryGirl.create(:product, :name => "product 2")
-    login_to_admin_section
+    Capybara.using_wait_time(2) do
+      FactoryGirl.create(:product, :name => "product 1")
+      FactoryGirl.create(:product, :name => "product 2")
+      login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+      visit '/admin/products/bulk_edit'
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "No changes to update."
-    Capybara.default_wait_time = 5
+      click_button 'Update'
+      page.find("span#update-status-message").should have_content "No changes to update."
+    end
   end
 
   scenario "updating when a filter has been applied" do
@@ -458,10 +544,11 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
+    page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
     first("div.option_tab_titles h6", :text => "Filter Products").click
 
-    select "Name", :from => "filter_property"
-    select "Contains", :from => "filter_predicate"
+    select2_select "Name", from: "filter_property"
+    select2_select "Contains", from: "filter_predicate"
     fill_in "filter_value", :with => "1"
     click_button "Apply Filter"
     page.should_not have_field "product_name", with: p2.name
@@ -497,7 +584,6 @@ feature %q{
 
         first("a.delete-product").click
 
-        sleep(0.5) if page.has_selector? "a.delete-product", :count => 3 # Wait for product to be removed from page
         page.should have_selector "a.delete-product", :count => 2
 
         visit '/admin/products/bulk_edit'
@@ -513,18 +599,17 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each{ |e| e.click }
+        all("a.view-variants").each { |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 3
 
         first("a.delete-variant").click
         
-        sleep(0.5) if page.has_selector? "a.delete-variant", :count => 3 # Wait for variant to be removed from page
         page.should have_selector "a.delete-variant", :count => 2
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").select{ |e| e.visible? }.each{ |e| e.click }
+        all("a.view-variants").select { |e| e.visible? }.each { |e| e.click }
 
         page.should have_selector "a.delete-variant", :count => 2
       end
@@ -554,7 +639,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        first("a.view-variants").click
+        all("a.view-variants").each { |e| e.click }
 
         page.should have_selector "a.edit-variant", :count => 3
 
@@ -614,7 +699,6 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6.unselected", :text => "Toggle Columns"
         page.should have_selector "div.option_tab_titles h6.selected", :text => "Filter Products"
         page.should have_selector "div.filters", :visible => true
-        page.should have_selector "li.column-list-item", text: "Available On"
 
         first("div.option_tab_titles h6", :text => "Filter Products").click
 
@@ -690,7 +774,7 @@ feature %q{
 
         select '25', :from => 'perPage'
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page1product" }.should == true
-        click_link "2"
+        find("a", text: "2").click
         page.all("input[name='product_name']").select{ |e| e.visible? }.all?{ |e| e.value == "page2product" }.should == true
       end
 
@@ -702,7 +786,7 @@ feature %q{
         visit '/admin/products/bulk_edit'
 
         select '25', :from => 'perPage'
-        click_link "3"
+        find("a", text: "3").click
         select '50', :from => 'perPage'
         page.first("div.pagenav span.page.current").should have_text "2"
         page.all("input[name='product_name']", :visible => true).length.should == 1
@@ -740,8 +824,8 @@ feature %q{
         page.should have_selector "div.option_tab_titles h6", :text => "Filter Products"
         first("div.option_tab_titles h6", :text => "Filter Products").click
 
-        page.should have_select "filter_property", :with_options => ["Supplier", "Name"]
-        page.should have_select "filter_predicate", :with_options => ["Equals", "Contains"]
+        page.should have_select "filter_property", visible: false
+        page.should have_select "filter_predicate", visible: false
         page.should have_field "filter_value"
       end
 
@@ -755,8 +839,8 @@ feature %q{
 
           first("div.option_tab_titles h6", :text => "Filter Products").click
 
-          select "Name", :from => "filter_property"
-          select "Equals", :from => "filter_predicate"
+          select2_select "Name", :from => "filter_property"
+          select2_select "Equals", :from => "filter_predicate"
           fill_in "filter_value", :with => "Product1"
           click_button "Apply Filter"
         end
@@ -776,15 +860,11 @@ feature %q{
 
         describe "clicking the 'Remove Filter' link" do
           before(:each) do
-            click_link "Remove Filter"
+            find("a", text: "Remove Filter").click
           end
 
           it "removes the filter from the list of applied filters" do
             page.should_not have_text "Name Equals Product1"
-          end
-
-          it "displays the 'loading' splash" do
-            page.should have_selector "div.loading", :text => "Loading Products..."
           end
 
           it "loads appropriate products" do
@@ -841,7 +921,6 @@ feature %q{
       p = product_supplied
 
       visit '/admin/products/bulk_edit'
-      
       first("div.option_tab_titles h6", :text => "Toggle Columns").click
       first("li.column-list-item", text: "Available On").click
 
@@ -861,6 +940,8 @@ feature %q{
       page.find("span#update-status-message").should have_content "Update complete"
 
       visit '/admin/products/bulk_edit'
+      first("div.option_tab_titles h6", :text => "Toggle Columns").click
+      first("li.column-list-item", text: "Available On").click
 
       page.should have_field "product_name", with: "Big Bag Of Potatoes"
       page.should have_select "supplier", selected: s2.name

@@ -173,12 +173,12 @@ describe Spree::Admin::ReportsController do
 
     it "builds suppliers for the current user" do
       spree_get :products_and_inventory
-      assigns(:suppliers).should == [s1, s2, s3]
+      assigns(:suppliers).sort.should == [s1, s2, s3].sort
     end
 
     it "builds order cycles for the current user" do
       spree_get :products_and_inventory
-      assigns(:order_cycles).should == [ocB, ocA]
+      assigns(:order_cycles).sort.should == [ocB, ocA].sort
     end
 
     it "assigns report types" do
@@ -216,7 +216,7 @@ describe Spree::Admin::ReportsController do
 
     it "should build distributors for the current user" do
       spree_get :customers
-      assigns(:distributors).should == [d1, d2, d3]
+      assigns(:distributors).sort.should == [d1, d2, d3].sort
     end
 
     it "builds suppliers for the current user" do
@@ -226,7 +226,7 @@ describe Spree::Admin::ReportsController do
 
     it "builds order cycles for the current user" do
       spree_get :customers
-      assigns(:order_cycles).should == [ocB, ocA]
+      assigns(:order_cycles).sort.should == [ocB, ocA].sort
     end
 
     it "assigns report types" do

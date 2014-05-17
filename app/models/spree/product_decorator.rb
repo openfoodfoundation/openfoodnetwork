@@ -1,12 +1,19 @@
 Spree::Product.class_eval do
+  # We have an after_destroy callback on Spree::ProductOptionType. However, if we
+  # don't specify dependent => destroy on this association, it is not called. See:
+  # https://github.com/rails/rails/issues/7618
+  has_many :option_types, :through => :product_option_types, :dependent => :destroy
+
+
   belongs_to :supplier, :class_name => 'Enterprise'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
+  delegate_belongs_to :master, :unit_value, :unit_description
 
-  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name
+  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes
 
   validates_presence_of :supplier
 
@@ -28,10 +35,8 @@ Spree::Product.class_eval do
                                   joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
                                   joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
-  scope :with_order_cycles_inner, joins('INNER JOIN spree_variants ON (spree_variants.product_id = spree_products.id)').
-                                  joins('INNER JOIN exchange_variants ON (exchange_variants.variant_id = spree_variants.id)').
-                                  joins('INNER JOIN exchanges ON (exchanges.id = exchange_variants.exchange_id)').
-                                  joins('INNER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
+
 
   # -- Scopes
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
@@ -45,7 +50,7 @@ Spree::Product.class_eval do
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('product_distributions.distributor_id = ? OR (o_exchanges.sender_id = o_order_cycles.coordinator_id AND o_exchanges.receiver_id = ?)', distributor, distributor).
+    where('product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', distributor, false, distributor).
     select('distinct spree_products.*')
   }
 
@@ -62,13 +67,13 @@ Spree::Product.class_eval do
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.sender_id = o_order_cycles.coordinator_id AND o_exchanges.receiver_id = ?)', enterprise, enterprise, enterprise).
+    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', enterprise, enterprise, false, enterprise).
     select('distinct spree_products.*')
   }
 
   # Find products that are distributed by the given order cycle
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
-                                                where('exchanges.sender_id = order_cycles.coordinator_id').
+                                                merge(Exchange.outgoing).
                                                 where('order_cycles.id = ?', order_cycle) }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -92,10 +97,25 @@ Spree::Product.class_eval do
   def product_distribution_for(distributor)
     self.product_distributions.find_by_distributor_id(distributor)
   end
-  
+
+  def variants_for(order_cycle, distributor)
+    self.variants.where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+  end
+
   # overriding to check self.on_demand as well
   def has_stock?
     has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
+  end
+
+  def has_stock_for_distribution?(order_cycle, distributor)
+    # This product has stock for a distribution if it is available on-demand
+    # or if one of its variants in the distribution is in stock
+    (!has_variants? && on_demand) ||
+      variants_distributed_by(order_cycle, distributor).any? { |v| v.in_stock? }
+  end
+
+  def variants_distributed_by(order_cycle, distributor)
+    order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
 
   # Build a product distribution for each distributor
@@ -129,7 +149,7 @@ Spree::Product.class_eval do
     if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
-      variants.each { |v| v.delete_unit_option_values }
+      variants_including_master.each { |v| v.delete_unit_option_values }
     end
   end
 

@@ -1,0 +1,43 @@
+
+
+Checkout:
+  it "displays correct distribution charges on checkout"
+  it "sends a confirmation email on successful checkout"
+  it "copies the addresses from a previous order" (controller test)
+
+Cart:
+  it "displays correct distribution charges on the cart"
+
+Shop:
+  it "shows nothing when there is no future order cycle"
+  scenario "order cycle expires mid-order" (see below)
+
+  it "does not allow the user to add a product from a distributor that cannot supply the cart's products"
+
+
+scenario "order cycle expires mid-order" do
+  d = create(:distributor_enterprise,
+             name: 'Green Grass', email: 'd@example.com', phone: '1029 3847')
+  create_enterprise_group_for d
+  p = create(:simple_product)
+  oc = create(:simple_order_cycle, name: 'oc', distributors: [d], variants: [p.master])
+
+  # When I select an order cycle and add a product to my cart
+  visit spree.root_path
+  click_link 'Green Grass'
+  visit enterprise_path d
+  click_link p.name
+  click_button 'Add To Cart'
+
+  # And the order cycle expires and I load a page
+  Timecop.travel(oc.orders_close_at + 1.day) do
+
+    visit enterprise_path d
+
+    # Then I should see an expiry message
+    page.should have_content "Sorry, orders for this order cycle closed 1 day ago! Please contact your hub directly to see if they can accept late orders."
+    page.should have_content d.email
+    page.should have_content d.phone
+  end
+end
+

@@ -1,0 +1,37 @@
+%fieldset#payment
+  %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
+
+    %h5{"ng-class" => "{valid: payment.$valid, dirty: details.$dirty}"} 
+      %span.right
+        %label.label.round.alert
+          %i.fi-x
+        %label.label.round.success
+          %i.fi-check
+      Payment
+
+    %accordion-group{"is-open" => "accordion.payment",
+      "ng-class" => "{valid: payment.$valid, open: accordion.payment}"}
+      %accordion-heading
+        .row
+          .small-11.columns
+            %em 
+              %small
+                {{ Order.paymentMethod().name }}
+          .small-1.columns.right
+            %span.accordion-up.right
+              %i.fi-arrow-up
+            %span.accordion-down.right
+              %i.fi-arrow-down  
+
+      - current_order.available_payment_methods.each do |method|
+        .row
+          .small-12.columns
+            %label
+              = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
+                required: true,
+                "ng-model" => "order.payment_method_id"
+              = method.name
+        .row{"ng-show" => "order.payment_method_id == #{method.id}"}
+          .small-12.columns
+            = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
+

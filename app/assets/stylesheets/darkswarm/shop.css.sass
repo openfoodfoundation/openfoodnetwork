@@ -4,7 +4,7 @@
 product
   display: block 
 
-shop
+.darkswarm
   #search
     font-size: 2em
     @include big-input
@@ -12,12 +12,12 @@ shop
   display: block
   navigation
     display: block
-    background: $fawn 
+    background: #f7f7f7
     distributor.details
       box-sizing: border-box
       display: block
-      height: 150px
-      padding: 40px 0px 0px
+      min-height: 150px
+      padding: 30px 0px 20px 0px
       select
         width: 200px
       position: relative
@@ -29,75 +29,115 @@ shop
       location
         font-family: "AvenirBla_IE", "AvenirBla"
         padding-right: 16px
-      ordercycle
+      @media all and (max-width: 768px)
+        location, location + small
+          display: block
+
+      #distributor_title
+        float: left
         display: block
-        position: absolute
-        right: 0px
-        top: 40px
+        min-width: 350px
+
+      ordercycle
+        @media all and (max-width: 768px)
+          float: left
+          clear: left
+          padding-bottom: 12px
+        display: block
+        float: right
         form.custom 
-          width: 400px
+          //width: 400px
           text-align: right
+          margin-right: 1em
+          @media all and (max-width: 768px)
+            padding-left: 1em
+            padding-top: 1em
           & > strong
             line-height: 2.5
             font-size: 1.29em
             padding-right: 14px
-          .custom.dropdown
+            @media all and (max-width: 768px)
+              font-size: 1.2em
+          select
             width: 280px
             display: inline-block
-            background: transparent
+            vackground: transparent
             border-width: 2px
             border-color: #666666
-            font-size: 1.28em 
+            font-size: 1em 
             margin-bottom: 0
+            padding: 8px 0px 8px 12px
+            @media all and (max-width: 768px)
+              font-size: 1.2em
+              width: 180px
         closing
           font-size: 0.875em
           display: block
-          float: right
           padding-top: 14px
-
-  tabs
-    background: url("/assets/matte.png") top left repeat
-    display: block
-    .section-container.auto
-      margin-bottom: 0
-      & > section 
-        transition:height 0s linear 0.5s
-        & > .content
-          background: none
-          border: none
-        & > .title, &.active > .title
-          text-transform: uppercase
-          line-height: 50px
-          border: none
-          &, &:hover
-            background: none
-          a
-            padding: 0px 2.2em
 
   products
     display: block
-    padding-top: 36px
+    padding-top: 2.3em 
+    @media all and (max-width: 768px)
+      padding-top: 1em
+      input.button.right
+        float: left
     table
+      table-layout: fixed
       width: 100%
       border-collapse: collapse
       border: none
       th
         line-height: 50px
+        &.name
+          width: 330px 
+        //&.notes
+          //width: 140px
+        &.variant
+          width: 180px
+        &.quantity, &.bulk, &.price
+          width: 90px
       .notes
         max-width: 300px
       td, th
         background: #fff
+        > span
+          min-width: 50px
+          display: block
+      tbody
         border: 1px solid #cccccc
         border-left: 0px
         border-right: 0px
       td
         padding: 20px 0px
+        &.name 
+          img
+            float: left
+            margin-right: 30px
+            @media all and (max-width: 768px)
+              margin-right: 1em
+          div
+            min-width: 150px
+      tr.product-description
+        display: none
+
+
+      // Responsive
+      @media all and (max-width: 768px)
+        td.notes, th.notes
+          display: none
+        img
+          width: 20px
+          height: auto
+        tr.product-description
+          display: table-row
+          td:empty
+            display: none
+            
+
       input[type=number]
         width: 60px
         margin: 0px
-      
-
-
           display: block
           float: right
           padding-top: 14px

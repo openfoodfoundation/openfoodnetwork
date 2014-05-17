@@ -19,6 +19,7 @@ describe 'OrderCycle controllers', ->
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
+        setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
         removeExchange: jasmine.createSpy('removeExchange')
@@ -31,6 +32,7 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
+        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
@@ -63,9 +65,17 @@ describe 'OrderCycle controllers', ->
         EnterpriseFee.loaded = false
         expect(scope.loaded()).toBe(false)
 
+    it "delegates suppliedVariants to Enterprise", ->
+      expect(scope.suppliedVariants('enterprise_id')).toEqual('supplied variants')
+      expect(Enterprise.suppliedVariants).toHaveBeenCalledWith('enterprise_id')
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+
+    it "delegates setExchangeVariants to OrderCycle", ->
+      scope.setExchangeVariants('exchange', 'variants', 'selected')
+      expect(OrderCycle.setExchangeVariants).toHaveBeenCalledWith('exchange', 'variants', 'selected')
 
     it 'Delegates enterpriseTotalVariants to Enterprise', ->
       expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
@@ -169,6 +179,7 @@ describe 'OrderCycle controllers', ->
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
         exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
+        setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
         addDistributor: jasmine.createSpy('addDistributor')
         removeExchange: jasmine.createSpy('removeExchange')
@@ -181,6 +192,7 @@ describe 'OrderCycle controllers', ->
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
+        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
         totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
@@ -213,9 +225,17 @@ describe 'OrderCycle controllers', ->
         OrderCycle.loaded = false
         expect(scope.loaded()).toBe(false)
 
+    it "delegates suppliedVariants to Enterprise", ->
+      expect(scope.suppliedVariants('enterprise_id')).toEqual('supplied variants')
+      expect(Enterprise.suppliedVariants).toHaveBeenCalledWith('enterprise_id')
+
     it 'Delegates exchangeSelectedVariants to OrderCycle', ->
       expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
       expect(OrderCycle.exchangeSelectedVariants).toHaveBeenCalledWith('exchange')
+
+    it "delegates setExchangeVariants to OrderCycle", ->
+      scope.setExchangeVariants('exchange', 'variants', 'selected')
+      expect(OrderCycle.setExchangeVariants).toHaveBeenCalledWith('exchange', 'variants', 'selected')
 
     it 'Delegates totalVariants to Enterprise', ->
       expect(scope.enterpriseTotalVariants('enterprise')).toEqual('variants total')
@@ -332,6 +352,25 @@ describe 'OrderCycle services', ->
       $httpBackend.flush()
       expect(Enterprise.supplied_products).toEqual [1, 2, 3, 4, 5, 6]
 
+    it "finds supplied variants for an enterprise", ->
+      spyOn(Enterprise, 'variantsOf').andReturn(10)
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
+
+    describe "finding the variants of a product", ->
+      it "returns the master for products without variants", ->
+        p =
+          master_id: 1
+          variants: []
+        expect(Enterprise.variantsOf(p)).toEqual [1]
+
+      it "returns the variant ids for products with variants", ->
+        p =
+          master_id: 1
+          variants: [{id: 2}, {id: 3}]
+        expect(Enterprise.variantsOf(p)).toEqual [2, 3]
+
     it 'counts total variants supplied by an enterprise', ->
       enterprise =
         supplied_products: [
@@ -362,10 +401,12 @@ describe 'OrderCycle services', ->
     it 'loads enterprise fees', ->
       enterprise_fees = EnterpriseFee.index()
       $httpBackend.flush()
-      expect(enterprise_fees).toEqual [
+      expected_fees = [
         new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
         new EnterpriseFee.EnterpriseFee({id: 2, name: "FeeTwo", enterprise_id: 2})
         ]
+      for fee, i in enterprise_fees
+        expect(fee.id).toEqual(expected_fees[i].id)
 
     it 'reports its loadedness', ->
       expect(EnterpriseFee.loaded).toBe(false)
@@ -403,8 +444,8 @@ describe 'OrderCycle services', ->
           coordinator_id: 456
           coordinator_fees: []
           exchanges: [
-            {sender_id: 1, receiver_id: 456}
-            {sender_id: 456, receiver_id: 2}
+            {sender_id: 1, receiver_id: 456, incoming: true}
+            {sender_id: 456, receiver_id: 2, incoming: false}
             ]
 
     it 'initialises order cycle', ->
@@ -450,13 +491,19 @@ describe 'OrderCycle services', ->
         OrderCycle.toggleProducts(exchange)
         expect(exchange.showProducts).toEqual(true)
 
+    describe "setting exchange variants", ->
+      it "sets all variants to the provided value", ->
+        exchange = {variants: {2: false}}
+        OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
+        expect(exchange.variants).toEqual {1: true, 2: true, 3: true}
+
     describe 'adding suppliers', ->
       exchange = null
 
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+          {enterprise_id: '123', incoming: true, active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'adding distributors', ->
@@ -465,7 +512,7 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
+          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'removing exchanges', ->
@@ -630,12 +677,14 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
           sender_id: 1
           enterprise_id: 1
+          incoming: true
           active: true
           ]
 
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
           receiver_id: 2
           enterprise_id: 2
+          incoming: false
           active: true
           ]
 
@@ -723,35 +772,62 @@ describe 'OrderCycle services', ->
           ]
 
       it 'converts coordinator fees into a list of ids', ->
-        data =
+        order_cycle =
           coordinator_fees: [
             {id: 1}
             {id: 2}
             ]
 
-        data = OrderCycle.translateCoordinatorFees(data)
+        data = OrderCycle.translateCoordinatorFees(order_cycle)
 
         expect(data.coordinator_fees).toBeUndefined()
         expect(data.coordinator_fee_ids).toEqual [1, 2]
 
-      it 'converts exchange fees into a list of ids', ->
-        data =
-          incoming_exchanges: [
-            enterprise_fees: [
-              {id: 1}
-              {id: 2}
+      it "preserves original data when converting coordinator fees", ->
+       OrderCycle.order_cycle =
+          coordinator_fees: [
+            {id: 1}
+            {id: 2}
             ]
-          ]
-          outgoing_exchanges: [
-            enterprise_fees: [
-              {id: 3}
-              {id: 4}
+
+        data = OrderCycle.deepCopy()
+        data = OrderCycle.translateCoordinatorFees(data)
+
+        expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{id: 1}, {id: 2}]
+        expect(OrderCycle.order_cycle.coordinator_fee_ids).toBeUndefined()
+
+      describe "converting exchange fees into a list of ids", ->
+        order_cycle = null
+        data = null
+
+        beforeEach ->
+          order_cycle =
+            incoming_exchanges: [
+              enterprise_fees: [
+                {id: 1}
+                {id: 2}
+              ]
             ]
-          ]
+            outgoing_exchanges: [
+              enterprise_fees: [
+                {id: 3}
+                {id: 4}
+              ]
+            ]
+          OrderCycle.order_cycle = order_cycle
 
-        data = OrderCycle.translateExchangeFees(data)
+          data = OrderCycle.deepCopy()
+          data = OrderCycle.translateExchangeFees(data)
 
-        expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
-        expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
-        expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
-        expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]
+        it 'converts exchange fees into a list of ids', ->
+          expect(data.incoming_exchanges[0].enterprise_fees).toBeUndefined()
+          expect(data.outgoing_exchanges[0].enterprise_fees).toBeUndefined()
+          expect(data.incoming_exchanges[0].enterprise_fee_ids).toEqual [1, 2]
+          expect(data.outgoing_exchanges[0].enterprise_fee_ids).toEqual [3, 4]
+
+        it "preserves original data when converting exchange fees", ->
+          expect(order_cycle.incoming_exchanges[0].enterprise_fees).toEqual [{id: 1}, {id: 2}]
+          expect(order_cycle.outgoing_exchanges[0].enterprise_fees).toEqual [{id: 3}, {id: 4}]
+          expect(order_cycle.incoming_exchanges[0].enterprise_fee_ids).toBeUndefined()
+          expect(order_cycle.outgoing_exchanges[0].enterprise_fee_ids).toBeUndefined()
+  

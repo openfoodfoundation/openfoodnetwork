@@ -29,6 +29,12 @@ describe Spree::Address do
     end
   end
 
+  describe "setters" do
+    it "lets us set a country" do
+      expect { Spree::Address.new.country = "A country" }.to raise_error ActiveRecord::AssociationTypeMismatch
+    end
+  end
+
   describe "notifying bugsnag when saved with missing data" do
     it "notifies on create" do
       Bugsnag.should_receive(:notify)

@@ -63,6 +63,8 @@ describe OrderCycle do
       p = create(:product)
       d = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+      p.reload
+
       OrderCycle.distributing_product(p).should == [oc]
     end
 
@@ -71,6 +73,8 @@ describe OrderCycle do
       v = create(:variant, product: p)
       d = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, distributors: [d], variants: [v])
+      p.reload
+
       OrderCycle.distributing_product(p).should == [oc]
     end
 
@@ -78,8 +82,9 @@ describe OrderCycle do
       p = create(:product)
       s = create(:supplier_enterprise)
       oc = create(:simple_order_cycle)
-      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator)
+      ex = create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator, incoming: true)
       ex.variants << p.master
+      p.reload
 
       OrderCycle.distributing_product(p).should == []
     end
@@ -132,9 +137,9 @@ describe OrderCycle do
   it "reports its suppliers" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
     oc.suppliers.sort.should == [e1.sender, e2.sender].sort
@@ -143,9 +148,9 @@ describe OrderCycle do
   it "reports its distributors" do
     oc = create(:simple_order_cycle)
 
-    e1 = create(:exchange,
+    e1 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
-    e2 = create(:exchange,
+    e2 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
     oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
@@ -155,7 +160,7 @@ describe OrderCycle do
     oc = create(:simple_order_cycle)
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
-    create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1)
+    create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1, incoming: false)
 
     oc.should have_distributor(d1)
     oc.should_not have_distributor(d2)
@@ -177,15 +182,16 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise)
 
-      @e0 = create(:exchange,
+      @e0 = create(:exchange, incoming: true,
                   order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange,
+      @e1 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d1)
-      @e2 = create(:exchange,
+      @e2 = create(:exchange, incoming: false,
                   order_cycle: @oc, sender: @oc.coordinator, receiver: @d2)
 
       @p0 = create(:simple_product)
       @p1 = create(:simple_product)
+      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.now)
       @p2 = create(:simple_product)
       @p2_v = create(:variant, product: @p2)
 
@@ -194,6 +200,7 @@ describe OrderCycle do
       @e1.variants << @p2.master
       @e1.variants << @p2_v
       @e2.variants << @p1.master
+      @e2.variants << @p1_v_deleted
     end
 
     it "reports on the variants exchanged" do
@@ -217,6 +224,58 @@ describe OrderCycle do
     end
   end
 
+  describe "finding valid products distributed by a particular distributor" do
+    it "returns valid products but not invalid products" do
+      p_valid = create(:product)
+      p_invalid = create(:product)
+      v = create(:variant, product: p_invalid)
+
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, distributors: [d], variants: [p_valid.master, p_invalid.master])
+      oc.valid_products_distributed_by(d).should == [p_valid]
+    end
+
+    describe "checking if a product has only an obsolete master variant in a distributution" do
+      it "returns true when so" do
+        master = double(:master)
+        unassociated_variant = double(:variant)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        distributed_variants = [master, unassociated_variant]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_true
+      end
+
+      it "returns false when the product doesn't have variants" do
+        master = double(:master)
+        product = double(:product, :has_variants? => false, :master => master, :variants => [])
+        distributed_variants = [master]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+
+      it "returns false when the master isn't distributed" do
+        master = double(:master)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        distributed_variants = []
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+
+      it "returns false when the product has other variants distributed" do
+        master = double(:master)
+        variant = double(:variant)
+        product = double(:product, :has_variants? => true, :master => master, :variants => [variant])
+        distributed_variants = [master, variant]
+
+        oc = OrderCycle.new
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+      end
+    end
+  end
+
   describe "exchanges" do
     before(:each) do
       @oc = create(:simple_order_cycle)
@@ -224,9 +283,9 @@ describe OrderCycle do
       @d1 = create(:enterprise)
       @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
 
-      @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator)
-      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
-      @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, pickup_time: nil)
+      @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise), receiver: @oc.coordinator, incoming: true)
+      @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1, incoming: false, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
+      @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2, incoming: false, pickup_time: nil)
     end
 
     it "finds the exchange for a distributor" do
@@ -309,62 +368,107 @@ describe OrderCycle do
     end
   end
 
-  describe "creating adjustments for a line item" do
-    let(:oc) { OrderCycle.new }
-    let(:line_item) { double(:line_item, variant: 123) }
+  describe "calculating fees for a variant via a particular distributor" do
+    it "sums all the per-item fees for the variant in the specified hub + order cycle" do
+      coordinator = create(:distributor_enterprise)
+      distributor = create(:distributor_enterprise)
+      order_cycle = create(:simple_order_cycle)
+      enterprise_fee1 = create(:enterprise_fee, amount: 20)
+      enterprise_fee2 = create(:enterprise_fee, amount:  3)
+      enterprise_fee3 = create(:enterprise_fee,
+                               calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2))
+      product = create(:simple_product)
 
-    it "creates adjustment for each fee" do
-      fee = {enterprise_fee: 'ef', label: 'label', role: 'role'}
-      oc.stub(:fees_for) { [fee] }
-      oc.should_receive(:create_adjustment_for_fee).with(line_item, 'ef', 'label', 'role')
-
-      oc.send(:create_adjustments_for, line_item)
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
+             enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product.master])
+      
+      order_cycle.fees_for(product.master, distributor).should == 23
     end
 
-    it "finds fees for a line item" do
+
+    it "sums percentage fees for the variant" do
+      coordinator = create(:distributor_enterprise)
+      distributor = create(:distributor_enterprise)
+      order_cycle = create(:simple_order_cycle)
+      enterprise_fee1 = create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20))
+      product = create(:simple_product, price: 10.00)
+      
+      create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
+             enterprise_fees: [enterprise_fee1], variants: [product.master])
+
+      product.master.price.should == 10.00
+      order_cycle.fees_for(product.master, distributor).should == 2.00
+    end
+  end
+
+  describe "creating adjustments for a line item" do
+    let(:oc) { OrderCycle.new }
+    let(:variant) { double(:variant) }
+    let(:distributor) { double(:distributor) }
+    let(:order) { double(:order, distributor: distributor) }
+    let(:line_item) { double(:line_item, variant: variant, order: order) }
+
+    it "creates an adjustment for each fee" do
+      applicator = double(:enterprise_fee_applicator)
+      applicator.should_receive(:create_line_item_adjustment).with(line_item)
+      oc.should_receive(:per_item_enterprise_fee_applicators_for).with(variant, distributor) { [applicator] }
+
+      oc.send(:create_line_item_adjustments_for, line_item)
+    end
+
+    it "makes fee applicators for a line item" do
+      distributor = double(:distributor)
       ef1 = double(:enterprise_fee)
       ef2 = double(:enterprise_fee)
       ef3 = double(:enterprise_fee)
-      incoming_exchange = double(:exchange, enterprise_fees: [ef1], incoming?: true)
-      outgoing_exchange = double(:exchange, enterprise_fees: [ef2], incoming?: false)
+      incoming_exchange = double(:exchange, role: 'supplier')
+      outgoing_exchange = double(:exchange, role: 'distributor')
+      incoming_exchange.stub_chain(:enterprise_fees, :per_item) { [ef1] }
+      outgoing_exchange.stub_chain(:enterprise_fees, :per_item) { [ef2] }
+
       oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
-      oc.stub(:coordinator_fees) { [ef3] }
-      oc.stub(:adjustment_label_for) { 'label' }
+      oc.stub_chain(:coordinator_fees, :per_item) { [ef3] }
 
-      oc.send(:fees_for, line_item).should ==
-        [{enterprise_fee: ef1, label: 'label', role: 'supplier'},
-         {enterprise_fee: ef2, label: 'label', role: 'distributor'},
-         {enterprise_fee: ef3, label: 'label', role: 'coordinator'}]
-    end
-
-    it "creates an adjustment for a fee" do
-      line_item = create(:line_item)
-      enterprise_fee = create(:enterprise_fee)
-
-      oc.send(:create_adjustment_for_fee, line_item, enterprise_fee, 'label', 'role')
-
-      adjustment = Spree::Adjustment.last
-      adjustment.label.should == 'label'
-      adjustment.adjustable.should == line_item.order
-      adjustment.source.should == line_item
-      adjustment.originator.should == enterprise_fee
-      adjustment.should be_mandatory
-
-      md = adjustment.metadata
-      md.enterprise.should == enterprise_fee.enterprise
-      md.fee_name.should == enterprise_fee.name
-      md.fee_type.should == enterprise_fee.fee_type
-      md.enterprise_role.should == 'role'
-    end
-
-    it "makes adjustment labels" do
-      line_item = double(:line_item, variant: double(:variant, product: double(:product, name: 'Bananas')))
-      enterprise_fee = double(:enterprise_fee, fee_type: 'packing', enterprise: double(:enterprise, name: 'Ballantyne'))
-
-      oc.send(:adjustment_label_for, line_item, enterprise_fee, 'distributor').should == "Bananas - packing fee by distributor Ballantyne"
+      oc.send(:per_item_enterprise_fee_applicators_for, line_item.variant, distributor).should ==
+        [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
     end
   end
-  
+
+  describe "creating adjustments for an order" do
+    let(:oc) { OrderCycle.new }
+    let(:distributor) { double(:distributor) }
+    let(:order) { double(:order, distributor: distributor) }
+
+    it "creates an adjustment for each fee" do
+      applicator = double(:enterprise_fee_applicator)
+      applicator.should_receive(:create_order_adjustment).with(order)
+      oc.should_receive(:per_order_enterprise_fee_applicators_for).with(order) { [applicator] }
+
+      oc.send(:create_order_adjustments_for, order)
+    end
+
+    it "makes fee applicators for an order" do
+      distributor = double(:distributor)
+      ef1 = double(:enterprise_fee)
+      ef2 = double(:enterprise_fee)
+      ef3 = double(:enterprise_fee)
+      incoming_exchange = double(:exchange, role: 'supplier')
+      outgoing_exchange = double(:exchange, role: 'distributor')
+      incoming_exchange.stub_chain(:enterprise_fees, :per_order) { [ef1] }
+      outgoing_exchange.stub_chain(:enterprise_fees, :per_order) { [ef2] }
+
+      oc.stub(:exchanges_supplying) { [incoming_exchange, outgoing_exchange] }
+      oc.stub_chain(:coordinator_fees, :per_order) { [ef3] }
+
+      oc.send(:per_order_enterprise_fee_applicators_for, order).should ==
+        [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
+         OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+    end
+  end
+
   describe "finding recently closed order cycles" do
     it "should give the most recently closed order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
@@ -388,6 +492,15 @@ describe OrderCycle do
     it "should return no order cycle when none are impending" do
       distributor = create(:distributor_enterprise)
       OrderCycle.first_opening_for(distributor).should == nil
+    end
+  end
+  
+  describe "finding open order cycles" do
+    it "should give the soonest closing order cycle for a distributor" do
+      distributor = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now) 
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now) 
+      OrderCycle.first_closing_for(distributor).should == oc
     end
   end
 end

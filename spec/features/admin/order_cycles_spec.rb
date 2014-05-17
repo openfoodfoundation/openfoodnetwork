@@ -7,16 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before :all do
-    @orig_default_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 5
-  end
-
-  after :all do
-    Capybara.default_wait_time = @orig_default_wait_time
-  end
-
-
   scenario "listing order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: '4',
@@ -141,9 +131,9 @@ feature %q{
     page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some fees
-    OrderCycle.last.exchanges.first.enterprise_fees.should == [supplier_fee]
-    OrderCycle.last.coordinator_fees.should                == [coordinator_fee]
-    OrderCycle.last.exchanges.last.enterprise_fees.should  == [distributor_fee]
+    OrderCycle.last.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
+    OrderCycle.last.coordinator_fees.should                         == [coordinator_fee]
+    OrderCycle.last.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
 
     # And it should have some variants selected
     OrderCycle.last.exchanges.first.variants.count.should == 2
@@ -189,24 +179,22 @@ feature %q{
     end
 
     # And the suppliers should have fees
-    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.suppliers.first.name
-    page.find('#order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.suppliers.first.enterprise_fees.first.name
+    supplier = oc.suppliers.sort_by(&:name).first
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: supplier.name
+    page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
-    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.suppliers.last.name
-    page.find('#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.suppliers.last.enterprise_fees.first.name
+    supplier = oc.suppliers.sort_by(&:name).last
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: supplier.name
+    page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
     # And I should see the distributors
     page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
     page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
 
-    page.find('#order_cycle_outgoing_exchange_0_pickup_time').value.should == 'time 0'
-    page.find('#order_cycle_outgoing_exchange_0_pickup_instructions').value.should == 'instructions 0'
-    page.find('#order_cycle_outgoing_exchange_1_pickup_time').value.should == 'time 1'
-    page.find('#order_cycle_outgoing_exchange_1_pickup_instructions').value.should == 'instructions 1'
+    page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
+    page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'
+    page.should have_field 'order_cycle_outgoing_exchange_1_pickup_time', with: 'time 1'
+    page.should have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
 
     # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each do |row|
@@ -219,22 +207,42 @@ feature %q{
     end
 
     # And the distributors should have fees
-    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.distributors.first.name
-    page.find('#order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.distributors.first.enterprise_fees.first.name
+    distributor = oc.distributors.sort_by(&:id).first
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
+    page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
 
-    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id option[selected=selected]').
-      text.should == oc.distributors.last.name
-    page.find('#order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id option[selected=selected]').
-      text.should == oc.distributors.last.enterprise_fees.first.name
+    distributor = oc.distributors.sort_by(&:id).last
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
+    page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
+  end
+
+
+  scenario "editing an order cycle with an exchange between the same enterprise" do
+    c = create(:distributor_enterprise, is_primary_producer: true)
+    login_to_admin_section
+
+    # Given two order cycles, one with a mono-enterprise incoming exchange...
+    oc_incoming = create(:simple_order_cycle, suppliers: [c], coordinator: c)
+
+    # And the other with a mono-enterprise outgoing exchange
+    oc_outgoing = create(:simple_order_cycle, coordinator: c, distributors: [c])
+
+    # When I edit the first order cycle, the exchange should appear as incoming
+    visit edit_admin_order_cycle_path(oc_incoming)
+    page.should     have_selector 'table.exchanges tr.supplier'
+    page.should_not have_selector 'table.exchanges tr.distributor'
+
+    # And when I edit the second order cycle, the exchange should appear as outgoing
+    visit edit_admin_order_cycle_path(oc_outgoing)
+    page.should     have_selector 'table.exchanges tr.distributor'
+    page.should_not have_selector 'table.exchanges tr.supplier'
   end
 
 
   scenario "updating an order cycle", js: true do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
-    initial_variants = oc.variants
+    initial_variants = oc.variants.sort_by &:id
 
     # And a coordinating, supplying and distributing enterprise with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
@@ -277,7 +285,8 @@ feature %q{
     click_button 'Add supplier'
     page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
-    uncheck "order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
+    page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
+    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
@@ -399,7 +408,33 @@ feature %q{
   end
 
 
-  context 'as an Enterprise user' do
+  scenario "removing a master variant from an order cycle when further variants have been added" do
+    # Given a product with a variant, with its master variant included in the order cycle
+    # (this usually happens when a product is added to an order cycle, then variants are added
+    #  to the product after the fact)
+    s = create(:supplier_enterprise)
+    p = create(:simple_product, supplier: s)
+    v = create(:variant, product: p)
+    d = create(:distributor_enterprise)
+    oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+    exchange_ids = oc.exchanges.pluck :id
+    ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should_not be_empty
+
+    # When I go to the order cycle page and remove the obsolete master
+    login_to_admin_section
+    click_link 'Order Cycles'
+    click_link oc.name
+    within("table.exchanges tbody tr.supplier") { page.find('td.products input').click }
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).click # uncheck
+    click_button "Update"
+
+    # Then the master variant should have been removed from all exchanges
+    page.should have_content "Your order cycle has been updated."
+    ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should be_empty
+  end
+
+
+  context "as an enterprise user" do
 
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
@@ -418,17 +453,22 @@ feature %q{
       login_to_admin_as @new_user
     end
 
-    scenario "can view products I am coordinating" do
-      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+    scenario "viewing a list of order cycles I am coordinating" do
+      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
       oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
 
       click_link "Order Cycles"
 
+      # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
+
+      # The order cycle should not show enterprises that I don't manage
+      page.should_not have_selector 'td.suppliers',    text: supplier2.name
+      page.should_not have_selector 'td.distributors', text: distributor2.name
     end
 
-    scenario "can create a new order cycle" do
+    scenario "creating a new order cycle" do
       click_link "Order Cycles"
       click_link 'New Order Cycle'
 
@@ -464,6 +504,16 @@ feature %q{
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
       order_cycle.coordinator.should == distributor1
+    end
+
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # I should not see exchanges for supplier2 or distributor2
+      page.all('tr.supplier').count.should == 1
+      page.all('tr.distributor').count.should == 1
     end
 
     scenario "cloning an order cycle" do

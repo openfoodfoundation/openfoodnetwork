@@ -23,10 +23,27 @@ Payment Details
 <%= @order.payments.first.andand.payment_method.andand.description.andand.html_safe %>
 
 <% end %>
+
+<%- if @order.shipping_method.andand.require_ship_address %>
 ============================================================
-Collection / Delivery Details
+Shipping Details
+============================================================
+Your order will be shipped to: 
+<%= @order.ship_address.to_s %>
+
+
+<% if @order.order_cycle %>
+Delivery on: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
+<% else %>
+<%= @order.distributor.next_collection_at %>
+<% end %>
+<% else %>
+
+============================================================
+Collection Details
 ============================================================
 <%= raw strip_html @order.distributor.distributor_info %>
+
 
 <% if @order.order_cycle %>
 <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
@@ -34,8 +51,11 @@ Collection / Delivery Details
 <% else %>
 <%= @order.distributor.next_collection_at %>
 <% end %>
+<% end %>
+
 
 Thanks for your support.
+
 
 <%= @order.distributor.contact %>,
 <%= @order.distributor.name %>

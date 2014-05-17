@@ -61,4 +61,4 @@ $ff_base:       'Ubuntu', sans-serif !default;
       $table_head_color:                      lighten($body_text_color, 60) !default;
 
 
-@import "./variables_changes.css.scss";
+@import "./store/variables_changes.css.scss";

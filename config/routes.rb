@@ -1,12 +1,17 @@
 Openfoodnetwork::Application.routes.draw do
-  root :to => 'home#temp_landing_page'
+  root :to => 'home#index'
 
-
-  resource :shop, controller: :shop do
+  resource :shop, controller: "shop" do
     get :products
     post :order_cycle
     get :order_cycle
   end
+
+  resources :producers
+
+  get '/checkout', :to => 'checkout#edit' , :as => :checkout
+  put '/checkout', :to => 'checkout#update' , :as => :update_checkout
+  get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
 
   resources :enterprises do
     collection do
@@ -43,8 +48,18 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :enterprises do
+      get :managed, on: :collection
+      get :accessible, on: :collection
+    end
+    resources :order_cycles do
+      get :managed, on: :collection
+      get :accessible, on: :collection
+    end
+  end
+
   get "new_landing_page", :controller => 'home', :action => "new_landing_page"
-  get "darkswarm", controller: :darkswarm, action: :index
   get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do
@@ -55,7 +70,22 @@ Openfoodnetwork::Application.routes.draw do
 
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
+
 end
+
+
+# Overriding Devise routes to use our own controller
+Spree::Core::Engine.routes.draw do
+  devise_for :spree_user,
+             :class_name => 'Spree::User',
+             :controllers => { :sessions => 'spree/user_sessions',
+                               :registrations => 'user_registrations',
+                               :passwords => 'user_passwords' },
+             :skip => [:unlocks, :omniauth_callbacks],
+             :path_names => { :sign_out => 'logout' },
+             :path_prefix => :user
+end
+
 
 
 Spree::Core::Engine.routes.prepend do
@@ -65,8 +95,10 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
   match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
+  match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
+  match '/admin', :to => 'admin/overview#index', :as => :admin
 
 
   namespace :api, :defaults => { :format => 'json' } do
@@ -76,9 +108,13 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
+
+      resources :variants do
+        delete :soft_delete
+      end
     end
 
-    resources :enterprises do
+    resources :orders do
       get :managed, on: :collection
     end
   end
@@ -97,4 +133,5 @@ Spree::Core::Engine.routes.prepend do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end
+
 end

@@ -1,0 +1,58 @@
+- @body_id = 'cart'
+.darkswarm
+  - content_for :order_cycle_form do
+    %strong.avenir
+      Order ready on
+      - if @order.order_cycle
+        = pickup_time @order.order_cycle 
+      - else
+        = @order.distributor.next_collection_at
+
+  = render partial: "shopping_shared/details"
+  
+  %fieldset
+    - if @order.line_items.empty?
+      %div.row{"data-hook" => "empty_cart"}
+        %p= t(:your_cart_is_empty)
+        %p= link_to t(:continue_shopping), main_app.shop_path, :class => 'button continue'
+
+    - else
+      %div{"data-hook" => "outside_cart_form"}
+        = form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form|
+          %div{"data-hook" => "inside_cart_form"}
+            %div{"data-hook" => "cart_items"}
+              .row
+                = render :partial => 'form', :locals => { :order_form => order_form }
+
+            #subtotal.row{'data-hook' => ""}
+              .columns.large-5
+                %h5
+                  Product 
+                  \:
+                  %span.order-total.item-total= number_to_currency @order.item_total
+              .columns.large-4
+                %h5
+                  Distribution
+                  \:
+                  %span.order-total.distribution-total= order_distribution_subtotal(@order)
+              .columns.large-3
+                %h4
+                  Cart Total
+                  \:
+                  %span.order-total.grand-total= @order.display_total
+
+        .links{'data-hook' => "cart_buttons"}
+          .row
+            #empty-cart.columns.large-8{"data-hook" => ""}
+              = form_tag empty_cart_path, :method => :put do
+                #clear_cart_link{"data-hook" => ""}
+                  = link_to "Continue Shopping", main_app.shop_path, class: "button secondary"
+                  = t(:or)
+                  = submit_tag t(:empty_cart), :class => 'button secondary'
+
+            .columns.large-4.text-right
+              = button_tag :class => 'secondary', :id => 'update-button' do
+                = t(:update)
+              = t(:or)
+              = link_to "Checkout", main_app.checkout_path, class: "button checkout primary", id: "checkout-link"
+

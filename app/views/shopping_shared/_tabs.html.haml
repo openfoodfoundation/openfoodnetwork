@@ -1,0 +1,13 @@
+#tabs{"ng-controller" => "TabsCtrl"}
+  .row
+    %tabset
+      - for name, heading in { about: "About Us", 
+        producers: "Producers", 
+        groups: "Groups", 
+        contact: "Contact"} 
+
+        %tab{heading: heading, 
+        id: "tab_#{name}",
+        active: "active(#{name}.path)",
+        select: "select(#{name})"}
+          = render "shopping_shared/#{name}"
