@@ -12,7 +12,7 @@
   .small-5.columns.summary-header
     {{ product.supplier.name }}
 
-  .small-2.columns.summary-price.text-right
+  .small-2.columns.summary-price.text-right.price
     %span{"ng-if" => "hasVariants"} 
       %em from
       {{ price() | currency }}

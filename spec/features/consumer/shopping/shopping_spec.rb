@@ -90,10 +90,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       it "should not show quantity field for product with variants" do
         visit shop_path
         page.should_not have_selector("#variants_#{product.master.id}", visible: true)
-
-        #it "expands variants" do
-        find(".collapse").trigger "click"
-        page.should_not have_text variant1.options_text
       end
 
       it "uses the adjusted price" do
@@ -104,15 +100,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
 
         # Page should not have product.price (with or without fee)
-        page.should_not have_selector 'tr.product > td', text: "from $10.00"
-        page.should_not have_selector 'tr.product > td', text: "from $33.00"
+        page.should_not have_price "from $10.00"
+        page.should_not have_price "from $33.00"
 
         # Page should have variant prices (with fee)
-        page.should have_selector 'tr.variant > td.price', text: "$43.00"
-        page.should have_selector 'tr.variant > td.price', text: "$53.00"
+        page.should have_price "$43.00"
+        page.should have_price "$53.00"
 
         # Product price should be listed as the lesser of these
-        page.should have_selector 'tr.product > td', text: "from $43.00"
+        #page.should have_selector 'tr.product > td', text: "from $43.00"
+        page.should have_price "from $43.00"
       end
     end
 
@@ -131,7 +128,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 9
@@ -142,7 +139,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         pending "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 1
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 5
@@ -161,7 +158,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 7
@@ -181,7 +178,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
       it "should let us add products to our cart" do
         fill_in "variants[#{variant.id}]", with: "1"
-        first("form.custom > input.button.right").click
+        add_to_cart
         current_path.should == "/cart" 
         page.should have_content product.name
       end
