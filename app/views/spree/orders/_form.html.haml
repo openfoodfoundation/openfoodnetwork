@@ -36,10 +36,9 @@
           = t(:update)
       %td
         %h5.order-total.grand-total= @order.display_total
-      %td#empty-cart
-        / This needs help from Will - would like a link not button
+      %td#empty-cart.text-center
         %span#clear_cart_link{"data-hook" => ""}
-          = link_to "Empty cart", empty_cart_path, method: :put
+          = link_to "Empty cart", empty_cart_path, method: :put, :class => 'not-bold small'
           -#= form_tag empty_cart_path, :method => :put do
             -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
 
