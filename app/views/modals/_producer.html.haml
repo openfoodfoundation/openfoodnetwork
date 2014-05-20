@@ -1,0 +1,13 @@
+%ofn-modal{title: "{{ producer.name }}"}
+  #producer_modal{bindonce: true}
+    .row
+      .small-12.columns
+        %img{"bo-src" => "producer.promo_image"} 
+        %h3 {{ producer.name }}
+
+    .row
+      .small-6.columns
+        %p
+          {{ producer.description }}
+      .small-6.columns
+        Stay in touch with {{ producer.name }}

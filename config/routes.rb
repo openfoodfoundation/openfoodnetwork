@@ -1,12 +1,15 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
+  get "/#/login", to: "home#index", as: :spree_login
+
   resource :shop, controller: "shop" do
     get :products
     post :order_cycle
     get :order_cycle
   end
 
+  resources :groups
   resources :producers
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout

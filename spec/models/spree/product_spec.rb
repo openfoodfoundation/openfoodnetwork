@@ -547,5 +547,15 @@ module Spree
         end
       end
     end
+
+    describe "Taxons" do
+      let(:taxon1) { create(:taxon) }
+      let(:taxon2) { create(:taxon) }
+      let(:product) { create(:simple_product, taxons: [taxon1, taxon2]) }
+
+      it "returns the first taxon as the primary taxon" do
+        product.primary_taxon.should == taxon1
+      end
+    end
   end
 end

@@ -15,12 +15,10 @@ module Admin
       redirect_to main_app.admin_enterprise_groups_path
     end
 
-
     private
 
     def collection
       EnterpriseGroup.by_position
     end
-
   end
 end

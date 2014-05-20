@@ -1,10 +1,6 @@
 collection @products
 attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy
 
-node :show_variants do
-  true
-end
-
 node do |product|
   {
     notes: strip_tags(product.notes),
@@ -15,6 +11,10 @@ end
 
 child :supplier => :supplier do
   attributes :id, :name, :description
+end
+
+child :primary_taxon => :primary_taxon do
+  extends 'json/taxon'
 end
 
 child :master => :master do

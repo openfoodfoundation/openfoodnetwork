@@ -2,11 +2,15 @@ collection Enterprise.visible.is_distributor
 extends 'json/enterprises'
 
 child distributed_taxons: :taxons do
-  attributes :name, :id
+  extends "json/taxon"
 end
 
 child suppliers: :producers do
-  attributes :name, :id
+  attributes :name, :id, :description, :long_description
+  
+  node :promo_image do |producer| 
+    producer.promo_image.url 
+  end
 end
 
 node :pickup do |hub|
@@ -15,14 +19,6 @@ end
 
 node :delivery do |hub|
   not hub.shipping_methods.where(:require_ship_address => true).empty?
-end
-
-node :path do |hub|
-  shop_enterprise_path(hub) 
-end
-
-node :hash do |hub|
-  hub.to_param
 end
 
 node :active do |hub|
