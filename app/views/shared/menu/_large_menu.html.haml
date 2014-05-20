@@ -24,7 +24,7 @@
         %a{href: ""}
           %span.nav-primary Groups
       %li.divider
-      - if spree_current_user.andand.has_spree_role? 'admin'
+      - if admin_user? or enterprise_user?
         %li
           %a{href: spree.admin_path}
             %span.nav-primary Admin

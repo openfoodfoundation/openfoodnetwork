@@ -20,6 +20,10 @@ module SharedHelper
   end
   
   def enterprise_user?
-    spree_current_user.andand.enterprises.count > 0
+    spree_current_user.andand.enterprises.andand.count.to_i > 0
+  end
+
+  def admin_user?
+    spree_current_user.andand.has_spree_role? 'admin'
   end
 end
