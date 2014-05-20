@@ -12,8 +12,14 @@
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
 
-  .row{bindonce: true}
+  .row.group_table{bindonce: true}
     .small.12.columns
-      .group_table
-        .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
-          {{ group.name }}
+      .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
+        %h2 {{ group.name }}
+        %p {{ group.description }}
+        %p {{ group.long_description }}
+        %img{"bo-src" => "group.logo"}
+
+        %ul
+          %li{"ng-repeat" => "enterprise in group.enterprises"}
+            %a{"bo-href" => "enterprise.path"} {{ enterprise.name }}
