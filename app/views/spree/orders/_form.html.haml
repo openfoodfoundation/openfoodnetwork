@@ -39,7 +39,8 @@
       %td#empty-cart
         / This needs help from Will - would like a link not button
         %span#clear_cart_link{"data-hook" => ""}
-          = form_tag empty_cart_path, :method => :put do
-            = submit_tag t(:empty_cart), :class => 'button alert expand small'
+          = link_to "Empty cart", empty_cart_path, method: :put
+          -#= form_tag empty_cart_path, :method => :put do
+            -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
 
   = render "spree/orders/adjustments" unless @order.adjustments.eligible.blank?

@@ -11,6 +11,16 @@ Spree::OrdersController.class_eval do
   include OrderCyclesHelper
   layout 'darkswarm'
 
+  # Patching to redirect to shop if order is empty
+  def edit
+    @order = current_order(true)
+    if @order.line_items.empty?
+      redirect_to main_app.shop_path
+    else
+      associate_user
+    end
+  end
+
   # Patch Orders#populate to populate multi_cart (if enabled)
   def populate
     if OpenFoodNetwork::FeatureToggle.enabled? :multi_cart
