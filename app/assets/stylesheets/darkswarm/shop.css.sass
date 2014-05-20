@@ -82,27 +82,49 @@
       input.button.right
         float: left
     
+    
+    product:hover, product:focus, product:active
+      border-color: $clr-brick
+      @include box-shadow(0 0 3px 0 $clr-brick-bright)
+
+      .row.variants
+        border-top: 1px solid $clr-brick-light
+        background: $clr-brick-ultra-light
+
     product
-      border: 1px solid #ff0000
+      @include csstrans
+      border: 1px solid #989898
       display: block 
       margin-bottom: 1em !important
 
+      input
+        margin: 0
+        width: 8em
+
+      .columns
+        padding-top: 1em
+        padding-bottom: 1em
+
       .row.summary, .row.variants
+        @include csstrans
         margin-left: 0
         margin-right: 0
+        background: #f7f7f7
+        border-top: 1px solid #dfdfdf
 
       .row.summary
-        background: #ccc
+        @include csstrans
+        background: #fff
 
-      .summary-header
-        &, & *
-          @include avenir
-          color: $clr-brick
+        .summary-header
+          &, & *
+            @include avenir
+            color: $clr-brick
 
-      .summary-price
-        &, & *
-          @include avenir
-      
+        .summary-price
+          &, & *
+            @include avenir
+        
       
 
 
