@@ -22,8 +22,8 @@ feature %q{
 
     # Then I should see the relationships
     within('table#enterprise-relationships') do
-      page.should have_table_row [e1.name, e2.name, '']
-      page.should have_table_row [e3.name, e4.name, '']
+      page.should have_table_row [e1.name, 'permits', e2.name, '']
+      page.should have_table_row [e3.name, 'permits', e4.name, '']
     end
   end
 
@@ -37,7 +37,7 @@ feature %q{
     select 'Two', from: 'enterprise_relationship_child_name'
     click_button 'Create'
 
-    page.should have_table_row [e1.name, e2.name, '']
+    page.should have_table_row [e1.name, 'permits', e2.name, '']
     EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
   end
 
@@ -66,11 +66,11 @@ feature %q{
     er = create(:enterprise_relationship, parent: e1, child: e2)
 
     visit admin_enterprise_relationships_path
-    page.should have_table_row [e1.name, e2.name, '']
+    page.should have_table_row [e1.name, 'permits', e2.name, '']
 
     first("a.delete-enterprise-relationship").click
 
-    page.should_not have_table_row [e1.name, e2.name, '']
+    page.should_not have_table_row [e1.name, 'permits', e2.name, '']
     EnterpriseRelationship.where(id: er.id).should be_empty
   end
 end
