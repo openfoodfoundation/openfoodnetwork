@@ -19,6 +19,15 @@ RSpec::Matchers.define :have_table_row do |row|
     end
   end
 
+  failure_message_for_should do |text|
+    "expected to find table row #{@row}"
+  end
+
+  failure_message_for_should_not do |text|
+    "expected not to find table row #{@row}"
+  end
+
+
   def rows_under(node)
     node.all('tr').map { |tr| tr.all('th, td').map(&:text) }
   end
@@ -29,15 +38,6 @@ RSpec::Matchers.define :have_table_row do |row|
     false
   else
     true
-  end
-
-
-  failure_message_for_should do |text|
-    "expected to find table row #{@row}"
-  end
-
-  failure_message_for_should_not do |text|
-    "expected not to find table row #{@row}"
   end
 
 end
