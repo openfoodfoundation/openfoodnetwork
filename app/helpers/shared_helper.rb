@@ -1,4 +1,9 @@
 module SharedHelper
+
+  def inject_json(name, partial)
+    render "json/injection", name: name, partial: partial
+  end
+
   def distributor_link_class(distributor)
     cart = current_order(true)
     @active_distributors ||= Enterprise.distributors_with_active_order_cycles
