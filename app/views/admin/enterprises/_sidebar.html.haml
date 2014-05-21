@@ -4,12 +4,13 @@
     %span.four.columns.alpha.centered Payment Methods
   .four.columns.alpha.list{ class: "#{payment_methods_color}" }
     - if @payment_methods.count > 0
+      -# = hidden_field_tag "enterprise[payment_method_ids][]", []
       - @payment_methods.each do |payment_method|
         %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_payment_method_path(payment_method)}" }
           %span.three.columns.alpha
             = payment_method.name
           %span.one.column.omega
-            = f.check_box :payment_method_ids, { :multiple => true }, payment_method.id, nil
+            = f.check_box :payment_method_ids, { multiple: true }, payment_method.id, nil
     - else
       .four.columns.alpha.list-item
         %span.three.columns.alpha None Available
