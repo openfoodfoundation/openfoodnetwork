@@ -12,5 +12,3 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Product, OrderCycle) -
     code = e.keyCode || e.which
     if code == 13
       e.preventDefault()
-
-  $scope.productPrice = (product) ->

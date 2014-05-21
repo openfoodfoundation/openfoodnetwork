@@ -26,8 +26,10 @@ describe 'Order service', ->
     }
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
+
     inject ($injector, _$httpBackend_)->
       $httpBackend = _$httpBackend_
+      $httpBackend.expectGET("/shop/products").respond 200, []
       Order = $injector.get("Order")
       Navigation = $injector.get("Navigation")
       flash = $injector.get("flash")
