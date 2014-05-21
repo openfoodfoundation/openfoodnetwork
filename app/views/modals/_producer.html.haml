@@ -1,10 +1,9 @@
 %ofn-modal{title: "{{ producer.name }}"}
-  #producer_modal{bindonce: true}
+  #producer_modal
     .row
       .small-12.columns
-        %img{"bo-src" => "producer.promo_image"} 
+        %img{"ng-src" => "producer.promo_image"} 
         %h3 {{ producer.name }}
-
     .row
       .small-6.columns
         %p
