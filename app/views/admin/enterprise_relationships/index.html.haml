@@ -9,11 +9,6 @@
   %input.search{"ng-model" => "query", "placeholder" => "Search"}
 
   %table#enterprise-relationships
-    %thead
-      %tr
-        %th Parent
-        %th Child
-        %th.actions
     %tbody
       = render 'form'
       %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships | filter:query"}
