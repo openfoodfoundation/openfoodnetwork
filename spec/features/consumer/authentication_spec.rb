@@ -5,7 +5,27 @@ feature "Authentication", js: true do
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
-    describe "newskool" do
+    describe "With redirects" do
+      scenario "logging in with a redirect set" do
+        visit groups_path(anchor: "login?after_login=#{producers_path}")
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_login_button
+        page.should have_content "Select a producer from the list below"
+        current_path.should == producers_path
+      end
+
+      scenario "logging into admin redirects home, then back to admin" do
+        visit spree.admin_path
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_login_button
+        page.should have_content "Dashboard"
+        current_path.should == spree.admin_path
+      end
+    end
+
+    describe "Loggin in from the home page" do
       before do
         visit root_path
       end
