@@ -22,7 +22,8 @@ child :master => :master do
   child :images => :images do
     attributes :id, :alt
     node do |img|
-      {:small_url => img.attachment.url(:small, false)}
+      {:small_url => img.attachment.url(:small, false),
+      :large_url => img.attachment.url(:large, false)}
     end
   end
 end
