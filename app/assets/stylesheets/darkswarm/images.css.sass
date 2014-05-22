@@ -1,0 +1,21 @@
+@import mixins
+@import variables
+@import branding
+
+.product-img
+  border-bottom: 40px white solid
+  border-top: 20px white solid
+  border-left: 20px white solid
+  border-right: 20px white solid
+  outline: 1px solid #ccc
+  @include box-shadow(0 1px 2px 1px rgba(0,0,0,0.25))
+  
+@media only screen and (max-width: 1024px)
+  .product-img
+    margin-top: 2em
+    margin-bottom: 1em
+    
+
+
+
+
