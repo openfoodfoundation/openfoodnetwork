@@ -76,17 +76,32 @@ feature %q{
     end
   end
 
+
   context "as an enterprise user" do
     let!(:d1) { create(:distributor_enterprise) }
     let!(:d2) { create(:distributor_enterprise) }
+    let!(:d3) { create(:distributor_enterprise) }
     let(:enterprise_user) { create_enterprise_user([d1]) }
 
+    let!(:er1) { create(:enterprise_relationship, parent: d1, child: d2) }
+    let!(:er2) { create(:enterprise_relationship, parent: d2, child: d1) }
+    let!(:er3) { create(:enterprise_relationship, parent: d2, child: d3) }
+
     before { login_to_admin_as enterprise_user }
+
+    scenario "enterprise user can only see relationships involving their enterprises" do
+      visit admin_enterprise_relationships_path
+
+      page.should     have_table_row [d1.name, 'permits', d2.name, '']
+      page.should     have_table_row [d2.name, 'permits', d1.name, '']
+      page.should_not have_table_row [d2.name, 'permits', d3.name, '']
+    end
+
 
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
       page.should have_select 'enterprise_relationship_parent_id', options: ['', d1.name]
-      page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name]
+      page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
     end
   end
 end
