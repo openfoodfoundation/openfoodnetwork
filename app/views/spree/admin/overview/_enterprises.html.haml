@@ -1,4 +1,4 @@
-%div.dashboard_item.sixteen.columns.alpha#enterprises{ 'ng-app' => 'ofn.admin', 'ng-controller' => "enterprisesDashboard" }
+%div.dashboard_item.sixteen.columns.alpha#enterprises{ 'ng-app' => 'ofn.admin', 'ng-controller' => "enterprisesDashboardCtrl" }
   %div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
     %h3.thirteen.columns.alpha My Enterprises
     - if @enterprises.any?
