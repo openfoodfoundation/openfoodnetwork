@@ -75,6 +75,12 @@ Spree::Product.class_eval do
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
                                                 merge(Exchange.outgoing).
                                                 where('order_cycles.id = ?', order_cycle) }
+
+  scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
+                                                merge(OrderCycle.active).
+                                                merge(Exchange.outgoing).
+                                                where('order_cycles.id IS NOT NULL') }
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped

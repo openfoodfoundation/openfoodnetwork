@@ -4,7 +4,23 @@ div.dashboard_item
   .centered
     text-align: center
 
+  .text-icon
+    margin-top: 7px
+    display: block
+    font-size: 16px
+    font-weight: bold
+    color: #fff
+    padding: 0px 6px
+    border-radius: 10px
+    &.green
+      background-color: #9fc820
+    &.red
+      background-color: #DA5354
+    &.orange
+      background-color: #DA7F52
+
   div.header
+    height: 50px
     border-radius: 6px 6px 0px 0px
     border: 1px solid #5498da
     position: relative
@@ -26,12 +42,36 @@ div.dashboard_item
       h3
         color: #DA7F52
 
-    h3
-      padding: 10px 5px 10px 3%
+    h3.alpha
+      height: 100%
+      padding: 10px 5px 0px 3%
 
     a
       border-radius: 0px 4px 0px 0px
       margin-left: 8px
+      height: 100%
+      padding: 15px 2px 0px 2px
+
+  .tabs
+    height: 30px
+    border: solid #5498da
+    border-width: 0px 0px 1px 0px
+    margin-top: 3px
+    div.dashboard_tab
+      cursor: pointer
+      height: 30px
+      color: #fff
+      background-color: #5498da
+      padding: 5px 5px 0px 5px
+      text-align: center
+      font-weight: bold
+      border: solid #5498da
+      border-width: 1px 1px 0px 1px
+      &:hover
+        background-color: #9fc820
+      &.selected
+        color: #5498da
+        background-color: #fff
 
   .list
     max-height: 250px
@@ -95,10 +135,13 @@ div.dashboard_item
           color: #fff
         .icon-ok-sign
           color: #fff
+        .text-icon
+          &.green
+            color: #9fc820
+            background-color: #fff
 
   a.button
     color: #fff
-    padding: 15px 15px
     font-size: 110%
     font-weight: bold
     text-align: center
@@ -112,3 +155,4 @@ div.dashboard_item
       background-color: #9fc820
     &.bottom
       border-radius: 0px 0px 6px 6px
+      padding: 15px 15px
