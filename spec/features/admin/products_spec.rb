@@ -6,6 +6,7 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
+  let!(:taxon) { create(:taxon) }
 
   background do
     @supplier = create(:supplier_enterprise, :name => 'New supplier')
@@ -22,6 +23,7 @@ feature %q{
 
       fill_in 'product_name', with: 'A new product !!!'
       fill_in 'product_price', with: '19.99'
+      select taxon.name, from: "product_primary_taxon_id"
       select 'New supplier', from: 'product_supplier_id'
 
       click_button 'Create'
@@ -43,6 +45,8 @@ feature %q{
       
       product.reload
       product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
+
+
       product.product_distributions.map { |pd| pd.enterprise_fee }.sort.should == [@enterprise_fees[0], @enterprise_fees[2]].sort
     end
 
@@ -53,6 +57,13 @@ feature %q{
 
       visit spree.edit_admin_product_path(product)
 
+<<<<<<< HEAD
+=======
+      fill_in 'product_name', :with => 'A new product !!!'
+      fill_in 'product_price', :with => '19.99'
+      select taxon.name, from: "product_primary_taxon_id"
+      select 'New supplier', :from => 'product_supplier_id'
+>>>>>>> 110a6f2... Adding primary taxon to admin forms
       choose 'product_group_buy_1'
       fill_in 'Group buy unit size', :with => '10'
 
@@ -96,6 +107,7 @@ feature %q{
 
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
+      select taxon.name, from: "product_primary_taxon_id"
 
       # Should only have suppliers listed which the user can manage
       within "#product_supplier_id" do
