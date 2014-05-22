@@ -15,6 +15,7 @@ class Enterprise < ActiveRecord::Base
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_and_belongs_to_many :shipping_methods, join_table: 'distributors_shipping_methods', class_name: 'Spree::ShippingMethod', foreign_key: 'distributor_id'
 
+
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
