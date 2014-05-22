@@ -33,7 +33,7 @@ module AuthenticationWorkflow
       :login => 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
-    login_to_admin_as admin_user
+    quick_login_as admin_user
   end
 
   def create_enterprise_user(enterprises = [])
@@ -47,10 +47,12 @@ module AuthenticationWorkflow
   end
 
   def login_to_admin_as user
+    quick_login_as user
     visit spree.admin_path
-    fill_in 'spree_user_email', :with => user.email
-    fill_in 'spree_user_password', :with => user.password
-    click_button 'Login'
+    #visit spree.admin_path
+    #fill_in 'spree_user_email', :with => user.email
+    #fill_in 'spree_user_password', :with => user.password
+    #click_button 'Login'
   end
 
   def login_to_consumer_section
