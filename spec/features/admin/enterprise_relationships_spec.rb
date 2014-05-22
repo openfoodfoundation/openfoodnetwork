@@ -23,8 +23,8 @@ feature %q{
 
       # Then I should see the relationships
       within('table#enterprise-relationships') do
-        page.should have_table_row [e1.name, 'permits', e2.name, '']
-        page.should have_table_row [e3.name, 'permits', e4.name, '']
+        page.should have_relationship e1, e2
+        page.should have_relationship e3, e4
       end
     end
 
@@ -38,7 +38,7 @@ feature %q{
       select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_table_row [e1.name, 'permits', e2.name, '']
+      page.should have_relationship e1, e2
       EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
     end
 
@@ -67,11 +67,11 @@ feature %q{
       er = create(:enterprise_relationship, parent: e1, child: e2)
 
       visit admin_enterprise_relationships_path
-      page.should have_table_row [e1.name, 'permits', e2.name, '']
+      page.should have_relationship e1, e2
 
       first("a.delete-enterprise-relationship").click
 
-      page.should_not have_table_row [e1.name, 'permits', e2.name, '']
+      page.should_not have_relationship e1, e2
       EnterpriseRelationship.where(id: er.id).should be_empty
     end
   end
@@ -92,9 +92,9 @@ feature %q{
     scenario "enterprise user can only see relationships involving their enterprises" do
       visit admin_enterprise_relationships_path
 
-      page.should     have_table_row [d1.name, 'permits', d2.name, '']
-      page.should     have_table_row [d2.name, 'permits', d1.name, '']
-      page.should_not have_table_row [d2.name, 'permits', d3.name, '']
+      page.should     have_relationship d1, d2
+      page.should     have_relationship d2, d1
+      page.should_not have_relationship d2, d3
     end
 
 
@@ -103,5 +103,12 @@ feature %q{
       page.should have_select 'enterprise_relationship_parent_id', options: ['', d1.name]
       page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
     end
+  end
+
+
+  private
+
+  def have_relationship(parent, child)
+    have_table_row [parent.name, 'permits', child.name, '']
   end
 end
