@@ -1,4 +1,22 @@
 module WebHelper
+  def self.included(base)
+    base.extend ClassMethods
+  end
+
+  module ClassMethods
+    # By default, Capybara uses a 30 s wait time, which is more reliable for CI, but too slow
+    # for TDD. Use this to make tests fail fast. Usage:
+    #
+    # describe "foo" do
+    #   use_short_wait
+    #   ...
+    # end
+    def use_short_wait
+      around { |example| Capybara.using_wait_time(2) { example.run } }
+    end
+  end
+
+
   def current_path_should_be path
     current_path = URI.parse(current_url).path
     current_path.should == path
