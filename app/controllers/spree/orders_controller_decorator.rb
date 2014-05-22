@@ -28,6 +28,7 @@ Spree::OrdersController.class_eval do
     end
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
     if populator.populate(params.slice(:products, :variants, :quantity))
+
       fire_event('spree.cart.add')
       fire_event('spree.order.contents_changed')
       respond_with(@order) do |format|

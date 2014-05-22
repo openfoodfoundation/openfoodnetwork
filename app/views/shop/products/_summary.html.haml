@@ -6,11 +6,10 @@
     %img{"bo-src" => "product.primary_taxon.icon", 
     "ng-click" => "ordering.order = 'primary_taxon.name'",
     name: "{{product.primary_taxon.name}}"}
-    {{ product.name}}
-    -#= render partial: "shop/products/modal"
+    = render partial: "modals/product"
 
   .small-5.columns.summary-header
-    {{ product.supplier.name }}
+    = render partial: "modals/producer"
 
   .small-2.columns.summary-price.text-right.price
     %span{"ng-if" => "hasVariants"} 

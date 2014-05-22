@@ -96,6 +96,9 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_relationship do
+  end
+
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
     description 'this is a group'
@@ -187,6 +190,10 @@ FactoryGirl.modify do
     distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
   end
 
+  factory :option_type do
+    # Prevent inconsistent ordering in specs when all option types have the same (0) position
+    sequence(:position)
+  end
 end
 
 

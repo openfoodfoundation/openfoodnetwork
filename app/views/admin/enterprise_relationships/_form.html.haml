@@ -1,0 +1,9 @@
+%tr
+  %td
+    %select{name: "enterprise_relationship_parent_name", "ng-model" => "parent_id", "ng-options" => "e.id as e.name for e in Enterprises.enterprises"}
+  %td permits
+  %td
+    %select{name: "enterprise_relationship_child_name", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.enterprises"}
+  %td.actions
+    %input{type: "button", value: "Create", "ng-click" => "create()"}
+    .errors {{ EnterpriseRelationships.create_errors }}

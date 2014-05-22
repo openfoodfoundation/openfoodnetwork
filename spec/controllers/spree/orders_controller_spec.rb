@@ -15,6 +15,7 @@ describe Spree::OrdersController do
     controller.stub(:current_order_cycle).and_return(order_cycle)
     controller.stub(:current_order).and_return order
     order.stub_chain(:line_items, :empty?).and_return true
+    session[:access_token] = order.token
     spree_get :edit
     response.should redirect_to shop_path
   end

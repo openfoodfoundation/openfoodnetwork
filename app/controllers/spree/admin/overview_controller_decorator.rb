@@ -13,8 +13,7 @@ Spree::Admin::OverviewController.class_eval do
       redirect_to '/unauthorized'
     else
       store_location
-      url = respond_to?(:spree_login_path) ? spree_login_path : root_path
-      redirect_to url
+      redirect_to root_path(anchor: "login?after_login=#{spree.admin_path}")
     end
   end
 end
