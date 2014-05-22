@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140516045323) do
+ActiveRecord::Schema.define(:version => 20140522015012) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -250,6 +250,9 @@ ActiveRecord::Schema.define(:version => 20140516045323) do
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
     t.boolean  "visible",                  :default => true
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "linkedin"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
