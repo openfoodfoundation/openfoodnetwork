@@ -34,6 +34,7 @@ module AuthenticationWorkflow
 
     admin_user.spree_roles << admin_role
     quick_login_as admin_user
+    visit spree.admin_path
   end
 
   def create_enterprise_user(enterprises = [])
