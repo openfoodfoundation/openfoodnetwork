@@ -2,6 +2,9 @@ require 'ffaker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
+  factory :classification, class: Spree::Classification do
+  end
+
   factory :order_cycle, :parent => :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
 
@@ -150,6 +153,9 @@ end
 
 
 FactoryGirl.modify do
+  factory :product do
+    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
+  end
   factory :simple_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
     # Pull request: https://github.com/spree/spree/pull/1964
@@ -157,6 +163,7 @@ FactoryGirl.modify do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
+    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
     on_hand 3
 
     variant_unit 'weight'
