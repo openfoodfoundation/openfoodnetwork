@@ -232,6 +232,19 @@ module OpenFoodNetwork
         applicator.send(:touched_exchanges).should == [exchange]
       end
 
+      it "does not add exchanges it is not permitted to touch" do
+        sender = FactoryGirl.create(:enterprise)
+        receiver = FactoryGirl.create(:enterprise)
+        oc = FactoryGirl.create(:simple_order_cycle)
+        applicator = OrderCycleFormApplicator.new(oc, [])
+        incoming = true
+
+        expect do
+          applicator.send(:touched_exchanges=, [])
+          applicator.send(:add_exchange, sender.id, receiver.id, incoming)
+        end.to change(Exchange, :count).by(0)
+      end
+
       it "does not update exchanges it is not permitted to touch" do
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)

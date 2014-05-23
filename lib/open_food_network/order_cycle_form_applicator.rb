@@ -58,14 +58,18 @@ module OpenFoodNetwork
 
     def add_exchange(sender_id, receiver_id, incoming, attrs={})
       attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming)
-      exchange = @order_cycle.exchanges.create! attrs
-      @touched_exchanges << exchange
+      exchange = @order_cycle.exchanges.build attrs
+
+      if permission_for exchange
+        exchange.save!
+        @touched_exchanges << exchange
+      end
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs={})
       exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
 
-      if permission_for(exchange)
+      if permission_for exchange
         exchange.update_attributes!(attrs)
         @touched_exchanges << exchange
       end
