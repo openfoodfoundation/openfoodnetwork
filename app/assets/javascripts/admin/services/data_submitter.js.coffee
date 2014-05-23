@@ -1,4 +1,4 @@
-Admin.factory "dataSubmitter", [
+angular.module("ofn.admin").factory "dataSubmitter", [
   "$http", "$q", "switchClass"
   ($http, $q, switchClass) ->
     return (changeObj) ->

@@ -1,4 +1,4 @@
-Admin.controller "AdminProductEditCtrl", [
+angular.module("ofn.admin").controller "AdminProductEditCtrl", [
   "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts"
   ($scope, $timeout, $http, dataFetcher, DirtyProducts) ->
     $scope.updateStatusMessage =

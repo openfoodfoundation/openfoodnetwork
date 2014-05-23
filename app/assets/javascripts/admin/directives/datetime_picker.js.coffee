@@ -1,4 +1,4 @@
-Admin.directive "datetimepicker", ->
+angular.module("ofn.admin").directive "datetimepicker", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     element.datetimepicker
