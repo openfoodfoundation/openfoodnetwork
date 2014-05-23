@@ -44,7 +44,7 @@
       %input{ type: 'hidden', 'ng-value' => 'product.master.unit_description', name: 'product[unit_description]' }
     .five.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
       = f.label :product_variant_unit_name, :unit_name
-      %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches',bu :type => 'text' }
+      %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
   #product-from-prototype.clearfix{"data-hook" => "product-from-prototype"}
     = render :file => 'spree/admin/prototypes/show' if @prototype
   = render :partial => 'spree/admin/shared/new_resource_links'
