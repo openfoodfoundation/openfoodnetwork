@@ -5,19 +5,12 @@ module Spree
 
     describe "associations" do
       it { should belong_to(:supplier) }
-      it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
 
     describe "validations and defaults" do
       it "is valid when created from factory" do
         create(:product).should be_valid
-      end
-
-      it "requires a primary taxon" do
-        product = create(:simple_product)
-        product.primary_taxon = nil
-        product.should_not be_valid
       end
 
       it "requires a supplier" do
@@ -558,10 +551,10 @@ module Spree
     describe "Taxons" do
       let(:taxon1) { create(:taxon) }
       let(:taxon2) { create(:taxon) }
-      let(:product) { create(:simple_product) }
+      let(:product) { create(:simple_product, taxons: [taxon1, taxon2]) }
 
       it "returns the first taxon as the primary taxon" do
-        product.taxons.should == [product.primary_taxon]
+        product.primary_taxon.should == taxon1
       end
     end
   end
