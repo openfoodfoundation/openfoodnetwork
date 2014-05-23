@@ -64,9 +64,11 @@ module OpenFoodNetwork
 
     def update_exchange(sender_id, receiver_id, incoming, attrs={})
       exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
-      exchange.update_attributes!(attrs)
 
-      @touched_exchanges << exchange
+      if permission_for(exchange)
+        exchange.update_attributes!(attrs)
+        @touched_exchanges << exchange
+      end
     end
 
     def destroy_untouched_exchanges
@@ -79,7 +81,11 @@ module OpenFoodNetwork
     end
 
     def with_permission(exchanges)
-      exchanges.select { |ex| @permitted_enterprises.include? ex.participant }
+      exchanges.select { |ex| permission_for(ex) }
+    end
+
+    def permission_for(exchange)
+      @permitted_enterprises.include? exchange.participant
     end
 
 

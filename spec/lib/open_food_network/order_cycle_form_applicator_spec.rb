@@ -136,20 +136,31 @@ module OpenFoodNetwork
       end
 
       describe "filtering exchanges for permission" do
-        it "returns exchanges involving enterprises we have permission to touch" do
-          e = double(:enterprise)
-          ex = double(:exchange, participant: e)
+        describe "checking permission on a single exchange" do
+          it "returns true when it has permission" do
+            e = double(:enterprise)
+            ex = double(:exchange, participant: e)
 
-          applicator = OrderCycleFormApplicator.new(nil, [e])
-          applicator.send(:with_permission, [ex]).should == [ex]
+            applicator = OrderCycleFormApplicator.new(nil, [e])
+            applicator.send(:permission_for, ex).should be_true
+          end
+
+          it "returns false otherwise" do
+            e = double(:enterprise)
+            ex = double(:exchange, participant: e)
+
+            applicator = OrderCycleFormApplicator.new(nil, [])
+            applicator.send(:permission_for, ex).should be_false
+          end
         end
 
-        it "does not return other exchanges" do
-          e = double(:enterprise)
-          ex = double(:exchange, participant: e)
-
-          applicator = OrderCycleFormApplicator.new(nil, [])
-          applicator.send(:with_permission, [ex]).should == []
+        describe "filtering many exchanges" do
+          it "returns exchanges involving enterprises we have permission to touch" do
+            ex1, ex2 = double(:exchange), double(:exchange)
+            applicator = OrderCycleFormApplicator.new(nil, [])
+            applicator.stub(:permission_for).and_return(true, false)
+            applicator.send(:with_permission, [ex1, ex2]).should == [ex1]
+          end
         end
       end
     end
@@ -197,10 +208,11 @@ module OpenFoodNetwork
       end
 
       it "updates exchanges" do
-        oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc)
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)
+        oc = FactoryGirl.create(:simple_order_cycle)
+        applicator = OrderCycleFormApplicator.new(oc, [sender, receiver])
+
         incoming = true
         variant1 = FactoryGirl.create(:variant)
         variant2 = FactoryGirl.create(:variant)
@@ -218,6 +230,21 @@ module OpenFoodNetwork
         exchange.variants.sort.should == [variant1, variant3].sort
         exchange.enterprise_fees.sort.should == [enterprise_fee2, enterprise_fee3]
         applicator.send(:touched_exchanges).should == [exchange]
+      end
+
+      it "does not update exchanges it is not permitted to touch" do
+        sender = FactoryGirl.create(:enterprise)
+        receiver = FactoryGirl.create(:enterprise)
+        oc = FactoryGirl.create(:simple_order_cycle)
+        applicator = OrderCycleFormApplicator.new(oc, [])
+        incoming = true
+        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming)
+        variant1 = FactoryGirl.create(:variant)
+
+        applicator.send(:touched_exchanges=, [])
+        applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id]})
+
+        exchange.variants.should_not == [variant1]
       end
     end
   end
