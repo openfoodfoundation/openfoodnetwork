@@ -115,12 +115,42 @@ module OpenFoodNetwork
 
           applicator.send(:untouched_exchanges).should == []
         end
+
+        it "does not destroy exchanges involving enterprises it does not have permission to touch" do
+          applicator = OrderCycleFormApplicator.new(nil)
+          exchanges = double(:exchanges)
+          permitted_exchanges = [double(:exchange), double(:exchange)]
+
+          applicator.should_receive(:with_permission).with(exchanges) { permitted_exchanges }
+          applicator.stub(:untouched_exchanges) { exchanges }
+          permitted_exchanges.each { |ex| ex.should_receive(:destroy) }
+
+          applicator.send(:destroy_untouched_exchanges)
+        end
       end
 
       it "converts exchange variant ids hash to an array of ids" do
         applicator = OrderCycleFormApplicator.new(nil)
 
         applicator.send(:exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}}).should == [1, 3]
+      end
+
+      describe "filtering exchanges for permission" do
+        it "returns exchanges involving enterprises we have permission to touch" do
+          e = double(:enterprise)
+          ex = double(:exchange, participant: e)
+
+          applicator = OrderCycleFormApplicator.new(nil, [e])
+          applicator.send(:with_permission, [ex]).should == [ex]
+        end
+
+        it "does not return other exchanges" do
+          e = double(:enterprise)
+          ex = double(:exchange, participant: e)
+
+          applicator = OrderCycleFormApplicator.new(nil, [])
+          applicator.send(:with_permission, [ex]).should == []
+        end
       end
     end
 
