@@ -17,20 +17,19 @@
           %a{"bo-href" => "{{producer.website}}", target: "_blank" }
             %i.fi-web
             {{ producer.website }}
-        {{ producer.twitterific }}
-        %li{"ng-show" => "producer.twitterific"}  
+        %li  
           %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.fi-social-twitter
             {{ producer.twitter }}
-        %li{"bo-if" => "producer.facebook"} 
+        %li 
           %a{"bo-href" => "{{producer.facebook}}", target: "_blank"}
             %i.fi-social-facebook
             {{ producer.facebook }}
-        %li{"bo-if" => "producer.linkedin"} 
+        %li 
           %a{"bo-href" => "{{producer.linkedin}}", target: "_blank"}
             %i.fi-social-linkedin
             {{ producer.linkedin }}
-        %li{"bo-if" => "producer.instagram"}
+        %li
           %a{"bo-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
             / Will needs logic to allow user to input @instagramhandle to drive a logical URL
             %i.fi-social-instagram
