@@ -1,28 +1,41 @@
-/ %ofn-modal{title: "{{ producer.name }}"}
-/   #producer_modal
-/     .row
-/       .small-12.columns
-/         %img{"ng-src" => "producer.promo_image"} 
-/         %h3 {{ producer.name }}
-/     .row
-/       .small-6.columns
-/         %p
-/           {{ producer.description }}
-/       .small-6.columns
-/         Stay in touch with {{ producer.name }}
-/   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
-
-
 %ofn-modal{title: "{{producer.name}}"}
   .row
-    .columns.small-12
-      %img.product-img{"ng-src" => "{{producer.promo_image.images[0].large_url}}"} 
-      %h3 {{ producer.name }}
+    .columns.small-12.producer-hero
+      %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
+      / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
+      %h3.producer-name {{ producer.name }}
   .row  
+    .columns.small-12.large-6{"ng-bind-html" => "{{producer.long_description}}"}
+      / Will to fix this
     .columns.small-12.large-6
-      %p {{ producer.description }}
-    .columns.small-12.large-6
-      Stay in touch with {{ producer.name }}
-  / %pre
-  /   {{ producer | json }}
+      / Will needs logic to add in following only if data is available for each type:
+      / Will needs better formatting of URLs printed on-screen (minus http://www.)
+      / Will needs formatting of URLs driving %a regardless of user input (plus http://www.)
+      %img.producer-logo{"ng-src" => "{{producer.logo}}"} 
+      %h4 Stay in touch with {{ producer.name }}
+      %ul.small-block-grid-1
+        %li 
+          %a{href: "{{producer.website}}", target: "_blank" }
+            %i.fi-web
+            {{ producer.website }}
+        %li  
+          %a{href: "{{producer.twitter}}", target: "_blank"}
+            / Will needs logic to allow user to input @twitterhandle to drive a logical URL
+            %i.fi-social-twitter
+            {{ producer.twitter }}
+        %li  
+          %a{href: "{{producer.facebook}}", target: "_blank"}
+            %i.fi-social-facebook
+            {{ producer.facebook }}
+        %li  
+          %a{href: "{{producer.linkedin}}", target: "_blank"}
+            %i.fi-social-linkedin
+            {{ producer.linkedin }}
+        %li  
+          %a{href: "{{producer.instagram}}", target: "_blank"}  
+            / Will needs logic to allow user to input @instagramhandle to drive a logical URL
+            %i.fi-social-instagram
+            {{ producer.instagram }}
+
+
   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
