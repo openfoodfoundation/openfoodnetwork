@@ -10,14 +10,7 @@ node do |product|
 end
 
 child :supplier => :supplier do
-  attributes :id, :name, :description, :long_description, :website, :instagram, :facebook, :linkedin, :twitter
-
-  node :logo do |supplier|
-    supplier.logo.url
-  end
-  node :promo_image do |supplier|
-    supplier.promo_image.url
-  end
+  attributes :id, :name, :description
 end
 
 child :primary_taxon => :primary_taxon do
