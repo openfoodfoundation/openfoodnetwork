@@ -16,11 +16,3 @@ Darkswarm.directive "ofnModal", ($modal)->
 
     elem.on "click", =>
       scope.modalInstance = $modal.open(controller: ctrl, template: contents)
-
-# TODO THIS IS TERRIBLE PLEASE FIX NG-BIND-HTML
-Darkswarm.directive "injectHtml", ->
-  restrict: 'A'
-  scope:
-    injectHtml: "="
-  link: (scope, elem, attrs, ctrl)->
-    elem.html(scope.injectHtml)

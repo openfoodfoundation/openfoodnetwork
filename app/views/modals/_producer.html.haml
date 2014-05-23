@@ -1,28 +1,12 @@
-/ %ofn-modal{title: "{{ producer.name }}"}
-/   #producer_modal
-/     .row
-/       .small-12.columns
-/         %img{"ng-src" => "producer.promo_image"} 
-/         %h3 {{ producer.name }}
-/     .row
-/       .small-6.columns
-/         %p
-/           {{ producer.description }}
-/       .small-6.columns
-/         Stay in touch with {{ producer.name }}
-/   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
-
-
-%ofn-modal{title: "{{producer.name}}"}
-  .row
-    .columns.small-12
-      %img.product-img{"ng-src" => "{{producer.promo_image.images[0].large_url}}"} 
-      %h3 {{ producer.name }}
-  .row  
-    .columns.small-12.large-6
-      %p {{ producer.description }}
-    .columns.small-12.large-6
-      Stay in touch with {{ producer.name }}
-  / %pre
-  /   {{ producer | json }}
-  %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
+%ofn-modal{title: "{{ producer.name }}"}
+  #producer_modal
+    .row
+      .small-12.columns
+        %img{"ng-src" => "producer.promo_image"} 
+        %h3 {{ producer.name }}
+    .row
+      .small-6.columns
+        %p
+          {{ producer.description }}
+      .small-6.columns
+        Stay in touch with {{ producer.name }}
