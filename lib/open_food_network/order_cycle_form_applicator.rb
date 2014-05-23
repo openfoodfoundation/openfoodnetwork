@@ -6,7 +6,7 @@ module OpenFoodNetwork
   # as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
     # The applicator will only touch exchanges where a permitted enterprise is the participant
-    def initialize(order_cycle, permitted_enterprises=[])
+    def initialize(order_cycle, permitted_enterprises)
       @order_cycle = order_cycle
       @permitted_enterprises = permitted_enterprises
     end
