@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductNodeCtrl", ($scope) ->
+Darkswarm.controller "ProductNodeCtrl", ($scope, $sce) ->
 
   $scope.price = ->
     if $scope.product.variants.length > 0
@@ -8,5 +8,10 @@ Darkswarm.controller "ProductNodeCtrl", ($scope) ->
       $scope.product.price
 
   $scope.producer = $scope.product.supplier
-
+  $scope.producer.twitterific = true
   $scope.hasVariants = $scope.product.variants.length > 0
+
+Darkswarm.filter "unsafe", ($sce) ->
+  (val) ->
+    $sce.trustAsHtml val
+
