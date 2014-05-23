@@ -1,40 +1,12 @@
-%ofn-modal{title: "{{producer.name}}"}
-  .row
-    .columns.small-12.producer-hero
-      %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
-      / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
-      %h3.producer-name {{ producer.name }}
-  .row  
-    .columns.small-12.large-6{"inject-html" => "producer.long_description"}
-    .columns.small-12.large-6
-      / Will needs logic to add in following only if data is available for each type:
-      / Will needs better formatting of URLs printed on-screen (minus http://www.)
-      / Will needs formatting of URLs driving %a regardless of user input (plus http://www.)
-      %img.producer-logo{"ng-src" => "{{producer.logo}}"} 
-      %h4 Stay in touch with {{ producer.name }}
-      %ul.small-block-grid-1{bindonce: true}
-        %li{"bo-if" => "producer.website"}
-          %a{"bo-href" => "{{producer.website}}", target: "_blank" }
-            %i.fi-web
-            {{ producer.website }}
-        {{ producer.twitterific }}
-        %li{"ng-show" => "producer.twitterific"}  
-          %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
-            %i.fi-social-twitter
-            {{ producer.twitter }}
-        %li{"bo-if" => "producer.facebook"} 
-          %a{"bo-href" => "{{producer.facebook}}", target: "_blank"}
-            %i.fi-social-facebook
-            {{ producer.facebook }}
-        %li{"bo-if" => "producer.linkedin"} 
-          %a{"bo-href" => "{{producer.linkedin}}", target: "_blank"}
-            %i.fi-social-linkedin
-            {{ producer.linkedin }}
-        %li{"bo-if" => "producer.instagram"}
-          %a{"bo-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
-            / Will needs logic to allow user to input @instagramhandle to drive a logical URL
-            %i.fi-social-instagram
-            {{ producer.instagram }}
-
-
-  %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
+%ofn-modal{title: "{{ producer.name }}"}
+  #producer_modal
+    .row
+      .small-12.columns
+        %img{"ng-src" => "producer.promo_image"} 
+        %h3 {{ producer.name }}
+    .row
+      .small-6.columns
+        %p
+          {{ producer.description }}
+      .small-6.columns
+        Stay in touch with {{ producer.name }}
