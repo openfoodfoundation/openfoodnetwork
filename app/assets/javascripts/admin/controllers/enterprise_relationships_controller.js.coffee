@@ -1,4 +1,4 @@
-Admin.controller "AdminEnterpriseRelationshipsCtrl", ($scope, EnterpriseRelationships, Enterprises) ->
+angular.module("ofn.admin").controller "AdminEnterpriseRelationshipsCtrl", ($scope, EnterpriseRelationships, Enterprises) ->
   $scope.EnterpriseRelationships = EnterpriseRelationships
   $scope.Enterprises = Enterprises
 

@@ -1,4 +1,4 @@
-Admin.factory 'EnterpriseRelationships', ($http, enterprise_relationships) ->
+angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterprise_relationships) ->
   new class EnterpriseRelationships
     create_errors: ""
 
