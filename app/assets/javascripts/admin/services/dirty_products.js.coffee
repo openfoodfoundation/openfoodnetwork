@@ -1,4 +1,4 @@
-Admin.factory "DirtyProducts", ($parse) ->
+angular.module("ofn.admin").factory "DirtyProducts", ($parse) ->
   # Temporary service to track changes in products on admin bulk product edit
   dirtyProducts = {}
   

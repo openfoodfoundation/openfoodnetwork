@@ -1,4 +1,4 @@
-Admin.factory "Taxons", ($resource) ->
+angular.module("ofn.admin").factory "Taxons", ($resource) ->
   resource = $resource "/admin/taxons/search"
 
   return {

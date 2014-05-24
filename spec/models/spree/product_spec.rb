@@ -230,6 +230,20 @@ module Spree
         end
       end
 
+      describe "in_an_active_order_cycle" do
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d2 = create(:distributor_enterprise)
+          d3 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          p3 = create(:product)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_close_at: 1.day.ago)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
+          Product.in_an_active_order_cycle.should == [p3]
+        end
+      end
+
       describe "access roles" do
         before(:each) do
           @e1 = create(:enterprise)

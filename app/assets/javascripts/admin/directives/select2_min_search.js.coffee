@@ -1,4 +1,4 @@
-Admin.directive "ofnSelect2MinSearch", ->
+angular.module("ofn.admin").directive "ofnSelect2MinSearch", ->
   require: 'ngModel'
   link: (scope, element, attrs, ngModel) ->
     element.select2

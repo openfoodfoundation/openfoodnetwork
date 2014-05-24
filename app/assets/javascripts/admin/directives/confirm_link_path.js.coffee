@@ -1,4 +1,4 @@
-Admin.directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
+angular.module("ofn.admin").directive "ofnConfirmLinkPath", (ofnConfirmHandler) ->
   restrict: "A"
   scope:
     path: "@ofnConfirmLinkPath"
