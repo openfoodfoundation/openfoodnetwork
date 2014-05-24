@@ -236,9 +236,7 @@ feature %q{
 
     fill_in 'product_name', :with => 'Big Bag Of Apples'
     select(s.name, :from => 'product_supplier_id')
-    choose('product_group_buy_0')
     fill_in 'product_price', :with => '10.00'
-    fill_in 'product_available_on', :with => Date.today.strftime("%Y/%m/%d")
     click_button 'Create'
 
     URI.parse(current_url).path.should == '/admin/products/bulk_edit'
