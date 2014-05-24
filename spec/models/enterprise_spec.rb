@@ -422,8 +422,8 @@ describe Enterprise do
     let(:supplier) { create(:supplier_enterprise) }
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
-    let(:product1) { create(:simple_product, taxons: [taxon1]) }
-    let(:product2) { create(:simple_product, taxons: [taxon1, taxon2]) }
+    let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
+    let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
 
     it "gets all taxons of all distributed products" do
       Spree::Product.stub(:in_distributor).and_return [product1, product2]
