@@ -1,10 +1,15 @@
 #groups{"ng-controller" => "GroupsCtrl"}
   :javascript
     angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
-  .row
+  .row.pad-top
     .small-12.columns.text-center
       %h1 Groups / Regions
-      %h3 Check out our food groups below
+      %div 
+        Check out our 
+        %ofn-modal{title: "food groups"}
+          = render partial: "modals/groups"  
+        below
+      %p
 
       %input{type: :text, 
       "ng-model" => "query", 
@@ -12,14 +17,27 @@
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
 
-  .row.group_table{bindonce: true}
-    .small.12.columns
-      .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
-        %h2 {{ group.name }}
-        %p {{ group.description }}
+  .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
+    
+    .row.pad-top{bindonce: true}
+      .small-12.columns
+        .group-hero
+          %img.group-hero-img{"bo-src" => "group.promo_image"} 
+          %img.group-logo{"bo-src" => "group.logo"}
+          %h3.group-name {{ group.name }}
+          %h5.group-description {{ group.description }}
+          
+    .row.pad-top{bindonce: true}
+      .small-6.columns
         %p {{ group.long_description }}
-        %img{"bo-src" => "group.logo"}
-
-        %ul
+      .small-6.columns
+        %h5 Our hubs & producers
+        %ul.small-block-grid-2
           %li{"ng-repeat" => "enterprise in group.enterprises"}
             %a{"bo-href" => "enterprise.path"} {{ enterprise.name }}
+
+    .row.group_footer
+      .small-12.columns
+        %hr
+
+= render partial: "shared/footer"
