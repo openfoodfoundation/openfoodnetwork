@@ -5,7 +5,7 @@
       / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
       %h3.producer-name {{ producer.name }}
   .row  
-    .columns.small-12.large-6{"inject-html" => "producer.long_description"}
+    .columns.small-12.large-6{"ng-bind-html" => "producer.long_description"}
     .columns.small-12.large-6
       / Will needs logic to add in following only if data is available for each type:
       / Will needs better formatting of URLs printed on-screen (minus http://www.)
@@ -26,12 +26,12 @@
         %li{"ng-if" => "producer.facebook"}
           %a{"ng-href" => "{{producer.facebook}}", target: "_blank"}
             %i.fi-social-facebook
-            {{ producer.facebook }}
+            {{ producer.facebook | stripUrl }}
 
         %li{"ng-if" => "producer.linkedin"}
           %a{"ng-href" => "{{producer.linkedin}}", target: "_blank"}
             %i.fi-social-linkedin
-            {{ producer.linkedin }}
+            {{ producer.linkedin | stripUrl }}
 
         %li{"ng-if" => "producer.instagram"}
           %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
