@@ -16,22 +16,25 @@
         %li{"ng-if" => "producer.website"}
           %a{"ng-href" => "{{producer.website}}", target: "_blank" }
             %i.fi-web
-            {{ producer.website }}
+            {{ producer.website | stripUrl }}
+
         %li{"ng-if" => "producer.twitter"} 
           %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.fi-social-twitter
             {{ producer.twitter }}
+
         %li{"ng-if" => "producer.facebook"}
           %a{"ng-href" => "{{producer.facebook}}", target: "_blank"}
             %i.fi-social-facebook
             {{ producer.facebook }}
+
         %li{"ng-if" => "producer.linkedin"}
           %a{"ng-href" => "{{producer.linkedin}}", target: "_blank"}
             %i.fi-social-linkedin
             {{ producer.linkedin }}
+
         %li{"ng-if" => "producer.instagram"}
           %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
-            / Will needs logic to allow user to input @instagramhandle to drive a logical URL
             %i.fi-social-instagram
             {{ producer.instagram }}
 
