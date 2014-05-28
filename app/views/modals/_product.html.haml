@@ -2,13 +2,11 @@
 
   .row
     .columns.small-12.large-6
-      %img.product-img{"ng-src" => "{{product.master.images[0].large_url}}"} 
+      %img.product-img{"ng-src" => "{{product.master.images[0].large_url}}", "ng-if" => "product.master.images[0]"} 
     .columns.small-12.large-6
       %h2 
         %img{"ng-src" => "{{product.primary_taxon.icon}}"} 
         {{product.name}}
       %p {{product.description}}
-  / %pre
-  /   {{ product | json }}
   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
  
