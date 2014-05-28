@@ -1,0 +1,3 @@
+/ insert_top "[data-hook='admin_product_form_right']"
+
+= render 'spree/admin/products/primary_taxon_form', f: f

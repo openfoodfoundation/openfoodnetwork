@@ -2,20 +2,25 @@
 
 %fieldset{ id: "new_product" }
   %legend{align: "center"}= t(:new_product)
+
   .row
-    = f.field_container :name do
-      = f.label :name, t(:name)
-      %span.required *
-      %br/
-      = f.text_field :name, :class => 'fullwidth title'
-      = f.error_message_on :name
-  .row
-    .alpha.six.columns
+    .alpha.eleven.columns
+      = f.field_container :name do
+        = f.label :name, t(:name)
+        %span.required *
+        %br/
+        = f.text_field :name, :class => 'fullwidth title'
+        = f.error_message_on :name
+    .five.columns.omega
       = f.field_container :supplier do
         = f.label :supplier
         %span.required *
         = f.collection_select(:supplier_id, Enterprise.is_primary_producer.managed_by(spree_current_user).by_name, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
         = f.error_message_on :supplier
+
+  .row
+    .alpha.six.columns
+      = render 'spree/admin/products/primary_taxon_form', f: f
     .five.columns
       = f.field_container :price do
         = f.label :price, t(:price)
@@ -30,6 +35,7 @@
         %br/
         = f.text_field :on_hand, :class => 'fullwidth'
         = f.error_message_on :on_hand
+
   .row{ 'ng-controller' => 'unitsCtrl' }
     .six.columns.alpha
       = f.label :variant_unit_with_scale, :units
@@ -45,6 +51,7 @@
     .five.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
       = f.label :product_variant_unit_name, :unit_name
       %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
+
   #product-from-prototype.clearfix{"data-hook" => "product-from-prototype"}
     = render :file => 'spree/admin/prototypes/show' if @prototype
   = render :partial => 'spree/admin/shared/new_resource_links'
