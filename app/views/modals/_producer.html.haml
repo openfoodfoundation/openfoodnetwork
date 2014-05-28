@@ -7,7 +7,7 @@
   .row  
     .columns.small-12.large-6{"ng-bind-html" => "producer.long_description"}
     .columns.small-12.large-6
-      %img.producer-logo{"ng-src" => "{{producer.logo}}"} 
+      %img.producer-logo{"ng-src" => "{{producer.logo}}", "ng-if" => "producer.logo"} 
       %h4 Stay in touch with {{ producer.name }}
       %ul.small-block-grid-1{bindonce: true}
         %li{"ng-if" => "producer.website"}
