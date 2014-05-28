@@ -6,5 +6,9 @@ child enterprises: :enterprises do
 end
 
 node :logo do |group|
-  group.logo(:original)
+  group.logo(:medium) if group.logo.exists?
+end
+
+node :promo_image do |group|
+  group.promo_image(:large) if group.promo_image.exists?
 end
