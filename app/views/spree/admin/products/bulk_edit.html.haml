@@ -132,7 +132,7 @@
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
-          %td{ 'ng-show' => 'columns.taxons.visible' }
+          %td{ 'ng-if' => 'columns.taxons.visible' }
             %input.fullwidth{ :type => 'text', 'ng-model' => 'product.taxon_ids', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'taxon_ids' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
