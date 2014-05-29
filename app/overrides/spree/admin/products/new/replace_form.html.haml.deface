@@ -68,7 +68,14 @@
     .row
       = button "Select An image"
 .sixteen.columns.alpha
-  = render :partial => 'spree/admin/shared/new_resource_links'
+  .form-buttons.filter-actions.actions{ 'data-hook' => "buttons" }
+    = button t('actions.create'), 'icon-ok', :submit, value: "create"
+    %span.or
+      = t(:or)
+    = button "Create And Add Another", 'icon-repeat', :submit, value: 'add_another'
+    %span.or
+      = t(:or)
+    = link_to_with_icon 'icon-remove', t('actions.cancel'), collection_url, :class => 'button'
 
 
 
