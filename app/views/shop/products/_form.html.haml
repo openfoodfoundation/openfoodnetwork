@@ -21,7 +21,7 @@
           %div{"bo-if" => "hasVariants"}
             = render partial: "shop/products/variants"
 
-        .variant.row{"bo-if" => "!hasVariants"}
+        .variants.row{"bo-if" => "!hasVariants"}
           = render partial: "shop/products/master"
     
     .row
