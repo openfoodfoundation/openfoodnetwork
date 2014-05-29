@@ -77,7 +77,6 @@ describe 'Order service', ->
     $httpBackend.flush()
     expect(Order.errors).toEqual {error: "frogs"}
 
-
   it "Munges the order attributes to add _attributes as Rails needs", ->
     expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)
     expect(Order.preprocess().bill_address).toBe(undefined)
