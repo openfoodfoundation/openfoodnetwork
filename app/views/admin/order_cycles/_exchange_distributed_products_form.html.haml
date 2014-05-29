@@ -1,7 +1,7 @@
 %td{:colspan => 3}
   .exchange-select-all-variants
     %label
-      = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants', 1, 1, 'ng-model' => 'exchange.select_all_variants', 'ng-click' => 'setExchangeVariants(exchange, incomingExchangesVariants(), exchange.select_all_variants)', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants'
+      = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants', 1, 1, 'ng-model' => 'exchange.select_all_variants', 'ng-change' => 'setExchangeVariants(exchange, incomingExchangesVariants(), exchange.select_all_variants)', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants'
       Select all
 
   .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle'}
