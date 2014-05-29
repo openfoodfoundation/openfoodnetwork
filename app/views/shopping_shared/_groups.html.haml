@@ -2,4 +2,4 @@
   %ul
     - for group in current_distributor.groups
       %li
-        %a{href: main_app.groups_path}= group.name 
+        %a{href: main_app.groups_path(anchor: "#/#group#{group.id}")}= group.name 
