@@ -1,4 +1,4 @@
-Admin.directive "ofnDecimal", ->
+angular.module("ofn.admin").directive "ofnDecimal", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     numRegExp = /^\d+(\.\d+)?$/

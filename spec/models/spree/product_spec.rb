@@ -5,19 +5,12 @@ module Spree
 
     describe "associations" do
       it { should belong_to(:supplier) }
-      it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
 
     describe "validations and defaults" do
       it "is valid when created from factory" do
         create(:product).should be_valid
-      end
-
-      it "requires a primary taxon" do
-        product = create(:simple_product)
-        product.primary_taxon = nil
-        product.should_not be_valid
       end
 
       it "requires a supplier" do
@@ -234,6 +227,20 @@ module Spree
           oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
           Product.in_order_cycle(oc1).should == [p1]
+        end
+      end
+
+      describe "in_an_active_order_cycle" do
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d2 = create(:distributor_enterprise)
+          d3 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          p3 = create(:product)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_close_at: 1.day.ago)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
+          Product.in_an_active_order_cycle.should == [p3]
         end
       end
 
@@ -558,10 +565,10 @@ module Spree
     describe "Taxons" do
       let(:taxon1) { create(:taxon) }
       let(:taxon2) { create(:taxon) }
-      let(:product) { create(:simple_product) }
+      let(:product) { create(:simple_product, taxons: [taxon1, taxon2]) }
 
       it "returns the first taxon as the primary taxon" do
-        product.taxons.should == [product.primary_taxon]
+        product.primary_taxon.should == taxon1
       end
     end
   end

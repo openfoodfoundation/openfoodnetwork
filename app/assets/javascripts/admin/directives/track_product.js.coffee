@@ -1,4 +1,4 @@
-Admin.directive "ofnTrackProduct", ["DirtyProducts", (DirtyProducts) ->
+angular.module("ofn.admin").directive "ofnTrackProduct", ["DirtyProducts", (DirtyProducts) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->

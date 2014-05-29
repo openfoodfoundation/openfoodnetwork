@@ -1,5 +1,4 @@
 %ofn-modal{title: "{{product.name}}"}
-
   .row
     .columns.small-12.large-6
       %img.product-img{"ng-src" => "{{product.master.images[0].large_url}}", "ng-if" => "product.master.images[0]"} 
@@ -9,4 +8,3 @@
         {{product.name}}
       %p {{product.description}}
   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
- 

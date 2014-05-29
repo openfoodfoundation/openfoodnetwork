@@ -15,7 +15,6 @@ class Enterprise < ActiveRecord::Base
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_and_belongs_to_many :shipping_methods, join_table: 'distributors_shipping_methods', class_name: 'Spree::ShippingMethod', foreign_key: 'distributor_id'
 
-
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
@@ -122,6 +121,14 @@ class Enterprise < ActiveRecord::Base
 
   def has_supplied_products_on_hand?
     self.supplied_products.where('count_on_hand > 0').present?
+  end
+
+  def supplied_and_active_products_on_hand
+    self.supplied_products.where('spree_products.count_on_hand > 0').active
+  end
+
+  def active_products_in_order_cycles
+    self.supplied_and_active_products_on_hand.in_an_active_order_cycle
   end
 
   def to_param

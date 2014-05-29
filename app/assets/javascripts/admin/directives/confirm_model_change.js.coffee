@@ -1,4 +1,4 @@
-Admin.directive "ofnConfirmModelChange", (ofnConfirmHandler,$timeout) ->
+angular.module("ofn.admin").directive "ofnConfirmModelChange", (ofnConfirmHandler,$timeout) ->
   restrict: "A"
   link: (scope, element, attrs) ->
     handler = ofnConfirmHandler scope, -> scope.fetchOrders()

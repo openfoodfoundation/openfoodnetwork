@@ -1,4 +1,4 @@
-Admin.controller "AdminOrderMgmtCtrl", [
+angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
   "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
   ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
 

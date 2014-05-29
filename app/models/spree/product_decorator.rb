@@ -6,7 +6,6 @@ Spree::Product.class_eval do
 
 
   belongs_to :supplier, :class_name => 'Enterprise'
-  belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
@@ -14,10 +13,9 @@ Spree::Product.class_eval do
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
   delegate_belongs_to :master, :unit_value, :unit_description
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes
+  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes
 
   validates_presence_of :supplier
-  validates_presence_of :primary_taxon
 
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,
@@ -27,7 +25,6 @@ Spree::Product.class_eval do
 
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
-  before_save :add_primary_taxon_to_taxons
 
 
   # -- Joins
@@ -78,6 +75,12 @@ Spree::Product.class_eval do
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
                                                 merge(Exchange.outgoing).
                                                 where('order_cycles.id = ?', order_cycle) }
+
+  scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
+                                                merge(OrderCycle.active).
+                                                merge(Exchange.outgoing).
+                                                where('order_cycles.id IS NOT NULL') }
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -121,6 +124,10 @@ Spree::Product.class_eval do
     order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
 
+  def primary_taxon
+    self.taxons.order.first
+  end
+
   # Build a product distribution for each distributor
   def build_product_distributions_for_user user
     Enterprise.is_distributor.managed_by(user).each do |distributor|
@@ -154,10 +161,6 @@ Spree::Product.class_eval do
       option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each { |v| v.delete_unit_option_values }
     end
-  end
-
-  def add_primary_taxon_to_taxons
-    taxons << primary_taxon unless taxons.find_by_id(primary_taxon)
   end
 
   def self.all_variant_unit_option_types

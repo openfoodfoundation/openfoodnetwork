@@ -1,10 +1,10 @@
-Darkswarm.factory 'OrderCycle', ($resource, Product, orderCycleData) ->
+Darkswarm.factory 'OrderCycle', ($resource, orderCycleData) ->
   class OrderCycle
     @order_cycle = orderCycleData # Object or {} due to RABL 
-    @push_order_cycle: ->
+    @push_order_cycle: (callback) ->
       new $resource("/shop/order_cycle").save {order_cycle_id: @order_cycle.order_cycle_id}, (order_data)->
         OrderCycle.order_cycle.orders_close_at = order_data.orders_close_at
-        Product.update()
+        callback()
 
     @orders_close_at: ->
       @order_cycle.orders_close_at if @selected()
