@@ -24,7 +24,9 @@
         .group-hero
           %img.group-hero-img{"bo-src" => "{{group.promo_image}}"} 
           %img.group-logo{"bo-src" => "group.logo"}
-          %h3.group-name {{ group.name }}
+          %h3.group-name 
+            %i.ofn-i_035-groups
+            {{ group.name }}
           %h5.group-description {{ group.description }}
           / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
           
