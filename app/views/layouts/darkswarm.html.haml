@@ -16,6 +16,7 @@
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
     = inject_json "currentHub", "current_hub"
+    = inject_json "currentOrder", "current_order"
     = inject_json "user", "current_user"
 
     .off-canvas-wrap{offcanvas: true}
