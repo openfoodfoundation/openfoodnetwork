@@ -28,6 +28,7 @@ Spree::Product.class_eval do
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   before_save :add_primary_taxon_to_taxons
+  before_validation :set_primary_taxon_to_first_taxon
 
 
   # -- Joins
@@ -155,11 +156,15 @@ Spree::Product.class_eval do
   end
 
   def update_units
-    if variant_unit_changed? && !variant_unit_change.first.nil?
+    if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each { |v| v.delete_unit_option_values }
     end
+  end
+
+  def set_primary_taxon_to_first_taxon
+    self.primary_taxon = taxons.first unless primary_taxon
   end
 
   def add_primary_taxon_to_taxons
