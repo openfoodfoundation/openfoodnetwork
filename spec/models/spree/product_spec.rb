@@ -16,6 +16,7 @@ module Spree
 
       it "requires a primary taxon" do
         product = create(:simple_product)
+        product.taxons = []
         product.primary_taxon = nil
         product.should_not be_valid
       end
