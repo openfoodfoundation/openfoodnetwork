@@ -1,7 +1,7 @@
 #tabs{"ng-controller" => "TabsCtrl"}
   .row
-    %tabset
-      - for name, heading in { about: "About Us", 
+    %tabset.small-12.columns
+      - for name, heading in { about: "About #{current_distributor.name}", 
         producers: "Producers", 
         groups: "Groups", 
         contact: "Contact"} 

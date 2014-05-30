@@ -43,8 +43,4 @@
           %span.nav-primary.nav-branded {{ CurrentHub.name }}
       %li.divider
       %li.cart
-        %a.icon{href: cart_url}
-          %i.ofn-i_027-shopping-cart.nav-branded 
-            %span
-              = cart_count
-              items
+        = render partial: "shared/menu/cart"

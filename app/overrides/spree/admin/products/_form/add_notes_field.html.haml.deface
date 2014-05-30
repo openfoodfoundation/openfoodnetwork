@@ -4,4 +4,3 @@
   = f.label :notes, t(:notes)
   = f.text_area :notes, { :class => 'fullwidth', rows: 5 }
   = f.error_message_on :notes
-

@@ -1,3 +1,3 @@
-Paperclip::Attachment.default_options[:convert_options] = {
+Paperclip::Attachment.default_options[:source_file_options] = {
   all: "-auto-orient"
 }

@@ -10,6 +10,6 @@ describe Spree::Admin::BaseController do
 
   it "redirects to Angular login" do
     get :index
-    response.should redirect_to root_path(anchor: "login?after_login=#{spree.admin_path}")
+    response.should redirect_to root_path(anchor: "login?after_login=/anonymous")
   end
 end
