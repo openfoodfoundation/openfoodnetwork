@@ -1,15 +1,42 @@
+/ Will for all the things: please add logic to include this /only/ if data is available
+
 .content#contact
   .panel
-    %p
-      %strong E
-      %a{href: "mailto:#{current_distributor.email}"}= current_distributor.email
-      - unless current_distributor.website.blank?
-        %br 
-        %strong W
-        %a{href: current_distributor.website}= current_distributor.website
-      %br 
-      = [current_distributor.address.address1, current_distributor.address.address2].join ", "
-      %br
-      = current_distributor.address.city
-      = current_distributor.address.state
-      = current_distributor.address.zipcode
+    .row
+      .small-12.large-4.columns
+        %h4=current_distributor.name
+        %p
+          = current_distributor.address.address1
+          %br
+            = current_distributor.address.address2
+          %br
+            = current_distributor.address.city
+            = current_distributor.address.state
+            = current_distributor.address.zipcode
+
+      .small-12.large-8.columns
+        %ul.small-block-grid-1.large-block-grid-2{bindonce: true}
+          %li
+            %a{href: "mailto:#{current_distributor.website}", target: "_blank" }
+              %i.fi-web 
+              = current_distributor.website
+          %li
+            %a{href: "mailto:#{current_distributor.email}", target: "_blank" }
+              %i.fi-mail 
+              = current_distributor.email
+          %li
+            %a{href: "mailto:#{current_distributor.twitter}", target: "_blank" }
+              %i.fi-social-twitter 
+              = current_distributor.twitter
+          %li
+            %a{href: "mailto:#{current_distributor.facebook}", target: "_blank" }
+              %i.fi-social-facebook 
+              = current_distributor.facebook
+          %li
+            %a{href: "mailto:#{current_distributor.linkedin}", target: "_blank" }
+              %i.fi-social-linkedin 
+              = current_distributor.linkedin
+          %li
+            %a{href: "mailto:#{current_distributor.instagram}", target: "_blank" }
+              %i.fi-social-instagram 
+              = current_distributor.instagram
