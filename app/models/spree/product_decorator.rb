@@ -155,7 +155,7 @@ Spree::Product.class_eval do
   end
 
   def update_units
-    if variant_unit_changed?
+    if variant_unit_changed? && !variant_unit_change.first.nil?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each { |v| v.delete_unit_option_values }
