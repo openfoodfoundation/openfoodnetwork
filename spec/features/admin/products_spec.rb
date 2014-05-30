@@ -57,13 +57,6 @@ feature %q{
 
       visit spree.edit_admin_product_path(product)
 
-<<<<<<< HEAD
-=======
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
-      select taxon.name, from: "product_primary_taxon_id"
-      select 'New supplier', :from => 'product_supplier_id'
->>>>>>> 110a6f2... Adding primary taxon to admin forms
       choose 'product_group_buy_1'
       fill_in 'Group buy unit size', :with => '10'
 
