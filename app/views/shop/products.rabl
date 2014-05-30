@@ -13,10 +13,10 @@ child :supplier => :supplier do
   attributes :id, :name, :description, :long_description, :website, :instagram, :facebook, :linkedin, :twitter
 
   node :logo do |supplier|
-    supplier.logo.url
+    supplier.logo(:medium) if supplier.logo.exists?
   end
   node :promo_image do |supplier|
-    supplier.promo_image.url
+    supplier.promo_image(:large) if supplier.promo_image.exists?
   end
 end
 

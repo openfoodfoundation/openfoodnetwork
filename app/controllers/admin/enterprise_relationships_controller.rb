@@ -1,8 +1,9 @@
 module Admin
   class EnterpriseRelationshipsController < ResourceController
     def index
-      @enterprises = Enterprise.managed_by(spree_current_user).by_name
-      @enterprise_relationships = EnterpriseRelationship.by_name
+      @my_enterprises = Enterprise.managed_by(spree_current_user).by_name
+      @all_enterprises = Enterprise.by_name
+      @enterprise_relationships = EnterpriseRelationship.by_name.involving_enterprises @my_enterprises
     end
 
     def create

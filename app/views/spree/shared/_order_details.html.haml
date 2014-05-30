@@ -16,8 +16,6 @@
       .columns.large-2
         %h6
           = t(:shipping_method)
-          \:
-          = link_to "(#{t(:edit)})", checkout_state_path(:delivery) unless @order.completed?
         .delivery
           = order.shipping_method.name
   .columns.large-4

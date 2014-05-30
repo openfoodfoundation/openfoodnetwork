@@ -8,5 +8,4 @@ Darkswarm.controller "ProductNodeCtrl", ($scope) ->
       $scope.product.price
 
   $scope.producer = $scope.product.supplier
-
   $scope.hasVariants = $scope.product.variants.length > 0

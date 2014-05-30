@@ -29,7 +29,6 @@ describe 'Order service', ->
 
     inject ($injector, _$httpBackend_)->
       $httpBackend = _$httpBackend_
-      $httpBackend.expectGET("/shop/products").respond 200, []
       Order = $injector.get("Order")
       Navigation = $injector.get("Navigation")
       flash = $injector.get("flash")
@@ -76,7 +75,6 @@ describe 'Order service', ->
     Order.submit()
     $httpBackend.flush()
     expect(Order.errors).toEqual {error: "frogs"}
-
 
   it "Munges the order attributes to add _attributes as Rails needs", ->
     expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)

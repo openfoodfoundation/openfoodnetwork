@@ -9,7 +9,7 @@ class EnterpriseGroup < ActiveRecord::Base
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
 
   attr_accessible :promo_image
-  has_attached_file :promo_image, styles: {medium: "800>400"}
+  has_attached_file :promo_image, styles: {large: "260x1200#"}
   validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
 
   attr_accessible :logo

@@ -1,4 +1,4 @@
-Admin.directive "ofnLineItemUpdAttr", [
+angular.module("ofn.admin").directive "ofnLineItemUpdAttr", [
   "switchClass", "pendingChanges"
   (switchClass, pendingChanges) ->
     require: "ngModel"

@@ -1,7 +1,7 @@
 %fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
 
-    %h5{"ng-class" => "{valid: payment.$valid, dirty: details.$dirty}"} 
+    %h5{"ng-class" => "{valid: payment.$valid, dirty: payment.$dirty}"} 
       %span.right
         %label.label.round.alert.right
           %i.ofn-i_009-close

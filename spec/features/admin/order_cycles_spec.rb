@@ -514,6 +514,15 @@ feature %q{
       # I should not see exchanges for supplier2 or distributor2
       page.all('tr.supplier').count.should == 1
       page.all('tr.distributor').count.should == 1
+
+      # When I save, then those exchanges should remain
+      click_button 'Update'
+      page.should have_content "Your order cycle has been updated."
+
+      oc.reload
+      oc.suppliers.sort.should == [supplier1, supplier2]
+      oc.coordinator.should == supplier1
+      oc.distributors.sort.should == [distributor1, distributor2]
     end
 
     scenario "cloning an order cycle" do

@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, Product, order, $http, CheckoutFormState, flash, Navigation)->
+Darkswarm.factory 'Order', ($resource, order, $http, CheckoutFormState, flash, Navigation)->
   new class Order
     errors: {}
 

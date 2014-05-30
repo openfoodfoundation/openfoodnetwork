@@ -32,6 +32,11 @@ class AddForeignKeys < ActiveRecord::Migration
     say "Destroying #{orphaned_exchange_variants.count} orphaned ExchangeVariants (of total #{ExchangeVariant.count})"
     orphaned_exchange_variants.destroy_all
 
+    # Remove orphaned ExchangeFee records
+    orphaned_exchange_fees = ExchangeFee.joins('LEFT OUTER JOIN enterprise_fees ON enterprise_fees.id=exchange_fees.enterprise_fee_id').where('enterprise_fees.id IS NULL')
+    say "Destroying #{orphaned_exchange_fees.count} orphaned ExchangeFees (of total #{ExchangeFee.count})"
+    orphaned_exchange_fees.destroy_all
+
     # Remove orphaned Spree::InventoryUnits
     orphaned_inventory_units = Spree::InventoryUnit.joins('LEFT OUTER JOIN spree_variants ON spree_variants.id=spree_inventory_units.variant_id').where('spree_variants.id IS NULL')
     say "Destroying #{orphaned_inventory_units.count} orphaned InventoryUnits (of total #{Spree::InventoryUnit.count})"

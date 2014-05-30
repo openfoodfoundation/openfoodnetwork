@@ -338,6 +338,16 @@ describe Enterprise do
     end
   end
 
+  describe "supplied_and_active_products_on_hand" do
+    it "find only active products which are in stock" do
+      supplier = create(:supplier_enterprise)
+      inactive_product = create(:product, supplier:  supplier, on_hand: 1, available_on: Date.tomorrow)
+      out_of_stock_product = create(:product, supplier:  supplier, on_hand: 0, available_on: Date.yesterday)
+      p1 = create(:product, supplier: supplier, on_hand: 1, available_on: Date.yesterday)
+      supplier.supplied_and_active_products_on_hand.should == [p1]
+    end
+  end
+
   describe "finding variants distributed by the enterprise" do
     it "finds the master variant" do
       d = create(:distributor_enterprise)

@@ -46,23 +46,20 @@ feature %q{
       product.product_distributions.map { |pd| pd.enterprise_fee }.sort.should == [@enterprise_fees[0], @enterprise_fees[2]].sort
     end
 
+    scenario "making a product into a group buy product" do
+      product = create(:simple_product, name: 'group buy product')
 
-    scenario "creating a group buy product" do
       login_to_admin_section
 
-      click_link 'Products'
-      click_link 'New Product'
+      visit spree.edit_admin_product_path(product)
 
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
-      select 'New supplier', :from => 'product_supplier_id'
       choose 'product_group_buy_1'
       fill_in 'Group buy unit size', :with => '10'
 
-      click_button 'Create'
+      click_button 'Update'
 
-      flash_message.should == 'Product "A new product !!!" has been successfully created!'
-      product = Spree::Product.find_by_name('A new product !!!')
+      flash_message.should == 'Product "group buy product" has been successfully updated!'
+      product.reload
       product.group_buy.should be_true
       product.group_buy_unit_size.should == 10.0
     end

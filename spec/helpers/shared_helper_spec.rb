@@ -23,37 +23,4 @@ describe SharedHelper do
     helper.stub(:current_order) { order }
     helper.distributor_link_class(d1).should =~ /empties-cart/
   end
-
-  describe "finding current producers" do
-    it "finds producers for the current distribution" do
-      s = create(:supplier_enterprise)
-      d = create(:distributor_enterprise)
-      p = create(:simple_product)
-      oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
-
-      helper.stub(:current_order_cycle) { oc }
-      helper.stub(:current_distributor) { d }
-
-      helper.current_producers.should == [s]
-    end
-
-    it "returns [] when no order cycle set" do
-      d = double(:distributor)
-
-      helper.stub(:current_order_cycle) { nil }
-      helper.stub(:current_distributor) { d }
-
-      helper.current_producers.should == []
-    end
-
-    it "returns [] when no distributor set" do
-      oc = double(:order_cycle)
-
-      helper.stub(:current_order_cycle) { oc }
-      helper.stub(:current_distributor) { nil }
-
-      helper.current_producers.should == []
-
-    end
-  end
 end

@@ -1,4 +1,4 @@
-Admin.directive "ofnToggleVariants", ->
+angular.module("ofn.admin").directive "ofnToggleVariants", ->
   link: (scope, element, attrs) ->
     if scope.displayProperties[scope.product.id].showVariants
       element.removeClass "icon-chevron-right"

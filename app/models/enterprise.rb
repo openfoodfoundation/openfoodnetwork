@@ -18,8 +18,8 @@ class Enterprise < ActiveRecord::Base
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
-  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-  has_attached_file :promo_image, :styles => { :large => "570x380>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :promo_image, :styles => { :large => "260x1200#", :thumb => "100x100>" }
 
   validates_presence_of :name
   validates_presence_of :address
@@ -121,6 +121,14 @@ class Enterprise < ActiveRecord::Base
 
   def has_supplied_products_on_hand?
     self.supplied_products.where('count_on_hand > 0').present?
+  end
+
+  def supplied_and_active_products_on_hand
+    self.supplied_products.where('spree_products.count_on_hand > 0').active
+  end
+
+  def active_products_in_order_cycles
+    self.supplied_and_active_products_on_hand.in_an_active_order_cycle
   end
 
   def to_param

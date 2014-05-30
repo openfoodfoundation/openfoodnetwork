@@ -14,16 +14,6 @@ module SharedHelper
     klass
   end
 
-  # all suppliers of current distributor's products
-  def current_producers
-    if current_distributor && current_order_cycle
-      variants = current_order_cycle.variants_distributed_by(current_distributor)
-      Enterprise.supplying_variant_in(variants)
-    else
-      []
-    end
-  end
-  
   def enterprise_user?
     spree_current_user.andand.enterprises.andand.count.to_i > 0
   end

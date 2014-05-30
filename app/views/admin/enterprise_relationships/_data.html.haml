@@ -1,3 +1,4 @@
 :javascript
   angular.module('ofn.admin').value('enterprise_relationships', #{render partial: "admin/json/enterprise_relationships", object: @enterprise_relationships});
-  angular.module('ofn.admin').value('enterprises',              #{render partial: "admin/json/enterprises",              object: @enterprises});
+  angular.module('ofn.admin').value('my_enterprises',           #{render partial: "admin/json/enterprises",              object: @my_enterprises});
+  angular.module('ofn.admin').value('all_enterprises',          #{render partial: "admin/json/enterprises",              object: @all_enterprises});

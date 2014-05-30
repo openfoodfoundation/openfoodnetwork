@@ -7,70 +7,108 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before { login_to_admin_section }
+
+  context "as a site administrator" do
+    before { login_to_admin_section }
+
+    scenario "listing relationships" do
+      # Given some enterprises with relationships
+      e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
+      create(:enterprise_relationship, parent: e1, child: e2)
+      create(:enterprise_relationship, parent: e3, child: e4)
+
+      # When I go to the relationships page
+      click_link 'Enterprises'
+      click_link 'Relationships'
+
+      # Then I should see the relationships
+      within('table#enterprise-relationships') do
+        page.should have_relationship e1, e2
+        page.should have_relationship e3, e4
+      end
+    end
 
 
-  scenario "listing relationships" do
-    # Given some enterprises with relationships
-    e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
-    create(:enterprise_relationship, parent: e1, child: e2)
-    create(:enterprise_relationship, parent: e3, child: e4)
+    scenario "creating a relationship" do
+      e1 = create(:enterprise, name: 'One')
+      e2 = create(:enterprise, name: 'Two')
 
-    # When I go to the relationships page
-    click_link 'Enterprises'
-    click_link 'Relationships'
+      visit admin_enterprise_relationships_path
+      select 'One', from: 'enterprise_relationship_parent_id'
+      select 'Two', from: 'enterprise_relationship_child_id'
+      click_button 'Create'
 
-    # Then I should see the relationships
-    within('table#enterprise-relationships') do
-      page.should have_table_row [e1.name, 'permits', e2.name, '']
-      page.should have_table_row [e3.name, 'permits', e4.name, '']
+      page.should have_relationship e1, e2
+      EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
+    end
+
+
+    scenario "attempting to create a relationship with invalid data" do
+      e1 = create(:enterprise, name: 'One')
+      e2 = create(:enterprise, name: 'Two')
+      create(:enterprise_relationship, parent: e1, child: e2)
+
+      expect do
+        # When I attempt to create a duplicate relationship
+        visit admin_enterprise_relationships_path
+        select 'One', from: 'enterprise_relationship_parent_id'
+        select 'Two', from: 'enterprise_relationship_child_id'
+        click_button 'Create'
+
+        # Then I should see an error message
+        page.should have_content "That relationship is already established."
+      end.to change(EnterpriseRelationship, :count).by(0)
+    end
+
+
+    scenario "deleting a relationship" do
+      e1 = create(:enterprise, name: 'One')
+      e2 = create(:enterprise, name: 'Two')
+      er = create(:enterprise_relationship, parent: e1, child: e2)
+
+      visit admin_enterprise_relationships_path
+      page.should have_relationship e1, e2
+
+      first("a.delete-enterprise-relationship").click
+
+      page.should_not have_relationship e1, e2
+      EnterpriseRelationship.where(id: er.id).should be_empty
     end
   end
 
 
-  scenario "creating a relationship" do
-    e1 = create(:enterprise, name: 'One')
-    e2 = create(:enterprise, name: 'Two')
+  context "as an enterprise user" do
+    let!(:d1) { create(:distributor_enterprise) }
+    let!(:d2) { create(:distributor_enterprise) }
+    let!(:d3) { create(:distributor_enterprise) }
+    let(:enterprise_user) { create_enterprise_user([d1]) }
 
-    visit admin_enterprise_relationships_path
-    select 'One', from: 'enterprise_relationship_parent_name'
-    select 'Two', from: 'enterprise_relationship_child_name'
-    click_button 'Create'
+    let!(:er1) { create(:enterprise_relationship, parent: d1, child: d2) }
+    let!(:er2) { create(:enterprise_relationship, parent: d2, child: d1) }
+    let!(:er3) { create(:enterprise_relationship, parent: d2, child: d3) }
 
-    page.should have_table_row [e1.name, 'permits', e2.name, '']
-    EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
-  end
+    before { login_to_admin_as enterprise_user }
 
-
-  scenario "attempting to create a relationship with invalid data" do
-    e1 = create(:enterprise, name: 'One')
-    e2 = create(:enterprise, name: 'Two')
-    create(:enterprise_relationship, parent: e1, child: e2)
-
-    expect do
-      # When I attempt to create a duplicate relationship
+    scenario "enterprise user can only see relationships involving their enterprises" do
       visit admin_enterprise_relationships_path
-      select 'One', from: 'enterprise_relationship_parent_name'
-      select 'Two', from: 'enterprise_relationship_child_name'
-      click_button 'Create'
 
-      # Then I should see an error message
-      page.should have_content "That relationship is already established."
-    end.to change(EnterpriseRelationship, :count).by(0)
+      page.should     have_relationship d1, d2
+      page.should     have_relationship d2, d1
+      page.should_not have_relationship d2, d3
+    end
+
+
+    scenario "enterprise user can only add their own enterprises as parent" do
+      visit admin_enterprise_relationships_path
+      page.should have_select 'enterprise_relationship_parent_id', options: ['', d1.name]
+      page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
+    end
   end
 
 
-  scenario "deleting a relationship" do
-    e1 = create(:enterprise, name: 'One')
-    e2 = create(:enterprise, name: 'Two')
-    er = create(:enterprise_relationship, parent: e1, child: e2)
+  private
 
-    visit admin_enterprise_relationships_path
-    page.should have_table_row [e1.name, 'permits', e2.name, '']
-
-    first("a.delete-enterprise-relationship").click
-
-    page.should_not have_table_row [e1.name, 'permits', e2.name, '']
-    EnterpriseRelationship.where(id: er.id).should be_empty
+  def have_relationship(parent, child)
+    have_table_row [parent.name, 'permits', child.name, '']
   end
 end

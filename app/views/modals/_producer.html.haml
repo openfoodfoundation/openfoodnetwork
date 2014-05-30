@@ -5,39 +5,35 @@
       / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
       %h3.producer-name {{ producer.name }}
   .row  
-    .columns.small-12.large-6{"ng-bind-html" => "{{producer.long_description}}"}
-      / Will to fix this
+    .columns.small-12.large-6{"ng-bind-html" => "producer.long_description"}
     .columns.small-12.large-6
-      / Will needs logic to add in following only if data is available for each type:
-      / Will needs better formatting of URLs printed on-screen (minus http://www.)
-      / Will needs formatting of URLs driving %a regardless of user input (plus http://www.)
-      %img.producer-logo{"ng-src" => "{{producer.logo}}"} 
+      %img.producer-logo{"ng-src" => "{{producer.logo}}", "ng-if" => "producer.logo"} 
       %h4 Stay in touch with {{ producer.name }}
-      %ul.small-block-grid-1
-        %li 
-          %a{href: "{{producer.website}}", target: "_blank" }
+      %ul.small-block-grid-1{bindonce: true}
+        %li{"ng-if" => "producer.website"}
+          %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
             %i.fi-web
-            {{ producer.website }}
-        %li  
-          %a{href: "{{producer.twitter}}", target: "_blank"}
-            / Will needs logic to allow user to input @twitterhandle to drive a logical URL
+            {{ producer.website | stripUrl }}
+
+        %li{"ng-if" => "producer.twitter"} 
+          %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.fi-social-twitter
             {{ producer.twitter }}
-        %li  
-          %a{href: "{{producer.facebook}}", target: "_blank"}
+
+        %li{"ng-if" => "producer.facebook"}
+          %a{"ng-href" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
             %i.fi-social-facebook
-            {{ producer.facebook }}
-        %li  
-          %a{href: "{{producer.linkedin}}", target: "_blank"}
+            {{ producer.facebook | stripUrl }}
+
+        %li{"ng-if" => "producer.linkedin"}
+          %a{"ng-href" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
             %i.fi-social-linkedin
-            {{ producer.linkedin }}
-        %li  
-          %a{href: "{{producer.instagram}}", target: "_blank"}  
-            / Will needs logic to allow user to input @instagramhandle to drive a logical URL
+            {{ producer.linkedin | stripUrl }}
+
+        %li{"ng-if" => "producer.instagram"}
+          %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
             %i.fi-social-instagram
             {{ producer.instagram }}
 
-  / %pre
-  /   {{ producer | json }}
 
   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
