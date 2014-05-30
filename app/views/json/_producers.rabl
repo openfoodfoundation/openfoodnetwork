@@ -2,7 +2,7 @@ collection @producers
 extends 'json/enterprises'
 
 child supplied_taxons: :taxons do
-  attributes :name, :id
+  extends 'json/taxon'
 end
 
 child distributors: :distributors do

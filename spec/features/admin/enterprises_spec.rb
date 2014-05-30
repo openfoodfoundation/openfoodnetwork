@@ -76,6 +76,8 @@ feature %q{
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
     fill_in 'enterprise_twitter', :with => '@eaterprises'
+    fill_in 'enterprise_facebook', :with => 'facebook.com/eaterprises'
+    fill_in 'enterprise_instagram', :with => 'eaterprises'
     fill_in 'enterprise_abn', :with => '09812309823'
     fill_in 'enterprise_acn', :with => ''
 

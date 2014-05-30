@@ -116,12 +116,21 @@
           = f.label :website
         .omega.eight.columns
           = f.text_field :website, { placeholder: "eg. www.truffles.com"}
-      -# TODO: Facebook model field
-      -#.row
-      -#  .alpha.two.columns
-      -#    = f.label :facebook, 'Facebook'
-      -#  .omega.four.columns
-      -#    = f.text_field :facebook
+      .row
+        .alpha.two.columns
+          = f.label :facebook, 'Facebook'
+        .omega.four.columns
+          = f.text_field :facebook
+      .row
+        .alpha.two.columns
+          = f.label :instagram, 'Instagram'
+        .omega.four.columns
+          = f.text_field :instagram
+      .row
+        .alpha.two.columns
+          = f.label :linkedin, 'LinkedIn'
+        .omega.four.columns
+          = f.text_field :linkedin
       .row
         .alpha.three.columns
           = f.label :twitter

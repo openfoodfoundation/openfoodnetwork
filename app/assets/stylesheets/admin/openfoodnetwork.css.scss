@@ -19,9 +19,11 @@ table .blank-action {
 }
 
 
+input.search {
+  margin-bottom: 1em;
+}
 #new_enterprise_fee_set input.search {
   float: right;
-  margin-bottom: 1em;
 }
 
 .ng .ng-invalid.ng-dirty {

@@ -11,6 +11,13 @@ describe EnterpriseGroup do
       e = build(:enterprise_group, name: '')
       e.should_not be_valid
     end
+
+    it "requires a description" do
+      e = build(:enterprise_group, description: '')
+    end
+
+    it { should have_attached_file :promo_image }
+    it { should have_attached_file :logo }
   end
 
   describe "relations" do

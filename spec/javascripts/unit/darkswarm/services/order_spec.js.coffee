@@ -26,6 +26,7 @@ describe 'Order service', ->
     }
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
+
     inject ($injector, _$httpBackend_)->
       $httpBackend = _$httpBackend_
       Order = $injector.get("Order")
@@ -74,7 +75,6 @@ describe 'Order service', ->
     Order.submit()
     $httpBackend.flush()
     expect(Order.errors).toEqual {error: "frogs"}
-
 
   it "Munges the order attributes to add _attributes as Rails needs", ->
     expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)

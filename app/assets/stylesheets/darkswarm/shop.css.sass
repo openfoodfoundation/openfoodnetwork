@@ -1,8 +1,7 @@
 @import mixins
 @import variables
+@import branding
 
-product
-  display: block 
 
 .darkswarm
   #search
@@ -77,68 +76,58 @@ product
 
   products
     display: block
-    padding-top: 2.3em 
+    padding-top: 2.3em
     @media all and (max-width: 768px)
       padding-top: 1em
       input.button.right
         float: left
-    table
-      table-layout: fixed
-      width: 100%
-      border-collapse: collapse
-      border: none
-      th
-        line-height: 50px
-        &.name
-          width: 330px 
-        //&.notes
-          //width: 140px
-        &.variant
-          width: 180px
-        &.quantity, &.bulk, &.price
-          width: 90px
-      .notes
-        max-width: 300px
-      td, th
+    
+    
+    product:hover, product:focus, product:active
+      border-color: $clr-brick
+      @include box-shadow(0 0 3px 0 $clr-brick-bright)
+
+      .row.variants
+        border-top: 1px solid $clr-brick-light
+        background: $clr-brick-ultra-light
+
+    product
+      @include csstrans
+      border: 1px solid #989898
+      display: block 
+      margin-bottom: 1em !important
+
+      input
+        margin: 0
+        width: 8em
+
+      .columns
+        padding-top: 1em
+        padding-bottom: 1em
+
+      .row.summary, .row.variants
+        @include csstrans
+        margin-left: 0
+        margin-right: 0
+        background: #f7f7f7
+        border-top: 1px solid #dfdfdf
+
+      .row.summary
+        @include csstrans
         background: #fff
-        > span
-          min-width: 50px
-          display: block
-      tbody
-        border: 1px solid #cccccc
-        border-left: 0px
-        border-right: 0px
-      td
-        padding: 20px 0px
-        &.name 
-          img
-            float: left
-            margin-right: 30px
-            @media all and (max-width: 768px)
-              margin-right: 1em
-          div
-            min-width: 150px
-      tr.product-description
-        display: none
+
+        .summary-header
+          &, & *
+            @include avenir
+            color: $clr-brick
+
+        .summary-price
+          &, & *
+            @include avenir
+        
+      
 
 
-      // Responsive
-      @media all and (max-width: 768px)
-        td.notes, th.notes
-          display: none
-        img
-          width: 20px
-          height: auto
-        tr.product-description
-          display: table-row
-          td:empty
-            display: none
-            
 
-      input[type=number]
-        width: 60px
-        margin: 0px
-          display: block
-          float: right
-          padding-top: 14px
+
 

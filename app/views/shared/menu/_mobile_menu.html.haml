@@ -15,7 +15,7 @@
   %ul.off-canvas-list
     %li= link_to image_tag("ofn_logo_small.png"), root_path
 
-    - if spree_current_user.andand.has_spree_role? 'admin'
+    - if admin_user? or enterprise_user?
       %li
         %a{href: spree.admin_path}
           %span.nav-primary Admin
@@ -36,17 +36,14 @@
       %li
         %a{href: root_path + "#/#hubs"}
           %span.nav-primary Hubs
-
     %li
       %a{href: ""}
         %span.nav-primary Map
-
     %li
       %a{href: main_app.producers_path}
         %span.nav-primary Producers
-
     %li
-      %a{href: ""}
+      %a{href: main_app.groups_path}
         %span.nav-primary Groups
 
     

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140514044959) do
+ActiveRecord::Schema.define(:version => 20140522044009) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -182,9 +182,19 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
   add_index "enterprise_fees", ["enterprise_id"], :name => "index_enterprise_fees_on_enterprise_id"
 
   create_table "enterprise_groups", :force => true do |t|
-    t.string  "name"
-    t.boolean "on_front_page"
-    t.integer "position"
+    t.string   "name"
+    t.boolean  "on_front_page"
+    t.integer  "position"
+    t.string   "promo_image_file_name"
+    t.string   "promo_image_content_type"
+    t.integer  "promo_image_file_size"
+    t.datetime "promo_image_updated_at"
+    t.text     "description"
+    t.text     "long_description"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
@@ -240,6 +250,9 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
     t.boolean  "visible",                  :default => true
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "linkedin"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
@@ -668,6 +681,7 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
     t.float    "variant_unit_scale"
     t.string   "variant_unit_name"
     t.text     "notes"
+    t.integer  "primary_taxon_id"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
@@ -675,6 +689,7 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
   add_index "spree_products", ["name"], :name => "index_products_on_name"
   add_index "spree_products", ["permalink"], :name => "index_products_on_permalink"
   add_index "spree_products", ["permalink"], :name => "permalink_idx_unique", :unique => true
+  add_index "spree_products", ["primary_taxon_id"], :name => "index_spree_products_on_primary_taxon_id"
 
   create_table "spree_products_promotion_rules", :id => false, :force => true do |t|
     t.integer "product_id"
@@ -1079,6 +1094,7 @@ ActiveRecord::Schema.define(:version => 20140514044959) do
   add_foreign_key "spree_products", "enterprises", name: "spree_products_supplier_id_fk", column: "supplier_id"
   add_foreign_key "spree_products", "spree_shipping_categories", name: "spree_products_shipping_category_id_fk", column: "shipping_category_id"
   add_foreign_key "spree_products", "spree_tax_categories", name: "spree_products_tax_category_id_fk", column: "tax_category_id"
+  add_foreign_key "spree_products", "spree_taxons", name: "spree_products_primary_taxon_id_fk", column: "primary_taxon_id"
 
   add_foreign_key "spree_products_promotion_rules", "spree_products", name: "spree_products_promotion_rules_product_id_fk", column: "product_id"
   add_foreign_key "spree_products_promotion_rules", "spree_promotion_rules", name: "spree_products_promotion_rules_promotion_rule_id_fk", column: "promotion_rule_id"

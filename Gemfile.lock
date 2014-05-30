@@ -7,6 +7,12 @@ GIT
       activemodel (~> 3.0)
 
 GIT
+  remote: git://github.com/jeremydurham/custom-err-msg.git
+  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  specs:
+    custom_error_message (1.1.1)
+
+GIT
   remote: git://github.com/openfoodfoundation/spree.git
   revision: da651b40f5c6cdd32e00b060729eb9aefd4f615f
   branch: 1-3-stable
@@ -492,6 +498,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
+  custom_error_message!
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache

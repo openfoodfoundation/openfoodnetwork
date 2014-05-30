@@ -2,7 +2,8 @@
   .columns.small-4
     %strong Shop for
     %p.trans-sentence
-      {{ hub.taxons | printArrayOfObjects }}
+      %img{"ng-repeat" => "taxon in hub.taxons", "bo-src" => "taxon.icon",
+      name: "{{taxon.name}}", alt: "{{taxon.name}}"}
   .columns.small-4
     %strong Delivery options
     %ol
@@ -10,8 +11,9 @@
       %li.delivery{"bo-if" => "hub.delivery"} Delivery
   .columns.small-4
     %strong Our producers
-    %p
-      Go to our shop to see our current producers
+    %ul
+      %li{"ng-repeat" => "producer in hub.producers"}
+        = render partial: "modals/producer"
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
   .columns.small-11

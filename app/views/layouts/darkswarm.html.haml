@@ -15,15 +15,15 @@
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
+    = inject_json "currentHub", "current_hub"
+    = inject_json "user", "current_user"
+
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render partial: "shared/current_hub"
-        = render partial: "shared/current_user"
         = render partial: "shared/menu/menu"
+
         = display_flash_messages
         %ofn-flash
-
-        -#= render "shared/sidebar"
 
         %section{ role: "main" }
           = yield

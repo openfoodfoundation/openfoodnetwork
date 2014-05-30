@@ -1,4 +1,9 @@
 module SharedHelper
+
+  def inject_json(name, partial)
+    render "json/injection", name: name, partial: partial
+  end
+
   def distributor_link_class(distributor)
     cart = current_order(true)
     @active_distributors ||= Enterprise.distributors_with_active_order_cycles
@@ -9,17 +14,11 @@ module SharedHelper
     klass
   end
 
-  # all suppliers of current distributor's products
-  def current_producers
-    if current_distributor && current_order_cycle
-      variants = current_order_cycle.variants_distributed_by(current_distributor)
-      Enterprise.supplying_variant_in(variants)
-    else
-      []
-    end
-  end
-  
   def enterprise_user?
-    spree_current_user.andand.enterprises.count > 0
+    spree_current_user.andand.enterprises.andand.count.to_i > 0
+  end
+
+  def admin_user?
+    spree_current_user.andand.has_spree_role? 'admin'
   end
 end

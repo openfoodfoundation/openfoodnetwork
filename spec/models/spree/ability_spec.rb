@@ -17,6 +17,9 @@ module Spree
       let(:p1) { create(:product, supplier: s1, distributors:[d1, d2]) }
       let(:p2) { create(:product, supplier: s2, distributors:[d1, d2]) }
 
+      let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
+      let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
+
       subject { user }
       let(:user) { nil }
 
@@ -70,6 +73,18 @@ module Spree
 
         it "should be able to read/write Classifications on a product" do
           should have_ability([:admin, :index, :read, :create, :edit], for: Spree::Classification)
+        end
+
+        it "should be able to read and create enterprise relationships" do
+          should have_ability([:admin, :index, :create], for: EnterpriseRelationship)
+        end
+
+        it "should be able to destroy enterprise relationships for its enterprises" do
+          should have_ability(:destroy, for: er1)
+        end
+
+        it "should not be able to destroy enterprise relationships for other enterprises" do
+          should_not have_ability(:destroy, for: er2)
         end
 
       end
@@ -145,6 +160,18 @@ module Spree
 
         it "should be able to read/write ShippingMethods" do
           should have_ability([:admin, :index, :create, :update, :destroy], for: Spree::ShippingMethod)
+        end
+
+        it "should be able to read and create enterprise relationships" do
+          should have_ability([:admin, :index, :create], for: EnterpriseRelationship)
+        end
+
+        it "should be able to destroy enterprise relationships for its enterprises" do
+          should have_ability(:destroy, for: er2)
+        end
+
+        it "should not be able to destroy enterprise relationships for other enterprises" do
+          should_not have_ability(:destroy, for: er1)
         end
       end
 

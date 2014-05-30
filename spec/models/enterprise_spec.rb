@@ -31,10 +31,10 @@ describe Enterprise do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }
       let(:c) { create(:distributor_enterprise) }
-      before do
-        EnterpriseRelationship.create! parent_id: p.id, child_id: e.id
-        EnterpriseRelationship.create! parent_id: e.id, child_id: c.id
-      end
+
+      let!(:er1) { create(:enterprise_relationship, parent_id: p.id, child_id: e.id) }
+      let!(:er2) { create(:enterprise_relationship, parent_id: e.id, child_id: c.id) }
+
       it "finds relatives" do
         e.relatives.sort.should == [p, c].sort
       end

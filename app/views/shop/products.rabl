@@ -1,10 +1,6 @@
 collection @products
 attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy
 
-node :show_variants do
-  true
-end
-
 node do |product|
   {
     notes: strip_tags(product.notes),
@@ -14,7 +10,18 @@ node do |product|
 end
 
 child :supplier => :supplier do
-  attributes :id, :name, :description
+  attributes :id, :name, :description, :long_description, :website, :instagram, :facebook, :linkedin, :twitter
+
+  node :logo do |supplier|
+    supplier.logo(:medium) if supplier.logo.exists?
+  end
+  node :promo_image do |supplier|
+    supplier.promo_image(:large) if supplier.promo_image.exists?
+  end
+end
+
+child :primary_taxon => :primary_taxon do
+  extends 'json/taxon'
 end
 
 child :master => :master do
@@ -22,7 +29,8 @@ child :master => :master do
   child :images => :images do
     attributes :id, :alt
     node do |img|
-      {:small_url => img.attachment.url(:small, false)}
+      {:small_url => img.attachment.url(:small, false),
+      :large_url => img.attachment.url(:large, false)}
     end
   end
 end

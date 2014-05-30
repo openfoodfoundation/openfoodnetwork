@@ -21,7 +21,7 @@
   %td.cart-item-total{"data-hook" => "cart_item_total"}
     = line_item.display_amount.to_html unless line_item.quantity.nil?
 
-  %td.cart-item-delete{"data-hook" => "cart_item_delete"}
+  %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
     {{ quantity }}
     = link_to image_tag('icons/delete.png'), '#', :class => 'delete', 
       :id => "delete_#{dom_id(line_item)}"
