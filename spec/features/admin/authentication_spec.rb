@@ -2,9 +2,7 @@ require 'spec_helper'
 
 feature "Authentication", js: true do
   include UIComponentHelper
-  describe "logging into admin" do
-    let(:user) { create(:user, password: "password", password_confirmation: "password") }
-  end
+  let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
   scenario "logging into admin redirects home, then back to admin" do
     visit spree.admin_path
