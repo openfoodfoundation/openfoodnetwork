@@ -1,39 +1,34 @@
 %ofn-modal{title: "{{producer.name}}"}
   .row
-    .columns.small-12.producer-hero
-      %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
-      / Will - scale large images down to 1200px wide, crop in to img aspect ratio 60W:13H
+    .small-12.columns.producer-hero
       %h3.producer-name {{ producer.name }}
+      %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
+      
   .row  
-    .columns.small-12.large-6{"ng-bind-html" => "producer.long_description"}
-    .columns.small-12.large-6
+    .small-12.large-6.columns
+      %p{"ng-bind-html" => "producer.long_description"}
+    .small-12.large-6.columns
       %img.producer-logo{"ng-src" => "{{producer.logo}}", "ng-if" => "producer.logo"} 
-      %h4 Stay in touch with {{ producer.name }}
+      %h5 Stay in touch with {{ producer.name }}
       %ul.small-block-grid-1{bindonce: true}
         %li{"ng-if" => "producer.website"}
           %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
             %i.fi-web
             {{ producer.website | stripUrl }}
-
         %li{"ng-if" => "producer.twitter"} 
           %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.fi-social-twitter
             {{ producer.twitter }}
-
         %li{"ng-if" => "producer.facebook"}
           %a{"ng-href" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
             %i.fi-social-facebook
             {{ producer.facebook | stripUrl }}
-
         %li{"ng-if" => "producer.linkedin"}
           %a{"ng-href" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
             %i.fi-social-linkedin
             {{ producer.linkedin | stripUrl }}
-
         %li{"ng-if" => "producer.instagram"}
           %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
             %i.fi-social-instagram
             {{ producer.instagram }}
-
-
   %a.close-reveal-modal{"ng-click" => "$close()"} &#215;
