@@ -1,4 +1,4 @@
-Darkswarm.controller "AccordionCtrl", ($scope, storage) ->
+Darkswarm.controller "AccordionCtrl", ($scope, storage, $timeout) ->
   $scope.accordion = 
     details: true 
     shipping: false
@@ -9,3 +9,8 @@ Darkswarm.controller "AccordionCtrl", ($scope, storage) ->
   $scope.show = (name)->
     $scope.accordion[name] = true
 
+  $timeout =>
+    if $scope.checkout.$valid
+      for k, v of $scope.accordion
+        $scope.accordion[k] = false
+      

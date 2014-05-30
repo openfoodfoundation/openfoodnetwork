@@ -2,15 +2,20 @@
   - content_for :order_cycle_form do
 
     %div{"ng-controller" => "OrderCycleChangeCtrl"}
-      %strong.avenir Ready for
+      %closing{"ng-if" => "OrderCycle.selected()"}
+        Next order closing
+        %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+
+      %span Ready for pickup
+
+      / Will this label should be a variable to reflect pickup or delivery as appropriate
+
       %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
               "ng-change" => "changeOrderCycle()",
               "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
               "popover-placement" => "bottom", "popover" => "When do you want to get your order?", "popover-trigger" => "openTrigger"}
 
-      %closing{"ng-if" => "OrderCycle.selected()"}
-        Orders close
-        %strong {{ OrderCycle.orders_close_at() | date_in_words }} 
+       
 
   = render partial: "shopping_shared/details"
 

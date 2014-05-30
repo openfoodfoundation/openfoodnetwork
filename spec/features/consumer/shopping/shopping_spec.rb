@@ -67,7 +67,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           select "frogs", :from => "order_cycle_id"
           page.should have_selector "products"
-          page.should have_content "Orders close in 2 days" 
+          page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
         end

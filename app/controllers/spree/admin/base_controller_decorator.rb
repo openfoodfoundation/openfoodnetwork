@@ -11,4 +11,16 @@ Spree::Admin::BaseController.class_eval do
     authorize! :admin, record
     authorize! action, record
   end
+
+  # This is in Spree::Core::ControllerHelpers::Auth
+  # But you can't easily reopen modules in Ruby
+  def unauthorized
+    if try_spree_current_user
+      flash[:error] = t(:authorization_failure)
+      redirect_to '/unauthorized'
+    else
+      store_location
+      redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+    end
+  end
 end

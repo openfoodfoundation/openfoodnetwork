@@ -27,7 +27,6 @@
         margin-right: 12px
       location
         font-family: "AvenirBla_IE", "AvenirBla"
-        padding-right: 16px
       @media all and (max-width: 768px)
         location, location + small
           display: block
@@ -58,21 +57,23 @@
             @media all and (max-width: 768px)
               font-size: 1.2em
           select
-            width: 280px
+            width: inherit
             display: inline-block
             vackground: transparent
-            border-width: 2px
-            border-color: #666666
+            border-width: 1px
+            border-color: #999
+            color: #666
             font-size: 1em 
             margin-bottom: 0
-            padding: 8px 0px 8px 12px
+            padding: 8px 20px 8px 12px
             @media all and (max-width: 768px)
               font-size: 1.2em
-              width: 180px
+              // width: 180px
         closing
-          font-size: 0.875em
+          color: black
+          font-size: 1.5em
           display: block
-          padding-top: 14px
+          padding-bottom: 20px
 
   products
     display: block
