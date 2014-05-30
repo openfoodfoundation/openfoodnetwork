@@ -1,7 +1,7 @@
 %fieldset#billing
   %ng-form{"ng-controller" => "BillingCtrl", name: "billing"}
 
-    %h5{"ng-class" => "{valid: billing.$valid, dirty: details.$dirty}"}
+    %h5{"ng-class" => "{valid: billing.$valid, dirty: billing.$dirty}"}
       %span.right
         %label.label.round.alert
           %i.fi-x
