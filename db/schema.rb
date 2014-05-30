@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140522015012) do
+ActiveRecord::Schema.define(:version => 20140522044009) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -681,6 +681,7 @@ ActiveRecord::Schema.define(:version => 20140522015012) do
     t.float    "variant_unit_scale"
     t.string   "variant_unit_name"
     t.text     "notes"
+    t.integer  "primary_taxon_id"
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
@@ -688,6 +689,7 @@ ActiveRecord::Schema.define(:version => 20140522015012) do
   add_index "spree_products", ["name"], :name => "index_products_on_name"
   add_index "spree_products", ["permalink"], :name => "index_products_on_permalink"
   add_index "spree_products", ["permalink"], :name => "permalink_idx_unique", :unique => true
+  add_index "spree_products", ["primary_taxon_id"], :name => "index_spree_products_on_primary_taxon_id"
 
   create_table "spree_products_promotion_rules", :id => false, :force => true do |t|
     t.integer "product_id"
@@ -1092,6 +1094,7 @@ ActiveRecord::Schema.define(:version => 20140522015012) do
   add_foreign_key "spree_products", "enterprises", name: "spree_products_supplier_id_fk", column: "supplier_id"
   add_foreign_key "spree_products", "spree_shipping_categories", name: "spree_products_shipping_category_id_fk", column: "shipping_category_id"
   add_foreign_key "spree_products", "spree_tax_categories", name: "spree_products_tax_category_id_fk", column: "tax_category_id"
+  add_foreign_key "spree_products", "spree_taxons", name: "spree_products_primary_taxon_id_fk", column: "primary_taxon_id"
 
   add_foreign_key "spree_products_promotion_rules", "spree_products", name: "spree_products_promotion_rules_product_id_fk", column: "product_id"
   add_foreign_key "spree_products_promotion_rules", "spree_promotion_rules", name: "spree_products_promotion_rules_promotion_rule_id_fk", column: "promotion_rule_id"
