@@ -1,4 +1,9 @@
 .content#producers{"ng-controller" => "ProducersTabCtrl"}
-  %ul
-    %li{"ng-repeat" => "producer in CurrentHub.producers"}
-      = render partial: "modals/producer"
+  .row
+    .small-12.columns
+      %h5
+        =current_distributor.name 
+        's producers:
+      %ul.ofn-list
+        %li{"ng-repeat" => "producer in CurrentHub.producers"}
+          = render partial: "modals/producer"
