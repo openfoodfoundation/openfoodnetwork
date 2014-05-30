@@ -7,7 +7,7 @@
         %h4=current_distributor.name
         %p
           = current_distributor.address.address1
-          - if current_distributor.address.address2
+          - unless current_distributor.address.address2.blank?
             %br
             = current_distributor.address.address2
           %br
