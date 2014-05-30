@@ -15,7 +15,6 @@ Spree::Admin::OrdersController.class_eval do
         per(params[:per_page] || Spree::Config[:orders_per_page])
     } } }
 
-
   private
 
   def load_spree_api_key

@@ -2,7 +2,7 @@
 %td{:colspan => 3}
   .exchange-select-all-variants
     %label
-      = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_select_all_variants', 1, 1, 'ng-model' => 'exchange.select_all_variants', 'ng-click' => 'setExchangeVariants(exchange, suppliedVariants(exchange.enterprise_id), exchange.select_all_variants)', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_select_all_variants'
+      = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_select_all_variants', 1, 1, 'ng-model' => 'exchange.select_all_variants', 'ng-change' => 'setExchangeVariants(exchange, suppliedVariants(exchange.enterprise_id), exchange.select_all_variants)', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_select_all_variants'
       Select all
 
   .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}

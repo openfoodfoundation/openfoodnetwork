@@ -17,8 +17,9 @@
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
 
-  .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order"}
-    
+  .group{"ng-repeat" => "group in Groups.groups | filter:query | orderBy:order",
+        name: "group{{group.id}}",
+        id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
       .small-12.columns
         .group-hero

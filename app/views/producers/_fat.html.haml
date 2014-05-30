@@ -5,7 +5,7 @@
       {{ producer.taxons | printArrayOfObjects }}
   .columns.small-8
     %strong About us
-    %p.trans-sentence
+    %p
       {{ producer.description }}
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-repeat" => "hub in producer.distributors"}

@@ -1,5 +1,6 @@
 Darkswarm.controller "DetailsCtrl", ($scope) ->
   angular.extend(this, new FieldsetMixin($scope))
+
   $scope.name = "details"
   $scope.nextPanel = "billing"
 
@@ -11,11 +12,3 @@ Darkswarm.controller "DetailsCtrl", ($scope) ->
   $scope.fullName = ->
     [$scope.order.bill_address.firstname ? null, 
     $scope.order.bill_address.lastname ? null].join(" ").trim()
-
-  
-  #$scope.$watch ->
-    #$scope.detailsValid()
-  #, (valid)->
-    #if valid
-      #$scope.show("billing")
-  
