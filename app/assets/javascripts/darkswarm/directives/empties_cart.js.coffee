@@ -1,10 +1,11 @@
-Darkswarm.directive "ofnEmptiesCart", (CurrentHub, Navigation) ->
+Darkswarm.directive "ofnEmptiesCart", (CurrentHub, CurrentOrder, Navigation) ->
   restrict: "A"
   scope:
     hub: '=ofnEmptiesCart'
   template: "{{action}} <strong>{{hub.name}}</strong>"
   link: (scope, elm, attr)-> 
-    if CurrentHub.id and CurrentHub.id isnt scope.hub.id
+    # A hub is selected, we're changing to a different hub, and the cart isn't empty
+    if CurrentHub.id and CurrentHub.id isnt scope.hub.id and not CurrentOrder.empty()
       scope.action = attr.change
       elm.bind 'click', (ev)->
         ev.preventDefault()
@@ -12,5 +13,3 @@ Darkswarm.directive "ofnEmptiesCart", (CurrentHub, Navigation) ->
           Navigation.go scope.hub.path 
     else
       scope.action = attr.shop
-
-
