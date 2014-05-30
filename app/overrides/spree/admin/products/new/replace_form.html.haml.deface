@@ -66,7 +66,8 @@
     .row
       = image_tag "noimage/product.png", class: "four columns alpha"
     .row
-      = button "Select An image"
+      = f.fields_for 'images_attributes[]', f.object.images.build do |image_fields|
+        = image_fields.file_field :attachment
 .sixteen.columns.alpha
   .form-buttons.filter-actions.actions{ 'data-hook' => "buttons" }
     = button t('actions.create'), 'icon-ok', :submit, value: "create"
@@ -76,8 +77,6 @@
     %span.or
       = t(:or)
     = link_to_with_icon 'icon-remove', t('actions.cancel'), collection_url, :class => 'button'
-
-
 
 
 :javascript
