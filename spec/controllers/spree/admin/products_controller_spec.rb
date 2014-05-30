@@ -14,6 +14,7 @@ describe Spree::Admin::ProductsController do
 
     it "redirects to bulk_edit when the user hits 'create'" do
       s = create(:supplier_enterprise)
+      t = create(:taxon)
       spree_post :create, {
         product: {
           name: "Product1",
@@ -23,7 +24,8 @@ describe Spree::Admin::ProductsController do
           variant_unit: 'weight',
           variant_unit_scale: 1000,
           unit_value: 10,
-          unit_description: ""
+          unit_description: "",
+          primary_taxon_id: t.id
         },
         button: 'create'
       }
@@ -32,6 +34,7 @@ describe Spree::Admin::ProductsController do
 
     it "redirects to new when the user hits 'add_another'" do
       s = create(:supplier_enterprise)
+      t = create(:taxon)
       spree_post :create, {
         product: {
           name: "Product1",
@@ -41,7 +44,8 @@ describe Spree::Admin::ProductsController do
           variant_unit: 'weight',
           variant_unit_scale: 1000,
           unit_value: 10,
-          unit_description: ""
+          unit_description: "",
+          primary_taxon_id: t.id
         },
         button: 'add_another'
       }
