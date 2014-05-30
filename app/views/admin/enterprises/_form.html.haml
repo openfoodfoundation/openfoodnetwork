@@ -177,5 +177,5 @@
           %a What's this?
 
       .omega.eight.columns
-        = image_tag @object.promo_image.url if @object.promo_image.present?
+        = image_tag @object.promo_image(:large) if @object.promo_image.present?
         = f.file_field :promo_image
