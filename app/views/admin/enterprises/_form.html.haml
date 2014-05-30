@@ -168,7 +168,7 @@
         %br
         100 x 100 pixels
       .omega.eight.columns
-        = image_tag @object.logo.url if @object.logo.present?
+        = image_tag @object.logo(:medium) if @object.logo.present?
         = f.file_field :logo
     .row
       .alpha.three.columns
@@ -177,5 +177,5 @@
           %a What's this?
 
       .omega.eight.columns
-        = image_tag @object.promo_image.url if @object.promo_image.present?
+        = image_tag @object.promo_image(:large) if @object.promo_image.present?
         = f.file_field :promo_image

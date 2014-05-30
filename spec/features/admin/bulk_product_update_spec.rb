@@ -223,20 +223,19 @@ feature %q{
   scenario "creating a new product" do
     s = FactoryGirl.create(:supplier_enterprise)
     d = FactoryGirl.create(:distributor_enterprise)
+    taxon = create(:taxon)
 
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
 
-    #save_screenshot "/Users/willmarshall/Desktop/foo.png"
-    #save_and_open_page
     find("a", text: "NEW PRODUCT").click
-
     page.should have_content 'NEW PRODUCT'
 
     fill_in 'product_name', :with => 'Big Bag Of Apples'
     select(s.name, :from => 'product_supplier_id')
     fill_in 'product_price', :with => '10.00'
+    select taxon.name, from: 'product_primary_taxon_id'
     click_button 'Create'
 
     URI.parse(current_url).path.should == '/admin/products/bulk_edit'
