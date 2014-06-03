@@ -20,36 +20,36 @@
           - unless current_distributor.website.blank?
             %li
               %a{href: current_distributor.website, target: "_blank" }
-                %i.fi-web 
+                %i.ofn-i_049-web
                 = current_distributor.website
 
           - unless current_distributor.email.blank?
             %li
               %a{href: current_distributor.email.reverse, mailto: true }
-                %i.fi-mail 
+                %i.ofn-i_050-mail-circle 
                 %span.email
                   = current_distributor.email.reverse
 
           - unless current_distributor.twitter.blank?
             %li
               %a{href: current_distributor.twitter, target: "_blank" }
-                %i.fi-social-twitter 
+                %i.ofn-i_041-twitter 
                 = current_distributor.twitter
 
           - unless current_distributor.facebook.blank?
             %li
               %a{href: current_distributor.facebook, target: "_blank" }
-                %i.fi-social-facebook 
+                %i.ofn-i_044-facebook
                 = current_distributor.facebook
 
           - unless current_distributor.linkedin.blank?
             %li
               %a{href: current_distributor.linkedin, target: "_blank" }
-                %i.fi-social-linkedin 
+                %i.ofn-i_042-linkedin 
                 = current_distributor.linkedin
 
           - unless current_distributor.instagram.blank?
             %li
               %a{href: current_distributor.instagram, target: "_blank" }
-                %i.fi-social-instagram 
+                %i.ofn-i_043-instagram
                 = current_distributor.instagram
