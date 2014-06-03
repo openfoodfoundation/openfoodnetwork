@@ -19,7 +19,7 @@
         %ul.small-block-grid-1.large-block-grid-2{bindonce: true}
           - unless current_distributor.website.blank?
             %li
-              %a{href: current_distributor.website, target: "_blank" }
+              %a{href: "http://#{current_distributor.website}", target: "_blank" }
                 %i.fi-web 
                 = current_distributor.website
 
@@ -32,24 +32,24 @@
 
           - unless current_distributor.twitter.blank?
             %li
-              %a{href: current_distributor.twitter, target: "_blank" }
+              %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
                 %i.fi-social-twitter 
                 = current_distributor.twitter
 
           - unless current_distributor.facebook.blank?
             %li
-              %a{href: current_distributor.facebook, target: "_blank" }
+              %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
                 %i.fi-social-facebook 
                 = current_distributor.facebook
 
           - unless current_distributor.linkedin.blank?
             %li
-              %a{href: current_distributor.linkedin, target: "_blank" }
+              %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
                 %i.fi-social-linkedin 
                 = current_distributor.linkedin
 
           - unless current_distributor.instagram.blank?
             %li
-              %a{href: current_distributor.instagram, target: "_blank" }
+              %a{href: "http://instagram.com.#{current_distributor.instagram}", target: "_blank" }
                 %i.fi-social-instagram 
                 = current_distributor.instagram
