@@ -30,11 +30,3 @@ describe "AccordionCtrl", ->
         scope.order =
           id: 129
         ctrl = $controller 'AccordionCtrl', {$scope: scope}
-
-  it "automatically closes all sections if the entire form is valid", ->
-    waitsFor ->
-      (scope.accordion.details and 
-      scope.accordion.shipping and
-      scope.accordion.payment and
-      scope.accordion.billing) == false
-    , "the accordion to close", 100

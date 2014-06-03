@@ -1,6 +1,5 @@
-Darkswarm.controller "DetailsCtrl", ($scope) ->
+Darkswarm.controller "DetailsCtrl", ($scope, $timeout) ->
   angular.extend(this, new FieldsetMixin($scope))
-
   $scope.name = "details"
   $scope.nextPanel = "billing"
 
@@ -12,3 +11,5 @@ Darkswarm.controller "DetailsCtrl", ($scope) ->
   $scope.fullName = ->
     [$scope.order.bill_address.firstname ? null, 
     $scope.order.bill_address.lastname ? null].join(" ").trim()
+
+  $timeout $scope.onTimeout 

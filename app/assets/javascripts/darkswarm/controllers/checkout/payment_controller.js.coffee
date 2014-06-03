@@ -1,4 +1,4 @@
-Darkswarm.controller "PaymentCtrl", ($scope) ->
+Darkswarm.controller "PaymentCtrl", ($scope, $timeout) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.name = "payment"
 
@@ -6,3 +6,4 @@ Darkswarm.controller "PaymentCtrl", ($scope) ->
   $scope.years = [moment().year()..(moment().year()+15)]
   $scope.secrets.card_month = "1"
   $scope.secrets.card_year = moment().year()
+  $timeout $scope.onTimeout 
