@@ -32,7 +32,7 @@ Darkswarm.factory 'Order', ($resource, order, $http, CheckoutFormState, flash, N
       if CheckoutFormState.ship_address_same_as_billing
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
 
-      if @secrets.card_number?.length > 0
+      if @paymentMethod()?.method_type == 'gateway'
         angular.extend munged_order.payments_attributes[0], {
           source_attributes:
             number: @secrets.card_number

@@ -30,7 +30,8 @@ end
 node :payment_methods do
   Hash[current_order.available_payment_methods.collect { 
     |method| [method.id, {
-      name: method.name
+      name: method.name,
+      method_type: method.method_type
     }] 
   }]
 end

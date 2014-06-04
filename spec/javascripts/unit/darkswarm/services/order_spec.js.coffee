@@ -26,6 +26,10 @@ describe 'Order service', ->
       payment_methods: 
         99:
           test: "foo"
+          method_type: "gateway"
+        123:
+          test: "bar"
+          method_type: "check"
 
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
@@ -60,7 +64,7 @@ describe 'Order service', ->
   it 'Gets the current payment method', ->
     expect(Order.paymentMethod()).toEqual null
     Order.order.payment_method_id = 99
-    expect(Order.paymentMethod()).toEqual {test: "foo"}
+    expect(Order.paymentMethod()).toEqual {test: "foo", method_type: "gateway"}
 
   it "Posts the Order to the server", ->
     $httpBackend.expectPUT("/checkout", {order: Order.preprocess()}).respond 200, {path: "test"}
@@ -112,6 +116,6 @@ describe 'Order service', ->
       expect(source_attributes.last_name).toBe Order.order.bill_address.lastname
 
     it "does not create attributes for card fields when no card is supplied", ->
-      Order.secrets.card_number = ''
+      Order.order.payment_method_id = 123
       source_attributes = Order.preprocess().payments_attributes[0].source_attributes
       expect(source_attributes).not.toBeDefined()
