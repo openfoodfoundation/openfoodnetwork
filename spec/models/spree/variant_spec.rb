@@ -209,7 +209,6 @@ module Spree
           end
         end
       end
-
       context "when the variant already has a value set (and all required option values exist)" do
         let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }

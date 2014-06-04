@@ -3,32 +3,53 @@ require 'spec_helper'
 module OpenFoodNetwork
   describe OptionValueNamer do
     describe "generating option value name" do
+<<<<<<< HEAD
       let(:v) { Spree::Variant.new }
       let(:subject) { OptionValueNamer.new v }
 
       it "when description is blank" do
         v.stub(:unit_description) { nil }
+=======
+      it "when description is blank" do
+        v = Spree::Variant.new unit_description: nil
+        subject = OptionValueNamer.new v
+>>>>>>> Move option value naming logic into separate lib class
         subject.stub(:value_scaled?) { true }
         subject.stub(:option_value_value_unit) { %w(value unit) }
         subject.name.should == "valueunit"
       end
 
       it "when description is present" do
+<<<<<<< HEAD
         v.stub(:unit_description) { 'desc' }
+=======
+        v = Spree::Variant.new unit_description: 'desc'
+        subject = OptionValueNamer.new v
+>>>>>>> Move option value naming logic into separate lib class
         subject.stub(:option_value_value_unit) { %w(value unit) }
         subject.stub(:value_scaled?) { true }
         subject.name.should == "valueunit desc"
       end
 
       it "when value is blank and description is present" do
+<<<<<<< HEAD
         v.stub(:unit_description) { 'desc' }
+=======
+        v = Spree::Variant.new unit_description: 'desc'
+        subject = OptionValueNamer.new v
+>>>>>>> Move option value naming logic into separate lib class
         subject.stub(:option_value_value_unit) { [nil, nil] }
         subject.stub(:value_scaled?) { true }
         subject.name.should == "desc"
       end
 
       it "spaces value and unit when value is unscaled" do
+<<<<<<< HEAD
         v.stub(:unit_description) { nil }
+=======
+        v = Spree::Variant.new unit_description: nil
+        subject = OptionValueNamer.new v
+>>>>>>> Move option value naming logic into separate lib class
         subject.stub(:option_value_value_unit) { %w(value unit) }
         subject.stub(:value_scaled?) { false }
         subject.name.should == "value unit"

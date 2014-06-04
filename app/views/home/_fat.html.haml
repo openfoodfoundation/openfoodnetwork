@@ -5,8 +5,8 @@
       Shop for
     %p.trans-sentence
       %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
-        %img{"bo-src" => "taxon.icon",
-        name: "{{taxon.name}}", alt: "{{taxon.name}}"}
+        %object.taxon{"data" => "{{taxon.icon}}", type: "image/svg+xml"}
+          {{taxon.name}} 
         {{taxon.name}} 
   .columns.small-4
     %h5 Delivery options
