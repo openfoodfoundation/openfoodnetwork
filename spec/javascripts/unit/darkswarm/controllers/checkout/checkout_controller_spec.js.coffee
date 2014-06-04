@@ -12,6 +12,9 @@ describe "CheckoutCtrl", ->
       navigate: ->
       order:
         id: 1
+        public: "public"
+      secrets:
+        card_number: "this is a secret"
      
   describe "with user", ->
     beforeEach ->
@@ -37,3 +40,11 @@ describe "CheckoutCtrl", ->
 
     it "is disabled", ->
       expect(scope.enabled).toEqual false
+
+    it "binds order to local storage", ->
+      expect(localStorage.getItem("order_#{Order.order.id}#{Order.order.user_id}")).toMatch Order.order.public
+
+    it "does not store secrets in local storage", ->
+      keys = (localStorage.key(i) for i in [0..localStorage.length])
+      for key in keys
+        expect(localStorage.getItem(key)).not.toMatch Order.secrets.card_number

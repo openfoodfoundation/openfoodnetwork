@@ -1,6 +1,7 @@
 Darkswarm.factory 'Order', ($resource, order, $http, CheckoutFormState, flash, Navigation)->
   new class Order
     errors: {}
+    secrets: {}
 
     constructor: ->
       @order = order
@@ -30,6 +31,17 @@ Darkswarm.factory 'Order', ($resource, order, $http, CheckoutFormState, flash, N
 
       if CheckoutFormState.ship_address_same_as_billing
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
+
+      angular.extend munged_order.payments_attributes[0], {
+        source_attributes:
+          number: @secrets.card_number
+          month: @secrets.card_month
+          year: @secrets.card_year
+          verification_value: @secrets.card_verification_value
+          first_name: @order.bill_address.firstname
+          last_name: @order.bill_address.lastname
+      }
+
       munged_order
 
     shippingMethod: ->

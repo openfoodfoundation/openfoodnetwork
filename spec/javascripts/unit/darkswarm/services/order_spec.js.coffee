@@ -7,10 +7,13 @@ describe 'Order service', ->
   flash = null
 
   beforeEach ->
-    orderData = {
+    orderData =
       id: 3102
       payment_method_id: null
-      bill_address: {test: "foo"}
+      bill_address:
+        test: "foo"
+        firstname: "Robert"
+        lastname: "Harrington"
       ship_address: {test: "bar"}
       shipping_methods:
         7:
@@ -23,7 +26,7 @@ describe 'Order service', ->
       payment_methods: 
         99:
           test: "foo"
-    }
+
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
 
@@ -76,14 +79,34 @@ describe 'Order service', ->
     $httpBackend.flush()
     expect(Order.errors).toEqual {error: "frogs"}
 
-  it "Munges the order attributes to add _attributes as Rails needs", ->
-    expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)
-    expect(Order.preprocess().bill_address).toBe(undefined)
-    expect(Order.preprocess().ship_address_attributes).not.toBe(undefined)
-    expect(Order.preprocess().ship_address).toBe(undefined)
+  describe "data preprocessing", ->
+    beforeEach ->
+      Order.order.payment_method_id = 99
 
-  it "Munges the order attributes to clone ship address from bill address", ->
-    CheckoutFormState.ship_address_same_as_billing = false
-    expect(Order.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
-    CheckoutFormState.ship_address_same_as_billing = true
-    expect(Order.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
+      Order.secrets =
+        card_number: "1234567890123456"
+        card_month: "10"
+        card_year: "2015"
+        card_verification_value: "123"
+
+    it "munges the order attributes to add _attributes as Rails needs", ->
+      expect(Order.preprocess().bill_address_attributes).not.toBe(undefined)
+      expect(Order.preprocess().bill_address).toBe(undefined)
+      expect(Order.preprocess().ship_address_attributes).not.toBe(undefined)
+      expect(Order.preprocess().ship_address).toBe(undefined)
+
+    it "munges the order attributes to clone ship address from bill address", ->
+      CheckoutFormState.ship_address_same_as_billing = false
+      expect(Order.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
+      CheckoutFormState.ship_address_same_as_billing = true
+      expect(Order.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
+
+    it "creates attributes for card fields", ->
+      source_attributes = Order.preprocess().payments_attributes[0].source_attributes
+      expect(source_attributes).toBeDefined()
+      expect(source_attributes.number).toBe Order.secrets.card_number
+      expect(source_attributes.month).toBe Order.secrets.card_month
+      expect(source_attributes.year).toBe Order.secrets.card_year
+      expect(source_attributes.verification_value).toBe Order.secrets.card_verification_value
+      expect(source_attributes.first_name).toBe Order.order.bill_address.firstname
+      expect(source_attributes.last_name).toBe Order.order.bill_address.lastname

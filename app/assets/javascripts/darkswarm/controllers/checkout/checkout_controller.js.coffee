@@ -2,6 +2,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, CheckoutFormState, Order,
   $scope.Order = Order
   storage.bind $scope, "Order.order", {storeName: "order_#{Order.order.id}#{Order.order.user_id}"}
   $scope.order = Order.order # Ordering is important
+  $scope.secrets = Order.secrets
 
   $scope.enabled = if CurrentUser then true else false
 
