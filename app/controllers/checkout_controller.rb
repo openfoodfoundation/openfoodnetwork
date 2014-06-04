@@ -26,7 +26,7 @@ class CheckoutController < Spree::CheckoutController
         if @order.next
           state_callback(:after)
         else
-          unless @order.errors.empty?
+          if @order.errors.present?
             flash[:error] = @order.errors.full_messages.to_sentence
           else
             flash[:error] = t(:payment_processing_failed)
