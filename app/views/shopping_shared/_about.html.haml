@@ -3,5 +3,6 @@
     .small-12.large-9.columns
       %p= current_distributor.long_description.andand.html_safe
     .small-12.large-3.columns
-      %img.about.right{src: current_distributor.promo_image.url(:large)}
+      / Hide image until image styles are working correctly:
+      / %img.about.right{src: current_distributor.promo_image.url(:large)}
 

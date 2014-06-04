@@ -15,26 +15,39 @@ feature %q{
   end
 
   describe "creating a product" do
-    scenario "assigning a supplier, distributors and units to the product" do
+    scenario "assigning a important attributes" do
       login_to_admin_section
 
       click_link 'Products'
       click_link 'New Product'
 
-      fill_in 'product_name', with: 'A new product !!!'
-      fill_in 'product_price', with: '19.99'
-      select taxon.name, from: "product_primary_taxon_id"
       select 'New supplier', from: 'product_supplier_id'
+      fill_in 'product_name', with: 'A new product !!!'
+      # select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      # fill_in 'product_unit_value_with_description', with: 5
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '19.99'
+      fill_in 'product_on_hand', with: 5
+      fill_in 'product_description', with: "A description..."
 
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
+      #product.variant_unit.should == 'weight'
+      #product.variant_unit_scale.should == 1000
+      #product.unit_value.should == 5
+      #product.unit_value_description.should == ""
+      #product.unit_name.should == ""
+      product.primary_taxon_id.should == taxon.id
+      product.price.to_s.should == '19.99'
+      product.on_hand.should == 5
+      product.description.should == "A description..."
       product.group_buy.should be_false
 
       # Distributors
-      within('#sidebar') { click_link 'Product Distributions' }
+      visit spree.product_distributions_admin_product_path(product)
 
       check @distributors[0].name
       select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
