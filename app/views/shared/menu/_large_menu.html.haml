@@ -1,7 +1,7 @@
-%nav.top-bar.show-for-large-up{'data' => 'topbar'}
+%nav.top-bar.show-for-large-up{'data-topbar' => true}
   %section.top-bar-section
     %ul.left{}
-      %li= link_to image_tag("ofn_logo_small.png"), root_path      
+      %li.ofn-logo= link_to image_tag("ofn_logo_small.png"), root_path      
       %li.divider
       - if current_page? root_path
         %li
@@ -27,7 +27,9 @@
       - if admin_user? or enterprise_user?
         %li
           %a{href: spree.admin_path}
-            %span.nav-primary Admin
+            %span.nav-primary 
+              %i.ofn-i_021-tools
+              Admin
       %li.divider
   %section.top-bar-section
     %ul.right
