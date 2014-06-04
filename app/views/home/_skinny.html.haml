@@ -10,9 +10,6 @@
   .columns.small-3{"bo-if" => "hub.active"}
     {{ hub.orders_close_at | sensible_timeframe }} 
 
-  .columns.small-3{"bo-if" => "hub.active"}
-    {{ hub.orders_close_at | sensible_timeframe }} 
-
   .columns.small-3{"bo-if" => "!hub.active"}
     %i.ofn-i_032-closed-sign
     Orders closed
