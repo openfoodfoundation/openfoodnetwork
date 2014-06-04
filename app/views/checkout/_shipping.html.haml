@@ -42,10 +42,10 @@
       = f.fields_for :ship_address, @order.ship_address do |sa|
         #ship_address{"ng-if" => "Order.requireShipAddress()"}
           %label
-            %input{type: :checkbox, "ng-model" => "CheckoutFormState.ship_address_same_as_billing"}
+            %input{type: :checkbox, "ng-model" => "Order.ship_address_same_as_billing"}
             Shipping address same as billing address?
 
-          %div.visible{"ng-if" => "!CheckoutFormState.ship_address_same_as_billing"}
+          %div.visible{"ng-if" => "!Order.ship_address_same_as_billing"}
             .row
               .small-12.columns
                 = validated_input "Address", "order.ship_address.address1", "ofn-focus" => "accordion['shipping']"

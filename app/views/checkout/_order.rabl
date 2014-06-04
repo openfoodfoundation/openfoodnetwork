@@ -1,3 +1,6 @@
+#NOTE: when adding new fields for user input, it may want to be cached in localStorage
+# If so, make sure to add it to Order.attributes_to_cache
+
 object current_order
 attributes :id, :email, :shipping_method_id, :user_id
 
@@ -18,7 +21,7 @@ child current_order.ship_address => :ship_address do
 end
 
 node :shipping_methods do
-  Hash[current_order.available_shipping_methods("front_end").collect { |method| 
+  Hash[current_distributor.shipping_methods.uniq.collect { |method| 
     [method.id, {
       require_ship_address: method.require_ship_address,
       price: method.compute_amount(current_order).to_f,

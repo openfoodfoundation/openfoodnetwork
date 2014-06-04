@@ -10,6 +10,7 @@ describe "CheckoutCtrl", ->
     Order = 
       submit: ->
       navigate: ->
+      bindFieldsToLocalStorage: ->
       order:
         id: 1
         public: "public"
@@ -20,6 +21,7 @@ describe "CheckoutCtrl", ->
     beforeEach ->
       inject ($controller, $rootScope) ->
         scope = $rootScope.$new() 
+        spyOn(Order, "bindFieldsToLocalStorage")
         ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: Order, CurrentUser: {}}
   
     it "delegates to the service on submit", ->
@@ -31,6 +33,9 @@ describe "CheckoutCtrl", ->
 
     it "is enabled", ->
       expect(scope.enabled).toEqual true
+
+    it "triggers localStorage binding", ->
+      expect(Order.bindFieldsToLocalStorage).toHaveBeenCalled()
 
   describe "without user", ->
     beforeEach ->
