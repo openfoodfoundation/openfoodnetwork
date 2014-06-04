@@ -4,7 +4,7 @@
       %i.ofn-i_029-shopping-basket
       Shop for
     %p.trans-sentence
-      %span{"ng-repeat" => "taxon in hub.taxons"}
+      %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
         %img{"bo-src" => "taxon.icon",
         name: "{{taxon.name}}", alt: "{{taxon.name}}"}
         {{taxon.name}} 
