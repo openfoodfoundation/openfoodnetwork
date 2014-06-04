@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, order, $http, Flash, Navigation, storage)->
+Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)->
   new class Order
     errors: {}
     secrets: {}
@@ -24,7 +24,8 @@ Darkswarm.factory 'Order', ($resource, order, $http, Flash, Navigation, storage)
         Navigation.go data.path
       .error (response, status)=>
         @errors = response.errors
-        Flash.loadFlash(response.flash)
+        flash.error = response.flash?.error
+        flash.success = response.flash?.notice
         
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->

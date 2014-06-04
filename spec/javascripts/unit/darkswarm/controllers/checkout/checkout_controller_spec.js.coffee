@@ -13,7 +13,7 @@ describe "CheckoutCtrl", ->
       bindFieldsToLocalStorage: ->
       order:
         id: 1
-        public: "public"
+        email: "public"
       secrets:
         card_number: "this is a secret"
      
@@ -45,9 +45,6 @@ describe "CheckoutCtrl", ->
 
     it "is disabled", ->
       expect(scope.enabled).toEqual false
-
-    it "binds order to local storage", ->
-      expect(localStorage.getItem("order_#{Order.order.id}#{Order.order.user_id}")).toMatch Order.order.public
 
     it "does not store secrets in local storage", ->
       keys = (localStorage.key(i) for i in [0..localStorage.length])
