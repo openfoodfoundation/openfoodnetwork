@@ -17,13 +17,18 @@
         "ng-repeat" => "product in data.products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
         %div
           = render partial: "shop/products/summary"
-        
           %div{"bo-if" => "hasVariants"}
             = render partial: "shop/products/variants"
-
         .variants.row{"bo-if" => "!hasVariants"}
           = render partial: "shop/products/master"
+      
+      %product{"ng-show" => "data.loading"}
+        .row.summary
+          .small-12.columns.text-center
+            Loading products
+            
     
     .row
       .small-12.columns
         %input.button.primary.right.add_to_cart{type: :submit, value: "Add to Cart"}
+

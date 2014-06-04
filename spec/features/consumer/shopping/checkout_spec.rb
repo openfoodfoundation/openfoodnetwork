@@ -96,37 +96,57 @@ feature "As a consumer I want to check out my cart", js: true do
 
           end
           place_order
-          page.should have_content "Your order has been processed successfully", wait: 10
+          page.should have_content "Your order has been processed successfully"
           ActionMailer::Base.deliveries.length.should == 1
           email = ActionMailer::Base.deliveries.last
           site_name = Spree::Config[:site_name]
           email.subject.should include "#{site_name} Order Confirmation"
         end
 
-        it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
-          toggle_shipping
-          choose sm1.name
-          toggle_payment
-          choose pm1.name
-          toggle_details
-          within "#details" do
-            fill_in "First Name", with: "Will"
-            fill_in "Last Name", with: "Marshall"
-            fill_in "Email", with: "test@test.com"
-            fill_in "Phone", with: "0468363090"
+        context "with basic details filled" do
+          before do
+            toggle_shipping
+            choose sm1.name
+            toggle_payment
+            choose pm1.name
+            toggle_details
+            within "#details" do
+              fill_in "First Name", with: "Will"
+              fill_in "Last Name", with: "Marshall"
+              fill_in "Email", with: "test@test.com"
+              fill_in "Phone", with: "0468363090"
+            end
+            toggle_billing
+            within "#billing" do
+              fill_in "City", with: "Melbourne"
+              fill_in "Postcode", with: "3066"
+              fill_in "Address", with: "123 Your Face"
+              select "Australia", from: "Country"
+              select "Victoria", from: "State"
+            end
+            toggle_shipping
+            check "Shipping address same as billing address?"
           end
-          toggle_billing
-          within "#billing" do
-            fill_in "City", with: "Melbourne"
-            fill_in "Postcode", with: "3066"
-            fill_in "Address", with: "123 Your Face"
-            select "Australia", from: "Country"
-            select "Victoria", from: "State"
+
+          it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+            place_order
+            page.should have_content "Your order has been processed successfully"
           end
-          toggle_shipping
-          check "Shipping address same as billing address?"
-          place_order
-          page.should have_content "Your order has been processed successfully", wait: 10
+
+          context "with a credit card payment method" do
+            let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::Gateway::Bogus") }
+
+            it "takes us to the order confirmation page when submitted with a valid credit card" do
+              toggle_payment
+              fill_in 'Card Number', with: "4111111111111111"
+              select 'February', from: 'secrets.card_month'
+              select (Date.today.year+1).to_s, from: 'secrets.card_year'
+              fill_in 'CVV', with: '123'
+
+              place_order
+              page.should have_content "Your order has been processed successfully"
+            end
+          end
         end
       end
     end

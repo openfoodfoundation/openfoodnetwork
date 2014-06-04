@@ -1,4 +1,4 @@
-Darkswarm.controller "BillingCtrl", ($scope) ->
+Darkswarm.controller "BillingCtrl", ($scope, $timeout) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.name = "billing"
   $scope.nextPanel = "shipping"
@@ -8,3 +8,4 @@ Darkswarm.controller "BillingCtrl", ($scope) ->
     $scope.order.bill_address.city, 
     $scope.order.bill_address.zipcode]
 
+  #$timeout $scope.onTimeout 

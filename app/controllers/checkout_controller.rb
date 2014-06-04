@@ -15,7 +15,6 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
-
     if @order.update_attributes(params[:order])
       fire_event('spree.checkout.update')
       while @order.state != "complete"
@@ -26,7 +25,7 @@ class CheckoutController < Spree::CheckoutController
         if @order.next
           state_callback(:after)
         else
-          unless @order.errors.empty?
+          if @order.errors.present?
             flash[:error] = @order.errors.full_messages.to_sentence
           else
             flash[:error] = t(:payment_processing_failed)
