@@ -56,9 +56,8 @@ Spree::Variant.class_eval do
     delete_unit_option_values
 
     option_type = self.product.variant_unit_option_type
-    option_value_namer = OpenFoodNetwork::OptionValueNamer.new self
     if option_type
-      name = option_value_namer.name
+      name = option_value_name
       ov = Spree::OptionValue.where(option_type_id: option_type, name: name, presentation: name).first || Spree::OptionValue.create!({option_type: option_type, name: name, presentation: name}, without_protection: true)
       option_values << ov
     end

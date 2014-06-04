@@ -229,6 +229,26 @@ module Spree
         end
       end
 
+      context "when the variant already has a value set (and all required option values exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
+
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
+
+        it "removes the old option value and assigns the new one" do
+          ov_orig = v.option_values.last
+          ov_new  = v0.option_values.last
+
+          expect {
+            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          }.to change(Spree::OptionValue, :count).by(0)
+
+          v.option_values.should_not include ov_orig
+          v.option_values.should     include ov_new
+        end
+      end
+
       context "when the variant does not have a display_as value set" do
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '') }
