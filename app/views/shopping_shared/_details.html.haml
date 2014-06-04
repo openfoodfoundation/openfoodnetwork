@@ -1,7 +1,8 @@
 %navigation
   %distributor.details.row
     #distributor_title
-      %img.left{src: current_distributor.logo.url(:thumb)}
+      - if current_distributor.logo.exists?
+        %img.left{src: current_distributor.logo.url(:thumb)}
       %h3
         = current_distributor.name
       %location= current_distributor.address.city
