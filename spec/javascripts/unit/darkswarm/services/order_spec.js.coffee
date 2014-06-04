@@ -110,3 +110,8 @@ describe 'Order service', ->
       expect(source_attributes.verification_value).toBe Order.secrets.card_verification_value
       expect(source_attributes.first_name).toBe Order.order.bill_address.firstname
       expect(source_attributes.last_name).toBe Order.order.bill_address.lastname
+
+    it "does not create attributes for card fields when no card is supplied", ->
+      Order.secrets.card_number = ''
+      source_attributes = Order.preprocess().payments_attributes[0].source_attributes
+      expect(source_attributes).not.toBeDefined()
