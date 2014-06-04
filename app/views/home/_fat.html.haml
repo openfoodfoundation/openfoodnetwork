@@ -1,17 +1,25 @@
 .row.active_table_row{"ng-show" => "open()"}
   .columns.small-4
-    %strong Shop for
+    %h5 
+      %i.ofn-i_029-shopping-basket
+      Shop for
     %p.trans-sentence
       %img{"ng-repeat" => "taxon in hub.taxons", "bo-src" => "taxon.icon",
       name: "{{taxon.name}}", alt: "{{taxon.name}}"}
   .columns.small-4
-    %strong Delivery options
+    %h5 Delivery options
     %ol
-      %li.pickup{"bo-if" => "hub.pickup"} Pickup
-      %li.delivery{"bo-if" => "hub.delivery"} Delivery
+      %li.pickup{"bo-if" => "hub.pickup"} 
+        %i.ofn-i_038-takeaway
+        Pickup
+      %li.delivery{"bo-if" => "hub.delivery"} 
+        %i.ofn-i_039-delivery
+        Delivery
   .columns.small-4
-    %strong Our producers
-    %ul
+    %h5 
+      %i.ofn-i_036-producers
+      Our producers
+    %ul.ofn-list
       %li{"ng-repeat" => "producer in hub.producers"}
         = render partial: "modals/producer"
 
