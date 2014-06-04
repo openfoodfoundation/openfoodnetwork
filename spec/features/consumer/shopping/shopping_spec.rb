@@ -24,7 +24,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       page.should have_text distributor.name
       find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
-      first("#about img")['src'].should == distributor.promo_image.url(:large) 
     end
 
     it "shows the producers for a distributor" do
