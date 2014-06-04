@@ -1,7 +1,9 @@
 %ofn-modal{title: "{{producer.name}}"}
   .row
     .small-12.columns.producer-hero
-      %h3.producer-name {{ producer.name }}
+      %h3.producer-name 
+        %i.ofn-i_036-producers
+        {{ producer.name }}
       %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
       
   .row  
