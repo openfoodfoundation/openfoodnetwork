@@ -6,9 +6,16 @@
     {{ hub.address.city }}
   .columns.small-1
     {{ hub.address.state | uppercase }}
+
   .columns.small-3{"bo-if" => "hub.active"}
     {{ hub.orders_close_at | sensible_timeframe }} 
+
+  .columns.small-3{"bo-if" => "hub.active"}
+    {{ hub.orders_close_at | sensible_timeframe }} 
+
   .columns.small-3{"bo-if" => "!hub.active"}
+    %i.ofn-i_032-closed-sign
     Orders closed
+
   .columns.small-1.text-right
     %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"} 

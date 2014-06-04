@@ -4,8 +4,10 @@
       %i.ofn-i_029-shopping-basket
       Shop for
     %p.trans-sentence
-      %img{"ng-repeat" => "taxon in hub.taxons", "bo-src" => "taxon.icon",
-      name: "{{taxon.name}}", alt: "{{taxon.name}}"}
+      %span{"ng-repeat" => "taxon in hub.taxons"}
+        %img{"bo-src" => "taxon.icon",
+        name: "{{taxon.name}}", alt: "{{taxon.name}}"}
+        {{taxon.name}} 
   .columns.small-4
     %h5 Delivery options
     %ol
