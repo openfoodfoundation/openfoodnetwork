@@ -2,7 +2,8 @@ Spree::Variant.class_eval do
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
 
-  attr_accessible :unit_value, :unit_description
+  attr_accessible :unit_value, :unit_description, :images_attributes
+  accepts_nested_attributes_for :images
 
   validates_presence_of :unit_value,
                         if: -> v { %w(weight volume).include? v.product.variant_unit },
