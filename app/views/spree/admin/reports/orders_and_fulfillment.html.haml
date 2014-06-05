@@ -1,33 +1,40 @@
 = form_for @search, :url => spree.orders_and_fulfillment_admin_reports_path do |f|
-  = label_tag nil, t(:date_range)
-  %br
-  .date-range-filter
+  .row.date-range-filter
+    = label_tag nil, t(:date_range)
+    %br
     = label_tag nil, t(:start), :class => 'inline'
     = f.text_field :completed_at_gt, :class => 'datetimepicker datepicker-from'    
     %span.range-divider
       %i.icon-arrow-right
     = f.text_field :completed_at_lt, :class => 'datetimepicker datepicker-to'
     = label_tag nil, t(:end), :class => 'inline'
-  %br
-  = label_tag nil, "Distributor: "
-  = f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => @include_blank)
-  %br
-  = label_tag nil, "Supplier: "
-  = select_tag(:supplier_id, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]), :prompt => @include_blank)
-  %br
-  = label_tag nil, "Order Cycle: "
-  - order_cycles_select = [['No Order Cycle', '-1']]
-  - order_cycles_select += @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
-  = f.select(:order_cycle_id_eq, order_cycles_select, include_blank: @include_blank, selected: params[:q][:order_cycle_id_eq])
-  %br
-  = label_tag nil, "Report Type: "
-  = select_tag(:report_type, options_for_select(@report_types, @report_type))
-  %br
-  %br
-  = check_box_tag :csv
-  = label_tag :csv, "Download as csv"
-  %br
+
+  .row
+    .alpha.two.columns= label_tag nil, "Distributor: "
+    .omega.fourteen.columns= f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => @include_blank)
+
+  .row
+    .alpha.two.columns= label_tag nil, "Supplier: "
+    .omega.fourteen.columns= select_tag(:supplier_id, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]), :prompt => @include_blank)
+
+  .row
+    .alpha.two.columns= label_tag nil, "Order Cycle: "
+    .omega.fourteen.columns
+      - order_cycles_select = [['No Order Cycle', '-1']]
+      - order_cycles_select += @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
+      = f.select(:order_cycle_id_eq, order_cycles_select, include_blank: @include_blank, selected: params[:q][:order_cycle_id_eq])
+
+  .row
+    .alpha.two.columns= label_tag nil, "Report Type: "
+    .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
+
+  .row
+    = check_box_tag :csv
+    = label_tag :csv, "Download as csv"
+
+  .row
   = button t(:search)
+
 %br
 %br
 %table#listing_orders.index
