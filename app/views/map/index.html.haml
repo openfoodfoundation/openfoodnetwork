@@ -1,6 +1,3 @@
-- content_for :scripts do
-  %script{src: "//maps.googleapis.com/maps/api/js?sensor=false"}
-
 = inject_json "enterprisesForMap" , "enterprises_for_map", collection: @enterprises
 
 .ofn-map-container{"fill-vertical" => true}
