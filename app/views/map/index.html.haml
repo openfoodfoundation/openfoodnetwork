@@ -3,10 +3,11 @@
 
 = inject_json "enterprisesForMap" , "enterprises_for_map", collection: @enterprises
 
-%map{"ng-controller" => "MapCtrl"}
-  %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+.ofn-map-container{"fill-vertical" => true}
+  %map{"ng-controller" => "MapCtrl"}
+    %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
 
-    %markers{models: "OfnMap.enterprises", fit: "true", 
-    coords: "'self'", icon: "'icon'", click: "'reveal'"} 
+      %markers{models: "OfnMap.enterprises", fit: "true", 
+      coords: "'self'", icon: "'icon'", click: "'reveal'"} 
 
 
