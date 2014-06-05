@@ -11,4 +11,6 @@ Darkswarm.factory "OfnMap", (enterprisesForMap, MapModal)->
           @[k] = v for k, v of enterprise
 
         reveal: =>
+
+          console.log @
           MapModal.open @
