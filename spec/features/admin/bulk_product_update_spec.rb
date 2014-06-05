@@ -596,7 +596,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.click }
+        all("a.view-variants").each { |e| e.trigger('click') }
 
         page.should have_selector "a.delete-variant", :count => 3
 
@@ -606,7 +606,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").select { |e| e.visible? }.each { |e| e.click }
+        all("a.view-variants").select { |e| e.visible? }.each { |e| e.trigger('click') }
 
         page.should have_selector "a.delete-variant", :count => 2
       end
@@ -636,7 +636,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.click }
+        all("a.view-variants").each { |e| e.trigger('click') }
 
         page.should have_selector "a.edit-variant", :count => 3
 
