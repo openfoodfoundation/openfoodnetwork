@@ -36,6 +36,7 @@ ComfortableMexicanSofa.configure do |config|
   # filesystem see: http://rdoc.info/gems/paperclip/2.3.8/Paperclip/Storage/Filesystem
   config.upload_file_options = {
     :storage => 's3',
+    :s3_protocol => :https,
     :s3_credentials => {
       :bucket => Spree::Config[:s3_bucket],
       :access_key_id => Spree::Config[:s3_access_key],

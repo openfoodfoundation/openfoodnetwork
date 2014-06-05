@@ -3,6 +3,8 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/#/login", to: "home#index", as: :spree_login
 
+  get "/map", to: "map#index", as: :map
+
   resource :shop, controller: "shop" do
     get :products
     post :order_cycle
