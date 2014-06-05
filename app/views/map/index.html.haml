@@ -1,5 +1,15 @@
 - content_for :scripts do
   %script{src: "//maps.googleapis.com/maps/api/js?sensor=false"}
 
+= inject_json "enterprisesForMap" , "enterprises_for_map", collection: @enterprises
+
 %map{"ng-controller" => "MapCtrl"}
-  %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles"}
+  %span{"ng-repeat" => "marker in OfnMap.enterprises"}
+    {{ marker.visible }}
+
+  %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+
+    %markers{models: "OfnMap.enterprises", fit: "true", 
+    coords: "'self'", icon: "'icon'", click: "'reveal'"} 
+
+
