@@ -134,7 +134,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
 
       visit '/admin/products/bulk_edit'
-      first("a.view-variants").click
+      first("a.view-variants").trigger('click')
 
       page.should_not have_selector "span[name='on_hand']", text: "On demand", visible: true
       page.should     have_field "variant_on_hand", with: "4"
@@ -171,7 +171,7 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
       page.should have_selector "a.view-variants"
-      all("a.view-variants").each{ |e| e.click }
+      all("a.view-variants").each { |e| e.trigger('click') }
 
       page.should have_field "product_name", with: v1.product.name
       page.should have_field "product_name", with: v2.product.name
@@ -185,7 +185,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
 
       visit '/admin/products/bulk_edit'
-      all("a.view-variants").each{ |e| e.click }
+      all("a.view-variants").each { |e| e.trigger('click') }
 
       page.should have_selector "span[name='on_hand']", text: "21"
       page.should have_field "variant_on_hand", with: "15"
@@ -199,7 +199,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit '/admin/products/bulk_edit'
-      all("a.view-variants").each{ |e| e.click }
+      all("a.view-variants").each { |e| e.trigger('click') }
 
       page.should have_field "price", with: "2.0", visible: false
       page.should have_field "variant_price", with: "12.75"
@@ -212,7 +212,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)")
 
       visit '/admin/products/bulk_edit'
-      all("a.view-variants").each{ |e| e.click }
+      all("a.view-variants").each { |e| e.trigger('click') }
 
       page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
       page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
@@ -260,9 +260,9 @@ feature %q{
     page.should have_selector 'a.add-variant', visible: true
 
     # When I add three variants
-    page.find('a.add-variant', visible: true).click
-    page.find('a.add-variant', visible: true).click
-    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).trigger('click')
+    page.find('a.add-variant', visible: true).trigger('click')
+    page.find('a.add-variant', visible: true).trigger('click')
 
     # They should be added, and should see no edit buttons
     page.all("tr.variant").count.should == 3
@@ -286,7 +286,7 @@ feature %q{
     # And the variants should be saved
     visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
     page.should have_field "variant_price", with: "4.0"
@@ -368,14 +368,14 @@ feature %q{
     page.should have_select "variant_unit_with_scale", selected: ''
 
     select "Weight (kg)", from: "variant_unit_with_scale"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
     fill_in "variant_unit_value_with_description", with: '123 abc'
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
     visit '/admin/products/bulk_edit'
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "variant_unit_value_with_description", with: "123 abc"
@@ -434,7 +434,7 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_field "variant_price", with: "3.0"
     page.should have_field "variant_unit_value_with_description", with: "250 (bottle)"
@@ -452,7 +452,7 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_field "variant_price", with: "4.0"
     page.should have_field "variant_on_hand", with: "10"
@@ -467,7 +467,7 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_field "variant_price", with: "3.0"
 
@@ -478,7 +478,7 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
     page.should have_selector "a.view-variants"
-    first("a.view-variants").click
+    first("a.view-variants").trigger('click')
 
     page.should have_field "variant_price", with: "10.0"
   end
@@ -596,7 +596,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.click }
+        all("a.view-variants").each { |e| e.trigger('click') }
 
         page.should have_selector "a.delete-variant", :count => 3
 
@@ -606,7 +606,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").select { |e| e.visible? }.each { |e| e.click }
+        all("a.view-variants").select { |e| e.visible? }.each { |e| e.trigger('click') }
 
         page.should have_selector "a.delete-variant", :count => 2
       end
@@ -636,7 +636,7 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
         page.should have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.click }
+        all("a.view-variants").each { |e| e.trigger('click') }
 
         page.should have_selector "a.edit-variant", :count => 3
 

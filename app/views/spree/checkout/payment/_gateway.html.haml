@@ -1,8 +1,16 @@
-= validated_input "Card Number", "secrets.card_number", required: true, maxlength: 19, autocomplete: "off"
+.row
+  .small-6.columns
+    = validated_input "Card Number", "secrets.card_number", required: true, maxlength: 19, autocomplete: "off"
+  .small-6.columns
+    = validated_input "Security Code", "secrets.card_verification_value", required: true
 
-%label{for: "secrets.card_month"} Expiry Date
-%select{"ng-model" => "secrets.card_month", "ng-options" => "number as name for (number, name) in months", name: "secrets.card_month", required: true}
+.row
+  .small-12.columns
+    %label{for: "secrets.card_month"} Expiry Date
 
-%select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", required: true}
+.row
+  .small-6.columns
+    %select{"ng-model" => "secrets.card_month", "ng-options" => "number as name for (number, name) in months", name: "secrets.card_month", required: true}
+  .small-6.columns
+    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", required: true}
 
-= validated_input "CVV", "secrets.card_verification_value", required: true

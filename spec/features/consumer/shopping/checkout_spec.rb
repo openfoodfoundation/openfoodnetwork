@@ -141,7 +141,7 @@ feature "As a consumer I want to check out my cart", js: true do
               fill_in 'Card Number', with: "4111111111111111"
               select 'February', from: 'secrets.card_month'
               select (Date.today.year+1).to_s, from: 'secrets.card_year'
-              fill_in 'CVV', with: '123'
+              fill_in 'Security Code', with: '123'
 
               place_order
               page.should have_content "Your order has been processed successfully"
