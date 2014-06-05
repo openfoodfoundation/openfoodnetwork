@@ -4,9 +4,6 @@
 = inject_json "enterprisesForMap" , "enterprises_for_map", collection: @enterprises
 
 %map{"ng-controller" => "MapCtrl"}
-  %span{"ng-repeat" => "marker in OfnMap.enterprises"}
-    {{ marker.visible }}
-
   %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
 
     %markers{models: "OfnMap.enterprises", fit: "true", 
