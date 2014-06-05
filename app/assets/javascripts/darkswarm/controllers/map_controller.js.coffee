@@ -6,4 +6,3 @@ Darkswarm.controller "MapCtrl", ($scope, MapConfiguration, OfnMap)->
       longitude: 144.743663
     zoom: 8
     styles: MapConfiguration.options
-
