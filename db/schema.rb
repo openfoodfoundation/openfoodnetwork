@@ -962,7 +962,7 @@ ActiveRecord::Schema.define(:version => 20140604051248) do
     t.string   "cost_currency"
     t.float    "unit_value"
     t.string   "unit_description",                               :default => ""
-    t.string   "name"
+    t.string   "display_name"
     t.string   "display_as"
   end
 
