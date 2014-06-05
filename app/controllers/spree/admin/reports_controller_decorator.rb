@@ -494,7 +494,6 @@ Spree::Admin::ReportsController.class_eval do
 
         proc { |line_items| line_items.first.order.shipping_method.andand.name },
         proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
-
         proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.city if rsa.call(line_items) },
@@ -507,8 +506,8 @@ Spree::Admin::ReportsController.class_eval do
       sort_by: proc { |distributor| distributor.name } },
       { group_by: proc { |line_item| line_item.order },
       sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
-      summary_columns: [ proc { |line_items| "" },
-        proc { |line_items| "" },
+      summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
+        proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
