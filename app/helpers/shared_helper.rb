@@ -1,7 +1,7 @@
 module SharedHelper
 
-  def inject_json(name, partial)
-    render "json/injection", name: name, partial: partial
+  def inject_json(name, partial, opts = {})
+    render "json/injection", {name: name, partial: partial}.merge(opts)
   end
 
   def distributor_link_class(distributor)
