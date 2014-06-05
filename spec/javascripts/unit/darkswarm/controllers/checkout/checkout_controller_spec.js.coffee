@@ -10,9 +10,10 @@ describe "CheckoutCtrl", ->
     Order = 
       submit: ->
       navigate: ->
+      bindFieldsToLocalStorage: ->
       order:
         id: 1
-        public: "public"
+        email: "public"
       secrets:
         card_number: "this is a secret"
      
@@ -20,6 +21,7 @@ describe "CheckoutCtrl", ->
     beforeEach ->
       inject ($controller, $rootScope) ->
         scope = $rootScope.$new() 
+        spyOn(Order, "bindFieldsToLocalStorage")
         ctrl = $controller 'CheckoutCtrl', {$scope: scope, Order: Order, CurrentUser: {}}
   
     it "delegates to the service on submit", ->
@@ -32,6 +34,9 @@ describe "CheckoutCtrl", ->
     it "is enabled", ->
       expect(scope.enabled).toEqual true
 
+    it "triggers localStorage binding", ->
+      expect(Order.bindFieldsToLocalStorage).toHaveBeenCalled()
+
   describe "without user", ->
     beforeEach ->
       inject ($controller, $rootScope) ->
@@ -40,9 +45,6 @@ describe "CheckoutCtrl", ->
 
     it "is disabled", ->
       expect(scope.enabled).toEqual false
-
-    it "binds order to local storage", ->
-      expect(localStorage.getItem("order_#{Order.order.id}#{Order.order.user_id}")).toMatch Order.order.public
 
     it "does not store secrets in local storage", ->
       keys = (localStorage.key(i) for i in [0..localStorage.length])

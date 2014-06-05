@@ -23,5 +23,5 @@
 
   %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
     {{ quantity }}
-    = link_to image_tag('icons/delete.png'), '#', :class => 'delete', 
-      :id => "delete_#{dom_id(line_item)}"
+    %a.delete{href: "#", id: "delete_#{dom_id(line_item)}"}
+      %i.delete.ofn-i_026-trash

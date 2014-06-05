@@ -445,4 +445,18 @@ describe Enterprise do
       supplier.supplied_taxons.should == [taxon1, taxon2]
     end
   end
+
+  describe "presentation of attributes" do
+    let(:distributor) { 
+      create(:distributor_enterprise, 
+             website: "http://www.google.com", 
+             facebook: "www.facebook.com/roger", 
+             linkedin: "http://linkedin.com") 
+    }
+    it "strips http and www from url fields" do
+      distributor.website.should == "google.com"
+      distributor.facebook.should == "facebook.com/roger"
+      distributor.linkedin.should == "linkedin.com"
+    end
+  end
 end

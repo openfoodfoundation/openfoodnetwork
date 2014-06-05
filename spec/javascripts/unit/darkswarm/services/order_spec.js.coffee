@@ -2,19 +2,22 @@ describe 'Order service', ->
   Order = null
   orderData = null
   $httpBackend = null
-  CheckoutFormState = null
   Navigation = null
   flash = null
+  storage = null
+  scope = null
 
   beforeEach ->
     orderData =
       id: 3102
       payment_method_id: null
+      email: "test@test.com"
       bill_address:
         test: "foo"
         firstname: "Robert"
         lastname: "Harrington"
       ship_address: {test: "bar"}
+      user_id: 901
       shipping_methods:
         7:
           require_ship_address: true
@@ -34,18 +37,43 @@ describe 'Order service', ->
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
 
-    inject ($injector, _$httpBackend_)->
+    inject ($injector, _$httpBackend_, _storage_, $rootScope)->
       $httpBackend = _$httpBackend_
+      storage = _storage_
       Order = $injector.get("Order")
+      scope = $rootScope.$new()
+      scope.Order = Order
       Navigation = $injector.get("Navigation")
       flash = $injector.get("flash")
-      CheckoutFormState = $injector.get("CheckoutFormState")
       spyOn(Navigation, "go") # Stubbing out writes to window.location
 
   it "defaults to no shipping method", ->
     expect(Order.order.shipping_method_id).toEqual null
     expect(Order.shippingMethod()).toEqual undefined
 
+  it "has a shipping price of zero with no shipping method", ->
+    expect(Order.shippingPrice()).toEqual 0.0
+
+  it "binds to localStorage when given a scope", ->
+    spyOn(storage, "bind")
+    Order.fieldsToBind = ["testy"]
+    Order.bindFieldsToLocalStorage({})
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}"
+    expect(storage.bind).toHaveBeenCalledWith({}, "Order.order.testy", {storeName: "#{prefix}_testy"})
+    expect(storage.bind).toHaveBeenCalledWith({}, "Order.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
+
+  it "binds order to local storage", ->
+    Order.bindFieldsToLocalStorage(scope)
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}"
+    expect(localStorage.getItem("#{prefix}_email")).toMatch "test@test.com" 
+
+  it "does not store secrets in local storage", ->
+    Order.secrets =
+      card_number: "superfuckingsecret"
+    Order.bindFieldsToLocalStorage(scope)
+    keys = (localStorage.key(i) for i in [0..localStorage.length])
+    for key in keys
+      expect(localStorage.getItem(key)).not.toMatch Order.secrets.card_number
 
   describe "with shipping method", ->
     beforeEach ->
@@ -100,9 +128,9 @@ describe 'Order service', ->
       expect(Order.preprocess().ship_address).toBe(undefined)
 
     it "munges the order attributes to clone ship address from bill address", ->
-      CheckoutFormState.ship_address_same_as_billing = false
+      Order.ship_address_same_as_billing = false
       expect(Order.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
-      CheckoutFormState.ship_address_same_as_billing = true
+      Order.ship_address_same_as_billing = true
       expect(Order.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
 
     it "creates attributes for card fields", ->

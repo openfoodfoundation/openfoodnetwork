@@ -1,6 +1,27 @@
-%li#login-name
-  %a{"ng-click" => "toggle('/account')"}
-    = spree_current_user.email
-%li.divider
-  %li#sign-out-link
-    = link_to "Sign Out", "/logout"
+/ %li#login-name
+/   %a{"ng-click" => "toggle('/account')"}
+/     = spree_current_user.email
+/ %li#sign-out-link
+/   %a{title: 'Log Out', href:'/logout' } 
+/     %i.ofn-i_018-unlocked
+/     LOG OUT
+/ = link_to "Sign Out", "/logout"
+/ %li.divider
+%li.has-dropdown.not-click
+  %a{href: "#"} 
+    %i.ofn-i_022-cog
+  %ul.dropdown
+    %li
+      %a{href: spree.account_path}
+        %i.ofn-i_015-user
+        = spree_current_user.email
+    %li
+      %a{title: 'Log Out', href:'/logout' } 
+        %i.ofn-i_018-unlocked
+        LOG OUT
+
+    - if admin_user? or enterprise_user?
+      %li
+        %a{href: spree.admin_path} 
+          %i.ofn-i_021-tools
+          Admin

@@ -7,7 +7,7 @@
         %h4=current_distributor.name
         %p
           = current_distributor.address.address1
-          - if current_distributor.address.address2
+          - unless current_distributor.address.address2.blank?
             %br
             = current_distributor.address.address2
           %br
@@ -19,37 +19,37 @@
         %ul.small-block-grid-1.large-block-grid-2{bindonce: true}
           - unless current_distributor.website.blank?
             %li
-              %a{href: current_distributor.website, target: "_blank" }
-                %i.fi-web 
+              %a{href: "http://#{current_distributor.website}", target: "_blank" }
+                %i.ofn-i_049-web
                 = current_distributor.website
 
           - unless current_distributor.email.blank?
             %li
               %a{href: current_distributor.email.reverse, mailto: true }
-                %i.fi-mail 
+                %i.ofn-i_050-mail-circle 
                 %span.email
                   = current_distributor.email.reverse
 
           - unless current_distributor.twitter.blank?
             %li
-              %a{href: current_distributor.twitter, target: "_blank" }
-                %i.fi-social-twitter 
+              %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
+                %i.ofn-i_041-twitter 
                 = current_distributor.twitter
 
           - unless current_distributor.facebook.blank?
             %li
-              %a{href: current_distributor.facebook, target: "_blank" }
-                %i.fi-social-facebook 
+              %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
+                %i.ofn-i_044-facebook
                 = current_distributor.facebook
 
           - unless current_distributor.linkedin.blank?
             %li
-              %a{href: current_distributor.linkedin, target: "_blank" }
-                %i.fi-social-linkedin 
+              %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
+                %i.ofn-i_042-linkedin 
                 = current_distributor.linkedin
 
           - unless current_distributor.instagram.blank?
             %li
-              %a{href: current_distributor.instagram, target: "_blank" }
-                %i.fi-social-instagram 
+              %a{href: "http://instagram.com.#{current_distributor.instagram}", target: "_blank" }
+                %i.ofn-i_043-instagram
                 = current_distributor.instagram

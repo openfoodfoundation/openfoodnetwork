@@ -1,6 +1,7 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, storage, CheckoutFormState, Order, CurrentUser) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, storage, Order, CurrentUser) ->
   $scope.Order = Order
-  storage.bind $scope, "Order.order", {storeName: "order_#{Order.order.id}#{Order.order.user_id}"}
+  Order.bindFieldsToLocalStorage($scope)
+
   $scope.order = Order.order # Ordering is important
   $scope.secrets = Order.secrets
 
@@ -9,6 +10,3 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, CheckoutFormState, Order,
   $scope.purchase = (event)->
     event.preventDefault()
     $scope.Order.submit()
-
-  $scope.CheckoutFormState = CheckoutFormState
-  storage.bind $scope, "CheckoutFormState.ship_address_same_as_billing", { defaultValue: true}
