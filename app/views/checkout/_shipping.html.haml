@@ -3,10 +3,10 @@
 
     %h5{"ng-class" => "{valid: shipping.$valid, dirty: shipping.$dirty}"}
       %span.right
-        %label.label.round.alert
-          %i.fi-x
-        %label.label.round.success
-          %i.fi-check
+        %label.label.round.alert.right
+          %i.ofn-i_009-close
+        %label.label.round.success.right
+          %i.ofn-i_051-check-big
       Shipping info
 
     %accordion-group{"is-open" => "accordion.shipping",
@@ -19,9 +19,9 @@
                 {{ Order.shippingMethod().name }}
           .small-1.columns.right
             %span.accordion-up.right
-              %i.fi-arrow-up
+              %i.ofn-i_006-caret-up
             %span.accordion-down.right
-              %i.fi-arrow-down  
+              %i.ofn-i_005-caret-down  
 
       - for ship_method, i in current_distributor.shipping_methods.uniq
         .row

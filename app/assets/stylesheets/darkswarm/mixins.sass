@@ -12,9 +12,14 @@
   border: 1px solid #999
   font-size: 18px
   @extend .avenir
+  box-shadow: 0
   padding: 0.75em 1em
   height: auto
   margin-bottom: 1em
+  background: rgba(255,255,255,0.65)
+  &:active, &:hover, &:focus
+    background: rgba(255,255,255,1)
+    border-color: #888
 
 @mixin disabled
   color: $disabled-bright
@@ -49,13 +54,12 @@
 // Assign content: "string"
 
 @mixin icon-font
-  font-family: "foundation-icons"
+  font-family: "OFN"
   display: inline-block
   font-weight: normal
   font-style: normal
   font-variant: normal
   text-transform: none
-  font-size: 80%
 
 
 // Background options \\

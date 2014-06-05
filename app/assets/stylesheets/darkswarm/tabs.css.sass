@@ -33,9 +33,12 @@
       border-top: 4px solid transparent
       a:after
         padding-left: 8px
-        content: "\f109"
+        content: "\e632"
         visibility: hidden
         @include icon-font
+    dd:hover
+      a:after
+        visibility: visible
   
   // active nav link
   
@@ -45,7 +48,7 @@
       a
         color: $clr-brick-bright
       a:after
-        content: "\f10c"
+        content: "\e631"
         visibility: visible
         @include icon-font
 
