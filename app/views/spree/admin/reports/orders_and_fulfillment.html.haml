@@ -10,19 +10,18 @@
     = label_tag nil, t(:end), :class => 'inline'
 
   .row
-    .alpha.two.columns= label_tag nil, "Distributor: "
-    .omega.fourteen.columns= f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => @include_blank)
+    .alpha.two.columns= label_tag nil, "Distributors: "
+    .omega.fourteen.columns= f.collection_select(:distributor_id_in, @distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Supplier: "
-    .omega.fourteen.columns= select_tag(:supplier_id, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]), :prompt => @include_blank)
+    .alpha.two.columns= label_tag nil, "Suppliers: "
+    .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Order Cycle: "
+    .alpha.two.columns= label_tag nil, "Order Cycles: "
     .omega.fourteen.columns
-      - order_cycles_select = [['No Order Cycle', '-1']]
-      - order_cycles_select += @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
-      = f.select(:order_cycle_id_eq, order_cycles_select, include_blank: @include_blank, selected: params[:q][:order_cycle_id_eq])
+      - order_cycles_select = @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
+      = f.select(:order_cycle_id_in, order_cycles_select, {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
 
   .row
     .alpha.two.columns= label_tag nil, "Report Type: "

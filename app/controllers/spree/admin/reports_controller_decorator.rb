@@ -356,19 +356,12 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    q = params[:q].dup
-    if q[:order_cycle_id_eq] == '-1'
-      q[:order_cycle_id_null] = true
-      q[:order_cycle_id_eq] = nil
-    end
-
     # -- Search
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(q)
-    
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
     orders = @search.result
     @line_items = orders.map do |o|
       lis = o.line_items.managed_by(spree_current_user)
-      lis = lis.supplied_by(params[:supplier_id]) if params[:supplier_id].present?
+      lis = lis.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
       lis
     end.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
