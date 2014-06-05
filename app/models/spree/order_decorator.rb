@@ -127,7 +127,11 @@ Spree::Order.class_eval do
   end
 
   def line_item_variants
-    line_items.map { |li| li.variant }
+    line_items.map(&:variant)
+  end
+
+  def distribution_total
+    adjustments.eligible.where(originator_type: 'EnterpriseFee').sum(&:amount)
   end
 
   # Show payment methods for this distributor
@@ -140,6 +144,8 @@ Spree::Order.class_eval do
   def available_shipping_methods(display_on = nil)
     Spree::ShippingMethod.all_available(self, display_on)
   end
+
+
   private
 
   def shipping_address_from_distributor

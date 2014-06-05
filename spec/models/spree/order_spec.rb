@@ -141,6 +141,37 @@ describe Spree::Order do
     end
   end
 
+  describe "getting the distribution charge" do
+    let(:o) { create(:order) }
+    let(:li) { create(:line_item, order: o) }
+
+    it "returns the sum of eligible enterprise fee adjustments" do
+      ef = create(:enterprise_fee)
+      ef.calculator.set_preference :amount, 123.45
+      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+
+      o.distribution_total.should == 123.45
+    end
+
+    it "does not include ineligible adjustments" do
+      ef = create(:enterprise_fee)
+      ef.calculator.set_preference :amount, 123.45
+      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+
+      a.update_column :eligible, false
+
+      o.distribution_total.should == 0
+    end
+
+    it "does not include adjustments that do not originate from enterprise fees" do
+      sm = create(:shipping_method)
+      sm.calculator.set_preference :amount, 123.45
+      sm.create_adjustment("adjustment", li.order, li, true)
+
+      o.distribution_total.should == 0
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
