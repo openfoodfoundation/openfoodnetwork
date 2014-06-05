@@ -474,18 +474,17 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Product", "Variant", "Amount", "Item ($)", "Ship ($)", "Total ($)", "Paid?", "Packed?", "Shipped?"]
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Ship ($)", "Total ($)", "Paid?"]
 
       columns = [ proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| line_items.first.order.email },
         proc { |line_items| line_items.first.order.bill_address.phone },
+        proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.options_text },
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
-        proc { |line_items| "" },
-        proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" } ]
@@ -498,15 +497,14 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
+        proc { |line_items| "" },
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
-        proc { |line_items| line_items.map { |li| li.order.paid? }.all? { |paid| paid == true } ? "Yes" : "No" },
-        proc { |line_items| "" },
-        proc { |line_items| "" } ] },
+        proc { |line_items| line_items.map { |li| li.order.paid? }.all? { |paid| paid == true } ? "Yes" : "No" } ] },
       { group_by: proc { |line_item| line_item.variant.product },
       sort_by: proc { |product| product.name } },
       { group_by: proc { |line_item| line_item.variant },
