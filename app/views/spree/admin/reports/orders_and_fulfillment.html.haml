@@ -10,11 +10,11 @@
     = label_tag nil, t(:end), :class => 'inline'
 
   .row
-    .alpha.two.columns= label_tag nil, "Distributors: "
+    .alpha.two.columns= label_tag nil, "Hubs: "
     .omega.fourteen.columns= f.collection_select(:distributor_id_in, @distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Suppliers: "
+    .alpha.two.columns= label_tag nil, "Producers: "
     .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
 
   .row
