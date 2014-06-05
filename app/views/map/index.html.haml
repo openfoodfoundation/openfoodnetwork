@@ -1,0 +1,5 @@
+- content_for :scripts do
+  %script{src: "//maps.googleapis.com/maps/api/js?sensor=false"}
+
+%map{"ng-controller" => "MapCtrl"}
+  %google-map{center: "map.center", zoom: "map.zoom", styles: "map.styles"}

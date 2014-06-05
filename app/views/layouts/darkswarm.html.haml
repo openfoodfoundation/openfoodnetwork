@@ -8,8 +8,10 @@
     = favicon_link_tag "favicon.png"
     %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
 
+    = yield :scripts
     = stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
+
 
     = render "layouts/bugherd_script"
     = csrf_meta_tags
@@ -30,4 +32,3 @@
           = yield
           
           #footer
-        = yield :scripts
