@@ -4,7 +4,7 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   def create
     @user = build_resource(params[:spree_user])
     if resource.save
-      set_flash_message(:notice, :signed_up)
+      set_flash_message(:success, :signed_up)
       sign_in(:spree_user, @user)
       session[:spree_user_signup] = true
       associate_user
