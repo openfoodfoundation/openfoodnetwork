@@ -107,7 +107,7 @@ describe Spree::Admin::ReportsController do
       end
 
       it "only shows the selected order cycle" do
-        spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
+        spree_get :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
 
         assigns(:search).result.should include(orderA1)
         assigns(:search).result.should_not include(orderB1)

@@ -3,7 +3,11 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/#/login", to: "home#index", as: :spree_login
 
-  get "/map", to: "map#index", as: :map
+  if Rails.env.production? 
+    get "/map", to: "home#index", as: :map
+  else
+    get "/map", to: "map#index", as: :map
+  end
 
   resource :shop, controller: "shop" do
     get :products
