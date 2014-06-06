@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)->
+Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage, CurrentHub)->
   new class Order
     errors: {}
     secrets: {}
@@ -10,7 +10,7 @@ Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)
 
     # Bind all the fields from fieldsToBind, + anything on the Order class
     bindFieldsToLocalStorage: (scope)=>
-      prefix = "order_#{@order.id}#{@order.user_id}"
+      prefix = "order_#{@order.id}#{@order.user_id}#{CurrentHub.id}"
       for field in @fieldsToBind
         storage.bind scope, "Order.order.#{field}", 
           storeName: "#{prefix}_#{field}"
