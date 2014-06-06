@@ -16,6 +16,6 @@ describe BaseController do
     oc.stub(:closed?).and_return true
     get :index
     response.should redirect_to root_url
-    flash[:info].should == "The order cycle you've selected has just closed. Please try again!"
+    flash[:notice].should == "The order cycle you've selected has just closed. Please try again!"
   end
 end

@@ -1,11 +1,10 @@
-Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
-  # Mappings between flash types (left) and Foundation classes
+Darkswarm.directive "ofnFlash", (flash, $timeout)->
   typePairings =
-    info: "info"
+    info: "standard"
     error: "alert"
     success: "success"
   scope: {}
-  restrict: 'E'
+  restrict: 'AE'
   templateUrl: "flash.html"
   controller: ($scope)->
     $scope.closeAlert = (index)->
@@ -22,4 +21,3 @@ Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
       $scope.flashes.shift()
 
     flash.subscribe(show)
-    RailsFlashLoader.initFlash()
