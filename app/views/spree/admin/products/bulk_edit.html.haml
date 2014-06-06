@@ -155,7 +155,7 @@
             %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
           %td.unit_value{ 'ng-show' => 'columns.unit.visible' }
             %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text' }
-          %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+          %td.display_as{ 'ng-show' => 'columns.unit.visible', 'ng-controller' => "VariantUnitsCtrl" }
             %input{ 'ng-model' => 'variant.display_as', :name => 'variant_display_as', 'ofn-track-variant' => 'display_as', :type => 'text', placeholder: "{{ variant.options_text }}" }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
