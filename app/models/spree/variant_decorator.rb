@@ -4,7 +4,7 @@ Spree::Variant.class_eval do
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
 
-  attr_accessible :unit_value, :unit_description, :images_attributes
+  attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name
   accepts_nested_attributes_for :images
 
   validates_presence_of :unit_value,

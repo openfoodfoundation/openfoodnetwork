@@ -12,6 +12,11 @@ angular.module("ofn.admin").factory "DirtyProducts", ($parse) ->
 
     addProductProperty: (productID, propertyName, propertyValue) ->
       addDirtyProperty dirtyProducts, productID, propertyName, propertyValue
+
+    addMasterProperty: (productID, masterID, propertyName, propertyValue) ->
+      if !dirtyProducts.hasOwnProperty(productID) or !dirtyProducts[productID].hasOwnProperty("master")
+        addDirtyProperty dirtyProducts, productID, "master", { id: masterID }
+      $parse(propertyName).assign(dirtyProducts[productID]["master"], propertyValue)
     
     addVariantProperty: (productID, variantID, propertyName, propertyValue) ->
       if !dirtyProducts.hasOwnProperty(productID) or !dirtyProducts[productID].hasOwnProperty("variants")

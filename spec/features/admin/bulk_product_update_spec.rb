@@ -166,8 +166,8 @@ feature %q{
     end
 
     it "displays a list of variants for each product" do
-      v1 = FactoryGirl.create(:variant)
-      v2 = FactoryGirl.create(:variant)
+      v1 = FactoryGirl.create(:variant, display_name: "something1" )
+      v2 = FactoryGirl.create(:variant, display_name: "something2" )
 
       visit '/admin/products/bulk_edit'
       page.should have_selector "a.view-variants"
@@ -175,8 +175,8 @@ feature %q{
 
       page.should have_field "product_name", with: v1.product.name
       page.should have_field "product_name", with: v2.product.name
-      page.should have_selector "td", text: v1.options_text
-      page.should have_selector "td", text: v2.options_text
+      page.should have_field "variant_display_name", with: v1.display_name
+      page.should have_field "variant_display_name", with: v2.display_name
     end
 
     it "displays an on_hand input (for each variant) for each product" do
@@ -208,14 +208,16 @@ feature %q{
 
     it "displays a unit value field (for each variant) for each product" do
       p1 = FactoryGirl.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)")
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)")
+      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
+      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
       visit '/admin/products/bulk_edit'
       all("a.view-variants").each { |e| e.trigger('click') }
 
       page.should have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
       page.should have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
+      page.should have_field "variant_display_as", with: "bag"
+      page.should have_field "variant_display_as", with: "bin"
     end
   end
 
@@ -274,10 +276,13 @@ feature %q{
     page.all("tr.variant").count.should == 1
 
     # When I fill out variant details and hit update
+    fill_in "variant_display_name", with: "Case of 12 Bottles"
     fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_display_as", with: "Case"
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
     click_button 'Update'
+
     page.find("span#update-status-message").should have_content "Update complete"
 
     # Then I should see edit buttons for the new variant
@@ -288,7 +293,9 @@ feature %q{
     page.should have_selector "a.view-variants"
     first("a.view-variants").trigger('click')
 
+    page.should have_field "variant_display_name", with: "Case of 12 Bottles"
     page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    page.should have_field "variant_display_as", with: "Case"
     page.should have_field "variant_price", with: "4.0"
     page.should have_field "variant_on_hand", with: "10"
   end
@@ -322,6 +329,7 @@ feature %q{
     fill_in "price", with: "20"
     select "Weight (kg)", from: "variant_unit_with_scale"
     fill_in "on_hand", with: "18"
+    fill_in "display_as", with: "Big Bag"
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
@@ -334,6 +342,7 @@ feature %q{
     page.should have_field "price", with: "20.0"
     page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
     page.should have_field "on_hand", with: "18"
+    page.should have_field "display_as", with: "Big Bag"
   end
   
   scenario "updating a product with a variant unit of 'items'" do
