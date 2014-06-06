@@ -6,11 +6,7 @@ Darkswarm.factory "OfnMap", (enterprisesForMap, MapModal)->
     # Adding methods to each enterprise
     extend: (enterprise)->
       new class MapMarker
-        icon: "/test.opng"
         constructor: ->
           @[k] = v for k, v of enterprise
-
         reveal: =>
-
-          console.log @
           MapModal.open @

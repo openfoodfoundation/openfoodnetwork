@@ -146,6 +146,17 @@ feature "As a consumer I want to check out my cart", js: true do
               place_order
               page.should have_content "Your order has been processed successfully"
             end
+
+            it "shows the payment processing failed message when submitted with an invalid credit card" do
+              toggle_payment
+              fill_in 'Card Number', with: "9999999988887777"
+              select 'February', from: 'secrets.card_month'
+              select (Date.today.year+1).to_s, from: 'secrets.card_year'
+              fill_in 'Security Code', with: '123'
+
+              place_order
+              page.should have_content "Payment could not be processed, please check the details you entered"
+            end
           end
         end
       end
