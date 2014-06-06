@@ -211,6 +211,15 @@ describe Spree::Order do
     end
   end
 
+  describe "emptying the order" do
+    it "removes shipping method" do
+      subject.shipping_method = create(:shipping_method)
+      subject.save!
+      subject.empty!
+      subject.shipping_method.should == nil
+    end
+  end
+
   describe "setting the order cycle" do
     let(:oc) { create(:simple_order_cycle) }
 

@@ -75,6 +75,12 @@ Spree::Order.class_eval do
       errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
     end
   end
+  
+  def empty_with_clear_shipping!
+    empty_without_clear_shipping!
+    update_attributes(shipping_method_id: nil)
+  end
+  alias_method_chain :empty!, :clear_shipping
 
   def set_order_cycle!(order_cycle)
     unless self.order_cycle == order_cycle
