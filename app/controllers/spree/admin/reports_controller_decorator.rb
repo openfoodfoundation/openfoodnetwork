@@ -474,9 +474,8 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Dist ($)", "Ship ($)", "Total ($)",
-                "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state",
-                "Paid?"]
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Dist ($)", "Ship ($)", "Total ($)", "Paid?",
+                "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state"]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
 
@@ -492,6 +491,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
+        proc { |line_items| "" },
 
         proc { |line_items| line_items.first.order.shipping_method.andand.name },
         proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
@@ -499,9 +499,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.city if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items) },
-        proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
-
-        proc { |line_items| "" } ]
+        proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) }]
 
     rules = [ { group_by: proc { |line_item| line_item.order.distributor },
       sort_by: proc { |distributor| distributor.name } },
@@ -519,6 +517,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.distribution_total } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
+        proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
 
         proc { |line_items| "" },
         proc { |line_items| "" },
@@ -526,9 +525,8 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
-        proc { |line_items| "" },
+        proc { |line_items| "" } ] },
 
-        proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" } ] },
       { group_by: proc { |line_item| line_item.variant.product },
       sort_by: proc { |product| product.name } },
       { group_by: proc { |line_item| line_item.variant },
