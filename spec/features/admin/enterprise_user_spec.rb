@@ -91,12 +91,12 @@ feature %q{
 
     scenario "should not be able to see system configuration" do
       visit '/admin/general_settings/edit'
-      page.should have_content 'Authorization Failure'
+      page.should have_content 'Unauthorized'
     end
 
     scenario "should not be able to see user management" do
       visit '/admin/users'
-      page.should have_content 'Authorization Failure'
+      page.should have_content 'Unauthorized'
     end
   end
 end
