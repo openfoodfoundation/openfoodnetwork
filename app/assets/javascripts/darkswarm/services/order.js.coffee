@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)->
+Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, CurrentHub, RailsFlashLoader, Loading)->
   new class Order
     errors: {}
     secrets: {}
@@ -10,7 +10,7 @@ Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)
 
     # Bind all the fields from fieldsToBind, + anything on the Order class
     bindFieldsToLocalStorage: (scope)=>
-      prefix = "order_#{@order.id}#{@order.user_id}"
+      prefix = "order_#{@order.id}#{@order.user_id}#{CurrentHub.id}"
       for field in @fieldsToBind
         storage.bind scope, "Order.order.#{field}", 
           storeName: "#{prefix}_#{field}"
@@ -20,12 +20,14 @@ Darkswarm.factory 'Order', ($resource, order, $http, flash, Navigation, storage)
         defaultValue: true
 
     submit: ->
+      Loading.message = "Submitting your order: please wait"
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>
+        Loading.clear()
         @errors = response.errors
-        flash.error = response.flash?.error
-        flash.success = response.flash?.notice
+        RailsFlashLoader.loadFlash(response.flash)
+        
         
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
