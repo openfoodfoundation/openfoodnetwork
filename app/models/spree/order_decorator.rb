@@ -76,11 +76,12 @@ Spree::Order.class_eval do
     end
   end
   
-  def empty_with_clear_shipping!
-    empty_without_clear_shipping!
+  def empty_with_clear_shipping_and_payments!
+    empty_without_clear_shipping_and_payments!
+    payments.clear 
     update_attributes(shipping_method_id: nil)
   end
-  alias_method_chain :empty!, :clear_shipping
+  alias_method_chain :empty!, :clear_shipping_and_payments
 
   def set_order_cycle!(order_cycle)
     unless self.order_cycle == order_cycle

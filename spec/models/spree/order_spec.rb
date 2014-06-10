@@ -218,6 +218,13 @@ describe Spree::Order do
       subject.empty!
       subject.shipping_method.should == nil
     end
+
+    it "removes payments" do
+      subject.payments << create(:payment)
+      subject.save!
+      subject.empty!
+      subject.payments.should == []
+    end
   end
 
   describe "setting the order cycle" do
