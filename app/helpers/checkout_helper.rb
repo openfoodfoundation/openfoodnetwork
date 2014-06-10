@@ -1,8 +1,10 @@
 module CheckoutHelper
-  def checkout_adjustments_for_summary(order)
+  def checkout_adjustments_for_summary(order, opts={})
     adjustments = order.adjustments.eligible
 
+    # Remove empty tax adjustments and (optionally) shipping fees
     adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
+    adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if opts[:exclude_shipping]
 
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' }
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' }

@@ -75,6 +75,13 @@ Spree::Order.class_eval do
       errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
     end
   end
+  
+  def empty_with_clear_shipping_and_payments!
+    empty_without_clear_shipping_and_payments!
+    payments.clear 
+    update_attributes(shipping_method_id: nil)
+  end
+  alias_method_chain :empty!, :clear_shipping_and_payments
 
   def set_order_cycle!(order_cycle)
     unless self.order_cycle == order_cycle
@@ -127,7 +134,11 @@ Spree::Order.class_eval do
   end
 
   def line_item_variants
-    line_items.map { |li| li.variant }
+    line_items.map(&:variant)
+  end
+
+  def distribution_total
+    adjustments.eligible.where(originator_type: 'EnterpriseFee').sum(&:amount)
   end
 
   # Show payment methods for this distributor
@@ -140,6 +151,8 @@ Spree::Order.class_eval do
   def available_shipping_methods(display_on = nil)
     Spree::ShippingMethod.all_available(self, display_on)
   end
+
+
   private
 
   def shipping_address_from_distributor

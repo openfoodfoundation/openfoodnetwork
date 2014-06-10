@@ -31,7 +31,7 @@
                 required: true,
                 "ng-model" => "order.payment_method_id"
               = method.name
-        .row{"ng-show" => "order.payment_method_id == #{method.id}"}
+        .row{"ng-if" => "order.payment_method_id == #{method.id}"}
           .small-12.columns
             = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
 

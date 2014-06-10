@@ -18,4 +18,8 @@ Spree::LineItem.class_eval do
     joins(:product).
     where('spree_products.supplier_id = ?', enterprise)
   }
+  scope :supplied_by_any, lambda { |enterprises|
+    joins(:product).
+    where('spree_products.supplier_id IN (?)', enterprises)
+  }
 end
