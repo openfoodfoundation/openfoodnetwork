@@ -20,8 +20,7 @@
   .row
     .alpha.two.columns= label_tag nil, "Order Cycles: "
     .omega.fourteen.columns
-      - order_cycles_select = @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
-      = f.select(:order_cycle_id_in, order_cycles_select, {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
+      = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
 
   .row
     .alpha.two.columns= label_tag nil, "Report Type: "
