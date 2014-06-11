@@ -127,10 +127,10 @@
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
               %option{'value' => '', 'ng-hide' => "hasVariants(product) && hasUnit(product)"}
-            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
+            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)", 'ofn-maintain-unit-scale' => true }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td.display_as{ 'ng-show' => 'columns.unit.visible' }
-            %input{ name: 'display_as', 'ofn-track-master' => 'display_as', :type => 'text', placeholder: "{{ product.master.options_text }}", ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
+            %input{ 'ofn-display-as' => 'product.master', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
@@ -154,9 +154,9 @@
           %td{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
           %td.unit_value{ 'ng-show' => 'columns.unit.visible' }
-            %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text' }
-          %td.display_as{ 'ng-show' => 'columns.unit.visible', 'ng-controller' => "VariantUnitsCtrl" }
-            %input{ 'ng-model' => 'variant.display_as', :name => 'variant_display_as', 'ofn-track-variant' => 'display_as', :type => 'text', placeholder: "{{ variant.options_text }}" }
+            %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text', 'ofn-maintain-unit-scale' => true }
+          %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+            %input{ 'ofn-display-as' => 'variant', 'ng-model' => 'variant.display_as', name: 'variant_display_as', 'ofn-track-variant' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }

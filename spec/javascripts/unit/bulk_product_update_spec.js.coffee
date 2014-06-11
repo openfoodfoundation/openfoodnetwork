@@ -202,6 +202,8 @@ describe "filtering products for submission to database", ->
         price: 10.0
         unit_value: 250
         unit_description: "(bottle)"
+        display_as: "bottle"
+        display_name: "nothing"
       ]
       variant_unit: 'volume'
       variant_unit_scale: 1
@@ -215,15 +217,19 @@ describe "filtering products for submission to database", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
-      unit_value: 250
-      unit_description: "foo"
       available_on: available_on
+      master_attributes:
+        id: 2
+        unit_value: 250
+        unit_description: "foo"
       variants_attributes: [
         id: 1
         on_hand: 2
         price: 10.0
         unit_value: 250
         unit_description: "(bottle)"
+        display_as: "bottle"
+        display_name: "nothing"
       ]
     ]
 
@@ -956,8 +962,8 @@ describe "AdminProductEditCtrl", ->
       expect(product).toEqual
         id: 123
         variants: [
-          {id: -1, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
-          {id: -2, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null}
+          {id: -1, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null}
+          {id: -2, price: null, unit_value: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null}
         ]
 
     it "shows the variant(s)", ->
