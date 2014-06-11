@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnEmptiesCart", (CurrentHub, CurrentOrder, Navigation) ->
+Darkswarm.directive "ofnEmptiesCart", (CurrentHub, CurrentOrder, Navigation, storage) ->
   restrict: "A"
   scope:
     hub: '=ofnEmptiesCart'
@@ -10,6 +10,7 @@ Darkswarm.directive "ofnEmptiesCart", (CurrentHub, CurrentOrder, Navigation) ->
       elm.bind 'click', (ev)->
         ev.preventDefault()
         if confirm "Are you sure? This will change your selected Hub and remove any items in you shopping cart."
+          storage.clearAll() # One day this will have to be moar GRANULAR
           Navigation.go scope.hub.path 
     else
       scope.action = attr.shop

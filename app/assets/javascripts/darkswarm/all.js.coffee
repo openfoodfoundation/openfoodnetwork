@@ -7,6 +7,8 @@
 #= require angular-cookies
 #= require angular-sanitize
 #= require angular-resource
+#= require lodash.underscore.js
+#= require angular-google-maps.min.js
 #= require ../shared/mm-foundation-tpls-0.2.0-SNAPSHOT
 #= require ../shared/bindonce.min.js
 #= require ../shared/ng-infinite-scroll.min.js

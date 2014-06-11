@@ -7,7 +7,7 @@
           %th Produce 
           %td= current_order.display_item_total
 
-        - checkout_adjustments_for_summary(current_order).each do |adjustment|
+        - checkout_adjustments_for_summary(current_order, exclude_shipping: true).each do |adjustment|
           %tr
             %th= adjustment.label 
             %td= adjustment.display_amount.to_html
@@ -25,6 +25,6 @@
 
       //= f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url} 
-        %i.fi-arrow-left
+        %i.ofn-i_008-caret-left
         Back to Cart
 

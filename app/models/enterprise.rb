@@ -149,6 +149,16 @@ class Enterprise < ActiveRecord::Base
     self.relatives.is_distributor
   end
 
+  def website
+    strip_url read_attribute(:website)
+  end
+  def facebook
+    strip_url read_attribute(:facebook)
+  end
+  def linkedin
+    strip_url read_attribute(:linkedin)
+  end
+
   def suppliers
     self.relatives.is_primary_producer
   end
@@ -179,6 +189,10 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def strip_url(url)
+    url.andand.sub /(https?:\/\/)?(www\.)?/, ''
+  end
 
   def initialize_country
     self.address ||= Spree::Address.new

@@ -1,7 +1,7 @@
 %nav.tab-bar.show-for-medium-down
   %section.left
     %a.left-off-canvas-toggle.menu-icon
-      %span 
+      %span
   %section.right
     = render partial: "shared/menu/cart"
     %a{href: main_app.shop_path}
@@ -14,32 +14,41 @@
     - if admin_user? or enterprise_user?
       %li
         %a{href: spree.admin_path}
-          %span.nav-primary Admin
+          %span.nav-primary 
+            %i.ofn-i_021-tools
+            Admin
     %li
     - if spree_current_user.nil?
       = render 'shared/signed_out'
     - else
-      = render 'shared/signed_in'
-
-    %li
-      %a{href: main_app.producers_path} Producers
+      = render 'shared/signed_in_offcanvas'
 
     - if current_page? root_path
       %li
         %a{"ofn-scroll-to" => "hubs"}
-          %span.nav-primary Hubs
+          %span.nav-primary 
+            %i.ofn-i_040-hub
+            Hubs
     - else
       %li
         %a{href: root_path + "#/#hubs"}
-          %span.nav-primary Hubs
+          %span.nav-primary 
+            %i.ofn-i_040-hub
+            Hubs
     %li
-      %a{href: ""}
-        %span.nav-primary Map
+      %a{href: main_app.map_path}
+        %span.nav-primary 
+          %i.ofn-i_037-map
+          Map
     %li
       %a{href: main_app.producers_path}
-        %span.nav-primary Producers
+        %span.nav-primary 
+          %i.ofn-i_036-producers
+          Producers
     %li
       %a{href: main_app.groups_path}
-        %span.nav-primary Groups
+        %span.nav-primary 
+          %i.ofn-i_035-groups
+          Groups
 
     
