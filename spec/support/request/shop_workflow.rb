@@ -13,6 +13,7 @@ module ShopWorkflow
 
   def add_product_to_cart
     create(:line_item, variant: product.master, order: order)
+    order.reload.save! # Recalculate totals
   end
 
   def toggle_accordion(name)
