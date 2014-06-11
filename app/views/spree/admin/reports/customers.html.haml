@@ -13,9 +13,8 @@
 
   %br
   = label_tag nil, "Order Cycle: "
-  - order_cycles_select = @order_cycles.collect {|oc| [ "#{oc.name} &nbsp; (#{oc.orders_open_at.to_s(:short)} - #{oc.orders_close_at.to_s(:short)})".html_safe, oc.id ] }
   = select_tag(:order_cycle_id,
-    options_for_select(order_cycles_select, params[:order_cycle_id]),
+    options_for_select(report_order_cycle_options(@order_cycles), params[:order_cycle_id]),
               include_blank: true)
 
   %br
