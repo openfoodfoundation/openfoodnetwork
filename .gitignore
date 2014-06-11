@@ -24,6 +24,7 @@ db/staging_structure.sql
 db/production_structure.sql
 db/backup
 app/public
+public/assets
 public/system
 public/stylesheets
 public/images
