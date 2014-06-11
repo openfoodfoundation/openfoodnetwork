@@ -145,6 +145,10 @@ feature "As a consumer I want to check out my cart", js: true do
 
               place_order
               page.should have_content "Your order has been processed successfully"
+
+              # Order should have a payment with the correct amount
+              o = Spree::Order.complete.first
+              o.payments.first.amount.should == 10
             end
 
             it "shows the payment processing failed message when submitted with an invalid credit card" do
