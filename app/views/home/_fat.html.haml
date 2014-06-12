@@ -20,8 +20,9 @@
     %h5 
       %i.ofn-i_036-producers
       Our producers
-    %ul.bullet-list
+    %ul.small-block-grid-1
       %li{"ng-repeat" => "producer in hub.producers"}
+        %i.ofn-i_054-point-right
         = render partial: "modals/producer"
 
 .row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
