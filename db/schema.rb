@@ -681,7 +681,7 @@ ActiveRecord::Schema.define(:version => 20140612020206) do
     t.float    "variant_unit_scale"
     t.string   "variant_unit_name"
     t.text     "notes"
-    t.integer  "primary_taxon_id"
+    t.integer  "primary_taxon_id",                        :null => false
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
