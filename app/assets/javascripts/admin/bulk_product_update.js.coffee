@@ -213,7 +213,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if confirm("Are you sure?")
         $http(
           method: "DELETE"
-          url: "/api/products/" + product.id
+          url: "/api/products/" + product.id + "/soft_delete"
         ).success (data) ->
           $scope.products.splice $scope.products.indexOf(product), 1
           DirtyProducts.deleteProduct product.id
