@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .map-container
+  width: 100%
   map, .angular-google-map-container, google-map, .angular-google-map
     display: block
     height: 100%
+
+  img // https://github.com/zurb/foundation/issues/112
+    max-width: none
+    height: auto
