@@ -4,4 +4,4 @@ Darkswarm.controller "HubsCtrl", ($scope, Hubs, $anchorScroll, $rootScope, HashN
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
     if HashNavigation.active "hubs"
-      $anchorScroll()
+      $document.scrollTo $("#hubs"), 100, 200
