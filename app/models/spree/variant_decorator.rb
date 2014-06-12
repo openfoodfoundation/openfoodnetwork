@@ -51,6 +51,11 @@ Spree::Variant.class_eval do
     end
   end
 
+  def delete
+    self.update_column(:deleted_at, Time.now)
+  end
+
+
   private
 
   def update_weight_from_unit_value

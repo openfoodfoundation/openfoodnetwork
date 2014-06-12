@@ -276,6 +276,15 @@ module Spree
     end
   end
 
+  describe "deletion" do
+    it "marks the variant as deleted" do
+      v = create(:variant)
+      v.deleted_at.should     be_nil
+      v.delete
+      v.deleted_at.should_not be_nil
+    end
+  end
+
   describe "destruction" do
     it "destroys exchange variants" do
       v = create(:variant)
