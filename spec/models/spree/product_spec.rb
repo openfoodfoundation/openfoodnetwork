@@ -442,24 +442,34 @@ module Spree
           p.update_attributes!(name: 'foo')
         end
 
-        it "removes the related option values from all its variants" do
+        it "removes the related option values from all its variants and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
-          v = create(:variant, product: p)
+          v = create(:variant, unit_value: 1, product: p)
           p.reload
 
-          expect {
+          v.option_values.map(&:name).include?("1L").should == false
+          v.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(v.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          v.reload
+          v.option_values.map(&:name).include?("1L").should == true
+          v.option_values.map(&:name).include?("1g").should == false
         end
 
-        it "removes the related option values from its master variant" do
+        it "removes the related option values from its master variant and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 
-          expect {
+          p.master.option_values.map(&:name).include?("1L").should == false
+          p.master.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          p.reload
+          p.master.option_values.map(&:name).include?("1L").should == true
+          p.master.option_values.map(&:name).include?("1g").should == false
         end
       end
 

@@ -264,13 +264,13 @@ module Spree
 
       it "removes option value associations for unit option types" do
         expect {
-          @v.delete_unit_option_values
+          @v.send(:delete_unit_option_values)
         }.to change(@v.option_values, :count).by(-1)
       end
 
       it "does not delete option values" do
         expect {
-          @v.delete_unit_option_values
+          @v.send(:delete_unit_option_values)
         }.to change(Spree::OptionValue, :count).by(0)
       end
     end
