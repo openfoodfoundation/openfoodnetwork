@@ -119,8 +119,15 @@
       .row.summary
         @include csstrans
         background: #fff
+        line-height: 1
 
         .summary-header
+          @include csstrans
+          font-size: 1.15rem
+        
+          object.taxon
+            height: 18px
+
           &, & *
             @include avenir
             color: $clr-brick
