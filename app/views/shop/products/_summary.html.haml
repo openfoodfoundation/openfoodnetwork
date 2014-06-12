@@ -3,7 +3,7 @@
     %img{"bo-src" => "product.master.images[0].small_url"}
 
   .small-4.columns.summary-header
-    %object.taxon{"data" => "{{taxon.icon}}", type: "image/svg+xml",
+    %object.taxon{"data" => "{{primary_taxon.icon}}", type: "image/svg+xml",
     "ng-click" => "ordering.order = 'primary_taxon.name'"}
       {{taxon.name}}
     = render partial: "modals/product"
