@@ -2,6 +2,7 @@ module Spree
   module Admin
     ShippingMethodsController.class_eval do
       before_filter :do_not_destroy_referenced_shipping_methods, :only => :destroy
+      before_filter :load_hubs, only: [:new, :edit]
 
       # Sort shipping methods by distributor name
       # ! Code copied from Spree::Admin::ResourceController with two added lines
@@ -40,6 +41,11 @@ module Spree
           flash[:error] = "That shipping method cannot be deleted as it is referenced by an order: #{order.number}."
           redirect_to collection_url and return
         end
+      end
+
+      private
+      def load_hubs
+        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@shipping_method.has_distributor? d) ? 0 : 1, d.name] }
       end
     end
   end

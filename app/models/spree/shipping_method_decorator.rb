@@ -34,6 +34,10 @@ Spree::ShippingMethod.class_eval do
     end
   end
 
+  def has_distributor?(distributor)
+    self.distributors.include?(distributor)
+  end
+
   def adjustment_label
     'Shipping'
   end

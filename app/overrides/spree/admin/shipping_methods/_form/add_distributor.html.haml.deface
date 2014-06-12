@@ -1,6 +1,0 @@
-/ insert_bottom "[data-hook='admin_shipping_method_form_availability_fields'] > fieldset"
-
-= f.field_container :distributors do
-  = f.label :distributor_ids, 'Distributors'
-  - distributors = Enterprise.is_distributor.managed_by(spree_current_user) | f.object.distributors
-  = f.collection_select(:distributor_ids, distributors, :id, :name, {include_blank: false}, {class: "select2 fullwidth", multiple: true})

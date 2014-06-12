@@ -21,8 +21,8 @@ feature 'shipping methods' do
       # When I create a shipping method and set the distributors
       visit spree.new_admin_shipping_method_path
       fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
-      select 'Aeronautical Adventures', from: 'shipping_method_distributor_ids'
-      select 'Nautical Travels', from: 'shipping_method_distributor_ids'
+      check "shipping_method_distributor_ids_#{d1.id}"
+      check "shipping_method_distributor_ids_#{d2.id}"
       click_button 'Create'
 
       # Then the shipping method should have its distributor set
@@ -85,7 +85,7 @@ feature 'shipping methods' do
 
       fill_in 'shipping_method_name', :with => 'Teleport'
 
-      select distributor1.name, :from => 'shipping_method_distributor_ids'
+      check "shipping_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'
 
       flash_message.should == 'Shipping method "Teleport" has been successfully created!'
