@@ -7,9 +7,11 @@ module Spree
     render_views
 
     let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
+    let(:supplier2) { FactoryGirl.create(:supplier_enterprise) }
     let!(:product1) { FactoryGirl.create(:product, supplier: supplier) }
     let!(:product2) { FactoryGirl.create(:product, supplier: supplier) }
     let!(:product3) { FactoryGirl.create(:product, supplier: supplier) }
+    let(:product_other_supplier) { FactoryGirl.create(:product, supplier: supplier2) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
     let(:unit_attributes) { [:id, :name, :group_buy_unit_size, :variant_unit] }
 
@@ -38,6 +40,20 @@ module Spree
         spree_get :managed, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
         attributes.all?{ |attr| keys.include? attr }.should == true
+      end
+
+      it "soft deletes my products" do
+        spree_delete :soft_delete, {product_id: product1.to_param, format: :json}
+        response.status.should == 204
+        lambda { product1.reload }.should_not raise_error
+        product1.deleted_at.should_not be_nil
+      end
+
+      it "is denied access to soft deleting another enterprises' product" do
+        spree_delete :soft_delete, {product_id: product_other_supplier.to_param, format: :json}
+        assert_unauthorized!
+        lambda { product_other_supplier.reload }.should_not raise_error
+        product_other_supplier.deleted_at.should be_nil
       end
     end
 
@@ -80,16 +96,22 @@ module Spree
       end
 
       it "should allow available_on to be nil" do
-
         spree_get :index, { :template => 'bulk_index', :format => :json }
         json_response.size.should == 3
 
-        product4 = FactoryGirl.create(:product)
-        product4.available_on = nil
-        product4.save!
+        product5 = FactoryGirl.create(:product)
+        product5.available_on = nil
+        product5.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
         json_response.size.should == 4
+      end
+
+      it "soft deletes a product" do
+        spree_delete :soft_delete, {product_id: product1.to_param, format: :json}
+        response.status.should == 204
+        lambda { product1.reload }.should_not raise_error
+        product1.deleted_at.should_not be_nil
       end
     end
   end
