@@ -579,5 +579,6 @@ module Spree
         product.taxons.should == [product.primary_taxon]
       end
     end
+
   end
 end

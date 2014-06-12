@@ -124,6 +124,31 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "getting name for display" do
+        it "returns display_name if present" do
+          v = create(:variant, display_name: "foo")
+          v.name_to_display.should == "foo"
+        end
+
+        it "returns product name if display_name is empty" do
+          v = create(:variant, product: create(:product))
+          v.name_to_display.should == v.product.name
+        end
+      end
+
+      describe "getting unit for display" do
+        it "returns display_as if present" do
+          v = create(:variant, display_as: "foo")
+          v.unit_to_display.should == "foo"
+        end
+
+        it "returns options_text if display_as is empty" do
+          v = create(:variant)
+          v.stub(:options_text).and_return "ponies"
+          v.unit_to_display.should == "ponies"
+        end
+      end
+
       describe "setting the variant's weight from the unit value" do
         it "sets the variant's weight when unit is weight" do
           p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
@@ -265,7 +290,7 @@ module Spree
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
 
-        it "requests the name of the new option_value from OptionValueName" do
+        it "does not request the name of the new option_value from OptionValueName" do
           OpenFoodNetwork::OptionValueNamer.any_instance.should_not_receive(:name)
           v.update_attributes!(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last

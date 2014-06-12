@@ -45,6 +45,14 @@ Spree::Variant.class_eval do
     self.option_values.destroy ovs
   end
 
+  def name_to_display
+    display_name || product.name
+  end
+
+  def unit_to_display
+    display_as || options_text
+  end
+
 
   private
 

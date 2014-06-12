@@ -25,7 +25,7 @@ child :primary_taxon => :primary_taxon do
 end
 
 child :master => :master do
-  attributes :id, :is_master, :count_on_hand, :options_text, :count_on_hand, :on_demand
+  attributes :id, :is_master, :count_on_hand, :name_to_display, :unit_to_display, :count_on_hand, :on_demand
   child :images => :images do
     attributes :id, :alt
     node do |img|
@@ -40,7 +40,8 @@ node :variants do |product|
     {id: v.id,
      is_master: v.is_master,
      count_on_hand: v.count_on_hand,
-     options_text: v.options_text,
+     name_to_display: v.name_to_display,
+     unit_to_display: v.unit_to_display,
      on_demand: v.on_demand,
      price: v.price_with_fees(current_distributor, current_order_cycle),
      images: v.images.map { |i| {id: i.id, alt: i.alt, small_url: i.attachment.url(:small, false)} }
