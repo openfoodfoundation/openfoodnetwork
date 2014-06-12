@@ -277,16 +277,24 @@ module Spree
   end
 
   describe "deletion" do
+    let(:v)  { create(:variant) }
+    let(:e)  { create(:exchange, variants: [v]) }
+
     it "marks the variant as deleted" do
-      v = create(:variant)
       v.deleted_at.should     be_nil
       v.delete
       v.deleted_at.should_not be_nil
     end
+
+    it "removes the variant from all order cycles" do
+      e
+      v.delete
+      e.variants(true).should be_empty
+    end
   end
 
   describe "destruction" do
-    it "destroys exchange variants" do
+    it "removes the variant from all order cycles" do
       v = create(:variant)
       e = create(:exchange, variants: [v])
 

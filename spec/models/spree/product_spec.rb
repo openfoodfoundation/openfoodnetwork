@@ -591,11 +591,11 @@ module Spree
     end
 
     describe "deletion" do
-      let(:p) { create(:simple_product) }
-      let(:v) { create(:variant, product: p) }
+      let(:p)  { create(:simple_product) }
+      let(:v)  { create(:variant, product: p) }
       let(:oc) { create(:simple_order_cycle) }
-      let(:s) { create(:supplier_enterprise) }
-      let(:e) { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
+      let(:s)  { create(:supplier_enterprise) }
+      let(:e)  { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
 
       it "removes the master variant from all order cycles" do
         e.variants << p.master

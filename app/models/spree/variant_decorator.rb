@@ -52,7 +52,10 @@ Spree::Variant.class_eval do
   end
 
   def delete
-    self.update_column(:deleted_at, Time.now)
+    transaction do
+      self.update_column(:deleted_at, Time.now)
+      ExchangeVariant.where(variant_id: self).destroy_all
+    end
   end
 
 
