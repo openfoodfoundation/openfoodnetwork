@@ -1,4 +1,5 @@
 @import branding
+@import mixins
 
 .hubs
   .active_table .active_table_node
@@ -36,7 +37,23 @@
     //Open row
     &.open
       .fat-taxons
+        @include csstrans
         margin-right: 0.5rem
+        text-transform: uppercase
+        font-size: 1rem
+        line-height: 1
+        color: $dark-grey
+        // border: 1px solid $disabled-bright
+        display: inline-block
+        padding: 0.2rem 0.5rem 0.35rem 0.35rem
+        
+        object.taxon
+          height: 20px
+          svg path
+            fill: black
+        // &:hover, &.hover, &:active
+        //   background: rgba(255,255,255,0.5)
+
       .active_table_row:first-child
         border-top: 1px solid $clr-brick
         border-left: 1px solid $clr-brick
