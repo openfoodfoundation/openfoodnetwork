@@ -31,35 +31,31 @@
         location, location + small
           display: block
 
-      #distributor_title
-        float: left
-        display: block
-        min-width: 350px
+      #distributor_title h3
+        margin-top: 0
+        @media all and (max-width: 768px)
+          margin-bottom: 8px
+        
 
       ordercycle
-        @media all and (max-width: 768px)
+        @media all and (max-width: 640px)
           float: left
           clear: left
-          padding-bottom: 12px
-        display: block
+          padding: 12px 10px
+          width: 100%
+          margin-top: 10px
+          background: #e5e5e5
         float: right
         form.custom 
-          //width: 400px
           text-align: right
-          margin-right: 1em
-          @media all and (max-width: 768px)
-            padding-left: 1em
-            padding-top: 1em
           & > strong
             line-height: 2.5
             font-size: 1.29em
             padding-right: 14px
             @media all and (max-width: 768px)
-              font-size: 1.2em
-          select
+          select            
             width: inherit
             display: inline-block
-            vackground: transparent
             border-width: 1px
             border-color: #999
             color: #666
@@ -67,13 +63,18 @@
             margin-bottom: 0
             padding: 8px 20px 8px 12px
             @media all and (max-width: 768px)
-              font-size: 1.2em
-              // width: 180px
+              font-size: 0.875em
         closing
+          @media all and (max-width: 768px)
+            font-size: 1.2em
+            padding-bottom: 10px
           color: black
           font-size: 1.5em
           display: block
-          padding-bottom: 20px
+          padding-bottom: 12px
+        span
+          @media all and (max-width: 768px)
+            font-size: 0.875em
 
   products
     display: block
@@ -101,10 +102,12 @@
       input
         margin: 0
         width: 8em
+        display: inline
 
       .columns
         padding-top: 1em
         padding-bottom: 1em
+        line-height: 2.4em
 
       .row.summary, .row.variants
         @include csstrans
@@ -116,8 +119,15 @@
       .row.summary
         @include csstrans
         background: #fff
+        line-height: 1
 
         .summary-header
+          @include csstrans
+          font-size: 1.15rem
+        
+          object.taxon
+            height: 18px
+
           &, & *
             @include avenir
             color: $clr-brick

@@ -40,6 +40,20 @@ Spree::Variant.class_eval do
     values.to_sentence({ :words_connector => ", ", :two_words_connector => ", " })
   end
 
+  def delete_unit_option_values
+    ovs = self.option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
+    self.option_values.destroy ovs
+  end
+
+  def name_to_display
+    display_name || product.name
+  end
+
+  def unit_to_display
+    display_as || options_text
+  end
+
+
   def update_units
     delete_unit_option_values
 

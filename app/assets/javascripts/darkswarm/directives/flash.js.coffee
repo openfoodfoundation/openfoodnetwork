@@ -16,7 +16,7 @@ Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
     show = (message, type)=>
       if message
         $scope.flashes.push({message: message, type: typePairings[type]})
-        $timeout($scope.delete, 5000)
+        $timeout($scope.delete, 10000)
 
     $scope.delete = ->
       $scope.flashes.shift()

@@ -27,9 +27,8 @@
       .inner-wrap
         = render partial: "shared/menu/menu"
 
-        %ofn-flash
-
         %section{ role: "main" }
           = yield
           
           #footer
+    %loading

@@ -4,7 +4,7 @@
       %h5
         =current_distributor.name 
         belongs to: 
-      %ul.ofn-list
+      %ul.bullet-list
         - for group in current_distributor.groups
           %li
             %a{href: main_app.groups_path(anchor: "#/#group#{group.id}")}= group.name 
