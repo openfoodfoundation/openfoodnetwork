@@ -290,6 +290,52 @@ module Spree
       end
     end
 
+    describe "properties" do
+      it "returns product properties as a hash" do
+        product = create(:simple_product)
+        product.set_property 'Organic Certified', 'NASAA 12345'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+      end
+
+      it "returns producer properties as a hash" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 54321'}]
+      end
+
+      it "overrides producer properties with product properties" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        product.set_property 'Organic Certified', 'NASAA 12345'
+        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+      end
+
+      it "sorts by position" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        pa = Spree::Property.create! name: 'A', presentation: 'A'
+        pb = Spree::Property.create! name: 'B', presentation: 'B'
+        pc = Spree::Property.create! name: 'C', presentation: 'C'
+
+        product.product_properties.create!({property_id: pa.id, value: '1', position: 1}, {without_protection: true})
+        product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
+        supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
+
+        product.properties_h.should ==
+          [{presentation: 'A', value: '1'},
+           {presentation: 'B', value: '2'},
+           {presentation: 'C', value: '3'}]
+      end
+    end
+
     describe "membership" do
       it "queries its membership of a particular product distribution" do
         d1 = create(:distributor_enterprise)

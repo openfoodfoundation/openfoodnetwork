@@ -95,6 +95,21 @@ Spree::Product.class_eval do
 
   # -- Methods
 
+  def properties_h
+    # Product properties override producer properties
+    ps = supplier.producer_properties.inject(product_properties) do |properties, property|
+      if properties.find { |p| p.property.presentation == property.property.presentation }
+        properties
+      else
+        properties + [property]
+      end
+    end
+
+    ps.
+      sort_by { |pp| pp.position }.
+      map { |pp| {presentation: pp.property.presentation, value: pp.value} }
+  end
+
   def in_distributor?(distributor)
     self.class.in_distributor(distributor).include? self
   end
