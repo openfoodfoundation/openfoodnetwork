@@ -36,6 +36,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       exchange.variants << product.master
 
       visit shop_path
+      save_screenshot "/users/willmarshall/Desktop/wtsvg.png"
       find("#tab_producers a").click
       page.should have_content supplier.name 
     end

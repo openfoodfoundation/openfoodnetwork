@@ -1,4 +1,4 @@
-Darkswarm.controller "HubsCtrl", ($scope, Hubs, $anchorScroll, $rootScope, HashNavigation) ->
+Darkswarm.controller "HubsCtrl", ($scope, Hubs, $document, $rootScope, HashNavigation) ->
   $scope.Hubs = Hubs
   $scope.hubs = Hubs.hubs
 
