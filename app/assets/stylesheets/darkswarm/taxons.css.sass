@@ -1,0 +1,33 @@
+@import branding
+@import mixins
+
+.fat-taxons
+  @include csstrans
+  display: inline-block
+  line-height: 1
+  margin-right: 0.5rem
+  margin-bottom: 0.2rem
+  text-transform: uppercase
+  font-size: 1rem
+  // border: 1px solid $disabled-bright
+  padding: 0.25rem 0.5rem 0.25rem 0.35rem
+  render-svg
+    svg
+      width: 16px
+      height: 16px
+      path
+        fill: $dark-grey
+  &, &*
+    display: inline-block
+    color: $dark-grey
+  // &:hover, &.hover, &:active
+    // background: rgba(255,255,255,0.5)
+
+.summary-header
+  @include csstrans
+  render-svg
+    svg
+      width: 18px
+      height: 18px
+      path
+        fill: $clr-brick
