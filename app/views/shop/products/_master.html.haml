@@ -15,7 +15,7 @@
   name: "variants[{{product.master.id}}]", 
   id: "variants_{{product.master.id}}",
   "ng-model" => "product.quantity"}
-  {{ product.master.unit_to_display }}
+  %small {{ product.master.unit_to_display }}
 
 -# WITH GROUP BUY
 .small-2.columns{"bo-if" => "product.group_buy"}
