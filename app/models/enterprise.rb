@@ -103,13 +103,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-
-  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
-  def self.distinct_count
-    count(distinct: true)
-  end
-
-
   def self.find_near(suburb)
     enterprises = []
 
@@ -119,6 +112,20 @@ class Enterprise < ActiveRecord::Base
     end
 
     enterprises
+  end
+
+  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
+  def self.distinct_count
+    count(distinct: true)
+  end
+
+  def set_producer_property(property_name, property_value)
+    transaction do
+      property = Spree::Property.where(name: property_name).first_or_create!(presentation: property_name)
+      producer_property = ProducerProperty.where(producer_id: id, property_id: property.id).first_or_initialize
+      producer_property.value = property_value
+      producer_property.save!
+    end
   end
 
   def has_supplied_products_on_hand?
