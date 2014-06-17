@@ -2,48 +2,30 @@
   .small-12.columns.producer-hero
     %h3.producer-name 
       %i.ofn-i_036-producers
-      {{ enterprise.name }}
-      {{ enterprise.id }}
-    %img.producer-hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
+      {{ producer.name }}
+    %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
     
-.row  
+.row{bindonce: true} 
   .small-12.large-6.columns
-    %p{"ng-bind-html" => "enterprise.long_description"}
-  .small-12.large-6.columns
-    %img.producer-logo{"ng-src" => "{{enterprise.logo}}", "ng-if" => "enterprise.logo"} 
-    %h5 Stay in touch with {{ enterprise.name }}
-    
-    %ul.small-block-grid-1{bindonce: true}
-      
-      %li{"ng-if" => "enterprise.website"}
-        %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
-          %i.ofn-i_049-web
-          {{ enterprise.website | stripUrl }}
-      
-      %li{"ng-if" => "enterprise.email"}
-        %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }
-          %i.ofn-i_050-mail-circle
-          {{ enterprise.email | stripUrl }}
-      
-      %li{"ng-if" => "enterprise.twitter"} 
-        %a{"ng-href" => "http://twitter.com/{{enterprise.twitter}}", target: "_blank"}
-          %i.ofn-i_041-twitter
-          {{ enterprise.twitter }}
-      
-      %li{"ng-if" => "enterprise.facebook"}
-        %a{"ng-href" => "http://{{enterprise.facebook | stripUrl}}", target: "_blank"}
-          %i.ofn-i_044-facebook
-          {{ enterprise.facebook | stripUrl }}
-      
-      %li{"ng-if" => "enterprise.linkedin"}
-        %a{"ng-href" => "http://{{enterprise.linkedin | stripUrl}}", target: "_blank"}
-          %i.ofn-i_042-linkedin
-          {{ enterprise.linkedin | stripUrl }}
-      
-      %li{"ng-if" => "enterprise.instagram"}
-        %a{"ng-href" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}  
-          %i.ofn-i_043-instagram
-          {{ enterprise.instagram }}
+    %img.producer-logo{"bo-src" => "producer.logo", "bo-if" => "producer.logo"} 
+    %p{"ng-bind-html" => "producer.long_description"}
 
-  %a.close-reveal-modal{"ng-click" => "$close()"}
-    %i.ofn-i_009-close
+  .small-12.large-6.columns
+
+    %ng-include{src: "'partials/contact.html'"}
+    %ng-include{src: "'partials/follow.html'"}
+
+.row{bindonce: true}
+  .hubs
+    %h4 Shop for {{producer.name}} products at:
+    %a.hub{"ng-repeat" => "hub in producer.hubs", 
+    "bo-href" => "hub.path", 
+    "bo-class" => "{active: hub.active, inactive: !hub.active}",
+    "ofn-empties-cart" => "hub"}
+      %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+      %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+      {{hub.name}}
+      ( {{ hub.address.city }} , {{hub.address.state}} )
+
+%a.close-reveal-modal{"ng-click" => "$close()"}
+  %i.ofn-i_009-close

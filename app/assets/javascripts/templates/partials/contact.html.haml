@@ -1,0 +1,16 @@
+%div{"bo-if" => "producer.email || producer.website || producer.address.phone"}
+  %h3 Contact
+
+  %p{"bo-if" => "producer.email"}
+    %a{"ng-href" => "mailto:{{producer.email | stripUrl}}", target: "_blank" }
+      %i.ofn-i_050-mail-circle
+      {{ producer.email | stripUrl }}
+
+  %p{"ng-if" => "producer.address.phone"}
+    WE NEED A PHONE ICON
+    {{ producer.address.phone }}
+
+  %p{"ng-if" => "producer.website"}
+    %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
+      %i.ofn-i_049-web
+      {{ producer.website | stripUrl }}
