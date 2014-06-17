@@ -14,6 +14,14 @@ node :active do |enterprise|
   @active_distributors.include?(enterprise)
 end
 
+child distributors: :hubs do
+  extends 'json/enterprises'
+  node :active do |hub|
+    @active_distributors.include?(hub)
+  end
+end
+
+
 node :icon do |e|
   if e.is_primary_producer? and e.is_distributor?
     image_path "map-icon-both.svg"

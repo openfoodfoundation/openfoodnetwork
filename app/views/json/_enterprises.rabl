@@ -1,6 +1,10 @@
 # DON'T USE DIRECTLY - for inheritance
 attributes :name, :id, :description
 
+node :email do |enterprise|
+  enterprise.email.to_s.reverse
+end
+
 child :address do
   extends "json/partials/address"
 end
