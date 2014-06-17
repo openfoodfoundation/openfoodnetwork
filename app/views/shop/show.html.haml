@@ -6,9 +6,9 @@
         Next order closing
         %strong {{ OrderCycle.orders_close_at() | date_in_words }}
 
-      %span Ready for pickup
+      %span Ready for
 
-      / Will this label should be a variable to reflect pickup or delivery as appropriate
+      / Will this label should be a variable to reflect 'Ready for pickup / delivery' as appropriate
 
       %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
               "ng-change" => "changeOrderCycle()",
