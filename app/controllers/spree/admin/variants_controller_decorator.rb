@@ -1,6 +1,17 @@
 Spree::Admin::VariantsController.class_eval do
   helper 'spree/products'
 
+  def destroy
+    @variant = Spree::Variant.find(params[:id])
+    @variant.delete # This line changed, as well as removal of following conditional
+    flash[:success] = I18n.t('notice_messages.variant_deleted')
+
+    respond_with(@variant) do |format|
+      format.html { redirect_to admin_product_variants_url(params[:product_id]) }
+      format.js   { render_js_for_destroy }
+    end
+  end
+
 
   protected
 

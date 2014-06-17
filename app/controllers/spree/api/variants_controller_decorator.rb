@@ -3,11 +3,7 @@ Spree::Api::VariantsController.class_eval do
     @variant = scope.find(params[:variant_id])
     authorize! :delete, @variant
 
-    @variant.deleted_at = Time.now()
-    if @variant.save
-      respond_with(@variant, :status => 204)
-    else
-      invalid_resource!(@variant)
-    end
+    @variant.delete
+    respond_with @variant, status: 204
   end
 end

@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :require_certified_hostname
 
   include EnterprisesHelper
 
@@ -16,6 +15,7 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
+
 
   private
 
@@ -39,17 +39,6 @@ class ApplicationController < ActionController::Base
       current_order.set_order_cycle! nil
       flash[:info] = "The order cycle you've selected has just closed. Please try again!"
       redirect_to root_url
-    end
-  end
-
-  # There are several domains that point to the production server, but only one
-  # (vic.openfoodnetwork.org) that has the SSL certificate. Redirect all requests to this
-  # domain to avoid showing customers a scary invalid certificate error.
-  def require_certified_hostname
-    certified_host = "openfoodnetwork.org.au"
-
-    if Rails.env.production? && request.host != certified_host
-      redirect_to "http://#{certified_host}#{request.fullpath}"
     end
   end
 

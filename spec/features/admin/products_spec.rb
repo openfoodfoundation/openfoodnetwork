@@ -45,6 +45,8 @@ feature %q{
       product.on_hand.should == 5
       product.description.should == "A description..."
       product.group_buy.should be_false
+      product.master.option_values.map(&:name).should == ['5kg']
+      product.master.options_text.should == "5kg"
 
       # Distributors
       visit spree.product_distributions_admin_product_path(product)

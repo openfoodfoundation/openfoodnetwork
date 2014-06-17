@@ -54,12 +54,6 @@ Spree::Variant.class_eval do
   end
 
 
-  private
-
-  def update_weight_from_unit_value
-    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
-  end
-
   def update_units
     delete_unit_option_values
 
@@ -69,6 +63,20 @@ Spree::Variant.class_eval do
       ov = Spree::OptionValue.where(option_type_id: option_type, name: name, presentation: name).first || Spree::OptionValue.create!({option_type: option_type, name: name, presentation: name}, without_protection: true)
       option_values << ov
     end
+  end
+
+  def delete
+    transaction do
+      self.update_column(:deleted_at, Time.now)
+      ExchangeVariant.where(variant_id: self).destroy_all
+    end
+  end
+
+
+  private
+
+  def update_weight_from_unit_value
+    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
   end
 
   def option_value_name

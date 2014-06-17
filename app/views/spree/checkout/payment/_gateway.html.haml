@@ -20,6 +20,6 @@
 
 .row
   .small-6.columns
-    %select{"ng-model" => "secrets.card_month", "ng-options" => "number as name for (number, name) in months", name: "secrets.card_month", required: true}
+    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", required: true}
   .small-6.columns
     %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", required: true}

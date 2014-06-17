@@ -442,24 +442,34 @@ module Spree
           p.update_attributes!(name: 'foo')
         end
 
-        it "removes the related option values from all its variants" do
+        it "removes the related option values from all its variants and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
-          v = create(:variant, product: p)
+          v = create(:variant, unit_value: 1, product: p)
           p.reload
 
-          expect {
+          v.option_values.map(&:name).include?("1L").should == false
+          v.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(v.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          v.reload
+          v.option_values.map(&:name).include?("1L").should == true
+          v.option_values.map(&:name).include?("1g").should == false
         end
 
-        it "removes the related option values from its master variant" do
+        it "removes the related option values from its master variant and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 
-          expect {
+          p.master.option_values.map(&:name).include?("1L").should == false
+          p.master.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          p.reload
+          p.master.option_values.map(&:name).include?("1L").should == true
+          p.master.option_values.map(&:name).include?("1g").should == false
         end
       end
 
@@ -570,7 +580,7 @@ module Spree
       end
     end
 
-    describe "Taxons" do
+    describe "taxons" do
       let(:taxon1) { create(:taxon) }
       let(:taxon2) { create(:taxon) }
       let(:product) { create(:simple_product) }
@@ -580,5 +590,24 @@ module Spree
       end
     end
 
+    describe "deletion" do
+      let(:p)  { create(:simple_product) }
+      let(:v)  { create(:variant, product: p) }
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s)  { create(:supplier_enterprise) }
+      let(:e)  { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
+
+      it "removes the master variant from all order cycles" do
+        e.variants << p.master
+        p.delete
+        e.variants(true).should be_empty
+      end
+
+      it "removes all other variants from order cycles" do
+        e.variants << v
+        p.delete
+        e.variants(true).should be_empty
+      end
+    end
   end
 end

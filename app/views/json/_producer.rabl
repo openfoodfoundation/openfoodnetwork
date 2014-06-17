@@ -8,7 +8,7 @@ node :logo do |producer|
 end
 
 node :path do |producer|
-  producer_path(producer) 
+  main_app.producer_path(producer) 
 end
 
 node :hash do |producer|

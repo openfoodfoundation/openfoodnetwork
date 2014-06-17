@@ -147,6 +147,15 @@ Spree::Product.class_eval do
     end
   end
 
+  def delete_with_delete_from_order_cycles
+    transaction do
+      delete_without_delete_from_order_cycles
+
+      ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+    end
+  end
+  alias_method_chain :delete, :delete_from_order_cycles
+
 
   private
 
@@ -158,7 +167,7 @@ Spree::Product.class_eval do
     if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
-      variants_including_master.each { |v| v.delete_unit_option_values }
+      variants_including_master.each { |v| v.update_units }
     end
   end
 

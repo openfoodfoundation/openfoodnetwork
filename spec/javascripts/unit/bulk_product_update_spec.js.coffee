@@ -973,7 +973,7 @@ describe "AdminProductEditCtrl", ->
 
 
   describe "deleting products", ->
-    it "deletes products with a http delete request to /api/products/id", ->
+    it "deletes products with a http delete request to /api/products/id/soft_delete", ->
       spyOn(window, "confirm").andReturn true
       $scope.products = [
         {
@@ -986,7 +986,7 @@ describe "AdminProductEditCtrl", ->
         }
       ]
       $scope.dirtyProducts = {}
-      $httpBackend.expectDELETE("/api/products/13").respond 200, "data"
+      $httpBackend.expectDELETE("/api/products/13/soft_delete").respond 200, "data"
       $scope.deleteProduct $scope.products[1]
       $httpBackend.flush()
 
@@ -1005,7 +1005,7 @@ describe "AdminProductEditCtrl", ->
       DirtyProducts.addProductProperty 9, "someProperty", "something"
       DirtyProducts.addProductProperty 13, "name", "P1"
 
-      $httpBackend.expectDELETE("/api/products/13").respond 200, "data"
+      $httpBackend.expectDELETE("/api/products/13/soft_delete").respond 200, "data"
       $scope.deleteProduct $scope.products[1]
       $httpBackend.flush()
       expect($scope.products).toEqual [
@@ -1036,7 +1036,7 @@ describe "AdminProductEditCtrl", ->
 
   
     describe "when the variant has been saved", ->
-      it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)", ->
+      it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)/soft_delete", ->
         spyOn(window, "confirm").andReturn true
         $scope.products = [
           {

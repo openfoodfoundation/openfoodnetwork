@@ -83,4 +83,18 @@ feature %q{
     page.should_not have_field "variant_unit_value"
     page.should_not have_field "variant_unit_description"
   end
+
+  it "soft-deletes variants", js: true do
+    p = create(:simple_product)
+    v = create(:variant, product: p)
+
+    login_to_admin_section
+    visit spree.admin_product_variants_path p
+
+    page.find('a.delete-resource').click
+    page.should_not have_content v.options_text
+
+    v.reload
+    v.deleted_at.should_not be_nil
+  end
 end
