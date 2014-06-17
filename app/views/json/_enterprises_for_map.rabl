@@ -1,12 +1,17 @@
 collection @enterprises
 extends 'json/enterprises'
-attributes :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook
+attributes :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook, :is_primary_producer?, :is_distributor?
 
 node :logo do |enterprise|
   enterprise.logo(:medium) if enterprise.logo.exists?
 end
+
 node :promo_image do |enterprise|
   enterprise.promo_image(:large) if enterprise.promo_image.exists?
+end
+
+node :active do |enterprise|
+  @active_distributors.include?(enterprise)
 end
 
 node :icon do |e|

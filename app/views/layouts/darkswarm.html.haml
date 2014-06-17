@@ -18,6 +18,13 @@
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
+    /[if lte IE 8]
+      #ie-warning
+        Your browser is very old! To use our site, you'll need to upgrade to 
+        something a bit more modern, such as 
+        %a{href: "https://www.google.com/intl/en_au/chrome/browser/"} Google Chrome
+
+
     = inject_json "currentHub", "current_hub"
     = inject_json "currentOrder", "current_order"
     = inject_json "user", "current_user"
