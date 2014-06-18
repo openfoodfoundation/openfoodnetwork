@@ -6,6 +6,10 @@ describe 'Order service', ->
   flash = null
   storage = null
   scope = null
+  CurrentHubMock = 
+    id: 1
+  FlashLoaderMock = 
+    loadFlash: (arg)->
 
   beforeEach ->
     orderData =
@@ -36,6 +40,10 @@ describe 'Order service', ->
 
     angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
+    module ($provide)->
+      $provide.value "CurrentHub", CurrentHubMock 
+      $provide.value "RailsFlashLoader", FlashLoaderMock 
+      null
 
     inject ($injector, _$httpBackend_, _storage_, $rootScope)->
       $httpBackend = _$httpBackend_
@@ -58,13 +66,13 @@ describe 'Order service', ->
     spyOn(storage, "bind")
     Order.fieldsToBind = ["testy"]
     Order.bindFieldsToLocalStorage({})
-    prefix = "order_#{Order.order.id}#{Order.order.user_id}"
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.id}"
     expect(storage.bind).toHaveBeenCalledWith({}, "Order.order.testy", {storeName: "#{prefix}_testy"})
     expect(storage.bind).toHaveBeenCalledWith({}, "Order.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
 
   it "binds order to local storage", ->
     Order.bindFieldsToLocalStorage(scope)
-    prefix = "order_#{Order.order.id}#{Order.order.user_id}"
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.id}"
     expect(localStorage.getItem("#{prefix}_email")).toMatch "test@test.com" 
 
   it "does not store secrets in local storage", ->
@@ -100,10 +108,11 @@ describe 'Order service', ->
     $httpBackend.flush()
 
   it "sends flash messages to the flash service", ->
+    spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
     $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
     Order.submit()
     $httpBackend.flush()
-    expect(flash.error).toEqual "frogs"
+    expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
 
   it "puts errors into the scope", ->
     $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
