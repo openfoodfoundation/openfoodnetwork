@@ -218,7 +218,7 @@ feature %q{
 
       # And I remove the property
       page.should have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
-      within("#producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+      within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
 
       # Then the property should have been removed
       page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'

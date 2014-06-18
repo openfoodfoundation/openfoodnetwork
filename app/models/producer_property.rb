@@ -1,6 +1,9 @@
 class ProducerProperty < ActiveRecord::Base
   belongs_to :property, class_name: 'Spree::Property'
 
+  default_scope order("#{self.table_name}.position")
+
+
   def property_name
     property.name if property
   end

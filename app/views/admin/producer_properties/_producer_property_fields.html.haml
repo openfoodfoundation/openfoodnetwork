@@ -1,4 +1,5 @@
-%tr.product_property.fields{"data-hook" => "producer_property", id: "#{dom_id(f.object)}"}
+-# admin/admin.js.erb in spree requires id to start with "spree_" for sortable tables
+%tr.product_property.fields{"data-hook" => "producer_property", id: "spree_#{dom_id(f.object)}"}
   %td.no-border
     %span.handle
     = f.hidden_field :id
