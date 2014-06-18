@@ -1,6 +1,6 @@
-attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook, :is_primary_producer?, :is_distributor?
+attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook
 
-node :type do |enterprise|
+node :enterprise_type do |enterprise|
   if enterprise.is_primary_producer?
     "producer"
   elsif enterprise.is_distributor?

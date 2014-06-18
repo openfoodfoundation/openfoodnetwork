@@ -16,4 +16,4 @@ describe "Hubs service", ->
       OfnMap = $injector.get("OfnMap") 
 
   it "builds MapMarkers from enterprises", ->
-    expect(OfnMap.enterprises[0].enterprise).toBe enterprises[0]
+    expect(OfnMap.enterprises[0].id).toBe enterprises[0].id

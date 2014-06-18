@@ -6,19 +6,19 @@ describe "Hubs service", ->
       id: 2
       active: false
       orders_close_at: new Date()
-      type: "hub"
+      enterprise_type: "hub"
     }
     {
       id: 3
       active: false
       orders_close_at: new Date()
-      type: "hub"
+      enterprise_type: "hub"
     }
     {
       id: 1
       active: true
       orders_close_at: new Date()
-      type: "hub"
+      enterprise_type: "hub"
     }
   ]
 

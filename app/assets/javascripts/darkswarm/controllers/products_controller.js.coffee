@@ -1,11 +1,12 @@
 Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Product, OrderCycle) ->
-  $scope.data = Product.data
+  $scope.products = Product.products
+  $scope.loading = Product.loading
   $scope.limit = 3
   $scope.ordering = {order: "name"}
   $scope.order_cycle = OrderCycle.order_cycle
 
   $scope.incrementLimit = ->
-    if $scope.limit < $scope.data.products.length
+    if $scope.limit < $scope.products.length
       $scope.limit = $scope.limit + 1 
 
   $scope.searchKeypress = (e)->

@@ -9,7 +9,7 @@ describe 'ProductsCtrl', ->
     Product = 
       all: ->
       update: ->
-      data: "testy mctest"
+      products: "testy mctest"
     OrderCycle =
       order_cycle: {}
         
@@ -18,4 +18,4 @@ describe 'ProductsCtrl', ->
       ctrl = $controller 'ProductsCtrl', {$scope: scope, Product: Product, OrderCycle: OrderCycle}
 
   it 'fetches products from Product', ->
-    expect(scope.data).toEqual 'testy mctest'
+    expect(scope.products).toEqual 'testy mctest'

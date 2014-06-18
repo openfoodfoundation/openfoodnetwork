@@ -1,8 +1,8 @@
 Darkswarm.factory 'Hubs', ($filter, Enterprises) ->
   new class Hubs
     constructor: ->
-      @hubs = @filter Enterprises.enterprises.filter (hub)->
-        hub.type == "hub"
+      @hubs = @order Enterprises.enterprises.filter (hub)->
+        hub.enterprise_type == "hub"
 
-    filter: (hubs)->
+    order: (hubs)->
       $filter('orderBy')(hubs, ['-active', '+orders_close_at'])

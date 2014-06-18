@@ -5,11 +5,10 @@ Darkswarm.factory 'Product', ($resource) ->
     
     # TODO: don't need to scope this into object
     # Already on object as far as controller scope is concerned
-    data: 
-      products: null
-      loading: true
+    products: null
+    loading: true
 
     update: =>
-      @data.products = $resource("/shop/products").query =>
-        @data.loading = false 
-      @data
+      @products = $resource("/shop/products").query =>
+        @loading = false 
+      @
