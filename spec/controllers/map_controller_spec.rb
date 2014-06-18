@@ -5,4 +5,9 @@ describe MapController do
     Enterprise.should_receive(:visible)
     get :index
   end
+
+  it "loads active distributors" do
+    Enterprise.should_receive(:distributors_with_active_order_cycles)
+    get :index
+  end
 end

@@ -1,4 +1,7 @@
 module SharedHelper
+  def inject_enterprises
+    inject_json "enterprises" , "enterprises", collection: @enterprises
+  end
 
   def inject_json(name, partial, opts = {})
     render "json/injection", {name: name, partial: partial}.merge(opts)

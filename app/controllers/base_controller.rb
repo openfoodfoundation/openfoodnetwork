@@ -11,4 +11,12 @@ class BaseController < ApplicationController
   include Spree::ProductsHelper
 
   before_filter :check_order_cycle_expiry
+  
+  def load_active_distributors
+    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
+  end
+
+  def load_visible_enterprises
+    @enterprises = Enterprise.visible
+  end
 end

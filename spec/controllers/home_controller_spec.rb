@@ -7,11 +7,17 @@ describe HomeController do
 
   before do
     Enterprise.stub(:distributors_with_active_order_cycles).and_return [distributor]
+    Enterprise.stub(:visible).and_return [distributor]
   end
 
   it "sets active distributors" do
     get :index
     assigns[:active_distributors].should == [distributor]
+  end
+
+  it "loads visible enterprises" do
+    get :index
+    assigns[:enterprises].should == [distributor]
   end
 
   it "does not show invisible hubs" do
