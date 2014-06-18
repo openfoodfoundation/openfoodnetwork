@@ -1,8 +1,5 @@
 .producers{"ng-controller" => "ProducersCtrl"}
-  :javascript
-    angular.module('Darkswarm').value('producers', #{render partial: "json/producers", object: @producers})
-  -#%pre
-    -#{{ Producers.producers | json }}
+  = inject_json "producers" , "producers", collection: @producers
 
   .row
     .small-12.columns.text-center.pad-top
