@@ -8,6 +8,15 @@ Spree::Api::ProductsController.class_eval do
   end
 
 
+  def soft_delete
+    authorize! :delete, Spree::Product
+    @product = find_product(params[:product_id])
+    authorize! :delete, @product
+    @product.delete
+    respond_with(@product, :status => 204)
+  end
+
+
   private
 
   # Copied and modified from Spree::Api::BaseController to allow

@@ -147,6 +147,15 @@ Spree::Product.class_eval do
     end
   end
 
+  def delete_with_delete_from_order_cycles
+    transaction do
+      delete_without_delete_from_order_cycles
+
+      ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+    end
+  end
+  alias_method_chain :delete, :delete_from_order_cycles
+
 
   private
 

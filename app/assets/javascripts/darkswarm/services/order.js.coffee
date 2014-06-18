@@ -1,4 +1,4 @@
-Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, CurrentHub, RailsFlashLoader)->
+Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, CurrentHub, RailsFlashLoader, Loading)->
   new class Order
     errors: {}
     secrets: {}
@@ -20,9 +20,11 @@ Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, Curren
         defaultValue: true
 
     submit: ->
+      Loading.message = "Submitting your order: please wait"
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>
+        Loading.clear()
         @errors = response.errors
         RailsFlashLoader.loadFlash(response.flash)
         

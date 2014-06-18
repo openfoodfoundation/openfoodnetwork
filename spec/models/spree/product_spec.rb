@@ -580,13 +580,33 @@ module Spree
       end
     end
 
-    describe "Taxons" do
+    describe "taxons" do
       let(:taxon1) { create(:taxon) }
       let(:taxon2) { create(:taxon) }
       let(:product) { create(:simple_product) }
 
       it "returns the first taxon as the primary taxon" do
         product.taxons.should == [product.primary_taxon]
+      end
+    end
+
+    describe "deletion" do
+      let(:p)  { create(:simple_product) }
+      let(:v)  { create(:variant, product: p) }
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s)  { create(:supplier_enterprise) }
+      let(:e)  { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
+
+      it "removes the master variant from all order cycles" do
+        e.variants << p.master
+        p.delete
+        e.variants(true).should be_empty
+      end
+
+      it "removes all other variants from order cycles" do
+        e.variants << v
+        p.delete
+        e.variants(true).should be_empty
       end
     end
   end

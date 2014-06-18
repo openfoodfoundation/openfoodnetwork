@@ -124,6 +124,31 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "getting name for display" do
+        it "returns display_name if present" do
+          v = create(:variant, display_name: "foo")
+          v.name_to_display.should == "foo"
+        end
+
+        it "returns product name if display_name is empty" do
+          v = create(:variant, product: create(:product))
+          v.name_to_display.should == v.product.name
+        end
+      end
+
+      describe "getting unit for display" do
+        it "returns display_as if present" do
+          v = create(:variant, display_as: "foo")
+          v.unit_to_display.should == "foo"
+        end
+
+        it "returns options_text if display_as is empty" do
+          v = create(:variant)
+          v.stub(:options_text).and_return "ponies"
+          v.unit_to_display.should == "ponies"
+        end
+      end
+
       describe "setting the variant's weight from the unit value" do
         it "sets the variant's weight when unit is weight" do
           p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
@@ -209,6 +234,25 @@ module Spree
           end
         end
       end
+      context "when the variant already has a value set (and all required option values exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
+
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
+
+        it "removes the old option value and assigns the new one" do
+          ov_orig = v.option_values.last
+          ov_new  = v0.option_values.last
+
+          expect {
+            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          }.to change(Spree::OptionValue, :count).by(0)
+
+          v.option_values.should_not include ov_orig
+          v.option_values.should     include ov_new
+        end
+      end
 
       context "when the variant already has a value set (and all required option values exist)" do
         let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
@@ -246,7 +290,7 @@ module Spree
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
 
-        it "requests the name of the new option_value from OptionValueName" do
+        it "does not request the name of the new option_value from OptionValueName" do
           OpenFoodNetwork::OptionValueNamer.any_instance.should_not_receive(:name)
           v.update_attributes!(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
@@ -264,13 +308,13 @@ module Spree
 
       it "removes option value associations for unit option types" do
         expect {
-          @v.send(:delete_unit_option_values)
+          @v.delete_unit_option_values
         }.to change(@v.option_values, :count).by(-1)
       end
 
       it "does not delete option values" do
         expect {
-          @v.send(:delete_unit_option_values)
+          @v.delete_unit_option_values
         }.to change(Spree::OptionValue, :count).by(0)
       end
     end

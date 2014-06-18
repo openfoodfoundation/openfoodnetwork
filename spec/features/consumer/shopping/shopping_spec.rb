@@ -36,6 +36,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       exchange.variants << product.master
 
       visit shop_path
+      save_screenshot "/users/willmarshall/Desktop/wtsvg.png"
       find("#tab_producers a").click
       page.should have_content supplier.name 
     end
@@ -64,6 +65,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
         
         it "shows products after selecting an order cycle" do
+          product.master.update_attribute(:display_name, "kitten")
+          product.master.update_attribute(:display_as, "rabbit")
           exchange1.variants << product.master ## add product to exchange
           visit shop_path
           page.should_not have_content product.name 
@@ -74,6 +77,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
+          save_screenshot "/Users/willmarshall/Desktop/shop.png"
+          page.should have_content product.master.display_name
+          page.should have_content product.master.display_as
         end
       end
     end

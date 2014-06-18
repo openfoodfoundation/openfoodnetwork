@@ -40,6 +40,20 @@ Spree::Variant.class_eval do
     values.to_sentence({ :words_connector => ", ", :two_words_connector => ", " })
   end
 
+  def delete_unit_option_values
+    ovs = self.option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
+    self.option_values.destroy ovs
+  end
+
+  def name_to_display
+    display_name || product.name
+  end
+
+  def unit_to_display
+    display_as || options_text
+  end
+
+
   def update_units
     delete_unit_option_values
 
@@ -51,15 +65,18 @@ Spree::Variant.class_eval do
     end
   end
 
+  def delete
+    transaction do
+      self.update_column(:deleted_at, Time.now)
+      ExchangeVariant.where(variant_id: self).destroy_all
+    end
+  end
+
+
   private
 
   def update_weight_from_unit_value
     self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
-  end
-
-  def delete_unit_option_values
-    ovs = self.option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
-    self.option_values.destroy ovs
   end
 
   def option_value_name

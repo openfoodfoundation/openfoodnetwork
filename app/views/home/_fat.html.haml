@@ -5,8 +5,7 @@
       Shop for
     %p.trans-sentence
       %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
-        %img{"bo-src" => "taxon.icon",
-        name: "{{taxon.name}}", alt: "{{taxon.name}}"}
+        %render-svg{path: "{{taxon.icon}}"}
         {{taxon.name}} 
   .columns.small-4
     %h5 Delivery options
@@ -21,7 +20,7 @@
     %h5 
       %i.ofn-i_036-producers
       Our producers
-    %ul.ofn-list
+    %ul.bullet-list
       %li{"ng-repeat" => "producer in hub.producers"}
         = render partial: "modals/producer"
 
