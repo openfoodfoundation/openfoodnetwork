@@ -1,9 +1,87 @@
 #ie-warning
-  background: white
-  position: fixed
-  top: 0
-  z-index: 200
-  left: 0
-  width: 100%
-  font-size: 1.2em
-  padding: 20px
+  margin-bottom: 0
+  padding-bottom: 2rem
+  .ie-msg
+    background: rgba(255,255,255,0.15)
+    padding: 0.5rem
+    margin-bottom: 1rem
+  .browserbtn
+    text-align: center
+    a
+      color: white
+      font-size: 1rem
+      &:hover, &:active, &:focus
+        color: black
+    a.browserlogo
+      display: block
+      width: 100%
+      // background: rgba(255,255,255,0.5)
+  i.rotateIn.animated
+    font-size: 5rem
+    color: white
+    text-align: center
+    display: block
+
+@-webkit-keyframes rotateIn
+  0%
+    -webkit-transform-origin: center center
+    transform-origin: center center
+    -webkit-transform: rotate(-200deg)
+    transform: rotate(-200deg)
+    opacity: 0
+  100%
+    -webkit-transform-origin: center center
+    transform-origin: center center
+    -webkit-transform: rotate(0)
+    transform: rotate(0)
+    opacity: 1
+
+
+@keyframes rotateIn
+  0%
+    -webkit-transform-origin: center center
+    -ms-transform-origin: center center
+    transform-origin: center center
+    -webkit-transform: rotate(-200deg)
+    -ms-transform: rotate(-200deg)
+    transform: rotate(-200deg)
+    opacity: 0
+  100%
+    -webkit-transform-origin: center center
+    -ms-transform-origin: center center
+    transform-origin: center center
+    -webkit-transform: rotate(0)
+    -ms-transform: rotate(0)
+    transform: rotate(0)
+    opacity: 1
+
+
+.rotateIn
+  -webkit-animation-name: rotateIn
+  animation-name: rotateIn
+  animation-delay: 0.5s
+  -webkit-animation-delay: 0.5s
+
+.delay1  
+  animation-delay: 0.75s
+  -webkit-animation-delay: 0.755s
+.delay2
+  animation-delay: 1s
+  -webkit-animation-delay: 1s
+.delay3
+  animation-delay: 1.25s
+  -webkit-animation-delay: 1.25s
+
+.animated
+  -webkit-animation-duration: 0.8s
+  animation-duration: 0.8s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  animation-timing-function: ease-in-out
+  -webkit-animation-timing-function: ease-in-out
+
+
+
+
+
+
