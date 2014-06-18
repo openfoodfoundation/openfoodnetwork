@@ -51,9 +51,13 @@ module Admin
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
     end
 
+    # Overriding method on Spree's resource controller
     def location_after_save
-      # Overriding method on Spree's resource controller
-      main_app.edit_admin_enterprise_path(@enterprise)
+      if params[:enterprise].key? :producer_properties_attributes
+        main_app.admin_enterprises_path
+      else
+        main_app.edit_admin_enterprise_path(@enterprise)
+      end
     end
   end
 end
