@@ -17,9 +17,19 @@ feature 'shipping methods' do
       # Given some distributors
       d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
       d2 = create(:distributor_enterprise, name: 'Nautical Travels')
+      sc1 = create(:shipping_category, name: 'Delivery')
+      sc2 = create(:shipping_category, name: 'Collection')
+
+      # Shows appropriate fields when logged in as admin
+      visit spree.new_admin_shipping_method_path
+      page.should have_field 'shipping_method_name'
+      page.should have_field 'shipping_method_description'
+      page.should have_select 'shipping_method_display_on'
+      page.should have_field "shipping_method_shipping_category_id_#{sc1.id}"
+      page.should have_field "shipping_method_shipping_category_id_#{sc2.id}"
+      page.should have_field 'shipping_method_require_ship_address_true', checked: true
 
       # When I create a shipping method and set the distributors
-      visit spree.new_admin_shipping_method_path
       fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
       check "shipping_method_distributor_ids_#{d1.id}"
       check "shipping_method_distributor_ids_#{d2.id}"
@@ -70,18 +80,20 @@ feature 'shipping methods' do
       login_to_admin_as enterprise_user
     end
 
-    it "lets me choose whether a shipping address is required" do
-      click_link "Enterprises"
-      within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
-      click_link 'New Shipping Method'
-
-      page.should have_content "Requires shipping address?"
-    end
-
-    it "creates shipping methods" do
+    it "creating a shipping method" do
+      sc1 = create(:shipping_category, name: 'Delivery')
+      sc2 = create(:shipping_category, name: 'Collection')
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
       click_link 'New Shipping Method'
+
+      # Show the correct fields
+      page.should have_field 'shipping_method_name'
+      page.should have_field 'shipping_method_description'
+      page.should_not have_select 'shipping_method_display_on'
+      page.should have_field "shipping_method_shipping_category_id_#{sc1.id}"
+      page.should have_field "shipping_method_shipping_category_id_#{sc2.id}"
+      page.should have_field 'shipping_method_require_ship_address_true', checked: true
 
       fill_in 'shipping_method_name', :with => 'Teleport'
 

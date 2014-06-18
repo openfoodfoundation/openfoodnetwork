@@ -2,7 +2,7 @@ module Spree
   module Admin
     ShippingMethodsController.class_eval do
       before_filter :do_not_destroy_referenced_shipping_methods, :only => :destroy
-      before_filter :load_hubs, only: [:new, :edit]
+      before_filter :load_hubs, only: [:new, :edit, :create, :update]
 
       # Sort shipping methods by distributor name
       # ! Code copied from Spree::Admin::ResourceController with two added lines
