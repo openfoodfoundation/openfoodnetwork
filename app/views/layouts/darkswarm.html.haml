@@ -18,27 +18,27 @@
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
     / [if lte IE 9]
-    .alert-box.alert#ie-warning{"data-alert" => ""}
-      .row.ie-msg
-        .small-4.large-2.columns
-          %i.ofn-i_012-warning.rotateIn.animated
-        .small-8.large-10.columns
-          %h3 Your browser is out of date!
-          %p For the best Open Food Network experience, we strongly recommend upgrading your browser: 
-      .row
-        .small-4.columns.browserbtn
-          %a.browserlogo{href: "https://www.google.com/intl/en_au/chrome/browser/", target: "_blank"} 
-            %img.rotateIn.animated.delay1{src: "assets/browser-logos/chrome.png"}
-          %a{href: "https://www.google.com/intl/en_au/chrome/browser/", target: "_blank"} Google Chrome  
-        .small-4.columns.browserbtn
-          %a.browserlogo{href: "http://www.mozilla.org/en-US/firefox/new/", target: "_blank"} 
-            %img.rotateIn.animated.delay2{src: "assets/browser-logos/firefox.png"}
-          %a{href: "http://www.mozilla.org/en-US/firefox/new/", target: "_blank"} Firefox  
-        .small-4.columns.browserbtn  
-          %a.browserlogo{href: "http://windows.microsoft.com/en-AU/internet-explorer/download-ie", target: "_blank"} 
-            %img.rotateIn.animated.delay3{src: "assets/browser-logos/internet-explorer.png"}
-          %a{href: "http://windows.microsoft.com/en-AU/internet-explorer/download-ie", target: "_blank"} Internet Explorer  
-      %a.close{href: "#"} ×
+      .alert-box.alert#ie-warning{"data-alert" => ""}
+        .row.ie-msg
+          .small-4.large-2.columns
+            %i.ofn-i_012-warning.rotateIn.animated
+          .small-8.large-10.columns
+            %h3 Your browser is out of date!
+            %p For the best Open Food Network experience, we strongly recommend upgrading your browser: 
+        .row
+          .small-4.columns.browserbtn
+            %a.browserlogo{href: "https://www.google.com/intl/en_au/chrome/browser/", target: "_blank"} 
+              %img.rotateIn.animated.delay1{src: "assets/browser-logos/chrome.png"}
+            %a{href: "https://www.google.com/intl/en_au/chrome/browser/", target: "_blank"} Google Chrome  
+          .small-4.columns.browserbtn
+            %a.browserlogo{href: "http://www.mozilla.org/en-US/firefox/new/", target: "_blank"} 
+              %img.rotateIn.animated.delay2{src: "assets/browser-logos/firefox.png"}
+            %a{href: "http://www.mozilla.org/en-US/firefox/new/", target: "_blank"} Firefox  
+          .small-4.columns.browserbtn  
+            %a.browserlogo{href: "http://windows.microsoft.com/en-AU/internet-explorer/download-ie", target: "_blank"} 
+              %img.rotateIn.animated.delay3{src: "assets/browser-logos/internet-explorer.png"}
+            %a{href: "http://windows.microsoft.com/en-AU/internet-explorer/download-ie", target: "_blank"} Internet Explorer  
+        %a.close{href: "#"} ×
 
 
     = inject_json "currentHub", "current_hub"
