@@ -206,6 +206,25 @@ feature %q{
       s.producer_properties.first.property.presentation.should == "Biodynamic"
       s.producer_properties.first.value.should == "Shininess"
     end
+
+    it "removes producer properties", js: true do
+      # Given a producer enterprise with a property
+      s = create(:supplier_enterprise)
+      pp = s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
+
+      # When I go to its properties page
+      login_to_admin_section
+      visit main_app.admin_enterprise_producer_properties_path(s)
+
+      # And I remove the property
+      page.should have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      within("#producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+
+      # Then the property should have been removed
+      page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      page.should_not have_selector '#progress'
+      s.producer_properties(true).should be_empty
+    end
   end
 
 
