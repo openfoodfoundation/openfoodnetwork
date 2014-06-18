@@ -183,6 +183,29 @@ feature %q{
       s.producer_properties.first.property.presentation.should == "Certified Organic"
       s.producer_properties.first.value.should == "NASAA 12345"
     end
+
+    it "updates producer properties" do
+      # Given a producer enterprise with a property
+      s = create(:supplier_enterprise)
+      s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
+
+      # When I go to its properties page
+      login_to_admin_section
+      visit main_app.admin_enterprise_producer_properties_path(s)
+
+      # And I update the property
+      fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Biodynamic"
+      fill_in 'enterprise_producer_properties_attributes_0_value', with: "Shininess"
+      click_button 'Update'
+
+      # Then I should be returned to the producer properties page
+      page.should have_selector 'h1.page-title', text: "Producer Properties"
+
+      # And the property should be updated
+      s.producer_properties(true).count.should == 1
+      s.producer_properties.first.property.presentation.should == "Biodynamic"
+      s.producer_properties.first.value.should == "Shininess"
+    end
   end
 
 
