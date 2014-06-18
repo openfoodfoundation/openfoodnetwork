@@ -273,7 +273,7 @@ feature %q{
       Enterprise.managed_by(@new_user).should include enterprise
     end
 
-    scenario "can edit enterprises I have permission to" do
+    scenario "editing enterprises I have permission to" do
       click_link 'Enterprises'
       within('#listing_enterprises tbody tr:first') { click_link 'Edit Profile' }
 
@@ -284,11 +284,31 @@ feature %q{
       page.should have_field 'enterprise_name', :with => 'Eaterprises'
     end
 
-    scenario "Editing images for an enterprise" do
+    scenario "editing images for an enterprise" do
       click_link 'Enterprises'
       first(".edit").click
       page.should have_content "Logo"
       page.should have_content "Promo"
+    end
+
+    scenario "managing producer properties", js: true do
+      click_link 'Enterprises'
+      within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
+
+      # -- Create / update
+      fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Certified Organic"
+      fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
+      click_button 'Update'
+      page.should have_selector '#listing_enterprises a', text: supplier1.name
+      supplier1.producer_properties(true).count.should == 1
+
+      # -- Destroy
+      pp = supplier1.producer_properties.first
+      within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
+
+      within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+      page.should_not have_selector '#progress'
+      supplier1.producer_properties(true).should be_empty
     end
   end
 end
