@@ -175,8 +175,8 @@ feature %q{
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
       click_button 'Update'
 
-      # Then I should be returned to the producer properties page
-      page.should have_selector 'h1.page-title', text: "Producer Properties"
+      # Then I should be returned to the enterprises page
+      page.should have_selector '#listing_enterprises a', text: s.name
 
       # And the producer should have the property
       s.producer_properties(true).count.should == 1
@@ -198,8 +198,8 @@ feature %q{
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "Shininess"
       click_button 'Update'
 
-      # Then I should be returned to the producer properties page
-      page.should have_selector 'h1.page-title', text: "Producer Properties"
+      # Then I should be returned to the enterprises
+      page.should have_selector '#listing_enterprises a', text: s.name
 
       # And the property should be updated
       s.producer_properties(true).count.should == 1
@@ -221,8 +221,8 @@ feature %q{
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
 
       # Then the property should have been removed
-      page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
       page.should_not have_selector '#progress'
+      page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
       s.producer_properties(true).should be_empty
     end
   end
