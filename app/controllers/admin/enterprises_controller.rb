@@ -10,7 +10,8 @@ module Admin
     def bulk_update
       @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
       if @enterprise_set.save
-        redirect_to main_app.admin_enterprises_path, :notice => 'Distributor collection times updated.'
+        flash[:success] = 'Enterprises updated successfully'
+        redirect_to main_app.admin_enterprises_path
       else
         render :index
       end

@@ -36,7 +36,7 @@
               Producer
             - else
               %h1.icon-exclamation-sign.with-tip{"data-powertip" => "This enterprise does not have any roles", style: "text-align: center;color: #DA5354"}
-          %td= enterprise.visible ? 'Visible' : 'Invisible'
+          %td= enterprise_form.check_box :visible
           %td= enterprise.description
           %td{"data-hook" => "admin_users_index_row_actions"}
             = link_to_with_icon('icon-edit', 'Edit Profile', main_app.edit_admin_enterprise_path(enterprise), class: 'edit')

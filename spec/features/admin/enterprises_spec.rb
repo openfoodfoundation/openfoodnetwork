@@ -33,6 +33,23 @@ feature %q{
     end
   end
 
+  scenario "editing enterprises in bulk" do
+    s = create(:supplier_enterprise)
+    d = create(:distributor_enterprise)
+
+    login_to_admin_section
+    click_link 'Enterprises'
+
+    within("tr.enterprise-#{d.id}") do
+      page.should have_field "enterprise_set_collection_attributes_0_visible", checked: true
+      uncheck "enterprise_set_collection_attributes_0_visible"
+    end
+    click_button "Update"
+    flash_message.should == 'Enterprises updated successfully'
+    distributor = Enterprise.find(d.id)
+    distributor.visible.should == false
+  end
+
   scenario "viewing an enterprise" do
     e = create(:enterprise)
 
