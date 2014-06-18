@@ -160,7 +160,33 @@ feature %q{
     page.should have_selector "a.list-item", text: enterprise_fee.name
   end
 
-  context 'as an Enterprise user' do
+  describe "producer properties" do
+    it "creates producer properties" do
+      # Given a producer enterprise
+      s = create(:supplier_enterprise)
+
+      # When I go to its properties page
+      login_to_admin_section
+      click_link 'Enterprises'
+      within(".enterprise-#{s.id}") { click_link 'Properties' }
+
+      # And I create a property
+      fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Certified Organic"
+      fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
+      click_button 'Update'
+
+      # Then I should be returned to the producer properties page
+      page.should have_selector 'h1.page-title', text: "Producer Properties"
+
+      # And the producer should have the property
+      s.producer_properties(true).count.should == 1
+      s.producer_properties.first.property.presentation.should == "Certified Organic"
+      s.producer_properties.first.value.should == "NASAA 12345"
+    end
+  end
+
+
+  context "as an Enterprise user" do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }

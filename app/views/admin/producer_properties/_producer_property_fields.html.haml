@@ -1,0 +1,11 @@
+%tr.product_property.fields{"data-hook" => "producer_property", id: "#{dom_id(f.object)}"}
+  %td.no-border
+    %span.handle
+    = f.hidden_field :id
+  %td.property_name
+    = f.text_field :property_name, :class => 'autocomplete'
+  %td.value
+    = f.text_field :value, :class => 'autocomplete'
+  %td.actions
+    - unless @enterprise.producer_properties.empty?
+      -#= link_to_remove_fields t(:remove), f, :no_text => true

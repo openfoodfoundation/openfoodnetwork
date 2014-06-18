@@ -7,6 +7,15 @@ module Admin
 
     helper 'spree/products'
 
+    respond_override update: { html: { success: lambda {
+      if params[:enterprise].key? :producer_properties_attributes
+        redirect_to main_app.admin_enterprise_producer_properties_path(@enterprise)
+      else
+        redirect_to main_app.admin_enterprises_path
+      end
+    } } }
+
+
     def bulk_update
       @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
       if @enterprise_set.save

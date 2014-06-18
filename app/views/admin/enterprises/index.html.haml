@@ -43,6 +43,10 @@
             %br/
             = link_to_delete_enterprise enterprise
             %br/
+            - if enterprise.is_primary_producer
+              = link_to_with_icon 'icon-dashboard', 'Properties', main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise.id)
+              (#{enterprise.producer_properties.count})
+              %br/
             - if enterprise.is_distributor
               = link_to_with_icon 'icon-chevron-right', 'Payment Methods', spree.admin_payment_methods_path(enterprise_id: enterprise.id)
               (#{enterprise.payment_methods.count})
