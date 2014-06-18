@@ -1,8 +1,9 @@
 describe "Enterprises service", ->
   Enterprises = null
   enterprises = [
-    {id: 1, type: "hub"},
-    {id: 2, type: "producer"}
+    {id: 1, type: "hub", producers: [{id: 2}]},
+    {id: 2, type: "producer", hubs: [{id: 1}]},
+    {id: 3, type: "producer", hubs: [{id: 1}]}
   ]
   beforeEach ->
     module 'Darkswarm'
@@ -20,3 +21,7 @@ describe "Enterprises service", ->
 
   it "puts the same objects in enterprises and enterprises_by_id", ->
     expect(Enterprises.enterprises[0]).toBe Enterprises.enterprises_by_id["1"]
+
+  it "dereferences references to other enterprises", ->
+    expect(Enterprises.enterprises_by_id["1"].producers[0]).toBe enterprises[1]
+    expect(Enterprises.enterprises_by_id["3"].hubs[0]).toBe enterprises[0]
