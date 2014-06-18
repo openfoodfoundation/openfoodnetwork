@@ -41,7 +41,7 @@ feature %q{
     click_link 'Enterprises'
 
     within("tr.enterprise-#{d.id}") do
-      page.should have_field "enterprise_set_collection_attributes_0_visible", checked: true
+      page.should have_checked_field "enterprise_set_collection_attributes_0_visible"
       uncheck "enterprise_set_collection_attributes_0_visible"
     end
     click_button "Update"
