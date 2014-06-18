@@ -1,5 +1,6 @@
-Darkswarm.factory 'Producers', (producers) ->
+Darkswarm.factory 'Producers', (Enterprises) ->
   new class Producers
     constructor: ->
-      @producers = producers
+      @producers = Enterprises.enterprises.filter (enterprise)->
+        enterprise.type == "producer"
 
