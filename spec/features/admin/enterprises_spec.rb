@@ -153,9 +153,7 @@ feature %q{
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-    page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
-
-    click_link 'Edit Profile'
+    page.should have_field 'enterprise_name', :with => 'Eaterprises'
 
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
@@ -215,7 +213,7 @@ feature %q{
       click_button 'Update'
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-      page.should have_selector '#listing_enterprises a', text: 'Eaterprises'
+      page.should have_field 'enterprise_name', :with => 'Eaterprises'
     end
 
     scenario "Editing images for an enterprise" do
