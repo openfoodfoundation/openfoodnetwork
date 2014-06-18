@@ -1,24 +1,27 @@
-.row
-  .small-12.columns.producer-hero
-    %h3.producer-name 
+.highlight
+  .highlight-row 
+    %p.right
+      {{ hub.address.city }} , {{hub.address.state}}
+    %h3
       %i.ofn-i_036-producers
       {{ producer.name }}
-    %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
     
-.row{bindonce: true} 
+  %img.producer-hero-img{"ng-src" => "{{producer.promo_image}}"} 
+    
+.row.pad-top{bindonce: true} 
   .small-12.large-6.columns
     %img.producer-logo{"bo-src" => "producer.logo", "bo-if" => "producer.logo"} 
+    %h5.modal-header About
     %p{"ng-bind-html" => "producer.long_description"}
 
   .small-12.large-6.columns
-
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
 
 .row{bindonce: true}
-  .hubs
-    %h4 Shop for {{producer.name}} products at:
-    %a.hub{"ng-repeat" => "hub in producer.hubs", 
+  .modal-hubs
+    %h5 Shop for {{producer.name}} products at:
+    %a.button.primary.hub{"ng-repeat" => "hub in producer.hubs", 
     "bo-href" => "hub.path", 
     "bo-class" => "{active: hub.active, inactive: !hub.active}",
     "ofn-empties-cart" => "hub"}
@@ -27,5 +30,5 @@
       {{hub.name}}
       ( {{ hub.address.city }} , {{hub.address.state}} )
 
-%a.close-reveal-modal{"ng-click" => "$close()"}
+%a.close-reveal-modal.outside{"ng-click" => "$close()"}
   %i.ofn-i_009-close
