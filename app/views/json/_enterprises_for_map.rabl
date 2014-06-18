@@ -1,2 +1,2 @@
 collection @enterprises
-extends 'json/partials/enterprise'
+extends "json/partials/enterprise"

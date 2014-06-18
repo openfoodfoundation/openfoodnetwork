@@ -14,7 +14,7 @@
     
     %div{bindonce: true}
       %product{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in data.products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
+        "ng-repeat" => "product in products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
         %div
           = render partial: "shop/products/summary"
           %div{"bo-if" => "hasVariants"}
@@ -22,7 +22,7 @@
         .variants.row{"bo-if" => "!hasVariants"}
           = render partial: "shop/products/master"
       
-      %product{"ng-show" => "data.loading"}
+      %product{"ng-show" => "loading"}
         .row.summary
           .small-12.columns.text-center
             Loading products

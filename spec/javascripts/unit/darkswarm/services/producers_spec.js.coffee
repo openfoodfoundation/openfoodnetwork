@@ -2,7 +2,7 @@ describe "Producers service", ->
   Producers = null
   Enterprises = null
   enterprises = [
-    {type: "producer"}
+    {enterprise_type: "producer"}
   ]
 
   beforeEach ->

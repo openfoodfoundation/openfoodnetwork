@@ -2,7 +2,7 @@ Darkswarm.factory "MapModal", ($modal, $rootScope)->
   new class MapModal
     open: (enterprise)->
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
-      if enterprise['is_primary_producer?']
+      if enterprise.enterprise_type == "producer"
         scope.producer = enterprise
         $modal.open(templateUrl: "map_modal_producer.html", scope: scope)
       else
