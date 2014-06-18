@@ -182,8 +182,10 @@
     .row
       .alpha.three.columns
         = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
-        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
-          %a What's this?
+        %br/
+        %span{ style: 'font-weight:bold' } PLEASE NOTE:
+        Any promo image uploaded here will be cropped to 1200 x 260.
+        This image is displayed on the right hand side of the "About Us" section of your public profile.
 
       .omega.eight.columns
         = image_tag @object.promo_image(:large) if @object.promo_image.present?
