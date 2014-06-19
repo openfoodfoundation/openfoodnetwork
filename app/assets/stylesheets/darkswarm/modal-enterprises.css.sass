@@ -60,14 +60,15 @@
 
 .cta-container
   background: url("/assets/gray_jean.png") repeat
-  padding: 0.75rem 1rem 0 1rem
+  padding-top: 0.75rem
+  .button.secondary
+    background-color: #999
   .button.hub
     margin-right: 1rem
     margin-bottom: 1rem
     padding-left: 1rem
     padding-right: 1rem
     font-weight: bold
-    line-height: 1
     i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
       margin-right: 0.15rem
       font-size: 1.25rem
@@ -78,6 +79,15 @@
       font-style: italic
       font-size: 0.75rem
       display: inline
+  .button.hub.expand
+    text-align: left
+    i.ofn-i_007-caret-right
+      float: right
+    i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
+      float: left
+      margin-right: 0.5rem
+
+
 
 
 // Generic styles for use
