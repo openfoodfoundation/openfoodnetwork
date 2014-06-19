@@ -1,0 +1,1 @@
+remove "div[data-hook='admin_shipping_method_form_calculator_fields']"

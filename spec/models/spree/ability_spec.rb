@@ -75,6 +75,10 @@ module Spree
           should have_ability([:admin, :index, :read, :create, :edit], for: Spree::Classification)
         end
 
+        it "should be able to read/write their enterprises' producer properties" do
+          should have_ability([:admin, :index, :read, :create, :edit, :update_positions, :destroy], for: ProducerProperty)
+        end
+
         it "should be able to read and create enterprise relationships" do
           should have_ability([:admin, :index, :create], for: EnterpriseRelationship)
         end

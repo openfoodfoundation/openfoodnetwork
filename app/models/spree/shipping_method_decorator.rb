@@ -1,6 +1,6 @@
 Spree::ShippingMethod.class_eval do
   has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
-  attr_accessible :distributor_ids
+  attr_accessible :distributor_ids, :description
   attr_accessible :require_ship_address
 
   scope :managed_by, lambda { |user|
@@ -32,6 +32,10 @@ Spree::ShippingMethod.class_eval do
     else
       true # Shipping methods are available before we've selected an address
     end
+  end
+
+  def has_distributor?(distributor)
+    self.distributors.include?(distributor)
   end
 
   def adjustment_label

@@ -49,6 +49,15 @@
         = f.radio_button :visible, false
         &nbsp;
         = f.label :visible, "Not Visible", :value => "false"
+    - if @enterprise.is_distributor
+    - # TODO: Angularise this
+      .row
+        .three.columns.alpha
+          %label Link to shop front
+          .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+            %a What's this?
+        .eight.columns.omega
+          = main_app.shop_enterprise_url(@enterprise)
 
 
   = f.fields_for :address do |af|
@@ -173,8 +182,10 @@
     .row
       .alpha.three.columns
         = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
-        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
-          %a What's this?
+        %br/
+        %span{ style: 'font-weight:bold' } PLEASE NOTE:
+        Any promo image uploaded here will be cropped to 1200 x 260.
+        This image is displayed on the right hand side of the "About Us" section of your public profile.
 
       .omega.eight.columns
         = image_tag @object.promo_image(:large) if @object.promo_image.present?

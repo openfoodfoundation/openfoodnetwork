@@ -4,6 +4,7 @@ class Enterprise < ActiveRecord::Base
   acts_as_gmappable :process_geocoding => false
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
+  has_many :producer_properties, foreign_key: 'producer_id'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'
@@ -19,6 +20,8 @@ class Enterprise < ActiveRecord::Base
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
+
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   has_attached_file :promo_image, :styles => { :large => "1200x260#", :thumb => "100x100>" }
 
@@ -102,13 +105,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-
-  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
-  def self.distinct_count
-    count(distinct: true)
-  end
-
-
   def self.find_near(suburb)
     enterprises = []
 
@@ -118,6 +114,20 @@ class Enterprise < ActiveRecord::Base
     end
 
     enterprises
+  end
+
+  # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
+  def self.distinct_count
+    count(distinct: true)
+  end
+
+  def set_producer_property(property_name, property_value)
+    transaction do
+      property = Spree::Property.where(name: property_name).first_or_create!(presentation: property_name)
+      producer_property = ProducerProperty.where(producer_id: id, property_id: property.id).first_or_initialize
+      producer_property.value = property_value
+      producer_property.save!
+    end
   end
 
   def has_supplied_products_on_hand?

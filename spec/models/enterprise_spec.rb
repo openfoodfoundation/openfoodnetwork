@@ -449,14 +449,27 @@ describe Enterprise do
   describe "presentation of attributes" do
     let(:distributor) { 
       create(:distributor_enterprise, 
-             website: "http://www.google.com", 
-             facebook: "www.facebook.com/roger", 
-             linkedin: "http://linkedin.com") 
+             website: "http://www.google.com",
+             facebook: "www.facebook.com/roger",
+             linkedin: "https://linkedin.com")
     }
+
     it "strips http and www from url fields" do
       distributor.website.should == "google.com"
       distributor.facebook.should == "facebook.com/roger"
       distributor.linkedin.should == "linkedin.com"
+    end
+  end
+
+  describe "producer properties" do
+    let(:supplier) { create(:supplier_enterprise) }
+
+    it "sets producer properties" do
+      supplier.set_producer_property 'Organic Certified', 'NASAA 12345'
+
+      supplier.producer_properties.count.should == 1
+      supplier.producer_properties.first.value.should == 'NASAA 12345'
+      supplier.producer_properties.first.property.presentation.should == 'Organic Certified'
     end
   end
 end

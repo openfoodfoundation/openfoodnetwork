@@ -1,0 +1,57 @@
+/ replace "div[data-hook='admin_shipping_method_form_fields']"
+
+.alpha.twelve.columns{"data-hook" => "admin_shipping_method_form_fields"}
+  .row
+    .alpha.three.columns
+      = f.label :name, t(:name)
+    .omega.eight.columns
+      = f.text_field :name, :class => 'fullwidth', placeholder: "eg. 'Pick-up from Primary School'"
+      = error_message_on :shipping_method, :name
+  .row
+    .alpha.three.columns
+      = f.label :description, t(:description)
+    .omega.eight.columns
+      = f.text_area :description, class: 'fullwidth', rows: 2, placeholder: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
+      = error_message_on :shipping_method, :description
+  - if @available_zones.length == 1
+    = f.hidden_field :zone_id, value: @available_zones.first.id
+  - else
+    .row
+      .alpha.three.columns
+        = f.label :zone_id, t(:zone)
+      .omega.eight.columns
+        = f.collection_select(:zone_id, @available_zones, :id, :name, {}, {:class => 'select2 fullwidth'})
+        = error_message_on :shipping_method, :zone_id
+  - if spree_current_user.admin?
+    .row
+      .alpha.three.columns
+        = f.label :display_on, t(:display)
+      .omega.eight.columns
+        = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'})
+        = error_message_on :shipping_method, :display_on
+  .row
+    -# Shipping Category used to be a select field, but we cut it down to two options to simplify the interface and because we thought 'Collection' and
+    -# 'Delivery' pretty much covered it. If we need more categories in the future, suggest reimplementing the select box from spree's code.
+    .three.columns.alpha
+      %label Category
+      = f.hidden_field :shipping_category_id, value: nil
+    - Spree::ShippingCategory.where(name: ['Delivery', 'Collection']).limit(2).each do |shipping_category|
+      .two.columns
+        = f.radio_button :shipping_category_id, shipping_category.id
+        &nbsp;
+        = f.label "shipping_category_id_#{shipping_category.id}", t(shipping_category.name)
+  .row
+    .alpha.three.columns
+      = f.label :require_ship_address, "Requires shipping address?"
+    .two.columns
+      = f.radio_button :require_ship_address, true
+      &nbsp;
+      = f.label :yes, t(:yes)
+    .six.columns
+      = f.radio_button :require_ship_address, false
+      &nbsp;
+      = f.label :no, t(:no)
+
+  .row
+    .alpha.eleven.columns
+      = render :partial => 'spree/admin/shared/calculator_fields', :locals => { :f => f }

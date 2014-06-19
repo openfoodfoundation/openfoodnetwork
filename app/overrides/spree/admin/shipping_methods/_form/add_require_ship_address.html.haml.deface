@@ -1,5 +1,0 @@
-/ insert_bottom "[data-hook='admin_shipping_method_form_availability_fields'] > fieldset"
-
-= f.field_container :shipping_requirements do
-  = f.label :require_ship_address, "Requires shipping address?"
-  = f.check_box :require_ship_address
