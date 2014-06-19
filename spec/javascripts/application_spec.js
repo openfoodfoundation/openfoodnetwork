@@ -5,7 +5,10 @@
 //= require angular-mocks
 //= require angular-cookies
 //= require angular-backstretch.js
+//= require lodash.underscore.js
 //= require angular-flash.min.js
 //= require moment
 
 angular.module('templates', [])
+angular.module('google-maps', []);
+angular.module('duScroll', []);

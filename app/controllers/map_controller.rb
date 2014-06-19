@@ -1,7 +1,7 @@
 class MapController < BaseController
   layout 'darkswarm'
+  before_filter :load_active_distributors
+
   def index
-    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
-    @enterprises = Enterprise.visible
   end
 end

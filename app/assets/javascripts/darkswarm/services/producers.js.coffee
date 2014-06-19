@@ -1,12 +1,6 @@
-Darkswarm.factory 'Producers', (producers) ->
+Darkswarm.factory 'Producers', (Enterprises) ->
   new class Producers
     constructor: ->
-      @producers = producers
-      
-      # TODO: start adding functionality to producers like so
-      #@producers = (@extend(producer) for producer in producers)
+      @producers = Enterprises.enterprises.filter (enterprise)->
+        enterprise.is_primary_producer
 
-    #extend: (producer)->
-      #new class Producer
-        #constructor: ->
-          #@[k] = v for k, v of Producer

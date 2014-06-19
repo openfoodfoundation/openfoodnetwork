@@ -1,9 +1,14 @@
 describe "AccordionCtrl", ->
   ctrl = null
   scope = null
+  CurrentHubMock = 
+    id: 1
 
   beforeEach ->
     module "Darkswarm"
+    module ($provide)->
+      $provide.value "CurrentHub", CurrentHubMock 
+      null
     localStorage.clear()
 
   describe "loading incomplete form", ->
