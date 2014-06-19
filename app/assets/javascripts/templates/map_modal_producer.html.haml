@@ -1,24 +1,24 @@
 .highlight
-  .highlight-row 
+  .highlight-top 
     %p.right
       {{ [enterprise.address.city, enterprise.address.state] | printArray}}
     %h3
       %i.ofn-i_036-producers
       {{ enterprise.name }}
-    
   %img.producer-hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
     
 .row{bindonce: true} 
   .small-12.large-8.columns
-    %h5.modal-header About
-    %img.producer-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
-    %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
+    %div{"ng-if" => "enterprise.long_description.length > 0 || enterprise.logo"}
+      %h5.modal-header About
+      .about-container
+        %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
+        %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
   .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
 
-.row{bindonce: true}
-
+.row.pad-top{bindonce: true, "ng-if" => "enterprise.hubs.length > 0"}
   .cta-container
     %h5 
       %i.ofn-i_029-shopping-basket
@@ -30,7 +30,7 @@
       %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
       %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
       {{hub.name}} 
-      .modal-address {{ hub.address.city }} , {{hub.address.state}}
+      .button-address {{ hub.address.city }} , {{hub.address.state}}
       %i.ofn-i_007-caret-right
 
 %a.close-reveal-modal.outside{"ng-click" => "$close()"}
