@@ -84,6 +84,10 @@ module OpenFoodNetwork
       subject { CustomersReport.new user }
 
       describe "fetching orders" do
+        let(:supplier) { create(:supplier_enterprise) }
+        let(:product) { create(:simple_product, supplier: supplier) }
+        let(:order) { create(:order, completed_at: 1.day.ago) }
+
         it "only shows orders managed by the current user" do
           d1 = create(:distributor_enterprise)
           d1.enterprise_roles.build(user: user).save
@@ -95,6 +99,16 @@ module OpenFoodNetwork
 
           subject.should_receive(:filter).with([o1]).and_return([o1])
           subject.orders.should == [o1]
+        end
+
+        it "does not show orders through a hub that the current user does not manage" do
+          # Given a supplier enterprise with an order for one of its products
+          supplier.enterprise_roles.build(user: user).save
+          order.line_items << create(:line_item, product: product)
+
+          # When I fetch orders, I should see no orders
+          subject.should_receive(:filter).with([]).and_return([])
+          subject.orders.should == []
         end
       end
 
