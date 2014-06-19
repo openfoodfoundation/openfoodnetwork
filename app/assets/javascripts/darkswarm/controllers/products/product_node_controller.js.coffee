@@ -7,5 +7,5 @@ Darkswarm.controller "ProductNodeCtrl", ($scope) ->
     else
       $scope.product.price
 
-  $scope.producer = $scope.product.supplier
+  $scope.enterprise = $scope.product.supplier # For the modal, so it's consistent
   $scope.hasVariants = $scope.product.variants.length > 0

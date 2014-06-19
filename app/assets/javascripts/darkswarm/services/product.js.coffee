@@ -1,4 +1,4 @@
-Darkswarm.factory 'Product', ($resource) ->
+Darkswarm.factory 'Product', ($resource, Enterprises) ->
   new class Product
     constructor: ->
       @update()
@@ -11,5 +11,10 @@ Darkswarm.factory 'Product', ($resource) ->
     update: =>
       @loading = true 
       @products = $resource("/shop/products").query =>
+        @dereference()
         @loading = false 
       @
+    
+    dereference: ->
+      for product in @products
+        product.supplier = Enterprises.enterprises_by_id[product.supplier.id]

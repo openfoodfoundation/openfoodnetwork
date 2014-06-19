@@ -1,5 +1,6 @@
 %products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
+  = inject_enterprises 
 
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
 
