@@ -1,12 +1,4 @@
-attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook
-
-node :enterprise_type do |enterprise|
-  if enterprise.is_primary_producer?
-    "producer"
-  elsif enterprise.is_distributor?
-    "hub"
-  end
-end
+attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor
 
 node :email do |enterprise|
   enterprise.email.to_s.reverse

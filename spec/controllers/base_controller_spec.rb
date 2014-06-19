@@ -23,9 +23,4 @@ describe BaseController do
     Enterprise.should_receive(:distributors_with_active_order_cycles)
     controller.load_active_distributors
   end
-
-  it "loads visible enterprises" do
-    Enterprise.should_receive(:visible)
-    controller.load_visible_enterprises
-  end
 end
