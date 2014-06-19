@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module OpenFoodNetwork
   describe CustomersReport do
-    context "As a site admin" do
+    context "as a site admin" do
       let(:user) do 
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
@@ -10,7 +10,7 @@ module OpenFoodNetwork
       end
       subject { CustomersReport.new user }
 
-      context "a mailing list" do
+      describe "mailing list report" do
         before do
           subject.stub(:params).and_return(report_type: "mailing_list")
         end
@@ -19,7 +19,7 @@ module OpenFoodNetwork
           subject.header.should == ["Email", "First Name", "Last Name", "Suburb"]
         end
 
-        it "should build a table from a list of variants" do
+        it "builds a table from a list of variants" do
           order = double(:order, email: "test@test.com")
           address = double(:billing_address, firstname: "Firsty",
                            lastname: "Lasty", city: "Suburbia")
@@ -32,15 +32,16 @@ module OpenFoodNetwork
         end
       end
 
-      context "an addresses report" do
+      describe "addresses report" do
         before do
           subject.stub(:params).and_return(report_type: "addresses")
         end
+
         it "returns headers for addresses" do
           subject.header.should == ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"]
         end
 
-        it "should build a table from a list of variants" do
+        it "builds a table from a list of variants" do
           a = create(:address)
           d = create(:distributor_enterprise)
           o = create(:order, distributor: d, bill_address: a) 
@@ -57,29 +58,33 @@ module OpenFoodNetwork
         end
       end
 
-      describe "Fetching orders" do
-        it "should fetch complete orders" do
+      describe "fetching orders" do
+        it "fetches completed orders" do
           o1 = create(:order)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
-        it "not show cancelled orders" do
+
+        it "does not show cancelled orders" do
           o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
       end
     end
-    context "As an enterprise user" do
+
+    context "as an enterprise user" do
       let(:user) do 
         user = create(:user)
         user.spree_roles = []
         user.save!
         user
       end
+
       subject { CustomersReport.new user }
-      describe "Fetching orders" do
-        it "should only show orders managed by the current user" do
+
+      describe "fetching orders" do
+        it "only shows orders managed by the current user" do
           d1 = create(:distributor_enterprise)
           d1.enterprise_roles.build(user: user).save
           d2 = create(:distributor_enterprise)
@@ -93,14 +98,15 @@ module OpenFoodNetwork
         end
       end
 
-      describe "Filtering orders" do
+      describe "filtering orders" do
         let(:orders) { Spree::Order.scoped }
         let(:supplier) { create(:supplier_enterprise) }
-        it "should return all orders sans-params" do
+
+        it "returns all orders sans-params" do
           subject.filter(orders).should == orders
         end
 
-        it "should return orders with a specific supplier" do
+        it "returns orders with a specific supplier" do
           supplier = create(:supplier_enterprise)
           supplier2 = create(:supplier_enterprise)
           product1 = create(:simple_product, supplier: supplier)
