@@ -25,7 +25,8 @@ node :shipping_methods do
     [method.id, {
       require_ship_address: method.require_ship_address,
       price: method.compute_amount(current_order).to_f,
-      name: method.name
+      name: method.name,
+      description: method.description
     }] 
   }]
 end

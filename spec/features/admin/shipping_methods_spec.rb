@@ -17,16 +17,12 @@ feature 'shipping methods' do
       # Given some distributors
       d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
       d2 = create(:distributor_enterprise, name: 'Nautical Travels')
-      sc1 = create(:shipping_category, name: 'Delivery')
-      sc2 = create(:shipping_category, name: 'Collection')
 
       # Shows appropriate fields when logged in as admin
       visit spree.new_admin_shipping_method_path
       page.should have_field 'shipping_method_name'
       page.should have_field 'shipping_method_description'
       page.should have_select 'shipping_method_display_on'
-      page.should have_field "shipping_method_shipping_category_id_#{sc1.id}"
-      page.should have_field "shipping_method_shipping_category_id_#{sc2.id}"
       page.should have_field 'shipping_method_require_ship_address_true', checked: true
 
       # When I create a shipping method and set the distributors
@@ -81,8 +77,6 @@ feature 'shipping methods' do
     end
 
     it "creating a shipping method" do
-      sc1 = create(:shipping_category, name: 'Delivery')
-      sc2 = create(:shipping_category, name: 'Collection')
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
       click_link 'New Shipping Method'
@@ -91,8 +85,6 @@ feature 'shipping methods' do
       page.should have_field 'shipping_method_name'
       page.should have_field 'shipping_method_description'
       page.should_not have_select 'shipping_method_display_on'
-      page.should have_field "shipping_method_shipping_category_id_#{sc1.id}"
-      page.should have_field "shipping_method_shipping_category_id_#{sc2.id}"
       page.should have_field 'shipping_method_require_ship_address_true', checked: true
 
       fill_in 'shipping_method_name', :with => 'Teleport'

@@ -26,36 +26,31 @@ Payment Details
 
 <%- if @order.shipping_method.andand.require_ship_address %>
 ============================================================
-Shipping Details
+Delivery Details
 ============================================================
-Your order will be shipped to: 
+Your order will be delivered to:
 <%= @order.ship_address.to_s %>
 
-
-<% if @order.order_cycle %>
+<% if @order.order_cycle.andand.pickup_time_for(@order.distributor) %>
 Delivery on: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
-<% else %>
-<%= @order.distributor.next_collection_at %>
 <% end %>
 <% else %>
-
 ============================================================
 Collection Details
 ============================================================
-<%= raw strip_html @order.distributor.distributor_info %>
-
-
-<% if @order.order_cycle %>
-<%= @order.order_cycle.pickup_time_for(@order.distributor) %>
-<%= @order.order_cycle.pickup_instructions_for(@order.distributor) %>
-<% else %>
-<%= @order.distributor.next_collection_at %>
-<% end %>
+<% if @order.shipping_method.description %>
+<%= @order.shipping_method.description.html_safe %>
 <% end %>
 
+<% if @order.order_cycle.andand.pickup_time_for(@order.distributor) %>
+Ready for collection: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
+<% end %>
+
+<% if @order.order_cycle.andand.pickup_instructions_for(@order.distributor) %>
+Collection instructions: <%= @order.order_cycle.pickup_instructions_for(@order.distributor) %>
+<% end %>
 
 Thanks for your support.
-
 
 <%= @order.distributor.contact %>,
 <%= @order.distributor.name %>

@@ -29,28 +29,22 @@
       .omega.eight.columns
         = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'})
         = error_message_on :shipping_method, :display_on
+
   .row
-    -# Shipping Category used to be a select field, but we cut it down to two options to simplify the interface and because we thought 'Collection' and
-    -# 'Delivery' pretty much covered it. If we need more categories in the future, suggest reimplementing the select box from spree's code.
-    .three.columns.alpha
-      %label Category
-      = f.hidden_field :shipping_category_id, value: nil
-    - Spree::ShippingCategory.where(name: ['Delivery', 'Collection']).limit(2).each do |shipping_category|
-      .two.columns
-        = f.radio_button :shipping_category_id, shipping_category.id
-        &nbsp;
-        = f.label "shipping_category_id_#{shipping_category.id}", t(shipping_category.name)
-  .row
+    -# Shipping Category is not really used, so set to nil
+    = f.hidden_field :shipping_category_id, value: nil
     .alpha.three.columns
-      = f.label :require_ship_address, "Requires shipping address?"
+      -# The 'Category' label here is just a logical descriptor for the data we are trying to collect for 'requires_ship_address'
+      -# and does not relate to shipping categories in any way.
+      = f.label :require_ship_address, "Category"
     .two.columns
       = f.radio_button :require_ship_address, true
       &nbsp;
-      = f.label :yes, t(:yes)
+      = f.label :delivery, t(:delivery)
     .six.columns
       = f.radio_button :require_ship_address, false
       &nbsp;
-      = f.label :no, t(:no)
+      = f.label :pick_up, t(:pick_up)
 
   .row
     .alpha.eleven.columns

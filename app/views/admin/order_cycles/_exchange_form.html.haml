@@ -9,9 +9,9 @@
   selected
 - if type == 'distributor'
   %td.collection-details
-    = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', 'placeholder' => 'Pickup time / date', 'ng-model' => 'exchange.pickup_time'
+    = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', 'placeholder' => 'Ready for (ie. Date / Time)', 'ng-model' => 'exchange.pickup_time'
     %br/
-    = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', 'placeholder' => 'Delivery instructions', 'ng-model' => 'exchange.pickup_instructions'
+    = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', 'placeholder' => 'Pick-up instructions', 'ng-model' => 'exchange.pickup_instructions'
 %td.fees
   %ol
     %li{'ng-repeat' => 'enterprise_fee in exchange.enterprise_fees'}
