@@ -1,42 +1,50 @@
 .highlight
-  .highlight-row 
+  .highlight-top 
     %p.right
-      {{ enterprise.address.city }} , {{enterprise.address.state}}
+      {{ [enterprise.address.city, enterprise.address.state] | printArray}}
     %h3
-      %i.ofn-i_036-producers
+      %i.ofn-i_040-hub
       {{ enterprise.name }}
+  %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
     
-  %img.producer-hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
-    
-.row.pad-top{bindonce: true} 
-  .small-12.large-6.columns
-    %img.producer-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
-    %h5.modal-header About
-    %p{"ng-bind-html" => "enterprise.long_description"}
-
-  .small-12.large-6.columns
+.row{bindonce: true} 
+  .small-12.large-8.columns
+    %div{"ng-if" => "enterprise.long_description.length > 0 || enterprise.logo"}
+      %h5.modal-header About
+      .about-container
+        %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
+        %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
+  .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
 
-.row{bindonce: true}
-  .modal-hubs
-    %h5
-      %span{"active-table-hub-link" => "enterprise", change: "Change hub to:", shop: "Shop at:"}
-      %ul.right
-        %li.pickup{"bo-if" => "enterprise.pickup"} 
-          %i.ofn-i_038-takeaway
-          Pickup
-        %li.delivery{"bo-if" => "enterprise.delivery"} 
-          %i.ofn-i_039-delivery
-          Delivery
-        
-    %a.button.hub{"bo-href" => "enterprise.path", 
-    "bo-class" => "{primary: enterprise.active, grey: !enterprise.active}",
-    "ofn-empties-cart" => "enterprise"}
-      %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
-      %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
-      {{enterprise.name}}
-      ( {{ enterprise.address.city }} , {{enterprise.address.state}} )
+.row.pad-top{bindonce: true}
+  .cta-container.small-12.columns
+    .row
+      .small-12.large-6.columns
+        %h5 
+          %i.ofn-i_029-shopping-basket
+          %span{"active-table-hub-link" => "enterprise", change: "Change hub to", shop: "Shop at"}
+      .small-12.large-6.columns.right
+        / Needs logic to hide if nothing populated:
+        .right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
+          Delivery options: 
+          %span{"bo-if" => "enterprise.pickup"} 
+            %i.ofn-i_038-takeaway
+            Pickup
+          %span{"bo-if" => "enterprise.delivery"} 
+            %i.ofn-i_039-delivery
+            Delivery
+    .row
+      .small-12.large-12.columns
+        %a.button.hub.expand{"bo-href" => "enterprise.path", 
+        "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
+        "ofn-empties-cart" => "enterprise"}
+          %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
+          {{enterprise.name}}
+          .button-address ( {{ enterprise.address.city }} , {{enterprise.address.state}} )
+          %i.ofn-i_007-caret-right
 
 %a.close-reveal-modal.outside{"ng-click" => "$close()"}
   %i.ofn-i_009-close
