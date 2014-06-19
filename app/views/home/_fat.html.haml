@@ -26,9 +26,13 @@
 
 .row.active_table_row.link{"ng-show" => "open()", "bo-if" => "hub.active"}
   .columns.small-11
-    %a{"bo-href" => "hub.path", "ofn-empties-cart" => "hub",
-    "active-table-hub-link" => "hub", 
-    change: "Change hub to", shop: "Shop at"} 
+    %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
+    %a.button.hub{"bo-href" => "hub.path", "ofn-empties-cart" => "hub",
+    "bo-class" => "{primary: hub.active, grey: !hub.active}"}
+      %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+      %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+      {{hub.name}}
+      ( {{ hub.address.city }} , {{hub.address.state}} )
 
   .columns.small-1.text-right
     %a{"bo-href" => "hub.path"} 
