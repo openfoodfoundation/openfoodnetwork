@@ -4,30 +4,77 @@
 dialog, .reveal-modal
   border: none
   outline: none
+  padding: 0.875rem
 
 .reveal-modal-bg
   background-color: rgba(0,0,0,0.65)
+
+dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
+  @include csstrans
+  top: -2.5rem
+  right: -2.5rem
+  font-size: 2rem
+  color: white
+  text-shadow: none
+  padding: 0.25rem
+  @include border-radius(999999)
+  border: 1px solid transparent
+  &:hover, &:active, &:focus
+    text-shadow: 0 1px 3px #333
+    border: 1px solid white
 
 .modal-centered
   text-align: center
   p
     margin-bottom: 0
 
+.modal-small
+  font-size: 0.875rem
+  max-height: 200px
+  min-height: 80px
+  overflow: scroll
+  border-bottom: 1px solid #999
+  @include box-shadow(0 2px 2px -2px #999)
+  img
+    float: left
+    margin-right: 1rem
+    margin-bottom: 1rem
+
+.follow-icons
+  text-align: center
+  span
+    display: inline-block
+    margin: 0 0.25rem 0.75rem 0.25rem
+  i
+    font-size: 2rem
+
+.cta-container
+  background: url("/assets/gray_jean.png") repeat
+  padding: 0.75rem 1rem 0 1rem
+  .button.hub
+    margin-right: 1rem
+    margin-bottom: 1rem
+    padding-left: 1rem
+    padding-right: 1rem
+    font-weight: bold
+    line-height: 1
+    i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
+      margin-right: 0.15rem
+      font-size: 1.25rem
+    i.ofn-i_007-caret-right
+      margin-left: 1rem
+    .modal-address
+      font-weight: 300
+      font-style: italic
+      font-size: 0.75rem
+      display: inline
+
 .modal-header
   text-align: center
   text-transform: uppercase
   border-bottom: 1px solid black
+  margin-top: 0.75rem
 
-dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
-  @include csstrans
-  top: -2.2rem
-  right: -2.2rem
-  font-size: 2rem
-  color: white
-  text-shadow: none
-  &:hover, &:active, &:focus
-    color: $clr-brick-light-bright
-    text-shadow: 0 1px 3px #333
 
 .highlight
   position: relative
@@ -36,7 +83,7 @@ dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
   padding: 0.75rem 0.9375rem
   width: 100%
   overflow: hidden
-  background-color: rgba(255,255,255,0.5)
+  background-color: rgba(255,255,255,0.65)
   position: absolute
   bottom: 0
   h3, p

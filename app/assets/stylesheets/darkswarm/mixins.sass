@@ -58,12 +58,14 @@
       -o-transform: rotate(0deg) scale(1) skew(0deg) translate(0px)
 
 
-
 @mixin box-shadow($box-shadow)
   -moz-box-shadow: $box-shadow
   -webkit-box-shadow: $box-shadow
   box-shadow: $box-shadow
 
+@mixin border-radius($border-radius)
+  -webkit-border-radius: $border-radius
+  border-radius: $border-radius
 
 // Typography \\
 

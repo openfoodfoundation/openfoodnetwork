@@ -1,7 +1,7 @@
 %div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.address.phone"}
   %h5.modal-header Contact
   %p{"ng-if" => "enterprise.address.phone"}
-    {{ enterprise.address.phone }}
+    {{ enterprise.phone }}
 
   %p{"bo-if" => "enterprise.email"}
     %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }

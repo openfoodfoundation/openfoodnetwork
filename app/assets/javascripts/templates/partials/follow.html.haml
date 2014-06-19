@@ -1,19 +1,19 @@
 %div.modal-centered{"bo-if" => "producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
   %h5.modal-header Follow
-  %ul.small-block-grid-1{bindonce: true}
-    %li{"ng-if" => "producer.twitter"} 
+  .follow-icons{bindonce: true}
+    %span{"ng-if" => "producer.twitter"} 
       %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
         %i.ofn-i_041-twitter
     
-    %li{"ng-if" => "producer.facebook"}
+    %span{"ng-if" => "producer.facebook"}
       %a{"ng-href" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
         %i.ofn-i_044-facebook
     
-    %li{"ng-if" => "producer.linkedin"}
+    %span{"ng-if" => "producer.linkedin"}
       %a{"ng-href" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
         %i.ofn-i_042-linkedin
     
-    %li{"ng-if" => "producer.instagram"}
+    %span{"ng-if" => "producer.instagram"}
       %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
         %i.ofn-i_043-instagram
 

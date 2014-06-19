@@ -1,34 +1,37 @@
 .highlight
   .highlight-row 
     %p.right
-      {{ enterprise.address.city }} , {{enterprise.address.state}}
+      {{ [enterprise.address.city, enterprise.address.state] | printArray}}
     %h3
       %i.ofn-i_036-producers
       {{ enterprise.name }}
     
   %img.producer-hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
     
-.row.pad-top{bindonce: true} 
-  .small-12.large-6.columns
-    %img.producer-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
+.row{bindonce: true} 
+  .small-12.large-8.columns
     %h5.modal-header About
-    %p{"ng-bind-html" => "enterprise.long_description"}
-
-  .small-12.large-6.columns
+    %img.producer-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
+    %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
+  .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
 
 .row{bindonce: true}
-  .modal-hubs
-    %h5 Shop for {{enterprise.name}} products at:
-    %a.button.primary.hub{"ng-repeat" => "hub in enterprise.hubs", 
+
+  .cta-container
+    %h5 
+      %i.ofn-i_029-shopping-basket
+      Shop for {{enterprise.name}} products at:
+    %a.button.hub{"ng-repeat" => "hub in enterprise.hubs", 
     "bo-href" => "hub.path", 
-    "bo-class" => "{primary: hub.active, grey: !hub.active}",
+    "bo-class" => "{primary: hub.active, secondary: !hub.active}",
     "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
       %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-      {{hub.name}}
-      ( {{ hub.address.city }} , {{hub.address.state}} )
+      {{hub.name}} 
+      .modal-address {{ hub.address.city }} , {{hub.address.state}}
+      %i.ofn-i_007-caret-right
 
 %a.close-reveal-modal.outside{"ng-click" => "$close()"}
   %i.ofn-i_009-close
