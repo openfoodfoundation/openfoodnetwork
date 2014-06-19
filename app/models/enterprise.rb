@@ -22,7 +22,7 @@ class Enterprise < ActiveRecord::Base
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
-  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :logo, :styles => { :medium => "300x300>", small: "180x180>", :thumb => "100x100>" }
   has_attached_file :promo_image, :styles => { :large => "1200x260#", :thumb => "100x100>" }
 
   validates_presence_of :name
