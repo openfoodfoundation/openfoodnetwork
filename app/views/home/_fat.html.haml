@@ -25,16 +25,18 @@
         = render partial: "modals/producer"
 
 .row.active_table_row.link{"ng-show" => "open()", "bo-if" => "hub.active"}
-  .columns.small-11
-    %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
-    %a.button.hub{"bo-href" => "hub.path", "ofn-empties-cart" => "hub",
-    "bo-class" => "{primary: hub.active, grey: !hub.active}"}
-      %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
-      %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-      {{hub.name}}
-      ( {{ hub.address.city }} , {{hub.address.state}} )
-
-  .columns.small-1.text-right
-    %a{"bo-href" => "hub.path"} 
-      %i.ofn-i_007-caret-right
-
+  .cta-container.columns.small-12
+    .row
+      .columns.small-12
+        %h5 
+          %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
+    .row
+      .columns.small-12
+        %a.button.hub.expand{"bo-href" => "hub.path", 
+        "ng-class" => "{primary: hub.active, secondary: !hub.active}",
+        "ofn-empties-cart" => "hub"}
+          %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+          {{hub.name}}
+          .button-address ({{ [hub.address.city, hub.address.state] | printArray }})
+          %i.ofn-i_007-caret-right

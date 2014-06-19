@@ -14,7 +14,7 @@
 
     %a{"ng-repeat" => "hub in producer.hubs",
     "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
-    "bo-class" => "{primary: hub.active, grey: !hub.active}"}
+    "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
       %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
       %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
       {{hub.name}}
