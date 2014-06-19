@@ -2,7 +2,7 @@ describe "Producers service", ->
   Producers = null
   Enterprises = null
   enterprises = [
-    {enterprise_type: "producer"}
+    {is_primary_producer: true}
   ]
 
   beforeEach ->

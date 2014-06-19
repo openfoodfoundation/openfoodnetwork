@@ -12,9 +12,4 @@ describe ProducersController do
     get :index
     assigns[:active_distributors].should == [distributor]
   end
-
-  it "loads visible enterprises" do
-    get :index
-    assigns[:enterprises].should == [distributor]
-  end
 end

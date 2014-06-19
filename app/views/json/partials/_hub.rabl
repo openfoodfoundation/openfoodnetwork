@@ -8,10 +8,10 @@ node :path do |enterprise|
   shop_enterprise_path(enterprise) 
 end
 node :pickup do |hub|
-  not hub.shipping_methods.where(:require_ship_address => false).empty?
+  hub.shipping_methods.where(:require_ship_address => false).present?
 end
 node :delivery do |hub|
-  not hub.shipping_methods.where(:require_ship_address => true).empty?
+  hub.shipping_methods.where(:require_ship_address => true).present?
 end
 node :active do |hub|
   @active_distributors.include?(hub)
