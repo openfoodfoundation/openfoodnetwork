@@ -11,4 +11,4 @@ describe 'Product service', ->
   it "Fetches products from the backend on init", ->
     $httpBackend.expectGET("/shop/products").respond([{test : "cats"}])
     $httpBackend.flush()
-    expect(Product.data.products[0].test).toEqual "cats" 
+    expect(Product.products[0].test).toEqual "cats" 

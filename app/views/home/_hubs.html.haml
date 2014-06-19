@@ -1,6 +1,5 @@
 #hubs.hubs{"ng-controller" => "HubsCtrl"}
-  :javascript
-    angular.module('Darkswarm').value('hubs', #{render "json/hubs"})
+  = inject_enterprises 
 
   .row
     .small-12.columns.text-center

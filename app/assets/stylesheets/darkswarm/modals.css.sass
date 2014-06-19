@@ -1,0 +1,49 @@
+@import branding
+@import mixins
+
+dialog, .reveal-modal
+  border: none
+  outline: none
+
+.reveal-modal-bg
+  background-color: rgba(0,0,0,0.65)
+
+.modal-centered
+  text-align: center
+  p
+    margin-bottom: 0
+
+.modal-header
+  text-align: center
+  text-transform: uppercase
+  border-bottom: 1px solid black
+
+dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
+  @include csstrans
+  top: -2.2rem
+  right: -2.2rem
+  font-size: 2rem
+  color: white
+  text-shadow: none
+  &:hover, &:active, &:focus
+    color: $clr-brick-light-bright
+    text-shadow: 0 1px 3px #333
+
+.highlight
+  position: relative
+
+.highlight-row
+  padding: 0.75rem 0.9375rem
+  width: 100%
+  overflow: hidden
+  background-color: rgba(255,255,255,0.5)
+  position: absolute
+  bottom: 0
+  h3, p
+    margin-top: 0
+    margin-bottom: 0
+    padding-bottom: 0
+    line-height: 1
+  p
+    line-height: 2
+

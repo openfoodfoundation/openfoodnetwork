@@ -1,7 +1,7 @@
 .row
   .small-12.columns.producer-hero
     %h3.producer-name 
-      %i.ofn-i_036-producers
+      %i.ofn-i_040-hub
       {{ enterprise.name }}
       {{ enterprise.id }}
     %img.producer-hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
@@ -45,5 +45,5 @@
           %i.ofn-i_043-instagram
           {{ enterprise.instagram }}
 
-  %a.close-reveal-modal{"ng-click" => "$close()"}
+  %a.close-reveal-modal.outside{"ng-click" => "$close()"}
     %i.ofn-i_009-close

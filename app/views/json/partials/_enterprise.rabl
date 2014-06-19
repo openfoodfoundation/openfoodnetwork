@@ -1,10 +1,21 @@
-collection @enterprises
-extends 'json/enterprises'
-attributes :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook
+attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor
+
+node :email do |enterprise|
+  enterprise.email.to_s.reverse
+end
+
+child :address do
+  extends "json/partials/address"
+end
+
+node :hash do |enterprise|
+  enterprise.to_param
+end
 
 node :logo do |enterprise|
   enterprise.logo(:medium) if enterprise.logo.exists?
 end
+
 node :promo_image do |enterprise|
   enterprise.promo_image(:large) if enterprise.promo_image.exists?
 end

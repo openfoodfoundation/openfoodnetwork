@@ -1,6 +1,7 @@
 class MapController < BaseController
   layout 'darkswarm'
+  before_filter :load_active_distributors
+
   def index
-    @enterprises = Enterprise.visible
   end
 end

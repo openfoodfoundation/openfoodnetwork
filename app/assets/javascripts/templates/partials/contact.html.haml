@@ -1,0 +1,12 @@
+%div.modal-centered{"bo-if" => "producer.email || producer.website || producer.address.phone"}
+  %h5.modal-header Contact
+  %p{"ng-if" => "producer.address.phone"}
+    {{ producer.address.phone }}
+
+  %p{"bo-if" => "producer.email"}
+    %a{"ng-href" => "mailto:{{producer.email | stripUrl}}", target: "_blank" }
+      {{ producer.email | stripUrl }}
+
+  %p{"ng-if" => "producer.website"}
+    %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
+      {{ producer.website | stripUrl }}

@@ -32,6 +32,33 @@
   transition: all 100ms ease-in-out
   -webkit-transform-style: preserve-3d
 
+@mixin animate-in
+  -webkit-animation: cssAnimation 100ms 1 ease-in
+  -moz-animation: cssAnimation 100ms 1 ease-in
+  -o-animation: cssAnimation 100ms 1 ease-in
+
+  @-webkit-keyframes cssAnimation
+    from
+      -webkit-transform: rotate(180deg) scale(0.25) skew(0deg) translate(0px)
+    to
+      -webkit-transform: rotate(0deg) scale(1) skew(0deg) translate(0px)
+
+
+  @-moz-keyframes cssAnimation
+    from
+      -moz-transform: rotate(180deg) scale(0.25) skew(0deg) translate(0px)
+    to
+      -moz-transform: rotate(0deg) scale(1) skew(0deg) translate(0px)
+
+
+  @-o-keyframes cssAnimation
+    from
+      -o-transform: rotate(180deg) scale(0.25) skew(0deg) translate(0px)
+    to
+      -o-transform: rotate(0deg) scale(1) skew(0deg) translate(0px)
+
+
+
 @mixin box-shadow($box-shadow)
   -moz-box-shadow: $box-shadow
   -webkit-box-shadow: $box-shadow
