@@ -20,7 +20,16 @@
 
 .row{bindonce: true}
   .modal-hubs
-    %h5 Shop at:
+    %h5
+      %span{"active-table-hub-link" => "enterprise", change: "Change hub to:", shop: "Shop at:"}
+      %ul.right
+        %li.pickup{"bo-if" => "enterprise.pickup"} 
+          %i.ofn-i_038-takeaway
+          Pickup
+        %li.delivery{"bo-if" => "enterprise.delivery"} 
+          %i.ofn-i_039-delivery
+          Delivery
+        
     %a.button.hub{"bo-href" => "enterprise.path", 
     "bo-class" => "{primary: enterprise.active, grey: !enterprise.active}",
     "ofn-empties-cart" => "enterprise"}
