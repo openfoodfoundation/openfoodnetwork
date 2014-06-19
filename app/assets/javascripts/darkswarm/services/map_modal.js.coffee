@@ -3,6 +3,7 @@ Darkswarm.factory "MapModal", ($modal, $rootScope)->
     open: (enterprise)->
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
 
+      scope.enterprise = enterprise
       if enterprise.is_distributor
         scope.hub = enterprise
         $modal.open(templateUrl: "map_modal_hub.html", scope: scope)

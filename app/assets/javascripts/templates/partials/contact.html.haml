@@ -1,12 +1,12 @@
-%div.modal-centered{"bo-if" => "producer.email || producer.website || producer.address.phone"}
+%div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.address.phone"}
   %h5.modal-header Contact
-  %p{"ng-if" => "producer.address.phone"}
-    {{ producer.address.phone }}
+  %p{"ng-if" => "enterprise.address.phone"}
+    {{ enterprise.address.phone }}
 
-  %p{"bo-if" => "producer.email"}
-    %a{"ng-href" => "mailto:{{producer.email | stripUrl}}", target: "_blank" }
-      {{ producer.email | stripUrl }}
+  %p{"bo-if" => "enterprise.email"}
+    %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }
+      {{ enterprise.email | stripUrl }}
 
-  %p{"ng-if" => "producer.website"}
-    %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
-      {{ producer.website | stripUrl }}
+  %p{"ng-if" => "enterprise.website"}
+    %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
+      {{ enterprise.website | stripUrl }}
