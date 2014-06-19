@@ -1,6 +1,6 @@
-%div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.address.phone"}
+%div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.phone"}
   %h5.modal-header Contact
-  %p{"ng-if" => "enterprise.address.phone"}
+  %p{"ng-if" => "enterprise.phone"}
     {{ enterprise.phone }}
 
   %p{"bo-if" => "enterprise.email"}
