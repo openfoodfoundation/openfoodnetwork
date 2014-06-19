@@ -18,4 +18,4 @@ describe 'ProductsCtrl', ->
       ctrl = $controller 'ProductsCtrl', {$scope: scope, Product: Product, OrderCycle: OrderCycle}
 
   it 'fetches products from Product', ->
-    expect(scope.products).toEqual 'testy mctest'
+    expect(scope.Product.products).toEqual 'testy mctest'

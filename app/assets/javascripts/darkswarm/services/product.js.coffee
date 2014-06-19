@@ -9,6 +9,7 @@ Darkswarm.factory 'Product', ($resource) ->
     loading: true
 
     update: =>
+      @loading = true 
       @products = $resource("/shop/products").query =>
         @loading = false 
       @
