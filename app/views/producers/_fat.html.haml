@@ -8,10 +8,17 @@
     %p
       {{ producer.description }}
 
-.row.active_table_row.link{"ng-show" => "open()", "ng-repeat" => "hub in producer.distributors"}
+.row.active_table_row.link{"ng-show" => "open()"}
   .columns.small-11
-    %a{"bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
-    change: "Change hub to", shop: "Shop at"} 
+    Shop for {{ producer.name }} products at:
+
+    %a{"ng-repeat" => "hub in producer.hubs",
+    "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+    "bo-class" => "{primary: hub.active, grey: !hub.active}"}
+      %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+      %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+      {{hub.name}}
+      ( {{ hub.address.city }} , {{hub.address.state}} )
 
   .columns.small-1.text-right
     %a{"bo-href" => "hub.path"} 
