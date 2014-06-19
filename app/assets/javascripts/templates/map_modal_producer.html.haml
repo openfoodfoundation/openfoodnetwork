@@ -23,7 +23,7 @@
     %h5 Shop for {{enterprise.name}} products at:
     %a.button.primary.hub{"ng-repeat" => "hub in enterprise.hubs", 
     "bo-href" => "hub.path", 
-    "bo-class" => "{active: hub.active, inactive: !hub.active}",
+    "bo-class" => "{primary: hub.active, grey: !hub.active}",
     "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
       %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
