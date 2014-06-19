@@ -64,6 +64,6 @@ module UIComponentHelper
   
   def follow_active_table_node(name)
     expand_active_table_node(name)
-    find(".active_table_node a", text: "Shop at #{name}").click
+    find(".active_table_node a", text: "#{name}").click
   end
 end
