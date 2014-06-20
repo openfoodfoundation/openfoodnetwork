@@ -1,12 +1,12 @@
 .row.active_table_row{"ng-show" => "open()"}
   .columns.small-12.large-4
     &nbsp;
-    %div{"bo-if" => "producer.taxons"}
+    %div{"ng-if" => "producer.supplied_taxons"}
       %h5 
         %i.ofn-i_029-shopping-basket
         Shop for
       %p.trans-sentence
-        %span.fat-taxons{"ng-repeat" => "taxon in producer.taxons"}
+        %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
   .columns.small-12.large-3
