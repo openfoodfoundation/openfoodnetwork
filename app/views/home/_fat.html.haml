@@ -44,5 +44,5 @@
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
           {{hub.name}}
-          .button-address ({{ [hub.address.city, hub.address.state] | printArray }})
+          .button-address {{ [hub.address.city, hub.address.state] | printArray }}
           %i.ofn-i_007-caret-right
