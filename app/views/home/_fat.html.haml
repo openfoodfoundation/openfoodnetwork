@@ -1,28 +1,34 @@
 .row.active_table_row{"ng-show" => "open()"}
-  .columns.small-4
-    %h5 
-      %i.ofn-i_029-shopping-basket
-      Shop for
-    %p.trans-sentence
-      %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
-        %render-svg{path: "{{taxon.icon}}"}
-        {{taxon.name}} 
-  .columns.small-4
-    %h5 Delivery options
-    %ol
-      %li.pickup{"bo-if" => "hub.pickup"} 
-        %i.ofn-i_038-takeaway
-        Pickup
-      %li.delivery{"bo-if" => "hub.delivery"} 
-        %i.ofn-i_039-delivery
-        Delivery
-  .columns.small-4
-    %h5 
-      %i.ofn-i_036-producers
-      Our producers
-    %ul.bullet-list
-      %li{"ng-repeat" => "producer in hub.producers"}
-        = render partial: "modals/producer"
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.taxons"}
+      %h5 
+        %i.ofn-i_029-shopping-basket
+        Shop for
+      %p.trans-sentence
+        %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
+          %render-svg{path: "{{taxon.icon}}"}
+          {{taxon.name}} 
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.pickup || hub.delivery"}
+      %h5 Delivery options
+      %ol
+        %li.pickup{"bo-if" => "hub.pickup"} 
+          %i.ofn-i_038-takeaway
+          Pickup
+        %li.delivery{"bo-if" => "hub.delivery"} 
+          %i.ofn-i_039-delivery
+          Delivery
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.producers"}
+      %h5 
+        %i.ofn-i_036-producers
+        Our producers
+      %ul.bullet-list
+        %li{"ng-repeat" => "producer in hub.producers"}
+          = render partial: "modals/producer"
 
 .row.active_table_row.link{"ng-show" => "open()", "bo-if" => "hub.active"}
   .cta-container.columns.small-12

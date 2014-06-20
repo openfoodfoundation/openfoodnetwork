@@ -22,3 +22,18 @@ dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
   &:hover, &:active, &:focus
     text-shadow: 0 1px 3px #333
     border: 1px solid white
+
+  @media all and (max-width: 640px)
+    top: 0.5rem
+    right: 0.5rem
+    font-size: 2rem
+    color: white
+    text-shadow: none
+    padding: 0.25rem
+    background-color: rgba(150,150,150,0.85)
+    @include border-radius(999999)
+    border: 1px solid transparent
+    &:hover, &:active, &:focus
+      text-shadow: 0 1px 3px #333
+      border: 1px solid white
+
