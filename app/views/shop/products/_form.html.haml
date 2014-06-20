@@ -13,7 +13,7 @@
     
     %div{bindonce: true}
       %product{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in Product.products | filter:query | orderBy:ordering.order | limitTo: limit track by product.id"}
+        "ng-repeat" => "product in Product.products | products:query | orderBy:ordering.order | limitTo: limit track by product.id"}
         %div
           = render partial: "shop/products/summary"
           %div{"bo-if" => "hasVariants"}
