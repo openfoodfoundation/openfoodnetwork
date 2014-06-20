@@ -1,7 +1,14 @@
 .content#about
   .row
-    .small-12.large-9.columns
-      %p= current_distributor.long_description.andand.html_safe
+    .small-12.large-6.columns
+      %img.hero-img-small{"ng-src" => "{{current_distributor.promo_image}}"} 
+      %p.small-text= current_distributor.long_description.andand.html_safe
+     
+    .small-12.large-3.columns
+      &nbsp;
+     
+    .small-12.large-3.columns
+      %img{"bo-src" => "current_distributor.logo", "bo-if" => "current_distributor.logo"} 
     
     -#- if current_distributor.promo_image.exists?
       -#.small-12.large-3.columns
