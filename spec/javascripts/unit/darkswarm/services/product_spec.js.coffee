@@ -2,6 +2,7 @@ describe 'Product service', ->
   $httpBackend = null
   Product = null
   Enterprises = null
+  CurrentHubMock = {} 
   product =
     test: "cats"
     supplier:
@@ -9,6 +10,9 @@ describe 'Product service', ->
 
   beforeEach ->
     module 'Darkswarm'
+    module ($provide)->
+      $provide.value "CurrentHub", CurrentHubMock 
+      null
     inject ($injector, _$httpBackend_)->
       Product = $injector.get("Product")
       Enterprises = $injector.get("Enterprises")

@@ -1,5 +1,6 @@
 describe "Hubs service", ->
   OfnMap = null
+  CurrentHubMock = {} 
   enterprises = [
     {
       id: 2
@@ -12,6 +13,9 @@ describe "Hubs service", ->
   beforeEach ->
     module 'Darkswarm'
     angular.module('Darkswarm').value('enterprises', enterprises) 
+    module ($provide)->
+      $provide.value "CurrentHub", CurrentHubMock 
+      null
     inject ($injector)->
       OfnMap = $injector.get("OfnMap") 
 

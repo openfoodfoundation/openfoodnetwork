@@ -1,2 +1,3 @@
-Darkswarm.factory 'CurrentHub', ($location, $filter, currentHub, Enterprises) ->
-  Enterprises.enterprises_by_id[currentHub.id] || {}
+Darkswarm.factory 'CurrentHub', ($location, $filter, currentHub) ->
+  new class CurrentHub
+    hub: currentHub

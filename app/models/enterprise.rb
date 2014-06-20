@@ -156,7 +156,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def distributors
-    self.relatives.is_distributor
+    self.relatives.is_distributor.visible
   end
 
   def website
@@ -170,7 +170,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def suppliers
-    self.relatives.is_primary_producer
+    self.relatives.is_primary_producer.visible
   end
 
   def distributed_variants

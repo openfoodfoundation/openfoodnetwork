@@ -1,2 +1,6 @@
 object current_distributor
-attributes :id
+extends 'json/partials/enterprise'
+
+child suppliers: :producers do
+  attributes :id
+end

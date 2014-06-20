@@ -7,7 +7,8 @@ describe 'Order service', ->
   storage = null
   scope = null
   CurrentHubMock = 
-    id: 1
+    hub:
+      id: 1
   FlashLoaderMock = 
     loadFlash: (arg)->
 
@@ -66,13 +67,13 @@ describe 'Order service', ->
     spyOn(storage, "bind")
     Order.fieldsToBind = ["testy"]
     Order.bindFieldsToLocalStorage({})
-    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.id}"
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.hub.id}"
     expect(storage.bind).toHaveBeenCalledWith({}, "Order.order.testy", {storeName: "#{prefix}_testy"})
     expect(storage.bind).toHaveBeenCalledWith({}, "Order.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
 
   it "binds order to local storage", ->
     Order.bindFieldsToLocalStorage(scope)
-    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.id}"
+    prefix = "order_#{Order.order.id}#{Order.order.user_id}#{CurrentHubMock.hub.id}"
     expect(localStorage.getItem("#{prefix}_email")).toMatch "test@test.com" 
 
   it "does not store secrets in local storage", ->

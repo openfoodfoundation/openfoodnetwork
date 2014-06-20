@@ -32,10 +32,10 @@
       - else
         = render 'shared/signed_in'
       %li.divider
-      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.id"}
+      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id"}
         %a{href: main_app.shop_path}
           %em Shopping &#64; 
-          %span.nav-primary.nav-branded {{ CurrentHub.name }}
+          %span.nav-primary.nav-branded {{ CurrentHub.hub.name }}
       %li.divider
       %li.cart
         = render partial: "shared/menu/cart"

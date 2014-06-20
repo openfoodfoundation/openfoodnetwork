@@ -2,7 +2,8 @@ describe "AccordionCtrl", ->
   ctrl = null
   scope = null
   CurrentHubMock = 
-    id: 1
+    hub:
+      id: 1
 
   beforeEach ->
     module "Darkswarm"

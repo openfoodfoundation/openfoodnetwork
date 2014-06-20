@@ -10,7 +10,7 @@ Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, Curren
 
     # Bind all the fields from fieldsToBind, + anything on the Order class
     bindFieldsToLocalStorage: (scope)=>
-      prefix = "order_#{@order.id}#{@order.user_id}#{CurrentHub.id}"
+      prefix = "order_#{@order.id}#{@order.user_id}#{CurrentHub.hub.id}"
       for field in @fieldsToBind
         storage.bind scope, "Order.order.#{field}", 
           storeName: "#{prefix}_#{field}"

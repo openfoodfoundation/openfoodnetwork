@@ -4,7 +4,7 @@ Darkswarm.controller "AccordionCtrl", ($scope, storage, $timeout, CurrentHub) ->
     shipping: false
     payment: false
     billing: false
-  storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}#{CurrentHub.id}#{$scope.order.user_id}"}
+  storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}#{CurrentHub.hub.id}#{$scope.order.user_id}"}
 
   $scope.show = (name)->
     $scope.accordion[name] = true

@@ -6,4 +6,4 @@ Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, Navigation, $locati
     HashNavigation.active $scope.hub.hash
   
   $scope.current = ->
-    $scope.hub.id is CurrentHub.id
+    $scope.hub.id is CurrentHub.hub.id

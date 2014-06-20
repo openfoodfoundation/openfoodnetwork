@@ -9,7 +9,8 @@ describe "HubNodeCtrl", ->
     scope = 
       hub: {}
     CurrentHub =
-      id: 99
+      hub:
+        id: 99
 
     inject ($controller, $location)->
       ctrl = $controller 'HubNodeCtrl', {$scope: scope, CurrentHub: CurrentHub, $location : $location}

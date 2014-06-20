@@ -3,7 +3,7 @@ Darkswarm.directive "ofnEmptiesCart", (CurrentHub, CurrentOrder, Navigation, sto
   link: (scope, elm, attr)-> 
     hub = scope.$eval(attr.ofnEmptiesCart)
     # A hub is selected, we're changing to a different hub, and the cart isn't empty
-    if CurrentHub.id and CurrentHub.id isnt hub.id
+    if CurrentHub.hub.id and CurrentHub.hub.id isnt hub.id
       unless CurrentOrder.empty()
         elm.bind 'click', (ev)->
           ev.preventDefault()

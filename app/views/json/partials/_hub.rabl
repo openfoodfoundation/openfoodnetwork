@@ -14,7 +14,7 @@ node :delivery do |hub|
   hub.shipping_methods.where(:require_ship_address => true).present?
 end
 node :active do |hub|
-  @active_distributors.andand.include?(hub)
+  @active_distributors.include?(hub)
 end
 node :orders_close_at do |hub|
   OrderCycle.first_closing_for(hub).andand.orders_close_at
