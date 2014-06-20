@@ -27,7 +27,7 @@
         %i.ofn-i_036-producers
         Our producers
       %ul.bullet-list
-        %li{"ng-repeat" => "producer in hub.producers"}
+        %li{"ng-repeat" => "enterprise in hub.producers"}
           = render partial: "modals/producer"
 
 .row.active_table_row.link{"ng-show" => "open()", "bo-if" => "hub.active"}
