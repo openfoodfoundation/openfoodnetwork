@@ -1,12 +1,13 @@
-%div.modal-centered{bindonce: true, "bo-if" => "enterprise.email || enterprise.website || enterprise.phone"}
-  %h5.modal-header Contact
-  %p{"ng-if" => "enterprise.phone"}
-    {{ enterprise.phone }}
+%div{bindonce: true}
+  %div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.phone"}
+    %h5.modal-header Contact
+    %p{"ng-if" => "enterprise.phone"}
+      {{ enterprise.phone }}
 
-  %p{"bo-if" => "enterprise.email"}
-    %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }
-      {{ enterprise.email | stripUrl }}
+    %p{"ng-if" => "enterprise.email"}
+      %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }
+        {{ enterprise.email | stripUrl }}
 
-  %p{"ng-if" => "enterprise.website"}
-    %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
-      {{ enterprise.website | stripUrl }}
+    %p{"ng-if" => "enterprise.website"}
+      %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
+        {{ enterprise.website | stripUrl }}

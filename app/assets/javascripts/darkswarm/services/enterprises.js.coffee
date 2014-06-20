@@ -8,7 +8,7 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub)->
       @dereference()
     
     dereference: ->
-      if CurrentHub.hub
+      if CurrentHub.hub?.id
         CurrentHub.hub = @enterprises_by_id[CurrentHub.hub.id]
       
       for enterprise in @enterprises
