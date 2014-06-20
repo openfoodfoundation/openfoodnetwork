@@ -2,7 +2,7 @@
   .row
     .columns.small-12.large-6
       %img.product-img{"ng-src" => "{{product.master.images[0].large_url}}", "ng-if" => "product.master.images[0]"} 
-    .columns.small-12.large-6
+    .columns.small-12.large-6.product-header
       %h2 
         %render-svg{path: "{{product.primary_taxon.icon}}"}
         {{product.name}}
