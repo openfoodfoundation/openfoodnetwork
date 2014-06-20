@@ -5,7 +5,7 @@ child suppliers: :producers do
   attributes :id
 end
 node :path do |enterprise|
-  shop_enterprise_path(enterprise) 
+  main_app.shop_enterprise_path(enterprise) 
 end
 node :pickup do |hub|
   hub.shipping_methods.where(:require_ship_address => false).present?
