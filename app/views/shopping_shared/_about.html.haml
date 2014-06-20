@@ -1,16 +1,9 @@
-.content#about
+.content#about{"ng-controller" => "AboutUsCtrl", bindonce: true}
   .row
     .small-12.large-6.columns
-      %img.hero-img-small{"ng-src" => "{{current_distributor.promo_image}}"} 
-      %p.small-text= current_distributor.long_description.andand.html_safe
-     
+      %img.hero-img-small{"bo-src" => "CurrentHub.promo_image"} 
+      %p.small-text{"bo-html" => "CurrentHub.long_description"}
     .small-12.large-3.columns
       &nbsp;
-     
     .small-12.large-3.columns
-      %img{"bo-src" => "current_distributor.logo", "bo-if" => "current_distributor.logo"} 
-    
-    -#- if current_distributor.promo_image.exists?
-      -#.small-12.large-3.columns
-        -#%img.about.right{src: current_distributor.promo_image.url(:large)}
-
+      %img{"bo-src" => "CurrentHub.logo", "bo-if" => "CurrentHub.logo"} 
