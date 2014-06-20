@@ -1,6 +1,8 @@
+= inject_enterprises 
+:javascript
+  angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
+
 #groups{"ng-controller" => "GroupsCtrl"}
-  :javascript
-    angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
   .row.pad-top
     .small-12.columns.text-center
       %h1 Groups / Regions

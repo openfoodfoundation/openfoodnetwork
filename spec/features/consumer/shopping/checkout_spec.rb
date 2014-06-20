@@ -14,6 +14,7 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:product) { create(:simple_product, supplier: supplier) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
+
   before do
     set_order order
     add_product_to_cart

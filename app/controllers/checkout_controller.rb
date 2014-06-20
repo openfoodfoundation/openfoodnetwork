@@ -12,6 +12,9 @@ class CheckoutController < Spree::CheckoutController
   include EnterprisesHelper
    
   def edit
+    # Because this controller doesn't inherit from our BaseController
+    # We need to duplicate the code here
+    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
   end
 
   def update
