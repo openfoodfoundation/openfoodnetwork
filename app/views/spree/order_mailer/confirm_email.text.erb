@@ -7,7 +7,7 @@ Order Summary
 ============================================================
 Order for: <%= @order.bill_address.full_name %>
 <% @order.line_items.each do |item| %>
-  <%= item.variant.sku %> <%= raw(item.variant.product.supplier.name) %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %>
+  <%= item.variant.sku %> <%= raw(item.variant.product.supplier.name) %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (QTY: <%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %>
 <% end %>
 ============================================================
 Subtotal: <%= @order.display_item_total %>
@@ -23,8 +23,7 @@ Payment Details
 <%= @order.payments.first.andand.payment_method.andand.description.andand.html_safe %>
 
 <% end %>
-
-<%- if @order.shipping_method.andand.require_ship_address %>
+<% if @order.shipping_method.andand.require_ship_address %>
 ============================================================
 Delivery Details
 ============================================================
@@ -33,21 +32,28 @@ Your order will be delivered to:
 
 <% if @order.order_cycle.andand.pickup_time_for(@order.distributor) %>
 Delivery on: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
+
+<% end %>
+<% if @order.order_cycle.andand.pickup_instructions_for(@order.distributor) %>
+Other delivery information: <%= @order.order_cycle.pickup_instructions_for(@order.distributor) %>
+
 <% end %>
 <% else %>
 ============================================================
 Collection Details
 ============================================================
-<% if @order.shipping_method.description %>
+<% if @order.shipping_method.andand.description %>
 <%= @order.shipping_method.description.html_safe %>
-<% end %>
 
+<% end %>
 <% if @order.order_cycle.andand.pickup_time_for(@order.distributor) %>
 Ready for collection: <%= @order.order_cycle.pickup_time_for(@order.distributor) %>
-<% end %>
 
+<% end %>
 <% if @order.order_cycle.andand.pickup_instructions_for(@order.distributor) %>
 Collection instructions: <%= @order.order_cycle.pickup_instructions_for(@order.distributor) %>
+
+<% end %>
 <% end %>
 
 Thanks for your support.
