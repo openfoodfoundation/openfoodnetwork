@@ -4,5 +4,5 @@
       %h5
         = "#{current_distributor.name}'s producers:" 
       %ul.bullet-list
-        %li{"ng-repeat" => "producer in CurrentHub.producers"}
+        %li{"ng-repeat" => "enterprise in CurrentHub.producers"}
           = render partial: "modals/producer"

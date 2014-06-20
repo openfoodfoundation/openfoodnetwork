@@ -13,7 +13,7 @@
       %h5.modal-header About
       .about-container
         %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
-        %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
+        %p.text-small{"ng-bind-html" => "enterprise.long_description"}
   .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}

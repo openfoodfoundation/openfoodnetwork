@@ -13,7 +13,7 @@
       %h5.modal-header About
       .about-container
         %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
-        %p.modal-small{"ng-bind-html" => "enterprise.long_description"}
+        %p.text-small{"ng-bind-html" => "enterprise.long_description"}
   .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
@@ -43,7 +43,7 @@
           %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
           {{enterprise.name}}
-          .button-address ( {{ enterprise.address.city }} , {{enterprise.address.state}} )
+          .button-address {{ enterprise.address.city }} , {{enterprise.address.state}}
           %i.ofn-i_007-caret-right
 
 %a.close-reveal-modal.outside{"ng-click" => "$close()"}
