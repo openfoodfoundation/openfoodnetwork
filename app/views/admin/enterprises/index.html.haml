@@ -26,10 +26,10 @@
       = f.fields_for :collection do |enterprise_form|
         - enterprise = enterprise_form.object
         %tr{class: "enterprise-#{enterprise.id}"}
-          %td= link_to enterprise.name, main_app.admin_enterprise_path(enterprise)
+          %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
             - if enterprise.is_primary_producer && enterprise.is_distributor
-              Producer & Distributor
+              Producer &amp; Distributor
             - elsif enterprise.is_distributor
               Distributor
             - elsif enterprise.is_primary_producer
