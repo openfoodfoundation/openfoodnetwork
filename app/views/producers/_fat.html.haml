@@ -1,25 +1,36 @@
 .row.active_table_row{"ng-show" => "open()"}
-  .columns.small-4
-    %strong Shop for
-    %p.trans-sentence
-      {{ producer.taxons | printArrayOfObjects }}
-  .columns.small-8
-    %strong About us
-    %p
-      {{ producer.description }}
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "producer.taxons"}
+      %h5 
+        %i.ofn-i_029-shopping-basket
+        Shop for
+      %p.trans-sentence
+        %span.fat-taxons{"ng-repeat" => "taxon in producer.taxons"}
+          %render-svg{path: "{{taxon.icon}}"}
+          {{taxon.name}} 
+  .columns.small-12.large-3
+    &nbsp;
+    %img{src: "{{ producer.logo }}" }
+  .columns.small-12.large-5
+    &nbsp;
+    %div{"bo-if" => "producer.description"}
+      %h5 About us
+      %p.text-small
+        {{ producer.description }}
 
-.row.active_table_row.link{"ng-show" => "open()"}
-  .columns.small-11
-    Shop for {{ producer.name }} products at:
-
-    %a{"ng-repeat" => "hub in producer.hubs",
-    "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
-    "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
-      %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
-      %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-      {{hub.name}}
-      ( {{ hub.address.city }} , {{hub.address.state}} )
-
-  .columns.small-1.text-right
-    %a{"bo-href" => "hub.path"} 
-      %i.ofn-i_007-caret-right
+.row.active_table_row.link{"ng-show" => "open()", "bo-if" => "producer.hubs"}
+  .cta-container.columns.small-12
+    .row
+      .columns.small-12
+        %h5 Shop for {{ producer.name }} products at:
+    .row
+      .columns.small-12
+        %a.button.hub{"ng-repeat" => "hub in producer.hubs",
+        "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+        "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
+          %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+          {{hub.name}}
+          .button-address ({{ [hub.address.city, hub.address.state] | printArray }})
+          %i.ofn-i_007-caret-right
