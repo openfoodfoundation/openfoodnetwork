@@ -86,6 +86,7 @@ usage instructions.
 * Alex Serdyuk (http://github.com/alexs333)
 * David Cook (http://github.com/dacook)
 * Will Marshall (http://soundcloud.com/willmarshall)
+* Laura Summers (https://github.com/summerscope)
 
 
 ## Licence
