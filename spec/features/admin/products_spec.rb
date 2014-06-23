@@ -99,9 +99,7 @@ feature %q{
     context "additional fields" do
       it "should have a notes field" do
         product = create(:simple_product, supplier: @supplier2)
-        click_link 'Products'
-        within('#sub_nav') { click_link 'Products' }
-        click_link product.name
+        visit spree.edit_admin_product_path product
         page.should have_content "Notes"
       end
     end
@@ -132,9 +130,7 @@ feature %q{
     scenario "editing product distributions" do
       product = create(:simple_product, supplier: @supplier2)
 
-      click_link 'Products'
-      within('#sub_nav') { click_link 'Products' }
-      click_link product.name
+      visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Product Distributions' }
 
       check @distributors[0].name

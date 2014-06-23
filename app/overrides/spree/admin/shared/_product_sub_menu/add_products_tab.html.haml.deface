@@ -1,0 +1,4 @@
+/ insert_bottom "[data-hook='admin_product_sub_tabs']"
+
+- if spree_current_user.admin?
+  = tab :spree_products, url: admin_products_path, :match_path => '/products'

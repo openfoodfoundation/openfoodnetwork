@@ -27,7 +27,7 @@ module OpenFoodNetwork
 
       it "should build a table from a list of variants" do
         variant = double(:variant, sku: "sku",
-                        options_text: "Variant Name",
+                        full_name: "Variant Name",
                         count_on_hand: 10,
                         price: 100)
         variant.stub_chain(:product, :supplier, :name).and_return("Supplier")

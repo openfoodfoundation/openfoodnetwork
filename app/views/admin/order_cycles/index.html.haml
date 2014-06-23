@@ -3,7 +3,7 @@
 
 = content_for :page_actions do
   %li#new_order_cycle_link
-    = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'add', :id => 'admin_new_order_cycle_link'
+    = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'icon-plus', :id => 'admin_new_order_cycle_link'
 
 
 
@@ -13,6 +13,7 @@
       %col
       %col{'style' => 'width: 20%;'}
       %col{'style' => 'width: 20%;'}
+      %col
       %col
       %col
       %col
@@ -28,6 +29,7 @@
         %th Coordinator
         %th Distributors
         %th Products
+        %th.actions
         %th.actions
 
     %tbody

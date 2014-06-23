@@ -3,7 +3,7 @@
 
 - content_for :page_actions do
   %li#new_product_link
-    = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'add', :id => 'admin_new_enterprise_link'
+    = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
 
 = render 'admin/shared/enterprises_sub_menu'
 
@@ -26,10 +26,10 @@
       = f.fields_for :collection do |enterprise_form|
         - enterprise = enterprise_form.object
         %tr{class: "enterprise-#{enterprise.id}"}
-          %td= link_to enterprise.name, main_app.admin_enterprise_path(enterprise)
+          %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
             - if enterprise.is_primary_producer && enterprise.is_distributor
-              Producer & Distributor
+              Producer &amp; Distributor
             - elsif enterprise.is_distributor
               Distributor
             - elsif enterprise.is_primary_producer

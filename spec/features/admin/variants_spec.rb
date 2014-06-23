@@ -13,10 +13,7 @@ feature %q{
 
     # When I create a variant on the product
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     click_link 'New Variant'
 
     fill_in 'variant_unit_value', with: '1'
@@ -38,10 +35,7 @@ feature %q{
 
     # When I view the variant
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     page.find('table.index .icon-edit').click
 
     # Then I should not see a traditional option value field for the unit-related option value
@@ -73,10 +67,7 @@ feature %q{
 
     # When I view the variant
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     page.find('table.index .icon-edit').click
 
     # Then I should not see unit value and description fields
