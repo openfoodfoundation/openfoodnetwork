@@ -73,7 +73,7 @@
     = button "Create And Add Another", 'icon-repeat', :submit, value: 'add_another'
     %span.or
       = t(:or)
-    = link_to_with_icon 'icon-remove', t('actions.cancel'), collection_url, :class => 'button'
+    = link_to_with_icon 'icon-remove', t('actions.cancel'), bulk_edit_admin_products_path, :class => 'button'
 
 
 :javascript
