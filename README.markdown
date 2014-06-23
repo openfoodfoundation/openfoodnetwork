@@ -9,9 +9,9 @@ Supported by the Open Food Foundation, we are proudly open source and not-for-pr
 
 We're part of global movement - get involved!
 
-* We're crowd-funding RIGHT NOW - please help out at startsomegood.com/openfoodnetwork
+* We're crowd-funding RIGHT NOW - please help out at http://startsomegood.com/openfoodnetwork
 * Fill in this short survey to tell us who you are and what you want to do with OFN: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
-* Find out more and join in the conversation - openfoodnetwork.org
+* Find out more and join in the conversation - http://openfoodnetwork.org
 
 
 ## Dependencies
