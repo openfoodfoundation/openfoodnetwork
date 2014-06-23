@@ -26,7 +26,7 @@ module OpenFoodNetwork
         variant.product.supplier.address.city,
         variant.product.name,
         variant.product.properties.map(&:name).join(", "),
-        variant.options_text,
+        variant.full_name,
         variant.price,
         variant.product.group_buy_unit_size,
         ""

@@ -45,6 +45,11 @@ Spree::Variant.class_eval do
     self.option_values.destroy ovs
   end
 
+  def full_name
+    return unit_to_display if display_name.blank?
+    display_name + " (" + unit_to_display + ")"
+  end
+
   def name_to_display
     display_name || product.name
   end
