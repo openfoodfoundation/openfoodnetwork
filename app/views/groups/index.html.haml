@@ -36,10 +36,11 @@
       .small-6.columns
         %p {{ group.long_description }}
       .small-6.columns
-        %h5 Our hubs & producers
+        %h5 Our hubs &amp; producers
         %ul.small-block-grid-2
           %li{"ng-repeat" => "enterprise in group.enterprises"}
-            %a{"bo-href" => "enterprise.path"} {{ enterprise.name }}
+            %hub-modal{"ng-if" => "enterprise.is_distributor"}  
+            %producer-modal{"ng-if" => "!enterprise.is_distributor"}  
 
     .row.group_footer
       .small-12.columns

@@ -36,9 +36,7 @@ feature 'Home', js: true do
   it "should show hub producer modals" do
     expand_active_table_node distributor.name
     page.should have_content producer.name
-    find("a", text: producer.name).click
-    within ".reveal-modal" do
-      page.should have_content producer.name
-    end
+    open_enterprise_modal producer
+    modal_should_be_open_for producer
   end
 end
