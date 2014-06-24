@@ -8,6 +8,8 @@ feature 'Home', js: true do
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:producer) { create(:supplier_enterprise) }
+  let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
     visit "/" 
@@ -29,5 +31,14 @@ feature 'Home', js: true do
   it "should link to the hub page" do
     follow_active_table_node distributor.name
     current_path.should == "/shop"
+  end
+
+  it "should show hub producer modals" do
+    expand_active_table_node distributor.name
+    page.should have_content producer.name
+    find("a", text: producer.name).click
+    within ".reveal-modal" do
+      page.should have_content producer.name
+    end
   end
 end

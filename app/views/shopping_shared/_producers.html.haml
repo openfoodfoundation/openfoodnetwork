@@ -2,8 +2,7 @@
   .row
     .small-12.columns.panel
       %h5 
-        Our producers:
-        / = "#{current_distributor.name}'s producers:" 
+        {{CurrentHub.hub.name}}'s producers:
       %ul.bullet-list
         %li{"ng-repeat" => "enterprise in CurrentHub.hub.producers"}
           = render partial: "modals/producer"
