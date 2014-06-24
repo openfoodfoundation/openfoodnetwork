@@ -8,7 +8,5 @@
         %ul.bullet-list
           - for group in current_distributor.groups
             %li
-              = group.id
               %a{href: main_app.groups_path + "/#/#group#{group.id}"}
                 = group.name 
-
