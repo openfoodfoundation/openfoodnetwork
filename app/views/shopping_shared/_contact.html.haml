@@ -43,22 +43,18 @@
               %span
                 %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
                   %i.ofn-i_041-twitter
-                  = current_distributor.facebook
 
             - unless current_distributor.facebook.blank?
               %span
                 %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
                   %i.ofn-i_044-facebook
-                  = current_distributor.facebook
 
             - unless current_distributor.linkedin.blank?
               %span
                 %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
                   %i.ofn-i_042-linkedin 
-                  = current_distributor.linkedin
 
             - unless current_distributor.instagram.blank?
               %span
                 %a{href: "http://instagram.com.#{current_distributor.instagram}", target: "_blank" }
                   %i.ofn-i_043-instagram
-                  = current_distributor.instagram
