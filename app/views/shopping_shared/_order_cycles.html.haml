@@ -3,13 +3,15 @@
     angular.module('Darkswarm').value('orderCycleData', #{render "json/order_cycle"})
 
   - if @order_cycles and @order_cycles.empty?
-    Orders are currently closed for this hub
-    %p 
-      Please contact your hub directly to see if they accept late orders, 
-      or wait until the next cycle opens.
-
-    = render partial: "shopping_shared/next_order_cycle"
-    = render partial: "shopping_shared/last_order_cycle"
+    %h4.text-right 
+      %i.ofn-i_032-closed-sign
+      Orders are closed
+    %p.text-right Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)
+    .text-right
+      %small
+        %em
+          = render partial: "shopping_shared/next_order_cycle"
+          = render partial: "shopping_shared/last_order_cycle"
 
   - else
     %form.custom
