@@ -15,7 +15,7 @@
   name: "variants[{{product.master.id}}]", 
   id: "variants_{{product.master.id}}",
   "ng-model" => "product.quantity"}
-  %small {{ product.master.unit_to_display }}
+  %small x {{ product.master.unit_to_display }}
 
 -# WITH GROUP BUY
 .small-2.columns{"bo-if" => "product.group_buy"}
@@ -36,7 +36,7 @@
   max: "{{product.on_demand && 9999 || product.count_on_hand }}",
   name: "variant_attributes[{{product.master.id}}][max_quantity]",
   "ng-model" => "product.max_quantity"}
-  {{ product.master.unit_to_display }}
+  %small x {{ product.master.unit_to_display }}
 
 .small-2.columns.text-right
   {{ product.price | currency }}
