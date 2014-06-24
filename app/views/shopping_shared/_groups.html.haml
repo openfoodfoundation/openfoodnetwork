@@ -1,9 +1,9 @@
 .content
   .row
-    .small-12.columns
+    .small-12.columns.panel
       %h5
         =current_distributor.name 
-        belongs to: 
+        is part of: 
       %ul.bullet-list
         - for group in current_distributor.groups
           %li
