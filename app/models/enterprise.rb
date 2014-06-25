@@ -194,9 +194,10 @@ class Enterprise < ActiveRecord::Base
   end
   # Return all taxons for all supplied products
   def supplied_taxons
-    Spree::Product.in_supplier(self).map do |p|
-      p.taxons
-    end.flatten.uniq
+    Spree::Taxon.
+      joins(:products).
+      where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
+      select('DISTINCT spree_taxons.*')
   end
 
   private
