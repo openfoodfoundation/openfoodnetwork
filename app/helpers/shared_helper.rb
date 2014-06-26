@@ -8,7 +8,8 @@ module SharedHelper
   end
 
   def inject_json_ams(name, data, serializer, opts = {})
-    render partial: "json/injection_ams", locals: {name: name, data: data, serializer: serializer, options: opts}
+    json = ActiveModel::ArraySerializer.new(data, {each_serializer: serializer}.merge(opts)).to_json
+    render partial: "json/injection_ams", locals: {name: name, json: json}
   end
 
   def distributor_link_class(distributor)

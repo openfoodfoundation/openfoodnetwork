@@ -1,2 +1,2 @@
 :javascript
-  angular.module('Darkswarm').value("#{name.to_s}", #{ActiveModel::ArraySerializer.new(data, {each_serializer: serializer}.merge(options)).to_json})
+  angular.module('Darkswarm').value("#{name.to_s}", #{json})
