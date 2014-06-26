@@ -1,7 +1,7 @@
-Darkswarm.factory "OfnMap", (Enterprises, MapModal)->
+Darkswarm.factory "OfnMap", (Enterprises, MapModal, visibleFilter)->
   new class OfnMap
     constructor: ->
-      @enterprises = (@extend(enterprise) for enterprise in Enterprises.enterprises) 
+      @enterprises = (@extend(enterprise) for enterprise in visibleFilter(Enterprises.enterprises)) 
 
 
     # Adding methods to each enterprise
