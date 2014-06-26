@@ -1,14 +1,14 @@
 module SharedHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.visible
+    inject_json_ams "enterprises", Enterprise.visible, Api::EnterpriseSerializer, active_distributors: @active_distributors
   end
 
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end
 
-  def inject_json_ams(name, data)
-    render partial: "json/injection_ams", locals: {name: name, data: data}
+  def inject_json_ams(name, data, serializer, opts = {})
+    render partial: "json/injection_ams", locals: {name: name, data: data, serializer: serializer, options: opts}
   end
 
   def distributor_link_class(distributor)
