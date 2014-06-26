@@ -3,6 +3,8 @@ Darkswarm.factory 'Hubs', ($filter, Enterprises) ->
     constructor: ->
       @hubs = @order Enterprises.enterprises.filter (hub)->
         hub.is_distributor
+      @visible = @hubs.filter (hub)->
+        hub.visible
 
     order: (hubs)->
       $filter('orderBy')(hubs, ['-active', '+orders_close_at'])

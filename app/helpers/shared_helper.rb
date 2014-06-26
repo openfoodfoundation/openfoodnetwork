@@ -1,6 +1,6 @@
 module SharedHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.visible, Api::EnterpriseSerializer, active_distributors: @active_distributors
+    inject_json_ams "enterprises", Enterprise.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
   end
 
   def inject_json(name, partial, opts = {})

@@ -1,7 +1,7 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :description, :latitude, :longitude, 
     :long_description, :website, :instagram, :linkedin, :twitter, 
-    :facebook, :is_primary_producer, :is_distributor, :phone,
+    :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
     :email, :hash, :logo, :promo_image, :icon, :path,
     :pickup, :delivery, :active, :orders_close_at
 
