@@ -156,7 +156,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def distributors
-    self.relatives.is_distributor.visible
+    self.relatives.is_distributor
   end
 
   def website
@@ -170,7 +170,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def suppliers
-    self.relatives.is_primary_producer.visible
+    self.relatives.is_primary_producer
   end
 
   def distributed_variants
@@ -187,15 +187,17 @@ class Enterprise < ActiveRecord::Base
 
   # Return all taxons for all distributed products
   def distributed_taxons
-    Spree::Product.in_distributor(self).map do |p|
-      p.taxons
-    end.flatten.uniq
+    Spree::Taxon.
+      joins(:products).
+      where('spree_products.id IN (?)', Spree::Product.in_distributor(self)).
+      select('DISTINCT spree_taxons.*')
   end
   # Return all taxons for all supplied products
   def supplied_taxons
-    Spree::Product.in_supplier(self).map do |p|
-      p.taxons
-    end.flatten.uniq
+    Spree::Taxon.
+      joins(:products).
+      where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
+      select('DISTINCT spree_taxons.*')
   end
 
   private

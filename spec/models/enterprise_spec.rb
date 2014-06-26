@@ -42,14 +42,12 @@ describe Enterprise do
       it "scopes relatives to visible distributors" do
         e.should_receive(:relatives).and_return(relatives = [])
         relatives.should_receive(:is_distributor).and_return relatives
-        relatives.should_receive(:visible)
         e.distributors
       end
 
       it "scopes relatives to visible producers" do
         e.should_receive(:relatives).and_return(relatives = [])
         relatives.should_receive(:is_primary_producer).and_return relatives
-        relatives.should_receive(:visible)
         e.suppliers
       end
     end

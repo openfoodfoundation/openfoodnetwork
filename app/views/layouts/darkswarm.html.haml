@@ -4,7 +4,10 @@
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
     %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
-    = favicon_link_tag "favicon.png"
+    - if Rails.env.production?
+      = favicon_link_tag
+    - else
+      = favicon_link_tag "/favicon-staging.ico"
     %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
 
     = yield :scripts

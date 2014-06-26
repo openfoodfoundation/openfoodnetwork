@@ -6,7 +6,6 @@ window.Darkswarm = angular.module("Darkswarm", ["ngResource",
   'angular-flash.service', 
   'templates',
   'ngSanitize',
-  'ngAnimate',
   'google-maps',
   'duScroll',
   ]).config ($httpProvider, $tooltipProvider, $locationProvider, $anchorScrollProvider) ->

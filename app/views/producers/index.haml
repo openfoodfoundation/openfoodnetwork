@@ -21,9 +21,9 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %producer.active_table_node.row{id: "{{producer.path}}",
+        %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
         "scroll-after-load" => true,
-        "ng-repeat" => "producer in filteredProducers = (Producers.producers | filterProducers:query)",
+        "ng-repeat" => "producer in filteredProducers = (Producers.visible | filterProducers:query)",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
         id: "{{producer.hash}}"}

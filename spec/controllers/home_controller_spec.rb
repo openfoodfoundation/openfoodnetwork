@@ -14,14 +14,15 @@ describe HomeController do
     assigns[:active_distributors].should == [distributor]
   end
 
-  it "does not show invisible hubs" do
+  # Exclusion from actual rendered view handled in features/consumer/home
+  it "shows JSON for invisible hubs" do
     get :index
-    response.body.should_not have_content invisible_distributor.name
+    response.body.should have_content invisible_distributor.name
   end
   
-  # This is done inside the json/hubs RABL template
+  # This is done inside the json/hubs Serializer
   it "gets the next order cycle for each hub" do
-    OrderCycle.should_receive(:first_closing_for).with(distributor)
+    OrderCycle.should_receive(:first_closing_for).twice
     get :index
   end
 end
