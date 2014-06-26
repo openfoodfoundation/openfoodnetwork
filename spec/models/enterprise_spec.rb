@@ -437,12 +437,12 @@ describe Enterprise do
 
     it "gets all taxons of all distributed products" do
       Spree::Product.stub(:in_distributor).and_return [product1, product2]
-      distributor.distributed_taxons.should == [taxon1, taxon2]
+      distributor.distributed_taxons.sort.should == [taxon1, taxon2].sort
     end
 
     it "gets all taxons of all supplied products" do
       Spree::Product.stub(:in_supplier).and_return [product1, product2]
-      supplier.supplied_taxons.should == [taxon1, taxon2]
+      supplier.supplied_taxons.sort.should == [taxon1, taxon2].sort
     end
   end
 
