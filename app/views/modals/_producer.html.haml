@@ -23,8 +23,9 @@
           {{ enterprise.phone }}
 
         %p{"bo-if" => "enterprise.email"}
-          %a{"ng-href" => "mailto:{{enterprise.email | stripUrl}}", target: "_blank" }
-            {{ enterprise.email | stripUrl }}
+          %a{"ng-href" => "{{enterprise.email | stripUrl}}", target: "_blank", mailto: true }
+            %span.email
+              {{ enterprise.email | stripUrl }}
 
         %p{"bo-show" => "enterprise.website"}
           %a{"ng-href" => "http://{{enterprise.website}}", target: "_blank" }

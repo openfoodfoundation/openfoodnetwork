@@ -28,9 +28,9 @@
         Our producers
       %ul.bullet-list
         %li{"ng-repeat" => "enterprise in hub.producers"}
-          = render partial: "modals/producer"
+          %producer-modal
 
-.row.active_table_row.link{"ng-show" => "open()", "bo-if" => "hub.active"}
+.row.active_table_row.link{"ng-show" => "open()"}
   .cta-container.columns.small-12
     .row
       .columns.small-12

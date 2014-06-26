@@ -196,7 +196,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     context "when no order cycles are available" do
       it "tells us orders are closed" do
         visit shop_path
-        page.should have_content "Orders are currently closed for this hub"
+        page.should have_content "Orders are closed"
       end
       it "shows the last order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_close_at: 10.days.ago)

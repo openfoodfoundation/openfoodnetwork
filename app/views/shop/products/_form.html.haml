@@ -12,7 +12,7 @@
         %input.button.primary.right{type: :submit, value: "Add to Cart"}
     
     %div{bindonce: true}
-      %product{"ng-controller" => "ProductNodeCtrl",
+      %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
         "ng-repeat" => "product in Product.products | products:query | orderBy:ordering.order | limitTo: limit track by product.id"}
         %div
           = render partial: "shop/products/summary"

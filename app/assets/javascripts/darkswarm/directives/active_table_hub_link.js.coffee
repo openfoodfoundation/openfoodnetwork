@@ -6,7 +6,7 @@ Darkswarm.directive "activeTableHubLink", (CurrentHub, CurrentOrder) ->
   link: (scope, elm, attr)->
     # Swap out the text of the hub link depending on whether it'll change current hub
     # To be used with ofnEmptiesCart
-    if CurrentHub.hub.id and CurrentHub.hub.id isnt scope.hub.id
+    if CurrentHub.hub?.id and CurrentHub.hub.id isnt scope.hub.id
       scope.action = attr.change
     else
       scope.action = attr.shop

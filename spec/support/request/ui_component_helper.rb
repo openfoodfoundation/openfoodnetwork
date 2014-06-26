@@ -38,6 +38,16 @@ module UIComponentHelper
     have_selector ".login-modal" 
   end
 
+  def open_enterprise_modal(enterprise)
+    find("a", text: enterprise.name).click
+  end
+
+  def modal_should_be_open_for(enterprise)
+    within ".reveal-modal" do
+      page.should have_content enterprise.name
+    end
+  end
+
   def have_reset_password
     have_content "An email with instructions on resetting your password has been sent!"
   end

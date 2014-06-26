@@ -1,4 +1,5 @@
 = inject_enterprises 
+
 :javascript
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
 
@@ -36,10 +37,11 @@
       .small-6.columns
         %p {{ group.long_description }}
       .small-6.columns
-        %h5 Our hubs & producers
+        %h5 Our hubs &amp; producers
         %ul.small-block-grid-2
-          %li{"ng-repeat" => "enterprise in group.enterprises"}
-            %a{"bo-href" => "enterprise.path"} {{ enterprise.name }}
+          %li{"ng-repeat" => "enterprise in group.enterprises", "scroll-after-load" => true}
+            %hub-modal{"ng-if" => "enterprise.is_distributor"}  
+            %producer-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
 
     .row.group_footer
       .small-12.columns
