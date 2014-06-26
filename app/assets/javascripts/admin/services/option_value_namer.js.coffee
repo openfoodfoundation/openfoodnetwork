@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "optionValueNamer", ($resource) ->
+angular.module("admin.products").factory "optionValueNamer", ->
   class OptionValueNamer
     constructor: (@variant) ->
 
