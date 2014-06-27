@@ -1,5 +1,5 @@
 - payment_methods_color = @payment_methods.count > 0 ? (@enterprise.payment_methods.count > 0 ? "blue" : "red") : "red"
-.sidebar_item.four.columns.alpha#payment_methods
+.sidebar_item.four.columns.alpha#payment_methods{ ng: { show: 'enterprise.is_distributor' } }
   .four.columns.alpha.header{ class: "#{payment_methods_color}" }
     %span.four.columns.alpha.centered Payment Methods
   .four.columns.alpha.list{ class: "#{payment_methods_color}" }
@@ -21,7 +21,7 @@
     %span.icon-arrow-right
 
 - shipping_methods_color = @shipping_methods.count > 0 ? (@enterprise.shipping_methods.count > 0 ? "blue" : "red") : "red"
-.sidebar_item.four.columns.alpha#shipping_methods
+.sidebar_item.four.columns.alpha#shipping_methods{ ng: { show: 'enterprise.is_distributor' } }
   .four.columns.alpha.header{ class: "#{shipping_methods_color}" }
     %span.four.columns.alpha.centered Shipping Methods
   .four.columns.alpha.list{ class: "#{shipping_methods_color}" }
@@ -42,7 +42,7 @@
     %span.icon-arrow-right
 
 - enterprise_fees_color = @enterprise_fees.count > 0 ? "blue" : "red"
-.sidebar_item.four.columns.alpha#enterprise_fees
+.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'enterprise.is_distributor' } }
   .four.columns.alpha.header{ class: "#{enterprise_fees_color}" }
     %span.four.columns.alpha.centered Enterprise Fees
   .four.columns.alpha.list{ class: "#{enterprise_fees_color}" }

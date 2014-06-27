@@ -17,5 +17,6 @@
 //= require admin/spree_promo
 //= require ./admin
 //= require ./products/products
+//= require ./enterprises/enterprises
 
 //= require_tree .

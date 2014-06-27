@@ -29,11 +29,11 @@
         .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
           %a What's this?
       .two.columns
-        = f.check_box :is_distributor
+        = f.check_box :is_distributor, 'ng-model' => 'enterprise.is_distributor'
         &nbsp;
         = f.label :is_distributor, 'Hub'
       .five.columns.omega
-        = f.check_box :is_primary_producer
+        = f.check_box :is_primary_producer, 'ng-model' => 'enterprise.is_primary_producer'
         &nbsp;
         = f.label :is_primary_producer, 'Producer'
     .row

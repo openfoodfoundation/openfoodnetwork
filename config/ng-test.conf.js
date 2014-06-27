@@ -13,7 +13,8 @@ module.exports = function(config) {
       'app/assets/javascripts/shared/bindonce.min.js',
       'app/assets/javascripts/shared/ng-infinite-scroll.min.js',
 
-      'app/assets/javascripts/admin/*.js.*',
+      'app/assets/javascripts/admin/*.js*',
+      'app/assets/javascripts/admin/*/*.js*', // Pull in top level files in each folder first (often these are module declarations)
       'app/assets/javascripts/admin/**/*.js*',
       'app/assets/javascripts/darkswarm/*.js*',
       'app/assets/javascripts/darkswarm/**/*.js*',

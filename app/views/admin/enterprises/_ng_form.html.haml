@@ -1,0 +1,7 @@
+= admin_inject_enterprise
+.sixteen.columns.alpha{ ng: { app: 'admin.enterprises', controller: 'enterpriseCtrl' } }
+  .eleven.columns.alpha
+    = render partial: 'form', :locals => { f: f }
+  .one.column &nbsp;
+  .four.columns.omega
+    = render partial: 'sidebar', :locals => { f: f }
