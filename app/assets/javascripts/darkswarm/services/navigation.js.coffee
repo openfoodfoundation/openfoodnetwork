@@ -1,4 +1,4 @@
-Darkswarm.factory 'Navigation', ($location) ->
+Darkswarm.factory 'Navigation', ($location, $window) ->
   new class Navigation
     path: null 
 
@@ -10,7 +10,6 @@ Darkswarm.factory 'Navigation', ($location) ->
       $location.path(@path)
 
     toggle: (path = false)=>
-      console.log "toggling"
       @path = path || @path
       if $location.path() == @path
         $location.path("/")
@@ -18,4 +17,7 @@ Darkswarm.factory 'Navigation', ($location) ->
         @navigate(path)
 
     go: (path)->
-      window.location.pathname = path
+      if path.match /^http/
+        $window.location.href = path
+      else
+        $window.location.pathname = path
