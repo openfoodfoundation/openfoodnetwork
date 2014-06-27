@@ -79,6 +79,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content product.name 
           page.should have_content product.master.display_name
           page.should have_content product.master.display_as
+
+          open_product_modal product
+          modal_should_be_open_for product
         end
       end
     end

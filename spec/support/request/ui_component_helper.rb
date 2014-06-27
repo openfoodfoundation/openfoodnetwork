@@ -38,13 +38,17 @@ module UIComponentHelper
     have_selector ".login-modal" 
   end
 
+  def open_product_modal(product)
+    find("a", text: product.name).click
+  end
+
   def open_enterprise_modal(enterprise)
     find("a", text: enterprise.name).click
   end
 
-  def modal_should_be_open_for(enterprise)
+  def modal_should_be_open_for(object)
     within ".reveal-modal" do
-      page.should have_content enterprise.name
+      page.should have_content object.name
     end
   end
 
