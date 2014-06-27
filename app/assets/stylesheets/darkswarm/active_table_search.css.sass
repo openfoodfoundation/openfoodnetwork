@@ -1,4 +1,33 @@
 @import mixins
+@import branding
+
+.filter-box
+  border: 2px solid $clr-brick
+  .tdhead
+    background-color: white
+    padding: 0.25rem 0.5rem
+    margin-top: 0.9rem
+  li a
+    display: block
+    line-height: 2
+    background-color: rgba(0,0,0,0.25)
+    color: #666
+    
+    &:hover, &:focus, &:active
+      color: #333
+      render-svg
+        svg
+          path
+            fill: #333
+    
+    render-svg
+      svg
+        width: 2rem
+        height: 2rem
+        display: block
+        float: left
+        path
+          fill: #666
 
 #active-table-search
   position: relative
@@ -17,3 +46,4 @@
     @include big-input
     padding-left: 44px
   
+
