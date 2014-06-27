@@ -1,10 +1,11 @@
 .row.summary
   .small-1.columns
-    %img{"bo-src" => "product.master.images[0].small_url"}
+    %producer-modal
+      %img{"bo-src" => "product.master.images[0].small_url"}
 
   .small-4.columns.summary-header
     %render-svg{path: "{{product.primary_taxon.icon}}"}
-    = render partial: "modals/product"
+    %producer-modal {{ enterprise.name }}
 
   .small-5.columns
     %i.ofn-i_036-producers

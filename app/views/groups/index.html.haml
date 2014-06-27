@@ -42,6 +42,7 @@
           %li{"ng-repeat" => "enterprise in group.enterprises", "scroll-after-load" => true}
             %hub-modal{"ng-if" => "enterprise.is_distributor"}  
             %producer-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
+              {{ enterprise.name }}
 
     .row.group_footer
       .small-12.columns
