@@ -5,6 +5,6 @@ Darkswarm.filter "groups", (Matcher)->
 
     groups.filter (group)=>
       Matcher.match([
-        group.name, group.description, group.long_description 
+        group.name, group.long_description 
       ], text) || group.enterprises.some (e)->
         Matcher.match [e.name], text
