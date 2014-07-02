@@ -1,5 +1,8 @@
 Spree::ShippingMethod.class_eval do
-  has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+  has_many :distributor_shipping_methods
+  has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
+
+  after_save :touch_distributors
   attr_accessible :distributor_ids, :description
   attr_accessible :require_ship_address
 
@@ -42,5 +45,11 @@ Spree::ShippingMethod.class_eval do
 
   def adjustment_label
     'Shipping'
+  end
+
+  private
+
+  def touch_distributors
+    distributors.each(&:touch)
   end
 end

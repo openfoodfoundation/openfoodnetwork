@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140613004344) do
+ActiveRecord::Schema.define(:version => 20140702053145) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -163,9 +163,11 @@ ActiveRecord::Schema.define(:version => 20140613004344) do
   add_index "distributors_payment_methods", ["distributor_id"], :name => "index_distributors_payment_methods_on_distributor_id"
   add_index "distributors_payment_methods", ["payment_method_id"], :name => "index_distributors_payment_methods_on_payment_method_id"
 
-  create_table "distributors_shipping_methods", :id => false, :force => true do |t|
-    t.integer "distributor_id"
-    t.integer "shipping_method_id"
+  create_table "distributors_shipping_methods", :force => true do |t|
+    t.integer  "distributor_id"
+    t.integer  "shipping_method_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "distributors_shipping_methods", ["distributor_id"], :name => "index_distributors_shipping_methods_on_distributor_id"
