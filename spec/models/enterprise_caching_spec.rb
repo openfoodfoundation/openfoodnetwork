@@ -46,6 +46,10 @@ describe Enterprise do
           expect{sm.save!}.to change {enterprise.reload.updated_at }  
         end
       end
+      
+      it "touches enterprise when address is updated" do
+        expect{enterprise.address.save!}.to change {enterprise.reload.updated_at }  
+      end
     end
   end
 end
