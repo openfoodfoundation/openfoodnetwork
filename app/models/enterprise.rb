@@ -159,18 +159,20 @@ class Enterprise < ActiveRecord::Base
     self.relatives.is_distributor
   end
 
+  def suppliers
+    self.relatives.is_primary_producer
+  end
+
   def website
     strip_url read_attribute(:website)
   end
+
   def facebook
     strip_url read_attribute(:facebook)
   end
+
   def linkedin
     strip_url read_attribute(:linkedin)
-  end
-
-  def suppliers
-    self.relatives.is_primary_producer
   end
 
   def distributed_variants
@@ -192,6 +194,7 @@ class Enterprise < ActiveRecord::Base
       where('spree_products.id IN (?)', Spree::Product.in_distributor(self)).
       select('DISTINCT spree_taxons.*')
   end
+
   # Return all taxons for all supplied products
   def supplied_taxons
     Spree::Taxon.
@@ -199,6 +202,7 @@ class Enterprise < ActiveRecord::Base
       where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
   end
+
 
   private
 
