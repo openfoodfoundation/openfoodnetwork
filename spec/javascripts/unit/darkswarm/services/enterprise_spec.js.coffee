@@ -1,8 +1,11 @@
 describe "Enterprises service", ->
   Enterprises = null
   CurrentHubMock = {} 
+  taxons = [
+    {id: 1, name: "test"}
+  ]
   enterprises = [
-    {id: 1, type: "hub", producers: [{id: 2}]},
+    {id: 1, type: "hub", producers: [{id: 2}], taxons: [{id: 1}]},
     {id: 2, type: "producer", hubs: [{id: 1}]},
     {id: 3, type: "producer", hubs: [{id: 1}]}
   ]
@@ -12,6 +15,7 @@ describe "Enterprises service", ->
       $provide.value "CurrentHub", CurrentHubMock 
       null
     angular.module('Darkswarm').value('enterprises', enterprises) 
+    angular.module('Darkswarm').value('taxons', taxons) 
 
     inject ($injector)->
       Enterprises = $injector.get("Enterprises") 
@@ -29,3 +33,6 @@ describe "Enterprises service", ->
   it "dereferences references to other enterprises", ->
     expect(Enterprises.enterprises_by_id["1"].producers[0]).toBe enterprises[1]
     expect(Enterprises.enterprises_by_id["3"].hubs[0]).toBe enterprises[0]
+
+  it "dereferences taxons", ->
+    expect(Enterprises.enterprises[0].taxons[0]).toBe taxons[0]

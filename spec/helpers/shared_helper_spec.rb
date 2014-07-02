@@ -32,9 +32,14 @@ describe SharedHelper do
     end
 
     it "injects enterprises" do
-      Enterprise.stub(:visible).and_return [enterprise]
       helper.inject_enterprises().should match enterprise.name
       helper.inject_enterprises().should match enterprise.facebook
     end
+
+    it "injects taxons" do
+      taxon = create(:taxon)
+      helper.inject_taxons.should match taxon.name
+    end
   end
+
 end

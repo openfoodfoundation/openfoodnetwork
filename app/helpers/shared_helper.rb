@@ -3,6 +3,10 @@ module SharedHelper
     inject_json_ams "enterprises", Enterprise.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
   end
 
+  def inject_taxons
+    inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end
