@@ -4,7 +4,6 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   # Taxons: 
   #   classifications touch products
   #   products touch suppliers
-  #   Taxon could change but unlikely: if becomes a problem dereference
   #
   # Relatives:
   #   Enterprise_relationships touches parent, child

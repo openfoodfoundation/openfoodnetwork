@@ -7,7 +7,7 @@ class Enterprise < ActiveRecord::Base
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
-  belongs_to :address, :class_name => 'Spree::Address', touch: true
+  belongs_to :address, :class_name => 'Spree::Address'
   has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
   has_many :distributed_products, :through => :product_distributions, :source => :product
   has_many :enterprise_fees
