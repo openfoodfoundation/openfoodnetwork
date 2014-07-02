@@ -1,35 +1,35 @@
 = inject_enterprises 
--#.producers{"ng-controller" => "ProducersCtrl"}
-  -#.row
-    -#.small-12.columns.text-center.pad-top
-      -#%h1 Producers
-      -#%div 
-        -#Select a 
-        -#%ofn-modal{title: "producer"}
-          -#= render partial: "modals/producers"
-        -#from the list below:
+.producers{"ng-controller" => "ProducersCtrl"}
+  .row
+    .small-12.columns.text-center.pad-top
+      %h1 Producers
+      %div 
+        Select a 
+        %ofn-modal{title: "producer"}
+          = render partial: "modals/producers"
+        from the list below:
 
-  -##active-table-search.row.pad-top
-    -#.small-12.columns
-      -#%i.ofn-i_020-search
-      -#%input{type: :text, 
-      -#"ng-model" => "query", 
-      -#placeholder: "Search postcode, suburb or producer name...",
-      -#"ng-debounce" => "150",
-      -#"ofn-disable-enter" => true}
+  #active-table-search.row.pad-top
+    .small-12.columns
+      %i.ofn-i_020-search
+      %input{type: :text, 
+      "ng-model" => "query", 
+      placeholder: "Search postcode, suburb or producer name...",
+      "ng-debounce" => "150",
+      "ofn-disable-enter" => true}
 
-  -#.row{bindonce: true}
-    -#.small-12.columns
-      -#.active_table
-        -#%producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-        -#"scroll-after-load" => true,
-        -#"ng-repeat" => "producer in filteredProducers = (Producers.visible | filterProducers:query)",
-        -#"ng-controller" => "ProducerNodeCtrl",
-        -#"ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
-        -#id: "{{producer.hash}}"}
+  .row{bindonce: true}
+    .small-12.columns
+      .active_table
+        %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+        "scroll-after-load" => true,
+        "ng-repeat" => "producer in filteredProducers = (Producers.visible | filterProducers:query)",
+        "ng-controller" => "ProducerNodeCtrl",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+        id: "{{producer.hash}}"}
 
-          -#.small-12.columns
-            -#= render partial: 'producers/skinny'
-            -#= render partial: 'producers/fat'
+          .small-12.columns
+            = render partial: 'producers/skinny'
+            = render partial: 'producers/fat'
 
--#= render partial: "shared/footer"
+= render partial: "shared/footer"
