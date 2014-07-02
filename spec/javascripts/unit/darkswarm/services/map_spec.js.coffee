@@ -7,6 +7,7 @@ describe "Hubs service", ->
       active: false
       orders_close_at: new Date()
       type: "hub"
+      visible: true
     }
   ]
 

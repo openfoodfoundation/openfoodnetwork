@@ -138,9 +138,8 @@ class CheckoutController < Spree::CheckoutController
        render :edit and return
     end
 
-    redirect_to(main_app.shop_paypal_payment_url(@order, :payment_method_id => payment_method.id))
+    render json: {path: main_app.paypal_payment_url(@order, :payment_method_id => payment_method.id)}, status: 200
     true
-
   end
   
   # Overriding to customize the cancel url

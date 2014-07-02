@@ -28,7 +28,7 @@
         Our producers
       %ul.bullet-list
         %li{"ng-repeat" => "enterprise in hub.producers"}
-          %producer-modal
+          %producer-modal {{ enterprise.name }}
 
 .row.active_table_row.link{"ng-show" => "open()"}
   .cta-container.columns.small-12
