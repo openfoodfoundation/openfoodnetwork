@@ -1,10 +1,8 @@
 Darkswarm.filter 'taxons', (Matcher)-> 
   # Filter anything that responds to object.taxons, and/or object.primary_taxon
-  (objects, text) ->
+  (objects, id) ->
     objects ||= []
-    text ?= ""
+    id ?= 0
     objects.filter (obj)->
-      Matcher.match([obj.primary_taxon?.name || ""], text) || obj.taxons.some (taxon)->
-        Matcher.match [taxon.name], text
-      
-
+      obj.primary_taxon?.id == id || obj.taxons.some (taxon)->
+        taxon.id == id
