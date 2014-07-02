@@ -5,6 +5,7 @@ Spree::Product.class_eval do
   has_many :option_types, :through => :product_option_types, :dependent => :destroy
 
   belongs_to :supplier, :class_name => 'Enterprise', touch: true
+  belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
@@ -26,6 +27,7 @@ Spree::Product.class_eval do
 
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
+  after_touch :touch_distributors
   before_save :add_primary_taxon_to_taxons
 
 
@@ -183,6 +185,10 @@ Spree::Product.class_eval do
       option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each { |v| v.update_units }
     end
+  end
+
+  def touch_distributors
+    Enterprise.distributing_product(self).each(&:touch)
   end
 
   def add_primary_taxon_to_taxons

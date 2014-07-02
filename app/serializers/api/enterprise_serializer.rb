@@ -1,20 +1,5 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
   # To improve this: http://hawkins.io/2013/06/caching_object_graphs_with_active_model_serializers/
-  #
-  # Taxons: 
-  #   classifications touch products
-  #   products touch suppliers
-  #
-  # Relatives:
-  #   Enterprise_relationships touches parent, child
-  #   Otherwise dereferencing makes easy
-  #
-  # Address:
-  #   Fine
-  #
-  # Shipping Methods:
-  #   Create distributors_shipping_methods class
-  #   Set up touches
   
   def serializable_hash
     cached_serializer_hash.merge uncached_serializer_hash
@@ -33,6 +18,7 @@ end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
+  has_one :address, serializer: Api::AddressSerializer
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -53,12 +39,10 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :email, :hash, :logo, :promo_image, :icon, :path,
     :pickup, :delivery
 
-  has_many :distributed_taxons, key: :taxons, serializer: Api::TaxonSerializer
+  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
   has_many :distributors, key: :hubs, serializer: Api::IdSerializer
   has_many :suppliers, key: :producers, serializer: Api::IdSerializer
-
-  has_one :address, serializer: Api::AddressSerializer
 
   def pickup
     object.shipping_methods.where(:require_ship_address => false).present?
