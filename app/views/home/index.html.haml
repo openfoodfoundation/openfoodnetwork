@@ -2,10 +2,16 @@
   .row
     .small-12.text-center.columns
       %h1= image_tag "ofn_logo_beta.png", title: "Open Food Network (beta)"
-      %h2 An open marketplace that makes it easy to find, buy, sell and move sustainable local food.
-      
-      %ofn-modal{title: "Learn more"}
-        = render partial: "modals/learn_more"
+      %h2 We're crowdfunding right now! 
+      %h5
+        %timer{"end-time" => '1407679200000'}
+          {{days}} days, {{hours}} hrs, {{minutes}} mins & {{seconds}} secs to go
+      %p Help us make Open Food Network the best it can be:
+      %a.button.primary{href: "http://startsomegood.com/openfoodnetwork", target:"_blank"} Support now
+      / %h2 An open marketplace that makes it easy to find, buy, sell and move sustainable local food.      
+      %br 
+        %ofn-modal{title: "Learn more"}
+          = render partial: "modals/learn_more"
 
 = render partial: "home/hubs"
 
