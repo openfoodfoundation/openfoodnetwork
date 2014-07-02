@@ -18,7 +18,6 @@ end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
-  has_one :address, serializer: Api::AddressSerializer
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -43,6 +42,8 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
   has_many :distributors, key: :hubs, serializer: Api::IdSerializer
   has_many :suppliers, key: :producers, serializer: Api::IdSerializer
+
+  #has_one :address, serializer: Api::AddressSerializer
 
   def pickup
     object.shipping_methods.where(:require_ship_address => false).present?
