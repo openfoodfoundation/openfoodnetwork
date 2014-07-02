@@ -5,11 +5,12 @@ describe 'filtering by taxons', ->
       taxons: []
       primary_taxon: 
         name: "frogs"
+        id: 1
     }
     {
       taxons: [
-        {name: "kittens"}
-        {name: "puppies"}
+        {name: "kittens", id: 2}
+        {name: "puppies", id: 3}
       ]
     }
   ]
@@ -21,7 +22,9 @@ describe 'filtering by taxons', ->
       filterByTaxons = $filter('taxons')
 
   it "filters by primary taxon", ->
-    expect(filterByTaxons(objects, "frogs")[0]).toBe objects[0]
+    expect(filterByTaxons(objects, 1)[0]).toBe objects[0]
 
   it "filters by taxons", ->
-    expect(filterByTaxons(objects, "kittens")[0]).toBe objects[1]
+    expect(filterByTaxons(objects, 2)[0]).toBe objects[1]
+
+
