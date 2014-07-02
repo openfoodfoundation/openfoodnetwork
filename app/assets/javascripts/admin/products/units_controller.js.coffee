@@ -2,7 +2,7 @@ angular.module("admin.products")
   .controller "unitsCtrl", ($scope) ->
     $scope.product = { master: {} }
 
-    $scope.$watch -> 
+    $scope.$watch ->
       $scope.product.variant_unit_with_scale
     , ->
       if $scope.product.variant_unit_with_scale
@@ -16,7 +16,7 @@ angular.module("admin.products")
       else
         $scope.product.variant_unit = $scope.product.variant_unit_scale = null
 
-    $scope.$watch -> 
+    $scope.$watch ->
       $scope.product.master.unit_value_with_description
     , ->
       if $scope.product.master.hasOwnProperty("unit_value_with_description")
@@ -33,7 +33,7 @@ angular.module("admin.products")
       ["Weight (T)", "weight_1000000"],
       ["Volume (mL)", "volume_0.001"],
       ["Volume (L)", "volume_1"],
-      ["Volume (ML)", "volume_1000000"],
+      ["Volume (KL)", "volume_1000"],
       ["Items", "items"]
     ]
 
@@ -43,4 +43,4 @@ angular.module("admin.products")
     $scope.hasUnit = (product) ->
       product.variant_unit_with_scale?
 
-    
+

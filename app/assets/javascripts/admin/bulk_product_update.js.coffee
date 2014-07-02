@@ -20,7 +20,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       ["Weight (T)", "weight_1000000"],
       ["Volume (mL)", "volume_0.001"],
       ["Volume (L)", "volume_1"],
-      ["Volume (ML)", "volume_1000000"],
+      ["Volume (KL)", "volume_1000"],
       ["Items", "items"]
     ]
 
@@ -511,12 +511,12 @@ filterSubmitVariant = (variant) ->
 
 toObjectWithIDKeys = (array) ->
   object = {}
-  
+
   for i of array
     if array[i] instanceof Object and array[i].hasOwnProperty("id")
       object[array[i].id] = angular.copy(array[i])
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
-  
+
   object
 
 subset = (bigArray,smallArray) ->

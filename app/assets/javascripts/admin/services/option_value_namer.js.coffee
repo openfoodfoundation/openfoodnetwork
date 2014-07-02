@@ -18,18 +18,18 @@ angular.module("ofn.admin").factory "optionValueNamer", ($resource) ->
       if @variant.unit_value?
         if @variant.product.variant_unit in ["weight", "volume"]
           [value, unit_name] = @option_value_value_unit_scaled()
-    
+
         else
           value = @variant.unit_value
           unit_name = @variant.product.variant_unit_name
           # TODO needs to add pluralize to line below
           # unit_name = unit_name if value > 1
-    
+
         value = parseInt(value, 10) if value == parseInt(value, 10)
-    
+
       else
         value = unit_name = null
-    
+
       [value, unit_name]
 
     option_value_value_unit_scaled: ->
@@ -40,7 +40,7 @@ angular.module("ofn.admin").factory "optionValueNamer", ($resource) ->
       [value, unit_name]
 
     scale_for_unit_value: ->
-      units = 
+      units =
         'weight':
           1.0: 'g'
           1000.0: 'kg'
@@ -48,7 +48,7 @@ angular.module("ofn.admin").factory "optionValueNamer", ($resource) ->
         'volume':
           0.001: 'mL'
           1.0: 'L'
-          1000000.0: 'ML'
+          1000.0: 'KL'
 
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest available unit.
