@@ -5,7 +5,6 @@ Spree::Product.class_eval do
   has_many :option_types, :through => :product_option_types, :dependent => :destroy
 
   belongs_to :supplier, :class_name => 'Enterprise', touch: true
-  belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
