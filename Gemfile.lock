@@ -341,6 +341,7 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    perftools.rb (2.0.1)
     pg (0.13.2)
     poltergeist (1.5.0)
       capybara (~> 2.1)
@@ -531,6 +532,7 @@ DEPENDENCIES
   newrelic_rpm
   oj
   paperclip
+  perftools.rb
   pg
   poltergeist
   pry-debugger

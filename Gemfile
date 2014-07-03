@@ -85,6 +85,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'perftools.rb'
 end
 
 group :development do
