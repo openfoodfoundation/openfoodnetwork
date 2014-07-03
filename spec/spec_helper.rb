@@ -104,4 +104,25 @@ RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
 
   config.include JsonSpec::Helpers
+
+  # Profiling
+  #
+  # This code shouldn't be run in normal circumstances. But if you want to know
+  # which parts of your code take most time, then you can activate the lines
+  # below. Keep in mind that it will slow down the execution time heaps.
+  #
+  # The PerfTools will write a binary file to the specified path which can then
+  # be examined by:
+  #
+  #   bundle exec pprof.rb --text  /tmp/rspec_profile
+  #
+
+  #require 'perftools'
+  #config.before :suite do
+  #  PerfTools::CpuProfiler.start("/tmp/rspec_profile")
+  #end
+  #
+  #config.after :suite do
+  # PerfTools::CpuProfiler.stop
+  #end
 end
