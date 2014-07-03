@@ -2,7 +2,6 @@
 @import mixins
 
 .fat-taxons
-  @include csstrans
   display: inline-block
   line-height: 1
   margin-right: 0.5rem
@@ -23,8 +22,6 @@
   &, &*
     display: inline-block
     color: #555
-  // &:hover, &.hover, &:active
-    // background: rgba(255,255,255,0.5)
      
 .product-header
   render-svg
@@ -40,7 +37,6 @@
         height: 24px
 
 .summary-header
-  @include csstrans
   render-svg
     svg
       width: 18px
