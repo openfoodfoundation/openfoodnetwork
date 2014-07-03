@@ -30,7 +30,6 @@ class Enterprise < ActiveRecord::Base
   validates_presence_of :address
   validates_associated :address
 
-  after_initialize :initialize_country
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -205,11 +204,6 @@ class Enterprise < ActiveRecord::Base
 
   def strip_url(url)
     url.andand.sub /(https?:\/\/)?(www\.)?/, ''
-  end
-
-  def initialize_country
-    self.address ||= Spree::Address.new
-    self.address.country = Spree::Country.find_by_id(Spree::Config[:default_country_id]) if self.address.new_record?
   end
 
   def set_unused_address_fields

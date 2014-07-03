@@ -1,4 +1,5 @@
 Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer)->
+  console.log enterprises[0].address
   new class Enterprises
     enterprises_by_id: {} # id/object pairs for lookup 
     constructor: ->
