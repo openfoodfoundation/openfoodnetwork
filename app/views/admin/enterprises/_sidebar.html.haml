@@ -1,27 +1,26 @@
-- payment_methods_color = @payment_methods.count > 0 ? (@enterprise.payment_methods.count > 0 ? "blue" : "red") : "red"
-.sidebar_item.four.columns.alpha#payment_methods{ ng: { show: 'enterprise.is_distributor' } }
-  .four.columns.alpha.header{ class: "#{payment_methods_color}" }
+.sidebar_item.four.columns.alpha#payment_methods{ ng: { show: 'Enterprise.is_distributor' } }
+  .four.columns.alpha.header{ ng: { class: "paymentMethodsColor()" } }
     %span.four.columns.alpha.centered Payment Methods
-  .four.columns.alpha.list{ class: "#{payment_methods_color}" }
+  .four.columns.alpha.list{ ng: { class: "paymentMethodsColor()" } }
     - if @payment_methods.count > 0
       -# = hidden_field_tag "enterprise[payment_method_ids][]", []
       - @payment_methods.each do |payment_method|
-        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_payment_method_path(payment_method)}" }
+        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_payment_method_path(payment_method)}", ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
           %span.three.columns.alpha
             = payment_method.name
           %span.one.column.omega
-            = f.check_box :payment_method_ids, { multiple: true }, payment_method.id, nil
+            = f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
     - else
       .four.columns.alpha.list-item
         %span.three.columns.alpha None Available
         %span.one.column.omega
           %span.icon-remove-sign
-  %a.four.columns.alpha.button{ href: "#{new_admin_payment_method_path}", class: "#{payment_methods_color}" }
+  %a.four.columns.alpha.button{ href: "#{new_admin_payment_method_path}", ng: { class: "paymentMethodsColor()" } }
     CREATE NEW
     %span.icon-arrow-right
 
 - shipping_methods_color = @shipping_methods.count > 0 ? (@enterprise.shipping_methods.count > 0 ? "blue" : "red") : "red"
-.sidebar_item.four.columns.alpha#shipping_methods{ ng: { show: 'enterprise.is_distributor' } }
+.sidebar_item.four.columns.alpha#shipping_methods{ ng: { show: 'Enterprise.is_distributor' } }
   .four.columns.alpha.header{ class: "#{shipping_methods_color}" }
     %span.four.columns.alpha.centered Shipping Methods
   .four.columns.alpha.list{ class: "#{shipping_methods_color}" }
@@ -42,7 +41,7 @@
     %span.icon-arrow-right
 
 - enterprise_fees_color = @enterprise_fees.count > 0 ? "blue" : "red"
-.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'enterprise.is_distributor' } }
+.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'Enterprise.is_distributor' } }
   .four.columns.alpha.header{ class: "#{enterprise_fees_color}" }
     %span.four.columns.alpha.centered Enterprise Fees
   .four.columns.alpha.list{ class: "#{enterprise_fees_color}" }
