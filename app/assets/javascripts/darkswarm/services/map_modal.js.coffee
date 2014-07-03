@@ -6,7 +6,7 @@ Darkswarm.factory "MapModal", ($modal, $rootScope)->
       scope.enterprise = enterprise
       if enterprise.is_distributor
         scope.hub = enterprise
-        $modal.open(templateUrl: "map_modal_hub.html", scope: scope)
+        $modal.open(templateUrl: "hub_modal.html", scope: scope)
       else
         scope.producer = enterprise
         $modal.open(templateUrl: "map_modal_producer.html", scope: scope)

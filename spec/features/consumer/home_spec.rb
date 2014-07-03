@@ -5,18 +5,25 @@ feature 'Home', js: true do
   include UIComponentHelper
 
   let!(:distributor) { create(:distributor_enterprise) }
+  let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }
   let!(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:producer) { create(:supplier_enterprise) }
+  let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
     visit "/" 
   end
 
-  it "shows all hubs" do
+  it "shows hubs" do
     page.should have_content distributor.name
     expand_active_table_node distributor.name
     page.should have_content "Shop at #{distributor.name}" 
+  end
+
+  it "does not show invisible hubs" do
+    page.should_not have_content invisible_distributor.name
   end
 
   it "should grey out hubs that are not in an order cycle" do
@@ -29,5 +36,12 @@ feature 'Home', js: true do
   it "should link to the hub page" do
     follow_active_table_node distributor.name
     current_path.should == "/shop"
+  end
+
+  it "should show hub producer modals" do
+    expand_active_table_node distributor.name
+    page.should have_content producer.name
+    open_enterprise_modal producer
+    modal_should_be_open_for producer
   end
 end

@@ -3,11 +3,7 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/#/login", to: "home#index", as: :spree_login
 
-  if Rails.env.production? 
-    get "/map", to: "home#index", as: :map
-  else
-    get "/map", to: "map#index", as: :map
-  end
+  get "/map", to: "map#index", as: :map
 
   resource :shop, controller: "shop" do
     get :products
@@ -20,7 +16,7 @@ Openfoodnetwork::Application.routes.draw do
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
-  get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
+  get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   resources :enterprises do
     collection do

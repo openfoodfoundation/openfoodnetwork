@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Dereferencer)->
   new class Enterprises
     enterprises_by_id: {} # id/object pairs for lookup 
     constructor: ->
@@ -10,12 +10,6 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub)->
     dereference: ->
       if CurrentHub.hub?.id
         CurrentHub.hub = @enterprises_by_id[CurrentHub.hub.id]
-      
       for enterprise in @enterprises
-        if enterprise.hubs
-          for hub, i in enterprise.hubs
-            enterprise.hubs[i] = @enterprises_by_id[hub.id]
-
-        if enterprise.producers
-          for producer, i in enterprise.producers
-            enterprise.producers[i] = @enterprises_by_id[producer.id]
+        Dereferencer.dereference enterprise.hubs, @enterprises_by_id
+        Dereferencer.dereference enterprise.producers, @enterprises_by_id

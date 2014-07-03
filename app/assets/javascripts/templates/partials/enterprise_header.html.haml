@@ -1,0 +1,9 @@
+.highlight
+  .highlight-top 
+    %p.right
+      {{ [enterprise.address.city, enterprise.address.state] | printArray}}
+    %h3
+      %i.ofn-i_036-producers{"ng-show" => "!enterprise.is_distributor"}
+      %i.ofn-i_040-hub{"ng-show" => "enterprise.is_distributor"}
+      {{ enterprise.name }}
+  %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 

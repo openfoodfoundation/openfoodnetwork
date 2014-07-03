@@ -1,9 +1,7 @@
 .content#about{"ng-controller" => "AboutUsCtrl", bindonce: true}
   .row
-    .small-12.large-6.columns
-      %img.hero-img-small{"bo-src" => "CurrentHub.hub.promo_image"} 
-      %p.small-text{"bo-html" => "CurrentHub.hub.long_description"}
-    .small-12.large-3.columns
+    .small-12.large-8.columns.panel
+      %img.hero-img-small{"bo-src" => "CurrentHub.hub.promo_image", "bo-if" => "CurrentHub.hub.promo_image"} 
+      %p{"bo-html" => "CurrentHub.hub.long_description"}
+    .small-12.large-4.columns
       &nbsp;
-    .small-12.large-3.columns
-      %img{"bo-src" => "CurrentHub.hub.logo", "bo-if" => "CurrentHub.hub.logo"} 
