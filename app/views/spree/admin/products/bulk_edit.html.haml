@@ -51,13 +51,13 @@
         %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
           {{ column.name }}
     %hr
-  %div.loading{ 'ng-show' => 'loading' }
+  %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
-  %div{ 'ng-show' => '!loading && products.length == 0' }
+  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
     %h4{ :style => 'color:red;' } No matching products found.
-  %div{ 'ng-show' => 'products.length == 500' }
+  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 500' }
     %h6 Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products
-  %div{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
     %div.quick_search{ :class => "five columns omega" }
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
     %div.pagination{ :class => "seven columns omega" }
