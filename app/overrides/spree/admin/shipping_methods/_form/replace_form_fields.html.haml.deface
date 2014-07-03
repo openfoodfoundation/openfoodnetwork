@@ -1,6 +1,6 @@
 / replace "div[data-hook='admin_shipping_method_form_fields']"
 
-.alpha.twelve.columns{"data-hook" => "admin_shipping_method_form_fields"}
+.alpha.eleven.columns{"data-hook" => "admin_shipping_method_form_fields"}
   .row
     .alpha.three.columns
       = f.label :name, t(:name)
@@ -41,7 +41,7 @@
       = f.radio_button :require_ship_address, true
       &nbsp;
       = f.label :delivery, t(:delivery)
-    .six.columns
+    .omega.six.columns
       = f.radio_button :require_ship_address, false
       &nbsp;
       = f.label :pick_up, t(:pick_up)
