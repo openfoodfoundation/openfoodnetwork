@@ -68,7 +68,7 @@ describe Enterprise do
   end
 
   it "should default address country to system country" do
-    subject.address.country.should == Spree::Country.find_by_id(Spree::Config[:default_country_id])
+    create(:distributor_enterprise).address.country.should == Spree::Country.find_by_id(Spree::Config[:default_country_id])
   end
 
   describe "scopes" do
