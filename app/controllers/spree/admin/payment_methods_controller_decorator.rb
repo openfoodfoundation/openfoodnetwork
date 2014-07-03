@@ -1,4 +1,6 @@
 Spree::Admin::PaymentMethodsController.class_eval do
+  before_filter :load_hubs, only: [:new, :edit, :create, :update]
+
   # Only show payment methods that user has access to and sort by distributor name
   # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
   def collection
@@ -21,5 +23,10 @@ Spree::Admin::PaymentMethodsController.class_eval do
     end
 
     collection
+  end
+
+  private
+  def load_hubs
+    @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
   end
 end
