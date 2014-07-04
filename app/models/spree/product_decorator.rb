@@ -193,7 +193,7 @@ Spree::Product.class_eval do
   end
 
   def add_primary_taxon_to_taxons
-    taxons << primary_taxon unless taxons.find_by_id(primary_taxon)
+    taxons << primary_taxon unless taxons.include? primary_taxon
   end
 
   def self.all_variant_unit_option_types
