@@ -1,20 +1,20 @@
 = inject_enterprises 
 #hubs.hubs{"ng-controller" => "HubsCtrl"}
   .row
-    .small-12.columns.text-center
-      %h1 Ready to shop?
-      %div 
-        Select a 
-        %ofn-modal{title: "food hub"}
-          = render partial: "modals/food_hub"
-        from the list below:
+    .small-12.columns
+      %h1 Find hubs in your area...
+      / %div 
+      /   Shop a 
+      /   %ofn-modal{title: "food hub"}
+      /     = render partial: "modals/food_hub"
+      /   from the list below:
 
   #active-table-search.row.pad-top
     .small-12.columns
-      %i.ofn-i_020-search
+      / %i.ofn-i_020-search
       %input{type: :text, 
       "ng-model" => "query", 
-      placeholder: "Search postcode, suburb or hub name...",
+      placeholder: "Search Hub or by Suburb / State",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
 
