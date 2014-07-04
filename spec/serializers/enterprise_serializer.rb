@@ -11,7 +11,7 @@ describe Api::EnterpriseSerializer do
   it "includes distributed taxons" do
     enterprise.stub(:distributed_taxons).and_return [taxon]
     serializer = Api::EnterpriseSerializer.new enterprise 
-    serializer.to_json.should match taxon.name
+    serializer.to_json.should match taxon.id.to_s
   end
   
   it "will render urls" do
