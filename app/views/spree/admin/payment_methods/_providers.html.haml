@@ -1,0 +1,10 @@
+:javascript
+  angular.module('ofn.admin').value('paymentMethod', #{ { id: @payment_method.id, type: @payment_method.type }.to_json })
+#provider-settings{ ng: { app: "ofn.admin", controller: "ProvidersCtrl" } }
+  .row
+    .alpha.three.columns
+      = label :payment_method, :type, t(:provider)
+    .omega.eight.columns
+      = collection_select(:payment_method, :type, @providers, :to_s, :clean_name, {}, { class: 'select2 fullwidth', 'ofn-fetch-provider-prefs' => "#{@object.id}"})
+
+  %div{"ng-include" => "include_html" }

@@ -135,6 +135,10 @@ Spree::Core::Engine.routes.prepend do
 
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
+
+    resources :payment_methods do
+      get :show_provider_preferences, on: :member
+    end
   end
 
   resources :orders do
