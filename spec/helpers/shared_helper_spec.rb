@@ -24,10 +24,10 @@ describe SharedHelper do
     helper.distributor_link_class(d1).should =~ /empties-cart/
   end
 
-  describe "Injecting json" do
-    let(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
+  describe "injecting json" do
+    let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 
-    it "Will inject via AMS" do
+    it "will inject via AMS" do
       helper.inject_json_ams("test", [enterprise], Api::EnterpriseSerializer).should match enterprise.name
     end
 
