@@ -1,6 +1,4 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
-  # To improve this: http://hawkins.io/2013/06/caching_object_graphs_with_active_model_serializers/
-  
   def serializable_hash
     cached_serializer_hash.merge uncached_serializer_hash
   end
@@ -43,7 +41,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   has_many :distributors, key: :hubs, serializer: Api::IdSerializer
   has_many :suppliers, key: :producers, serializer: Api::IdSerializer
 
-  #has_one :address, serializer: Api::AddressSerializer
+  has_one :address, serializer: Api::AddressSerializer
 
   def pickup
     object.shipping_methods.where(:require_ship_address => false).present?
