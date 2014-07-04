@@ -30,4 +30,21 @@ end
 # Ensure that all derived classes also allow distributor_ids
 Spree::Gateway.providers.each do |p|
   p.attr_accessible :distributor_ids
+  p.instance_eval do
+    def clean_name
+      case name
+      when "Spree::PaymentMethod::Check"
+        "Cash/EFT/etc. (payments for which automatic validation is not required)"
+      when "Spree::Gateway::Migs"
+        "MasterCard Internet Gateway Service (MIGS)"
+      when "Spree::BillingIntegration::PaypalExpressUk"
+        "PayPal Express (UK)"
+      when "Spree::BillingIntegration::PaypalExpress"
+        "PayPal Express"
+      else
+        i = name.rindex('::') + 2
+        name[i..-1]
+      end
+    end
+  end
 end

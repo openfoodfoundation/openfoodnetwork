@@ -33,13 +33,16 @@
       = radio_button :payment_method, :active, false
       &nbsp;
       = label_tag nil, t(:say_no)
+  .row
+    .alpha.three.columns
+      = f.label :type, t(:provider)
+    .omega.eight.columns
+      = collection_select(:payment_method, :type, @providers, :to_s, :clean_name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth'})
 
   %fieldset.alpha.eleven.columns.no-border-bottom#gateway_fields
     %legend{ align="center"}
-      = t(:gateway)
-    #preference-settings.field{"data-hook" => ""}
-      = f.label :type, t(:provider)
-      = collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth'})
+      = t(:provider_settings)
+    #preference-settings
       - unless @object.new_record?
         = preference_fields(@object, f)
         - if @object.respond_to?(:preferences)
