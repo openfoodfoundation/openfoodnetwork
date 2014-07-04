@@ -2,30 +2,39 @@
 @import branding
 
 .filter-box
-  border: 2px solid $clr-brick
+  border-top: 1px solid $clr-brick
+  background-color: rgba(255,255,255,0.5)
   .tdhead
-    background-color: white
     padding: 0.25rem 0.5rem
     margin-top: 0.9rem
   li a
-    display: block
-    line-height: 2
-    background-color: rgba(0,0,0,0.25)
+    display: table
+    height: 2rem
+    line-height: 1
     color: #666
-    
-    &:hover, &:focus, &:active
-      color: #333
+    span
+      display: table-cell
+      vertical-align: middle
+    &:hover, &:focus
+      color: #000
       render-svg
         svg
           path
-            fill: #333
+            fill: #000
     
+    &:active, &.active
+      color: $clr-brick
+      render-svg
+        svg
+          path
+            fill: $clr-brick
+
     render-svg
+      width: 2rem
+      height: 2rem
+      display: block
+      margin-right: 0.25rem
       svg
-        width: 2rem
-        height: 2rem
-        display: block
-        float: left
         path
           fill: #666
 
