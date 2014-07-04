@@ -1,7 +1,11 @@
-%a{"ng-click" => "filtersActive = !filtersActive"} Toggle
+.row
+  .small-12.columns
+    %a.right{"ng-click" => "filtersActive = !filtersActive"}
+      Filter by
+      %i.ofn-i_052-point-down
 .row.animate-show{"ng-show" => "filtersActive"}
-  .small-12.columns.filter-box
-    .row
+  .small-12.columns
+    .row.filter-box
       .small-12.large-6.columns
         %h5.tdhead 
           .light Filter by
@@ -14,7 +18,7 @@
         %h5.tdhead 
           .light Filter by
           Something  
-    .row
+    .row.filter-box
       .small-12.large-6.columns
         %taxon-selector{enterprises: "Producers.visible"}
 
