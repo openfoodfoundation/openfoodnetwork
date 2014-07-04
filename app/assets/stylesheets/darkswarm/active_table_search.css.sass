@@ -1,26 +1,56 @@
 @import mixins
 @import branding
 
+// OVERRIDES
+.row .row.filter-box
+  margin-left: 0
+  margin-right: 0
+
+
 .filter-box
-  border-top: 1px solid $clr-brick
-  background-color: rgba(255,255,255,0.5)
+  background: rgba(255,255,255,0.5)
+  margin-top: 5rem
+
   .tdhead
     padding: 0.25rem 0.5rem
     margin-top: 0.9rem
+
+  // OVERRIDES
+  [class*="block-grid-"] > li
+    padding-bottom: 0.5rem !important
+
+  li.active a
+    color: $clr-brick
+    @include border-radius(12px)
+    @include box-shadow(inset 0 1px 3px 0 rgba(143,48,29,0.5))
+    border: 1px solid $clr-brick
+    render-svg
+      svg
+        path
+          fill: $clr-brick
+    &:hover, &:focus
+      border-color: $clr-brick-bright
+
   li a
     display: table
-    height: 2rem
+    table-layout: fixed
+    // width: 100%
+    height: 2.5rem
+    padding: 0.5rem 0.5rem 0.5rem 0.25rem 
+    border: 1px solid transparent
     line-height: 1
-    color: #666
+    color: #444
+    font-size: 0.875rem
     span
       display: table-cell
       vertical-align: middle
+      text-align: left
     &:hover, &:focus
-      color: #000
+      color: $clr-brick-bright
       render-svg
         svg
           path
-            fill: #000
+            fill: $clr-brick-bright
     
     &:active, &.active
       color: $clr-brick
@@ -30,11 +60,15 @@
             fill: $clr-brick
 
     render-svg
-      width: 2rem
-      height: 2rem
       display: block
-      margin-right: 0.25rem
+      width: 1.5rem
+      height: 1.5rem
+      margin: 0
+      padding: 0
+      // margin-right: 0.25rem
       svg
+        width: 1.5rem
+        height: 1.5rem
         path
           fill: #666
 
