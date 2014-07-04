@@ -12,5 +12,5 @@ describe "Taxons service", ->
     inject ($injector)->
       Taxons = $injector.get("Taxons") 
 
-  it "caches taxons in an id-referenced hash", ->
+  it "indexes taxons by id", ->
     expect(Taxons.taxons_by_id[1]).toBe taxons[0]

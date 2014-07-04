@@ -32,8 +32,8 @@ describe SharedHelper do
     end
 
     it "injects enterprises" do
-      helper.inject_enterprises().should match enterprise.name
-      helper.inject_enterprises().should match enterprise.facebook
+      helper.inject_enterprises.should match enterprise.name
+      helper.inject_enterprises.should match enterprise.facebook
     end
 
     it "injects taxons" do
