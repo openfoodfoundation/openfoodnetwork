@@ -18,3 +18,4 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer)
     dereferenceTaxons: ->
       for enterprise in @enterprises 
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
+        Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id

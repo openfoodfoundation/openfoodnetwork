@@ -28,3 +28,6 @@ describe 'filtering by shipping method', ->
 
   it "filters to none", ->
     expect(filterByShippingMethod(objects, {pickup: false, delivery: false})).toBe objects
+
+  it "filters to none with empty", ->
+    expect(filterByShippingMethod(objects, {})).toBe objects

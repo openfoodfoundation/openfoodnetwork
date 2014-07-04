@@ -3,6 +3,7 @@ describe 'filtering by taxons', ->
   objects = [
     {
       taxons: []
+      supplied_taxons: []
       primary_taxon: 
         name: "frogs"
         id: 1
@@ -12,6 +13,7 @@ describe 'filtering by taxons', ->
         {name: "kittens", id: 2}
         {name: "puppies", id: 3}
       ]
+      supplied_taxons: []
     }
   ]
 

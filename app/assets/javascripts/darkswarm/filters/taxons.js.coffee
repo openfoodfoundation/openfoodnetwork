@@ -3,10 +3,9 @@ Darkswarm.filter 'taxons', (Matcher)->
   (objects, ids) ->
     objects ||= []
     ids ?= []
-    console.log ids
     if ids.length == 0
       objects
     else
       objects.filter (obj)->
-        obj.primary_taxon?.id in ids || obj.taxons.some (taxon)->
+        obj.primary_taxon?.id in ids || (obj.taxons.concat obj.supplied_taxons).some (taxon)->
           taxon.id in ids
