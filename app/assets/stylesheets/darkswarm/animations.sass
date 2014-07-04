@@ -1,3 +1,58 @@
+@import mixins
+
+// ANIMATION FUNCTIONS
+
+@-webkit-keyframes slideInDown
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-20px)
+    transform: translateY(-20px)
+  100%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+@keyframes slideInDown
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-20px)
+    -ms-transform: translateY(-20px)
+    transform: translateY(-20px)
+  100%
+    -webkit-transform: translateY(0)
+    -ms-transform: translateY(0)
+    transform: translateY(0)
+
+@-webkit-keyframes slideOutUp
+  0%
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+  100%
+    opacity: 0
+    -webkit-transform: translateY(-20px)
+    transform: translateY(-20px)
+
+
+@keyframes slideOutUp
+  0%
+    -webkit-transform: translateY(0)
+    -ms-transform: translateY(0)
+    transform: translateY(0)
+
+@-webkit-keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+// ANIMATION CLASSES
+
 .fade
   opacity: 0
   -webkit-transition: opacity .15s linear
@@ -53,16 +108,36 @@
 
 
 .animate-show
-  -webkit-transition: all linear 0.25s
-  transition: all linear 0.25s
-  line-height: 20px
-  opacity: 1
+  -webkit-animation-name: slideInDown
+  animation-name: slideInDown
+  -webkit-animation-duration: 0.5s
+  animation-duration: 0.5s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  // line-height: 20px
+  // opacity: 1
 
 .animate-show.ng-hide-add,
 .animate-show.ng-hide-remove
-  display: block !important
+  // display: block !important
 
 .animate-show.ng-hide
-  line-height: 0
-  opacity: 0
-  padding: 0 10px
+  -webkit-animation-name: slideOutUp
+  animation-name: slideOutUp
+  -webkit-animation-duration: 0.15s
+  animation-duration: 0.15s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  // line-height: 0
+  // opacity: 0
+  // padding: 0 10px
+
+.row.animate-show ~ .row
+  -webkit-animation-name: fadeIn
+  animation-name: fadeIn
+  -webkit-animation-duration: 0.5s
+  animation-duration: 0.5s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+
+
