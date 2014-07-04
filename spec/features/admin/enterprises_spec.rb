@@ -110,16 +110,17 @@ feature %q{
 
   scenario "editing an existing enterprise" do
     @enterprise = create(:enterprise)
+    e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method, distributors: [])
-    shipping_method = create(:shipping_method, distributors: [])
+    shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
 
     login_to_admin_section
 
     click_link 'Enterprises'
-    click_link 'Edit Profile'
+    all("a", text:'Edit Profile').first.click
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
