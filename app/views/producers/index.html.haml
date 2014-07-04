@@ -1,19 +1,19 @@
 = inject_enterprises 
 .producers{"ng-controller" => "ProducersCtrl"}
   .row
-    .small-12.columns.text-center.pad-top
-      %h1 Producers
-      %div 
-        Select a 
-        %ofn-modal{title: "producer"}
-          = render partial: "modals/producers"
-        from the list below:
+    .small-12.columns.pad-top
+      %h1 Find a local producer...
+      / %div 
+      /   Find a 
+      /   %ofn-modal{title: "producer"}
+      /     = render partial: "modals/producers"
+      /   from the list below:
 
   #active-table-search.row.pad-top
     .small-12.columns
       %input{type: :text, 
       "ng-model" => "query", 
-      placeholder: "Search Producer <or> Suburb / Postcode / State",
+      placeholder: "Search Producer or by Suburb / State",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
       / %placeholder
