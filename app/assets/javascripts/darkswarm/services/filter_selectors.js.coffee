@@ -14,10 +14,13 @@ Darkswarm.factory "FilterSelectorsService", ->
       .length
 
     filterText: (active)=>
-      if @totalActive() == 0
+      total = @totalActive()
+      if total == 0
         if active then "Hide filters" else "Filter by"
+      else if total == 1
+        "1 filter applied"
       else
-        "#{@totalActive()} filters active"
+        "#{@totalActive()} filters applied"
 
     clearAll: =>
       for selector in @selectors
