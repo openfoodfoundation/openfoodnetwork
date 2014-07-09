@@ -6,9 +6,9 @@ namespace :openfoodnetwork do
     desc 'export users to CSV'
     task export_users: :environment do
       CSV.open('db/users.csv', 'wb') do |csv|
-        csv << header
+        csv << user_header
         users.each do |user|
-          csv << row(user)
+          csv << user_row(user)
         end
       end
     end
@@ -34,7 +34,7 @@ namespace :openfoodnetwork do
     end
 
 
-    def header
+    def user_header
       ["encrypted_password", "password_salt", "email", "remember_token", "persistence_token", "reset_password_token", "perishable_token", "sign_in_count", "failed_attempts", "last_request_at", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "login", "created_at", "updated_at", "authentication_token", "unlock_token", "locked_at", "remember_created_at", "reset_password_sent_at",
 
        "role_name",
@@ -45,7 +45,7 @@ namespace :openfoodnetwork do
     end
 
 
-    def row(user)
+    def user_row(user)
       sa = user.orders.last.andand.ship_address
       ba = user.orders.last.andand.bill_address
 
