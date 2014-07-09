@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(:version => 20140702053145) do
   create_table "distributors_shipping_methods", :force => true do |t|
     t.integer  "distributor_id"
     t.integer  "shipping_method_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   add_index "distributors_shipping_methods", ["distributor_id"], :name => "index_distributors_shipping_methods_on_distributor_id"
@@ -562,9 +562,9 @@ ActiveRecord::Schema.define(:version => 20140702053145) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 

@@ -29,7 +29,6 @@ class Enterprise < ActiveRecord::Base
   validates_presence_of :address
   validates_associated :address
 
-  before_create :initialize_country
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -159,18 +158,20 @@ class Enterprise < ActiveRecord::Base
     self.relatives.is_distributor
   end
 
+  def suppliers
+    self.relatives.is_primary_producer
+  end
+
   def website
     strip_url read_attribute(:website)
   end
+
   def facebook
     strip_url read_attribute(:facebook)
   end
+
   def linkedin
     strip_url read_attribute(:linkedin)
-  end
-
-  def suppliers
-    self.relatives.is_primary_producer
   end
 
   def distributed_variants
@@ -192,6 +193,7 @@ class Enterprise < ActiveRecord::Base
       where('spree_products.id IN (?)', Spree::Product.in_distributor(self)).
       select('DISTINCT spree_taxons.*')
   end
+
   # Return all taxons for all supplied products
   def supplied_taxons
     Spree::Taxon.
@@ -200,16 +202,11 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+
   private
 
   def strip_url(url)
     url.andand.sub /(https?:\/\/)?(www\.)?/, ''
-  end
-
-  # Give us an empty address on create, and set the country to the default 
-  def initialize_country
-    self.address ||= Spree::Address.new
-    self.address.country = Spree::Country.find_by_id(Spree::Config[:default_country_id]) if self.address.new_record?
   end
 
   def set_unused_address_fields

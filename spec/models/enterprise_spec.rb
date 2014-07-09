@@ -66,13 +66,7 @@ describe Enterprise do
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
   end
-
-  it "should default address country to system country" do
-    create(:distributor_enterprise).address.country.should == Spree::Country.find_by_id(Spree::Config[:default_country_id])
-  end
-
   describe "scopes" do
-
     describe 'active' do
       it 'find active enterprises' do
         d1 = create(:distributor_enterprise, visible: false)

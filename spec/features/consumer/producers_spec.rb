@@ -8,6 +8,8 @@ feature %q{
   include UIComponentHelper
   let!(:producer) { create(:supplier_enterprise) }
   let!(:invisible_producer) { create(:supplier_enterprise, visible: false) }
+  let(:taxon) { create(:taxon) }
+  let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
   
   before do
     visit producers_path
@@ -16,7 +18,7 @@ feature %q{
   it "shows all producers with expandable details" do
     page.should have_content producer.name
     expand_active_table_node producer.name
-    page.should have_content producer.supplied_taxons.join(', ')
+    page.should have_content producer.supplied_taxons.first.name.upcase
   end
   
   it "doesn't show invisible producers" do

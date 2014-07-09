@@ -36,7 +36,7 @@ module OpenFoodNetwork
       d1 = create(:distributor_enterprise)
       p1 = create(:product, :supplier => s1)
       p2 = create(:product, :distributors => [d1])
-      p3 = create(:product)
+      p3 = create(:product, :supplier => s0)
 
       # When we search by the supplier enterprise, we should see the supplied products
       searcher = Searcher.new(:enterprise_id => s1.id.to_s)

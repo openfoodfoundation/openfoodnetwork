@@ -22,7 +22,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def active
-    @options[:active_distributors].andand.include?(object)
+    @options[:active_distributors].andand.include? object
   end
 end
 

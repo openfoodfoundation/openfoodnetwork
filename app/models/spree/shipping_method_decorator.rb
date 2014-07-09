@@ -6,6 +6,8 @@ Spree::ShippingMethod.class_eval do
   attr_accessible :distributor_ids, :description
   attr_accessible :require_ship_address
 
+  validates :distributors, presence: { message: "^At least one hub must be selected" }
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
