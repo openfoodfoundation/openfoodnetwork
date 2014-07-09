@@ -1,0 +1,33 @@
+.row
+  .small-12.columns
+    %a.button.primary.tiny.filterbtn{{"ng-click" => "filtersActive = !filtersActive"}}
+      {{ filterText(filtersActive) }}
+      %i.ofn-i_052-point-down{"ng-show" => "!filtersActive"}
+      %i.ofn-i_053-point-up{"ng-show" => "filtersActive"}
+
+.row.animate-show{"ng-show" => "filtersActive"}
+  .small-12.columns
+    
+    .row.filter-box
+      .small-12.large-8.columns
+        %h5.tdhead 
+          .light Filter by
+          Type
+      .small-12.large-4.columns
+        %h5.tdhead 
+          .light Filter by
+          Delivery
+    
+    .row.filter-box
+      .small-12.large-8.columns
+        %taxon-selector{objects: "Hubs.visible | filterHubs:query", 
+          results: "activeTaxons"}
+
+      .small-12.large-4.columns
+        %shipping-type-selector{results: "shippingTypes"} 
+
+    .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
+      .small-12.columns
+        %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 
+          %i.ofn-i_009-close
+          Clear all filters
