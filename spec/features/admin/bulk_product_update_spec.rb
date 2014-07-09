@@ -277,27 +277,23 @@ feature %q{
 
     # When I fill out variant details and hit update
     fill_in "variant_display_name", with: "Case of 12 Bottles"
-    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
     fill_in "variant_display_as", with: "Case"
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
     click_button 'Update'
-
     page.find("span#update-status-message").should have_content "Update complete"
+
+    updated_variant = Spree::Variant.where(deleted_at: nil).last
+    updated_variant.display_name.should == "Case of 12 Bottles"
+    updated_variant.unit_value.should == 3000
+    updated_variant.unit_description.should == "(12x250 mL bottles)"
+    updated_variant.display_as.should == "Case"
+    updated_variant.price.should == 4.0
+    updated_variant.on_hand.should == 10
 
     # Then I should see edit buttons for the new variant
     page.should have_selector "a.edit-variant", visible: true
-
-    # And the variants should be saved
-    visit '/admin/products/bulk_edit'
-    page.should have_selector "a.view-variants"
-    first("a.view-variants").trigger('click')
-
-    page.should have_field "variant_display_name", with: "Case of 12 Bottles"
-    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
-    page.should have_field "variant_display_as", with: "Case"
-    page.should have_field "variant_price", with: "4.0"
-    page.should have_field "variant_on_hand", with: "10"
   end
 
 
@@ -334,15 +330,15 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_edit'
-
-    page.should have_field "product_name", with: "Big Bag Of Potatoes"
-    page.should have_select "supplier", selected: s2.name
-    page.should have_field "available_on", with: (Date.today-3).strftime("%F %T"), visible: false
-    page.should have_field "price", with: "20.0"
-    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
-    page.should have_field "on_hand", with: "18"
-    page.should have_field "display_as", with: "Big Bag"
+    p.reload
+    p.name.should == "Big Bag Of Potatoes"
+    p.supplier.should == s2
+    p.variant_unit.should == "weight"
+    p.variant_unit_scale.should == 1000 # Kg
+    p.available_on.should == 3.days.ago.beginning_of_day
+    p.master.display_as.should == "Big Bag"
+    p.price.should == 20.0
+    p.on_hand.should == 18
   end
   
   scenario "updating a product with a variant unit of 'items'" do
@@ -360,10 +356,10 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_edit'
-
-    page.should have_select "variant_unit_with_scale", selected: "Items"
-    page.should have_field "variant_unit_name", with: "loaf"
+    p.reload
+    p.variant_unit.should == "items"
+    p.variant_unit_scale.should be_nil
+    p.variant_unit_name.should == "loaf"
   end
 
   scenario "setting a variant unit on a product that has none" do
@@ -383,11 +379,12 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_edit'
-    first("a.view-variants").trigger('click')
-
-    page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
-    page.should have_field "variant_unit_value_with_description", with: "123 abc"
+    p.reload
+    p.variant_unit.should == "weight"
+    p.variant_unit_scale.should == 1000 # Kg
+    v.reload
+    v.unit_value.should == 123000 # 123 kg in g
+    v.unit_description.should == "abc"
   end
 
   describe "setting the master unit value for a product without variants" do
@@ -406,11 +403,6 @@ feature %q{
 
       click_button 'Update'
       page.find("span#update-status-message").should have_content "Update complete"
-
-      visit '/admin/products/bulk_edit'
-
-      page.should have_select "variant_unit_with_scale", selected: "Weight (kg)"
-      page.should have_field "master_unit_value_with_description", with: "123 abc"
 
       p.reload
       p.variant_unit.should == 'weight'
@@ -450,22 +442,21 @@ feature %q{
     page.should have_field "variant_on_hand", with: "9"
     page.should have_selector "span[name='on_hand']", text: "9"
 
+    select "Volume (L)", from: "variant_unit_with_scale"
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
-    fill_in "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    fill_in "variant_unit_value_with_description", with: "2 (8x250 mL bottles)"
 
     page.should have_selector "span[name='on_hand']", text: "10"
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_edit'
-    page.should have_selector "a.view-variants"
-    first("a.view-variants").trigger('click')
-
-    page.should have_field "variant_price", with: "4.0"
-    page.should have_field "variant_on_hand", with: "10"
-    page.should have_field "variant_unit_value_with_description", with: "4000 (12x250 mL bottles)"
+    v.reload
+    v.price.should == 4.0
+    v.on_hand.should == 10
+    v.unit_value.should == 2 # 2L in L
+    v.unit_description.should == "(8x250 mL bottles)"
   end
 
   scenario "updating delegated attributes of variants in isolation" do
@@ -485,11 +476,8 @@ feature %q{
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
 
-    visit '/admin/products/bulk_edit'
-    page.should have_selector "a.view-variants"
-    first("a.view-variants").trigger('click')
-
-    page.should have_field "variant_price", with: "10.0"
+    v.reload
+    v.price.should == 10.0
   end
 
   scenario "updating a product mutiple times without refresh" do
@@ -504,20 +492,26 @@ feature %q{
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p.reload
+    p.name.should == "new name 1"
 
     fill_in "product_name", with: "new name 2"
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p.reload
+    p.name.should == "new name 2"
 
     fill_in "product_name", with: "original name"
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p.reload
+    p.name.should == "original name"
   end
 
   scenario "updating a product after cloning a product" do
-    FactoryGirl.create(:product, :name => "product 1")
+    p = FactoryGirl.create(:product, :name => "product 1")
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
@@ -528,12 +522,13 @@ feature %q{
 
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p.reload
+    p.name.should == "new product name"
   end
 
   scenario "updating when no changes have been made" do
     Capybara.using_wait_time(2) do
       FactoryGirl.create(:product, :name => "product 1")
-      FactoryGirl.create(:product, :name => "product 2")
       login_to_admin_section
 
       visit '/admin/products/bulk_edit'
@@ -562,18 +557,24 @@ feature %q{
 
     click_on 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p1.reload
+    p1.name.should == "new product1"
   end
 
   scenario "updating a product when there are more products than the default API page size" do
-    26.times { FactoryGirl.create(:simple_product) }
+    p = FactoryGirl.create(:simple_product)
+    25.times { FactoryGirl.create(:simple_product) }
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
 
-    field = page.all("table#listing_products input[name='product_name']").first
-    field.set "new name"
+    within "tr#p_#{p.id}" do
+      fill_in 'product_name', with: "new name"
+    end
     click_button 'Update'
     page.find("span#update-status-message").should have_content "Update complete"
+    p.reload
+    p.name.should == "new name"
   end
 
   describe "using action buttons" do
@@ -937,23 +938,25 @@ feature %q{
       page.should have_field "on_hand", with: "6"
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select s2.name, from: 'supplier'
+      select(s2.name, :from => 'supplier')
       fill_in "available_on", with: (Date.today-3).strftime("%F %T")
       fill_in "price", with: "20"
+      select "Weight (kg)", from: "variant_unit_with_scale"
       fill_in "on_hand", with: "18"
+      fill_in "display_as", with: "Big Bag"
 
       click_button 'Update'
       page.find("span#update-status-message").should have_content "Update complete"
 
-      visit '/admin/products/bulk_edit'
-      first("div.option_tab_titles h6", :text => "Toggle Columns").click
-      first("li.column-list-item", text: "Available On").click
-
-      page.should have_field "product_name", with: "Big Bag Of Potatoes"
-      page.should have_select "supplier", selected: s2.name
-      page.should have_field "available_on", with: (Date.today-3).strftime("%F %T")
-      page.should have_field "price", with: "20.0"
-      page.should have_field "on_hand", with: "18"
+      p.reload
+      p.name.should == "Big Bag Of Potatoes"
+      p.supplier.should == s2
+      p.variant_unit.should == "weight"
+      p.variant_unit_scale.should == 1000 # Kg
+      p.available_on.should == 3.days.ago.beginning_of_day
+      p.master.display_as.should == "Big Bag"
+      p.price.should == 20.0
+      p.on_hand.should == 18
     end
   end
 end
