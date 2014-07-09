@@ -16,7 +16,6 @@ Darkswarm.directive "taxonSelector",  ->
         selector.taxon.id
 
     scope.selectors = ->
-      console.log "selectoring"
       taxons = {} 
       selectors = []
       for object in scope.objects()
