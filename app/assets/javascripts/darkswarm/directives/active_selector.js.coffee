@@ -7,3 +7,4 @@ Darkswarm.directive "activeSelector",  ->
     elem.bind "click", ->
       scope.$apply ->
         scope.selector.active = !scope.selector.active 
+        scope.emit()

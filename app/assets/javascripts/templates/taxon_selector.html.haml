@@ -1,4 +1,4 @@
 %ul.small-block-grid-4
-  %active-selector{"ng-repeat" => "selector in TaxonSelector.selectors"}
+  %active-selector{"ng-repeat" => "selector in selectors()"}
     %render-svg{path: "{{selector.taxon.icon}}"} 
     %span {{ selector.taxon.name }}

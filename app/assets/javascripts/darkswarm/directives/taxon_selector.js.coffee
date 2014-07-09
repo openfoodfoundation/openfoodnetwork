@@ -1,5 +1,33 @@
-Darkswarm.directive "taxonSelector", (TaxonSelector) ->
+Darkswarm.directive "taxonSelector",  ->
   restrict: 'E'
+  scope:
+    objects: "&"
+    results: "="
   templateUrl: "taxon_selector.html"
+
   link: (scope, elem, attr)->
-    scope.TaxonSelector = TaxonSelector
+    selectors_by_id = {}
+    selectors = ["foo"]
+
+    scope.emit = ->
+      scope.results = selectors.filter (selector)->
+        selector.active
+      .map (selector)->
+        selector.taxon.id
+
+    scope.selectors = ->
+      console.log "selectoring"
+      taxons = {} 
+      selectors = []
+      for object in scope.objects()
+        for taxon in (object.taxons.concat object?.supplied_taxons)
+          taxons[taxon.id] = taxon
+      for id, taxon of taxons
+        if selector = selectors_by_id[id]
+          selectors.push selector
+        else
+          selector = selectors_by_id[id] =
+            active: false
+            taxon: taxon
+          selectors.push selector
+      selectors

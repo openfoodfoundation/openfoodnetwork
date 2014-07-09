@@ -20,7 +20,8 @@
           Something  
     .row.filter-box
       .small-12.large-6.columns
-        %taxon-selector{enterprises: "Producers.visible"}
+        %taxon-selector{objects: "Producers.visible | filterProducers:query", 
+          results: "activeTaxons"}
 
       .small-12.large-6.columns
         %shipping-type-selector
