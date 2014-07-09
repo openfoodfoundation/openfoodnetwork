@@ -1,7 +1,3 @@
 %ul.small-block-grid-4
-  %li{"ng-class" => "{active: shippingTypes['delivery']}"}
-    %a{"ng-click" => "shippingTypes['delivery'] = !shippingTypes['delivery']"}
-      Delivery
-  %li{"ng-class" => "{active: shippingTypes['pickup']}"}
-    %a{"ng-click" => "shippingTypes['pickup'] = !shippingTypes['pickup']"}
-      Pickup
+  %active-selector{"ng-repeat" => "(name, selector) in selectors"}
+    {{ name | capitalize }}

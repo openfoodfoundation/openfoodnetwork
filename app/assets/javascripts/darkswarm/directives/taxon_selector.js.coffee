@@ -1,4 +1,4 @@
-Darkswarm.directive "taxonSelector",  ->
+Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
   restrict: 'E'
   scope:
     objects: "&"
@@ -25,8 +25,7 @@ Darkswarm.directive "taxonSelector",  ->
         if selector = selectors_by_id[id]
           selectors.push selector
         else
-          selector = selectors_by_id[id] =
-            active: false
+          selector = selectors_by_id[id] = FilterSelectorsService.new
             taxon: taxon
           selectors.push selector
       selectors
