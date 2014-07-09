@@ -1,5 +1,5 @@
 = inject_enterprises 
-.producers{"ng-controller" => "ProducersCtrl"}
+.producers.pad-top{"ng-controller" => "ProducersCtrl"}
   .row
     .small-12.columns.pad-top
       %h1 Find local producers
@@ -35,7 +35,11 @@
           .small-12.columns
             = render partial: 'producers/skinny'
             = render partial: 'producers/fat'
-      %producer.active_table_node.row{"ng-show" => "producers.length == 0"}
-        No Results
+            
+        %producer.row{"ng-show" => "producers.length == 0"}
+          %p.no-results
+            Sorry, no results found for
+            %strong {{query}}.
+            Try another search?
 
 = render partial: "shared/footer"
