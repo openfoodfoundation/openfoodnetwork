@@ -46,14 +46,18 @@ feature %q{
       login_to_admin_as enterprise_user
     end
 
-    it "creates payment methods" do
+    it "I can get to the new enterprise page" do
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Payment Methods' }
       click_link 'New Payment Method'
+      current_path.should == spree.new_admin_payment_method_path
+    end
 
+    it "creates payment methods" do
+      visit spree.new_admin_payment_method_path
       fill_in 'payment_method_name', :with => 'Cheque payment method'
 
-      select distributor1.name, :from => 'payment_method_distributor_ids'
+      check "payment_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'

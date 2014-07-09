@@ -1,7 +1,8 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
-      before_filter :load_hubs, only: [:new, :edit, :create, :update]
+      before_filter :load_hubs, only: [:new, :edit, :update]
+      create.before :load_hubs
 
       # Only show payment methods that user has access to and sort by distributor name
       # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked

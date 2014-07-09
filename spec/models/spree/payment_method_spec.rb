@@ -9,5 +9,11 @@ module Spree
 
       PaymentMethod.by_name.should == [pm2, pm3, pm1]
     end
+
+    it "raises errors when required fields are missing" do
+      pm = PaymentMethod.new()
+      pm.save
+      pm.errors.to_a.should == ["Name can't be blank", "At least one hub must be selected"]
+    end
   end
 end

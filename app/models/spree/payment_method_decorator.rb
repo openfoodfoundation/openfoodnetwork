@@ -4,6 +4,8 @@ Spree::PaymentMethod.class_eval do
 
   attr_accessible :distributor_ids
 
+  validates :distributors, presence: { message: "^At least one hub must be selected" }
+
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
