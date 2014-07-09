@@ -16,9 +16,6 @@
       placeholder: "Search by Producer name or Suburb / State",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
-      / %placeholder
-      /   %i.ofn-i_020-search
-      /   Search Producer or by Suburb / Postcode / State 
 
   = render partial: "producers/filters"
 
@@ -35,7 +32,7 @@
           .small-12.columns
             = render partial: 'producers/skinny'
             = render partial: 'producers/fat'
-            
+
         %producer.row{"ng-show" => "producers.length == 0"}
           %p.no-results
             Sorry, no results found for
