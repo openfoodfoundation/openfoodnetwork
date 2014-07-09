@@ -15,5 +15,15 @@ module Spree
       pm.save
       pm.errors.to_a.should == ["Name can't be blank", "At least one hub must be selected"]
     end
+
+    it "generates a clean name for known Payment Method types" do
+      Spree::PaymentMethod::Check.clean_name.should == "Cash/EFT/etc. (payments for which automatic validation is not required)"
+      Spree::Gateway::Migs.clean_name.should == "MasterCard Internet Gateway Service (MIGS)"
+      Spree::BillingIntegration::PaypalExpressUk.clean_name.should == "PayPal Express (UK)"
+      Spree::BillingIntegration::PaypalExpress.clean_name.should == "PayPal Express"
+
+      # Testing else condition
+      Spree::Gateway::BogusSimple.clean_name.should == "BogusSimple"
+    end
   end
 end
