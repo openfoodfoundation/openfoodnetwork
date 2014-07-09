@@ -1,6 +1,7 @@
 @import typography
 @import branding
 @import animations
+@import mixins
 
 //Big search used in active table search \\
 
@@ -20,8 +21,7 @@
   color: $inputactv
 
   &:hover
-    -webkit-box-shadow: 0 1px 1px 0 rgba(255,255,255,0.25)
-    box-shadow: 0 1px 1px 0 rgba(255,255,255,0.25)
+    @include box-shadow(0 1px 1px 0 rgba(255,255,255,0.25))
     border-bottom: 2px dotted $inputhvr
     color: $inputactv
 
@@ -31,6 +31,12 @@
     text-shadow: 0 0 10px #ffffff
     padding: 1rem 0.5rem 0.5rem 0.5rem
     letter-spacing: 0.02rem
+
+@mixin big-input-static
+  outline: 0
+  &:active, &:focus, &.active
+    padding: 0rem 0.5rem 0.2rem 0.5rem
+    letter-spacing: 0
 
 @mixin placeholder($placeholder, $placeholderhvr)
   ::-webkit-input-placeholder
