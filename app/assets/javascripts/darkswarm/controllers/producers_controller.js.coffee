@@ -2,6 +2,7 @@ Darkswarm.controller "ProducersCtrl", ($scope, Producers, $filter, FilterSelecto
   $scope.Producers = Producers
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
+  $scope.filterText =  FilterSelectorsService.filterText
   $scope.filtersActive = true
   $scope.activeTaxons = []
   $scope.query = Search.search()
