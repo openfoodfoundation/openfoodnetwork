@@ -1,0 +1,54 @@
+@import typography
+@import branding
+@import animations
+
+//Big search used in active table search \\
+
+@mixin big-input($input, $inputhvr, $inputactv)
+  @extend .avenir
+  @include csstrans
+  // transition: all 0.5s ease
+  background: transparent
+  border: none
+  border-bottom: 2px dotted $input
+  font-size: 2rem 
+  box-shadow: 0
+  padding: 0rem 0.5rem 0.2rem 0.5rem
+  height: auto
+  margin-bottom: 0.5rem
+  box-shadow: none
+  color: $inputactv
+
+  &:hover
+    -webkit-box-shadow: 0 1px 1px 0 rgba(255,255,255,0.25)
+    box-shadow: 0 1px 1px 0 rgba(255,255,255,0.25)
+    border-bottom: 2px dotted $inputhvr
+    color: $inputactv
+
+  &:active, &:focus, &.active
+    border-bottom: 2px dotted $inputactv
+    color: $inputactv
+    text-shadow: 0 0 10px #ffffff
+    padding: 1rem 0.5rem 0.5rem 0.5rem
+    letter-spacing: 0.02rem
+
+@mixin placeholder($placeholder, $placeholderhvr)
+  ::-webkit-input-placeholder
+    color: $placeholder
+  :-moz-placeholder
+    color: $placeholder
+  ::-moz-placeholder 
+    color: $placeholder
+  :-ms-input-placeholder 
+    color: $placeholder   
+
+  &:hover
+    ::-webkit-input-placeholder
+      color: $placeholderhvr
+    :-moz-placeholder
+      color: $placeholderhvr
+    ::-moz-placeholder 
+      color: $placeholderhvr
+    :-ms-input-placeholder 
+      color: $placeholderhvr
+

@@ -1,14 +1,18 @@
 @import mixins
 @import branding
+@import big-input
+@import animations
 
 // OVERRIDES
 .row .row.filter-box
   margin-left: 0
   margin-right: 0
 
+.row.filter-box:first-child
+  border-top: 1px solid $clr-brick
 
 .filter-box
-  background: rgba(255,255,255,0.5)
+  background: rgba(255,255,255,0.65)
 
   .tdhead
     padding: 0.25rem 0.5rem
@@ -18,11 +22,19 @@
   [class*="block-grid-"] > li
     padding-bottom: 0.5rem !important
 
+  li
+    @include border-radius(12px)
+    padding-top: 0.5rem
+    margin-bottom: 0.25rem 
+    &:hover, &:focus
+      background: rgba(255,255,255,0.25)
+  li.active 
+    background: white
+    @include box-shadow(inset 0 1px 3px 0 rgba(143,48,29,0.5))
+
   li.active a
     color: $clr-brick
-    @include border-radius(12px)
-    @include box-shadow(inset 0 1px 3px 0 rgba(143,48,29,0.5))
-    border: 1px solid $clr-brick
+    // border: 1px solid $clr-brick
     render-svg
       svg
         path
@@ -31,12 +43,12 @@
       border-color: $clr-brick-bright
 
   li a
+    @include csstrans
     display: table
     table-layout: fixed
+    overflow: visible
     // width: 100%
-    height: 2.5rem
-    padding: 0.5rem 0.5rem 0.5rem 0.25rem 
-    border: 1px solid transparent
+    height: 2rem
     line-height: 1
     color: #444
     font-size: 0.875rem
@@ -46,6 +58,7 @@
       text-align: left
     &:hover, &:focus
       color: $clr-brick-bright
+      
       render-svg
         svg
           path
@@ -71,6 +84,9 @@
         path
           fill: #666
 
+.button.filterbtn
+  margin-bottom: 0 !important
+
 #active-table-search
   position: relative
   i.ofn-i_020-search
@@ -81,11 +97,13 @@
     // z-index: 2
     // color: #b2b2b2
   
+  @include placeholder(rgba(0,0,0,0.3), #888)
+
   input[type="text"]
-    font-size: 2em  
-    @include big-input
-    // padding-left: 44px
-  
-  placeholder
-    color: $disabled-dark
+    @include big-input(rgba(0,0,0,0.2), #999, #000)
+
+
+
+
+
 

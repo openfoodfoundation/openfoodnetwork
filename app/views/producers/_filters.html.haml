@@ -1,7 +1,7 @@
 .row
   .small-12.columns
-    %a.right{"ng-click" => "filtersActive = !filtersActive"}
-      Filter by
+    %a.button.primary.tiny.filterbtn{"ng-click" => "filtersActive = !filtersActive"}
+      Filter options
       %i.ofn-i_052-point-down
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns

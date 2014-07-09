@@ -2,18 +2,18 @@
 .producers{"ng-controller" => "ProducersCtrl"}
   .row
     .small-12.columns.pad-top
-      %h1 Find a local producer...
+      %h1 Find local producers
       / %div 
       /   Find a 
       /   %ofn-modal{title: "producer"}
       /     = render partial: "modals/producers"
       /   from the list below:
 
-  #active-table-search.row.pad-top
+  #active-table-search.row
     .small-12.columns
-      %input{type: :text, 
+      %input.animate-show{type: :text, 
       "ng-model" => "query", 
-      placeholder: "Search Producer or by Suburb / State",
+      placeholder: "Search by Producer name or Suburb / State",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
       / %placeholder

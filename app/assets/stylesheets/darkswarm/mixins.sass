@@ -8,34 +8,8 @@
   padding-top: 100px
   padding-bottom: 100px
 
-@mixin big-input 
-  // border: 1px solid #999
-  background: transparent
-  border: none
-  border-bottom: 1px dotted black
-  font-size: 2rem
-  @extend .avenir
-  box-shadow: 0
-  padding: 1rem 0 0.5rem 0
-  height: auto
-  margin-bottom: 0.1rem
-  box-shadow: none
-  // background: rgba(255,255,255,0.65)
-  &:active, &:hover, &:focus
-    color: black
-    // background: rgba(255,255,255,1)
-    // border-color: #888
-
 @mixin disabled
   color: $disabled-bright
-
-@mixin csstrans
-  -webkit-transition: all 100ms ease-in-out
-  -moz-transition: all 100ms ease-in-out
-  -ms-transition: all 100ms ease-in-out
-  -o-transition: all 100ms ease-in-out
-  transition: all 100ms ease-in-out
-  -webkit-transform-style: preserve-3d
 
 @mixin box-shadow($box-shadow)
   -moz-box-shadow: $box-shadow

@@ -1,12 +1,16 @@
 @import mixins
 @import variables
 @import branding
+@import big-input
 
 
 .darkswarm
-  #search
-    font-size: 2em
-    @include big-input
+  // #search
+  @include placeholder(rgba(0,0,0,0.3), #999)
+
+  input#search
+    @include big-input(rgba(0,0,0,0.2), #999, #000)
+
   color: #666
   display: block
   navigation
