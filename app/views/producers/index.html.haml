@@ -35,5 +35,7 @@
           .small-12.columns
             = render partial: 'producers/skinny'
             = render partial: 'producers/fat'
+      %producer.active_table_node.row{"ng-show" => "producers.length == 0"}
+        No Results
 
 = render partial: "shared/footer"
