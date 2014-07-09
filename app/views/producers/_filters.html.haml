@@ -4,28 +4,23 @@
       {{ filterText(filtersActive) }}
       %i.ofn-i_052-point-down{"ng-show" => "!filtersActive"}
       %i.ofn-i_053-point-up{"ng-show" => "filtersActive"}
+
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
+    
     .row.filter-box
-      .small-12.large-6.columns
+      .small-12.columns
         %h5.tdhead 
           .light Filter by
           Type
-      .small-12.large-3.columns
-        %h5.tdhead 
-          .light Filter by
-          Delivery
-      .small-12.large-3.columns
-        %h5.tdhead 
-          .light Filter by
-          Something  
+    
     .row.filter-box
-      .small-12.large-6.columns
+      .small-12.columns
         %taxon-selector{objects: "Producers.visible | filterProducers:query", 
           results: "activeTaxons"}
 
-      .small-12.large-6.columns
-        %shipping-type-selector{results: "shippingTypes"} 
+      / .small-12.large-6.columns
+      /   %shipping-type-selector{results: "shippingTypes"} 
 
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
       .small-12.columns
