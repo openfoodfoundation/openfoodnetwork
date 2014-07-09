@@ -27,7 +27,7 @@
       .active_table
         %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
         "scroll-after-load" => true,
-        "ng-repeat" => "producer in filteredProducers = (Producers.visible | filterProducers:query | taxons:TaxonSelector.active() | shipping:shippingTypes)",
+        "ng-repeat" => "producer in veryFilteredProducers = (filteredProducers() | taxons:TaxonSelector.active() | shipping:shippingTypes)",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
         id: "{{producer.hash}}"}

@@ -6,5 +6,4 @@ Darkswarm.directive "activeSelector",  ->
   link: (scope, elem, attr)->
     elem.bind "click", ->
       scope.$apply ->
-        elem.toggleClass "active"
         scope.selector.active = !scope.selector.active 
