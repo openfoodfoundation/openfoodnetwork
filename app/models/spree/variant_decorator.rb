@@ -51,11 +51,13 @@ Spree::Variant.class_eval do
   end
 
   def name_to_display
-    display_name || product.name
+    return product.name if display_name.blank?
+    display_name
   end
 
   def unit_to_display
-    display_as || options_text
+    return options_text if display_as.blank?
+    display_as
   end
 
 
