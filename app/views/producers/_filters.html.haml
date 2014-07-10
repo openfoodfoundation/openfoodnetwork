@@ -2,8 +2,8 @@
   .small-12.columns
     %a.button.primary.tiny.filterbtn{{"ng-click" => "filtersActive = !filtersActive"}}
       {{ filterText(filtersActive) }}
-      %i.ofn-i_052-point-down{"ng-show" => "!filtersActive"}
-      %i.ofn-i_053-point-up{"ng-show" => "filtersActive"}
+      %i.ofn-i_005-caret-down{"ng-show" => "!filtersActive"}
+      %i.ofn-i_006-caret-up{"ng-show" => "filtersActive"}
 
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
