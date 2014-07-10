@@ -8,13 +8,14 @@
 @mixin big-input($input, $inputhvr, $inputactv)
   @extend .avenir
   @include csstrans
+  @include border-radius(0.5rem)
+
   // transition: all 0.5s ease
-  background: transparent
-  border: none
-  border-bottom: 2px dotted $input
+  background: rgba(255,255,255,0.1)
+  border: 2px solid $input
   font-size: 2rem 
   box-shadow: 0
-  padding: 0rem 0.5rem 0.2rem 0.5rem
+  padding: 0.75rem 1rem 0.35rem 1rem
   height: auto
   margin-bottom: 0.5rem
   box-shadow: none
@@ -22,14 +23,16 @@
 
   &:hover
     @include box-shadow(0 1px 1px 0 rgba(255,255,255,0.25))
-    border-bottom: 2px dotted $inputhvr
+    border: 2px solid $inputhvr
     color: $inputactv
 
   &:active, &:focus, &.active
-    border-bottom: 2px dotted $inputactv
+    border: 2px solid $inputactv
     color: $inputactv
+    background: white 
+    background: rgba(255,255,255,0.5)
     text-shadow: 0 0 10px #ffffff
-    padding: 1rem 0.5rem 0.5rem 0.5rem
+    padding: 1.5rem 1rem 1rem 1rem
     letter-spacing: 0.02rem
 
 @mixin big-input-static
