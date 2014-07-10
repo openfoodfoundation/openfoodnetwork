@@ -1,0 +1,6 @@
+.row
+  .small-12.columns
+    %a.button.primary.tiny.filterbtn{{"ng-click" => "filtersActive = !filtersActive"}}
+      {{ filterText(filtersActive) }}
+      %i.ofn-i_005-caret-down{"ng-show" => "!filtersActive"}
+      %i.ofn-i_006-caret-up{"ng-show" => "filtersActive"}
