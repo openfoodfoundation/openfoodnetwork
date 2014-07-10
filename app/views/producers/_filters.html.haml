@@ -2,15 +2,11 @@
 
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
-    
     .row.filter-box
       .small-12.columns
         %h5.tdhead 
           .light Filter by
           Type
-    
-    .row.filter-box
-      .small-12.columns
         %taxon-selector{objects: "Producers.visible | filterProducers:query", 
           results: "activeTaxons"}
 
