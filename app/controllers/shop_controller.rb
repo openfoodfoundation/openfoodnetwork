@@ -9,15 +9,17 @@ class ShopController < BaseController
   
   def products
     # Can we make this query less slow?
-    unless @products = current_order_cycle.andand
+    #
+    if @products = current_order_cycle.andand
       .valid_products_distributed_by(current_distributor).andand
       .select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
       .sort_by {|p| p.name }
+      render status: 200,
+        json: ActiveModel::ArraySerializer.new(@products, each_serializer: Api::ProductSerializer, 
+        current_order_cycle: current_order_cycle, current_distributor: current_distributor).to_json 
+    else
       render json: "", status: 404
     end
-    render status: 200,
-      json: ActiveModel::ArraySerializer.new(@products, each_serializer: Api::ProductSerializer, 
-      current_order_cycle: current_order_cycle, current_distributor: current_distributor).to_json 
   end
 
   def order_cycle
