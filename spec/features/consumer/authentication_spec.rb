@@ -11,7 +11,7 @@ feature "Authentication", js: true do
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
         click_login_button
-        page.should have_content "Select a producer from the list below"
+        page.should have_content "Find local producers"
         current_path.should == producers_path
       end
     end
