@@ -1,26 +1,19 @@
 = render partial: 'shared/components/filter_controls'
 
 .row.animate-show{"ng-show" => "filtersActive"}
-  .small-12.columns
-    
+  .small-12.columns    
     .row.filter-box
-      .small-12.large-8.columns
+      .small-12.large-9.columns
         %h5.tdhead 
           .light Filter by
           Type
-      .small-12.large-4.columns
+        %taxon-selector{objects: "hubs | hubs:query", 
+          results: "activeTaxons"}
+      .small-12.large-3.columns
         %h5.tdhead 
           .light Filter by
           Delivery
-    
-    .row.filter-box
-      .small-12.large-8.columns
-        %taxon-selector{objects: "hubs | hubs:query", 
-          results: "activeTaxons"}
-
-      .small-12.large-4.columns
         %shipping-type-selector{results: "shippingTypes"} 
-
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
       .small-12.columns
         %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 
