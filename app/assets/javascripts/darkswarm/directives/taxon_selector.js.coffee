@@ -19,8 +19,11 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
       taxons = {} 
       selectors = []
       for object in scope.objects()
-        for taxon in (object.taxons.concat object?.supplied_taxons)
+        for taxon in object.taxons
           taxons[taxon.id] = taxon
+        if object.supplied_taxons
+          for taxon in object.supplied_taxons
+            taxons[taxon.id] = taxon
       for id, taxon of taxons
         if selector = selectors_by_id[id]
           selectors.push selector

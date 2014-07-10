@@ -1,6 +1,7 @@
 %products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
+
   = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
     .row
       .small-6.columns
@@ -8,12 +9,14 @@
         placeholder: "Search products",
         "ng-debounce" => "150",
         "ofn-disable-enter" => true}
+
       .small-6.columns
         %input.button.primary.right{type: :submit, value: "Add to Cart"}
-    
+    = render partial: "shop/products/filters"
+
     %div{bindonce: true}
       %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in Product.products | products:query | orderBy:ordering.order"}
+        "ng-repeat" => "product in Product.products | products:query | taxons:activeTaxons | orderBy:ordering.order"}
         %div
           = render partial: "shop/products/summary"
           %div{"bo-if" => "hasVariants"}
