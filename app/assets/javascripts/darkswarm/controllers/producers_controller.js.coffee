@@ -9,6 +9,3 @@ Darkswarm.controller "ProducersCtrl", ($scope, Producers, $filter, FilterSelecto
 
   $scope.$watch "query", (query)->
     Search.search query
-    
-     
-

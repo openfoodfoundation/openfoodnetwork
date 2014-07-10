@@ -23,7 +23,7 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query)",
+        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query  | taxons:activeTaxons | shipping:shippingTypes)",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",

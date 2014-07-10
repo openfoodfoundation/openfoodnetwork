@@ -25,3 +25,4 @@ Darkswarm.factory "FilterSelectorsService", ->
     clearAll: =>
       for selector in @selectors
         selector.active = false
+        selector.emit()
