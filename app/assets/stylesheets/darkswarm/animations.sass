@@ -85,7 +85,6 @@
 
 
 .animate-repeat
-  border-color: rgba(153, 153, 153, 1)
   -webkit-transform: translateZ(0)
   transform: translateZ(0)
   &.ng-move, &.ng-enter, &.ng-leave
@@ -94,21 +93,24 @@
   
   &.ng-leave
     opacity: 1
-    border-color: rgba(153, 153, 153, 1)
     &.ng-leave-active
       opacity: 0
-      border-color: rgba(153, 153, 153, 0)
 
   &.ng-enter
     opacity: 0
-    border-color: rgba(153, 153, 153, 0)
     &.ng-enter-active
       opacity: 1
+
+product.animate-repeat
+  &.ng-leave
+    border-color: rgba(153, 153, 153, 1)
+    &.ng-leave-active
+      border-color: rgba(153, 153, 153, 0)
+
+  &.ng-enter
+    border-color: rgba(153, 153, 153, 0)
+    &.ng-enter-active
       border-color: rgba(153, 153, 153, 1)
-
-  &.ng-move
-    &.ng-move-active
-
 
 .animate-show
   -webkit-animation-name: slideInDown
