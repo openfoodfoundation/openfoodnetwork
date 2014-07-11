@@ -7,8 +7,9 @@
         %h5.tdhead 
           .light Filter by
           Type
-        %taxon-selector{objects: "Producers.visible | filterProducers:query", 
-          results: "activeTaxons"}
+        %ul.small-block-grid-2.large-block-grid-5
+          %taxon-selector{objects: "Producers.visible | filterProducers:query", 
+            results: "activeTaxons"}
 
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
       .small-12.columns
