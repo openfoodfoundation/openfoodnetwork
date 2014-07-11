@@ -46,6 +46,27 @@ module Spree
           Variant.in_distributor(d1).should == [p1.master]
         end
       end
+
+      describe "finding variants in an order cycle" do
+        let!(:d1) { create(:distributor_enterprise) }
+        let!(:d2) { create(:distributor_enterprise) }
+        let!(:p1) { create(:product) }
+        let!(:p2) { create(:product) }
+        let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [p1.master]) }
+        let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.master]) }
+
+        it "shows variants in an order cycle" do
+          Variant.in_order_cycle(oc1).should == [p1.master]
+        end
+
+        it "doesn't show duplicates" do
+          ex = create(:exchange, order_cycle: oc1, sender: oc1.coordinator, receiver: d2)
+          ex.variants << p1.master
+
+          Variant.in_order_cycle(oc1).should == [p1.master]
+        end
+      end
+
     end
 
     describe "calculating the price with enterprise fees" do

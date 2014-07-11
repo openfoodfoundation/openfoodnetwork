@@ -18,6 +18,7 @@ Spree::Variant.class_eval do
   before_validation :update_weight_from_unit_value
   after_save :update_units
 
+  scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
   scope :with_order_cycles_outer, joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = spree_variants.id)').
                                   joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
                                   joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
@@ -27,6 +28,13 @@ Spree::Variant.class_eval do
   scope :in_distributor, lambda { |distributor|
     with_order_cycles_outer.
     where('o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?', false, distributor).
+    select('DISTINCT spree_variants.*')
+  }
+
+  scope :in_order_cycle, lambda { |order_cycle|
+    with_order_cycles_inner.
+    merge(Exchange.outgoing).
+    where('order_cycles.id = ?', order_cycle).
     select('DISTINCT spree_variants.*')
   }
 
