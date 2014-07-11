@@ -32,11 +32,13 @@
           .small-12.columns.text-center
             Loading products
 
-      %product{"ng-show" => "filteredProducts.length == 0 && !Product.loading"}
+      %div{"ng-show" => "filteredProducts.length == 0 && !Product.loading"}
         .row.summary
-          .small-12.columns.text-center
-            No results for {{ query }}
-
+          .small-12.columns
+            %p.no-results
+              Sorry, no results found for
+              %strong {{query}}.
+              Try another search?
     .row
       .small-12.columns
         %input.button.primary.right.add_to_cart{type: :submit, value: "Add to Cart"}
