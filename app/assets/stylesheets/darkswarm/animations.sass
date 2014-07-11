@@ -89,26 +89,24 @@
   -webkit-transform: translateZ(0)
   transform: translateZ(0)
   &.ng-move, &.ng-enter, &.ng-leave
-    // -webkit-transition: border 0s
-    -webkit-transition: all 300ms linear 
-    // transition: border 0s
-    transition: all 300ms linear 
+    -webkit-transition: all 1s linear 
+    transition: all 1s linear 
   
   &.ng-leave
     opacity: 1
     border-color: rgba(153, 153, 153, 1)
-    max-height: 200px
+    //max-height: 200px
     &.ng-leave-active
       opacity: 0
-      max-height: 0px
+      //max-height: 0px
       border-color: rgba(153, 153, 153, 0)
 
   &.ng-enter
     opacity: 0
     border-color: rgba(153, 153, 153, 0)
-    max-height: 0px
+    //max-height: 0px
     &.ng-enter-active
-      max-height: 200px 
+      //max-height: 200px 
       opacity: 1
       border-color: rgba(153, 153, 153, 1)
 
