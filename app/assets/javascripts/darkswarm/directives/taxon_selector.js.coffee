@@ -1,5 +1,6 @@
 Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
   restrict: 'E'
+  replace: true
   scope:
     objects: "&"
     results: "="
