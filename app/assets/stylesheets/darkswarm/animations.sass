@@ -83,33 +83,37 @@
   filter: alpha(opacity = 50)
   opacity: .5
 
+
 .animate-repeat
-  // line-height: 40px
-  list-style: none
-  box-sizing: border-box
 
-.animate-repeat.ng-move,
-.animate-repeat.ng-enter,
-.animate-repeat.ng-leave
-  -webkit-transition: all linear 300ms
-  transition: all linear 300ms
+  &.ng-move, &.ng-enter, &.ng-leave
+    // -webkit-transition: border 0s
+    -webkit-transform: translateZ(0)
+    transform: translateZ(0)
+    -webkit-transition: all 300ms ease-in
+    // transition: border 0s
+    transition: all 300ms ease-in
   
-  -webkit-transition: border linear 500ms ease-in
-  transition : border 500ms ease-in
+  &.ng-leave
+    opacity: 1
+    max-height: 1000px
+    border-color: transparent
+    &.ng-leave-active
+      opacity: 0
+      max-height: 0px
+      border-color: transparent
 
-.animate-repeat.ng-leave.ng-leave-active,
-.animate-repeat.ng-move,
-.animate-repeat.ng-enter
-  opacity: 0
-  max-height: 0
-  border-color: transparent
+  &.ng-enter
+    opacity: 0
+    max-height: 0px
+    border-color: transparent
+    &.ng-enter-active
+      opacity: 1
+      max-height: 1000px
+      border-color: transparent
 
-.animate-repeat.ng-leave,
-.animate-repeat.ng-move.ng-move-active,
-.animate-repeat.ng-enter.ng-enter-active
-  opacity: 1
-  max-height: inherit
-  border-color: inherit
+  &.ng-move
+    &.ng-move-active
 
 
 .animate-show
