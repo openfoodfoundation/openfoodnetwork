@@ -1,11 +1,10 @@
 .row.summary
   .small-1.columns
-    %product-modal
-      %img{"bo-src" => "product.master.images[0].small_url"}
+    %img{"bo-src" => "product.master.images[0].small_url", "ng-click" => "triggerProductModal()"}
 
   .small-4.columns.summary-header
     %render-svg{path: "{{product.primary_taxon.icon}}"}
-    %product-modal {{ product.name }}
+    %a{"ng-click" => "triggerProductModal()"}{{ product.name }}
 
   .small-5.columns
     %i.ofn-i_036-producers
@@ -14,4 +13,4 @@
   .small-2.columns.summary-price.text-right.price
     %span{"ng-if" => "hasVariants"} 
       %em from
-      {{ price() | currency }}
+      {{ product.price | currency }}

@@ -1,5 +1,5 @@
 .row.variants{bindonce: true,
-  "ng-repeat" => "variant in product.variants"}
+  "ng-repeat" => "variant in product.variants track by variant.id"}
 
   .small-1.columns
     %i.ofn-i_056-bulk{"bo-if" => "product.group_buy"}

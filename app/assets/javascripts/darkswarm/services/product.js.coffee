@@ -1,5 +1,5 @@
 Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
-  new class Product
+  new class Products
     constructor: ->
       @update()
     
@@ -10,7 +10,8 @@ Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
 
     update: =>
       @loading = true 
-      @products = $resource("/shop/products").query =>
+      @products = $resource("/shop/products").query (products)=>
+        @extend()
         @dereference()
         @loading = false 
       @
@@ -19,4 +20,9 @@ Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
       for product in @products
         product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
-        
+
+    extend: ->
+      for product in @products
+        if product.variants.length > 0
+          prices = (v.price for v in product.variants)
+          product.price = Math.min.apply(null, prices)
