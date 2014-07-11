@@ -4,6 +4,7 @@ Darkswarm.controller "HubsCtrl", ($scope, Hubs, Search, $document, $rootScope, H
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText
+  $scope.FilterSelectorsService =  FilterSelectorsService
   $scope.query = Search.search()
 
   $scope.$watch "query", (query)->

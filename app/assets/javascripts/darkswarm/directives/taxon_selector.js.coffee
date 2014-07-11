@@ -24,6 +24,7 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
         if object.supplied_taxons
           for taxon in object.supplied_taxons
             taxons[taxon.id] = taxon
+
       for id, taxon of taxons
         if selector = selectors_by_id[id]
           selectors.push selector

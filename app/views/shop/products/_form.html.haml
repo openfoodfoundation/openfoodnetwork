@@ -19,7 +19,7 @@
 
     %div.pad-top{bindonce: true}
       %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in Product.products | products:query | taxons:activeTaxons | orderBy:ordering.order"}
+        "ng-repeat" => "product in filteredProducts = (Product.products | products:query | taxons:activeTaxons | orderBy:ordering.order)"}
         %div
           = render partial: "shop/products/summary"
           %div{"bo-if" => "hasVariants"}
@@ -31,6 +31,12 @@
         .row.summary
           .small-12.columns.text-center
             Loading products
+
+      %product{"ng-show" => "filteredProducts.length == 0 && !Product.loading"}
+        .row.summary
+          .small-12.columns.text-center
+            No results for {{ query }}
+
     .row
       .small-12.columns
         %input.button.primary.right.add_to_cart{type: :submit, value: "Add to Cart"}
