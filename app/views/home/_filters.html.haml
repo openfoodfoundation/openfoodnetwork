@@ -7,13 +7,15 @@
         %h5.tdhead 
           .light Filter by
           Type
-        %taxon-selector{objects: "hubs | hubs:query", 
-          results: "activeTaxons"}
+        %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5
+          %taxon-selector{objects: "hubs | hubs:query", 
+            results: "activeTaxons"}
       .small-12.large-3.columns
         %h5.tdhead 
           .light Filter by
           Delivery
-        %shipping-type-selector{results: "shippingTypes"} 
+        %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-2
+          %shipping-type-selector{results: "shippingTypes"} 
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
       .small-12.columns
         %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 

@@ -43,7 +43,7 @@ node :variants do |product|
 end
 
 child :taxons => :taxons do |taxon|
-  attributes :name 
+  attributes :id 
 end
 
 child :properties => :properties do |property|

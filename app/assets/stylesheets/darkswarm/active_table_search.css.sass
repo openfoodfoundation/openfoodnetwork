@@ -11,16 +11,22 @@
 .row.filter-box:first-child
   border-top: 1px solid $clr-brick
 
+products .filter-box
+  background: #f7f7f7
+
 .filter-box
-  background: rgba(255,255,255,0.65)
+  background: rgba(245,245,245,0.6)
 
   .tdhead
     padding: 0.25rem 0.5rem
     margin-top: 0.9rem
 
   // OVERRIDES
+  [class*="block-grid-"]
+    margin: 0 0 0.5rem 0
   [class*="block-grid-"] > li
     padding-bottom: 0.5rem !important
+
 
   li
     @include border-radius(12px)
@@ -45,6 +51,7 @@
     @include csstrans
     display: table
     table-layout: fixed
+    text-transform: capitalize
     overflow: visible
     // width: 100%
     // height: 2rem
