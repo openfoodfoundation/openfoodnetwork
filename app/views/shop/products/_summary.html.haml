@@ -11,6 +11,6 @@
     %producer-modal {{ enterprise.name }}
 
   .small-2.columns.summary-price.text-right.price
-    %span{"ng-if" => "hasVariants"} 
+    %span{"ng-if" => "product.hasVariants"} 
       %em from
       {{ product.price | currency }}
