@@ -1,4 +1,4 @@
-Darkswarm.factory 'Product', ($resource, Enterprises) ->
+Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
   new class Product
     constructor: ->
       @update()
@@ -18,3 +18,5 @@ Darkswarm.factory 'Product', ($resource, Enterprises) ->
     dereference: ->
       for product in @products
         product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
+        Dereferencer.dereference product.taxons, Taxons.taxons_by_id
+        
