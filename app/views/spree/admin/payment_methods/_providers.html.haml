@@ -5,6 +5,6 @@
     .alpha.three.columns
       = label :payment_method, :type, t(:provider)
     .omega.eight.columns
-      = collection_select(:payment_method, :type, @providers, :to_s, :clean_name, {}, { class: 'select2 fullwidth', 'ofn-fetch-provider-prefs' => "#{@object.id}"})
+      = collection_select(:payment_method, :type, @providers, :to_s, :clean_name, (!@object.persisted? ? { :selected => "Spree::PaymentMethod::Check"} : {}), { class: 'select2 fullwidth', 'provider-prefs-for' => "#{@object.id}"})
 
   %div{"ng-include" => "include_html" }

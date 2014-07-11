@@ -29,11 +29,15 @@ module Spree
       end
 
       def show_provider_preferences
-        @payment_method = PaymentMethod.find(params[:id])
-        payment_method_type = params[:provider_type]
-        if @payment_method['type'].to_s != payment_method_type
-          @payment_method.update_column(:type, payment_method_type)
-          @payment_method = PaymentMethod.find(params[:id])
+        if params[:pm_id].present?
+          @payment_method = PaymentMethod.find(params[:pm_id])
+          payment_method_type = params[:provider_type]
+          if @payment_method['type'].to_s != payment_method_type
+            @payment_method.update_column(:type, payment_method_type)
+            @payment_method = PaymentMethod.find(params[:pm_id])
+          end
+        else
+          @payment_method = params[:provider_type].constantize.new()
         end
         render partial: 'provider_settings'
       end
