@@ -7,14 +7,14 @@
         %h5.tdhead 
           .light Filter by
           Type
-        %ul.small-block-grid-2.large-block-grid-5
+        %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5
           %taxon-selector{objects: "hubs | hubs:query", 
             results: "activeTaxons"}
       .small-12.large-3.columns
         %h5.tdhead 
           .light Filter by
           Delivery
-        %ul.small-block-grid-2.large-block-grid-1
+        %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-2
           %shipping-type-selector{results: "shippingTypes"} 
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
       .small-12.columns
