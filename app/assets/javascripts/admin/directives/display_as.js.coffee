@@ -17,7 +17,7 @@ angular.module("ofn.admin").directive "ofnDisplayAs", (optionValueNamer) ->
           variant_unit_scale: variant_unit_scale
           variant_unit: variant_unit
           variant_unit_name: scope.product.variant_unit_name
-      
+
       scope.placeholder_text = new optionValueNamer(variant_object).name()
 
     productUnitProperties = ->

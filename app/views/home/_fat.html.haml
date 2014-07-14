@@ -38,7 +38,7 @@
           %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
     .row
       .columns.small-12
-        %a.button.hub.expand{"bo-href" => "hub.path", 
+        %a.button.hub{"bo-href" => "hub.path", 
         "ng-class" => "{primary: hub.active, secondary: !hub.active}",
         "ofn-empties-cart" => "hub"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}

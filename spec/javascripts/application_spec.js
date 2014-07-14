@@ -4,6 +4,7 @@
 //= require angular-sanitize
 //= require angular-mocks
 //= require angular-cookies
+//= require angular-timer.min.js
 //= require angular-backstretch.js
 //= require lodash.underscore.js
 //= require angular-flash.min.js

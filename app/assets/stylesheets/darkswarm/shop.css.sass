@@ -1,12 +1,17 @@
 @import mixins
 @import variables
 @import branding
+@import big-input
 
 
 .darkswarm
-  #search
-    font-size: 2em
-    @include big-input
+  // #search
+  @include placeholder(rgba(0,0,0,0.4), #777)
+
+  input#search
+    @include big-input(rgba(0,0,0,0.3), #777, $clr-brick)
+    @include big-input-static
+
   color: #666
   display: block
   navigation
@@ -98,7 +103,6 @@
         background: $clr-brick-ultra-light
 
     product
-      @include csstrans
       border: 1px solid #989898
       display: block 
       margin-bottom: 1em !important
@@ -111,22 +115,19 @@
       .columns
         padding-top: 1em
         padding-bottom: 1em
-        line-height: 2.4em
+        line-height: 1em
 
       .row.summary, .row.variants
-        @include csstrans
         margin-left: 0
         margin-right: 0
         background: #f7f7f7
         border-top: 1px solid #dfdfdf
 
       .row.summary
-        @include csstrans
         background: #fff
         line-height: 1
 
         .summary-header
-          @include csstrans
           font-size: 1.15rem
 
           &, & *

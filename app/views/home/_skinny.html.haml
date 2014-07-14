@@ -15,4 +15,7 @@
     Orders closed
 
   .columns.small-1.text-right
-    %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"} 
+    / This forces line-height to be triggered
+    %span &nbsp;
+    %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+

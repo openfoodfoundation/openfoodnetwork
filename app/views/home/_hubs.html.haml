@@ -1,27 +1,29 @@
 = inject_enterprises 
 #hubs.hubs{"ng-controller" => "HubsCtrl"}
   .row
-    .small-12.columns.text-center
-      %h1 Ready to shop?
-      %div 
-        Select a 
-        %ofn-modal{title: "food hub"}
-          = render partial: "modals/food_hub"
-        from the list below:
+    .small-12.columns
+      %h1 Find hubs in your area...
+      / %div 
+      /   Shop a 
+      /   %ofn-modal{title: "food hub"}
+      /     = render partial: "modals/food_hub"
+      /   from the list below:
 
   #active-table-search.row.pad-top
     .small-12.columns
-      %i.ofn-i_020-search
+      / %i.ofn-i_020-search
       %input{type: :text, 
       "ng-model" => "query", 
-      placeholder: "Search postcode, suburb or hub name...",
+      placeholder: "Search by Hub or Suburb name",
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
+
+  = render partial: "home/filters"
 
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query)",
+        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query  | taxons:activeTaxons | shipping:shippingTypes)",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",
@@ -30,6 +32,9 @@
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
 
-      .row{"ng-show" => "filteredHubs.length == 0"}
-        .columns.small-12.text-center
-          No results
+        .row{"ng-show" => "filteredHubs.length == 0"}
+          .columns.small-12
+            %p.no-results
+              Sorry, no results found for
+              %strong {{query}}.
+              Try another search?

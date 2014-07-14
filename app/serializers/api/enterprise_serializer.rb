@@ -1,12 +1,43 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
+  def serializable_hash
+    cached_serializer_hash.merge uncached_serializer_hash
+  end
+
+  private
+  
+  def cached_serializer_hash
+    Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
+  end
+
+  def uncached_serializer_hash
+    Api::UncachedEnterpriseSerializer.new(object, @options).serializable_hash
+  end
+end
+
+class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
+  attributes :orders_close_at, :active
+
+  def orders_close_at
+    OrderCycle.first_closing_for(object).andand.orders_close_at
+  end
+
+  def active
+    @options[:active_distributors].andand.include? object
+  end
+end
+
+class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
+  cached
+  delegate :cache_key, to: :object
+
   attributes :name, :id, :description, :latitude, :longitude, 
     :long_description, :website, :instagram, :linkedin, :twitter, 
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
     :email, :hash, :logo, :promo_image, :icon, :path,
-    :pickup, :delivery, :active, :orders_close_at
+    :pickup, :delivery
 
-  has_many :distributed_taxons, key: :taxons, serializer: Api::TaxonSerializer
-  has_many :supplied_taxons, serializer: Api::TaxonSerializer
+  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
+  has_many :supplied_taxons, serializer: Api::IdSerializer
   has_many :distributors, key: :hubs, serializer: Api::IdSerializer
   has_many :suppliers, key: :producers, serializer: Api::IdSerializer
 
@@ -18,14 +49,6 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
 
   def delivery
     object.shipping_methods.where(:require_ship_address => true).present?
-  end
-
-  def active
-    @options[:active_distributors].andand.include?(object)
-  end
-
-  def orders_close_at
-    OrderCycle.first_closing_for(object).andand.orders_close_at
   end
 
   def email

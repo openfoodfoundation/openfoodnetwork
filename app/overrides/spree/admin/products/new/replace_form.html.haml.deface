@@ -30,10 +30,11 @@
           %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
           %input{ type: 'hidden', 'ng-value' => 'product.master.unit_value', name: 'product[unit_value]' }
           %input{ type: 'hidden', 'ng-value' => 'product.master.unit_description', name: 'product[unit_description]' }
-        .three.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
-          = f.field_container :unit_name do
-            = f.label :product_variant_unit_name, :unit_name
-            %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
+      = render 'display_as', f: f
+      .three.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
+        = f.field_container :unit_name do
+          = f.label :product_variant_unit_name, t(:unit_name)
+          %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
     .twelve.columns.alpha
       .six.columns.alpha
         = render 'spree/admin/products/primary_taxon_form', f: f

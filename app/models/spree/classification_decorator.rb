@@ -1,4 +1,5 @@
 Spree::Classification.class_eval do
+  belongs_to :product, :class_name => "Spree::Product", touch: true
   before_destroy :dont_destroy_if_primary_taxon
 
   def dont_destroy_if_primary_taxon

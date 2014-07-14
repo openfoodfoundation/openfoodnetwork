@@ -133,6 +133,8 @@ module Spree
         it "returns product name if display_name is empty" do
           v = create(:variant, product: create(:product))
           v.name_to_display.should == v.product.name
+          v1 = create(:variant, display_name: "", product: create(:product))
+          v1.name_to_display.should == v1.product.name
         end
       end
 
@@ -142,10 +144,13 @@ module Spree
           v.unit_to_display.should == "foo"
         end
 
-        it "returns options_text if display_as is empty" do
+        it "returns options_text if display_as is blank" do
           v = create(:variant)
+          v1 = create(:variant, display_as: "")
           v.stub(:options_text).and_return "ponies"
+          v1.stub(:options_text).and_return "ponies"
           v.unit_to_display.should == "ponies"
+          v1.unit_to_display.should == "ponies"
         end
       end
 

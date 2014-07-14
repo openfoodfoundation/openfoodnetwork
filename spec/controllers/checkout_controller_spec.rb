@@ -40,9 +40,7 @@ describe CheckoutController do
 
   it "doesn't copy the previous shipping address from a pickup order" do
     old_order = create(:order, bill_address: create(:address), ship_address: create(:address))
-    old_order.shipping_method.stub_chain(:andand, :require_ship_address).and_return(false)
     Spree::Order.stub_chain(:order, :where, :where, :limit, :detect).and_return(old_order)
-
     controller.send(:find_last_used_addresses, "email").last.should == nil 
   end
 
@@ -81,6 +79,7 @@ describe CheckoutController do
   context "via xhr" do
     before do
       controller.stub(:current_distributor).and_return(distributor)
+
       controller.stub(:current_order_cycle).and_return(order_cycle)
       controller.stub(:current_order).and_return(order)
     end

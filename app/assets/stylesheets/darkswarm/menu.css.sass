@@ -27,7 +27,6 @@ nav
   .top-bar-section ul li > a
     font-size: 0.75rem
     height: 45px
-    @include csstrans
     opacity: 0.8
     &:hover, &:focus, &:active
       opacity: 1
@@ -47,7 +46,6 @@ nav
   @include box-shadow(inset 0 0 6px 2px rgba(0,0,0,0.5))
 
 .off-canvas-wrap .tab-bar .menu-icon
-  @include csstrans
   @include box-shadow(none)
 
 .off-canvas-wrap.move-right .tab-bar .menu-icon span
@@ -73,3 +71,5 @@ nav
   section.right 
     .nav-branded
       padding: 0 1em
+
+      

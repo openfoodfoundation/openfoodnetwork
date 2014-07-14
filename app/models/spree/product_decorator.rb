@@ -4,7 +4,7 @@ Spree::Product.class_eval do
   # https://github.com/rails/rails/issues/7618
   has_many :option_types, :through => :product_option_types, :dependent => :destroy
 
-  belongs_to :supplier, :class_name => 'Enterprise'
+  belongs_to :supplier, :class_name => 'Enterprise', touch: true
   belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
   has_many :product_distributions, :dependent => :destroy
@@ -12,9 +12,10 @@ Spree::Product.class_eval do
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
   delegate_belongs_to :master, :unit_value, :unit_description
-  delegate :images_attributes=, to: :master
+  delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes
+  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
+  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
   validates_presence_of :supplier
   validates_presence_of :primary_taxon
@@ -27,6 +28,7 @@ Spree::Product.class_eval do
 
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
+  after_touch :touch_distributors
   before_save :add_primary_taxon_to_taxons
 
 
@@ -186,8 +188,12 @@ Spree::Product.class_eval do
     end
   end
 
+  def touch_distributors
+    Enterprise.distributing_product(self).each(&:touch)
+  end
+
   def add_primary_taxon_to_taxons
-    taxons << primary_taxon unless taxons.find_by_id(primary_taxon)
+    taxons << primary_taxon unless taxons.include? primary_taxon
   end
 
   def self.all_variant_unit_option_types
