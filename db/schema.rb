@@ -993,7 +993,7 @@ ActiveRecord::Schema.define(:version => 20140716051214) do
 
   create_table "suburbs", :force => true do |t|
     t.string  "name"
-    t.integer "postcode"
+    t.string  "postcode"
     t.float   "latitude"
     t.float   "longitude"
     t.integer "state_id"
