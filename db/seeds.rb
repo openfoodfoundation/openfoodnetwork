@@ -27,13 +27,6 @@ unless Spree::State.find_by_name 'Victoria'
   end
 end
 
-# -- Landing page images
-unless LandingPageImage.find_by_photo_file_name("potatoes.jpg")
-  LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "carrots.jpg"))
-  LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "tomatoes.jpg"))
-  LandingPageImage.create photo: File.open(File.join(Rails.root, "lib", "seed_data", "potatoes.jpg"))
-end
-
-# -- Seeding suburbs
+# -- Suburbs
 require_relative './suburb_seeds'
 SuburbSeeder.seed_suburbs unless Suburb.find_by_name("Dayton")
