@@ -1,0 +1,133 @@
+describe 'Checkout service', ->
+  Checkout = null
+  orderData = null
+  $httpBackend = null
+  Navigation = null
+  flash = null
+  scope = null
+  FlashLoaderMock = 
+    loadFlash: (arg)->
+
+  beforeEach ->
+    orderData =
+      id: 3102
+      payment_method_id: null
+      email: "test@test.com"
+      bill_address:
+        test: "foo"
+        firstname: "Robert"
+        lastname: "Harrington"
+      ship_address: {test: "bar"}
+      user_id: 901
+      shipping_methods:
+        7:
+          require_ship_address: true
+          price: 0.0
+
+        25:
+          require_ship_address: false
+          price: 13
+      payment_methods: 
+        99:
+          test: "foo"
+          method_type: "gateway"
+        123:
+          test: "bar"
+          method_type: "check"
+
+    angular.module('Darkswarm').value('order', orderData)
+    module 'Darkswarm'
+    module ($provide)->
+      $provide.value "RailsFlashLoader", FlashLoaderMock 
+      null
+
+    inject ($injector, _$httpBackend_, $rootScope)->
+      $httpBackend = _$httpBackend_
+      Checkout = $injector.get("Checkout")
+      scope = $rootScope.$new()
+      scope.Checkout = Checkout
+      Navigation = $injector.get("Navigation")
+      flash = $injector.get("flash")
+      spyOn(Navigation, "go") # Stubbing out writes to window.location
+
+  it "defaults to no shipping method", ->
+    expect(Checkout.order.shipping_method_id).toEqual null
+    expect(Checkout.shippingMethod()).toEqual undefined
+
+  it "has a shipping price of zero with no shipping method", ->
+    expect(Checkout.shippingPrice()).toEqual 0.0
+
+  describe "with shipping method", ->
+    beforeEach ->
+      Checkout.order.shipping_method_id = 7
+
+    it 'Tracks whether a ship address is required', ->
+      expect(Checkout.requireShipAddress()).toEqual true
+      Checkout.order.shipping_method_id = 25
+      expect(Checkout.requireShipAddress()).toEqual false
+
+    it 'Gets the current shipping price', ->
+      expect(Checkout.shippingPrice()).toEqual 0.0
+      Checkout.order.shipping_method_id = 25
+      expect(Checkout.shippingPrice()).toEqual 13
+
+  it 'Gets the current payment method', ->
+    expect(Checkout.paymentMethod()).toEqual null
+    Checkout.order.payment_method_id = 99
+    expect(Checkout.paymentMethod()).toEqual {test: "foo", method_type: "gateway"}
+
+  it "Posts the Checkout to the server", ->
+    $httpBackend.expectPUT("/checkout", {order: Checkout.preprocess()}).respond 200, {path: "test"}
+    Checkout.submit()
+    $httpBackend.flush()
+
+  it "sends flash messages to the flash service", ->
+    spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+    $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
+    Checkout.submit()
+
+    $httpBackend.flush()
+    expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
+
+  it "puts errors into the scope", ->
+    $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
+    Checkout.submit()
+    $httpBackend.flush()
+    expect(Checkout.errors).toEqual {error: "frogs"}
+
+  describe "data preprocessing", ->
+    beforeEach ->
+      Checkout.order.payment_method_id = 99
+
+      Checkout.secrets =
+        card_number: "1234567890123456"
+        card_month: "10"
+        card_year: "2015"
+        card_verification_value: "123"
+
+    it "munges the order attributes to add _attributes as Rails needs", ->
+      expect(Checkout.preprocess().bill_address_attributes).not.toBe(undefined)
+      expect(Checkout.preprocess().bill_address).toBe(undefined)
+      expect(Checkout.preprocess().ship_address_attributes).not.toBe(undefined)
+      expect(Checkout.preprocess().ship_address).toBe(undefined)
+
+    it "munges the order attributes to clone ship address from bill address", ->
+      Checkout.ship_address_same_as_billing = false
+      expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
+      Checkout.ship_address_same_as_billing = true
+      expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
+
+    it "creates attributes for card fields", ->
+      source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
+      expect(source_attributes).toBeDefined()
+      expect(source_attributes.number).toBe Checkout.secrets.card_number
+      expect(source_attributes.month).toBe Checkout.secrets.card_month
+      expect(source_attributes.year).toBe Checkout.secrets.card_year
+      expect(source_attributes.verification_value).toBe Checkout.secrets.card_verification_value
+      expect(source_attributes.first_name).toBe Checkout.order.bill_address.firstname
+      expect(source_attributes.last_name).toBe Checkout.order.bill_address.lastname
+
+    it "does not create attributes for card fields when no card is supplied", ->
+      Checkout.order.payment_method_id = 123
+      source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
+      expect(source_attributes).not.toBeDefined()

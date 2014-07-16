@@ -23,8 +23,8 @@ Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
 
     extend: ->
       for product in @products
-        if product.variants.length > 0
+        if product.variants?.length > 0
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
 
-        product.hasVariants = product.variants.length > 0
+        product.hasVariants = product.variants?.length > 0

@@ -1,3 +1,5 @@
+# TODO this SUCKS. Fix it
+
 Darkswarm.controller "OrderCycleCtrl", ($scope, OrderCycle, $timeout) ->
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.OrderCycle = OrderCycle
