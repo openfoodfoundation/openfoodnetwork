@@ -18,7 +18,7 @@ feature %q{
   it "shows all producers with expandable details" do
     page.should have_content producer.name
     expand_active_table_node producer.name
-    page.should have_content producer.supplied_taxons.first.name.upcase
+    page.should have_content producer.supplied_taxons.first.name.split.map(&:capitalize).join(' ')
   end
   
   it "doesn't show invisible producers" do

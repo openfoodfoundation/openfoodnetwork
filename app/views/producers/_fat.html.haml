@@ -26,7 +26,7 @@
         %h5 Shop for {{ producer.name }} products at:
     .row
       .columns.small-12
-        %a.button.hub{"ng-repeat" => "hub in producer.hubs",
+        %a.button.hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
         "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
         "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}

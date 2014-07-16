@@ -7,5 +7,7 @@ Darkswarm.filter 'taxons', (Matcher)->
       objects
     else
       objects.filter (obj)->
-        obj.primary_taxon?.id in ids || (obj.taxons.concat obj.supplied_taxons).some (taxon)->
+        taxons = obj.taxons
+        taxons.concat obj.supplied_taxons if obj.supplied_taxons
+        obj.primary_taxon?.id in ids || taxons.some (taxon)->
           taxon.id in ids

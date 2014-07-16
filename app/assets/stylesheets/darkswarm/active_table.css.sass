@@ -2,6 +2,10 @@
 @import mixins
 @import "compass/css3/user-interface"
 
+
+.no-results
+  font-size: 1.875rem
+
 .active_table
   margin: 2em 0em
   @include user-select(none)
@@ -9,9 +13,7 @@
     display: block
     &:first-child
       cursor: pointer
-  
-  .no-results
-    font-size: 1.875rem
+      padding: 1rem 0
 
 .active_table .active_table_node
   display: block
