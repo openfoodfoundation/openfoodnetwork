@@ -129,6 +129,15 @@ module WebHelper
     targetted_select2(value, options)
   end
 
+  def have_select2_option(value, options)
+    container = options[:dropdown_css] || ".select2-with-searchbox"
+    page.execute_script %Q{$('#{options[:from]}').select2('open')}
+    page.execute_script "$('#{container} input.select2-input').val('#{value}').trigger('keyup-change');"
+    sleep 1
+    have_selector "div.select2-result-label", text: value
+  end
+
+
   private
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }

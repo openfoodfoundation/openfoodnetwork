@@ -9,7 +9,11 @@ feature %q{
 
   background do
     @user = create(:user)
-    @order = create(:order_with_totals_and_distribution, user: @user, state: 'complete', payment_state: 'balance_due')
+    @product = create(:simple_product)
+    @distributor = create(:distributor_enterprise)
+    @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.master])
+
+    @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
 
     # ensure order has a payment to capture
     @order.finalize!
@@ -41,6 +45,29 @@ feature %q{
     o = Spree::Order.last
     o.distributor.should == distributor
     o.order_cycle.should == order_cycle
+  end
+
+  scenario "can add a product to an existing order", js: true do
+    login_to_admin_section
+    visit '/admin/orders'
+    page.find('td.actions a.icon-edit').click
+
+    targetted_select2_search @product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
+
+    click_icon :plus
+
+    page.should have_selector 'td', text: @product.name
+    @order.line_items(true).map(&:product).should include @product
+  end
+
+  scenario "can't add products to an order outside the order's hub and order cycle", js: true do
+    product = create(:simple_product)
+
+    login_to_admin_section
+    visit '/admin/orders'
+    page.find('td.actions a.icon-edit').click
+
+    page.should_not have_select2_option product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
