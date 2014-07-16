@@ -92,6 +92,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller
+  config.include OpenFoodNetwork::ControllerHelper, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::DistributionHelper
