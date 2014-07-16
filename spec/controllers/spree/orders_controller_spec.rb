@@ -66,6 +66,26 @@ describe Spree::OrdersController do
         spree_post :populate, :variants => {p.master.id => 1}, :variant_attributes => {p.master.id => {:max_quantity => 3}}
       end.to change(Spree::LineItem, :count).by(1)
     end
+
+    it "returns HTTP success when successful" do
+      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      populator.stub(:populate).and_return true
+      xhr :post, :populate, use_route: :spree, format: :json
+      response.status.should == 200
+    end
+
+    it "returns failure when unsuccessful" do
+      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      populator.stub(:populate).and_return false
+      xhr :post, :populate, use_route: :spree, format: :json
+      response.status.should == 402
+    end
+
+    it "tells populator to overwrite" do
+      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      populator.should_receive(:populate).with({}, true)
+      xhr :post, :populate, use_route: :spree, format: :json
+    end
   end
 
   context "removing line items from cart" do

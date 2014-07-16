@@ -21,22 +21,15 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  # Patch Orders#populate to populate multi_cart (if enabled)
+  # Patch populate to be Ajax
   def populate
-    if OpenFoodNetwork::FeatureToggle.enabled? :multi_cart
-      populate_cart params.slice(:products, :variants, :quantity, :distributor_id, :order_cycle_id)
-    end
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
-    if populator.populate(params.slice(:products, :variants, :quantity))
-
+    if populator.populate(params.slice(:products, :variants, :quantity), true)
       fire_event('spree.cart.add')
       fire_event('spree.order.contents_changed')
-      respond_with(@order) do |format|
-        format.html { redirect_to cart_path }
-      end
+      render json: true, status: 200
     else
-      flash[:error] = populator.errors.full_messages.join(" ")
-      redirect_to :back
+      render json: false, status: 402
     end
   end
 

@@ -4,22 +4,35 @@ module Spree
   describe OrderPopulator do
     let(:order) { double(:order, id: 123) }
     let(:currency) { double(:currency) }
-    let(:params) { double(:params) }
+    let(:params) { {} }
     let(:distributor) { double(:distributor) }
     let(:order_cycle) { double(:order_cycle) }
     let(:op) { OrderPopulator.new(order, currency) }
 
     describe "populate" do
-
-      it "checks that distribution can supply all products in the cart" do
+      before do
         op.should_receive(:distributor_and_order_cycle).
           and_return([distributor, order_cycle])
+      end
+      it "checks that distribution can supply all products in the cart" do
         op.should_receive(:distribution_can_supply_products_in_cart).
           with(distributor, order_cycle).and_return(false)
-        op.should_receive(:populate_without_distribution_validation).never
 
         op.populate(params).should be_false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
+      end
+      
+      it "empties the order if override is true" do
+        op.stub(:distribution_can_supply_products_in_cart).and_return true
+        order.stub(:with_lock).and_yield
+        order.should_receive(:empty!)
+        op.populate(params, true)
+      end
+
+      it "locks the order" do
+        op.stub(:distribution_can_supply_products_in_cart).and_return(true)
+        order.should_receive(:with_lock)
+        op.populate(params, true)
       end
     end
 
