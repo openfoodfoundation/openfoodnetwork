@@ -2,14 +2,8 @@ require 'spec_helper'
 
 describe Spree::Admin::ProductsController do
   context "Creating a new product" do
-    let(:user) do
-      user = create(:user)
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
-      user
-    end
-
     before do
-      controller.stub spree_current_user: user
+      login_as_admin
     end
 
     it "redirects to bulk_edit when the user hits 'create'" do

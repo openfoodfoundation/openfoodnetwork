@@ -56,16 +56,7 @@ describe Spree::Admin::ReportsController do
   
   # As a Distributor Enterprise user for d1  
   context "Distributor Enterprise User" do
-    let(:user) do
-      user = create(:user)
-      user.spree_roles = []
-      d1.enterprise_roles.build(user: user).save
-      user
-    end
-
-    before :each do
-      controller.stub :spree_current_user => user
-    end
+    before { login_as_enterprise_user [d1] }
 
     describe 'Orders and Distributors' do
       it "only shows orders that I have access to" do
@@ -117,16 +108,7 @@ describe Spree::Admin::ReportsController do
 
   # As a Supplier Enterprise user for s1
   context "Supplier" do
-    let(:user) do
-      user = create(:user)
-      user.spree_roles = []
-      s1.enterprise_roles.build(user: user).save
-      user
-    end
-
-    before :each do
-      controller.stub :spree_current_user => user
-    end
+    before { login_as_enterprise_user [s1] }
 
     describe 'Bulk Coop' do
       it "only shows product line items that I am supplying" do
@@ -157,14 +139,7 @@ describe Spree::Admin::ReportsController do
   end
 
   context "Products & Inventory" do
-    let(:user) do
-      user = create(:user)
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
-      user
-    end
-    before do
-      controller.stub spree_current_user: user
-    end
+    before { login_as_admin }
 
     it "should build distributors for the current user" do
       spree_get :products_and_inventory
@@ -188,24 +163,17 @@ describe Spree::Admin::ReportsController do
 
     it "creates a ProductAndInventoryReport" do
       OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
-      .with(user, {"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"products_and_inventory"})
-      .and_return(report = double(:report))
+        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "products_and_inventory"})
+        .and_return(report = double(:report))
       report.stub(:header).and_return []
       report.stub(:table).and_return []
-      spree_get :products_and_inventory, :test => "foo"
+      spree_get :products_and_inventory, test: "foo"
       assigns(:report).should == report
     end
   end
 
   context "My Customers" do
-    let(:user) do
-      user = create(:user)
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
-      user
-    end
-    before do
-      controller.stub spree_current_user: user
-    end
+    before { login_as_admin }
 
     it "should have report types for customers" do
       Spree::Admin::ReportsController::REPORT_TYPES[:customers].should == [
@@ -236,13 +204,12 @@ describe Spree::Admin::ReportsController do
 
     it "creates a CustomersReport" do
       OpenFoodNetwork::CustomersReport.should_receive(:new)
-      .with(user, {"test"=>"foo", "controller"=>"spree/admin/reports", "action"=>"customers"})
-      .and_return(report = double(:report))
+        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"})
+        .and_return(report = double(:report))
       report.stub(:header).and_return []
       report.stub(:table).and_return []
-      spree_get :customers, :test => "foo"
+      spree_get :customers, test: "foo"
       assigns(:report).should == report
     end
   end
-
 end
