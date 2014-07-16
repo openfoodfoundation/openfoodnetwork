@@ -9,7 +9,7 @@ feature %q{
 
   background do
     @user = create(:user)
-    @order = create(:order_with_totals_and_distributor, :user => @user, :state => 'complete', :payment_state => 'balance_due')
+    @order = create(:order_with_totals_and_distribution, user: @user, state: 'complete', payment_state: 'balance_due')
 
     # ensure order has a payment to capture
     @order.finalize!
@@ -44,6 +44,8 @@ feature %q{
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
+    @order.update_attributes order_cycle_id: nil
+
     login_to_admin_section
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
@@ -52,7 +54,7 @@ feature %q{
     page.should have_no_select 'order_order_cycle_id'
 
     page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    page.should have_selector 'p', text: 'Order cycle: None'
+    page.should have_selector 'p', text: "Order cycle: None"
   end
 
   scenario "capture multiple payments from the orders index page" do
