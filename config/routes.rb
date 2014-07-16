@@ -31,8 +31,6 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  resources :suburbs
-
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, :on => :collection, :as => :bulk_update
