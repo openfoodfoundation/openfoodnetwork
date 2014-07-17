@@ -44,7 +44,7 @@ module OpenFoodNetwork
 
     def scale_for_unit_value
       units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
-               'volume' => {0.001 => 'mL', 1.0 => 'L',  1000.0 => 'KL'}}
+               'volume' => {0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL'}}
 
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest available unit.

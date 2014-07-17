@@ -94,7 +94,7 @@ module OpenFoodNetwork
       end
 
       it "generates values for all volume scales" do
-        [[0.001, 'mL'], [1.0, 'L'], [1000000.0, 'ML']].each do |scale, unit|
+        [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']].each do |scale, unit|
           p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
           v.stub(:product) { p }
           v.stub(:unit_value) { 100 * scale }

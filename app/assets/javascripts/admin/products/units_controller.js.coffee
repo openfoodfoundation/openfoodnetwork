@@ -32,7 +32,7 @@ angular.module("admin.products")
       ["Weight (T)", "weight_1000000"],
       ["Volume (mL)", "volume_0.001"],
       ["Volume (L)", "volume_1"],
-      ["Volume (KL)", "volume_1000"],
+      ["Volume (kL)", "volume_1000"],
       ["Items", "items"]
     ]
 

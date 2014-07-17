@@ -87,7 +87,7 @@ describe "Option Value Namer", ->
           expect(namer.option_value_value_unit()).toEqual [100, unit]
 
       it "generates values for all volume scales", ->
-        for units in [[0.001, 'mL'], [1.0, 'L'], [1000000.0, 'ML']]
+        for units in [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']]
           [scale, unit] = units
           p.variant_unit = 'volume'
           p.variant_unit_scale = scale

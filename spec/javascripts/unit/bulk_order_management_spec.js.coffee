@@ -352,7 +352,7 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.getScale(1.2,"weight")).toEqual 1.0
         expect(scope.getScale(1000,"weight")).toEqual 1000.0
         expect(scope.getScale(0.0012,"volume")).toEqual 0.001
-        expect(scope.getScale(1001,"volume")).toEqual 1.0
+        expect(scope.getScale(1001,"volume")).toEqual 1000.0
 
       it "returns the smallest unit available when value is smaller", ->
         expect(scope.getScale(0.4,"weight")).toEqual 1
@@ -365,7 +365,7 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.getUnitName(1000000,"weight")).toEqual "T"
         expect(scope.getUnitName(0.001,"volume")).toEqual "mL"
         expect(scope.getUnitName(1,"volume")).toEqual "L"
-        expect(scope.getUnitName(1000000,"volume")).toEqual "ML"
+        expect(scope.getUnitName(1000,"volume")).toEqual "kL"
 
 describe "managing pending changes", ->
   dataSubmitter = pendingChangesService = null

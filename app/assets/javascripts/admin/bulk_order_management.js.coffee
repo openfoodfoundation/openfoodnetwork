@@ -150,7 +150,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
     $scope.getUnitName = (scale, unitType) ->
       unitNames =
         'weight': {1.0: 'g', 1000.0: 'kg', 1000000.0: 'T'}
-        'volume': {0.001: 'mL', 1.0: 'L',  1000.0: 'KL'}
+        'volume': {0.001: 'mL', 1.0: 'L',  1000.0: 'kL'}
       unitNames[unitType][scale]
 
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
