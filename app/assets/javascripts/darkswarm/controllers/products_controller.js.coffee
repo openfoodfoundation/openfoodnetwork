@@ -1,5 +1,5 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Product, OrderCycle, FilterSelectorsService) ->
-  $scope.Product = Product
+Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService) ->
+  $scope.Products = Products
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText
@@ -9,7 +9,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Product, OrderCycle, F
   $scope.order_cycle = OrderCycle.order_cycle
 
   $scope.incrementLimit = ->
-    if $scope.limit < $scope.Product.products.length
+    if $scope.limit < Products.products.length
       $scope.limit = $scope.limit + 1 
 
   $scope.searchKeypress = (e)->

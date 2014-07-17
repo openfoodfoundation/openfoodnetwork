@@ -1,2 +1,2 @@
-Darkswarm.controller "CartCtrl", ($scope, CurrentOrder) ->
-  $scope.CurrentOrder = CurrentOrder
+Darkswarm.controller "CartCtrl", ($scope, Cart) ->
+  $scope.Cart = Cart

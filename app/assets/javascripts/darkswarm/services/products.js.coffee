@@ -1,4 +1,4 @@
-Darkswarm.factory 'Product', ($resource, Enterprises, Dereferencer, Taxons) ->
+Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
   new class Products
     constructor: ->
       @update()

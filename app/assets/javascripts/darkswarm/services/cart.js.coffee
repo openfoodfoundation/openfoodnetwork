@@ -3,3 +3,5 @@ Darkswarm.factory 'Cart', (CurrentOrder)->
   new class Cart
     order: CurrentOrder.order
 
+  # How to structure this?
+  

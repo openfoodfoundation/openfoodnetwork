@@ -13,8 +13,7 @@
   "ofn-disable-scroll" => true,
   max: "{{product.on_demand && 9999 || product.count_on_hand }}",
   name: "variants[{{product.master.id}}]", 
-  id: "variants_{{product.master.id}}",
-  "ng-model" => "product.quantity"}
+  id: "variants_{{product.master.id}}"}
   %small x {{ product.master.unit_to_display }}
 
 -# WITH GROUP BUY
@@ -25,8 +24,7 @@
   "ofn-disable-scroll" => true,
   max: "{{product.on_demand && 9999 || product.count_on_hand }}",
   name: "variants[{{product.master.id}}]", 
-  id: "variants_{{product.master.id}}",
-  "ng-model" => "product.quantity"}
+  id: "variants_{{product.master.id}}"}
 
 .small-3.columns{"bo-if" => "product.group_buy"}
   %input{type: :number,
@@ -34,8 +32,7 @@
   placeholder: "max",
   "ofn-disable-scroll" => true,
   max: "{{product.on_demand && 9999 || product.count_on_hand }}",
-  name: "variant_attributes[{{product.master.id}}][max_quantity]",
-  "ng-model" => "product.max_quantity"}
+  name: "variant_attributes[{{product.master.id}}][max_quantity]"}
   %small x {{ product.master.unit_to_display }}
 
 .small-2.columns.text-right

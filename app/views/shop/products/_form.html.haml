@@ -17,7 +17,7 @@
 
     %div.pad-top{bindonce: true}
       %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in filteredProducts = (Product.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
+        "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
         %div
           = render partial: "shop/products/summary"
           %div{"bo-if" => "product.hasVariants"}
@@ -25,12 +25,12 @@
         .variants.row{"bo-if" => "!product.hasVariants"}
           = render partial: "shop/products/master"
       
-      %product{"ng-show" => "Product.loading"}
+      %product{"ng-show" => "Products.loading"}
         .row.summary
           .small-12.columns.text-center
             Loading products
 
-      %div{"ng-show" => "filteredProducts.length == 0 && !Product.loading"}
+      %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
         .row.summary
           .small-12.columns
             %p.no-results

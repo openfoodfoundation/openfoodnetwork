@@ -12,8 +12,8 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, OrderCycle, $timeout) ->
       $("#order_cycle_id").trigger("openTrigger") 
 
 
-Darkswarm.controller "OrderCycleChangeCtrl", ($scope, OrderCycle, Product, $timeout) ->
+Darkswarm.controller "OrderCycleChangeCtrl", ($scope, OrderCycle, Products, $timeout) ->
   $scope.changeOrderCycle = ->
-    OrderCycle.push_order_cycle Product.update
+    OrderCycle.push_order_cycle Products.update
     $timeout ->
       $("#order_cycle_id").trigger("closeTrigger") 

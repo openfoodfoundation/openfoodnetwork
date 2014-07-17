@@ -8,7 +8,7 @@
           .light Filter by
           Type
         %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
-          %taxon-selector{objects: "Product.products | products:query", 
+          %taxon-selector{objects: "Products.products | products:query", 
             results: "activeTaxons"}
 
     .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}

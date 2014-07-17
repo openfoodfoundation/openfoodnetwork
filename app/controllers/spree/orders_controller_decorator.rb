@@ -21,7 +21,6 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  # Patch populate to be Ajax
   def populate
     populator = Spree::OrderPopulator.new(current_order(true), current_currency)
     if populator.populate(params.slice(:products, :variants, :quantity), true)
