@@ -4,6 +4,32 @@
 
 set -e
 
+if hash zeus 2>/dev/null && [ -e .zeus.sock ]; then
+  RAILS_RUN='zeus r'
+else
+  RAILS_RUN='rails runner'
+fi
+
+
+# -- Mirror database
+echo "Mirroring database..."
 echo "drop database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
 echo "create database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
 ssh $1 "pg_dump -h localhost -U openfoodweb openfoodweb_production |gzip" |gunzip |psql -h localhost -U ofn open_food_network_dev
+
+
+# -- Disable S3
+echo "Disabling S3 in development..."
+$RAILS_RUN script/disable_s3.rb
+
+
+# -- Mirror images
+if hash aws 2>/dev/null; then
+    echo "Mirroring images..."
+    BUCKET=`echo $1 | sed s/-/_/ | sed "s/\\([0-9]\\)/_\1/" | sed s/prod/production/`
+    aws s3 sync s3://$BUCKET/public public/
+
+else
+    echo "Please install the AWS CLI tools so that I can copy the images from $1 for you."
+    echo "eg. sudo easy_install awscli"
+fi
