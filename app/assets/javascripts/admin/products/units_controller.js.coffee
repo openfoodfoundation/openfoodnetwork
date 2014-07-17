@@ -26,15 +26,7 @@ angular.module("admin.products")
 
       $scope.placeholder_text = new optionValueNamer($scope.product.master).name()
 
-    $scope.variant_unit_options = [
-      ["Weight (g)", "weight_1"],
-      ["Weight (kg)", "weight_1000"],
-      ["Weight (T)", "weight_1000000"],
-      ["Volume (mL)", "volume_0.001"],
-      ["Volume (L)", "volume_1"],
-      ["Volume (kL)", "volume_1000"],
-      ["Items", "items"]
-    ]
+    $scope.variant_unit_options = optionValueNamer.variant_unit_options
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0

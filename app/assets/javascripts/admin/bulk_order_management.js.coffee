@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
-  ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "optionValueNamer",
+  ($scope, $http, dataFetcher, blankOption, pendingChanges, optionValueNamer) ->
 
     $scope.initialiseVariables = ->
       start = daysFromToday -7
@@ -137,21 +137,16 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
     $scope.getScale = (value, unitType) ->
       scaledValue = null
       validScales = []
-      unitScales =
-        'weight': [1.0, 1000.0, 1000000.0]
-        'volume': [0.001, 1.0, 1000.0]
+      unitScales = optionValueNamer.unitScales(unitType)
 
-      validScales.unshift scale for scale in unitScales[unitType] when value/scale >= 1
+      validScales.unshift scale for scale in unitScales when value/scale >= 1
       if validScales.length > 0
         validScales[0]
       else
-        unitScales[unitType][0]
+        unitScales[0]
 
     $scope.getUnitName = (scale, unitType) ->
-      unitNames =
-        'weight': {1.0: 'g', 1000.0: 'kg', 1000000.0: 'T'}
-        'volume': {0.001: 'mL', 1.0: 'L',  1000.0: 'kL'}
-      unitNames[unitType][scale]
+      optionValueNamer.getUnitName(scale, unitType)
 
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
