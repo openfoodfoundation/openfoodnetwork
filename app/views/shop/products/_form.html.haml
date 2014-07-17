@@ -18,10 +18,17 @@
     %div.pad-top{bindonce: true}
       %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
         "ng-repeat" => "product in filteredProducts = (Product.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
-        %div
-          = render partial: "shop/products/summary"
-          %div{"bo-if" => "product.hasVariants"}
-            = render partial: "shop/products/variants"
+        
+
+        .product-thumb
+          %a{"ng-click" => "triggerProductModal()"}
+            %img{"bo-src" => "product.master.images[0].small_url", "ng-click" => "triggerProductModal()"}
+
+        = render partial: "shop/products/summary"
+
+        %span{"bo-if" => "product.hasVariants"}
+          = render partial: "shop/products/variants"
+
         .variants.row{"bo-if" => "!product.hasVariants"}
           = render partial: "shop/products/master"
       
