@@ -4,6 +4,6 @@ class ChangeSuburbPostcodeToString < ActiveRecord::Migration
   end
 
   def down
-    change_column :suburbs, :postcode,  :integer
+    change_column :suburbs, :postcode,  'integer USING (postcode::integer)'
   end
 end
