@@ -23,6 +23,7 @@
             %span.accordion-down.right
               %i.ofn-i_005-caret-down 
 
+      -# TODO render this in Angular instead of server-side
       - current_order.available_payment_methods.each do |method|
         .row
           .small-12.columns
@@ -31,7 +32,8 @@
                 required: true,
                 "ng-model" => "order.payment_method_id"
               = method.name
-        .row{"ng-if" => "order.payment_method_id == #{method.id}"}
+
+        .row{"ng-if" => "order.payment_method_id == method.id"}
           .small-12.columns
             = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
 
