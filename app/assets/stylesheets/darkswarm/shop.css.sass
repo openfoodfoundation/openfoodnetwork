@@ -95,48 +95,152 @@
     
     
     product:hover, product:focus, product:active
-      border-color: $clr-brick
-      @include box-shadow(0 0 3px 0 $clr-brick-bright)
+      // border-color: $clr-brick
+      // @include box-shadow(0 0 3px 0 $clr-brick-bright)
 
       .row.variants
-        border-top: 1px solid $clr-brick-light
-        background: $clr-brick-ultra-light
+        // border-top: 1px solid $clr-brick-light
+        // background: $clr-brick-ultra-light
 
     product
-      border: 1px solid #989898
-      display: block 
-      margin-bottom: 1em !important
+      border-bottom: 1px solid #e5e5e5
+      border-top: 1px solid #e5e5e5
+      padding-bottom: 1px
+      margin-bottom: 20px !important
+      position: relative
+      display: block
+      color: #444
+
+      .product-thumb
+        position: absolute
+        top: 3px
+        left: 0px
+        // float: left
+        // display: inline
+        width: 7rem
+        height: 7rem
+        outline: 1px solid red
+        float: left
+        display: block
+        margin-right: 0.9375rem
+        z-index: 999999
+        background-color: white
+      
+        @media all and (max-width: 640px)
+          width: 4rem
+          height: 4rem
+
+      // Product thumb
+      .columns:first-child
+        padding-left: 7.9375rem
+        @media all and (max-width: 640px)
+          padding-left: 4.9375rem
+
+      // Variant label
+      .variant-unit  
+        padding-left: 0rem
+        color: #999
+        font-size: 0.875rem
+        overflow: nowrap
+
+      .taxon-flag
+        background: transparent url("/assets/flag.svg") top center no-repeat
+        background-size: 34px 38px
+        min-height: 40px
+        margin-top: -1.1rem
+        padding-top: 0.25rem
+
+        render-svg
+          svg
+            width: 24px
+            height: 24px
+            path
+              fill: #999
+        @media all and (max-width: 640px)
+          render-svg
+            svg
+              width: 16px
+              height: 16px
 
       input
+        @include csstrans
         margin: 0
-        width: 8em
+        width: 12em
         display: inline
+        @include box-shadow(none)
+        border-color: #b3b3b3
+        text-align: right
+
+        &:hover
+          @include box-shadow(none)
+          border-color: #888
+          background-color: #fafafa
+
+        &:active, &:focus, &.active
+          @include box-shadow(none)
+          background-color: #f9f4b9
+          border-color: #666
+
+      // BULK
+      span.bulk-input-container
+        float: right
+
+        .bulk-input
+          float: left
+
+      input.bulk
+        width: 6em
+
+      input.bulk.first
+        border-right: 0
+
+      input.bulk.second
+        border-left: 0
+
+      .bulk-buy, .bulk-buy i
+        color: #999
+
+      
+      // ICONS
+      i
+        font-size: 0.75em
+        padding-right: 0.9375rem
+
+      i.ofn-i_056-bulk, i.ofn-i_036-producers
+        font-size: 1rem
+        padding-right: 0rem
+        padding-left: 0.5rem
 
       .columns
-        padding-top: 1em
-        padding-bottom: 1em
-        line-height: 1em
+        padding-top: 0em
+        padding-bottom: 0em
+        // This is to be consistent with input heights
+        line-height: 2.3125 
+        // outline: 1px solid red
 
       .row.summary, .row.variants
         margin-left: 0
         margin-right: 0
-        background: #f7f7f7
-        border-top: 1px solid #dfdfdf
-
-      .row.summary
         background: #fff
-        line-height: 1
 
-        .summary-header
-          font-size: 1.15rem
+      // ROW VARIANTS 
+      .row.variants
+        background: url("/assets/gray_jean.png") top left repeat
 
-          &, & *
-            @include avenir
-            color: $clr-brick
+        &:nth-of-type(even)
+          background: url("/assets/gray_jean_light.png") top left repeat
 
-        .summary-price
-          &, & *
-            @include avenir
+      // ROW SUMMARY
+      .row.summary
+        .columns
+          padding-top: 1em
+          padding-bottom: 1em
+          line-height: 1
+
+        h3
+          font-size: 1.5rem
+          margin: 0
+
         
       
 
