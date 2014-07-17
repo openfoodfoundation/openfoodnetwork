@@ -25,10 +25,10 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
             munged_order["ship_address_attributes"] = value
           when "payment_method_id"
             munged_order["payments_attributes"] = [{payment_method_id: value}]
-
-          when "form_state" # don't keep this shit
-          else
+          when "shipping_method_id", "payment_method_id", "email"
             munged_order[name] = value
+          else
+            # Ignore everything else
 
       if @ship_address_same_as_billing
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
