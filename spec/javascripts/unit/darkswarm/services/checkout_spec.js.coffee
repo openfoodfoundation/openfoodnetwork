@@ -39,10 +39,10 @@ describe 'Checkout service', ->
       ship_address: {test: "bar"}
       user_id: 901
 
-    angular.module('Darkswarm').value('order', orderData)
     module 'Darkswarm'
     module ($provide)->
       $provide.value "RailsFlashLoader", FlashLoaderMock 
+      $provide.value "currentOrder", orderData 
       $provide.value "shippingMethods", shippingMethods 
       $provide.value "paymentMethods", paymentMethods 
       null

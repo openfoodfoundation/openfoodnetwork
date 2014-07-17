@@ -1,8 +1,8 @@
-Darkswarm.factory 'Checkout', (Order, ShippingMethods, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
   new class Checkout
     errors: {}
     secrets: {}
-    order: Order.order
+    order: CurrentOrder.order
     ship_address_same_as_billing: true
 
     submit: ->
