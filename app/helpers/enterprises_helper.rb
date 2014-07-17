@@ -3,6 +3,10 @@ module EnterprisesHelper
     @current_distributor ||= current_order(false).andand.distributor
   end
 
+  def available_shipping_methods
+    current_distributor.shipping_methods.uniq
+  end
+
   def managed_enterprises
     Enterprise.managed_by(spree_current_user)
   end

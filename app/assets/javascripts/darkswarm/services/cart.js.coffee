@@ -1,5 +1,5 @@
-Darkswarm.factory 'Cart', (Order)->
+Darkswarm.factory 'Cart', (CurrentOrder)->
   # Handles syncing of current cart/order state to server
   new class Cart
-    order: Order.order
+    order: CurrentOrder.order
 

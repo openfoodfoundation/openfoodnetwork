@@ -1,4 +1,4 @@
-Darkswarm.factory 'Checkout', (Order, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', (Order, ShippingMethods, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
   new class Checkout
     errors: {}
     secrets: {}
@@ -8,7 +8,7 @@ Darkswarm.factory 'Checkout', (Order, $http, Navigation, CurrentHub, RailsFlashL
     submit: ->
       Loading.message = "Submitting your order: please wait"
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
-        Navigation.go data.pat
+        Navigation.go data.path
       .error (response, status)=>
         Loading.clear()
         @errors = response.errors
@@ -47,7 +47,7 @@ Darkswarm.factory 'Checkout', (Order, $http, Navigation, CurrentHub, RailsFlashL
       munged_order
 
     shippingMethod: ->
-      @order.shipping_methods[@order.shipping_method_id] if @order.shipping_method_id
+      ShippingMethods.shipping_methods_by_id[@order.shipping_method_id] if @order.shipping_method_id
 
     requireShipAddress: ->
       @shippingMethod()?.require_ship_address
@@ -56,7 +56,7 @@ Darkswarm.factory 'Checkout', (Order, $http, Navigation, CurrentHub, RailsFlashL
       @shippingMethod()?.price || 0.0
     
     paymentMethod: ->
-      @order.payment_methods[@order.payment_method_id]
+      PaymentMethods.payment_methods_by_id[@order.payment_method_id]
 
     cartTotal: ->
       @shippingPrice() + @order.display_total

@@ -1,5 +1,5 @@
 #NOTE: when adding new fields for user input, it may want to be cached in localStorage
-# If so, make sure to add it to Order.attributes_to_cache
+# If so, make sure to add it to controller attribute caching
 
 object current_order
 attributes :id, :email, :shipping_method_id, :user_id
@@ -19,6 +19,9 @@ end
 child current_order.ship_address => :ship_address do
   attributes :phone, :firstname, :lastname, :address1, :address2, :city, :country_id, :state_id, :zipcode
 end
+
+# This is actually totally decoupled data and should be injected separately into their
+# own services
 
 node :shipping_methods do
   Hash[current_distributor.shipping_methods.uniq.collect { |method| 

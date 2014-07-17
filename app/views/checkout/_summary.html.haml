@@ -13,10 +13,10 @@
             %td= adjustment.display_amount.to_html
         %tr
           %th Shipping
-          %td {{ Order.shippingPrice() | currency }}
+          %td {{ Checkout.shippingPrice() | currency }}
         %tr
           %th Cart total 
-          %td {{ Order.cartTotal() | currency }}
+          %td {{ Checkout.cartTotal() | currency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
             %tr

@@ -1,4 +1,5 @@
 Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redirections)->
+
   new class AuthenticationService
     selectedPath: "/login"
 

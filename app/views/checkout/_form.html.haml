@@ -4,6 +4,8 @@
     novalidate: true,
     name: "checkout"} do |f|
 
+  = inject_available_shipping_methods
+  = inject_available_payment_methods
   :javascript
     angular.module('Darkswarm').value('order', #{render "checkout/order"})
 

@@ -23,28 +23,4 @@ describe SharedHelper do
     helper.stub(:current_order) { order }
     helper.distributor_link_class(d1).should =~ /empties-cart/
   end
-
-  describe "injecting json" do
-    let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
-
-    it "will inject via AMS" do
-      helper.inject_json_ams("test", [enterprise], Api::EnterpriseSerializer).should match enterprise.name
-    end
-
-    it "injects enterprises" do
-      helper.inject_enterprises.should match enterprise.name
-      helper.inject_enterprises.should match enterprise.facebook
-    end
-
-    it "injects taxons" do
-      taxon = create(:taxon)
-      helper.inject_taxons.should match taxon.name
-    end
-
-    it "injects taxons" do
-      taxon = create(:taxon)
-      helper.inject_taxons.should match taxon.name
-    end
-  end
-
 end
