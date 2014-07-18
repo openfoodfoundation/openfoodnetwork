@@ -35,7 +35,4 @@ angular.module("admin.products").factory "VariantUnitManager", ->
       @unitNames[unitType][scale]
 
     @unitScales: (unitType) ->
-      unitScales =
-        'weight': [1.0, 1000.0, 1000000.0]
-        'volume': [0.001, 1.0, 1000.0]
-      unitScales[unitType]
+      (parseFloat(scale) for scale in Object.keys(@unitNames[unitType])).sort()
