@@ -13,7 +13,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
       @products = $resource("/shop/products").query (products)=>
         @extend()
         @dereference()
-        @loading = false 
+        @loading = false
       @
     
     dereference: ->

@@ -2,11 +2,11 @@ describe 'ProductsCtrl', ->
   ctrl = null
   scope = null
   event = null
-  Product = null
+  Products = null
 
   beforeEach ->
     module('Darkswarm')
-    Product = 
+    Products = 
       all: ->
       update: ->
       products: ["testy mctest"]
@@ -15,10 +15,10 @@ describe 'ProductsCtrl', ->
         
     inject ($controller) ->
       scope = {}
-      ctrl = $controller 'ProductsCtrl', {$scope: scope, Product: Product, OrderCycle: OrderCycle}
+      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle}
 
-  it 'fetches products from Product', ->
-    expect(scope.Product.products).toEqual ['testy mctest']
+  it 'fetches products from Products', ->
+    expect(scope.Products.products).toEqual ['testy mctest']
 
   it "increments the limit up to the number of products", ->
     scope.limit = 0
