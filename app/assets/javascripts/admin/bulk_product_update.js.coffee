@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "optionValueNamer",
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts, optionValueNamer) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "OptionValueNamer",
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts, OptionValueNamer) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
@@ -14,7 +14,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       taxons:       {name: "Taxons",        visible: false}
       available_on: {name: "Available On",  visible: false}
 
-    $scope.variant_unit_options = optionValueNamer.variant_unit_options
+    $scope.variant_unit_options = OptionValueNamer.variant_unit_options
 
     $scope.filterableColumns = [
       { name: "Supplier",       db_column: "supplier_name" },

@@ -1,5 +1,5 @@
 angular.module("admin.products")
-  .controller "unitsCtrl", ($scope, optionValueNamer) ->
+  .controller "unitsCtrl", ($scope, OptionValueNamer) ->
     $scope.product = { master: {} }
     $scope.product.master.product = $scope.product
     $scope.placeholder_text = ""
@@ -24,9 +24,9 @@ angular.module("admin.products")
           $scope.product.master.unit_value *= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
           $scope.product.master.unit_description = match[3]
 
-      $scope.placeholder_text = new optionValueNamer($scope.product.master).name()
+      $scope.placeholder_text = new OptionValueNamer($scope.product.master).name()
 
-    $scope.variant_unit_options = optionValueNamer.variant_unit_options
+    $scope.variant_unit_options = OptionValueNamer.variant_unit_options
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0

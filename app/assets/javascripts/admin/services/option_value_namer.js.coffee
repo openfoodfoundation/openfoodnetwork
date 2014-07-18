@@ -1,4 +1,4 @@
-angular.module("admin.products").factory "optionValueNamer", ->
+angular.module("admin.products").factory "OptionValueNamer", ->
   class OptionValueNamer
     @getUnitName: (scale, unitType) ->
       unitNames =
