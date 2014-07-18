@@ -6,7 +6,7 @@ Darkswarm.factory 'Order', ($resource, order, $http, Navigation, storage, Curren
     ship_address_same_as_billing: true
 
     #Whitelist of fields from Order.order to bind into localStorage
-    fieldsToBind: ["bill_address", "email", "payment_method_id", "shipping_method_id", "ship_address"]
+    fieldsToBind: ["bill_address", "email", "payment_method_id", "shipping_method_id", "ship_address", "special_instructions"]
 
     # Bind all the fields from fieldsToBind, + anything on the Order class
     bindFieldsToLocalStorage: (scope)=>

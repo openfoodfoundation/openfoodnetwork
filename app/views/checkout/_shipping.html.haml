@@ -73,5 +73,9 @@
                 .small-6.columns
                   = validated_input "Phone", "order.ship_address.phone"
       .row
+        .small-12.columns
+          = f.text_area :special_instructions, label: "Any notes or custom delivery instructions?", size: "60x4", "ng-model" => "order.special_instructions"
+
+      .row
         .small-12.columns.text-right
           %button.primary{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next
