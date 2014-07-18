@@ -1,12 +1,13 @@
 describe "AdminOrderMgmtCtrl", ->
-  ctrl = scope = httpBackend = null
+  ctrl = scope = httpBackend = VariantUnitManager = null
 
   beforeEach ->
     module "ofn.admin"
-  beforeEach inject(($controller, $rootScope, $httpBackend) ->
+  beforeEach inject(($controller, $rootScope, $httpBackend, _VariantUnitManager_) ->
     scope = $rootScope.$new()
     ctrl = $controller
     httpBackend = $httpBackend
+    VariantUnitManager = _VariantUnitManager_
     spyOn(window, "formatDate").andReturn "SomeDate"
 
     ctrl "AdminOrderMgmtCtrl", {$scope: scope}
@@ -337,35 +338,15 @@ describe "AdminOrderMgmtCtrl", ->
 
       it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(scope,"getScale").andReturn 5
-        scope.formattedValueWithUnitName(10,unitsVariant)
+        spyOn(VariantUnitManager, "getScale").andReturn 5
+        scope.formattedValueWithUnitName(10, unitsVariant)
         expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
 
       it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(scope,"getScale").andReturn 1000
-        spyOn(scope,"getUnitName").andReturn "kg"
+        spyOn(VariantUnitManager, "getScale").andReturn 1000
+        spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
-
-    describe "getScale", ->
-      it "returns the largest scale for which value/scale is greater than 1", ->
-        expect(scope.getScale(1.2,"weight")).toEqual 1.0
-        expect(scope.getScale(1000,"weight")).toEqual 1000.0
-        expect(scope.getScale(0.0012,"volume")).toEqual 0.001
-        expect(scope.getScale(1001,"volume")).toEqual 1.0
-
-      it "returns the smallest unit available when value is smaller", ->
-        expect(scope.getScale(0.4,"weight")).toEqual 1
-        expect(scope.getScale(0.0004,"volume")).toEqual 0.001
-
-    describe "getUnitName", ->
-      it "returns the unit name based on the scale and unit type (weight/volume) provided", ->
-        expect(scope.getUnitName(1,"weight")).toEqual "g"
-        expect(scope.getUnitName(1000,"weight")).toEqual "kg"
-        expect(scope.getUnitName(1000000,"weight")).toEqual "T"
-        expect(scope.getUnitName(0.001,"volume")).toEqual "mL"
-        expect(scope.getUnitName(1,"volume")).toEqual "L"
-        expect(scope.getUnitName(1000000,"volume")).toEqual "ML"
 
 describe "managing pending changes", ->
   dataSubmitter = pendingChangesService = null

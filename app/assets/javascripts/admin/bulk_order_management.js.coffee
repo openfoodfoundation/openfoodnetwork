@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges"
-  ($scope, $http, dataFetcher, blankOption, pendingChanges) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer",
+  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer) ->
 
     $scope.initialiseVariables = ->
       start = daysFromToday -7
@@ -134,30 +134,13 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
       true
 
-    $scope.getScale = (value, unitType) ->
-      scaledValue = null
-      validScales = []
-      unitScales =
-        'weight': [1.0, 1000.0, 1000000.0]
-        'volume': [0.001, 1.0, 1000000.0]
-
-      validScales.unshift scale for scale in unitScales[unitType] when value/scale >= 1
-      if validScales.length > 0
-        validScales[0]
-      else
-        unitScales[unitType][0]
-
-    $scope.getUnitName = (scale, unitType) ->
-      unitNames =
-        'weight': {1.0: 'g', 1000.0: 'kg', 1000000.0: 'T'}
-        'volume': {0.001: 'mL', 1.0: 'L',  1000000.0: 'ML'}
-      unitNames[unitType][scale]
-
+    # How is this different to OptionValueNamer#name?
+    # Should it be extracted to that class or VariantUnitManager?
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
       if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
-        scale = $scope.getScale(value, unitsProduct.variant_unit)
-        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsProduct.variant_unit)
+        scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
+        Math.round(value/scale * 1000)/1000 + " " + VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
       else
         ''
 
