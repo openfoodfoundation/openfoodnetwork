@@ -26,3 +26,7 @@ describe 'Cart service', ->
     expect(Cart.line_items[1].variant).toBe v2 
     expect(Cart.line_items[1].variant.line_item).toBe Cart.line_items[1] 
 
+  it "returns a list of items actually in the cart", ->
+    expect(Cart.line_items_present()).toEqual []
+    order.line_items[0].quantity = 1
+    expect(Cart.line_items_present().length).toEqual 1

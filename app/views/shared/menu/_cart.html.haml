@@ -2,5 +2,5 @@
   %span.nav-branded 
     %i.ofn-i_027-shopping-cart
     %span
-      {{ Cart.order.line_items.length }}
+      {{ Cart.line_items_present().length }}
       items

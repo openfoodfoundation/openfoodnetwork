@@ -8,14 +8,16 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants)->
         line_item.variant.line_item = line_item
         Variants.register line_item.variant
 
-    register_variant: (variant)=>
-      @create_line_item(variant) unless @line_items.some (li)-> 
-        li.variant == variant
+    line_items_present: =>
+      @line_items.filter (li)->
+        li.quantity > 0
 
+    register_variant: (variant)=>
+      exists = @line_items.some (li)-> li.variant == variant
+      @create_line_item(variant) unless exists 
+        
     create_line_item: (variant)->
-      li =
+      variant.line_item =
         variant: variant
         quantity: 0
-      variant.line_item = li
-      @line_items.push li
-
+      @line_items.push variant.line_item
