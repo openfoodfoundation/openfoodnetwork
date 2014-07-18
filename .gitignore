@@ -5,6 +5,7 @@
 *.swp
 .sass-cache
 db/*.sqlite3
+db/*.csv
 log/*.log
 log/*.log.lck
 log/*.log.*

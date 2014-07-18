@@ -31,8 +31,6 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  resources :suburbs
-
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, :on => :collection, :as => :bulk_update
@@ -70,7 +68,6 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  get "new_landing_page", :controller => 'home', :action => "new_landing_page"
   get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do

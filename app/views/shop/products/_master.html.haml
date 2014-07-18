@@ -1,12 +1,13 @@
-.small-1.columns
-  %i.ofn-i_056-bulk{"bo-if" => "product.group_buy"}
-  &nbsp;
-
-.small-4.columns
-  {{ product.master.name_to_display }}
+.small-12.medium-4.large-4.columns.variant-name
+  .table-cell
+    .inline {{ product.master.name_to_display }}
+    .bulk-buy.inline{"bo-if" => "product.group_buy"}
+      %i.ofn-i_056-bulk><
+      %em><
+        \ Bulk
 
 -# WITHOUT GROUP BUY
-.small-5.columns{"bo-if" => "!product.group_buy"}
+.small-4.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
   %input{type: :number, 
   min: 0,
   placeholder: "0",
@@ -15,29 +16,39 @@
   name: "variants[{{product.master.id}}]", 
   "ng-model" => "product.master.line_item.quantity",
   id: "variants_{{product.master.id}}"}
-  %small x {{ product.master.unit_to_display }}
 
 -# WITH GROUP BUY
-.small-2.columns{"bo-if" => "product.group_buy"}
-  %input{type: :number, 
-  min: 0,
-  placeholder: "min",
-  "ofn-disable-scroll" => true,
-  max: "{{product.on_demand && 9999 || product.count_on_hand }}",
-  name: "variants[{{product.master.id}}]", 
-  "ng-model" => "product.master.line_item.quantity",
-  id: "variants_{{product.master.id}}"}
+.small-4.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
+  %span.bulk-input-container
+    %span.bulk-input
+      %input.bulk.first{type: :number, 
+      min: 0,
+      "ng-model" => "product.master.line_item.quantity",
+      placeholder: "min",
+      "ofn-disable-scroll" => true,
+      max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+      name: "variants[{{product.master.id}}]", 
+      id: "variants_{{product.master.id}}"}
 
-.small-3.columns{"bo-if" => "product.group_buy"}
-  %input{type: :number,
-  min: 0,
-  placeholder: "max",
-  "ofn-disable-scroll" => true,
-  max: "{{product.on_demand && 9999 || product.count_on_hand }}",
-  "ng-model" => "product.master.line_item.max_quantity",
-  name: "variant_attributes[{{product.master.id}}][max_quantity]"}
-  %small x {{ product.master.unit_to_display }}
+    %span.bulk-input{"bo-if" => "product.group_buy"}
+      %input.bulk.second{type: :number,
+      min: 0,
+      "ng-model" => "product.master.line_item.max_quantity",
+      placeholder: "max",
+      "ofn-disable-scroll" => true,
+      max: "{{product.on_demand && 9999 || product.count_on_hand }}",
+      name: "variant_attributes[{{product.master.id}}][max_quantity]"}
 
-.small-2.columns.text-right
-  {{ product.master.price | currency }} x {{ product.master.line_item.quantity }} =
-  {{ product.master.getPrice() | currency }}
+.small-2.medium-1.large-1.columns.variant-unit
+  .table-cell 
+    %em {{ product.master.unit_to_display }}
+
+.small-3.medium-2.large-2.columns.variant-price
+  .table-cell 
+    %i.ofn-i_009-close 
+    {{ product.price | currency }}
+
+.small-3.medium-2.large-2.columns.total-price.text-right
+  .table-cell
+    %strong
+      {{ product.master.getPrice() | currency }} 

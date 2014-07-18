@@ -8,10 +8,12 @@
       %p
         %b Distributor:
         = f.object.distributor.andand.name || "None"
+        = f.hidden_field :distributor_id
     .omega.six.columns
       %p
         %b Order cycle:
         = f.object.order_cycle.andand.name || "None"
+        = f.hidden_field :order_cycle_id
 
   - else
     .alpha.six.columns

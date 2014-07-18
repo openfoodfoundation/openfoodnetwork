@@ -22,8 +22,23 @@ class Enterprise < ActiveRecord::Base
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
 
-  has_attached_file :logo, :styles => { :medium => "300x300>", small: "180x180>", :thumb => "100x100>" }
-  has_attached_file :promo_image, :styles => { :large => "1200x260#", :thumb => "100x100>" }
+  has_attached_file :logo,
+    styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
+    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
+    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
+
+  has_attached_file :promo_image,
+    styles: { large: "1200x260#", thumb: "100x100>" },
+    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
+    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
+
+  validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
+
+  include Spree::Core::S3Support
+  supports_s3 :logo
+  supports_s3 :promo_image
+
 
   validates_presence_of :name
   validates_presence_of :address

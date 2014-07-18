@@ -1,6 +1,22 @@
 Spree::Admin::VariantsController.class_eval do
   helper 'spree/products'
 
+  def search
+    search_params = { :product_name_cont => params[:q], :sku_cont => params[:q] }
+
+    @variants = Spree::Variant.ransack(search_params.merge(:m => 'or')).result
+
+    if params[:distributor_id].present?
+      distributor = Enterprise.find params[:distributor_id]
+      @variants = @variants.in_distributor(distributor)
+    end
+
+    if params[:order_cycle_id].present?
+      order_cycle = OrderCycle.find params[:order_cycle_id]
+      @variants = @variants.in_order_cycle(order_cycle)
+    end
+  end
+
   def destroy
     @variant = Spree::Variant.find(params[:id])
     @variant.delete # This line changed, as well as removal of following conditional
