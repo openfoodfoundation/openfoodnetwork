@@ -1,4 +1,4 @@
-Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
+Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()
@@ -13,6 +13,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
       @products = $resource("/shop/products").query (products)=>
         @extend()
         @dereference()
+        @registerVariants()
         @loading = false
       @
     
@@ -21,6 +22,12 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
         product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
 
+    registerVariants: ->
+      for product in @products
+        if product.variants
+          product.variants = (Variants.register variant for variant in product.variants)
+        product.master = Variants.register master if product.master
+
     extend: ->
       for product in @products
         if product.variants?.length > 0
@@ -28,3 +35,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons) ->
           product.price = Math.min.apply(null, prices)
 
         product.hasVariants = product.variants?.length > 0
+
+    # Iterate through variants
+    #   Cart.register_variant(v)

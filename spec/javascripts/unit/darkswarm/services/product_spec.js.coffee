@@ -2,21 +2,27 @@ describe 'Products service', ->
   $httpBackend = null
   Products = null
   Enterprises = null
+  Variants = null
   CurrentHubMock = {} 
-  product =
-    test: "cats"
-    supplier:
-      id: 9
-    price: 11
-    variants: []
+  currentOrder =
+    line_items: []
+  product = null
   beforeEach ->
+    product =  
+      test: "cats"
+      supplier:
+        id: 9
+      price: 11
+      variants: []
     module 'Darkswarm'
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock 
+      $provide.value "currentOrder", currentOrder 
       null
     inject ($injector, _$httpBackend_)->
       Products = $injector.get("Products")
       Enterprises = $injector.get("Enterprises")
+      Variants = $injector.get("Variants")
       $httpBackend = _$httpBackend_
 
   it "Fetches products from the backend on init", ->
@@ -31,6 +37,13 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Products.products[0].supplier).toBe Enterprises.enterprises_by_id["9"]
 
+  it "registers variants with the Variants service", ->
+    spyOn(Variants, "register")
+    product.variants = [{id: 1}]
+    $httpBackend.expectGET("/shop/products").respond([product])
+    $httpBackend.flush()
+    expect(Variants.register).toHaveBeenCalledWith product.variants[0]
+
   describe "determining the price to display for a product", ->
     it "displays the product price when the product does not have variants", ->
       $httpBackend.expectGET("/shop/products").respond([product])
@@ -42,3 +55,4 @@ describe 'Products service', ->
       $httpBackend.expectGET("/shop/products").respond([product])
       $httpBackend.flush()
       expect(Products.products[0].price).toEqual 22
+
