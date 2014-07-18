@@ -43,7 +43,7 @@
             padding-left: 0.9375rem
             font-weight: bold
             .table-cell
-              height: 28px
+              height: 27px
 
         // Variant unit
         .variant-unit  
@@ -60,10 +60,16 @@
         .variant-price
           padding-left: 0.25rem
           padding-right: 0rem
+          @media all and (max-width: 640px)
+            text-align: right
 
         // Total price
         .total-price
           padding-left: 0rem
+          @media all and (max-width: 640px)
+            background: white
+            .table-cell
+              height: 27px
 
       
       // ROW SUMMARY
