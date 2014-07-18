@@ -43,9 +43,12 @@
     %em {{ product.master.unit_to_display }}
 
 .small-3.medium-2.large-2.columns.variant-price
-  .table-cell 
-    %i.ofn-i_009-close 
+  .table-cell
+    %i.ofn-i_009-close
     {{ product.price | currency }}
+    %a{}><
+      %i.ofn-i_028-barcode
+
 
 .small-3.medium-2.large-2.columns.total-price.text-right
   .table-cell
