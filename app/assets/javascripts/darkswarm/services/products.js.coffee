@@ -27,7 +27,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
     registerVariants: ->
       for product in @products
         if product.variants
-          variants = []
           product.variants = (Variants.register variant for variant in product.variants)
         product.master = Variants.register product.master if product.master
 

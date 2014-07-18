@@ -4,3 +4,7 @@
     %span
       {{ Cart.line_items_present().length }}
       items
+    %ul
+      %li{"ng-repeat" => "line_item in Cart.line_items_present()",
+      "ng-controller" => "LineItemCtrl"}
+        {{ line_item.id }}

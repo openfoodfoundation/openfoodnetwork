@@ -39,4 +39,5 @@
   %small x {{ product.master.unit_to_display }}
 
 .small-2.columns.text-right
-  {{ product.price | currency }}
+  {{ product.master.price | currency }} x {{ product.master.line_item.quantity }} =
+  {{ product.master.getPrice() | currency }}
