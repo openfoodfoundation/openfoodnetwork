@@ -33,3 +33,15 @@ describe "VariantUnitManager", ->
 
     it "returns a set of scales for unit type volume", ->
       expect(VariantUnitManager.unitScales('volume')).toEqual [0.001, 1.0, 1000.0]
+
+  describe "variantUnitOptions", ->
+    it "returns an array of options", ->
+      expect(VariantUnitManager.variantUnitOptions()).toEqual [
+        ["Weight (g)", "weight_1"],
+        ["Weight (kg)", "weight_1000"],
+        ["Weight (T)", "weight_1000000"],
+        ["Volume (mL)", "volume_0.001"],
+        ["Volume (L)", "volume_1"],
+        ["Volume (kL)", "volume_1000"],
+        ["Items", "items"]
+      ]

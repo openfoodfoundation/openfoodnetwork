@@ -11,15 +11,13 @@ angular.module("admin.products").factory "VariantUnitManager", ->
         1000.0: 'kL'
 
     @variantUnitOptions: ->
-      [
-        ["Weight (g)", "weight_1"],
-        ["Weight (kg)", "weight_1000"],
-        ["Weight (T)", "weight_1000000"],
-        ["Volume (mL)", "volume_0.001"],
-        ["Volume (L)", "volume_1"],
-        ["Volume (kL)", "volume_1000"],
-        ["Items", "items"]
-      ]
+      options = for unit_type, scale_with_name of @unitNames
+        unit_type_cap = unit_type[0].toUpperCase() + unit_type[1..-1]
+        for scale in @unitScales(unit_type)
+          name = @getUnitName(scale, unit_type)
+          ["#{unit_type_cap} (#{name})", "#{unit_type}_#{scale}"]
+      options.push [['Items', 'items']]
+      [].concat options...
 
     @getScale: (value, unitType) ->
       scaledValue = null
