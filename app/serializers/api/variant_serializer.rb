@@ -1,7 +1,8 @@
 class Api::VariantSerializer < ActiveModel::Serializer
   attributes :id, :is_master, :count_on_hand, :name_to_display, :on_demand,
     :price
-
+  attributes :id, :is_master, :count_on_hand, :name_to_display, :unit_to_display, :on_demand
+  attributes :price
   has_many :images, serializer: Api::ImageSerializer
 
   def price

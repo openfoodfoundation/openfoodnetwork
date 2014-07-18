@@ -142,11 +142,10 @@ describe ShopController do
         end
 
         it "includes the primary taxon" do
-          taxon = mock_model(Spree::Taxon, name: "fruitbat") 
+          taxon = create(:taxon)
           Spree::Product.any_instance.stub(:primary_taxon).and_return taxon
-          taxon.stub_chain(:icon, :url).and_return ""
           xhr :get, :products
-          response.body.should have_content "fruitbat"
+          response.body.should have_content taxon.name
         end
       end
     end
