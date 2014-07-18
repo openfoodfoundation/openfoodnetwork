@@ -115,33 +115,53 @@
         position: absolute
         top: 3px
         left: 0px
-        // float: left
-        // display: inline
         width: 7rem
         height: 7rem
-        outline: 1px solid red
+        outline: 1px solid black
         float: left
         display: block
-        margin-right: 0.9375rem
         z-index: 999999
-        background-color: white
+        background-color: black
+        overflow: hidden
       
-        @media all and (max-width: 640px)
+        @media all and (max-width: 768px)
           width: 4rem
           height: 4rem
 
-      // Product thumb
-      .columns:first-child
+      // Variant name
+      .variant-name, .summary-header
+        text-transform: capitalize
         padding-left: 7.9375rem
-        @media all and (max-width: 640px)
+        
+        @media all and (max-width: 768px)
           padding-left: 4.9375rem
 
-      // Variant label
+      .variant-name
+        @media all and (max-width: 480px)
+          padding-left: 0.9375rem
+          font-weight: bold
+          .table-cell
+            height: 24px
+
+      // Variant unit
       .variant-unit  
         padding-left: 0rem
-        color: #999
+        padding-right: 0rem
+        color: #888
         font-size: 0.875rem
-        overflow: nowrap
+        overflow: hidden
+
+        @media all and (max-width: 768px)
+          font-size: 0.75rem
+
+      // Variant price
+      .variant-price
+        padding-left: 0.25rem
+        padding-right: 0rem
+
+      // Total price
+      .total-price
+        padding-left: 0rem
 
       .taxon-flag
         background: transparent url("/assets/flag.svg") top center no-repeat
@@ -149,6 +169,10 @@
         min-height: 40px
         margin-top: -1.1rem
         padding-top: 0.25rem
+        z-index: 999999
+
+        @media all and (max-width: 768px)
+          margin-top: -0.85rem
 
         render-svg
           svg
@@ -156,6 +180,7 @@
             height: 24px
             path
               fill: #999
+        
         @media all and (max-width: 640px)
           render-svg
             svg
@@ -165,11 +190,23 @@
       input
         @include csstrans
         margin: 0
-        width: 12em
+        width: 10rem
         display: inline
         @include box-shadow(none)
         border-color: #b3b3b3
         text-align: right
+        
+        @media all and (max-width: 768px)
+          width: 8rem
+
+        @media all and (max-width: 640px) 
+          font-size: 0.75rem
+          padding-left: 0.25rem
+          padding-right: 0.25rem
+       
+        @media all and (max-width: 480px) 
+          float: left !important
+          width: 5.8rem
 
         &:hover
           @include box-shadow(none)
@@ -185,11 +222,20 @@
       span.bulk-input-container
         float: right
 
+        @media all and (max-width: 480px) 
+          float: left !important
+
         .bulk-input
           float: left
 
       input.bulk
-        width: 6em
+        width: 5rem
+
+        @media all and (max-width: 768px)
+          width: 4rem
+
+        @media all and (max-width: 480px) 
+          width: 2.9rem
 
       input.bulk.first
         border-right: 0
@@ -197,8 +243,17 @@
       input.bulk.second
         border-left: 0
 
+      .bulk-buy
+        font-size: 0.875rem
+        @media all and (max-width: 768px)
+          font-size: 0.75rem
+
       .bulk-buy, .bulk-buy i
-        color: #999
+        color: #888
+
+        
+      .inline
+        display: inline
 
       
       // ICONS
@@ -209,14 +264,24 @@
       i.ofn-i_056-bulk, i.ofn-i_036-producers
         font-size: 1rem
         padding-right: 0rem
+
+      i.ofn-i_036-producers
         padding-left: 0.5rem
 
       .columns
         padding-top: 0em
         padding-bottom: 0em
-        // This is to be consistent with input heights
-        line-height: 2.3125 
-        // outline: 1px solid red
+        display: table
+        line-height: 1.1
+        // outline: 1px solid red 
+
+        @media all and (max-width: 640px) 
+          font-size: 0.75rem      
+        
+      .table-cell
+        display: table-cell
+        vertical-align: middle
+        height: 37px
 
       .row.summary, .row.variants
         margin-left: 0
@@ -236,6 +301,10 @@
           padding-top: 1em
           padding-bottom: 1em
           line-height: 1
+          
+          @media all and (max-width: 768px)
+            padding-top: 0.65rem
+            padding-bottom: 0.65rem
 
         h3
           font-size: 1.5rem
