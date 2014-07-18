@@ -1,9 +1,13 @@
 .row.variants{bindonce: true,
   "ng-repeat" => "variant in product.variants track by variant.id"}
 
-  .small-12.medium-4.large-4.columns
-    {{ variant.name_to_display }}
-    %i.ofn-i_056-bulk{"bo-if" => "product.group_buy"}
+  .small-12.medium-4.large-4.columns.variant-name
+    .table-cell  
+      .inline {{ variant.name_to_display }}
+      .bulk-buy.inline{"bo-if" => "product.group_buy"}
+        %i.ofn-i_056-bulk><
+        %em><
+          \ Bulk
 
   -# WITHOUT GROUP BUY
   .small-4.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
@@ -15,37 +19,38 @@
     max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
     name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}",
     "bo-model" => "variant.quantity"}
-    
-  .small-4.medium-1.large-1.columns.variant-unit
-    %em {{ variant.unit_to_display }}
+      
 
-  .small-4.medium-2.large-2.columns
-    %span
+  -# WITH GROUP BUY
+  .small-4.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
+    %span.bulk-input-container
+      %span.bulk-input
+        %input.bulk.first{type: :number, 
+        value: nil, 
+        min: 0, 
+        placeholder: "min",
+        "ofn-disable-scroll" => true,
+        max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+        name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}",
+        "bo-model" => "variant.quantity"}
+      %span.bulk-input{"bo-if" => "product.group_buy"}
+        %input.bulk.second{type: :number,
+        min: 0,
+        placeholder: "max",
+        "ofn-disable-scroll" => true,
+        max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+        name: "variant_attributes[{{variant.id}}][max_quantity]",
+        "ng-model" => "variant.max_quantity"}    
+
+  .small-2.medium-1.large-1.columns.variant-unit
+    .table-cell 
+      %em {{ variant.unit_to_display }}
+
+  .small-3.medium-2.large-2.columns.variant-price
+    .table-cell 
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
 
-  -# WITH GROUP BUY
-  / .small-2.columns{"bo-if" => "product.group_buy"}
-  /   %input{type: :number, 
-  /   value: nil, 
-  /   min: 0, 
-  /   placeholder: "min",
-  /   "ofn-disable-scroll" => true,
-  /   max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
-  /   name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}",
-  /   "bo-model" => "variant.quantity"}
-
-  / .small-3.columns{"bo-if" => "product.group_buy"}
-  /   %input{type: :number,
-  /   min: 0,
-  /   placeholder: "max",
-  /   "ofn-disable-scroll" => true,
-  /   max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
-  /   name: "variant_attributes[{{variant.id}}][max_quantity]",
-  /   "ng-model" => "variant.max_quantity"}
-  /   %em {{ variant.unit_to_display }}
-
-  .small-12.medium-2.large-2.columns.text-right
-    %span
-      %i.ofn-i_009-close 
+  .small-3.medium-2.large-2.columns.total-price.text-right
+    .table-cell
       %strong $10,000.95
