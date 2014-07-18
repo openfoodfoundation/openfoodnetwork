@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "OptionValueNamer",
-  ($scope, $http, dataFetcher, blankOption, pendingChanges, OptionValueNamer) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer",
+  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer) ->
 
     $scope.initialiseVariables = ->
       start = daysFromToday -7
@@ -137,7 +137,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
     $scope.getScale = (value, unitType) ->
       scaledValue = null
       validScales = []
-      unitScales = OptionValueNamer.unitScales(unitType)
+      unitScales = VariantUnitManager.unitScales(unitType)
 
       validScales.unshift scale for scale in unitScales when value/scale >= 1
       if validScales.length > 0
@@ -146,13 +146,13 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         unitScales[0]
 
     $scope.getUnitName = (scale, unitType) ->
-      OptionValueNamer.getUnitName(scale, unitType)
+      VariantUnitManager.getUnitName(scale, unitType)
 
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
       if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
         scale = $scope.getScale(value, unitsProduct.variant_unit)
-        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale,unitsProduct.variant_unit)
+        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale, unitsProduct.variant_unit)
       else
         ''
 
