@@ -135,15 +135,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       true
 
     $scope.getScale = (value, unitType) ->
-      scaledValue = null
-      validScales = []
-      unitScales = VariantUnitManager.unitScales(unitType)
-
-      validScales.unshift scale for scale in unitScales when value/scale >= 1
-      if validScales.length > 0
-        validScales[0]
-      else
-        unitScales[0]
+      VariantUnitManager.getScale(value, unitType)
 
     $scope.getUnitName = (scale, unitType) ->
       VariantUnitManager.getUnitName(scale, unitType)

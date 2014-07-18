@@ -1,5 +1,16 @@
 angular.module("admin.products").factory "VariantUnitManager", ->
   class VariantUnitManager
+    @getScale = (value, unitType) ->
+      scaledValue = null
+      validScales = []
+      unitScales = VariantUnitManager.unitScales(unitType)
+
+      validScales.unshift scale for scale in unitScales when value/scale >= 1
+      if validScales.length > 0
+        validScales[0]
+      else
+        unitScales[0]
+
     @getUnitName: (scale, unitType) ->
       unitNames =
         'weight': {1.0: 'g', 1000.0: 'kg', 1000000.0: 'T'}
