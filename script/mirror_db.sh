@@ -19,8 +19,8 @@ ssh $1 "pg_dump -h localhost -U openfoodweb openfoodweb_production |gzip" |gunzi
 
 
 # -- Disable S3
-echo "Disabling S3 in development..."
-$RAILS_RUN script/disable_s3.rb
+echo "Preparing mirrored database..."
+$RAILS_RUN script/prepare_imported_db.rb
 
 
 # -- Mirror images
