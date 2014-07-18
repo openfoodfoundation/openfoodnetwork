@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $window)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -11,13 +11,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $window)->
 
     orderChanged: =>
       @unsaved()
-      $window.onBeforeUnload
       if @promise
         $timeout.cancel(@promise)
       @promise = $timeout @update, 1000
 
     update: =>
-      console.log @data()
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
@@ -32,12 +30,12 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $window)->
 
     saved: =>
       @dirty = false
-      #$window.onBeforeUnload = null 
+      $(window).unbind "beforeunload"
 
     unsaved: =>
       @dirty = true
-      window.onBeforeUnload = ->
-        "Your order hasn't been saved yet! Are you sure you want to leave this page?"
+      $(window).bind "beforeunload", ->
+        "Your order hasn't been saved yet. Give us a few seconds to finish!"
 
     line_items_present: =>
       @line_items.filter (li)->
