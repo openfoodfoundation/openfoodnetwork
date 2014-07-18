@@ -134,6 +134,8 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
       true
 
+    # How is this different to OptionValueNamer#name?
+    # Should it be extracted to that class or VariantUnitManager?
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
       if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
