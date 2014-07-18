@@ -10,7 +10,7 @@
           \ Bulk
 
   -# WITHOUT GROUP BUY
-  .small-4.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
     %input{type: :number, 
     value: nil, 
     min: 0, 
@@ -22,7 +22,7 @@
       
 
   -# WITH GROUP BUY
-  .small-4.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
     %span.bulk-input-container
       %span.bulk-input
         %input.bulk.first{type: :number, 
@@ -42,17 +42,17 @@
         name: "variant_attributes[{{variant.id}}][max_quantity]",
         "ng-model" => "variant.max_quantity"}    
 
-  .small-2.medium-1.large-1.columns.variant-unit
+  .small-3.medium-1.large-1.columns.variant-unit
     .table-cell 
       %em {{ variant.unit_to_display }}
 
-  .small-3.medium-2.large-2.columns.variant-price
+  .small-4.medium-2.large-2.columns.variant-price
     .table-cell
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
       %a{}>< 
         %i.ofn-i_028-barcode
 
-  .small-3.medium-2.large-2.columns.total-price.text-right
+  .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
-      %strong $10,000.95
+      %strong $100.95
