@@ -1,4 +1,4 @@
-angular.module("admin.products").factory "OptionValueNamer", ->
+angular.module("admin.products").factory "OptionValueNamer", (VariantUnitManager) ->
   class OptionValueNamer
     constructor: (@variant) ->
 
@@ -40,26 +40,16 @@ angular.module("admin.products").factory "OptionValueNamer", ->
       [value, unit_name]
 
     scale_for_unit_value: ->
-      units =
-        'weight':
-          1.0: 'g'
-          1000.0: 'kg'
-          1000000.0: 'T'
-        'volume':
-          0.001: 'mL'
-          1.0: 'L'
-          1000.0: 'kL'
-
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest available unit.
-      unit = ([scale, unit_name] for scale, unit_name of units[@variant.product.variant_unit] when @variant.unit_value / scale >= 1).reduce (unit, [scale, unit_name]) ->
+      unit = ([scale, unit_name] for scale, unit_name of VariantUnitManager.unitNames[@variant.product.variant_unit] when @variant.unit_value / scale >= 1).reduce (unit, [scale, unit_name]) ->
         if (unit && scale > unit[0]) || !unit?
           [scale, unit_name]
         else
           unit
       , null
       if !unit?
-        unit = ([scale, unit_name] for scale, unit_name of units[@variant.product.variant_unit]).reduce (unit, [scale, unit_name]) ->
+        unit = ([scale, unit_name] for scale, unit_name of VariantUnitManager.unitNames[@variant.product.variant_unit]).reduce (unit, [scale, unit_name]) ->
           if scale < unit[0] then [scale, unit_name] else unit
         , [Infinity,""]
 
