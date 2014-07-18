@@ -1,12 +1,13 @@
 describe "AdminOrderMgmtCtrl", ->
-  ctrl = scope = httpBackend = null
+  ctrl = scope = httpBackend = VariantUnitManager = null
 
   beforeEach ->
     module "ofn.admin"
-  beforeEach inject(($controller, $rootScope, $httpBackend) ->
+  beforeEach inject(($controller, $rootScope, $httpBackend, _VariantUnitManager_) ->
     scope = $rootScope.$new()
     ctrl = $controller
     httpBackend = $httpBackend
+    VariantUnitManager = _VariantUnitManager_
     spyOn(window, "formatDate").andReturn "SomeDate"
 
     ctrl "AdminOrderMgmtCtrl", {$scope: scope}
@@ -337,14 +338,14 @@ describe "AdminOrderMgmtCtrl", ->
 
       it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(scope,"getScale").andReturn 5
-        scope.formattedValueWithUnitName(10,unitsVariant)
+        spyOn(VariantUnitManager, "getScale").andReturn 5
+        scope.formattedValueWithUnitName(10, unitsVariant)
         expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
 
       it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(scope,"getScale").andReturn 1000
-        spyOn(scope,"getUnitName").andReturn "kg"
+        spyOn(VariantUnitManager, "getScale").andReturn 1000
+        spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
 describe "managing pending changes", ->

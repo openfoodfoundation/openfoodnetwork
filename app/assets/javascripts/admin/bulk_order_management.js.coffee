@@ -134,17 +134,11 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
       true
 
-    $scope.getScale = (value, unitType) ->
-      VariantUnitManager.getScale(value, unitType)
-
-    $scope.getUnitName = (scale, unitType) ->
-      VariantUnitManager.getUnitName(scale, unitType)
-
     $scope.formattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
       # A Units Variant is an API object which holds unit properies of a variant
       if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume") && value > 0
-        scale = $scope.getScale(value, unitsProduct.variant_unit)
-        Math.round(value/scale * 1000)/1000 + " " + $scope.getUnitName(scale, unitsProduct.variant_unit)
+        scale = VariantUnitManager.getScale(value, unitsProduct.variant_unit)
+        Math.round(value/scale * 1000)/1000 + " " + VariantUnitManager.getUnitName(scale, unitsProduct.variant_unit)
       else
         ''
 
