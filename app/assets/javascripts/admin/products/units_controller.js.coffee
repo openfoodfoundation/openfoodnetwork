@@ -26,7 +26,7 @@ angular.module("admin.products")
 
       $scope.placeholder_text = new OptionValueNamer($scope.product.master).name()
 
-    $scope.variant_unit_options = VariantUnitManager.variant_unit_options
+    $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0

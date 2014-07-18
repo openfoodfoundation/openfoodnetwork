@@ -14,7 +14,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       taxons:       {name: "Taxons",        visible: false}
       available_on: {name: "Available On",  visible: false}
 
-    $scope.variant_unit_options = VariantUnitManager.variant_unit_options
+    $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
     $scope.filterableColumns = [
       { name: "Supplier",       db_column: "supplier_name" },
