@@ -10,45 +10,37 @@
 %aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
     %li= link_to image_tag("ofn_logo_small.png"), root_path
-
-    - if admin_user? or enterprise_user?
-      %li
-        %a{href: spree.admin_path}
-          %span.nav-primary 
-            %i.ofn-i_021-tools
-            Admin
-    %li
-    - if spree_current_user.nil?
-      = render 'shared/signed_out'
-    - else
-      = render 'shared/signed_in_offcanvas'
-
+    
     - if current_page? root_path
-      %li
+      %li.li-menu
         %a{"ofn-scroll-to" => "hubs"}
           %span.nav-primary 
             %i.ofn-i_040-hub
             Hubs
     - else
-      %li
+      %li.li-menu
         %a{href: root_path + "#/#hubs"}
           %span.nav-primary 
             %i.ofn-i_040-hub
             Hubs
-    %li
+    %li.li-menu
       %a{href: main_app.map_path}
         %span.nav-primary 
           %i.ofn-i_037-map
           Map
-    %li
+    %li.li-menu
       %a{href: main_app.producers_path}
         %span.nav-primary 
           %i.ofn-i_036-producers
           Producers
-    %li
+    %li.li-menu
       %a{href: main_app.groups_path}
         %span.nav-primary 
           %i.ofn-i_035-groups
           Groups
 
-    
+    %li
+    - if spree_current_user.nil?
+      = render 'shared/signed_out'
+    - else
+      = render 'shared/signed_in_offcanvas'
