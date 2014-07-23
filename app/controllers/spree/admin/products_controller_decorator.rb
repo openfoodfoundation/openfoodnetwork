@@ -5,13 +5,17 @@ Spree::Admin::ProductsController.class_eval do
 
   respond_to :json, :only => :clone
 
-  respond_override create: { html: { success: lambda {
-    if params[:button] == "add_another"
-      redirect_to new_admin_product_path
-    else
-      redirect_to '/admin/products/bulk_edit'
-    end
-  } } }
+  respond_override create: { html: { 
+    success: lambda {
+      if params[:button] == "add_another"
+        redirect_to new_admin_product_path
+      else
+        redirect_to '/admin/products/bulk_edit'
+      end
+    },
+    failure: lambda {
+      render :new
+    } } }
   #respond_override :clone => { :json => {:success => lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
 
   def product_distributions
