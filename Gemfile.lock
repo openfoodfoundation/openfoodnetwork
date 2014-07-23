@@ -55,12 +55,13 @@ GIT
       spree_core (= 1.3.6.beta)
 
 GIT
-  remote: git://github.com/openfoodfoundation/spree_paypal_express.git
-  revision: d2f38e5068c4b6979c2af7f64caca9e1df50de89
+  remote: git://github.com/spree-contrib/better_spree_paypal_express.git
+  revision: db135b89a289aaab951c1228bcc55871de0cbba7
   branch: 1-3-stable
   specs:
-    spree_paypal_express (1.2.0)
-      spree_core (~> 1.3.0)
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 1.3.4)
 
 GIT
   remote: git://github.com/spree/deface.git
@@ -341,6 +342,11 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    paypal-sdk-core (0.2.10)
+      multi_json (~> 1.0)
+      xml-simple
+    paypal-sdk-merchant (1.106.1)
+      paypal-sdk-core (~> 0.2.3)
     perftools.rb (2.0.1)
     pg (0.13.2)
     poltergeist (1.5.0)
@@ -486,6 +492,7 @@ GEM
     whenever (0.9.2)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    xml-simple (1.1.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     zeus (0.13.3)
