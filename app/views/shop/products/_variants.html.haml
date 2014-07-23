@@ -50,8 +50,9 @@
     .table-cell
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
-      %a{}>< 
-        %i.ofn-i_028-barcode
+
+      %button.graph-button{popover: "This is the popover text", "popover-title" => "The title.", "popover-animation" => "true", "popover-trigger" =>"mouseenter", "popover-placement" => "top"}
+        %i.ofn-i-058-graph
 
   .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
