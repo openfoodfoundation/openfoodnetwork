@@ -1,5 +1,6 @@
 @import branding
 @import mixins
+@import typography
 
 
 .fixed .top-bar 
@@ -55,6 +56,12 @@ nav
 
 .off-canvas-wrap.move-right ul.off-canvas-list
   font-size: 0.875rem
+
+  .li-menu
+    @include avenir
+    font-size: 1rem
+    a
+      color: rgba(255, 255, 255, 0.9)
 
 .off-canvas-wrap.move-right ul.off-canvas-list i
   font-size: 1.5rem
