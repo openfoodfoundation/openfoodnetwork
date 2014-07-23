@@ -44,8 +44,10 @@
 
 // Rewrite foundation's .primary button style
 
-.button.primary, button.primary
+.button, button
   @include border-radius(0.5em)
+
+.button.primary, button.primary
   font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
   background: $clr-brick
   color: white
