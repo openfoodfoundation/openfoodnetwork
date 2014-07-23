@@ -18,7 +18,7 @@ Spree::Product.class_eval do
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
   validates_presence_of :supplier
-  validates_presence_of :primary_taxon
+  validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
 
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,
