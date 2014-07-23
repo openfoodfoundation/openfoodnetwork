@@ -1,6 +1,7 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
+      skip_before_filter :load_resource, only: [:show_provider_preferences]
       before_filter :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
 
@@ -31,6 +32,7 @@ module Spree
       def show_provider_preferences
         if params[:pm_id].present?
           @payment_method = PaymentMethod.find(params[:pm_id])
+          authorize! :show_provider_preferences, @payment_method
           payment_method_type = params[:provider_type]
           if @payment_method['type'].to_s != payment_method_type
             @payment_method.update_column(:type, payment_method_type)
