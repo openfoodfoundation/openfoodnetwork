@@ -22,9 +22,11 @@ describe Spree::Order do
   end
 
   describe "Payment methods" do
-    let(:order) { build(:order, distributor: create(:distributor_enterprise)) }
-    let(:pm1) { create(:payment_method, distributors: [order.distributor])}
-    let(:pm2) { create(:payment_method, distributors: [])}
+    let(:order_distributor) { create(:distributor_enterprise) }
+    let(:some_other_distributor) { create(:distributor_enterprise) }
+    let(:order) { build(:order, distributor: order_distributor) }
+    let(:pm1) { create(:payment_method, distributors: [order_distributor])}
+    let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
     
     it "finds the correct payment methods" do
       Spree::PaymentMethod.stub(:available).and_return [pm1, pm2] 

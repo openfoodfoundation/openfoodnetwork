@@ -21,7 +21,7 @@ feature %q{
 
       fill_in 'payment_method_name', :with => 'Cheque payment method'
       
-      select @distributors[0].name, :from => 'payment_method_distributor_ids', visible: false
+      check "payment_method_distributor_ids_#{@distributors[0].id}"
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'
