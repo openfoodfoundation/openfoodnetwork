@@ -5,7 +5,7 @@ module Admin
     end
 
     def admin_inject_payment_methods
-      admin_inject_json_ams_array "admin.payment_methods", "paymentMethods", @payment_methods, Api::Admin::PaymentMethodSerializer
+      admin_inject_json_ams_array "admin.payment_methods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
     end
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
