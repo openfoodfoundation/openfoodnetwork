@@ -17,8 +17,6 @@
 #= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
 
-#= require store/spree_paypal_express
-
 #= require angular-rails-templates
 #= require_tree ../templates
 #
