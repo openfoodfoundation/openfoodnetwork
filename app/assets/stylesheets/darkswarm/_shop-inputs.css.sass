@@ -16,6 +16,7 @@
   product
     
     input
+      @include border-radius(0) 
       @include csstrans
       margin: 0
       width: 10rem
@@ -31,12 +32,12 @@
         width: 7rem
 
       @media all and (max-width: 640px) 
+        float: left !important
         font-size: 0.75rem
         padding-left: 0.25rem
         padding-right: 0.25rem
      
       @media all and (max-width: 480px) 
-        float: left !important
         width: 5.8rem
 
       &:hover
@@ -62,7 +63,7 @@
         width: 3.5rem
 
       @media all and (max-width: 480px) 
-        width: 2.9rem
+        width: 2.8rem
 
     input.bulk.first
       border-right: 0

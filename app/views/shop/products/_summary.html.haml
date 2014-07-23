@@ -1,6 +1,7 @@
 .row.summary
   .small-9.medium-10.large-11.columns.summary-header
-    %h3 {{ product.name }}
+    %a{"ng-click" => "triggerProductModal()"}
+      %h3 {{ product.name }}
 
     %em from 
     %span

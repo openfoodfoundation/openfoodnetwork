@@ -59,7 +59,7 @@
         // Variant price
         .variant-price
           padding-left: 0.25rem
-          padding-right: 0rem
+          padding-right: 0.25rem
           @media all and (max-width: 640px)
             text-align: right
 
@@ -67,7 +67,8 @@
         .total-price
           padding-left: 0rem
           @media all and (max-width: 640px)
-            background: white
+            background: #777
+            color: white
             .table-cell
               height: 27px
 
@@ -94,9 +95,13 @@
             padding-left: 4.9375rem
           @media all and (max-width: 640px)
             padding-left: 4.5rem
+          @media all and (max-width:480px)
+            padding-left: 0.9375rem
           h3
             font-size: 1.5rem
             margin: 0
+          a h3
+            color: black
 
 
 
