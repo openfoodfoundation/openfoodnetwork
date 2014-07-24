@@ -1,0 +1,24 @@
+.darkswarm
+  products
+    product
+      .product-thumb
+        position: absolute
+        top: 3px
+        left: 0px
+        width: 7rem
+        height: 7rem
+        outline: 1px solid #999
+        float: left
+        display: block
+        z-index: 999999
+        background-color: #999
+        overflow: hidden
+      
+        @media all and (max-width: 768px)
+          width: 4rem
+          height: 4rem
+
+        @media all and (max-width: 480px)
+          display: none
+          width: 0rem
+          height: 0rem

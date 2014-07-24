@@ -1,6 +1,7 @@
 #tabs{"ng-controller" => "TabsCtrl"}
   .row
     %tabset.small-12.columns
+      // WILL can we add some logic here to make the distributor name not appear at small sizes? e.g. add a class?)
       - for name, heading in { about: "About #{current_distributor.name}", 
         producers: "Producers", 
         groups: "Groups", 

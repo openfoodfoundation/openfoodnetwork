@@ -13,15 +13,19 @@
       "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
       %accordion-heading
         .row
-          .small-11.columns
+          .small-10.columns
             %em 
               %small
                 {{ Checkout.shippingMethod().name }}
-          .small-1.columns.right
-            %span.accordion-up.right
-              %i.ofn-i_006-caret-up
-            %span.accordion-down.right
-              %i.ofn-i_005-caret-down  
+          .small-2.columns.text-right
+            %span.accordion-up
+              %em 
+                %small Hide
+              %i.ofn-i_053-point-up 
+            %span.accordion-down
+              %em 
+                %small Expand
+              %i.ofn-i_052-point-down
 
       .small-12.columns.medium-6.columns.large-6.columns
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}

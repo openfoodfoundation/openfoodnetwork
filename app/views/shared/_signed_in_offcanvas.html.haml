@@ -1,14 +1,15 @@
-%li
-  %a{href: spree.account_path}
-    %i.ofn-i_015-user
-    = spree_current_user.email
-%li
-  %a{title: 'Log Out', href:'/logout' } 
-    %i.ofn-i_018-unlocked
-    LOG OUT
-
 - if admin_user? or enterprise_user?
   %li
     %a{href: spree.admin_path} 
       %i.ofn-i_021-tools
       Admin
+
+%li
+  %a{href: spree.account_path}
+    %i.ofn-i_015-user
+    = spree_current_user.email
+
+%li
+  %a{title: 'Log Out', href:'/logout' } 
+    %i.ofn-i_018-unlocked
+    Log out

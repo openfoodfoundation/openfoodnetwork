@@ -6,6 +6,7 @@
 
 .neutral-btn
   @include button
+  @include border-radius(0.5em)
   font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
   background-color: transparent
   border: 2px solid rgba(200, 200, 200, 1)
@@ -42,6 +43,9 @@
   text-shadow: 0 1px 0 #fff
 
 // Rewrite foundation's .primary button style
+
+.button, button
+  @include border-radius(0.5em)
 
 .button.primary, button.primary
   font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif

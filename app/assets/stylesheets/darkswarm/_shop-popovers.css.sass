@@ -1,0 +1,37 @@
+@import mixins
+
+.darkswarm
+  product
+    // Pop over
+
+    // Foundation overrides
+    .joyride-tip-guide
+      // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
+      background-color: #ebebeb
+      border: 1px solid #a5a5a5
+      color: #1f1f1f
+      
+      h1, h2, h3, h4, h5, h6
+        color: #1f1f1f
+
+      .joyride-nub.bottom
+        border-color: #a5a5a5 !important
+        border-bottom-color: transparent !important
+        border-left-color: transparent !important
+        border-right-color: transparent !important
+
+    button.graph-button
+      padding: 0
+      margin: 0
+      @include border-radius(0)
+      display: inline
+      background: none
+
+      i.ofn-i-058-graph
+        color: #999
+        margin: 0
+        padding: 0
+        font-size: 1rem
+
+        &:hover, &:focus, &:active, &.active
+          color: #444

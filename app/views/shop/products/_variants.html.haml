@@ -10,7 +10,7 @@
           \ Bulk
 
   -# WITHOUT GROUP BUY
-  .small-4.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
     %input{type: :number, 
     value: nil, 
     min: 0, 
@@ -22,7 +22,7 @@
       
 
   -# WITH GROUP BUY
-  .small-4.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
     %span.bulk-input-container
       %span.bulk-input
         %input.bulk.first{type: :number, 
@@ -42,16 +42,19 @@
         max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
         name: "variant_attributes[{{variant.id}}][max_quantity]"}
 
-  .small-2.medium-1.large-1.columns.variant-unit
+  .small-3.medium-1.large-1.columns.variant-unit
     .table-cell 
       %em {{ variant.unit_to_display }}
 
-  .small-3.medium-2.large-2.columns.variant-price
-    .table-cell 
+  .small-4.medium-2.large-2.columns.variant-price
+    .table-cell
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
 
-  .small-3.medium-2.large-2.columns.total-price.text-right
+      %button.graph-button{popover: "This is the popover text", "popover-title" => "The title.", "popover-animation" => "true", "popover-trigger" =>"mouseenter", "popover-placement" => "top"}
+        %i.ofn-i-058-graph
+
+  .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
       %strong
         {{ variant.getPrice() | currency }} 
