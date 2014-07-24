@@ -3,7 +3,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
   new class Cart
     dirty: false
     order: CurrentOrder.order
-    line_items: CurrentOrder.order.line_items 
+    line_items: CurrentOrder.order?.line_items || [] 
     constructor: ->
       for line_item in @line_items
         line_item.variant.line_item = line_item
@@ -19,7 +19,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
-        console.log "What do we do on error?"
+        alert "There was an error on the server! Please refresh the page"
 
     data: =>
       variants = {} 
