@@ -1,5 +1,6 @@
 = f.field_container :primary_taxon_id do
   = f.label :primary_taxon_id, t(:product_category)
+  *
   %br
   = f.collection_select(:primary_taxon_id, Spree::Taxon.all, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
   = f.error_message_on :primary_taxon_id
