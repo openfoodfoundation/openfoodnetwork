@@ -2,7 +2,9 @@
 
 .producers
   .active_table .active_table_node
-    
+    //Overwrite active_table
+    border: 0
+
     //Open row
     &.open
       .active_table_row:first-child
@@ -24,10 +26,13 @@
     
     //Closed row
     &.closed
+      .active_table_row.closed
+        border: 1px solid transparent
       &, & *
         color: $dark-grey
       &:hover, &:active, &:focus
-        border: 1px solid $clr-turquoise
+        border: 0
+        .active_table_row.closed
+          border: 1px solid $clr-turquoise  
         &, & *
-          color: $clr-turquoise    
-
+          color: $clr-turquoise 
