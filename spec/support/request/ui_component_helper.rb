@@ -27,7 +27,7 @@ module UIComponentHelper
   end
 
   def open_login_modal
-    find("a", text: "LOG IN").click
+    find("a", text: "Log in").click
   end
 
   def open_off_canvas
@@ -65,7 +65,7 @@ module UIComponentHelper
   end
 
   def be_logged_out
-    have_content "LOG IN"
+    have_content "Log in"
   end
 
   def open_active_table_row

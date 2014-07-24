@@ -1,6 +1,6 @@
 module MenuHelper
   def open_login_modal
-    find("a", text: "LOG IN").click
+    find("a", text: "Log in").click
   end
 
   def have_login_modal

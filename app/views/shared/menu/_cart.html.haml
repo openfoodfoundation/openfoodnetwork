@@ -21,5 +21,5 @@
           is 
           {{ line_item.variant.getPrice() | currency }}
         %li{"ng-show" => "Cart.line_items_present().length > 0"}
-          Total: {{ Cart.total() | currency }}
+          Total: {{ Cart.total()  | currency }}
         %a.button{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
