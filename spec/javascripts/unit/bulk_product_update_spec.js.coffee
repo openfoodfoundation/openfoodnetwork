@@ -397,8 +397,9 @@ describe "AdminProductEditCtrl", ->
         $scope.loadVariantUnit product
         expect(product.variant_unit_with_scale).toEqual "items"
 
-    it "loads data for variants (inc. master)", ->
-      spyOn $scope, "loadVariantVariantUnit"
+    it "loads data for variants (incl. master)", ->
+      spyOn $scope, "loadVariantUnitValues"
+      spyOn $scope, "loadVariantUnitValue"
 
       product =
         variant_unit_scale: 1.0
@@ -406,15 +407,27 @@ describe "AdminProductEditCtrl", ->
         variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
       $scope.loadVariantUnit product
 
-      expect($scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.variants[0]
-      expect($scope.loadVariantVariantUnit).toHaveBeenCalledWith product, product.master
+      expect($scope.loadVariantUnitValues).toHaveBeenCalledWith product
+      expect($scope.loadVariantUnitValue).toHaveBeenCalledWith product, product.master
+
+    it "loads data for variants (excl. master)", ->
+      spyOn $scope, "loadVariantUnitValue"
+
+      product =
+        variant_unit_scale: 1.0
+        master: {id: 1, unit_value: 1, unit_description: '(one)'}
+        variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
+      $scope.loadVariantUnitValues product
+
+      expect($scope.loadVariantUnitValue).toHaveBeenCalledWith product, product.variants[0]
+      expect($scope.loadVariantUnitValue).not.toHaveBeenCalledWith product, product.master
 
     describe "setting variant unit_value_with_description", ->
       it "sets by combining unit_value and unit_description", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
-        $scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0]).toEqual
           id: 1
           unit_value: 1
@@ -425,28 +438,28 @@ describe "AdminProductEditCtrl", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 1}]
-        $scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '1'
 
       it "uses unit_description when value is missing", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_description: 'Small'}]
-        $scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
       it "converts values from base value to chosen unit", ->
         product =
           variant_unit_scale: 1000.0
           variants: [{id: 1, unit_value: 2500}]
-        $scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
       it "displays a unit_value of zero", ->
         product =
           variant_unit_scale: 1.0
           variants: [{id: 1, unit_value: 0}]
-        $scope.loadVariantVariantUnit product, product.variants[0]
+        $scope.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '0'
 
 
@@ -827,6 +840,8 @@ describe "AdminProductEditCtrl", ->
 
       it "runs displaySuccess() when post returns success", ->
         spyOn $scope, "displaySuccess"
+        spyOn $scope, "updateVariantLists"
+        spyOn DirtyProducts, "clear"
         $scope.products = [
           {
             id: 1
@@ -851,14 +866,8 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         $timeout.flush()
         expect($scope.displaySuccess).toHaveBeenCalled()
-
-      it "runs displayFailure() when post return data does not match $scope.products", ->
-        spyOn $scope, "displayFailure"
-        $scope.products = "current list of products"
-        $httpBackend.expectPOST("/admin/products/bulk_update").respond 200, "returned list of products"
-        $scope.updateProducts "updated list of products"
-        $httpBackend.flush()
-        expect($scope.displayFailure).toHaveBeenCalled()
+        expect(DirtyProducts.clear).toHaveBeenCalled()
+        expect($scope.updateVariantLists).toHaveBeenCalled()
 
       it "runs displayFailure() when post returns error", ->
         spyOn $scope, "displayFailure"
@@ -868,87 +877,15 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         expect($scope.displayFailure).toHaveBeenCalled()
 
-
-  describe "copying new variant ids from server to client", ->
-    it "copies server ids to the client where the client id is negative", ->
-      clientProducts = [
-        {
-          id: 123
-          variants: [{id: 1}, {id: -2}, {id: -3}]
-        }
-      ]
-      serverProducts = [
-        {
-          id: 123
-          variants: [{id: 1}, {id: 4534}, {id: 3453}]
-        }
-      ]
-      $scope.copyNewVariantIds(clientProducts, serverProducts)
-      expect(clientProducts).toEqual(serverProducts)
-
-
-  describe "fetching products without derived attributes", ->
-    it "returns products without the variant_unit_with_scale field", ->
-      $scope.products = [{id: 123, variant_unit_with_scale: 'weight_1000'}]
-      expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual([{id: 123}])
-
-    it "returns an empty array when products are undefined", ->
-      expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual([])
-
-    it "does not alter original products", ->
-      $scope.products = [{
-        id: 123
-        variant_unit_with_scale: 'weight_1000'
-        variants: [{options_text: 'foo'}]
-      }]
-      $scope.productsWithoutDerivedAttributes($scope.products)
-      expect($scope.products).toEqual [{
-        id: 123
-        variant_unit_with_scale: 'weight_1000'
-        variants: [{options_text: 'foo'}]
-      }]
-
-    describe "updating variants", ->
-      it "returns variants without the unit_value_with_description field", ->
-        $scope.products = [{id: 123, variants: [{id: 234, unit_value_with_description: 'foo'}]}]
-        expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual [
-          {
-            id: 123
-            variants: [{id: 234}]
-          }
-        ]
-
-      it "removes the master variant", ->
-        $scope.products = [{id: 123, master: {id: 234, unit_value_with_description: 'foo'}}]
-        expect($scope.productsWithoutDerivedAttributes($scope.products)).toEqual [
-          {
-            id: 123
-          }
-        ]
-
-
-  describe "deep copying products", ->
-    it "copies products", ->
-      product = {id: 123}
-      copiedProducts = $scope.deepCopyProducts [product]
-      expect(copiedProducts[0]).not.toBe(product)
-
-    it "copies variants", ->
-      variant = {id: 1}
-      product = {id: 123, variants: [variant]}
-      copiedProducts = $scope.deepCopyProducts [product]
-      expect(copiedProducts[0].variants[0]).not.toBe(variant)
-
-
   describe "fetching a product by id", ->
     it "returns the product when it is present", ->
       product = {id: 123}
       $scope.products = [product]
-      expect($scope.findProduct(123)).toEqual product
+      expect($scope.findProduct(123, $scope.products)).toEqual product
 
     it "returns null when the product is not present", ->
       $scope.products = []
-      expect($scope.findProduct(123)).toBeNull()
+      expect($scope.findProduct(123, $scope.products)).toBeNull()
 
 
   describe "adding variants", ->

@@ -42,6 +42,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.setPage = (page) -> $scope.currentPage = page
     $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
     $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
+    $scope.productsWithUnsavedVariants = []
 
     $scope.$watch ->
       $scope.totalPages()
@@ -108,13 +109,14 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         else
           null
 
-      if product.variants
-        for variant in product.variants
-          $scope.loadVariantVariantUnit product, variant
-      $scope.loadVariantVariantUnit product, product.master if product.master
+      $scope.loadVariantUnitValues product if product.variants
+      $scope.loadVariantUnitValue product, product.master if product.master
 
+    $scope.loadVariantUnitValues = (product) ->
+      for variant in product.variants
+        $scope.loadVariantUnitValue product, variant
 
-    $scope.loadVariantVariantUnit = (product, variant) ->
+    $scope.loadVariantUnitValue = (product, variant) ->
       unit_value = $scope.variantUnitValue product, variant
       unit_value = if unit_value? then unit_value else ''
       variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
@@ -192,6 +194,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         display_name: null
         on_hand: null
         price: null
+      $scope.productsWithUnsavedVariants.push product
       $scope.displayProperties[product.id].showVariants = true
 
 
@@ -200,6 +203,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       $scope.variantIdCounter -= 1
       $scope.variantIdCounter
 
+    $scope.updateVariantLists = (server_products) ->
+      for product in $scope.productsWithUnsavedVariants
+        server_product = $scope.findProduct(product.id, server_products)
+        product.variants = server_product.variants
+        $scope.loadVariantUnitValues product
 
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
@@ -281,20 +289,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
           products: productsToSubmit
           filters: $scope.currentFilters
       ).success((data) ->
-        # TODO: remove this check altogether, need to write controller tests if we want to test this behaviour properly
-        # Note: Rob implemented subset(), which is a simpler alternative to productsWithoutDerivedAttributes(). However, it
-        #       conflicted with some changes I made before merging my work, so for now I've reverted to the old way of
-        #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
-        #if subset($scope.productsWithoutDerivedAttributes(), data)
-        if $scope.productListsMatch $scope.products, data
-          $scope.resetProducts data
-          $timeout -> $scope.displaySuccess()
-        else
-          # console.log angular.toJson($scope.productsWithoutDerivedAttributes($scope.products))
-          # console.log "---"
-          # console.log angular.toJson($scope.productsWithoutDerivedAttributes(data))
-          # console.log "---"
-          $scope.displayFailure "Product lists do not match."
+        DirtyProducts.clear()
+        #$scope.updateVariantLists(data)
+        $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status
 
@@ -322,56 +319,14 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if variant.hasOwnProperty("unit_value_with_description")
         match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
         if match
-          product = $scope.findProduct(product.id)
+          product = $scope.findProduct(product.id, $scope.products)
           variant.unit_value  = parseFloat(match[1])
           variant.unit_value  = null if isNaN(variant.unit_value)
           variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
 
-
-    $scope.productListsMatch = (clientProducts, serverProducts) ->
-      $scope.copyNewVariantIds clientProducts, serverProducts
-      angular.toJson($scope.productsWithoutDerivedAttributes(clientProducts)) == angular.toJson($scope.productsWithoutDerivedAttributes(serverProducts))
-
-
-    # When variants are created clientside, they are given a negative id. The server
-    # responds with a real id, which would cause the productListsMatch() check to fail.
-    # To avoid that false negative, we copy the server variant id to the client for any
-    # negative ids.
-    $scope.copyNewVariantIds = (clientProducts, serverProducts) ->
-      if clientProducts?
-        for product, i in clientProducts
-          if product.variants?
-            for variant, j in product.variants
-              if variant.id < 0
-                variant.id = serverProducts[i].variants[j].id
-
-
-    $scope.productsWithoutDerivedAttributes = (products) ->
-      products_filtered = []
-      if products
-        products_filtered = $scope.deepCopyProducts products
-        for product in products_filtered
-          delete product.variant_unit_with_scale
-          if product.variants
-            for variant in product.variants
-              delete variant.unit_value_with_description
-              # If we end up live-updating this field, we might want to reinstate its verification here
-              delete variant.options_text
-          delete product.master
-      products_filtered
-
-
-    $scope.deepCopyProducts = (products) ->
-      copied_products = (angular.extend {}, product for product in products)
-      for product in copied_products
-        if product.variants
-          product.variants = (angular.extend {}, variant for variant in product.variants)
-      copied_products
-
-
-    $scope.findProduct = (id) ->
-      products = (product for product in $scope.products when product.id == id)
+    $scope.findProduct = (id, product_list) ->
+      products = (product for product in product_list when product.id == id)
       if products.length == 0 then null else products[0]
 
 
