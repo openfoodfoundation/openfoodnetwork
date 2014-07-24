@@ -7,8 +7,8 @@
     - if @hubs.count > 0
       = f.hidden_field :distributor_ids, :multiple => true, value: nil
       - @hubs.each do |hub|
-        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(hub)}" }
-          %span.three.columns.alpha
+        %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}" }
+          %a.three.columns.alpha{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }
             = hub.name
           %span.one.column.omega
             = f.check_box :distributor_ids, { multiple: true }, hub.id, nil
