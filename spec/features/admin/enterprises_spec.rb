@@ -129,13 +129,13 @@ feature %q{
     # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
     uncheck 'enterprise_is_distributor'
-    page.should_not have_selector "#payment_methods"
-    page.should_not have_selector "#shipping_methods"
-    page.should_not have_selector "#enterprise_feess"
+    page.should have_selector "#payment_methods", visible: false
+    page.should have_selector "#shipping_methods", visible: false
+    page.should have_selector "#enterprise_fees", visible: false
     check 'enterprise_is_distributor'
     page.should have_selector "#payment_methods"
     page.should have_selector "#shipping_methods"
-    page.should have_selector "#enterprise_feess"
+    page.should have_selector "#enterprise_fees"
 
     select eg1.name, from: 'enterprise_group_ids'
 
