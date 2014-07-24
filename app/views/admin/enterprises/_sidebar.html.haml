@@ -5,8 +5,8 @@
     - if @payment_methods.count > 0
       -# = hidden_field_tag "enterprise[payment_method_ids][]", []
       - @payment_methods.each do |payment_method|
-        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_payment_method_path(payment_method)}", ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
-          %span.three.columns.alpha
+        %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
+          %a.three.columns.alpha{ href: "#{edit_admin_payment_method_path(payment_method)}" }
             = payment_method.name
           %span.one.column.omega
             = f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
@@ -25,8 +25,8 @@
   .four.columns.alpha.list{ ng: { class: "shippingMethodsColor()" } }
     - if @shipping_methods.count > 0
       - @shipping_methods.each do |shipping_method|
-        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{edit_admin_shipping_method_path(shipping_method)}", ng: { controller: 'shippingMethodCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
-          %span.three.columns.alpha
+        %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", ng: { controller: 'shippingMethodCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
+          %a.three.columns.alpha{ href: "#{edit_admin_shipping_method_path(shipping_method)}" }
             = shipping_method.name
           %span.one.column.omega
             = f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
