@@ -1,9 +1,9 @@
 describe "Enterprise service", ->
   Enterprise = null
-  enterprise = { name: "test ent name" } 
+  enterprise = { name: "test ent name" }
   beforeEach ->
     module 'admin.enterprises'
-    angular.module('admin.enterprises').value('enterprise', enterprise) 
+    angular.module('admin.enterprises').value('enterprise', enterprise)
 
     inject ($injector) ->
       Enterprise = $injector.get("Enterprise") 
