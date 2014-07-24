@@ -1,5 +1,5 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  .columns.small-12.large-5.fat1
+  .columns.small-12.medium-4.large-5.fat1
     &nbsp;
     %div{"bo-if" => "hub.taxons"}
       %label Shop for
@@ -7,18 +7,18 @@
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
-  .columns.small-12.large-2.fat2
+  .columns.small-12.medium-3.large-2.fat2
     &nbsp;
     %div{"bo-if" => "hub.pickup || hub.delivery"}
       %label Delivery options
-      %ul.small-block-grid-1
+      %ul.small-block-grid-2.large-block-grid-1
         %li.pickup{"bo-if" => "hub.pickup"} 
           %i.ofn-i_038-takeaway
           Pickup
         %li.delivery{"bo-if" => "hub.delivery"} 
           %i.ofn-i_039-delivery
           Delivery
-  .columns.small-12.large-5.fat3
+  .columns.small-12.medium-5.large-5.fat3
     &nbsp;
     %div{"bo-if" => "hub.producers"}
       %label Our producers

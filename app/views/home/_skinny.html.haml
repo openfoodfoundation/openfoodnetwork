@@ -1,20 +1,20 @@
 .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
-  .columns.small-12.large-5
+  .columns.small-12.medium-5.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_040-hub 
       %span
         %strong {{ hub.name }}
-  .columns.small-3.large-2
+  .columns.small-4.medium-2.large-2
     {{ hub.address.city }}
-  .columns.small-1.large-1
+  .columns.small-2.medium-2.large-1
     {{ hub.address.state | uppercase }}
 
-  .columns.small-3.large-4.text-right{"bo-if" => "hub.active"}
+  .columns.small-6.medium-3.large-4.text-right{"bo-if" => "hub.active"}
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign
       %span {{ hub.orders_close_at | sensible_timeframe }} 
 
-  .columns.small-3.large-4.text-right{"bo-if" => "!hub.active"}
+  .columns.small-6.medium-3.large-4.text-right{"bo-if" => "!hub.active"}
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_032-closed-sign
       %span Orders closed
