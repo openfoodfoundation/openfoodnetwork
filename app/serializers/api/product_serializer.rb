@@ -25,8 +25,8 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
 end
 
 class Api::CachedProductSerializer < ActiveModel::Serializer
-  cached
-  delegate :cache_key, to: :object
+  #cached
+  #delegate :cache_key, to: :object
 
   attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy,
     :notes, :description
@@ -38,4 +38,8 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_one :supplier, serializer: Api::IdSerializer
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_one :master, serializer: Api::MasterVariantSerializer
+
+  def variants
+    object.variants_for(options[:current_order_cycle], options[:current_distributor]).in_stock
+  end
 end
