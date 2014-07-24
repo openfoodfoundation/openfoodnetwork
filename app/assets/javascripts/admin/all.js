@@ -19,5 +19,6 @@
 //= require ./enterprises/enterprises
 //= require ./payment_methods/payment_methods
 //= require ./products/products
+//= require ./shipping_methods/shipping_methods
 
 //= require_tree .
