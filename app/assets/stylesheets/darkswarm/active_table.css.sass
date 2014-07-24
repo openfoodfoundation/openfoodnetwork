@@ -11,8 +11,8 @@
   @include user-select(none)
   .active_table_row
     display: block
+    cursor: pointer
     &:first-child
-      cursor: pointer
       padding: 1rem 0
 
 .active_table .active_table_node
@@ -21,6 +21,11 @@
 
   .active_table_row // Inherits from active_table
     border: 1px solid transparent
+
+    // Foundation overrides
+    margin-left: 0
+    margin-right: 0
+
     &, & > a.row
       display: block
 
@@ -33,8 +38,6 @@
       border-left: 1px solid $dark-grey
       border-right: 1px solid $dark-grey
       border-bottom: none
-      -webkit-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
-      box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.5)
       background-color: rgba(0,0,0,0.15)
       &:hover, &:active, &:focus
         color: $dark-grey
