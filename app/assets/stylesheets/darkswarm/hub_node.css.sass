@@ -9,14 +9,36 @@
     //Hub icon styline
     i.ofn-i_040-hub
       @include border-radius(9999em)
-      padding: 0.5em
+      padding: 0.5rem
+      margin-bottom: 0.5rem
       background-color: transparent
+      @media all and (max-width: 768px) 
+        display: inline-block
+        margin-right: 0.1rem
+        margin-bottom: 0.1rem
     
     //Generic text link style
     a:hover, a:active, a:focus
       color: $clr-brick-bright
       span
         text-decoration: underline
+
+    @media all and (max-width: 640px) 
+      &.closed, &.open
+        .active_table_row:first-child .skinny-head
+          background-color: $clr-brick-light
+          margin-bottom: 0.5rem
+          padding-top: 0.1rem
+          padding-bottom: 0.1rem
+      &.inactive
+        &.closed, &.open
+          .active_table_row:first-child .skinny-head
+            background-color: white
+
+      font-size: 0.875rem
+      &, & *
+        font-size: 0.875rem
+    
 
     //Inactive row
     &.inactive, &.inactive strong
@@ -71,7 +93,6 @@
       .active_table_row.closed
         border: 1px solid transparent
       &:hover, &:active, &:focus
-        background-color: transparent
         border: 0
         .active_table_row.closed
           border: 1px solid $disabled-bright
@@ -98,6 +119,9 @@
       .fat1 > div, .fat2 > div, .fat3 > div
         border-top: 1px solid $disabled-bright
         margin-top: -1rem
+        @media all and (max-width: 640px) 
+          margin-top: 0
+
         ul, ol 
           font-size: 0.875rem
 
