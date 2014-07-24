@@ -41,6 +41,12 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       @line_items.filter (li)->
         li.quantity > 0
 
+    total: =>
+      @line_items_present().map (li)->
+        li.variant.getPrice()
+      .reduce (total, price)->
+        total + price
+
     register_variant: (variant)=>
       exists = @line_items.some (li)-> li.variant == variant
       @create_line_item(variant) unless exists 

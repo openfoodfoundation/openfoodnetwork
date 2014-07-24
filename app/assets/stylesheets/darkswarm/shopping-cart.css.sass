@@ -1,5 +1,15 @@
 @import mixins
 @import branding
+@import "compass/css3/user-interface"
+
+.cart
+  @include user-select(none)
+  .joyride-tip-guide
+    display: block
+    right: 0px
+    top: 45px
+    li
+      float: none
 
 #cart-detail
   .cart-item-delete

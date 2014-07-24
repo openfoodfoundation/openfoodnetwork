@@ -47,8 +47,10 @@
   .table-cell
     %i.ofn-i_009-close
     {{ product.price | currency }}
-    
-    %button.graph-button{popover: "This is the popover text", "popover-title" => "The title.", "popover-animation" => "true", "popover-trigger" =>"mouseenter", "popover-placement" => "top"}
+    {{ $id }} 
+    %button.graph-button{"price-breakdown" => "_",
+      "variant" => "product.master",
+      "price-breakdown-animation" => "true"}
       %i.ofn-i-058-graph
 
 .small-12.medium-2.large-2.columns.total-price.text-right

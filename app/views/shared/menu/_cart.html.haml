@@ -1,10 +1,25 @@
-%a.icon{href: cart_url, "ng-controller" => "CartCtrl"}
-  %span.nav-branded 
-    %i.ofn-i_027-shopping-cart
-    %span
-      {{ Cart.line_items_present().length }}
-      items
-    %ul
-      %li{"ng-repeat" => "line_item in Cart.line_items_present()",
-      "ng-controller" => "LineItemCtrl"}
-        {{ line_item.id }}
+%span{"ng-controller" => "CartCtrl"}
+  %a#cart.icon{cart: true}
+    %span.nav-branded 
+      %i.ofn-i_027-shopping-cart
+      %span
+        {{ Cart.line_items_present().length }}
+        items
+
+  .joyride-tip-guide{"ng-class" => "{ in: open }", "ng-show" => "open"}
+    %span.joyride-nub.top
+    .joyride-content-wrapper
+      %ul
+        %li{"ng-repeat" => "line_item in Cart.line_items_present()",
+        "ng-controller" => "LineItemCtrl"}
+          {{ line_item.variant.name_to_display }}
+          ({{line_item.quantity}})
+          x
+          {{ line_item.variant.unit_to_display }}
+          x
+          {{ line_item.variant.price | currency }}
+          is 
+          {{ line_item.variant.getPrice() | currency }}
+        %li{"ng-show" => "Cart.line_items_present().length > 0"}
+          Total: {{ Cart.total() | currency }}
+        %a.button{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now

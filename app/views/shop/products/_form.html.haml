@@ -1,8 +1,7 @@
 %products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
-
-  = form_for :order, :url => populate_orders_path, html: {:class => "custom"} do
+  %form.custom
     .row
       .small-12.columns
         %input#search.text{"ng-model" => "query", 
