@@ -9,7 +9,7 @@
   text-transform: capitalize
   font-weight: 300
   font-size: 0.875rem
-  background: rgba(235,235,235,0.5)
+  background: rgba(215,215,215,0.5)
   color: #555
   @include border-radius(3px)
   padding: 0.25rem 0.5rem 0.35rem 0.35rem
@@ -19,9 +19,16 @@
       height: 16px
       path
         fill: #555
-  &, &*
+  &, & *
     display: inline-block
     color: #555
+
+.inactive
+  .fat-taxons
+    render-svg
+    svg
+      path
+        fill: $disabled-dark
      
 .product-header
   render-svg
