@@ -3,64 +3,133 @@
 
 .hubs
   .active_table .active_table_node
+    //Overwrite active_table
+    border: 0
     
+    //Hub icon styline
+    i.ofn-i_040-hub
+      @include border-radius(9999em)
+      padding: 0.5em
+      background-color: transparent
+    
+    //Generic text link style
+    a:hover, a:active, a:focus
+      color: $clr-brick-bright
+      span
+        text-decoration: underline
+
     //Inactive row
     &.inactive, &.inactive strong
       color: $disabled-dark
+
+      &, & *
+        color: $disabled-dark
+
+      a i.ofn-i_040-hub
+        color: $disabled-dark
+
+      &.current
+        &.closed, &.open
+          
+          a, a strong, a span, a i
+            color: $disabled-dark
+            &:hover, &:focus, &:active
+              color: $disabled-dark
+
+          a i.ofn-i_040-hub
+            color: white
+            background-color: $disabled-dark
+          a:hover, a:focus, a:active
+            color: $disabled-dark
+            i.ofn-i_040-hub
+              background-color: $disabled-dark
+      
       &.closed
         &:hover, &:active, &:focus
-          border: 1px solid $disabled-dark
+          border: none
           color: $disabled-dark
+
       &.open
         .active_table_row:first-child
-          color: $dark-grey
-          border-top: 1px solid $disabled-dark
-          border-left: 1px solid $disabled-dark
-          border-right: 1px solid $disabled-dark
+          color: $disabled-dark
+          border-top: 1px solid $disabled-bright
+          border-left: 1px solid $disabled-bright
+          border-right: 1px solid $disabled-bright
           strong
-            color: $dark-grey
+            color: $disabled-dark
           &:hover, &:active, &:focus
-            color: $dark-grey
+            color: $disabled-dark
             strong
-              color: $dark-grey
+              color: $disabled-dark
         .active_table_row:nth-child(2)
-          border-left: 1px solid $disabled-dark
-          border-right: 1px solid $disabled-dark
-          border-bottom: 1px solid $disabled-dark
+          border-left: 1px solid $disabled-bright
+          border-right: 1px solid $disabled-bright
+          border-bottom: 1px solid $disabled-bright
 
     //Closed row
     &.closed
+      .active_table_row.closed
+        border: 1px solid transparent
       &:hover, &:active, &:focus
-        border: 1px solid $clr-brick
-        color: $clr-brick
+        background-color: transparent
+        border: 0
+        .active_table_row.closed
+          border: 1px solid $disabled-bright
 
     //Open row
     &.open
       .active_table_row:first-child
-        border-top: 1px solid $clr-brick
-        border-left: 1px solid $clr-brick
-        border-right: 1px solid $clr-brick
+        background-color: transparent
+        border-top: 1px solid $disabled-bright
+        border-left: 1px solid $disabled-bright
+        border-right: 1px solid $disabled-bright
         &:hover, &:active, &:focus
-          color: $clr-brick
+          color: inherit
           strong
-            color: $clr-brick
+            color: inherit
       .active_table_row:nth-child(2)
-        border-left: 1px solid $clr-brick
-        border-right: 1px solid $clr-brick
-      .active_table_row.link
-        border-left: 1px solid $clr-brick
-        border-right: 1px solid $clr-brick
-        border-bottom: 1px solid $clr-brick
+        padding-bottom: 0.75rem
+        border-left: 1px solid $disabled-bright
+        border-right: 1px solid $disabled-bright
+        border-bottom: 1px solid $disabled-bright
+      
 
-    
+      //Open row sections
+      .fat1 > div, .fat2 > div, .fat3 > div
+        border-top: 1px solid $disabled-bright
+        margin-top: -1rem
+        ul, ol 
+          font-size: 0.875rem
+
+        [class*="block-grid-"] > li
+          padding-bottom: 0.25rem !important
+        // border-bottom: 1px solid $disabled-bright
+
+        label
+          text-transform: uppercase
+          font-size: 0.75rem
+          margin-top: 0.25rem
+          color: $disabled-dark
+        
     //Current selected row
     &.current
+      //overwrites active_table
       &.closed
-        &, & *
-          color: $clr-brick
-      &.open
-        .active_table_row:first-child
-          &, & *
+        a, a i, a span, a strong
           color: $clr-brick
 
-    
+      &.closed, &.open
+
+        a i.ofn-i_040-hub
+          color: white
+          background-color: $clr-brick
+        a:hover, a:focus, a:active
+          strong, span
+            color: $clr-brick-bright
+          i.ofn-i_040-hub
+            background-color: $clr-brick-bright
+
+        .active_table_row:first-child
+          &, & *
+          color: inherit
+
