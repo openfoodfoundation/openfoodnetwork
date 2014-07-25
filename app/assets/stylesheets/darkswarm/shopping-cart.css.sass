@@ -4,12 +4,28 @@
 
 .cart
   @include user-select(none)
+  .cart-span, .cart-span a
+    display: inline-block
   .joyride-tip-guide
     display: block
-    right: 0px
-    top: 45px
+    right: 10px
+    top: 55px
+    width: 400px
+
+    .joyride-nub
+      right: 22px !important
+      left: auto
+
     li
       float: none
+      .row .columns
+        padding-left: 0.25rem
+        padding-right: 0.25rem
+
+    li.total-cart
+      background-color: #424242
+    li.product-cart
+      border-top: 1px solid #424242
 
 #cart-detail
   .cart-item-delete
