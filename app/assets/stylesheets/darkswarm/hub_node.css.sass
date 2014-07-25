@@ -6,15 +6,26 @@
     //Overwrite active_table
     border: 0
     
+    //Prevents ugly overflows on hub title
+    .columns.skinny-head
+      white-space: nowrap
+      overflow-x: hidden
+      overflow-y: visible
+      // min-height: 28px
+      a
+        // padding: 0.25rem
+
     //Hub icon styline
     i.ofn-i_040-hub
       @include border-radius(9999em)
-      padding: 0.5rem
-      margin-bottom: 0.5rem
+      font-size: 1.15rem
+      display: inline-block
+      padding: 0.2rem
+      // margin-bottom: 0.5rem
       background-color: transparent
       @media all and (max-width: 768px) 
-        display: inline-block
-        margin-right: 0.1rem
+        font-size: 1rem
+        margin-top: 0.1rem
         margin-bottom: 0.1rem
     
     //Generic text link style
@@ -84,6 +95,7 @@
             strong
               color: $disabled-dark
         .active_table_row:nth-child(2)
+          background-color: rgba(255, 255, 255, 0)
           border-left: 1px solid $disabled-bright
           border-right: 1px solid $disabled-bright
           border-bottom: 1px solid $disabled-bright
@@ -93,6 +105,7 @@
       .active_table_row.closed
         border: 1px solid transparent
       &:hover, &:active, &:focus
+        background-color: rgba(255, 255, 255, 0)
         border: 0
         .active_table_row.closed
           border: 1px solid $disabled-bright
@@ -110,6 +123,7 @@
             color: inherit
       .active_table_row:nth-child(2)
         padding-bottom: 0.75rem
+        background-color: rgba(255, 255, 255, 0)
         border-left: 1px solid $disabled-bright
         border-right: 1px solid $disabled-bright
         border-bottom: 1px solid $disabled-bright
@@ -156,4 +170,7 @@
         .active_table_row:first-child
           &, & *
           color: inherit
+
+
+
 
