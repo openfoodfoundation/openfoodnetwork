@@ -4,9 +4,15 @@
 // Styling for big panes on homepage
 
 #beta.pane
-  @include lightbg
   .row
     @include panepadding
+    background-image: url("/assets/home/macbook.png") 
+    background-repeat: no-repeat
+    background-position: center bottom
+    padding-bottom: 280px
+    &, & *
+      max-width: 610px
+
 
 #map.pane
   @include darkbg
