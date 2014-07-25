@@ -1,4 +1,4 @@
-%span{"ng-controller" => "CartCtrl"}
+%span.cart-span{"ng-controller" => "CartCtrl"}
   %a#cart.icon{cart: true}
     %span.nav-branded 
       %i.ofn-i_027-shopping-cart
@@ -9,17 +9,32 @@
   .joyride-tip-guide{"ng-class" => "{ in: open }", "ng-show" => "open"}
     %span.joyride-nub.top
     .joyride-content-wrapper
+      %h5 Your shopping cart
       %ul
-        %li{"ng-repeat" => "line_item in Cart.line_items_present()",
+        %li.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
         "ng-controller" => "LineItemCtrl"}
-          {{ line_item.variant.name_to_display }}
-          ({{line_item.quantity}})
-          x
-          {{ line_item.variant.unit_to_display }}
-          x
-          {{ line_item.variant.price | currency }}
-          is 
-          {{ line_item.variant.getPrice() | currency }}
-        %li{"ng-show" => "Cart.line_items_present().length > 0"}
-          Total: {{ Cart.total()  | currency }}
-        %a.button{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
+          .row
+            .columns.small-6
+              %small
+                %strong {{ line_item.variant.name_to_display }}
+                %em {{ line_item.variant.unit_to_display }}
+            .columns.small-3
+              %small
+                {{line_item.quantity}}
+                x
+                {{ line_item.variant.price | currency }}
+
+            .columns.small-3.text-right
+              %small
+                \=
+                %strong {{ line_item.variant.getPrice() | currency }}
+
+        %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
+          .row
+            .columns.small-6
+              %em Total: 
+            .columns.small-6.text-right
+              %strong {{ Cart.total()  | currency }}        
+
+        .text-right
+          %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
