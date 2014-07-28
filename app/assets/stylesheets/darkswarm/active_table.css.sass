@@ -22,6 +22,19 @@
   @media all and (max-width: 640px)
     margin-bottom: 1rem
 
+  //Generic text link style
+  a:hover, a:active, a:focus
+    color: $dark-grey
+    span
+      text-decoration: underline
+
+  // Generic text resize
+  @media all and (max-width: 640px) 
+    font-size: 0.875rem
+    &, & *
+      font-size: 0.875rem    
+
+
   .active_table_row // Inherits from active_table
     border: 1px solid transparent 
 

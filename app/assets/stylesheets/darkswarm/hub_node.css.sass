@@ -25,8 +25,6 @@
     //Generic text link style
     a:hover, a:active, a:focus
       color: $clr-brick-bright
-      span
-        text-decoration: underline
 
     @media all and (max-width: 640px) 
       &.closed, &.open
@@ -40,12 +38,7 @@
         &.closed, &.open
           .active_table_row:first-child .skinny-head
             background-color: white
-
-      font-size: 0.875rem
-      &, & *
-        font-size: 0.875rem
     
-
     //Inactive row
     &.inactive, &.inactive strong
       color: $disabled-dark
@@ -102,10 +95,11 @@
           color: $clr-brick
 
       &.closed, &.open
-
         a i.ofn-i_040-hub
           color: white
           background-color: $clr-brick
+        
+
         a:hover, a:focus, a:active
           strong, span
             color: $clr-brick-bright
@@ -114,7 +108,7 @@
 
         .active_table_row:first-child
           &, & *
-          color: inherit
+            color: inherit
 
 
 
