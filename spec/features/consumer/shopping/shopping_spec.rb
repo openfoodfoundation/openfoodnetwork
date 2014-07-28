@@ -36,7 +36,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       exchange.variants << product.master
 
       visit shop_path
-      save_screenshot "/users/willmarshall/Desktop/wtsvg.png"
       find("#tab_producers a").click
       page.should have_content supplier.name 
     end
@@ -77,7 +76,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
-          page.should have_content product.master.display_name
+          page.should have_content product.master.display_name.capitalize
           page.should have_content product.master.display_as
 
           open_product_modal product
@@ -112,8 +111,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
 
         # Page should not have product.price (with or without fee)
-        page.should_not have_price "from $10.00"
-        page.should_not have_price "from $33.00"
+        page.should_not have_price "$10.00"
+        page.should_not have_price "$33.00"
 
         # Page should have variant prices (with fee)
         page.should have_price "$43.00"
@@ -121,7 +120,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         # Product price should be listed as the lesser of these
         #page.should have_selector 'tr.product > td', text: "from $43.00"
-        page.should have_price "from $43.00"
+        page.should have_price "$43.00"
       end
     end
 
@@ -140,8 +139,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
-          add_to_cart
-          page.should have_content product.name
+          sleep 5
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 9
           li.quantity.should == 5

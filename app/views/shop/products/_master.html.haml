@@ -46,7 +46,7 @@
 .small-4.medium-2.large-2.columns.variant-price
   .table-cell
     %i.ofn-i_009-close
-    {{ product.price | currency }}
+    {{ product.master.price | currency }}
     %button.graph-button{"price-breakdown" => "_",
       "variant" => "product.master",
       "price-breakdown-animation" => "true"}
