@@ -1,7 +1,7 @@
 .row{bindonce: true} 
   .small-12.large-8.columns
     %div{"ng-if" => "enterprise.long_description.length > 0 || enterprise.logo"}
-      %h5.modal-header About
+      %p.modal-header About
       .about-container
         %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
         %p.text-small{"ng-bind-html" => "enterprise.long_description"}

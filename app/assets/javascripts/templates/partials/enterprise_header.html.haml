@@ -2,8 +2,11 @@
   .highlight-top 
     %p.right
       {{ [enterprise.address.city, enterprise.address.state] | printArray}}
-    %h3
-      %i.ofn-i_036-producers{"ng-show" => "!enterprise.is_distributor"}
-      %i.ofn-i_040-hub{"ng-show" => "enterprise.is_distributor"}
+    %h3{"ng-if" => "enterprise.is_distributor"}
+      %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise"}
+        %i.ofn-i_040-hub
+        {{ enterprise.name }}
+    %h3{"ng-if" => "!enterprise.is_distributor"}
+      %i.ofn-i_036-producers
       {{ enterprise.name }}
   %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 

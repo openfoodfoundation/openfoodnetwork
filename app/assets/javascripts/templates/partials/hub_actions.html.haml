@@ -1,8 +1,9 @@
 .row.pad-top{bindonce: true, "ng-if" => "enterprise.hubs.length > 0"}
   .cta-container.small-12.columns
-    %h5 
-      %i.ofn-i_029-shopping-basket
-      Shop for {{enterprise.name}} products at:
+    %label 
+      Shop for 
+      %strong {{enterprise.name}} 
+      products at:
     %a.button.hub{"ng-repeat" => "hub in enterprise.hubs", 
     "bo-href" => "hub.path", 
     "bo-class" => "{primary: hub.active, secondary: !hub.active}",
