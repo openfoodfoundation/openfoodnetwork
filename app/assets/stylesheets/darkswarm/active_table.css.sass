@@ -17,10 +17,13 @@
 
 .active_table .active_table_node
   display: block
-  border: 1px solid transparent 
+  border: 0
+
+  @media all and (max-width: 640px)
+    margin-bottom: 1rem
 
   .active_table_row // Inherits from active_table
-    border: 1px solid transparent
+    border: 1px solid transparent 
 
     // Foundation overrides
     margin-left: 0
@@ -33,41 +36,47 @@
     border: 0
 
   &.open
+    // .active_table_row:nth-child(2)
+
+    .active_table_row
+      border-left: 1px solid $disabled-bright
+      border-right: 1px solid $disabled-bright
+      border-top: 0
+      border-bottom: 0
+
     .active_table_row:first-child
-      border-top: 1px solid $dark-grey
-      border-left: 1px solid $dark-grey
-      border-right: 1px solid $dark-grey
-      border-bottom: none
-      background-color: rgba(0,0,0,0.15)
+      border-top: 1px solid $disabled-bright
       &:hover, &:active, &:focus
-        color: $dark-grey
-        background-color: rgba(0,0,0,0.05)
+        // color: $dark-grey
 
-    .active_table_row:nth-child(2)
-      border-left: 1px solid $dark-grey
-      border-right: 1px solid $dark-grey
-      border-top: none
-      background-color: rgba(255,255,255,0.2)
+    .active_table_row:last-child
+      border-bottom: 1px solid $disabled-bright
+      
+      
+    //Open row sections
+    .fat > div
+      border-top: 1px solid $disabled-bright
 
-    .active_table_row.link
-      padding: 0
-      -webkit-box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
-      box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
-      border-left: 1px solid $dark-grey
-      border-right: 1px solid $dark-grey
-      border-bottom: 1px solid $dark-grey
-    
-    p
-      padding-top: 1em
+      ul, ol 
+        font-size: 0.875rem
+
+      [class*="block-grid-"] > li
+        padding-bottom: 0.25rem !important
+
+      label
+        text-transform: uppercase
+        font-size: 0.75rem
+        margin-top: 0.25rem
+        margin-bottom: 0.25rem
+        color: $disabled-dark
     
     p.trans-sentence
       text-transform: capitalize
   
   &.closed
     &:hover, &:active, &:focus
-      background-color: rgba(255,255,255,0.2)
-      border: 1px solid $dark-grey
-      color: $dark-grey
+      .active_table_row.closed
+        border: 1px solid $disabled-bright
 
   &.current
     &.closed

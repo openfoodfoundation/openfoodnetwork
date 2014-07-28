@@ -2,37 +2,39 @@
 
 .producers
   .active_table .active_table_node
-    //Overwrite active_table
-    border: 0
+
+    // Header row
+    @media all and (max-width: 640px) 
+      .skinny-header
+        background-color: $clr-turquoise-light
+        margin-top: -1rem
+        margin-bottom: 1rem
+        padding-top: 1rem
+        padding-bottom: 1rem
 
     //Open row
     &.open
+      
+      .active_table_row
+        border-left: 1px solid $clr-turquoise-bright
+        border-right: 1px solid $clr-turquoise-bright
+        background-color: rgba(255,255,255,0.4)
+        .cta-container
+          background: none
+        .columns img
+          padding: 1rem 0
+          max-height: 160px
+          width: auto
+
       .active_table_row:first-child
-        border-top: 1px solid $clr-turquoise
-        border-left: 1px solid $clr-turquoise
-        border-right: 1px solid $clr-turquoise
-        &:hover, &:active, &:focus
-          color: $clr-turquoise
-          strong
-            color: $clr-turquoise
-      .active_table_row:nth-child(2)
-        border-left: 1px solid $clr-turquoise
-        border-right: 1px solid $clr-turquoise
-        border-bottom: 1px solid $clr-turquoise
-      .active_table_row.link
-        border-left: 1px solid $clr-turquoise
-        border-right: 1px solid $clr-turquoise
-        border-bottom: 1px solid $clr-turquoise
-    
+        border-top: 1px solid $clr-turquoise-bright
+
+      .active_table_row:last-child
+        border-bottom: 1px solid $clr-turquoise-bright
+        cursor: auto
+
     //Closed row
     &.closed
-      .active_table_row.closed
-        border: 1px solid transparent
-      &, & *
-        color: $dark-grey
       &:hover, &:active, &:focus
-        border: 0
         .active_table_row.closed
-          border: 1px solid $clr-turquoise  
-        &, & *
-          color: $clr-turquoise 
+          border: 1px solid $clr-turquoise
