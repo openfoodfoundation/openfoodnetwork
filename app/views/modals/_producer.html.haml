@@ -11,14 +11,14 @@
   .row{bindonce: true} 
     .small-12.large-8.columns
       %div{"ng-show" => "enterprise.long_description.length > 0 || enterprise.logo"}
-        %h5.modal-header About
+        %p.modal-header About
         .about-container
           %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"} 
           %p.text-small{"ng-bind-html" => "enterprise.long_description"}
 
     .small-12.large-4.columns  
       %div.modal-centered{"bo-if" => "enterprise.email || enterprise.website || enterprise.phone"}
-        %h5.modal-header Contact
+        %p.modal-header Contact
         %p{"bo-if" => "enterprise.phone"}
           {{ enterprise.phone }}
 
@@ -32,7 +32,7 @@
             {{ enterprise.website | stripUrl }}
 
       %div.modal-centered{"bo-if" => "enterprise.twitter || enterprise.facebook || enterprise.linkedin || enterprise.instagram"}
-        %h5.modal-header Follow
+        %p.modal-header Follow
         .follow-icons{bindonce: true}
           %span{"bo-show" => "enterprise.twitter"} 
             %a{"ng-href" => "http://twitter.com/{{enterprise.twitter}}", target: "_blank"}
