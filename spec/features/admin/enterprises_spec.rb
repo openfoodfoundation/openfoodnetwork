@@ -125,9 +125,17 @@ feature %q{
     fill_in 'enterprise_name', :with => 'Eaterprises'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-
+    
+    # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
+    uncheck 'enterprise_is_distributor'
+    page.should have_selector "#payment_methods", visible: false
+    page.should have_selector "#shipping_methods", visible: false
+    page.should have_selector "#enterprise_fees", visible: false
     check 'enterprise_is_distributor'
+    page.should have_selector "#payment_methods"
+    page.should have_selector "#shipping_methods"
+    page.should have_selector "#enterprise_fees"
 
     select eg1.name, from: 'enterprise_group_ids'
 

@@ -1,17 +1,17 @@
 describe "Option Value Namer", ->
-  optionValueNamer = null
+  OptionValueNamer = null
 
   beforeEach ->
     module "ofn.admin"
 
-  beforeEach inject (_optionValueNamer_) ->
-    optionValueNamer = _optionValueNamer_
+  beforeEach inject (_OptionValueNamer_) ->
+    OptionValueNamer = _OptionValueNamer_
 
   describe "generating option value name", ->
     v = namer = null
     beforeEach ->
       v = {}
-      namer = new optionValueNamer(v)
+      namer = new OptionValueNamer(v)
 
     it "when description is blank", ->
       v.unit_description = null
@@ -43,7 +43,7 @@ describe "Option Value Namer", ->
       beforeEach ->
         p = {}
         v = { product: p }
-        namer = new optionValueNamer(v)
+        namer = new OptionValueNamer(v)
         
       it "returns true when the product has a scale", ->
         p.variant_unit_scale = 1000
@@ -58,7 +58,7 @@ describe "Option Value Namer", ->
       beforeEach ->
         p = {}
         v = { product: p }
-        namer = new optionValueNamer(v)
+        namer = new OptionValueNamer(v)
 
       it "generates simple values", ->
         p.variant_unit = 'weight'
@@ -87,7 +87,7 @@ describe "Option Value Namer", ->
           expect(namer.option_value_value_unit()).toEqual [100, unit]
 
       it "generates values for all volume scales", ->
-        for units in [[0.001, 'mL'], [1.0, 'L'], [1000000.0, 'ML']]
+        for units in [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']]
           [scale, unit] = units
           p.variant_unit = 'volume'
           p.variant_unit_scale = scale

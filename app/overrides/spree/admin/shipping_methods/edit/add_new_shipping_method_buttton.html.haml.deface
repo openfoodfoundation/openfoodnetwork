@@ -1,0 +1,4 @@
+/ insert_after "code[erb-silent]:contains('content_for :page_actions do')"
+
+%li
+  = button_link_to t(:new), spree.new_admin_shipping_method_path, :icon => 'icon-plus' %>

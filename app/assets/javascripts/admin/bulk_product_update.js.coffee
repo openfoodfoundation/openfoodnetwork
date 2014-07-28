@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts"
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager",
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
@@ -14,15 +14,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       taxons:       {name: "Taxons",        visible: false}
       available_on: {name: "Available On",  visible: false}
 
-    $scope.variant_unit_options = [
-      ["Weight (g)", "weight_1"],
-      ["Weight (kg)", "weight_1000"],
-      ["Weight (T)", "weight_1000000"],
-      ["Volume (mL)", "volume_0.001"],
-      ["Volume (L)", "volume_1"],
-      ["Volume (ML)", "volume_1000000"],
-      ["Items", "items"]
-    ]
+    $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
     $scope.filterableColumns = [
       { name: "Supplier",       db_column: "supplier_name" },
@@ -511,12 +503,12 @@ filterSubmitVariant = (variant) ->
 
 toObjectWithIDKeys = (array) ->
   object = {}
-  
+
   for i of array
     if array[i] instanceof Object and array[i].hasOwnProperty("id")
       object[array[i].id] = angular.copy(array[i])
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
-  
+
   object
 
 subset = (bigArray,smallArray) ->

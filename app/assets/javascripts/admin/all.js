@@ -15,7 +15,11 @@
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo
+//= require admin/spree_paypal_express
 //= require ./admin
+//= require ./enterprises/enterprises
+//= require ./payment_methods/payment_methods
 //= require ./products/products
+//= require ./shipping_methods/shipping_methods
 
 //= require_tree .

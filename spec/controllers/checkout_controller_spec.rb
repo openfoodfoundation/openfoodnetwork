@@ -108,7 +108,7 @@ describe CheckoutController do
   end
 
   describe "Paypal routing" do
-    let(:payment_method) { create(:payment_method, type: "Spree::BillingIntegration::PaypalExpress") }
+    let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
     before do
       controller.stub(:current_distributor).and_return(distributor)
       controller.stub(:current_order_cycle).and_return(order_cycle)
@@ -120,11 +120,6 @@ describe CheckoutController do
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "payment"
       spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
-    end
-
-    it "should override the cancel return url" do
-      controller.stub(:params).and_return({payment_method_id: payment_method.id})
-      controller.send(:order_opts, order, payment_method.id, 'payment')[:cancel_return_url].should == checkout_url
     end
   end
 end

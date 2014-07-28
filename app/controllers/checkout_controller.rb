@@ -6,7 +6,6 @@ class CheckoutController < Spree::CheckoutController
   prepend_before_filter :require_distributor_chosen
 
   skip_before_filter :check_registration
-  skip_before_filter :redirect_to_paypal_express_form_if_needed
 
   include OrderCyclesHelper
   include EnterprisesHelper
@@ -119,34 +118,13 @@ class CheckoutController < Spree::CheckoutController
     redirect_to main_app.shop_path
   end
 
-  # Overriding from github.com/spree/spree_paypal_express
   def redirect_to_paypal_express_form_if_needed
     return unless params[:order][:payments_attributes]
 
     payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
-    return unless payment_method.kind_of?(Spree::BillingIntegration::PaypalExpress) || payment_method.kind_of?(Spree::BillingIntegration::PaypalExpressUk)
+    return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
 
-    update_params = object_params.dup
-    update_params.delete(:payments_attributes)
-    if @order.update_attributes(update_params)
-      fire_event('spree.checkout.update')
-      render :edit and return unless apply_coupon_code
-    end
-
-    load_order
-    if not @order.errors.empty?
-       render :edit and return
-    end
-
-    render json: {path: main_app.paypal_payment_url(@order, :payment_method_id => payment_method.id)}, status: 200
+    render json: {path: spree.paypal_express_url(payment_method_id: payment_method.id)}, status: 200
     true
   end
-  
-  # Overriding to customize the cancel url
-  def order_opts_with_new_cancel_return_url(order, payment_method_id, stage)
-    opts = order_opts_without_new_cancel_return_url(order, payment_method_id, stage)
-    opts[:cancel_return_url] = main_app.checkout_url
-    opts
-  end
-  alias_method_chain :order_opts, :new_cancel_return_url
 end

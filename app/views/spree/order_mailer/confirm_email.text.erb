@@ -55,6 +55,9 @@ Collection instructions: <%= @order.order_cycle.pickup_instructions_for(@order.d
 
 <% end %>
 <% end %>
+<% if @order.special_instructions.present? %>Order notes: <%= @order.special_instructions %>
+
+<% end %>
 
 Thanks for your support.
 
