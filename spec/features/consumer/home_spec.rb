@@ -19,7 +19,7 @@ feature 'Home', js: true do
   it "shows hubs" do
     page.should have_content distributor.name
     expand_active_table_node distributor.name
-    page.should have_content "Shop at #{distributor.name}" 
+    page.should have_content "OUR PRODUCERS" 
   end
 
   it "does not show invisible hubs" do

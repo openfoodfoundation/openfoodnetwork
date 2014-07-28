@@ -43,7 +43,7 @@ module UIComponentHelper
   end
 
   def open_enterprise_modal(enterprise)
-    find("a", text: enterprise.name).click
+    find("a", text: enterprise.name).trigger "click"
   end
 
   def modal_should_be_open_for(object)
@@ -65,6 +65,15 @@ module UIComponentHelper
 
   def show_cart
     find("#cart").click
+  end
+
+  def wait_for_ajax
+    counter = 0
+    while page.execute_script("return $.active").to_i > 0
+      counter += 1
+      sleep(0.1)
+      raise "AJAX request took longer than 5 seconds." if counter >= 50
+    end
   end
 
   def be_logged_in_as(user_or_email)
