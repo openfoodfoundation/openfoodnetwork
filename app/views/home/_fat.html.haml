@@ -1,14 +1,14 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  .columns.small-12.medium-6.large-5.fat1
-    &nbsp;
+  .columns.small-12.medium-6.large-5.fat
     %div{"bo-if" => "hub.taxons"}
       %label Shop for
       .trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
-  .columns.small-12.medium-3.large-2.fat2
-    &nbsp;
+    %div{"bo-if" => "!hub.taxons"}
+      &nbsp;
+  .columns.small-12.medium-3.large-2.fat
     %div{"bo-if" => "hub.pickup || hub.delivery"}
       %label Delivery options
       %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-1
@@ -18,16 +18,17 @@
         %li.delivery{"bo-if" => "hub.delivery"} 
           %i.ofn-i_039-delivery
           Delivery
-  .columns.small-12.medium-3.large-5.fat3
-    &nbsp;
+  .columns.small-12.medium-3.large-5.fat
     %div{"bo-if" => "hub.producers"}
       %label Our producers
-      %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-3
+      %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2
         %li{"ng-repeat" => "enterprise in hub.producers"}
           %producer-modal
             %i.ofn-i_036-producers
             %span
               {{ enterprise.name }}
+    %div{"bo-if" => "!hub.producers"}
+      &nbsp;
 
 / .row.active_table_row.link{"ng-show" => "open()"}
 /   .cta-container.columns.small-12
