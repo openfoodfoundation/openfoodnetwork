@@ -1,30 +1,32 @@
-.row.active_table_row{"ng-show" => "open()"}
-  .columns.small-12.large-4
-    &nbsp;
+.row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+  .columns.small-12.medium-4.large-4.fat
     %div{"ng-if" => "producer.supplied_taxons"}
-      %h5 
-        %i.ofn-i_029-shopping-basket
-        Shop for
+      %label Shop for
       %p.trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
-  .columns.small-12.large-3
-    &nbsp;
-    %img{src: "{{ producer.logo }}" }
-  .columns.small-12.large-5
-    &nbsp;
+
+  .columns.small-12.medium-3.large-3.fat
+    %div{"bo-if" => "producer.logo"}
+      %img{src: "{{ producer.logo }}" }
+
+  .columns.small-12.medium-5.large-5.fat
     %div{"bo-if" => "producer.description"}
-      %h5 About us
+      %label About us
       %p.text-small
         {{ producer.description }}
 
-.row.active_table_row.link{"ng-show" => "open()", "bo-if" => "producer.hubs"}
-  .cta-container.columns.small-12
+.row.active_table_row{"ng-show" => "open()", "bo-if" => "producer.hubs"}
+  .columns.small-12
     .row
-      .columns.small-12
-        %h5 Shop for {{ producer.name }} products at:
-    .row
+      .columns.small-12.fat
+        %div{"bo-if" => "producer.name"}
+          %label 
+            Shop for
+            %span.turquoise {{ producer.name }} 
+            products at:
+    .row.cta-container
       .columns.small-12
         %a.button.hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
         "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 

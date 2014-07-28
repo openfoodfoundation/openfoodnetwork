@@ -1,12 +1,12 @@
 .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
-  .columns.small-4
+  .columns.small-12.medium-4.large-4.skinny-header
     %i.ofn-i_036-producers
     %strong {{ producer.name }}
-  .columns.small-3
+  .columns.small-6.medium-3.large-3
     {{ producer.address.city }}
-  .columns.small-4
+  .columns.small-4.medium-3.large-4
     {{ producer.address.state | uppercase }}
-  .columns.small-1.text-right
+  .columns.small-2.medium-2.large-1.text-right
     / This forces line-height to be triggered
     %span &nbsp;
     %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
