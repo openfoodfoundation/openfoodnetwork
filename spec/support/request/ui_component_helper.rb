@@ -56,6 +56,17 @@ module UIComponentHelper
     have_content "An email with instructions on resetting your password has been sent!"
   end
 
+  def have_in_cart name
+    show_cart
+    within "li.cart" do
+      have_content name
+    end
+  end
+
+  def show_cart
+    find("#cart").click
+  end
+
   def be_logged_in_as(user_or_email)
     if user_or_email.is_a? Spree::User
       have_content user_or_email.email

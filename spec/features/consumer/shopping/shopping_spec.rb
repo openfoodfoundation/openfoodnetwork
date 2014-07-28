@@ -168,9 +168,12 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
-          add_to_cart
-          page.should have_content product.name
+          page.should have_in_cart product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          while li == nil
+            sleep 0.1
+            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          end
           li.max_quantity.should == 7
           li.quantity.should == 6
         end
@@ -188,9 +191,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
       it "should let us add products to our cart" do
         fill_in "variants[#{variant.id}]", with: "1"
-        add_to_cart
-        current_path.should == "/cart" 
-        page.should have_content product.name
+        page.should have_in_cart product.name
       end
     end
 

@@ -92,6 +92,30 @@ Spree::Order.class_eval do
     end
   end
 
+  # Overridden to support max_quantity
+  def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
+    current_item = find_line_item_by_variant(variant)
+    if current_item
+      current_item.quantity += quantity
+      current_item.max_quantity += max_quantity.to_i
+      current_item.currency = currency unless currency.nil?
+      current_item.save
+    else
+      current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
+      current_item.variant = variant
+      if currency
+        current_item.currency = currency unless currency.nil?
+        current_item.price    = variant.price_in(currency).amount
+      else
+        current_item.price    = variant.price
+      end
+      self.line_items << current_item
+    end
+
+    self.reload
+    current_item
+  end
+
   def set_distributor!(distributor)
     self.distributor = distributor
     self.order_cycle = nil unless self.order_cycle.andand.has_distributor? distributor

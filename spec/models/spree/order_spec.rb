@@ -9,8 +9,7 @@ describe Spree::Order do
       subject.distributor = d
       subject.save!
 
-      subject.add_variant(p.master, 1)
-      subject.set_variant_attributes(p.master, {'max_quantity' => '3'})
+      subject.add_variant(p.master, 1, 3)
 
       li = Spree::LineItem.last
       li.max_quantity.should == 3

@@ -34,6 +34,15 @@ module Spree
         order.should_receive(:with_lock)
         op.populate(params, true)
       end
+
+      it "attempts cart add with max_quantity" do
+        op.stub(:distribution_can_supply_products_in_cart).and_return true
+        order.should_receive(:empty!)
+        params = {variants: {"1" => {quantity: 1, max_quantity: 2}}} 
+        order.stub(:with_lock).and_yield
+        op.should_receive(:attempt_cart_add).with("1", 1, 2).and_return true
+        op.populate(params, true)
+      end
     end
 
     describe "attempt_cart_add" do
@@ -46,7 +55,7 @@ module Spree
         op.should_receive(:check_order_cycle_provided_for).with(variant).and_return(true)
         op.should_receive(:check_variant_available_under_distribution).with(variant).
           and_return(true)
-        order.should_receive(:add_variant).with(variant, quantity, currency)
+        order.should_receive(:add_variant).with(variant, quantity, nil, currency)
 
         op.attempt_cart_add(333, quantity.to_s)
       end

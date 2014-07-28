@@ -24,7 +24,9 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
     data: =>
       variants = {} 
       for li in @line_items_present()
-        variants[li.variant.id] = li.quantity
+        variants[li.variant.id] = 
+          quantity: li.quantity
+          max_quantity: li.max_quantity
       {variants: variants}
   
 
@@ -56,4 +58,5 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       variant.line_item =
         variant: variant
         quantity: 0
+        max_quantity: null
       @line_items.push variant.line_item

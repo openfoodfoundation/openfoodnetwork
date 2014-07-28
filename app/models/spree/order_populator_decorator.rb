@@ -10,12 +10,13 @@ Spree::OrderPopulator.class_eval do
     if valid? 
       @order.with_lock do
         @order.empty! if overwrite
-        from_hash[:products].each do |product_id,variant_id|
+
+        from_hash[:products].each do |product_id, variant_id|
           attempt_cart_add(variant_id, from_hash[:quantity])
         end if from_hash[:products]
 
-        from_hash[:variants].each do |variant_id, quantity|
-          attempt_cart_add(variant_id, quantity)
+        from_hash[:variants].each do |variant_id, args|
+          attempt_cart_add(variant_id, args[:quantity], args[:max_quantity])
         end if from_hash[:variants]
       end
     end
@@ -23,16 +24,14 @@ Spree::OrderPopulator.class_eval do
     valid?
   end
 
-  # Copied from Spree::OrderPopulator, with additional validations added
-  def attempt_cart_add(variant_id, quantity)
+  def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
     variant = Spree::Variant.find(variant_id)
     if quantity > 0
       if check_stock_levels(variant, quantity) &&
           check_order_cycle_provided_for(variant) &&
           check_variant_available_under_distribution(variant)
-
-        @order.add_variant(variant, quantity, currency)
+        @order.add_variant(variant, quantity, max_quantity, currency)
       end
     end
   end
