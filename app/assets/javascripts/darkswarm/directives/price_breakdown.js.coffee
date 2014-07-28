@@ -4,12 +4,8 @@ Darkswarm.directive "priceBreakdown", ($tooltip)->
     variant: "="
   tooltip
 
-Darkswarm.directive 'priceBreakdownPopup', ()->
+Darkswarm.directive 'priceBreakdownPopup', ->
   restrict: 'EA'
   replace: true
   templateUrl: 'price_breakdown.html'
   scope: true
-  #link: (scope, elem, attrs)->
-    #angular.element($window).bind 'click', ->
-        #scope.tt_isOpen = false
-        #elem.remove()

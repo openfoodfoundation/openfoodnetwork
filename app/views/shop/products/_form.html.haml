@@ -1,47 +1,50 @@
 %products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
-  %form.custom
-    .row
-      .small-12.medium-8.large-9.columns
-        %input#search.text{"ng-model" => "query", 
-        placeholder: "Search by product or producer",
-        "ng-debounce" => "100",
-        "ofn-disable-enter" => true}
+  .row
+    .small-12.medium-8.large-9.columns
+      %input#search.text{"ng-model" => "query", 
+      placeholder: "Search by product or producer",
+      "ng-debounce" => "100",
+      "ofn-disable-enter" => true}
 
-        = render partial: "shop/products/filters"
+      = render partial: "shop/products/filters"
 
+    %form{action: cart_path}
       .small-12.medium-4.large-3.columns
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Checkout now"}
+        %input.button.primary.right.add_to_cart{type: :submit, value: "Checkout now",
+        "ng-disabled" => "Cart.dirty"}
 
-    %div.pad-top{bindonce: true}
-      %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-        "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
-        .product-thumb
-          %a{"ng-click" => "triggerProductModal()"}
-            %img{"bo-src" => "product.master.images[0].small_url", "ng-click" => "triggerProductModal()"}
+  %div.pad-top{bindonce: true}
+    %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
+      .product-thumb
+        %a{"ng-click" => "triggerProductModal()"}
+          %img{"bo-src" => "product.master.images[0].small_url", "ng-click" => "triggerProductModal()"}
 
-        = render partial: "shop/products/summary"
+      = render partial: "shop/products/summary"
 
-        %span{"bo-if" => "product.hasVariants"}
-          = render partial: "shop/products/variants"
+      %span{"bo-if" => "product.hasVariants"}
+        = render partial: "shop/products/variants"
 
-        .variants.row{"bo-if" => "!product.hasVariants"}
-          = render partial: "shop/products/master"
-      
-      %product{"ng-show" => "Products.loading"}
-        .row.summary
-          .small-12.columns.text-center
-            Loading products
+      .variants.row{"bo-if" => "!product.hasVariants"}
+        = render partial: "shop/products/master"
+    
+    %product{"ng-show" => "Products.loading"}
+      .row.summary
+        .small-12.columns.text-center
+          Loading products
 
-      %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
-        .row.summary
-          .small-12.columns
-            %p.no-results
-              Sorry, no results found for
-              %strong {{query}}.
-              Try another search?
-    .row
-      .small-12.columns
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Checkout now"}
+    %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
+      .row.summary
+        .small-12.columns
+          %p.no-results
+            Sorry, no results found for
+            %strong {{query}}.
+            Try another search?
+  .row
+    .small-12.columns
+      %form{action: cart_path}
+        %input.button.primary.right.add_to_cart{type: :submit, value: "Checkout now",
+        "ng-disabled" => "Cart.dirty"}
 

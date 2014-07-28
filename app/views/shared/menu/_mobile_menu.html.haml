@@ -3,7 +3,8 @@
     %a.left-off-canvas-toggle.menu-icon
       %span
   %section.right
-    = render partial: "shared/menu/cart"
+    .cart
+      = render partial: "shared/menu/cart"
     %a{href: main_app.shop_path}
       {{ CurrentHub.hub.name }}
 

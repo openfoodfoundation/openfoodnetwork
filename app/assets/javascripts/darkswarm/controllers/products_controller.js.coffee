@@ -1,5 +1,6 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart) ->
   $scope.Products = Products
+  $scope.Cart = Cart
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText
