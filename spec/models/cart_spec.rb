@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# TODO this seems to be redundant
 describe Cart do
 
   describe "associations" do

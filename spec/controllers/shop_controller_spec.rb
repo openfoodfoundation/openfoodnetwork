@@ -114,7 +114,8 @@ describe ShopController do
       it "scopes variants for a product to the order cycle and distributor" do
         controller.stub(:current_order_cycle).and_return order_cycle      
         controller.stub(:current_distributor).and_return d
-        Spree::Product.any_instance.should_receive(:variants_for).with(order_cycle, d)
+        Spree::Product.any_instance.should_receive(:variants_for).with(order_cycle, d).and_return(m = double())
+        m.stub(:in_stock).and_return []
         xhr :get, :products
       end
 

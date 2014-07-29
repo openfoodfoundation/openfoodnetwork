@@ -15,8 +15,12 @@ Spree::OrderPopulator.class_eval do
           attempt_cart_add(variant_id, from_hash[:quantity])
         end if from_hash[:products]
 
-        from_hash[:variants].each do |variant_id, args|
-          attempt_cart_add(variant_id, args[:quantity], args[:max_quantity])
+        from_hash[:variants].each do |variant_id, quantity|
+          if quantity.is_a?(Hash)
+            attempt_cart_add(variant_id, quantity[:quantity], quantity[:max_quantity])
+          else
+            attempt_cart_add(variant_id, quantity)
+          end
         end if from_hash[:variants]
       end
     end
