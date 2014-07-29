@@ -4,7 +4,7 @@
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
 
 #groups{"ng-controller" => "GroupsCtrl"}
-  .row.pad-top
+  #active-table-search.row.pad-top
     .small-12.columns.text-center
       %h1 Groups / Regions
       %div 
@@ -14,7 +14,7 @@
         below
       %p
 
-      %input{type: :text, 
+      %input.animate-show{type: :text, 
       "ng-model" => "query", 
       placeholder: "Search group name",
       "ng-debounce" => "150",
