@@ -18,9 +18,6 @@
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
       "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
-      .product-thumb
-        %a{"ng-click" => "triggerProductModal()"}
-          %img{"bo-src" => "product.master.images[0].small_url", "ng-click" => "triggerProductModal()"}
 
       = render partial: "shop/products/summary"
 
