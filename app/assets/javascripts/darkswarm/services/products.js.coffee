@@ -43,3 +43,5 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
         product.hasVariants = product.variants?.length > 0
+        
+        product.primaryImage = product.images[0]?.small_url || "/assets/noimage/small.png"

@@ -34,6 +34,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_many :variants, serializer: Api::VariantSerializer
   has_many :taxons, serializer: Api::IdSerializer
   has_many :properties, serializer: Api::PropertySerializer
+  has_many :images, serializer: Api::ImageSerializer
 
   has_one :supplier, serializer: Api::IdSerializer
   has_one :primary_taxon, serializer: Api::TaxonSerializer
