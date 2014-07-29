@@ -5,6 +5,17 @@ dialog, .reveal-modal
   border: none
   outline: none
   padding: 1rem
+  div
+    overflow: scroll
+    @media only screen and (min-width: 40.063em)
+      max-height: 580px
+    @media all and (max-width: 768px)
+      max-height: 440px
+    @media all and (max-width: 640px)
+      max-height: 400px
+    @media all and (max-width: 640px)
+      max-height: inherit
+      overflow: scroll
 
 .reveal-modal-bg
   background-color: rgba(0,0,0,0.65)
