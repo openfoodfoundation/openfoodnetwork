@@ -5,47 +5,56 @@ dialog, .reveal-modal
   border: none
   outline: none
   padding: 1rem
-  
-  // TO DO: deal with scroll container inheritance (kirsten box) + bigger scrolling on mobile device issue
-  div
-    overflow: scroll
-    @media only screen and (min-width: 40.063em)
-      max-height: 580px
-    @media all and (max-width: 768px)
-      max-height: 440px
-    @media all and (max-width: 640px)
-      max-height: 400px
-    @media all and (max-width: 640px)
-      max-height: inherit
-      overflow: scroll
+  // TO DO: look at bigger issue scrolling on mobile device 
+  overflow-y: scroll
+  @media only screen and (min-width: 40.063em)
+    max-height: 580px
+  @media all and (max-width: 768px)
+    max-height: 440px
+  @media all and (max-width: 640px)
+    max-height: 400px
+  @media all and (max-width: 640px)
+    max-height: inherit
+    overflow-y: scroll
 
 .reveal-modal-bg
   background-color: rgba(0,0,0,0.65)
 
-dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
-  top: -2.5rem
-  right: -2.5rem
-  font-size: 2rem
-  color: white
+dialog .close-reveal-modal, .reveal-modal .close-reveal-modal
+  top: 0.45rem
+  right: 0.4rem
+  background-color: rgba(235,235,235,0.85)
   text-shadow: none
-  padding: 0.25rem
+  padding: 0.3rem
   @include border-radius(999999)
-  border: 1px solid transparent
   &:hover, &:active, &:focus
-    text-shadow: 0 1px 3px #333
-    border: 1px solid white
+    background-color: rgba(235,235,235,1)
+    color: #333
 
-  @media all and (max-width: 640px)
-    top: 0.5rem
-    right: 0.5rem
-    font-size: 2rem
-    color: white
-    text-shadow: none
-    padding: 0.25rem
-    background-color: rgba(150,150,150,0.85)
-    @include border-radius(999999)
-    border: 1px solid transparent
-    &:hover, &:active, &:focus
-      text-shadow: 0 1px 3px #333
-      border: 1px solid white
+// dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
+//   top: -2.5rem
+//   right: -2.5rem
+//   font-size: 2rem
+//   color: white
+//   text-shadow: none
+//   padding: 0.25rem
+//   @include border-radius(999999)
+//   border: 1px solid transparent
+//   &:hover, &:active, &:focus
+//     text-shadow: 0 1px 3px #333
+//     border: 1px solid white
+
+//   @media all and (max-width: 640px)
+//     top: 0.5rem
+//     right: 0.5rem
+//     font-size: 2rem
+//     color: white
+//     text-shadow: none
+//     padding: 0.25rem
+//     background-color: rgba(150,150,150,0.85)
+//     @include border-radius(999999)
+//     border: 1px solid transparent
+//     &:hover, &:active, &:focus
+//       text-shadow: 0 1px 3px #333
+//       border: 1px solid white
 
