@@ -20,12 +20,8 @@
       "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
 
       = render partial: "shop/products/summary"
-
-      %span{"bo-if" => "product.hasVariants"}
-        = render partial: "shop/products/variants"
-
-      .variants.row{"bo-if" => "!product.hasVariants"}
-        = render partial: "shop/products/master"
+      %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants"}
+      %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id"}
     
     %product{"ng-show" => "Products.loading"}
       .row.summary
