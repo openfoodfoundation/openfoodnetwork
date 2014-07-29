@@ -221,7 +221,7 @@ class Enterprise < ActiveRecord::Base
   private
 
   def strip_url(url)
-    url.andand.sub /(https?:\/\/)?(www\.)?/, ''
+    url.andand.sub /(https?:\/\/)?/, ''
   end
 
   def set_unused_address_fields

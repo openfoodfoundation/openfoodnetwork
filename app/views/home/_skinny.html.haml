@@ -1,9 +1,9 @@
-.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
+.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}", bindonce: true}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_040-hub 
       %span
-        %strong {{ hub.name }}
+        %strong {{ hub.name | truncate:40}}
   .columns.small-4.medium-2.large-2
     {{ hub.address.city }}
   .columns.small-2.medium-1.large-1

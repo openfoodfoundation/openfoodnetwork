@@ -20,7 +20,7 @@
       "ng-debounce" => "150",
       "ofn-disable-enter" => true}
 
-  .group{"ng-repeat" => "group in Groups.groups | groups:query | orderBy:order",
+  .group{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
@@ -44,8 +44,13 @@
             %producer-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
               {{ enterprise.name }}
 
+
     .row.group_footer
       .small-12.columns
         %hr
+
+  .group{"ng-show" => "groups.length == 0"}
+    .row.pad-top
+      No groups found
 
 = render partial: "shared/footer"

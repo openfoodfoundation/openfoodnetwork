@@ -5,6 +5,7 @@ Darkswarm.directive "producerModal", ($modal)->
   transclude: true
   link: (scope, elem, attrs, ctrl)->
     elem.on "click", (ev)=>
-      ev.preventDefault()
+      ev.stopPropagation()
+      console.log scope.enterprise
       scope.modalInstance = $modal.open(controller: ctrl, templateUrl: 'producer_modal.html', scope: scope)
 

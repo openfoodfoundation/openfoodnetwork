@@ -1,5 +1,5 @@
 Darkswarm.filter "stripUrl", ->
-  stripper = /(https?:\/\/)?(www\.)?(.*)/
+  stripper = /(https?:\/\/)?(.*)/
   (url) ->
     url.match(stripper).pop()
 
