@@ -18,9 +18,8 @@ Darkswarm.directive 'mapSearch', ($timeout)->
         markers = []
         bounds = new google.maps.LatLngBounds()
         for place in places
-          bounds.extend place.geometry.location
           #map.setCenter place.geometry.location
-          map.panToBounds place.geometry.viewport
+          map.fitBounds place.geometry.viewport
         #map.fitBounds bounds
       
       # Bias the SearchBox results towards places that are within the bounds of the
