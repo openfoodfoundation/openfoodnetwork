@@ -1,16 +1,15 @@
-.row.variants{bindonce: true,
-  "ng-repeat" => "variant in product.variants track by variant.id"}
-
+.variants.row
   .small-12.medium-4.large-4.columns.variant-name
     .table-cell  
       .inline {{ variant.name_to_display }}
-      .bulk-buy.inline{"bo-if" => "product.group_buy"}
+      .bulk-buy.inline{"bo-if" => "variant.product.group_buy"}
         %i.ofn-i_056-bulk><
         %em><
           \ Bulk
 
   -# WITHOUT GROUP BUY
-  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!variant.product.group_buy"}
+
     %input{type: :number, 
     value: nil, 
     min: 0, 
@@ -22,7 +21,7 @@
       
 
   -# WITH GROUP BUY
-  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "product.group_buy"}
+  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "variant.product.group_buy"}
     %span.bulk-input-container
       %span.bulk-input
         %input.bulk.first{type: :number, 
@@ -33,7 +32,7 @@
         "ofn-disable-scroll" => true,
         max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
         name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
-      %span.bulk-input{"bo-if" => "product.group_buy"}
+      %span.bulk-input{"bo-if" => "variant.product.group_buy"}
         %input.bulk.second{type: :number,
         min: 0,
         "ng-model" => "variant.line_item.max_quantity",
@@ -51,8 +50,10 @@
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
 
-      / %button.graph-button{popover: "This is the popover text", "popover-title" => "The title.", "popover-animation" => "true", "popover-trigger" =>"mouseenter", "popover-placement" => "top", "tabindex" => "-1"}
-      /   %i.ofn-i-058-graph
+      %button.graph-button{"price-breakdown" => "_",
+        "variant" => "variant",
+        "price-breakdown-animation" => "true"}
+        %i.ofn-i-058-graph
 
   .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell

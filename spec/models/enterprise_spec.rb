@@ -448,9 +448,9 @@ describe Enterprise do
              linkedin: "https://linkedin.com")
     }
 
-    it "strips http and www from url fields" do
-      distributor.website.should == "google.com"
-      distributor.facebook.should == "facebook.com/roger"
+    it "strips http from url fields" do
+      distributor.website.should == "www.google.com"
+      distributor.facebook.should == "www.facebook.com/roger"
       distributor.linkedin.should == "linkedin.com"
     end
   end

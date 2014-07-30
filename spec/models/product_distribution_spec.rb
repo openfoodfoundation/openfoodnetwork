@@ -56,6 +56,7 @@ describe ProductDistribution do
         adjustment.label.should == "Product distribution by #{distributor.name} for Pear"
         adjustment.amount.should == 1.23
 
+        # TODO ROB this has an intermittent failure
         # And it should have some associated metadata
         md = adjustment.metadata
         md.enterprise.should == distributor

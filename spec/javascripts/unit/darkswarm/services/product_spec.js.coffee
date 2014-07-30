@@ -55,6 +55,12 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Cart.line_items[0].variant).toBe Products.products[0].variants[0]
 
+  it "sets primaryImageOrMissing when no images are provided", ->
+    $httpBackend.expectGET("/shop/products").respond([product])
+    $httpBackend.flush()
+    expect(Products.products[0].primaryImage).toBeUndefined()
+    expect(Products.products[0].primaryImageOrMissing).toEqual "/assets/noimage/small.png"
+
   describe "determining the price to display for a product", ->
     it "displays the product price when the product does not have variants", ->
       $httpBackend.expectGET("/shop/products").respond([product])
@@ -66,4 +72,3 @@ describe 'Products service', ->
       $httpBackend.expectGET("/shop/products").respond([product])
       $httpBackend.flush()
       expect(Products.products[0].price).toEqual 22
-

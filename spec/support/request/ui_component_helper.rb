@@ -24,6 +24,7 @@ module UIComponentHelper
     within ".login-modal" do
       find("a", text: text).click
     end
+    sleep 0.2
   end
 
   def open_login_modal

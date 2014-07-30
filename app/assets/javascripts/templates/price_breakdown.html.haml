@@ -1,4 +1,27 @@
 .joyride-tip-guide{"ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
   %span.joyride-nub.bottom
   .joyride-content-wrapper
-    {{ variant.id }}
+
+    .collapsed{"ng-show" => "!expanded"}
+      %price-percentage{percentage: 'variant.basePricePercentage'}
+      %a{"ng-click" => "expanded = !expanded"} Full price breakdown
+
+    .expanded{"ng-show" => "expanded"}
+      %ul
+        %li
+          Cost
+          %span {{ variant.base_price | currency }}
+        %li
+          Admin fee
+          %span {{ variant.fees.admin | currency }}
+        %li
+          Sales fee
+          %span {{ variant.fees.sales | currency }}
+        %li
+          Packing fee
+          %span {{ variant.fees.packing | currency }}
+        %li
+          Transport fee
+          %span {{ variant.fees.transport | currency }}
+      %a{"ng-click" => "expanded = !expanded"} Price graph
+      \= {{ variant.price | currency }}
