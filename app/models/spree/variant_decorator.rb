@@ -1,3 +1,4 @@
+require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/option_value_namer'
 
 Spree::Variant.class_eval do
@@ -44,7 +45,7 @@ Spree::Variant.class_eval do
   end
 
   def fees_for(distributor, order_cycle)
-    order_cycle.fees_for(self, distributor)
+    OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for self
   end
 
 
