@@ -29,20 +29,3 @@
               {{ enterprise.name }}
     %div{"bo-if" => "!hub.producers"}
       &nbsp;
-
-/ .row.active_table_row.link{"ng-show" => "open()"}
-/   .cta-container.columns.small-12
-/     .row
-/       .columns.small-12
-/         %h5 
-/           %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
-/     .row
-/       .columns.small-12
-/         %a.button.hub{"bo-href" => "hub.path", 
-/         "ng-class" => "{primary: hub.active, secondary: !hub.active}",
-/         "ofn-empties-cart" => "hub"}
-/           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
-/           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-/           {{hub.name}}
-/           .button-address {{ [hub.address.city, hub.address.state] | printArray }}
-/           %i.ofn-i_007-caret-right

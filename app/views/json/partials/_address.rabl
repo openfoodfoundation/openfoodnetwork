@@ -1,4 +1,4 @@
 attributes :city, :zipcode, :phone
-node :state do |address|
+node :state_name do |address|
   address.state.abbr
 end
