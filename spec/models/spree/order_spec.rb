@@ -82,7 +82,9 @@ describe Spree::Order do
       subject.stub(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
-      order_cycle.should_receive(:create_line_item_adjustments_for).with(line_item)
+      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
+        should_receive(:create_line_item_adjustments_for).
+        with(line_item)
       order_cycle.stub(:create_order_adjustments_for)
       subject.stub(:order_cycle) { order_cycle }
 

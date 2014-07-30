@@ -1,5 +1,6 @@
-require 'open_food_network/feature_toggle'
+require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
+require 'open_food_network/feature_toggle'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
@@ -133,7 +134,7 @@ Spree::Order.class_eval do
 
     line_items.each do |line_item|
       if provided_by_order_cycle? line_item
-        order_cycle.create_line_item_adjustments_for line_item
+        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
 
       else
         pd = product_distribution_for line_item
