@@ -1,5 +1,3 @@
-require 'open_food_network/enterprise_fee_applicator'
-
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
   has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
@@ -165,76 +163,16 @@ class OrderCycle < ActiveRecord::Base
     exchange_for_distributor(distributor).andand.pickup_instructions
   end
 
-
-  # -- Fees
-
-  # TODO: The boundary of this class is ill-defined here. OrderCycle should not know about
-  # EnterpriseFeeApplicator. Clients should be able to query it for relevant EnterpriseFees.
-  # This logic would fit better in another service object.
-
-  def fees_for(variant, distributor)
-    per_item_enterprise_fee_applicators_for(variant, distributor).sum do |applicator|
-      # Spree's Calculator interface accepts Orders or LineItems,
-      # so we meet that interface with a struct.
-      # Amount is faked, this is a method on LineItem
-      line_item = OpenStruct.new variant: variant, quantity: 1, amount: variant.price
-      applicator.enterprise_fee.compute_amount(line_item)
-    end
+  def exchanges_carrying(variant, distributor)
+    exchanges.supplying_to(distributor).with_variant(variant)
   end
 
-  def create_line_item_adjustments_for(line_item)
-    variant = line_item.variant
-    distributor = line_item.order.distributor
-
-    per_item_enterprise_fee_applicators_for(variant, distributor).each do |applicator|
-      applicator.create_line_item_adjustment(line_item)
-    end
-  end
-
-  def create_order_adjustments_for(order)
-    per_order_enterprise_fee_applicators_for(order).each do |applicator|
-      applicator.create_order_adjustment(order)
-    end
+  def exchanges_supplying(order)
+    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 
 
   private
-
-  # -- Fees
-  def per_item_enterprise_fee_applicators_for(variant, distributor)
-    fees = []
-
-    exchanges_carrying(variant, distributor).each do |exchange|
-      exchange.enterprise_fees.per_item.each do |enterprise_fee|
-        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, exchange.role)
-      end
-    end
-
-    coordinator_fees.per_item.each do |enterprise_fee|
-      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, variant, 'coordinator')
-    end
-
-    fees
-  end
-
-  def per_order_enterprise_fee_applicators_for(order)
-    fees = []
-
-    exchanges_supplying(order).each do |exchange|
-      exchange.enterprise_fees.per_order.each do |enterprise_fee|
-        fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, exchange.role)
-      end
-    end
-
-    coordinator_fees.per_order.each do |enterprise_fee|
-      fees << OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
-    end
-
-    fees
-  end
-
-
-  # -- Misc
 
   # If a product without variants is added to an order cycle, and then some variants are added
   # to that product, then the master variant is still part of the order cycle, but customers
@@ -245,13 +183,5 @@ class OrderCycle < ActiveRecord::Base
     product.has_variants? &&
       distributed_variants.include?(product.master) &&
       (product.variants & distributed_variants).empty?
-  end
-
-  def exchanges_carrying(variant, distributor)
-    exchanges.supplying_to(distributor).with_variant(variant)
-  end
-
-  def exchanges_supplying(order)
-    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 end
