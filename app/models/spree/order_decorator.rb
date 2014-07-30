@@ -142,7 +142,9 @@ Spree::Order.class_eval do
       end
     end
 
-    order_cycle.create_order_adjustments_for self if order_cycle
+    if order_cycle
+      OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+    end
   end
 
   def set_variant_attributes(variant, attributes)
