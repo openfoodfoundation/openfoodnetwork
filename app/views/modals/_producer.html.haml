@@ -2,7 +2,7 @@
   .highlight
     .highlight-top 
       %p.right
-        {{ [enterprise.address.city, enterprise.address.state] | printArray}}
+        {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
       %h3
         %i.ofn-i_036-producers
         {{ enterprise.name }}
