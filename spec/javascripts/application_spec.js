@@ -8,6 +8,7 @@
 //= require angular-backstretch.js
 //= require lodash.underscore.js
 //= require angular-flash.min.js
+//= require shared/mm-foundation-tpls-0.2.2.min.js
 //= require moment
 
 angular.module('templates', [])
