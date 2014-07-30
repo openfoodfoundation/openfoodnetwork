@@ -5,7 +5,7 @@ describe 'Variants service', ->
   beforeEach ->
     variant =
       id: 1
-      base_price: 80
+      base_price: 80.5
       price: 100
     module 'Darkswarm'
     inject ($injector)->
@@ -22,4 +22,4 @@ describe 'Variants service', ->
     expect(Variants.register(variant)).toBe variant
 
   it "initialises base price percentage", ->
-    expect(Variants.register(variant).basePricePercentage).toEqual 80
+    expect(Variants.register(variant).basePricePercentage).toEqual 81
