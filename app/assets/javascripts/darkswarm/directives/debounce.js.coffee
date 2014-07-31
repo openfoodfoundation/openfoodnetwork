@@ -1,4 +1,6 @@
 Darkswarm.directive "ngDebounce", ($timeout) ->
+  # Slows down ng-model updates, only triggering binding ngDebounce milliseconds
+  # after the last change. Used to prevent squirrely UI
   restrict: "A"
   require: "ngModel"
   priority: 99
