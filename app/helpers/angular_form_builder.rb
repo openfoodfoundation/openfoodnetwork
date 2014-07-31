@@ -12,8 +12,9 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
     # @object.send(@fields_for_record_name).first.class.to_s.underscore --> enterprise_fee
 
     value = "{{ #{@object.send(@fields_for_record_name).first.class.to_s.underscore}.#{method} }}"
+    options.reverse_merge!({'id' => angular_id(method)})
 
-    @template.text_field_tag angular_name(method), value, :id => angular_id(method)
+    @template.text_field_tag angular_name(method), value, options
   end
 
   def ng_hidden_field(method, options = {})
