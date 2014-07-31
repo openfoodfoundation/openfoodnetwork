@@ -16,6 +16,7 @@
 //= require admin/spree_auth
 //= require admin/spree_promo
 //= require admin/spree_paypal_express
+//= require ../shared/ng-infinite-scroll.min.js
 //= require ./admin
 //= require ./enterprises/enterprises
 //= require ./payment_methods/payment_methods

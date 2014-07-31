@@ -60,33 +60,8 @@
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
     %div.quick_search{ :class => "five columns omega" }
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
-    %div.pagination{ :class => "seven columns omega" }
-      %div.pagenav{ :class => "two columns alpha" }
-        %span.first
-          %a{ :href => "#", 'ng-click' => "currentPage = 1", 'ng-show' => "currentPage > 1" }
-            &laquo;&nbsp;First
-        %span.prev
-          %a{ :href => "#", 'ng-click' => "currentPage = currentPage - 1", 'ng-show' => "currentPage > 1" }
-            &lsaquo;&nbsp;Prev
-      %div.pagenav{ :class => "columns omega" }
-        %span.page{ 'ng-repeat' => "page in [] | rangeArray:minPage():maxPage()", 'ng-class' => "{current: currentPage==page}" }
-          %a{ :href => "#", 'ng-click' => "setPage(page)" }
-            {{page}}
-        %span{ 'ng-show' => "maxPage() < totalPages()" } ...
-      %div.pagenav{ :class => "two columns omega" }
-        %span.next
-          %a{ :href => "#", 'ng-click' => "currentPage = currentPage + 1", 'ng-show' => "currentPage < totalPages()" }
-            Next&nbsp;&rsaquo;
-        %span.last
-          %a{ :href => "#", 'ng-click' => "currentPage = totalPages()", 'ng-show' => "currentPage < totalPages()" }
-            Last&nbsp;&raquo;
-    %div.pagination_info{ :class => 'four columns alpha' }
-      Show&nbsp;
-      %select{ 'ng-model' => 'perPage', :name => 'perPage', 'ng-options' => 'pp for pp in [25,50,100,200]'}
-      &nbsp;per page
-      %br
-      %span Displaying {{firstVisibleProduct()}}-{{lastVisibleProduct()}} of {{totalCount()}} products
-    %table.index#listing_products.bulk
+    %div.spacer{ :class => "nine columns omega" } &nbsp;
+    %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup
         %col
         %col
@@ -115,7 +90,7 @@
           %th.actions
           %th.actions
           %th.actions
-      %tbody{ 'ng-repeat' => 'product in filteredProducts = (products | filter:query)', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", 'ng-show' => "$index >= perPage*(currentPage-1) && $index < perPage*currentPage" }
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %tr.product{ :id => "p_{{product.id}}" }
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }

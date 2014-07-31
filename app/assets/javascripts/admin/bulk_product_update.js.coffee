@@ -30,24 +30,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       filters:        { title: "Filter Products",   visible: false }
       column_toggle:  { title: "Toggle Columns",    visible: false }
 
-    $scope.perPage = 25
-    $scope.currentPage = 1
     $scope.products = []
     $scope.filteredProducts = []
     $scope.currentFilters = []
-    $scope.totalCount = -> $scope.filteredProducts.length
-    $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
-    $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
-    $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
-    $scope.setPage = (page) -> $scope.currentPage = page
-    $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
-    $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
+    $scope.limit = 15
     $scope.productsWithUnsavedVariants = []
 
-    $scope.$watch ->
-      $scope.totalPages()
-    , (newVal, oldVal) ->
-      $scope.currentPage = Math.max $scope.totalPages(), 1  if newVal != oldVal && $scope.totalPages() < $scope.currentPage
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -328,6 +316,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       products = (product for product in product_list when product.id == id)
       if products.length == 0 then null else products[0]
 
+    $scope.incrementLimit = ->
+      if $scope.limit < $scope.products.length
+        $scope.limit = $scope.limit + 5
 
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text
@@ -464,11 +455,3 @@ toObjectWithIDKeys = (array) ->
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
 
   object
-
-subset = (bigArray,smallArray) ->
-  if smallArray instanceof Array && bigArray instanceof Array && smallArray.length > 0
-    for item in smallArray
-      return false if angular.toJson(bigArray).indexOf(angular.toJson(item)) == -1
-    return true
-  else
-    return false
