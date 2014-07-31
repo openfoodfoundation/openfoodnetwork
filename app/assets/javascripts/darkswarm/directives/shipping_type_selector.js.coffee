@@ -1,4 +1,5 @@
 Darkswarm.directive "shippingTypeSelector", (FilterSelectorsService)->
+  # Builds selector for shipping types
   restrict: 'E'
   replace: true
   templateUrl: 'shipping_type_selector.html'
