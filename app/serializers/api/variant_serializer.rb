@@ -7,13 +7,10 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def base_price
-    1.00
+    object.price
   end
 
   def fees
-    {admin: 1.23, sales: 4.56, packing: 7.89, transport: 0.12}
+    object.fees_by_type_for(options[:current_distributor], options[:current_order_cycle])
   end
 end
-
-
-# price_without_fees / price

@@ -48,6 +48,10 @@ Spree::Variant.class_eval do
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for self
   end
 
+  def fees_by_type_for(distributor, order_cycle)
+    OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
+  end
+
 
   # Copied and modified from Spree::Variant
   def options_text

@@ -8,7 +8,7 @@ module OpenFoodNetwork
       let(:order_cycle) { create(:simple_order_cycle) }
       let(:product) { create(:simple_product, price: 10.00) }
 
-      describe "calculating fees for a variant via a particular distribution" do
+      describe "calculating fees for a variant" do
         it "sums all the per-item fees for the variant in the specified hub + order cycle" do
           enterprise_fee1 = create(:enterprise_fee, amount: 20)
           enterprise_fee2 = create(:enterprise_fee, amount:  3)
@@ -29,6 +29,21 @@ module OpenFoodNetwork
 
           product.master.price.should == 10.00
           EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for(product.master).should == 2.00
+        end
+      end
+
+      describe "calculating fees by type" do
+        let!(:ef_admin) { create(:enterprise_fee, fee_type: 'admin', amount: 1.23) }
+        let!(:ef_sales) { create(:enterprise_fee, fee_type: 'sales', amount: 4.56) }
+        let!(:ef_packing) { create(:enterprise_fee, fee_type: 'packing', amount: 7.89) }
+        let!(:ef_transport) { create(:enterprise_fee, fee_type: 'transport', amount: 0.12) }
+        let!(:exchange) { create(:exchange, order_cycle: order_cycle,
+                                 sender: coordinator, receiver: distributor, incoming: false,
+                                 enterprise_fees: [ef_admin, ef_sales, ef_packing, ef_transport],
+                                 variants: [product.master]) }
+
+        it "returns a breakdown of fees" do
+          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {admin: 1.23, sales: 4.56, packing: 7.89, transport: 0.12}
         end
       end
 

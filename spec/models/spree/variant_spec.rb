@@ -94,6 +94,20 @@ module Spree
     end
 
 
+    describe "calculating fees broken down by fee type" do
+      it "delegates to EnterpriseFeeCalculator" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+        variant = Variant.new
+        fees = double(:fees)
+
+        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.should_receive(:fees_by_type_for).with(variant) { fees }
+
+        variant.fees_by_type_for(distributor, order_cycle).should == fees
+      end
+    end
+
+
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }
       let!(:variant) { create(:variant, product: product) }
