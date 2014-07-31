@@ -8,17 +8,23 @@
 // Foundation overrides
 .joyride-tip-guide
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
-  background-color: #d1d1d1
+  background-color: #999
   color: #1f1f1f
   @include box-shadow(0 1px 2px 0 rgba(0,0,0,0.7))
 
-  
+  .joyride-content-wrapper
+    padding: 1.125rem 1.25rem 1.5rem
+    padding: 1rem
+    margin: 1%
+    width: 98%
+    background-color: white
+
   h1, h2, h3, h4, h5, h6
     color: #1f1f1f
 
   .joyride-nub.right
     top: 40px
-    border-color: #d1d1d1 !important
+    border-color: #999 !important
     border-top-color: transparent !important
     border-right-color: transparent !important
     border-bottom-color: transparent !important
@@ -51,6 +57,8 @@
       color: white
     li.cost
       background-color: #097563
+    li:last-child
+      margin-bottom: 0.75rem
 
 
 button.graph-button
@@ -58,12 +66,18 @@ button.graph-button
   margin: 0
   @include border-radius(99999)
   display: inline
-  background: rgba(255,255,255,0.5)
+  background-color: rgba(255,255,255,0.5)
   padding: 0.2rem
-  &:hover, &:focus, &:active, &.active
-    background: $clr-brick-bright
+
+  &:focus
+    background-color: rgba(255,255,255,0.5)
     i.ofn-i-058-graph
-      color: white
+      color: #999
+
+  &:hover, &:active
+    background-color: rgba(255,255,255,1)
+    i.ofn-i-058-graph
+      color: $clr-brick-bright
 
   i.ofn-i-058-graph
     color: #999
@@ -71,6 +85,16 @@ button.graph-button
     padding: 0
     font-size: 1rem
 
+button.graph-button.open
+  background-color: #999
+  
+  &:hover, &:active, &:focus
+    background-color: #b2b2b2
+    i.ofn-i-058-graph
+      color: $clr-brick-bright
+
+  i.ofn-i-058-graph
+    color: $clr-brick
 
 
 
