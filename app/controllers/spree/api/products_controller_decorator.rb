@@ -7,6 +7,10 @@ Spree::Api::ProductsController.class_eval do
     respond_with(@products, default_template: :index)
   end
 
+  def bulk_products
+    @products = product_scope.ransack(params[:q]).result.managed_by(current_api_user).page(params[:page]).per(params[:per_page])
+    render text: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer).to_json
+  end
 
   def soft_delete
     authorize! :delete, Spree::Product

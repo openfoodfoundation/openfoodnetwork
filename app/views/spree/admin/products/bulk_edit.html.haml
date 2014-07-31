@@ -104,7 +104,7 @@
       %thead
         %tr
           %th.left-actions
-          %th{ 'ng-show' => 'columns.supplier.visible' } Supplier
+          %th{ 'ng-show' => 'columns.producer.visible' } Supplier
           %th{ 'ng-show' => 'columns.name.visible' } Name
           %th{ 'ng-show' => 'columns.unit.visible' } Unit / Value
           %th{ 'ng-show' => 'columns.unit.visible' } Display As
@@ -120,8 +120,8 @@
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
-          %td.supplier{ 'ng-show' => 'columns.supplier.visible' }
-            %select.select2{ 'ng-model' => 'product.supplier', :name => 'supplier', 'ofn-track-product' => 'supplier', 'ng-options' => 's.name for s in suppliers' }
+          %td.producer{ 'ng-show' => 'columns.producer.visible' }
+            %select.select2{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.name for producer in producers' }
           %td{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
@@ -150,7 +150,7 @@
           %td.left-actions
             %a{ :class => "variant-item icon-caret-right", 'ng-hide' => "$last" }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
-          %td{ 'ng-show' => 'columns.supplier.visible' }
+          %td{ 'ng-show' => 'columns.producer.visible' }
           %td{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
           %td.unit_value{ 'ng-show' => 'columns.unit.visible' }

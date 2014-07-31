@@ -6,7 +6,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       style: {}
 
     $scope.columns =
-      supplier:     {name: "Supplier",      visible: true}
+      producer:     {name: "Producer",      visible: true}
       name:         {name: "Name",          visible: true}
       unit:         {name: "Unit",          visible: true}
       price:        {name: "Price",         visible: true}
@@ -17,7 +17,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
     $scope.filterableColumns = [
-      { name: "Supplier",       db_column: "supplier_name" },
+      { name: "Producer",       db_column: "producer_name" },
       { name: "Name",           db_column: "name" }
     ]
 
@@ -57,21 +57,20 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
           dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
-            $scope.suppliers = data
-            # Need to have suppliers before we get products so we can match suppliers to product.supplier
+            $scope.producers = data
+            # Need to have producers before we get products so we can match producers to product.producer
             $scope.fetchProducts()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
-
     $scope.fetchProducts = -> # WARNING: returns a promise
       $scope.loading = true
       queryString = $scope.currentFilters.reduce (qs,f) ->
         return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
       , ""
-      return dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500;#{queryString}").then (data) ->
+      return dataFetcher("/api/products/bulk_products?page=1;per_page=500;#{queryString}").then (data) ->
         $scope.resetProducts data
         $scope.loading = false
 
@@ -88,15 +87,15 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.unpackProduct = (product) ->
       $scope.displayProperties ||= {}
       $scope.displayProperties[product.id] ||= showVariants: false
-      $scope.matchSupplier product
+      $scope.matchProducer product
       $scope.loadVariantUnit product
 
 
-    $scope.matchSupplier = (product) ->
-      for i of $scope.suppliers
-        supplier = $scope.suppliers[i]
-        if angular.equals(supplier, product.supplier)
-          product.supplier = supplier
+    $scope.matchProducer = (product) ->
+      for i of $scope.producers
+        producer = $scope.producers[i]
+        if angular.equals(producer.id, product.producer)
+          product.producer = producer
           break
 
 
@@ -252,7 +251,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.hasVariants = (product) ->
-      Object.keys(product.variants).length > 0
+      product.variants.length > 0
 
 
     $scope.hasUnit = (product) ->
@@ -397,8 +396,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
-        if product.hasOwnProperty("supplier")
-          filteredProduct.supplier_id = product.supplier.id
+        if product.hasOwnProperty("producer")
+          filteredProduct.supplier_id = product.producer.id
           hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price

@@ -116,6 +116,7 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
+      get :bulk_products, on: :collection
       delete :soft_delete
 
       resources :variants do
