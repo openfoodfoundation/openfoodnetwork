@@ -50,13 +50,11 @@
       %i.ofn-i_009-close 
       {{ variant.price | currency }}
 
-      %button.graph-button{"price-breakdown" => "_",
-        "variant" => "variant",
-        "ng-class" => "{open: tt_isOpen}",
-        "price-breakdown-animation" => "true",
+      -# Now in a template in app/assets/javascripts/templates !
+      %price-breakdown{"price-breakdown" => "_", variant: "variant", 
         "price-breakdown-append-to-body" => "true",
-        "price-breakdown-placement" => "left"}
-        %i.ofn-i-058-graph
+        "price-breakdown-placement" => "left",
+        "price-breakdown-animation" => true}
 
   .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
