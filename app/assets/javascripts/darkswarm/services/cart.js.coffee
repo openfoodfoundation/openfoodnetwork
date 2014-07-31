@@ -57,6 +57,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
     create_line_item: (variant)->
       variant.line_item =
         variant: variant
-        quantity: 0
+        quantity: null
         max_quantity: null
       @line_items.push variant.line_item
