@@ -1,27 +1,36 @@
 .joyride-tip-guide{bindonce: true, "ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
-  %span.joyride-nub.bottom
+  %span.joyride-nub.right
   .joyride-content-wrapper
 
     .collapsed{"ng-show" => "!expanded"}
       %price-percentage{percentage: 'variant.basePricePercentage'}
-      %a{"ng-click" => "expanded = !expanded"} Full price breakdown
+      %a{"ng-click" => "expanded = !expanded"} 
+        Full price breakdown
+        %i.ofn-i_005-caret-down
 
     .expanded{"ng-show" => "expanded"}
       %ul
-        %li
+        %li.cost
+          .right {{ variant.base_price | currency }}
           Cost
-          %span {{ variant.base_price | currency }}
         %li{"bo-if" => "variant.fees.admin"}
+          .right {{ variant.fees.admin | currency }}
           Admin fee
-          %span {{ variant.fees.admin | currency }}
         %li{"bo-if" => "variant.fees.sales"}
+          .right {{ variant.fees.sales | currency }}
           Sales fee
-          %span {{ variant.fees.sales | currency }}
         %li{"bo-if" => "variant.fees.packing"}
+          .right {{ variant.fees.packing | currency }}
           Packing fee
-          %span {{ variant.fees.packing | currency }}
         %li{"bo-if" => "variant.fees.transport"}
+          .right {{ variant.fees.transport | currency }}
           Transport fee
-          %span {{ variant.fees.transport | currency }}
-      %a{"ng-click" => "expanded = !expanded"} Price graph
-      \= {{ variant.price | currency }}
+        %li
+          %strong
+            .right = {{ variant.price | currency }}
+            &nbsp;
+
+      %a{"ng-click" => "expanded = !expanded"} 
+        Price graph
+        %i.ofn-i_006-caret-up
+      
