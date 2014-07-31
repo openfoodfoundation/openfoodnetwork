@@ -28,6 +28,8 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
       for product in @products
         if product.variants
           product.variants = (Variants.register variant for variant in product.variants)
+          variant.product = product for variant in product.variants
+        product.master.product = product
         product.master = Variants.register product.master if product.master
 
     registerVariantsWithCart: ->
