@@ -45,6 +45,12 @@ module OpenFoodNetwork
         it "returns a breakdown of fees" do
           EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {admin: 1.23, sales: 4.56, packing: 7.89, transport: 0.12}
         end
+
+        it "filters out zero fees" do
+          ef_admin.calculator.update_attribute :preferred_amount, 0
+
+          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {sales: 4.56, packing: 7.89, transport: 0.12}
+        end
       end
 
       describe "creating adjustments" do

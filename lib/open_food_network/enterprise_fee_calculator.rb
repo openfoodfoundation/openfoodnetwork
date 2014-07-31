@@ -19,7 +19,7 @@ module OpenFoodNetwork
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
         fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator
         fees
-      end
+      end.select { |fee_type, amount| amount > 0 }
     end
 
 
