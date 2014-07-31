@@ -52,7 +52,10 @@
 
       %button.graph-button{"price-breakdown" => "_",
         "variant" => "variant",
-        "price-breakdown-animation" => "true"}
+        "ng-class" => "{open: tt_isOpen}",
+        "price-breakdown-animation" => "true",
+        "price-breakdown-append-to-body" => "true",
+        "price-breakdown-placement" => "left"}
         %i.ofn-i-058-graph
 
   .small-12.medium-2.large-2.columns.total-price.text-right
