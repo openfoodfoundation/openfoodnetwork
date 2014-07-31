@@ -19,7 +19,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
-        alert "There was an error on the server! Please refresh the page"
+        # TODO what shall we do here?
 
     data: =>
       variants = {} 
