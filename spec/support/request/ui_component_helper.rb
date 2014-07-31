@@ -68,6 +68,10 @@ module UIComponentHelper
     find("#cart").click
   end
 
+  def cart_dirty
+    page.find("span.cart-span")[:class].include? 'dirty'
+  end
+
   def wait_for_ajax
     counter = 0
     while page.execute_script("return $.active").to_i > 0

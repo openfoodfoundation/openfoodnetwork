@@ -6,7 +6,8 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
   $scope.filterText =  FilterSelectorsService.filterText
   $scope.FilterSelectorsService =  FilterSelectorsService
   $scope.limit = 3
-  $scope.ordering = {order: "name"}
+  $scope.ordering = 
+    order: "primary_taxon.name"
   $scope.order_cycle = OrderCycle.order_cycle
 
   $scope.incrementLimit = ->

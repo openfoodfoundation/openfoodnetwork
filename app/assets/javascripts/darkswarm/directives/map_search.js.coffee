@@ -3,7 +3,7 @@ Darkswarm.directive 'mapSearch', ($timeout)->
   restrict: 'E'
   require: '^googleMap'
   replace: true
-  template: '<input id="pac-input"></input>' 
+  template: '<input id="pac-input" placeholder="Type in a location..."></input>' 
   link: (scope, elem, attrs, ctrl)->
     $timeout =>
       map = ctrl.getMap()

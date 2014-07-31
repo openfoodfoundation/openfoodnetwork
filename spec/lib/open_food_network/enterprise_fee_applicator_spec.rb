@@ -27,7 +27,6 @@ module OpenFoodNetwork
 
     it "creates an adjustment for an order" do
       order = create(:order)
-      #line_item = create(:line_item)
       enterprise_fee = create(:enterprise_fee)
       product = create(:simple_product)
 

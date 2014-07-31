@@ -28,6 +28,8 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
       for product in @products
         if product.variants
           product.variants = (Variants.register variant for variant in product.variants)
+          variant.product = product for variant in product.variants
+        product.master.product = product
         product.master = Variants.register product.master if product.master
 
     registerVariantsWithCart: ->
@@ -44,5 +46,5 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
           product.price = Math.min.apply(null, prices)
         product.hasVariants = product.variants?.length > 0
         
-        product.primaryImage = product.images[0]?.small_url
+        product.primaryImage = product.images[0]?.small_url if product.images
         product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"

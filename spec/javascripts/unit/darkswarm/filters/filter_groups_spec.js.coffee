@@ -2,7 +2,7 @@ describe "filtering Groups", ->
   filterGroups = null
   groups = [{
     name: "test"
-    long_description: "roger"
+    description: "roger"
     enterprises: [{
         name: "kittens"
       }, {
@@ -10,7 +10,7 @@ describe "filtering Groups", ->
       }]
     }, {
     name: "blankness"
-    long_description: "in the sky"
+    description: "in the sky"
     enterprises: [{
         name: "ponies"
       }, {

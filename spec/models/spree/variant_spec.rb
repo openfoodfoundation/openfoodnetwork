@@ -82,13 +82,28 @@ module Spree
 
 
     describe "calculating the fees" do
-      it "delegates to order cycle" do
+      it "delegates to EnterpriseFeeCalculator" do
         distributor = double(:distributor)
         order_cycle = double(:order_cycle)
         variant = Variant.new
 
-        order_cycle.should_receive(:fees_for).with(variant, distributor) { 23 }
+        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.should_receive(:fees_for).with(variant) { 23 }
+
         variant.fees_for(distributor, order_cycle).should == 23
+      end
+    end
+
+
+    describe "calculating fees broken down by fee type" do
+      it "delegates to EnterpriseFeeCalculator" do
+        distributor = double(:distributor)
+        order_cycle = double(:order_cycle)
+        variant = Variant.new
+        fees = double(:fees)
+
+        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.should_receive(:fees_by_type_for).with(variant) { fees }
+
+        variant.fees_by_type_for(distributor, order_cycle).should == fees
       end
     end
 

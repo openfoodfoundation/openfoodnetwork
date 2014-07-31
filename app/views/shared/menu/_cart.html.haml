@@ -1,4 +1,4 @@
-%span.cart-span{"ng-controller" => "CartCtrl"}
+%span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty }"}
   %a#cart.icon{cart: true}
     %span.nav-branded 
       %i.ofn-i_027-shopping-cart
