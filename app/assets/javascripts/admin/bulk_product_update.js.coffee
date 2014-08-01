@@ -1,5 +1,5 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers", "taxons",
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers", "Taxons",
   ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons) ->
     $scope.updateStatusMessage =
       text: ""
@@ -52,7 +52,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
-    $scope.$watch 'query', ->
+    $scope.$watchCollection '[query, producerFilter, categoryFilter]', ->
       $scope.limit = 15 # Reset limit whenever searching
 
     $scope.fetchProducts = -> # WARNING: returns a promise
@@ -83,15 +83,15 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.unpackProduct = (product) ->
       $scope.displayProperties ||= {}
       $scope.displayProperties[product.id] ||= showVariants: false
-      $scope.matchProducer product
+      #$scope.matchProducer product
       $scope.loadVariantUnit product
 
 
-    $scope.matchProducer = (product) ->
-      for producer in $scope.producers
-        if angular.equals(producer.id, product.producer)
-          product.producer = producer
-          break
+    # $scope.matchProducer = (product) ->
+    #   for producer in $scope.producers
+    #     if angular.equals(producer.id, product.producer)
+    #       product.producer = producer
+    #       break
 
     $scope.loadVariantUnit = (product) ->
       product.variant_unit_with_scale =

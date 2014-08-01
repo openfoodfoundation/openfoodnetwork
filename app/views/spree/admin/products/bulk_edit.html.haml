@@ -17,46 +17,31 @@
 %div{ 'ng-app' => 'ofn.admin', 'ng-controller' => 'AdminProductEditCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  %div.option_tab_titles{ :class => "sixteen columns alpha" }
-    %h6{ :class => "three columns alpha", 'ng-repeat' => "tab in optionTabs", "ng-click" => "shiftTab(tab)", "ng-class" => "tab.visible && 'selected' || !tab.visible && 'unselected'"}
-      {{ tab.title }}
-  %div.option_tabs{ :class => "sixteen columns alpha" }
-    %div.filters{ :class => "sixteen columns alpha", "ng-show" => 'optionTabs.filters.visible' }
-      %div{ :class => "four columns alpha" }
-        Column:
-        %br.clear
-        %select.fullwidth{ 'ng-model' => 'filterProperty', :id => "filter_property", 'ng-options' => 'fc.name for fc in filterableColumns', 'ofn-select2-min-search' => 10 }
-      %div{ :class => "four columns omega" }
-        Filter Type:
-        %br.clear
-        %select.fullwidth{ 'ng-model' => 'filterPredicate', :id => "filter_predicate", 'ng-options' => 'ft.name for ft in filterTypes', 'ofn-select2-min-search' => 10 }
-      %div{ :class => "six columns omega" }
-        Value:
-        %br.clear
-        %input{ :class => "four columns alpha", 'ng-model' => 'filterValue', :id => "filter_value", :type => "text", 'placeholder' => 'Filter Value' }
-      %div{ :class => "two columns omega" }
-        &nbsp;
-        %input.fullwidth{ :name => "add_filter", :value => "Apply Filter", :type => "button", "ng-click" => "addFilter({property:filterProperty,predicate:filterPredicate,value:filterValue})" }
-    %div.applied_filters{ :class => "sixteen columns alpha", "ng-show" => 'optionTabs.filters.visible && currentFilters.length > 0' }
-      %div.applied_filter{ :class => "sixteen columns alpha", 'ng-repeat' => 'filter in currentFilters' }
-        %div{ :class => "four columns alpha" }
-          {{ filter.property.name }}
-        %div{ :class => "four columns omega" }
-          {{ filter.predicate.name }}
-        %div{ :class => "six columns omega" }
-          {{ filter.value }}
-        %div{ :class => "two columns omega" }
-          %a{ :href => "#", 'ng-click' => "removeFilter(filter)" } Remove Filter
-    %hr
   %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
   %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
     %h4{ :style => 'color:red;' } No matching products found.
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
-    %div.quick_search{ :class => "five columns alpha" }
+    %div.quick_search{ :class => "four columns alpha" }
+      %label{ :for => 'quick_filter' }
+      %br
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
-    %div{ :class => "eight columns" } &nbsp;
+    .filter_select{ :class => "three columns" }
+      %label{ :for => 'producer_filter' }Producer
+      %br
+      %select{ :class => "three columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+    .filter_select{ :class => "three columns" }
+      %label{ :for => 'taxon_filter' }Category
+      %br
+      %select{ :class => "three columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in taxons'}
+    .filter_clear{ :class => "two columns omega" }
+      %label{ :for => 'clear_all_filters' }
+      %br
+      %input.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
+    %div{ :class => "one column" } &nbsp;
     %div{ :class => "three columns omega" }
+      %label{ }
+      %br
       %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
         %span{ :class => 'icon-reorder' } &nbsp; Columns
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
@@ -93,13 +78,13 @@
           %th.actions
           %th.actions
           %th.actions
-      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | filter:{producer: producerFilter}:true | filter:{category: categoryFilter}:true | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %tr.product{ :id => "p_{{product.id}}" }
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
           %td.producer{ 'ng-show' => 'columns.producer.visible' }
-            %select.select2{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.name for producer in producers' }
+            %select.select2{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.id as producer.name for producer in producers' }
           %td.name{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
