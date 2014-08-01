@@ -52,14 +52,23 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
+    $scope.$watch 'query', ->
+      $scope.limit = 15 # Reset limit whenever searching
+
     $scope.fetchProducts = -> # WARNING: returns a promise
       $scope.loading = true
       queryString = $scope.currentFilters.reduce (qs,f) ->
         return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
       , ""
-      return dataFetcher("/api/products/bulk_products?page=1;per_page=500;#{queryString}").then (data) ->
-        $scope.resetProducts data
+      return dataFetcher("/api/products/bulk_products?page=1;per_page=20;#{queryString}").then (data) ->
+        $scope.resetProducts data.products
         $scope.loading = false
+        if data.pages > 1
+          for page in [2..data.pages]
+            dataFetcher("/api/products/bulk_products?page=#{page};per_page=20;#{queryString}").then (data) ->
+              for product in data.products
+                $scope.unpackProduct product
+                $scope.products.push product
 
 
     $scope.resetProducts = (data) ->
@@ -276,7 +285,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
           filters: $scope.currentFilters
       ).success((data) ->
         DirtyProducts.clear()
-        $scope.updateVariantLists(data)
+        $scope.updateVariantLists(data.products)
         $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status

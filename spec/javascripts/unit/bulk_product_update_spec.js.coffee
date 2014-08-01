@@ -184,8 +184,7 @@ describe "filtering products for submission to database", ->
       created_at: null
       updated_at: null
       count_on_hand: 0
-      supplier_id: 5
-      supplier:
+      producer:
         id: 5
         name: "Supplier 1"
 
@@ -213,7 +212,7 @@ describe "filtering products for submission to database", ->
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
-      supplier_id: 5
+      producer: 5
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
@@ -249,38 +248,45 @@ describe "AdminProductEditCtrl", ->
   )
 
   describe "loading data upon initialisation", ->
-    it "gets a list of suppliers and then resets products with a list of data", ->
+    it "gets a list of producers and then resets products with a list of data", ->
       $httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
-      $httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of suppliers"
+      $httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of producers"
       spyOn($scope, "fetchProducts").andReturn "nothing"
       $scope.initialise "api_key"
       $httpBackend.flush()
-      expect($scope.suppliers).toEqual "list of suppliers"
+      expect($scope.producers).toEqual "list of producers"
       expect($scope.fetchProducts.calls.length).toEqual 1
       expect($scope.spree_api_key_ok).toEqual true
 
 
   describe "fetching products", ->
     it "makes a standard call to dataFetcher when no filters exist", ->
-      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond "list of products"
       $scope.fetchProducts()
 
     it "calls resetProducts after data has been received", ->
       spyOn $scope, "resetProducts"
-      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond { products: "list of products" }
       $scope.fetchProducts()
       $httpBackend.flush()
       expect($scope.resetProducts).toHaveBeenCalledWith "list of products"
+
+    it "calls makes more calls to dataFetcher if more pages exist", ->
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond { products: [], pages: 2 }
+      $httpBackend.expectGET("/api/products/bulk_products?page=2;per_page=20;").respond { products: ["list of products"] }
+      $scope.fetchProducts()
+      $httpBackend.flush()
 
     it "applies filters when they are present", ->
       filter = {property: $scope.filterableColumns[1], predicate:$scope.filterTypes[0], value:"Product1"}
       $scope.currentFilters.push filter # Don't use addFilter as that is not what we are testing
       expect($scope.currentFilters).toEqual [filter]
-      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;q[name_eq]=Product1;").respond "list of products"
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;q[name_eq]=Product1;").respond "list of products"
       $scope.fetchProducts()
+      $httpBackend.flush()
 
     it "sets the loading property to true before fetching products and unsets it when loading is complete", ->
-      $httpBackend.expectGET("/api/products/managed?template=bulk_index;page=1;per_page=500;").respond "list of products"
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond "list of products"
       $scope.fetchProducts()
       expect($scope.loading).toEqual true
       $httpBackend.flush()
@@ -324,7 +330,7 @@ describe "AdminProductEditCtrl", ->
 
   describe "preparing products", ->
     beforeEach ->
-      spyOn $scope, "matchSupplier"
+      spyOn $scope, "matchProducer"
       spyOn $scope, "loadVariantUnit"
 
     it "initialises display properties for the product", ->
@@ -333,11 +339,11 @@ describe "AdminProductEditCtrl", ->
       $scope.unpackProduct product
       expect($scope.displayProperties[123]).toEqual {showVariants: false}
 
-    it "calls matchSupplier for the product", ->
+    it "calls matchProducer for the product", ->
       product = {id: 123}
       $scope.displayProperties = {}
       $scope.unpackProduct product
-      expect($scope.matchSupplier.calls.length).toEqual 1
+      expect($scope.matchProducer.calls.length).toEqual 1
 
     it "calls loadVariantUnit for the product", ->
       product = {id: 123}
@@ -346,31 +352,19 @@ describe "AdminProductEditCtrl", ->
       expect($scope.loadVariantUnit.calls.length).toEqual 1
 
 
-  describe "matching supplier", ->
-    it "changes the supplier of the product to the one which matches it from the suppliers list", ->
-      s1_s =
-        id: 1
-        name: "S1"
-
-      s2_s =
-        id: 2
-        name: "S2"
-
-      s1_p =
-        id: 1
-        name: "S1"
-
-      expect(s1_s is s1_p).not.toEqual true
-      $scope.suppliers = [
-        s1_s
-        s2_s
+  describe "matching producer", ->
+    it "changes the producer of the product to the one which matches it from the producers list", ->
+      $scope.producers = [
+        { id: 1, name: "S1" }
+        { id: 2, name: "S2" }
       ]
+
       product =
         id: 10
-        supplier: s1_p
+        producer: 1
 
-      $scope.matchSupplier product
-      expect(product.supplier is s1_s).toEqual true
+      $scope.matchProducer product
+      expect(product.producer).toBe $scope.producers[0]
 
 
   describe "loading variant unit", ->
@@ -1059,7 +1053,7 @@ describe "AdminProductEditCtrl", ->
       $scope.cloneProduct $scope.products[0]
       $httpBackend.flush()
 
-    it "adds the newly created product to $scope.products and matches supplier", ->
+    it "adds the newly created product to $scope.products and matches producer", ->
       spyOn($scope, "unpackProduct").andCallThrough()
       $scope.products = [
         id: 13
@@ -1069,8 +1063,7 @@ describe "AdminProductEditCtrl", ->
         product:
           id: 17
           name: "new_product"
-          supplier:
-            id: 6
+          producer: 6
 
           variants: [
             id: 3
@@ -1080,8 +1073,7 @@ describe "AdminProductEditCtrl", ->
       $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
         id: 17
         name: "new_product"
-        supplier:
-          id: 6
+        producer: 6
 
         variants: [
           id: 3
@@ -1094,8 +1086,7 @@ describe "AdminProductEditCtrl", ->
         id: 17
         name: "new_product"
         variant_unit_with_scale: null
-        supplier:
-          id: 6
+        producer: 6
 
         variants: [
           id: 3
@@ -1112,8 +1103,7 @@ describe "AdminProductEditCtrl", ->
           id: 17
           name: "new_product"
           variant_unit_with_scale: null
-          supplier:
-            id: 6
+          producer: 6
 
           variants: [
             id: 3

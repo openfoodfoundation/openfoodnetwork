@@ -9,7 +9,7 @@ Spree::Api::ProductsController.class_eval do
 
   def bulk_products
     @products = product_scope.ransack(params[:q]).result.managed_by(current_api_user).page(params[:page]).per(params[:per_page])
-    render text: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer).to_json
+    render text: { products: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer), pages: @products.num_pages }.to_json
   end
 
   def soft_delete
