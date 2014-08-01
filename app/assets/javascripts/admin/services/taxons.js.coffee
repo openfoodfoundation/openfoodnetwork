@@ -1,13 +1,12 @@
-angular.module("ofn.admin").factory "Taxons", ($resource) ->
-  resource = $resource "/admin/taxons/search"
+angular.module("ofn.admin").factory "Taxons", (taxons, $filter) ->
+  new class Taxons
+    constructor: ->
+      @taxons = taxons
 
-  return {
     findByIDs: (ids) ->
-      resource.get { ids: ids }
+      taxons = []
+      taxons.push taxon for taxon in @taxons when taxon.id.toString() in ids.split(",")
+      taxons
 
     findByTerm: (term) ->
-      resource.get { q: term }
-
-    cleanTaxons: (data) ->
-      data['taxons'].map (result) -> result
-  }
+      $filter('filter')(@taxons, term)

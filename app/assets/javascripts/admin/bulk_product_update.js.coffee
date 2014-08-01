@@ -1,11 +1,9 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers",
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers", "taxons",
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
-
-    $scope.producers = producers
 
     $scope.columns =
       producer:     {name: "Producer",      visible: true}
@@ -31,6 +29,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.optionTabs =
       filters:        { title: "Filter Products",   visible: false }
 
+
+    $scope.producers = producers
+    $scope.taxons = Taxons.taxons
     $scope.products = []
     $scope.filteredProducts = []
     $scope.currentFilters = []
@@ -87,12 +88,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.matchProducer = (product) ->
-      for i of $scope.producers
-        producer = $scope.producers[i]
+      for producer in $scope.producers
         if angular.equals(producer.id, product.producer)
           product.producer = producer
           break
-
 
     $scope.loadVariantUnit = (product) ->
       product.variant_unit_with_scale =

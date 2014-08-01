@@ -239,6 +239,7 @@ describe "AdminProductEditCtrl", ->
     module "ofn.admin"
     module ($provide)->
       $provide.value "producers", []
+      $provide.value "taxons", []
       null
 
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _DirtyProducts_) ->

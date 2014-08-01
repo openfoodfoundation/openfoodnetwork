@@ -7,7 +7,6 @@ class Spree::Api::ProductSerializer < ActiveModel::Serializer
   has_many :variants, key: :variants, serializer: Spree::Api::VariantSerializer # embed: ids
   has_one :master, serializer: Spree::Api::VariantSerializer
   
-  # Infinity is not a valid JSON object, but Rails encodes it anyway
   def taxon_ids
     object.taxons.map{ |t| t.id }.join(",")
   end
