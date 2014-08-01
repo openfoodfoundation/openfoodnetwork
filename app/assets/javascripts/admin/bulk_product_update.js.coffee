@@ -28,7 +28,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
     $scope.optionTabs =
       filters:        { title: "Filter Products",   visible: false }
-      column_toggle:  { title: "Toggle Columns",    visible: false }
 
     $scope.products = []
     $scope.filteredProducts = []
@@ -277,7 +276,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
           filters: $scope.currentFilters
       ).success((data) ->
         DirtyProducts.clear()
-        #$scope.updateVariantLists(data)
+        $scope.updateVariantLists(data)
         $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
         $scope.displayFailure "Server returned with error status: " + status

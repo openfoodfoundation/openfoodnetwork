@@ -4,7 +4,7 @@ class Spree::Api::ProductSerializer < ActiveModel::Serializer
   attributes :taxon_ids, :on_hand, :price, :available_on, :permalink_live
   
   has_one :supplier, key: :producer, embed: :id
-  has_many :variants, key: :variants, embed: :ids#, serializer: Spree::Api::VariantSerializer
+  has_many :variants, key: :variants, serializer: Spree::Api::VariantSerializer # embed: ids
   has_one :master, serializer: Spree::Api::VariantSerializer
   
   # Infinity is not a valid JSON object, but Rails encodes it anyway

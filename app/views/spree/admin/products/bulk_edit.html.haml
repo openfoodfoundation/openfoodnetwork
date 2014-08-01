@@ -46,10 +46,6 @@
           {{ filter.value }}
         %div{ :class => "two columns omega" }
           %a{ :href => "#", 'ng-click' => "removeFilter(filter)" } Remove Filter
-    %div.column_toggle{ :class => "sixteen columns alpha", "ng-show" => 'optionTabs.column_toggle.visible' }
-      %ul.column-list{ :class => "sixteen columns alpha" }
-        %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
-          {{ column.name }}
     %hr
   %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
@@ -60,33 +56,41 @@
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
     %div.quick_search{ :class => "five columns omega" }
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
-    %div.spacer{ :class => "nine columns omega" } &nbsp;
+    %div{ :class => "eight columns" } &nbsp;
+    %div{ :class => "three columns omega" }
+      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
+        %span{ :class => 'icon-reorder' } &nbsp; Columns
+        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+        %div.menu{ 'ng-show' => "expanded" }
+          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+            %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+            %span{ :class => 'two columns omega' } {{column.name }}
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup
-        %col
-        %col
-        %col{'style' => 'width: 20%;'}
-        %col{'style' => 'width: 12%;'}
-        %col{'style' => 'width: 12%;'}
-        %col{'style' => 'width: 12%;'}
-        %col
-        %col
-        %col
-        %col
-        %col
-        %col
+        %col.actions
+        %col.producer{ 'style' => 'width: 14%;', 'ng-show' => 'columns.producer.visible' }
+        %col.name{ 'style' => 'width: 20%;', 'ng-show' => 'columns.name.visible' }
+        %col.unit{ 'style' => 'width: 14%;', 'ng-show' => 'columns.unit.visible' }
+        %col.display_as{ 'style' => 'width: 12%;', 'ng-show' => 'columns.unit.visible' }
+        %col.price{ 'style' => 'width: 10%;', 'ng-show' => 'columns.price.visible'}
+        %col.on_hand{ 'style' => 'width: 10%;', 'ng-show' => 'columns.on_hand.visible' }
+        %col.taxons{ 'ng-show' => 'columns.taxons.visible' }
+        %col.available_on{ 'ng-show' => 'columns.available_on.visible' }
+        %col.actions
+        %col.actions
+        %col.actions
 
       %thead
         %tr
           %th.left-actions
-          %th{ 'ng-show' => 'columns.producer.visible' } Supplier
-          %th{ 'ng-show' => 'columns.name.visible' } Name
-          %th{ 'ng-show' => 'columns.unit.visible' } Unit / Value
-          %th{ 'ng-show' => 'columns.unit.visible' } Display As
-          %th{ 'ng-show' => 'columns.price.visible' } Price
-          %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
-          %th{ 'ng-show' => 'columns.taxons.visible' } Taxons
-          %th{ 'ng-show' => 'columns.available_on.visible' } Av. On
+          %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
+          %th.name{ 'ng-show' => 'columns.name.visible' } Name
+          %th.unit{ 'ng-show' => 'columns.unit.visible' } Unit / Value
+          %th.display_as{ 'ng-show' => 'columns.unit.visible' } Display As
+          %th.price{ 'ng-show' => 'columns.price.visible' } Price
+          %th.on_hand{ 'ng-show' => 'columns.on_hand.visible' } On Hand
+          %th.taxons{ 'ng-show' => 'columns.taxons.visible' } Taxons
+          %th.available_on{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
           %th.actions
           %th.actions
@@ -97,7 +101,7 @@
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
           %td.producer{ 'ng-show' => 'columns.producer.visible' }
             %select.select2{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.name for producer in producers' }
-          %td{ 'ng-show' => 'columns.name.visible' }
+          %td.name{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
@@ -106,14 +110,14 @@
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
           %td.display_as{ 'ng-show' => 'columns.unit.visible' }
             %input{ 'ofn-display-as' => 'product.master', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
-          %td{ 'ng-show' => 'columns.price.visible' }
+          %td.price{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
-          %td{ 'ng-show' => 'columns.on_hand.visible' }
+          %td.on_hand{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
           %td{ 'ng-if' => 'columns.taxons.visible' }
             %input.fullwidth{ :type => 'text', 'ng-model' => 'product.taxon_ids', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'taxon_ids' }
-          %td{ 'ng-show' => 'columns.available_on.visible' }
+          %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
@@ -121,7 +125,7 @@
             %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
           %td.actions
             %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
-        %tr.variant{ 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+        %tr.variant{ :id => "v_{{variant.id}}", 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
           %td.left-actions
             %a{ :class => "variant-item icon-caret-right", 'ng-hide' => "$last" }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
