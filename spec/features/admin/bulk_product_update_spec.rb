@@ -28,14 +28,6 @@ feature %q{
       expect(page).to have_text "No matching products found."
     end
 
-    pending "displays a message when number of products is too great" do
-      501.times { FactoryGirl.create(:simple_product) }
-
-      visit '/admin/products/bulk_edit'
-
-      expect(page).to have_text "Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products"
-    end
-
     it "displays a select box for suppliers, with the appropriate supplier selected" do
       s1 = FactoryGirl.create(:supplier_enterprise)
       s2 = FactoryGirl.create(:supplier_enterprise)

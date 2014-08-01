@@ -51,9 +51,7 @@
     %h4 Loading Products...
   %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
     %h4{ :style => 'color:red;' } No matching products found.
-  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length >= 500' }
-    %h6 Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products
-  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length >= 500 || products.length == 0' }
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
     %div.quick_search{ :class => "five columns alpha" }
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
     %div{ :class => "eight columns" } &nbsp;
