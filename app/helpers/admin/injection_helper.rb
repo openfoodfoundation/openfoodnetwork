@@ -12,6 +12,10 @@ module Admin
       admin_inject_json_ams_array "admin.shipping_methods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_producers
+      admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
+    end
+
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
       json = serializer.new(data).to_json
       render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}

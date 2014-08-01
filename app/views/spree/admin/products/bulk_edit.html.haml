@@ -12,7 +12,7 @@
 %div#new_product(data-hook)
 
 
-
+=admin_inject_producers
 %div{ 'ng-app' => 'ofn.admin', 'ng-controller' => 'AdminProductEditCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}

@@ -237,6 +237,10 @@ describe "AdminProductEditCtrl", ->
 
   beforeEach ->
     module "ofn.admin"
+    module ($provide)->
+      $provide.value "producers", []
+      null
+
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _DirtyProducts_) ->
     $scope = $rootScope.$new()
     $ctrl = _$controller_
@@ -250,11 +254,9 @@ describe "AdminProductEditCtrl", ->
   describe "loading data upon initialisation", ->
     it "gets a list of producers and then resets products with a list of data", ->
       $httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
-      $httpBackend.expectGET("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").respond "list of producers"
       spyOn($scope, "fetchProducts").andReturn "nothing"
       $scope.initialise "api_key"
       $httpBackend.flush()
-      expect($scope.producers).toEqual "list of producers"
       expect($scope.fetchProducts.calls.length).toEqual 1
       expect($scope.spree_api_key_ok).toEqual true
 

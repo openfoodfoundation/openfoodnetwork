@@ -1,5 +1,5 @@
 Spree::Admin::ProductsController.class_eval do
-  before_filter :load_spree_api_key, :only => :bulk_edit
+  before_filter :load_bpe_data, :only => :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -78,8 +78,9 @@ Spree::Admin::ProductsController.class_eval do
 
   private
 
-  def load_spree_api_key
+  def load_bpe_data
     current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
     @spree_api_key = spree_current_user.spree_api_key
+    @producers = Enterprise.managed_by(spree_current_user).is_primary_producer
   end
 end

@@ -1,9 +1,11 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager",
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers",
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
+
+    $scope.producers = producers
 
     $scope.columns =
       producer:     {name: "Producer",      visible: true}
@@ -43,10 +45,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
-          dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
-            $scope.producers = data
-            # Need to have producers before we get products so we can match producers to product.producer
-            $scope.fetchProducts()
+          $scope.fetchProducts()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
