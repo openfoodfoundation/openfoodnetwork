@@ -1,8 +1,20 @@
 @import mixins
+@import branding
 
 // .darkswarm
 //   product
 
+ordercycle
+  .joyride-tip-guide 
+    background-color: $clr-brick
+    .joyride-nub.right
+      border-color: $clr-brick !important
+      border-top-color: transparent !important
+      border-right-color: transparent !important
+      border-bottom-color: transparent !important
+    p
+      margin: 0
+      font-weight: 700
 
 // Pop over
 // Foundation overrides
@@ -64,7 +76,7 @@
 button.graph-button
   padding: 0
   margin: 0
-  @include border-radius(99999)
+  @include border-radius(99999rem)
   display: inline
   background-color: rgba(255,255,255,0.5)
   padding: 0.2rem
