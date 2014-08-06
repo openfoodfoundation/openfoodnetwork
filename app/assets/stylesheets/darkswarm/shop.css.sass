@@ -38,6 +38,11 @@
       display: block
       color: #444
 
+      &:hover, &:focus, &:active
+        border-bottom: 1px solid $clr-brick-med-bright
+        border-top: 1px solid $clr-brick-med-bright
+        @include box-shadow(0 0 5px 0 #f5c4c9)
+
       // BULK
       .bulk-buy
         font-size: 0.875rem
