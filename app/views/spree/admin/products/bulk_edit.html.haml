@@ -29,11 +29,11 @@
     .filter_select{ :class => "three columns" }
       %label{ :for => 'producer_filter' }Producer
       %br
-      %select{ :class => "three columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+      %select{ :class => "three columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in filterProducers' }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'taxon_filter' }Category
       %br
-      %select{ :class => "three columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in taxons'}
+      %select{ :class => "three columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in filterTaxons'}
     .filter_clear{ :class => "two columns omega" }
       %label{ :for => 'clear_all_filters' }
       %br
@@ -78,7 +78,7 @@
           %th.actions
           %th.actions
           %th.actions
-      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | filter:{producer: producerFilter}:true | filter:{category: categoryFilter}:true | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
         %tr.product{ :id => "p_{{product.id}}" }
           %td.left-actions
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }

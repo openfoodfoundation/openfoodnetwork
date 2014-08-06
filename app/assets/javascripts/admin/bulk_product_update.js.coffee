@@ -32,6 +32,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
     $scope.producers = producers
     $scope.taxons = Taxons.taxons
+    $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
+    $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
+    $scope.producerFilter = "0"
+    $scope.categoryFilter = "0"
     $scope.products = []
     $scope.filteredProducts = []
     $scope.currentFilters = []
@@ -148,29 +152,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       tab.visible = !tab.visible
       $scope.visibleTab = tab
 
-    $scope.addFilter = (filter) ->
-      existingfilterIndex = $scope.indexOfFilter filter
-      if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
-        if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
-          if existingfilterIndex == -1
-            $scope.currentFilters.push filter
-            $scope.fetchProducts()
-          else if confirm("'#{filter.predicate.name}' filter already exists on column '#{filter.property.name}'. Replace it?")
-            $scope.currentFilters[existingfilterIndex] = filter
-            $scope.fetchProducts()
-      else
-        alert("Please ensure all filter fields are filled in before adding a filter.")
-
-    $scope.removeFilter = (filter) ->
-      index = $scope.currentFilters.indexOf(filter)
-      if index != -1
-        $scope.currentFilters.splice index, 1
-        $scope.fetchProducts()
-
-    $scope.indexOfFilter = (filter) ->
-      for existingFilter, i in $scope.currentFilters
-        return i if filter.property == existingFilter.property && filter.predicate == existingFilter.predicate
-      return -1
+    $scope.resetSelectFilters = ->
+      $scope.query = ""
+      $scope.producerFilter = "0"
+      $scope.categoryFilter = "0"
 
     $scope.editWarn = (product, variant) ->
       if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)

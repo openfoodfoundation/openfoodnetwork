@@ -1094,94 +1094,15 @@ describe "AdminProductEditCtrl", ->
 
 
   describe "filtering products", ->
-    describe "adding a filter to the filter list", ->
-      filterObject1 = filterObject2 = null
-
-      beforeEach ->
-        spyOn($scope, "fetchProducts").andReturn "nothing"
-        spyOn(DirtyProducts, "count").andReturn 0
-        filterObject1 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "value1"}
-        filterObject2 = {property: $scope.filterableColumns[1], predicate: $scope.filterTypes[1], value: "value2"}
-        $scope.addFilter filterObject1
-        $scope.addFilter filterObject2
-
-      it "adds objects sent to addFilter() to $scope.currentFilters", ->
-        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-      it "ignores objects sent to addFilter() which do not contain a 'property' with a corresponding key in filterableColumns", ->
-        filterObject3 = {property: "some_random_property", predicate: $scope.filterTypes[0], value: "value3"}
-        $scope.addFilter filterObject3
-        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-      it "ignores objects sent to addFilter() which do not contain a query with a corresponding key in filterTypes", ->
-        filterObject3 = {property: $scope.filterableColumns[0], predicate: "something", value: "value3"}
-        $scope.addFilter filterObject3
-        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-      it "ignores objects sent to addFilter() which have a blank 'value' property", ->
-        filterObject3 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[1], value: ""}
-        $scope.addFilter filterObject3
-        expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-      it "calls fetchProducts when adding a new filter", ->
-        expect($scope.fetchProducts.calls.length).toEqual(2)
-
-      describe "when unsaved products exist", ->
-        beforeEach ->
-          filterObject3 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[1], value: "value3"}
-          spyOn(window, "confirm").andReturn false
-          DirtyProducts.count.andReturn 1
-          $scope.addFilter filterObject3
-
-        it "it does not call fetchProducts", ->
-          expect($scope.fetchProducts.calls.length).toEqual(2)
-
-        it "does not add the filter to $scope.currentFilters", ->
-          expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-        it "asks the user to save changes before proceeding", ->
-          expect(window.confirm).toHaveBeenCalledWith "Unsaved changes will be lost. Continue anyway?"
-
-      describe "when a filter on the same property and predicate already exists", ->
-        filterObject3 = null
-
-        beforeEach ->
-          filterObject3 = { property: filterObject2.property, predicate: filterObject2.predicate, value: "new value" }
-
-        it "asks the user for permission before proceeding", ->
-          spyOn(window, "confirm").andReturn true
-          $scope.addFilter filterObject3
-          expect(window.confirm).toHaveBeenCalledWith "'#{filterObject3.predicate.name}' filter already exists on column '#{filterObject3.property.name}'. Replace it?"
-
-        it "replaces the filter in $scope.currentFilters when user clicks OK", ->
-          spyOn(window, "confirm").andReturn true
-          $scope.addFilter filterObject3
-          expect($scope.currentFilters).toEqual [filterObject1, filterObject3]
-
-        it "does not add the filter to $scope.currentFilters when user clicks cancel", ->
-          spyOn(window, "confirm").andReturn false
-          $scope.addFilter filterObject3
-          expect($scope.currentFilters).toEqual [filterObject1, filterObject2]
-
-    describe "removing a filter from the filter list", ->
-      filterObject1 = filterObject2 = null
-
-      beforeEach ->
-        spyOn($scope, "fetchProducts").andReturn "nothing"
-        filterObject1 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "Product1"}
-        filterObject2 = {property: $scope.filterableColumns[0], predicate: $scope.filterTypes[0], value: "Product2"}
-        $scope.currentFilters = [ filterObject1, filterObject2 ]
-
-      it "removes the specified filter from $scope.currentFilters and calls fetchProducts", ->
-        $scope.removeFilter filterObject1
-        expect($scope.currentFilters).toEqual [ filterObject2 ]
-        expect($scope.fetchProducts.calls.length).toEqual 1
-
-      it "ignores filters which do not exist in currentFilters", ->
-        filterObject3 = {property: $scope.filterableColumns[1], predicate: $scope.filterTypes[1], value: "SomethingElse"}
-        $scope.removeFilter filterObject3
-        expect($scope.currentFilters).toEqual [ filterObject1, filterObject2 ]
-        expect($scope.fetchProducts.calls.length).toEqual 0
+    describe "clearing filters", ->
+      it "resets filter variables", ->
+        $scope.query = "lala"
+        $scope.producerFilter = "5"
+        $scope.categoryFilter = "6"
+        $scope.resetSelectFilters()
+        expect($scope.query).toBe ""
+        expect($scope.producerFilter).toBe "0"
+        expect($scope.categoryFilter).toBe "0"
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

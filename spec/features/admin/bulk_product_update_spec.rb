@@ -555,7 +555,9 @@ feature %q{
 
         expect(page).to have_selector "a.delete-product", :count => 3
 
-        first("a.delete-product").click
+        within "tr#p_#{p1.id}" do
+          first("a.delete-product").click
+        end
 
         expect(page).to have_selector "a.delete-product", :count => 2
 
@@ -576,7 +578,9 @@ feature %q{
 
         expect(page).to have_selector "a.delete-variant", :count => 3
 
-        first("a.delete-variant").click
+        within "tr#v_#{v1.id}" do
+          first("a.delete-variant").click
+        end
         
         expect(page).to have_selector "a.delete-variant", :count => 2
 
@@ -599,7 +603,9 @@ feature %q{
 
         expect(page).to have_selector "a.edit-product", :count => 3
 
-        first("a.edit-product").click
+        within "tr#p_#{p1.id}" do
+          first("a.edit-product").click
+        end
 
         URI.parse(current_url).path.should == "/admin/products/#{p1.permalink}/edit"
       end
@@ -668,7 +674,7 @@ feature %q{
         expect(page).to have_selector "th", :text => "ON HAND"
         expect(page).to have_selector "th", :text => "AV. ON"
 
-        first("div#columns_dropdown div.menu div.menu_item", text: /.{0,1}Producer/).click
+        first("div#columns_dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -696,11 +702,19 @@ feature %q{
         expect(page).to have_field "product_name", with: p1.name
         expect(page).to have_field "product_name", with: p2.name
 
+        # Set a filter
         select2_select s1.name, from: "producer_filter"
 
         # Products are hidden when filtered out
         expect(page).to have_field "product_name", with: p1.name
         expect(page).to have_no_field "product_name", with: p2.name
+
+        # Clearing filters
+        click_button "Clear All"
+
+        # All products are shown again
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_field "product_name", with: p2.name
       end
     end
   end
