@@ -524,19 +524,16 @@ feature %q{
   end
 
   scenario "updating when a filter has been applied" do
-    p1 = FactoryGirl.create(:simple_product, :name => "product1")
-    p2 = FactoryGirl.create(:simple_product, :name => "product2")
+    s1 = create(:supplier_enterprise)
+    s2 = create(:supplier_enterprise)
+    p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
+    p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
 
-    expect(page).to have_selector "div.option_tab_titles h6", :text => "Filter Products"
-    first("div.option_tab_titles h6", :text => "Filter Products").click
+    select2_select s1.name, from: "producer_filter"
 
-    select2_select "Name", from: "filter_property"
-    select2_select "Contains", from: "filter_predicate"
-    fill_in "filter_value", :with => "1"
-    click_button "Apply Filter"
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
 
@@ -682,63 +679,28 @@ feature %q{
     end
 
     describe "using filtering controls" do
-      it "displays basic filtering controls" do
-        FactoryGirl.create(:simple_product)
-
+      it "displays basic filtering controls which filter the product list" do
+        s1 = create(:supplier_enterprise)
+        s2 = create(:supplier_enterprise)
+        p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
+        p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
         login_to_admin_section
+
         visit '/admin/products/bulk_edit'
 
-        expect(page).to have_selector "div.option_tab_titles h6", :text => "Filter Products"
-        first("div.option_tab_titles h6", :text => "Filter Products").click
+        # Page shows the filter controls
+        expect(page).to have_select "producer_filter", visible: false
+        expect(page).to have_select "category_filter", visible: false
 
-        expect(page).to have_select "filter_property", visible: false
-        expect(page).to have_select "filter_predicate", visible: false
-        expect(page).to have_field "filter_value"
-      end
+        # All products are shown when no filter is selected
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_field "product_name", with: p2.name
 
-      describe "clicking the 'Apply Filter' Button" do
-        before(:each) do
-          FactoryGirl.create(:simple_product, :name => "Product1")
-          FactoryGirl.create(:simple_product, :name => "Product2")
+        select2_select s1.name, from: "producer_filter"
 
-          login_to_admin_section
-          visit '/admin/products/bulk_edit'
-
-          first("div.option_tab_titles h6", :text => "Filter Products").click
-
-          select2_select "Name", :from => "filter_property"
-          select2_select "Equals", :from => "filter_predicate"
-          fill_in "filter_value", :with => "Product1"
-          click_button "Apply Filter"
-        end
-
-        it "adds a new filter to the list of applied filters" do
-          expect(page).to have_text "Name Equals Product1"
-        end
-
-        it "displays the 'loading' splash" do
-          expect(page).to have_selector "div.loading", :text => "Loading Products..."
-        end
-
-        it "loads appropriate products" do
-          expect(page).to have_field "product_name", :with => "Product1"
-          expect(page).to have_no_field "product_name", :with => "Product2"
-        end
-
-        describe "clicking the 'Remove Filter' link" do
-          before(:each) do
-            find("a", text: "Remove Filter").click
-          end
-
-          it "removes the filter from the list of applied filters" do
-            expect(page).to have_no_text "Name Equals Product1"
-          end
-
-          it "loads appropriate products" do
-            expect(page).to have_field "product_name", :with => "Product1"
-            expect(page).to have_field "product_name", :with => "Product2"
-          end
-        end
+        # Products are hidden when filtered out
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_no_field "product_name", with: p2.name
       end
     end
   end
