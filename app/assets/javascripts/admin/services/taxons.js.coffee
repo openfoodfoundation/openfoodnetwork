@@ -4,9 +4,7 @@ angular.module("ofn.admin").factory "Taxons", (taxons, $filter) ->
       @taxons = taxons
 
     findByIDs: (ids) ->
-      taxons = []
-      taxons.push taxon for taxon in @taxons when taxon.id.toString() in ids.split(",")
-      taxons
+      taxon for taxon in @taxons when taxon.id in ids.split(",")
 
     findByTerm: (term) ->
       $filter('filter')(@taxons, term)

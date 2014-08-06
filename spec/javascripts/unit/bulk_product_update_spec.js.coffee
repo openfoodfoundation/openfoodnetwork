@@ -333,7 +333,6 @@ describe "AdminProductEditCtrl", ->
 
   describe "preparing products", ->
     beforeEach ->
-      spyOn $scope, "matchProducer"
       spyOn $scope, "loadVariantUnit"
 
     it "initialises display properties for the product", ->
@@ -342,32 +341,11 @@ describe "AdminProductEditCtrl", ->
       $scope.unpackProduct product
       expect($scope.displayProperties[123]).toEqual {showVariants: false}
 
-    it "calls matchProducer for the product", ->
-      product = {id: 123}
-      $scope.displayProperties = {}
-      $scope.unpackProduct product
-      expect($scope.matchProducer.calls.length).toEqual 1
-
     it "calls loadVariantUnit for the product", ->
       product = {id: 123}
       $scope.displayProperties = {}
       $scope.unpackProduct product
       expect($scope.loadVariantUnit.calls.length).toEqual 1
-
-
-  describe "matching producer", ->
-    it "changes the producer of the product to the one which matches it from the producers list", ->
-      $scope.producers = [
-        { id: 1, name: "S1" }
-        { id: 2, name: "S2" }
-      ]
-
-      product =
-        id: 10
-        producer: 1
-
-      $scope.matchProducer product
-      expect(product.producer).toBe $scope.producers[0]
 
 
   describe "loading variant unit", ->
@@ -1264,28 +1242,3 @@ describe "converting arrays of objects with ids to an object with ids as keys", 
 
     expect(toObjectWithIDKeys).toHaveBeenCalledWith [id: 17]
     expect(toObjectWithIDKeys).not.toHaveBeenCalledWith {12: {id: 12}}
-
-describe "Taxons service", ->
-  Taxons = $httpBackend = $resource = null
-
-  beforeEach ->
-    module "ofn.admin"
-
-  beforeEach inject (_Taxons_, _$resource_, _$httpBackend_) ->
-    Taxons = _Taxons_
-    $resource = _$resource_
-    $httpBackend = _$httpBackend_
-
-  it "calling findByIDs makes a http request", ->
-    response = { taxons: "list of taxons by id" }
-    $httpBackend.expectGET("/admin/taxons/search?ids=1,2").respond 200, response
-    taxons = Taxons.findByIDs("1,2")
-    $httpBackend.flush()
-    expect(angular.equals(taxons,response)).toBe true
-
-  it "calling findByTerm makes a http request", ->
-    response = { taxons: "list of taxons by term" }
-    $httpBackend.expectGET("/admin/taxons/search?q=lala").respond 200, response
-    taxons = Taxons.findByTerm("lala")
-    $httpBackend.flush()
-    expect(angular.equals(taxons,response)).toBe true
