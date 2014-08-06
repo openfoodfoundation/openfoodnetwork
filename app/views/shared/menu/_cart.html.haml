@@ -36,5 +36,5 @@
             .columns.small-6.text-right
               %strong {{ Cart.total()  | currency }}        
 
-        .text-right
-          %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
+      .text-right
+        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
