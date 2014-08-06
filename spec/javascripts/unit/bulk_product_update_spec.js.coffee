@@ -184,9 +184,7 @@ describe "filtering products for submission to database", ->
       created_at: null
       updated_at: null
       count_on_hand: 0
-      producer:
-        id: 5
-        name: "Supplier 1"
+      producer: 5
 
       group_buy: null
       group_buy_unit_size: null
@@ -212,7 +210,7 @@ describe "filtering products for submission to database", ->
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
-      producer: 5
+      supplier_id: 5
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'

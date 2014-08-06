@@ -394,7 +394,7 @@ filterSubmitProducts = (productsToFilter) ->
           filteredProduct.name = product.name
           hasUpdatableProperty = true
         if product.hasOwnProperty("producer")
-          filteredProduct.supplier_id = product.producer.id
+          filteredProduct.supplier_id = product.producer
           hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
