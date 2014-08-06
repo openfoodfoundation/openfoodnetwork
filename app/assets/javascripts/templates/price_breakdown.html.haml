@@ -11,7 +11,7 @@
       %ul
         %li.cost
           .right {{ variant.base_price | currency }}
-          Cost
+          Item cost
         %li{"bo-if" => "variant.fees.admin"}
           .right {{ variant.fees.admin | currency }}
           Admin fee
