@@ -4,7 +4,7 @@
   - content_for :order_cycle_form do
     %closing Your shopping cart
     %p 
-      Order ready on
+      Order ready for
       %strong
         - if @order.order_cycle
           = pickup_time @order.order_cycle 
