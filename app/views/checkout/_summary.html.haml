@@ -17,11 +17,11 @@
         %tr
           %th Total 
           %td.text-right {{ Checkout.cartTotal() | currency }}
-        - if current_order.price_adjustment_totals.present?
-          - current_order.price_adjustment_totals.each do |label, total|
-            %tr
-              %th= label
-              %td= total
+        / - if current_order.price_adjustment_totals.present?
+        /   - current_order.price_adjustment_totals.each do |label, total|
+        /     %tr
+        /       %th= label
+        /       %td= total
 
       //= f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url} 
