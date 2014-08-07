@@ -1,17 +1,30 @@
 module CheckoutHelper
   def checkout_adjustments_for_summary(order, opts={})
     adjustments = order.adjustments.eligible
+    exclude = opts[:exclude] || {}
 
     # Remove empty tax adjustments and (optionally) shipping fees
     adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
-    adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if opts[:exclude_shipping]
+    adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if exclude.include? :shipping
 
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' }
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' }
-    adjustments << Spree::Adjustment.new(label: 'Distribution', amount: enterprise_fee_adjustments.sum(&:amount))
+    unless exclude.include? :distribution
+      adjustments << Spree::Adjustment.new(label: 'Distribution', amount: enterprise_fee_adjustments.sum(&:amount))
+    end
 
     adjustments
   end
+
+  def checkout_adjustments_total(order)
+    adjustments = checkout_adjustments_for_summary(order, exclude: [:shipping])
+    adjustments.sum &:display_amount
+  end
+
+  def checkout_cart_total_with_adjustments(order)
+    current_order.display_item_total.money.to_f + checkout_adjustments_total(current_order).money.to_f
+  end
+
 
   def validated_input(name, path, args = {})
     attributes = {
