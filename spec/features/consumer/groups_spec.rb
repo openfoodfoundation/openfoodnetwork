@@ -17,5 +17,6 @@ feature 'Groups', js: true do
     page.should have_content enterprise.name
     open_enterprise_modal enterprise
     modal_should_be_open_for enterprise
+    page.should have_content "Herndon, Vic"
   end
 end
