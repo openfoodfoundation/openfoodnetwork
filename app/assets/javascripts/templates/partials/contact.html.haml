@@ -4,11 +4,11 @@
     %p{"ng-if" => "enterprise.phone"}
       {{ enterprise.phone }}
 
-    %p{"ng-if" => "enterprise.email"}
+    %p.word-wrap{"ng-if" => "enterprise.email"}
       %a{"ng-href" => "{{enterprise.email | stripUrl}}", target: "_blank", mailto: true}
         %span.email
           {{ enterprise.email | stripUrl }}
 
-    %p{"ng-if" => "enterprise.website"}
+    %p.word-wrap{"ng-if" => "enterprise.website"}
       %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
         {{ enterprise.website | stripUrl }}
