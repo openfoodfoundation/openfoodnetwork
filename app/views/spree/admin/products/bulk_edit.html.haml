@@ -15,33 +15,38 @@
 =admin_inject_producers
 =admin_inject_taxons
 %div{ 'ng-app' => 'ofn.admin', 'ng-controller' => 'AdminProductEditCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
+  %div.sixteen.columns.alpha
+    %div.quick_search{ :class => "four columns alpha" }
+      %label{ :for => 'quick_filter' }
+      %br
+      %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
+    .filter_select{ :class => "four columns" }
+      %label{ :for => 'producer_filter' }Producer
+      %br
+      %select{ :class => "four columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in filterProducers' }
+    .filter_select{ :class => "four columns" }
+      %label{ :for => 'taxon_filter' }Category
+      %br
+      %select{ :class => "four columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in filterTaxons'}
+    %div{ :class => "one column" } &nbsp;
+    .filter_clear{ :class => "three columns omega" }
+      %label{ :for => 'clear_all_filters' }
+      %br
+      %input.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear Filters", 'ng-click' => "resetSelectFilters()" }
+  %hr.sixteen.columns.alpha
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
   %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
   %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
     %h4{ :style => 'color:red;' } No matching products found.
-  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
-    %div.quick_search{ :class => "four columns alpha" }
-      %label{ :for => 'quick_filter' }
-      %br
-      %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
-    .filter_select{ :class => "three columns" }
-      %label{ :for => 'producer_filter' }Producer
-      %br
-      %select{ :class => "three columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in filterProducers' }
-    .filter_select{ :class => "three columns" }
-      %label{ :for => 'taxon_filter' }Category
-      %br
-      %select{ :class => "three columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in filterTaxons'}
-    .filter_clear{ :class => "two columns omega" }
-      %label{ :for => 'clear_all_filters' }
-      %br
-      %input.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
-    %div{ :class => "one column" } &nbsp;
-    %div{ :class => "three columns omega" }
-      %label{ }
-      %br
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0', style: "margin-bottom: 10px" }
+    %div.four.columns.alpha
+      %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
+    %div.nine.columns
+      %div{ id: "update-status-message", ng: { style: 'updateStatusMessage.style' } }
+        {{ updateStatusMessage.text || "&nbsp;" }}
+    %div.three.columns.omega
       %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
         %span{ :class => 'icon-reorder' } &nbsp; Columns
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
@@ -49,6 +54,7 @@
           %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
             %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
             %span{ :class => 'two columns omega' } {{column.name }}
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup
         %col.actions
@@ -132,6 +138,3 @@
           %td.actions
           %td.actions
             %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
-    %input{ :type => 'button', :value => 'Update', 'ng-click' => 'submitProducts()'}
-    %span{ id: "update-status-message", 'ng-style' => 'updateStatusMessage.style' }
-      {{ updateStatusMessage.text }}

@@ -322,19 +322,19 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.displayUpdating = ->
-      $scope.setMessage $scope.updateStatusMessage, "Updating...",
+      $scope.setMessage $scope.updateStatusMessage, "Saving...",
         color: "orange"
       , false
 
 
     $scope.displaySuccess = ->
-      $scope.setMessage $scope.updateStatusMessage, "Update complete",
+      $scope.setMessage $scope.updateStatusMessage, "Changes Saved.",
         color: "green"
       , 3000
 
 
     $scope.displayFailure = (failMessage) ->
-      $scope.setMessage $scope.updateStatusMessage, "Updating failed. " + failMessage,
+      $scope.setMessage $scope.updateStatusMessage, "Saving failed. " + failMessage,
         color: "red"
       , 10000
 
