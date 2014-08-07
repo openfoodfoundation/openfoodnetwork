@@ -83,7 +83,7 @@ button.graph-button
   @include border-radius(999rem)
   display: inline
   background-color: rgba(255,255,255,0.5)
-  padding: 5px
+  padding: 5px   
 
   &:hover, &:active, &:focus
     background-color: rgba(255,255,255,1)
@@ -95,6 +95,11 @@ button.graph-button
     margin: 0
     padding: 0
     font-size: 1rem
+
+  @media all and (max-width: 640px) 
+    padding: 3px
+    i.ofn-i-058-graph
+      font-size: 0.75rem 
 
 button.graph-button.open
   @include box-shadow(inset 0 1px 1px 0 rgba(0,0,0,0.35))
