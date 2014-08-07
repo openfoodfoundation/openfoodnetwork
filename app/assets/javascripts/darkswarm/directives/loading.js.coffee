@@ -1,4 +1,5 @@
 Darkswarm.directive "loading", (Loading)->
+  # Triggers a screen-wide "loading" thing when Ajaxy stuff is happening
   scope: {}
   restrict: 'E'
   templateUrl: 'loading.html'
@@ -6,5 +7,3 @@ Darkswarm.directive "loading", (Loading)->
     $scope.Loading = Loading
     $scope.show = ->
       $scope.Loading.message?
-
-  link: ($scope, element, attr)->
