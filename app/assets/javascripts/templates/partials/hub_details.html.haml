@@ -1,10 +1,10 @@
 .row.pad-top{bindonce: true}
   .cta-container.small-12.columns
     .row
-      .small-12.large-6.columns
-        %label{"active-table-hub-link" => "enterprise", change: "Change hub to", shop: "Shop now at"}
-      .small-12.large-6.columns.right
-        .right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
+      .small-4.columns
+        %label{"active-table-hub-link" => "enterprise", change: "Change hub to:", shop: "Shop now at:"}
+      .small-8.columns.right
+        %label.right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
           Delivery options: 
           %span{"bo-if" => "enterprise.pickup"} 
             %i.ofn-i_038-takeaway
