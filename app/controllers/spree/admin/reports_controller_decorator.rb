@@ -386,12 +386,23 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Producer", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+      header = ["Producer", "Product", "Variant", "Amount", "Total Units", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+
+      ovn = OpenFoodNetwork::OptionValueNamer.new()
 
       columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.full_name },
         proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| ovn.name(OpenStruct.new({
+          unit_value: ( line_items.map{ |li| li.variant.unit_value.nil? }.any? ? 0 : line_items.sum { |li| li.quantity * li.variant.unit_value } ),
+          unit_description: line_items.first.variant.unit_description,
+          product: OpenStruct.new({
+            variant_unit: line_items.first.product.variant_unit,
+            variant_unit_scale: line_items.first.product.variant_unit_scale,
+            variant_unit_name: line_items.first.product.variant_unit_name
+          })
+        }))},
         proc { |line_items| line_items.first.variant.price },
         proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
