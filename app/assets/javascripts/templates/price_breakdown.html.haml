@@ -1,4 +1,4 @@
-.joyride-tip-guide{bindonce: true, "ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
+.joyride-tip-guide.price_breakdown{bindonce: true, "ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
   %span.joyride-nub.right
   .joyride-content-wrapper
     .collapsed{"ng-show" => "!expanded"}
@@ -11,7 +11,7 @@
       %ul
         %li.cost
           .right {{ variant.base_price | currency }}
-          Cost
+          Item cost
         %li{"bo-if" => "variant.fees.admin"}
           .right {{ variant.fees.admin | currency }}
           Admin fee

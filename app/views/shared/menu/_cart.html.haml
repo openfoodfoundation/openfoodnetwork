@@ -14,20 +14,21 @@
         %li.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
         "ng-controller" => "LineItemCtrl"}
           .row
-            .columns.small-6
+            .columns.small-7
               %small
                 %strong {{ line_item.variant.name_to_display }}
                 %em {{ line_item.variant.unit_to_display }}
-            .columns.small-3
-              %small
-                {{line_item.quantity}}
-                x
-                {{ line_item.variant.price | currency }}
-
             .columns.small-3.text-right
               %small
+                {{line_item.quantity}}
+                %i.ofn-i_009-close
+                {{ line_item.variant.price | currency }}    
+        
+            .columns.small-2
+              %small
                 \=
-                %strong {{ line_item.variant.getPrice() | currency }}
+                %strong 
+                  .right {{ line_item.variant.getPrice() | currency }}
 
         %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
           .row
@@ -36,5 +37,5 @@
             .columns.small-6.text-right
               %strong {{ Cart.total()  | currency }}        
 
-        .text-right
-          %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Checkout now
+      .text-right
+        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Quick checkout

@@ -1,7 +1,7 @@
 .highlight
   .highlight-top 
     %p.right
-      {{ [enterprise.address.city, enterprise.address.state] | printArray}}
+      {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
     %h3{"ng-if" => "enterprise.is_distributor"}
       %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
         %i.ofn-i_040-hub

@@ -10,9 +10,9 @@
     angular.module('Darkswarm').value('order', #{render "checkout/order"})
 
   %div
-    %h3.text-center.pad-top 
-      Checkout from 
-      = current_distributor.name
+    / %h3.text-center.pad-top 
+    /   Checkout from 
+    /   = current_distributor.name
 
     = render partial: "checkout/details", locals: {f: f}
     = render partial: "checkout/billing", locals: {f: f}

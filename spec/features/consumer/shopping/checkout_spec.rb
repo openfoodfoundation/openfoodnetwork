@@ -10,33 +10,44 @@ feature "As a consumer I want to check out my cart", js: true do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
-  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.master]) }
+  let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23) }
   let(:product) { create(:simple_product, supplier: supplier) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
 
   before do
+    add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart
   end
 
-  it "shows the current distributor oncheckout" do
+  it "shows the current distributor on checkout" do
     visit checkout_path 
     page.should have_content distributor.name
   end
 
   describe "with shipping methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
-    let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue") }
+    let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
     before do
-      distributor.shipping_methods << sm1 
-      distributor.shipping_methods << sm2 
+      distributor.shipping_methods << sm1
+      distributor.shipping_methods << sm2
     end
 
     context "on the checkout page" do
       before do
         visit checkout_path
         checkout_as_guest
+      end
+
+      it "shows a breakdown of the order price" do
+        toggle_shipping
+        choose sm2.name
+
+        page.should have_selector 'orderdetails .cart-total', text: "$11.23"
+        page.should have_selector 'orderdetails .shipping', text: "$4.56"
+        page.should have_selector 'orderdetails .total', text: "$15.79"
       end
 
       it "shows all shipping methods, but doesn't show ship address when not needed" do
@@ -157,7 +168,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
               # Order should have a payment with the correct amount
               o = Spree::Order.complete.first
-              o.payments.first.amount.should == 10
+              o.payments.first.amount.should == 11.23
             end
 
             it "shows the payment processing failed message when submitted with an invalid credit card" do

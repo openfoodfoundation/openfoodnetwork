@@ -2,9 +2,12 @@
 
 .darkswarm
   - content_for :order_cycle_form do
-    %strong.avenir
+    
+    %closing Checkout now
+    %p 
       Order ready for
-      = pickup_time current_order_cycle
+      %strong
+        = pickup_time current_order_cycle
 
   = render partial: "shopping_shared/details"
    

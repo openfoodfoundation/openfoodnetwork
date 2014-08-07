@@ -1,15 +1,28 @@
 @import mixins
+@import branding
 
 // .darkswarm
 //   product
 
+ordercycle
+  .joyride-tip-guide 
+    background-color: $clr-brick
+    .joyride-nub.right
+      border-color: $clr-brick !important
+      border-top-color: transparent !important
+      border-right-color: transparent !important
+      border-bottom-color: transparent !important
+    p
+      margin: 0
+      font-weight: 700
 
 // Pop over
 // Foundation overrides
-.joyride-tip-guide
+.joyride-tip-guide.price_breakdown
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
   background-color: #999
   color: #1f1f1f
+  margin-left: -8px
   @include box-shadow(0 1px 2px 0 rgba(0,0,0,0.7))
 
   .joyride-content-wrapper
@@ -23,7 +36,7 @@
     color: #1f1f1f
 
   .joyride-nub.right
-    top: 40px
+    top: 38px
     border-color: #999 !important
     border-top-color: transparent !important
     border-right-color: transparent !important
@@ -62,19 +75,17 @@
 
 
 button.graph-button
+  z-index: 9999999
+  border: 1px solid transparent
+  @include box-shadow(none)
   padding: 0
   margin: 0
-  @include border-radius(99999)
+  @include border-radius(999rem)
   display: inline
   background-color: rgba(255,255,255,0.5)
-  padding: 0.2rem
+  padding: 5px
 
-  &:focus
-    background-color: rgba(255,255,255,0.5)
-    i.ofn-i-058-graph
-      color: #999
-
-  &:hover, &:active
+  &:hover, &:active, &:focus
     background-color: rgba(255,255,255,1)
     i.ofn-i-058-graph
       color: $clr-brick-bright
@@ -86,10 +97,11 @@ button.graph-button
     font-size: 1rem
 
 button.graph-button.open
-  background-color: #999
+  @include box-shadow(inset 0 1px 1px 0 rgba(0,0,0,0.35))
+  border: 1px solid #999
   
   &:hover, &:active, &:focus
-    background-color: #b2b2b2
+    background-color: rgba(255,255,255,1)
     i.ofn-i-058-graph
       color: $clr-brick-bright
 
