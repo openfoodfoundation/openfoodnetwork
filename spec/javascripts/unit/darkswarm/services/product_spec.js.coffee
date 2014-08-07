@@ -14,6 +14,7 @@ describe 'Products service', ->
       supplier:
         id: 9
       price: 11
+      master: {}
       variants: []
     currentOrder =
       line_items: []
@@ -39,7 +40,7 @@ describe 'Products service', ->
   it "dereferences suppliers", ->
     Enterprises.enterprises_by_id = 
       {id: 9, name: "test"}
-    $httpBackend.expectGET("/shop/products").respond([{supplier : {id: 9}}])
+    $httpBackend.expectGET("/shop/products").respond([{supplier : {id: 9}, master: {}}])
     $httpBackend.flush()
     expect(Products.products[0].supplier).toBe Enterprises.enterprises_by_id["9"]
 
