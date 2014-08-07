@@ -60,19 +60,26 @@
 // CALL TO ACTION - hub click throughs
 
 .cta-container
-  background: url("/assets/gray_jean.png") repeat
+  background-color: #ececec
   padding-top: 0.75rem
 
   label
     text-transform: uppercase
     font-size: 0.875rem
-    margin-bottom: 0.5rem
+    margin-bottom: 0
+    5rem
     color: $dark-grey
+
+  label.right
+    color: $disabled-dark
+    span
+      text-transform: capitalize
 
   .button.secondary
     background-color: #999
   .button.hub
     margin-right: 1rem
+    margin-top: 0.25rem
     margin-bottom: 1rem
     padding-left: 1rem
     padding-right: 1rem

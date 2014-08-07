@@ -4,24 +4,34 @@
 dialog, .reveal-modal
   border: none
   outline: none
-  padding: 1rem
-  // TO DO: look at bigger issue scrolling on mobile device 
+  padding: 1rem 
   overflow-y: scroll
-  @media only screen and (min-width: 40.063em)
-    max-height: 580px
-  @media all and (max-width: 768px)
+  
+  // Sets up max heights based on device height
+  @media all and (min-height: 1025px) 
+    max-height: 800px
+
+  @media all and (min-height: 700px) and (max-height: 1024px)
+    max-height: 600px
+
+  @media all and (min-height: 600px) and (max-height: 699px)
+    max-height: 560px
+
+  @media all and (min-height: 481px) and (max-height: 599px)
     max-height: 440px
-  @media all and (max-width: 640px)
-    max-height: 400px
-  @media all and (max-width: 640px)
-    max-height: inherit
+
+  @media only screen and (min-height: 480px)
+    max-height: 440px
+
+  @media handheld and (min-height: 480px)
+    max-height: 100%
     overflow-y: scroll
+
 
 .reveal-modal-bg
   background-color: rgba(0,0,0,0.65)
 
 dialog .close-reveal-modal, .reveal-modal .close-reveal-modal
-  top: 0.45rem
   right: 0.4rem
   background-color: rgba(235,235,235,0.85)
   text-shadow: none
