@@ -271,7 +271,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         $scope.updateVariantLists(data.products)
         $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
-        $scope.displayFailure "Server returned with error status: " + status
+        if status == 400 && data.errors? && data.errors.length > 0
+          errors = error + "\n" for error in data.errors
+          alert "Saving failed with the following error(s):\n" + errors
+          $scope.displayFailure "Save failed due to invalid data"
+        else
+          $scope.displayFailure "Server returned with error status: " + status
 
 
     $scope.packProduct = (product) ->
@@ -336,7 +341,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.displayFailure = (failMessage) ->
       $scope.setMessage $scope.updateStatusMessage, "Saving failed. " + failMessage,
         color: "#DA5354"
-      , 10000
+      , false
 
 
     $scope.displayDirtyProducts = ->

@@ -842,13 +842,21 @@ describe "AdminProductEditCtrl", ->
         expect(DirtyProducts.clear).toHaveBeenCalled()
         expect($scope.updateVariantLists).toHaveBeenCalled()
 
-      it "runs displayFailure() when post returns error", ->
+      it "runs displayFailure() when post returns an error", ->
         spyOn $scope, "displayFailure"
         $scope.products = "updated list of products"
-        $httpBackend.expectPOST("/admin/products/bulk_update").respond 404, "updated list of products"
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond 500, "updated list of products"
         $scope.updateProducts "updated list of products"
         $httpBackend.flush()
         expect($scope.displayFailure).toHaveBeenCalled()
+
+      it "shows an alert with error information when post returns 400 with an errors array", ->
+        spyOn(window, "alert")
+        $scope.products = "updated list of products"
+        $httpBackend.expectPOST("/admin/products/bulk_update").respond 400, { "errors": ["an error"] }
+        $scope.updateProducts "updated list of products"
+        $httpBackend.flush()
+        expect(window.alert).toHaveBeenCalledWith("Saving failed with the following error(s):\nan error\n")
 
   describe "fetching a product by id", ->
     it "returns the product when it is present", ->

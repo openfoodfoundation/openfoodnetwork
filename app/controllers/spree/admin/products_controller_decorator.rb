@@ -33,7 +33,11 @@ Spree::Admin::ProductsController.class_eval do
     if product_set.save
       redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
-      render :nothing => true, :status => 418
+      if product_set.errors.present?
+        render json: { errors: product_set.errors }, status: 400
+      else
+        render :nothing => true, :status => 500
+      end
     end
   end
 
