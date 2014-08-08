@@ -39,9 +39,7 @@ Spree::Gateway.providers.each do |p|
         "Cash/EFT/etc. (payments for which automatic validation is not required)"
       when "Spree::Gateway::Migs"
         "MasterCard Internet Gateway Service (MIGS)"
-      when "Spree::BillingIntegration::PaypalExpressUk"
-        "PayPal Express (UK)"
-      when "Spree::BillingIntegration::PaypalExpress"
+      when "Spree::Gateway::PayPalExpress"
         "PayPal Express"
       else
         i = name.rindex('::') + 2
