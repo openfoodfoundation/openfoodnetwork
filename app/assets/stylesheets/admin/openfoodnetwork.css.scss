@@ -140,6 +140,24 @@ table#listing_enterprise_groups {
   }
 }
 
+#no_results {
+  font-weight:bold;
+  color: #DA5354;
+}
+
+
+#loading {
+  text-align: center;
+  img.spinner {
+    width: 100px;
+    height: 100px;
+  }
+  h1 {
+    margin-top: 20px;
+    color: gray;
+  }
+}
+
 .ofn_drop_down {
 	padding: 7px 15px;
 	border-radius: 3px;

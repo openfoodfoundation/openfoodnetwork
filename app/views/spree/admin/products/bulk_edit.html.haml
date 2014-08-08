@@ -54,7 +54,7 @@
     %img.spinner{ src: "/assets/loading.gif" }
     %h1 LOADING PRODUCTS
   %div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0' }
-    %h1#no_products No products found.
+    %h1#no_results No products found.
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup
