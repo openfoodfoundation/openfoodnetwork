@@ -255,7 +255,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if productsToSubmit.length > 0
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
-        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
+        $scope.setMessage $scope.updateStatusMessage, "No changes to save.", color: "grey", 3000
 
 
     $scope.updateProducts = (productsToSubmit) ->
@@ -323,25 +323,26 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
     $scope.displayUpdating = ->
       $scope.setMessage $scope.updateStatusMessage, "Saving...",
-        color: "orange"
+        color: "#FF9906"
       , false
 
 
     $scope.displaySuccess = ->
       $scope.setMessage $scope.updateStatusMessage, "Changes saved.",
-        color: "green"
+        color: "#9fc820"
       , 3000
 
 
     $scope.displayFailure = (failMessage) ->
       $scope.setMessage $scope.updateStatusMessage, "Saving failed. " + failMessage,
-        color: "red"
+        color: "#DA5354"
       , 10000
 
 
     $scope.displayDirtyProducts = ->
       if DirtyProducts.count() > 0
-        $scope.setMessage $scope.updateStatusMessage, "Changes to " + DirtyProducts.count() + " products remain unsaved.",
+        message = if DirtyProducts.count() == 1 then "one product" else DirtyProducts.count() + " products"
+        $scope.setMessage $scope.updateStatusMessage, "Changes to " + message + " remain unsaved.",
           color: "gray"
         , false
       else

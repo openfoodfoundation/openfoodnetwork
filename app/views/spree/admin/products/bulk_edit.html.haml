@@ -38,10 +38,10 @@
     %div.four.columns.alpha
       %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
     %div.nine.columns
-      %div{ id: "update-status-message", ng: { style: 'updateStatusMessage.style' } }
+      %h6{ id: "update-status-message", ng: { style: 'updateStatusMessage.style' } }
         {{ updateStatusMessage.text || "&nbsp;" }}
     %div.three.columns.omega
-      %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
+      %div.ofn_drop_down.three.columns.omega{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
         %span{ :class => 'icon-reorder' } &nbsp; Columns
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
         %div.menu{ 'ng-show' => "expanded" }
@@ -50,10 +50,11 @@
             %span{ :class => 'two columns omega' } {{column.name }}
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
-  %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
-    %h4 Loading Products...
+  %div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
+    %img.spinner{ src: "/assets/loading.gif" }
+    %h1 LOADING PRODUCTS
   %div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0' }
-    %h4{ :style => 'color:red;' } No products found.
+    %h1#no_products No products found.
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup

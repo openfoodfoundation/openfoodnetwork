@@ -267,7 +267,7 @@ feature %q{
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     updated_variant = Spree::Variant.where(deleted_at: nil).last
     expect(updated_variant.display_name).to eq "Case of 12 Bottles"
@@ -321,7 +321,7 @@ feature %q{
     end
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     p.reload
     expect(p.name).to eq "Big Bag Of Potatoes"
@@ -348,7 +348,7 @@ feature %q{
     fill_in "variant_unit_name", with: "loaf"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     p.reload
     expect(p.variant_unit).to eq "items"
@@ -371,7 +371,7 @@ feature %q{
     fill_in "variant_unit_value_with_description", with: '123 abc'
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     p.reload
     expect(p.variant_unit).to eq "weight"
@@ -396,7 +396,7 @@ feature %q{
       fill_in "master_unit_value_with_description", with: '123 abc'
 
       click_button 'Save Changes'
-      expect(page.find("div#update-status-message")).to have_content "Changes saved."
+      expect(page.find("#update-status-message")).to have_content "Changes saved."
 
       p.reload
       expect(p.variant_unit).to eq 'weight'
@@ -444,7 +444,7 @@ feature %q{
     expect(page).to have_selector "span[name='on_hand']", text: "10"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     v.reload
     expect(v.price).to eq 4.0
@@ -468,7 +468,7 @@ feature %q{
     fill_in "variant_price", with: "10.0"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
 
     v.reload
     expect(v.price).to eq 10.0
@@ -485,21 +485,21 @@ feature %q{
     fill_in "product_name", with: "new name 1"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new name 1"
 
     fill_in "product_name", with: "new name 2"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new name 2"
 
     fill_in "product_name", with: "original name"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "original name"
   end
@@ -515,7 +515,7 @@ feature %q{
     fill_in "product_name", :with => "new product name"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new product name"
   end
@@ -528,7 +528,7 @@ feature %q{
       visit '/admin/products/bulk_edit'
 
       click_button 'Save Changes'
-      expect(page.find("div#update-status-message")).to have_content "No changes to update."
+      expect(page.find("#update-status-message")).to have_content "No changes to save."
     end
   end
 
@@ -547,7 +547,7 @@ feature %q{
     fill_in "product_name", :with => "new product1"
 
     click_button 'Save Changes'
-    expect(page.find("div#update-status-message")).to have_content "Changes saved."
+    expect(page.find("#update-status-message")).to have_content "Changes saved."
     p1.reload
     expect(p1.name).to eq "new product1"
   end
@@ -791,7 +791,7 @@ feature %q{
       fill_in "display_as", with: "Big Bag"
 
       click_button 'Save Changes'
-      expect(page.find("div#update-status-message")).to have_content "Changes saved."
+      expect(page.find("#update-status-message")).to have_content "Changes saved."
 
       p.reload
       expect(p.name).to eq "Big Bag Of Potatoes"
