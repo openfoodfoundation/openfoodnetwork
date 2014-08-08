@@ -4,10 +4,10 @@ angular.module("ofn.admin").directive "ofnTaxonAutocomplete", (Taxons) ->
   link: (scope,element,attrs,ngModel) ->
     setTimeout ->
       element.select2
-        placeholder: Spree.translations.taxon_placeholder
-        multiple: true
+        placeholder: "Category"
+        multiple: false
         initSelection: (element, callback) ->
-          callback Taxons.findByIDs(element.val())
+          callback Taxons.findByID(scope.product.category)
         query: (query) ->
           query.callback { results: Taxons.findByTerm(query.term) }
         formatResult: (taxon) ->

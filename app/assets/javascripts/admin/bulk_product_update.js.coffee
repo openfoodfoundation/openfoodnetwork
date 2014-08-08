@@ -11,7 +11,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       unit:         {name: "Unit",          visible: true}
       price:        {name: "Price",         visible: true}
       on_hand:      {name: "On Hand",       visible: true}
-      taxons:       {name: "Taxons",        visible: false}
+      category:     {name: "Category",      visible: false}
       available_on: {name: "Available On",  visible: false}
 
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
@@ -328,7 +328,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.displaySuccess = ->
-      $scope.setMessage $scope.updateStatusMessage, "Changes Saved.",
+      $scope.setMessage $scope.updateStatusMessage, "Changes saved.",
         color: "green"
       , 3000
 
@@ -394,8 +394,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("taxon_ids")
-          filteredProduct.taxon_ids = product.taxon_ids
+        if product.hasOwnProperty("category")
+          filteredProduct.primary_taxon_id = product.category
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on

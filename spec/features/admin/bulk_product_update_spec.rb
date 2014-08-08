@@ -25,7 +25,7 @@ feature %q{
     it "displays a message when number of products is zero" do
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_text "No matching products found."
+      expect(page).to have_text "No products found."
     end
 
     it "displays a select box for suppliers, with the appropriate supplier selected" do
@@ -266,8 +266,8 @@ feature %q{
     fill_in "variant_display_as", with: "Case"
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
-    click_button 'Update'
-    expect(page.find("span#update-status-message")).to have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     updated_variant = Spree::Variant.where(deleted_at: nil).last
     expect(updated_variant.display_name).to eq "Case of 12 Bottles"
@@ -285,7 +285,9 @@ feature %q{
   scenario "updating a product with no variants (except master)" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1)
+    t1 = FactoryGirl.create(:taxon)
+    t2 = FactoryGirl.create(:taxon)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2)
     p.price = 10.0
     p.on_hand = 6;
     p.save!
@@ -296,24 +298,30 @@ feature %q{
     
     first("div#columns_dropdown", :text => "COLUMNS").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "Category").click
 
-    expect(page).to have_field "product_name", with: p.name
-    expect(page).to have_select "producer", selected: s1.name
-    expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
-    expect(page).to have_field "price", with: "10.0"
-    expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
-    expect(page).to have_field "on_hand", with: "6"
+    within "tr#p_#{p.id}" do
+      expect(page).to have_field "product_name", with: p.name
+      expect(page).to have_select "producer", selected: s1.name
+      expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
+      expect(page).to have_field "price", with: "10.0"
+      save_screenshot '/Users/rob/Desktop/ss.png'
+      expect(page).to have_selector "div#s2id_p#{p.id}_category a.select2-choice"
+      expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
+      expect(page).to have_field "on_hand", with: "6"
 
-    fill_in "product_name", with: "Big Bag Of Potatoes"
-    select(s2.name, :from => 'producer')
-    fill_in "available_on", with: (Date.today-3).strftime("%F %T")
-    fill_in "price", with: "20"
-    select "Weight (kg)", from: "variant_unit_with_scale"
-    fill_in "on_hand", with: "18"
-    fill_in "display_as", with: "Big Bag"
+      fill_in "product_name", with: "Big Bag Of Potatoes"
+      select s2.name, :from => 'producer'
+      fill_in "available_on", with: (Date.today-3).strftime("%F %T")
+      fill_in "price", with: "20"
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      select2_select t1.name, from: "p#{p.id}_category"
+      fill_in "on_hand", with: "18"
+      fill_in "display_as", with: "Big Bag"
+    end
 
-    click_button 'Update'
-    expect(page.find("span#update-status-message")).to have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     p.reload
     expect(p.name).to eq "Big Bag Of Potatoes"
@@ -324,6 +332,7 @@ feature %q{
     expect(p.master.display_as).to eq "Big Bag"
     expect(p.price).to eq 20.0
     expect(p.on_hand).to eq 18
+    expect(p.primary_taxon).to eq t1
   end
   
   scenario "updating a product with a variant unit of 'items'" do
@@ -338,13 +347,13 @@ feature %q{
     select "Items", from: "variant_unit_with_scale"
     fill_in "variant_unit_name", with: "loaf"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     p.reload
-    p.variant_unit.should == "items"
-    p.variant_unit_scale.should be_nil
-    p.variant_unit_name.should == "loaf"
+    expect(p.variant_unit).to eq "items"
+    expect(p.variant_unit_scale).to be_nil
+    expect(p.variant_unit_name).to eq "loaf"
   end
 
   scenario "setting a variant unit on a product that has none" do
@@ -361,15 +370,15 @@ feature %q{
     first("a.view-variants").trigger('click')
     fill_in "variant_unit_value_with_description", with: '123 abc'
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     p.reload
-    p.variant_unit.should == "weight"
-    p.variant_unit_scale.should == 1000 # Kg
+    expect(p.variant_unit).to eq "weight"
+    expect(p.variant_unit_scale).to eq 1000 # Kg
     v.reload
-    v.unit_value.should == 123000 # 123 kg in g
-    v.unit_description.should == "abc"
+    expect(v.unit_value).to eq 123000 # 123 kg in g
+    expect(v.unit_description).to eq "abc"
   end
 
   describe "setting the master unit value for a product without variants" do
@@ -386,14 +395,14 @@ feature %q{
       select "Weight (kg)", from: "variant_unit_with_scale"
       fill_in "master_unit_value_with_description", with: '123 abc'
 
-      click_button 'Update'
-      page.find("span#update-status-message").should have_content "Update complete"
+      click_button 'Save Changes'
+      expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
       p.reload
-      p.variant_unit.should == 'weight'
-      p.variant_unit_scale.should == 1000
-      p.master.unit_value.should == 123000
-      p.master.unit_description.should == 'abc'
+      expect(p.variant_unit).to eq 'weight'
+      expect(p.variant_unit_scale).to eq 1000
+      expect(p.master.unit_value).to eq 123000
+      expect(p.master.unit_description).to eq 'abc'
     end
 
     it "does not show the field when the product has variants" do
@@ -434,14 +443,14 @@ feature %q{
 
     expect(page).to have_selector "span[name='on_hand']", text: "10"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     v.reload
-    v.price.should == 4.0
-    v.on_hand.should == 10
-    v.unit_value.should == 2 # 2L in L
-    v.unit_description.should == "(8x250 mL bottles)"
+    expect(v.price).to eq 4.0
+    expect(v.on_hand).to eq 10
+    expect(v.unit_value).to eq 2 # 2L in L
+    expect(v.unit_description).to eq "(8x250 mL bottles)"
   end
 
   scenario "updating delegated attributes of variants in isolation" do
@@ -458,11 +467,11 @@ feature %q{
 
     fill_in "variant_price", with: "10.0"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
     v.reload
-    v.price.should == 10.0
+    expect(v.price).to eq 10.0
   end
 
   scenario "updating a product mutiple times without refresh" do
@@ -475,24 +484,24 @@ feature %q{
 
     fill_in "product_name", with: "new name 1"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
     p.reload
-    p.name.should == "new name 1"
+    expect(p.name).to eq "new name 1"
 
     fill_in "product_name", with: "new name 2"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
     p.reload
-    p.name.should == "new name 2"
+    expect(p.name).to eq "new name 2"
 
     fill_in "product_name", with: "original name"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
     p.reload
-    p.name.should == "original name"
+    expect(p.name).to eq "original name"
   end
 
   scenario "updating a product after cloning a product" do
@@ -505,10 +514,10 @@ feature %q{
 
     fill_in "product_name", :with => "new product name"
 
-    click_button 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
     p.reload
-    p.name.should == "new product name"
+    expect(p.name).to eq "new product name"
   end
 
   scenario "updating when no changes have been made" do
@@ -518,8 +527,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      click_button 'Update'
-      page.find("span#update-status-message").should have_content "No changes to update."
+      click_button 'Save Changes'
+      expect(page.find("div#update-status-message")).to have_content "No changes to update."
     end
   end
 
@@ -537,10 +546,10 @@ feature %q{
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
 
-    click_on 'Update'
-    page.find("span#update-status-message").should have_content "Update complete"
+    click_button 'Save Changes'
+    expect(page.find("div#update-status-message")).to have_content "Changes saved."
     p1.reload
-    p1.name.should == "new product1"
+    expect(p1.name).to eq "new product1"
   end
 
   describe "using action buttons" do
@@ -607,7 +616,7 @@ feature %q{
           first("a.edit-product").click
         end
 
-        URI.parse(current_url).path.should == "/admin/products/#{p1.permalink}/edit"
+        expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
       end
 
       it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
@@ -626,7 +635,7 @@ feature %q{
           first("a.edit-variant").click
         end
 
-        URI.parse(current_url).path.should == "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
+        expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
       end
     end
 
@@ -710,7 +719,7 @@ feature %q{
         expect(page).to have_no_field "product_name", with: p2.name
 
         # Clearing filters
-        click_button "Clear All"
+        click_button "Clear Filters"
 
         # All products are shown again
         expect(page).to have_field "product_name", with: p1.name
@@ -781,8 +790,8 @@ feature %q{
       fill_in "on_hand", with: "18"
       fill_in "display_as", with: "Big Bag"
 
-      click_button 'Update'
-      expect(page.find("span#update-status-message")).to have_content "Update complete"
+      click_button 'Save Changes'
+      expect(page.find("div#update-status-message")).to have_content "Changes saved."
 
       p.reload
       expect(p.name).to eq "Big Bag Of Potatoes"

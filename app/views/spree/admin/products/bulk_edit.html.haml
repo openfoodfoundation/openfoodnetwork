@@ -25,7 +25,7 @@
       %br
       %select{ :class => "four columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in filterProducers' }
     .filter_select{ :class => "four columns" }
-      %label{ :for => 'taxon_filter' }Category
+      %label{ :for => 'category_filter' }Category
       %br
       %select{ :class => "four columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in filterTaxons'}
     %div{ :class => "one column" } &nbsp;
@@ -34,12 +34,6 @@
       %br
       %input.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear Filters", 'ng-click' => "resetSelectFilters()" }
   %hr.sixteen.columns.alpha
-  %div{ 'ng-show' => '!spree_api_key_ok' }
-    {{ api_error_msg }}
-  %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
-    %h4 Loading Products...
-  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
-    %h4{ :style => 'color:red;' } No matching products found.
   %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0', style: "margin-bottom: 10px" }
     %div.four.columns.alpha
       %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
@@ -54,18 +48,24 @@
           %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
             %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
             %span{ :class => 'two columns omega' } {{column.name }}
-  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
+  %div{ 'ng-show' => '!spree_api_key_ok' }
+    {{ api_error_msg }}
+  %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
+    %h4 Loading Products...
+  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0' }
+    %h4{ :style => 'color:red;' } No products found.
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
       %colgroup
         %col.actions
-        %col.producer{ 'style' => 'width: 14%;', 'ng-show' => 'columns.producer.visible' }
-        %col.name{ 'style' => 'width: 20%;', 'ng-show' => 'columns.name.visible' }
-        %col.unit{ 'style' => 'width: 14%;', 'ng-show' => 'columns.unit.visible' }
-        %col.display_as{ 'style' => 'width: 12%;', 'ng-show' => 'columns.unit.visible' }
-        %col.price{ 'style' => 'width: 10%;', 'ng-show' => 'columns.price.visible'}
-        %col.on_hand{ 'style' => 'width: 10%;', 'ng-show' => 'columns.on_hand.visible' }
-        %col.taxons{ 'ng-show' => 'columns.taxons.visible' }
-        %col.available_on{ 'ng-show' => 'columns.available_on.visible' }
+        %col.producer{ ng: { show: 'columns.producer.visible' } }
+        %col.name{ ng: { show: 'columns.name.visible' } }
+        %col.unit{ ng: { show: 'columns.unit.visible' } }
+        %col.display_as{ ng: { show: 'columns.unit.visible' } }
+        %col.price{ ng: { show: 'columns.price.visible'} }
+        %col.on_hand{ ng: { show: 'columns.on_hand.visible' } }
+        %col.category{ ng: { show: 'columns.category.visible' } }
+        %col.available_on{ ng: { show: 'columns.available_on.visible' } }
         %col.actions
         %col.actions
         %col.actions
@@ -79,7 +79,7 @@
           %th.display_as{ 'ng-show' => 'columns.unit.visible' } Display As
           %th.price{ 'ng-show' => 'columns.price.visible' } Price
           %th.on_hand{ 'ng-show' => 'columns.on_hand.visible' } On Hand
-          %th.taxons{ 'ng-show' => 'columns.taxons.visible' } Taxons
+          %th.category{ 'ng-show' => 'columns.category.visible' } Category
           %th.available_on{ 'ng-show' => 'columns.available_on.visible' } Av. On
           %th.actions
           %th.actions
@@ -90,7 +90,7 @@
             %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
           %td.producer{ 'ng-show' => 'columns.producer.visible' }
-            %select.select2{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+            %select.select2.fullwidth{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.id as producer.name for producer in producers' }
           %td.name{ 'ng-show' => 'columns.name.visible' }
             %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
@@ -105,8 +105,8 @@
           %td.on_hand{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
-          %td{ 'ng-if' => 'columns.taxons.visible' }
-            %input.fullwidth{ :type => 'text', 'ng-model' => 'product.taxon_ids', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'taxon_ids' }
+          %td.category{ 'ng-if' => 'columns.category.visible' }
+            %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category", 'ng-model' => 'product.category', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category' }
           %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
           %td.actions
@@ -131,7 +131,7 @@
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-hide' => 'variant.on_demand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
             %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
-          %td{ 'ng-show' => 'columns.taxons.visible' }
+          %td{ 'ng-show' => 'columns.category.visible' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
           %td.actions
             %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }

@@ -12,7 +12,12 @@ describe "Taxons service", ->
     $resource = _$resource_
     $httpBackend = _$httpBackend_
 
-  describe "calling findByIDs", ->
+  describe "findByID", ->
+    it "returns the taxon with exactly matching id, ignoring ids which do not exactly match", ->
+      result = Taxons.findByID("1")
+      expect(result).toEqual {id: "1", name: "t1"}
+
+  describe "findByIDs", ->
     it "returns taxons with exactly matching ids", ->
       result = Taxons.findByIDs("1,2")
       expect(result).toEqual [{id: "1", name: "t1"}, {id: "2", name: "t2"}]
@@ -21,7 +26,7 @@ describe "Taxons service", ->
       result = Taxons.findByIDs("1,3")
       expect(result).toEqual [{id: "1", name: "t1"}]
 
-  describe "calling findByTerm", ->
+  describe "findByTerm", ->
     it "returns taxons which match partially", ->
       result = Taxons.findByTerm("t1")
       expect(result).toEqual [{id: "1", name: "t1"}, {id: "12", name: "t12"}]

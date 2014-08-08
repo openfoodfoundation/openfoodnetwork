@@ -30,9 +30,33 @@ th.left-actions, td.left-actions {
 table#listing_products.bulk {
   clear: both;
 
-  td.supplier {
-    select {
-      width: 125px;
+  colgroup col {
+    &.producer {
+      width: 18%;
+    }
+    &.name {
+      width: 18%;
+    }
+    &.unit {
+      width: 14%;
+    }
+    &.display_as {
+      width: 12%;
+    }
+    &.price {
+      width: 10%;
+    }
+    &.on_hand {
+      width: 10%;
+    }
+    &.category {
+      width: 15%;
+    }
+    &.available_on {
+      width: 15%;
+    }
+    &.actions {
+      width: 3%;
     }
   }
 

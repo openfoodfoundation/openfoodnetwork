@@ -1,16 +1,12 @@
 class Spree::Api::ProductSerializer < ActiveModel::Serializer
   attributes :id, :name, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand
 
-  attributes :taxon_ids, :on_hand, :price, :available_on, :permalink_live
+  attributes :on_hand, :price, :available_on, :permalink_live
   
   has_one :supplier, key: :producer, embed: :id
   has_one :primary_taxon, key: :category, embed: :id
   has_many :variants, key: :variants, serializer: Spree::Api::VariantSerializer # embed: ids
   has_one :master, serializer: Spree::Api::VariantSerializer
-  
-  def taxon_ids
-    object.taxons.map{ |t| t.id }.join(",")
-  end
   
   def on_hand
     object.on_hand.nil? ? 0 : object.on_hand.to_f.finite? ? object.on_hand : "On demand"

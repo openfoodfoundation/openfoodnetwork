@@ -3,6 +3,11 @@ angular.module("ofn.admin").factory "Taxons", (taxons, $filter) ->
     constructor: ->
       @taxons = taxons
 
+    # For finding a single Taxon
+    findByID: (id) ->
+      $filter('filter')(@taxons, {id: id}, true)[0]
+
+    # For finding multiple Taxons represented by comma delimited string
     findByIDs: (ids) ->
       taxon for taxon in @taxons when taxon.id.toString() in ids.split(",")
 
