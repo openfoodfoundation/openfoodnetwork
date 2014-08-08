@@ -12,7 +12,8 @@ feature "As a consumer I want to check out my cart", js: true do
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
-  let(:user) { create_enterprise_user }
+  let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+  let(:user) { create(:user, bill_address: address, ship_address: address) }
   after { Warden.test_reset! }
 
   before do
@@ -36,6 +37,19 @@ feature "As a consumer I want to check out my cart", js: true do
       click_button "Log in"
     end
     page.should have_login_modal
+  end
+
+  it "populates user details once logged in" do
+    visit checkout_path
+    within("section[role='main']") { click_button "Log in" }
+    page.should have_login_modal
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    within(".login-modal") { click_button 'Log in' }
+    toggle_details
+
+    page.should have_field 'First Name', with: 'Foo'
+    page.should have_field 'Last Name', with: 'Bar'
   end
 
   it "allows user to checkout as guest" do

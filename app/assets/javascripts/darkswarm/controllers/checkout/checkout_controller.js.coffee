@@ -3,7 +3,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
 
   # Bind to local storage
   $scope.fieldsToBind = ["bill_address", "email", "payment_method_id", "shipping_method_id", "ship_address"]
-  prefix = "order_#{Checkout.order.id}#{Checkout.order.user_id}#{CurrentHub.hub.id}"
+  prefix = "order_#{Checkout.order.id}#{CurrentUser?.id}#{CurrentHub.hub.id}"
 
   for field in $scope.fieldsToBind
     storage.bind $scope, "Checkout.order.#{field}", 

@@ -46,7 +46,7 @@ describe "CheckoutCtrl", ->
 
     describe "Local storage", ->
       it "binds to localStorage when given a scope", ->
-        prefix = "order_#{scope.order.id}#{scope.order.user_id}#{CurrentHubMock.hub.id}"
+        prefix = "order_#{scope.order.id}#{CurrentUser?.id}#{CurrentHubMock.hub.id}"
         field = scope.fieldsToBind[0]
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.order.#{field}", {storeName: "#{prefix}_#{field}"})
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
