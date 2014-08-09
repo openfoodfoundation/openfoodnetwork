@@ -45,6 +45,15 @@ module Spree
       end
 
       private
+
+      def load_data
+        if spree_current_user.admin? || Rails.env.test?
+          @providers = Gateway.providers.sort{|p1, p2| p1.name <=> p2.name }
+        else
+          @providers = Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort{|p1, p2| p1.name <=> p2.name }
+        end
+      end
+
       def load_hubs
         @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
       end
