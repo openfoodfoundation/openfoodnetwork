@@ -13,6 +13,15 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
+  remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
+  revision: cdd61161ccd27cd8d183f9321422c7be113796b8
+  branch: 1-3-stable
+  specs:
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 1.3.4)
+
+GIT
   remote: git://github.com/openfoodfoundation/spree.git
   revision: bbe5e779bcb883a1726ad4006d7c06b06c3f5372
   branch: 1-3-stable
@@ -53,15 +62,6 @@ GIT
       spree_core (= 1.3.6.beta)
     spree_sample (1.3.6.beta)
       spree_core (= 1.3.6.beta)
-
-GIT
-  remote: git://github.com/spree-contrib/better_spree_paypal_express.git
-  revision: db135b89a289aaab951c1228bcc55871de0cbba7
-  branch: 1-3-stable
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.4)
 
 GIT
   remote: git://github.com/spree/deface.git
