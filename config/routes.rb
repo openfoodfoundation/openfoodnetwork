@@ -46,6 +46,7 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resources :enterprise_relationships
+    resources :enterprise_roles
 
     resources :enterprise_fees do
       post :bulk_update, :on => :collection, :as => :bulk_update

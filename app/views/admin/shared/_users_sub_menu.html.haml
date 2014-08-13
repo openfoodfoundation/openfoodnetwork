@@ -1,0 +1,4 @@
+= content_for :sub_menu do
+  %ul#sub_nav.inline-menu{"data-hook" => "admin_user_sub_tabs"}
+    = tab :users, url: spree.admin_users_path
+    = tab :roles, url: main_app.admin_enterprise_roles_path, match_path: '/enterprise_roles'
