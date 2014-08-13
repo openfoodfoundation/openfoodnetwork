@@ -37,19 +37,20 @@ module OpenFoodNetwork
         let!(:ef_sales) { create(:enterprise_fee, fee_type: 'sales', amount: 4.56) }
         let!(:ef_packing) { create(:enterprise_fee, fee_type: 'packing', amount: 7.89) }
         let!(:ef_transport) { create(:enterprise_fee, fee_type: 'transport', amount: 0.12) }
+        let!(:ef_fundraising) { create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45) }
         let!(:exchange) { create(:exchange, order_cycle: order_cycle,
                                  sender: coordinator, receiver: distributor, incoming: false,
-                                 enterprise_fees: [ef_admin, ef_sales, ef_packing, ef_transport],
+                                 enterprise_fees: [ef_admin, ef_sales, ef_packing, ef_transport, ef_fundraising],
                                  variants: [product.master]) }
 
         it "returns a breakdown of fees" do
-          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {admin: 1.23, sales: 4.56, packing: 7.89, transport: 0.12}
+          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {admin: 1.23, sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45}
         end
 
         it "filters out zero fees" do
           ef_admin.calculator.update_attribute :preferred_amount, 0
 
-          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {sales: 4.56, packing: 7.89, transport: 0.12}
+          EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for(product.master).should == {sales: 4.56, packing: 7.89, transport: 0.12, fundraising: 3.45}
         end
       end
 
