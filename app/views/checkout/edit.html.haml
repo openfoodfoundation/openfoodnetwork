@@ -13,12 +13,12 @@
    
   %accordion{"close-others" => "true"}
     %checkout.row{"ng-controller" => "CheckoutCtrl"}
-      .small-9.columns
+      .small-12.medium-8.large-9.columns
         - unless spree_current_user
           = render partial: "checkout/authentication"
         .row{"ng-show" => "enabled", "ng-controller" => "AccordionCtrl"}
           = render partial: "checkout/form"
-      .small-3.columns
+      .small-12.medium-4.large-3.columns
         = render partial: "checkout/summary"
 
 
