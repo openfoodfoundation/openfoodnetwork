@@ -4,11 +4,8 @@ require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
-require 'open_food_network/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
-  include OpenFoodNetwork::ModelClassFromControllerName
-  
   # Fetches user's distributors, suppliers and order_cycles 
   before_filter :load_data, only: [:customers, :products_and_inventory]
 
