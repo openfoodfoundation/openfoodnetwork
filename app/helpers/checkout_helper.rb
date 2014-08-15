@@ -22,7 +22,7 @@ module CheckoutHelper
   end
 
   def checkout_cart_total_with_adjustments(order)
-    current_order.display_item_total.money.to_f + checkout_adjustments_total(current_order).money.to_f
+    order.display_item_total.money.to_f + checkout_adjustments_total(order).money.to_f
   end
 
 

@@ -113,7 +113,7 @@ feature %q{
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
-    payment_method = create(:payment_method, distributors: [])
+    payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
 

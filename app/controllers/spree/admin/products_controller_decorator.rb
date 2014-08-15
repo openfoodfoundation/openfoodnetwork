@@ -1,5 +1,5 @@
 Spree::Admin::ProductsController.class_eval do
-  before_filter :load_spree_api_key, :only => :bulk_edit
+  before_filter :load_bpe_data, :only => :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -31,9 +31,13 @@ Spree::Admin::ProductsController.class_eval do
     end
 
     if product_set.save
-      redirect_to "/api/products/managed?template=bulk_index;page=1;per_page=500;#{bulk_index_query}"
+      redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
-      render :nothing => true, :status => 418
+      if product_set.errors.present?
+        render json: { errors: product_set.errors }, status: 400
+      else
+        render :nothing => true, :status => 500
+      end
     end
   end
 
@@ -78,8 +82,10 @@ Spree::Admin::ProductsController.class_eval do
 
   private
 
-  def load_spree_api_key
+  def load_bpe_data
     current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
     @spree_api_key = spree_current_user.spree_api_key
+    @producers = Enterprise.managed_by(spree_current_user).is_primary_producer.order(:name)
+    @taxons = Spree::Taxon.order(:name)
   end
 end

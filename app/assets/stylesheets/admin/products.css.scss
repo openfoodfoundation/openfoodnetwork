@@ -2,59 +2,6 @@
   display: block;
 }
 
-div.pagination {
-	div.pagenav {
-		margin: 0px;
-		span.first, span.prev, span.next, span.last {
-			padding: 5px 0px;
-			display:inline-block;
-		}
-	}
-}
-
-div.pagination_info {
-	text-align: right;
-}
-
-
-
-div.applied_filter {
-	margin-bottom: 5px;
-	border: solid 2px #5498da;
-	padding: 5px 0px;
-	border-radius: 5px;
-	div.four.columns {
-		padding-left: 10px;
-	}
-}
-
-div.option_tabs {
-	div.applied_filters, div.filters, div.column_toggle {
-		margin-bottom: 10px;
-	}
-}
-
-div.option_tab_titles {
-	h6 {
-		border-radius: 3px;
-		border: 1px solid #cee1f4;
-		padding: 3px;
-		text-align: center;
-		color: darken(#cee1f4, 3);
-		cursor: pointer;
-		-moz-user-select: none;
-		-khtml-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-	}
-	h6.selected {
-		border: 1px solid #5498da;
-		color: #5498da;
-	}
-	margin-bottom: 10px;
-}
-
 tbody.odd {
 	tr.product { td { background-color: white; } }
 	tr.variant.odd { td { background-color: lighten(#eff5fc, 3); } }
@@ -76,41 +23,41 @@ th.left-actions, td.left-actions {
 	border-right: 1px solid #cee1f4 !important;
 }
 
-li.column-list-item {
-  border-radius: 3px;
-  padding: 2px 20px;
-  margin: 2px 1px;
-  background-color: white;
-  border: 2px solid lightgray;
-  color: darkgray;
-  font-size: 100%;
-  cursor: default;
-  text-align: center;
-  cursor: pointer;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-li.column-list-item.selected {
-  border: 2px solid #5498da;
-  background-color: #5498da;
-  color: white;
-  font-size: 100%;
-}
-
-ul.column-list {
-  list-style: none;
+#update-status-message {
+  margin: 4px 0px;
+  font-weight: bold;
 }
 
 table#listing_products.bulk {
   clear: both;
 
-  td.supplier {
-    select {
-      width: 125px;
+  colgroup col {
+    &.producer {
+      width: 18%;
+    }
+    &.name {
+      width: 18%;
+    }
+    &.unit {
+      width: 14%;
+    }
+    &.display_as {
+      width: 12%;
+    }
+    &.price {
+      width: 10%;
+    }
+    &.on_hand {
+      width: 10%;
+    }
+    &.category {
+      width: 15%;
+    }
+    &.available_on {
+      width: 15%;
+    }
+    &.actions {
+      width: 3%;
     }
   }
 

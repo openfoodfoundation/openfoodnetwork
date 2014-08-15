@@ -72,8 +72,7 @@ feature "As a consumer I want to check out my cart", js: true do
       let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
       let!(:pm2) { create(:payment_method, distributors: [distributor]) }
       let!(:pm3) do
-        Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test').tap do |pm|
-          pm.distributors << distributor
+        Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
           pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
           pm.preferred_password = '1406163716'
           pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'

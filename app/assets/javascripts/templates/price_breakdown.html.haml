@@ -24,6 +24,9 @@
         %li{"bo-if" => "variant.fees.transport"}
           .right {{ variant.fees.transport | currency }}
           Transport fee
+        %li{"bo-if" => "variant.fees.fundraising"}
+          .right {{ variant.fees.fundraising | currency }}
+          Fundraising fee
         %li
           %strong
             .right = {{ variant.price | currency }}

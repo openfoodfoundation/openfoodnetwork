@@ -107,6 +107,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
   match '/admin', :to => 'admin/overview#index', :as => :admin
+  match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
 
 
   namespace :api, :defaults => { :format => 'json' } do
@@ -116,6 +117,7 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
+      get :bulk_products, on: :collection
       delete :soft_delete
 
       resources :variants do

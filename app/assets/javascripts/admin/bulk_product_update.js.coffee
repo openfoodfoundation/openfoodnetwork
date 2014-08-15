@@ -1,23 +1,23 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager",
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager) ->
+  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers", "Taxons",
+  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons) ->
     $scope.updateStatusMessage =
       text: ""
       style: {}
 
     $scope.columns =
-      supplier:     {name: "Supplier",      visible: true}
+      producer:     {name: "Producer",      visible: true}
       name:         {name: "Name",          visible: true}
       unit:         {name: "Unit",          visible: true}
       price:        {name: "Price",         visible: true}
       on_hand:      {name: "On Hand",       visible: true}
-      taxons:       {name: "Taxons",        visible: false}
+      category:     {name: "Category",      visible: false}
       available_on: {name: "Available On",  visible: false}
 
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
     $scope.filterableColumns = [
-      { name: "Supplier",       db_column: "supplier_name" },
+      { name: "Producer",       db_column: "producer_name" },
       { name: "Name",           db_column: "name" }
     ]
 
@@ -28,25 +28,20 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
     $scope.optionTabs =
       filters:        { title: "Filter Products",   visible: false }
-      column_toggle:  { title: "Toggle Columns",    visible: false }
 
-    $scope.perPage = 25
-    $scope.currentPage = 1
+
+    $scope.producers = producers
+    $scope.taxons = Taxons.taxons
+    $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
+    $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
+    $scope.producerFilter = "0"
+    $scope.categoryFilter = "0"
     $scope.products = []
     $scope.filteredProducts = []
     $scope.currentFilters = []
-    $scope.totalCount = -> $scope.filteredProducts.length
-    $scope.totalPages = -> Math.ceil($scope.totalCount()/$scope.perPage)
-    $scope.firstVisibleProduct = -> ($scope.currentPage-1)*$scope.perPage+1
-    $scope.lastVisibleProduct = -> Math.min($scope.totalCount(),$scope.currentPage*$scope.perPage)
-    $scope.setPage = (page) -> $scope.currentPage = page
-    $scope.minPage = -> Math.max(1,Math.min($scope.totalPages()-4,$scope.currentPage-2))
-    $scope.maxPage = -> Math.min($scope.totalPages(),Math.max(5,$scope.currentPage+2))
+    $scope.limit = 15
+    $scope.productsWithUnsavedVariants = []
 
-    $scope.$watch ->
-      $scope.totalPages()
-    , (newVal, oldVal) ->
-      $scope.currentPage = Math.max $scope.totalPages(), 1  if newVal != oldVal && $scope.totalPages() < $scope.currentPage
 
     $scope.initialise = (spree_api_key) ->
       authorise_api_reponse = ""
@@ -55,24 +50,29 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
-          dataFetcher("/api/enterprises/managed?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
-            $scope.suppliers = data
-            # Need to have suppliers before we get products so we can match suppliers to product.supplier
-            $scope.fetchProducts()
+          $scope.fetchProducts()
         else if authorise_api_reponse.hasOwnProperty("error")
           $scope.api_error_msg = authorise_api_reponse("error")
         else
           api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
 
+    $scope.$watchCollection '[query, producerFilter, categoryFilter]', ->
+      $scope.limit = 15 # Reset limit whenever searching
 
     $scope.fetchProducts = -> # WARNING: returns a promise
       $scope.loading = true
       queryString = $scope.currentFilters.reduce (qs,f) ->
         return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
       , ""
-      return dataFetcher("/api/products/managed?template=bulk_index;page=1;per_page=500;#{queryString}").then (data) ->
-        $scope.resetProducts data
+      return dataFetcher("/api/products/bulk_products?page=1;per_page=20;#{queryString}").then (data) ->
+        $scope.resetProducts data.products
         $scope.loading = false
+        if data.pages > 1
+          for page in [2..data.pages]
+            dataFetcher("/api/products/bulk_products?page=#{page};per_page=20;#{queryString}").then (data) ->
+              for product in data.products
+                $scope.unpackProduct product
+                $scope.products.push product
 
 
     $scope.resetProducts = (data) ->
@@ -87,17 +87,15 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.unpackProduct = (product) ->
       $scope.displayProperties ||= {}
       $scope.displayProperties[product.id] ||= showVariants: false
-      $scope.matchSupplier product
+      #$scope.matchProducer product
       $scope.loadVariantUnit product
 
 
-    $scope.matchSupplier = (product) ->
-      for i of $scope.suppliers
-        supplier = $scope.suppliers[i]
-        if angular.equals(supplier, product.supplier)
-          product.supplier = supplier
-          break
-
+    # $scope.matchProducer = (product) ->
+    #   for producer in $scope.producers
+    #     if angular.equals(producer.id, product.producer)
+    #       product.producer = producer
+    #       break
 
     $scope.loadVariantUnit = (product) ->
       product.variant_unit_with_scale =
@@ -108,13 +106,14 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         else
           null
 
-      if product.variants
-        for variant in product.variants
-          $scope.loadVariantVariantUnit product, variant
-      $scope.loadVariantVariantUnit product, product.master if product.master
+      $scope.loadVariantUnitValues product if product.variants
+      $scope.loadVariantUnitValue product, product.master if product.master
 
+    $scope.loadVariantUnitValues = (product) ->
+      for variant in product.variants
+        $scope.loadVariantUnitValue product, variant
 
-    $scope.loadVariantVariantUnit = (product, variant) ->
+    $scope.loadVariantUnitValue = (product, variant) ->
       unit_value = $scope.variantUnitValue product, variant
       unit_value = if unit_value? then unit_value else ''
       variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
@@ -153,29 +152,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       tab.visible = !tab.visible
       $scope.visibleTab = tab
 
-    $scope.addFilter = (filter) ->
-      existingfilterIndex = $scope.indexOfFilter filter
-      if $scope.filterableColumns.indexOf(filter.property) >= 0 && $scope.filterTypes.indexOf(filter.predicate) >= 0 && filter.value != "" && filter.value != undefined
-        if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
-          if existingfilterIndex == -1
-            $scope.currentFilters.push filter
-            $scope.fetchProducts()
-          else if confirm("'#{filter.predicate.name}' filter already exists on column '#{filter.property.name}'. Replace it?")
-            $scope.currentFilters[existingfilterIndex] = filter
-            $scope.fetchProducts()
-      else
-        alert("Please ensure all filter fields are filled in before adding a filter.")
-
-    $scope.removeFilter = (filter) ->
-      index = $scope.currentFilters.indexOf(filter)
-      if index != -1
-        $scope.currentFilters.splice index, 1
-        $scope.fetchProducts()
-
-    $scope.indexOfFilter = (filter) ->
-      for existingFilter, i in $scope.currentFilters
-        return i if filter.property == existingFilter.property && filter.predicate == existingFilter.predicate
-      return -1
+    $scope.resetSelectFilters = ->
+      $scope.query = ""
+      $scope.producerFilter = "0"
+      $scope.categoryFilter = "0"
 
     $scope.editWarn = (product, variant) ->
       if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
@@ -192,6 +172,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         display_name: null
         on_hand: null
         price: null
+      $scope.productsWithUnsavedVariants.push product
       $scope.displayProperties[product.id].showVariants = true
 
 
@@ -200,6 +181,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       $scope.variantIdCounter -= 1
       $scope.variantIdCounter
 
+    $scope.updateVariantLists = (server_products) ->
+      for product in $scope.productsWithUnsavedVariants
+        server_product = $scope.findProduct(product.id, server_products)
+        product.variants = server_product.variants
+        $scope.loadVariantUnitValues product
 
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
@@ -244,7 +230,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.hasVariants = (product) ->
-      Object.keys(product.variants).length > 0
+      product.variants.length > 0
 
 
     $scope.hasUnit = (product) ->
@@ -269,7 +255,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if productsToSubmit.length > 0
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
-        $scope.setMessage $scope.updateStatusMessage, "No changes to update.", color: "grey", 3000
+        $scope.setMessage $scope.updateStatusMessage, "No changes to save.", color: "grey", 3000
 
 
     $scope.updateProducts = (productsToSubmit) ->
@@ -281,22 +267,16 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
           products: productsToSubmit
           filters: $scope.currentFilters
       ).success((data) ->
-        # TODO: remove this check altogether, need to write controller tests if we want to test this behaviour properly
-        # Note: Rob implemented subset(), which is a simpler alternative to productsWithoutDerivedAttributes(). However, it
-        #       conflicted with some changes I made before merging my work, so for now I've reverted to the old way of
-        #       doing things. TODO: Review together and decide on strategy here. -- Rohan, 14-1-2014
-        #if subset($scope.productsWithoutDerivedAttributes(), data)
-        if $scope.productListsMatch $scope.products, data
-          $scope.resetProducts data
-          $timeout -> $scope.displaySuccess()
-        else
-          # console.log angular.toJson($scope.productsWithoutDerivedAttributes($scope.products))
-          # console.log "---"
-          # console.log angular.toJson($scope.productsWithoutDerivedAttributes(data))
-          # console.log "---"
-          $scope.displayFailure "Product lists do not match."
+        DirtyProducts.clear()
+        $scope.updateVariantLists(data.products)
+        $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
-        $scope.displayFailure "Server returned with error status: " + status
+        if status == 400 && data.errors? && data.errors.length > 0
+          errors = error + "\n" for error in data.errors
+          alert "Saving failed with the following error(s):\n" + errors
+          $scope.displayFailure "Save failed due to invalid data"
+        else
+          $scope.displayFailure "Server returned with error status: " + status
 
 
     $scope.packProduct = (product) ->
@@ -322,58 +302,19 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if variant.hasOwnProperty("unit_value_with_description")
         match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
         if match
-          product = $scope.findProduct(product.id)
+          product = $scope.findProduct(product.id, $scope.products)
           variant.unit_value  = parseFloat(match[1])
           variant.unit_value  = null if isNaN(variant.unit_value)
           variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
 
-
-    $scope.productListsMatch = (clientProducts, serverProducts) ->
-      $scope.copyNewVariantIds clientProducts, serverProducts
-      angular.toJson($scope.productsWithoutDerivedAttributes(clientProducts)) == angular.toJson($scope.productsWithoutDerivedAttributes(serverProducts))
-
-
-    # When variants are created clientside, they are given a negative id. The server
-    # responds with a real id, which would cause the productListsMatch() check to fail.
-    # To avoid that false negative, we copy the server variant id to the client for any
-    # negative ids.
-    $scope.copyNewVariantIds = (clientProducts, serverProducts) ->
-      if clientProducts?
-        for product, i in clientProducts
-          if product.variants?
-            for variant, j in product.variants
-              if variant.id < 0
-                variant.id = serverProducts[i].variants[j].id
-
-
-    $scope.productsWithoutDerivedAttributes = (products) ->
-      products_filtered = []
-      if products
-        products_filtered = $scope.deepCopyProducts products
-        for product in products_filtered
-          delete product.variant_unit_with_scale
-          if product.variants
-            for variant in product.variants
-              delete variant.unit_value_with_description
-              # If we end up live-updating this field, we might want to reinstate its verification here
-              delete variant.options_text
-          delete product.master
-      products_filtered
-
-
-    $scope.deepCopyProducts = (products) ->
-      copied_products = (angular.extend {}, product for product in products)
-      for product in copied_products
-        if product.variants
-          product.variants = (angular.extend {}, variant for variant in product.variants)
-      copied_products
-
-
-    $scope.findProduct = (id) ->
-      products = (product for product in $scope.products when product.id == id)
+    $scope.findProduct = (id, product_list) ->
+      products = (product for product in product_list when product.id == id)
       if products.length == 0 then null else products[0]
 
+    $scope.incrementLimit = ->
+      if $scope.limit < $scope.products.length
+        $scope.limit = $scope.limit + 5
 
     $scope.setMessage = (model, text, style, timeout) ->
       model.text = text
@@ -386,26 +327,27 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.displayUpdating = ->
-      $scope.setMessage $scope.updateStatusMessage, "Updating...",
-        color: "orange"
+      $scope.setMessage $scope.updateStatusMessage, "Saving...",
+        color: "#FF9906"
       , false
 
 
     $scope.displaySuccess = ->
-      $scope.setMessage $scope.updateStatusMessage, "Update complete",
-        color: "green"
+      $scope.setMessage $scope.updateStatusMessage, "Changes saved.",
+        color: "#9fc820"
       , 3000
 
 
     $scope.displayFailure = (failMessage) ->
-      $scope.setMessage $scope.updateStatusMessage, "Updating failed. " + failMessage,
-        color: "red"
-      , 10000
+      $scope.setMessage $scope.updateStatusMessage, "Saving failed. " + failMessage,
+        color: "#DA5354"
+      , false
 
 
     $scope.displayDirtyProducts = ->
       if DirtyProducts.count() > 0
-        $scope.setMessage $scope.updateStatusMessage, "Changes to " + DirtyProducts.count() + " products remain unsaved.",
+        message = if DirtyProducts.count() == 1 then "one product" else DirtyProducts.count() + " products"
+        $scope.setMessage $scope.updateStatusMessage, "Changes to " + message + " remain unsaved.",
           color: "gray"
         , false
       else
@@ -442,8 +384,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
-        if product.hasOwnProperty("supplier")
-          filteredProduct.supplier_id = product.supplier.id
+        if product.hasOwnProperty("producer")
+          filteredProduct.supplier_id = product.producer
           hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
@@ -458,8 +400,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("taxon_ids")
-          filteredProduct.taxon_ids = product.taxon_ids
+        if product.hasOwnProperty("category")
+          filteredProduct.primary_taxon_id = product.category
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on
@@ -510,11 +452,3 @@ toObjectWithIDKeys = (array) ->
       object[array[i].id].variants = toObjectWithIDKeys(array[i].variants)  if array[i].hasOwnProperty("variants") and array[i].variants instanceof Array
 
   object
-
-subset = (bigArray,smallArray) ->
-  if smallArray instanceof Array && bigArray instanceof Array && smallArray.length > 0
-    for item in smallArray
-      return false if angular.toJson(bigArray).indexOf(angular.toJson(item)) == -1
-    return true
-  else
-    return false
