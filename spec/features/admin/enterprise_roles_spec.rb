@@ -62,6 +62,20 @@ feature %q{
         page.should have_content "That role is already present."
       end.to change(EnterpriseRole, :count).by(0)
     end
+
+    scenario "deleting a relationship" do
+      u = create(:user, email: 'u@example.com')
+      e = create(:enterprise, name: 'One')
+      er = create(:enterprise_role, user: u, enterprise: e)
+
+      visit admin_enterprise_roles_path
+      page.should have_relationship u, e
+
+      first("a.delete-enterprise-role").click
+
+      page.should_not have_relationship u, e
+      EnterpriseRole.where(id: er.id).should be_empty
+    end
   end
 
 

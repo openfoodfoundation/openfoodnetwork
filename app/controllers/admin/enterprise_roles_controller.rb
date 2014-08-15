@@ -16,5 +16,11 @@ module Admin
         render status: 400, json: {errors: @enterprise_role.errors.full_messages.join(', ')}
       end
     end
+
+    def destroy
+      @enterprise_role = EnterpriseRole.find params[:id]
+      @enterprise_role.destroy
+      render nothing: true
+    end
   end
 end
