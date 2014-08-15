@@ -1,0 +1,9 @@
+%tr
+  %td
+    %select{name: "enterprise_role_user_id", "ng-model" => "user_id", "ng-options" => "u.id as u.email for u in Users.users"}
+  %td manages
+  %td
+    %select{name: "enterprise_role_enterprise_id", "ng-model" => "enterprise_id", "ng-options" => "e.id as e.name for e in Enterprises.all_enterprises"}
+  %td.actions
+    %input{type: "button", value: "Create", "ng-click" => "create()"}
+    .errors {{ EnterpriseRoles.create_errors }}

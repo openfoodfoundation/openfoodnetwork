@@ -32,6 +32,19 @@ feature %q{
         page.should have_relationship u2, e4
       end
     end
+
+    scenario "creating a relationship" do
+      u = create(:user, email: 'u@example.com')
+      e = create(:enterprise, name: 'One')
+
+      visit admin_enterprise_roles_path
+      select 'u@example.com', from: 'enterprise_role_user_id'
+      select 'One', from: 'enterprise_role_enterprise_id'
+      click_button 'Create'
+
+      page.should have_relationship u, e
+      EnterpriseRole.where(user_id: u, enterprise_id: e).should be_present
+    end
   end
 
 
