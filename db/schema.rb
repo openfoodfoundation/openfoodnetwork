@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140723023713) do
+ActiveRecord::Schema.define(:version => 20140815053659) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
   end
 
   add_index "enterprise_roles", ["enterprise_id"], :name => "index_enterprise_roles_on_enterprise_id"
+  add_index "enterprise_roles", ["user_id", "enterprise_id"], :name => "index_enterprise_roles_on_user_id_and_enterprise_id", :unique => true
   add_index "enterprise_roles", ["user_id"], :name => "index_enterprise_roles_on_user_id"
 
   create_table "enterprises", :force => true do |t|

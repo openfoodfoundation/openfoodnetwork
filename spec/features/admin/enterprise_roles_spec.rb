@@ -45,6 +45,23 @@ feature %q{
       page.should have_relationship u, e
       EnterpriseRole.where(user_id: u, enterprise_id: e).should be_present
     end
+
+    scenario "attempting to create a relationship with invalid data" do
+      u = create(:user, email: 'u@example.com')
+      e = create(:enterprise, name: 'One')
+      create(:enterprise_role, user: u, enterprise: e)
+
+      expect do
+        # When I attempt to create a duplicate relationship
+        visit admin_enterprise_roles_path
+        select 'u@example.com', from: 'enterprise_role_user_id'
+        select 'One', from: 'enterprise_role_enterprise_id'
+        click_button 'Create'
+
+        # Then I should see an error message
+        page.should have_content "That role is already present."
+      end.to change(EnterpriseRole, :count).by(0)
+    end
   end
 
 
