@@ -4,6 +4,10 @@ module Admin
       admin_inject_json_ams "admin.enterprises", "enterprise", @enterprise, Api::Admin::EnterpriseSerializer
     end
 
+    def admin_inject_enterprise_roles
+      admin_inject_json_ams_array "ofn.admin", "enterpriseRoles", @enterprise_roles, Api::Admin::EnterpriseRoleSerializer
+    end
+
     def admin_inject_payment_methods
       admin_inject_json_ams_array "admin.payment_methods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
     end
