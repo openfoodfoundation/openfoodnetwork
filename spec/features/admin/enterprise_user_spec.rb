@@ -121,7 +121,21 @@ feature %q{
       end
     end
 
-    it "shows me only profile options on the enterprises page"
+    it "shows me only profile options on the enterprise listing page" do
+      click_link 'Enterprises'
+
+      within "tr.enterprise-#{supplier_profile.id}" do
+        page.should_not have_link 'Enterprise Fees'
+      end
+
+      within "tr.enterprise-#{distributor_profile.id}" do
+        page.should_not have_link 'Payment Methods'
+        page.should_not have_link 'Shipping Methods'
+        page.should_not have_link 'Enterprise Fees'
+      end
+    end
+
+    it "shows me only profile fields on the enterprise edit page"
   end
 
   describe "system management lockdown" do
