@@ -7,71 +7,64 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  before(:each) do
-    @new_user = create_enterprise_user
-    @supplier1 = create(:supplier_enterprise, name: 'Supplier 1')
-    @supplier2 = create(:supplier_enterprise, name: 'Supplier 2')
-    @distributor1 = create(:distributor_enterprise, name: 'Distributor 3')
-    @distributor2 = create(:distributor_enterprise, name: 'Distributor 4')
-  end
+  let!(:user) { create_enterprise_user }
+  let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
+  let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
+  let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
+  let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
 
-  context "creating an Enterprise User" do
-    context 'with no enterprises' do
-      scenario "assigning a user to an Enterprise" do
+  describe "creating an enterprise user" do
+    context "with no enterprises managed" do
+      it "assigns an enterprise to a user" do
         login_to_admin_section
         click_link 'Users'
-        click_link @new_user.email
+        click_link user.email
         click_link 'Edit'
 
-        check @supplier2.name
+        check supplier2.name
 
         click_button 'Update'
-        @new_user.enterprises.count.should == 1
-        @new_user.enterprises.first.name.should == @supplier2.name
+        user.enterprises.count.should == 1
+        user.enterprises.first.name.should == supplier2.name
       end
-
     end
 
-    context 'with existing enterprises' do
-
-      before(:each) do
-        @new_user.enterprise_roles.build(enterprise: @supplier1).save
-        @new_user.enterprise_roles.build(enterprise: @distributor1).save
+    context "with existing enterprises managed" do
+      before do
+        user.enterprise_roles.create!(enterprise: supplier1)
+        user.enterprise_roles.create!(enterprise: distributor1)
       end
 
-      scenario "removing and add enterprises for a user" do
+      it "can remove and add enterprise management for a user" do
         login_to_admin_section
 
         click_link 'Users'
-        click_link @new_user.email
+        click_link user.email
         click_link 'Edit'
 
-        uncheck @distributor1.name # remove
-        check @distributor2.name # add
+        uncheck distributor1.name # remove
+        check distributor2.name # add
 
         click_button 'Update'
 
-        @new_user.enterprises.count.should == 2
-        @new_user.enterprises.should include(@supplier1)
-        @new_user.enterprises.should include(@distributor2)
+        user.enterprises.count.should == 2
+        user.enterprises.should include supplier1
+        user.enterprises.should include distributor2
       end
-
     end
-
   end
 
-  context "Product management" do
-
-    context 'products I supply' do
-      before(:each) do
-        @new_user.enterprise_roles.build(enterprise: @supplier1).save
-        product1 = create(:product, name: 'Green eggs', supplier: @supplier1)
-        product2 = create(:product, name: 'Ham', supplier: @supplier2)
-        login_to_admin_as @new_user
+  describe "product management" do
+    describe "managing supplied products" do
+      before do
+        user.enterprise_roles.create!(enterprise: supplier1)
+        product1 = create(:product, name: 'Green eggs', supplier: supplier1)
+        product2 = create(:product, name: 'Ham', supplier: supplier2)
+        login_to_admin_as user
       end
 
-      scenario "manage products that I supply" do
-        visit '/admin/products'
+      it "can manage products that I supply" do
+        visit spree.admin_products_path
 
         within '#listing_products' do
           page.should have_content 'Green eggs'
@@ -79,23 +72,21 @@ feature %q{
         end
       end
     end
-
   end
 
-  context "System management lockdown" do
-
-    before(:each) do
-      @new_user.enterprise_roles.build(enterprise: @supplier1).save
-      login_to_admin_as @new_user
+  describe "system management lockdown" do
+    before do
+      user.enterprise_roles.create!(enterprise: supplier1)
+      login_to_admin_as user
     end
 
     scenario "should not be able to see system configuration" do
-      visit '/admin/general_settings/edit'
+      visit spree.edit_admin_general_settings_path
       page.should have_content 'Unauthorized'
     end
 
     scenario "should not be able to see user management" do
-      visit '/admin/users'
+      visit spree.admin_users_path
       page.should have_content 'Unauthorized'
     end
   end
