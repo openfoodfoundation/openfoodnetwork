@@ -73,6 +73,7 @@ feature %q{
     click_link 'New Enterprise'
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    choose 'Full'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
     fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
@@ -123,6 +124,7 @@ feature %q{
     all("a", text:'Edit Profile').first.click
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    choose 'Single'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
     

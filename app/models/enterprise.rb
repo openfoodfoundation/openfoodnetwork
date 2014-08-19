@@ -1,5 +1,8 @@
 class Enterprise < ActiveRecord::Base
+  TYPES = %w(full single profile)
   ENTERPRISE_SEARCH_RADIUS = 100
+
+  self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
 
@@ -40,9 +43,9 @@ class Enterprise < ActiveRecord::Base
   supports_s3 :promo_image
 
 
-  validates_presence_of :name
-  validates_presence_of :address
-  validates_associated :address
+  validates :name, presence: true
+  validates :type, presence: true, inclusion: {in: TYPES}
+  validates :address, presence: true, associated: true
 
   before_validation :set_unused_address_fields
   after_validation :geocode_address
