@@ -19,6 +19,8 @@
               %span.icon-ok-sign.with-tip{ title: "#{pluralize payment_method_count, 'payment method'}" }
             - else
               %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
+          - else
+            &nbsp;
         %span.symbol.three.columns.centered
           - if can? :admin, Spree::ShippingMethod
             - shipping_method_count = enterprise.shipping_methods.count
@@ -26,6 +28,8 @@
               %span.icon-ok-sign.with-tip{ title: "#{pluralize shipping_method_count, 'shipping method'}" }
             - else
               %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
+          - else
+            &nbsp;
         %span.symbol.three.columns.centered
           - if can? :admin, EnterpriseFee
             - fee_count = enterprise.enterprise_fees.count
@@ -33,5 +37,7 @@
               %span.icon-ok-sign.with-tip{ title: "#{pluralize fee_count, 'fee'}" }
             - else
               %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no enterprise fees" }
+          - else
+            &nbsp;
         %span.two.columns.omega.right
           %span.icon-arrow-right
