@@ -1,0 +1,20 @@
+- enterprise_fees_color = @enterprise_fees.count > 0 ? "blue" : "red"
+.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'Enterprise.is_distributor' } }
+  .four.columns.alpha.header{ class: "#{enterprise_fees_color}" }
+    %span.four.columns.alpha.centered Enterprise Fees
+  .four.columns.alpha.list{ class: "#{enterprise_fees_color}" }
+    - if @enterprise_fees.count > 0
+      - @enterprise_fees.each do |enterprise_fee|
+        %a.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.admin_enterprise_fees_path}" }
+          %span.three.columns.alpha
+            = enterprise_fee.name
+          %span.one.column.omega
+            &nbsp;
+    - else
+      .four.columns.alpha.list-item.red
+        %span.three.columns.alpha None Available
+        %span.one.column.omega
+          %span.icon-remove-sign
+  %a.four.columns.alpha.button{ href: "#{main_app.admin_enterprise_fees_path}", class: "#{enterprise_fees_color}" }
+    CREATE NEW
+    %span.icon-arrow-right
