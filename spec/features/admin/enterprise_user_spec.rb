@@ -6,10 +6,12 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
+  include AdminHelper
 
   let!(:user) { create_enterprise_user }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
+  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', type: 'profile') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
 
@@ -72,6 +74,25 @@ feature %q{
         end
       end
     end
+  end
+
+  describe "with only a profile-level enterprise" do
+    before do
+      user.enterprise_roles.create! enterprise: supplier_profile
+      login_to_admin_as user
+    end
+
+    it "shows me only menu items for enterprise management" do
+      page.should have_admin_menu_item 'Dashboard'
+      page.should have_admin_menu_item 'Enterprises'
+
+      ['Orders', 'Products', 'Reports', 'Configuration', 'Promotions', 'Users', 'Order Cycles'].each do |menu_item_name|
+        page.should_not have_admin_menu_item menu_item_name
+      end
+    end
+
+    it "shows me a cut-down dashboard"
+    it "shows me only profile options on the enterprises page"
   end
 
   describe "system management lockdown" do

@@ -14,8 +14,7 @@ class AbilityDecorator
 
 
   def can_manage_products?(user)
-    can_manage_enterprises? user
-    # ( user.enterprises.map(&:type) & %w(single full) ).any?
+    ( user.enterprises.map(&:type) & %w(single full) ).any?
   end
 
 

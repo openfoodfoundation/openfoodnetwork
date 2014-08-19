@@ -6,6 +6,46 @@ module Spree
 
   describe User do
 
+    describe "broad permissions" do
+      subject { AbilityDecorator.new(user) }
+      let(:user) { create(:user) }
+      let(:enterprise_full) { create(:enterprise, type: 'full') }
+      let(:enterprise_single) { create(:enterprise, type: 'single') }
+      let(:enterprise_profile) { create(:enterprise, type: 'profile') }
+
+      describe "managing enterprises" do
+        it "can manage enterprises when the user has at least one enterprise assigned" do
+          user.enterprise_roles.create! enterprise: enterprise_full
+          subject.can_manage_enterprises?(user).should be_true
+        end
+
+        it "can't otherwise" do
+          subject.can_manage_enterprises?(user).should be_false
+        end
+      end
+
+      describe "managing products" do
+        it "can when a user manages a 'full' type enterprise" do
+          user.enterprise_roles.create! enterprise: enterprise_full
+          subject.can_manage_products?(user).should be_true
+        end
+
+        it "can when a user manages a 'single' type enterprise" do
+          user.enterprise_roles.create! enterprise: enterprise_single
+          subject.can_manage_products?(user).should be_true
+        end
+
+        it "can't when a user manages a 'profile' type enterprise" do
+          user.enterprise_roles.create! enterprise: enterprise_profile
+          subject.can_manage_products?(user).should be_false
+        end
+
+        it "can't when the user manages no enterprises" do
+          subject.can_manage_products?(user).should be_false
+        end
+      end
+    end
+
     describe 'Roles' do
 
       # create enterprises

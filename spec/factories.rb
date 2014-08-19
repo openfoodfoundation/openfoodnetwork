@@ -83,6 +83,7 @@ FactoryGirl.define do
 
   factory :enterprise, :class => Enterprise do
     sequence(:name) { |n| "Enterprise #{n}" }
+    type 'full'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'
