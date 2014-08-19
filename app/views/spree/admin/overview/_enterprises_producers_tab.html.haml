@@ -11,17 +11,17 @@
           = enterprise.name
         %span.symbol.three.columns.centered
           %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_products.not_deleted.count > 0 ? "green" : "red" }" }
+          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_products.not_deleted.any? ? "green" : "red" }" }
             = enterprise.supplied_products.not_deleted.count
           %span.one.column.omega &nbsp;
         %span.symbol.three.columns.centered
           %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_and_active_products_on_hand.count > 0 ? "green" : "red" }" }
+          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_and_active_products_on_hand.any? ? "green" : "red" }" }
             = enterprise.supplied_and_active_products_on_hand.count
           %span.one.column.omega &nbsp;
         %span.symbol.three.columns.centered
           %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.active_products_in_order_cycles.count > 0 ? "green" : "orange" }" }
+          %span.text-icon.one.column.centered{ class: "#{enterprise.active_products_in_order_cycles.any? ? "green" : "orange" }" }
             = enterprise.active_products_in_order_cycles.count
           %span.one.column.omega &nbsp;
         %span.two.columns.omega.right
