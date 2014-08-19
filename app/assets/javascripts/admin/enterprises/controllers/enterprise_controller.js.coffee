@@ -4,8 +4,8 @@ angular.module("admin.enterprises")
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
 
-    for PaymentMethod in $scope.PaymentMethods
-      PaymentMethod.selected = if PaymentMethod.id in $scope.Enterprise.payment_method_ids then true else false
+    for payment_method in $scope.PaymentMethods
+      payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
 
     $scope.paymentMethodsColor = ->
       if $scope.PaymentMethods.length > 0
@@ -14,13 +14,13 @@ angular.module("admin.enterprises")
         "red"
 
     $scope.selectedPaymentMethodsCount = ->
-      $scope.PaymentMethods.reduce (count, PaymentMethod) ->
-        count++ if PaymentMethod.selected
+      $scope.PaymentMethods.reduce (count, payment_method) ->
+        count++ if payment_method.selected
         count
       , 0
 
-    for ShippingMethod in $scope.ShippingMethods
-      ShippingMethod.selected = if ShippingMethod.id in $scope.Enterprise.shipping_method_ids then true else false
+    for shipping_method in $scope.ShippingMethods
+      shipping_method.selected = shipping_method.id in $scope.Enterprise.shipping_method_ids
 
     $scope.shippingMethodsColor = ->
       if $scope.ShippingMethods.length > 0
@@ -29,7 +29,7 @@ angular.module("admin.enterprises")
         "red"
 
     $scope.selectedShippingMethodsCount = ->
-      $scope.ShippingMethods.reduce (count, ShippingMethod) ->
-        count++ if ShippingMethod.selected
+      $scope.ShippingMethods.reduce (count, shipping_method) ->
+        count++ if shipping_method.selected
         count
       , 0
