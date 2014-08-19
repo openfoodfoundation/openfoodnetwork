@@ -5,6 +5,8 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/map", to: "map#index", as: :map
 
+  get "/register", to: "registration#index", as: :registration
+
   resource :shop, controller: "shop" do
     get :products
     post :order_cycle
