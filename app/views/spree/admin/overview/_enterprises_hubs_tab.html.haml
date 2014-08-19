@@ -15,21 +15,17 @@
         %span.symbol.three.columns.centered
           - if can? :admin, Spree::PaymentMethod
             - payment_method_count = enterprise.payment_methods.count
-            - if payment_method_count < 1 && enterprise.is_distributor
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
-            - elsif enterprise.is_primary_producer
-              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require payment methods." }
-            - else
+            - if payment_method_count > 0
               %span.icon-ok-sign.with-tip{ title: "#{pluralize payment_method_count, 'payment method'}" }
+            - else
+              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
         %span.symbol.three.columns.centered
           - if can? :admin, Spree::ShippingMethod
             - shipping_method_count = enterprise.shipping_methods.count
-            - if shipping_method_count < 1 && enterprise.is_distributor
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
-            - elsif enterprise.is_primary_producer
-              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require shipping methods." }
-            - else
+            - if shipping_method_count > 0
               %span.icon-ok-sign.with-tip{ title: "#{pluralize shipping_method_count, 'shipping method'}" }
+            - else
+              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
         %span.symbol.three.columns.centered
           - if can? :admin, EnterpriseFee
             - fee_count = enterprise.enterprise_fees.count
