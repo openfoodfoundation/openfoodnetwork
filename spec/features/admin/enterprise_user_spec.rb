@@ -135,7 +135,13 @@ feature %q{
       end
     end
 
-    it "shows me only profile fields on the enterprise edit page"
+    it "shows me only profile fields on the hub edit page" do
+      click_link distributor_profile.name
+
+      page.should_not have_selector '#payment_methods'
+      page.should_not have_selector '#shipping_methods'
+      page.should_not have_selector '#enterprise_fees'
+    end
   end
 
   describe "system management lockdown" do

@@ -5,6 +5,6 @@
   = @enterprise.name
 
 = form_for [main_app, :admin, @enterprise] do |f|
-  = render partial: 'ng_form', :locals => { f: f }
+  = render 'ng_form', f: f
   .twelve.columns.alpha
     = render partial: 'spree/admin/shared/edit_resource_links'
