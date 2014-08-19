@@ -1,35 +1,41 @@
 %div.hubs_tab{ ng: { show: "activeTab == 'hubs'"} }
   %div.sixteen.columns.alpha.list-title
     %span.five.columns.alpha Name
-    %span.centered.three.columns Payment Methods
-    %span.centered.three.columns Shipping Methods
-    %span.centered.three.columns Enterprise Fees
+    - if can? :admin, Spree::PaymentMethod
+      %span.centered.three.columns Payment Methods
+    - if can? :admin, Spree::ShippingMethod
+      %span.centered.three.columns Shipping Methods
+    - if can? :admin, EnterpriseFee
+      %span.centered.three.columns Enterprise Fees
   %div.sixteen.columns.alpha.list
     - @enterprises.is_distributor.each do |enterprise|
       %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
         %span.five.columns.alpha
           = enterprise.name
         %span.symbol.three.columns.centered
-          - payment_method_count = enterprise.payment_methods.count
-          - if payment_method_count < 1 && enterprise.is_distributor
-            %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
-          - elsif enterprise.is_primary_producer
-            %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require payment methods." }
-          - else
-            %span.icon-ok-sign.with-tip{ title: "#{pluralize payment_method_count, 'payment method'}" }
+          - if can? :admin, Spree::PaymentMethod
+            - payment_method_count = enterprise.payment_methods.count
+            - if payment_method_count < 1 && enterprise.is_distributor
+              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
+            - elsif enterprise.is_primary_producer
+              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require payment methods." }
+            - else
+              %span.icon-ok-sign.with-tip{ title: "#{pluralize payment_method_count, 'payment method'}" }
         %span.symbol.three.columns.centered
-          - shipping_method_count = enterprise.shipping_methods.count
-          - if shipping_method_count < 1 && enterprise.is_distributor
-            %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
-          - elsif enterprise.is_primary_producer
-            %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require shipping methods." }
-          -else
-            %span.icon-ok-sign.with-tip{ title: "#{pluralize shipping_method_count, 'shipping method'}" }
+          - if can? :admin, Spree::ShippingMethod
+            - shipping_method_count = enterprise.shipping_methods.count
+            - if shipping_method_count < 1 && enterprise.is_distributor
+              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
+            - elsif enterprise.is_primary_producer
+              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require shipping methods." }
+            - else
+              %span.icon-ok-sign.with-tip{ title: "#{pluralize shipping_method_count, 'shipping method'}" }
         %span.symbol.three.columns.centered
-          - fee_count = enterprise.enterprise_fees.count
-          - if fee_count > 0
-            %span.icon-ok-sign.with-tip{ title: "#{pluralize fee_count, 'fee'}" }
-          - else
-            %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no enterprise fees" }
+          - if can? :admin, EnterpriseFee
+            - fee_count = enterprise.enterprise_fees.count
+            - if fee_count > 0
+              %span.icon-ok-sign.with-tip{ title: "#{pluralize fee_count, 'fee'}" }
+            - else
+              %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no enterprise fees" }
         %span.two.columns.omega.right
           %span.icon-arrow-right

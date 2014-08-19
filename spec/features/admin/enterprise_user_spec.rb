@@ -14,6 +14,7 @@ feature %q{
   let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', type: 'profile') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
+  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', type: 'profile') }
 
   describe "creating an enterprise user" do
     context "with no enterprises managed" do
@@ -79,6 +80,7 @@ feature %q{
   describe "with only a profile-level enterprise" do
     before do
       user.enterprise_roles.create! enterprise: supplier_profile
+      user.enterprise_roles.create! enterprise: distributor_profile
       login_to_admin_as user
     end
 
@@ -91,7 +93,34 @@ feature %q{
       end
     end
 
-    it "shows me a cut-down dashboard"
+    describe "dashboard" do
+      it "shows me enterprise management controls" do
+        within('#enterprises') do
+          page.should have_selector 'h3', text: 'My Enterprises'
+          page.should have_link 'CREATE NEW'
+          page.should have_link supplier_profile.name
+          page.should have_link 'MANAGE MY ENTERPRISES'
+        end
+      end
+
+      it "does not show me product management controls" do
+        page.should_not have_selector '#products'
+        page.should_not have_selector '#order_cycles'
+      end
+
+      it "does not show me enterprise product info, payment methods, shipping methods or enterprise fees" do
+        # Producer product info
+        page.should_not have_selector '.producers_tab span', text: 'Total Products'
+        page.should_not have_selector '.producers_tab span', text: 'Active Products'
+        page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
+
+        # Payment methods, shipping methods, enterprise fees
+        page.should_not have_selector '.hubs_tab span', text: 'Payment Methods'
+        page.should_not have_selector '.hubs_tab span', text: 'Shipping Methods'
+        page.should_not have_selector '.hubs_tab span', text: 'Enterprise Fees'
+      end
+    end
+
     it "shows me only profile options on the enterprises page"
   end
 

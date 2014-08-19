@@ -1,28 +1,37 @@
 %div.producers_tab{ ng: { show: "activeTab == 'producers'"} }
   %div.list-title.sixteen.columns.alpha
     %span.five.columns.alpha Name
-    %span.centered.three.columns Total Products
-    %span.centered.three.columns Active Products
-    %span.centered.three.columns Products in OCs
+    - if can? :admin, Spree::Product
+      %span.centered.three.columns Total Products
+      %span.centered.three.columns Active Products
+    - if can? :admin, OrderCycle
+      %span.centered.three.columns Products in OCs
   %div.sixteen.columns.alpha.list
     - @enterprises.is_primary_producer.each do |enterprise|
       %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
+
         %span.five.columns.alpha
           = enterprise.name
+
         %span.symbol.three.columns.centered
-          %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_products.not_deleted.any? ? "green" : "red" }" }
-            = enterprise.supplied_products.not_deleted.count
-          %span.one.column.omega &nbsp;
+          - if can? :admin, Spree::Product
+            %span.one.column.alpha &nbsp;
+            %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_products.not_deleted.any? ? "green" : "red" }" }
+              = enterprise.supplied_products.not_deleted.count
+            %span.one.column.omega &nbsp;
         %span.symbol.three.columns.centered
-          %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_and_active_products_on_hand.any? ? "green" : "red" }" }
-            = enterprise.supplied_and_active_products_on_hand.count
-          %span.one.column.omega &nbsp;
+          - if can? :admin, Spree::Product
+            %span.one.column.alpha &nbsp;
+            %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_and_active_products_on_hand.any? ? "green" : "red" }" }
+              = enterprise.supplied_and_active_products_on_hand.count
+            %span.one.column.omega &nbsp;
+
         %span.symbol.three.columns.centered
-          %span.one.column.alpha &nbsp;
-          %span.text-icon.one.column.centered{ class: "#{enterprise.active_products_in_order_cycles.any? ? "green" : "orange" }" }
-            = enterprise.active_products_in_order_cycles.count
-          %span.one.column.omega &nbsp;
+          - if can? :admin, OrderCycle
+            %span.one.column.alpha &nbsp;
+            %span.text-icon.one.column.centered{ class: "#{enterprise.active_products_in_order_cycles.any? ? "green" : "orange" }" }
+              = enterprise.active_products_in_order_cycles.count
+            %span.one.column.omega &nbsp;
+
         %span.two.columns.omega.right
           %span.icon-arrow-right

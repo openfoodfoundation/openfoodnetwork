@@ -30,17 +30,6 @@ class AbilityDecorator
 
     can [:admin, :index], :overview
 
-    # Enterprise User can only access payment methods for their distributors
-    can [:index, :create], Spree::PaymentMethod
-    can [:admin, :read, :update, :fire, :resend, :destroy, :show_provider_preferences], Spree::PaymentMethod do |payment_method|
-      (user.enterprises & payment_method.distributors).any?
-    end
-
-    can [:index, :create], Spree::ShippingMethod
-    can [:admin, :read, :update, :destroy], Spree::ShippingMethod do |shipping_method|
-      (user.enterprises & shipping_method.distributors).any?
-    end
-
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
@@ -96,6 +85,17 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
     can [:admin, :index, :read, :create, :edit, :update], Exchange
     can [:admin, :index, :read, :create, :edit, :update], ExchangeFee
+
+    # Enterprise user can only access payment and shipping methods for their distributors
+    can [:index, :create], Spree::PaymentMethod
+    can [:admin, :read, :update, :fire, :resend, :destroy, :show_provider_preferences], Spree::PaymentMethod do |payment_method|
+      (user.enterprises & payment_method.distributors).any?
+    end
+
+    can [:index, :create], Spree::ShippingMethod
+    can [:admin, :read, :update, :destroy], Spree::ShippingMethod do |shipping_method|
+      (user.enterprises & shipping_method.distributors).any?
+    end
 
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
