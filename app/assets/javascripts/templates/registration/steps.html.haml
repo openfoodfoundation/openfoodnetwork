@@ -1,6 +1,5 @@
-.row
-  .small-2.columns{ ng: { repeat: 'step in steps', class: "{active: currentStep == step}" } }
-    %div{ style: 'text-transform: uppercase; text-align: center;background-color: #000; color: #fff;'}
-      {{ step }}
+.row#progress_bar
+  .small-2.columns.item{ ng: { repeat: 'step in steps', class: "{active: currentStep == step}" } }
+    {{ step }}
     
     

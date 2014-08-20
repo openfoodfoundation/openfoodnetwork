@@ -9,7 +9,7 @@ Darkswarm.factory "RegistrationService", (Navigation, $modal, $location)->
     open: =>
       @modalInstance = $modal.open
         templateUrl: 'registration.html'
-        windowClass: "login-modal medium"
+        windowClass: "login-modal large"
       @modalInstance.result.then @close, @close
       @select @current_step
 
