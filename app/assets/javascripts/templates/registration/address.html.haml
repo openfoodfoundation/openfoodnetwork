@@ -24,18 +24,18 @@
           %label{ for: 'enterprise_state' } State:
           %input.chunky.small-12.columns{ id: 'enterprise_state', placeholder: "eg. Victoria", ng: { model: 'enterprise.state' } }
     .small-5.columns
-      %h6 Location display
+      %h6
+        Location display
+        %i.ofn-i_013-help.has-tip{ 'data-tooltip' => true, title: "Choose how you want to display your enterprise's address on the Open Food Network. By default, full location is shown everywhere including street name and number."} 
       .row
-        .small-2.columns
-          %input{ type: 'checkbox', id: 'enterpise_suburb_only', ng: { model: 'enterprise.suburb_only' } }
-        .small-10.columns
-          %label{ for: 'enterpise_suburb_only' } Hide my street name and street number from the public (ie. only show the suburb)
-      .row &nbsp;        
-      .row
-        .small-2.columns
-          %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
-        .small-10.columns
-          %label{ for: 'enterprise_on_map' } Blur my location on the map (show an approximate, not exact pin)
+        .small-12.columns
+          %label.indent-checkbox
+            %input{ type: 'checkbox', id: 'enterpise_suburb_only', ng: { model: 'enterprise.suburb_only' } }
+              Hide my street name and street number from the public (ie. only show the suburb)
+        .small-12.columns
+          %label.indent-checkbox
+            %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
+              Blur my location on the map (show an approximate, not exact pin)
   .row
     .small-12.columns
       %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }

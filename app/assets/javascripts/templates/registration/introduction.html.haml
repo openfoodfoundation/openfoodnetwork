@@ -15,11 +15,11 @@
           %li Your logo image
           %li A pretty image to serve as your profile header
           %li Some 'About Us' text
-    .small-6.columns{ 'data-equalizer-watch' => true, style: 'background-color: #ffffff; padding-bottom: 10px;'}
-      %h6 Your profile entitles you to:
-      A searchable listing in Hub / Producer view
-      %br
-      A pin on the OFN map to help users find you
+    .small-6.columns{ 'data-equalizer-watch' => true, style: 'background-color: #ffffff; padding: 10px;'}
+      %span{ style: 'font-weight: bold;' } Your profile entitles you to:
+      %ul{ style: 'margin-top: 10px;' }
+        %li A searchable listing in Hub / Producer view
+        %li A pin on the OFN map to help users find you
   .row
     .small-12.columns
       %input.button.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" }, style: 'float: right' }

@@ -21,16 +21,18 @@
           %label{ for: 'contact_phone' } Phone number:
           %input.chunky.small-12.columns{ id: 'contact_phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.contact.phone' } }
     .small-12.large-4.columns
-      %h6 Contact display
+      %h6
+        Contact display
+        %i.ofn-i_013-help.has-tip{ 'data-tooltip' => true, title: "Choose how you want to display your contact details on the Open Food Network."}
       .row
         .small-12.columns
-          %label{ for: 'contact_display_profile' } 
+          %label.indent-checkbox
             %input{ type: 'checkbox', id: 'contact_name_profile', ng: { model: 'enterprise.contact.name_in_profile' } } &nbsp; Display name in profile
         .small-12.columns
-          %label{ for: 'contact_display_profile' } 
+          %label.indent-checkbox
             %input{ type: 'checkbox', id: 'contact_email_profile', ng: { model: 'enterprise.contact.email_in_profile' } } &nbsp; Display email in profile
         .small-12.columns
-          %label{ for: 'contact_display_profile' } 
+          %label.indent-checkbox
             %input{ type: 'checkbox', id: 'contact_phone_profile', ng: { model: 'enterprise.contact.phone_in_profile' } } &nbsp; Display phone in profile
   .row
     .small-12.columns

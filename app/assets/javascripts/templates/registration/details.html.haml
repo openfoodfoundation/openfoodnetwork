@@ -15,23 +15,26 @@
         .medium-12.large-4.columns{ 'data-equalizer-watch' => true }
           %a.small-12.columns.panel#producer{ href: "#", ng: { click: "enterprise.type = 'producer'", class: "{selected: enterprise.type == 'producer'}" } }
             .small-2.columns
+              %i.ofn-i_036-producers
             .small-10.columns
               %h6 I'm A Producer
-              %span Producers are anyone making things to eat &amp; drink - whether you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+              %span{ style: 'font-size: 80%'} Producers are anyone making things to eat &amp; drink - whether you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
 
         .medium-12.large-4.columns{ 'data-equalizer-watch' => true }
           %a.small-12.columns.panel#hub{ href: "#", ng: { click: "enterprise.type = 'hub'", class: "{selected: enterprise.type == 'hub'}" } }
             .small-2.columns
+              %i.ofn-i_040-hub
             .small-10.columns
               %h6 I'm A Hub
-              %span Hubs are anyone connecting the producer to the eater. Hubs may be a co-op, and independent retailer, a buying group, a CSA box scheme, a farm-gate stall, a wholesaler, etc...
+              %span{ style: 'font-size: 80%'} Hubs are anyone connecting the producer to the eater. Hubs may be a co-op, and independent retailer, a buying group, a CSA box scheme, a farm-gate stall, a wholesaler, etc...
 
         .medium-12.large-4.columns{ 'data-equalizer-watch' => true }
           %a.small-12.columns.panel#both{ href: "#", ng: { click: "enterprise.type = 'both'", class: "{selected: enterprise.type == 'both'}" } }
             .small-2.columns
+              %i.ofn-i_039-delivery
             .small-10.columns
               %h6 I'm Both
-              %span Hey there, Jack-of-all-trades! Not only do you produce yummy things to eat and/or drink, you also want to connect directly to those who love buying your products!
+              %span{ style: 'font-size: 80%'} Hey there, Jack-of-all-trades! Not only do you produce yummy things to eat and/or drink, you also want to connect directly to those who love buying your products!
   .row
     .small-12.columns
       %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" }, style: 'float:right' }
