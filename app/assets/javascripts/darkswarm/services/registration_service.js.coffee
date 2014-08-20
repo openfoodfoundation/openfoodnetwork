@@ -1,8 +1,6 @@
-Darkswarm.factory "RegistrationService", (Navigation, $modal, $location)->
+Darkswarm.factory "RegistrationService", (Navigation, $modal, Loading)->
 
   new class RegistrationService
-    current_step: 'introduction'
-
     constructor: ->
       @open()
 
@@ -10,17 +8,16 @@ Darkswarm.factory "RegistrationService", (Navigation, $modal, $location)->
       @modalInstance = $modal.open
         templateUrl: 'registration.html'
         windowClass: "login-modal large"
+        backdrop: 'static'
       @modalInstance.result.then @close, @close
-      @select @current_step
+      @select 'introduction'
 
     select: (step)=>
       @current_step = step
-      Navigation.navigate '/' + @current_step
-
-    active: Navigation.active
     
     currentStep: =>
       @current_step
 
     close: ->
-      Navigation.navigate "/"
+      Loading.message = "Taking you back to the home page"
+      Navigation.go "/"
