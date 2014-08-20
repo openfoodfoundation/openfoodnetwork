@@ -1,0 +1,41 @@
+.container#registration-address
+  .row.header
+    %h2 {{ enterprise.name }}
+    %h5 Now we need to know where you are:
+  %ng-include{ src: "'registration/steps.html'" }
+  .row.content
+    .small-7.columns
+      .row
+        .small-12.columns
+          %label{ for: 'enterprise_address' } Address:
+          %input.chunky.small-12.columns{ id: 'enterprise_address', placeholder: "eg. 123 Cranberry Drive", ng: { model: 'enterprise.address' } }
+      .row
+        .small-8.columns
+          %label{ for: 'enterprise_suburb' } Suburb:
+          %input.chunky.small-12.columns{ id: 'enterprise_suburb', placeholder: "eg. Northcote", ng: { model: 'enterprise.suburb' } }
+        .small-4.columns        
+          %label{ for: 'enterprise_postcode' } Postcode:
+          %input.chunky.small-12.columns{ id: 'enterprise_postcode', placeholder: "eg. 3070", ng: { model: 'enterprise.suburb' } }
+      .row
+        .small-8.columns
+          %label{ for: 'enterprise_country' } Country:
+          %input.chunky.small-12.columns{ id: 'enterprise_country', placeholder: "eg. Australia", ng: { model: 'enterprise.country' } }
+        .small-4.columns 
+          %label{ for: 'enterprise_state' } State:
+          %input.chunky.small-12.columns{ id: 'enterprise_state', placeholder: "eg. Victoria", ng: { model: 'enterprise.state' } }
+    .small-5.columns
+      %h6 Location display
+      .row
+        .small-2.columns
+          %input{ type: 'checkbox', id: 'enterpise_suburb_only', ng: { model: 'enterprise.suburb_only' } }
+        .small-10.columns
+          %label{ for: 'enterpise_suburb_only' } Hide my street name and street number from the public (ie. only show the suburb)
+      .row &nbsp;        
+      .row
+        .small-2.columns
+          %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
+        .small-10.columns
+          %label{ for: 'enterprise_on_map' } Blur my location on the map (show an approximate, not exact pin)
+  .row
+    %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }
+    %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" }, style: 'float:right' }
