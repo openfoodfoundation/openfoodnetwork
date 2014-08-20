@@ -4,12 +4,12 @@
     %h5 Who is responsible for managing {{ enterprise.name }}?
   %ng-include{ src: "'registration/steps.html'" }
   .row.content
-    .small-8.columns
+    .small-12.large-8.columns
       .row
-        .small-6.columns
+        .small-12.large-6.columns
           %label{ for: 'contact_first_name' } Primary Contact:
           %input.chunky.small-12.columns{ id: 'contact_first_name', placeholder: "First Name", ng: { model: 'enterprise.contact.first_name' } }
-        .small-6.columns        
+        .small-12.large-6.columns 
           %label{ for: 'contact_surname' } &nbsp;
           %input.chunky.small-12.columns{ id: 'contact_surname', placeholder: "Surname", ng: { model: 'enterprise.contact.surname' } }
       .row
@@ -20,7 +20,7 @@
         .small-12.columns
           %label{ for: 'contact_phone' } Phone number:
           %input.chunky.small-12.columns{ id: 'contact_phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.contact.phone' } }
-    .small-4.columns
+    .small-12.large-4.columns
       %h6 Contact display
       .row
         .small-12.columns
