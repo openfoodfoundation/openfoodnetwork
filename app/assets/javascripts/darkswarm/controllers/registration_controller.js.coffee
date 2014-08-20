@@ -4,7 +4,9 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, CurrentUs
   $scope.currentStep = RegistrationService.currentStep
   $scope.select = RegistrationService.select
 
-  $scope.steps = ['details','address']
-  # ,'contact','about','images','social'
+  $scope.steps = ['details','address','contact']
+  # ,'about','images','social'
 
-  $scope.enterprise = {}
+  $scope.enterprise =
+    contact:
+      email: CurrentUser.email

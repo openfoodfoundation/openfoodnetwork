@@ -1,0 +1,37 @@
+.container#registration-contact
+  .row.header
+    %h2 Last step to create your enterprise!
+    %h5 Who is responsible for managing {{ enterprise.name }}?
+  %ng-include{ src: "'registration/steps.html'" }
+  .row.content
+    .small-8.columns
+      .row
+        .small-6.columns
+          %label{ for: 'contact_first_name' } Primary Contact:
+          %input.chunky.small-12.columns{ id: 'contact_first_name', placeholder: "First Name", ng: { model: 'enterprise.contact.first_name' } }
+        .small-6.columns        
+          %label{ for: 'contact_surname' } &nbsp;
+          %input.chunky.small-12.columns{ id: 'contact_surname', placeholder: "Surname", ng: { model: 'enterprise.contact.surname' } }
+      .row
+        .small-12.columns
+          %label{ for: 'contact_email' } Email address:
+          %input.chunky.small-12.columns{ id: 'contact_email', placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.contact.email' } }
+      .row
+        .small-12.columns
+          %label{ for: 'contact_phone' } Phone number:
+          %input.chunky.small-12.columns{ id: 'contact_phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.contact.phone' } }
+    .small-4.columns
+      %h6 Contact display
+      .row
+        .small-12.columns
+          %label{ for: 'contact_display_profile' } 
+            %input{ type: 'checkbox', id: 'contact_name_profile', ng: { model: 'enterprise.contact.name_in_profile' } } &nbsp; Display name in profile
+        .small-12.columns
+          %label{ for: 'contact_display_profile' } 
+            %input{ type: 'checkbox', id: 'contact_email_profile', ng: { model: 'enterprise.contact.email_in_profile' } } &nbsp; Display email in profile
+        .small-12.columns
+          %label{ for: 'contact_display_profile' } 
+            %input{ type: 'checkbox', id: 'contact_phone_profile', ng: { model: 'enterprise.contact.phone_in_profile' } } &nbsp; Display phone in profile
+  .row
+    %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }
+    %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" }, style: 'float:right' }
