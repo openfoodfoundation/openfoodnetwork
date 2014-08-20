@@ -37,5 +37,6 @@
         .small-10.columns
           %label{ for: 'enterprise_on_map' } Blur my location on the map (show an approximate, not exact pin)
   .row
-    %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }
-    %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" }, style: 'float:right' }
+    .small-12.columns
+      %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }
+      %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" }, style: 'float:right' }

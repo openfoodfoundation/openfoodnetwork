@@ -6,12 +6,12 @@
   .row.content
     .small-12.columns
       .row
-        %label{ for: 'enterprise_name' } Enterprise Name:
-      .row
-        %input.chunky.small-12.columns{ id: 'enterprise_name', placeholder: "eg. Charlie's Awesome Farm", ng: { model: 'enterprise.name' } }
-      .row
-        Choose One:
+        .small-12.columns
+          %label{ for: 'enterprise_name' } Enterprise Name:
+          %input.chunky.small-12.columns{ id: 'enterprise_name', placeholder: "eg. Charlie's Awesome Farm", ng: { model: 'enterprise.name' } }
       .row#enterprise-types{ 'data-equalizer' => true }
+        .small-12.columns
+          %label Choose One:
         .medium-12.large-4.columns{ 'data-equalizer-watch' => true }
           %a.small-12.columns.panel#producer{ href: "#", ng: { click: "enterprise.type = 'producer'", class: "{selected: enterprise.type == 'producer'}" } }
             .small-2.columns
@@ -33,6 +33,7 @@
               %h6 I'm Both
               %span Hey there, Jack-of-all-trades! Not only do you produce yummy things to eat and/or drink, you also want to connect directly to those who love buying your products!
   .row
-    %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" }, style: 'float:right' }
+    .small-12.columns
+      %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" }, style: 'float:right' }
         
     
