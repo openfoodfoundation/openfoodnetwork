@@ -1,5 +1,10 @@
-Darkswarm.controller "RegistrationCtrl", ($scope, $location, AuthenticationService, CurrentUser)->
-  if CurrentUser is undefined
-    $location.search('after_login', '/register/')
-    AuthenticationService.open()
+Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, CurrentUser) ->
+  $scope.current_user = CurrentUser
+  
+  $scope.currentStep = RegistrationService.currentStep
+  $scope.select = RegistrationService.select
 
+  $scope.steps = ['details']
+  # ,'address','contact','about','images','social'
+
+  $scope.enterprise = {}

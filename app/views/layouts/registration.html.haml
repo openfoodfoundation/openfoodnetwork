@@ -19,7 +19,7 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas{"ng-app" => "Darkswarm"}
+  %body.off-canvas{"ng-app" => "Darkswarm", style: 'background-image: url("/assets/home/ofn_bg_1.jpg")' }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"

@@ -1,0 +1,34 @@
+%div
+  .row
+    %h2 Let's Get Started
+  .row
+    %h5 Woot! First we need to know what sort of enterprise you are:
+  %ng-include{ src: "'registration/steps.html'" }
+  .row
+    .small-12.columns{ style: 'background-color: #fff;'}
+      .row
+        %label{ for: 'enterprise_name'} Enterprise Name:
+      .row
+        %input.small-12.columns{ id: 'enterprise_name', placeholder: "eg. Charlie's Awesome Farm" }
+      .row
+        Choose One:
+      .row{ 'data-equalizer' => true }
+        %a#producer.small-4.columns{ 'data-equalizer-watch' => true, style: 'background-color: #efefef;', href: "#", ng: { click: "enterprise.type = 'producer'" } }
+          %div.small-1.columns
+          %div.small-11.columns
+            %h6 I'm A Producer
+            %span Producers are anyone making things to eat &amp; drink - whether you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+        %a#hub.small-4.columns{ 'data-equalizer-watch' => true, style: 'background-color: #efefef;', href: "#", ng: { click: "enterprise.type = 'hub'" } }
+          %div.small-1.columns
+          %div.small-11.columns
+            %h6 I'm A Hub
+            %span Hubs are anyone connecting the producer to the eater. Hubs may be a co-op, and independent retailer, a buying group, a CSA box scheme, a farm-gate stall, a wholesaler, etc...
+        %a#both.small-4.columns{ 'data-equalizer-watch' => true, style: 'background-color: #efefef;', href: "#", ng: { click: "enterprise.type = 'both'" } }
+          %div.small-1.columns
+          %div.small-11.columns
+            %h6 I'm Both
+            %span Hey there, Jack-of-all-trades! Not only do you produce yummy things to eat and/or drink, you also want to connect directly to those who love buying your products!
+  .row
+    %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" } }
+        
+    

@@ -1,0 +1,32 @@
+%div
+  .row
+    %h2 Hi there!
+  .row
+    %h5 This wizard will step you through creating a Profile on the Open Food Network.
+  .row
+    .small-2.columns &nbsp;
+    .small-10.columns{ style: 'line-height: 150%;'} Your profile gives you an online presence on the Open Food Network, allowing you to easily connect with potential customers or partners. You can always choose to update your info later, as well as choose to upgrade your Profile to and Online Store, where you can sell products, track orders and receive payments.
+  %br
+  .row
+    .small-12.columns{ 'data-equalizer' => true }
+      .small-6.columns{ style: 'font-size: 80%' }
+        %span Creating a profile usually takes about 5-10 minutes.
+        %h6 You'll need the following:
+        %ol{ style: 'font-size: 100%' }
+          %li Your enterprise address and contact details
+          %li Your logo image
+          %li A pretty image to serve as your profile header
+          %li Some 'About Us' text
+      .small-6.columns{ style: 'background-color: #FFFFFF;'}
+        %h6 Your profile entitles you to:
+        A searchable listing in Hub / Producer view
+        %br
+        A pin on the OFN map to help users find you
+  .row
+    .large-12.columns
+      .row
+        Ready to go?
+      %br
+      .row
+        %input.button.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } }
+  
