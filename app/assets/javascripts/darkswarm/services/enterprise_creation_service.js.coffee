@@ -7,6 +7,7 @@ Darkswarm.factory "EnterpriseCreationService", ($http, RegistrationService, Curr
       country: availableCountries[0]
 
     create: =>
+      # Loading.message = "Creating " + $scope.enterprise.name
       # $http(
       #   method: "POST"
       #   url: "/api/enterprises"
@@ -15,8 +16,10 @@ Darkswarm.factory "EnterpriseCreationService", ($http, RegistrationService, Curr
       #   params:
       #     token: SpreeApiKey
       # ).success((data) ->
+      #   Loading.clear()
       #   RegistrationService.select('about')
       # ).error((data) ->
+      #   Loading.clear()
       #   console.log angular.toJson(data)
       #   alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
       # )
