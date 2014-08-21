@@ -25,6 +25,10 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: {name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
   end
 
+  def inject_available_countries
+    inject_json_ams "availableCountries", available_countries, Api::CountrySerializer
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end

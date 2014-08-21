@@ -19,15 +19,10 @@
       .row
         .small-12.large-8.columns
           %label{ for: 'enterprise_country' } Country:
-          -#= select :country_id, available_countries.map{|c|[c.name, c.id]}, {include_blank: false}
-          %input.chunky.small-12.columns{ id: 'enterprise_country', placeholder: "eg. Australia" }
-          -# , ng: { model: 'enterprise.country' } }
+          %select.chunky.small-12.columns{ id: 'enterprise_country', ng: { model: 'enterprise.country', options: 'c as c.name for c in countries' } }
         .small-12.large-4.columns
           %label{ for: 'enterprise_state' } State:
-          - binding.pry
-          -#= select :state_id, available_countries.first.states.map{|c|[c.name, c.id]}
-          %input.chunky.small-12.columns{ id: 'enterprise_state', placeholder: "eg. Victoria" }
-          -# , ng: { model: 'enterprise.state' } }
+          %select.chunky.small-12.columns{ id: 'enterprise_state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()' } }
     .small-5.columns
       %h6
         Location display

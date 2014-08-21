@@ -32,8 +32,8 @@ feature "Registration", js: true do
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
-      fill_in 'enterprise_country', with: 'Australia'
-      fill_in 'enterprise_state', with: 'Victoria'
+      select 'Australia', from: 'enterprise_country'
+      select 'Vic', from: 'enterprise_state'
       click_button 'Continue'
 
       # Filling in Contact Details
@@ -44,8 +44,6 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Enterprise should be created
-      sleep 10
-      save_screenshot '/Users/rob/Desktop/ss.png'
       expect(page).to have_content 'Yay! You created an enterprise!'
     end
   end
