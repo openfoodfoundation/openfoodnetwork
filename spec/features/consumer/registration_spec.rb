@@ -23,10 +23,30 @@ feature "Registration", js: true do
       
       # Filling in details
       expect(page).to have_content "Woot! First we need to know what sort of enterprise you are:"
-      
       fill_in 'enterprise_name', with: "My Awesome Enterprise"
-      click_link "both"
-      click_button "Continue"
+      click_link 'both'
+      click_button 'Continue'
+
+      # Filling in address
+      expect(page).to have_content 'My Awesome Enterprise'
+      fill_in 'enterprise_address', with: '123 Abc Street'
+      fill_in 'enterprise_city', with: 'Northcote'
+      fill_in 'enterprise_zipcode', with: '3070'
+      fill_in 'enterprise_country', with: 'Australia'
+      fill_in 'enterprise_state', with: 'Victoria'
+      click_button 'Continue'
+
+      # Filling in Contact Details
+      expect(page).to have_content 'Who is responsible for managing My Awesome Enterprise?'
+      fill_in 'enterprise_contact', with: 'Saskia Munroe'
+      page.should have_field 'enterprise_email', with: user.email
+      fill_in 'enterprise_phone', with: '12 3456 7890'
+      click_button 'Continue'
+
+      # Enterprise should be created
+      sleep 10
+      save_screenshot '/Users/rob/Desktop/ss.png'
+      expect(page).to have_content 'Yay! You created an enterprise!'
     end
   end
 end

@@ -8,21 +8,26 @@
       .row
         .small-12.columns
           %label{ for: 'enterprise_address' } Address:
-          %input.chunky.small-12.columns{ id: 'enterprise_address', placeholder: "eg. 123 Cranberry Drive", ng: { model: 'enterprise.address' } }
+          %input.chunky.small-12.columns{ id: 'enterprise_address', placeholder: "eg. 123 Cranberry Drive", ng: { model: 'enterprise.address.address1' } }
       .row
         .small-12.large-8.columns
-          %label{ for: 'enterprise_suburb' } Suburb:
-          %input.chunky.small-12.columns{ id: 'enterprise_suburb', placeholder: "eg. Northcote", ng: { model: 'enterprise.suburb' } }
+          %label{ for: 'enterprise_city' } Suburb:
+          %input.chunky.small-12.columns{ id: 'enterprise_city', placeholder: "eg. Northcote", ng: { model: 'enterprise.address.city' } }
         .small-12.large-4.columns
-          %label{ for: 'enterprise_postcode' } Postcode:
-          %input.chunky.small-12.columns{ id: 'enterprise_postcode', placeholder: "eg. 3070", ng: { model: 'enterprise.suburb' } }
+          %label{ for: 'enterprise_zipcode' } Postcode:
+          %input.chunky.small-12.columns{ id: 'enterprise_zipcode', placeholder: "eg. 3070", ng: { model: 'enterprise.address.zipcode' } }
       .row
         .small-12.large-8.columns
           %label{ for: 'enterprise_country' } Country:
-          %input.chunky.small-12.columns{ id: 'enterprise_country', placeholder: "eg. Australia", ng: { model: 'enterprise.country' } }
+          -#= select :country_id, available_countries.map{|c|[c.name, c.id]}, {include_blank: false}
+          %input.chunky.small-12.columns{ id: 'enterprise_country', placeholder: "eg. Australia" }
+          -# , ng: { model: 'enterprise.country' } }
         .small-12.large-4.columns
           %label{ for: 'enterprise_state' } State:
-          %input.chunky.small-12.columns{ id: 'enterprise_state', placeholder: "eg. Victoria", ng: { model: 'enterprise.state' } }
+          - binding.pry
+          -#= select :state_id, available_countries.first.states.map{|c|[c.name, c.id]}
+          %input.chunky.small-12.columns{ id: 'enterprise_state', placeholder: "eg. Victoria" }
+          -# , ng: { model: 'enterprise.state' } }
     .small-5.columns
       %h6
         Location display

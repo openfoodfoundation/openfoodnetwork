@@ -21,6 +21,10 @@ module InjectionHelper
     inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
   end
 
+  def inject_spree_api_key
+    render partial: "json/injection_ams", locals: {name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end
