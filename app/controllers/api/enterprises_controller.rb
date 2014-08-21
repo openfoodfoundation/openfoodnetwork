@@ -13,7 +13,7 @@ module Api
     end
 
     def create
-      #authorize! :create, Enterprise
+      authorize! :create, Enterprise
 
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
