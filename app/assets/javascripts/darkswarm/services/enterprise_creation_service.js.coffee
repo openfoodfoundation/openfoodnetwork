@@ -7,20 +7,20 @@ Darkswarm.factory "EnterpriseCreationService", ($http, RegistrationService, Curr
       country: availableCountries[0]
 
     create: =>
-      $http(
-        method: "POST"
-        url: "/api/enterprises"
-        data:
-          enterprise: @prepare()
-        params:
-          token: SpreeApiKey
-      ).success((data) ->
-        RegistrationService.select('about')
-      ).error((data) ->
-        console.log angular.toJson(data)
-        alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
-      )
-      # RegistrationService.select('about')
+      # $http(
+      #   method: "POST"
+      #   url: "/api/enterprises"
+      #   data:
+      #     enterprise: @prepare()
+      #   params:
+      #     token: SpreeApiKey
+      # ).success((data) ->
+      #   RegistrationService.select('about')
+      # ).error((data) ->
+      #   console.log angular.toJson(data)
+      #   alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+      # )
+      RegistrationService.select('about')
 
     prepare: =>
       enterprise = {}
