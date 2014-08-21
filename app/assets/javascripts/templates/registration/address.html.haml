@@ -36,7 +36,7 @@
           %label.indent-checkbox
             %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
               Blur my location on the map (show an approximate, not exact pin)
-  .row
+  .row.buttons
     .small-12.columns
-      %input.button.primary{ type: "button", value: "Back", ng: { click: "select('details')" }, style: 'float:left' }
-      %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" }, style: 'float:right' }
+      %input.button.primary.left{ type: "button", value: "Back", ng: { click: "select('details')" } }
+      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('contact')" } }

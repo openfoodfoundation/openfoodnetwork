@@ -31,7 +31,7 @@
         .small-12.columns
           %label.indent-checkbox
             %input{ type: 'checkbox', id: 'contact_phone_profile', ng: { model: 'enterprise.phone_in_profile' } } &nbsp; Display phone in profile
-  .row
+  .row.buttons
     .small-12.columns
-      %input.button.primary{ type: "button", value: "Back", ng: { click: "select('address')" }, style: 'float:left' }
-      %input.button.primary{ type: "button", value: "Continue", ng: { click: "create()" }, style: 'float:right' }
+      %input.button.primary.left{ type: "button", value: "Back", ng: { click: "select('address')" } }
+      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "create()" } }

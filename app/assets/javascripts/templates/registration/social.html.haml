@@ -1,0 +1,11 @@
+.container#registration-social
+  .row.header
+    %h2 Last step!
+    %h5 How can people find {{ enterprise.name }} online?
+  %ng-include{ src: "'registration/steps.html'" }
+  .row.content
+
+  .row.buttons
+    .small-12.columns
+      %input.button.primary.left{ type: "button", value: "Back", ng: { click: "select('images')" } }
+      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('finished')" } }

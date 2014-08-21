@@ -1,4 +1,4 @@
-.container#registration-contact
+.container#registration-about
   .row.header
     %h2 Nice one!
     %h5 Now let's flesh out the details about {{ enterprise.name }}.
@@ -30,6 +30,6 @@
         .small-12.columns
           %label{ for: 'enterprise_acn' } ACN:
           %input.chunky.small-12.columns{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
-  .row
+  .row.buttons
     .small-12.columns
-      %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('images')" }, style: 'float:right' }
+      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('images')" } }

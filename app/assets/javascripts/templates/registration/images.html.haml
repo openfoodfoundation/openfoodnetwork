@@ -1,0 +1,11 @@
+.container#registration-images
+  .row.header
+    %h2 Thanks!
+    %h5 Let's upload some pretty pictures so your profile looks great! :)
+  %ng-include{ src: "'registration/steps.html'" }
+  .row.content
+
+  .row.buttons
+    .small-12.columns
+      %input.button.primary.left{ type: "button", value: "Back", ng: { click: "select('about')" } }
+      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('social')" } }
