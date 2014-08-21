@@ -1,8 +1,9 @@
-Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseCreationService, availableCountries) ->
+Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, EnterpriseRegistrationService, availableCountries) ->
   $scope.currentStep = RegistrationService.currentStep
   $scope.select = RegistrationService.select
-  $scope.enterprise = EnterpriseCreationService.enterprise
-  $scope.create = EnterpriseCreationService.create
+  $scope.enterprise = EnterpriseRegistrationService.enterprise
+  $scope.create = EnterpriseRegistrationService.create
+  $scope.update = EnterpriseRegistrationService.update
 
   $scope.steps = ['details','address','contact','about','images','social']
 

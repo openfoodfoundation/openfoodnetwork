@@ -17,7 +17,18 @@ module Api
 
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
-        render text: '', :status => 201
+        render text: @enterprise.id, :status => 201
+      else
+        invalid_resource!(@enterprise)
+      end
+    end
+
+    def update
+      authorize! :update, Enterprise
+
+      @enterprise = Enterprise.find(params[:id])
+      if @enterprise.update_attributes(params[:enterprise])
+        render text: @enterprise.id, :status => 200
       else
         invalid_resource!(@enterprise)
       end
