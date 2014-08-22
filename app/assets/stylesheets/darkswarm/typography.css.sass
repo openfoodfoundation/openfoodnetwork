@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6, .avenir
   @include avenir
   padding: 0px
 
-ul.bullet-list
+ul.bullet-list, ul.check-list
   margin: 0
   li
     list-style: none
@@ -69,7 +69,10 @@ ul.bullet-list
     font-style: normal
     font-variant: normal
     text-transform: none
-    
+
+ul.check-list
+  li:before
+    content: "\e632"
 
 .light-grey
   color: #666666
