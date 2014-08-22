@@ -7,43 +7,43 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       country: availableCountries[0]
 
     create: =>
-      Loading.message = "Creating " + @enterprise.name
-      $http(
-        method: "POST"
-        url: "/api/enterprises"
-        data:
-          enterprise: @prepare()
-        params:
-          token: SpreeApiKey
-      ).success((data) =>
-        Loading.clear()
-        @enterprise.id = data
-        RegistrationService.select('about')
-      ).error((data) =>
-        Loading.clear()
-        console.log angular.toJson(data)
-        alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
-      )
-      #RegistrationService.select('about')
+      # Loading.message = "Creating " + @enterprise.name
+      # $http(
+      #   method: "POST"
+      #   url: "/api/enterprises"
+      #   data:
+      #     enterprise: @prepare()
+      #   params:
+      #     token: SpreeApiKey
+      # ).success((data) =>
+      #   Loading.clear()
+      #   @enterprise.id = data
+      #   RegistrationService.select('about')
+      # ).error((data) =>
+      #   Loading.clear()
+      #   console.log angular.toJson(data)
+      #   alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+      # )
+      RegistrationService.select('about')
 
     update: (step) =>
-      Loading.message = "Updating " + @enterprise.name
-      $http(
-        method: "PUT"
-        url: "/api/enterprises/#{@enterprise.id}"
-        data:
-          enterprise: @prepare()
-        params:
-          token: SpreeApiKey
-      ).success((data) ->
-        Loading.clear()
-        RegistrationService.select(step)
-      ).error((data) ->
-        Loading.clear()
-        console.log angular.toJson(data)
-        alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
-      )
-      #RegistrationService.select(step)
+      # Loading.message = "Updating " + @enterprise.name
+      # $http(
+      #   method: "PUT"
+      #   url: "/api/enterprises/#{@enterprise.id}"
+      #   data:
+      #     enterprise: @prepare()
+      #   params:
+      #     token: SpreeApiKey
+      # ).success((data) ->
+      #   Loading.clear()
+      #   RegistrationService.select(step)
+      # ).error((data) ->
+      #   Loading.clear()
+      #   console.log angular.toJson(data)
+      #   alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+      # )
+      RegistrationService.select(step)
 
     prepare: =>
       enterprise = {}
