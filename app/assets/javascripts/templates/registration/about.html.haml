@@ -1,13 +1,29 @@
 .container#registration-about
   .header
     %h2 Nice one!
-    %h5 Now let's flesh out the details about {{ enterprise.name }}.
+    %h5 
+      Now let's flesh out the details about
+      %span.brick{"ng-show" => "enterprise.is_distributor"}
+        {{ enterprise.name }}
+      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
+        {{ enterprise.name }}
+
   %ng-include{ src: "'registration/steps.html'" }
   %form
+    .row
+      .small-12.columns
+        .alert-box.alert{"data-alert" => ""}
+          {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
+          %a.close{:href => "#"} X
+
+        .alert-box.info{"data-alert" => ""}
+          {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
+          %a.close{:href => "#"} X
+
     .row.content
       %ofn-inline-flash.turquoise.small-12.columns{ ng: { show: 'visible' } }
-        %i.ofn-i_009-close.close-button{ ng: { click: 'closeFlash()' } }
-        {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
+        / %i.ofn-i_009-close.close-button{ ng: { click: 'closeFlash()' } }
+        / {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
       -# %ofn-inline-flash.brick.small-12.columns{ ng: { show: 'visible' } }
       -#   %i.ofn-i_009-close.close-button{ ng: { click: 'closeFlash()' } }
       -#   {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
@@ -21,7 +37,7 @@
           .small-12.columns
             %label{ for: 'enterprise_long_desc' } Long Description:
             %textarea.chunky.small-12.columns{ id: 'enterprise_long_desc', placeholder: "We recommend keeping your description to under 600 characters or 150 words. Why? Cus people are lazy, and don't like to read too much text online. ;)", ng: { model: 'enterprise.long_description' } }
-            {{ enterprise.long_description.length }} characters used
+            %small {{ enterprise.long_description.length }} characters used
       .small-12.large-4.columns
         .row
           .small-12.columns
@@ -31,6 +47,6 @@
           .small-12.columns
             %label{ for: 'enterprise_acn' } ACN:
             %input.chunky.small-12.columns{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
-    .row.buttons
+    .row.buttons.pad-top
       .small-12.columns
-        %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "update('social')" } }
+        %input.button.primary{ type: "button", value: "Continue", ng: { click: "update('social')" } }
