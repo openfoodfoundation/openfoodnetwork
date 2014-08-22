@@ -32,6 +32,10 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
 
       if @ship_address_same_as_billing
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
+        # If the order already has a ship and bill address (as with logged in users with
+        # past orders), and we don't remove id here, then this will set the wrong id for
+        # ship address, and Rails will error with a 404 for that address.
+        delete munged_order.ship_address_attributes.id
 
       if @paymentMethod()?.method_type == 'gateway'
         angular.extend munged_order.payments_attributes[0], {

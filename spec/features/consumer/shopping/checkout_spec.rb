@@ -15,8 +15,8 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:product) { create(:simple_product, supplier: supplier) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
-
   before do
+    ActionMailer::Base.deliveries.clear
     add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart
@@ -56,7 +56,7 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content "Donkeys"
       end
 
-      context "When shipping method requires an address" do
+      context "when shipping method requires an address" do
         before do
           toggle_shipping
           choose sm1.name
@@ -92,9 +92,8 @@ feature "As a consumer I want to check out my cart", js: true do
           page.should have_content pm3.name
         end
 
-        describe "Purchasing" do
+        describe "purchasing" do
           it "takes us to the order confirmation page when we submit a complete form" do
-            ActionMailer::Base.deliveries.clear
             toggle_shipping
             choose sm2.name
             toggle_payment
@@ -117,7 +116,7 @@ feature "As a consumer I want to check out my cart", js: true do
             end
             place_order
             page.should have_content "Your order has been processed successfully"
-            ActionMailer::Base.deliveries.length.should == 1
+            ActionMailer::Base.deliveries.length.should == 2
             email = ActionMailer::Base.deliveries.last
             site_name = Spree::Config[:site_name]
             email.subject.should include "#{site_name} Order Confirmation"
@@ -187,6 +186,30 @@ feature "As a consumer I want to check out my cart", js: true do
               end
             end
           end
+        end
+      end
+
+      context "when the customer has a pre-set shipping and billing address" do
+        before do
+          # Load up the customer's order and give them a shipping and billing address
+          # This is equivalent to when the customer has ordered before and their addresses
+          # are pre-populated.
+          o = Spree::Order.last
+          o.ship_address = build(:address)
+          o.bill_address = build(:address)
+          o.save!
+        end
+
+        it "checks out successfully" do
+          visit checkout_path
+          checkout_as_guest
+          choose sm2.name
+          toggle_payment
+          choose pm1.name
+
+          place_order
+          page.should have_content "Your order has been processed successfully"
+          ActionMailer::Base.deliveries.length.should == 2
         end
       end
     end
