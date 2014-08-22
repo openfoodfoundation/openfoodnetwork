@@ -51,9 +51,19 @@
   label
     margin-bottom: 3px
 
-  ol.numbered-list
-    font-size: 80%
+  ol, ul
+    // font-size: 80%
+    font-size: 0.875rem
+    padding: 0
+    margin: 0
+  ol
     list-style-type: decimal
+
+  .highlight-box
+    background: white
+    padding: 1rem 1.2rem
+    @media all and (max-width: 640px) 
+      margin-top: 1rem
 
   #progress-bar
     margin-bottom: 15px
