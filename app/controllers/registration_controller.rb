@@ -7,7 +7,7 @@ class RegistrationController < BaseController
 
   def index
     if spree_current_user.nil?
-      redirect_to registration_auth_path(anchor: "login?after_login=/register")
+      redirect_to registration_auth_path(anchor: "signup?after_login=/register")
     end
   end
 end

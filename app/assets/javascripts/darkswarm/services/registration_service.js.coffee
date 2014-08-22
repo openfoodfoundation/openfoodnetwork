@@ -14,7 +14,7 @@ Darkswarm.factory "RegistrationService", (Navigation, $modal, Loading)->
 
     select: (step)=>
       @current_step = step
-    
+
     currentStep: =>
       @current_step
 
