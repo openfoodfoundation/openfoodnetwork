@@ -6,22 +6,26 @@ dialog, .reveal-modal
   outline: none
   padding: 1rem 
   overflow-y: scroll
+  top: 10%
+  @media all and (max-width: 640px) 
+    top: 0
   
   // Sets up max heights based on device height
   @media all and (min-height: 1025px) 
-    max-height: 80%
+    max-height: 70%
+    top: 15%
 
   @media all and (min-height: 700px) and (max-height: 1024px)
-    max-height: 70%
+    max-height: 80%
 
   @media all and (min-height: 600px) and (max-height: 699px)
-    max-height: 60%
+    max-height: 80%
 
   @media all and (min-height: 481px) and (max-height: 599px)
-    max-height: 60%
+    max-height: 80%
 
   @media only screen and (max-height: 480px) and (min-width: 641px)
-    max-height: 60%
+    max-height: 80%
 
   @media all and (max-height: 480px)
     overflow-y: scroll
