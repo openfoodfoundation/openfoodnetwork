@@ -1,13 +1,13 @@
 .container#registration-address
   .header
     %h2 
-      Hi there,
+      Greetings
       %span.brick{"ng-show" => "enterprise.is_distributor"}
         {{ enterprise.name }}
       %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
         {{ enterprise.name }}
       
-    %h5 Now we need to know where you are:
+    %h5 Now we need to know where you are
   %ng-include{ src: "'registration/steps.html'" }
   %form
     .row.content
@@ -44,8 +44,9 @@
         /     %label.indent-checkbox
         /       %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
         /         Blur my location on the map (show an approximate, not exact pin)
+    
     .row.buttons
-      .small-12.medium-6.columns
-        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('details')" } }
-      .small-12.medium-6.columns
-        %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('contact')" } }
+      .small-12.columns
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('details')" } } 
+        &nbsp;
+        %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('contact')" } }
