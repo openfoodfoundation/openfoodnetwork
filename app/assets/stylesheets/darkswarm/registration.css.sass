@@ -87,10 +87,30 @@
       display: block
       background-color: #efefef
       color: black
+      @media all and (min-width: 768px) 
+        min-height: 200px
       &:hover
         background-color: #fff
+      &.producer-panel:hover
+        &, & *
+          color: $clr-turquoise
+      &.hub-panel:hover, &.both-panel:hover
+        &, & *
+          color: $clr-brick
       &.selected
         &, &  *
           color: #fff
-        color: #fff
-        background-color: $clr-turquoise-bright
+        &.hub-panel, &.both-panel
+          background-color: $clr-brick-bright
+          &:hover
+            &, & *
+              color: white
+        &.producer-panel
+          background-color: $clr-turquoise-bright
+          &:hover
+            &, & *
+              color: white
+      p
+        clear: both
+        font-size: 0.875rem
+

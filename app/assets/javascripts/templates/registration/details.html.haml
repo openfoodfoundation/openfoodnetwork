@@ -13,29 +13,26 @@
       .small-12.columns
         .row
           .small-12.columns
-            %label Choose One:
+            %label Choose one:
         .row
           .small-12.medium-4.large-4.columns{ 'data-equalizer-watch' => true }
             %a.panel.producer-panel{ href: "#", ng: { click: "enterprise.is_distributor = false; enterprise.is_primary_producer = true", class: "{selected: (!enterprise.is_distributor && enterprise.is_primary_producer)}" } }
               .left
                 %render-svg{path: "/assets/map-icon-producer.svg"}
               %h4 I'm A Producer
-              %p.clear
-                %small Producers are anyone making things to eat &amp; drink - whether you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+              %p Producers make yummy things to eat &amp;/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
           .small-12.medium-4.large-4.columns{ 'data-equalizer-watch' => true }
             %a.panel.hub-panel{ href: "#", ng: { click: "enterprise.is_distributor = true; enterprise.is_primary_producer = false", class: "{selected: (enterprise.is_distributor && !enterprise.is_primary_producer)}" } }
               .left
                 %render-svg{path: "/assets/map-icon-hub.svg"}
               %h4 I'm A Hub
-              %p
-                %small Hubs are anyone connecting the producer to the eater. Hubs may be a co-op, and independent retailer, a buying group, a CSA box scheme, a farm-gate stall, a wholesaler, etc...
+              %p Hubs connect the producer to the eater. Hubs can be co-ops, independent retailers, buying groups, wholesalers, CSA box schemes, farm-gate stalls, etc.
           .small-12.medium-4.large-4.columns{ 'data-equalizer-watch' => true }
             %a.panel.both-panel{ href: "#", ng: { click: "enterprise.is_distributor = true; enterprise.is_primary_producer = true", class: "{selected: (enterprise.is_distributor && enterprise.is_primary_producer)}" } }
               .left
                 %render-svg{path: "/assets/map-icon-both.svg"}
               %h4 I'm Both
-              %p
-                %small Hey there, Jack-of-all-trades! Not only do you produce yummy things to eat and/or drink, you also want to connect directly to those who love buying your products!
+              %p Hey there, Jack-of-all-trades! Not only do you produce things to eat &amp;/or drink, you also want to sell your yummies through an Open Food Network shopfront.
     .row.buttons
       .small-12.columns
         %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" } }
