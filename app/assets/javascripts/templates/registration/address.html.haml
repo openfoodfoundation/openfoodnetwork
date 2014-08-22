@@ -1,11 +1,17 @@
 .container#registration-address
   .header
-    %h2 Hi there, {{ enterprise.name }}
+    %h2 
+      Hi there,
+      %span.brick{"ng-show" => "enterprise.is_distributor"}
+        {{ enterprise.name }}
+      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
+        {{ enterprise.name }}
+      
     %h5 Now we need to know where you are:
   %ng-include{ src: "'registration/steps.html'" }
   %form
     .row.content
-      .small-7.columns
+      .small-12.medium-12.large-7.columns
         .row
           .small-12.columns
             %label{ for: 'enterprise_address' } Address:
@@ -24,19 +30,20 @@
           .small-12.large-4.columns
             %label{ for: 'enterprise_state' } State:
             %select.chunky.small-12.columns{ id: 'enterprise_state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()' } }
-      .small-5.columns
-        %h6
-          Location display
-          %i.ofn-i_013-help.has-tip{ 'data-tooltip' => true, title: "Choose how you want to display your enterprise's address on the Open Food Network. By default, full location is shown everywhere including street name and number."} 
-        .row
-          .small-12.columns
-            %label.indent-checkbox
-              %input{ type: 'checkbox', id: 'enterpise_suburb_only', ng: { model: 'enterprise.suburb_only' } }
-                Hide my street name and street number from the public (ie. only show the suburb)
-          .small-12.columns
-            %label.indent-checkbox
-              %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
-                Blur my location on the map (show an approximate, not exact pin)
+      .small-12.medium-12.large-5.hide-for-small-only
+        // This is the location area
+        / %h6
+        /   Location display
+        /   %i.ofn-i_013-help.has-tip{ 'data-tooltip' => true, title: "Choose how you want to display your enterprise's address on the Open Food Network. By default, full location is shown everywhere including street name and number."} 
+        / .row
+        /   .small-12.columns
+        /     %label.indent-checkbox
+        /       %input{ type: 'checkbox', id: 'enterpise_suburb_only', ng: { model: 'enterprise.suburb_only' } }
+        /         Hide my street name and street number from the public (ie. only show the suburb)
+        /   .small-12.columns
+        /     %label.indent-checkbox
+        /       %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
+        /         Blur my location on the map (show an approximate, not exact pin)
     .row.buttons
       .small-12.medium-6.columns
         %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('details')" } }
