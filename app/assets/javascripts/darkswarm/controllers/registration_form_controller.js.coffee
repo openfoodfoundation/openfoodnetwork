@@ -11,5 +11,5 @@ Darkswarm.controller "RegistrationFormCtrl", ($scope, RegistrationService, Enter
   $scope.update = (nextStep, form) ->
     EnterpriseRegistrationService.update(nextStep) if $scope.valid(form)
 
-  $scope.select = (nextStep, form) ->
+  $scope.selectIfValid = (nextStep, form) ->
     RegistrationService.select(nextStep) if $scope.valid(form)

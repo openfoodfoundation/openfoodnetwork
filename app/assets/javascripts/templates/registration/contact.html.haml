@@ -1,8 +1,8 @@
 .container#registration-contact
   .header
     %h2 Last step to create your enterprise!
-    %h5 
-      Who is responsible for managing 
+    %h5
+      Who is responsible for managing
       %span.brick{"ng-show" => "enterprise.is_distributor"}
         {{ enterprise.name }}
       %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
@@ -12,15 +12,15 @@
     .row.content
       .small-12.medium-12.large-7.columns
         .row
-          .small-12.columns
+          .small-12.columns.field
             %label{ for: 'enterprise_contact' } Primary Contact:
             %input.chunky.small-12.columns{ id: 'enterprise_contact', placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
         .row
-          .small-12.columns
+          .small-12.columns.field
             %label{ for: 'enterprise_email' } Email address:
             %input.chunky.small-12.columns{ id: 'enterprise_email', placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email' } }
         .row
-          .small-12.columns
+          .small-12.columns.field
             %label{ for: 'enterprise_phone' } Phone number:
             %input.chunky.small-12.columns{ id: 'enterprise_phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.phone' } }
       .small-12.medium-12.large-5.hide-for-small-only
@@ -37,11 +37,8 @@
         /   .small-12.columns
         /     %label.indent-checkbox
         /       %input{ type: 'checkbox', id: 'contact_phone_profile', ng: { model: 'enterprise.phone_in_profile' } } &nbsp; Display phone in profile
-    
     .row.buttons
       .small-12.columns
-        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('address')" } } 
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('address')" } }
         &nbsp;
         %input.button.primary{ type: "button", value: "Continue", ng: { click: "create()" } }
-        
-        
