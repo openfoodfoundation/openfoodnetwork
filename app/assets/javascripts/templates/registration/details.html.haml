@@ -3,11 +3,14 @@
     %h2 Let's Get Started
     %h5 Woot! First we need to know what sort of enterprise you are:
   %ng-include{ src: "'registration/steps.html'" }
-  %form
+  %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('address',details)" } }
     .row
       .small-12.columns
         %label{ for: 'enterprise_name' } Enterprise Name:
-        %input.chunky.small-12.columns{ id: 'enterprise_name', placeholder: "eg. Charlie's Awesome Farm", ng: { model: 'enterprise.name' } }
+        %input.chunky.small-12.columns{ id: 'enterprise_name', name: 'name', placeholder: "eg. Charlie's Awesome Farm", required: true, ng: { model: 'enterprise.name' } }
+        {{ submitted + " " + details.name.$error.required }}
+        %span.error.small-12.columns{ ng: { show: "details.name.$error.required && submitted" } }
+          You need to enter a name for you enterprise!
 
     .row#enterprise-types{ 'data-equalizer' => true }
       .small-12.columns
@@ -35,4 +38,4 @@
               %p Hey there, Jack-of-all-trades! Not only do you produce things to eat &amp;/or drink, you also want to sell your yummies through an Open Food Network shopfront.
     .row.buttons
       .small-12.columns
-        %input.button.primary{ type: "button", value: "Continue", ng: { click: "select('address')" } }
+        %input.button.primary.right{ type: "submit", value: "Continue" }
