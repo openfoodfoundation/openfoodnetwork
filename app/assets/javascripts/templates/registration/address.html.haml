@@ -2,9 +2,7 @@
   .header
     %h2
       Greetings
-      %span.brick{ ng: { show: "enterprise.is_distributor" } }
-        {{ enterprise.name }}
-      %span.turquoise{ ng: { show: "!enterprise.is_distributor" } }
+      %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
         {{ enterprise.name }}
 
     %h5 Now we need to know where you are
@@ -24,18 +22,18 @@
             %input.chunky.small-12.columns{ id: 'enterprise_city', name: 'city', required: true, placeholder: "eg. Northcote", ng: { model: 'enterprise.address.city' } }
             %span.error.small-12.columns{ ng: { show: "address.city.$error.required && submitted" } }
               You need to enter a suburb.
-          .small-12.large-4.columns
+          .small-12.large-4.columns.field
             %label{ for: 'enterprise_zipcode' } Postcode:
             %input.chunky.small-12.columns{ id: 'enterprise_zipcode', name: 'zipcode', required: true, placeholder: "eg. 3070", ng: { model: 'enterprise.address.zipcode' } }
             %span.error.small-12.columns{ ng: { show: "address.zipcode.$error.required && submitted" } }
               You need to enter a postcode.
         .row
-          .small-12.large-8.columns
+          .small-12.large-8.columns.field
             %label{ for: 'enterprise_country' } Country:
             %select.chunky.small-12.columns{ id: 'enterprise_country', name: 'country', required: true, ng: { model: 'enterprise.country', options: 'c as c.name for c in countries' } }
             %span.error.small-12.columns{ ng: { show: "address.country.$error.required && submitted" } }
               You need to enter a country.
-          .small-12.large-4.columns
+          .small-12.large-4.columns.field
             %label{ for: 'enterprise_state' } State:
             %select.chunky.small-12.columns{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
             %span.error.small-12.columns{ ng: { show: "address.state.$error.required && submitted" } }

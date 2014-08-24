@@ -3,26 +3,28 @@
     %h2 Last step to create your enterprise!
     %h5
       Who is responsible for managing
-      %span.brick{"ng-show" => "enterprise.is_distributor"}
-        {{ enterprise.name }}
-      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
+      %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
         {{ enterprise.name }}
   %ng-include{ src: "'registration/steps.html'" }
-  %form
+  %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(contact)" } }
     .row.content
       .small-12.medium-12.large-7.columns
         .row
           .small-12.columns.field
             %label{ for: 'enterprise_contact' } Primary Contact:
-            %input.chunky.small-12.columns{ id: 'enterprise_contact', placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
+            %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact', required: true, placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
+            %span.error.small-12.columns{ ng: { show: "contact.contact.$error.required && submitted" } }
+              You need to enter a primary contact.
         .row
           .small-12.columns.field
             %label{ for: 'enterprise_email' } Email address:
-            %input.chunky.small-12.columns{ id: 'enterprise_email', placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email' } }
+            %input.chunky.small-12.columns{ id: 'enterprise_email', name: 'email', type: 'email', required: true, placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email' } }
+            %span.error.small-12.columns{ ng: { show: "(contact.email.$error.email || contact.email.$error.required) && submitted" } }
+              You need to enter valid email address.
         .row
           .small-12.columns.field
             %label{ for: 'enterprise_phone' } Phone number:
-            %input.chunky.small-12.columns{ id: 'enterprise_phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.phone' } }
+            %input.chunky.small-12.columns{ id: 'enterprise_phone', name: 'phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.phone' } }
       .small-12.medium-12.large-5.hide-for-small-only
         / %h6
         /   Contact display
@@ -41,4 +43,4 @@
       .small-12.columns
         %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('address')" } }
         &nbsp;
-        %input.button.primary{ type: "button", value: "Continue", ng: { click: "create()" } }
+        %input.button.primary{ type: "submit", value: "Continue" }
