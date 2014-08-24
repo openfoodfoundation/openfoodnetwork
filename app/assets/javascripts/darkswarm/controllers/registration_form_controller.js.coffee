@@ -1,20 +1,15 @@
 Darkswarm.controller "RegistrationFormCtrl", ($scope, RegistrationService, EnterpriseRegistrationService) ->
   $scope.submitted = false
 
+  $scope.valid = (form) ->
+    $scope.submitted = !form.$valid
+    form.$valid
+
   $scope.create = (form) ->
-    $scope.submitted = true
-    if form.$valid
-      EnterpriseRegistrationService.create()
-      $scope.submitted = false
+    EnterpriseRegistrationService.create() if $scope.valid(form)
 
   $scope.update = (nextStep, form) ->
-    $scope.submitted = true
-    if form.$valid
-      EnterpriseRegistrationService.update(nextStep)
-      $scope.submitted = false
+    EnterpriseRegistrationService.update(nextStep) if $scope.valid(form)
 
   $scope.select = (nextStep, form) ->
-    $scope.submitted = true
-    if form.$valid
-      RegistrationService.select(nextStep)
-      $scope.submitted = false
+    RegistrationService.select(nextStep) if $scope.valid(form)
