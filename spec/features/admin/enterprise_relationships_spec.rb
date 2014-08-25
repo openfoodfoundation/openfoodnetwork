@@ -38,11 +38,16 @@ feature %q{
 
       visit admin_enterprise_relationships_path
       select 'One', from: 'enterprise_relationship_parent_id'
+      check 'can add products to order cycle from'
+      check 'can manage the products of'
+      uncheck 'can manage the products of'
       select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_relationship e1, e2
-      EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
+      page.should have_relationship e1, e2, ['can add products to order cycle from']
+      er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
+      er.should be_present
+      er.permissions.map(&:name).should == ['add_products_to_order_cycle']
     end
 
 

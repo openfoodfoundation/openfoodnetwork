@@ -1,7 +1,11 @@
 %tr
   %td
     %select{name: "enterprise_relationship_parent_id", "ng-model" => "parent_id", "ng-options" => "e.id as e.name for e in Enterprises.my_enterprises"}
-  %td permits
+  %td
+    %div{"ng-repeat" => "permission in EnterpriseRelationships.all_permissions"}
+      %label
+        %input{type: "checkbox", "ng-model" => "permissions[permission]"}
+        {{ EnterpriseRelationships.permission_presentation(permission) }}
   %td
     %select{name: "enterprise_relationship_child_id", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.all_enterprises"}
   %td.actions
