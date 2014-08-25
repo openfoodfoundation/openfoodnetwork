@@ -14,4 +14,9 @@ class EnterpriseRelationship < ActiveRecord::Base
   scope :involving_enterprises, ->(enterprises) {
     where('parent_id IN (?) OR child_id IN (?)', enterprises, enterprises)
   }
+
+
+  def permissions_list=(perms)
+    perms.andand.each { |name| permissions.build name: name }
+  end
 end

@@ -29,5 +29,19 @@ describe EnterpriseRelationship do
         EnterpriseRelationship.involving_enterprises([e3]).should == []
       end
     end
+
+    describe "creating with a permission list" do
+      it "creates permissions with a list" do
+        er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: ['one', 'two']
+        er.reload
+        er.permissions.map(&:name).sort.should == ['one', 'two'].sort
+      end
+
+      it "does nothing when the list is nil" do
+        er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: nil
+        er.reload
+        er.permissions.should be_empty
+      end
+    end
   end
 end
