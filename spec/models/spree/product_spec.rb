@@ -27,10 +27,18 @@ module Spree
         product.should_not be_valid
       end
 
-      it "should default available_on to now" do
+      it "defaults available_on to now" do
         Timecop.freeze
         product = Product.new
         product.available_on.should == Time.now
+      end
+
+      it "does not save when master is invalid" do
+        s = create(:supplier_enterprise)
+        t = create(:taxon)
+        product = Product.new supplier_id: s.id, name: "Apples", price: 1, primary_taxon_id: t.id
+        product.on_hand = "10,000"
+        product.save.should be_false
       end
 
       context "when the product has variants" do
