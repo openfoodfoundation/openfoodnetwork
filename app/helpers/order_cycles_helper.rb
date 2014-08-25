@@ -4,7 +4,7 @@ module OrderCyclesHelper
   end
 
   def coordinating_enterprises
-    Enterprise.is_distributor.managed_by(spree_current_user).order('name')
+    Enterprise.is_distributor.managed_by(spree_current_user).by_name
   end
 
   def order_cycle_local_remote_class(distributor, order_cycle)

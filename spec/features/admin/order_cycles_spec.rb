@@ -436,12 +436,13 @@ feature %q{
 
   context "as an enterprise user" do
 
-    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
-    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
-    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
-    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let!(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
+    let!(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
+    let!(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
+    let!(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:distributor1_fee) { create(:enterprise_fee, enterprise: distributor1, name: 'First Distributor Fee') }
-    before(:each) do
+
+    before do
       product = create(:product, supplier: supplier1)
       product.distributors << distributor1
       product.save!
@@ -486,17 +487,12 @@ feature %q{
       select 'First Distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
 
-      # Should only have suppliers / distributors listed which the user can manage
-      within "#new_supplier_id" do
-        page.should_not have_content supplier2.name
-      end
-      within "#new_distributor_id" do
-        page.should_not have_content distributor2.name
-      end
-      within "#order_cycle_coordinator_id" do
-        page.should_not have_content distributor2.name
-        page.should_not have_content supplier1.name
-        page.should_not have_content supplier2.name
+      # Should only have suppliers / distributors listed which the user is managing
+      page.should_not have_select 'new_supplier_id', with_options: [supplier2.name]
+      page.should_not have_select 'new_distributor_id', with_options: [distributor2.name]
+
+      [distributor2.name, supplier1.name, supplier2.name].each do |enterprise_name|
+        page.should_not have_select 'order_cycle_coordinator_id', with_options: [enterprise_name]
       end
 
       click_button 'Create'
