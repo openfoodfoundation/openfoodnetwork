@@ -16,3 +16,8 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
     delete: (er) ->
       $http.delete('/admin/enterprise_relationships/' + er.id).success (data) =>
         @enterprise_relationships.splice @enterprise_relationships.indexOf(er), 1
+
+    permission_presentation: (permission) ->
+      switch permission
+        when "add_products_to_order_cycle" then "can add products to order cycle from"
+        when "manage_products" then "can manage the products of"
