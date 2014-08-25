@@ -10,7 +10,7 @@ module Admin
       @enterprise_relationship = EnterpriseRelationship.new params[:enterprise_relationship]
 
       if @enterprise_relationship.save
-        render partial: "admin/json/enterprise_relationship", locals: {enterprise_relationship: @enterprise_relationship}
+        render text: Api::Admin::EnterpriseRelationshipSerializer.new(@enterprise_relationship).to_json
       else
         render status: 400, json: {errors: @enterprise_relationship.errors.full_messages.join(', ')}
       end
