@@ -1,5 +1,8 @@
 %td {{ enterprise_relationship.parent_name }}
-%td permits
+%td
+  %ul
+    %li{"ng-repeat" => "permission in enterprise_relationship.permissions"}
+      {{ EnterpriseRelationships.permission_presentation(permission.name) }}
 %td {{ enterprise_relationship.child_name }}
 %td.actions
   %a.delete-enterprise-relationship.icon-trash.no-text{'ng-click' => 'delete(enterprise_relationship)'}
