@@ -101,12 +101,6 @@ FactoryGirl.define do
   end
 
   factory :enterprise_relationship do
-    ignore { permissions [] }
-    after(:create) do |er, proxy|
-      proxy.permissions.each do |name|
-        er.permissions.create! name: name
-      end
-    end
   end
 
   factory :enterprise_role do

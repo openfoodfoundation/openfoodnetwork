@@ -14,9 +14,9 @@ feature %q{
     scenario "listing relationships" do
       # Given some enterprises with relationships
       e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
-      create(:enterprise_relationship, parent: e1, child: e2, permissions: [:add_products_to_order_cycle])
-      create(:enterprise_relationship, parent: e2, child: e3, permissions: [:manage_products])
-      create(:enterprise_relationship, parent: e3, child: e4, permissions: [:add_products_to_order_cycle, :manage_products])
+      create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_products_to_order_cycle])
+      create(:enterprise_relationship, parent: e2, child: e3, permissions_list: [:manage_products])
+      create(:enterprise_relationship, parent: e3, child: e4, permissions_list: [:add_products_to_order_cycle, :manage_products])
 
       # When I go to the relationships page
       click_link 'Enterprises'
