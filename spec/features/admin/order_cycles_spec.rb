@@ -444,7 +444,7 @@ feature %q{
     let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
     let!(:supplier_permitted_relationship) do
       create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed,
-             permissions_list: [:add_products_to_order_cycle])
+             permissions_list: [:add_to_order_cycle])
     end
 
     before do
