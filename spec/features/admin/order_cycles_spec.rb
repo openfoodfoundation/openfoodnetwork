@@ -511,12 +511,12 @@ feature %q{
     end
 
     scenario "editing an order cycle" do
-      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
 
       visit edit_admin_order_cycle_path(oc)
 
       # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
-      page.all('tr.supplier').count.should == 1
+      page.all('tr.supplier').count.should == 2
       page.all('tr.distributor').count.should == 1
 
       # When I save, then those exchanges should remain
@@ -524,13 +524,13 @@ feature %q{
       page.should have_content "Your order cycle has been updated."
 
       oc.reload
-      oc.suppliers.sort.should == [supplier_managed, supplier_unmanaged]
+      oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
       oc.coordinator.should == supplier_managed
-      oc.distributors.sort.should == [distributor_managed, distributor_unmanaged]
+      oc.distributors.sort.should == [distributor_managed, distributor_unmanaged].sort
     end
 
     scenario "cloning an order cycle" do
-      oc = create(:simple_order_cycle)
+      oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
       click_link "Order Cycles"
       first('a.clone-order-cycle').click

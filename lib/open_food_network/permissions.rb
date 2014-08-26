@@ -4,9 +4,16 @@ module OpenFoodNetwork
       @user = user
     end
 
+    # Find producers for which an admin is allowed to add their products to an order cycle
     def order_cycle_producers
       (managed_producers + related_producers_with(:add_products_to_order_cycle)).
         sort_by(&:name)
+    end
+
+    # Find the exchanges of an order cycle that an admin can manage
+    def order_cycle_exchanges(order_cycle)
+      enterprises = managed_enterprises + related_enterprises_with(:add_products_to_order_cycle)
+      order_cycle.exchanges.to_enterprises(enterprises).from_enterprises(enterprises)
     end
 
 
