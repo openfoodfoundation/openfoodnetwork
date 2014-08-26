@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140825023227) do
+ActiveRecord::Schema.define(:version => 20140826043521) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20140825023227) do
     t.integer "enterprise_id"
   end
 
+  add_index "enterprise_roles", ["enterprise_id", "user_id"], :name => "index_enterprise_roles_on_enterprise_id_and_user_id", :unique => true
   add_index "enterprise_roles", ["enterprise_id"], :name => "index_enterprise_roles_on_enterprise_id"
   add_index "enterprise_roles", ["user_id", "enterprise_id"], :name => "index_enterprise_roles_on_user_id_and_enterprise_id", :unique => true
   add_index "enterprise_roles", ["user_id"], :name => "index_enterprise_roles_on_user_id"
@@ -562,9 +563,9 @@ ActiveRecord::Schema.define(:version => 20140825023227) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
