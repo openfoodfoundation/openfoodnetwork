@@ -6,10 +6,10 @@ describe EnterpriseRelationship do
     let(:e2)  { create(:enterprise, name: 'B') }
     let(:e3)  { create(:enterprise, name: 'C') }
 
-    it "sorts by parent, child enterprise name" do
-      er1 = create(:enterprise_relationship, parent: e1, child: e3)
-      er2 = create(:enterprise_relationship, parent: e2, child: e1)
-      er3 = create(:enterprise_relationship, parent: e1, child: e2)
+    it "sorts by child, parent enterprise name" do
+      er1 = create(:enterprise_relationship, parent: e3, child: e1)
+      er2 = create(:enterprise_relationship, parent: e1, child: e2)
+      er3 = create(:enterprise_relationship, parent: e2, child: e1)
 
       EnterpriseRelationship.by_name.should == [er3, er1, er2]
     end

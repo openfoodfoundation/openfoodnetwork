@@ -119,6 +119,6 @@ feature %q{
   def have_relationship(parent, child, perms=[])
     perms = perms.join(' ') || 'permits'
 
-    have_table_row [parent.name, perms, child.name, '']
+    have_table_row [child.name, perms, parent.name, '']
   end
 end
