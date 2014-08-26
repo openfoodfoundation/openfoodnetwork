@@ -514,10 +514,12 @@ feature %q{
 
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
+      order_cycle.suppliers.sort.should == [supplier_managed, supplier_permitted].sort
       order_cycle.coordinator.should == distributor_managed
+      order_cycle.distributors.sort.should == [distributor_managed, distributor_permitted].sort
     end
 
-    scenario "editing an order cycle" do
+    scenario "editing an order cycle does not affect exchanges we don't manage" do
       oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
       visit edit_admin_order_cycle_path(oc)
@@ -535,6 +537,28 @@ feature %q{
       oc.coordinator.should == supplier_managed
       oc.distributors.sort.should == [distributor_managed, distributor_permitted, distributor_unmanaged].sort
     end
+
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # When I remove all the exchanges and save
+      page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
+      page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+      click_button 'Update'
+
+      # Then the exchanges should be removed
+      page.should have_content "Your order cycle has been updated."
+
+      oc.reload
+      oc.suppliers.should == [supplier_unmanaged]
+      oc.coordinator.should == supplier_managed
+      oc.distributors.should == [distributor_unmanaged]
+    end
+
 
     scenario "cloning an order cycle" do
       oc = create(:simple_order_cycle, coordinator: distributor_managed)
