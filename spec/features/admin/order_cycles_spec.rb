@@ -438,9 +438,14 @@ feature %q{
 
     let!(:supplier_managed) { create(:supplier_enterprise, name: 'Managed supplier') }
     let!(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Unmanaged supplier') }
+    let!(:supplier_permitted) { create(:supplier_enterprise, name: 'Permitted supplier') }
     let!(:distributor_managed) { create(:distributor_enterprise, name: 'Managed distributor') }
     let!(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Unmanaged Distributor') }
-    let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor Fee') }
+    let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed,
+             permissions_list: [:add_products_to_order_cycle])
+    end
 
     before do
       product = create(:product, supplier: supplier_managed)
@@ -479,10 +484,12 @@ feature %q{
 
       select 'Managed supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
+      select 'Permitted supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
 
       select 'Managed distributor', from: 'order_cycle_coordinator_id'
       click_button 'Add coordinator fee'
-      select 'Managed distributor Fee', from: 'order_cycle_coordinator_fee_0_id'
+      select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
 
       select 'Managed distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
