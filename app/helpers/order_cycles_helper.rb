@@ -8,7 +8,11 @@ module OrderCyclesHelper
   end
 
   def coordinating_enterprises
-    Enterprise.is_distributor.managed_by(spree_current_user).by_name
+    order_cycle_hub_enterprises
+  end
+
+  def order_cycle_hub_enterprises
+    OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises.is_distributor.by_name
   end
 
   def order_cycle_local_remote_class(distributor, order_cycle)
