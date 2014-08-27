@@ -1,7 +1,7 @@
 .container#registration-about
   .header
     %h2 Nice one!
-    %h5 
+    %h5
       Now let's flesh out the details about
       %span.brick{"ng-show" => "enterprise.is_distributor"}
         {{ enterprise.name }}
@@ -9,24 +9,16 @@
         {{ enterprise.name }}
 
   %ng-include{ src: "'registration/steps.html'" }
-  %form
+  %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('social',about)" } }
     .row
       .small-12.columns
         .alert-box.alert{"data-alert" => ""}
           {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
-          %a.close{:href => "#"} X
+          %a.close{:href => "#"} &times;
 
         .alert-box.info{"data-alert" => ""}
           {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
-          %a.close{:href => "#"} X
-
-    .row.content
-      %ofn-inline-flash.turquoise.small-12.columns{ ng: { show: 'visible' } }
-        / %i.ofn-i_009-close.close-button{ ng: { click: 'closeFlash()' } }
-        / {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
-      -# %ofn-inline-flash.brick.small-12.columns{ ng: { show: 'visible' } }
-      -#   %i.ofn-i_009-close.close-button{ ng: { click: 'closeFlash()' } }
-      -#   {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
+          %a.close{:href => "#"} &times;
 
       .small-12.large-8.columns
         .row
@@ -49,4 +41,4 @@
             %input.chunky.small-12.columns{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
     .row.buttons.pad-top
       .small-12.columns
-        %input.button.primary{ type: "button", value: "Continue", ng: { click: "update('social')" } }
+        %input.button.primary{ type: "submit", value: "Continue" }

@@ -3,7 +3,7 @@
     %h2 Last step!
     %h5 How can people find {{ enterprise.name }} online?
   %ng-include{ src: "'registration/steps.html'" }
-  %form
+  %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
     .row.content
       .small-12.large-7.columns
         .row
@@ -32,4 +32,4 @@
       .small-12.columns
         %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('about')" } }
         &nbsp;
-        %input.button.primary{ type: "button", value: "Continue", ng: { click: "update('finished')" } }
+        %input.button.primary{ type: "submit", value: "Continue" }
