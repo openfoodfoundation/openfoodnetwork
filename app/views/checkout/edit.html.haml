@@ -1,16 +1,16 @@
-= inject_enterprises 
+= inject_enterprises
 
 .darkswarm
   - content_for :order_cycle_form do
-    
+
     %closing Checkout now
-    %p 
+    %p
       Order ready for
       %strong
         = pickup_time current_order_cycle
 
   = render partial: "shopping_shared/details"
-   
+
   %accordion{"close-others" => "true"}
     %checkout.row{"ng-controller" => "CheckoutCtrl"}
       .small-12.medium-8.large-9.columns
