@@ -9,11 +9,13 @@
   %fieldset.eleven.columns.alpha.no-border-bottom
     %legend Primary Details
     .row
-      .alpha.eleven.columns
+      .alpha.twelve.columns
         .three.columns.alpha
           = f.label :name
         .eight.columns.omega
           = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
+        .one.columns.omega
+          = render 'required'
     .row
       .alpha.eleven.columns
         .three.columns.alpha
@@ -79,13 +81,15 @@
 
 
   = f.fields_for :address do |af|
-    %fieldset.eleven.columns.alpha.no-border-bottom
+    %fieldset.twelve.columns.alpha.no-border-bottom
       %legend Address
       .row
         .three.columns.alpha
           = af.label :address1
         .eight.columns.omega
           = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+        .one.columns.omega
+          = render 'required'
       .row
         .alpha.three.columns
           = af.label :address2
@@ -100,6 +104,8 @@
           = af.text_field :city, { placeholder: "eg. Northcote"}
         .four.columns.omega
           = af.text_field :zipcode, { placeholder: "eg. 3070"}
+        .one.columns.omega
+          = render 'required'
       .row
         .three.columns.alpha
           = af.label :state_id, 'State'
@@ -109,6 +115,8 @@
           = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
         .four.columns.omega
           = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
+        .one.columns.omega
+          = render 'required'
     %fieldset.eleven.columns.alpha.no-border-bottom
       %legend Contact Details
       .row
