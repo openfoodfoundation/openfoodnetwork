@@ -23,7 +23,7 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   it "shows the current distributor on checkout" do
-    visit checkout_path 
+    visit checkout_path
     page.should have_content distributor.name
   end
 

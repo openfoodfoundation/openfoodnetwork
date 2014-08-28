@@ -14,16 +14,16 @@
       %accordion-heading
         .row
           .small-8.medium-10.columns
-            %em 
+            %em
               %small
                 {{ Checkout.shippingMethod().name }}
           .small-4.medium-2.columns.text-right
             %span.accordion-up
-              %em 
+              %em
                 %small Hide
-              %i.ofn-i_053-point-up 
+              %i.ofn-i_053-point-up
             %span.accordion-down
-              %em 
+              %em
                 %small Expand
               %i.ofn-i_052-point-down
 
@@ -61,13 +61,14 @@
                 .small-6.columns
                   = validated_input "City", "order.ship_address.city"
                 .small-6.columns
-                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}
+                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
+                    "ng-model" => "order.ship_address.state_id", required: true
               .row
                 .small-6.columns
                   = validated_input "Postcode", "order.ship_address.zipcode"
                 .small-6.columns.right
                   = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
-                    {include_blank: false}
+                    "ng-model" => "order.ship_address.country_id", required: true
               .row
                 .small-6.columns
                   = validated_input "First Name", "order.ship_address.firstname"

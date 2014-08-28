@@ -9,23 +9,23 @@
           %i.ofn-i_051-check-big
       Your details
 
-    %accordion-group{"is-open" => "accordion.details", 
+    %accordion-group{"is-open" => "accordion.details",
       "ng-class" => "{valid: details.$valid, open: accordion.details}"}
       %accordion-heading
         .row
           .small-8.medium-10.columns
-            %em 
+            %em
               %small
                 {{ summary() | printArray }}
           .small-4.medium-2.columns.text-right
             %span.accordion-up
-              %em 
+              %em
                 %small Hide
-              %i.ofn-i_053-point-up 
+              %i.ofn-i_053-point-up
             %span.accordion-down
-              %em 
+              %em
                 %small Expand
-              %i.ofn-i_052-point-down 
+              %i.ofn-i_052-point-down
 
       .row
         .small-6.columns
@@ -36,10 +36,10 @@
       .row
         .small-6.columns
           = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"
-        
+
         .small-6.columns
           = validated_input 'Phone', 'order.bill_address.phone'
-        
+
       .row
         .small-12.columns.text-right
           %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next

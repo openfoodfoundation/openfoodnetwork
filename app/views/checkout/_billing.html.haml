@@ -47,7 +47,7 @@
 
           .small-6.columns.right
             = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
-              {include_blank: false}, "ng-model" => "order.bill_address.country_id"
+              "ng-model" => "order.bill_address.country_id", required: true
 
       .row
         .small-12.columns.text-right
