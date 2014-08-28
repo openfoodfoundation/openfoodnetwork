@@ -6,6 +6,11 @@ module Admin
     create.after :grant_management
 
     helper 'spree/products'
+    include OrderCyclesHelper
+
+    def for_order_cycle
+      @collection = order_cycle_permitted_enterprises
+    end
 
 
     def bulk_update
@@ -53,7 +58,7 @@ module Admin
     end
 
     def collection_actions
-      [:index, :bulk_update]
+      [:index, :for_order_cycle, :bulk_update]
     end
 
     def load_methods_and_fees

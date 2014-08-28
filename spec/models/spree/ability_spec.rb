@@ -264,7 +264,7 @@ module Spree
         end
 
         it 'should have the ability administrate and create enterpises' do
-          should have_ability([:admin, :index, :create], for: Enterprise)
+          should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
         end
       end
     end

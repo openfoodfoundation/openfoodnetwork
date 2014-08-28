@@ -451,12 +451,10 @@ feature %q{
       create(:enterprise_relationship, parent: distributor_permitted, child: distributor_managed,
              permissions_list: [:add_to_order_cycle])
     end
+    let!(:product_managed) { create(:product, supplier: supplier_managed) }
+    let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
 
     before do
-      product = create(:product, supplier: supplier_managed)
-      product.distributors << distributor_managed
-      product.save!
-
       @new_user = create_enterprise_user
       @new_user.enterprise_roles.build(enterprise: supplier_managed).save
       @new_user.enterprise_roles.build(enterprise: distributor_managed).save
@@ -491,6 +489,9 @@ feature %q{
       click_button 'Add supplier'
       select 'Permitted supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
+
+      select_incoming_variant supplier_managed, 0, product_managed.master
+      select_incoming_variant supplier_permitted, 1, product_permitted.master
 
       select 'Managed distributor', from: 'order_cycle_coordinator_id'
       click_button 'Add coordinator fee'
@@ -574,4 +575,11 @@ feature %q{
 
   end
 
+
+  private
+
+  def select_incoming_variant(supplier, exchange_no, variant)
+    page.find("table.exchanges tr.supplier-#{supplier.id} td.products input").click
+    check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
+  end
 end

@@ -327,7 +327,7 @@ describe 'OrderCycle services', ->
       inject ($injector, _$httpBackend_)->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
-        $httpBackend.whenGET('/admin/enterprises.json').respond [
+        $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
           {id: 1, name: 'One', supplied_products: [1, 2]}
           {id: 2, name: 'Two', supplied_products: [3, 4]}
           {id: 3, name: 'Three', supplied_products: [5, 6]}
