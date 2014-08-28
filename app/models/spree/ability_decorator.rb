@@ -76,6 +76,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end
+    can [:for_order_cycle], Enterprise
 
     can [:index, :create], EnterpriseFee
     can [:admin, :read, :edit, :bulk_update, :destroy], EnterpriseFee do |enterprise_fee|
