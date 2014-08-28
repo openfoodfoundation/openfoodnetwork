@@ -6,7 +6,7 @@
 
 
 .fullwidth_inputs
-  %fieldset.eleven.columns.alpha.no-border-bottom
+  %fieldset.twelve.columns.alpha.no-border-bottom
     %legend Primary Details
     .row
       .alpha.twelve.columns
@@ -117,7 +117,7 @@
           = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
         .one.columns.omega
           = render 'required'
-    %fieldset.eleven.columns.alpha.no-border-bottom
+    %fieldset.twelve.columns.alpha.no-border-bottom
       %legend Contact Details
       .row
         .alpha.three.columns
@@ -134,7 +134,7 @@
           = f.label :phone
         .omega.eight.columns
           = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
-    %fieldset.eleven.columns.alpha.no-border-bottom
+    %fieldset.twelve.columns.alpha.no-border-bottom
       %legend Enterprise Details
       .row
         .alpha.three.columns
@@ -171,7 +171,7 @@
           = f.label :twitter
         .omega.eight.columns
           = f.text_field :twitter, { placeholder: "eg. @the_prof" }
-  %fieldset.eleven.columns.alpha.no-border-bottom
+  %fieldset.twelve.columns.alpha.no-border-bottom
     %legend About Us
     .row
       .alpha.three.columns
@@ -195,7 +195,7 @@
       .omega.eight.columns
         = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
         / TODO: editor breaks scrolling with arrow keys
-  %fieldset.eleven.columns.alpha.no-border-bottom
+  %fieldset.twelve.columns.alpha.no-border-bottom
     %legend IMAGES
     .row
       .alpha.three.columns
