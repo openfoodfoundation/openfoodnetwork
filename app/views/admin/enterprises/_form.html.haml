@@ -23,6 +23,10 @@
 
         .eight.columns.omega
           = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+    - if spree_current_user.admin?
+      / Select box for assigning owner goes here
+      = f.hidden_field :owner_id, value: @enterprise.owner_id || spree_current_user.id
+
     .row
       .three.columns.alpha
         %label Enterprise Type(s)

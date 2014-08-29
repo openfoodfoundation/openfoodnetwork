@@ -22,6 +22,7 @@ module Admin
 
       it "grants management permission if the current user is an enterprise user" do
         controller.stub spree_current_user: user
+        enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
@@ -30,6 +31,7 @@ module Admin
 
       it "does not grant management permission to admins" do
         controller.stub spree_current_user: admin_user
+        enterprise_params[:enterprise][:owner_id] = admin_user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
