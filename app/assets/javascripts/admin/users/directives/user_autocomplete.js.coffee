@@ -4,8 +4,7 @@ angular.module("admin.users").directive "ofnUserAutocomplete", ($http) ->
       element.select2
         multiple: false
         initSelection: (element, callback) ->
-          $http.get( Spree.url(Spree.routes.user_search, { ids: element.val() }) ).success (data) ->
-            callback(data[0]) if data.length > 0
+          callback { id: element.val(), email: attrs.email }
         ajax:
           url: Spree.routes.user_search
           datatype: 'json'
