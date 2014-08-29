@@ -64,7 +64,7 @@ feature %q{
     page.should have_content e.name
   end
 
-  scenario "creating a new enterprise" do
+  scenario "creating a new enterprise", js:true do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -73,8 +73,7 @@ feature %q{
 
     # Navigating
     admin = quick_login_as_admin
-    visit '/admin/enterprises'
-    click_link 'New Enterprise'
+    visit '/admin/enterprises/new'
 
     # Checking shipping and payment method sidebars work
     uncheck 'enterprise_is_primary_producer'
@@ -84,11 +83,11 @@ feature %q{
 
     # Filling in details
     fill_in 'enterprise_name', :with => 'Eaterprises'
-    select admin.email, from: 'enterprise_own/er_id'
+    select2_search admin.email, from: 'Owner'
     choose 'Full'
     check "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
-    select eg1.name, from: 'enterprise_group_ids'
+    select2_search eg1.name, from: 'Groups'
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
@@ -102,8 +101,8 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select('Australia', :from => 'enterprise_address_attributes_country_id')
-    select('Victoria', :from => 'enterprise_address_attributes_state_id')
+    select2_search 'Australia', :from => 'Country'
+    select2_search 'Victoria', :from => 'State'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
