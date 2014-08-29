@@ -3,8 +3,20 @@ module OrderCyclesHelper
     @current_order_cycle ||= current_order(false).andand.order_cycle
   end
 
+  def order_cycle_permitted_enterprises
+    OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
+  end
+
+  def order_cycle_producer_enterprises
+    order_cycle_permitted_enterprises.is_primary_producer.by_name
+  end
+
   def coordinating_enterprises
-    Enterprise.is_distributor.managed_by(spree_current_user).order('name')
+    order_cycle_hub_enterprises
+  end
+
+  def order_cycle_hub_enterprises
+    order_cycle_permitted_enterprises.is_distributor.by_name
   end
 
   def order_cycle_local_remote_class(distributor, order_cycle)
