@@ -73,7 +73,8 @@ feature %q{
 
     # Navigating
     admin = quick_login_as_admin
-    visit '/admin/enterprises/new'
+    visit '/admin/enterprises'
+    click_link 'New Enterprise'
 
     # Checking shipping and payment method sidebars work
     uncheck 'enterprise_is_primary_producer'
@@ -110,7 +111,7 @@ feature %q{
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
 
-  scenario "editing an existing enterprise" do
+  scenario "editing an existing enterprise", js: true do
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -118,14 +119,18 @@ feature %q{
     payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
+    user = create(:user)
 
-    login_to_admin_section
+    admin = quick_login_as_admin
 
-    click_link 'Enterprises'
-    all("a", text:'Edit Profile').first.click
+    visit '/admin/enterprises'
+    within "tr.enterprise-#{@enterprise.id}" do
+      all("a", text: 'Edit Profile').first.click
+    end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
     choose 'Single'
+    select2_search user.email, from: 'Owner'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
@@ -140,7 +145,7 @@ feature %q{
     page.should have_selector "#shipping_methods"
     page.should have_selector "#enterprise_fees"
 
-    select eg1.name, from: 'enterprise_group_ids'
+    select2_search eg1.name, from: 'Groups'
 
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
@@ -159,13 +164,15 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select('Australia', :from => 'enterprise_address_attributes_country_id')
-    select('Victoria', :from => 'enterprise_address_attributes_state_id')
+    select2_search 'Australia', :from => 'Country'
+    select2_search 'Victoria', :from => 'State'
 
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
     page.should have_field 'enterprise_name', :with => 'Eaterprises'
+    @enterprise.reload
+    expect(@enterprise.owner).to eq user
 
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
