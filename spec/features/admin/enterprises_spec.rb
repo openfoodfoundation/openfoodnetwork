@@ -71,28 +71,24 @@ feature %q{
     shipping_method = create(:shipping_method)
     enterprise_fee = create(:enterprise_fee)
 
-    login_to_admin_section
-
-    click_link 'Enterprises'
+    # Navigating
+    admin = quick_login_as_admin
+    visit '/admin/enterprises'
     click_link 'New Enterprise'
 
-    fill_in 'enterprise_name', :with => 'Eaterprises'
-    choose 'Full'
-    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-
+    # Checking shipping and payment method sidebars work
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
-
-    select eg1.name, from: 'enterprise_group_ids'
-
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
+    # Filling in details
+    fill_in 'enterprise_name', :with => 'Eaterprises'
+    select admin.email, from: 'enterprise_own/er_id'
+    choose 'Full'
     check "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
-
+    select eg1.name, from: 'enterprise_group_ids'
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
@@ -108,6 +104,9 @@ feature %q{
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select('Australia', :from => 'enterprise_address_attributes_country_id')
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
+    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
+    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
