@@ -106,7 +106,6 @@ feature %q{
     select('Victoria', :from => 'enterprise_address_attributes_state_id')
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
