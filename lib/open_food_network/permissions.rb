@@ -18,6 +18,10 @@ module OpenFoodNetwork
       order_cycle.exchanges.to_enterprises(enterprises).from_enterprises(enterprises)
     end
 
+    def managed_products
+      Spree::Product.managed_by(@user)
+    end
+
 
     private
 

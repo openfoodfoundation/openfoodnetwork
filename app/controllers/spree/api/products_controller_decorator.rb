@@ -1,3 +1,5 @@
+require 'open_food_network/permissions'
+
 Spree::Api::ProductsController.class_eval do
   def managed
     authorize! :admin, Spree::Product
@@ -8,7 +10,11 @@ Spree::Api::ProductsController.class_eval do
   end
 
   def bulk_products
-    @products = product_scope.ransack(params[:q]).result.managed_by(current_api_user).page(params[:page]).per(params[:per_page])
+    @products = OpenFoodNetwork::Permissions.new(current_api_user).managed_products.
+      merge(product_scope).
+      ransack(params[:q]).result.
+      page(params[:page]).per(params[:per_page])
+
     render text: { products: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer), pages: @products.num_pages }.to_json
   end
 
