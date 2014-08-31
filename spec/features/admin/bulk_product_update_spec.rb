@@ -729,20 +729,20 @@ feature %q{
   end
 
   context "as an enterprise manager" do
-    let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
-    let(:s2) { create(:supplier_enterprise, name: 'Another Supplier') }
-    let(:s3) { create(:supplier_enterprise, name: 'Yet Another Supplier') }
-    let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
-    let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
-    let!(:product_supplied) { create(:product, supplier: s1, price: 10.0, on_hand: 6) }
-    let!(:product_not_supplied) { create(:product, supplier: s3) }
-    let(:product_supplied_inactive) { create(:product, supplier: s1, price: 10.0, on_hand: 6, available_on: 1.week.from_now) }
+    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
+    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
+    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
+    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6) }
+    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let(:product_supplied_inactive) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6, available_on: 1.week.from_now) }
 
-    before(:each) do
+    before do
       @enterprise_user = create_enterprise_user
-      @enterprise_user.enterprise_roles.build(enterprise: s1).save
-      @enterprise_user.enterprise_roles.build(enterprise: s2).save
-      @enterprise_user.enterprise_roles.build(enterprise: d1).save
+      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
 
       login_to_admin_as @enterprise_user
     end
@@ -757,8 +757,8 @@ feature %q{
     it "shows only suppliers that I manage" do
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_select 'producer', with_options: [s1.name, s2.name], selected: s1.name
-      expect(page).to have_no_select 'producer', with_options: [s3.name]
+      expect(page).to have_select 'producer', with_options: [supplier_managed1.name, supplier_managed2.name], selected: supplier_managed1.name
+      expect(page).to have_no_select 'producer', with_options: [supplier_unmanaged.name]
     end
 
     it "shows inactive products that I supply" do
@@ -777,13 +777,13 @@ feature %q{
       first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
       expect(page).to have_field "product_name", with: p.name
-      expect(page).to have_select "producer", selected: s1.name
+      expect(page).to have_select "producer", selected: supplier_managed1.name
       expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
       expect(page).to have_field "price", with: "10.0"
       expect(page).to have_field "on_hand", with: "6"
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select(s2.name, :from => 'producer')
+      select(supplier_managed2.name, :from => 'producer')
       fill_in "available_on", with: (Date.today-3).strftime("%F %T")
       fill_in "price", with: "20"
       select "Weight (kg)", from: "variant_unit_with_scale"
@@ -795,7 +795,7 @@ feature %q{
 
       p.reload
       expect(p.name).to eq "Big Bag Of Potatoes"
-      expect(p.supplier).to eq s2
+      expect(p.supplier).to eq supplier_managed2
       expect(p.variant_unit).to eq "weight"
       expect(p.variant_unit_scale).to eq 1000 # Kg
       expect(p.available_on).to eq 3.days.ago.beginning_of_day
