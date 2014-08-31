@@ -88,7 +88,7 @@ module Openfoodnetwork
     # css and js files other than application.* are not precompiled by default
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
-    config.assets.initialize_on_precompile = true
+    config.assets.initialize_on_precompile = false
     config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js', 'iehack.js']
     config.assets.precompile += ['admin/all.css', 'admin/restore_spree_from_cms.css', 'admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all.js']
