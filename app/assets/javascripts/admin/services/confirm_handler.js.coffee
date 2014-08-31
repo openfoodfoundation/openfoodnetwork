@@ -1,4 +1,4 @@
-Admin.factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
+angular.module("ofn.admin").factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
   return (scope, callback) ->
     template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
     dialogDiv = $compile(template)(scope)

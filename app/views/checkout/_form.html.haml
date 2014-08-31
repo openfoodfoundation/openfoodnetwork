@@ -7,10 +7,7 @@
   :javascript
     angular.module('Darkswarm').value('order', #{render "checkout/order"})
 
-  -#%pre
-    -#{{ Order.order}}
-
-  .small-12.columns
+  %div
     %h3.text-center.pad-top 
       Checkout from 
       = current_distributor.name
@@ -20,7 +17,8 @@
     = render partial: "checkout/shipping", locals: {f: f}
     = render partial: "checkout/payment", locals: {f: f}
     %p
-      %input.button.primary{type: :submit, 
-      value: "Place order now", 
-      "ng-click" => "purchase($event)", 
-      "ng-show" => "checkout.$valid"}
+      %button.button.primary{type: :submit, 
+      "ng-click" => "purchase($event)",
+      "ng-disabled" => "checkout.$invalid"}
+        Place order now
+      / {{ checkout.$valid }}

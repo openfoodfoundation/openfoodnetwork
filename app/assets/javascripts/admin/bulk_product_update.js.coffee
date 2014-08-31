@@ -1,4 +1,4 @@
-Admin.controller "AdminProductEditCtrl", [
+angular.module("ofn.admin").controller "AdminProductEditCtrl", [
   "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts"
   ($scope, $timeout, $http, dataFetcher, DirtyProducts) ->
     $scope.updateStatusMessage =
@@ -196,6 +196,8 @@ Admin.controller "AdminProductEditCtrl", [
         unit_value: null
         unit_description: null
         on_demand: false
+        display_as: null
+        display_name: null
         on_hand: null
         price: null
       $scope.displayProperties[product.id].showVariants = true
@@ -211,7 +213,7 @@ Admin.controller "AdminProductEditCtrl", [
       if confirm("Are you sure?")
         $http(
           method: "DELETE"
-          url: "/api/products/" + product.id
+          url: "/api/products/" + product.id + "/soft_delete"
         ).success (data) ->
           $scope.products.splice $scope.products.indexOf(product), 1
           DirtyProducts.deleteProduct product.id
@@ -425,6 +427,7 @@ filterSubmitProducts = (productsToFilter) ->
       if product.hasOwnProperty("id")
         filteredProduct = {id: product.id}
         filteredVariants = []
+        filteredMaster = null
         hasUpdatableProperty = false
 
         if product.hasOwnProperty("variants")
@@ -435,11 +438,14 @@ filterSubmitProducts = (productsToFilter) ->
             filteredVariants.push filteredVariant  if variantHasUpdatableProperty
 
         if product.master?.hasOwnProperty("unit_value")
-          filteredProduct.unit_value = product.master.unit_value
-          hasUpdatableProperty = true
+          filteredMaster ?= { id: product.master.id }
+          filteredMaster.unit_value = product.master.unit_value
         if product.master?.hasOwnProperty("unit_description")
-          filteredProduct.unit_description = product.master.unit_description
-          hasUpdatableProperty = true
+          filteredMaster ?= { id: product.master.id }
+          filteredMaster.unit_description = product.master.unit_description
+        if product.master?.hasOwnProperty("display_as")
+          filteredMaster ?= { id: product.master.id }
+          filteredMaster.display_as = product.master.display_as
 
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
@@ -466,6 +472,9 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on
           hasUpdatableProperty = true
+        if filteredMaster?
+          filteredProduct.master_attributes = filteredMaster
+          hasUpdatableProperty = true
         if filteredVariants.length > 0 # Note that the name of the property changes to enable mass assignment of variants attributes with rails
           filteredProduct.variants_attributes = filteredVariants
           hasUpdatableProperty = true
@@ -490,6 +499,12 @@ filterSubmitVariant = (variant) ->
       hasUpdatableProperty = true
     if variant.hasOwnProperty("unit_description")
       filteredVariant.unit_description = variant.unit_description
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("display_name")
+      filteredVariant.display_name = variant.display_name
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("display_as")
+      filteredVariant.display_as = variant.display_as
       hasUpdatableProperty = true
   {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
 

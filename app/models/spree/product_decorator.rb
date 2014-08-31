@@ -4,18 +4,21 @@ Spree::Product.class_eval do
   # https://github.com/rails/rails/issues/7618
   has_many :option_types, :through => :product_option_types, :dependent => :destroy
 
-
-  belongs_to :supplier, :class_name => 'Enterprise'
+  belongs_to :supplier, :class_name => 'Enterprise', touch: true
+  belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
   has_many :product_distributions, :dependent => :destroy
   has_many :distributors, :through => :product_distributions
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
   delegate_belongs_to :master, :unit_value, :unit_description
+  delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size, :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes
+  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
+  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
   validates_presence_of :supplier
+  validates_presence_of :primary_taxon
 
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,
@@ -25,6 +28,8 @@ Spree::Product.class_eval do
 
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
+  after_touch :touch_distributors
+  before_save :add_primary_taxon_to_taxons
 
 
   # -- Joins
@@ -75,6 +80,12 @@ Spree::Product.class_eval do
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
                                                 merge(Exchange.outgoing).
                                                 where('order_cycles.id = ?', order_cycle) }
+
+  scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
+                                                merge(OrderCycle.active).
+                                                merge(Exchange.outgoing).
+                                                where('order_cycles.id IS NOT NULL') }
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -85,6 +96,21 @@ Spree::Product.class_eval do
 
 
   # -- Methods
+
+  def properties_h
+    # Product properties override producer properties
+    ps = supplier.producer_properties.inject(product_properties) do |properties, property|
+      if properties.find { |p| p.property.presentation == property.property.presentation }
+        properties
+      else
+        properties + [property]
+      end
+    end
+
+    ps.
+      sort_by { |pp| pp.position }.
+      map { |pp| {presentation: pp.property.presentation, value: pp.value} }
+  end
 
   def in_distributor?(distributor)
     self.class.in_distributor(distributor).include? self
@@ -138,6 +164,15 @@ Spree::Product.class_eval do
     end
   end
 
+  def delete_with_delete_from_order_cycles
+    transaction do
+      delete_without_delete_from_order_cycles
+
+      ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+    end
+  end
+  alias_method_chain :delete, :delete_from_order_cycles
+
 
   private
 
@@ -149,8 +184,16 @@ Spree::Product.class_eval do
     if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
-      variants_including_master.each { |v| v.delete_unit_option_values }
+      variants_including_master.each { |v| v.update_units }
     end
+  end
+
+  def touch_distributors
+    Enterprise.distributing_product(self).each(&:touch)
+  end
+
+  def add_primary_taxon_to_taxons
+    taxons << primary_taxon unless taxons.include? primary_taxon
   end
 
   def self.all_variant_unit_option_types

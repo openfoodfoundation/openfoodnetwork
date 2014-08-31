@@ -1,11 +1,15 @@
-%div.dashboard_item.sixteen.columns.alpha#enterprises
+%div.dashboard_item.sixteen.columns.alpha#enterprises{ 'ng-app' => 'ofn.admin', 'ng-controller' => "enterprisesDashboardCtrl" }
   %div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
     %h3.thirteen.columns.alpha My Enterprises
     - if @enterprises.any?
-      %a.three.columns.omega.icon-plus.button.blue{ href: "#{main_app.new_admin_enterprise_path}" }
+      %a.three.columns.omega.icon-plus.button.blue.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
         CREATE NEW
     - else
       %a.with-tip{ title: "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." } What's this?
+  - if @enterprises.any?
+    %div.sixteen.columns.alpha.tabs
+      %div.dashboard_tab.eight.columns.alpha.blue{ ng: { class: "{selected: activeTab == 'hubs'}", click: "activeTab = 'hubs'" } } HUBS
+      %div.dashboard_tab.eight.columns.omega.blue{ ng: { class: "{selected: activeTab == 'producers'}", click: "activeTab = 'producers'" } } PRODUCERS
   - if @enterprises.empty?
     %div.sixteen.columns.alpha.list-item.red
       %span.text.fifteen.columns.alpha You don't have any enterprises yet.
@@ -15,40 +19,69 @@
       CREATE A NEW ENTERPRISE
       %span.icon-arrow-right
   - else
-    %div.sixteen.columns.alpha.list-title
-      %span.five.columns.alpha Name
-      %span.centered.three.columns Payment Methods
-      %span.centered.three.columns Shipping Methods
-      %span.centered.three.columns Enterprise Fees
-    %div.sixteen.columns.alpha.list
-      - @enterprises.each do |enterprise|
-        %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
-          %span.five.columns.alpha
-            = enterprise.name
-          %span.symbol.three.columns.centered
-            - payment_method_count = enterprise.payment_methods.count
-            - if payment_method_count < 1 && enterprise.is_distributor
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no Payment Methods" }
-            - elsif enterprise.is_primary_producer
-              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require Payment Methods." }
-            - else
-              %span.icon-ok-sign.with-tip{ title: "#{payment_method_count} Payment Method#{payment_method_count > 1 ? "s" : ""}" }
-          %span.symbol.three.columns.centered
-            - shipping_method_count = enterprise.shipping_methods.count
-            - if shipping_method_count < 1 && enterprise.is_distributor
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no Shipping Methods" }
-            - elsif enterprise.is_primary_producer
-              %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require Shipping Methods." }
-            -else
-              %span.icon-ok-sign.with-tip{ title: "#{shipping_method_count} Shipping Method#{shipping_method_count > 1 ? "s" : ""}" }
-          %span.symbol.three.columns.centered
-            - fee_count = enterprise.enterprise_fees.count
-            - if fee_count > 0
-              %span.icon-ok-sign.with-tip{ title: "#{fee_count} Fee#{fee_count > 1 ? "s" : ""}" }
-            - else
-              %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no Enterprise Fees" }
-          %span.two.columns.omega.right
-            %span.icon-arrow-right
+    %div.hubs_tab{ ng: { show: "activeTab == 'hubs'"} }
+      %div.sixteen.columns.alpha.list-title
+        %span.five.columns.alpha Name
+        %span.centered.three.columns Payment Methods
+        %span.centered.three.columns Shipping Methods
+        %span.centered.three.columns Enterprise Fees
+      %div.sixteen.columns.alpha.list
+        - @enterprises.is_distributor.each do |enterprise|
+          %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
+            %span.five.columns.alpha
+              = enterprise.name
+            %span.symbol.three.columns.centered
+              - payment_method_count = enterprise.payment_methods.count
+              - if payment_method_count < 1 && enterprise.is_distributor
+                %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no Payment Methods" }
+              - elsif enterprise.is_primary_producer
+                %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require Payment Methods." }
+              - else
+                %span.icon-ok-sign.with-tip{ title: "#{payment_method_count} Payment Method#{payment_method_count > 1 ? "s" : ""}" }
+            %span.symbol.three.columns.centered
+              - shipping_method_count = enterprise.shipping_methods.count
+              - if shipping_method_count < 1 && enterprise.is_distributor
+                %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no Shipping Methods" }
+              - elsif enterprise.is_primary_producer
+                %span.icon-ok-sign.with-tip{ title: "Producers (like #{enterprise.name}) do not require Shipping Methods." }
+              -else
+                %span.icon-ok-sign.with-tip{ title: "#{shipping_method_count} Shipping Method#{shipping_method_count > 1 ? "s" : ""}" }
+            %span.symbol.three.columns.centered
+              - fee_count = enterprise.enterprise_fees.count
+              - if fee_count > 0
+                %span.icon-ok-sign.with-tip{ title: "#{fee_count} Fee#{fee_count > 1 ? "s" : ""}" }
+              - else
+                %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no Enterprise Fees" }
+            %span.two.columns.omega.right
+              %span.icon-arrow-right
+    %div.producers_tab{ ng: { show: "activeTab == 'producers'"} }
+      %div.list-title.sixteen.columns.alpha
+        %span.five.columns.alpha Name
+        %span.centered.three.columns Total Products
+        %span.centered.three.columns Active Products
+        %span.centered.three.columns Products in OCs
+      %div.sixteen.columns.alpha.list
+        - @enterprises.is_primary_producer.each do |enterprise|
+          %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
+            %span.five.columns.alpha
+              = enterprise.name
+            %span.symbol.three.columns.centered
+              %span.one.column.alpha &nbsp;
+              %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_products.not_deleted.count > 0 ? "green" : "red" }" }
+                = enterprise.supplied_products.not_deleted.count
+              %span.one.column.omega &nbsp;
+            %span.symbol.three.columns.centered
+              %span.one.column.alpha &nbsp;
+              %span.text-icon.one.column.centered{ class: "#{enterprise.supplied_and_active_products_on_hand.count > 0 ? "green" : "red" }" }
+                = enterprise.supplied_and_active_products_on_hand.count
+              %span.one.column.omega &nbsp;
+            %span.symbol.three.columns.centered
+              %span.one.column.alpha &nbsp;
+              %span.text-icon.one.column.centered{ class: "#{enterprise.active_products_in_order_cycles.count > 0 ? "green" : "orange" }" }
+                = enterprise.active_products_in_order_cycles.count
+              %span.one.column.omega &nbsp;
+            %span.two.columns.omega.right
+              %span.icon-arrow-right
     %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
       MANAGE MY ENTERPRISES
       %span.icon-arrow-right

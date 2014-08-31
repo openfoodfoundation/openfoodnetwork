@@ -6,6 +6,7 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
+  let!(:taxon) { create(:taxon) }
 
   background do
     @supplier = create(:supplier_enterprise, :name => 'New supplier')
@@ -14,55 +15,70 @@ feature %q{
   end
 
   describe "creating a product" do
-    scenario "assigning a supplier, distributors and units to the product" do
+    scenario "assigning a important attributes", js: true do
       login_to_admin_section
 
       click_link 'Products'
       click_link 'New Product'
 
-      fill_in 'product_name', with: 'A new product !!!'
-      fill_in 'product_price', with: '19.99'
       select 'New supplier', from: 'product_supplier_id'
+      fill_in 'product_name', with: 'A new product !!!'
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value_with_description', with: 5
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '19.99'
+      fill_in 'product_on_hand', with: 5
+      fill_in 'product_description', with: "A description..."
 
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
+      product.variant_unit.should == 'weight'
+      product.variant_unit_scale.should == 1000
+      product.unit_value.should == 5000
+      product.unit_description.should == ""
+      product.variant_unit_name.should == ""
+      product.primary_taxon_id.should == taxon.id
+      product.price.to_s.should == '19.99'
+      product.on_hand.should == 5
+      product.description.should == "A description..."
       product.group_buy.should be_false
+      product.master.option_values.map(&:name).should == ['5kg']
+      product.master.options_text.should == "5kg"
 
       # Distributors
-      within('#sidebar') { click_link 'Product Distributions' }
+      visit spree.product_distributions_admin_product_path(product)
 
       check @distributors[0].name
-      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
+      select2_select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
       check @distributors[2].name
-      select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
+      select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
 
       click_button 'Update'
       
       product.reload
       product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
+
+
       product.product_distributions.map { |pd| pd.enterprise_fee }.sort.should == [@enterprise_fees[0], @enterprise_fees[2]].sort
     end
 
+    scenario "making a product into a group buy product" do
+      product = create(:simple_product, name: 'group buy product')
 
-    scenario "creating a group buy product" do
       login_to_admin_section
 
-      click_link 'Products'
-      click_link 'New Product'
+      visit spree.edit_admin_product_path(product)
 
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
-      select 'New supplier', :from => 'product_supplier_id'
       choose 'product_group_buy_1'
       fill_in 'Group buy unit size', :with => '10'
 
-      click_button 'Create'
+      click_button 'Update'
 
-      flash_message.should == 'Product "A new product !!!" has been successfully created!'
-      product = Spree::Product.find_by_name('A new product !!!')
+      flash_message.should == 'Product "group buy product" has been successfully updated!'
+      product.reload
       product.group_buy.should be_true
       product.group_buy_unit_size.should == 10.0
     end
@@ -83,9 +99,7 @@ feature %q{
     context "additional fields" do
       it "should have a notes field" do
         product = create(:simple_product, supplier: @supplier2)
-        click_link 'Products'
-        within('#sub_nav') { click_link 'Products' }
-        click_link product.name
+        visit spree.edit_admin_product_path product
         page.should have_content "Notes"
       end
     end
@@ -99,6 +113,7 @@ feature %q{
 
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
+      select taxon.name, from: "product_primary_taxon_id"
 
       # Should only have suppliers listed which the user can manage
       within "#product_supplier_id" do
@@ -115,9 +130,7 @@ feature %q{
     scenario "editing product distributions" do
       product = create(:simple_product, supplier: @supplier2)
 
-      click_link 'Products'
-      within('#sub_nav') { click_link 'Products' }
-      click_link product.name
+      visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Product Distributions' }
 
       check @distributors[0].name

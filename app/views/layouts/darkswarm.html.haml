@@ -1,32 +1,41 @@
-!!!
 %html
   %head
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
     %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
-    = favicon_link_tag "favicon.png"
-    %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
+    - if Rails.env.production?
+      = favicon_link_tag
+    - else
+      = favicon_link_tag "/favicon-staging.ico"
+    %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
 
+    = yield :scripts
+    %script{src: "//maps.googleapis.com/maps/api/js?sensor=false"}
     = stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
+
 
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
   %body.off-canvas{"ng-app" => "Darkswarm"}
+    / [if lte IE 8]
+      = render partial: "shared/ie_warning"
+      = javascript_include_tag "iehack"
+
+    = inject_json "currentHub", "current_hub"
+    = inject_json "currentOrder", "current_order"
+    = inject_json "user", "current_user"
+    = inject_json "railsFlash", "flash"
+    = inject_taxons
+
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render partial: "shared/current_hub"
-        = render partial: "shared/current_user"
         = render partial: "shared/menu/menu"
-        = display_flash_messages
-        %ofn-flash
-
-        -#= render "shared/sidebar"
 
         %section{ role: "main" }
           = yield
           
           #footer
-        = yield :scripts
+    %loading

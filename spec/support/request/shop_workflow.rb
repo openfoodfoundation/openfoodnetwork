@@ -1,10 +1,19 @@
 module ShopWorkflow
+  def add_to_cart
+    first("input.add_to_cart").click
+  end
+
+  def have_price(price)
+    have_selector ".price", text: price
+  end
+
   def set_order(order)
     ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
   end
 
   def add_product_to_cart
     create(:line_item, variant: product.master, order: order)
+    order.reload.save! # Recalculate totals
   end
 
   def toggle_accordion(name)

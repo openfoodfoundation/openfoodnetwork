@@ -54,6 +54,10 @@ class Exchange < ActiveRecord::Base
     incoming? ? 'supplier' : 'distributor'
   end
 
+  def participant
+    incoming? ? sender : receiver
+  end
+
   def to_h(core_only=false)
     h = attributes.merge({ 'variant_ids' => variant_ids.sort, 'enterprise_fee_ids' => enterprise_fee_ids.sort })
     h.reject! { |k| %w(id order_cycle_id created_at updated_at).include? k } if core_only

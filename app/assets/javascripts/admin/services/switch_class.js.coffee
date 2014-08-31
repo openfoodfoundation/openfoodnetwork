@@ -1,4 +1,4 @@
-Admin.factory "switchClass", [
+angular.module("ofn.admin").factory "switchClass", [
   "$timeout"
   ($timeout) ->
     return (element,classToAdd,removeClasses,timeout) ->

@@ -71,26 +71,20 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # ## Filters
-  #
+  # Filters
   config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
 
-  config.before(:each) do
-    Spree::Address.any_instance.stub(:geocode).and_return([1,1])
+  # DatabaseCleaner
+  config.before(:suite)          { DatabaseCleaner.clean_with :deletion, {except: ['spree_countries', 'spree_states']} }
+  config.before(:each)           { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, {except: ['spree_countries', 'spree_states']} }
+  config.before(:each)           { DatabaseCleaner.start }
+  config.after(:each)            { DatabaseCleaner.clean }
 
-    if example.metadata[:js]
-      DatabaseCleaner.strategy = :deletion, { :except => ['spree_countries', 'spree_states'] }
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
+  # Geocoding
+  config.before(:each) { Spree::Address.any_instance.stub(:geocode).and_return([1,1]) }
 
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
+  # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
@@ -103,11 +97,32 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DistributionHelper
   config.include ActionView::Helpers::DateHelper
 
-  # Factory girl
+  # FactoryGirl
   require 'factory_girl_rails'
   config.include FactoryGirl::Syntax::Methods
 
   config.include Paperclip::Shoulda::Matchers
 
   config.include JsonSpec::Helpers
+
+  # Profiling
+  #
+  # This code shouldn't be run in normal circumstances. But if you want to know
+  # which parts of your code take most time, then you can activate the lines
+  # below. Keep in mind that it will slow down the execution time heaps.
+  #
+  # The PerfTools will write a binary file to the specified path which can then
+  # be examined by:
+  #
+  #   bundle exec pprof.rb --text  /tmp/rspec_profile
+  #
+
+  #require 'perftools'
+  #config.before :suite do
+  #  PerfTools::CpuProfiler.start("/tmp/rspec_profile")
+  #end
+  #
+  #config.after :suite do
+  # PerfTools::CpuProfiler.stop
+  #end
 end

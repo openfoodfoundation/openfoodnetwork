@@ -206,7 +206,7 @@ feature %q{
         page.should have_selector "tr#li_#{li2.id}", visible: true
         select2_select s1.name, from: "supplier_filter"
         page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        page.should_not have_selector "tr#li_#{li2.id}"
       end
 
       it "displays all line items when 'All' is selected from supplier filter" do

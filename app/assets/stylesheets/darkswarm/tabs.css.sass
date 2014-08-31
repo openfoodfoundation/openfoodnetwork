@@ -2,14 +2,27 @@
 @import mixins
 @import branding
 
+// Foundation overrides
+#tabs .tabs-content > .content p
+  max-width: 100% !important
+  
+.tabs-content > .content
+  padding-top: 0 !important
+
+// Tabs styling
+
 #tabs
   background: url("/assets/gray_jean.png") top left repeat
   @include box-shadow(inset 0 2px 3px 0 rgba(0,0,0,0.15))
   display: block
+  color: $dark-grey
+
+  .panel
+    border-color: rgba(219, 88, 61, 0.5)
+    background-color: rgba(255, 255, 255, 0)
 
   dl dd a
     @include avenir
-    @include csstrans
     background: transparent
     text-transform: uppercase
     line-height: 50px
@@ -33,9 +46,12 @@
       border-top: 4px solid transparent
       a:after
         padding-left: 8px
-        content: "\f109"
+        content: "\e634"
         visibility: hidden
         @include icon-font
+    dd:hover
+      a:after
+        visibility: visible
   
   // active nav link
   
@@ -45,7 +61,7 @@
       a
         color: $clr-brick-bright
       a:after
-        content: "\f10c"
+        content: "\e633"
         visibility: visible
         @include icon-font
 

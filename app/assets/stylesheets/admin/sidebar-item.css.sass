@@ -17,10 +17,22 @@ div.sidebar_item
   .list
     max-height: 400px
     overflow-y: auto
-
-  .list-item
+    overflow-x: hidden
     border: solid #5498da
     border-width: 0px 1px 0px 1px
+    &.red
+      color: #DA5354
+      border: solid #DA5354
+      border-width: 0px 3px 0px 3px
+      .list-item
+        &.odd
+          background-color: #fcf6ef
+          &:hover
+            background-color: #9fc820
+      a
+        color: #DA5354
+
+  .list-item
     span.alpha
       font-weight: bold
       margin-left: -3px
@@ -29,16 +41,12 @@ div.sidebar_item
       max-width: 160px
       text-overflow: ellipsis
     span.omega
-      padding: 8px 13px 8px 0px
+      padding: 8px 18px 8px 0px
       margin-right: -3px
       text-align: right
     .icon-remove-sign
       color: #DA5354
       font-size: 18px
-    &.red
-      color: #DA5354
-      border: solid #DA5354
-      border-width: 0px 3px 0px 3px
     &.even
       background-color: #fff
     &.odd

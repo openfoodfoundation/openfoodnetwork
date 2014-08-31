@@ -24,36 +24,27 @@ describe SharedHelper do
     helper.distributor_link_class(d1).should =~ /empties-cart/
   end
 
-  describe "finding current producers" do
-    it "finds producers for the current distribution" do
-      s = create(:supplier_enterprise)
-      d = create(:distributor_enterprise)
-      p = create(:simple_product)
-      oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+  describe "injecting json" do
+    let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 
-      helper.stub(:current_order_cycle) { oc }
-      helper.stub(:current_distributor) { d }
-
-      helper.current_producers.should == [s]
+    it "will inject via AMS" do
+      helper.inject_json_ams("test", [enterprise], Api::EnterpriseSerializer).should match enterprise.name
     end
 
-    it "returns [] when no order cycle set" do
-      d = double(:distributor)
-
-      helper.stub(:current_order_cycle) { nil }
-      helper.stub(:current_distributor) { d }
-
-      helper.current_producers.should == []
+    it "injects enterprises" do
+      helper.inject_enterprises.should match enterprise.name
+      helper.inject_enterprises.should match enterprise.facebook
     end
 
-    it "returns [] when no distributor set" do
-      oc = double(:order_cycle)
+    it "injects taxons" do
+      taxon = create(:taxon)
+      helper.inject_taxons.should match taxon.name
+    end
 
-      helper.stub(:current_order_cycle) { oc }
-      helper.stub(:current_distributor) { nil }
-
-      helper.current_producers.should == []
-
+    it "injects taxons" do
+      taxon = create(:taxon)
+      helper.inject_taxons.should match taxon.name
     end
   end
+
 end

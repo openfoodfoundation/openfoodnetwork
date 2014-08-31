@@ -8,30 +8,29 @@
   padding-top: 100px
   padding-bottom: 100px
 
-@mixin big-input 
-  border: 1px solid #999
-  font-size: 18px
-  @extend .avenir
-  padding: 22px 18px
-  height: auto
-  margin-bottom: 1em
-
 @mixin disabled
   color: $disabled-bright
-
-@mixin csstrans
-  -webkit-transition: all 100ms ease-in-out
-  -moz-transition: all 100ms ease-in-out
-  -ms-transition: all 100ms ease-in-out
-  -o-transition: all 100ms ease-in-out
-  transition: all 100ms ease-in-out
-  -webkit-transform-style: preserve-3d
 
 @mixin box-shadow($box-shadow)
   -moz-box-shadow: $box-shadow
   -webkit-box-shadow: $box-shadow
   box-shadow: $box-shadow
 
+@mixin border-radius($border-radius)
+  -webkit-border-radius: $border-radius
+  border-radius: $border-radius
+
+@mixin transform-translate($translate)
+  -ms-transform: $translate
+  -webkit-transform: $translate
+  transform: $translate
+
+@mixin transform-scale($scale)
+  -moz-transform: $scale
+  -webkit-transform: $scale
+  -o-transform: $scale
+  -ms-transform: $scale
+  transform: $scale
 
 // Typography \\
 
@@ -49,13 +48,12 @@
 // Assign content: "string"
 
 @mixin icon-font
-  font-family: "foundation-icons"
+  font-family: "OFN"
   display: inline-block
   font-weight: normal
   font-style: normal
   font-variant: normal
   text-transform: none
-  font-size: 80%
 
 
 // Background options \\
@@ -85,10 +83,10 @@
   &, & *
     color: $clr-turquoise
   a
-    color: white
+    color: $clr-turquoise
     &:hover
       text-decoration: none
-      color: $clr-turquoise-light
+      color: $clr-turquoise-bright
 
 @mixin fullbg
   background-position: center center 

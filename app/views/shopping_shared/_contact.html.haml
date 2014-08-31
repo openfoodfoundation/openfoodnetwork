@@ -1,15 +1,60 @@
+/ Will for all the things: please add logic to include this /only/ if data is available
+
 .content#contact
   .panel
-    %p
-      %strong E
-      %a{href: "mailto:#{current_distributor.email}"}= current_distributor.email
-      - unless current_distributor.website.blank?
-        %br 
-        %strong W
-        %a{href: current_distributor.website}= current_distributor.website
-      %br 
-      = [current_distributor.address.address1, current_distributor.address.address2].join ", "
-      %br
-      = current_distributor.address.city
-      = current_distributor.address.state
-      = current_distributor.address.zipcode
+    .row
+      .small-12.large-4.columns
+        - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode 
+          %div.modal-centered
+            %h5.modal-header=current_distributor.name
+            %p
+              = current_distributor.address.address1
+              - unless current_distributor.address.address2.blank?
+                %br
+                = current_distributor.address.address2
+              %br
+              = current_distributor.address.city
+              = current_distributor.address.state
+              = current_distributor.address.zipcode
+
+      .small-12.large-4.columns
+        - if current_distributor.website || current_distributor.email
+          %div.modal-centered
+            %h5.modal-header Contact
+            - unless current_distributor.website.blank?
+              %p
+                %a{href: "http://#{current_distributor.website}", target: "_blank" }
+                  = current_distributor.website
+            - unless current_distributor.email.blank?
+              %p
+                %a{href: current_distributor.email.reverse, mailto: true}
+                  %span.email
+                    = current_distributor.email.reverse
+
+      .small-12.large-4.columns
+        - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
+          %div.modal-centered
+            %h5.modal-header Follow
+            %div.follow-icons
+              - unless current_distributor.twitter.blank?
+                %span
+                  %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
+                    %i.ofn-i_041-twitter
+
+              - unless current_distributor.facebook.blank?
+                %span
+                  %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
+                    %i.ofn-i_044-facebook
+                    = current_distributor.facebook
+
+              - unless current_distributor.linkedin.blank?
+                %span
+                  %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
+                    %i.ofn-i_042-linkedin 
+                    = current_distributor.linkedin
+
+              - unless current_distributor.instagram.blank?
+                %span
+                  %a{href: "http://instagram.com.#{current_distributor.instagram}", target: "_blank" }
+                    %i.ofn-i_043-instagram
+                    = current_distributor.instagram

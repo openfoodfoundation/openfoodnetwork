@@ -5,8 +5,10 @@ module OpenFoodNetwork
   # translation is more a responsibility of Angular, so I'd be inclined to refactor this class to move
   # as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
-    def initialize(order_cycle)
+    # The applicator will only touch exchanges where a permitted enterprise is the participant
+    def initialize(order_cycle, permitted_enterprises)
       @order_cycle = order_cycle
+      @permitted_enterprises = permitted_enterprises
     end
 
     def go!
@@ -56,24 +58,38 @@ module OpenFoodNetwork
 
     def add_exchange(sender_id, receiver_id, incoming, attrs={})
       attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming)
-      exchange = @order_cycle.exchanges.create! attrs
-      @touched_exchanges << exchange
+      exchange = @order_cycle.exchanges.build attrs
+
+      if permission_for exchange
+        exchange.save!
+        @touched_exchanges << exchange
+      end
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs={})
       exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
-      exchange.update_attributes!(attrs)
 
-      @touched_exchanges << exchange
+      if permission_for exchange
+        exchange.update_attributes!(attrs)
+        @touched_exchanges << exchange
+      end
     end
 
     def destroy_untouched_exchanges
-      untouched_exchanges.each { |exchange| exchange.destroy }
+      with_permission(untouched_exchanges).each(&:destroy)
     end
 
     def untouched_exchanges
       touched_exchange_ids = @touched_exchanges.map(&:id)
       @order_cycle.exchanges.reject { |ex| touched_exchange_ids.include? ex.id }
+    end
+
+    def with_permission(exchanges)
+      exchanges.select { |ex| permission_for(ex) }
+    end
+
+    def permission_for(exchange)
+      @permitted_enterprises.include? exchange.participant
     end
 
 

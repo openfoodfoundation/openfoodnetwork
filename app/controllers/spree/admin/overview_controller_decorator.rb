@@ -5,3 +5,4 @@ Spree::Admin::OverviewController.class_eval do
     @order_cycle_count = OrderCycle.active.managed_by(spree_current_user).count
   end
 end
+

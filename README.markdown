@@ -3,9 +3,15 @@
 
 # Open Food Network
 
-Connect suppliers (ie. farmers), distributors (ie. co-ops) and
-consumers (ie. local food lovers) for the sale and purchase of local
-produce.
+The Open Food Network is an online marketplace for local food. It enables a network of independent online food stores that connect farmers and food hubs (including coops, online farmers' markets, independent food businesses etc);  with individuals and local businesses. It gives farmers and food hubs an easier and fairer way to distribute their food.
+
+Supported by the Open Food Foundation, we are proudly open source and not-for-profit - we're trying to seriously disrupt the concentration of power in global agri-food systems, and we need as many smart people working together on this as possible.
+
+We're part of global movement - get involved!
+
+* We're crowd-funding RIGHT NOW - please help out at http://startsomegood.com/openfoodnetwork
+* Fill in this short survey to tell us who you are and what you want to do with OFN: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
+* Find out more and join in the conversation - http://openfoodnetwork.org
 
 
 ## Dependencies
@@ -72,12 +78,6 @@ startup time while Rails loads. See the Zeus github page for
 usage instructions.
 
 
-## Deployment
-
-Deployment is achieved using [Heroku](http://heroku.com). For access,
-speak to Andrew Spinks.
-
-
 ## Credits
 
 * Andrew Spinks (http://github.com/andrewspinks)
@@ -86,9 +86,9 @@ speak to Andrew Spinks.
 * Alex Serdyuk (http://github.com/alexs333)
 * David Cook (http://github.com/dacook)
 * Will Marshall (http://soundcloud.com/willmarshall)
+* Laura Summers (https://github.com/summerscope)
 
 
 ## Licence
 
 Copyright (c) 2012 - 2013 Open Food Foundation, released under the AGPL licence.
-

@@ -5,7 +5,12 @@ window.Darkswarm = angular.module("Darkswarm", ["ngResource",
   'infinite-scroll', 
   'angular-flash.service', 
   'templates',
-  'backstretch']).config ($httpProvider, $tooltipProvider, $locationProvider, $anchorScrollProvider) ->
+  'timer',
+  'ngSanitize',
+  'ngAnimate',
+  'google-maps',
+  'duScroll',
+  ]).config ($httpProvider, $tooltipProvider, $locationProvider, $anchorScrollProvider) ->
   $httpProvider.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
   $httpProvider.defaults.headers.put['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content') 
   $httpProvider.defaults.headers['common']['X-Requested-With'] = 'XMLHttpRequest' 

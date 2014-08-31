@@ -18,11 +18,17 @@ feature 'shipping methods' do
       d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
       d2 = create(:distributor_enterprise, name: 'Nautical Travels')
 
-      # When I create a shipping method and set the distributors
+      # Shows appropriate fields when logged in as admin
       visit spree.new_admin_shipping_method_path
+      page.should have_field 'shipping_method_name'
+      page.should have_field 'shipping_method_description'
+      page.should have_select 'shipping_method_display_on'
+      page.should have_field 'shipping_method_require_ship_address_true', checked: true
+
+      # When I create a shipping method and set the distributors
       fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
-      select 'Aeronautical Adventures', from: 'shipping_method_distributor_ids'
-      select 'Nautical Travels', from: 'shipping_method_distributor_ids'
+      check "shipping_method_distributor_ids_#{d1.id}"
+      check "shipping_method_distributor_ids_#{d2.id}"
       click_button 'Create'
 
       # Then the shipping method should have its distributor set
@@ -70,22 +76,20 @@ feature 'shipping methods' do
       login_to_admin_as enterprise_user
     end
 
-    it "lets me choose whether a shipping address is required" do
-      click_link "Enterprises"
-      within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
-      click_link 'New Shipping Method'
-
-      page.should have_content "Requires shipping address?"
-    end
-
-    it "creates shipping methods" do
+    it "creating a shipping method" do
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
       click_link 'New Shipping Method'
 
+      # Show the correct fields
+      page.should have_field 'shipping_method_name'
+      page.should have_field 'shipping_method_description'
+      page.should_not have_select 'shipping_method_display_on'
+      page.should have_field 'shipping_method_require_ship_address_true', checked: true
+
       fill_in 'shipping_method_name', :with => 'Teleport'
 
-      select distributor1.name, :from => 'shipping_method_distributor_ids'
+      check "shipping_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'
 
       flash_message.should == 'Shipping method "Teleport" has been successfully created!'

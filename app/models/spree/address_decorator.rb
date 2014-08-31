@@ -2,6 +2,8 @@ Spree::Address.class_eval do
   has_one :enterprise
   belongs_to :country, class_name: "Spree::Country"
 
+  after_save :touch_enterprise
+
   geocoded_by :full_address
 
   delegate :name, :to => :state, :prefix => true, :allow_nil => true
@@ -14,6 +16,10 @@ Spree::Address.class_eval do
 
 
   private
+
+  def touch_enterprise
+    enterprise.andand.touch
+  end
 
   # We have a hard-to-track-down bug around invalid addresses with all-nil fields finding
   # their way into the database. I don't know what the source of them is, so this patch

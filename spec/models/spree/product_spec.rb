@@ -5,12 +5,20 @@ module Spree
 
     describe "associations" do
       it { should belong_to(:supplier) }
+      it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
 
     describe "validations and defaults" do
       it "is valid when created from factory" do
         create(:product).should be_valid
+      end
+
+      it "requires a primary taxon" do
+        product = create(:simple_product)
+        product.taxons = []
+        product.primary_taxon = nil
+        product.should_not be_valid
       end
 
       it "requires a supplier" do
@@ -230,6 +238,20 @@ module Spree
         end
       end
 
+      describe "in_an_active_order_cycle" do
+        it "shows products in order cycle distribution" do
+          s = create(:supplier_enterprise)
+          d2 = create(:distributor_enterprise)
+          d3 = create(:distributor_enterprise)
+          p1 = create(:product)
+          p2 = create(:product)
+          p3 = create(:product)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_close_at: 1.day.ago)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
+          Product.in_an_active_order_cycle.should == [p3]
+        end
+      end
+
       describe "access roles" do
         before(:each) do
           @e1 = create(:enterprise)
@@ -265,6 +287,52 @@ module Spree
         product = create(:product)
         product_distribution = create(:product_distribution, product: product, distributor: distributor)
         product.product_distribution_for(distributor).should == product_distribution
+      end
+    end
+
+    describe "properties" do
+      it "returns product properties as a hash" do
+        product = create(:simple_product)
+        product.set_property 'Organic Certified', 'NASAA 12345'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+      end
+
+      it "returns producer properties as a hash" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 54321'}]
+      end
+
+      it "overrides producer properties with product properties" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        product.set_property 'Organic Certified', 'NASAA 12345'
+        supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+
+        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+      end
+
+      it "sorts by position" do
+        supplier = create(:supplier_enterprise)
+        product = create(:simple_product, supplier: supplier)
+
+        pa = Spree::Property.create! name: 'A', presentation: 'A'
+        pb = Spree::Property.create! name: 'B', presentation: 'B'
+        pc = Spree::Property.create! name: 'C', presentation: 'C'
+
+        product.product_properties.create!({property_id: pa.id, value: '1', position: 1}, {without_protection: true})
+        product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
+        supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
+
+        product.properties_h.should ==
+          [{presentation: 'A', value: '1'},
+           {presentation: 'B', value: '2'},
+           {presentation: 'C', value: '3'}]
       end
     end
 
@@ -420,24 +488,34 @@ module Spree
           p.update_attributes!(name: 'foo')
         end
 
-        it "removes the related option values from all its variants" do
+        it "removes the related option values from all its variants and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
-          v = create(:variant, product: p)
+          v = create(:variant, unit_value: 1, product: p)
           p.reload
 
-          expect {
+          v.option_values.map(&:name).include?("1L").should == false
+          v.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(v.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          v.reload
+          v.option_values.map(&:name).include?("1L").should == true
+          v.option_values.map(&:name).include?("1g").should == false
         end
 
-        it "removes the related option values from its master variant" do
+        it "removes the related option values from its master variant and replaces them" do
           ot = Spree::OptionType.find_by_name 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 
-          expect {
+          p.master.option_values.map(&:name).include?("1L").should == false
+          p.master.option_values.map(&:name).include?("1g").should == true
+                    expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values(true), :count).by(-1)
+          }.to change(p.master.option_values(true), :count).by(0)
+          p.reload
+          p.master.option_values.map(&:name).include?("1L").should == true
+          p.master.option_values.map(&:name).include?("1g").should == false
         end
       end
 
@@ -545,6 +623,36 @@ module Spree
 
           p.should_not have_stock_for_distribution(oc, d)
         end
+      end
+    end
+
+    describe "taxons" do
+      let(:taxon1) { create(:taxon) }
+      let(:taxon2) { create(:taxon) }
+      let(:product) { create(:simple_product) }
+
+      it "returns the first taxon as the primary taxon" do
+        product.taxons.should == [product.primary_taxon]
+      end
+    end
+
+    describe "deletion" do
+      let(:p)  { create(:simple_product) }
+      let(:v)  { create(:variant, product: p) }
+      let(:oc) { create(:simple_order_cycle) }
+      let(:s)  { create(:supplier_enterprise) }
+      let(:e)  { create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator) }
+
+      it "removes the master variant from all order cycles" do
+        e.variants << p.master
+        p.delete
+        e.variants(true).should be_empty
+      end
+
+      it "removes all other variants from order cycles" do
+        e.variants << v
+        p.delete
+        e.variants(true).should be_empty
       end
     end
   end

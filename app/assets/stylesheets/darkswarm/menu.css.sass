@@ -1,28 +1,68 @@
 @import branding
 @import mixins
 
-.top-bar
+
+.fixed .top-bar 
   @include box-shadow(0 2px 3px 0 rgba(0,0,0,0.25))
 
 nav
   @include textpress
+  
+  // Default overrides - big menu
+  
+  .top-bar-section ul li.ofn-logo  > a
+    display: table-cell
+    vertical-align: middle
+
+  .top-bar-section .has-dropdown > a
+    padding-right: 15px !important
+    
+    i.ofn-i_022-cog
+      font-size: 24px
+      line-height: 45px
+  
+  .top-bar-section .has-dropdown > a:after
+    display: none
+
   .top-bar-section ul li > a
     font-size: 0.75rem
     height: 45px
-    @include csstrans
     opacity: 0.8
     &:hover, &:focus, &:active
       opacity: 1
+
   .nav-branded
     color: $clr-brick-light-bright
+    span
+      font-size: 13px
   .nav-primary
     @include avenir
     font-size: 0.875rem
 
-nav.top-bar a.icon i
-  font-size: 22px
+
+// Mobile Menu
+
+.off-canvas-wrap.move-right .tab-bar .menu-icon
+  @include box-shadow(inset 0 0 6px 2px rgba(0,0,0,0.5))
+
+.off-canvas-wrap .tab-bar .menu-icon
+  @include box-shadow(none)
+
+.off-canvas-wrap.move-right .tab-bar .menu-icon span
+  -moz-box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666
+  -webkit-box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666
+  box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666
+
+.off-canvas-wrap.move-right ul.off-canvas-list
+  font-size: 0.875rem
+
+.off-canvas-wrap.move-right ul.off-canvas-list i
+  font-size: 1.5rem
+  margin-right: 0.25rem
+
 
 // Responsive 
+
 @media screen and (min-width: 1025px)
   body.off-canvas
     // padding required to placehold for fixed menu bar
@@ -31,3 +71,5 @@ nav.top-bar a.icon i
   section.right 
     .nav-branded
       padding: 0 1em
+
+      

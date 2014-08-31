@@ -1,0 +1,3 @@
+/ replace "code[erb-loud]:contains('tab :products')"
+
+= tab :products, url: bulk_edit_admin_products_path, :match_path => '/products'

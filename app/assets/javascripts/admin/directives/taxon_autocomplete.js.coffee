@@ -1,4 +1,4 @@
-Admin.directive "ofnTaxonAutocomplete", (Taxons) ->
+angular.module("ofn.admin").directive "ofnTaxonAutocomplete", (Taxons) ->
   # Adapted from Spree's existing taxon autocompletion
   require: "ngModel"
   link: (scope,element,attrs,ngModel) ->

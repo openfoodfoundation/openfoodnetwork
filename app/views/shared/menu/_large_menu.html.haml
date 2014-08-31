@@ -1,7 +1,7 @@
-%nav.top-bar.show-for-large-up{'data' => 'topbar'}
+%nav.top-bar.show-for-large-up{'data-topbar' => true}
   %section.top-bar-section
     %ul.left{}
-      %li= link_to image_tag("ofn_logo_small.png"), root_path      
+      %li.ofn-logo= link_to image_tag("ofn_logo_small.png"), root_path      
       %li.divider
       - if current_page? root_path
         %li
@@ -13,7 +13,7 @@
             %span.nav-primary Hubs
       %li.divider
       %li
-        %a{href: ""}
+        %a{href: main_app.map_path}
           %span.nav-primary Map
       %li.divider
       %li
@@ -21,13 +21,8 @@
           %span.nav-primary Producers
       %li.divider
       %li
-        %a{href: ""}
+        %a{href: main_app.groups_path}
           %span.nav-primary Groups
-      %li.divider
-      - if spree_current_user.andand.has_spree_role? 'admin'
-        %li
-          %a{href: spree.admin_path}
-            %span.nav-primary Admin
       %li.divider
   %section.top-bar-section
     %ul.right
@@ -37,14 +32,10 @@
       - else
         = render 'shared/signed_in'
       %li.divider
-      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.id"}
+      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id"}
         %a{href: main_app.shop_path}
           %em Shopping &#64; 
-          %span.nav-primary.nav-branded {{ CurrentHub.name }}
+          %span.nav-primary.nav-branded {{ CurrentHub.hub.name }}
       %li.divider
       %li.cart
-        %a.icon{href: cart_url}
-          %i.fi-shopping-cart.nav-branded 
-            %span
-              = cart_count
-              items
+        = render partial: "shared/menu/cart"

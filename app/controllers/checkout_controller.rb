@@ -12,11 +12,13 @@ class CheckoutController < Spree::CheckoutController
   include EnterprisesHelper
    
   def edit
+    # Because this controller doesn't inherit from our BaseController
+    # We need to duplicate the code here
+    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
   end
 
   def update
-
-    if @order.update_attributes(params[:order])
+    if @order.update_attributes(object_params)
       fire_event('spree.checkout.update')
       while @order.state != "complete"
         if @order.state == "payment"
@@ -26,13 +28,17 @@ class CheckoutController < Spree::CheckoutController
         if @order.next
           state_callback(:after)
         else
-          flash[:error] = t(:payment_processing_failed)
+          if @order.errors.present?
+            flash[:error] = @order.errors.full_messages.to_sentence
+          else
+            flash[:error] = t(:payment_processing_failed)
+          end
           update_failed
           return
         end
       end
       if @order.state == "complete" ||  @order.completed?
-        flash.notice = t(:order_processed_successfully)
+        flash[:success] = t(:order_processed_successfully)
           respond_to do |format|
             format.html do
               respond_with(@order, :location => order_path(@order))
@@ -49,8 +55,23 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
+
   private
   
+  # Copied and modified from spree. Remove check for order state, since the state machine is
+  # progressed all the way in one go with the one page checkout.
+  def object_params
+    # For payment step, filter order parameters to produce the expected nested attributes for a single payment and its source, discarding attributes for payment methods other than the one selected
+    if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
+      params[:order][:payments_attributes].first[:source_attributes] = source_params
+    end
+    if (params[:order][:payments_attributes])
+      params[:order][:payments_attributes].first[:amount] = @order.total
+    end
+    params[:order]
+  end
+
+
   def update_failed
     clear_ship_address
     respond_to do |format|
@@ -117,9 +138,8 @@ class CheckoutController < Spree::CheckoutController
        render :edit and return
     end
 
-    redirect_to(main_app.shop_paypal_payment_url(@order, :payment_method_id => payment_method.id))
+    render json: {path: main_app.paypal_payment_url(@order, :payment_method_id => payment_method.id)}, status: 200
     true
-
   end
   
   # Overriding to customize the cancel url

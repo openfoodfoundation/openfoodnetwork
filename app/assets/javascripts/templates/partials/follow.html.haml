@@ -1,0 +1,19 @@
+%div.modal-centered{"ng-if" => "enterprise.twitter || enterprise.facebook || enterprise.linkedin || enterprise.instagram"}
+  %h5.modal-header Follow
+  .follow-icons{bindonce: true}
+    %span{"ng-if" => "enterprise.twitter"} 
+      %a{"ng-href" => "http://twitter.com/{{enterprise.twitter}}", target: "_blank"}
+        %i.ofn-i_041-twitter
+    
+    %span{"ng-if" => "enterprise.facebook"}
+      %a{"ng-href" => "http://{{enterprise.facebook | stripUrl}}", target: "_blank"}
+        %i.ofn-i_044-facebook
+    
+    %span{"ng-if" => "enterprise.linkedin"}
+      %a{"ng-href" => "http://{{enterprise.linkedin | stripUrl}}", target: "_blank"}
+        %i.ofn-i_042-linkedin
+    
+    %span{"ng-if" => "enterprise.instagram"}
+      %a{"ng-href" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}  
+        %i.ofn-i_043-instagram
+

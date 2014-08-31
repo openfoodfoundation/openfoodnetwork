@@ -1,0 +1,26 @@
+.row.pad-top{bindonce: true}
+  .cta-container.small-12.columns
+    .row
+      .small-12.large-6.columns
+        %h5 
+          %i.ofn-i_029-shopping-basket
+          %span{"active-table-hub-link" => "enterprise", change: "Change hub to", shop: "Shop at"}
+      .small-12.large-6.columns.right
+        .right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
+          Delivery options: 
+          %span{"bo-if" => "enterprise.pickup"} 
+            %i.ofn-i_038-takeaway
+            Pickup
+          %span{"bo-if" => "enterprise.delivery"} 
+            %i.ofn-i_039-delivery
+            Delivery
+    .row
+      .columns.small-12
+        %a.button.hub.expand{"bo-href" => "enterprise.path", 
+        "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
+        "ofn-empties-cart" => "enterprise"}
+          %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
+          {{enterprise.name}}
+          .button-address {{ enterprise.address.city }} , {{enterprise.address.state}}
+          %i.ofn-i_007-caret-right

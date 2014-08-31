@@ -51,13 +51,13 @@
         %li.column-list-item{ :class => "three columns alpha", 'ofn-toggle-column' => 'column', 'ng-repeat' => 'column in columns' }
           {{ column.name }}
     %hr
-  %div.loading{ 'ng-show' => 'loading' }
+  %div.sixteen.columns.alpha.loading{ 'ng-show' => 'loading' }
     %h4 Loading Products...
-  %div{ 'ng-show' => '!loading && products.length == 0' }
+  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 0' }
     %h4{ :style => 'color:red;' } No matching products found.
-  %div{ 'ng-show' => 'products.length == 500' }
+  %div.sixteen.columns.alpha{ 'ng-show' => '!loading && products.length == 500' }
     %h6 Search returned too many products to display (500+), please apply more search filters to reduce the number of matching products
-  %div{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
+  %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 500 || products.length == 0' }
     %div.quick_search{ :class => "five columns omega" }
       %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
     %div.pagination{ :class => "seven columns omega" }
@@ -93,6 +93,7 @@
         %col{'style' => 'width: 20%;'}
         %col{'style' => 'width: 12%;'}
         %col{'style' => 'width: 12%;'}
+        %col{'style' => 'width: 12%;'}
         %col
         %col
         %col
@@ -106,6 +107,7 @@
           %th{ 'ng-show' => 'columns.supplier.visible' } Supplier
           %th{ 'ng-show' => 'columns.name.visible' } Name
           %th{ 'ng-show' => 'columns.unit.visible' } Unit / Value
+          %th{ 'ng-show' => 'columns.unit.visible' } Display As
           %th{ 'ng-show' => 'columns.price.visible' } Price
           %th{ 'ng-show' => 'columns.on_hand.visible' } On Hand
           %th{ 'ng-show' => 'columns.taxons.visible' } Taxons
@@ -125,14 +127,16 @@
           %td.unit{ 'ng-show' => 'columns.unit.visible' }
             %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
               %option{'value' => '', 'ng-hide' => "hasVariants(product) && hasUnit(product)"}
-            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-product' => 'master.unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
+            %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)", 'ofn-maintain-unit-scale' => true }
             %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
+          %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+            %input{ 'ofn-display-as' => 'product.master', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }
             %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
             %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
-          %td{ 'ng-show' => 'columns.taxons.visible' }
+          %td{ 'ng-if' => 'columns.taxons.visible' }
             %input.fullwidth{ :type => 'text', 'ng-model' => 'product.taxon_ids', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'taxon_ids' }
           %td{ 'ng-show' => 'columns.available_on.visible' }
             %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
@@ -148,9 +152,11 @@
             %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
           %td{ 'ng-show' => 'columns.supplier.visible' }
           %td{ 'ng-show' => 'columns.name.visible' }
-            {{ variant.options_text }}
-          %td{ 'ng-show' => 'columns.unit.visible' }
-            %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text' }
+            %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
+          %td.unit_value{ 'ng-show' => 'columns.unit.visible' }
+            %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text', 'ofn-maintain-unit-scale' => true }
+          %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+            %input{ 'ofn-display-as' => 'variant', 'ng-model' => 'variant.display_as', name: 'variant_display_as', 'ofn-track-variant' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}' }
           %td{ 'ng-show' => 'columns.price.visible' }
             %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
           %td{ 'ng-show' => 'columns.on_hand.visible' }

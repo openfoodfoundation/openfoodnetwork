@@ -1,0 +1,3 @@
+/ replace "code[erb-loud]:contains('button_link_to t(:back_to_products_list)')"
+
+= button_link_to t(:back_to_products_list), bulk_edit_admin_products_path, :icon => 'icon-arrow-left'

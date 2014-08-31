@@ -2,10 +2,22 @@ require 'spec_helper'
 
 describe Spree::OrdersController do
   let(:distributor) { double(:distributor) }
+  let(:order) { create(:order) }
+  let(:order_cycle) { create(:simple_order_cycle) }
 
   it "redirects home when no distributor is selected" do
     spree_get :edit
     response.should redirect_to root_path
+  end
+
+  it "redirects to shop when order is empty" do
+    controller.stub(:current_distributor).and_return(distributor)
+    controller.stub(:current_order_cycle).and_return(order_cycle)
+    controller.stub(:current_order).and_return order
+    order.stub_chain(:line_items, :empty?).and_return true
+    session[:access_token] = order.token
+    spree_get :edit
+    response.should redirect_to shop_path
   end
 
   it "redirects to the shop when no order cycle is selected" do

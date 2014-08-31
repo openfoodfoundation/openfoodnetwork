@@ -1,8 +1,11 @@
+require 'open_food_network/option_value_namer'
+
 Spree::Variant.class_eval do
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
 
-  attr_accessible :unit_value, :unit_description
+  attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name
+  accepts_nested_attributes_for :images
 
   validates_presence_of :unit_value,
                         if: -> v { %w(weight volume).include? v.product.variant_unit },
@@ -42,12 +45,21 @@ Spree::Variant.class_eval do
     self.option_values.destroy ovs
   end
 
-
-  private
-
-  def update_weight_from_unit_value
-    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
+  def full_name
+    return unit_to_display if display_name.blank?
+    display_name + " (" + unit_to_display + ")"
   end
+
+  def name_to_display
+    return product.name if display_name.blank?
+    display_name
+  end
+
+  def unit_to_display
+    return options_text if display_as.blank?
+    display_as
+  end
+
 
   def update_units
     delete_unit_option_values
@@ -60,60 +72,26 @@ Spree::Variant.class_eval do
     end
   end
 
-  def option_value_name
-    value, unit = option_value_value_unit
-    separator = value_scaled? ? '' : ' '
-
-    name_fields = []
-    name_fields << "#{value}#{separator}#{unit}" if value.present? && unit.present?
-    name_fields << unit_description   if unit_description.present?
-    name_fields.join ' '
-  end
-
-  def value_scaled?
-    self.product.variant_unit_scale.present?
-  end
-
-  def option_value_value_unit
-    if unit_value.present?
-      if %w(weight volume).include? self.product.variant_unit
-        value, unit_name = option_value_value_unit_scaled
-
-      else
-        value = unit_value
-        unit_name = self.product.variant_unit_name
-        unit_name = unit_name.pluralize if value > 1
-      end
-
-      value = value.to_i if value == value.to_i
-
-    else
-      value = unit_name = nil
+  def delete
+    transaction do
+      self.update_column(:deleted_at, Time.now)
+      ExchangeVariant.where(variant_id: self).destroy_all
     end
-
-    [value, unit_name]
   end
 
-  def option_value_value_unit_scaled
-    unit_scale, unit_name = scale_for_unit_value
 
-    value = unit_value / unit_scale
+  private
 
-    [value, unit_name]
+  def update_weight_from_unit_value
+    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
   end
 
-  def scale_for_unit_value
-    units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
-             'volume' => {0.001 => 'mL', 1.0 => 'L',  1000000.0 => 'ML'}}
-
-    # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
-    # If there is none available where this is true, use the smallest available unit.
-    unit = units[self.product.variant_unit].select { |scale, unit_name|
-      unit_value / scale >= 1
-    }.to_a.last
-    unit = units[self.product.variant_unit].first if unit.nil?
-
-    unit
+  def option_value_name
+    if display_as.present?
+      display_as
+    else
+      option_value_namer = OpenFoodNetwork::OptionValueNamer.new self
+      option_value_namer.name
+    end
   end
-
 end

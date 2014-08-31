@@ -1,13 +1,17 @@
 @import mixins
 @import variables
+@import branding
+@import big-input
 
-product
-  display: block 
 
 .darkswarm
-  #search
-    font-size: 2em
-    @include big-input
+  // #search
+  @include placeholder(rgba(0,0,0,0.4), #777)
+
+  input#search
+    @include big-input(rgba(0,0,0,0.3), #777, $clr-brick)
+    @include big-input-static
+
   color: #666
   display: block
   navigation
@@ -28,117 +32,115 @@ product
         margin-right: 12px
       location
         font-family: "AvenirBla_IE", "AvenirBla"
-        padding-right: 16px
       @media all and (max-width: 768px)
         location, location + small
           display: block
 
-      #distributor_title
-        float: left
-        display: block
-        min-width: 350px
+      #distributor_title h3
+        margin-top: 0
+        @media all and (max-width: 768px)
+          margin-bottom: 8px
+        
 
       ordercycle
-        @media all and (max-width: 768px)
+        p.text-right
+          max-width: 400px
+        @media all and (max-width: 640px)
           float: left
           clear: left
-          padding-bottom: 12px
-        display: block
+          padding: 12px 10px
+          width: 100%
+          margin-top: 10px
+          background: #e5e5e5
+          p.text-right
+            max-width: 100%
         float: right
         form.custom 
-          //width: 400px
           text-align: right
-          margin-right: 1em
-          @media all and (max-width: 768px)
-            padding-left: 1em
-            padding-top: 1em
           & > strong
             line-height: 2.5
             font-size: 1.29em
             padding-right: 14px
             @media all and (max-width: 768px)
-              font-size: 1.2em
-          select
-            width: 280px
+          select            
+            width: inherit
             display: inline-block
-            vackground: transparent
-            border-width: 2px
-            border-color: #666666
+            border-width: 1px
+            border-color: #999
+            color: #666
             font-size: 1em 
             margin-bottom: 0
-            padding: 8px 0px 8px 12px
+            padding: 8px 20px 8px 12px
             @media all and (max-width: 768px)
-              font-size: 1.2em
-              width: 180px
+              font-size: 0.875em
         closing
-          font-size: 0.875em
+          @media all and (max-width: 768px)
+            font-size: 1.2em
+            padding-bottom: 10px
+          color: black
+          font-size: 1.5em
           display: block
-          padding-top: 14px
+          padding-bottom: 12px
+        span
+          @media all and (max-width: 768px)
+            font-size: 0.875em
 
   products
     display: block
-    padding-top: 2.3em 
+    padding-top: 2.3em
     @media all and (max-width: 768px)
       padding-top: 1em
       input.button.right
         float: left
-    table
-      table-layout: fixed
-      width: 100%
-      border-collapse: collapse
-      border: none
-      th
-        line-height: 50px
-        &.name
-          width: 330px 
-        //&.notes
-          //width: 140px
-        &.variant
-          width: 180px
-        &.quantity, &.bulk, &.price
-          width: 90px
-      .notes
-        max-width: 300px
-      td, th
+    
+    
+    product:hover, product:focus, product:active
+      border-color: $clr-brick
+      @include box-shadow(0 0 3px 0 $clr-brick-bright)
+
+      .row.variants
+        border-top: 1px solid $clr-brick-light
+        background: $clr-brick-ultra-light
+
+    product
+      border: 1px solid #989898
+      display: block 
+      margin-bottom: 1em !important
+
+      input
+        margin: 0
+        width: 8em
+        display: inline
+
+      .columns
+        padding-top: 1em
+        padding-bottom: 1em
+        line-height: 1em
+
+      .row.summary, .row.variants
+        margin-left: 0
+        margin-right: 0
+        background: #f7f7f7
+        border-top: 1px solid #dfdfdf
+
+      .row.summary
         background: #fff
-        > span
-          min-width: 50px
-          display: block
-      tbody
-        border: 1px solid #cccccc
-        border-left: 0px
-        border-right: 0px
-      td
-        padding: 20px 0px
-        &.name 
-          img
-            float: left
-            margin-right: 30px
-            @media all and (max-width: 768px)
-              margin-right: 1em
-          div
-            min-width: 150px
-      tr.product-description
-        display: none
+        line-height: 1
+
+        .summary-header
+          font-size: 1.15rem
+
+          &, & *
+            @include avenir
+            color: $clr-brick
+
+        .summary-price
+          &, & *
+            @include avenir
+        
+      
 
 
-      // Responsive
-      @media all and (max-width: 768px)
-        td.notes, th.notes
-          display: none
-        img
-          width: 20px
-          height: auto
-        tr.product-description
-          display: table-row
-          td:empty
-            display: none
-            
 
-      input[type=number]
-        width: 60px
-        margin: 0px
-          display: block
-          float: right
-          padding-top: 14px
+
 

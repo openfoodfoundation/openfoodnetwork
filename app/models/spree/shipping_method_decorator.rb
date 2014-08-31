@@ -1,7 +1,12 @@
 Spree::ShippingMethod.class_eval do
-  has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
-  attr_accessible :distributor_ids
+  has_many :distributor_shipping_methods
+  has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
+
+  after_save :touch_distributors
+  attr_accessible :distributor_ids, :description
   attr_accessible :require_ship_address
+
+  validates :distributors, presence: { message: "^At least one hub must be selected" }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -34,7 +39,17 @@ Spree::ShippingMethod.class_eval do
     end
   end
 
+  def has_distributor?(distributor)
+    self.distributors.include?(distributor)
+  end
+
   def adjustment_label
     'Shipping'
+  end
+
+  private
+
+  def touch_distributors
+    distributors.each(&:touch)
   end
 end

@@ -1,6 +1,6 @@
-
 class AbilityDecorator
   include CanCan::Ability
+
   def initialize(user)
     if user.enterprises.count > 0
 
@@ -53,6 +53,11 @@ class AbilityDecorator
         (user.enterprises & shipping_method.distributors).any?
       end
 
+      can [:admin, :index, :create], EnterpriseRelationship
+      can [:destroy], EnterpriseRelationship do |enterprise_relationship|
+        user.enterprises.include? enterprise_relationship.parent
+      end
+
       can [:create], OrderCycle
       can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
         user.enterprises.include? order_cycle.coordinator
@@ -66,6 +71,8 @@ class AbilityDecorator
       can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
       can [:admin, :index, :read, :create, :edit, :update], Exchange
       can [:admin, :index, :read, :create, :edit, :update], ExchangeFee
+
+      can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
       can [:admin, :index, :create], Enterprise
       can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|

@@ -28,16 +28,21 @@ gem 'andand'
 gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
+gem "active_model_serializers"
 gem 'oj'
 gem 'deface', :github => 'spree/deface', :ref => '1110a13'
 gem 'paperclip'
+gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
+gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 
 gem 'foreigner'
 gem 'immigrant'
+
+gem 'whenever', require: false
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -81,6 +86,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'perftools.rb'
 end
 
 group :development do

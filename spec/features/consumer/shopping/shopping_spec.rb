@@ -20,11 +20,15 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     it "shows a distributor with images" do
+      # Given the distributor has a logo
+      distributor.logo = File.new(Rails.root + 'app/assets/images/logo.jpg')
+      distributor.save!
+
+      # Then we should see the distributor and its logo
       visit shop_path
       page.should have_text distributor.name
       find("#tab_about a").click
       first("distributor img")['src'].should == distributor.logo.url(:thumb) 
-      first("#about img")['src'].should == distributor.promo_image.url(:large) 
     end
 
     it "shows the producers for a distributor" do
@@ -32,6 +36,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       exchange.variants << product.master
 
       visit shop_path
+      save_screenshot "/users/willmarshall/Desktop/wtsvg.png"
       find("#tab_producers a").click
       page.should have_content supplier.name 
     end
@@ -60,6 +65,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
         
         it "shows products after selecting an order cycle" do
+          product.master.update_attribute(:display_name, "kitten")
+          product.master.update_attribute(:display_as, "rabbit")
           exchange1.variants << product.master ## add product to exchange
           visit shop_path
           page.should_not have_content product.name 
@@ -67,9 +74,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           select "frogs", :from => "order_cycle_id"
           page.should have_selector "products"
-          page.should have_content "Orders close in 2 days" 
+          page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
+          page.should have_content product.master.display_name
+          page.should have_content product.master.display_as
+
+          open_product_modal product
+          modal_should_be_open_for product
         end
       end
     end
@@ -90,10 +102,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       it "should not show quantity field for product with variants" do
         visit shop_path
         page.should_not have_selector("#variants_#{product.master.id}", visible: true)
-
-        #it "expands variants" do
-        find(".collapse").trigger "click"
-        page.should_not have_text variant1.options_text
       end
 
       it "uses the adjusted price" do
@@ -104,15 +112,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
 
         # Page should not have product.price (with or without fee)
-        page.should_not have_selector 'tr.product > td', text: "from $10.00"
-        page.should_not have_selector 'tr.product > td', text: "from $33.00"
+        page.should_not have_price "from $10.00"
+        page.should_not have_price "from $33.00"
 
         # Page should have variant prices (with fee)
-        page.should have_selector 'tr.variant > td.price', text: "$43.00"
-        page.should have_selector 'tr.variant > td.price', text: "$53.00"
+        page.should have_price "$43.00"
+        page.should have_price "$53.00"
 
         # Product price should be listed as the lesser of these
-        page.should have_selector 'tr.product > td', text: "from $43.00"
+        #page.should have_selector 'tr.product > td', text: "from $43.00"
+        page.should have_price "from $43.00"
       end
     end
 
@@ -131,7 +140,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 9
@@ -142,7 +151,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         pending "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 1
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 5
@@ -161,7 +170,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
-          first("form.custom > input.button.right").click 
+          add_to_cart
           page.should have_content product.name
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 7
@@ -181,7 +190,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
       it "should let us add products to our cart" do
         fill_in "variants[#{variant.id}]", with: "1"
-        first("form.custom > input.button.right").click
+        add_to_cart
         current_path.should == "/cart" 
         page.should have_content product.name
       end
@@ -190,7 +199,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     context "when no order cycles are available" do
       it "tells us orders are closed" do
         visit shop_path
-        page.should have_content "Orders are currently closed for this hub"
+        page.should have_content "Orders are closed"
       end
       it "shows the last order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_close_at: 10.days.ago)

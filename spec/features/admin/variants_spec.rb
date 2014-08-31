@@ -13,10 +13,7 @@ feature %q{
 
     # When I create a variant on the product
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     click_link 'New Variant'
 
     fill_in 'variant_unit_value', with: '1'
@@ -38,10 +35,7 @@ feature %q{
 
     # When I view the variant
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     page.find('table.index .icon-edit').click
 
     # Then I should not see a traditional option value field for the unit-related option value
@@ -73,14 +67,25 @@ feature %q{
 
     # When I view the variant
     login_to_admin_section
-    click_link 'Products'
-    within('#sub_nav') { click_link 'Products' }
-    click_link p.name
-    click_link 'Variants'
+    visit spree.admin_product_variants_path p
     page.find('table.index .icon-edit').click
 
     # Then I should not see unit value and description fields
     page.should_not have_field "variant_unit_value"
     page.should_not have_field "variant_unit_description"
+  end
+
+  it "soft-deletes variants", js: true do
+    p = create(:simple_product)
+    v = create(:variant, product: p)
+
+    login_to_admin_section
+    visit spree.admin_product_variants_path p
+
+    page.find('a.delete-resource').click
+    page.should_not have_content v.options_text
+
+    v.reload
+    v.deleted_at.should_not be_nil
   end
 end

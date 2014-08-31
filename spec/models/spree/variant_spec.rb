@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/option_value_namer'
 
 module Spree
   describe Variant do
@@ -123,6 +124,36 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "getting name for display" do
+        it "returns display_name if present" do
+          v = create(:variant, display_name: "foo")
+          v.name_to_display.should == "foo"
+        end
+
+        it "returns product name if display_name is empty" do
+          v = create(:variant, product: create(:product))
+          v.name_to_display.should == v.product.name
+          v1 = create(:variant, display_name: "", product: create(:product))
+          v1.name_to_display.should == v1.product.name
+        end
+      end
+
+      describe "getting unit for display" do
+        it "returns display_as if present" do
+          v = create(:variant, display_as: "foo")
+          v.unit_to_display.should == "foo"
+        end
+
+        it "returns options_text if display_as is blank" do
+          v = create(:variant)
+          v1 = create(:variant, display_as: "")
+          v.stub(:options_text).and_return "ponies"
+          v1.stub(:options_text).and_return "ponies"
+          v.unit_to_display.should == "ponies"
+          v1.unit_to_display.should == "ponies"
+        end
+      end
+
       describe "setting the variant's weight from the unit value" do
         it "sets the variant's weight when unit is weight" do
           p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
@@ -207,149 +238,68 @@ module Spree
             v_orig.option_values.should include ov
           end
         end
+      end
+      context "when the variant already has a value set (and all required option values exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
 
-        context "when the variant already has a value set (and all required option values exist)" do
-          let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-          let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
 
-          let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-          let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
+        it "removes the old option value and assigns the new one" do
+          ov_orig = v.option_values.last
+          ov_new  = v0.option_values.last
 
-          it "removes the old option value and assigns the new one" do
-            ov_orig = v.option_values.last
-            ov_new  = v0.option_values.last
+          expect {
+            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          }.to change(Spree::OptionValue, :count).by(0)
 
-            expect {
-              v.update_attributes!(unit_value: 10, unit_description: 'foo')
-            }.to change(Spree::OptionValue, :count).by(0)
-
-            v.option_values.should_not include ov_orig
-            v.option_values.should     include ov_new
-          end
+          v.option_values.should_not include ov_orig
+          v.option_values.should     include ov_new
         end
       end
 
-      describe "generating option value name" do
-        it "when description is blank" do
-          v = Spree::Variant.new unit_description: nil
-          v.stub(:option_value_value_unit) { %w(value unit) }
-          v.stub(:value_scaled?) { true }
-          v.send(:option_value_name).should == "valueunit"
-        end
+      context "when the variant already has a value set (and all required option values exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
 
-        it "when description is present" do
-          v = Spree::Variant.new unit_description: 'desc'
-          v.stub(:option_value_value_unit) { %w(value unit) }
-          v.stub(:value_scaled?) { true }
-          v.send(:option_value_name).should == "valueunit desc"
-        end
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
 
-        it "when value is blank and description is present" do
-          v = Spree::Variant.new unit_description: 'desc'
-          v.stub(:option_value_value_unit) { [nil, nil] }
-          v.stub(:value_scaled?) { true }
-          v.send(:option_value_name).should == "desc"
-        end
+        it "removes the old option value and assigns the new one" do
+          ov_orig = v.option_values.last
+          ov_new  = v0.option_values.last
 
-        it "spaces value and unit when value is unscaled" do
-          v = Spree::Variant.new unit_description: nil
-          v.stub(:option_value_value_unit) { %w(value unit) }
-          v.stub(:value_scaled?) { false }
-          v.send(:option_value_name).should == "value unit"
+          expect {
+            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          }.to change(Spree::OptionValue, :count).by(0)
+
+          v.option_values.should_not include ov_orig
+          v.option_values.should     include ov_new
         end
       end
 
-      describe "determining if a variant's value is scaled" do
-        it "returns true when the product has a scale" do
-          p = Spree::Product.new variant_unit_scale: 1000
-          v = Spree::Variant.new
-          v.stub(:product) { p }
+      context "when the variant does not have a display_as value set" do
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '') }
 
-          v.send(:value_scaled?).should be_true
-        end
-
-        it "returns false otherwise" do
-          p = Spree::Product.new
-          v = Spree::Variant.new
-          v.stub(:product) { p }
-
-          v.send(:value_scaled?).should be_false
+        it "requests the name of the new option_value from OptionValueName" do
+          OpenFoodNetwork::OptionValueNamer.any_instance.should_receive(:name).exactly(1).times.and_call_original
+          v.update_attributes(unit_value: 10, unit_description: 'foo')
+          ov = v.option_values.last
+          ov.name.should == "10g foo"
         end
       end
 
-      describe "generating option value's value and unit" do
-        let(:v) { Spree::Variant.new }
+      context "when the variant has a display_as value set" do
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
 
-        it "generates simple values" do
-          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
-          v.stub(:product) { p }
-          v.stub(:unit_value) { 100 }
-
-          v.send(:option_value_value_unit).should == [100, 'g']
-        end
-
-        it "generates values when unit value is non-integer" do
-          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
-          v.stub(:product) { p }
-          v.stub(:unit_value) { 123.45 }
-
-          v.send(:option_value_value_unit).should == [123.45, 'g']
-        end
-
-        it "returns a value of 1 when unit value equals the scale" do
-          p = double(:product, variant_unit: 'weight', variant_unit_scale: 1000.0)
-          v.stub(:product) { p }
-          v.stub(:unit_value) { 1000.0 }
-
-          v.send(:option_value_value_unit).should == [1, 'kg']
-        end
-
-        it "generates values for all weight scales" do
-          [[1.0, 'g'], [1000.0, 'kg'], [1000000.0, 'T']].each do |scale, unit|
-            p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
-            v.stub(:product) { p }
-            v.stub(:unit_value) { 100 * scale }
-            v.send(:option_value_value_unit).should == [100, unit]
-          end
-        end
-
-        it "generates values for all volume scales" do
-          [[0.001, 'mL'], [1.0, 'L'], [1000000.0, 'ML']].each do |scale, unit|
-            p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
-            v.stub(:product) { p }
-            v.stub(:unit_value) { 100 * scale }
-            v.send(:option_value_value_unit).should == [100, unit]
-          end
-        end
-
-        it "chooses the correct scale when value is very small" do
-          p = double(:product, variant_unit: 'volume', variant_unit_scale: 0.001)
-          v.stub(:product) { p }
-          v.stub(:unit_value) { 0.0001 }
-          v.send(:option_value_value_unit).should == [0.1, 'mL']
-        end
-
-        it "generates values for item units" do
-          %w(packet box).each do |unit|
-            p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: unit)
-            v.stub(:product) { p }
-            v.stub(:unit_value) { 100 }
-            v.send(:option_value_value_unit).should == [100, unit.pluralize]
-          end
-        end
-
-        it "generates singular values for item units when value is 1" do
-          p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
-          v.stub(:product) { p }
-          v.stub(:unit_value) { 1 }
-          v.send(:option_value_value_unit).should == [1, 'packet']
-        end
-
-        it "returns [nil, nil] when unit value is not set" do
-          p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'foo')
-          v.stub(:product) { p }
-          v.stub(:unit_value) { nil }
-          v.send(:option_value_value_unit).should == [nil, nil]
+        it "does not request the name of the new option_value from OptionValueName" do
+          OpenFoodNetwork::OptionValueNamer.any_instance.should_not_receive(:name)
+          v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          ov = v.option_values.last
+          ov.name.should == "FOOS!"
         end
       end
     end

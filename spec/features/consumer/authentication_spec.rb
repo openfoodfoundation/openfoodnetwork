@@ -5,7 +5,18 @@ feature "Authentication", js: true do
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
-    describe "newskool" do
+    describe "With redirects" do
+      scenario "logging in with a redirect set" do
+        visit groups_path(anchor: "login?after_login=#{producers_path}")
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_login_button
+        page.should have_content "Find local producers"
+        current_path.should == producers_path
+      end
+    end
+
+    describe "Loggin in from the home page" do
       before do
         visit root_path
       end

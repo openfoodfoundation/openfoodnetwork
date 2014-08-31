@@ -1,0 +1,51 @@
+/ replace "div[data-hook='admin_shipping_method_form_fields']"
+
+.alpha.twelve.columns{"data-hook" => "admin_shipping_method_form_fields"}
+  .row
+    .alpha.three.columns
+      = f.label :name, t(:name)
+    .omega.eight.columns
+      = f.text_field :name, :class => 'fullwidth', placeholder: "eg. 'Pick-up from Primary School'"
+      = error_message_on :shipping_method, :name
+  .row
+    .alpha.three.columns
+      = f.label :description, t(:description)
+    .omega.eight.columns
+      = f.text_area :description, class: 'fullwidth', rows: 2, placeholder: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
+      = error_message_on :shipping_method, :description
+  - if @available_zones.length == 1
+    = f.hidden_field :zone_id, value: @available_zones.first.id
+  - else
+    .row
+      .alpha.three.columns
+        = f.label :zone_id, t(:zone)
+      .omega.eight.columns
+        = f.collection_select(:zone_id, @available_zones, :id, :name, {}, {:class => 'select2 fullwidth'})
+        = error_message_on :shipping_method, :zone_id
+  - if spree_current_user.admin?
+    .row
+      .alpha.three.columns
+        = f.label :display_on, t(:display)
+      .omega.eight.columns
+        = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'})
+        = error_message_on :shipping_method, :display_on
+
+  .row
+    -# Shipping Category is not really used, so set to nil
+    = f.hidden_field :shipping_category_id, value: nil
+    .alpha.three.columns
+      -# The 'Category' label here is just a logical descriptor for the data we are trying to collect for 'requires_ship_address'
+      -# and does not relate to shipping categories in any way.
+      = f.label :require_ship_address, "Category"
+    .two.columns
+      = f.radio_button :require_ship_address, true
+      &nbsp;
+      = f.label :delivery, t(:delivery)
+    .six.columns
+      = f.radio_button :require_ship_address, false
+      &nbsp;
+      = f.label :pick_up, t(:pick_up)
+
+  .row
+    .alpha.eleven.columns
+      = render :partial => 'spree/admin/shared/calculator_fields', :locals => { :f => f }

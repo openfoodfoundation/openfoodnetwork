@@ -1,13 +1,15 @@
+= inject_enterprises 
+
 .darkswarm
   - content_for :order_cycle_form do
     %strong.avenir
-      Order ready on
+      Order ready for
       = pickup_time current_order_cycle
 
   = render partial: "shopping_shared/details"
    
-  %accordion.row{"close-others" => "true"}
-    %checkout{"ng-controller" => "CheckoutCtrl"}
+  %accordion{"close-others" => "true"}
+    %checkout.row{"ng-controller" => "CheckoutCtrl"}
       .small-9.columns
         - unless spree_current_user
           = render partial: "checkout/authentication"

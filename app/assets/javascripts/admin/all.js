@@ -11,9 +11,11 @@
 //= require shared/jquery-ui-timepicker-addon
 //= require angular
 //= require angular-resource
+//= require angular-animate
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo
 //= require ./admin
+//= require ./products/products
 
 //= require_tree .

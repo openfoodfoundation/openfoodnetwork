@@ -1,0 +1,83 @@
+/ replace "fieldset[data-hook='new_product']"
+.twelve.columns.alpha
+  %fieldset.no-border-bottom{ id: "new_product" }
+    %legend{align: "center"}= t(:new_product)
+    .twelve.columns.alpha
+      .six.columns.alpha
+        = f.field_container :supplier do
+          = f.label :supplier_id, t(:supplier)
+          %span.required *
+          = f.collection_select(:supplier_id, Enterprise.is_primary_producer.managed_by(spree_current_user).by_name, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+          = f.error_message_on :supplier
+      .six.columns.omega
+        = f.field_container :name do
+          = f.label :name, t(:product_name)
+          %span.required *
+          %br/
+          = f.text_field :name, :class => 'fullwidth title'
+          = f.error_message_on :name
+    .twelve.columns.alpha{ 'ng-controller' => 'unitsCtrl' }
+      .six.columns.alpha
+        = f.field_container :units do
+          = f.label :variant_unit_with_scale, :units
+          %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
+            %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
+          %input{ type: 'hidden', 'ng-value' => 'product.variant_unit', name: 'product[variant_unit]' }
+          %input{ type: 'hidden', 'ng-value' => 'product.variant_unit_scale', name: 'product[variant_unit_scale]' }
+      .three.columns
+        = f.field_container :unit_value do
+          = f.label :product_unit_value_with_description, :value, 'ng-disabled' => "!hasUnit(product)"
+          %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
+          %input{ type: 'hidden', 'ng-value' => 'product.master.unit_value', name: 'product[unit_value]' }
+          %input{ type: 'hidden', 'ng-value' => 'product.master.unit_description', name: 'product[unit_description]' }
+      = render 'display_as', f: f
+      .three.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
+        = f.field_container :unit_name do
+          = f.label :product_variant_unit_name, t(:unit_name)
+          %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
+    .twelve.columns.alpha
+      .six.columns.alpha
+        = render 'spree/admin/products/primary_taxon_form', f: f
+      .three.columns
+        = f.field_container :price do
+          = f.label :price, t(:price)
+          %span.required *
+          %br/
+          = f.text_field :price, class: 'fullwidth'
+          = f.error_message_on :price
+      .three.columns.omega
+        = f.field_container :on_hand do
+          = f.label :on_hand, t(:on_hand)
+          %span.required *
+          %br/
+          = f.text_field :on_hand, class: 'fullwidth'
+          = f.error_message_on :on_hand
+    .twelve.columns.alpha
+      = f.field_container :description do
+        = f.label :product_description, t(:product_description)
+        %br/
+        = f.text_area :description, class: 'fullwidth', rows: 3
+        = f.error_message_on :description
+.four.columns.omega{ style: "text-align: center" }
+  %fieldset.no-border-bottom{ id: "image" }
+    %legend{align: "center"}= t(:image)
+    .row
+      = image_tag "noimage/product.png", class: "four columns alpha"
+    .row
+      = f.fields_for 'images_attributes[]', f.object.images.build do |image_fields|
+        = image_fields.file_field :attachment
+.sixteen.columns.alpha
+  .form-buttons.filter-actions.actions{ 'data-hook' => "buttons" }
+    = button t('actions.create'), 'icon-ok', :submit, value: "create"
+    %span.or
+      = t(:or)
+    = button "Create And Add Another", 'icon-repeat', :submit, value: 'add_another'
+    %span.or
+      = t(:or)
+    = link_to_with_icon 'icon-remove', t('actions.cancel'), bulk_edit_admin_products_path, :class => 'button'
+
+
+:javascript
+  angular.element(document.getElementById("new_product")).ready(function() {
+    angular.bootstrap(document.getElementById("new_product"), ['admin.products']);
+  });

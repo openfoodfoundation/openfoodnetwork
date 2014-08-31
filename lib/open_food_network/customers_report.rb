@@ -38,7 +38,7 @@ module OpenFoodNetwork
     end
 
     def orders
-      filter Spree::Order.managed_by(@user).complete.not_state(:canceled)
+      filter Spree::Order.managed_by(@user).distributed_by_user(@user).complete.not_state(:canceled)
     end
 
     def filter(orders)

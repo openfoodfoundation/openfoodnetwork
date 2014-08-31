@@ -1,17 +1,22 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
+  get "/#/login", to: "home#index", as: :spree_login
+
+  get "/map", to: "map#index", as: :map
+
   resource :shop, controller: "shop" do
     get :products
     post :order_cycle
     get :order_cycle
   end
 
+  resources :groups
   resources :producers
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
-  get "/checkout/paypal_payment", to: 'checkout#paypal_payment', as: :paypal_payment
+  get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   resources :enterprises do
     collection do
@@ -36,7 +41,13 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :enterprises do
       post :bulk_update, :on => :collection, :as => :bulk_update
+
+      resources :producer_properties do
+        post :update_positions, on: :collection
+      end
     end
+
+    resources :enterprise_relationships
 
     resources :enterprise_fees do
       post :bulk_update, :on => :collection, :as => :bulk_update
@@ -108,6 +119,7 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
+      delete :soft_delete
 
       resources :variants do
         delete :soft_delete

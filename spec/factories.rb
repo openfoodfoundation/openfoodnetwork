@@ -2,6 +2,9 @@ require 'ffaker'
 require 'spree/core/testing_support/factories'
 
 FactoryGirl.define do
+  factory :classification, class: Spree::Classification do
+  end
+
   factory :order_cycle, :parent => :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
 
@@ -96,8 +99,12 @@ FactoryGirl.define do
     is_distributor true
   end
 
+  factory :enterprise_relationship do
+  end
+
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
+    description 'this is a group'
     on_front_page false
   end
 
@@ -146,6 +153,9 @@ end
 
 
 FactoryGirl.modify do
+  factory :product do
+    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
+  end
   factory :simple_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
     # Pull request: https://github.com/spree/spree/pull/1964
@@ -153,6 +163,7 @@ FactoryGirl.modify do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
+    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
     on_hand 3
 
     variant_unit 'weight'
@@ -186,6 +197,10 @@ FactoryGirl.modify do
     distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
   end
 
+  factory :option_type do
+    # Prevent inconsistent ordering in specs when all option types have the same (0) position
+    sequence(:position)
+  end
 end
 
 

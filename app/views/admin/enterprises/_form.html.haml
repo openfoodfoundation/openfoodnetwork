@@ -49,6 +49,15 @@
         = f.radio_button :visible, false
         &nbsp;
         = f.label :visible, "Not Visible", :value => "false"
+    - if @enterprise.is_distributor
+    - # TODO: Angularise this
+      .row
+        .three.columns.alpha
+          %label Link to shop front
+          .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+            %a What's this?
+        .eight.columns.omega
+          = main_app.shop_enterprise_url(@enterprise)
 
 
   = f.fields_for :address do |af|
@@ -116,12 +125,21 @@
           = f.label :website
         .omega.eight.columns
           = f.text_field :website, { placeholder: "eg. www.truffles.com"}
-      -# TODO: Facebook model field
-      -#.row
-      -#  .alpha.two.columns
-      -#    = f.label :facebook, 'Facebook'
-      -#  .omega.four.columns
-      -#    = f.text_field :facebook
+      .row
+        .alpha.three.columns
+          = f.label :facebook, 'Facebook'
+        .omega.eight.columns
+          = f.text_field :facebook
+      .row
+        .alpha.three.columns
+          = f.label :instagram, 'Instagram'
+        .omega.eight.columns
+          = f.text_field :instagram
+      .row
+        .alpha.three.columns
+          = f.label :linkedin, 'LinkedIn'
+        .omega.eight.columns
+          = f.text_field :linkedin
       .row
         .alpha.three.columns
           = f.label :twitter
@@ -159,14 +177,16 @@
         %br
         100 x 100 pixels
       .omega.eight.columns
-        = image_tag @object.logo.url if @object.logo.present?
+        = image_tag @object.logo(:medium) if @object.logo.present?
         = f.file_field :logo
     .row
       .alpha.three.columns
         = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
-        .with-tip{'data-powertip' => 'This image is displayed on the right hand side of the "About Us" section of your public profile.'}
-          %a What's this?
+        %br/
+        %span{ style: 'font-weight:bold' } PLEASE NOTE:
+        Any promo image uploaded here will be cropped to 1200 x 260.
+        The promo image is displayed at the top of an enterprise's profile page and pop-ups.
 
       .omega.eight.columns
-        = image_tag @object.promo_image.url if @object.promo_image.present?
+        = image_tag @object.promo_image(:large) if @object.promo_image.present?
         = f.file_field :promo_image

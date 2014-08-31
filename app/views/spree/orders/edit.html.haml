@@ -1,4 +1,5 @@
-- @body_id = 'cart'
+= inject_enterprises 
+
 .darkswarm
   - content_for :order_cycle_form do
     %strong.avenir
@@ -24,35 +25,18 @@
               .row
                 = render :partial => 'form', :locals => { :order_form => order_form }
 
-            #subtotal.row{'data-hook' => ""}
-              .columns.large-5
-                %h5
-                  Product 
-                  \:
-                  %span.order-total.item-total= number_to_currency @order.item_total
-              .columns.large-4
-                %h5
-                  Distribution
-                  \:
-                  %span.order-total.distribution-total= order_distribution_subtotal(@order)
-              .columns.large-3
-                %h4
-                  Cart Total
-                  \:
-                  %span.order-total.grand-total= @order.display_total
 
         .links{'data-hook' => "cart_buttons"}
           .row
-            #empty-cart.columns.large-8{"data-hook" => ""}
-              = form_tag empty_cart_path, :method => :put do
-                #clear_cart_link{"data-hook" => ""}
-                  = link_to "Continue Shopping", main_app.shop_path, class: "button secondary"
-                  = t(:or)
-                  = submit_tag t(:empty_cart), :class => 'button secondary'
-
+            .columns.large-8{"data-hook" => ""}
+              
+              %a.button.large.secondary{href: main_app.shop_path}
+                %i.ofn-i_008-caret-left 
+                Continue shopping
             .columns.large-4.text-right
-              = button_tag :class => 'secondary', :id => 'update-button' do
-                = t(:update)
-              = t(:or)
-              = link_to "Checkout", main_app.checkout_path, class: "button checkout primary", id: "checkout-link"
+              %a#checkout-link.button.large.primary{href: main_app.checkout_path}
+                Checkout
+                %i.ofn-i_007-caret-right
+
+= render partial: "shared/footer"
 

@@ -1,4 +1,7 @@
-Darkswarm.factory 'Producers', (producers) ->
+Darkswarm.factory 'Producers', (Enterprises, visibleFilter) ->
   new class Producers
     constructor: ->
-      @producers = producers
+      @producers = Enterprises.enterprises.filter (enterprise)->
+        enterprise.is_primary_producer
+      @visible = visibleFilter @producers
+

@@ -26,8 +26,17 @@ a
     text-decoration: none
     color: $clr-brick-bright
 
-small
+small, .small
   font-size: 0.75rem
+
+.text-small
+  font-size: 0.875rem
+  margin-bottom: 0.5rem
+  &, & *
+    font-size: 0.875rem
+.light
+  color: #999
+  display: inline
 
 @mixin avenir
   font-family: "AvenirBla_IE", "AvenirBla"
@@ -36,25 +45,30 @@ h1, h2, h3, h4, h5, h6, .avenir
   @include avenir
   padding: 0px
 
-ul.ofn-list
-  margin-left: 0.5em
+ul.bullet-list
+  margin: 0
   li
     list-style: none
+    line-height: 1.5
+    height: inherit
   li:before
-    content: "\f112"
-    font-family: "foundation-icons"
+    content: "\e62f"
+    font-family: "OFN"
     display: inline-block
     font-weight: normal
     font-style: normal
     font-variant: normal
     text-transform: none
-    font-size: 80%
+    
 
 .light-grey
   color: #666666
 
 .pad-top
   padding-top: 1em
+
+.not-bold
+  font-weight: normal
 
 strong.avenir
   font-weight: normal // Avenir is basically bold anyway
@@ -66,3 +80,7 @@ table tr th, table tr td
   color: #333333
 table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td 
   color: #333333
+
+span.email
+  direction: rtl
+  unicode-bidi: bidi-override

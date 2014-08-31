@@ -1,0 +1,15 @@
+- content_for :page_title do
+  Enterprise Relationships
+
+= render 'admin/shared/enterprises_sub_menu'
+
+%div{"ng-app" => "ofn.admin", "ng-controller" => "AdminEnterpriseRelationshipsCtrl"}
+  = render 'data'
+
+  %input.search{"ng-model" => "query", "placeholder" => "Search"}
+
+  %table#enterprise-relationships
+    %tbody
+      = render 'form'
+      %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships | filter:query"}
+        = render 'enterprise_relationship'

@@ -1,0 +1,109 @@
+@import branding
+@import mixins
+
+
+// Enterprise promo image and text
+
+.highlight
+  position: relative
+
+.highlight-top
+  padding: 0.75rem 0.9375rem
+  width: 100%
+  overflow: hidden
+  background-color: rgba(255,255,255,0.65)
+  position: absolute
+  bottom: 0
+  h3, p
+    margin-top: 0
+    margin-bottom: 0
+    padding-bottom: 0
+    line-height: 1
+  p
+    line-height: 2
+
+
+// ABOUT Enterprise
+
+.about-container
+  max-height: 200px
+  min-height: 20px
+  margin-bottom: 0.5rem
+  overflow-y: scroll
+  overflow-x: hidden
+  border-bottom: 1px solid #999
+  @include box-shadow(0 2px 2px -2px #999)
+
+  .enterprise-logo, img
+    float: left
+    margin-right: 2rem
+    margin-bottom: 0.5rem
+    max-width: 180px
+    max-height: 180px
+
+
+// FOLLOW Enterprise
+
+.follow-icons
+  text-align: center
+  span
+    display: inline-block
+    margin: 0 0.25rem 0.75rem 0.25rem
+  i
+    font-size: 2rem
+  a
+    color: #999
+    &:hover, &:active, &:focus
+      color: #666
+
+
+// CALL TO ACTION - hub click throughs
+
+.cta-container
+  background: url("/assets/gray_jean.png") repeat
+  padding-top: 0.75rem
+  .button.secondary
+    background-color: #999
+  .button.hub
+    margin-right: 1rem
+    margin-bottom: 1rem
+    padding-left: 1rem
+    padding-right: 1rem
+    font-weight: bold
+    i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
+      margin-right: 0.15rem
+      font-size: 1.25rem
+    i.ofn-i_007-caret-right
+      margin-left: 1rem
+    .button-address
+      font-weight: 300
+      font-style: italic
+      font-size: 0.75rem
+      display: inline
+  .button.hub.expand
+    text-align: left
+    i.ofn-i_007-caret-right
+      float: right
+    i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
+      float: left
+      margin-right: 0.5rem
+
+.active_table_row
+  .cta-container
+    // padding-bottom: 0.75rem
+    background: rgba(0,0,0,0.05)
+    padding-top: 0.5rem
+
+// Generic styles for use
+
+.modal-centered
+  text-align: center
+  p
+    margin-bottom: 0
+
+.modal-header
+  text-align: center
+  text-transform: uppercase
+  border-bottom: 1px solid black
+  margin-top: 0.75rem
+

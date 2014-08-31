@@ -31,23 +31,23 @@ describe Enterprise do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }
       let(:c) { create(:distributor_enterprise) }
-      before do
-        EnterpriseRelationship.create! parent_id: p.id, child_id: e.id
-        EnterpriseRelationship.create! parent_id: e.id, child_id: c.id
-      end
+
+      let!(:er1) { create(:enterprise_relationship, parent_id: p.id, child_id: e.id) }
+      let!(:er2) { create(:enterprise_relationship, parent_id: e.id, child_id: c.id) }
+
       it "finds relatives" do
         e.relatives.sort.should == [p, c].sort
       end
 
-      it "scopes relatives to distributors" do
+      it "scopes relatives to visible distributors" do
         e.should_receive(:relatives).and_return(relatives = [])
-        relatives.should_receive(:is_distributor)
+        relatives.should_receive(:is_distributor).and_return relatives
         e.distributors
       end
 
-      it "scopes relatives to producers" do
+      it "scopes relatives to visible producers" do
         e.should_receive(:relatives).and_return(relatives = [])
-        relatives.should_receive(:is_primary_producer)
+        relatives.should_receive(:is_primary_producer).and_return relatives
         e.suppliers
       end
     end
@@ -66,13 +66,7 @@ describe Enterprise do
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
   end
-
-  it "should default address country to system country" do
-    subject.address.country.should == Spree::Country.find_by_id(Spree::Config[:default_country_id])
-  end
-
   describe "scopes" do
-
     describe 'active' do
       it 'find active enterprises' do
         d1 = create(:distributor_enterprise, visible: false)
@@ -338,6 +332,16 @@ describe Enterprise do
     end
   end
 
+  describe "supplied_and_active_products_on_hand" do
+    it "find only active products which are in stock" do
+      supplier = create(:supplier_enterprise)
+      inactive_product = create(:product, supplier:  supplier, on_hand: 1, available_on: Date.tomorrow)
+      out_of_stock_product = create(:product, supplier:  supplier, on_hand: 0, available_on: Date.yesterday)
+      p1 = create(:product, supplier: supplier, on_hand: 1, available_on: Date.yesterday)
+      supplier.supplied_and_active_products_on_hand.should == [p1]
+    end
+  end
+
   describe "finding variants distributed by the enterprise" do
     it "finds the master variant" do
       d = create(:distributor_enterprise)
@@ -422,17 +426,44 @@ describe Enterprise do
     let(:supplier) { create(:supplier_enterprise) }
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
-    let(:product1) { create(:simple_product, taxons: [taxon1]) }
-    let(:product2) { create(:simple_product, taxons: [taxon1, taxon2]) }
+    let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
+    let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
 
     it "gets all taxons of all distributed products" do
       Spree::Product.stub(:in_distributor).and_return [product1, product2]
-      distributor.distributed_taxons.should == [taxon1, taxon2]
+      distributor.distributed_taxons.sort.should == [taxon1, taxon2].sort
     end
 
     it "gets all taxons of all supplied products" do
       Spree::Product.stub(:in_supplier).and_return [product1, product2]
-      supplier.supplied_taxons.should == [taxon1, taxon2]
+      supplier.supplied_taxons.sort.should == [taxon1, taxon2].sort
+    end
+  end
+
+  describe "presentation of attributes" do
+    let(:distributor) { 
+      create(:distributor_enterprise, 
+             website: "http://www.google.com",
+             facebook: "www.facebook.com/roger",
+             linkedin: "https://linkedin.com")
+    }
+
+    it "strips http and www from url fields" do
+      distributor.website.should == "google.com"
+      distributor.facebook.should == "facebook.com/roger"
+      distributor.linkedin.should == "linkedin.com"
+    end
+  end
+
+  describe "producer properties" do
+    let(:supplier) { create(:supplier_enterprise) }
+
+    it "sets producer properties" do
+      supplier.set_producer_property 'Organic Certified', 'NASAA 12345'
+
+      supplier.producer_properties.count.should == 1
+      supplier.producer_properties.first.value.should == 'NASAA 12345'
+      supplier.producer_properties.first.property.presentation.should == 'Organic Certified'
     end
   end
 end

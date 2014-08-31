@@ -20,10 +20,13 @@ checkout
     padding: 0.65em
     background: #f7f7f7
   
+    .label 
+      font-size: 1em
+      padding: 0.3rem 0.35rem 0.275rem
+
     // Logic to turn on & off the alerts for success against each fieldset
 
     label, label.alert, label.success, &.valid label.alert, &.dirty label.success 
-      @include csstrans
       display: none
 
     &.dirty label.alert 

@@ -22,4 +22,6 @@
     %span.with-tip{'data-powertip' => variant_images}= "#{order_cycle.variants.count} variants"
 
   %td.actions
+    = link_to '', main_app.edit_admin_order_cycle_path(order_cycle), class: 'edit-order-cycle icon-edit no-text'
+  %td.actions
     = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'

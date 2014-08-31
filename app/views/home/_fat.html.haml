@@ -1,23 +1,48 @@
 .row.active_table_row{"ng-show" => "open()"}
-  .columns.small-4
-    %strong Shop for
-    %p.trans-sentence
-      {{ hub.taxons | printArrayOfObjects }}
-  .columns.small-4
-    %strong Delivery options
-    %ol
-      %li.pickup{"bo-if" => "hub.pickup"} Pickup
-      %li.delivery{"bo-if" => "hub.delivery"} Delivery
-  .columns.small-4
-    %strong Our producers
-    %p
-      Go to our shop to see our current producers
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.taxons"}
+      %h5 
+        %i.ofn-i_029-shopping-basket
+        Shop for
+      %p.trans-sentence
+        %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
+          %render-svg{path: "{{taxon.icon}}"}
+          {{taxon.name}} 
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.pickup || hub.delivery"}
+      %h5 Delivery options
+      %ol
+        %li.pickup{"bo-if" => "hub.pickup"} 
+          %i.ofn-i_038-takeaway
+          Pickup
+        %li.delivery{"bo-if" => "hub.delivery"} 
+          %i.ofn-i_039-delivery
+          Delivery
+  .columns.small-12.large-4
+    &nbsp;
+    %div{"bo-if" => "hub.producers"}
+      %h5 
+        %i.ofn-i_036-producers
+        Our producers
+      %ul.bullet-list
+        %li{"ng-repeat" => "enterprise in hub.producers"}
+          %producer-modal {{ enterprise.name }}
 
-.row.active_table_row.link{"ng-show" => "open()", "ng-if" => "hub.active"}
-  .columns.small-11
-    %a{"bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
-    change: "Change hub to", shop: "Shop at"} 
-
-  .columns.small-1.text-right
-    %a{"bo-href" => "hub.path"} 
-      %i.fi-arrow-right
+.row.active_table_row.link{"ng-show" => "open()"}
+  .cta-container.columns.small-12
+    .row
+      .columns.small-12
+        %h5 
+          %span{"active-table-hub-link" => "hub", change: "Change hub to", shop: "Shop at"}
+    .row
+      .columns.small-12
+        %a.button.hub{"bo-href" => "hub.path", 
+        "ng-class" => "{primary: hub.active, secondary: !hub.active}",
+        "ofn-empties-cart" => "hub"}
+          %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+          {{hub.name}}
+          .button-address {{ [hub.address.city, hub.address.state] | printArray }}
+          %i.ofn-i_007-caret-right

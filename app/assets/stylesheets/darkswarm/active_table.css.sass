@@ -2,18 +2,20 @@
 @import mixins
 @import "compass/css3/user-interface"
 
+
+.no-results
+  font-size: 1.875rem
+
 .active_table
   margin: 2em 0em
   @include user-select(none)
   .active_table_row
-    padding: 0.8em 0.5em  
     display: block
     &:first-child
       cursor: pointer
-
+      padding: 1rem 0
 
 .active_table .active_table_node
-  @include csstrans
   display: block
   border: 1px solid transparent 
 
@@ -22,9 +24,11 @@
     &, & > a.row
       display: block
 
+  .active_table_row.link
+    border: 0
+
   &.open
     .active_table_row:first-child
-      @include csstrans
       border-top: 1px solid $dark-grey
       border-left: 1px solid $dark-grey
       border-right: 1px solid $dark-grey
@@ -39,24 +43,16 @@
     .active_table_row:nth-child(2)
       border-left: 1px solid $dark-grey
       border-right: 1px solid $dark-grey
-      border-bottom: 1px solid $dark-grey
       border-top: none
       background-color: rgba(255,255,255,0.2)
 
     .active_table_row.link
-      @include csstrans
       padding: 0
-      background-color: $dark-grey
       -webkit-box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
       box-shadow:  0 1px 1px 0 rgba(0,0,0,0.35)
-      &:hover
-        background-color: $disabled-dark
-      a
-        display: block
-        padding: 0.8em 0.5em
-        margin: 0 -0.9375rem
-        &, & * 
-          color: white
+      border-left: 1px solid $dark-grey
+      border-right: 1px solid $dark-grey
+      border-bottom: 1px solid $dark-grey
     
     p
       padding-top: 1em
