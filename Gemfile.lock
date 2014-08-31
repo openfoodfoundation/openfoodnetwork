@@ -7,6 +7,12 @@ GIT
       activemodel (~> 3.0)
 
 GIT
+  remote: git://github.com/jeremydurham/custom-err-msg.git
+  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  specs:
+    custom_error_message (1.1.1)
+
+GIT
   remote: git://github.com/openfoodfoundation/spree.git
   revision: 1c133672652e1ee8b6c8d694efe258e62378062e
   branch: 1-3-stable
@@ -112,6 +118,8 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
+    active_model_serializers (0.9.0)
+      activemodel (>= 3.2)
     active_utils (2.0.1)
       activesupport (>= 2.3.11)
       i18n
@@ -172,6 +180,7 @@ GEM
       timers (~> 1.1.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.10.2)
     chunky_png (1.2.8)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -199,6 +208,7 @@ GEM
       compass (>= 0.12.2, < 0.14)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
+    dalli (2.7.2)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
       activerecord (~> 3.0)
@@ -336,6 +346,7 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    perftools.rb (2.0.1)
     pg (0.13.2)
     poltergeist (1.1.2)
       capybara (~> 2.0.1)
@@ -487,6 +498,9 @@ GEM
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket (1.0.7)
+    whenever (0.9.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
     xpath (1.0.0)
       nokogiri (~> 1.3)
     zeus (0.13.3)
@@ -496,6 +510,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   andand
   angular-rails-templates
   angularjs-rails
@@ -506,6 +521,8 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
+  custom_error_message!
+  dalli
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
@@ -531,6 +548,7 @@ DEPENDENCIES
   newrelic_rpm
   oj
   paperclip
+  perftools.rb
   pg
   poltergeist
   pry-debugger
@@ -560,3 +578,4 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   webmock
+  whenever
