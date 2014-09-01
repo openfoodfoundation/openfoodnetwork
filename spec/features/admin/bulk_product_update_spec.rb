@@ -780,19 +780,19 @@ feature %q{
     end
 
     it "allows me to update a product" do
-      p = product_supplied
+      p = product_supplied_permitted
 
       visit '/admin/products/bulk_edit'
       first("div#columns_dropdown", :text => "COLUMNS").click
       first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
-      expect(page).to have_field "product_name", with: p.name
-      expect(page).to have_select "producer", selected: supplier_managed1.name
-      expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
-      expect(page).to have_field "price", with: "10.0"
-      expect(page).to have_field "on_hand", with: "6"
+      within "tr#p_#{p.id}" do
+        expect(page).to have_field "product_name", with: p.name
+        expect(page).to have_select "producer", selected: supplier_permitted.name
+        expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
+        expect(page).to have_field "price", with: "10.0"
+        expect(page).to have_field "on_hand", with: "6"
 
-      within("tr#p_#{product_supplied.id}") do
         fill_in "product_name", with: "Big Bag Of Potatoes"
         select(supplier_managed2.name, :from => 'producer')
         fill_in "available_on", with: (Date.today-3).strftime("%F %T")

@@ -43,12 +43,12 @@ class AbilityDecorator
     # Enterprise User can only access products that they are a supplier for
     can [:create], Spree::Product
     can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product do |product|
-      user.enterprises.include? product.supplier
+      OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
     end
 
     can [:create], Spree::Variant
     can [:admin, :index, :read, :edit, :update, :search, :destroy], Spree::Variant do |variant|
-      user.enterprises.include? variant.product.supplier
+      OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
