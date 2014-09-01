@@ -7,6 +7,7 @@ describe 'Products service', ->
   CurrentHubMock = {} 
   currentOrder = null
   product = null
+  productWithImage = null
 
   beforeEach ->
     product =  
@@ -16,6 +17,14 @@ describe 'Products service', ->
       price: 11
       master: {}
       variants: []
+    productWithImage =
+      supplier:
+        id: 9
+      master: {}
+      variants: []
+      images: [
+        large_url: 'foo.png'
+      ]
     currentOrder =
       line_items: []
 
@@ -61,6 +70,11 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Products.products[0].primaryImage).toBeUndefined()
     expect(Products.products[0].primaryImageOrMissing).toEqual "/assets/noimage/small.png"
+
+  it "sets largeImage", ->
+    $httpBackend.expectGET("/shop/products").respond([productWithImage])
+    $httpBackend.flush()
+    expect(Products.products[0].largeImage).toEqual("foo.png")
 
   describe "determining the price to display for a product", ->
     it "displays the product price when the product does not have variants", ->
