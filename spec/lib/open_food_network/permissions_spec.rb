@@ -9,19 +9,15 @@ module OpenFoodNetwork
     let(:e2) { create(:enterprise) }
 
     describe "finding enterprises that can be added to an order cycle" do
-      before do
-        permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
-        permissions.stub(:related_enterprises_with) { Enterprise.where('1=0') }
-      end
+      let(:e) { double(:enterprise) }
 
-      it "returns managed enterprises" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: e1) }
-        permissions.order_cycle_enterprises.should == [e1]
-      end
+      it "returns managed and related enterprises with add_to_order_cycle permission" do
+        permissions.
+          should_receive(:managed_and_related_enterprises_with).
+          with(:add_to_order_cycle).
+          and_return([e])
 
-      it "returns permitted enterprises" do
-        permissions.stub(:related_enterprises_with) { Enterprise.where(id: e2) }
-        permissions.order_cycle_enterprises.should == [e2]
+        permissions.order_cycle_enterprises.should == [e]
       end
     end
 
@@ -75,6 +71,19 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding enterprises that we manage products for" do
+      let(:e) { double(:enterprise) }
+
+      it "returns managed and related enterprises with manage_products permission" do
+        permissions.
+          should_receive(:managed_and_related_enterprises_with).
+          with(:manage_products).
+          and_return([e])
+
+        permissions.managed_product_enterprises.should == [e]
+      end
+    end
+
     ########################################
 
     describe "finding related enterprises with a particular permission" do
@@ -88,6 +97,24 @@ module OpenFoodNetwork
       it "returns an empty array when there are none" do
         permissions.stub(:managed_enterprises) { e1 }
         permissions.send(:related_enterprises_with, permission).should == []
+      end
+    end
+
+    describe "finding enterprises that are managed or with a particular permission" do
+      before do
+        permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
+        permissions.stub(:related_enterprises_with) { Enterprise.where('1=0') }
+      end
+
+      it "returns managed enterprises" do
+        permissions.should_receive(:managed_enterprises) { Enterprise.where(id: e1) }
+        permissions.send(:managed_and_related_enterprises_with, permission).should == [e1]
+      end
+
+      it "returns permitted enterprises" do
+        permissions.should_receive(:related_enterprises_with).with(permission).
+          and_return(Enterprise.where(id: e2))
+        permissions.send(:managed_and_related_enterprises_with, permission).should == [e2]
       end
     end
 
