@@ -30,6 +30,9 @@ Spree::Admin::ProductsController.class_eval do
       "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
     end
 
+    # Ensure we're authorised to update all products
+    product_set.collection.each { |p| authorize! :update, p }
+
     if product_set.save
       redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
