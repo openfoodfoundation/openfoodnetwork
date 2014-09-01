@@ -85,7 +85,7 @@ Spree::Admin::ProductsController.class_eval do
   def load_bpe_data
     current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
     @spree_api_key = spree_current_user.spree_api_key
-    @producers = Enterprise.managed_by(spree_current_user).is_primary_producer.order(:name)
+    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
   end
 end
