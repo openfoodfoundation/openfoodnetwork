@@ -732,11 +732,20 @@ feature %q{
     let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
     let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
     let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
     let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6) }
     let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied_permitted) { create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0, on_hand: 6) }
     let(:product_supplied_inactive) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6, available_on: 1.week.from_now) }
+
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
+             permissions_list: [:manage_products])
+    end
+
+    use_short_wait
 
     before do
       @enterprise_user = create_enterprise_user
@@ -751,6 +760,7 @@ feature %q{
       visit '/admin/products/bulk_edit'
 
       expect(page).to have_field 'product_name', with: product_supplied.name
+      expect(page).to have_field 'product_name', with: product_supplied_permitted.name
       expect(page).to have_no_field 'product_name', with: product_not_supplied.name
     end
 
@@ -782,13 +792,15 @@ feature %q{
       expect(page).to have_field "price", with: "10.0"
       expect(page).to have_field "on_hand", with: "6"
 
-      fill_in "product_name", with: "Big Bag Of Potatoes"
-      select(supplier_managed2.name, :from => 'producer')
-      fill_in "available_on", with: (Date.today-3).strftime("%F %T")
-      fill_in "price", with: "20"
-      select "Weight (kg)", from: "variant_unit_with_scale"
-      fill_in "on_hand", with: "18"
-      fill_in "display_as", with: "Big Bag"
+      within("tr#p_#{product_supplied.id}") do
+        fill_in "product_name", with: "Big Bag Of Potatoes"
+        select(supplier_managed2.name, :from => 'producer')
+        fill_in "available_on", with: (Date.today-3).strftime("%F %T")
+        fill_in "price", with: "20"
+        select "Weight (kg)", from: "variant_unit_with_scale"
+        fill_in "on_hand", with: "18"
+        fill_in "display_as", with: "Big Bag"
+      end
 
       click_button 'Save Changes'
       expect(page.find("#update-status-message")).to have_content "Changes saved."

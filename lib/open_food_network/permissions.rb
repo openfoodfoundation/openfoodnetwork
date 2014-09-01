@@ -19,7 +19,9 @@ module OpenFoodNetwork
     end
 
     def managed_products
-      Spree::Product.managed_by(@user)
+      managed_enterprise_products_ids = managed_enterprise_products.pluck :id
+      permitted_enterprise_products_ids = related_enterprise_products.pluck :id
+      Spree::Product.where('id IN (?)', managed_enterprise_products_ids + permitted_enterprise_products_ids)
     end
 
 
@@ -36,6 +38,14 @@ module OpenFoodNetwork
         pluck(:parent_id)
 
       Enterprise.where('id IN (?)', parent_ids)
+    end
+
+    def managed_enterprise_products
+      Spree::Product.managed_by(@user)
+    end
+
+    def related_enterprise_products
+      Spree::Product.where('supplier_id IN (?)', related_enterprises_with(:manage_products))
     end
   end
 end
