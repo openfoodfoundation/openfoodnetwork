@@ -764,10 +764,10 @@ feature %q{
       expect(page).to have_no_field 'product_name', with: product_not_supplied.name
     end
 
-    it "shows only suppliers that I manage" do
+    it "shows only suppliers that I manage or have permission to" do
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_select 'producer', with_options: [supplier_managed1.name, supplier_managed2.name], selected: supplier_managed1.name
+      expect(page).to have_select 'producer', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name], selected: supplier_managed1.name
       expect(page).to have_no_select 'producer', with_options: [supplier_unmanaged.name]
     end
 
