@@ -48,3 +48,4 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Car
         
         product.primaryImage = product.images[0]?.small_url if product.images
         product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"
+        product.largeImage = product.images[0]?.large_url if product.images
