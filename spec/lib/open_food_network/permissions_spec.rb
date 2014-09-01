@@ -55,6 +55,26 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding managed products" do
+      let!(:p1) { create(:simple_product) }
+      let!(:p2) { create(:simple_product) }
+
+      before do
+        permissions.stub(:managed_enterprise_products) { Spree::Product.where('1=0') }
+        permissions.stub(:related_enterprise_products) { Spree::Product.where('1=0') }
+      end
+
+      it "returns products produced by managed enterprises" do
+        permissions.stub(:managed_enterprise_products) { Spree::Product.where(id: p1) }
+        permissions.managed_products.should == [p1]
+      end
+
+      it "returns products produced by permitted enterprises" do
+        permissions.stub(:related_enterprise_products) { Spree::Product.where(id: p2) }
+        permissions.managed_products.should == [p2]
+      end
+    end
+
     ########################################
 
     describe "finding related enterprises with a particular permission" do
@@ -68,6 +88,17 @@ module OpenFoodNetwork
       it "returns an empty array when there are none" do
         permissions.stub(:managed_enterprises) { e1 }
         permissions.send(:related_enterprises_with, permission).should == []
+      end
+    end
+
+    describe "finding the supplied products of related enterprises" do
+      let!(:e) { create(:enterprise) }
+      let!(:p) { create(:simple_product, supplier: e) }
+
+      it "returns supplied products" do
+        permissions.should_receive(:related_enterprises_with).with(:manage_products) { [e] }
+
+        permissions.send(:related_enterprise_products).should == [p]
       end
     end
   end
