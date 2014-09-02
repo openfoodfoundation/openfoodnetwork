@@ -1,0 +1,14 @@
+%div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0', style: "margin-bottom: 10px" }
+  %div.four.columns.alpha
+    %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
+  %div.nine.columns
+    %h6{ id: "update-status-message", ng: { style: 'updateStatusMessage.style' } }
+      {{ updateStatusMessage.text || "&nbsp;" }}
+  %div.three.columns.omega
+    %div.ofn_drop_down.three.columns.omega{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
+      %span{ :class => 'icon-reorder' } &nbsp; Columns
+      %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+      %div.menu{ 'ng-show' => "expanded" }
+        %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+          %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+          %span{ :class => 'two columns omega' } {{column.name }}
