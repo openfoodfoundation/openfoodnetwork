@@ -1,0 +1,14 @@
+- if spree_current_user
+  %ul#login-nav.inline-menu
+    %li{"data-hook" => "user-logged-in-as"}
+      = t(:logged_in_as)
+      \: #{spree_current_user.email}
+    %li{"data-hook" => "user-account-link"}
+      %i.icon-user
+      = link_to t(:account), spree.edit_user_path(spree_current_user)
+    %li{"data-hook" => "user-logout-link"}
+      %i.icon-signout
+      = link_to t(:logout), spree.logout_path
+    %li{"data-hook" => "store-frontend-link"}
+      %i.icon-external-link
+      = link_to t(:store), spree.root_path, :target => '_blank'
