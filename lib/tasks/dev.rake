@@ -32,7 +32,6 @@ namespace :openfoodnetwork do
       # -- Addresses
       unless Spree::Address.find_by_zipcode "3160"
         puts "[#{task_name}] Seeding addresses"
-        Spree::Address.delete_all
 
         FactoryGirl.create(:address, :address1 => "25 Myrtle Street", :zipcode => "3153", :city => "Bayswater")
         FactoryGirl.create(:address, :address1 => "6 Rollings Road", :zipcode => "3156", :city => "Upper Ferntree Gully")
