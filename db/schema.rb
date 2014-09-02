@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140723023713) do
+ActiveRecord::Schema.define(:version => 20140826043521) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -207,6 +207,13 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
   add_index "enterprise_groups_enterprises", ["enterprise_group_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_group_id"
   add_index "enterprise_groups_enterprises", ["enterprise_id"], :name => "index_enterprise_groups_enterprises_on_enterprise_id"
 
+  create_table "enterprise_relationship_permissions", :force => true do |t|
+    t.integer "enterprise_relationship_id"
+    t.string  "name",                       :null => false
+  end
+
+  add_index "enterprise_relationship_permissions", ["enterprise_relationship_id"], :name => "index_erp_on_erid"
+
   create_table "enterprise_relationships", :force => true do |t|
     t.integer "parent_id"
     t.integer "child_id"
@@ -221,7 +228,9 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
     t.integer "enterprise_id"
   end
 
+  add_index "enterprise_roles", ["enterprise_id", "user_id"], :name => "index_enterprise_roles_on_enterprise_id_and_user_id", :unique => true
   add_index "enterprise_roles", ["enterprise_id"], :name => "index_enterprise_roles_on_enterprise_id"
+  add_index "enterprise_roles", ["user_id", "enterprise_id"], :name => "index_enterprise_roles_on_user_id_and_enterprise_id", :unique => true
   add_index "enterprise_roles", ["user_id"], :name => "index_enterprise_roles_on_user_id"
 
   create_table "enterprises", :force => true do |t|
@@ -240,8 +249,8 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -255,6 +264,7 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
+    t.string   "type",                     :default => "profile", :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
@@ -1049,6 +1059,8 @@ ActiveRecord::Schema.define(:version => 20140723023713) do
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"
+
+  add_foreign_key "enterprise_relationship_permissions", "enterprise_relationships", name: "erp_enterprise_relationship_id_fk"
 
   add_foreign_key "enterprise_relationships", "enterprises", name: "enterprise_relationships_child_id_fk", column: "child_id"
   add_foreign_key "enterprise_relationships", "enterprises", name: "enterprise_relationships_parent_id_fk", column: "parent_id"

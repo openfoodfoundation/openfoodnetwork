@@ -10,4 +10,8 @@ class Api::CurrentOrderSerializer < ActiveModel::Serializer
   def payment_method_id
     object.payments.first.andand.payment_method_id
   end
+
+  def display_total
+    object.display_total.money.to_f
+  end
 end

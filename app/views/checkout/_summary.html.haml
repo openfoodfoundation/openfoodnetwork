@@ -1,22 +1,24 @@
 %orderdetails
   = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
     %fieldset
-      %legend Your Order
+      %legend Your order
       %table
         %tr
-          %th Produce 
-          %td= current_order.display_item_total
+          %th Cart total
+          %td.cart-total.text-right= number_to_currency checkout_cart_total_with_adjustments(current_order)
 
-        - checkout_adjustments_for_summary(current_order, exclude_shipping: true).each do |adjustment|
+        - checkout_adjustments_for_summary(current_order, exclude: [:shipping, :distribution]).each do |adjustment|
           %tr
             %th= adjustment.label 
-            %td= adjustment.display_amount.to_html
+            %td.text-right= adjustment.display_amount.to_html
+
         %tr
           %th Shipping
-          %td {{ Checkout.shippingPrice() | currency }}
+          %td.shipping.text-right {{ Checkout.shippingPrice() | currency }}
+
         %tr
-          %th Cart total 
-          %td {{ Checkout.cartTotal() | currency }}
+          %th Total 
+          %td.total.text-right {{ Checkout.cartTotal() | currency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
             %tr

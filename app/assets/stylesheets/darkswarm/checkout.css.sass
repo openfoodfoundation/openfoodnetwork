@@ -3,10 +3,19 @@
 
 checkout
   display: block
+
+  @media all and (max-width: 640px) 
+    &.row .row 
+      margin-left: 0
+      margin-right: 0
   
   orderdetails
     .button, table
       width: 100%
+    @media all and (max-width: 640px) 
+      form.edit_order
+        border: 1px solid $disabled-bright
+        margin-bottom: 2rem
   
   #details, #billing, #shipping, #payment
     border: 0

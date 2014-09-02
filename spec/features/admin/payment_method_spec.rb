@@ -21,13 +21,35 @@ feature %q{
 
       fill_in 'payment_method_name', :with => 'Cheque payment method'
       
-      select @distributors[0].name, :from => 'payment_method_distributor_ids', visible: false
+      check "payment_method_distributor_ids_#{@distributors[0].id}"
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'
       
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
       payment_method.distributors.should == [@distributors[0]]
+    end
+
+    scenario "updating a payment method" do
+      pm = create(:payment_method, distributors: [@distributors[0]])
+      login_to_admin_section
+
+      visit spree.edit_admin_payment_method_path pm
+
+      fill_in 'payment_method_name', :with => 'New PM Name'
+
+      uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+      check "payment_method_distributor_ids_#{@distributors[1].id}"
+      check "payment_method_distributor_ids_#{@distributors[2].id}"
+      select2_select "PayPal Express", from: "payment_method_type"
+      click_button 'Update'
+
+      expect(flash_message).to eq 'Payment Method has been successfully updated!'
+
+      payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+      expect(payment_method.distributors).to include @distributors[1], @distributors[2]
+      expect(payment_method.distributors).not_to include @distributors[0]
+      expect(payment_method.type).to eq "Spree::Gateway::PayPalExpress"
     end
   end
 
@@ -46,14 +68,18 @@ feature %q{
       login_to_admin_as enterprise_user
     end
 
-    it "creates payment methods" do
+    it "I can get to the new enterprise page" do
       click_link 'Enterprises'
       within(".enterprise-#{distributor1.id}") { click_link 'Payment Methods' }
       click_link 'New Payment Method'
+      current_path.should == spree.new_admin_payment_method_path
+    end
 
+    it "creates payment methods" do
+      visit spree.new_admin_payment_method_path
       fill_in 'payment_method_name', :with => 'Cheque payment method'
 
-      select distributor1.name, :from => 'payment_method_distributor_ids'
+      check "payment_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'

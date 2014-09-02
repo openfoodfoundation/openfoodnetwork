@@ -3,6 +3,7 @@ describe 'ProductsCtrl', ->
   scope = null
   event = null
   Products = null
+  Cart = {}
 
   beforeEach ->
     module('Darkswarm')
@@ -15,7 +16,7 @@ describe 'ProductsCtrl', ->
         
     inject ($controller) ->
       scope = {}
-      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle}
+      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle, Cart: Cart}
 
   it 'fetches products from Products', ->
     expect(scope.Products.products).toEqual ['testy mctest']

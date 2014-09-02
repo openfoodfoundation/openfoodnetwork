@@ -13,19 +13,19 @@
       "ng-class" => "{valid: billing.$valid, open: accordion.billing}"}
       %accordion-heading
         .row
-          .small-10.columns
+          .small-8.medium-10.columns
             %em
               %small
                 {{ summary() | printArray }}
-          .small-2.columns.text-right
+          .small-4.medium-2.columns.text-right
             %span.accordion-up
-              %em 
+              %em
                 %small Hide
-              %i.ofn-i_053-point-up 
+              %i.ofn-i_053-point-up
             %span.accordion-down
-              %em 
+              %em
                 %small Expand
-              %i.ofn-i_052-point-down   
+              %i.ofn-i_052-point-down
 
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
@@ -40,14 +40,14 @@
 
           .small-6.columns
             = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
-              "ng-model" => "order.bill_address.state_id"
+              "ng-model" => "order.bill_address.state_id", required: true
         .row
           .small-6.columns
             = validated_input "Postcode", "order.bill_address.zipcode"
 
           .small-6.columns.right
             = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
-              {include_blank: false}, "ng-model" => "order.bill_address.country_id"
+              "ng-model" => "order.bill_address.country_id", required: true
 
       .row
         .small-12.columns.text-right

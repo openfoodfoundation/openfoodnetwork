@@ -73,6 +73,7 @@ feature %q{
     click_link 'New Enterprise'
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    choose 'Full'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
     fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
@@ -113,7 +114,7 @@ feature %q{
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
-    payment_method = create(:payment_method, distributors: [])
+    payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
 
@@ -123,6 +124,7 @@ feature %q{
     all("a", text:'Edit Profile').first.click
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    choose 'Single'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
     

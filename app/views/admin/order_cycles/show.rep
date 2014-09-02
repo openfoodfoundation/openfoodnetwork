@@ -9,7 +9,7 @@ r.element :order_cycle, @order_cycle do
     r.element :id
   end
 
-  r.list_of :exchanges, @order_cycle.exchanges.managed_by(spree_current_user).order('id ASC') do |exchange|
+  r.list_of :exchanges, OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_exchanges(@order_cycle).order('id ASC') do |exchange|
     r.element :id
     r.element :sender_id
     r.element :receiver_id

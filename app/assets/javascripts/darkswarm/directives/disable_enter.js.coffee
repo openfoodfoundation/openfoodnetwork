@@ -1,4 +1,5 @@
 Darkswarm.directive "ofnDisableEnter", ()->
+  # Stops enter from doing normal enter things
   restrict: 'A'
   link: (scope, element, attrs)->
     element.bind "keydown keypress", (e)->

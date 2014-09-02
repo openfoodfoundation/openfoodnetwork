@@ -1,0 +1,36 @@
+/ replace "div[data-hook='admin_payment_method_form_fields']"
+
+%div.alpha.eleven.columns
+  .row
+    .alpha.three.columns
+      = label_tag nil, t(:name)
+    .omega.eight.columns
+      = text_field :payment_method, :name, :class => 'fullwidth'
+  .row
+    .alpha.three.columns
+      = label_tag nil, t(:description)
+    .omega.eight.columns
+      = text_area :payment_method, :description, {:cols => 60, :rows => 6, :class => 'fullwidth'}
+  - if spree_current_user.admin?
+    .row
+      .alpha.three.columns
+        = label_tag nil, t(:environment)
+      .omega.eight.columns
+        = collection_select(:payment_method, :environment, Rails.configuration.database_configuration.keys.sort, :to_s, :titleize, {}, {:id => 'gtwy-env', :class => 'select2 fullwidth'})
+    .row
+      .alpha.three.columns
+        = label_tag nil, t(:display)
+      .omega.eight.columns
+        = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'})
+  .row
+    .alpha.three.columns
+      = label_tag nil, t(:active)
+    .two.columns
+      = radio_button :payment_method, :active, true
+      &nbsp;
+      = label_tag nil, t(:say_yes)
+    .omega.six.columns
+      = radio_button :payment_method, :active, false
+      &nbsp;
+      = label_tag nil, t(:say_no)
+  = render 'providers'

@@ -2,12 +2,14 @@
 
 .darkswarm
   - content_for :order_cycle_form do
-    %strong.avenir
-      Order ready on
-      - if @order.order_cycle
-        = pickup_time @order.order_cycle 
-      - else
-        = @order.distributor.next_collection_at
+    %closing Your shopping cart
+    %p 
+      Order ready for
+      %strong
+        - if @order.order_cycle
+          = pickup_time @order.order_cycle 
+        - else
+          = @order.distributor.next_collection_at
 
   = render partial: "shopping_shared/details"
   

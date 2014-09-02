@@ -24,7 +24,7 @@ feature %q{
 
     it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
-      page.should have_text "No matching line items found."
+      page.should have_text "No orders found."
 
     end
 

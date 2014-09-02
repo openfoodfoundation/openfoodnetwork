@@ -33,12 +33,15 @@ Openfoodnetwork::Application.routes.draw do
 
   namespace :admin do
     resources :order_cycles do
-      post :bulk_update, :on => :collection, :as => :bulk_update
+      post :bulk_update, on: :collection, as: :bulk_update
       get :clone, on: :member
     end
 
     resources :enterprises do
-      post :bulk_update, :on => :collection, :as => :bulk_update
+      collection do
+        get :for_order_cycle
+        post :bulk_update, as: :bulk_update
+      end
 
       resources :producer_properties do
         post :update_positions, on: :collection
@@ -46,6 +49,7 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resources :enterprise_relationships
+    resources :enterprise_roles
 
     resources :enterprise_fees do
       post :bulk_update, :on => :collection, :as => :bulk_update
@@ -107,6 +111,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
   match '/admin', :to => 'admin/overview#index', :as => :admin
+  match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
 
 
   namespace :api, :defaults => { :format => 'json' } do
@@ -116,6 +121,7 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :managed, on: :collection
+      get :bulk_products, on: :collection
       delete :soft_delete
 
       resources :variants do

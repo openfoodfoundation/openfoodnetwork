@@ -19,7 +19,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
-        alert "There was an error on the server! Please refresh the page"
+        # TODO what shall we do here?
 
     data: =>
       variants = {} 
@@ -43,6 +43,9 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       @line_items.filter (li)->
         li.quantity > 0
 
+    empty: =>
+      @line_items_present().length == 0
+
     total: =>
       @line_items_present().map (li)->
         li.variant.getPrice()
@@ -57,6 +60,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
     create_line_item: (variant)->
       variant.line_item =
         variant: variant
-        quantity: 0
+        quantity: null
         max_quantity: null
       @line_items.push variant.line_item

@@ -11,7 +11,6 @@
 #= require lodash.underscore.js
 #= require angular-scroll.min.js
 #= require angular-google-maps.min.js
-#= require angular-timer.min.js
 #= require ../shared/mm-foundation-tpls-0.2.2.min.js
 #= require ../shared/bindonce.min.js
 #= require ../shared/ng-infinite-scroll.min.js

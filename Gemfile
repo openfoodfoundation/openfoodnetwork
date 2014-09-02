@@ -7,7 +7,11 @@ gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
 gem 'spree_i18n', :github => 'spree/spree_i18n'
 gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
-gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
+
+# Waiting on merge of PR #117
+# https://github.com/spree-contrib/better_spree_paypal_express/pull/117
+gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "1-3-stable"
+#gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
 
 gem 'comfortable_mexican_sofa'
 

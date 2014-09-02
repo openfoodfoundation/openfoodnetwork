@@ -119,7 +119,6 @@ feature %q{
     before(:each) do
       @enterprise_user = create_enterprise_user
       @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
-      @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 

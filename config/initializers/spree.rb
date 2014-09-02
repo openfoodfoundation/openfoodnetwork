@@ -8,13 +8,11 @@
 
 
 require 'spree/product_filters'
-require 'open_food_network/searcher'
 
 Spree.config do |config|
   config.shipping_instructions = true
   config.checkout_zone = 'Australia'
   config.address_requires_state = true
-  config.searcher_class = OpenFoodNetwork::Searcher
 
   # 12 should be Australia. Hardcoded for CI (Jenkins), where countries are not pre-loaded.
   config.default_country_id = 12

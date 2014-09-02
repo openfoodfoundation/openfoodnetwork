@@ -139,7 +139,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "should save group buy data to ze cart" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
-          sleep 5
+
+          wait_until { !cart_dirty }
+
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 9
           li.quantity.should == 5

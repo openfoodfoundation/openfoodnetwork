@@ -1,3 +1,5 @@
+@import branding.css.sass
+
 .darkswarm
   products
     product
@@ -25,9 +27,13 @@
       .row.variants
         margin-left: 0
         margin-right: 0
-        background: url("/assets/gray_jean.png") top left repeat
+        background-color: #ECECEC
+        &:hover, &:focus, &:active
+          background-color: $clr-brick-light
         &:nth-of-type(even)
-          background: url("/assets/gray_jean_light.png") top left repeat
+          background-color: #f9f9f9
+          &:hover, &:focus, &:active
+            background-color: $clr-brick-ultra-light
         
         // Variant name
         .variant-name
@@ -72,7 +78,6 @@
             .table-cell
               height: 27px
 
-      
       // ROW SUMMARY
       .row.summary
         margin-left: 0
@@ -100,12 +105,10 @@
           h3
             font-size: 1.5rem
             margin: 0
-          a h3
-            color: black
-
-
-
-
+          h3 a
+            color: #222
+            &:hover, &:focus, &:active
+              color: black
 
 
 

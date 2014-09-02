@@ -92,10 +92,11 @@
             %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
               %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
               %span{ :class => 'two columns omega' } {{column.name }}
-  %div.loading{ :class => "sixteen columns alpha", 'ng-show' => 'loading' }
-    %h4 Loading Line Items...
+  %div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
+    %img.spinner{ src: "/assets/loading.gif" }
+    %h1 LOADING ORDERS
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && filteredLineItems.length == 0'}
-    %h4{ :style => 'color:red;' } No matching line items found.
+    %h1#no_results No orders found.
   %div{ 'ng-hide' => 'loading || filteredLineItems.length == 0' }
     %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
       %thead

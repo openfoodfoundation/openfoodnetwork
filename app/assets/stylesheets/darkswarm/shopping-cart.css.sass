@@ -12,14 +12,21 @@
     display: block
     right: 10px
     top: 55px
-    width: 400px
+    width: 480px
+    @media screen and (max-width: 640px)
+      width: 96%
 
     .joyride-nub
       right: 22px !important
       left: auto
 
+    ul, li
+      list-style: none
+      margin-left: 0
+
     li
       float: none
+
       .row .columns
         padding-left: 0.25rem
         padding-right: 0.25rem

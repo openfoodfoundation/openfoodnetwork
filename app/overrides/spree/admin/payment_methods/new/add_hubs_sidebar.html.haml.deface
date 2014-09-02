@@ -1,0 +1,5 @@
+/ insert_after "code[erb-loud]:contains(\"render :partial => 'form', :locals => { :f => f }\")"
+
+.one.column &nbsp;
+= render :partial => 'spree/admin/shared/hubs_sidebar', :locals => { f: f, klass: :payment_method }
+.clear

@@ -5,11 +5,13 @@
   = render partial: "spree/admin/overview/enterprises"
 
 - else
-  = render partial: "spree/admin/overview/products"
+  - if can? :admin, Spree::Product
+    = render partial: "spree/admin/overview/products"
 
-  %div.two.columns
-    &nbsp;
+    %div.two.columns
+      &nbsp;
 
-  = render partial: "spree/admin/overview/order_cycles"
+  - if can? :admin, OrderCycle
+    = render partial: "spree/admin/overview/order_cycles"
 
   = render partial: "spree/admin/overview/enterprises"

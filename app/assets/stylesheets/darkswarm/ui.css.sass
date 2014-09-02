@@ -46,6 +46,7 @@
 
 .button, button
   @include border-radius(0.5em)
+  outline: none // Turn off blue highlight on chrome
 
 .button.primary, button.primary
   font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
@@ -57,10 +58,10 @@
   text-shadow: 0 1px 0 $clr-brick
 
 button.success, .button.success
-  background: $clr-turquoise
+  background: #0096ad 
 
 .button.success:hover, .button.success:active, .button.success:focus, button.success:hover, button.success:active, button.success:focus
-  background: $clr-turquoise-bright
+  background: #14b6cc
 
 // Responsive 
 @media screen and (min-width: 768px)

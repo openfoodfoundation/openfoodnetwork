@@ -7,6 +7,7 @@ describe 'Products service', ->
   CurrentHubMock = {} 
   currentOrder = null
   product = null
+  productWithImage = null
 
   beforeEach ->
     product =  
@@ -14,7 +15,16 @@ describe 'Products service', ->
       supplier:
         id: 9
       price: 11
+      master: {}
       variants: []
+    productWithImage =
+      supplier:
+        id: 9
+      master: {}
+      variants: []
+      images: [
+        large_url: 'foo.png'
+      ]
     currentOrder =
       line_items: []
 
@@ -39,7 +49,7 @@ describe 'Products service', ->
   it "dereferences suppliers", ->
     Enterprises.enterprises_by_id = 
       {id: 9, name: "test"}
-    $httpBackend.expectGET("/shop/products").respond([{supplier : {id: 9}}])
+    $httpBackend.expectGET("/shop/products").respond([{supplier : {id: 9}, master: {}}])
     $httpBackend.flush()
     expect(Products.products[0].supplier).toBe Enterprises.enterprises_by_id["9"]
 
@@ -55,6 +65,17 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Cart.line_items[0].variant).toBe Products.products[0].variants[0]
 
+  it "sets primaryImageOrMissing when no images are provided", ->
+    $httpBackend.expectGET("/shop/products").respond([product])
+    $httpBackend.flush()
+    expect(Products.products[0].primaryImage).toBeUndefined()
+    expect(Products.products[0].primaryImageOrMissing).toEqual "/assets/noimage/small.png"
+
+  it "sets largeImage", ->
+    $httpBackend.expectGET("/shop/products").respond([productWithImage])
+    $httpBackend.flush()
+    expect(Products.products[0].largeImage).toEqual("foo.png")
+
   describe "determining the price to display for a product", ->
     it "displays the product price when the product does not have variants", ->
       $httpBackend.expectGET("/shop/products").respond([product])
@@ -66,4 +87,3 @@ describe 'Products service', ->
       $httpBackend.expectGET("/shop/products").respond([product])
       $httpBackend.flush()
       expect(Products.products[0].price).toEqual 22
-

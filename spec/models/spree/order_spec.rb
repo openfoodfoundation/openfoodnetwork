@@ -22,9 +22,11 @@ describe Spree::Order do
   end
 
   describe "Payment methods" do
-    let(:order) { build(:order, distributor: create(:distributor_enterprise)) }
-    let(:pm1) { create(:payment_method, distributors: [order.distributor])}
-    let(:pm2) { create(:payment_method, distributors: [])}
+    let(:order_distributor) { create(:distributor_enterprise) }
+    let(:some_other_distributor) { create(:distributor_enterprise) }
+    let(:order) { build(:order, distributor: order_distributor) }
+    let(:pm1) { create(:payment_method, distributors: [order_distributor])}
+    let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
     
     it "finds the correct payment methods" do
       Spree::PaymentMethod.stub(:available).and_return [pm1, pm2] 
@@ -82,8 +84,10 @@ describe Spree::Order do
       subject.stub(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
-      order_cycle.should_receive(:create_line_item_adjustments_for).with(line_item)
-      order_cycle.stub(:create_order_adjustments_for)
+      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
+        should_receive(:create_line_item_adjustments_for).
+        with(line_item)
+      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.stub(:create_order_adjustments_for)
       subject.stub(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
@@ -94,7 +98,10 @@ describe Spree::Order do
       subject.stub(:line_items) { [] }
 
       order_cycle = double(:order_cycle)
-      order_cycle.should_receive(:create_order_adjustments_for).with(subject)
+      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
+        should_receive(:create_order_adjustments_for).
+        with(subject)
+
       subject.stub(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!

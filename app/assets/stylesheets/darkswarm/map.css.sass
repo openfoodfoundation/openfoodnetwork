@@ -1,16 +1,27 @@
 // Place all the styles related to the map controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import big-input
+
 .map-container
   width: 100%
   map, .angular-google-map-container, google-map, .angular-google-map
     display: block
     height: 100%
+    width: 100%
 
   img // https://github.com/zurb/foundation/issues/112
     max-width: none
     height: auto
 
-  #pac-input
-    padding: 4px
-    font-size: 2em
+  #pac-input  
+    @include big-input(#888, #333, $clr-brick)
+    @include big-input-static
+    font-size: 1.5rem
+    background: rgba(255,255,255,0.85)
+    width: 50%
+    margin-top: 1.2rem
+    @media all and (max-width: 768px)
+      width: 80%
+    &:active, &:focus, &.active
+      background: rgba(255,255,255, 1)

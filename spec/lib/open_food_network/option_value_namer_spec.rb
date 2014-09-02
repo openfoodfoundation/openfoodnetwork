@@ -4,34 +4,34 @@ module OpenFoodNetwork
   describe OptionValueNamer do
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
-      let(:subject) { OptionValueNamer.new v }
+      let(:subject) { OptionValueNamer.new }
 
       it "when description is blank" do
         v.stub(:unit_description) { nil }
         subject.stub(:value_scaled?) { true }
         subject.stub(:option_value_value_unit) { %w(value unit) }
-        subject.name.should == "valueunit"
+        subject.name(v).should == "valueunit"
       end
 
       it "when description is present" do
         v.stub(:unit_description) { 'desc' }
         subject.stub(:option_value_value_unit) { %w(value unit) }
         subject.stub(:value_scaled?) { true }
-        subject.name.should == "valueunit desc"
+        subject.name(v).should == "valueunit desc"
       end
 
       it "when value is blank and description is present" do
         v.stub(:unit_description) { 'desc' }
         subject.stub(:option_value_value_unit) { [nil, nil] }
         subject.stub(:value_scaled?) { true }
-        subject.name.should == "desc"
+        subject.name(v).should == "desc"
       end
 
       it "spaces value and unit when value is unscaled" do
         v.stub(:unit_description) { nil }
         subject.stub(:option_value_value_unit) { %w(value unit) }
         subject.stub(:value_scaled?) { false }
-        subject.name.should == "value unit"
+        subject.name(v).should == "value unit"
       end
     end
 
@@ -42,7 +42,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         subject = OptionValueNamer.new v
 
-        subject.value_scaled?.should be_true
+        expect(subject.send(:value_scaled?)).to be_true
       end
 
       it "returns false otherwise" do
@@ -51,7 +51,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         subject = OptionValueNamer.new v
 
-        subject.value_scaled?.should be_false
+        expect(subject.send(:value_scaled?)).to be_false
       end
     end
 
@@ -65,7 +65,7 @@ module OpenFoodNetwork
         v.stub(:unit_value) { 100 }
         
 
-        subject.option_value_value_unit.should == [100, 'g']
+        expect(subject.send(:option_value_value_unit)).to eq [100, 'g']
       end
 
       it "generates values when unit value is non-integer" do
@@ -73,7 +73,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         v.stub(:unit_value) { 123.45 }
 
-        subject.option_value_value_unit.should == [123.45, 'g']
+        expect(subject.send(:option_value_value_unit)).to eq [123.45, 'g']
       end
 
       it "returns a value of 1 when unit value equals the scale" do
@@ -81,7 +81,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         v.stub(:unit_value) { 1000.0 }
 
-        subject.option_value_value_unit.should == [1, 'kg']
+        expect(subject.send(:option_value_value_unit)).to eq [1, 'kg']
       end
 
       it "generates values for all weight scales" do
@@ -89,7 +89,7 @@ module OpenFoodNetwork
           p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
           v.stub(:product) { p }
           v.stub(:unit_value) { 100 * scale }
-          subject.option_value_value_unit.should == [100, unit]
+          expect(subject.send(:option_value_value_unit)).to eq [100, unit]
         end
       end
 
@@ -98,7 +98,7 @@ module OpenFoodNetwork
           p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
           v.stub(:product) { p }
           v.stub(:unit_value) { 100 * scale }
-          subject.option_value_value_unit.should == [100, unit]
+          expect(subject.send(:option_value_value_unit)).to eq [100, unit]
         end
       end
 
@@ -106,7 +106,7 @@ module OpenFoodNetwork
         p = double(:product, variant_unit: 'volume', variant_unit_scale: 0.001)
         v.stub(:product) { p }
         v.stub(:unit_value) { 0.0001 }
-        subject.option_value_value_unit.should == [0.1, 'mL']
+        expect(subject.send(:option_value_value_unit)).to eq [0.1, 'mL']
       end
 
       it "generates values for item units" do
@@ -114,7 +114,7 @@ module OpenFoodNetwork
           p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: unit)
           v.stub(:product) { p }
           v.stub(:unit_value) { 100 }
-          subject.option_value_value_unit.should == [100, unit.pluralize]
+          expect(subject.send(:option_value_value_unit)).to eq [100, unit.pluralize]
         end
       end
 
@@ -122,14 +122,14 @@ module OpenFoodNetwork
         p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
         v.stub(:product) { p }
         v.stub(:unit_value) { 1 }
-        subject.option_value_value_unit.should == [1, 'packet']
+        expect(subject.send(:option_value_value_unit)).to eq [1, 'packet']
       end
 
       it "returns [nil, nil] when unit value is not set" do
         p = double(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'foo')
         v.stub(:product) { p }
         v.stub(:unit_value) { nil }
-        subject.option_value_value_unit.should == [nil, nil]
+        expect(subject.send(:option_value_value_unit)).to eq [nil, nil]
       end
     end
   end

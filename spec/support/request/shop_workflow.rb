@@ -7,13 +7,21 @@ module ShopWorkflow
     have_selector ".price", text: price
   end
 
+  def add_enterprise_fee(enterprise_fee)
+    order_cycle.exchanges.outgoing.first.enterprise_fees << enterprise_fee
+  end
+
   def set_order(order)
     ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
   end
 
   def add_product_to_cart
     create(:line_item, variant: product.master, order: order)
-    order.reload.save! # Recalculate totals
+    order.reload
+
+    # Recalculate totals
+    order.save!
+    order.update_distribution_charge!
   end
 
   def toggle_accordion(name)

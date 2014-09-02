@@ -14,8 +14,9 @@ feature %q{
     scenario "listing relationships" do
       # Given some enterprises with relationships
       e1, e2, e3, e4 = create(:enterprise), create(:enterprise), create(:enterprise), create(:enterprise)
-      create(:enterprise_relationship, parent: e1, child: e2)
-      create(:enterprise_relationship, parent: e3, child: e4)
+      create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_to_order_cycle])
+      create(:enterprise_relationship, parent: e2, child: e3, permissions_list: [:manage_products])
+      create(:enterprise_relationship, parent: e3, child: e4, permissions_list: [:add_to_order_cycle, :manage_products])
 
       # When I go to the relationships page
       click_link 'Enterprises'
@@ -23,8 +24,10 @@ feature %q{
 
       # Then I should see the relationships
       within('table#enterprise-relationships') do
-        page.should have_relationship e1, e2
-        page.should have_relationship e3, e4
+        page.should have_relationship e1, e2, ['can add to order cycle']
+        page.should have_relationship e2, e3, ['can manage the products of']
+        page.should have_relationship e3, e4,
+          ['can add to order cycle', 'can manage the products of']
       end
     end
 
@@ -35,11 +38,17 @@ feature %q{
 
       visit admin_enterprise_relationships_path
       select 'One', from: 'enterprise_relationship_parent_id'
+
+      check 'can add to order cycle'
+      check 'can manage the products of'
+      uncheck 'can manage the products of'
       select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_relationship e1, e2
-      EnterpriseRelationship.where(parent_id: e1, child_id: e2).should be_present
+      page.should have_relationship e1, e2, ['can add to order cycle']
+      er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
+      er.should be_present
+      er.permissions.map(&:name).should == ['add_to_order_cycle']
     end
 
 
@@ -108,7 +117,9 @@ feature %q{
 
   private
 
-  def have_relationship(parent, child)
-    have_table_row [parent.name, 'permits', child.name, '']
+  def have_relationship(parent, child, perms=[])
+    perms = perms.join(' ') || 'permits'
+
+    have_table_row [child.name, perms, parent.name, '']
   end
 end

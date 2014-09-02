@@ -30,6 +30,7 @@
 
 
     product
+      @include csstrans
       border-bottom: 1px solid #e5e5e5
       border-top: 1px solid #e5e5e5
       padding-bottom: 1px
@@ -37,6 +38,10 @@
       position: relative
       display: block
       color: #444
+
+      &:hover, &:focus, &:active
+        border-bottom: 1px solid $clr-brick-med-bright
+        border-top: 1px solid $clr-brick-med-bright
 
       // BULK
       .bulk-buy
@@ -55,6 +60,8 @@
       i
         font-size: 0.75em
         padding-right: 0.9375rem
+        @media all and (max-width: 640px) 
+          padding-right: 0.25rem
 
       i.ofn-i_056-bulk, i.ofn-i_036-producers
         font-size: 1rem

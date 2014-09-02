@@ -1,4 +1,38 @@
-.joyride-tip-guide{"ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
-  %span.joyride-nub.bottom
+.joyride-tip-guide.price_breakdown{bindonce: true, "ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
+  %span.joyride-nub.right
   .joyride-content-wrapper
-    {{ variant.id }}
+    .collapsed{"ng-show" => "!expanded"}
+      %price-percentage{percentage: 'variant.basePricePercentage'}
+      %a{"ng-click" => "expanded = !expanded"} 
+        Full price breakdown
+        %i.ofn-i_005-caret-down
+
+    .expanded{"ng-show" => "expanded"}
+      %ul
+        %li.cost
+          .right {{ variant.base_price | currency }}
+          Item cost
+        %li{"bo-if" => "variant.fees.admin"}
+          .right {{ variant.fees.admin | currency }}
+          Admin fee
+        %li{"bo-if" => "variant.fees.sales"}
+          .right {{ variant.fees.sales | currency }}
+          Sales fee
+        %li{"bo-if" => "variant.fees.packing"}
+          .right {{ variant.fees.packing | currency }}
+          Packing fee
+        %li{"bo-if" => "variant.fees.transport"}
+          .right {{ variant.fees.transport | currency }}
+          Transport fee
+        %li{"bo-if" => "variant.fees.fundraising"}
+          .right {{ variant.fees.fundraising | currency }}
+          Fundraising fee
+        %li
+          %strong
+            .right = {{ variant.price | currency }}
+            &nbsp;
+
+      %a{"ng-click" => "expanded = !expanded"} 
+        Price graph
+        %i.ofn-i_006-caret-up
+      

@@ -1,4 +1,5 @@
 Darkswarm.directive 'scrollAfterLoad', ($timeout, $location, $document)->
+  # Scroll to an element on page load
   restrict: "A"
   link: (scope, element, attr) ->
     if scope.$last is true
