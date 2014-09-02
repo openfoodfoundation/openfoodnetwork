@@ -4,12 +4,9 @@ require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
-require 'open_food_network/model_class_from_controller_name'
 
 Spree::Admin::ReportsController.class_eval do
-  include OpenFoodNetwork::ModelClassFromControllerName
-  
-  # Fetches user's distributors, suppliers and order_cycles 
+  # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory]
 
   # Render a partial for orders and fulfillment description
@@ -365,9 +362,9 @@ Spree::Admin::ReportsController.class_eval do
       lis
     end.flatten
     #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
-    
+
     # -- Prepare form options
-    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user) 
+    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
 
     # My distributors and any distributors distributing products I supply
@@ -388,21 +385,11 @@ Spree::Admin::ReportsController.class_eval do
 
       header = ["Producer", "Product", "Variant", "Amount", "Total Units", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
 
-      ovn = OpenFoodNetwork::OptionValueNamer.new()
-
       columns = [ proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.full_name },
         proc { |line_items| line_items.sum { |li| li.quantity } },
-        proc { |line_items| ovn.name(OpenStruct.new({
-          unit_value: ( line_items.map{ |li| li.variant.unit_value.nil? }.any? ? 0 : line_items.sum { |li| li.quantity * li.variant.unit_value } ),
-          unit_description: line_items.first.variant.unit_description,
-          product: OpenStruct.new({
-            variant_unit: line_items.first.product.variant_unit,
-            variant_unit_scale: line_items.first.product.variant_unit_scale,
-            variant_unit_name: line_items.first.product.variant_unit_name
-          })
-        }))},
+        proc { |line_items| total_units(line_items) },
         proc { |line_items| line_items.first.variant.price },
         proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
         proc { |line_items| "" },
@@ -607,10 +594,10 @@ Spree::Admin::ReportsController.class_eval do
   def load_data
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
-    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers)) 
-    @distributors = my_distributors | distributors_of_my_products 
+    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    @distributors = my_distributors | distributors_of_my_products
     suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
-    @suppliers = my_suppliers | suppliers_of_products_I_distribute 
+    @suppliers = my_suppliers | suppliers_of_products_I_distribute
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
   end
 
@@ -627,5 +614,14 @@ Spree::Admin::ReportsController.class_eval do
       reports[:sales_total] = { :name => "Sales Total", :description => "Sales Total For All Orders" }
     end
     reports
+  end
+
+  def total_units(line_items)
+    return " " if line_items.map{ |li| li.variant.unit_value.nil? }.any?
+    total_units = line_items.sum do |li|
+      scale_factor = ( li.product.variant_unit == 'weight' ? 1000 : 1 )
+      li.quantity * li.variant.unit_value / scale_factor
+    end
+    total_units.round(3)
   end
 end

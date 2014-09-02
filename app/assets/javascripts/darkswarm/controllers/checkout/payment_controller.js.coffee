@@ -6,7 +6,7 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout) ->
     {key: "January", value: "1"},
     {key: "February", value: "2"},
     {key: "March", value: "3"},
-    {key: "April", value: "4"}, 
+    {key: "April", value: "4"},
     {key: "May", value: "5"},
     {key: "June", value: "6"},
     {key: "July", value: "7"},
@@ -20,4 +20,4 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout) ->
   $scope.years = [moment().year()..(moment().year()+15)]
   $scope.secrets.card_month = "1"
   $scope.secrets.card_year = moment().year()
-  $timeout $scope.onTimeout 
+  $timeout $scope.onTimeout

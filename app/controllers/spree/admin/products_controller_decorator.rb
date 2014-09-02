@@ -30,6 +30,9 @@ Spree::Admin::ProductsController.class_eval do
       "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
     end
 
+    # Ensure we're authorised to update all products
+    product_set.collection.each { |p| authorize! :update, p }
+
     if product_set.save
       redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
@@ -85,7 +88,7 @@ Spree::Admin::ProductsController.class_eval do
   def load_bpe_data
     current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
     @spree_api_key = spree_current_user.spree_api_key
-    @producers = Enterprise.managed_by(spree_current_user).is_primary_producer.order(:name)
+    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
   end
 end

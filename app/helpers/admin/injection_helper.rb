@@ -9,6 +9,10 @@ module Admin
         admin_inject_json_ams_array("ofn.admin", "all_enterprises", @all_enterprises, Api::Admin::EnterpriseSerializer)
     end
 
+    def admin_inject_enterprise_relationships
+      admin_inject_json_ams_array "ofn.admin", "enterprise_relationships", @enterprise_relationships, Api::Admin::EnterpriseRelationshipSerializer
+    end
+
     def admin_inject_enterprise_roles
       admin_inject_json_ams_array "ofn.admin", "enterpriseRoles", @enterprise_roles, Api::Admin::EnterpriseRoleSerializer
     end
