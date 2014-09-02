@@ -1,0 +1,9 @@
+%div{ 'ng-show' => '!spree_api_key_ok' }
+  {{ api_error_msg }}
+
+%div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
+  %img.spinner{ src: "/assets/loading.gif" }
+  %h1 LOADING PRODUCTS
+
+%div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0' }
+  %h1#no_results No products found.
