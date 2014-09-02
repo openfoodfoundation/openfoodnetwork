@@ -1,8 +1,0 @@
-<% if spree_current_user %>
-  <ul id="login-nav" class="inline-menu">
-    <li data-hook="user-logged-in-as"><%= t(:logged_in_as) %>: <%= spree_current_user.email %></li>
-    <li data-hook="user-account-link"><i class="icon-user"></i><%= link_to t(:account), spree.edit_user_path(spree_current_user) %></li>
-    <li data-hook="user-logout-link"><i class="icon-signout"></i><%= link_to t(:logout), spree.logout_path %></li>
-    <li data-hook="store-frontend-link"><i class="icon-external-link"></i><%= link_to t(:store), spree.root_path, :target => '_blank' %></li>
-  </ul>
-<% end %>
