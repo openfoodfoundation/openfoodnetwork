@@ -38,6 +38,9 @@ feature %q{
   scenario "editing enterprises in bulk" do
     s = create(:supplier_enterprise)
     d = create(:distributor_enterprise, type: 'profile')
+    d_manager = create_enterprise_user
+    d_manager.enterprise_roles.build(enterprise: d).save
+    expect(d.owner).to_not eq d_manager
 
     login_to_admin_section
     click_link 'Enterprises'
@@ -46,12 +49,14 @@ feature %q{
       expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
       uncheck "enterprise_set_collection_attributes_0_visible"
       select 'full', from: "enterprise_set_collection_attributes_0_type"
+      select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
     end
     click_button "Update"
     flash_message.should == 'Enterprises updated successfully'
     distributor = Enterprise.find(d.id)
     expect(distributor.visible).to eq false
     expect(distributor.type).to eq 'full'
+    expect(distributor.owner).to eq d_manager
   end
 
   scenario "viewing an enterprise" do
