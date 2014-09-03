@@ -1,6 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", [
-  "$scope", "$timeout", "$http", "dataFetcher", "DirtyProducts", "VariantUnitManager", "producers", "Taxons", "SpreeApiKey",
-  ($scope, $timeout, $http, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiKey) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiKey) ->
     $scope.loading = true
 
     $scope.updateStatusMessage =
@@ -38,12 +36,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
     $scope.producerFilter = "0"
     $scope.categoryFilter = "0"
-    $scope.products = []
+    $scope.products = BulkProducts.products
     $scope.filteredProducts = []
     $scope.currentFilters = []
     $scope.limit = 15
     $scope.productsWithUnsavedVariants = []
     $scope.query = ""
+    $scope.displayProperties = {}
 
     $scope.initialise = ->
       authorise_api_reponse = ""
@@ -61,36 +60,18 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.$watchCollection '[query, producerFilter, categoryFilter]', ->
       $scope.limit = 15 # Reset limit whenever searching
 
-    $scope.fetchProducts = -> # WARNING: returns a promise
+    $scope.fetchProducts = ->
       $scope.loading = true
-      queryString = $scope.currentFilters.reduce (qs,f) ->
-        return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
-      , ""
-      return dataFetcher("/api/products/bulk_products?page=1;per_page=20;#{queryString}").then (data) ->
-        $scope.resetProducts data.products
+      BulkProducts.fetch($scope.currentFilters).then ->
+        $scope.resetProducts()
         $scope.loading = false
-        if data.pages > 1
-          for page in [2..data.pages]
-            dataFetcher("/api/products/bulk_products?page=#{page};per_page=20;#{queryString}").then (data) ->
-              for product in data.products
-                $scope.unpackProduct product
-                $scope.products.push product
 
 
-    $scope.resetProducts = (data) ->
-      $scope.products = data
+    $scope.resetProducts = ->
       DirtyProducts.clear()
       $scope.setMessage $scope.updateStatusMessage, "", {}, false
-      $scope.displayProperties ||= {}
-      angular.forEach $scope.products, (product) ->
-        $scope.unpackProduct product
-
-
-    $scope.unpackProduct = (product) ->
-      $scope.displayProperties ||= {}
-      $scope.displayProperties[product.id] ||= showVariants: false
-      #$scope.matchProducer product
-      $scope.loadVariantUnit product
+      for product in $scope.products
+        $scope.displayProperties[product.id] ||= showVariants: false
 
 
     # $scope.matchProducer = (product) ->
@@ -98,37 +79,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     #     if angular.equals(producer.id, product.producer)
     #       product.producer = producer
     #       break
-
-    $scope.loadVariantUnit = (product) ->
-      product.variant_unit_with_scale =
-        if product.variant_unit && product.variant_unit_scale && product.variant_unit != 'items'
-          "#{product.variant_unit}_#{product.variant_unit_scale}"
-        else if product.variant_unit
-          product.variant_unit
-        else
-          null
-
-      $scope.loadVariantUnitValues product if product.variants
-      $scope.loadVariantUnitValue product, product.master if product.master
-
-    $scope.loadVariantUnitValues = (product) ->
-      for variant in product.variants
-        $scope.loadVariantUnitValue product, variant
-
-    $scope.loadVariantUnitValue = (product, variant) ->
-      unit_value = $scope.variantUnitValue product, variant
-      unit_value = if unit_value? then unit_value else ''
-      variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
-
-
-    $scope.variantUnitValue = (product, variant) ->
-      if variant.unit_value?
-        if product.variant_unit_scale
-          variant.unit_value / product.variant_unit_scale
-        else
-          variant.unit_value
-      else
-        null
 
 
     $scope.updateOnHand = (product) ->
@@ -183,12 +133,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       $scope.variantIdCounter -= 1
       $scope.variantIdCounter
 
-    $scope.updateVariantLists = (server_products) ->
-      for product in $scope.productsWithUnsavedVariants
-        server_product = $scope.findProduct(product.id, server_products)
-        product.variants = server_product.variants
-        $scope.loadVariantUnitValues product
-
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
         $http(
@@ -218,18 +162,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
 
     $scope.cloneProduct = (product) ->
-      dataFetcher("/admin/products/" + product.permalink_live + "/clone.json").then (data) ->
-        # Ideally we would use Spree's built in respond_override helper here to redirect the
-        # user after a successful clone with .json in the accept headers
-        # However, at the time of writing there appears to be an issue which causes the
-        # respond_with block in the destroy action of Spree::Admin::Product to break
-        # when a respond_overrride for the clone action is used.
-        id = data.product.id
-        dataFetcher("/api/products/" + id + "?template=bulk_show").then (data) ->
-          newProduct = data
-          $scope.unpackProduct newProduct
-          $scope.products.push newProduct
-
+      BulkProducts.cloneProduct product
 
     $scope.hasVariants = (product) ->
       product.variants.length > 0
@@ -270,7 +203,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
           filters: $scope.currentFilters
       ).success((data) ->
         DirtyProducts.clear()
-        $scope.updateVariantLists(data.products)
+        BulkProducts.updateVariantLists(data.products, $scope.productsWithUnsavedVariants)
         $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
         if status == 400 && data.errors? && data.errors.length > 0
@@ -304,15 +237,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
       if variant.hasOwnProperty("unit_value_with_description")
         match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
         if match
-          product = $scope.findProduct(product.id, $scope.products)
+          product = BulkProducts.find product.id
           variant.unit_value  = parseFloat(match[1])
           variant.unit_value  = null if isNaN(variant.unit_value)
           variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
           variant.unit_description = match[3]
-
-    $scope.findProduct = (id, product_list) ->
-      products = (product for product in product_list when product.id == id)
-      if products.length == 0 then null else products[0]
 
     $scope.incrementLimit = ->
       if $scope.limit < $scope.products.length
@@ -354,7 +283,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
         , false
       else
         $scope.setMessage $scope.updateStatusMessage, "", {}, false
-]
+
 
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []
