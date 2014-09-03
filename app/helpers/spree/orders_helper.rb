@@ -8,7 +8,7 @@ module Spree
     def order_distribution_subtotal(order, options={})
       options.reverse_merge! :format_as_currency => true
       amount = order.adjustments.enterprise_fee.sum &:amount
-      options.delete(:format_as_currency) ? number_to_currency(amount) : amount
+      options.delete(:format_as_currency) ? Spree::Money.new(amount).to_s : amount
     end
 
     def alternative_available_distributors(order)

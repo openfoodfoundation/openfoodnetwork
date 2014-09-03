@@ -10,7 +10,7 @@ Order for: <%= @order.bill_address.full_name %>
   <%= item.variant.sku %> <%= raw(item.variant.product.supplier.name) %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (QTY: <%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %>
 <% end %>
 ============================================================
-Subtotal: <%= number_to_currency checkout_cart_total_with_adjustments(@order) %>
+Subtotal: <%= Spree::Money.new(checkout_cart_total_with _adjustments ( @order)) %>
 <% checkout_adjustments_for_summary(@order, exclude: [:distribution]).each do |adjustment| %>
   <%= raw(adjustment.label) %> <%= adjustment.display_amount %>
 <% end %>

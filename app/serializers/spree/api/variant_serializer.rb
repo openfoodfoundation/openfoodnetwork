@@ -7,6 +7,6 @@ class Spree::Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def price
-    object.price.nil? ? 0.to_f : object.price
+    object.price.nil? ? 0.to_f : object.price.to_f
   end
 end

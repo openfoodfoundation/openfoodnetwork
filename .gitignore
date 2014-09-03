@@ -36,3 +36,5 @@ config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
 libpeerconnection.log
+tags
+app/assets/javascripts/tags

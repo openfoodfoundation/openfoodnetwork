@@ -10,26 +10,26 @@
     .expanded{"ng-show" => "expanded"}
       %ul
         %li.cost
-          .right {{ variant.base_price | currency }}
+          .right {{ variant.price | localiseCurrency }}
           Item cost
         %li{"bo-if" => "variant.fees.admin"}
-          .right {{ variant.fees.admin | currency }}
+          .right {{ variant.fees.admin | localiseCurrency }}
           Admin fee
         %li{"bo-if" => "variant.fees.sales"}
-          .right {{ variant.fees.sales | currency }}
+          .right {{ variant.fees.sales | localiseCurrency }}
           Sales fee
         %li{"bo-if" => "variant.fees.packing"}
-          .right {{ variant.fees.packing | currency }}
+          .right {{ variant.fees.packing | localiseCurrency }}
           Packing fee
         %li{"bo-if" => "variant.fees.transport"}
-          .right {{ variant.fees.transport | currency }}
+          .right {{ variant.fees.transport | localiseCurrency }}
           Transport fee
         %li{"bo-if" => "variant.fees.fundraising"}
-          .right {{ variant.fees.fundraising | currency }}
+          .right {{ variant.fees.fundraising | localiseCurrency }}
           Fundraising fee
         %li
           %strong
-            .right = {{ variant.price | currency }}
+            .right = {{ variant.price | localiseCurrency }}
             &nbsp;
 
       %a{"ng-click" => "expanded = !expanded"} 
