@@ -386,8 +386,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
-        if product.hasOwnProperty("producer")
-          filteredProduct.supplier_id = product.producer
+        if product.hasOwnProperty("producer_id")
+          filteredProduct.supplier_id = product.producer_id
           hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
@@ -402,8 +402,8 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("category")
-          filteredProduct.primary_taxon_id = product.category
+        if product.hasOwnProperty("category_id")
+          filteredProduct.primary_taxon_id = product.category_id
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on
