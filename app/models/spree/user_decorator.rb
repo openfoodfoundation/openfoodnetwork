@@ -9,6 +9,8 @@ Spree.user_class.class_eval do
   attr_accessible :enterprise_ids, :enterprise_roles_attributes
   after_create :send_signup_confirmation
 
+  validate :owned_enterprises_count
+
   def build_enterprise_roles
     Enterprise.all.each do |enterprise|
       unless self.enterprise_roles.find_by_enterprise_id enterprise.id
@@ -19,5 +21,13 @@ Spree.user_class.class_eval do
 
   def send_signup_confirmation
     Spree::UserMailer.signup_confirmation(self).deliver
+  end
+
+  private
+
+  def owned_enterprises_count
+    if owned_enterprises.size > enterprise_limit
+      errors.add(:owned_enterprises, "^The nominated user is not permitted to own own any more enterprises.")
+    end
   end
 end
