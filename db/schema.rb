@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140828023619) do
+ActiveRecord::Schema.define(:version => 20140904003026) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -971,6 +971,7 @@ ActiveRecord::Schema.define(:version => 20140828023619) do
     t.string   "spree_api_key",          :limit => 48
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
+    t.integer  "enterprise_limit",                     :default => 1, :null => false
   end
 
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
