@@ -58,7 +58,7 @@ describe Enterprise do
       let(:u2) { create(:user) }
       let(:e) { create(:enterprise, owner: u1 ) }
 
-      it "allows owner to be changed" do
+      it "adds new owner to list of managers" do
         expect(e.owner).to eq u1
         expect(e.users).to include u1
         expect(e.users).to_not include u2

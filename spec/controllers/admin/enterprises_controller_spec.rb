@@ -2,7 +2,12 @@ require 'spec_helper'
 
 module Admin
   describe EnterprisesController do
-    let(:distributor) { create(:distributor_enterprise) }
+    let(:distributor_owner) do
+      user = create(:user)
+      user.spree_roles = []
+      user
+    end
+    let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
     let(:user) do
       user = create(:user)
       user.spree_roles = []
@@ -36,6 +41,44 @@ module Admin
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
+      end
+
+      it "it overrides the owner_id submitted by the user unless current_user is super admin" do
+        controller.stub spree_current_user: user
+        enterprise_params[:enterprise][:owner_id] = admin_user
+
+        spree_put :create, enterprise_params
+        enterprise = Enterprise.find_by_name 'zzz'
+        user.enterprise_roles.where(enterprise_id: enterprise).first.should be
+      end
+    end
+
+    describe "updating an enterprise" do
+      it "allows current owner to change ownership" do
+        controller.stub spree_current_user: distributor_owner
+        update_params = { id: distributor, enterprise: { owner_id: user } }
+        spree_post :update, update_params
+
+        distributor.reload
+        expect(distributor.owner).to eq user
+      end
+
+      it "allows super admin to change ownership" do
+        controller.stub spree_current_user: admin_user
+        update_params = { id: distributor, enterprise: { owner_id: user } }
+        spree_post :update, update_params
+
+        distributor.reload
+        expect(distributor.owner).to eq user
+      end
+
+      it "does not allow managers to change ownership" do
+        controller.stub spree_current_user: user
+        update_params = { id: distributor, enterprise: { owner_id: user } }
+        spree_post :update, update_params
+
+        distributor.reload
+        expect(distributor.owner).to eq distributor_owner
       end
     end
 
