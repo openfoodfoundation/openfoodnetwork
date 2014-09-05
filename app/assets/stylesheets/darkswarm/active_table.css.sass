@@ -29,11 +29,17 @@
     span
       text-decoration: underline
 
+  span.margin-top
+    margin-top: 0.5rem    
+    display: inline-block
+
   // Generic text resize
   @media all and (max-width: 640px) 
-    font-size: 0.875rem
     &, & *
       font-size: 0.875rem    
+    fat > div label
+      &, & *    
+        font-size: 0.75rem 
 
 
   .active_table_row // Inherits from active_table
@@ -69,7 +75,7 @@
       
     //Open row sections
     .fat > div
-      border-top: 1px solid $disabled-bright
+      border-top: 1px solid #aaa
 
       ul, ol 
         font-size: 0.875rem
@@ -82,7 +88,7 @@
         font-size: 0.75rem
         margin-top: 0.25rem
         margin-bottom: 0.25rem
-        color: $disabled-dark
+        color: #777
     
     p.trans-sentence
       text-transform: capitalize
