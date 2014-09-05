@@ -1,5 +1,5 @@
 .row
-  .small-12.columns
+  .small-12.medium-6.columns
     %a.button.success.tiny.filterbtn{"ng-click" => "filtersActive = !filtersActive",
     "ng-show" => "FilterSelectorsService.selectors.length > 0"}
       {{ filterText(filtersActive) }}
@@ -8,3 +8,6 @@
 
     %a.button.secondary.tiny.filterbtn.disabled{"ng-show" => "FilterSelectorsService.selectors.length == 0"}
       No filters
+  .small-12.medium-6.columns.text-right
+    %input{type: "checkbox", name: "profile"}><
+    %label Show profiles
