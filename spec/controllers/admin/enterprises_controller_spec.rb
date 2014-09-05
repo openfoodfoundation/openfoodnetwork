@@ -36,5 +36,34 @@ module Admin
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
       end
     end
+
+    describe "updating an enterprise" do
+      let(:profile_enterprise) { create(:enterprise, type: 'profile') }
+
+      context "as manager" do
+        it "does not allow 'type' to be changed" do
+          # TODO should be implemented and tested using cancan abilities, but can't do this using our current version
+          profile_enterprise.enterprise_roles.build(user: user).save
+          controller.stub spree_current_user: user
+          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.type).to eq 'profile'
+        end
+      end
+
+      context "as super admin" do
+        it "allows 'type' to be changed" do
+          # TODO should be implemented and tested using cancan abilities, but can't do this using our current version
+          controller.stub spree_current_user: admin_user
+          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.type).to eq 'full'
+        end
+      end
+    end
   end
 end
