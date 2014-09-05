@@ -1,0 +1,23 @@
+%tr.variant{ :id => "v_{{variant.id}}", 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'displayProperties[product.id].showVariants', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+  %td.left-actions
+    %a{ :class => "variant-item icon-caret-right", 'ng-hide' => "$last" }
+    %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
+  %td{ 'ng-show' => 'columns.producer.visible' }
+  %td{ 'ng-show' => 'columns.name.visible' }
+    %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
+  %td.unit_value{ 'ng-show' => 'columns.unit.visible' }
+    %input{ 'ng-model' => 'variant.unit_value_with_description', :name => 'variant_unit_value_with_description', 'ofn-track-variant' => 'unit_value_with_description', :type => 'text', 'ofn-maintain-unit-scale' => true }
+  %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+    %input{ 'ofn-display-as' => 'variant', 'ng-model' => 'variant.display_as', name: 'variant_display_as', 'ofn-track-variant' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}' }
+  %td{ 'ng-show' => 'columns.price.visible' }
+    %input{ 'ng-model' => 'variant.price', 'ofn-decimal' => :true, :name => 'variant_price', 'ofn-track-variant' => 'price', :type => 'text' }
+  %td{ 'ng-show' => 'columns.on_hand.visible' }
+    %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-hide' => 'variant.on_demand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
+    %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
+  %td{ 'ng-show' => 'columns.category.visible' }
+  %td{ 'ng-show' => 'columns.available_on.visible' }
+  %td.actions
+    %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
+  %td.actions
+  %td.actions
+    %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }

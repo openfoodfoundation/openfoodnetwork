@@ -436,26 +436,35 @@ feature %q{
 
   context "as an enterprise user" do
 
-    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
-    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
-    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
-    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
-    let!(:distributor1_fee) { create(:enterprise_fee, enterprise: distributor1, name: 'First Distributor Fee') }
-    before(:each) do
-      product = create(:product, supplier: supplier1)
-      product.distributors << distributor1
-      product.save!
+    let!(:supplier_managed) { create(:supplier_enterprise, name: 'Managed supplier') }
+    let!(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Unmanaged supplier') }
+    let!(:supplier_permitted) { create(:supplier_enterprise, name: 'Permitted supplier') }
+    let!(:distributor_managed) { create(:distributor_enterprise, name: 'Managed distributor') }
+    let!(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Unmanaged Distributor') }
+    let!(:distributor_permitted) { create(:distributor_enterprise, name: 'Permitted distributor') }
+    let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed,
+             permissions_list: [:add_to_order_cycle])
+    end
+    let!(:distributor_permitted_relationship) do
+      create(:enterprise_relationship, parent: distributor_permitted, child: distributor_managed,
+             permissions_list: [:add_to_order_cycle])
+    end
+    let!(:product_managed) { create(:product, supplier: supplier_managed) }
+    let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
 
+    before do
       @new_user = create_enterprise_user
-      @new_user.enterprise_roles.build(enterprise: supplier1).save
-      @new_user.enterprise_roles.build(enterprise: distributor1).save
+      @new_user.enterprise_roles.build(enterprise: supplier_managed).save
+      @new_user.enterprise_roles.build(enterprise: distributor_managed).save
 
       login_to_admin_as @new_user
     end
 
     scenario "viewing a list of order cycles I am coordinating" do
-      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
-      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
+      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier_unmanaged, name: 'Order Cycle 2' } )
 
       click_link "Order Cycles"
 
@@ -464,8 +473,8 @@ feature %q{
       page.should_not have_content oc_for_other_user.name
 
       # The order cycle should not show enterprises that I don't manage
-      page.should_not have_selector 'td.suppliers',    text: supplier2.name
-      page.should_not have_selector 'td.distributors', text: distributor2.name
+      page.should_not have_selector 'td.suppliers',    text: supplier_unmanaged.name
+      page.should_not have_selector 'td.distributors', text: distributor_unmanaged.name
     end
 
     scenario "creating a new order cycle" do
@@ -476,57 +485,84 @@ feature %q{
       fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
       fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
 
-      select 'First Supplier', from: 'new_supplier_id'
+      select 'Managed supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
+      select 'Permitted supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
 
-      select 'First Distributor', from: 'order_cycle_coordinator_id'
-      click_button 'Add coordinator fee'
-      select 'First Distributor Fee', from: 'order_cycle_coordinator_fee_0_id'
+      select_incoming_variant supplier_managed, 0, product_managed.master
+      select_incoming_variant supplier_permitted, 1, product_permitted.master
 
-      select 'First Distributor', from: 'new_distributor_id'
+      select 'Managed distributor', from: 'order_cycle_coordinator_id'
+      click_button 'Add coordinator fee'
+      select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
+
+      select 'Managed distributor', from: 'new_distributor_id'
+      click_button 'Add distributor'
+      select 'Permitted distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
 
-      # Should only have suppliers / distributors listed which the user can manage
-      within "#new_supplier_id" do
-        page.should_not have_content supplier2.name
-      end
-      within "#new_distributor_id" do
-        page.should_not have_content distributor2.name
-      end
-      within "#order_cycle_coordinator_id" do
-        page.should_not have_content distributor2.name
-        page.should_not have_content supplier1.name
-        page.should_not have_content supplier2.name
+      # Should only have suppliers / distributors listed which the user is managing or
+      # has E2E permission to add products to order cycles
+      page.should_not have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
+      page.should_not have_select 'new_distributor_id', with_options: [distributor_unmanaged.name]
+
+      [distributor_unmanaged.name, supplier_managed.name, supplier_unmanaged.name].each do |enterprise_name|
+        page.should_not have_select 'order_cycle_coordinator_id', with_options: [enterprise_name]
       end
 
       click_button 'Create'
 
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
-      order_cycle.coordinator.should == distributor1
+      order_cycle.suppliers.sort.should == [supplier_managed, supplier_permitted].sort
+      order_cycle.coordinator.should == distributor_managed
+      order_cycle.distributors.sort.should == [distributor_managed, distributor_permitted].sort
     end
 
-    scenario "editing an order cycle" do
-      oc = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
+    scenario "editing an order cycle does not affect exchanges we don't manage" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
       visit edit_admin_order_cycle_path(oc)
 
-      # I should not see exchanges for supplier2 or distributor2
-      page.all('tr.supplier').count.should == 1
-      page.all('tr.distributor').count.should == 1
+      # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
+      page.all('tr.supplier').count.should == 2
+      page.all('tr.distributor').count.should == 2
 
       # When I save, then those exchanges should remain
       click_button 'Update'
       page.should have_content "Your order cycle has been updated."
 
       oc.reload
-      oc.suppliers.sort.should == [supplier1, supplier2]
-      oc.coordinator.should == supplier1
-      oc.distributors.sort.should == [distributor1, distributor2]
+      oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
+      oc.coordinator.should == supplier_managed
+      oc.distributors.sort.should == [distributor_managed, distributor_permitted, distributor_unmanaged].sort
     end
 
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # When I remove all the exchanges and save
+      page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
+      page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+      click_button 'Update'
+
+      # Then the exchanges should be removed
+      page.should have_content "Your order cycle has been updated."
+
+      oc.reload
+      oc.suppliers.should == [supplier_unmanaged]
+      oc.coordinator.should == supplier_managed
+      oc.distributors.should == [distributor_unmanaged]
+    end
+
+
     scenario "cloning an order cycle" do
-      oc = create(:simple_order_cycle)
+      oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
       click_link "Order Cycles"
       first('a.clone-order-cycle').click
@@ -539,4 +575,11 @@ feature %q{
 
   end
 
+
+  private
+
+  def select_incoming_variant(supplier, exchange_no, variant)
+    page.find("table.exchanges tr.supplier-#{supplier.id} td.products input").click
+    check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
+  end
 end

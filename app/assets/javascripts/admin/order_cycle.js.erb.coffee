@@ -330,7 +330,7 @@ angular.module('order_cycle', ['ngResource'])
     }])
 
   .factory('Enterprise', ['$resource', ($resource) ->
-    Enterprise = $resource('/admin/enterprises/:enterprise_id.json', {}, {'index': {method: 'GET', isArray: true}})
+    Enterprise = $resource('/admin/enterprises/for_order_cycle/:enterprise_id.json', {}, {'index': {method: 'GET', isArray: true}})
 
     {
       Enterprise: Enterprise
