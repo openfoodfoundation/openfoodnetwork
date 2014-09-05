@@ -127,7 +127,7 @@ feature %q{
     choose 'Single'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-    
+
     # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
     uncheck 'enterprise_is_distributor'
