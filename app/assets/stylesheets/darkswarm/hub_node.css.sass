@@ -11,20 +11,24 @@
       overflow-y: visible
 
     //Hub icon styline
-    i.ofn-i_040-hub
-      @include border-radius(99999rem)
-      font-size: 1.15rem
+    // i.ofn-i_040-hub
+    i.ofn-i_063-hub
+      font-size: 2rem
       display: inline-block
-      padding: 0.2rem
-      margin-top: 0.1rem
-      margin-bottom: 0.1rem
-      background-color: transparent
+      margin-right: 0.25rem
+      float: left
       @media all and (max-width: 768px) 
         font-size: 1rem
     
     //Generic text link style
     a:hover, a:active, a:focus
       color: $clr-brick-bright
+
+    .hub span.hub-name-listing
+      margin-top: 0.5rem
+      display: inline-block
+      float: left
+      font-weight: 700
 
     @media all and (max-width: 640px) 
       &.closed, &.open
@@ -91,20 +95,15 @@
     &.current
       //overwrites active_table
       &.closed
-        a, a i, a span, a strong
-          color: $clr-brick
+        &, & *
+          color: white
 
       &.closed, &.open
-        a i.ofn-i_040-hub
-          color: white
+        div.active_table_row
           background-color: $clr-brick
-        
-
         a:hover, a:focus, a:active
           strong, span
-            color: $clr-brick-bright
-          i.ofn-i_040-hub
-            background-color: $clr-brick-bright
+            color: $clr-brick-light
 
 
 
