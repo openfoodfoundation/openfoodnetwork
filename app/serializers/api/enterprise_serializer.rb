@@ -85,7 +85,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   # TODO: Remove this when flags on enterprises are switched over
   def can_aggregate
-    object.is_distributor && !object.is_primary_producer
+    object.is_distributor && object.suppliers != [object]
   end
 
   # TODO when ActiveSerializers supports URL helpers
