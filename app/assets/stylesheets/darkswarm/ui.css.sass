@@ -63,6 +63,20 @@ button.success, .button.success
 .button.success:hover, .button.success:active, .button.success:focus, button.success:hover, button.success:active, button.success:focus
   background: #14b6cc
 
+.button.help-btn
+  @include border-radius(999999px)
+  &.tiny
+    padding: 0rem
+    margin: 0
+    float: right
+  i
+    font-size: 1.25rem
+
+.profile-checkbox
+  display: inline-block
+  input[type="checkbox"] + label
+    margin: 0 0.2rem
+
 // Responsive 
 @media screen and (min-width: 768px)
   [role="main"]
