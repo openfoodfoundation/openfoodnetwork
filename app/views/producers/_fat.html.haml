@@ -6,16 +6,22 @@
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
+    %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
+      &nbsp;
 
   .columns.small-12.medium-3.large-3.fat
     %div{"bo-if" => "producer.logo"}
       %img{src: "{{ producer.logo }}" }
+    %div.show-for-medium-up{"bo-if" => "!producer.logo"}
+      &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
     %div{"bo-if" => "producer.description"}
       %label About us
       %p.text-small
         {{ producer.description }}
+    %div.show-for-medium-up{"bo-if" => "!producer.description"}
+      &nbsp;
 
 .row.active_table_row{"ng-show" => "open()", "bo-if" => "producer.hubs"}
   .columns.small-12
@@ -26,13 +32,14 @@
             Shop for
             %span.turquoise {{ producer.name }} 
             products at:
+        %div.show-for-medium-up{"bo-if" => "!producer.name"}
+          &nbsp;
     .row.cta-container
       .columns.small-12
-        %a.button.hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
+        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
         "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
         "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-          {{hub.name}}
+          .hub-name {{hub.name}}
           .button-address {{ [hub.address.city, hub.address.state_name] | printArray }}
-          %i.ofn-i_007-caret-right
