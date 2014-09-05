@@ -4,7 +4,7 @@
       Shop for 
       %strong {{enterprise.name}} 
       products at:
-    %a.hub{"ng-repeat" => "hub in enterprise.hubs", 
+    %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs", 
     "bo-href" => "hub.path", 
     "bo-class" => "{primary: hub.active, secondary: !hub.active}",
     "ofn-empties-cart" => "hub"}
