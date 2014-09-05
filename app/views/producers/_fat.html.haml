@@ -1,47 +1,61 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
   
-  .columns.small-12.medium-4.large-4.fat
+  .columns.small-12.medium-7.large-7.fat
     / No long description available because it spits out HTML formatting producer.long_description
     %div{"bo-if" => "producer.long_description"}
       %label About us
+      %img.right.show-for-medium-up{src: "{{ producer.logo }}" }
       %p.text-small
         {{ producer.long_description }}
-    %div.show-for-medium-up{"bo-if" => "!producer.description"}
-      &nbsp;
-
-  .columns.small-12.medium-3.large-3.fat
-    %div{"bo-if" => "producer.logo"}
-      %img{src: "{{ producer.logo }}" }
-    %div.show-for-medium-up{"bo-if" => "!producer.logo"}
-      &nbsp;
+    %div.show-for-medium-up{"bo-if" => "producer.long_description.length==0"}
+      %label &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
+    
     %div{"ng-if" => "producer.supplied_taxons"}
       %label Shop for
       %p.trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
+    
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
 
     %div{"ng-if" => "producer.email || producer.website || producer.phone"}
       %label Contact
-      %p{"ng-if" => "producer.phone"}
-        {{ enterprise.phone }}
+      
+      %p.word-wrap{"ng-if" => "producer.phone"}
+        Call {{ producer.phone }}
 
       %p.word-wrap{"ng-if" => "producer.email"}
         %a{"ng-href" => "{{producer.email | stripUrl}}", target: "_blank", mailto: true}
-          %span.email
-            {{ producer.email | stripUrl }}
+          %span.email {{ producer.email | stripUrl }}
 
       %p.word-wrap{"ng-if" => "producer.website"}
         %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
-          {{ producer.website | stripUrl }}
+          %span {{ producer.website | stripUrl }}
 
+    %div{"ng-if" => "producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
+      %label Follow
+      .follow-icons{bindonce: true}
+        %span{"ng-if" => "producer.twitter"} 
+          %a{"ng-href" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
+            %i.ofn-i_041-twitter
+        
+        %span{"ng-if" => "producer.facebook"}
+          %a{"ng-href" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
+            %i.ofn-i_044-facebook
+        
+        %span{"ng-if" => "producer.linkedin"}
+          %a{"ng-href" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
+            %i.ofn-i_042-linkedin
+        
+        %span{"ng-if" => "producer.instagram"}
+          %a{"ng-href" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
+            %i.ofn-i_043-instagram
 
-
-.row.active_table_row{"ng-show" => "open()", "bo-if" => "producer.hubs"}
+.row.active_table_row.pad-top{"ng-show" => "open()", "bo-if" => "producer.hubs"}
   .columns.small-12
     .row
       .columns.small-12.fat
@@ -61,3 +75,4 @@
           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
           .hub-name {{hub.name}}
           .button-address {{ [hub.address.city, hub.address.state_name] | printArray }}
+
