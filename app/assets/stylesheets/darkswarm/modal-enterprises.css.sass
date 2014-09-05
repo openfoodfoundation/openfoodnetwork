@@ -91,7 +91,7 @@
   label
     text-transform: uppercase
     font-size: 0.875rem
-    margin-bottom: 0
+    margin-bottom: 0.75rem
     5rem
     color: $dark-grey
 
@@ -101,9 +101,9 @@
       text-transform: capitalize
   
   .hub
-    margin-right: 1rem
-    margin-top: 0.5rem
-    margin-bottom: 0.5rem
+    margin-right: 2rem
+    margin-top: 0rem
+    margin-bottom: 0.75rem
     // padding-left: 1rem
     // padding-right: 1rem
     display: inline-block
@@ -120,17 +120,14 @@
       padding: 0.15rem 0.25rem 0.35rem 0.25rem 
       float: left
 
-    // i.ofn-i_007-caret-right
-    //   margin-left: .1rem
-
     .hub-name 
-      margin-top: 0.6rem
+      margin-top: 0.75rem
       margin-bottom: 0.2rem
       font-weight: 400
       display: inline-block
       border-bottom: 1px solid transparent
     .button-address
-      margin-top: 0.55rem
+      margin-top: 0.5rem
       margin-bottom: 0.2rem
       margin-left: 0.1rem
       text-transform: uppercase
@@ -143,11 +140,14 @@
         display: none
 
     &:hover, &:focus, &:active
-      color: #666
-      .hub-name, .button-address 
-        // text-decoration: underline
-        border-bottom: 1px solid #999
-
+      &.secondary
+        color: #666
+        .hub-name, .button-address 
+          border-bottom: 1px solid #999
+      &.primary
+        color: $clr-brick-bright
+        .hub-name, .button-address 
+          border-bottom: 1px solid $clr-brick-bright
 
 
   
