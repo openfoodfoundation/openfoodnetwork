@@ -14,11 +14,11 @@
             Delivery
     .row
       .columns.small-12
-        %a.button.hub.expand{"bo-href" => "enterprise.path", 
+        %a.hub{"bo-href" => "enterprise.path", 
         "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
         "ofn-empties-cart" => "enterprise"}
           %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
-          {{enterprise.name}}
+          .hub-name {{enterprise.name}}
           .button-address {{ enterprise.address.city }} , {{enterprise.address.state_name}}
-          %i.ofn-i_007-caret-right
+          / %i.ofn-i_007-caret-right
