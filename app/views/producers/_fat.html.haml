@@ -1,12 +1,12 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+  
   .columns.small-12.medium-4.large-4.fat
-    %div{"ng-if" => "producer.supplied_taxons"}
-      %label Shop for
-      %p.trans-sentence
-        %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
-          %render-svg{path: "{{taxon.icon}}"}
-          {{taxon.name}} 
-    %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
+    / No long description available because it spits out HTML formatting producer.long_description
+    %div{"bo-if" => "producer.long_description"}
+      %label About us
+      %p.text-small
+        {{ producer.long_description }}
+    %div.show-for-medium-up{"bo-if" => "!producer.description"}
       &nbsp;
 
   .columns.small-12.medium-3.large-3.fat
@@ -16,12 +16,30 @@
       &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
-    %div{"bo-if" => "producer.description"}
-      %label About us
-      %p.text-small
-        {{ producer.description }}
-    %div.show-for-medium-up{"bo-if" => "!producer.description"}
+    %div{"ng-if" => "producer.supplied_taxons"}
+      %label Shop for
+      %p.trans-sentence
+        %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
+          %render-svg{path: "{{taxon.icon}}"}
+          {{taxon.name}} 
+    %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
+
+    %div{"ng-if" => "producer.email || producer.website || producer.phone"}
+      %label Contact
+      %p{"ng-if" => "producer.phone"}
+        {{ enterprise.phone }}
+
+      %p.word-wrap{"ng-if" => "producer.email"}
+        %a{"ng-href" => "{{producer.email | stripUrl}}", target: "_blank", mailto: true}
+          %span.email
+            {{ producer.email | stripUrl }}
+
+      %p.word-wrap{"ng-if" => "producer.website"}
+        %a{"ng-href" => "http://{{producer.website | stripUrl}}", target: "_blank" }
+          {{ producer.website | stripUrl }}
+
+
 
 .row.active_table_row{"ng-show" => "open()", "bo-if" => "producer.hubs"}
   .columns.small-12
