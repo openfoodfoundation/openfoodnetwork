@@ -30,11 +30,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   cached
   delegate :cache_key, to: :object
 
-  attributes :name, :id, :description, :latitude, :longitude, 
-    :long_description, :website, :instagram, :linkedin, :twitter, 
+  attributes :name, :id, :description, :latitude, :longitude,
+    :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
     :email, :hash, :logo, :promo_image, :icon, :path,
     :pickup, :delivery
+  attributes :has_shopfront, :can_aggregate
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
@@ -75,6 +76,16 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     else
       "/assets/map_005-hub.svg"
     end
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def has_shopfront
+    object.type != 'profile'
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def can_aggregate
+    object.is_distributor && !object.is_primary_producer
   end
 
   # TODO when ActiveSerializers supports URL helpers
