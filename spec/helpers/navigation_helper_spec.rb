@@ -15,6 +15,10 @@ module Spree
         it "returns :overview for the dashboard" do
           helper.klass_for('dashboard').should == :overview
         end
+
+        it "returns Spree::Order for bulk_order_management" do
+          helper.klass_for('bulk_order_management').should == Spree::Order
+        end
       end
     end
   end
