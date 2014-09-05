@@ -69,12 +69,26 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def icon
-    if object.is_primary_producer? and object.is_distributor?
-      "/assets/map_003-producer-shop.svg"
-    elsif object.is_primary_producer?
-      "/assets/map_001-producer-only.svg"
+    if has_shopfront
+      if can_aggregate
+        "/assets/map_005-hub.svg"
+      else
+        if object.is_distributor
+          "/assets/map_003-producer-shop.svg"
+        else
+          "/assets/map_001-producer-only.svg"
+        end
+      end
     else
-      "/assets/map_005-hub.svg"
+      if can_aggregate
+        "/assets/map_006-hub-profile.svg"
+      else
+        if object.is_distributor
+          "/assets/map_004-producer-shop-profile.svg"
+        else
+          "/assets/map_002-producer-only-profile.svg"
+        end
+      end
     end
   end
 
