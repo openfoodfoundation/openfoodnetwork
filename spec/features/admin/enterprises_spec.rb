@@ -263,14 +263,18 @@ feature %q{
 
       click_link "Enterprises"
 
-      within("tr.enterprise-#{supplier1.id}") do
-        expect(page).to have_content supplier1.name
-        expect(page).to have_select "enterprise_set_collection_attributes_1_type"
-      end
-
       within("tr.enterprise-#{distributor1.id}") do
         expect(page).to have_content distributor1.name
+        expect(page).to have_checked_field "enterprise_set_collection_attributes_0_is_distributor"
+        expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
         expect(page).to have_select "enterprise_set_collection_attributes_0_type"
+      end
+
+      within("tr.enterprise-#{supplier1.id}") do
+        expect(page).to have_content supplier1.name
+        expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_distributor"
+        expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
+        expect(page).to have_select "enterprise_set_collection_attributes_1_type"
       end
 
       expect(page).to_not have_content "supplier2.name"

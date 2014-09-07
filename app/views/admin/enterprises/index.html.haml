@@ -28,14 +28,11 @@
         %tr{class: "enterprise-#{enterprise.id}"}
           %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
-            - if enterprise.is_primary_producer && enterprise.is_distributor
-              Producer &amp; Distributor
-            - elsif enterprise.is_distributor
-              Distributor
-            - elsif enterprise.is_primary_producer
-              Producer
-            - else
-              %h1.icon-exclamation-sign.with-tip{"data-powertip" => "This enterprise does not have any roles", style: "text-align: center;color: #DA5354"}
+            = enterprise_form.check_box :is_primary_producer
+            Producer
+            %br/
+            = enterprise_form.check_box :is_distributor
+            Hub
           %td= enterprise_form.check_box :visible
           %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
           %td{"data-hook" => "admin_users_index_row_actions"}
