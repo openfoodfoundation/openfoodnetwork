@@ -15,39 +15,43 @@ feature %q{
     click_link 'Enterprises'
 
     within("tr.enterprise-#{s.id}") do
-      page.should have_content s.name
-      page.should have_content "Edit Profile"
-      page.should have_content "Delete"
-      page.should_not have_content "Payment Methods"
-      page.should_not have_content "Shipping Methods"
-      page.should have_content "Enterprise Fees"
+      expect(page).to have_content s.name
+      expect(page).to have_select "enterprise_set_collection_attributes_1_type"
+      expect(page).to have_content "Edit Profile"
+      expect(page).to have_content "Delete"
+      expect(page).to_not have_content "Payment Methods"
+      expect(page).to_not have_content "Shipping Methods"
+      expect(page).to have_content "Enterprise Fees"
     end
 
     within("tr.enterprise-#{d.id}") do
-      page.should have_content d.name
-      page.should have_content "Edit Profile"
-      page.should have_content "Delete"
-      page.should have_content "Payment Methods"
-      page.should have_content "Shipping Methods"
-      page.should have_content "Enterprise Fees"
+      expect(page).to have_content d.name
+      expect(page).to have_select "enterprise_set_collection_attributes_0_type"
+      expect(page).to have_content "Edit Profile"
+      expect(page).to have_content "Delete"
+      expect(page).to have_content "Payment Methods"
+      expect(page).to have_content "Shipping Methods"
+      expect(page).to have_content "Enterprise Fees"
     end
   end
 
   scenario "editing enterprises in bulk" do
     s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise)
+    d = create(:distributor_enterprise, type: 'profile')
 
     login_to_admin_section
     click_link 'Enterprises'
 
     within("tr.enterprise-#{d.id}") do
-      page.should have_checked_field "enterprise_set_collection_attributes_0_visible"
+      expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
       uncheck "enterprise_set_collection_attributes_0_visible"
+      select 'full', from: "enterprise_set_collection_attributes_0_type"
     end
     click_button "Update"
     flash_message.should == 'Enterprises updated successfully'
     distributor = Enterprise.find(d.id)
-    distributor.visible.should == false
+    expect(distributor.visible).to eq false
+    expect(distributor.type).to eq 'full'
   end
 
   scenario "viewing an enterprise" do
@@ -259,10 +263,18 @@ feature %q{
 
       click_link "Enterprises"
 
-      page.should have_content supplier1.name
-      page.should have_content distributor1.name
-      page.should_not have_content supplier2.name
-      page.should_not have_content distributor2.name
+      within("tr.enterprise-#{supplier1.id}") do
+        expect(page).to have_content supplier1.name
+        expect(page).to have_select "enterprise_set_collection_attributes_1_type"
+      end
+
+      within("tr.enterprise-#{distributor1.id}") do
+        expect(page).to have_content distributor1.name
+        expect(page).to have_select "enterprise_set_collection_attributes_0_type"
+      end
+
+      expect(page).to_not have_content "supplier2.name"
+      expect(page).to_not have_content "distributor2.name"
     end
 
     scenario "creating an enterprise" do
