@@ -4,6 +4,8 @@ module Admin
     before_filter :load_countries, :except => :index
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     create.after :grant_management
+    before_filter :check_type, only: :update
+    before_filter :check_bulk_type, only: :bulk_update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -65,6 +67,18 @@ module Admin
       @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
       @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
+    end
+
+    def check_bulk_type
+      unless spree_current_user.admin?
+        params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
+          enterprise_params.delete :type
+        end
+      end
+    end
+
+    def check_type
+      params[:enterprise].delete :type unless spree_current_user.admin?
     end
 
     # Overriding method on Spree's resource controller

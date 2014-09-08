@@ -8,6 +8,7 @@ module Spree
         klass = klass_for_without_sym_fallback(name)
         klass ||= name.singularize.to_sym
         klass = :overview if klass == :dashboard
+        klass = Spree::Order if klass == :bulk_order_management
         klass
       end
       alias_method_chain :klass_for, :sym_fallback

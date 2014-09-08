@@ -1,8 +1,8 @@
-= f_form_for current_order, url: main_app.update_checkout_path,
+= f_form_for current_order,
   html: {name: "checkout",
     id: "checkout_form",
     novalidate: true,
-    name: "checkout"} do |f|
+    "ng-submit" => "purchase($event)"} do |f|
 
   = inject_available_shipping_methods
   = inject_available_payment_methods
@@ -20,7 +20,6 @@
     = render partial: "checkout/payment", locals: {f: f}
     %p
       %button.button.primary{type: :submit,
-      "ng-click" => "purchase($event)",
       "ng-disabled" => "checkout.$invalid"}
         Place order now
       / {{ checkout.$valid }}

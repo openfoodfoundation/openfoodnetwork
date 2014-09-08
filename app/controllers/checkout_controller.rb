@@ -9,7 +9,7 @@ class CheckoutController < Spree::CheckoutController
 
   include OrderCyclesHelper
   include EnterprisesHelper
-   
+
   def edit
     # Because this controller doesn't inherit from our BaseController
     # We need to duplicate the code here
@@ -56,7 +56,7 @@ class CheckoutController < Spree::CheckoutController
 
 
   private
-  
+
   # Copied and modified from spree. Remove check for order state, since the state machine is
   # progressed all the way in one go with the one page checkout.
   def object_params
@@ -94,7 +94,7 @@ class CheckoutController < Spree::CheckoutController
   def skip_state_validation?
     true
   end
-  
+
   def load_order
     @order = current_order
     redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?

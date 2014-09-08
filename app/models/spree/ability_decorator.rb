@@ -59,12 +59,12 @@ class AbilityDecorator
 
     # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
-    can [:read, :update, :bulk_management, :fire, :resend], Spree::Order do |order|
+    can [:read, :update, :fire, :resend], Spree::Order do |order|
       # We allow editing orders with a nil distributor as this state occurs
       # during the order creation process from the admin backend
       order.distributor.nil? || user.enterprises.include?(order.distributor)
     end
-    can [:admin], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor?)
+    can [:admin, :bulk_management], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor?)
     can [:admin, :create], Spree::LineItem
 
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment

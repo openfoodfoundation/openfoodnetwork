@@ -94,10 +94,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
         describe "purchasing" do
           it "takes us to the order confirmation page when we submit a complete form" do
-            toggle_shipping
-            choose sm2.name
-            toggle_payment
-            choose pm1.name
             toggle_details
             within "#details" do
               fill_in "First Name", with: "Will"
@@ -112,14 +108,25 @@ feature "As a consumer I want to check out my cart", js: true do
               select "Victoria", from: "State"
               fill_in "City", with: "Melbourne"
               fill_in "Postcode", with: "3066"
-
             end
+            toggle_shipping
+            within "#shipping" do
+              choose sm2.name
+              fill_in 'Any notes or custom delivery instructions?', with: "SpEcIaL NoTeS"
+            end
+            toggle_payment
+            within "#payment" do
+              choose pm1.name
+            end
+
             place_order
             page.should have_content "Your order has been processed successfully"
             ActionMailer::Base.deliveries.length.should == 2
             email = ActionMailer::Base.deliveries.last
             site_name = Spree::Config[:site_name]
             email.subject.should include "#{site_name} Order Confirmation"
+            o = Spree::Order.complete.first
+            expect(o.special_instructions).to eq "SpEcIaL NoTeS"
           end
 
           context "with basic details filled" do
@@ -157,6 +164,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
               it "takes us to the order confirmation page when submitted with a valid credit card" do
                 toggle_payment
+                save_screenshot '/Users/rob/Desktop/ss.png'
                 fill_in 'Card Number', with: "4111111111111111"
                 select 'February', from: 'secrets.card_month'
                 select (Date.today.year+1).to_s, from: 'secrets.card_year'
