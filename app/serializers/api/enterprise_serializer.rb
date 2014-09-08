@@ -17,6 +17,9 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
+  #TODO: Remove these later
+  attributes :icon, :has_shopfront, :can_aggregate
+
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
   end
@@ -69,9 +72,8 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :icon, :path,
+    :email, :hash, :logo, :promo_image, :path,
     :pickup, :delivery
-  attributes :has_shopfront, :can_aggregate
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
