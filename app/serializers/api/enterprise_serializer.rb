@@ -24,6 +24,42 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   def active
     @options[:active_distributors].andand.include? object
   end
+
+  # TODO: Move this back to uncached section when relavant properties are defined on the Enterprise model
+  def icon
+    # TODO: Replace with object.has_shopfront when this property exists
+    if has_shopfront
+      if can_aggregate
+        "/assets/map_005-hub.svg"
+      else
+        if object.is_distributor
+          "/assets/map_003-producer-shop.svg"
+        else
+          "/assets/map_001-producer-only.svg"
+        end
+      end
+    else
+      if can_aggregate
+        "/assets/map_006-hub-profile.svg"
+      else
+        if object.is_distributor
+          "/assets/map_004-producer-shop-profile.svg"
+        else
+          "/assets/map_002-producer-only-profile.svg"
+        end
+      end
+    end
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def has_shopfront
+    object.type != 'profile'
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def can_aggregate
+    object.is_distributor && object.suppliers != [object]
+  end
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
@@ -66,40 +102,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def promo_image
     object.promo_image(:large) if object.promo_image.exists?
-  end
-
-  def icon
-    if has_shopfront
-      if can_aggregate
-        "/assets/map_005-hub.svg"
-      else
-        if object.is_distributor
-          "/assets/map_003-producer-shop.svg"
-        else
-          "/assets/map_001-producer-only.svg"
-        end
-      end
-    else
-      if can_aggregate
-        "/assets/map_006-hub-profile.svg"
-      else
-        if object.is_distributor
-          "/assets/map_004-producer-shop-profile.svg"
-        else
-          "/assets/map_002-producer-only-profile.svg"
-        end
-      end
-    end
-  end
-
-  # TODO: Remove this when flags on enterprises are switched over
-  def has_shopfront
-    object.type != 'profile'
-  end
-
-  # TODO: Remove this when flags on enterprises are switched over
-  def can_aggregate
-    object.is_distributor && object.suppliers != [object]
   end
 
   # TODO when ActiveSerializers supports URL helpers
