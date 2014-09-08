@@ -13,14 +13,16 @@
       %col{style: "width: 25%;"}/
       %col{style: "width: 10%;"}/
       %col{style: "width: 5%;"}/
-      %col{style: "width: 10%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 10%;"}/
       %col{style: "width: 20%;"}/
     %thead
       %tr{"data-hook" => "enterprises_header"}
         %th Name
         %th Role
         %th Visible?
-        %th Type
+        - if spree_current_user.admin?
+          %th Type
         %th
     %tbody
       = f.fields_for :collection do |enterprise_form|
@@ -34,7 +36,8 @@
             = enterprise_form.check_box :is_distributor
             Hub
           %td= enterprise_form.check_box :visible
-          %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
           %td{"data-hook" => "admin_users_index_row_actions"}
             = render 'actions', enterprise: enterprise
       - if @enterprises.empty?
