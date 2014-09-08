@@ -21,7 +21,7 @@
       display: inline-block
       margin-right: 0.25rem
       float: left
-    
+
     //Closed & Open column
     .open_closed
       i
@@ -29,12 +29,11 @@
         float: right
         margin-left: 0.5rem
 
-    //Hub Name 
+    //Hub Name
     span.hub-name-listing
-      float: left
       font-weight: 700
 
-    @media all and (max-width: 640px) 
+    @media all and (max-width: 640px)
       &.closed, &.open
         .active_table_row:first-child .skinny-head
           background-color: $clr-brick-light
@@ -91,7 +90,7 @@
     &.open
       .active_table_row:nth-child(2)
         padding-bottom: 0.75rem
-        
+
     //Current selected row
     &.current
       //overwrites active_table
