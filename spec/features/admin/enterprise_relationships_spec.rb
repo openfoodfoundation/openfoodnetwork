@@ -69,14 +69,13 @@ feature %q{
       end.to change(EnterpriseRelationship, :count).by(0)
     end
 
-
     scenario "deleting a relationship" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
-      er = create(:enterprise_relationship, parent: e1, child: e2)
+      er = create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_to_order_cycle])
 
       visit admin_enterprise_relationships_path
-      page.should have_relationship e1, e2
+      page.should have_relationship e1, e2, ['to add to order cycle']
 
       first("a.delete-enterprise-relationship").click
 
