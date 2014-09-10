@@ -2,8 +2,9 @@
   Enterprises
 
 - content_for :page_actions do
-  %li#new_product_link
-    = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
+  - if spree_current_user.can_own_more_enterprises?
+    %li#new_product_link
+      = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
 
 = render 'admin/shared/enterprises_sub_menu'
 
