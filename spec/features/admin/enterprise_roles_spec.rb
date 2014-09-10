@@ -71,7 +71,9 @@ feature %q{
       visit admin_enterprise_roles_path
       page.should have_relationship u, e
 
-      first("a.delete-enterprise-role").click
+      within("#enterprise_role_#{er.id}") do
+        find("a.delete-enterprise-role").click
+      end
 
       page.should_not have_relationship u, e
       EnterpriseRole.where(id: er.id).should be_empty
