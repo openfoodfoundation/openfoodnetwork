@@ -18,6 +18,85 @@
   #     $httpBackend.flush()
 
 
+  # describe "cloning products", ->
+  #   it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
+  #     $scope.products = [
+  #       id: 13
+  #       permalink_live: "oranges"
+  #     ]
+  #     $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+  #       product:
+  #         id: 17
+  #         name: "new_product"
+
+  #     $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
+  #       id: 17
+  #       name: "new_product"
+  #     ]
+  #     $scope.cloneProduct $scope.products[0]
+  #     $httpBackend.flush()
+
+  #   it "adds the newly created product to $scope.products and matches producer", ->
+  #     spyOn($scope, "unpackProduct").andCallThrough()
+  #     $scope.products = [
+  #       id: 13
+  #       permalink_live: "oranges"
+  #     ]
+  #     $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+  #       product:
+  #         id: 17
+  #         name: "new_product"
+  #         producer_id: 6
+
+  #         variants: [
+  #           id: 3
+  #           name: "V1"
+  #         ]
+
+  #     $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
+  #       id: 17
+  #       name: "new_product"
+  #       producer_id: 6
+
+  #       variants: [
+  #         id: 3
+  #         name: "V1"
+  #       ]
+
+  #     $scope.cloneProduct $scope.products[0]
+  #     $httpBackend.flush()
+  #     expect($scope.unpackProduct).toHaveBeenCalledWith
+  #       id: 17
+  #       name: "new_product"
+  #       variant_unit_with_scale: null
+  #       producer_id: 6
+
+  #       variants: [
+  #         id: 3
+  #         name: "V1"
+  #         unit_value_with_description: ""
+  #       ]
+
+  #     expect($scope.products).toEqual [
+  #       {
+  #         id: 13
+  #         permalink_live: "oranges"
+  #       }
+  #       {
+  #         id: 17
+  #         name: "new_product"
+  #         variant_unit_with_scale: null
+  #         producer_id: 6
+
+  #         variants: [
+  #           id: 3
+  #           name: "V1"
+  #           unit_value_with_description: ""
+  #         ]
+  #       }
+  #     ]
+
+
   # describe "preparing products", ->
   #   beforeEach ->
   #     spyOn $scope, "loadVariantUnit"
@@ -145,5 +224,16 @@
   #     product = {}
   #     variant = {}
   #     expect($scope.variantUnitValue(product, variant)).toEqual null
+
+
+  # describe "fetching a product by id", ->
+  #   it "returns the product when it is present", ->
+  #     product = {id: 123}
+  #     $scope.products = [product]
+  #     expect($scope.findProduct(123, $scope.products)).toEqual product
+
+  #   it "returns null when the product is not present", ->
+  #     $scope.products = []
+  #     expect($scope.findProduct(123, $scope.products)).toBeNull()
 
 

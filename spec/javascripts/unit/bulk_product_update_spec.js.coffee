@@ -231,7 +231,7 @@ describe "filtering products for submission to database", ->
     ]
 
 describe "AdminProductEditCtrl", ->
-  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = null
+  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = null
 
   beforeEach ->
     module "ofn.admin"
@@ -241,13 +241,14 @@ describe "AdminProductEditCtrl", ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       null
 
-  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_) ->
+  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_) ->
     $scope = $rootScope.$new()
     $ctrl = _$controller_
     $timeout = _$timeout_
     $httpBackend = _$httpBackend_
     BulkProducts = _BulkProducts_
     DirtyProducts = _DirtyProducts_
+    DisplayProperties = _DisplayProperties_
 
     $ctrl "AdminProductEditCtrl", {$scope: $scope, $timeout: $timeout}
   )
@@ -524,7 +525,7 @@ describe "AdminProductEditCtrl", ->
       testProduct = {id: 123}
 
       beforeEach ->
-        $scope.products = [testProduct]
+        BulkProducts.products = [testProduct]
 
       it "extracts unit_value and unit_description from unit_value_with_description", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
@@ -586,7 +587,7 @@ describe "AdminProductEditCtrl", ->
       it "converts value from chosen unit to base unit", ->
         testProduct = {id: 123, variant_unit_scale: 1000}
         testVariant = {unit_value_with_description: "250.5"}
-        $scope.products = [testProduct]
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250500
@@ -596,7 +597,7 @@ describe "AdminProductEditCtrl", ->
       it "does not convert value when using a non-scaled unit", ->
         testProduct = {id: 123}
         testVariant = {unit_value_with_description: "12"}
-        $scope.products = [testProduct]
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 12
@@ -662,7 +663,7 @@ describe "AdminProductEditCtrl", ->
 
       it "runs displaySuccess() when post returns success", ->
         spyOn $scope, "displaySuccess"
-        spyOn $scope, "updateVariantLists"
+        spyOn BulkProducts, "updateVariantLists"
         spyOn DirtyProducts, "clear"
         $scope.products = [
           {
@@ -689,7 +690,7 @@ describe "AdminProductEditCtrl", ->
         $timeout.flush()
         expect($scope.displaySuccess).toHaveBeenCalled()
         expect(DirtyProducts.clear).toHaveBeenCalled()
-        expect($scope.updateVariantLists).toHaveBeenCalled()
+        expect(BulkProducts.updateVariantLists).toHaveBeenCalled()
 
       it "runs displayFailure() when post returns an error", ->
         spyOn $scope, "displayFailure"
@@ -707,20 +708,10 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         expect(window.alert).toHaveBeenCalledWith("Saving failed with the following error(s):\nan error\n")
 
-  describe "fetching a product by id", ->
-    it "returns the product when it is present", ->
-      product = {id: 123}
-      $scope.products = [product]
-      expect($scope.findProduct(123, $scope.products)).toEqual product
-
-    it "returns null when the product is not present", ->
-      $scope.products = []
-      expect($scope.findProduct(123, $scope.products)).toBeNull()
-
 
   describe "adding variants", ->
     beforeEach ->
-      $scope.displayProperties ||= {123: {}}
+      spyOn DisplayProperties, 'setShowVariants'
 
     it "adds first and subsequent variants", ->
       product = {id: 123, variants: []}
@@ -736,7 +727,7 @@ describe "AdminProductEditCtrl", ->
     it "shows the variant(s)", ->
       product = {id: 123, variants: []}
       $scope.addVariant(product)
-      expect($scope.displayProperties[123].showVariants).toBe(true)
+      expect(DisplayProperties.setShowVariants).toHaveBeenCalledWith 123, true
 
 
   describe "deleting products", ->
@@ -869,85 +860,6 @@ describe "AdminProductEditCtrl", ->
             id: 13
             name: "P1"
 
-
-
-  describe "cloning products", ->
-    it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
-      $scope.products = [
-        id: 13
-        permalink_live: "oranges"
-      ]
-      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-        product:
-          id: 17
-          name: "new_product"
-
-      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
-        id: 17
-        name: "new_product"
-      ]
-      $scope.cloneProduct $scope.products[0]
-      $httpBackend.flush()
-
-    it "adds the newly created product to $scope.products and matches producer", ->
-      spyOn($scope, "unpackProduct").andCallThrough()
-      $scope.products = [
-        id: 13
-        permalink_live: "oranges"
-      ]
-      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-        product:
-          id: 17
-          name: "new_product"
-          producer_id: 6
-
-          variants: [
-            id: 3
-            name: "V1"
-          ]
-
-      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
-        id: 17
-        name: "new_product"
-        producer_id: 6
-
-        variants: [
-          id: 3
-          name: "V1"
-        ]
-
-      $scope.cloneProduct $scope.products[0]
-      $httpBackend.flush()
-      expect($scope.unpackProduct).toHaveBeenCalledWith
-        id: 17
-        name: "new_product"
-        variant_unit_with_scale: null
-        producer_id: 6
-
-        variants: [
-          id: 3
-          name: "V1"
-          unit_value_with_description: ""
-        ]
-
-      expect($scope.products).toEqual [
-        {
-          id: 13
-          permalink_live: "oranges"
-        }
-        {
-          id: 17
-          name: "new_product"
-          variant_unit_with_scale: null
-          producer_id: 6
-
-          variants: [
-            id: 3
-            name: "V1"
-            unit_value_with_description: ""
-          ]
-        }
-      ]
 
 
   describe "filtering products", ->
