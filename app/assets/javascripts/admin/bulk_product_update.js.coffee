@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiKey) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiKey) ->
     $scope.loading = true
 
     $scope.updateStatusMessage =
@@ -42,7 +42,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.limit = 15
     $scope.productsWithUnsavedVariants = []
     $scope.query = ""
-    $scope.displayProperties = {}
+    $scope.DisplayProperties = DisplayProperties
 
     $scope.initialise = ->
       authorise_api_reponse = ""
@@ -70,9 +70,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.resetProducts = ->
       DirtyProducts.clear()
       $scope.setMessage $scope.updateStatusMessage, "", {}, false
-      for product in $scope.products
-        $scope.displayProperties[product.id] ||= showVariants: false
-
 
     # $scope.matchProducer = (product) ->
     #   for producer in $scope.producers
@@ -125,7 +122,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         on_hand: null
         price: null
       $scope.productsWithUnsavedVariants.push product
-      $scope.displayProperties[product.id].showVariants = true
+      DisplayProperties.setShowVariants product.id, true
 
 
     $scope.nextVariantId = ->
