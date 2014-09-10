@@ -167,7 +167,7 @@ feature "As a consumer I want to check out my cart", js: true do
                 page.should have_content "Your order has been processed successfully"
 
                 # There are two orders - our order and our new cart
-                o = Spree::Order.first
+                o = Spree::Order.complete.first
                 o.adjustments.shipping.first.amount.should == 4.56
                 o.payments.first.amount.should == 10 + 1.23 + 4.56 # items + fees + shipping
               end
@@ -178,7 +178,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
               it "takes us to the order confirmation page when submitted with a valid credit card" do
                 toggle_payment
-                save_screenshot '/Users/rob/Desktop/ss.png'
                 fill_in 'Card Number', with: "4111111111111111"
                 select 'February', from: 'secrets.card_month'
                 select (Date.today.year+1).to_s, from: 'secrets.card_year'
@@ -189,7 +188,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
                 # Order should have a payment with the correct amount
                 o = Spree::Order.complete.first
-                o.payments.first.amount.should == 11.23
+                o.payments.first.amount.should == 15.79
               end
 
               it "shows the payment processing failed message when submitted with an invalid credit card" do
