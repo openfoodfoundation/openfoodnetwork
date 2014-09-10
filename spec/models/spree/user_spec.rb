@@ -3,23 +3,23 @@ describe Spree.user_class do
     it { should have_many(:owned_enterprises) }
 
     describe "enterprise ownership" do
-      let(:u1) { create(:user) }
-      let(:u2) { create(:user) }
-      let(:e1) { create(:enterprise, owner: u1) }
-      let(:e2) { create(:enterprise, owner: u1) }
+      let(:u1) { create(:user, enterprise_limit: 2) }
+      let(:u2) { create(:user, enterprise_limit: 1) }
+      let!(:e1) { create(:enterprise, owner: u1) }
+      let!(:e2) { create(:enterprise, owner: u1) }
 
-      it "provides access to owned enteprises" do
-        expect(u1.owned_enterprises).to include e1, e2
+      it "provides access to owned enterprises" do
+        expect(u1.owned_enterprises(:reload)).to include e1, e2
       end
 
       it "enforces the limit on the number of enterprise owned" do
-        expect(u2.owned_enterprises).to eq []
+        expect(u2.owned_enterprises(:reload)).to eq []
         u2.owned_enterprises << e1
-        u2.owned_enterprises << e2
+        expect(u2.save!).to_not raise_error
         expect {
+          u2.owned_enterprises << e2
           u2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: The nominated user is not permitted to own own any more enterprises."
-
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: The nominated user is not permitted to own own any more enterprises (limit is 1)."
       end
     end
   end

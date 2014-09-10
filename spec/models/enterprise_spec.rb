@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Enterprise do
+  include AuthenticationWorkflow
 
   describe "associations" do
     it { should belong_to(:owner) }
@@ -54,9 +55,9 @@ describe Enterprise do
     end
 
     describe "ownership" do
-      let(:u1) { create(:user) }
-      let(:u2) { create(:user) }
-      let(:e) { create(:enterprise, owner: u1 ) }
+      let(:u1) { create_enterprise_user }
+      let(:u2) { create_enterprise_user }
+      let!(:e) { create(:enterprise, owner: u1 ) }
 
       it "adds new owner to list of managers" do
         expect(e.owner).to eq u1
@@ -67,6 +68,16 @@ describe Enterprise do
         e.reload
         expect(e.owner).to eq u2
         expect(e.users).to include u1, u2
+      end
+
+      it "validates ownership limit" do
+        expect(u1.enterprise_limit).to be 1
+        expect(u1.owned_enterprises(:reload)).to eq [e]
+        e2 = create(:enterprise, owner: u2 )
+        expect{
+          e2.owner = u1
+          e2.save!
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: You are not permitted to own own any more enterprises (limit is 1)."
       end
     end
   end

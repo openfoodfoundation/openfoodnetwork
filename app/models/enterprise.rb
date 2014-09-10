@@ -16,7 +16,7 @@ class Enterprise < ActiveRecord::Base
   has_many :enterprise_fees
   has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
-  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id
+  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
@@ -47,7 +47,8 @@ class Enterprise < ActiveRecord::Base
   validates :name, presence: true
   validates :type, presence: true, inclusion: {in: TYPES}
   validates :address, presence: true, associated: true
-  validates :owner, presence: true
+  validates_presence_of :owner
+  validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? }
   before_validation :set_unused_address_fields
@@ -240,5 +241,11 @@ class Enterprise < ActiveRecord::Base
 
   def ensure_owner_is_manager
     users << owner unless users.include?(owner) || owner.admin?
+  end
+
+  def enforce_ownership_limit
+    unless owner.can_own_more_enterprises?
+      errors.add(:owner, "^You are not permitted to own own any more enterprises (limit is #{owner.enterprise_limit}).")
+    end
   end
 end

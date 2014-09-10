@@ -257,13 +257,13 @@ feature %q{
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let(:enterprise_user) { create_enterprise_user }
 
     before(:each) do
-      @new_user = create_enterprise_user
-      @new_user.enterprise_roles.build(enterprise: supplier1).save
-      @new_user.enterprise_roles.build(enterprise: distributor1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier1).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as @new_user
+      login_to_admin_as enterprise_user
     end
 
     scenario "can view enterprises I have permission to" do
@@ -290,23 +290,42 @@ feature %q{
       expect(page).to_not have_content "distributor2.name"
     end
 
-    scenario "creating an enterprise" do
-      # When I create an enterprise
-      click_link 'Enterprises'
-      click_link 'New Enterprise'
-      fill_in 'enterprise_name', with: 'zzz'
-      fill_in 'enterprise_address_attributes_address1', with: 'z'
-      fill_in 'enterprise_address_attributes_city', with: 'z'
-      fill_in 'enterprise_address_attributes_zipcode', with: 'z'
-      click_button 'Create'
+    context "creating an enterprise" do
+      before do
+        # When I create an enterprise
+        click_link 'Enterprises'
+        click_link 'New Enterprise'
+        fill_in 'enterprise_name', with: 'zzz'
+        fill_in 'enterprise_address_attributes_address1', with: 'z'
+        fill_in 'enterprise_address_attributes_city', with: 'z'
+        fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+      end
 
-      # Then it should be created
-      page.should have_content 'Enterprise "zzz" has been successfully created!'
-      enterprise = Enterprise.last
-      enterprise.name.should == 'zzz'
+      scenario "without violating rules" do
+        click_button 'Create'
 
-      # And I should be managing it
-      Enterprise.managed_by(@new_user).should include enterprise
+        # Then it should be created
+        page.should have_content 'Enterprise "zzz" has been successfully created!'
+        enterprise = Enterprise.last
+        enterprise.name.should == 'zzz'
+
+        # And I should be managing it
+        Enterprise.managed_by(enterprise_user).should include enterprise
+      end
+
+      context "overstepping my owned enterprises limit" do
+        before do
+          create(:enterprise, owner: enterprise_user)
+        end
+
+        it "shows me an error message" do
+          click_button 'Create'
+
+          # Then it should show me an error
+          expect(page).to_not have_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).to have_content "You are not permitted to own own any more enterprises (limit is 1)."
+        end
+      end
     end
 
     scenario "editing enterprises I have permission to" do
