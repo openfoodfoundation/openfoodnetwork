@@ -1,4 +1,4 @@
-class Api::CurrencyLocalizationSerializer < ActiveModel::Serializer
+class Api::CurrencyConfigSerializer < ActiveModel::Serializer
   attributes :currency, :display_currency, :symbol, :symbol_position, :hide_cents, :decimal_mark, :thousands_separator
 
   def currency
