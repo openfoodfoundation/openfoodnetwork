@@ -21,8 +21,8 @@ module InjectionHelper
     inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
   end
 
-  def inject_currency_localization
-    inject_json_ams "currencyLocalization", {}, Api::CurrencyLocalizationSerializer
+  def inject_currency_config
+    inject_json_ams "currencyConfig", {}, Api::CurrencyConfigSerializer
   end
 
 
