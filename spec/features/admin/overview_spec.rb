@@ -16,7 +16,7 @@ feature %q{
       Spree::Admin::OverviewController.any_instance.stub(:spree_current_user).and_return @enterprise_user
       quick_login_as @enterprise_user
     end
-    
+
     context "with no enterprises" do
       it "prompts the user to create a new enteprise" do
         visit '/admin'
@@ -42,9 +42,8 @@ feature %q{
         page.should have_selector ".dashboard_item#order_cycles"
         page.should have_selector ".dashboard_item#enterprises .list-item", text: d1.name
         page.should have_selector ".dashboard_item#enterprises .button.bottom", text: "MANAGE MY ENTERPRISES"
-
       end
-      
+
       context "but no products or order cycles" do
         it "prompts the user to create a new product and to manage order cycles" do
           visit '/admin'
