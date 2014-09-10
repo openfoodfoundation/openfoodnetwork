@@ -35,7 +35,7 @@
         = render partial: "shared/menu/menu"
 
         %section{ role: "main" }
-          = yield
+          .ng-cloak= yield
           
           #footer
     %loading
