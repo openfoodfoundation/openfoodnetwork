@@ -305,7 +305,6 @@ feature %q{
       expect(page).to have_select "producer", selected: s1.name
       expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
       expect(page).to have_field "price", with: "10.0"
-      save_screenshot '/Users/rob/Desktop/ss.png'
       expect(page).to have_selector "div#s2id_p#{p.id}_category a.select2-choice"
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_field "on_hand", with: "6"
