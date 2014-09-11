@@ -1,4 +1,5 @@
 @import branding
+@import mixins
 
 .producers
   .active_table .active_table_node
@@ -7,6 +8,7 @@
     @media all and (max-width: 640px) 
       .skinny-head
         background-color: $clr-turquoise-light
+        @include border-radius-mixed(0.5em, 0.5em, 0, 0)
         margin-top: -1rem
         margin-bottom: 1rem
         padding-top: 1rem
@@ -14,6 +16,7 @@
       .follow-icons
         &, & *
           font-size: 1.5rem
+        
 
     // Producer icons
     i.ofn-i_059-producer, i.ofn-i_060-producer-reversed
@@ -75,9 +78,12 @@
 
     //Closed row
     &.closed
-      &:hover, &:active, &:focus
-        .active_table_row.closed
-          border: 1px solid $clr-turquoise
+      .active_table_row.closed
+        border: 1px solid transparent
+        @media all and (max-width: 640px) 
+          border-color: $clr-turquoise-light
+        &:hover, &:active, &:focus
+          border-color: $clr-turquoise
 
 
 
