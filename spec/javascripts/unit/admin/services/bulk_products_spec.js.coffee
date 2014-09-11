@@ -1,21 +1,40 @@
-  # describe "fetching products", ->
-  #   it "makes a standard call to dataFetcher when no filters exist", ->
-  #     $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond "list of products"
-  #     $scope.fetchProducts()
+describe "BulkProducts service", ->
+  BulkProducts = $httpBackend = null
 
-  #   it "calls makes more calls to dataFetcher if more pages exist", ->
-  #     $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond { products: [], pages: 2 }
-  #     $httpBackend.expectGET("/api/products/bulk_products?page=2;per_page=20;").respond { products: ["list of products"] }
-  #     $scope.fetchProducts()
-  #     $httpBackend.flush()
+  beforeEach ->
+    module "ofn.admin"
 
-  #   it "applies filters when they are present", ->
-  #     filter = {property: $scope.filterableColumns[1], predicate:$scope.filterTypes[0], value:"Product1"}
-  #     $scope.currentFilters.push filter # Don't use addFilter as that is not what we are testing
-  #     expect($scope.currentFilters).toEqual [filter]
-  #     $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;q[name_eq]=Product1;").respond "list of products"
-  #     $scope.fetchProducts()
-  #     $httpBackend.flush()
+  beforeEach inject (_BulkProducts_, _$httpBackend_) ->
+    BulkProducts = _BulkProducts_
+    $httpBackend = _$httpBackend_
+
+  describe "fetching products", ->
+    beforeEach ->
+      spyOn BulkProducts, 'addProducts'
+
+    it "makes a standard call to dataFetcher when no filters exist", ->
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond "list of products"
+      BulkProducts.fetch [], ->
+      $httpBackend.flush()
+
+    it "makes more calls to dataFetcher if more pages exist", ->
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;").respond { products: [], pages: 2 }
+      $httpBackend.expectGET("/api/products/bulk_products?page=2;per_page=20;").respond { products: ["list of products"] }
+      BulkProducts.fetch [], ->
+      $httpBackend.flush()
+
+    it "applies filters when they are supplied", ->
+      filter =
+        property:
+          name: "Name"
+          db_column: "name"
+        predicate:
+          name: "Equals"
+          predicate: "eq"
+        value: "Product1"
+      $httpBackend.expectGET("/api/products/bulk_products?page=1;per_page=20;q[name_eq]=Product1;").respond "list of products"
+      BulkProducts.fetch [filter], ->
+      $httpBackend.flush()
 
 
   # describe "cloning products", ->
