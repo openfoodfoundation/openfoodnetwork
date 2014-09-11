@@ -31,6 +31,21 @@ feature %q{
         user.enterprises.first.name.should == supplier2.name
       end
     end
+
+    context "with a limitted number of owned enterprises" do
+      scenario "setting the enterprise ownership limit" do
+        user.enterprise_limit.should == 1
+        login_to_admin_section
+        click_link 'Users'
+        click_link user.email
+
+        fill_in "user_enterprise_limit", with: 2
+
+        click_button 'Update'
+        user.reload
+        expect(user.enterprise_limit).to eq 2
+      end
+    end
   end
 
   describe "product management" do

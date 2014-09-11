@@ -6,7 +6,7 @@ Spree.user_class.class_eval do
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
-  attr_accessible :enterprise_ids, :enterprise_roles_attributes
+  attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
