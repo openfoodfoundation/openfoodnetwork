@@ -4,16 +4,17 @@
       %h1= image_tag "ofn_logo_beta.png", title: "Open Food Network (beta)"
       %h2 An open marketplace that makes it easy to find, buy, sell and move sustainable local food.
       
-      %ofn-modal{title: "Learn more"}
+      %ofn-modal{title: "Learn more", "ng-cloak" => true}
         = render partial: "modals/learn_more"
 
-= render partial: "home/hubs"
+.ng-cloak
+  = render partial: "home/hubs"
 
-/ = render partial: "home/map"
+  / = render partial: "home/map"
 
-/ = render partial: "home/producers"
+  / = render partial: "home/producers"
 
-/ = render partial: "home/groups"
+  / = render partial: "home/groups"
 
 = render partial: "home/beta"
 

@@ -94,10 +94,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
         describe "purchasing" do
           it "takes us to the order confirmation page when we submit a complete form" do
-            toggle_shipping
-            choose sm2.name
-            toggle_payment
-            choose pm1.name
             toggle_details
             within "#details" do
               fill_in "First Name", with: "Will"
@@ -112,14 +108,25 @@ feature "As a consumer I want to check out my cart", js: true do
               select "Victoria", from: "State"
               fill_in "City", with: "Melbourne"
               fill_in "Postcode", with: "3066"
-
             end
+            toggle_shipping
+            within "#shipping" do
+              choose sm2.name
+              fill_in 'Any notes or custom delivery instructions?', with: "SpEcIaL NoTeS"
+            end
+            toggle_payment
+            within "#payment" do
+              choose pm1.name
+            end
+
             place_order
             page.should have_content "Your order has been processed successfully"
             ActionMailer::Base.deliveries.length.should == 2
             email = ActionMailer::Base.deliveries.last
             site_name = Spree::Config[:site_name]
             email.subject.should include "#{site_name} Order Confirmation"
+            o = Spree::Order.complete.first
+            expect(o.special_instructions).to eq "SpEcIaL NoTeS"
           end
 
           context "with basic details filled" do
@@ -152,6 +159,20 @@ feature "As a consumer I want to check out my cart", js: true do
               page.should have_content "Your order has been processed successfully"
             end
 
+            context "when we are charged a shipping fee" do
+              before { choose sm2.name }
+
+              it "creates a payment for the full amount inclusive of shipping" do
+                place_order
+                page.should have_content "Your order has been processed successfully"
+
+                # There are two orders - our order and our new cart
+                o = Spree::Order.complete.first
+                o.adjustments.shipping.first.amount.should == 4.56
+                o.payments.first.amount.should == 10 + 1.23 + 4.56 # items + fees + shipping
+              end
+            end
+
             context "with a credit card payment method" do
               let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::Gateway::Bogus") }
 
@@ -167,7 +188,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
                 # Order should have a payment with the correct amount
                 o = Spree::Order.complete.first
-                o.payments.first.amount.should == 11.23
+                o.payments.first.amount.should == 15.79
               end
 
               it "shows the payment processing failed message when submitted with an invalid credit card" do

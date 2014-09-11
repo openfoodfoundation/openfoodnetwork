@@ -15,13 +15,6 @@ feature %q{
       admin_user = quick_login_as_admin
     end
 
-    it "displays a Bulk Management Tab under the Orders item" do
-      visit '/admin/orders'
-      page.should have_link "Bulk Order Management"
-      click_link "Bulk Order Management"
-      page.should have_selector "h1.page-title", text: "Bulk Order Management"
-    end
-
     it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
       page.should have_text "No orders found."
@@ -584,6 +577,13 @@ feature %q{
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
       quick_login_as @enterprise_user
+    end
+
+    it "displays a Bulk Management Tab under the Orders item" do
+      visit '/admin/orders'
+      page.should have_link "Bulk Order Management"
+      click_link "Bulk Order Management"
+      page.should have_selector "h1.page-title", text: "Bulk Order Management"
     end
 
     it "shows only line item from orders that I distribute, and not those that I supply" do

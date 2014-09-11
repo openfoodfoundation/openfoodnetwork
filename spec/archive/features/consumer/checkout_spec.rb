@@ -7,7 +7,7 @@ feature %q{
 }, skip: true do
   include AuthenticationWorkflow
   include WebHelper
-  
+
 
   background do
     set_feature_toggle :order_cycles, true
@@ -24,8 +24,8 @@ feature %q{
                                              :state => Spree::State.find_by_name('Victoria'),
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
-    
-    
+
+
     @distributor_alternative = create(:distributor_enterprise, :name => 'Alternative Distributor',
                           :address => create(:address,
                                              :address1 => '1600 Rathdowne St',
@@ -33,7 +33,7 @@ feature %q{
                                              :zipcode => 3054,
                                              :state => Spree::State.find_by_name('Victoria'),
                                              :country => Spree::Country.find_by_name('Australia')),
-                          :pickup_times => 'Tuesday, 4 PM')    
+                          :pickup_times => 'Tuesday, 4 PM')
 
     @enterprise_fee_1 = create(:enterprise_fee, :name => 'Enterprise Fee One', :calculator => Spree::Calculator::PerItem.new)
     @enterprise_fee_1.calculator.set_preference :amount, 1
@@ -347,16 +347,16 @@ feature %q{
 
     login_to_consumer_section
     click_link 'FruitAndVeg'
-    visit enterprise_path @distributor1 
+    visit enterprise_path @distributor1
 
     click_link 'Bananas'
     click_button 'Add To Cart'
-    visit enterprise_path @distributor1 
+    visit enterprise_path @distributor1
 
     click_link 'Zucchini'
     click_button 'Add To Cart'
     find('#checkout-link').click
-    
+
     # And manually visit the old checkout
     visit "/checkout"
 
@@ -389,7 +389,7 @@ feature %q{
     # -- Checkout: Delivery
     page.should have_content "DELIVERY METHOD"
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Distribution:", "$51.00"]] 
+    order_charges.should == [["Distribution:", "$51.00"]]
 
     click_checkout_continue_button
 
@@ -403,7 +403,7 @@ feature %q{
     # -- Checkout: Order complete
     page.should have_content 'Your order has been processed successfully'
     page.should have_content @payment_method_distributor_oc.description
-    page.should have_content @distributor_oc.name 
+    page.should have_content @distributor_oc.name
 
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
     page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'

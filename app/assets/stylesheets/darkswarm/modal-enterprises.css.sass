@@ -2,6 +2,23 @@
 @import mixins
 
 
+// Generic styles for use
+
+.modal-centered
+  text-align: center
+  p
+    margin-bottom: 0
+
+.modal-header, p.modal-header
+  text-align: center
+  text-transform: uppercase
+  font-size: 1rem
+  font-weight: 400
+  color: $disabled-dark
+  border-bottom: 1px solid $disabled-dark
+  margin-top: 0.75rem
+  margin-bottom: 0.5rem
+
 // Enterprise promo image and text
 
 .highlight
@@ -53,7 +70,7 @@
 // FOLLOW Enterprise
 
 .follow-icons
-  text-align: center
+  // text-align: center
   span
     display: inline-block
     margin: 0 0.25rem 0.75rem 0.25rem
@@ -74,7 +91,7 @@
   label
     text-transform: uppercase
     font-size: 0.875rem
-    margin-bottom: 0
+    margin-bottom: 0.75rem
     5rem
     color: $dark-grey
 
@@ -82,51 +99,53 @@
     color: $disabled-dark
     span
       text-transform: capitalize
+  
+  .cta-hub
+    margin-right: 2rem
+    margin-top: 0rem
+    margin-bottom: 0.75rem
+    display: inline-block
 
-  .button.secondary
-    background-color: #999
-  .button.hub
-    margin-right: 1rem
-    margin-top: 0.25rem
-    margin-bottom: 1rem
-    padding-left: 1rem
-    padding-right: 1rem
-    font-weight: bold
+    &.secondary
+      color: $disabled-dark
+
+    &.primary
+      color: $clr-brick
+    
     i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
-      margin-right: 0.15rem
-      font-size: 1.25rem
-    i.ofn-i_007-caret-right
-      margin-left: 1rem
+      margin-right: 0.1rem
+      font-size: 2rem
+      padding: 0.15rem 0.25rem 0.35rem 0.25rem 
+      float: left
+
+    .hub-name 
+      margin-top: 0.75rem
+      margin-bottom: 0.2rem
+      font-weight: 400
+      display: inline-block
+      border-bottom: 1px solid transparent
     .button-address
+      margin-top: 0.5rem
+      margin-bottom: 0.2rem
+      margin-left: 0.1rem
+      text-transform: uppercase
       font-weight: 300
       font-style: italic
       font-size: 0.75rem
-      display: inline
+      display: inline-block
+      border-bottom: 1px solid transparent
       @media all and (max-width: 640px)
         display: none
-  .button.hub.expand
-    text-align: left
-    i.ofn-i_007-caret-right
-      float: right
-    i.ofn-i_033-open-sign, i.ofn-i_032-closed-sign
-      float: left
-      margin-right: 0.5rem
+
+    &:hover, &:focus, &:active
+      &.secondary
+        color: #666
+        .hub-name, .button-address 
+          border-bottom: 1px solid #999
+      &.primary
+        color: $clr-brick-bright
+        .hub-name, .button-address 
+          border-bottom: 1px solid $clr-brick-bright
 
 
-// Generic styles for use
-
-.modal-centered
-  text-align: center
-  p
-    margin-bottom: 0
-
-.modal-header, p.modal-header
-  text-align: center
-  text-transform: uppercase
-  font-size: 1rem
-  font-weight: 400
-  color: $disabled-dark
-  border-bottom: 1px solid $disabled-dark
-  margin-top: 0.75rem
-  margin-bottom: 0.5rem
   

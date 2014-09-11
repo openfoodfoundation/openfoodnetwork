@@ -24,5 +24,5 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
 
     permission_presentation: (permission) ->
       switch permission
-        when "add_to_order_cycle" then "can add to order cycle"
-        when "manage_products" then "can manage the products of"
+        when "add_to_order_cycle" then "to add to order cycle"
+        when "manage_products" then "to manage products"

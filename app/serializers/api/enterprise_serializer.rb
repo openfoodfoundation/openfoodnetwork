@@ -17,6 +17,9 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
+  #TODO: Remove these later
+  attributes :icon, :has_shopfront, :can_aggregate
+
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
   end
@@ -24,16 +27,52 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   def active
     @options[:active_distributors].andand.include? object
   end
+
+  # TODO: Move this back to uncached section when relavant properties are defined on the Enterprise model
+  def icon
+    # TODO: Replace with object.has_shopfront when this property exists
+    if has_shopfront
+      if can_aggregate
+        "/assets/map_005-hub.svg"
+      else
+        if object.is_distributor
+          "/assets/map_003-producer-shop.svg"
+        else
+          "/assets/map_001-producer-only.svg"
+        end
+      end
+    else
+      if can_aggregate
+        "/assets/map_006-hub-profile.svg"
+      else
+        if object.is_distributor
+          "/assets/map_004-producer-shop-profile.svg"
+        else
+          "/assets/map_002-producer-only-profile.svg"
+        end
+      end
+    end
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def has_shopfront
+    object.type != 'profile'
+  end
+
+  # TODO: Remove this when flags on enterprises are switched over
+  def can_aggregate
+    object.is_distributor && object.suppliers != [object]
+  end
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   cached
   delegate :cache_key, to: :object
 
-  attributes :name, :id, :description, :latitude, :longitude, 
-    :long_description, :website, :instagram, :linkedin, :twitter, 
+  attributes :name, :id, :description, :latitude, :longitude,
+    :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :icon, :path,
+    :email, :hash, :logo, :promo_image, :path,
     :pickup, :delivery
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
@@ -65,16 +104,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def promo_image
     object.promo_image(:large) if object.promo_image.exists?
-  end
-
-  def icon
-    if object.is_primary_producer? and object.is_distributor?
-      "/assets/map-icon-both.svg"
-    elsif object.is_primary_producer?
-      "/assets/map-icon-producer.svg"
-    else
-      "/assets/map-icon-hub.svg"
-    end
   end
 
   # TODO when ActiveSerializers supports URL helpers

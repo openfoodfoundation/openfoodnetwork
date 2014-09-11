@@ -16,6 +16,6 @@ describe Api::EnterpriseSerializer do
   
   it "will render urls" do
     serializer = Api::EnterpriseSerializer.new enterprise
-    serializer.to_json.should match "map-icon-hub.svg"
+    serializer.to_json.should match "map_005-hub.svg"
   end
 end

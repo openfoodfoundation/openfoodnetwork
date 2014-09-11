@@ -10,23 +10,30 @@
       overflow-x: hidden
       overflow-y: visible
 
-    //Hub icon styline
-    i.ofn-i_040-hub
-      @include border-radius(99999rem)
-      font-size: 1.15rem
-      display: inline-block
-      padding: 0.2rem
-      margin-top: 0.1rem
-      margin-bottom: 0.1rem
-      background-color: transparent
-      @media all and (max-width: 768px) 
-        font-size: 1rem
-    
     //Generic text link style
     a:hover, a:active, a:focus
       color: $clr-brick-bright
 
-    @media all and (max-width: 640px) 
+    //Hub and Producer icons
+    // i.ofn-i_040-hub
+    i.ofn-i_063-hub, i.ofn-i_064-hub-reversed, i.ofn-i_059-producer, i.ofn-i_060-producer-reversed
+      font-size: 2rem
+      display: inline-block
+      margin-right: 0.25rem
+      float: left
+
+    //Closed & Open column
+    .open_closed
+      i
+        font-size: 2rem
+        float: right
+        margin-left: 0.5rem
+
+    //Hub Name
+    span.hub-name-listing
+      font-weight: 700
+
+    @media all and (max-width: 640px)
       &.closed, &.open
         .active_table_row:first-child .skinny-head
           background-color: $clr-brick-light
@@ -38,38 +45,35 @@
         &.closed, &.open
           .active_table_row:first-child .skinny-head
             background-color: white
-    
+      &.current
+        &.closed, &.open
+          .active_table_row:first-child .skinny-head
+            background-color: $clr-brick-bright
+      &.current
+        &.inactive
+          &.closed, &.open
+            .active_table_row:first-child .skinny-head
+              background-color: #555
+
     //Inactive row
     &.inactive, &.inactive strong
       color: $disabled-dark
-
       &, & *
         color: $disabled-dark
 
       a i.ofn-i_040-hub
         color: $disabled-dark
-
-      &.current
+    &.current
+      &.inactive
         &.closed, &.open
-          
-          a, a strong, a span, a i
-            color: $disabled-dark
-            &:hover, &:focus, &:active
-              color: $disabled-dark
-
-          a i.ofn-i_040-hub
-            color: white
+          .active_table_row:first-child
             background-color: $disabled-dark
-          a:hover, a:focus, a:active
-            color: $disabled-dark
-            i.ofn-i_040-hub
-              background-color: $disabled-dark
-      
+            &, & *
+              color: white
       &.closed
         &:hover, &:active, &:focus
           border: none
           color: $disabled-dark
-
       &.open
         .active_table_row:first-child
           color: $disabled-dark
@@ -82,31 +86,27 @@
         .active_table_row:nth-child(2)
           background-color: rgba(255, 255, 255, 0)
 
-    //Open row
+    //Padding second row
     &.open
       .active_table_row:nth-child(2)
         padding-bottom: 0.75rem
-        
+
     //Current selected row
     &.current
       //overwrites active_table
-      &.closed
-        a, a i, a span, a strong
-          color: $clr-brick
-
       &.closed, &.open
-        a i.ofn-i_040-hub
-          color: white
+        .active_table_row:first-child
           background-color: $clr-brick
-        
-
-        a:hover, a:focus, a:active
-          strong, span
-            color: $clr-brick-bright
-          i.ofn-i_040-hub
-            background-color: $clr-brick-bright
-
-
-
-
+          opacity: 1
+          &:hover, &:focus, &:active
+            opacity: 0.9
+          &, & *
+            color: white
+      &.open, &.closed
+        .active_table_row
+          border-color: $clr-brick
+      &.inactive
+        &.open, &.closed
+          .active_table_row
+            border-color: $disabled-dark
 
