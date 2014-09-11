@@ -71,143 +71,134 @@ describe "BulkProducts service", ->
       expect(BulkProducts.addProducts).toHaveBeenCalledWith [clonedProduct]
 
 
-  # describe "preparing products", ->
-  #   beforeEach ->
-  #     spyOn $scope, "loadVariantUnit"
+  describe "preparing products", ->
+    beforeEach ->
+      spyOn BulkProducts, "loadVariantUnit"
 
-  #   it "initialises display properties for the product", ->
-  #     product = {id: 123}
-  #     $scope.displayProperties = {}
-  #     $scope.unpackProduct product
-  #     expect($scope.displayProperties[123]).toEqual {showVariants: false}
-
-  #   it "calls loadVariantUnit for the product", ->
-  #     product = {id: 123}
-  #     $scope.displayProperties = {}
-  #     $scope.unpackProduct product
-  #     expect($scope.loadVariantUnit.calls.length).toEqual 1
+    it "calls loadVariantUnit for the product", ->
+      product = {id: 123}
+      BulkProducts.unpackProduct product
+      expect(BulkProducts.loadVariantUnit).toHaveBeenCalled()
 
 
-  # describe "loading variant unit", ->
-  #   describe "setting product variant_unit_with_scale field", ->
-  #     it "sets by combining variant_unit and variant_unit_scale", ->
-  #       product =
-  #         variant_unit: "volume"
-  #         variant_unit_scale: .001
-  #       $scope.loadVariantUnit product
-  #       expect(product.variant_unit_with_scale).toEqual "volume_0.001"
+  describe "loading variant unit", ->
+    describe "setting product variant_unit_with_scale field", ->
+      it "sets by combining variant_unit and variant_unit_scale", ->
+        product =
+          variant_unit: "volume"
+          variant_unit_scale: .001
+        BulkProducts.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "volume_0.001"
 
-  #     it "sets to null when variant_unit is null", ->
-  #       product = {variant_unit: null, variant_unit_scale: 1000}
-  #       $scope.loadVariantUnit product
-  #       expect(product.variant_unit_with_scale).toBeNull()
+      it "sets to null when variant_unit is null", ->
+        product = {variant_unit: null, variant_unit_scale: 1000}
+        BulkProducts.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toBeNull()
 
-  #     it "sets to variant_unit when variant_unit_scale is null", ->
-  #       product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
-  #       $scope.loadVariantUnit product
-  #       expect(product.variant_unit_with_scale).toEqual "items"
+      it "sets to variant_unit when variant_unit_scale is null", ->
+        product = {variant_unit: 'items', variant_unit_scale: null, variant_unit_name: 'foo'}
+        BulkProducts.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "items"
 
-  #     it "sets to variant_unit when variant_unit is 'items'", ->
-  #       product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
-  #       $scope.loadVariantUnit product
-  #       expect(product.variant_unit_with_scale).toEqual "items"
+      it "sets to variant_unit when variant_unit is 'items'", ->
+        product = {variant_unit: 'items', variant_unit_scale: 1000, variant_unit_name: 'foo'}
+        BulkProducts.loadVariantUnit product
+        expect(product.variant_unit_with_scale).toEqual "items"
 
-  #   it "loads data for variants (incl. master)", ->
-  #     spyOn $scope, "loadVariantUnitValues"
-  #     spyOn $scope, "loadVariantUnitValue"
+    it "loads data for variants (incl. master)", ->
+      spyOn BulkProducts, "loadVariantUnitValues"
+      spyOn BulkProducts, "loadVariantUnitValue"
 
-  #     product =
-  #       variant_unit_scale: 1.0
-  #       master: {id: 1, unit_value: 1, unit_description: '(one)'}
-  #       variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
-  #     $scope.loadVariantUnit product
+      product =
+        variant_unit_scale: 1.0
+        master: {id: 1, unit_value: 1, unit_description: '(one)'}
+        variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
+      BulkProducts.loadVariantUnit product
 
-  #     expect($scope.loadVariantUnitValues).toHaveBeenCalledWith product
-  #     expect($scope.loadVariantUnitValue).toHaveBeenCalledWith product, product.master
+      expect(BulkProducts.loadVariantUnitValues).toHaveBeenCalledWith product
+      expect(BulkProducts.loadVariantUnitValue).toHaveBeenCalledWith product, product.master
 
-  #   it "loads data for variants (excl. master)", ->
-  #     spyOn $scope, "loadVariantUnitValue"
+    it "loads data for variants (excl. master)", ->
+      spyOn BulkProducts, "loadVariantUnitValue"
 
-  #     product =
-  #       variant_unit_scale: 1.0
-  #       master: {id: 1, unit_value: 1, unit_description: '(one)'}
-  #       variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
-  #     $scope.loadVariantUnitValues product
+      product =
+        variant_unit_scale: 1.0
+        master: {id: 1, unit_value: 1, unit_description: '(one)'}
+        variants: [{id: 2, unit_value: 2, unit_description: '(two)'}]
+      BulkProducts.loadVariantUnitValues product
 
-  #     expect($scope.loadVariantUnitValue).toHaveBeenCalledWith product, product.variants[0]
-  #     expect($scope.loadVariantUnitValue).not.toHaveBeenCalledWith product, product.master
+      expect(BulkProducts.loadVariantUnitValue).toHaveBeenCalledWith product, product.variants[0]
+      expect(BulkProducts.loadVariantUnitValue).not.toHaveBeenCalledWith product, product.master
 
-  #   describe "setting variant unit_value_with_description", ->
-  #     it "sets by combining unit_value and unit_description", ->
-  #       product =
-  #         variant_unit_scale: 1.0
-  #         variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
-  #       $scope.loadVariantUnitValues product, product.variants[0]
-  #       expect(product.variants[0]).toEqual
-  #         id: 1
-  #         unit_value: 1
-  #         unit_description: '(bottle)'
-  #         unit_value_with_description: '1 (bottle)'
+    describe "setting variant unit_value_with_description", ->
+      it "sets by combining unit_value and unit_description", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_value: 1, unit_description: '(bottle)'}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0]).toEqual
+          id: 1
+          unit_value: 1
+          unit_description: '(bottle)'
+          unit_value_with_description: '1 (bottle)'
 
-  #     it "uses unit_value when description is missing", ->
-  #       product =
-  #         variant_unit_scale: 1.0
-  #         variants: [{id: 1, unit_value: 1}]
-  #       $scope.loadVariantUnitValues product, product.variants[0]
-  #       expect(product.variants[0].unit_value_with_description).toEqual '1'
+      it "uses unit_value when description is missing", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_value: 1}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '1'
 
-  #     it "uses unit_description when value is missing", ->
-  #       product =
-  #         variant_unit_scale: 1.0
-  #         variants: [{id: 1, unit_description: 'Small'}]
-  #       $scope.loadVariantUnitValues product, product.variants[0]
-  #       expect(product.variants[0].unit_value_with_description).toEqual 'Small'
+      it "uses unit_description when value is missing", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_description: 'Small'}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual 'Small'
 
-  #     it "converts values from base value to chosen unit", ->
-  #       product =
-  #         variant_unit_scale: 1000.0
-  #         variants: [{id: 1, unit_value: 2500}]
-  #       $scope.loadVariantUnitValues product, product.variants[0]
-  #       expect(product.variants[0].unit_value_with_description).toEqual '2.5'
+      it "converts values from base value to chosen unit", ->
+        product =
+          variant_unit_scale: 1000.0
+          variants: [{id: 1, unit_value: 2500}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
-  #     it "displays a unit_value of zero", ->
-  #       product =
-  #         variant_unit_scale: 1.0
-  #         variants: [{id: 1, unit_value: 0}]
-  #       $scope.loadVariantUnitValues product, product.variants[0]
-  #       expect(product.variants[0].unit_value_with_description).toEqual '0'
-
-
-  # describe "calculating the scaled unit value for a variant", ->
-  #   it "returns the scaled value when variant has a unit_value", ->
-  #     product = {variant_unit_scale: 0.001}
-  #     variant = {unit_value: 5}
-  #     expect($scope.variantUnitValue(product, variant)).toEqual 5000
-
-  #   it "returns the unscaled value when the product has no scale", ->
-  #     product = {}
-  #     variant = {unit_value: 5}
-  #     expect($scope.variantUnitValue(product, variant)).toEqual 5
-
-  #   it "returns zero when the value is zero", ->
-  #     product = {}
-  #     variant = {unit_value: 0}
-  #     expect($scope.variantUnitValue(product, variant)).toEqual 0
-
-  #   it "returns null when the variant has no unit_value", ->
-  #     product = {}
-  #     variant = {}
-  #     expect($scope.variantUnitValue(product, variant)).toEqual null
+      it "displays a unit_value of zero", ->
+        product =
+          variant_unit_scale: 1.0
+          variants: [{id: 1, unit_value: 0}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '0'
 
 
-  # describe "fetching a product by id", ->
-  #   it "returns the product when it is present", ->
-  #     product = {id: 123}
-  #     $scope.products = [product]
-  #     expect($scope.findProduct(123, $scope.products)).toEqual product
+  describe "calculating the scaled unit value for a variant", ->
+    it "returns the scaled value when variant has a unit_value", ->
+      product = {variant_unit_scale: 0.001}
+      variant = {unit_value: 5}
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 5000
 
-  #   it "returns null when the product is not present", ->
-  #     $scope.products = []
-  #     expect($scope.findProduct(123, $scope.products)).toBeNull()
+    it "returns the unscaled value when the product has no scale", ->
+      product = {}
+      variant = {unit_value: 5}
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 5
+
+    it "returns zero when the value is zero", ->
+      product = {}
+      variant = {unit_value: 0}
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 0
+
+    it "returns null when the variant has no unit_value", ->
+      product = {}
+      variant = {}
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual null
 
 
+  describe "fetching a product by id", ->
+    it "returns the product when it is present", ->
+      product = {id: 123}
+      BulkProducts.products = [product]
+      expect(BulkProducts.find(123)).toEqual product
+
+    it "returns null when the product is not present", ->
+      BulkProducts.products = []
+      expect(BulkProducts.find(123)).toBeNull()
