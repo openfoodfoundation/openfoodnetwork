@@ -4,7 +4,7 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
     selectedPath: "/login"
 
     constructor: ->
-      if $location.path() in ["/login", "/signup", "/forgot"] && location.pathname is not '/register/auth'
+      if $location.path() in ["/login", "/signup", "/forgot"] && location.pathname isnt '/register/auth'
         @open $location.path()
       else if location.pathname is '/register/auth'
         @open '/signup', 'registration_authentication.html'
