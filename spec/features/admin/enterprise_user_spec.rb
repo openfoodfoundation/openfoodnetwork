@@ -17,21 +17,6 @@ feature %q{
   let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', type: 'profile') }
 
   describe "creating an enterprise user" do
-    context "with no enterprises managed" do
-      it "assigns an enterprise to a user" do
-        login_to_admin_section
-        click_link 'Users'
-        click_link user.email
-        click_link 'Edit'
-
-        check supplier2.name
-
-        click_button 'Update'
-        user.enterprises.count.should == 1
-        user.enterprises.first.name.should == supplier2.name
-      end
-    end
-
     context "with a limitted number of owned enterprises" do
       scenario "setting the enterprise ownership limit" do
         user.enterprise_limit.should == 1
