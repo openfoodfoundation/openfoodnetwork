@@ -31,30 +31,6 @@ feature %q{
         user.enterprises.first.name.should == supplier2.name
       end
     end
-
-    context "with existing enterprises managed" do
-      before do
-        user.enterprise_roles.create!(enterprise: supplier1)
-        user.enterprise_roles.create!(enterprise: distributor1)
-      end
-
-      it "can remove and add enterprise management for a user" do
-        login_to_admin_section
-
-        click_link 'Users'
-        click_link user.email
-        click_link 'Edit'
-
-        uncheck distributor1.name # remove
-        check distributor2.name # add
-
-        click_button 'Update'
-
-        user.enterprises.count.should == 2
-        user.enterprises.should include supplier1
-        user.enterprises.should include distributor2
-      end
-    end
   end
 
   describe "product management" do
