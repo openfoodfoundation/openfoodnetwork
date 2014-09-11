@@ -13,7 +13,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
         Loading.clear()
         @errors = response.errors
         RailsFlashLoader.loadFlash(response.flash)
-        
+
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
       munged_order = {}
@@ -25,7 +25,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
             munged_order["ship_address_attributes"] = value
           when "payment_method_id"
             munged_order["payments_attributes"] = [{payment_method_id: value}]
-          when "shipping_method_id", "payment_method_id", "email"
+          when "shipping_method_id", "payment_method_id", "email", "special_instructions"
             munged_order[name] = value
           else
             # Ignore everything else
@@ -58,7 +58,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
 
     shippingPrice: ->
       @shippingMethod()?.price || 0.0
-    
+
     paymentMethod: ->
       PaymentMethods.payment_methods_by_id[@order.payment_method_id]
 

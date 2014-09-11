@@ -36,5 +36,67 @@ module Admin
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
       end
     end
+
+    describe "updating an enterprise" do
+      let(:profile_enterprise) { create(:enterprise, type: 'profile') }
+
+      context "as manager" do
+        it "does not allow 'type' to be changed" do
+          profile_enterprise.enterprise_roles.build(user: user).save
+          controller.stub spree_current_user: user
+          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.type).to eq 'profile'
+        end
+      end
+
+      context "as super admin" do
+        it "allows 'type' to be changed" do
+          controller.stub spree_current_user: admin_user
+          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.type).to eq 'full'
+        end
+      end
+    end
+
+    describe "bulk updating enterprises" do
+      let(:profile_enterprise1) { create(:enterprise, type: 'profile') }
+      let(:profile_enterprise2) { create(:enterprise, type: 'profile') }
+
+      context "as manager" do
+        it "does not allow 'type' to be changed" do
+          profile_enterprise1.enterprise_roles.build(user: user).save
+          profile_enterprise2.enterprise_roles.build(user: user).save
+          controller.stub spree_current_user: user
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full' }, '1' => { id: profile_enterprise2.id, type: 'full' } } } }
+
+          spree_put :bulk_update, bulk_enterprise_params
+          profile_enterprise1.reload
+          profile_enterprise2.reload
+          expect(profile_enterprise1.type).to eq 'profile'
+          expect(profile_enterprise2.type).to eq 'profile'
+        end
+      end
+
+      context "as super admin" do
+        it "allows 'type' to be changed" do
+          profile_enterprise1.enterprise_roles.build(user: user).save
+          profile_enterprise2.enterprise_roles.build(user: user).save
+          controller.stub spree_current_user: admin_user
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full' }, '1' => { id: profile_enterprise2.id, type: 'full' } } } }
+
+          spree_put :bulk_update, bulk_enterprise_params
+          profile_enterprise1.reload
+          profile_enterprise2.reload
+          expect(profile_enterprise1.type).to eq 'full'
+          expect(profile_enterprise2.type).to eq 'full'
+        end
+      end
+    end
   end
 end

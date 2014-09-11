@@ -36,24 +36,25 @@
         = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
         &nbsp;
         = f.label :is_primary_producer, 'Producer'
-    .row
-      .alpha.eleven.columns
-        .three.columns.alpha
-          = f.label :type, 'Profile type'
-          .with-tip{'data-powertip' => "Full - enterprise may have products and relationships.<br />Single - enterprise may have products but no relationships.<br />Profile - enterprise has a profile but no products or relationships.<br />"}
-            %a What's this?
-        .two.columns
-          = f.radio_button :type, "full"
-          &nbsp;
-          = f.label :type, "Full", value: "full"
-        .two.columns
-          = f.radio_button :type, "single"
-          &nbsp;
-          = f.label :type, "Single", value: "single"
-        .four.columns.omega
-          = f.radio_button :type, "profile"
-          &nbsp;
-          = f.label :type, "Profile", value: "profile"
+    - if spree_current_user.admin?
+      .row
+        .alpha.eleven.columns
+          .three.columns.alpha
+            = f.label :type, 'Profile type'
+            .with-tip{'data-powertip' => "Full - enterprise may have products and relationships.<br />Single - enterprise may have products but no relationships.<br />Profile - enterprise has a profile but no products or relationships.<br />"}
+              %a What's this?
+          .two.columns
+            = f.radio_button :type, "full"
+            &nbsp;
+            = f.label :type, "Full", value: "full"
+          .two.columns
+            = f.radio_button :type, "single"
+            &nbsp;
+            = f.label :type, "Single", value: "single"
+          .four.columns.omega
+            = f.radio_button :type, "profile"
+            &nbsp;
+            = f.label :type, "Profile", value: "profile"
     .row
       .three.columns.alpha
         %label Visible in search?

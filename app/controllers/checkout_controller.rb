@@ -9,7 +9,7 @@ class CheckoutController < Spree::CheckoutController
 
   include OrderCyclesHelper
   include EnterprisesHelper
-   
+
   def edit
     # Because this controller doesn't inherit from our BaseController
     # We need to duplicate the code here
@@ -56,7 +56,7 @@ class CheckoutController < Spree::CheckoutController
 
 
   private
-  
+
   # Copied and modified from spree. Remove check for order state, since the state machine is
   # progressed all the way in one go with the one page checkout.
   def object_params
@@ -94,7 +94,7 @@ class CheckoutController < Spree::CheckoutController
   def skip_state_validation?
     true
   end
-  
+
   def load_order
     @order = current_order
     redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
@@ -110,6 +110,14 @@ class CheckoutController < Spree::CheckoutController
     preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
     @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default 
+  end
+
+  def after_payment
+    # object_params sets the payment amount to the order total, but it does this before
+    # the shipping method is set. This results in the customer not being charged for their
+    # order's shipping. To fix this, we refresh the payment amount here.
+    @order.update_totals
+    @order.payments.first.update_attribute :amount, @order.total
   end
 
   # Overriding Spree's methods
