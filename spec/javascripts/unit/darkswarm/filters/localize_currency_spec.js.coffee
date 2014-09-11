@@ -1,15 +1,14 @@
 describe 'convert number to localised currency ', ->
-  filter = null
-
-  currencyconfig =
-    currency: "D"
-    symbol: "$"
-    symbol_position: "before"
-    hide_cents: "false"
-    decimal_mark: "."
-    thousands_separator: ","
+  filter = currencyconfig = null
 
   beforeEach ->
+    currencyconfig =
+      currency: "D"
+      symbol: "$"
+      symbol_position: "before"
+      hide_cents: "false"
+      decimal_mark: "."
+      thousands_separator: ","
     module 'Darkswarm'
     module ($provide)->
       $provide.value "currencyConfig", currencyconfig
@@ -26,16 +25,13 @@ describe 'convert number to localised currency ', ->
   it "can use any currency symbol", ->
     currencyconfig.symbol = "£"
     expect(filter(404.04)).toEqual "£404.04"
-    currencyconfig.symbol = "$"
 
   it "can place symbols after the amount", ->
     currencyconfig.symbol_position = "after"
     expect(filter(333.3)).toEqual "333.30 $"
-    currencyconfig.symbol_position = "before"
 
   it "can add a currency string", ->
     currencyconfig.display_currency = "true"
     expect(filter(5)).toEqual "$5.00 D"
-    currencyconfig.display_currency = "false"
 
 
