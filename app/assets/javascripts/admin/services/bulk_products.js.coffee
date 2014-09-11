@@ -22,10 +22,8 @@ angular.module("ofn.admin").factory "BulkProducts", (dataFetcher) ->
         # respond_with block in the destroy action of Spree::Admin::Product to break
         # when a respond_overrride for the clone action is used.
         id = data.product.id
-        dataFetcher("/api/products/" + id + "?template=bulk_show").then (data) =>
-          newProduct = data
-          @unpackProduct newProduct
-          @products.push newProduct
+        dataFetcher("/api/products/" + id + "?template=bulk_show").then (newProduct) =>
+          @addProducts [newProduct]
 
     updateVariantLists: (serverProducts, productsWithUnsavedVariants) ->
       for product in productsWithUnsavedVariants

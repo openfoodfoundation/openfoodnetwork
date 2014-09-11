@@ -37,83 +37,38 @@ describe "BulkProducts service", ->
       $httpBackend.flush()
 
 
-  # describe "cloning products", ->
-  #   it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
-  #     $scope.products = [
-  #       id: 13
-  #       permalink_live: "oranges"
-  #     ]
-  #     $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-  #       product:
-  #         id: 17
-  #         name: "new_product"
+  describe "cloning products", ->
+    it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
+      BulkProducts.products = [
+        id: 13
+        permalink_live: "oranges"
+      ]
+      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+        product:
+          id: 17
+          name: "new_product"
+      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
+        id: 17
+        name: "new_product"
+      ]
+      BulkProducts.cloneProduct BulkProducts.products[0]
+      $httpBackend.flush()
 
-  #     $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
-  #       id: 17
-  #       name: "new_product"
-  #     ]
-  #     $scope.cloneProduct $scope.products[0]
-  #     $httpBackend.flush()
+    it "adds the product", ->
+      originalProduct =
+        id: 16
+        permalink_live: "oranges"
+      clonedProduct =
+        id: 17
 
-  #   it "adds the newly created product to $scope.products and matches producer", ->
-  #     spyOn($scope, "unpackProduct").andCallThrough()
-  #     $scope.products = [
-  #       id: 13
-  #       permalink_live: "oranges"
-  #     ]
-  #     $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-  #       product:
-  #         id: 17
-  #         name: "new_product"
-  #         producer_id: 6
-
-  #         variants: [
-  #           id: 3
-  #           name: "V1"
-  #         ]
-
-  #     $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200,
-  #       id: 17
-  #       name: "new_product"
-  #       producer_id: 6
-
-  #       variants: [
-  #         id: 3
-  #         name: "V1"
-  #       ]
-
-  #     $scope.cloneProduct $scope.products[0]
-  #     $httpBackend.flush()
-  #     expect($scope.unpackProduct).toHaveBeenCalledWith
-  #       id: 17
-  #       name: "new_product"
-  #       variant_unit_with_scale: null
-  #       producer_id: 6
-
-  #       variants: [
-  #         id: 3
-  #         name: "V1"
-  #         unit_value_with_description: ""
-  #       ]
-
-  #     expect($scope.products).toEqual [
-  #       {
-  #         id: 13
-  #         permalink_live: "oranges"
-  #       }
-  #       {
-  #         id: 17
-  #         name: "new_product"
-  #         variant_unit_with_scale: null
-  #         producer_id: 6
-
-  #         variants: [
-  #           id: 3
-  #           name: "V1"
-  #           unit_value_with_description: ""
-  #         ]
-  #       }
-  #     ]
+      spyOn(BulkProducts, "addProducts")
+      BulkProducts.products = [originalProduct]
+      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
+        product: clonedProduct
+      $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, clonedProduct
+      BulkProducts.cloneProduct BulkProducts.products[0]
+      $httpBackend.flush()
+      expect(BulkProducts.addProducts).toHaveBeenCalledWith [clonedProduct]
 
 
   # describe "preparing products", ->
