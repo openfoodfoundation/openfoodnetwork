@@ -15,7 +15,6 @@
       color: $clr-brick-bright
 
     //Hub and Producer icons
-    // i.ofn-i_040-hub
     i.ofn-i_063-hub, i.ofn-i_064-hub-reversed, i.ofn-i_059-producer, i.ofn-i_060-producer-reversed
       font-size: 2rem
       display: inline-block
@@ -75,17 +74,6 @@
         &:hover, &:active, &:focus
           border: none
           color: $disabled-dark
-      &.open
-        .active_table_row:first-child
-          color: $disabled-dark
-          strong
-            color: $disabled-dark
-          &:hover, &:active, &:focus
-            color: $disabled-dark
-            strong
-              color: $disabled-dark
-        .active_table_row:nth-child(2)
-          background-color: rgba(255, 255, 255, 0)
 
     //Padding second row
     &.open
@@ -96,13 +84,16 @@
     &.current
       //overwrites active_table
       &.closed, &.open
-        .active_table_row:first-child
-          background-color: $clr-brick
+        .active_table_row:first-child, .active_table_row:last-child
+          background-color: rgba(245, 230, 231, 0.95) 
           opacity: 1
           &:hover, &:focus, &:active
             opacity: 0.9
-          &, & *
-            color: white
+      &.closed
+        a, a *
+          color: $clr-brick
+          &:hover, &:active, &:focus
+            color: $clr-brick-bright
       &.open, &.closed
         .active_table_row
           border-color: $clr-brick
