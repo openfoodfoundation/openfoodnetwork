@@ -3,7 +3,7 @@ require 'spec_helper'
 feature "Registration", js: true do
   include WebHelper
 
-  describe "Registering a Profile", use_short_wait do
+  describe "Registering a Profile" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
     it "Allows a logged in user to register a profile" do
