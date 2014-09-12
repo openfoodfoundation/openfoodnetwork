@@ -516,30 +516,44 @@ describe 'OrderCycle services', ->
         ]
 
     describe 'removing exchanges', ->
-      it 'removes incoming exchanges', ->
-        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
-        OrderCycle.order_cycle.incoming_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+      exchange = null
 
-      it 'removes outgoing exchanges', ->
-        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
-        OrderCycle.order_cycle.outgoing_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
-
-      it 'removes distribution of all exchange variants', ->
+      beforeEach ->
         spyOn(OrderCycle, 'removeDistributionOfVariant')
         exchange =
           enterprise_id: '123'
           active: true
+          incoming: false
           variants: {1: true, 2: false, 3: true}
           enterprise_fees: []
-        OrderCycle.order_cycle.incoming_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('1')
-        expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalledWith('2')
-        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('3')
+    
+      describe "removing incoming exchanges", ->
+        beforeEach ->
+          exchange.incoming = true
+          OrderCycle.order_cycle.incoming_exchanges = [exchange]
+
+        it 'removes the exchange', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+
+        it 'removes distribution of all exchange variants', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('1')
+          expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalledWith('2')
+          expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('3')
+
+      describe "removing outgoing exchanges", ->
+        beforeEach ->
+          exchange.incoming = false
+          OrderCycle.order_cycle.outgoing_exchanges = [exchange]
+
+        it 'removes the exchange', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
+
+        it "does not remove distribution of any variants", ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalled()
 
     it 'adds coordinator fees', ->
       OrderCycle.addCoordinatorFee()
