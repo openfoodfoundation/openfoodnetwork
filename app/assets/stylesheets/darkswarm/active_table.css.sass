@@ -44,6 +44,7 @@
 
   .active_table_row // Inherits from active_table
     border: 1px solid transparent 
+    @include border-radius(0.5em)
 
     // Foundation overrides
     margin-left: 0
@@ -63,19 +64,25 @@
       border-right: 1px solid $disabled-bright
       border-top: 0
       border-bottom: 0
+      @include border-radius(0)
 
     .active_table_row:first-child
       border-top: 1px solid $disabled-bright
+      color: $dark-grey
+      @include border-radius-mixed(0.5em, 0.5em, 0, 0)
       &:hover, &:active, &:focus
         // color: $dark-grey
 
     .active_table_row:last-child
       border-bottom: 1px solid $disabled-bright
+      @include border-radius-mixed(0, 0, 0.5em, 0.5em)
       
       
     //Open row sections
     .fat > div
       border-top: 1px solid #aaa
+      @media all and (max-width: 640px) 
+        margin-top: 1em
 
       ul, ol 
         font-size: 0.875rem
@@ -104,7 +111,6 @@
         color: $dark-grey
     &.open
       .active_table_row:first-child
-        &, & *
         color: $dark-grey
 
 

@@ -6,30 +6,23 @@ dialog, .reveal-modal
   outline: none
   padding: 1rem 
   overflow-y: scroll
-  top: 10%
-  @media all and (max-width: 640px) 
+
+  // Reveal.js break point:
+  // @media only screen and (max-width: 40.063em)
+
+  // Small - when modal IS full screen
+  @media only screen and (max-width: 640px)
+    max-height: initial
+    // This is needed to make the height not the height of whole content page
+    min-height: 100%
+    position: absolute !important
     top: 0
-  
-  // Sets up max heights based on device height
-  @media all and (min-height: 1025px) 
-    max-height: 70%
-    top: 15%
-
-  @media all and (min-height: 700px) and (max-height: 1024px)
+    left: 0
+    
+  // Medium and up - when modal IS NOT full screen
+  @media only screen and (min-width: 641px)
+    top: 10%
     max-height: 80%
-
-  @media all and (min-height: 600px) and (max-height: 699px)
-    max-height: 80%
-
-  @media all and (min-height: 481px) and (max-height: 599px)
-    max-height: 80%
-
-  @media only screen and (max-height: 480px) and (min-width: 641px)
-    max-height: 80%
-
-  @media all and (max-height: 480px)
-    overflow-y: scroll
-
 
 .reveal-modal-bg
   background-color: rgba(0,0,0,0.65)
@@ -43,31 +36,3 @@ dialog .close-reveal-modal, .reveal-modal .close-reveal-modal
   &:hover, &:active, &:focus
     background-color: rgba(235,235,235,1)
     color: #333
-
-// dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
-//   top: -2.5rem
-//   right: -2.5rem
-//   font-size: 2rem
-//   color: white
-//   text-shadow: none
-//   padding: 0.25rem
-//   @include border-radius(999999)
-//   border: 1px solid transparent
-//   &:hover, &:active, &:focus
-//     text-shadow: 0 1px 3px #333
-//     border: 1px solid white
-
-//   @media all and (max-width: 640px)
-//     top: 0.5rem
-//     right: 0.5rem
-//     font-size: 2rem
-//     color: white
-//     text-shadow: none
-//     padding: 0.25rem
-//     background-color: rgba(150,150,150,0.85)
-//     @include border-radius(999999)
-//     border: 1px solid transparent
-//     &:hover, &:active, &:focus
-//       text-shadow: 0 1px 3px #333
-//       border: 1px solid white
-
