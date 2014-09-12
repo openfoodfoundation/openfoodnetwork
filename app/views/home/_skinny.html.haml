@@ -1,10 +1,7 @@
 .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}", bindonce: true}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
-      %i{ ng: { class: "{ 'ofn-i_063-hub': hub.can_aggregate && hub.has_shopfront,
-        'ofn-i_059-producer': !hub.can_aggregate && hub.has_shopfront,
-        'ofn-i_060-producer-reversed': !hub.can_aggregate && !hub.has_shopfront,
-        'ofn-i_064-hub-reversed': hub.can_aggregate && !hub.has_shopfront }" } }
+      %i{'ng-class'=> "hub.icon_font" }
       / %i.ofn-i_063-hub
       %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
   .columns.small-4.medium-2.large-2
