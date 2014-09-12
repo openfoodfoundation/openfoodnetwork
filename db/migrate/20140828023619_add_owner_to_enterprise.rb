@@ -7,7 +7,8 @@ class AddOwnerToEnterprise < ActiveRecord::Migration
       owner = e.users.find{ |u| !u.admin? }
       admin_owner = e.users.find &:admin?
       any_admin = Spree::User.admin.first
-      e.update_column :owner_id, (owner || admin_owner || any_admin )
+      any_user = Spree::User.first
+      e.update_column :owner_id, (owner || admin_owner || any_admin || any_user )
     end
 
     add_foreign_key :enterprises, :spree_users, column: :owner_id
