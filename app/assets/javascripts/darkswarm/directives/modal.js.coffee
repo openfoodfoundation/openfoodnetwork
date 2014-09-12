@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnModal", ($modal, $document)->
+Darkswarm.directive "ofnModal", ($modal)->
   # Generic modal! Uses transclusion so designer-types can do stuff like:
   # %ofn-modal 
   #   CONTENT
@@ -17,5 +17,3 @@ Darkswarm.directive "ofnModal", ($modal, $document)->
     elem.on "click", =>
       transclude scope, (clone)->
         scope.modalInstance = $modal.open(controller: ctrl, template: clone, scope: scope)
-        #$document.scrollTo 0, 0
-      false

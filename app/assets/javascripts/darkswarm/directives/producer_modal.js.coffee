@@ -1,4 +1,4 @@
-Darkswarm.directive "producerModal", ($modal, $document)->
+Darkswarm.directive "producerModal", ($modal)->
   restrict: 'E'
   replace: true
   template: "<a ng-transclude></a>"
@@ -7,5 +7,4 @@ Darkswarm.directive "producerModal", ($modal, $document)->
     elem.on "click", (ev)=>
       ev.stopPropagation()
       scope.modalInstance = $modal.open(controller: ctrl, templateUrl: 'producer_modal.html', scope: scope)
-      #$document.scrollTo 0, 0
-      false
+
