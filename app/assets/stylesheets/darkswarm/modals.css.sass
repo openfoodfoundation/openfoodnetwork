@@ -7,16 +7,17 @@ dialog, .reveal-modal
   padding: 1rem 
   overflow-y: scroll
 
-  // Reveal.js
+  // Reveal.js break point:
   // @media only screen and (max-width: 40.063em)
 
+  // Small - when modal IS full screen
   @media only screen and (max-width: 640px)
     max-height: auto
     position: absolute !important
     top: 0
     left: 0
     
-  // Medium and up - when modal is NOT full screen
+  // Medium and up - when modal IS NOT full screen
   @media only screen and (min-width: 641px)
     top: 10%
     max-height: 80%
@@ -35,31 +36,3 @@ dialog .close-reveal-modal, .reveal-modal .close-reveal-modal
   &:hover, &:active, &:focus
     background-color: rgba(235,235,235,1)
     color: #333
-
-// dialog .close-reveal-modal.outside, .reveal-modal .close-reveal-modal.outside
-//   top: -2.5rem
-//   right: -2.5rem
-//   font-size: 2rem
-//   color: white
-//   text-shadow: none
-//   padding: 0.25rem
-//   @include border-radius(999999)
-//   border: 1px solid transparent
-//   &:hover, &:active, &:focus
-//     text-shadow: 0 1px 3px #333
-//     border: 1px solid white
-
-//   @media all and (max-width: 640px)
-//     top: 0.5rem
-//     right: 0.5rem
-//     font-size: 2rem
-//     color: white
-//     text-shadow: none
-//     padding: 0.25rem
-//     background-color: rgba(150,150,150,0.85)
-//     @include border-radius(999999)
-//     border: 1px solid transparent
-//     &:hover, &:active, &:focus
-//       text-shadow: 0 1px 3px #333
-//       border: 1px solid white
-
