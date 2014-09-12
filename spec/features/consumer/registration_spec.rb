@@ -10,11 +10,22 @@ feature "Registration", js: true do
       visit registration_path
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
+      # Prevent race condition - "Log in" link is visible, but early click events are lost
+      # without some delay here
+      page.should have_link "Log in"
 
       # Logging in
       click_link "Log in"
+      #page.should have_button 'Log in'
+
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
+
+      # unless page.has_button? 'Log in'
+      #   save_screenshot('/home/rohan/ss.png', full: true)
+      #   binding.pry
+      # end
+
       click_button 'Log in'
 
       # Log in was successful, introduction shown
