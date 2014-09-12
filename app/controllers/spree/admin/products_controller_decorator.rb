@@ -1,5 +1,6 @@
 Spree::Admin::ProductsController.class_eval do
-  before_filter :load_bpe_data, :only => :bulk_edit
+  before_filter :load_form_data, only: [:bulk_edit, :new]
+  before_filter :load_bpe_data, only: :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -85,10 +86,13 @@ Spree::Admin::ProductsController.class_eval do
 
   private
 
+  def load_form_data
+    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
+    @taxons = Spree::Taxon.order(:name)
+  end
+
   def load_bpe_data
     current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
     @spree_api_key = spree_current_user.spree_api_key
-    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
-    @taxons = Spree::Taxon.order(:name)
   end
 end

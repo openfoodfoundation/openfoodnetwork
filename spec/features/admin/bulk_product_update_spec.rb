@@ -745,8 +745,6 @@ feature %q{
              permissions_list: [:manage_products])
     end
 
-    use_short_wait
-
     before do
       @enterprise_user = create_enterprise_user
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
@@ -777,6 +775,28 @@ feature %q{
       visit '/admin/products/bulk_edit'
 
       expect(page).to have_field 'product_name', with: product_supplied_inactive.name
+    end
+
+    it "allows me to create a product" do
+      taxon = create(:taxon, name: 'Fruit')
+
+      visit '/admin/products/bulk_edit'
+
+      find("a", text: "NEW PRODUCT").click
+      expect(page).to have_content 'NEW PRODUCT'
+      expect(page).to have_select 'product_supplier_id', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name]
+
+      within 'fieldset#new_product' do
+        fill_in 'product_name', with: 'Big Bag Of Apples'
+        select supplier_permitted.name, from: 'product_supplier_id'
+        fill_in 'product_price', with: '10.00'
+        select taxon.name, from: 'product_primary_taxon_id'
+      end
+      click_button 'Create'
+
+      expect(URI.parse(current_url).path).to eq '/admin/products/bulk_edit'
+      expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
+      expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
     end
 
     it "allows me to update a product" do
