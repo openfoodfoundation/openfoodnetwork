@@ -1,4 +1,4 @@
-Darkswarm.directive "hubModal", ($modal)->
+Darkswarm.directive "hubModal", ($modal, $document)->
   restrict: 'E'
   replace: true
   template: "<a>{{enterprise.name}}</a>"
@@ -6,3 +6,5 @@ Darkswarm.directive "hubModal", ($modal)->
     elem.on "click", (ev)=>
       ev.stopPropagation()
       scope.modalInstance = $modal.open(controller: ctrl, templateUrl: 'hub_modal.html', scope: scope)
+      #$document.scrollTo 0, 0
+      false
