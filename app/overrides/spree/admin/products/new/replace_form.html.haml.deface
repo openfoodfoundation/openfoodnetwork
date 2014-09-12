@@ -7,7 +7,7 @@
         = f.field_container :supplier do
           = f.label :supplier_id, t(:supplier)
           %span.required *
-          = f.collection_select(:supplier_id, Enterprise.is_primary_producer.managed_by(spree_current_user).by_name, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+          = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
           = f.error_message_on :supplier
       .six.columns.omega
         = f.field_container :name do

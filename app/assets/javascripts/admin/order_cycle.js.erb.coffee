@@ -197,12 +197,13 @@ angular.module('order_cycle', ['ngResource'])
       	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
 
       removeExchange: (exchange) ->
-        incoming_index = this.order_cycle.incoming_exchanges.indexOf exchange
-        this.order_cycle.incoming_exchanges.splice(incoming_index, 1) if incoming_index > -1
-        outgoing_index = this.order_cycle.outgoing_exchanges.indexOf exchange
-        this.order_cycle.outgoing_exchanges.splice(outgoing_index, 1) if outgoing_index > -1
-
-        this.removeDistributionOfVariant(variant_id) for variant_id, active of exchange.variants when active
+        if exchange.incoming
+          incoming_index = this.order_cycle.incoming_exchanges.indexOf exchange
+          this.order_cycle.incoming_exchanges.splice(incoming_index, 1)
+          this.removeDistributionOfVariant(variant_id) for variant_id, active of exchange.variants when active
+        else
+          outgoing_index = this.order_cycle.outgoing_exchanges.indexOf exchange
+          this.order_cycle.outgoing_exchanges.splice(outgoing_index, 1) if outgoing_index > -1
 
       addCoordinatorFee: ->
         this.order_cycle.coordinator_fees.push({})
