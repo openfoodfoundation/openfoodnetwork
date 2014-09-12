@@ -205,92 +205,58 @@ class Enterprise < ActiveRecord::Base
   end
 
   def enterprise_category
-
-    # Explanation: We needed to add the can_supply flag because this case (the most common for producers) was not covered:
-    # Short version: meets front end and back end needs.
+    # Explanation: I added and extra flag then pared it back to a combo, before realising we allready had one.
+    # Short version: meets front end and back end needs, without changing much at all.
     #
-    # when "producer_without_shopfront_cant_aggregate_can_supply"
-    #   "producer" # Producer selling only through others.
-    #
-    # And needs to be separate from this case:
-    # 
-    # when "producer_with_shopfront_cant_aggregate_can_supply"
-    #   "producer_shop" # Producer with shopfront for own products.
-    #
-    # And from this case
-    #
-    # when "producer_without_shopfront_cant_aggregate_cant_supply"
-    #   "producer_profile" # Producer profile.
-    #
-    # And the front end very clearly distinguishes between producers with a shop and without, 
-    # so the combined case was not enough, and it was going to be a bit weird anyway.
-    # As a side benefit, this also allows non producer suppliers. Yay.
-    #
-    # can_aggregate could depend on with_shopfront, as the combination always shouldn't exist.
-    #
-    # So it could be a combo box: 
-    # Sell V
-    #  none
-    #  own
-    #  any
-    #
-    # So 12 is possible anyway and seems to cover usefull cases. But the variables could be different.
+    # Ditch is_distributor, add can_supply and swap combo names as below.
+    # using profile instead of cant_sell was blocking the non selling supplier case and limiting more than it needed to.
     
+
     # Make this crazy logic human readable so we can argue about it sanely. 
-    category = is_primary_producer ? "producer_"       : "non_producer_" 
-    category << (has_shopfront     ? "with_shopfront_" : "without_shopfront_")
-    category << (can_aggregate     ? "can_aggregate_"  : "cant_aggregate_")
-    category << (can_supply        ? "can_supply"      : "cant_supply")
+    # This can be simplified later, like this for readablitlty during changes.
+    category = is_primary_producer ? "producer_" : "non_producer_" 
+    case type
+      when "full"
+        category << "sell_all_"
+      when "single"
+        category << "sell_own_"
+      when "profile"
+        category << "cant_sell_"
+    end
+    category << (can_supply ? "can_supply" : "cant_supply")
 
     # Map backend cases to front end cases.
     case category
-      when "producer_with_shopfront_can_aggregate_can_supply"
+      when "producer_sell_all_can_supply"
         "producer_hub" # Producer hub who sells own and others produce and supplies other hubs.
-      when "producer_with_shopfront_can_aggregate_cant_supply"
+      when "producer_sell_all_cant_supply"
         "producer_hub" # Producer hub who sells own and others products but does not supply other hubs.
-      when "producer_with_shopfront_cant_aggregate_can_supply"
+      when "producer_sell_own_can_supply"
         "producer_shop" # Producer with shopfront and supplies other hubs.
-      when "producer_with_shopfront_cant_aggregate_cant_supply"
+      when "producer_sell_own_cant_supply"
         "producer_shop" # Producer with shopfront.
-      when "producer_without_shopfront_can_aggregate_can_supply"
-        "empty" # Shouldn't exist.
-      when "producer_without_shopfront_can_aggregate_cant_supply"
-        "empty" # Shouldn't exist.
-      when "producer_without_shopfront_cant_aggregate_can_supply"
+      when "producer_cant_sell_can_supply"
         "producer" # Producer selling only through others.
-      when "producer_without_shopfront_cant_aggregate_cant_supply"
+      when "producer_cant_sell_cant_supply"
         "producer_profile" # Producer profile.
         
-      when "non_producer_with_shopfront_can_aggregate_can_supply"
+      when "non_producer_sell_all_can_supply"
         "hub" # Hub selling in products without origin.
-      when "non_producer_with_shopfront_can_aggregate_cant_supply"
+      when "non_producer_sell_all_cant_supply"
         "hub" # Regular hub.
-      when "non_producer_with_shopfront_cant_aggregate_can_supply"
+      when "non_producer_sell_own_can_supply"
         "hub" # Wholesaler selling through own shopfront and others?
-      when "non_producer_with_shopfront_cant_aggregate_cant_supply"
+      when "non_producer_sell_own_cant_supply"
         "hub" # Wholesaler selling through own shopfront?
-      when "non_producer_without_shopfront_can_aggregate_can_supply"
-        "empty" # Shouldn't exist?
-      when "non_producer_without_shopfront_can_aggregate_cant_supply"
-        "empty" # Shouldn't exist?
-      when "non_producer_without_shopfront_cant_aggregate_can_supply"
+      when "non_producer_cant_sell_can_supply"
         "hub_profile" # Wholesaler selling to others.
-      when "non_producer_without_shopfront_cant_aggregate_cant_supply"
+      when "non_producer_cant_sell_cant_supply"
         "hub_profile" # Hub with just a profile.
     end
   end
 
   # TODO: Remove this when flags on enterprises are switched over
-  def has_shopfront
-    type != 'profile'
-  end
-
-  # TODO: Remove this when flags on enterprises are switched over
-  def can_aggregate
-    is_distributor# && suppliers != [self]
-  end
-
-  # TODO: Remove this when flags on enterprises are switched over
+  # Obviously this is duplicated is producer currently, needs to 
   def can_supply
     is_primary_producer #and has distributors?
   end
@@ -310,7 +276,6 @@ class Enterprise < ActiveRecord::Base
       where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
   end
-
 
   private
 

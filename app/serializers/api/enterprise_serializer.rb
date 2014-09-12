@@ -18,7 +18,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   #TODO: Remove these later
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :can_aggregate, :enterprise_category
+  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :enterprise_category
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -28,33 +28,13 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     @options[:active_distributors].andand.include? object
   end
 
-  # def enterprise_category
-  #   object.enterprise_category
-  # end
-
-  # # TODO: Remove this when flags on enterprises are switched over
-  # def has_shopfront
-  #   object.has_shopfront
-  # end
-
-  # # TODO: Remove this when flags on enterprises are switched over
-  # def can_aggregate
-  #   object.can_aggregate
-  # end
-
-
   def enterprise_category
     object.enterprise_category
   end
 
-  # todo: remove this when flags on enterprises are switched over
-  def has_shopfront
-    object.has_shopfront
-  end
-
   # TODO: Remove this when flags on enterprises are switched over
-  def can_aggregate
-    object.can_aggregate
+  def has_shopfront
+    object.type != 'profile'
   end
 
   # Map svg icons.
@@ -66,7 +46,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "prodshop_shop" => "/assets/map_003-producer-shop.svg",
       "producer" => "map_001-producer-only.svg",
       "producer_profile" => "/assets/map_002-producer-only-profile.svg",
-      "empty" => "",
     }
     icons[object.enterprise_category]
   end
@@ -80,7 +59,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "producer_shop" => "ofn-i_059-producer",
       "producer" => "ofn-i_059-producer",
       "producer_profile" => "ofn-i_060-producer-reversed",
-      "empty" => "",
     }
     icon_fonts[object.enterprise_category]
   end
@@ -99,36 +77,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "empty" => "",
     }
     icon_fonts[object.enterprise_category]
-  end
-
-end
-
-class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
-  cached
-  delegate :cache_key, to: :object
-
-  attributes :name, :id, :description, :latitude, :longitude,
-    :long_description, :website, :instagram, :linkedin, :twitter,
-    :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :path,
-    :pickup, :delivery
-
-  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
-  has_many :supplied_taxons, serializer: Api::IdSerializer
-  has_many :distributors, key: :hubs, serializer: Api::IdSerializer
-  has_many :suppliers, key: :producers, serializer: Api::IdSerializer
-
-  has_one :address, serializer: Api::AddressSerializer
-
-
-  # TODO: Remove this when flags on enterprises are switched over
-  def has_shopfront
-    object.type != 'profile'
-  end
-
-  # TODO: Remove this when flags on enterprises are switched over
-  def can_aggregate
-    object.is_distributor && object.suppliers != [object]
   end
 
 end
