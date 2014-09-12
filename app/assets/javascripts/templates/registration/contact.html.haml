@@ -4,7 +4,7 @@
     %h5
       Who is responsible for managing
       %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
-        {{ enterprise.name }}
+        {{ enterprise.name }}?
   %ng-include{ src: "'registration/steps.html'" }
   %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(contact)" } }
     .row.content

@@ -1,10 +1,14 @@
-Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, CurrentUser, SpreeApiKey, Loading, availableCountries) ->
+Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, CurrentUser, spreeApiKey, Loading, availableCountries, enterpriseAttributes) ->
   new class EnterpriseRegistrationService
     enterprise:
       user_ids: [CurrentUser.id]
       email: CurrentUser.email
       address: {}
       country: availableCountries[0]
+
+    constructor: ->
+      for key, value of enterpriseAttributes
+        @enterprise[key] = value
 
     create: =>
       # Loading.message = "Creating " + @enterprise.name
@@ -14,7 +18,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       #   data:
       #     enterprise: @prepare()
       #   params:
-      #     token: SpreeApiKey
+      #     token: spreeApiKey
       # ).success((data) =>
       #   Loading.clear()
       #   @enterprise.id = data
@@ -34,21 +38,22 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       #   data:
       #     enterprise: @prepare()
       #   params:
-      #     token: SpreeApiKey
+      #     token: spreeApiKey
       # ).success((data) ->
       #   Loading.clear()
       #   RegistrationService.select(step)
       # ).error((data) ->
       #   Loading.clear()
       #   console.log angular.toJson(data)
-      #   alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+      #   alert('Failed to update your enterprise.\nPlease ensure all fields are completely filled out.')
       # )
       RegistrationService.select(step)
 
     prepare: =>
       enterprise = {}
-      for a, v of @enterprise when a isnt 'address' && a isnt 'country' && a isnt 'id'
-        enterprise[a] = v
+      excluded = [ 'address', 'country', 'id' ]
+      for key, value of @enterprise when key not in excluded
+        enterprise[key] = value
       enterprise.address_attributes = @enterprise.address
       enterprise.address_attributes.country_id = @enterprise.country.id
       enterprise
