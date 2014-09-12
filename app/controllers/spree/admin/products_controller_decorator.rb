@@ -1,5 +1,5 @@
 Spree::Admin::ProductsController.class_eval do
-  before_filter :load_form_data, only: [:bulk_edit, :new]
+  before_filter :load_form_data, only: [:bulk_edit, :new, :edit]
   before_filter :load_bpe_data, only: :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
