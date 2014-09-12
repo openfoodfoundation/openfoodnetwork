@@ -6,6 +6,8 @@ class Enterprise < ActiveRecord::Base
 
   acts_as_gmappable :process_geocoding => false
 
+  after_create :send_creation_email
+
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
@@ -226,6 +228,10 @@ class Enterprise < ActiveRecord::Base
 
 
   private
+
+  def send_creation_email
+    EnterpriseMailer.creation_confirmation(self).deliver
+  end
 
   def strip_url(url)
     url.andand.sub /(https?:\/\/)?/, ''

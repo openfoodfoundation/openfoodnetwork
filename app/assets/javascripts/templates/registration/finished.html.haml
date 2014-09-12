@@ -1,8 +1,8 @@
 .container#registration-finished
   .header
     %h2 Well done!
-    %h5 
-      You have successfully completed the profile for 
+    %h5
+      You have successfully completed the profile for
       %span.brick{"ng-show" => "enterprise.is_distributor"}
         {{ enterprise.name }}
       %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
@@ -10,10 +10,9 @@
   .content{ style: 'text-align: center'}
     %h3 Why not check it out on the Open Food Network?
     %a.button.primary{ type: "button", href: "/map" } Go to Map Page &gt;
-    
+
     %br
     %br
-    
+
     %h3 Next step - add some products:
     %a.button.primary{ type: "button", href: "/admin/products/new" } Add a Product &gt;
-    
