@@ -10,9 +10,8 @@ feature "Registration", js: true do
       visit registration_path
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
-      # Prevent race condition - "Log in" link is visible, but early click events are lost
-      # without some delay here
-      page.should have_link "Log in"
+
+      sleep 0.5 # TOTO: DEAL WITH ME
 
       # Logging in
       click_link "Log in"
@@ -21,6 +20,8 @@ feature "Registration", js: true do
       click_button 'Log in'
 
       # Log in was successful, introduction shown
+      sleep 0.5 # TOTO: DEAL WITH ME
+
       expect(page).to have_content "This wizard will step you through creating a profile"
       expect(URI.parse(current_url).path).to eq registration_path
 
@@ -95,6 +96,8 @@ feature "Registration", js: true do
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
+      sleep 0.5 # TOTO: DEAL WITH ME
+
       # Logging in
       click_link "Log in"
       fill_in "Email", with: user.email
@@ -102,6 +105,8 @@ feature "Registration", js: true do
       click_button 'Log in'
 
       # Log in was successful, introduction shown
+      sleep 0.5 # TOTO: DEAL WITH ME
+
       expect(page).to have_content "This wizard will step you through creating a profile"
       expect(URI.parse(current_url).path).to eq store_registration_path
 
