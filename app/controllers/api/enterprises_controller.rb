@@ -1,5 +1,8 @@
 module Api
   class EnterprisesController < Spree::Api::BaseController
+
+    before_filter :override_owner, only: [:create, :update]
+    before_filter :check_type, only: :update
     respond_to :json
 
     def managed
@@ -32,6 +35,16 @@ module Api
       else
         invalid_resource!(@enterprise)
       end
+    end
+
+    private
+
+    def override_owner
+      params[:enterprise][:owner_id] = current_api_user.id
+    end
+
+    def check_type
+      params[:enterprise].delete :type unless current_api_user.admin?
     end
   end
 end
