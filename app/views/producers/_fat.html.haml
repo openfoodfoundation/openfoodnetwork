@@ -1,13 +1,13 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle()", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
   
   .columns.small-12.medium-7.large-7.fat
-    / No long description available because it spits out HTML formatting producer.long_description
-    %div{"bo-if" => "producer.long_description"}
+    / Will add in long description available once clean up HTML formatting producer.long_description
+    %div{"bo-if" => "producer.description"}
       %label About us
       %img.right.show-for-medium-up{src: "{{ producer.logo }}" }
       %p.text-small
-        {{ producer.long_description }}
-    %div.show-for-medium-up{"bo-if" => "producer.long_description.length==0"}
+        {{ producer.description }}
+    %div.show-for-medium-up{"bo-if" => "producer.description.length==0"}
       %label &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
