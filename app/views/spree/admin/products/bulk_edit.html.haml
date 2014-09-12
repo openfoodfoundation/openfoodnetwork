@@ -1,7 +1,7 @@
 = render 'spree/admin/products/bulk_edit/header'
 = render 'spree/admin/products/bulk_edit/data'
 
-%div{ 'ng-app' => 'ofn.admin', 'ng-controller' => 'AdminProductEditCtrl', 'ng-init' => "initialise('#{@spree_api_key}');loading=true;" }
+%div{ ng: { app: 'ofn.admin', controller: 'AdminProductEditCtrl', init: 'initialise()' } }
 
   = render 'spree/admin/products/bulk_edit/filters'
   %hr.sixteen.columns.alpha

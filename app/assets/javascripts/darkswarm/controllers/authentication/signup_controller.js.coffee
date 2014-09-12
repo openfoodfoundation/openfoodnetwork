@@ -1,4 +1,4 @@
-Darkswarm.controller "SignupCtrl", ($scope, $http, $location, AuthenticationService) ->
+Darkswarm.controller "SignupCtrl", ($scope, $http, $window, $location, Redirections, AuthenticationService) ->
   $scope.path = "/signup"
   $scope.errors =
     email: null
@@ -6,6 +6,9 @@ Darkswarm.controller "SignupCtrl", ($scope, $http, $location, AuthenticationServ
 
   $scope.submit = ->
     $http.post("/user/spree_user", {spree_user: $scope.spree_user}).success (data)->
-      location.href = location.origin + location.pathname  # Strips out hash fragments
+       if Redirections.after_login
+        $window.location.href = $window.location.origin + Redirections.after_login
+       else
+        $window.location.href = $window.location.origin + $window.location.pathname  # Strips out hash fragments
     .error (data) ->
       $scope.errors = data

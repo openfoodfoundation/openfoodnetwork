@@ -38,6 +38,9 @@ feature %q{
   scenario "editing enterprises in bulk" do
     s = create(:supplier_enterprise)
     d = create(:distributor_enterprise, type: 'profile')
+    d_manager = create_enterprise_user
+    d_manager.enterprise_roles.build(enterprise: d).save
+    expect(d.owner).to_not eq d_manager
 
     login_to_admin_section
     click_link 'Enterprises'
@@ -46,12 +49,14 @@ feature %q{
       expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
       uncheck "enterprise_set_collection_attributes_0_visible"
       select 'full', from: "enterprise_set_collection_attributes_0_type"
+      select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
     end
     click_button "Update"
     flash_message.should == 'Enterprises updated successfully'
     distributor = Enterprise.find(d.id)
     expect(distributor.visible).to eq false
     expect(distributor.type).to eq 'full'
+    expect(distributor.owner).to eq d_manager
   end
 
   scenario "viewing an enterprise" do
@@ -64,35 +69,31 @@ feature %q{
     page.should have_content e.name
   end
 
-  scenario "creating a new enterprise" do
+  scenario "creating a new enterprise", js:true do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
     shipping_method = create(:shipping_method)
     enterprise_fee = create(:enterprise_fee)
 
-    login_to_admin_section
-
-    click_link 'Enterprises'
+    # Navigating
+    admin = quick_login_as_admin
+    visit '/admin/enterprises'
     click_link 'New Enterprise'
 
-    fill_in 'enterprise_name', :with => 'Eaterprises'
-    choose 'Full'
-    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-    fill_in 'enterprise_distributor_info', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
-
+    # Checking shipping and payment method sidebars work
     uncheck 'enterprise_is_primary_producer'
     check 'enterprise_is_distributor'
-
-    select eg1.name, from: 'enterprise_group_ids'
-
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
+    # Filling in details
+    fill_in 'enterprise_name', :with => 'Eaterprises'
+    select2_search admin.email, from: 'Owner'
+    choose 'Full'
     check "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
-
+    select2_search eg1.name, from: 'Groups'
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
@@ -106,14 +107,16 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select('Australia', :from => 'enterprise_address_attributes_country_id')
-    select('Victoria', :from => 'enterprise_address_attributes_state_id')
+    select2_search 'Australia', :from => 'Country'
+    select2_search 'Victoria', :from => 'State'
+    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
+    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
   end
 
-  scenario "editing an existing enterprise" do
+  scenario "editing an existing enterprise", js: true do
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -121,14 +124,18 @@ feature %q{
     payment_method = create(:payment_method, distributors: [e2])
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
+    user = create(:user)
 
-    login_to_admin_section
+    admin = quick_login_as_admin
 
-    click_link 'Enterprises'
-    all("a", text:'Edit Profile').first.click
+    visit '/admin/enterprises'
+    within "tr.enterprise-#{@enterprise.id}" do
+      all("a", text: 'Edit Profile').first.click
+    end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
     choose 'Single'
+    select2_search user.email, from: 'Owner'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
 
@@ -143,7 +150,7 @@ feature %q{
     page.should have_selector "#shipping_methods"
     page.should have_selector "#enterprise_fees"
 
-    select eg1.name, from: 'enterprise_group_ids'
+    select2_search eg1.name, from: 'Groups'
 
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
@@ -162,13 +169,15 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select('Australia', :from => 'enterprise_address_attributes_country_id')
-    select('Victoria', :from => 'enterprise_address_attributes_state_id')
+    select2_search 'Australia', :from => 'Country'
+    select2_search 'Victoria', :from => 'State'
 
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
     page.should have_field 'enterprise_name', :with => 'Eaterprises'
+    @enterprise.reload
+    expect(@enterprise.owner).to eq user
 
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
@@ -248,56 +257,91 @@ feature %q{
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let(:enterprise_user) { create_enterprise_user }
 
     before(:each) do
-      @new_user = create_enterprise_user
-      @new_user.enterprise_roles.build(enterprise: supplier1).save
-      @new_user.enterprise_roles.build(enterprise: distributor1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier1).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as @new_user
+      login_to_admin_as enterprise_user
     end
 
-    scenario "can view enterprises I have permission to" do
-      oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
-      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+    context "listing enterprises" do
+      scenario "displays enterprises I have permission to manage" do
+        oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
+        oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
 
-      click_link "Enterprises"
+        click_link "Enterprises"
 
-      within("tr.enterprise-#{distributor1.id}") do
-        expect(page).to have_content distributor1.name
-        expect(page).to have_checked_field "enterprise_set_collection_attributes_0_is_distributor"
-        expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
-        expect(page).to have_select "enterprise_set_collection_attributes_0_type"
+        within("tr.enterprise-#{distributor1.id}") do
+          expect(page).to have_content distributor1.name
+          expect(page).to have_checked_field "enterprise_set_collection_attributes_0_is_distributor"
+          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_0_type"
+        end
+
+        within("tr.enterprise-#{supplier1.id}") do
+          expect(page).to have_content supplier1.name
+          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_distributor"
+          expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_1_type"
+        end
+
+        expect(page).to_not have_content "supplier2.name"
+        expect(page).to_not have_content "distributor2.name"
+
+        expect(find("#content-header")).to have_link "New Enterprise"
       end
 
-      within("tr.enterprise-#{supplier1.id}") do
-        expect(page).to have_content supplier1.name
-        expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_distributor"
-        expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
-        expect(page).to have_select "enterprise_set_collection_attributes_1_type"
-      end
+      context "when I have reached my enterprise ownership limit" do
+        it "does not display the link to create a new enterprise" do
+          enterprise_user.owned_enterprises.push [supplier1]
 
-      expect(page).to_not have_content "supplier2.name"
-      expect(page).to_not have_content "distributor2.name"
+          click_link "Enterprises"
+
+          page.should have_content supplier1.name
+          page.should have_content distributor1.name
+          expect(find("#content-header")).to_not have_link "New Enterprise"
+        end
+      end
     end
 
-    scenario "creating an enterprise" do
-      # When I create an enterprise
-      click_link 'Enterprises'
-      click_link 'New Enterprise'
-      fill_in 'enterprise_name', with: 'zzz'
-      fill_in 'enterprise_address_attributes_address1', with: 'z'
-      fill_in 'enterprise_address_attributes_city', with: 'z'
-      fill_in 'enterprise_address_attributes_zipcode', with: 'z'
-      click_button 'Create'
+    context "creating an enterprise" do
+      before do
+        # When I create an enterprise
+        click_link 'Enterprises'
+        click_link 'New Enterprise'
+        fill_in 'enterprise_name', with: 'zzz'
+        fill_in 'enterprise_address_attributes_address1', with: 'z'
+        fill_in 'enterprise_address_attributes_city', with: 'z'
+        fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+      end
 
-      # Then it should be created
-      page.should have_content 'Enterprise "zzz" has been successfully created!'
-      enterprise = Enterprise.last
-      enterprise.name.should == 'zzz'
+      scenario "without violating rules" do
+        click_button 'Create'
 
-      # And I should be managing it
-      Enterprise.managed_by(@new_user).should include enterprise
+        # Then it should be created
+        page.should have_content 'Enterprise "zzz" has been successfully created!'
+        enterprise = Enterprise.last
+        enterprise.name.should == 'zzz'
+
+        # And I should be managing it
+        Enterprise.managed_by(enterprise_user).should include enterprise
+      end
+
+      context "overstepping my owned enterprises limit" do
+        before do
+          create(:enterprise, owner: enterprise_user)
+        end
+
+        it "shows me an error message" do
+          click_button 'Create'
+
+          # Then it should show me an error
+          expect(page).to_not have_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).to have_content "You are not permitted to own own any more enterprises (limit is 1)."
+        end
+      end
     end
 
     scenario "editing enterprises I have permission to" do

@@ -86,11 +86,14 @@ feature %q{
 
   context "as an enterprise user" do
 
-    before(:each) do
+    before do
       @new_user = create_enterprise_user
       @supplier2 = create(:supplier_enterprise, name: 'Another Supplier')
+      @supplier_permitted = create(:supplier_enterprise, name: 'Permitted Supplier')
       @new_user.enterprise_roles.build(enterprise: @supplier2).save
       @new_user.enterprise_roles.build(enterprise: @distributors[0]).save
+      create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
+             permissions_list: [:manage_products])
 
       login_to_admin_as @new_user
     end
@@ -116,15 +119,26 @@ feature %q{
       select taxon.name, from: "product_primary_taxon_id"
 
       # Should only have suppliers listed which the user can manage
-      within "#product_supplier_id" do
-        page.should_not have_content @supplier.name
-      end
+      page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
+      page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
 
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier2
+    end
+
+    scenario "editing a product" do
+      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+
+      visit spree.edit_admin_product_path product
+
+      select 'Permitted Supplier', from: 'product_supplier_id'
+      click_button 'Update'
+      flash_message.should == 'Product "a product" has been successfully updated!'
+      product.reload
+      product.supplier.should == @supplier_permitted
     end
 
     scenario "editing product distributions" do

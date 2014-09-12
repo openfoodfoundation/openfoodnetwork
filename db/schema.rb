@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140826043521) do
+ActiveRecord::Schema.define(:version => 20140904003026) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -265,9 +265,11 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.string   "instagram"
     t.string   "linkedin"
     t.string   "type",                     :default => "profile", :null => false
+    t.integer  "owner_id",                                        :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
 
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"
@@ -969,6 +971,7 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.string   "spree_api_key",          :limit => 48
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
+    t.integer  "enterprise_limit",                     :default => 1, :null => false
   end
 
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
@@ -1069,6 +1072,7 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
   add_foreign_key "enterprise_roles", "spree_users", name: "enterprise_roles_user_id_fk", column: "user_id"
 
   add_foreign_key "enterprises", "spree_addresses", name: "enterprises_address_id_fk", column: "address_id"
+  add_foreign_key "enterprises", "spree_users", name: "enterprises_owner_id_fk", column: "owner_id"
 
   add_foreign_key "exchange_fees", "enterprise_fees", name: "exchange_fees_enterprise_fee_id_fk"
   add_foreign_key "exchange_fees", "exchanges", name: "exchange_fees_exchange_id_fk"

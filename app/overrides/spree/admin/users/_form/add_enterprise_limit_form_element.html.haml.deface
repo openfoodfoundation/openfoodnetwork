@@ -1,0 +1,5 @@
+/ insert_bottom "div[data-hook='admin_user_form_fields'] div.alpha"
+
+= f.field_container :enterprise_limit do
+  = f.label :enterprise_limit, t(:enterprise_limit)
+  = f.text_field :enterprise_limit, :class => 'fullwidth'

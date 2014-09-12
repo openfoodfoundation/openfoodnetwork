@@ -1,6 +1,3 @@
-- content_for :head do
-  = render 'shared/cms_elrte_head'
-
 - content_for :page_actions do
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
@@ -23,6 +20,16 @@
 
         .eight.columns.omega
           = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+    - if spree_current_user.admin?
+      .row
+        .three.columns.alpha
+          =f.label :owner_id, 'Owner'
+          .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
+            %a What's this?
+        .eight.columns
+          - owner_email = @enterprise.andand.owner.andand.email || ""
+          = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: owner_email
+
     .row
       .three.columns.alpha
         %label Enterprise Type(s)
@@ -174,20 +181,8 @@
     .row
       .alpha.three.columns
         = f.label :long_description, 'About Us'
-        %br
-        Tell us about yourself. This information appears on your public profile (under "About Us")
       .omega.eight.columns
-        = f.text_area :long_description, class: 'rich_text', placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")'
-    .row
-      .alpha.three.columns
-        = f.label :distributor_info, 'How does your hub work?'
-        %br
-        %em (Hub only)
-        %br
-        Explain your distribution offer/s - this information appears on your public profile (under "How does it work?")
-      .omega.eight.columns
-        = f.text_area :distributor_info, class: 'rich_text', placeholder: 'Hub only: Explain your distribution offer/s - this is more detailed information that the user can access by clicking on "How does it work?"'
-        / TODO: editor breaks scrolling with arrow keys
+        = f.text_area :long_description, rows: 6, placeholder: 'Tell us about yourself. This information appears on your public profile (under "About Us")', class: 'fullwidth'
   %fieldset.eleven.columns.alpha.no-border-bottom
     %legend IMAGES
     .row

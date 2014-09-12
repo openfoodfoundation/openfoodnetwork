@@ -1,7 +1,8 @@
 %div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
   %h3.thirteen.columns.alpha My Enterprises
   - if @enterprises.any?
-    %a.three.columns.omega.icon-plus.button.blue.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
-      CREATE NEW
+    - if spree_current_user.can_own_more_enterprises?
+      %a.three.columns.omega.icon-plus.button.blue.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
+        CREATE NEW
   - else
     %a.with-tip{ title: "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." } What's this?
