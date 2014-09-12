@@ -256,9 +256,9 @@ class Enterprise < ActiveRecord::Base
   end
 
   # TODO: Remove this when flags on enterprises are switched over
-  # Obviously this is duplicated is producer currently, needs to 
+  # Obviously this duplicates is_producer currently
   def can_supply
-    is_primary_producer #and has distributors?
+    is_primary_producer && type != "profile" #and has distributors?
   end
 
   # Return all taxons for all distributed products
