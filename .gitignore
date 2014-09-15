@@ -36,3 +36,7 @@ config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
 libpeerconnection.log
+tags
+
+# Ignore application configuration
+/config/application.yml
