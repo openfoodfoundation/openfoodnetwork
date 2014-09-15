@@ -42,6 +42,7 @@ gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
+gem 'figaro'
 
 gem 'foreigner'
 gem 'immigrant'

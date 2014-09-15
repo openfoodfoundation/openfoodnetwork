@@ -243,6 +243,9 @@ GEM
       railties (>= 3.0.0)
     ffaker (1.15.0)
     ffi (1.9.3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     fog (1.14.0)
       builder
       excon (~> 0.25.0)
@@ -520,6 +523,7 @@ DEPENDENCIES
   debugger-linecache
   deface!
   factory_girl_rails
+  figaro
   foreigner
   foundation-icons-sass-rails
   foundation-rails

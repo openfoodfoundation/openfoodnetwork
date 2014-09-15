@@ -1,6 +1,6 @@
 Hello,
 
-Welcome to Australia's Open Food Network! Your login email is <%= @user.email %>
+Welcome to #{ENV['DEFAULT_COUNTRY']}'s Open Food Network! Your login email is #{@user.email} 
 
 You can go online and start shopping through food hubs and local producers you like at http://openfoodnetwork.org.au
 
@@ -9,5 +9,5 @@ We welcome all your questions and feedback; you can use the Send Feedback button
 Thanks for getting on board and we look forward to introducing you to many more great farmers, food hubs and food!
 
 Cheers,
-Kirsten Larsen and the OFN Team
+#{ENV['CONTACT_STRING']}
 
