@@ -28,7 +28,7 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   describe "with shipping methods" do
-    let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow") }
+    let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
     before do
       distributor.shipping_methods << sm1
@@ -188,7 +188,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
                 # Order should have a payment with the correct amount
                 o = Spree::Order.complete.first
-                o.payments.first.amount.should == 15.79
+                o.payments.first.amount.should == 11.23
               end
 
               it "shows the payment processing failed message when submitted with an invalid credit card" do

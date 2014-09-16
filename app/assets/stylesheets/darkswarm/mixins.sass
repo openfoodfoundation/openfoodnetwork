@@ -20,6 +20,10 @@
   -webkit-border-radius: $border-radius
   border-radius: $border-radius
 
+@mixin border-radius-mixed($border-radius-TL, $border-radius-TR, $border-radius-BR, $border-radius-BL)
+  -webkit-border-radius: $border-radius-TL $border-radius-TR $border-radius-BR $border-radius-BL
+  border-radius: $border-radius-TL $border-radius-TR $border-radius-BR $border-radius-BL
+
 @mixin transform-translate($translate)
   -ms-transform: $translate
   -webkit-transform: $translate

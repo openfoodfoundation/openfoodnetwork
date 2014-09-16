@@ -11,5 +11,5 @@
   %table#enterprise-roles
     %tbody
       = render 'form'
-      %tr{"ng-repeat" => "enterprise_role in EnterpriseRoles.enterprise_roles | filter:query"}
+      %tr{"ng-repeat" => "enterprise_role in EnterpriseRoles.enterprise_roles | filter:query", id: "enterprise_role_{{enterprise_role.id}}"}
         = render 'enterprise_role'

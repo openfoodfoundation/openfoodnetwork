@@ -2,7 +2,9 @@ describe "AdminOrderMgmtCtrl", ->
   ctrl = scope = httpBackend = VariantUnitManager = null
 
   beforeEach ->
-    module "ofn.admin"
+    module "ofn.admin", ($provide) ->
+      $provide.value 'SpreeApiKey', 'API_KEY'
+      return
   beforeEach inject(($controller, $rootScope, $httpBackend, _VariantUnitManager_) ->
     scope = $rootScope.$new()
     ctrl = $controller
@@ -18,7 +20,7 @@ describe "AdminOrderMgmtCtrl", ->
       returnedSuppliers = ["list of suppliers"]
       returnedDistributors = ["list of distributors"]
       returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
-      httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
+      httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
       httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
@@ -27,7 +29,7 @@ describe "AdminOrderMgmtCtrl", ->
       #spyOn(returnedSuppliers, "unshift")
       #spyOn(returnedDistributors, "unshift")
       #spyOn(returnedOrderCycles, "unshift")
-      scope.initialise "api_key"
+      scope.initialise()
       httpBackend.flush()
 
       expect(scope.suppliers).toEqual [{ id : '0', name : 'All' }, 'list of suppliers']

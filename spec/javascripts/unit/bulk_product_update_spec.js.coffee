@@ -165,7 +165,7 @@ describe "filtering products for submission to database", ->
       variant_unit: 'weight'
       variant_unit_scale: 1
     ]
-  
+
   # TODO Not an exhaustive test, is there a better way to do this?
   it "only returns the properties of products which ought to be updated", ->
     available_on = new Date()
@@ -238,6 +238,7 @@ describe "AdminProductEditCtrl", ->
     module ($provide)->
       $provide.value "producers", []
       $provide.value "taxons", []
+      $provide.value 'SpreeApiKey', 'API_KEY'
       null
 
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _DirtyProducts_) ->
@@ -252,9 +253,9 @@ describe "AdminProductEditCtrl", ->
 
   describe "loading data upon initialisation", ->
     it "gets a list of producers and then resets products with a list of data", ->
-      $httpBackend.expectGET("/api/users/authorise_api?token=api_key").respond success: "Use of API Authorised"
+      $httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       spyOn($scope, "fetchProducts").andReturn "nothing"
-      $scope.initialise "api_key"
+      $scope.initialise()
       $httpBackend.flush()
       expect($scope.fetchProducts.calls.length).toEqual 1
       expect($scope.spree_api_key_ok).toEqual true

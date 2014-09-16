@@ -1,4 +1,0 @@
-/ insert_after "[data-hook='long_description']"
-%tr{'data-hook' => 'distributor_info'}
-  %th Distributor Info:
-  %td= @enterprise.distributor_info.andand.html_safe

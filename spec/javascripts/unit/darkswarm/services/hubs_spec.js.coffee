@@ -8,18 +8,21 @@ describe "Hubs service", ->
       active: false
       orders_close_at: new Date()
       is_distributor: true
+      has_shopfront: true
     }
     {
       id: 3
       active: false
       orders_close_at: new Date()
       is_distributor: true
+      has_shopfront: true
     }
     {
       id: 1
       active: true
       orders_close_at: new Date()
       is_distributor: true
+      has_shopfront: true
     }
   ]
 
