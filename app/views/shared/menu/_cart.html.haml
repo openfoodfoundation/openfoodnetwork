@@ -28,7 +28,7 @@
               %small
                 \=
                 %strong 
-                  .right {{ line_item.variant.getPrice() | localizeCurrency }}
+                  .right {{ line_item.variant.totalPrice() | localizeCurrency }}
 
         %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
           .row

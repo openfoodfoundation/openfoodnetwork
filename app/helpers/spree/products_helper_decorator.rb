@@ -2,7 +2,7 @@ module Spree
   ProductsHelper.class_eval do
     # Return the price of the variant
     def variant_price_diff(variant)
-      "(#{number_to_currency variant.price})"
+      "(#{Spree::Money.new(variant.price).to_s})"
     end
 
 

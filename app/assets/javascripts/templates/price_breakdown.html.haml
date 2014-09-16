@@ -29,7 +29,7 @@
           Fundraising fee
         %li
           %strong
-            .right = {{ variant.price | localizeCurrency }}
+            .right = {{ variant.price_with_fees | localizeCurrency }}
             &nbsp;
 
       %a{"ng-click" => "expanded = !expanded"} 

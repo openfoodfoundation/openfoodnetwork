@@ -4,13 +4,13 @@
 # @return: string
 Darkswarm.filter "localizeCurrency", (currencyConfig)->
   (amount) ->
-    decimals = if currencyConfig.hide_cents then 0 else 2
-    amount_fixed = amount.toFixed(2)
-    currency_str = ""
-    currency_str = " " + currencyConfig.currency if currencyConfig.display_currency
+    currency_code = if currencyConfig.display_currency then " " + currencyConfig.currency else ""
+    decimals = if currencyConfig.hide_cents == "true" then 0 else 2
+    # We need to use parseFloat before toFixed as the amount should be a passed in as a string.
+    amount_fixed = parseFloat(amount).toFixed(decimals)
 
+    # Build the final price string.
     if currencyConfig.symbol_position == 'before'
-      currencyConfig.symbol + amount_fixed + currency_str
+      currencyConfig.symbol + amount_fixed + currency_code
     else
-      amount_fixed + " " + currencyConfig.symbol + currency_str
-
+      amount_fixed + " " + currencyConfig.symbol + currency_code
