@@ -1,53 +1,55 @@
-Dear #{ @order.bill_address.firstname },
+Dear #{@order.bill_address.firstname},
 
 Please review and retain the following order information for your records.
-
+\
 ============================================================
 Order Summary
 ============================================================
-Order for: #{ @order.bill_address.full_name }
+Order for: #{@order.bill_address.full_name}
 - @order.line_items.each do |item| 
-  #{ item.variant.sku } #{ raw(item.variant.product.supplier.name) } #{ raw(item.variant.product.name) } #{ raw(item.variant.options_text) -} (QTY: #{item.quantity}) @ #{ item.single_money } = #{ item.display_amount }
-
+  #{item.variant.sku} #{raw(item.variant.product.supplier.name)} #{raw(item.variant.product.name)} #{raw(item.variant.options_text)} (QTY: #{item.quantity}) @ #{item.single_money} = #{item.display_amount}
 ============================================================
-Subtotal: #{ number_to_currency checkout_cart_total_with_adjustments(@order) }
-- checkout_adjustments_for_summary(@order, exclude: [:distribution]).each do |adjustment| }
-  #{ raw(adjustment.label) } #{ adjustment.display_amount }
-Order Total: #{ @order.display_total }
-
-- if @order.payments.first.andand.payment_method.andand.name == "Spree::PaymentMethod::Check"
+Subtotal: #{number_to_currency checkout_cart_total_with_adjustments(@order)}
+- checkout_adjustments_for_summary(@order, exclude: [:distribution]).each do |adjustment|
+  #{raw(adjustment.label)} #{adjustment.display_amount}
+Order Total: #{@order.display_total}
+- if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check"
+  \
   ============================================================
   Payment Details
   ============================================================
-  #{ @order.payments.first.andand.payment_method.andand.description.andand.html_safe }
+  #{@order.payments.first.andand.payment_method.andand.description.andand.html_safe}
 
 - if @order.shipping_method.andand.require_ship_address 
+  \
   ============================================================
   Delivery Details
   ============================================================
   Your order will be delivered to:
-  #{ @order.ship_address.to_s }
+  #{@order.ship_address.to_s}
 
 - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
-  Delivery on: #{ @order.order_cycle.pickup_time_for(@order.distributor) }
+  Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}
 
-- if @order.order_cycle.andand.pickup_instructions_for(@order.distributor) }
-  Other delivery information: #{ @order.order_cycle.pickup_instructions_for(@order.distributor) }
-
+- if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+  Other delivery information: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+  
 - else 
+  \
   ============================================================
   Collection Details
   ============================================================
   - if @order.shipping_method.andand.description 
-    #{ @order.shipping_method.description.html_safe }
+    #{@order.shipping_method.description.html_safe}
 
   - if @order.order_cycle.andand.pickup_time_for(@order.distributor) 
-    Ready for collection: #{ @order.order_cycle.pickup_time_for(@order.distributor) }
+    Ready for collection: #{@order.order_cycle.pickup_time_for(@order.distributor)}
 
   - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-    Collection instructions: #{ @order.order_cycle.pickup_instructions_for(@order.distributor) }
+    Collection instructions: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
-  - if @order.special_instructions.present? Order notes: #{ @order.special_instructions }
+  - if @order.special_instructions.present?
+    notes: #{@order.special_instructions}
 
 Thanks for your support.
 
