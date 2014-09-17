@@ -11,31 +11,26 @@ feature "Registration", js: true do
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
-      sleep 0.5 # TOTO: DEAL WITH ME
+      page.has_selector? "dd", text: "Log in"
+      switch_to_login_tab
 
-      # Logging in
-      click_link "Log in"
+      # Enter Login details
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_button 'Log in'
+      click_login_and_ensure_content "This wizard will step you through creating a profile"
 
-      # Log in was successful, introduction shown
-      sleep 0.5 # TOTO: DEAL WITH ME
-
-      expect(page).to have_content "This wizard will step you through creating a profile"
       expect(URI.parse(current_url).path).to eq registration_path
 
       # Done reading introduction
-      click_button "Let's get started!"
+      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know what sort of enterprise you are:"
 
       # Filling in details
-      expect(page).to have_content "Woot! First we need to know what sort of enterprise you are:"
       fill_in 'enterprise_name', with: "My Awesome Enterprise"
       click_link 'both-panel'
-      click_button 'Continue'
+
+      click_button_and_ensure_content "Continue", "Greetings My Awesome Enterprise"
 
       # Filling in address
-      expect(page).to have_content 'Greetings My Awesome Enterprise'
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
@@ -96,28 +91,55 @@ feature "Registration", js: true do
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
-      sleep 0.5 # TOTO: DEAL WITH ME
+      page.has_selector? "dd", text: "Log in"
+      switch_to_login_tab
 
-      # Logging in
-      click_link "Log in"
+      # Enter Login details
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_button 'Log in'
+      click_login_and_ensure_content "This wizard will step you through creating a profile"
 
-      # Log in was successful, introduction shown
-      sleep 0.5 # TOTO: DEAL WITH ME
-
-      expect(page).to have_content "This wizard will step you through creating a profile"
       expect(URI.parse(current_url).path).to eq store_registration_path
 
       # Done reading introduction
-      click_button "Let's get started!"
+      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know the name of your farm:"
 
       # Details Page
       expect(page).to have_content "Woot! First we need to know the name of your farm:"
       expect(page).to_not have_selector '#enterprise-types'
 
       # Everything from here should be covered in 'profile' spec
+    end
+  end
+
+  def switch_to_login_tab
+    # Link appears to be unresponsive for a while, so keep clicking it until it works
+    using_wait_time 0.5 do
+      10.times do
+        click_link "Log in"
+        break if page.has_selector? "dd.active", text: "Log in"
+      end
+    end
+  end
+
+  def click_login_and_ensure_content(content)
+    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
+    using_wait_time 1 do
+      3.times do
+        click_button "Log in"
+        break if page.has_selector? "div#loading", text: "Hold on a moment, we're logging you in"
+      end
+    end
+    expect(page).to have_content content
+  end
+
+  def click_button_and_ensure_content(button_text, content)
+    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
+    using_wait_time 0.5 do
+      10.times do
+        click_button button_text
+        break if page.has_content? content
+      end
     end
   end
 end

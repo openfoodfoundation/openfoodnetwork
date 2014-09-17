@@ -21,10 +21,14 @@ module InjectionHelper
     inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
   end
 
+  def inject_currency_config
+    inject_json_ams "currencyConfig", {}, Api::CurrencyConfigSerializer
+  end
+
   def inject_spree_api_key
     render partial: "json/injection_ams", locals: {name: 'spreeApiKey', json: "'#{@spree_api_key.to_s}'"}
   end
-
+  
   def inject_available_countries
     inject_json_ams "availableCountries", available_countries, Api::CountrySerializer
   end

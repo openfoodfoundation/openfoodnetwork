@@ -10,7 +10,7 @@ feature %q{
   after { Warden.test_reset! }
   stub_authorization!
 
-  context "listing orders" do
+  pending "listing orders" do
     before :each do
       admin_user = quick_login_as_admin
     end
@@ -92,7 +92,7 @@ feature %q{
     end
   end
 
-  context "altering line item properties" do
+  pending "altering line item properties" do
     before :each do
       admin_user = quick_login_as_admin
     end
@@ -140,7 +140,7 @@ feature %q{
     end
   end
 
-  context "using page controls" do
+  pending "using page controls" do
     before :each do
       admin_user = quick_login_as_admin
     end
@@ -562,7 +562,7 @@ feature %q{
     end
   end
 
-  context "as an enterprise manager" do
+  pending "as an enterprise manager" do
     let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }

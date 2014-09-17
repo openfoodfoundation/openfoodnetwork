@@ -1,6 +1,7 @@
 Spree::OrderMailer.class_eval do
   helper HtmlHelper
   helper CheckoutHelper
+  helper SpreeCurrencyHelper
   def confirm_email(order, resend = false)
     find_order(order)
     subject = (resend ? "[#{t(:resend).upcase}] " : '')
