@@ -3,11 +3,11 @@ class Api::VariantSerializer < ActiveModel::Serializer
     :on_demand, :price, :fees, :price_with_fees
 
   def price_with_fees
-    object.price_with_fees(options[:current_distributor], options[:current_order_cycle]).to_f
+    object.price_with_fees(options[:current_distributor], options[:current_order_cycle])
   end
 
   def price
-    object.price.to_f
+    object.price
   end
 
   def fees
