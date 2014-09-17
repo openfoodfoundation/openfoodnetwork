@@ -1,6 +1,7 @@
 module Spree
   ProductsHelper.class_eval do
-    # Return the price of the variant
+    # Return the price of the variant, overriding sprees price diff capability.
+    # This will allways return the variant price as if the show_variant_full_price is set.
     def variant_price_diff(variant)
       "(#{Spree::Money.new(variant.price).to_s})"
     end
