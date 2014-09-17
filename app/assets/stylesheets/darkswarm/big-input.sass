@@ -9,8 +9,6 @@
   @include avenir
   @include csstrans
   @include border-radius(0.5rem)
-
-  // transition: all 0.5s ease
   background: rgba(255,255,255,0.1)
   border: 2px solid $input
   font-size: 2rem 
@@ -21,6 +19,8 @@
   margin-bottom: 0.5rem
   box-shadow: none
   color: $inputactv
+  @media all and (max-width: 640px) 
+    font-size: 1.25rem
 
   &:hover
     @include box-shadow(0 1px 1px 0 rgba(255,255,255,0.25))

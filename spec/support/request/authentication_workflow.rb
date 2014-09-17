@@ -6,7 +6,7 @@ module AuthenticationWorkflow
 
   def quick_login_as_admin
     admin_role = Spree::Role.find_or_create_by_name!('admin')
-    admin_user = create(:user, 
+    admin_user = create(:user,
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
       :remember_me => false,
@@ -25,7 +25,7 @@ module AuthenticationWorkflow
 
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
-    admin_user = create(:user, 
+    admin_user = create(:user,
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
       :remember_me => false,
@@ -38,7 +38,7 @@ module AuthenticationWorkflow
   end
 
   def create_enterprise_user(enterprises = [])
-    new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah', :password_confirmation => 'blahblah', )
+    new_user = create(:user, password: 'blahblah', :password_confirmation => 'blahblah')
     new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
     for enterprise in enterprises do
       new_user.enterprise_roles.build(enterprise: enterprise).save

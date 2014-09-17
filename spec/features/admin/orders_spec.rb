@@ -129,26 +129,40 @@ feature %q{
       visit '/admin/orders'
       click_link 'New Order'
 
-      page.should have_content 'ADD PRODUCT'
+      expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+
+      puts "c1: " + coordinator1.id.to_s + " "+ coordinator1.name
+      puts "c2: " + coordinator2.id.to_s + " "+ coordinator2.name
+      puts "s1: " + supplier1.id.to_s + " "+ supplier1.name
+      puts "s2: " + supplier2.id.to_s + " "+ supplier2.name
+      puts "d1: " + distributor1.id.to_s + " "+ distributor1.name
+      puts "d2: " + distributor2.id.to_s + " "+ distributor2.name
+      order_cycle1.distributors.each do |distributor|
+        puts "oc1d: " + distributor.id.to_s + " "+ distributor.name
+      end
+      Enterprise.is_distributor.managed_by(@enterprise_user).each do |distributor|
+        puts "eud: " + distributor.id.to_s + " "+ distributor.name
+      end
+
       click_link 'Add'
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
-      page.should have_selector 'td', text: product.name
+      expect(page).to have_selector 'td', text: product.name
 
-      page.should have_select 'order_distributor_id', with_options: [distributor1.name]
-      page.should have_no_select 'order_distributor_id', with_options: [distributor2.name]
+      expect(page).to have_select 'order_distributor_id', with_options: [distributor1.name]
+      expect(page).to_not have_select 'order_distributor_id', with_options: [distributor2.name]
 
-      page.should have_select 'order_order_cycle_id', with_options: [order_cycle1.name]
-      page.should have_no_select 'order_order_cycle_id', with_options: [order_cycle2.name]
+      expect(page).to have_select 'order_order_cycle_id', with_options: [order_cycle1.name]
+      expect(page).to_not have_select 'order_order_cycle_id', with_options: [order_cycle2.name]
 
       select distributor1.name, from: 'order_distributor_id'
       select order_cycle1.name, from: 'order_order_cycle_id'
       click_button 'Update'
 
-      page.should have_selector 'h1', text: 'Customer Details'
+      expect(page).to have_selector 'h1', text: 'Customer Details'
       o = Spree::Order.last
-      o.distributor.should == distributor1
-      o.order_cycle.should == order_cycle1
+      expect(o.distributor).to eq distributor1
+      expect(o.order_cycle).to eq order_cycle1
     end
 
   end

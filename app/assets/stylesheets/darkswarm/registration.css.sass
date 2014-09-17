@@ -1,0 +1,115 @@
+@import branding
+@import mixins
+
+#registration-modal
+  .header
+    text-align: center
+    background-color: #efefef
+    padding-bottom: 1rem
+  .container
+    background-color: #ffffff
+  .content
+    // margin-bottom: 15px
+
+  i
+    font-size: 150%
+
+  .buttons
+
+  ofn-inline-flash
+    display: block
+    padding: 15px
+    position: relative
+    margin-bottom: 10px
+    &.brick
+      background-color: $clr-brick-light
+      border: 2px solid $clr-brick
+      color: $clr-brick
+    &.turquoise
+      background-color: $clr-turquoise-light
+      border: 2px solid $clr-turquoise
+      color: $clr-turquoise
+    .close-button
+      position: absolute
+      top: 0px
+      right: 0px
+
+  .field
+    margin-bottom: 15px
+
+  input.chunky
+    padding: 8px
+    font-size: 105%
+
+  label.indent-checkbox
+    display: block
+    padding-left: 20px
+    text-indent: -17px
+    input
+      margin: 0px
+
+  label
+    margin-bottom: 3px
+
+  ol, ul
+    // font-size: 80%
+    font-size: 0.875rem
+    padding: 0
+    margin: 0
+  ol
+    list-style-type: decimal
+
+  .highlight-box
+    background: white
+    padding: 1rem 1.2rem
+    @media all and (max-width: 640px)
+      margin-top: 1rem
+
+  #progress-bar
+    margin-bottom: 15px
+    .item
+      padding: 12px 0px
+      text-transform: uppercase
+      text-align: center
+      background-color: #333
+      border: 2px solid #333
+      color: #fff
+    .item.active
+      background-color: #cccccc
+      border: 2px solid #333
+      color: #333
+      @include box-shadow(inset 0 0 1px 0 #fff)
+
+#registration-details
+  #enterprise-types
+    a.panel
+      display: block
+      background-color: #efefef
+      color: black
+      @media all and (min-width: 768px)
+        min-height: 200px
+      &:hover
+        background-color: #fff
+      &#producer-panel:hover
+        &, & *
+          color: $clr-turquoise
+      &#hub-panel:hover, &#both-panel:hover
+        &, & *
+          color: $clr-brick
+      &.selected
+        &, &  *
+          color: #fff
+        &#hub-panel, &#both-panel
+          background-color: $clr-brick-bright
+          &:hover
+            &, & *
+              color: white
+        &#producer-panel
+          background-color: $clr-turquoise-bright
+          &:hover
+            &, & *
+              color: white
+      p
+        clear: both
+        font-size: 0.875rem
+

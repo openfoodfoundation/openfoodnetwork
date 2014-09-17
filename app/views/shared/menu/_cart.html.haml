@@ -22,20 +22,20 @@
               %small
                 {{line_item.quantity}}
                 %i.ofn-i_009-close
-                {{ line_item.variant.price | currency }}    
+                {{ line_item.variant.price_with_fees | localizeCurrency }}    
         
             .columns.small-2
               %small
                 \=
                 %strong 
-                  .right {{ line_item.variant.getPrice() | currency }}
+                  .right {{ line_item.variant.totalPrice() | localizeCurrency }}
 
         %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
           .row
             .columns.small-6
               %em Total: 
             .columns.small-6.text-right
-              %strong {{ Cart.total()  | currency }}        
+              %strong {{ Cart.total()  | localizeCurrency }}        
 
       .text-right
         %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Quick checkout

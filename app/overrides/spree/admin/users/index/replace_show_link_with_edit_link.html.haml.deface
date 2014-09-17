@@ -1,0 +1,3 @@
+/ replace "code[erb-loud]:contains('link_to user.email, object_url(user)')"
+
+= link_to user.email, edit_object_url(user)

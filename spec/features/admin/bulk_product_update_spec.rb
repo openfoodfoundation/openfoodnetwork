@@ -6,7 +6,7 @@ feature %q{
 } , js: true do
   include AuthenticationWorkflow
   include WebHelper
-  
+
   describe "listing products" do
     before :each do
       login_to_admin_section
@@ -69,7 +69,7 @@ feature %q{
       expect(page).to have_field "price", with: "44.0"
       expect(page).to have_no_field "price", with: "66.0", visible: true
     end
-    
+
     it "displays an on hand count input for each product (ie. for master variant) if no regular variants exist" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
@@ -84,7 +84,7 @@ feature %q{
       expect(page).to have_field "on_hand", with: "15"
       expect(page).to have_field "on_hand", with: "12"
     end
-    
+
     it "displays an on hand count in a span for each product (ie. for master variant) if other variants exist" do
       p1 = FactoryGirl.create(:product)
       p2 = FactoryGirl.create(:product)
@@ -142,7 +142,7 @@ feature %q{
       expect(page).to have_field "variant_unit_name", with: "packet"
     end
   end
-  
+
   describe "listing variants" do
     before :each do
       login_to_admin_section
@@ -174,8 +174,8 @@ feature %q{
       expect(page).to have_field "variant_on_hand", with: "15"
       expect(page).to have_field "variant_on_hand", with: "6"
     end
-    
-   
+
+
     it "displays a price input (for each variant) for each product" do
       p1 = FactoryGirl.create(:product, price: 2.0)
       v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75)
@@ -295,7 +295,7 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
-    
+
     first("div#columns_dropdown", :text => "COLUMNS").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Category").click
@@ -305,14 +305,13 @@ feature %q{
       expect(page).to have_select "producer", selected: s1.name
       expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
       expect(page).to have_field "price", with: "10.0"
-      save_screenshot '/Users/rob/Desktop/ss.png'
       expect(page).to have_selector "div#s2id_p#{p.id}_category a.select2-choice"
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_field "on_hand", with: "6"
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
       select s2.name, :from => 'producer'
-      fill_in "available_on", with: (Date.today-3).strftime("%F %T")
+      fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
       fill_in "price", with: "20"
       select "Weight (kg)", from: "variant_unit_with_scale"
       select2_select t1.name, from: "p#{p.id}_category"
@@ -334,7 +333,7 @@ feature %q{
     expect(p.on_hand).to eq 18
     expect(p.primary_taxon).to eq t1
   end
-  
+
   scenario "updating a product with a variant unit of 'items'" do
     p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
@@ -590,7 +589,7 @@ feature %q{
         within "tr#v_#{v1.id}" do
           first("a.delete-variant").click
         end
-        
+
         expect(page).to have_selector "a.delete-variant", :count => 2
 
         visit '/admin/products/bulk_edit'
@@ -673,7 +672,7 @@ feature %q{
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
-        
+
         first("div#columns_dropdown", :text => "COLUMNS").click
         first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
@@ -745,8 +744,6 @@ feature %q{
              permissions_list: [:manage_products])
     end
 
-    use_short_wait
-
     before do
       @enterprise_user = create_enterprise_user
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
@@ -779,6 +776,28 @@ feature %q{
       expect(page).to have_field 'product_name', with: product_supplied_inactive.name
     end
 
+    it "allows me to create a product" do
+      taxon = create(:taxon, name: 'Fruit')
+
+      visit '/admin/products/bulk_edit'
+
+      find("a", text: "NEW PRODUCT").click
+      expect(page).to have_content 'NEW PRODUCT'
+      expect(page).to have_select 'product_supplier_id', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name]
+
+      within 'fieldset#new_product' do
+        fill_in 'product_name', with: 'Big Bag Of Apples'
+        select supplier_permitted.name, from: 'product_supplier_id'
+        fill_in 'product_price', with: '10.00'
+        select taxon.name, from: 'product_primary_taxon_id'
+      end
+      click_button 'Create'
+
+      expect(URI.parse(current_url).path).to eq '/admin/products/bulk_edit'
+      expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
+      expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
+    end
+
     it "allows me to update a product" do
       p = product_supplied_permitted
 
@@ -795,7 +814,7 @@ feature %q{
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
         select(supplier_managed2.name, :from => 'producer')
-        fill_in "available_on", with: (Date.today-3).strftime("%F %T")
+        fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
         fill_in "price", with: "20"
         select "Weight (kg)", from: "variant_unit_with_scale"
         fill_in "on_hand", with: "18"

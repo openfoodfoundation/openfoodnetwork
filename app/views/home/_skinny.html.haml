@@ -12,12 +12,16 @@
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign
-      %span.margin-top {{ hub.orders_close_at | sensible_timeframe }}
+      %span.margin-top{ bo: { if: "current()" } } 
+        %em Shopping here
+      %span.margin-top{ bo: { if: "!current()" } } {{ hub.orders_close_at | sensible_timeframe }}
 
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "!hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_032-closed-sign
-      %span.margin-top Orders closed
+      %span.margin-top{ bo: { if: "current()" } } 
+        %em Shopping here
+      %span.margin-top{ bo: { if: "!current()" } } Orders closed
 
 
 

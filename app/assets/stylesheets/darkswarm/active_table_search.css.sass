@@ -9,7 +9,13 @@
   margin-right: 0
 
 .row.filter-box:first-child
-  // border-top: 1px solid $clr-brick
+  border: 1px solid $clr-blue-light
+  @include border-radius(0.25em)
+  margin-top: 2px
+
+.row.filter-box:last-child
+  background: transparent
+  margin-top: 1em
 
 products .filter-box
   background: #f7f7f7
@@ -20,6 +26,8 @@ products .filter-box
   .tdhead
     padding: 0.25rem 0.5rem
     margin-top: 0.9rem
+    color: $clr-blue
+    border-bottom: 1px solid $clr-blue-light
 
   // OVERRIDES
   [class*="block-grid-"]

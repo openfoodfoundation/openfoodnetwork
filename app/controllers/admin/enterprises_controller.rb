@@ -3,9 +3,10 @@ module Admin
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
-    create.after :grant_management
     before_filter :check_type, only: :update
     before_filter :check_bulk_type, only: :bulk_update
+    before_filter :override_owner, only: :create
+    before_filter :check_owner, only: :update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -39,14 +40,6 @@ module Admin
 
     private
 
-    # When an enterprise user creates another enterprise, it is granted management
-    # permission for it
-    def grant_management
-      unless spree_current_user.has_spree_role? 'admin'
-        spree_current_user.enterprise_roles.create(enterprise: @object)
-      end
-    end
-
     def load_enterprise_set
       @enterprise_set = EnterpriseSet.new :collection => collection
     end
@@ -79,6 +72,16 @@ module Admin
 
     def check_type
       params[:enterprise].delete :type unless spree_current_user.admin?
+    end
+
+    def override_owner
+      params[:enterprise][:owner_id] = spree_current_user.id unless spree_current_user.admin?
+    end
+
+    def check_owner
+      unless spree_current_user == @enterprise.owner || spree_current_user.admin?
+        params[:enterprise].delete :owner_id
+      end
     end
 
     # Overriding method on Spree's resource controller

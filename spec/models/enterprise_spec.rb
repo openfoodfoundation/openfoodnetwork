@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Enterprise do
+  include AuthenticationWorkflow
 
   describe "associations" do
+    it { should belong_to(:owner) }
     it { should have_many(:supplied_products) }
     it { should have_many(:distributed_orders) }
     it { should belong_to(:address) }
@@ -51,11 +53,44 @@ describe Enterprise do
         e.suppliers
       end
     end
+
+    describe "ownership" do
+      let(:u1) { create_enterprise_user }
+      let(:u2) { create_enterprise_user }
+      let!(:e) { create(:enterprise, owner: u1 ) }
+
+      it "adds new owner to list of managers" do
+        expect(e.owner).to eq u1
+        expect(e.users).to include u1
+        expect(e.users).to_not include u2
+        e.owner = u2
+        e.save!
+        e.reload
+        expect(e.owner).to eq u2
+        expect(e.users).to include u1, u2
+      end
+
+      it "validates ownership limit" do
+        expect(u1.enterprise_limit).to be 1
+        expect(u1.owned_enterprises(:reload)).to eq [e]
+        e2 = create(:enterprise, owner: u2 )
+        expect{
+          e2.owner = u1
+          e2.save!
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: You are not permitted to own own any more enterprises (limit is 1)."
+      end
+    end
   end
 
   describe "validations" do
     subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
     it { should validate_presence_of(:name) }
+
+    it "requires an owner" do
+      expect{
+        e = create(:enterprise, owner: nil)
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Owner can't be blank"
+    end
   end
 
   describe "delegations" do
@@ -74,7 +109,7 @@ describe Enterprise do
         Enterprise.visible.should == [s1]
       end
     end
-    
+
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
@@ -441,8 +476,8 @@ describe Enterprise do
   end
 
   describe "presentation of attributes" do
-    let(:distributor) { 
-      create(:distributor_enterprise, 
+    let(:distributor) {
+      create(:distributor_enterprise,
              website: "http://www.google.com",
              facebook: "www.facebook.com/roger",
              linkedin: "https://linkedin.com")

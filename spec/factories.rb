@@ -82,6 +82,7 @@ FactoryGirl.define do
   end
 
   factory :enterprise, :class => Enterprise do
+    owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     type 'full'
     description 'enterprise'
