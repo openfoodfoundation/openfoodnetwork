@@ -5,8 +5,8 @@ describe 'Variants service', ->
   beforeEach ->
     variant =
       id: 1
-      base_price: 80.5
-      price: 100
+      price: 80.5
+      price_with_fees: 100
     module 'Darkswarm'
     inject ($injector)->
       Variants =  $injector.get("Variants")

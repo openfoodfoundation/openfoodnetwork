@@ -15,7 +15,7 @@
           .product-image
             = link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url'
           = link_to truncate(product.name, :length => 50), product, :class => 'info', :itemprop => "name", :title => product.name
-          %span.price.selling{:itemprop => "price"}= number_to_currency product.price
+          %span.price.selling{:itemprop => "price"}= spree_number_to_currency(product.price)
 
 - if paginated_products.respond_to?(:num_pages)
   - params.delete(:search)

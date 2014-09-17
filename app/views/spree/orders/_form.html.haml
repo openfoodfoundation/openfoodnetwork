@@ -24,7 +24,7 @@
       %td
         Product 
         \:
-        %span.order-total.item-total= number_to_currency @order.item_total
+        %span.order-total.item-total= spree_number_to_currency(@order.item_total)
       %td
         Distribution
         \:
