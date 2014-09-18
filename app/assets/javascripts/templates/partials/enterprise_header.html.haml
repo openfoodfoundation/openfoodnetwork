@@ -1,12 +1,9 @@
-.highlight
+.highlight{ng: {class: "enterprise.has_shopfront"}}
   .highlight-top 
     %p.right
       {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
-    %h3{"ng-if" => "enterprise.is_distributor"}
+    %h3
       %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
-        %i.ofn-i_040-hub
+        %i{ng: {class: "enterprise.icon_font"}}
         %span {{ enterprise.name }}
-    %h3{"ng-if" => "!enterprise.is_distributor"}
-      %i.ofn-i_036-producers
-      %span {{ enterprise.name }}
   %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 

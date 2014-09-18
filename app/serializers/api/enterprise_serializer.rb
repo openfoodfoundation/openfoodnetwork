@@ -32,9 +32,12 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     object.enterprise_category
   end
 
-  # TODO: Remove this when flags on enterprises are switched over
   def has_shopfront
     object.is_distributor && object.type != 'profile'
+  end
+
+  def profile_only
+    object.type = 'profile'
   end
 
   # Map svg icons.
@@ -43,7 +46,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "hub" => "/assets/map_005-hub.svg",
       "hub_profile" => "/assets/map_006-hub-profile.svg",
       "producer_hub" => "/assets/map_005-hub.svg",
-      "prodshop_shop" => "/assets/map_003-producer-shop.svg",
+      "producer_shop" => "/assets/map_003-producer-shop.svg",
       "producer" => "map_001-producer-only.svg",
       "producer_profile" => "/assets/map_002-producer-only-profile.svg",
     }

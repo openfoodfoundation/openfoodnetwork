@@ -210,6 +210,18 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
+  # Make this a real database attridbute later.
+  def sells
+    case type
+      when "full"
+        "all"
+      when "single"
+        "own"
+      when "profile"
+        "none"
+    end
+  end
+
   def enterprise_category
     # Explanation: I added and extra flag then pared it back to a combo, before realising we allready had one.
     # Short version: meets front end and back end needs, without changing much at all.
@@ -221,15 +233,8 @@ class Enterprise < ActiveRecord::Base
     # Make this crazy logic human readable so we can argue about it sanely. 
     # This can be simplified later, like this for readablitlty during changes.
     category = is_primary_producer ? "producer_" : "non_producer_" 
-    case type
-      when "full"
-        category << "sell_all_"
-      when "single"
-        category << "sell_own_"
-      when "profile"
-        category << "cant_sell_"
-    end
-    category << (can_supply ? "can_supply" : "cant_supply")
+    category << "sell_" + sells
+    category << (supplies ? "can_supply" : "cant_supply")
 
     # Map backend cases to front end cases.
     case category
@@ -261,11 +266,10 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  # TODO: Remove this when flags on enterprises are switched over
-  # Obviously this duplicates is_producer currently
-  def can_supply
+  def supplies
     is_primary_producer && type != "profile" #and has distributors?
   end
+
 
   # Return all taxons for all distributed products
   def distributed_taxons
