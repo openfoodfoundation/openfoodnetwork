@@ -34,7 +34,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   # TODO: Remove this when flags on enterprises are switched over
   def has_shopfront
-    object.type != 'profile'
+    object.is_distributor && object.type != 'profile'
   end
 
   # Map svg icons.
@@ -63,7 +63,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     icon_fonts[object.enterprise_category]
   end
 
-  # Choose producser page icon font - yes, sadly its got to be different.
+  # Choose producer page icon font - yes, sadly its got to be different.
   # This duplicates some code but covers the producer page edge case where 
   # producer-hub has a producer icon without needing to duplicate the category logic in angular.
   def producer_icon_font
