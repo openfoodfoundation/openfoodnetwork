@@ -1,10 +1,16 @@
 .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.}"}
   .columns.small-12.medium-4.large-4.skinny-head
     / This needs logic to show profile only icon when available %i.ofn-i_060-producer-reversed
-    %i{ng: {class: "producer.producer_icon_font"}}
-    %span.margin-top
-      %strong 
-        %a{"bo-if" => "producer.has_shopfront" } {{ producer.path }}
+    %span{"bo-if" => "producer.has_shopfront" }
+      %a{"bo-href" => "producer.path" } 
+        %i{ng: {class: "producer.producer_icon_font"}}
+        %span.margin-top 
+          %strong {{ producer.name }}
+    %span{"bo-if" => "!producer.has_shopfront" }
+      %i{ng: {class: "producer.producer_icon_font"}}
+      %span.margin-top 
+        %strong {{ producer.name }}
+
         
   .columns.small-6.medium-3.large-3
     %span.margin-top {{ producer.address.city }}
