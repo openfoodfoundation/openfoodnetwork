@@ -1,9 +1,9 @@
-.highlight{ng: {class: "enterprise.has_shopfront"}}
+.highlight{"ng-class" => "{'has_shopfront' : enterprise.has_shopfront}"}
   .highlight-top 
     %p.right
       {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
     %h3
       %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
-        %i{ng: {class: "enterprise.icon_font"}}
-        %span {{ enterprise.name }}
+        %i{"ng-class" => "enterprise.icon_font"}
+          %span {{ enterprise.name }}
   %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 

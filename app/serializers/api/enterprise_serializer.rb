@@ -47,7 +47,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "hub_profile" => "/assets/map_006-hub-profile.svg",
       "producer_hub" => "/assets/map_005-hub.svg",
       "producer_shop" => "/assets/map_003-producer-shop.svg",
-      "producer" => "map_001-producer-only.svg",
+      "producer" => "/assets/map_001-producer-only.svg",
       "producer_profile" => "/assets/map_002-producer-only-profile.svg",
     }
     icons[object.enterprise_category]

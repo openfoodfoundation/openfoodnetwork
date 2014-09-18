@@ -210,30 +210,23 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
-  # Make this a real database attridbute later.
+  # Replaces currententerprse type field.
   def sells
-    case type
-      when "full"
-        "all"
-      when "single"
-        "own"
-      when "profile"
-        "none"
-    end
+    # Type: full - single - profile becomes Sells: all - own - none
+    # Remove this return later.
+    return "none" if !is_distributor || type == "profile"
+    return "own" if is_distributor && (suppliers != [self] || type == "full")
+    "own"
   end
 
   def enterprise_category
-    # Explanation: I added and extra flag then pared it back to a combo, before realising we allready had one.
-    # Short version: meets front end and back end needs, without changing much at all.
-    #
-    # Ditch is_distributor, add can_supply and swap combo names as below.
-    # using profile instead of cant_sell was blocking the non selling supplier case and limiting more than it needed to.
+    # Using profile instead of cant_sell was blocking the non selling supplier case and limiting more than it needed to.
     
 
     # Make this crazy logic human readable so we can argue about it sanely. 
-    # This can be simplified later, like this for readablitlty during changes.
+    # This can be simplified later, it's like this for readablitlty during changes.
     category = is_primary_producer ? "producer_" : "non_producer_" 
-    category << "sell_" + sells
+    category << "sell_" + sells + "_"
     category << (supplies ? "can_supply" : "cant_supply")
 
     # Map backend cases to front end cases.
@@ -246,9 +239,9 @@ class Enterprise < ActiveRecord::Base
         "producer_shop" # Producer with shopfront and supplies other hubs.
       when "producer_sell_own_cant_supply"
         "producer_shop" # Producer with shopfront.
-      when "producer_cant_sell_can_supply"
+      when "producer_sell_none_can_supply"
         "producer" # Producer selling only through others.
-      when "producer_cant_sell_cant_supply"
+      when "producer_sell_none_cant_supply"
         "producer_profile" # Producer profile.
         
       when "non_producer_sell_all_can_supply"
@@ -259,13 +252,16 @@ class Enterprise < ActiveRecord::Base
         "hub" # Wholesaler selling through own shopfront and others?
       when "non_producer_sell_own_cant_supply"
         "hub" # Wholesaler selling through own shopfront?
-      when "non_producer_cant_sell_can_supply"
+      when "non_producer_sell_none_can_supply"
         "hub_profile" # Wholesaler selling to others.
-      when "non_producer_cant_sell_cant_supply"
+      when "non_producer_sell_none_cant_supply"
         "hub_profile" # Hub with just a profile.
+      else
+        "producer"
     end
   end
 
+  # New boolean field shows whether we can supply products into the system.
   def supplies
     is_primary_producer && type != "profile" #and has distributors?
   end

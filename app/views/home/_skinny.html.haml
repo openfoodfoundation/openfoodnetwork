@@ -1,7 +1,7 @@
 .row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
-      %i{ng: {class: "hub.icon_font" }}
+      %i{ng: {class: "hub.icon_font"}}
       %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
   .columns.small-4.medium-2.large-2
     %span.margin-top {{ hub.address.city }}

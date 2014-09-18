@@ -1,6 +1,5 @@
-.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.}"}
+.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}"}
   .columns.small-12.medium-4.large-4.skinny-head
-    / This needs logic to show profile only icon when available %i.ofn-i_060-producer-reversed
     %span{"bo-if" => "producer.has_shopfront" }
       %a{"bo-href" => "producer.path" } 
         %i{ng: {class: "producer.producer_icon_font"}}
