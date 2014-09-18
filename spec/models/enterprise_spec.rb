@@ -502,7 +502,7 @@ describe Enterprise do
     end
   end
 
-  describe "provide enterprise category" do
+  pending "provide enterprise category" do
 
     # Swap type values full > sell_all, single > sell_own profile > sell_none
     # swap is_distributor for new can_supply flag.
@@ -518,10 +518,10 @@ describe Enterprise do
     let(:producer_sell_own_cant_supply) {     
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:producer_cant_sell_can_supply) {        
+    let(:producer_sell_none_can_supply) {        
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: true)
     }
-    let(:producer_cant_sell_cant_supply) {        
+    let(:producer_sell_none_cant_supply) {        
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: false)
     }
     let(:non_producer_sell_all_can_supply) {
@@ -536,30 +536,30 @@ describe Enterprise do
     let(:non_producer_sell_own_cant_supply) {     
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:non_producer_cant_sell_can_supply) {  
+    let(:non_producer_sell_none_can_supply) {  
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: true)
     }
-    let(:non_producer_cant_sell_cant_supply) { 
+    let(:non_producer_sell_none_cant_supply) { 
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: false)
     }
 
     it "should output enterprise categories" do
       producer_sell_all_can_supply.is_primary_producer.should == true
-      producer_sell_all_can_supply.can_supply.should == true
+      producer_sell_all_can_supply.supplies.should == true
       producer_sell_all_can_supply.type.should == "full"
 
       producer_sell_all_can_supply.enterprise_category.should == "producer_hub"
       producer_sell_all_cant_supply.enterprise_category.should == "producer_hub"
       producer_sell_own_can_supply.enterprise_category.should == "producer_shop"
       producer_sell_own_cant_supply.enterprise_category.should == "producer_shop"
-      producer_cant_sell_can_supply.enterprise_category.should == "producer"
-      producer_cant_sell_cant_supply.enterprise_category.should == "producer_profile"
+      producer_sell_none_can_supply.enterprise_category.should == "producer"
+      producer_sell_none_cant_supply.enterprise_category.should == "producer_profile"
       non_producer_sell_all_can_supply.enterprise_category.should == "hub" 
       non_producer_sell_all_cant_supply.enterprise_category.should == "hub" 
       non_producer_sell_own_can_supply.enterprise_category.should == "hub"
       non_producer_sell_own_cant_supply.enterprise_category.should == "hub"
-      non_producer_cant_sell_can_supply.enterprise_category.should == "hub_profile"
-      non_producer_cant_sell_cant_supply.enterprise_category.should == "hub_profile"
+      non_producer_sell_none_can_supply.enterprise_category.should == "hub_profile"
+      non_producer_sell_none_cant_supply.enterprise_category.should == "hub_profile"
     end
   end
 end
