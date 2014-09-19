@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module Admin
   describe EnterprisesController do
+    include AuthenticationWorkflow
     let(:distributor_owner) do
       user = create(:user)
       user.spree_roles = []
@@ -110,36 +111,52 @@ module Admin
     end
 
     describe "bulk updating enterprises" do
-      let(:profile_enterprise1) { create(:enterprise, type: 'profile') }
-      let(:profile_enterprise2) { create(:enterprise, type: 'profile') }
+      let!(:original_owner) do
+        user = create_enterprise_user
+        user.enterprise_limit = 2
+        user.save!
+        user
+      end
+      let!(:new_owner) do
+        user = create_enterprise_user
+        user.enterprise_limit = 2
+        user.save!
+        user
+      end
+      let!(:profile_enterprise1) { create(:enterprise, type: 'profile', owner: original_owner ) }
+      let!(:profile_enterprise2) { create(:enterprise, type: 'profile', owner: original_owner ) }
 
       context "as manager" do
-        it "does not allow 'type' to be changed" do
-          profile_enterprise1.enterprise_roles.build(user: user).save
-          profile_enterprise2.enterprise_roles.build(user: user).save
-          controller.stub spree_current_user: user
-          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full' }, '1' => { id: profile_enterprise2.id, type: 'full' } } } }
+        it "does not allow 'type' or 'owner' to be changed" do
+          profile_enterprise1.enterprise_roles.build(user: new_owner).save
+          profile_enterprise2.enterprise_roles.build(user: new_owner).save
+          controller.stub spree_current_user: new_owner
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, type: 'full', owner_id: new_owner.id } } } }
 
           spree_put :bulk_update, bulk_enterprise_params
           profile_enterprise1.reload
           profile_enterprise2.reload
           expect(profile_enterprise1.type).to eq 'profile'
           expect(profile_enterprise2.type).to eq 'profile'
+          expect(profile_enterprise1.owner).to eq original_owner
+          expect(profile_enterprise2.owner).to eq original_owner
         end
       end
 
       context "as super admin" do
-        it "allows 'type' to be changed" do
-          profile_enterprise1.enterprise_roles.build(user: user).save
-          profile_enterprise2.enterprise_roles.build(user: user).save
+        it "allows 'type' and 'owner' to be changed" do
+          profile_enterprise1.enterprise_roles.build(user: new_owner).save
+          profile_enterprise2.enterprise_roles.build(user: new_owner).save
           controller.stub spree_current_user: admin_user
-          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full' }, '1' => { id: profile_enterprise2.id, type: 'full' } } } }
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, type: 'full', owner_id: new_owner.id } } } }
 
           spree_put :bulk_update, bulk_enterprise_params
           profile_enterprise1.reload
           profile_enterprise2.reload
           expect(profile_enterprise1.type).to eq 'full'
           expect(profile_enterprise2.type).to eq 'full'
+          expect(profile_enterprise1.owner).to eq new_owner
+          expect(profile_enterprise2.owner).to eq new_owner
         end
       end
     end

@@ -7,6 +7,7 @@ module Admin
     before_filter :check_bulk_type, only: :bulk_update
     before_filter :override_owner, only: :create
     before_filter :check_owner, only: :update
+    before_filter :check_bulk_owner, only: :bulk_update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -79,8 +80,16 @@ module Admin
     end
 
     def check_owner
-      unless spree_current_user == @enterprise.owner || spree_current_user.admin?
+      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
         params[:enterprise].delete :owner_id
+      end
+    end
+
+    def check_bulk_owner
+      unless spree_current_user.admin?
+        params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
+          enterprise_params.delete :owner_id
+        end
       end
     end
 
