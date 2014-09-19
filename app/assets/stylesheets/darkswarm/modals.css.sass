@@ -4,8 +4,15 @@
 dialog, .reveal-modal
   border: none
   outline: none
-  padding: 1rem 
-  overflow-y: scroll
+  padding:  1.25rem
+  padding-bottom: 0 !important
+  border-bottom: 20px solid white
+  overflow-y: auto
+  overflow-x: hidden
+  // Not working yet - want a nice gradient shadow when there is overflow - needs JS too
+  // &:after
+  //   @include elipse-shadow(0 0 40px rgba(0, 0, 0, 0.8))
+
 
   // Reveal.js break point:
   // @media only screen and (max-width: 40.063em)
