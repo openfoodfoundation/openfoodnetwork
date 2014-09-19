@@ -67,6 +67,7 @@ Openfoodnetwork::Application.routes.draw do
 
   namespace :api do
     resources :enterprises do
+      post :update_image, on: :member
       get :managed, on: :collection
       get :accessible, on: :collection
     end

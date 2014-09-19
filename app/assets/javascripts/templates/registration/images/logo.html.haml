@@ -1,0 +1,41 @@
+.small-12.medium-12.large-6.columns
+  .row
+    .small-12.columns.center
+      .row
+        .small-12.columns.center
+          %h4
+            Step 1. Select Logo Image
+      .row
+        .small-12.columns.center
+          %span.small
+            Tip: Square images will work best, preferably at least 300&times;300px
+      .row.pad-top
+        .small-12.columns
+          .image-select.small-12.columns
+            %label.small-12.columns.button{ for: 'image-select' } Choose a logo image
+            %input#image-select{ type: 'file', hidden: true, 'nv-file-select' => true, uploader: "imageUploader", options: '{ alias: imageStep }' }
+  .row.show-for-large-up
+    .large-12.columns
+      %span#or.large-12.columns
+        OR
+  .row.show-for-large-up
+    .large-12.columns
+      #image-over{ 'nv-file-over' => true, uploader: "imageUploader" }
+        Drag and drop your logo here
+.small-12.medium-12.large-6.columns
+  .row
+    .small-12.columns.center
+      .row
+        .small-12.columns.center
+          %h4
+            Step 2. Review Your Logo
+      .row
+        .small-12.columns.center
+          %span.small
+            Tip: for best results, your logo should fill the available space
+      .row.pad-top
+        .small-12.columns.center
+          #image-placeholder.logo
+            %img{ ng: { show: "imageSrc()", src: '{{ imageSrc() }}' } }
+            .message{ ng: { hide: "imageSrc()" } }
+              Your logo will appear here for review once uploaded

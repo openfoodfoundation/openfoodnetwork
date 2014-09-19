@@ -9,7 +9,7 @@
         {{ enterprise.name }}
 
   %ng-include{ src: "'registration/steps.html'" }
-  %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('social',about)" } }
+  %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('images',about)" } }
     .row
       .small-12.columns
         .alert-box.alert{"data-alert" => ""}

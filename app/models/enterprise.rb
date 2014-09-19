@@ -34,7 +34,7 @@ class Enterprise < ActiveRecord::Base
     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: "1200x260#", thumb: "100x100>" },
+    styles: { large: "1200x260#", medium: "720x156#",  thumb: "100x100>" },
     url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
