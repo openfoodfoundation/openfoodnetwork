@@ -1,9 +1,13 @@
 .highlight{"ng-class" => "{'has_shopfront' : enterprise.has_shopfront}"}
-  .highlight-top 
-    %p.right
-      {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
-    %h3
-      %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
-        %i{"ng-class" => "enterprise.icon_font"}
-        %span {{ enterprise.name }}
+  
+  .highlight-top.row
+    .small-12.medium-7.large-8.columns
+      %h3
+        %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
+          %i{"ng-class" => "enterprise.icon_font"}
+          %span {{ enterprise.name }}
+    .small-12.medium-5.large-4.columns.text-right.small-only-text-left
+      %p {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
+  
+  // Hero image
   %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
