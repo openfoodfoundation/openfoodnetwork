@@ -219,10 +219,13 @@ class Enterprise < ActiveRecord::Base
     "own"
   end
 
-  def enterprise_category
-    # Using profile instead of cant_sell was blocking the non selling supplier case and limiting more than it needed to.
-    
+  # New boolean field shows whether we can supply products into the system.
+  def supplies
+    is_primary_producer && type != "profile" #and has distributors?
+  end
 
+  # Simplify enterprise categories for frontend logic and icons, and maybe other things.
+  def enterprise_category
     # Make this crazy logic human readable so we can argue about it sanely. 
     # This can be simplified later, it's like this for readablitlty during changes.
     category = is_primary_producer ? "producer_" : "non_producer_" 
@@ -260,12 +263,6 @@ class Enterprise < ActiveRecord::Base
         "producer"
     end
   end
-
-  # New boolean field shows whether we can supply products into the system.
-  def supplies
-    is_primary_producer && type != "profile" #and has distributors?
-  end
-
 
   # Return all taxons for all distributed products
   def distributed_taxons
