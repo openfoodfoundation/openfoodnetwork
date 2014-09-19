@@ -13,6 +13,13 @@ module Spree
       let(:enterprise_single) { create(:enterprise, type: 'single') }
       let(:enterprise_profile) { create(:enterprise, type: 'profile') }
 
+      describe "creating enterprises" do
+        it "can create enterprises straight off the bat" do
+          subject.is_new_user?(user).should be_true
+          expect(user).to have_ability :create, for: Enterprise
+        end
+      end
+
       describe "managing enterprises" do
         it "can manage enterprises when the user has at least one enterprise assigned" do
           user.enterprise_roles.create! enterprise: enterprise_full

@@ -2,11 +2,16 @@ class AbilityDecorator
   include CanCan::Ability
 
   def initialize(user)
+    add_base_abilities user if is_new_user? user
     add_enterprise_management_abilities user if can_manage_enterprises? user
     add_product_management_abilities user if can_manage_products? user
     add_relationship_management_abilities user if can_manage_relationships? user
   end
 
+
+  def is_new_user?(user)
+    user.enterprises.blank?
+  end
 
   def can_manage_enterprises?(user)
     user.enterprises.present?
@@ -22,6 +27,9 @@ class AbilityDecorator
     can_manage_enterprises? user
   end
 
+  def add_base_abilities(user)
+    can [:create], Enterprise
+  end
 
   def add_enterprise_management_abilities(user)
     # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
