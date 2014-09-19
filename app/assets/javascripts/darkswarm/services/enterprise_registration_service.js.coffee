@@ -1,4 +1,4 @@
-Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, CurrentUser, spreeApiKey, Loading, availableCountries, enterpriseAttributes) ->
+Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, EnterpriseImageService, CurrentUser, spreeApiKey, Loading, availableCountries, enterpriseAttributes) ->
   new class EnterpriseRegistrationService
     enterprise:
       user_ids: [CurrentUser.id]
@@ -22,6 +22,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       ).success((data) =>
         Loading.clear()
         @enterprise.id = data
+        EnterpriseImageService.configure(@enterprise)
         RegistrationService.select('about')
       ).error((data) =>
         Loading.clear()
