@@ -18,7 +18,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   #TODO: Remove these later
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :enterprise_category
+  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :is_profile, :enterprise_category
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -37,7 +37,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def is_profile
-    object.type = 'profile'
+    object.sells == "none" && !object.supplies
   end
 
   # Map svg icons.
