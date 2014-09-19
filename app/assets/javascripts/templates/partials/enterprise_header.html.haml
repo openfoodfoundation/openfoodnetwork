@@ -1,12 +1,13 @@
 .highlight{"ng-class" => "{'has_shopfront' : enterprise.has_shopfront}"}
   .highlight-top.row
     .small-12.medium-7.large-8.columns
-    %h3{"ng-if" => "enterprise.has_shopfront"}
-      %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
+      %h3{"ng-if" => "enterprise.has_shopfront"}
+        %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
+          %i{"ng-class" => "enterprise.icon_font"}
+          %span {{ enterprise.name }}
+      %h3{"ng-if" => "!enterprise.has_shopfront"}
         %i{"ng-class" => "enterprise.icon_font"}
         %span {{ enterprise.name }}
-    %h3{"ng-if" => "!enterprise.has_shopfront"}
-      %i{"ng-class" => "enterprise.icon_font"}
-      %span {{ enterprise.name }}
     .small-12.medium-5.large-4.columns.text-right.small-only-text-left
       %p {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
+  %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 
