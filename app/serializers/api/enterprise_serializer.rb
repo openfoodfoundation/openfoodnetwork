@@ -36,7 +36,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     object.is_distributor && object.type != 'profile'
   end
 
-  def profile_only
+  def is_profile
     object.type = 'profile'
   end
 
