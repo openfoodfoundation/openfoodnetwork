@@ -25,19 +25,27 @@
   position: relative
 
 .highlight-top
-  padding: 0.75rem 0.9375rem
-  width: 100%
-  overflow: hidden
+  padding-top: 0.75rem
+  padding-bottom: 0.75rem
   background-color: rgba(255,255,255,0.65)
   position: absolute
   bottom: 0
+  width: 100%
+  border: 0
+  outline: 0
+  @media only screen and (max-width: 640px)
+    padding-top: 0.5rem
+    padding-bottom: 0.35rem  
+
   h3, p
     margin-top: 0
     margin-bottom: 0
     padding-bottom: 0
     line-height: 1
   p
-    line-height: 2
+    line-height: 2.4
+    @media all and (max-width: 640px)
+      line-height: 1.4
 
   h3 a:hover span
     border-bottom: 1px solid $clr-brick-bright

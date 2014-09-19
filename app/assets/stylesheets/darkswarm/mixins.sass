@@ -16,6 +16,20 @@
   -webkit-box-shadow: $box-shadow
   box-shadow: $box-shadow
 
+@mixin elipse-shadow($elipse-shadow)
+  content: ""
+  position: absolute
+  z-index: -1
+  -webkit-box-shadow: $elipse-shadow
+  box-shadow: $elipse-shadow
+  bottom: -12%
+  left: 10%
+  right: 10%
+  width: 80%
+  height: 10%
+  -moz-border-radius: 100%
+  border-radius: 100%
+
 @mixin border-radius($border-radius)
   -webkit-border-radius: $border-radius
   border-radius: $border-radius
