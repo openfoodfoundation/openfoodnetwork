@@ -24,7 +24,7 @@
       .active_table
         %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
         "scroll-after-load" => true,
-        "ng-repeat" => "producer in producers = (Producers.visible | filterProducers:query | taxons:activeTaxons)",
+        "ng-repeat" => "producer in producers = (Producers.visible | showProfiles:show_profiles | filterProducers:query | taxons:activeTaxons)",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
         id: "{{producer.hash}}"}

@@ -1,8 +1,10 @@
-.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
+.row.active_table_row{"ng-if" => "!hub.is_profile", "ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
+
   .columns.small-12.medium-6.large-5.skinny-head
-    %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+    %a.hub{"ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i{ng: {class: "hub.icon_font"}}
       %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
+
   .columns.small-4.medium-2.large-2
     %span.margin-top {{ hub.address.city }}
   .columns.small-2.medium-1.large-1
@@ -22,5 +24,16 @@
         %em Shopping here
       %span.margin-top{ bo: { if: "!current()" } } Orders closed
 
+.row.active_table_row{"ng-if" => "hub.is_profile", "ng-class" => "closed"}
+  .columns.small-12.medium-6.large-5.skinny-head
+    %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+      %i{ng: {class: "hub.icon_font"}}
+      %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
 
+  .columns.small-4.medium-2.large-2
+    %span.margin-top {{ hub.address.city }}
+  .columns.small-2.medium-1.large-1
+    %span.margin-top {{ hub.address.state_name | uppercase }}
 
+  .columns.small-6.medium-3.large-4.text-right
+    %span.margin-top{ bo: { if: "!current()" } } Profile only

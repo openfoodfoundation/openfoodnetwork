@@ -1,9 +1,12 @@
-.highlight{"ng-class" => "{'has_shopfront' : enterprise.has_shopfront}"}
+.highlight
   .highlight-top 
     %p.right
       {{ [enterprise.address.city, enterprise.address.state_name] | printArray}}
-    %h3
+    %h3{"ng-if" => "enterprise.has_shopfront"}
       %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
         %i{"ng-class" => "enterprise.icon_font"}
-          %span {{ enterprise.name }}
+        %span {{ enterprise.name }}
+    %h3{"ng-if" => "!enterprise.has_shopfront"}
+      %i{"ng-class" => "enterprise.icon_font"}
+      %span {{ enterprise.name }}
   %img.hero-img{"ng-src" => "{{enterprise.promo_image}}"} 

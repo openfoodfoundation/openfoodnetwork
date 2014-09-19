@@ -8,11 +8,6 @@
           .light Filter by
           Type
         %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-6
-          %taxon-selector{objects: "Producers.visible | filterProducers:query", 
+          %taxon-selector{objects: "Producers.visible | filterProducers:query ", 
             results: "activeTaxons"}
 
-    .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
-      .small-12.columns
-        %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 
-          %i.ofn-i_009-close
-          Clear all filters
