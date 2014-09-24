@@ -229,38 +229,22 @@ class Enterprise < ActiveRecord::Base
     # Make this crazy logic human readable so we can argue about it sanely. 
     # This can be simplified later, it's like this for readablitlty during changes.
     category = is_primary_producer ? "producer_" : "non_producer_" 
-    category << "sell_" + sells + "_"
-    category << (supplies ? "can_supply" : "cant_supply")
+    category << "sell_" + sells
 
     # Map backend cases to front end cases.
     case category
-      when "producer_sell_all_can_supply"
+      when "producer_sell_all"
         "producer_hub" # Producer hub who sells own and others produce and supplies other hubs.
-      when "producer_sell_all_cant_supply"
-        "producer_hub" # Producer hub who sells own and others products but does not supply other hubs.
-      when "producer_sell_own_can_supply"
+      when "producer_sell_own"
         "producer_shop" # Producer with shopfront and supplies other hubs.
-      when "producer_sell_own_cant_supply"
-        "producer_shop" # Producer with shopfront.
-      when "producer_sell_none_can_supply"
-        "producer" # Producer selling only through others.
-      when "producer_sell_none_cant_supply"
-        "producer_profile" # Producer profile.
-        
-      when "non_producer_sell_all_can_supply"
-        "hub" # Hub selling in products without origin.
-      when "non_producer_sell_all_cant_supply"
-        "hub" # Regular hub.
-      when "non_producer_sell_own_can_supply"
-        "hub" # Wholesaler selling through own shopfront and others?
-      when "non_producer_sell_own_cant_supply"
+      when "producer_sell_none"
+        "producer" # Producer only supplies through others.
+      when "non_producer_sell_all"
+        "hub" # Hub selling others products in order cycles.
+      when "non_producer_sell_own"
         "hub" # Wholesaler selling through own shopfront?
-      when "non_producer_sell_none_can_supply"
-        "hub_profile" # Wholesaler selling to others.
-      when "non_producer_sell_none_cant_supply"
-        "hub_profile" # Hub with just a profile.
-      else
-        "producer"
+      when "non_producer_sell_none"
+        "hub_profile" # Hub selling outside the system.
     end
   end
 
