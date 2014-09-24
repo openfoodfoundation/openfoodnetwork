@@ -210,3 +210,6 @@ table#listing_enterprise_groups {
 	color: #575757;
 }
 
+.field_with_errors > input {
+    border-color: red;
+}
