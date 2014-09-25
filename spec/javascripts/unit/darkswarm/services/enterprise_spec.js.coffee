@@ -1,24 +1,24 @@
 describe "Enterprises service", ->
   Enterprises = null
-  CurrentHubMock = {} 
+  CurrentHubMock = {}
   taxons = [
     {id: 1, name: "test"}
   ]
   enterprises = [
-    {id: 1, type: "hub", producers: [{id: 2}], taxons: [{id: 1}]},
-    {id: 2, type: "producer", hubs: [{id: 1}]},
-    {id: 3, type: "producer", hubs: [{id: 1}]}
+    {id: 1, is_distributor: true, is_primary_producer: false, producers: [{id: 2}], taxons: [{id: 1}]},
+    {id: 2, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]},
+    {id: 3, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]}
   ]
   beforeEach ->
     module 'Darkswarm'
     module ($provide)->
-      $provide.value "CurrentHub", CurrentHubMock 
+      $provide.value "CurrentHub", CurrentHubMock
       null
-    angular.module('Darkswarm').value('enterprises', enterprises) 
-    angular.module('Darkswarm').value('taxons', taxons) 
+    angular.module('Darkswarm').value('enterprises', enterprises)
+    angular.module('Darkswarm').value('taxons', taxons)
 
     inject ($injector)->
-      Enterprises = $injector.get("Enterprises") 
+      Enterprises = $injector.get("Enterprises")
 
   it "stores enterprises as id/object pairs", ->
     expect(Enterprises.enterprises_by_id["1"]).toBe enterprises[0]
@@ -36,3 +36,13 @@ describe "Enterprises service", ->
 
   it "dereferences taxons", ->
     expect(Enterprises.enterprises[0].taxons[0]).toBe taxons[0]
+
+  it "filters Enterprise.hubs into a new array", ->
+    expect(Enterprises.hubs[0]).toBe Enterprises.enterprises[0]
+    # Because the $filter is a new sorted array
+    # We check to see the objects in both arrays are still the same
+    Enterprises.enterprises[0].active = false
+    expect(Enterprises.hubs[0].active).toBe false
+
+  it "delegates producers array to Enterprises", ->
+    expect(Enterprises.producers[0]).toBe enterprises[1]
