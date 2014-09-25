@@ -4,7 +4,7 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   end
 
   private
-  
+
   def cached_serializer_hash
     Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
   end
@@ -18,7 +18,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   #TODO: Remove these later
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :is_profile, :enterprise_category
+  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -36,13 +36,14 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     object.is_distributor && object.type != 'profile'
   end
 
-  def is_profile
-    object.sells == "none" && !object.supplies
+  # Used to select enterprises for hub listing
+  def has_hub_listing
+    has_shopfront || object.enterprise_category == "hub_profile"
   end
 
   # Map svg icons.
   def icon
-    icons = { 
+    icons = {
       "hub" => "/assets/map_005-hub.svg",
       "hub_profile" => "/assets/map_006-hub-profile.svg",
       "producer_hub" => "/assets/map_005-hub.svg",
@@ -67,7 +68,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   # Choose producer page icon font - yes, sadly its got to be different.
-  # This duplicates some code but covers the producer page edge case where 
+  # This duplicates some code but covers the producer page edge case where
   # producer-hub has a producer icon without needing to duplicate the category logic in angular.
   def producer_icon_font
     icon_fonts = {

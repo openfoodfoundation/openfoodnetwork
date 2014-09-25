@@ -1,13 +1,15 @@
-= render partial: 'shared/components/filter_controls'
+.row
+  = render partial: 'shared/components/filter_controls'
+  .small-12.medium-6.columns.text-right
+    &nbsp;
 
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
     .row.filter-box
       .small-12.columns
-        %h5.tdhead 
+        %h5.tdhead
           .light Filter by
           Type
         %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-6
           %taxon-selector{objects: "Enterprises.producers | searchEnterprises:query ", 
             results: "activeTaxons"}
-
