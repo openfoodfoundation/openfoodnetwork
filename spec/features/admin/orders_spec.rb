@@ -110,10 +110,10 @@ feature %q{
     let(:coordinator2) { create(:distributor_enterprise) }
     let!(:order_cycle1) { create(:order_cycle, coordinator: coordinator1) }
     let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
-    let(:supplier1) { order_cycle1.suppliers.first }
-    let(:supplier2) { order_cycle1.suppliers.last }
-    let(:distributor1) { order_cycle1.distributors.first }
-    let(:distributor2) { order_cycle1.distributors.last }
+    let!(:supplier1) { order_cycle1.suppliers.first }
+    let!(:supplier2) { order_cycle1.suppliers.last }
+    let!(:distributor1) { order_cycle1.distributors.first }
+    let!(:distributor2) { order_cycle1.distributors.reject{ |d| d == distributor1 }.last } # ensure d1 != d2
     let(:product) { order_cycle1.products.first }
 
     before(:each) do
@@ -131,19 +131,6 @@ feature %q{
 
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-
-      puts "c1: " + coordinator1.id.to_s + " "+ coordinator1.name
-      puts "c2: " + coordinator2.id.to_s + " "+ coordinator2.name
-      puts "s1: " + supplier1.id.to_s + " "+ supplier1.name
-      puts "s2: " + supplier2.id.to_s + " "+ supplier2.name
-      puts "d1: " + distributor1.id.to_s + " "+ distributor1.name
-      puts "d2: " + distributor2.id.to_s + " "+ distributor2.name
-      order_cycle1.distributors.each do |distributor|
-        puts "oc1d: " + distributor.id.to_s + " "+ distributor.name
-      end
-      Enterprise.is_distributor.managed_by(@enterprise_user).each do |distributor|
-        puts "eud: " + distributor.id.to_s + " "+ distributor.name
-      end
 
       click_link 'Add'
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS

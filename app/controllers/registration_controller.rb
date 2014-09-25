@@ -2,7 +2,7 @@ require 'open_food_network/spree_api_key_loader'
 
 class RegistrationController < BaseController
   include OpenFoodNetwork::SpreeApiKeyLoader
-  before_filter :load_spree_api_key, only: :index
+  before_filter :load_spree_api_key, only: [:index, :store]
   before_filter :check_user, except: :authenticate
   layout 'registration'
 

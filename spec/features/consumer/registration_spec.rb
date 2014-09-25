@@ -60,15 +60,22 @@ feature "Registration", js: true do
       fill_in 'enterprise_acn', with: '54321'
       click_button 'Continue'
 
-      # Enterprise should be updated
-      expect(page).to have_content 'Last step!'
+      # Enterprise should be update
+      expect(page).to have_content "Let's upload some pretty pictures so your profile looks great!"
       e.reload
       expect(e.description).to eq "Short description"
       expect(e.long_description).to eq "Long description"
       expect(e.abn).to eq '12345'
       expect(e.acn).to eq '54321'
 
+      # Images
+      # Move from logo page
+      click_button 'Continue'
+      # Move from promo page
+      click_button 'Continue'
+
       # Filling in social
+      expect(page).to have_content 'Last step!'
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'

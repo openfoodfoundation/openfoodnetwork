@@ -16,7 +16,8 @@
       %col{style: "width: 5%;"}/
       - if spree_current_user.admin?
         %col{style: "width: 12%;"}/
-      %col{style: "width: 18%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 18%;"}/
       %col{style: "width: 25%;"}/
     %thead
       %tr{"data-hook" => "enterprises_header"}
@@ -25,7 +26,8 @@
         %th Visible?
         - if spree_current_user.admin?
           %th Type
-        %th Owner
+        - if spree_current_user.admin?
+          %th Owner
         %th
     %tbody
       = f.fields_for :collection do |enterprise_form|
@@ -41,7 +43,8 @@
           %td= enterprise_form.check_box :visible
           - if spree_current_user.admin?
             %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
-          %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
           %td{"data-hook" => "admin_users_index_row_actions"}
             = render 'actions', enterprise: enterprise
       - if @enterprises.empty?

@@ -3,20 +3,15 @@ RSpec::Matchers.define :have_table_row do |row|
   match_for_should do |node|
     @row = row
 
-    false_on_timeout_error do
-      wait_until { rows_under(node).include? row }
-    end
+    node.has_selector? "tr", text: row.join(" ").strip # Check for appearance
+    rows_under(node).include? row # Robust check of columns
   end
 
   match_for_should_not do |node|
     @row = row
 
-    false_on_timeout_error do
-      # Without this sleep, we trigger capybara's wait when looking up the table, for the full
-      # period of default_wait_time.
-      sleep 0.1
-      wait_until { !rows_under(node).include? row }
-    end
+    node.has_no_selector? "tr", text: row.join(" ").strip # Check for appearance
+    !rows_under(node).include? row # Robust check of columns
   end
 
   failure_message_for_should do |text|
@@ -27,17 +22,7 @@ RSpec::Matchers.define :have_table_row do |row|
     "expected not to find table row #{@row}"
   end
 
-
   def rows_under(node)
     node.all('tr').map { |tr| tr.all('th, td').map(&:text) }
   end
-
-  def false_on_timeout_error
-    yield
-  rescue TimeoutError
-    false
-  else
-    true
-  end
-
 end

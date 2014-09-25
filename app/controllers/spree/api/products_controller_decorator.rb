@@ -12,6 +12,7 @@ Spree::Api::ProductsController.class_eval do
   def bulk_products
     @products = OpenFoodNetwork::Permissions.new(current_api_user).managed_products.
       merge(product_scope).
+      order('created_at DESC').
       ransack(params[:q]).result.
       page(params[:page]).per(params[:per_page])
 
