@@ -215,20 +215,15 @@ class Enterprise < ActiveRecord::Base
     # Type: full - single - profile becomes Sells: all - own - none
     # Remove this return later.
     return "none" if !is_distributor || type == "profile"
-    return "own" if is_distributor && (suppliers != [self] || type == "full")
-    "own"
-  end
-
-  # New boolean field shows whether we can supply products into the system.
-  def supplies
-    is_primary_producer && type != "profile" #and has distributors?
+    return "own" if suppliers == [self] || type == "single"
+    "all"
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def enterprise_category
-    # Make this crazy logic human readable so we can argue about it sanely. 
+    # Make this crazy logic human readable so we can argue about it sanely.
     # This can be simplified later, it's like this for readablitlty during changes.
-    category = is_primary_producer ? "producer_" : "non_producer_" 
+    category = is_primary_producer ? "producer_" : "non_producer_"
     category << "sell_" + sells
 
     # Map backend cases to front end cases.

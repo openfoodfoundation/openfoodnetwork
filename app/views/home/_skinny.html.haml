@@ -1,4 +1,4 @@
-.row.active_table_row{"ng-if" => "!hub.is_profile", "ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
+.row.active_table_row{"ng-if" => "hub.has_shopfront", "ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
 
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
@@ -13,18 +13,18 @@
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign
-      %span.margin-top{ bo: { if: "current()" } } 
+      %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here
       %span.margin-top{ bo: { if: "!current()" } } {{ hub.orders_close_at | sensible_timeframe }}
 
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "!hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_032-closed-sign
-      %span.margin-top{ bo: { if: "current()" } } 
+      %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here
       %span.margin-top{ bo: { if: "!current()" } } Orders closed
 
-.row.active_table_row{"ng-if" => "hub.is_profile", "ng-class" => "closed"}
+.row.active_table_row{"ng-if" => "!hub.has_shopfront", "ng-class" => "closed"}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i{ng: {class: "hub.icon_font"}}

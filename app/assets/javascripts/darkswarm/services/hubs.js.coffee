@@ -2,7 +2,7 @@ Darkswarm.factory 'Hubs', ($filter, Enterprises, visibleFilter) ->
   new class Hubs
     constructor: ->
       @hubs = @order Enterprises.enterprises.filter (hub)->
-        hub.is_distributor
+        hub.has_hub_listing
       @visible = visibleFilter @hubs
 
     order: (hubs)->
