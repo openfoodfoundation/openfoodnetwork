@@ -10,8 +10,8 @@ feature %q{
   context "Permissions for different reports" do
     context "As an enterprise user" do
       let(:user) do
-        create_enterprise_user([
-          create(:distributor_enterprise) 
+        create_enterprise_user(enterprises: [
+          create(:distributor_enterprise)
         ])
       end
       it "should not show the Sales Total report" do
@@ -99,7 +99,7 @@ feature %q{
       let(:shipping_instructions) { "pick up on thursday please!" }
       let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
       let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      
+
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
         Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
@@ -144,7 +144,7 @@ feature %q{
       variant_2.update_column(:count_on_hand, 20)
       product_2.master.update_column(:count_on_hand, 9)
       variant_1.option_values = [create(:option_value, :presentation => "Test")]
-      
+
       login_to_admin_section
       click_link 'Reports'
 
@@ -165,4 +165,3 @@ feature %q{
     end
   end
 end
-
