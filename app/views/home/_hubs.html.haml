@@ -26,7 +26,7 @@
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
 
-        .row{"ng-show" => "filteredHubs.length == 0"}
+        .row{"ng-show" => "hubs.length == 0"}
           .columns.small-12
             %p.no-results
               Sorry, no results found for
