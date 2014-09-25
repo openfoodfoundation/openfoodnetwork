@@ -1,0 +1,15 @@
+%div
+  .header.center
+    %h2 Oh no!
+    %h4 You have reached the limit!
+  .row
+    .small-12.medium-3.large-2.columns.text-right.hide-for-small-only
+      %img{:src => "/assets/potatoes.png"}
+    .small-12.medium-9.large-10.columns
+      %p
+        You have reached the limit for the number of enterprises you are allowed to own on the
+        %strong Open Food Network.
+  .row
+    .small-12.columns
+      %hr
+      %input.button.primary{ type: "button", value: "Return to the homepage", ng: { click: "close()" } }
