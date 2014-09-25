@@ -49,6 +49,7 @@ class Enterprise < ActiveRecord::Base
   validates :name, presence: true
   validates :type, presence: true, inclusion: {in: TYPES}
   validates :address, presence: true, associated: true
+  validates :email, presence: true
   validates_presence_of :owner
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
 
