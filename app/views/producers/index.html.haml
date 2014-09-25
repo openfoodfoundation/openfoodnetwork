@@ -1,5 +1,5 @@
 = inject_enterprises 
-.producers.pad-top{"ng-controller" => "ProducersCtrl"}
+.producers.pad-top{"ng-controller" => "EnterprisesCtrl"}
   .row
     .small-12.columns.pad-top
       %h1 Find local producers
@@ -24,7 +24,7 @@
       .active_table
         %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
         "scroll-after-load" => true,
-        "ng-repeat" => "producer in producers = (Producers.visible | showProfiles:show_profiles | searchEnterprises:query | taxons:activeTaxons)",
+        "ng-repeat" => "producer in producers = (Enterprises.producers | showProfiles:show_profiles | searchEnterprises:query | taxons:activeTaxons)",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
         id: "{{producer.hash}}"}

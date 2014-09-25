@@ -1,13 +1,15 @@
-Darkswarm.controller "HubsCtrl", ($scope, Hubs, Search, $document, $rootScope, HashNavigation, FilterSelectorsService, MapModal) ->
-  $scope.Hubs = Hubs
-  $scope.hubs = Hubs.visible
+Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document, $rootScope, HashNavigation, FilterSelectorsService, EnterpriseModal) ->
+  $scope.Enterprises = Enterprises
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText
   $scope.FilterSelectorsService =  FilterSelectorsService
   $scope.query = Search.search()
+  $scope.openModal = EnterpriseModal.open
+  $scope.activeTaxons = []
   $scope.show_profiles = false
-  $scope.openModal = MapModal.open
+  $scope.filtersActive = false
+  $scope.show_profiles = false
 
   $scope.$watch "query", (query)->
     Search.search query

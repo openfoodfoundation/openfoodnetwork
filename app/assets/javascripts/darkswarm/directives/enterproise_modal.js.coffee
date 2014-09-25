@@ -1,4 +1,4 @@
-Darkswarm.directive "hubModal", ($modal)->
+Darkswarm.directive "enterpriseModal", ($modal)->
   restrict: 'E'
   replace: true
   template: "<a>{{enterprise.name}}</a>"
