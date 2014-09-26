@@ -8,10 +8,11 @@
       = hidden_field klass, :distributor_ids, :multiple => true, value: nil
       - @hubs.each do |hub|
         %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}" }
-          %a.three.columns.alpha{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }
-            = hub.name
-          %span.one.column.omega
-            = check_box klass, :distributor_ids, { multiple: true }, hub.id, nil
+          %span.three.columns.omega
+            %label
+              = check_box klass, :distributor_ids, { multiple: true }, hub.id, nil
+              = hub.name
+          %a.one.column.alpha{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }Link
     - else
       .four.columns.alpha.list-item
         %span.three.columns.alpha None Available
