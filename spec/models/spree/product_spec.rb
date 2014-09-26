@@ -85,6 +85,14 @@ module Spree
           end
         end
 
+        context "instatiating a new product" do
+          let!(:product) { Spree::Product.new }
+
+          it "creates a standard (non-master) variant when created" do
+            product.variants.should_not be_empty
+          end
+        end
+
         context "when the unit is items" do
           it "is valid when unit name is set and unit scale is not" do
             product.variant_unit = 'items'
@@ -122,7 +130,6 @@ module Spree
         end
       end
     end
-    
 
     describe "scopes" do
       describe "in_supplier" do
