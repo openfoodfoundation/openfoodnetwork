@@ -1,4 +1,4 @@
-= inject_enterprises 
+= inject_enterprises
 #hubs.hubs{"ng-controller" => "HubsCtrl"}
   .row
     .small-12.columns
@@ -6,7 +6,7 @@
 
   #active-table-search.row.pad-top
     .small-12.columns
-      %input{type: :text, 
+      %input{type: :text,
       "ng-model" => "query",
       placeholder: "Search by name or suburb...",
       "ng-debounce" => "150",
@@ -18,10 +18,10 @@
     .small-12.columns
       .active_table
         %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query  | taxons:activeTaxons | shipping:shippingTypes | showProfiles:show_profiles )",
-        "ng-class" => "{'is_profile' : hub.is_profile, 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+        "ng-class" => "{'is_profile' : !hub.has_shopfront, 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",
-        id: "{{hub.hash}}"} 
+        id: "{{hub.hash}}"}
           .small-12.columns
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
@@ -32,4 +32,3 @@
               Sorry, no results found for
               %strong {{query}}.
               Try another search?
-
