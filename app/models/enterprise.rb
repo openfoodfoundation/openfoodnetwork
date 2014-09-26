@@ -215,7 +215,7 @@ class Enterprise < ActiveRecord::Base
     # Type: full - single - profile becomes Sells: all - own - none
     # Remove this return later.
     return "none" if !is_distributor || type == "profile"
-    return "own" if suppliers == [self] || type == "single"
+    return "own" if type == "single" || suppliers == [self]
     "all"
   end
 
