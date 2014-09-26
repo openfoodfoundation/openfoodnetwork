@@ -32,7 +32,7 @@ Spree::Product.class_eval do
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
-  after_initialize :ensure_first_standard_variant, :if => :new_record?
+  after_create :ensure_one_standard_variant
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   after_touch :touch_distributors
@@ -206,7 +206,10 @@ Spree::Product.class_eval do
     Spree::OptionType.where('name LIKE ?', 'unit_%%')
   end
 
-  def ensure_first_standard_variant
-    self.variants << Spree::Variant.new
+  def ensure_one_standard_variant
+    variant = self.master.dup
+    variant.product = self
+    variant.is_master = false
+    self.variants << variant
   end
 end

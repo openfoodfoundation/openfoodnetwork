@@ -85,11 +85,21 @@ module Spree
           end
         end
 
-        context "instatiating a new product" do
-          let!(:product) { Spree::Product.new }
+        context "saving a new product" do
+          let!(:product){ Spree::Product.new }
 
-          it "creates a standard (non-master) variant when created" do
-            product.variants.should_not be_empty
+          before do
+            product.primary_taxon = create(:taxon)
+            product.supplier = create(:supplier_enterprise)
+            product.name = "Product1"
+            product.on_hand = 3
+            product.price = 4.27
+            product.save!
+          end
+
+          it "copies the properties on master variant to the first standard variant" do
+            standard_variant = product.variants(:reload).first
+            expect(standard_variant.price).to eq product.master.price
           end
         end
 
