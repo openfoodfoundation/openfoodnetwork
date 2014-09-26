@@ -64,7 +64,7 @@ feature %q{
       page.should have_admin_menu_item 'Dashboard'
       page.should have_admin_menu_item 'Enterprises'
 
-      ['Orders', 'Products', 'Reports', 'Configuration', 'Promotions', 'Users', 'Order Cycles'].each do |menu_item_name|
+      ['Orders', 'Reports', 'Configuration', 'Promotions', 'Users', 'Order Cycles'].each do |menu_item_name|
         page.should_not have_admin_menu_item menu_item_name
       end
     end
@@ -79,15 +79,15 @@ feature %q{
         end
       end
 
-      it "does not show me product management controls" do
-        page.should_not have_selector '#products'
+      it "shows me product management controls, but not order_cycle controls" do
+        page.should have_selector '#products'
         page.should_not have_selector '#order_cycles'
       end
 
-      it "does not show me enterprise product info, payment methods, shipping methods or enterprise fees" do
+      it "shows me enterprise product info but not payment methods, shipping methods or enterprise fees" do
         # Producer product info
-        page.should_not have_selector '.producers_tab span', text: 'Total Products'
-        page.should_not have_selector '.producers_tab span', text: 'Active Products'
+        page.should have_selector '.producers_tab span', text: 'Total Products'
+        page.should have_selector '.producers_tab span', text: 'Active Products'
         page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
 
         # Payment methods, shipping methods, enterprise fees
