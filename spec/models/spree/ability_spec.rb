@@ -44,7 +44,7 @@ module Spree
 
         it "can't when a user manages a 'profile' type enterprise" do
           user.enterprise_roles.create! enterprise: enterprise_profile
-          subject.can_manage_products?(user).should be_false
+          subject.can_manage_products?(user).should be_true
         end
 
         it "can't when the user manages no enterprises" do
