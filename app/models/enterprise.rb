@@ -1,5 +1,5 @@
 class Enterprise < ActiveRecord::Base
-  TYPES = %w(full single profile)
+  SELLS = %w(none own any)
   ENTERPRISE_SEARCH_RADIUS = 100
 
   self.inheritance_column = nil
@@ -47,7 +47,7 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
-  validates :type, presence: true, inclusion: {in: TYPES}
+  validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
   validates_presence_of :owner
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
@@ -59,7 +59,7 @@ class Enterprise < ActiveRecord::Base
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
   scope :is_primary_producer, where(:is_primary_producer => true)
-  scope :is_distributor, where(:is_distributor => true)
+  scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -210,13 +210,8 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
-  # Replaces currententerprse type field.
-  def sells
-    # Type: full - single - profile becomes Sells: all - own - none
-    # Remove this return later.
-    return "none" if !is_distributor || type == "profile"
-    return "own" if type == "single" || suppliers == [self]
-    "all"
+  def is_distributor
+    not self.sells == "none" 
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
@@ -224,21 +219,21 @@ class Enterprise < ActiveRecord::Base
     # Make this crazy logic human readable so we can argue about it sanely.
     # This can be simplified later, it's like this for readablitlty during changes.
     category = is_primary_producer ? "producer_" : "non_producer_"
-    category << "sell_" + sells
+    category << "sells_" + sells
 
     # Map backend cases to front end cases.
     case category
-      when "producer_sell_all"
+      when "producer_sells_any"
         "producer_hub" # Producer hub who sells own and others produce and supplies other hubs.
-      when "producer_sell_own"
+      when "producer_sells_own"
         "producer_shop" # Producer with shopfront and supplies other hubs.
-      when "producer_sell_none"
+      when "producer_sells_none"
         "producer" # Producer only supplies through others.
-      when "non_producer_sell_all"
+      when "non_producer_sells_any"
         "hub" # Hub selling others products in order cycles.
-      when "non_producer_sell_own"
+      when "non_producer_sells_own"
         "hub" # Wholesaler selling through own shopfront?
-      when "non_producer_sell_none"
+      when "non_producer_sells_none"
         "hub_profile" # Hub selling outside the system.
     end
   end

@@ -17,8 +17,7 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
-  #TODO: Remove these later
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category
+  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category, :is_distributor
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -33,12 +32,16 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def has_shopfront
-    object.is_distributor && object.type != 'profile'
+    object.is_distributor
+  end
+
+  def is_distributor
+    object.is_distributor
   end
 
   # Used to select enterprises for hub listing
   def has_hub_listing
-    has_shopfront || object.enterprise_category == "hub_profile"
+    object.is_distributor || object.enterprise_category == "hub_profile"
   end
 
   # Map svg icons.

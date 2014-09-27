@@ -73,7 +73,7 @@ class AbilityDecorator
       # during the order creation process from the admin backend
       order.distributor.nil? || user.enterprises.include?(order.distributor)
     end
-    can [:admin, :bulk_management], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor?)
+    can [:admin, :bulk_management], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
     can [:admin, :create], Spree::LineItem
 
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment

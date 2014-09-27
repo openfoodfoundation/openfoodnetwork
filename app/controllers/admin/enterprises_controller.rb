@@ -3,8 +3,8 @@ module Admin
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
-    before_filter :check_type, only: :update
-    before_filter :check_bulk_type, only: :bulk_update
+    before_filter :check_sells, only: :update
+    before_filter :check_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
     before_filter :check_owner, only: :update
     before_filter :check_bulk_owner, only: :bulk_update
@@ -50,7 +50,8 @@ module Admin
     end
 
     def collection
-      Enterprise.managed_by(spree_current_user).order('is_distributor DESC, is_primary_producer ASC, name')
+      # TODO is_distributor DESC, 
+      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -63,16 +64,16 @@ module Admin
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
     end
 
-    def check_bulk_type
+    def check_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
-          enterprise_params.delete :type
+          enterprise_params.delete :sells
         end
       end
     end
 
-    def check_type
-      params[:enterprise].delete :type unless spree_current_user.admin?
+    def check_sells
+      params[:enterprise].delete :sells unless spree_current_user.admin?
     end
 
     def override_owner

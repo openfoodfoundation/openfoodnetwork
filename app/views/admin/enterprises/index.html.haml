@@ -37,12 +37,9 @@
           %td
             = enterprise_form.check_box :is_primary_producer
             Producer
-            %br/
-            = enterprise_form.check_box :is_distributor
-            Hub
           %td= enterprise_form.check_box :visible
           - if spree_current_user.admin?
-            %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
+            %td= enterprise_form.select :sells, Enterprise::SELLS, {}, class: 'select2 fullwidth'
           - if spree_current_user.admin?
             %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
           %td{"data-hook" => "admin_users_index_row_actions"}
