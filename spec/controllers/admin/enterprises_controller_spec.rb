@@ -84,28 +84,28 @@ module Admin
     end
 
     describe "updating an enterprise" do
-      let(:profile_enterprise) { create(:enterprise, type: 'profile') }
+      let(:profile_enterprise) { create(:enterprise, sells: 'none') }
 
       context "as manager" do
-        it "does not allow 'type' to be changed" do
+        it "does not allow 'sells' to be changed" do
           profile_enterprise.enterprise_roles.build(user: user).save
           controller.stub spree_current_user: user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
-          expect(profile_enterprise.type).to eq 'profile'
+          expect(profile_enterprise.sells).to eq 'none'
         end
       end
 
       context "as super admin" do
-        it "allows 'type' to be changed" do
+        it "allows 'sells' to be changed" do
           controller.stub spree_current_user: admin_user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { type: 'full' } }
+          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
-          expect(profile_enterprise.type).to eq 'full'
+          expect(profile_enterprise.sells).to eq 'any'
         end
       end
     end
@@ -123,38 +123,38 @@ module Admin
         user.save!
         user
       end
-      let!(:profile_enterprise1) { create(:enterprise, type: 'profile', owner: original_owner ) }
-      let!(:profile_enterprise2) { create(:enterprise, type: 'profile', owner: original_owner ) }
+      let!(:profile_enterprise1) { create(:enterprise, sells: 'none', owner: original_owner ) }
+      let!(:profile_enterprise2) { create(:enterprise, sells: 'none', owner: original_owner ) }
 
       context "as manager" do
-        it "does not allow 'type' or 'owner' to be changed" do
+        it "does not allow 'sells' or 'owner' to be changed" do
           profile_enterprise1.enterprise_roles.build(user: new_owner).save
           profile_enterprise2.enterprise_roles.build(user: new_owner).save
           controller.stub spree_current_user: new_owner
-          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, type: 'full', owner_id: new_owner.id } } } }
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
 
           spree_put :bulk_update, bulk_enterprise_params
           profile_enterprise1.reload
           profile_enterprise2.reload
-          expect(profile_enterprise1.type).to eq 'profile'
-          expect(profile_enterprise2.type).to eq 'profile'
+          expect(profile_enterprise1.sells).to eq 'none'
+          expect(profile_enterprise2.sells).to eq 'none'
           expect(profile_enterprise1.owner).to eq original_owner
           expect(profile_enterprise2.owner).to eq original_owner
         end
       end
 
       context "as super admin" do
-        it "allows 'type' and 'owner' to be changed" do
+        it "allows 'sells' and 'owner' to be changed" do
           profile_enterprise1.enterprise_roles.build(user: new_owner).save
           profile_enterprise2.enterprise_roles.build(user: new_owner).save
           controller.stub spree_current_user: admin_user
-          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, type: 'full', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, type: 'full', owner_id: new_owner.id } } } }
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
 
           spree_put :bulk_update, bulk_enterprise_params
           profile_enterprise1.reload
           profile_enterprise2.reload
-          expect(profile_enterprise1.type).to eq 'full'
-          expect(profile_enterprise2.type).to eq 'full'
+          expect(profile_enterprise1.sells).to eq 'any'
+          expect(profile_enterprise2.sells).to eq 'any'
           expect(profile_enterprise1.owner).to eq new_owner
           expect(profile_enterprise2.owner).to eq new_owner
         end

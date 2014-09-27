@@ -11,10 +11,10 @@ feature %q{
   let!(:user) { create_enterprise_user }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
-  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', type: 'profile') }
+  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', sells: 'none') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
-  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', type: 'profile') }
+  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', sells: 'none') }
 
   describe "creating an enterprise user" do
     context "with a limitted number of owned enterprises" do

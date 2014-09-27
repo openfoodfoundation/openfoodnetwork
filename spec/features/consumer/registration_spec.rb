@@ -49,7 +49,7 @@ feature "Registration", js: true do
       expect(page).to have_content 'Nice one!'
       e = Enterprise.find_by_name('My Awesome Enterprise')
       expect(e.address.address1).to eq "123 Abc Street"
-      expect(e.is_distributor).to eq true
+      expect(e.sells).to eq "none"
       expect(e.is_primary_producer).to eq true
       expect(e.contact).to eq "Saskia Munroe"
 

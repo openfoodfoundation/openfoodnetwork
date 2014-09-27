@@ -167,7 +167,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
         end
         
-        it "should save group buy data to ze cart" do
+        it "should save group buy data to the cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           page.should have_in_cart product.name

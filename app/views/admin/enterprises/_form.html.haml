@@ -32,7 +32,7 @@
 
     .row
       .three.columns.alpha
-        %label Enterprise Type(s)
+        %label Primary Producer
         .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
           %a What's this?
       .five.columns.omega
@@ -47,15 +47,15 @@
             .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
               %a What's this?
           .two.columns
-            = f.radio_button :sells, "none"
+            = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
             &nbsp;
             = f.label :sells, "None", value: "none"
           .two.columns
-            = f.radio_button :sells, "own"
+            = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
             &nbsp;
             = f.label :sells, "Own", value: "own"
           .four.columns.omega
-            = f.radio_button :sells, "any"
+            = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
             &nbsp;
             = f.label :sells, "Any", value: "any"
     .row

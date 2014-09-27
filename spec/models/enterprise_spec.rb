@@ -502,64 +502,37 @@ describe Enterprise do
     end
   end
 
-  pending "provide enterprise category" do
+  describe "provide enterprise category" do
 
-    # Swap type values full > sell_all, single > sell_own profile > sell_none
-    # swap is_distributor for new can_supply flag.
-    let(:producer_sell_all_can_supply) {        
-      create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
+    let(:producer_sell_all) {        
+      create(:enterprise, is_primary_producer: true,  sells: "any")
     }
-    let(:producer_sell_all_cant_supply) {        
-      create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
+    let(:producer_sell_own) {      
+      create(:enterprise, is_primary_producer: true,  sells: "own")
     }
-    let(:producer_sell_own_can_supply) {      
-      create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
+    let(:producer_sell_none) {        
+      create(:enterprise, is_primary_producer: true,  sells: "none")
     }
-    let(:producer_sell_own_cant_supply) {     
-      create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
+    let(:non_producer_sell_all) {
+      create(:enterprise, is_primary_producer: false,  sells: "any")
     }
-    let(:producer_sell_none_can_supply) {        
-      create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: true)
+    let(:non_producer_sell_own) {      
+      create(:enterprise, is_primary_producer: false,  sells: "own")
     }
-    let(:producer_sell_none_cant_supply) {        
-      create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: false)
-    }
-    let(:non_producer_sell_all_can_supply) {
-      create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
-    }
-    let(:non_producer_sell_all_cant_supply) {        
-      create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
-    }
-    let(:non_producer_sell_own_can_supply) {      
-      create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
-    }
-    let(:non_producer_sell_own_cant_supply) {     
-      create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
-    }
-    let(:non_producer_sell_none_can_supply) {  
-      create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: true)
-    }
-    let(:non_producer_sell_none_cant_supply) { 
-      create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: false)
+    let(:non_producer_sell_none) {  
+      create(:enterprise, is_primary_producer: false, sells: "none")
     }
 
     it "should output enterprise categories" do
-      producer_sell_all_can_supply.is_primary_producer.should == true
-      producer_sell_all_can_supply.supplies.should == true
-      producer_sell_all_can_supply.type.should == "full"
+      producer_sell_all.is_primary_producer.should == true
+      producer_sell_all.sells.should == "any"
 
-      producer_sell_all_can_supply.enterprise_category.should == "producer_hub"
-      producer_sell_all_cant_supply.enterprise_category.should == "producer_hub"
-      producer_sell_own_can_supply.enterprise_category.should == "producer_shop"
-      producer_sell_own_cant_supply.enterprise_category.should == "producer_shop"
-      producer_sell_none_can_supply.enterprise_category.should == "producer"
-      producer_sell_none_cant_supply.enterprise_category.should == "producer_profile"
-      non_producer_sell_all_can_supply.enterprise_category.should == "hub" 
-      non_producer_sell_all_cant_supply.enterprise_category.should == "hub" 
-      non_producer_sell_own_can_supply.enterprise_category.should == "hub"
-      non_producer_sell_own_cant_supply.enterprise_category.should == "hub"
-      non_producer_sell_none_can_supply.enterprise_category.should == "hub_profile"
-      non_producer_sell_none_cant_supply.enterprise_category.should == "hub_profile"
+      producer_sell_all.enterprise_category.should == "producer_hub"
+      producer_sell_own.enterprise_category.should == "producer_shop"
+      producer_sell_none.enterprise_category.should == "producer"
+      non_producer_sell_all.enterprise_category.should == "hub" 
+      non_producer_sell_own.enterprise_category.should == "hub"
+      non_producer_sell_none.enterprise_category.should == "hub_profile"
     end
   end
 end
