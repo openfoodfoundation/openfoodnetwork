@@ -2,7 +2,7 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
   def up
     add_column :enterprises, :sells, :string, null: false, default: 'none'
 
-    Enterprise.all do |enterprise|
+    Enterprise.all.each do |enterprise|
       enterprise.sells = sells_what?(enterprise)
       enterprise.save!
     end
@@ -14,10 +14,11 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
   def down
   end
 
-  #TODO make this work
-  def sells_what?(enterprise)    
-    return "none" if !enterprise.is_distributor || enterprise.type == "profile"
-    return "own" if enterprise.type == "single" || enterprise.suppliers == [enterprise]
+  def sells_what?(enterprise)
+    is_distributor = enterprise.read_attribute(:is_distributor)
+    type = enterprise.read_attribute(:type)
+    return "none" if !is_distributor || type == "profile"
+    return "own" if type == "single" || enterprise.suppliers == [enterprise]
     return "any"
   end
 end
