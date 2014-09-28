@@ -248,8 +248,8 @@ ActiveRecord::Schema.define(:version => 20140927005043) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -263,10 +263,8 @@ ActiveRecord::Schema.define(:version => 20140927005043) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.integer  "owner_id",                                        :null => false
-    t.string   "sell",                     :default => "none",    :null => false
-    t.string   "sells",                    :default => "none",    :null => false
-    t.string   "type",                     :default => "profile", :null => false
+    t.integer  "owner_id",                                     :null => false
+    t.string   "sells",                    :default => "none", :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
