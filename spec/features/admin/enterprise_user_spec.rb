@@ -53,7 +53,10 @@ feature %q{
     end
   end
 
-  describe "with only a profile-level enterprise" do
+  # This case no longer exists as anyone with an enterprise can supply into the system. 
+  # Or can they?? There is no producer profile anyway.
+  # TODO discuss what parts of this are still necessary in which cases.
+  pending "with only a profile-level enterprise" do
     before do
       user.enterprise_roles.create! enterprise: supplier_profile
       user.enterprise_roles.create! enterprise: distributor_profile

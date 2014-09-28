@@ -142,16 +142,23 @@ feature %q{
 
     # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
-    #TODO something needed here ? sells=any? not sure what js is_distributor was connected to
-    # uncheck 'enterprise_is_distributor'
-    # page.should have_selector "#payment_methods", visible: false
-    # page.should have_selector "#shipping_methods", visible: false
-    # page.should have_selector "#enterprise_fees", visible: false
-    #TODO something needed here ? sells=any? not sure what js is_distributor was connected to
-    # check 'enterprise_is_distributor'
+    choose 'None'
+    page.should have_selector "#enterprise_fees", visible: false
+    page.should have_selector "#payment_methods", visible: false
+    page.should have_selector "#shipping_methods", visible: false
+    check 'enterprise_is_primary_producer'
+    page.should have_selector "#enterprise_fees"
+    page.should have_selector "#payment_methods", visible: false
+    page.should have_selector "#shipping_methods", visible: false
+    uncheck 'enterprise_is_primary_producer'
+    choose 'Own'
+    page.should have_selector "#enterprise_fees"
     page.should have_selector "#payment_methods"
     page.should have_selector "#shipping_methods"
+    choose 'Any'
     page.should have_selector "#enterprise_fees"
+    page.should have_selector "#payment_methods"
+    page.should have_selector "#shipping_methods"
 
     select2_search eg1.name, from: 'Groups'
 
@@ -182,6 +189,7 @@ feature %q{
     @enterprise.reload
     expect(@enterprise.owner).to eq user
 
+    #TODO fix so the sells field actually saves something
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     page.should have_selector "a.list-item", text: enterprise_fee.name

@@ -50,7 +50,7 @@ module Admin
     end
 
     def collection
-      # TODO is_distributor DESC, 
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
       Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
     end
 
