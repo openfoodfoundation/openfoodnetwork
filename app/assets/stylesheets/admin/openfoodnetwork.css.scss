@@ -210,3 +210,11 @@ table#listing_enterprise_groups {
 	color: #575757;
 }
 
+// textAngular wysiwyg
+.text-angular .btn-group {
+  display: inline;
+  margin-right: 8px;
+  button {
+    padding: 5px 10px;
+  }
+}
