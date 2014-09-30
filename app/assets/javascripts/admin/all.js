@@ -23,5 +23,7 @@
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
 //= require ./users/users
+//= require ../shared/text-angular
+//= require ../shared/text-angular-sanitize
 
 //= require_tree .
