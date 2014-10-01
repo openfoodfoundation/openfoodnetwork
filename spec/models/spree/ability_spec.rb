@@ -10,13 +10,13 @@ module Spree
     pending "broad permissions" do
       subject { AbilityDecorator.new(user) }
       let(:user) { create(:user) }
-      let(:enterprise_full) { create(:enterprise, sells: 'full') }
-      let(:enterprise_single) { create(:enterprise, sells: 'single') }
-      let(:enterprise_profile) { create(:enterprise, sells: 'profile') }
+      let(:enterprise_any) { create(:enterprise, sells: 'any') }
+      let(:enterprise_own) { create(:enterprise, sells: 'own') }
+      let(:enterprise_none) { create(:enterprise, sells: 'none') }
 
-      context "as manager of a 'full' type enterprise" do
+      context "as manager of a 'any' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_full
+          user.enterprise_roles.create! enterprise: enterprise_any
         end
 
         it { subject.can_manage_products?(user).should be_true }
@@ -24,9 +24,9 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'single' type enterprise" do
+      context "as manager of a 'own' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_single
+          user.enterprise_roles.create! enterprise: enterprise_own
         end
 
         it { subject.can_manage_products?(user).should be_true }
@@ -34,9 +34,9 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'profile' type enterprise" do
+      context "as manager of a 'none' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_profile
+          user.enterprise_roles.create! enterprise: enterprise_none
         end
 
         it { subject.can_manage_products?(user).should be_true }
