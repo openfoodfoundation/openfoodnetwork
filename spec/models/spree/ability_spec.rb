@@ -14,42 +14,44 @@ module Spree
       let(:enterprise_single) { create(:enterprise, sells: 'single') }
       let(:enterprise_profile) { create(:enterprise, sells: 'profile') }
 
-      describe "creating enterprises" do
+      context "as manager of a 'full' type enterprise" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_full
+        end
+
+        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_enterprises?(user).should be_true }
+        it { subject.can_manage_orders?(user).should be_true }
+      end
+
+      context "as manager of a 'single' type enterprise" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_single
+        end
+
+        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_enterprises?(user).should be_true }
+        it { subject.can_manage_orders?(user).should be_true }
+      end
+
+      context "as manager of a 'profile' type enterprise" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_profile
+        end
+
+        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_enterprises?(user).should be_true }
+        it { subject.can_manage_orders?(user).should be_false }
+      end
+
+      context "as a new user with no enterprises" do
+        it { subject.can_manage_products?(user).should be_false }
+        it { subject.can_manage_enterprises?(user).should be_false }
+        it { subject.can_manage_orders?(user).should be_false }
+
         it "can create enterprises straight off the bat" do
           subject.is_new_user?(user).should be_true
           expect(user).to have_ability :create, for: Enterprise
-        end
-      end
-
-      describe "managing enterprises" do
-        it "can manage enterprises when the user has at least one enterprise assigned" do
-          user.enterprise_roles.create! enterprise: enterprise_full
-          subject.can_manage_enterprises?(user).should be_true
-        end
-
-        it "can't otherwise" do
-          subject.can_manage_enterprises?(user).should be_false
-        end
-      end
-
-      describe "managing products" do
-        it "can when a user manages a 'full' type enterprise" do
-          user.enterprise_roles.create! enterprise: enterprise_full
-          subject.can_manage_products?(user).should be_true
-        end
-
-        it "can when a user manages a 'single' type enterprise" do
-          user.enterprise_roles.create! enterprise: enterprise_single
-          subject.can_manage_products?(user).should be_true
-        end
-
-        it "can't when a user manages a 'profile' type enterprise" do
-          user.enterprise_roles.create! enterprise: enterprise_profile
-          subject.can_manage_products?(user).should be_true
-        end
-
-        it "can't when the user manages no enterprises" do
-          subject.can_manage_products?(user).should be_false
         end
       end
     end
