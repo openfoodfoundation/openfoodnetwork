@@ -17,7 +17,7 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category, :is_distributor
+  attributes :icon, :icon_font, :producer_icon_font, :has_hub_listing, :enterprise_category, :is_distributor
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -25,18 +25,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   def active
     @options[:active_distributors].andand.include? object
-  end
-
-  def enterprise_category
-    object.enterprise_category
-  end
-
-  def has_shopfront
-    object.is_distributor
-  end
-
-  def is_distributor
-    object.is_distributor
   end
 
   # Used to select enterprises for hub listing

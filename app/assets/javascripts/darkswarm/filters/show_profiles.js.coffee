@@ -4,4 +4,4 @@ Darkswarm.filter 'showProfiles', ()->
     show_profiles ?= true
 
     enterprises.filter (enterprise)=>
-      show_profiles or enterprise.has_shopfront
+      show_profiles or enterprise.is_distributor
