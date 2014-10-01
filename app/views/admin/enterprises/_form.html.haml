@@ -187,11 +187,9 @@
         -# 	['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
         -# 	['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
         -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
-        %text-angular{'ng-model' => 'htmlVariable', 'class' => 'text-angular',
+        %text-angular{'ng-model' => 'htmlVariable', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular',
           'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]", 
           'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}
-        -# Use a hidden rails form field bound to the textAngular wysiwit field above, using the htmlVariable model. So rails knows to save it.
-        = f.text_area :long_description, rows: 6, 'ng-model' => 'htmlVariable', 'hidden' => 'true'
   %fieldset.eleven.columns.alpha.no-border-bottom
     %legend IMAGES
     .row

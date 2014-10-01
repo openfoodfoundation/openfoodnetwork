@@ -41,6 +41,10 @@ module Admin
       render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
     end
 
+    def admin_inject_enterprise_long_description
+      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.enterprises', name: 'longDescription', json: "'#{@enterprise.long_description.to_s}'"}
+    end
+
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
       json = serializer.new(data).to_json
