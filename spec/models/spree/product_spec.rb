@@ -106,6 +106,11 @@ module Spree
             standard_variant = product.variants(:reload).first
             expect(standard_variant.price).to eq product.master.price
           end
+
+          it "only duplicates master variant on initial save" do
+            product.save!
+            expect(product.variants(:reload).length).to eq 1
+          end
         end
 
         context "when the unit is items" do
