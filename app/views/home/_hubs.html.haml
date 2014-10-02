@@ -1,5 +1,5 @@
-= inject_enterprises
-#hubs.hubs{"ng-controller" => "HubsCtrl"}
+= inject_enterprises 
+#hubs.hubs{"ng-controller" => "EnterprisesCtrl"}
   .row
     .small-12.columns
       %h1 Shop in your local area
@@ -17,7 +17,7 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query  | taxons:activeTaxons | shipping:shippingTypes | showProfiles:show_profiles )",
+        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in hubs = (Enterprises.hubs | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
         "ng-class" => "{'is_profile' : !hub.is_distributor, 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",
@@ -26,7 +26,7 @@
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
 
-        .row{"ng-show" => "filteredHubs.length == 0"}
+        .row{"ng-show" => "hubs.length == 0"}
           .columns.small-12
             %p.no-results
               Sorry, no results found for
