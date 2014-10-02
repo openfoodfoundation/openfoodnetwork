@@ -1,12 +1,10 @@
-.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}", bindonce: true}
+.row.active_table_row{"ng-if" => "hub.has_shopfront", "ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'has_shopfront' : producer.has_shopfront}", bindonce: true}
+
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
-      %i{ ng: { class: "{ 'ofn-i_063-hub': hub.can_aggregate && hub.has_shopfront,
-        'ofn-i_059-producer': !hub.can_aggregate && hub.has_shopfront,
-        'ofn-i_060-producer-reversed': !hub.can_aggregate && !hub.has_shopfront,
-        'ofn-i_064-hub-reversed': hub.can_aggregate && !hub.has_shopfront }" } }
-      / %i.ofn-i_063-hub
+      %i{ng: {class: "hub.icon_font"}}
       %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
+
   .columns.small-4.medium-2.large-2
     %span.margin-top {{ hub.address.city }}
   .columns.small-2.medium-1.large-1
@@ -15,16 +13,28 @@
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign
-      %span.margin-top{ bo: { if: "current()" } } 
+      %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here
       %span.margin-top{ bo: { if: "!current()" } } {{ hub.orders_close_at | sensible_timeframe }}
 
   .columns.small-6.medium-3.large-4.text-right{"bo-if" => "!hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
       %i.ofn-i_032-closed-sign
-      %span.margin-top{ bo: { if: "current()" } } 
+      %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here
       %span.margin-top{ bo: { if: "!current()" } } Orders closed
 
+.row.active_table_row{"ng-if" => "!hub.has_shopfront", "ng-class" => "closed"}
+  .columns.small-12.medium-6.large-5.skinny-head
+    %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+      %i{ng: {class: "hub.icon_font"}}
+      %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
 
+  .columns.small-4.medium-2.large-2
+    %span.margin-top {{ hub.address.city }}
+  .columns.small-2.medium-1.large-1
+    %span.margin-top {{ hub.address.state_name | uppercase }}
 
+  .columns.small-6.medium-3.large-4.text-right
+    %span.margin-top{ bo: { if: "!current()" } } 
+      %em Profile only

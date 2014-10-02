@@ -87,6 +87,8 @@
     &.inactive
       &.closed, &.open
         &, & *
+          color: $disabled-med
+        a, a *
           color: $disabled-dark
       &.closed
         .active_table_row, .active_table_row:first-child, .active_table_row:last-child
@@ -125,4 +127,14 @@
               opacity: 0.85
           .active_table_row:first-child .skinny-head
             background-color: $disabled-light
+
+    //Is Profile - profile node
+    &.inactive.is_profile
+      &.closed, &.open
+        .active_table_row
+          &:hover, &:active, &:focus
+            border-color: transparent
+            cursor: auto
+          @media all and (max-width: 640px) 
+            border-color: transparent
 

@@ -13,7 +13,7 @@ Subtotal: #{number_to_currency checkout_cart_total_with_adjustments(@order)}
 - checkout_adjustments_for_summary(@order, exclude: [:distribution]).each do |adjustment|
   #{raw(adjustment.label)} #{adjustment.display_amount}
 Order Total: #{@order.display_total}
-- if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check"
+- if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
   \
   ============================================================
   Payment Details
@@ -27,6 +27,9 @@ Order Total: #{@order.display_total}
   ============================================================
   Your order will be delivered to:
   #{@order.ship_address.to_s}
+
+  - if @order.shipping_method.andand.description 
+    #{@order.shipping_method.description.html_safe}
 
   - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
     Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}

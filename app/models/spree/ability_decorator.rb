@@ -5,6 +5,7 @@ class AbilityDecorator
     add_base_abilities user if is_new_user? user
     add_enterprise_management_abilities user if can_manage_enterprises? user
     add_product_management_abilities user if can_manage_products? user
+    add_order_management_abilities user if can_manage_orders? user
     add_relationship_management_abilities user if can_manage_relationships? user
   end
 
@@ -17,11 +18,13 @@ class AbilityDecorator
     user.enterprises.present?
   end
 
-
   def can_manage_products?(user)
-    ( user.enterprises.map(&:type) & %w(single full) ).any?
+    can_manage_enterprises? user
   end
 
+  def can_manage_orders?(user)
+    ( user.enterprises.map(&:type) & %w(single full) ).any?
+  end
 
   def can_manage_relationships?(user)
     can_manage_enterprises? user
@@ -46,7 +49,6 @@ class AbilityDecorator
     end
   end
 
-
   def add_product_management_abilities(user)
     # Enterprise User can only access products that they are a supplier for
     can [:create], Spree::Product
@@ -64,7 +66,9 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :search], Spree::Taxon
     can [:admin, :index, :read, :create, :edit], Spree::Classification
+  end
 
+  def add_order_management_abilities(user)
     # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
     can [:read, :update, :fire, :resend], Spree::Order do |order|

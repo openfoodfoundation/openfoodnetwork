@@ -4,7 +4,7 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   end
 
   private
-  
+
   def cached_serializer_hash
     Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
   end
@@ -18,7 +18,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   #TODO: Remove these later
-  attributes :icon, :has_shopfront, :can_aggregate
+  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category
 
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
@@ -28,41 +28,61 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     @options[:active_distributors].andand.include? object
   end
 
-  # TODO: Move this back to uncached section when relavant properties are defined on the Enterprise model
-  def icon
-    # TODO: Replace with object.has_shopfront when this property exists
-    if has_shopfront
-      if can_aggregate
-        "/assets/map_005-hub.svg"
-      else
-        if object.is_distributor
-          "/assets/map_003-producer-shop.svg"
-        else
-          "/assets/map_001-producer-only.svg"
-        end
-      end
-    else
-      if can_aggregate
-        "/assets/map_006-hub-profile.svg"
-      else
-        if object.is_distributor
-          "/assets/map_004-producer-shop-profile.svg"
-        else
-          "/assets/map_002-producer-only-profile.svg"
-        end
-      end
-    end
+  def enterprise_category
+    object.enterprise_category
   end
 
-  # TODO: Remove this when flags on enterprises are switched over
   def has_shopfront
-    object.type != 'profile'
+    object.is_distributor && object.type != 'profile'
   end
 
-  # TODO: Remove this when flags on enterprises are switched over
-  def can_aggregate
-    object.is_distributor && object.suppliers != [object]
+  # Used to select enterprises for hub listing
+  def has_hub_listing
+    has_shopfront || object.enterprise_category == "hub_profile"
   end
+
+  # Map svg icons.
+  def icon
+    icons = {
+      "hub" => "/assets/map_005-hub.svg",
+      "hub_profile" => "/assets/map_006-hub-profile.svg",
+      "producer_hub" => "/assets/map_005-hub.svg",
+      "producer_shop" => "/assets/map_003-producer-shop.svg",
+      "producer" => "/assets/map_001-producer-only.svg",
+      "producer_profile" => "/assets/map_002-producer-only-profile.svg",
+    }
+    icons[object.enterprise_category]
+  end
+
+  # Choose regular icon font for enterprises.
+  def icon_font
+    icon_fonts = {
+      "hub" => "ofn-i_063-hub",
+      "hub_profile" => "ofn-i_064-hub-reversed",
+      "producer_hub" => "ofn-i_063-hub",
+      "producer_shop" => "ofn-i_059-producer",
+      "producer" => "ofn-i_059-producer",
+      "producer_profile" => "ofn-i_060-producer-reversed",
+    }
+    icon_fonts[object.enterprise_category]
+  end
+
+  # Choose producer page icon font - yes, sadly its got to be different.
+  # This duplicates some code but covers the producer page edge case where
+  # producer-hub has a producer icon without needing to duplicate the category logic in angular.
+  def producer_icon_font
+    icon_fonts = {
+      "hub" => "",
+      "hub_profile" => "",
+      "producer_hub" => "ofn-i_059-producer",
+      "producer_shop" => "ofn-i_059-producer",
+      "producer" => "ofn-i_059-producer",
+      "producer_profile" => "ofn-i_060-producer-reversed",
+      "empty" => "",
+    }
+    icon_fonts[object.enterprise_category]
+  end
+
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer

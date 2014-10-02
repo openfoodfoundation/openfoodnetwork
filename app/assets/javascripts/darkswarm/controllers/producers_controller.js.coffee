@@ -1,4 +1,4 @@
-Darkswarm.controller "ProducersCtrl", ($scope, Producers, $filter, FilterSelectorsService, Search) ->
+Darkswarm.controller "ProducersCtrl", ($scope, Producers, $filter, FilterSelectorsService, Search, MapModal) ->
   $scope.Producers = Producers
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
@@ -7,6 +7,8 @@ Darkswarm.controller "ProducersCtrl", ($scope, Producers, $filter, FilterSelecto
   $scope.filtersActive = false
   $scope.activeTaxons = []
   $scope.query = Search.search()
+  $scope.show_profiles = false
+  $scope.openModal = MapModal.open
 
   $scope.$watch "query", (query)->
     Search.search query

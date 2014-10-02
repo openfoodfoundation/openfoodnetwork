@@ -1,4 +1,4 @@
-Darkswarm.controller "HubsCtrl", ($scope, Hubs, Search, $document, $rootScope, HashNavigation, FilterSelectorsService) ->
+Darkswarm.controller "HubsCtrl", ($scope, Hubs, Search, $document, $rootScope, HashNavigation, FilterSelectorsService, MapModal) ->
   $scope.Hubs = Hubs
   $scope.hubs = Hubs.visible
   $scope.totalActive =  FilterSelectorsService.totalActive
@@ -6,6 +6,8 @@ Darkswarm.controller "HubsCtrl", ($scope, Hubs, Search, $document, $rootScope, H
   $scope.filterText =  FilterSelectorsService.filterText
   $scope.FilterSelectorsService =  FilterSelectorsService
   $scope.query = Search.search()
+  $scope.show_profiles = false
+  $scope.openModal = MapModal.open
 
   $scope.$watch "query", (query)->
     Search.search query

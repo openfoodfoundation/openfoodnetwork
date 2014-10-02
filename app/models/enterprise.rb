@@ -51,9 +51,9 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
-  validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
+  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
-  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? }
+  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -211,6 +211,39 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
+  # Replaces currententerprse type field.
+  def sells
+    # Type: full - single - profile becomes Sells: all - own - none
+    # Remove this return later.
+    return "none" if !is_distributor || type == "profile"
+    return "own" if type == "single" || suppliers == [self]
+    "all"
+  end
+
+  # Simplify enterprise categories for frontend logic and icons, and maybe other things.
+  def enterprise_category
+    # Make this crazy logic human readable so we can argue about it sanely.
+    # This can be simplified later, it's like this for readablitlty during changes.
+    category = is_primary_producer ? "producer_" : "non_producer_"
+    category << "sell_" + sells
+
+    # Map backend cases to front end cases.
+    case category
+      when "producer_sell_all"
+        "producer_hub" # Producer hub who sells own and others produce and supplies other hubs.
+      when "producer_sell_own"
+        "producer_shop" # Producer with shopfront and supplies other hubs.
+      when "producer_sell_none"
+        "producer" # Producer only supplies through others.
+      when "non_producer_sell_all"
+        "hub" # Hub selling others products in order cycles.
+      when "non_producer_sell_own"
+        "hub" # Wholesaler selling through own shopfront?
+      when "non_producer_sell_none"
+        "hub_profile" # Hub selling outside the system.
+    end
+  end
+
   # Return all taxons for all distributed products
   def distributed_taxons
     Spree::Taxon.
@@ -226,7 +259,6 @@ class Enterprise < ActiveRecord::Base
       where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
   end
-
 
   private
 
