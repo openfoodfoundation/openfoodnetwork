@@ -239,19 +239,6 @@ module Spree
       end
     end
 
-    context "when the product does not have variants" do
-      let(:product) { create(:simple_product) }
-      let(:variant) { product.master }
-
-      it "requires unit value and/or unit description" do
-        variant.unit_value = nil
-        variant.unit_description = nil
-        variant.should be_invalid
-        variant.unit_value = 1
-        variant.should be_valid
-      end
-    end
-
     describe "unit value/description" do
       describe "getting name for display" do
         it "returns display_name if present" do
