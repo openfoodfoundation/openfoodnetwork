@@ -8,7 +8,7 @@
     - if can? :admin, EnterpriseFee
       %span.centered.three.columns Enterprise Fees
   %div.sixteen.columns.alpha.list
-    - @enterprises.each do |enterprise|
+    - @enterprises.is_distributor.each do |enterprise|
       %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
         %span.five.columns.alpha
           = enterprise.name

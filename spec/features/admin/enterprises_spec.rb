@@ -189,7 +189,6 @@ feature %q{
     @enterprise.reload
     expect(@enterprise.owner).to eq user
 
-    #TODO fix so the sells field actually saves something
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     page.should have_selector "a.list-item", text: enterprise_fee.name
@@ -286,16 +285,12 @@ feature %q{
 
         within("tr.enterprise-#{distributor1.id}") do
           expect(page).to have_content distributor1.name
-          # TODO expect sell= ?
-          # expect(page).to have_checked_field "enterprise_set_collection_attributes_0_is_distributor"
           expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
           expect(page).to_not have_select "enterprise_set_collection_attributes_0_sells"
         end
 
         within("tr.enterprise-#{supplier1.id}") do
           expect(page).to have_content supplier1.name
-          # TODO expect sells= ?
-          # expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_distributor"
           expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
           expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
         end
