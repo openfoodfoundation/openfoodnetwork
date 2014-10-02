@@ -8,7 +8,7 @@ module Spree
       it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
-    
+
     describe "validations and defaults" do
       it "is valid when built from factory" do
         build(:product).should be_valid
@@ -60,6 +60,14 @@ module Spree
         end
       end
 
+
+      it "does not allow only standard variant to be deleted" do
+        product = create(:simple_product)
+        expect(product.variants(:reload).length).to eq 1
+        product.variants = []
+        expect(product.save).to be_false
+        expect(product.errors[:variants]).to include "Product must have at least one variant"
+      end
 
       context "when the product has variants" do
         let(:product) do

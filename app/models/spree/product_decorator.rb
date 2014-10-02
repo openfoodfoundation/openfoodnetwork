@@ -23,6 +23,7 @@ Spree::Product.class_eval do
 
   before_validation :ensure_standard_variant, if: :new_record?
 
+  validates_presence_of :variants, message: "Product must have at least one variant"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
   validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
