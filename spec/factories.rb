@@ -93,7 +93,6 @@ FactoryGirl.define do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
-    is_primary_producer false
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'

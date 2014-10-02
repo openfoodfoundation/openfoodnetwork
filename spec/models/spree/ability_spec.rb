@@ -6,8 +6,7 @@ module Spree
 
   describe User do
 
-    # TODO work out what permissions are meant to be now...
-    pending "broad permissions" do
+    describe "broad permissions" do
       subject { AbilityDecorator.new(user) }
       let(:user) { create(:user) }
       let(:enterprise_any) { create(:enterprise, sells: 'any') }
@@ -240,15 +239,15 @@ module Spree
         end
       end
 
-      context 'Order Cycle co-ordinator' do
-
+      context 'Order Cycle co-ordinator, distributor enterprise manager' do
         let (:user) do
           user = create(:user)
           user.spree_roles = []
-          s1.enterprise_roles.build(user: user).save
+          d1.enterprise_roles.build(user: user).save
           user
         end
-        let(:oc1) { create(:simple_order_cycle, {coordinator: s1}) }
+
+        let(:oc1) { create(:simple_order_cycle, {coordinator: d1}) }
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
