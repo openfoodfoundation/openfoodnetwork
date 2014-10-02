@@ -214,6 +214,10 @@ end
 
 
 FactoryGirl.modify do
+  factory :base_product do
+    unit_value 1
+    unit_description ''
+  end
   factory :product do
     primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
   end

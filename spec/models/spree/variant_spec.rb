@@ -240,12 +240,14 @@ module Spree
     end
 
     context "when the product does not have variants" do
-      let(:product) { create(:simple_product, variant_unit: nil) }
+      let(:product) { create(:simple_product) }
       let(:variant) { product.master }
 
-      it "does not require unit value or unit description when the product's unit is empty" do
+      it "requires unit value and/or unit description" do
         variant.unit_value = nil
         variant.unit_description = nil
+        variant.should be_invalid
+        variant.unit_value = 1
         variant.should be_valid
       end
     end
@@ -283,7 +285,7 @@ module Spree
 
       describe "setting the variant's weight from the unit value" do
         it "sets the variant's weight when unit is weight" do
-          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: nil)
 
           p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
@@ -293,7 +295,7 @@ module Spree
         end
 
         it "does nothing when unit is not weight" do
-          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: 123)
 
           p.update_attributes! variant_unit: 'volume', variant_unit_scale: 1
@@ -303,7 +305,7 @@ module Spree
         end
 
         it "does nothing when unit_value is not set" do
-          p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
+          p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: 123)
 
           p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
@@ -316,56 +318,6 @@ module Spree
         end
       end
 
-      context "when the variant initially has no value" do
-        context "when the required option value does not exist" do
-          let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }
-          let!(:v) { create(:variant, product: p, unit_value: nil, unit_description: nil) }
-
-          before do
-            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
-            @ot = Spree::OptionType.find_by_name 'unit_weight'
-          end
-
-          it "creates the option value and assigns it to the variant" do
-            expect {
-              v.update_attributes!(unit_value: 10, unit_description: 'foo')
-            }.to change(Spree::OptionValue, :count).by(1)
-
-            ov = Spree::OptionValue.last
-            ov.option_type.should == @ot
-            ov.name.should == '10g foo'
-            ov.presentation.should == '10g foo'
-
-            v.option_values.should include ov
-          end
-        end
-
-        context "when the required option value already exists" do
-          let!(:p_orig) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-          let!(:v_orig) { create(:variant, product: p_orig, unit_value: 10, unit_description: 'foo') }
-
-          let!(:p) { create(:simple_product, variant_unit: nil, variant_unit_scale: nil) }
-          let!(:v) { create(:variant, product: p, unit_value: nil, unit_description: nil) }
-
-          before do
-            p.update_attributes!(variant_unit: 'weight', variant_unit_scale: 1)
-            @ot = Spree::OptionType.find_by_name 'unit_weight'
-          end
-
-          it "looks up the option value and assigns it to the variant" do
-            expect {
-              v.update_attributes!(unit_value: 10, unit_description: 'foo')
-            }.to change(Spree::OptionValue, :count).by(0)
-
-            ov = v.option_values.last
-            ov.option_type.should == @ot
-            ov.name.should == '10g foo'
-            ov.presentation.should == '10g foo'
-
-            v_orig.option_values.should include ov
-          end
-        end
-      end
       context "when the variant already has a value set (and all required option values exist)" do
         let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
