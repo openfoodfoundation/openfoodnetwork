@@ -23,7 +23,7 @@ class AbilityDecorator
   end
 
   def can_manage_orders?(user)
-    ( user.enterprises.map(&:type) & %w(single full) ).any?
+    ( user.enterprises.map(&:sells) & %w(own any) ).any?
   end
 
   def can_manage_relationships?(user)
