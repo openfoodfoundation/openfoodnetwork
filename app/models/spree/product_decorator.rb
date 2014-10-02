@@ -21,6 +21,8 @@ Spree::Product.class_eval do
   attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
+  before_validation :ensure_standard_variant
+
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
   validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
@@ -31,7 +33,6 @@ Spree::Product.class_eval do
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
-  #after_create :ensure_one_standard_variant
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   after_touch :touch_distributors
@@ -205,7 +206,7 @@ Spree::Product.class_eval do
     Spree::OptionType.where('name LIKE ?', 'unit_%%')
   end
 
-  def ensure_one_standard_variant
+  def ensure_standard_variant
     variant = self.master.dup
     variant.product = self
     variant.is_master = false

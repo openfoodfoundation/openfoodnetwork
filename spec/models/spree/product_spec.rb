@@ -86,24 +86,27 @@ module Spree
           end
         end
 
-        # context "saving a new product" do
-        #   let!(:product){ Spree::Product.new }
-        #
-        #   before do
-        #     product.primary_taxon = create(:taxon)
-        #     product.supplier = create(:supplier_enterprise)
-        #     product.name = "Product1"
-        #     product.variant_unit = "weight"
-        #     product.on_hand = 3
-        #     product.price = 4.27
-        #     product.save!
-        #   end
-        #
-        #   it "copies the properties on master variant to the first standard variant" do
-        #     standard_variant = product.variants(:reload).first
-        #     expect(standard_variant.price).to eq product.master.price
-        #   end
-        # end
+        context "saving a new product" do
+          let!(:product){ Spree::Product.new }
+
+          before do
+            product.primary_taxon = create(:taxon)
+            product.supplier = create(:supplier_enterprise)
+            product.name = "Product1"
+            product.variant_unit = "weight"
+            product.variant_unit_scale = 1000
+            product.unit_value = 1
+            product.on_hand = 3
+            product.price = 4.27
+            product.save!
+          end
+
+          it "copies the properties on master variant to the first standard variant" do
+            expect(product.variants(:reload).length).to eq 1
+            standard_variant = product.variants(:reload).first
+            expect(standard_variant.price).to eq product.master.price
+          end
+        end
 
         context "when the unit is items" do
           it "is valid when unit name is set and unit scale is not" do
