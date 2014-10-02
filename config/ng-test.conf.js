@@ -27,16 +27,9 @@ module.exports = function(config) {
       'app/assets/javascripts/admin/util.js.erb'
     ],
 
-    preprocessors: {
-      '**/*.coffee': ['coffee']
-    },
-
     coffeePreprocessor: {
       options: {
         sourceMap: true
-      },
-      transformPath: function(path) {
-        return path.replace(/\.coffee$/, '.js');
       }
     },
 
