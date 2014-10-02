@@ -14,7 +14,7 @@ module Spree
 
       describe "finding variants in stock" do
         before do
-          p = create(:product)
+          p = create(:product, on_hand: 0)
           @v_in_stock = create(:variant, product: p)
           @v_on_demand = create(:variant, product: p, on_demand: true)
           @v_no_stock = create(:variant, product: p)
