@@ -135,10 +135,10 @@ module Spree
         end
       end
 
-      context "when product does not have variants" do
+      context "a basic product" do
         let(:product) { create(:simple_product) }
 
-        it "does not require any variant unit fields" do
+        it "requires variant unit fields" do
           product.variant_unit = nil
           product.variant_unit_name = nil
           product.variant_unit_scale = nil
@@ -523,16 +523,6 @@ module Spree
       end
 
       describe "finding products in stock for a particular distribution" do
-        it "returns in-stock products without variants" do
-          p = create(:simple_product)
-          p.master.update_attribute(:count_on_hand, 1)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << p.master
-
-          p.should have_stock_for_distribution(oc, d)
-        end
-
         it "returns on-demand products" do
           p = create(:simple_product, on_demand: true)
           p.master.update_attribute(:count_on_hand, 0)
