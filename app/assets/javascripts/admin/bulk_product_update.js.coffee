@@ -135,15 +135,18 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
     $scope.deleteVariant = (product, variant) ->
-      if !$scope.variantSaved(variant)
-        $scope.removeVariant(product, variant)
+      if product.variants.length > 1
+        if !$scope.variantSaved(variant)
+          $scope.removeVariant(product, variant)
+        else
+          if confirm("Are you sure?")
+            $http(
+              method: "DELETE"
+              url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
+            ).success (data) ->
+              $scope.removeVariant(product, variant)
       else
-        if confirm("Are you sure?")
-          $http(
-            method: "DELETE"
-            url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
-          ).success (data) ->
-            $scope.removeVariant(product, variant)
+        alert("The last variant cannot be deleted!")
 
     $scope.removeVariant = (product, variant) ->
       product.variants.splice product.variants.indexOf(variant), 1

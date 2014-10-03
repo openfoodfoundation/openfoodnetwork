@@ -777,22 +777,31 @@ describe "AdminProductEditCtrl", ->
 
 
   describe "deleting variants", ->
+    describe "when the variant is the only one left on the product", ->
+      it "alerts the user", ->
+        spyOn(window, "alert")
+        $scope.products = [
+          {id: 1, variants: [{id: 1}]}
+        ]
+        $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
+        expect(window.alert).toHaveBeenCalledWith "The last variant cannot be deleted!"
+
     describe "when the variant has not been saved", ->
       it "removes the variant from products and dirtyProducts", ->
         spyOn(window, "confirm").andReturn true
         $scope.products = [
-          {id: 1, variants: [{id: -1}]}
+          {id: 1, variants: [{id: -1},{id: -2}]}
         ]
         DirtyProducts.addVariantProperty 1, -1, "something", "something"
         DirtyProducts.addProductProperty 1, "something", "something"
         $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
         expect($scope.products).toEqual([
-          {id: 1, variants: []}
+          {id: 1, variants: [{id: -2}]}
         ])
         expect(DirtyProducts.all()).toEqual
           1: { id: 1, something: 'something'}
 
-  
+
     describe "when the variant has been saved", ->
       it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)/soft_delete", ->
         spyOn(window, "confirm").andReturn true
@@ -800,9 +809,14 @@ describe "AdminProductEditCtrl", ->
           {
             id: 9
             permalink_live: "apples"
-            variants: [
+            variants: [{
               id: 3
               price: 12
+            },
+            {
+              id: 4
+              price: 15
+            }
             ]
           }
           {
