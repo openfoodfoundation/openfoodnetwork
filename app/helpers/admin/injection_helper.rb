@@ -42,7 +42,9 @@ module Admin
     end
 
     def admin_inject_enterprise_long_description
-      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.enterprises', name: 'longDescription', json: "'#{@enterprise.long_description.to_s}'"}
+      # Clean line breaks and quotes.
+      long_description = @enterprise.long_description.gsub("\r\n", "<br />").gsub("\"", "&#34;").gsub("'","&#39;")
+      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.enterprises', name: 'longDescription', json: "'#{long_description}'"}
     end
 
 
