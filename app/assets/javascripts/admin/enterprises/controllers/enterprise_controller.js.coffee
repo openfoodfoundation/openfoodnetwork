@@ -1,8 +1,10 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, Enterprise, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, $rootScope, Enterprise, PaymentMethods, ShippingMethods) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
+    $scope.$on "$routeChangeStart", (event, newUrl, oldUrl) ->
+      event.preventDefault()
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
