@@ -40,7 +40,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "producer_hub" => "/assets/map_005-hub.svg",
       "producer_shop" => "/assets/map_003-producer-shop.svg",
       "producer" => "/assets/map_001-producer-only.svg",
-      "producer_profile" => "/assets/map_002-producer-only-profile.svg",
     }
     icons[object.enterprise_category]
   end
@@ -53,7 +52,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "producer_hub" => "ofn-i_063-hub",
       "producer_shop" => "ofn-i_059-producer",
       "producer" => "ofn-i_059-producer",
-      "producer_profile" => "ofn-i_060-producer-reversed",
     }
     icon_fonts[object.enterprise_category]
   end
@@ -68,8 +66,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "producer_hub" => "ofn-i_059-producer",
       "producer_shop" => "ofn-i_059-producer",
       "producer" => "ofn-i_059-producer",
-      "producer_profile" => "ofn-i_060-producer-reversed",
-      "empty" => "",
     }
     icon_fonts[object.enterprise_category]
   end
