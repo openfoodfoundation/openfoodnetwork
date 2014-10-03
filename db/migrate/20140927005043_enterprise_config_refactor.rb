@@ -3,8 +3,7 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     add_column :enterprises, :sells, :string, null: false, default: 'none'
 
     Enterprise.all.each do |enterprise|
-      enterprise.sells = sells_what?(enterprise)
-      enterprise.save!
+      enterprise.update_attributes({:sells => sells_what?(enterprise)})
     end
 
     remove_column :enterprises, :type
@@ -17,9 +16,10 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     add_column :enterprises, :is_distributor, :boolean
 
     Enterprise.all.each do |enterprise|
-      enterprise.type = type?(enterprise)
-      enterprise.is_distributor = distributes?(enterprise)
-      enterprise.save!
+      enterprise.update_attributes({
+        :type => type?(enterprise),
+        :is_distributor => distributes?(enterprise)
+      })
     end
 
     remove_column :enterprises, :sells
