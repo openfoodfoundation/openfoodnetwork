@@ -18,6 +18,7 @@ Spree::Variant.class_eval do
     if: -> v { v.product.andand.variant_unit.present? && v.unit_value.nil? }
 
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
+  before_destroy :check_product_variants
   after_save :update_units
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
@@ -121,6 +122,13 @@ Spree::Variant.class_eval do
     else
       option_value_namer = OpenFoodNetwork::OptionValueNamer.new self
       option_value_namer.name
+    end
+  end
+
+  def check_product_variants
+    if product.variants == [self] # Only variant left on product
+      errors.add :product, "must have at least one variant"
+      return false
     end
   end
 end
