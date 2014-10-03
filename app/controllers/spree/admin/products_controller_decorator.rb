@@ -2,14 +2,14 @@ require 'open_food_network/spree_api_key_loader'
 
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
-  before_filter :load_form_data, :only => [:bulk_edit, :new, :edit]
+  before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
   before_filter :load_spree_api_key, :only => :bulk_edit
 
   alias_method :location_after_save_original, :location_after_save
 
   respond_to :json, :only => :clone
 
-  respond_override create: { html: { 
+  respond_override create: { html: {
     success: lambda {
       if params[:button] == "add_another"
         redirect_to new_admin_product_path
