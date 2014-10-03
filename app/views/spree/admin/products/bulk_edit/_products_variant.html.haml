@@ -20,4 +20,4 @@
     %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
   %td.actions
   %td.actions
-    %a{ 'ng-click' => 'deleteVariant(product,variant)', :class => "delete-variant icon-trash no-text" }
+    %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text" }
