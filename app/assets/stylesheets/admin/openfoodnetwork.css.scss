@@ -211,10 +211,19 @@ table#listing_enterprise_groups {
 }
 
 // textAngular wysiwyg
-text-angular .btn-group {
-  display: inline;
-  margin-right: 8px;
-  button {
-    padding: 5px 10px;
+text-angular {
+  .ta-scroll-window > .ta-bind {
+    max-height: 400px;
+    min-height: 100px;
+  }
+  .ta-scroll-window.form-control {
+    min-height: 100px;
+  }
+  .btn-group {
+    display: inline;
+    margin-right: 8px;
+    button {
+      padding: 5px 10px;
+    }
   }
 }
