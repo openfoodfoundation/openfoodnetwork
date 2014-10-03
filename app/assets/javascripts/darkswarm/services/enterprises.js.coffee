@@ -2,15 +2,16 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
   new class Enterprises
     enterprises_by_id: {} # id/object pairs for lookup
     constructor: ->
-      @enterprises = visibleFilter enterprises
+      @enterprises = enterprises
       for enterprise in enterprises
         @enterprises_by_id[enterprise.id] = enterprise
       @dereferenceEnterprises()
       @dereferenceTaxons()
-      @producers = @enterprises.filter (enterprise)->
-        enterprise.is_primary_producer
-      @hubs = @enterprises.filter (enterprise)->
-        enterprise.is_distributor
+      @visible = visibleFilter @enterprises
+      @producers = @visible.filter (enterprise)->
+        enterprise.enterprise_category in ["producer_hub", "producer_shop", "producer"]
+      @hubs = @visible.filter (enterprise)->
+        enterprise.enterprise_category in ["hub", "hub_profile", "producer_hub", "producer_shop"]
 
     dereferenceEnterprises: ->
       if CurrentHub.hub?.id
