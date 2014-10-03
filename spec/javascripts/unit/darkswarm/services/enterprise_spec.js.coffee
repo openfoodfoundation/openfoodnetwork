@@ -5,9 +5,9 @@ describe "Enterprises service", ->
     {id: 1, name: "test"}
   ]
   enterprises = [
-    {id: 1, is_distributor: true, is_primary_producer: false, producers: [{id: 2}], taxons: [{id: 1}]},
-    {id: 2, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]},
-    {id: 3, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]}
+    {id: 1, visible: true, is_distributor: true, is_primary_producer: false, producers: [{id: 2}], taxons: [{id: 1}]},
+    {id: 2, visible: true, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]},
+    {id: 3, visible: true, is_distributor: false, is_primary_producer: true, hubs: [{id: 1}]}
   ]
   beforeEach ->
     module 'Darkswarm'
