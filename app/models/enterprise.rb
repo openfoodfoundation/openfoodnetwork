@@ -232,7 +232,7 @@ class Enterprise < ActiveRecord::Base
       when "non_producer_sells_any"
         "hub" # Hub selling others products in order cycles.
       when "non_producer_sells_own"
-        "hub" # Wholesaler selling through own shopfront?
+        "hub" # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
       when "non_producer_sells_none"
         "hub_profile" # Hub selling outside the system.
     end
