@@ -9,7 +9,6 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document,
   $scope.activeTaxons = []
   $scope.show_profiles = false
   $scope.filtersActive = false
-  $scope.show_profiles = false
 
   $scope.$watch "query", (query)->
     Search.search query
