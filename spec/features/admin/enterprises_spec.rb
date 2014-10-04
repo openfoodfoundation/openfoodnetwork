@@ -314,6 +314,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'New Enterprise'
         fill_in 'enterprise_name', with: 'zzz'
+        fill_in 'enterprise_email', with: 'bob@example.com'
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'
