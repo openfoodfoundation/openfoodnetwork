@@ -17,8 +17,6 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
-  attributes :icon, :icon_font, :producer_icon_font, :has_hub_listing, :enterprise_category, :is_distributor
-
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
   end
@@ -27,9 +25,54 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     @options[:active_distributors].andand.include? object
   end
 
-  # Used to select enterprises for hub listing
-  def has_hub_listing
-    object.is_distributor || object.enterprise_category == "hub_profile"
+
+end
+
+class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
+  cached
+  delegate :cache_key, to: :object
+
+  attributes :name, :id, :description, :latitude, :longitude,
+    :long_description, :website, :instagram, :linkedin, :twitter,
+    :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
+    :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
+    :icon, :icon_font, :producer_icon_font, :enterprise_category
+
+  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
+  has_many :supplied_taxons, serializer: Api::IdSerializer
+  has_many :distributors, key: :hubs, serializer: Api::IdSerializer
+  has_many :suppliers, key: :producers, serializer: Api::IdSerializer
+
+  has_one :address, serializer: Api::AddressSerializer
+
+  def pickup
+    object.shipping_methods.where(:require_ship_address => false).present?
+  end
+
+  def delivery
+    object.shipping_methods.where(:require_ship_address => true).present?
+  end
+
+  def email
+    object.email.to_s.reverse
+  end
+
+  def hash
+    object.to_param
+  end
+
+  def logo
+    object.logo(:medium) if object.logo.exists?
+  end
+
+  def promo_image
+    object.promo_image(:large) if object.promo_image.exists?
+  end
+
+  # TODO when ActiveSerializers supports URL helpers
+  # Then refactor. See readme https://github.com/rails-api/active_model_serializers
+  def path
+    "/enterprises/#{object.to_param}/shop"
   end
 
   # Map svg icons.
@@ -68,54 +111,5 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
       "producer" => "ofn-i_059-producer",
     }
     icon_fonts[object.enterprise_category]
-  end
-
-end
-
-class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
-  cached
-  delegate :cache_key, to: :object
-
-  attributes :name, :id, :description, :latitude, :longitude,
-    :long_description, :website, :instagram, :linkedin, :twitter,
-    :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :path,
-    :pickup, :delivery
-
-  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
-  has_many :supplied_taxons, serializer: Api::IdSerializer
-  has_many :distributors, key: :hubs, serializer: Api::IdSerializer
-  has_many :suppliers, key: :producers, serializer: Api::IdSerializer
-
-  has_one :address, serializer: Api::AddressSerializer
-
-  def pickup
-    object.shipping_methods.where(:require_ship_address => false).present?
-  end
-
-  def delivery
-    object.shipping_methods.where(:require_ship_address => true).present?
-  end
-
-  def email
-    object.email.to_s.reverse
-  end
-
-  def hash
-    object.to_param
-  end
-
-  def logo
-    object.logo(:medium) if object.logo.exists?
-  end
-
-  def promo_image
-    object.promo_image(:large) if object.promo_image.exists?
-  end
-
-  # TODO when ActiveSerializers supports URL helpers
-  # Then refactor. See readme https://github.com/rails-api/active_model_serializers
-  def path
-    "/enterprises/#{object.to_param}/shop"
   end
 end
