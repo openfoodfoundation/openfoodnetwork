@@ -239,7 +239,7 @@ module Spree
         end
       end
 
-      context 'Order Cycle co-ordinator, distributor enterprise manager' do
+      context 'Order Cycle co-ordinator, distriutor enterprise manager' do
         let (:user) do
           user = create(:user)
           user.spree_roles = []
@@ -265,6 +265,11 @@ module Spree
         it "should be able to read/write EnterpriseFees" do
           should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
         end
+
+        #TODO clarify :for_order_cycle and its purpose - and possibly rename it.
+        it "should be able to do something with order cycles (??)" do
+          should have_ability([:for_order_cycle], Enterprise)
+        end
       end
 
       context 'enterprise manager' do
@@ -284,7 +289,7 @@ module Spree
         end
 
         it 'should have the ability administrate and create enterpises' do
-          should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
+          should have_ability([:admin, :index, :create], for: Enterprise)
         end
       end
     end
