@@ -10,7 +10,6 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
       # Replace enterprise and taxons ids with actual objects.
       @dereferenceEnterprises()
       @dereferenceTaxons()
-      # Remove non-visible enterprises.
       @visible_enterprises = visibleFilter @enterprises
       @producers = @visible_enterprises.filter (enterprise)->
         enterprise.enterprise_category in ["producer_hub", "producer_shop", "producer"]

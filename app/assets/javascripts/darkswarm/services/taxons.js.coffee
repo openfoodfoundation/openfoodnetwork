@@ -1,5 +1,6 @@
 Darkswarm.factory "Taxons", (taxons)->
   new class Taxons
+    # Populate Taxons.taxons from json in page.
     taxons: taxons
     taxons_by_id: {}
     constructor: ->
