@@ -79,6 +79,8 @@ class AbilityDecorator
     can [:admin, :index, :read, :search], Spree::Taxon
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
+    # Reports page
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
   def add_order_management_abilities(user)
@@ -118,8 +120,6 @@ class AbilityDecorator
       (user.enterprises & shipping_method.distributors).any?
     end
 
-    # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
 
