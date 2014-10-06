@@ -110,8 +110,8 @@ feature %q{
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select2_search 'Australia', :from => 'Country'
     select2_search 'Victoria', :from => 'State'
-    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+    long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
+    long_description.set 'Connecting farmers and eaters'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
@@ -138,7 +138,8 @@ feature %q{
     choose 'Own'
     select2_search user.email, from: 'Owner'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    fill_in 'enterprise_long_description', :with => 'Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro.'
+    long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
+    long_description.set 'This is an interesting long description'
 
     # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
@@ -192,6 +193,7 @@ feature %q{
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     page.should have_selector "a.list-item", text: enterprise_fee.name
+    page.should have_content 'This is an interesting long description'
   end
 
   describe "producer properties" do
@@ -320,6 +322,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'New Enterprise'
         fill_in 'enterprise_name', with: 'zzz'
+        fill_in 'enterprise_email', with: 'bob@example.com'
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'

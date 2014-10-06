@@ -1,0 +1,5 @@
+/
+  insert_before '[data-hook="admin_inside_head"]'
+
+= render "layouts/bugherd_script"
+%link{'data-require' => "font-awesome@*", 'data-semver'=>"4.2.0", 'rel' => "stylesheet", 'href' => "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"}

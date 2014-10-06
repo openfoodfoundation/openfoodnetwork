@@ -23,5 +23,7 @@
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
 //= require ./users/users
+//= require textAngular.min.js
+//= require textAngular-sanitize.min.js
 
 //= require_tree .
