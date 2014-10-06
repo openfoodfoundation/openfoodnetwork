@@ -268,7 +268,7 @@ module Spree
 
         #TODO clarify :for_order_cycle and its purpose - and possibly rename it.
         it "should be able to do something with order cycles (??)" do
-          should have_ability([:for_order_cycle], Enterprise)
+          should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
         end
       end
 
