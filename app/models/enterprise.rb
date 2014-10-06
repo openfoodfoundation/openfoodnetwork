@@ -214,6 +214,10 @@ class Enterprise < ActiveRecord::Base
     not self.sells == "none" 
   end
 
+  def is_hub
+    self.enterprise_category.in Array['hub', 'hub_profile', 'producer_hub', 'producer_shop']
+  end
+
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def enterprise_category
     # Make this crazy logic human readable so we can argue about it sanely.
