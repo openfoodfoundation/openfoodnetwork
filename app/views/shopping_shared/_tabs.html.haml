@@ -9,6 +9,6 @@
 
         %tab{heading: heading, 
         id: "tab_#{name}",
-        active: "active(#{name}.path)",
+        active: "active(\'#{name}\')",
         select: "select(#{name})"}
           = render "shopping_shared/#{name}"
