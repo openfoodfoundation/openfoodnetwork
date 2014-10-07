@@ -4,8 +4,8 @@ Darkswarm.controller "TabsCtrl", ($scope, $rootScope, $location, OrderCycle) ->
     $location.hash() == path
 
   # Toggle tab selected status by setting the url hash path.
-  $scope.select = (tab)->
-    if $scope.active(tab.path)
+  $scope.select = (path)->
+    if $scope.active(path)
       $location.hash ""
     else
-      $location.hash tab.path
+      $location.hash path
