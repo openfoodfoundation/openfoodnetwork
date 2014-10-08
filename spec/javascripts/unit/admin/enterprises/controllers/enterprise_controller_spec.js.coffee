@@ -4,9 +4,13 @@ describe "enterpriseCtrl", ->
   Enterprise = null
   PaymentMethods = null
   ShippingMethods = null
+  longDescriptionMock = ["long description text"]
 
   beforeEach ->
     module('admin.enterprises')
+    module ($provide)->
+      $provide.value "longDescription", longDescriptionMock
+      null
     Enterprise =
       enterprise:
         payment_method_ids: [ 1, 3 ]

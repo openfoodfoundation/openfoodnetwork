@@ -49,10 +49,11 @@ class Enterprise < ActiveRecord::Base
   validates :name, presence: true
   validates :type, presence: true, inclusion: {in: TYPES}
   validates :address, presence: true, associated: true
+  validates :email, presence: true
   validates_presence_of :owner
-  validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
+  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
-  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? }
+  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 

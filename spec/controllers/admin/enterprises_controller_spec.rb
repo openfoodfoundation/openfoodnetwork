@@ -24,7 +24,7 @@ module Admin
     describe "creating an enterprise" do
       let(:country) { Spree::Country.find_by_name 'Australia' }
       let(:state) { Spree::State.find_by_name 'Victoria' }
-      let(:enterprise_params) { {enterprise: {name: 'zzz', address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
+      let(:enterprise_params) { {enterprise: {name: 'zzz', email: "bob@example.com", address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
 
       it "grants management permission if the current user is an enterprise user" do
         controller.stub spree_current_user: user

@@ -210,3 +210,24 @@ table#listing_enterprise_groups {
 	color: #575757;
 }
 
+.field_with_errors > input {
+    border-color: red;
+}
+
+// textAngular wysiwyg
+text-angular {
+  .ta-scroll-window > .ta-bind {
+    max-height: 400px;
+    min-height: 100px;
+  }
+  .ta-scroll-window.form-control {
+    min-height: 100px;
+  }
+  .btn-group {
+    display: inline;
+    margin-right: 8px;
+    button {
+      padding: 5px 10px;
+    }
+  }
+}

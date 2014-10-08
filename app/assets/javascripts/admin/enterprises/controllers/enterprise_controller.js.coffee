@@ -1,8 +1,9 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, Enterprise, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, Enterprise, longDescription, PaymentMethods, ShippingMethods) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
+    $scope.htmlVariable = longDescription
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids

@@ -85,6 +85,7 @@ describe Enterprise do
   describe "validations" do
     subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
     it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:email) }
 
     it "requires an owner" do
       expect{
