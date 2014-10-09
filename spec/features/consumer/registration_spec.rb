@@ -22,13 +22,10 @@ feature "Registration", js: true do
       expect(URI.parse(current_url).path).to eq registration_path
 
       # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know what sort of enterprise you are:"
+      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know a little bit about your enterprise:"
 
       # Filling in details
       fill_in 'enterprise_name', with: "My Awesome Enterprise"
-      click_link 'both-panel'
-
-      click_button_and_ensure_content "Continue", "Greetings My Awesome Enterprise"
 
       # Filling in address
       fill_in 'enterprise_address', with: '123 Abc Street'
@@ -43,6 +40,11 @@ feature "Registration", js: true do
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       page.should have_field 'enterprise_email', with: user.email
       fill_in 'enterprise_phone', with: '12 3456 7890'
+      click_button 'Continue'
+
+      # Choosing a type
+      expect(page).to have_content 'Last step to create your enterprise!'
+      click_link 'both-panel'
       click_button 'Continue'
 
       # Enterprise should be created
@@ -109,10 +111,9 @@ feature "Registration", js: true do
       expect(URI.parse(current_url).path).to eq store_registration_path
 
       # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know the name of your farm:"
+      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know a little bit about your farm:"
 
       # Details Page
-      expect(page).to have_content "Woot! First we need to know the name of your farm:"
       expect(page).to_not have_selector '#enterprise-types'
 
       # Everything from here should be covered in 'profile' spec
