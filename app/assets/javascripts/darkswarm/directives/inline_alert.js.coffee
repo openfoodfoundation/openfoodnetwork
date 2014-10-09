@@ -1,6 +1,7 @@
-Darkswarm.directive "ofnInlineFlash", ->
-  restrict: 'E'
-  controller: ($scope) ->
-    $scope.visible = true
-    $scope.closeFlash = ->
-      $scope.visible = false
+Darkswarm.directive "ofnInlineAlert", ->
+  restrict: 'A'
+  scope: true
+  link: (scope, elem, attrs) ->
+    scope.visible = true
+    scope.close = ->
+      scope.visible = false

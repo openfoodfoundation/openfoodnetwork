@@ -12,13 +12,12 @@
   %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('images',about)" } }
     .row
       .small-12.columns
-        .alert-box.alert{"data-alert" => ""}
+        .alert-box.alert{ "ofn-inline-alert" => true, ng: { show: "visible" } }
           {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
-          %a.close{:href => "#"} &times;
-
-        .alert-box.info{"data-alert" => ""}
+          %a.close{ ng: { click: "close()" } } &times;
+        .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }
           {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
-          %a.close{:href => "#"} &times;
+          %a.close{ ng: { click: "close()" } } &times;
 
       .small-12.large-8.columns
         .row
