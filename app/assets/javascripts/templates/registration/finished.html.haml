@@ -1,12 +1,15 @@
 .container#registration-finished
-  .header
-    %h2 Well done!
-    %h5
-      You have successfully completed the profile for
-      %span.brick{"ng-show" => "enterprise.is_distributor"}
-        {{ enterprise.name }}
-      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
-        {{ enterprise.name }}
+  .row
+    .small-12.columns
+      %header
+        %h2 Well done!
+        %h5
+          You have successfully completed the profile for
+          %span.brick{"ng-show" => "enterprise.is_distributor"}
+            {{ enterprise.name }}
+          %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
+            {{ enterprise.name }}
+
   .content{ style: 'text-align: center'}
     %h3 Why not check it out on the Open Food Network?
     %a.button.primary{ type: "button", href: "/map" } Go to Map Page &gt;

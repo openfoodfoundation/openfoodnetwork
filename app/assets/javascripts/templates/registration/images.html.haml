@@ -1,8 +1,11 @@
 .container#registration-images{ 'nv-file-drop' => true, uploader: "imageUploader", options:"{ alias: imageStep }", ng: { controller: "EnterpriseImageCtrl" } }
-  .header
-    %h2 Thanks!
-    %h5 Let's upload some pretty pictures so your profile looks great! :)
   %ng-include{ src: "'registration/steps.html'" }
+  .row
+    .small-12.columns
+      %header
+        %h2 Thanks!
+        %h5 Let's upload some pretty pictures so your profile looks great! :)
+        
   %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
     .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
       %ng-include{ src: "'registration/images/'+ image_step + '.html'" }

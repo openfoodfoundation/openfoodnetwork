@@ -1,14 +1,16 @@
 .container#registration-about
-  .header
-    %h2 Nice one!
-    %h5
-      Now let's flesh out the details about
-      %span.brick{"ng-show" => "enterprise.is_distributor"}
-        {{ enterprise.name }}
-      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
-        {{ enterprise.name }}
-
   %ng-include{ src: "'registration/steps.html'" }
+  .row
+    .small-12.columns
+      %header
+        %h2 Nice one!
+        %h5
+          Now let's flesh out the details about
+          %span.brick{"ng-show" => "enterprise.is_distributor"}
+            {{ enterprise.name }}
+          %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
+            {{ enterprise.name }}
+
   %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('images',about)" } }
     .row
       .small-12.columns

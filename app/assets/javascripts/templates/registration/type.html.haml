@@ -1,14 +1,18 @@
 .container#registration-type{bindonce: true}
-  .header
-    %h2
-      Last step to create your enterprise!
 
-    %h5
-      Is
-      %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
-        {{ enterprise.name }}
-      a primary producer?
   %ng-include{ src: "'registration/steps.html'" }
+  
+  .row
+    .small-12.columns
+      %header
+        %h2
+          Last step to create your enterprise!
+        %h5
+          Is
+          %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
+            {{ enterprise.name }}
+          a primary producer?
+
   %form{ name: 'type', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(type)" } }
     .row#enterprise-types{ 'data-equalizer' => true, bo: { if: "enterprise.type != 'single'" } }
       .small-12.columns.field

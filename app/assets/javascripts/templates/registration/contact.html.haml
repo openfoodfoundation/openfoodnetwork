@@ -1,11 +1,14 @@
 .container#registration-contact
-  .header
-    %h2 Greetings!
-    %h5
-      Who is responsible for managing
-      %span.turquoise
-        {{ enterprise.name }}?
   %ng-include{ src: "'registration/steps.html'" }
+  .row
+    .small-12.columns
+      %header
+        %h2 Greetings!
+        %h5
+          Who is responsible for managing
+          %span.turquoise
+            {{ enterprise.name }}?
+  
   %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
     .row.content
       .small-12.medium-12.large-7.columns
