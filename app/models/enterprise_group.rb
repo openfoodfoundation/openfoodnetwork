@@ -15,7 +15,7 @@ class EnterpriseGroup < ActiveRecord::Base
     path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: {large: "1200x260#"},
+    styles: {large: ["1200x260#", :jpg]},
     url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
 
