@@ -44,6 +44,6 @@
             .row{"ng-if" => "order.payment_method_id == #{method.id}"}
               .small-12.columns
                 = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
-        .small-6.columns
-          %small {{ Checkout.paymentMethod().description }}
-
+        .small-12.columns.medium-6.columns.large-6.columns
+          #distributor_address.panel{"ng-show" => "Checkout.paymentMethod().description"}
+            %span{ style: "white-space: pre-wrap;" }{{ Checkout.paymentMethod().description }}
