@@ -2,6 +2,8 @@ class Enterprise < ActiveRecord::Base
   TYPES = %w(full single profile)
   ENTERPRISE_SEARCH_RADIUS = 100
 
+  devise :confirmable, reconfirmable: true
+
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904003026) do
+ActiveRecord::Schema.define(:version => 20141010043405) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -266,9 +266,14 @@ ActiveRecord::Schema.define(:version => 20140904003026) do
     t.string   "linkedin"
     t.string   "type",                     :default => "profile", :null => false
     t.integer  "owner_id",                                        :null => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
 
   create_table "exchange_fees", :force => true do |t|
