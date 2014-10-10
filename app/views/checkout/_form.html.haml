@@ -6,20 +6,14 @@
 
   = inject_available_shipping_methods
   = inject_available_payment_methods
-  :javascript
-    angular.module('Darkswarm').value('order', #{render "checkout/order"})
+  = inject_current_order
 
-  %div
-    / %h3.text-center.pad-top
-    /   Checkout from
-    /   = current_distributor.name
-
-    = render partial: "checkout/details", locals: {f: f}
-    = render partial: "checkout/billing", locals: {f: f}
-    = render partial: "checkout/shipping", locals: {f: f}
-    = render partial: "checkout/payment", locals: {f: f}
-    %p
-      %button.button.primary{type: :submit,
-      "ng-disabled" => "checkout.$invalid"}
-        Place order now
-      / {{ checkout.$valid }}
+  = render partial: "checkout/details", locals: {f: f}
+  = render partial: "checkout/billing", locals: {f: f}
+  = render partial: "checkout/shipping", locals: {f: f}
+  = render partial: "checkout/payment", locals: {f: f}
+  %p
+    %button.button.primary{type: :submit,
+    "ng-disabled" => "checkout.$invalid"}
+      Place order now
+    / {{ checkout.$valid }}
