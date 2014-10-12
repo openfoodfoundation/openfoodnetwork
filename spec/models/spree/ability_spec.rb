@@ -151,6 +151,14 @@ module Spree
           should_not have_ability(:destroy, for: er2)
         end
 
+        it "should be able to read some reports" do
+          should have_ability([:admin, :index, :customers, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+        end
+
+        it "should not be able to read other reports" do
+          should_not have_ability([:sales_total, :group_buys, :bulk_coop, :payments], for: :reports)
+        end
+
       end
 
       context "when is a distributor enterprise user" do
@@ -237,6 +245,15 @@ module Spree
         it "should not be able to destroy enterprise relationships for other enterprises" do
           should_not have_ability(:destroy, for: er1)
         end
+
+        it "should be able to read some reports" do
+          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+        end
+
+        it "should not be able to read other reports" do
+          should_not have_ability([:sales_total], for: :reports)
+        end
+
       end
 
       context 'Order Cycle co-ordinator' do
