@@ -177,7 +177,7 @@
       .alpha.three.columns
         = f.label :description, 'Short Description'
       .omega.eight.columns
-        = f.text_field :description, placeholder: 'Tell us about your enterprise in one or two sentences'
+        = f.text_field :description, maxlength: 255, placeholder: 'Tell us about your enterprise in one or two sentences'
     .row
       .alpha.three.columns
         = f.label :long_description, 'About Us'
