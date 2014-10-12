@@ -80,7 +80,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_fulfillment, :products_and_inventory], :report
+    can [:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
   def add_order_management_abilities(user)
