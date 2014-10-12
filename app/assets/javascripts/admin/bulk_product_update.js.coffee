@@ -160,7 +160,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
 
     $scope.editWarn = (product, variant) ->
       if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
-        window.open("/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit")
+        window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
     $scope.addVariant = (product) ->

@@ -1,8 +1,9 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $rootScope, Enterprise, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, Enterprise, longDescription, PaymentMethods, ShippingMethods) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
+    $scope.htmlVariable = longDescription
     $scope.$on "$routeChangeStart", (event, newUrl, oldUrl) ->
       event.preventDefault()
 
