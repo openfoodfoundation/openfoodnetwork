@@ -608,12 +608,10 @@ Spree::Admin::ReportsController.class_eval do
       :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
       :customers => {:name => "Customers", :description => 'Customer details'},
-      :products_and_inventory => {:name => "Products & Inventory", :description => ''}
+      :products_and_inventory => {:name => "Products & Inventory", :description => ''},
+      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" }
     }
-    if spree_current_user.has_spree_role? 'admin'
-      reports[:sales_total] = { :name => "Sales Total", :description => "Sales Total For All Orders" }
-    end
-    reports
+    reports.select { |action, details| can? action, :report }
   end
 
   def total_units(line_items)
