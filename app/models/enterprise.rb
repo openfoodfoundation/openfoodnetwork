@@ -262,6 +262,12 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  protected
+
+  def devise_mailer
+    EnterpriseMailer
+  end
+
   private
 
   def send_creation_email

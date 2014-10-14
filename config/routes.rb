@@ -35,6 +35,8 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  devise_for :enterprise
+
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
