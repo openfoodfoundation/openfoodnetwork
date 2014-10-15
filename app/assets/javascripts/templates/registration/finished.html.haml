@@ -2,17 +2,19 @@
   .header
     %h2 Well done!
     %h5
-      You have successfully completed the profile for
+      That's all of the details we need for
       %span.brick{"ng-show" => "enterprise.is_distributor"}
         {{ enterprise.name }}
       %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
         {{ enterprise.name }}
   .content{ style: 'text-align: center'}
-    %h3 Why not check it out on the Open Food Network?
-    %a.button.primary{ type: "button", href: "/map" } Go to Map Page &gt;
 
-    %br
-    %br
+    %h3 There's just one last thing we need you to do:
+    %h5 We've sent a confirmation email to {{ enterprise.email }}, so please follow the instructions there to finalise the creation of your enterprise.
 
-    %h3 Next step - add some products:
-    %a.button.primary{ type: "button", href: "/admin/products/new" } Add a Product &gt;
+    -# perhaps a pretty picture here?
+
+    %br/
+    %br/
+
+    %a.button.primary{ type: "button", href: "/" } Take me home &gt;

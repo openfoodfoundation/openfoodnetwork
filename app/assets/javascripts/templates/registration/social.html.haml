@@ -1,6 +1,6 @@
 .container#registration-social
   .header
-    %h2 Last step!
+    %h2 Almost there!
     %h5 How can people find {{ enterprise.name }} online?
   %ng-include{ src: "'registration/steps.html'" }
   %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
