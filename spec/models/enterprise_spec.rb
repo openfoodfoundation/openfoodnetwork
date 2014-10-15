@@ -3,6 +3,15 @@ require 'spec_helper'
 describe Enterprise do
   include AuthenticationWorkflow
 
+  describe "creation" do
+    it "should send a confirmation email" do
+      mail_message = double "Mail::Message"
+      EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
+      mail_message.should_receive :deliver
+      create(:enterprise)
+    end
+  end
+
   describe "associations" do
     it { should belong_to(:owner) }
     it { should have_many(:supplied_products) }
@@ -507,40 +516,40 @@ describe Enterprise do
 
     # Swap type values full > sell_all, single > sell_own profile > sell_none
     # swap is_distributor for new can_supply flag.
-    let(:producer_sell_all_can_supply) {        
+    let(:producer_sell_all_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
     }
-    let(:producer_sell_all_cant_supply) {        
+    let(:producer_sell_all_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
     }
-    let(:producer_sell_own_can_supply) {      
+    let(:producer_sell_own_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
     }
-    let(:producer_sell_own_cant_supply) {     
+    let(:producer_sell_own_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:producer_sell_none_can_supply) {        
+    let(:producer_sell_none_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: true)
     }
-    let(:producer_sell_none_cant_supply) {        
+    let(:producer_sell_none_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: false)
     }
     let(:non_producer_sell_all_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
     }
-    let(:non_producer_sell_all_cant_supply) {        
+    let(:non_producer_sell_all_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
     }
-    let(:non_producer_sell_own_can_supply) {      
+    let(:non_producer_sell_own_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
     }
-    let(:non_producer_sell_own_cant_supply) {     
+    let(:non_producer_sell_own_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:non_producer_sell_none_can_supply) {  
+    let(:non_producer_sell_none_can_supply) {
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: true)
     }
-    let(:non_producer_sell_none_cant_supply) { 
+    let(:non_producer_sell_none_cant_supply) {
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: false)
     }
 
@@ -555,8 +564,8 @@ describe Enterprise do
       producer_sell_own_cant_supply.enterprise_category.should == "producer_shop"
       producer_sell_none_can_supply.enterprise_category.should == "producer"
       producer_sell_none_cant_supply.enterprise_category.should == "producer_profile"
-      non_producer_sell_all_can_supply.enterprise_category.should == "hub" 
-      non_producer_sell_all_cant_supply.enterprise_category.should == "hub" 
+      non_producer_sell_all_can_supply.enterprise_category.should == "hub"
+      non_producer_sell_all_cant_supply.enterprise_category.should == "hub"
       non_producer_sell_own_can_supply.enterprise_category.should == "hub"
       non_producer_sell_own_cant_supply.enterprise_category.should == "hub"
       non_producer_sell_none_can_supply.enterprise_category.should == "hub_profile"
