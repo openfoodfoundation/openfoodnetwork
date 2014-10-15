@@ -62,6 +62,7 @@ class Enterprise < ActiveRecord::Base
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
+  scope :unconfirmed, where('confirmed_at IS NULL')
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where(:is_distributor => true)
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }

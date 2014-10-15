@@ -132,6 +132,17 @@ describe Enterprise do
       end
     end
 
+    describe "unconfirmed" do
+      it "find enterprises without a confirmed date" do
+        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
+        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.unconfirmed).to_not include s1, d1
+        expect(Enterprise.unconfirmed).to include s2, d2
+      end
+    end
+
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
