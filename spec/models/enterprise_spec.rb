@@ -111,12 +111,24 @@ describe Enterprise do
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
   end
+
   describe "scopes" do
     describe 'active' do
       it 'find active enterprises' do
         d1 = create(:distributor_enterprise, visible: false)
         s1 = create(:supplier_enterprise)
         Enterprise.visible.should == [s1]
+      end
+    end
+
+    describe "confirmed" do
+      it "find enterprises with a confirmed date" do
+        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
+        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.confirmed).to include s1, d1
+        expect(Enterprise.confirmed).to_not include s2, d2
       end
     end
 
