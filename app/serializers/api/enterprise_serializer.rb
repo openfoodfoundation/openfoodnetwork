@@ -103,7 +103,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   has_one :address, serializer: Api::AddressSerializer
 
   def visible
-    binding.pry
     object.visible && object.confirmed?
   end
 
