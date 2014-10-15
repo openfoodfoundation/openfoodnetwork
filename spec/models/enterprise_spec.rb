@@ -3,12 +3,22 @@ require 'spec_helper'
 describe Enterprise do
   include AuthenticationWorkflow
 
-  describe "creation" do
-    it "should send a confirmation email" do
-      mail_message = double "Mail::Message"
-      EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
-      mail_message.should_receive :deliver
-      create(:enterprise)
+  describe "sending emails" do
+    describe "on creation" do
+      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
+      let!(:enterprise) { create(:enterprise, owner: user, confirmed_at: Time.now) }
+
+      it "when the email address has not already been confirmed" do
+        mail_message = double "Mail::Message"
+        EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
+        mail_message.should_receive :deliver
+        create(:enterprise, owner: user, email: "unknown@email.com" )
+      end
+
+      it "when the email address has already been confirmed" do
+        EnterpriseMailer.should_not_receive(:confirmation_instructions)
+        e = create(:enterprise, owner: user, email: enterprise.email)
+      end
     end
   end
 

@@ -8,6 +8,8 @@ class Enterprise < ActiveRecord::Base
 
   acts_as_gmappable :process_geocoding => false
 
+  before_create :check_email
+
   after_create :send_creation_email
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
@@ -271,6 +273,10 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def check_email
+    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
+  end
 
   def send_creation_email
     EnterpriseMailer.creation_confirmation(self).deliver
