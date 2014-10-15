@@ -102,6 +102,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   has_one :address, serializer: Api::AddressSerializer
 
+  def visible
+    binding.pry
+    object.visible && object.confirmed?
+  end
+
   def pickup
     object.shipping_methods.where(:require_ship_address => false).present?
   end
