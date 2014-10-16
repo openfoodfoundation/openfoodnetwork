@@ -505,24 +505,12 @@ describe Enterprise do
 
   describe "provide enterprise category" do
 
-    let(:producer_sell_all) {        
-      create(:enterprise, is_primary_producer: true,  sells: "any")
-    }
-    let(:producer_sell_own) {      
-      create(:enterprise, is_primary_producer: true,  sells: "own")
-    }
-    let(:producer_sell_none) {        
-      create(:enterprise, is_primary_producer: true,  sells: "none")
-    }
-    let(:non_producer_sell_all) {
-      create(:enterprise, is_primary_producer: false,  sells: "any")
-    }
-    let(:non_producer_sell_own) {      
-      create(:enterprise, is_primary_producer: false,  sells: "own")
-    }
-    let(:non_producer_sell_none) {  
-      create(:enterprise, is_primary_producer: false, sells: "none")
-    }
+    let(:producer_sell_all) { build(:enterprise, is_primary_producer: true,  sells: "any") } 
+    let(:producer_sell_own) { build(:enterprise, is_primary_producer: true,  sells: "own") }
+    let(:producer_sell_none) { build(:enterprise, is_primary_producer: true,  sells: "none") }
+    let(:non_producer_sell_all) { build(:enterprise, is_primary_producer: false,  sells: "any") }
+    let(:non_producer_sell_own) { build(:enterprise, is_primary_producer: false,  sells: "own") }
+    let(:non_producer_sell_none) { build(:enterprise, is_primary_producer: false, sells: "none") }
 
     it "should output enterprise categories" do
       producer_sell_all.is_primary_producer.should == true
