@@ -1,0 +1,5 @@
+%p= "Welcome #{@resource.contact}!"
+
+%p= "You can confirm this email address for #{@resource.name} using the link below:"
+
+%p= link_to 'Confirm this email address', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)

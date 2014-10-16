@@ -3,6 +3,25 @@ require 'spec_helper'
 describe Enterprise do
   include AuthenticationWorkflow
 
+  describe "sending emails" do
+    describe "on creation" do
+      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
+      let!(:enterprise) { create(:enterprise, owner: user, confirmed_at: Time.now) }
+
+      it "when the email address has not already been confirmed" do
+        mail_message = double "Mail::Message"
+        EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
+        mail_message.should_receive :deliver
+        create(:enterprise, owner: user, email: "unknown@email.com" )
+      end
+
+      it "when the email address has already been confirmed" do
+        EnterpriseMailer.should_not_receive(:confirmation_instructions)
+        e = create(:enterprise, owner: user, email: enterprise.email)
+      end
+    end
+  end
+
   describe "associations" do
     it { should belong_to(:owner) }
     it { should have_many(:supplied_products) }
@@ -102,12 +121,35 @@ describe Enterprise do
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
   end
+
   describe "scopes" do
     describe 'active' do
       it 'find active enterprises' do
         d1 = create(:distributor_enterprise, visible: false)
         s1 = create(:supplier_enterprise)
         Enterprise.visible.should == [s1]
+      end
+    end
+
+    describe "confirmed" do
+      it "find enterprises with a confirmed date" do
+        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
+        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.confirmed).to include s1, d1
+        expect(Enterprise.confirmed).to_not include s2, d2
+      end
+    end
+
+    describe "unconfirmed" do
+      it "find enterprises without a confirmed date" do
+        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
+        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.unconfirmed).to_not include s1, d1
+        expect(Enterprise.unconfirmed).to include s2, d2
       end
     end
 
@@ -507,40 +549,40 @@ describe Enterprise do
 
     # Swap type values full > sell_all, single > sell_own profile > sell_none
     # swap is_distributor for new can_supply flag.
-    let(:producer_sell_all_can_supply) {        
+    let(:producer_sell_all_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
     }
-    let(:producer_sell_all_cant_supply) {        
+    let(:producer_sell_all_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
     }
-    let(:producer_sell_own_can_supply) {      
+    let(:producer_sell_own_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
     }
-    let(:producer_sell_own_cant_supply) {     
+    let(:producer_sell_own_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:producer_sell_none_can_supply) {        
+    let(:producer_sell_none_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: true)
     }
-    let(:producer_sell_none_cant_supply) {        
+    let(:producer_sell_none_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "profile",  is_distributor: false)
     }
     let(:non_producer_sell_all_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: true)
     }
-    let(:non_producer_sell_all_cant_supply) {        
+    let(:non_producer_sell_all_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "full",  is_distributor: false)
     }
-    let(:non_producer_sell_own_can_supply) {      
+    let(:non_producer_sell_own_can_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: true)
     }
-    let(:non_producer_sell_own_cant_supply) {     
+    let(:non_producer_sell_own_cant_supply) {
       create(:enterprise, is_primary_producer: true,  type: "single", is_distributor: false)
     }
-    let(:non_producer_sell_none_can_supply) {  
+    let(:non_producer_sell_none_can_supply) {
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: true)
     }
-    let(:non_producer_sell_none_cant_supply) { 
+    let(:non_producer_sell_none_cant_supply) {
       create(:enterprise, is_primary_producer: false, type: "profile", is_distributor: false)
     }
 
@@ -555,8 +597,8 @@ describe Enterprise do
       producer_sell_own_cant_supply.enterprise_category.should == "producer_shop"
       producer_sell_none_can_supply.enterprise_category.should == "producer"
       producer_sell_none_cant_supply.enterprise_category.should == "producer_profile"
-      non_producer_sell_all_can_supply.enterprise_category.should == "hub" 
-      non_producer_sell_all_cant_supply.enterprise_category.should == "hub" 
+      non_producer_sell_all_can_supply.enterprise_category.should == "hub"
+      non_producer_sell_all_cant_supply.enterprise_category.should == "hub"
       non_producer_sell_own_can_supply.enterprise_category.should == "hub"
       non_producer_sell_own_cant_supply.enterprise_category.should == "hub"
       non_producer_sell_none_can_supply.enterprise_category.should == "hub_profile"

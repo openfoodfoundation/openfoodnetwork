@@ -1,13 +1,12 @@
 .container#registration-social
-  
   %ng-include{ src: "'registration/steps.html'" }
 
   .row
     .small-12.columns
       %header
-        %h2 Last step!
+        %h2 Almost there!
         %h5 How can people find {{ enterprise.name }} online?
-        
+
   %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
     .row.content
       .small-12.large-7.columns

@@ -77,7 +77,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Filling in social
-      expect(page).to have_content 'Last step!'
+      expect(page).to have_content 'Almost there!'
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
@@ -86,7 +86,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Done
-      expect(page).to have_content "You have successfully completed the profile for My Awesome Enterprise"
+      expect(page).to have_content "That's all of the details we need for My Awesome Enterprise"
       e.reload
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
