@@ -30,20 +30,20 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
   end
 
   def sells_what?(enterprise)
-    is_distributor = enterprise.read_attribute!(:is_distributor)
-    is_primary_producer = enterprise.read_attribute!(:is_primary_producer)
-    type = enterprise.read_attribute!(:type)
+    is_distributor = enterprise.read_attribute(:is_distributor)
+    is_primary_producer = enterprise.read_attribute(:is_primary_producer)
+    type = enterprise.read_attribute(:type)
     return "own" if type == "single" && (is_distributor || is_primary_producer)
     return "none" if !is_distributor || type == "profile"
     return "any"
   end
 
   def distributes?(enterprise)
-    enterprise.read_attribute!(:sells) != "none"
+    enterprise.read_attribute(:sells) != "none"
   end
 
   def type?(enterprise)
-    sells = enterprise.read_attribute!(:sells)
+    sells = enterprise.read_attribute(:sells)
     return "profile" if sells == "none"
     return "single" if sells == "own"
     return "full"
