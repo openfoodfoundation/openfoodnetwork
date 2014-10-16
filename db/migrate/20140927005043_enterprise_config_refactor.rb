@@ -1,6 +1,8 @@
 class EnterpriseConfigRefactor < ActiveRecord::Migration
   def up
     add_column :enterprises, :sells, :string, null: false, default: 'none'
+    add_index :enterprises, :sells
+    add_index :enterprises, [:is_primary_producer, :sells]
 
     Enterprise.all.each do |enterprise|
       enterprise.update_attributes({:sells => sells_what?(enterprise)})
@@ -23,10 +25,13 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     end
 
     remove_column :enterprises, :sells
+    remove_index :enterprises, :sells
+    remove_index :enterprises, [:is_primary_producer, :sells]
   end
 
   def sells_what?(enterprise)
     is_distributor = enterprise.read_attribute(:is_distributor)
+    is_primary_producer = enterprise.read_attribute(:is_primary_producer)
     type = enterprise.read_attribute(:type)
     return "own" if type == "single" && (is_distributor || is_primary_producer)
     return "none" if !is_distributor || type == "profile"
