@@ -4,20 +4,20 @@
     .small-12.columns
       %header
         %h2 Let's Get Started
-        %h5{ bo: { if: "enterprise.type != 'single'" } } Woot! First we need to know a little bit about your enterprise:
-        %h5{ bo: { if: "enterprise.type == 'single'" } } Woot! First we need to know a little bit about your farm:
-  
+        %h5{ bo: { if: "enterprise.type != 'own'" } } Woot! First we need to know a little bit about your enterprise:
+        %h5{ bo: { if: "enterprise.type == 'own'" } } Woot! First we need to know a little bit about your farm:
+
   %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('contact',details)" } }
-    
+
     .row
       .small-12.medium-9.large-12.columns.end
         .field
-          %label{ for: 'enterprise_name', bo: { if: "enterprise.type != 'single'" } } Enterprise Name:
-          %label{ for: 'enterprise_name', bo: { if: "enterprise.type == 'single'" } } Farm Name:
+          %label{ for: 'enterprise_name', bo: { if: "enterprise.type != 'own'" } } Enterprise Name:
+          %label{ for: 'enterprise_name', bo: { if: "enterprise.type == 'own'" } } Farm Name:
           %input.chunky{ id: 'enterprise_name', name: 'name', placeholder: "e.g. Charlie's Awesome Farm", required: true, ng: { model: 'enterprise.name' } }
           %span.error{ ng: { show: "details.name.$error.required && submitted" } }
             Please choose a unique name for your enterprise
-    
+
     .row
       .small-12.medium-9.large-6.columns
         .field
@@ -28,8 +28,8 @@
         .field
           %label{ for: 'enterprise_address2' } Address line 2:
           %input.chunky{ id: 'enterprise_address2', name: 'address2', required: false, placeholder: "", required: false, ng: { model: 'enterprise.address.address2' } }
-    
-      .small-12.medium-9.large-6.columns.end  
+
+      .small-12.medium-9.large-6.columns.end
         .row
           .small-12.medium-8.large-8.columns
             .field
@@ -37,14 +37,14 @@
               %input.chunky{ id: 'enterprise_city', name: 'city', required: true, placeholder: "e.g. Northcote", ng: { model: 'enterprise.address.city' } }
               %span.error{ ng: { show: "details.city.$error.required && submitted" } }
                 Please enter a suburb
-          .small-12.medium-4.large-4.columns  
+          .small-12.medium-4.large-4.columns
             .field
               %label{ for: 'enterprise_zipcode' } Postcode:
               %input.chunky{ id: 'enterprise_zipcode', name: 'zipcode', required: true, placeholder: "e.g. 3070", ng: { model: 'enterprise.address.zipcode' } }
               %span.error{ ng: { show: "details.zipcode.$error.required && submitted" } }
                 Postcode required
         .row
-          .small-12.medium-4.large-4.columns  
+          .small-12.medium-4.large-4.columns
             .field
               %label{ for: 'enterprise_state' } State:
               %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
@@ -69,6 +69,7 @@
       /       %label.indent-checkbox
       /         %input{ type: 'checkbox', id: 'enterprise_on_map', ng: { model: 'enterprise.on_map' } }
       /           Blur my location on the map (show an approximate, not exact pin)
+
 
     .row.buttons
       .small-12.columns

@@ -11,10 +11,10 @@ feature %q{
   let!(:user) { create_enterprise_user }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
-  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', type: 'profile') }
+  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', sells: 'none') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
-  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', type: 'profile') }
+  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', sells: 'none') }
 
   describe "creating an enterprise user" do
     context "with a limitted number of owned enterprises" do
@@ -53,7 +53,10 @@ feature %q{
     end
   end
 
-  describe "with only a profile-level enterprise" do
+  # This case no longer exists as anyone with an enterprise can supply into the system. 
+  # Or can they?? There is no producer profile anyway.
+  # TODO discuss what parts of this are still necessary in which cases.
+  pending "with only a profile-level enterprise" do
     before do
       user.enterprise_roles.create! enterprise: supplier_profile
       user.enterprise_roles.create! enterprise: distributor_profile

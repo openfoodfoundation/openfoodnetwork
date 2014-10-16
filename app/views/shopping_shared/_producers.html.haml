@@ -4,5 +4,6 @@
       %h5 {{CurrentHub.hub.name}}'s producers:
       %ul.small-block-grid-2.large-block-grid-4
         %li{"ng-repeat" => "enterprise in CurrentHub.hub.producers"}
-          %i.ofn-i_036-producers
-          = render partial: "modals/producer"
+          %enterprise-modal 
+            %i.ofn-i_036-producers
+            {{ enterprise.name }}

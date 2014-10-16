@@ -17,9 +17,6 @@ end
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
-  #TODO: Remove these later
-  attributes :icon, :icon_font, :producer_icon_font, :has_shopfront, :has_hub_listing, :enterprise_category
-
   def orders_close_at
     OrderCycle.first_closing_for(object).andand.orders_close_at
   end
@@ -28,60 +25,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     @options[:active_distributors].andand.include? object
   end
 
-  def enterprise_category
-    object.enterprise_category
-  end
-
-  def has_shopfront
-    object.is_distributor && object.type != 'profile'
-  end
-
-  # Used to select enterprises for hub listing
-  def has_hub_listing
-    has_shopfront || object.enterprise_category == "hub_profile"
-  end
-
-  # Map svg icons.
-  def icon
-    icons = {
-      "hub" => "/assets/map_005-hub.svg",
-      "hub_profile" => "/assets/map_006-hub-profile.svg",
-      "producer_hub" => "/assets/map_005-hub.svg",
-      "producer_shop" => "/assets/map_003-producer-shop.svg",
-      "producer" => "/assets/map_001-producer-only.svg",
-      "producer_profile" => "/assets/map_002-producer-only-profile.svg",
-    }
-    icons[object.enterprise_category]
-  end
-
-  # Choose regular icon font for enterprises.
-  def icon_font
-    icon_fonts = {
-      "hub" => "ofn-i_063-hub",
-      "hub_profile" => "ofn-i_064-hub-reversed",
-      "producer_hub" => "ofn-i_063-hub",
-      "producer_shop" => "ofn-i_059-producer",
-      "producer" => "ofn-i_059-producer",
-      "producer_profile" => "ofn-i_060-producer-reversed",
-    }
-    icon_fonts[object.enterprise_category]
-  end
-
-  # Choose producer page icon font - yes, sadly its got to be different.
-  # This duplicates some code but covers the producer page edge case where
-  # producer-hub has a producer icon without needing to duplicate the category logic in angular.
-  def producer_icon_font
-    icon_fonts = {
-      "hub" => "",
-      "hub_profile" => "",
-      "producer_hub" => "ofn-i_059-producer",
-      "producer_shop" => "ofn-i_059-producer",
-      "producer" => "ofn-i_059-producer",
-      "producer_profile" => "ofn-i_060-producer-reversed",
-      "empty" => "",
-    }
-    icon_fonts[object.enterprise_category]
-  end
 
 end
 
@@ -92,8 +35,8 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :path,
-    :pickup, :delivery
+    :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
+    :icon, :icon_font, :producer_icon_font, :category
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
@@ -134,5 +77,43 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # Then refactor. See readme https://github.com/rails-api/active_model_serializers
   def path
     "/enterprises/#{object.to_param}/shop"
+  end
+
+  # Map svg icons.
+  def icon
+    icons = {
+      :hub => "/assets/map_005-hub.svg",
+      :hub_profile => "/assets/map_006-hub-profile.svg",
+      :producer_hub => "/assets/map_005-hub.svg",
+      :producer_shop => "/assets/map_003-producer-shop.svg",
+      :producer => "/assets/map_001-producer-only.svg",
+    }
+    icons[object.category]
+  end
+
+  # Choose regular icon font for enterprises.
+  def icon_font
+    icon_fonts = {
+      :hub => "ofn-i_063-hub",
+      :hub_profile => "ofn-i_064-hub-reversed",
+      :producer_hub => "ofn-i_063-hub",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
+    }
+    icon_fonts[object.category]
+  end
+
+  # Choose producer page icon font - yes, sadly its got to be different.
+  # This duplicates some code but covers the producer page edge case where
+  # producer-hub has a producer icon without needing to duplicate the category logic in angular.
+  def producer_icon_font
+    icon_fonts = {
+      :hub => "",
+      :hub_profile => "",
+      :producer_hub => "ofn-i_059-producer",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
+    }
+    icon_fonts[object.category]
   end
 end
