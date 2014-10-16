@@ -25,8 +25,6 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     end
 
     remove_column :enterprises, :sells
-    remove_index :enterprises, :sells
-    remove_index :enterprises, [:is_primary_producer, :sells]
   end
 
   def sells_what?(enterprise)
