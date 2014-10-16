@@ -10,7 +10,7 @@
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visibleFilter | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
         "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",
