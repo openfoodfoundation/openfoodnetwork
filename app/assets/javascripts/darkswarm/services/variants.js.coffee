@@ -5,8 +5,7 @@ Darkswarm.factory 'Variants', ->
       @variants[variant.id] ||= @extend variant
 
     extend: (variant)->
-      # Add totalPrice and basPricePercentage methods to calculate line item values.
-      # This should probably be on a line item object!
+      # Add totalPrice method to calculate line item total. This should be on a line item!
       variant.totalPrice = ->
         variant.price_with_fees * variant.line_item.quantity
       variant.basePricePercentage = Math.round(variant.price / variant.price_with_fees * 100)

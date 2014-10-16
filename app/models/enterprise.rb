@@ -215,31 +215,26 @@ class Enterprise < ActiveRecord::Base
     not self.sells == "none" 
   end
 
-  def is_hub
-    self.enterprise_category.in Array['hub', 'hub_profile', 'producer_hub', 'producer_shop']
-  end
-
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
-  def enterprise_category
+  def category
     # Make this crazy logic human readable so we can argue about it sanely.
-    # This can be simplified later, it's like this for readablitlty during changes.
-    category = is_primary_producer ? "producer_" : "non_producer_"
-    category << "sells_" + sells
+    cat = is_primary_producer ? "producer_" : "non_producer_"
+    cat << "sells_" + sells
 
     # Map backend cases to front end cases.
-    case category
+    case cat
       when "producer_sells_any"
-        "producer_hub" # Producer hub who sells own and others produce and supplies other hubs.
+        :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
       when "producer_sells_own"
-        "producer_shop" # Producer with shopfront and supplies other hubs.
+        :producer_shop # Producer with shopfront and supplies other hubs.
       when "producer_sells_none"
-        "producer" # Producer only supplies through others.
+        :producer # Producer only supplies through others.
       when "non_producer_sells_any"
-        "hub" # Hub selling others products in order cycles.
+        :hub # Hub selling others products in order cycles.
       when "non_producer_sells_own"
-        "hub" # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+        :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
       when "non_producer_sells_none"
-        "hub_profile" # Hub selling outside the system.
+        :hub_profile # Hub selling outside the system.
     end
   end
 

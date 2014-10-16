@@ -528,12 +528,12 @@ describe Enterprise do
       producer_sell_all.is_primary_producer.should == true
       producer_sell_all.sells.should == "any"
 
-      producer_sell_all.enterprise_category.should == "producer_hub"
-      producer_sell_own.enterprise_category.should == "producer_shop"
-      producer_sell_none.enterprise_category.should == "producer"
-      non_producer_sell_all.enterprise_category.should == "hub" 
-      non_producer_sell_own.enterprise_category.should == "hub"
-      non_producer_sell_none.enterprise_category.should == "hub_profile"
+      producer_sell_all.category.should == :producer_hub
+      producer_sell_own.category.should == :producer_shop
+      producer_sell_none.category.should == :producer
+      non_producer_sell_all.category.should == :hub 
+      non_producer_sell_own.category.should == :hub
+      non_producer_sell_none.category.should == :hub_profile
     end
   end
 end

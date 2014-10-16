@@ -5,14 +5,14 @@ describe "Enterprises service", ->
     {id: 1, name: "test"}
   ]
   enterprises = [
-    {id: 1, visible: true, enterprise_category: "hub", producers: [{id: 5}], taxons: [{id: 1}]},
-    {id: 2, visible: true, enterprise_category: "hub", producers: [{id: 6}]}
-    {id: 3, visible: true, enterprise_category: "hub_profile"}
-    {id: 4, visible: false, enterprise_category: "hub", producers: [{id: 7}]}
-    {id: 5, visible: true, enterprise_category: "producer_hub", hubs: [{id: 1}]},
-    {id: 6, visible: true, enterprise_category: "producer_shop", hubs: [{id: 2}]},
-    {id: 7, visible: true, enterprise_category: "producer", hubs: [{id: 2}]}
-    {id: 8, visible: false, enterprise_category: "producer", hubs: [{id: 2}]}
+    {id: 1, visible: true, category: "hub", producers: [{id: 5}], taxons: [{id: 1}]},
+    {id: 2, visible: true, category: "hub", producers: [{id: 6}]}
+    {id: 3, visible: true, category: "hub_profile"}
+    {id: 4, visible: false, category: "hub", producers: [{id: 7}]}
+    {id: 5, visible: true, category: "producer_hub", hubs: [{id: 1}]},
+    {id: 6, visible: true, category: "producer_shop", hubs: [{id: 2}]},
+    {id: 7, visible: true, category: "producer", hubs: [{id: 2}]}
+    {id: 8, visible: false, category: "producer", hubs: [{id: 2}]}
   ]
   H1: 0
   beforeEach ->

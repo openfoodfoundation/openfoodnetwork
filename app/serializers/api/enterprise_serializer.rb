@@ -36,7 +36,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
     :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
-    :icon, :icon_font, :producer_icon_font, :enterprise_category
+    :icon, :icon_font, :producer_icon_font, :category
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
@@ -78,25 +78,25 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # Map svg icons.
   def icon
     icons = {
-      "hub" => "/assets/map_005-hub.svg",
-      "hub_profile" => "/assets/map_006-hub-profile.svg",
-      "producer_hub" => "/assets/map_005-hub.svg",
-      "producer_shop" => "/assets/map_003-producer-shop.svg",
-      "producer" => "/assets/map_001-producer-only.svg",
+      :hub => "/assets/map_005-hub.svg",
+      :hub_profile => "/assets/map_006-hub-profile.svg",
+      :producer_hub => "/assets/map_005-hub.svg",
+      :producer_shop => "/assets/map_003-producer-shop.svg",
+      :producer => "/assets/map_001-producer-only.svg",
     }
-    icons[object.enterprise_category]
+    icons[object.category]
   end
 
   # Choose regular icon font for enterprises.
   def icon_font
     icon_fonts = {
-      "hub" => "ofn-i_063-hub",
-      "hub_profile" => "ofn-i_064-hub-reversed",
-      "producer_hub" => "ofn-i_063-hub",
-      "producer_shop" => "ofn-i_059-producer",
-      "producer" => "ofn-i_059-producer",
+      :hub => "ofn-i_063-hub",
+      :hub_profile => "ofn-i_064-hub-reversed",
+      :producer_hub => "ofn-i_063-hub",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
     }
-    icon_fonts[object.enterprise_category]
+    icon_fonts[object.category]
   end
 
   # Choose producer page icon font - yes, sadly its got to be different.
@@ -104,12 +104,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # producer-hub has a producer icon without needing to duplicate the category logic in angular.
   def producer_icon_font
     icon_fonts = {
-      "hub" => "",
-      "hub_profile" => "",
-      "producer_hub" => "ofn-i_059-producer",
-      "producer_shop" => "ofn-i_059-producer",
-      "producer" => "ofn-i_059-producer",
+      :hub => "",
+      :hub_profile => "",
+      :producer_hub => "ofn-i_059-producer",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
     }
-    icon_fonts[object.enterprise_category]
+    icon_fonts[object.category]
   end
 end

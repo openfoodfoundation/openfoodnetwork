@@ -12,9 +12,9 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
       @dereferenceTaxons()
       @visible_enterprises = visibleFilter @enterprises
       @producers = @visible_enterprises.filter (enterprise)->
-        enterprise.enterprise_category in ["producer_hub", "producer_shop", "producer"]
+        enterprise.category in ["producer_hub", "producer_shop", "producer"]
       @hubs = @visible_enterprises.filter (enterprise)->
-        enterprise.enterprise_category in ["hub", "hub_profile", "producer_hub", "producer_shop"]
+        enterprise.category in ["hub", "hub_profile", "producer_hub", "producer_shop"]
 
     dereferenceEnterprises: ->
       if CurrentHub.hub?.id
