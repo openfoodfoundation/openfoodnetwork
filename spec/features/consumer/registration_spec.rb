@@ -46,9 +46,6 @@ feature "Registration", js: true do
       expect(page).to have_content 'Last step to create your enterprise!'
       click_link 'producer-panel'
       click_button 'Continue'
-      sleep 2
-      click_button 'Continue'
-      save_screenshot '/Users/rob/Desktop/ss.png'
 
       # Enterprise should be created
       expect(page).to have_content 'Nice one!'
@@ -96,30 +93,6 @@ feature "Registration", js: true do
       expect(e.linkedin).to eq "LiNkEdIn"
       expect(e.twitter).to eq "@TwItTeR"
       expect(e.instagram).to eq "@InStAgRaM"
-    end
-
-    it "Allows a logged in user to register a store" do
-      visit store_registration_path
-
-      expect(URI.parse(current_url).path).to eq registration_auth_path
-
-      page.has_selector? "dd", text: "Log in"
-      switch_to_login_tab
-
-      # Enter Login details
-      fill_in "Email", with: user.email
-      fill_in "Password", with: user.password
-      click_login_and_ensure_content "Hi there!"
-
-      expect(URI.parse(current_url).path).to eq store_registration_path
-
-      # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know a little bit about your farm:"
-
-      # Details Page
-      expect(page).to_not have_selector '#enterprise-types'
-
-      # Everything from here should be covered in 'profile' spec
     end
   end
 
