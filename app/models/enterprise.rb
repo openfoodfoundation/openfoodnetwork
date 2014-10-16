@@ -212,14 +212,14 @@ class Enterprise < ActiveRecord::Base
   end
 
   def is_distributor
-    not self.sells == "none" 
+    self.sells != "none"
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
-    cat = is_primary_producer ? "producer_" : "non_producer_"
-    cat << "sells_" + sells
+    cat = self.is_primary_producer ? "producer_" : "non_producer_"
+    cat << "sells_" + self.sells
 
     # Map backend cases to front end cases.
     case cat
@@ -261,7 +261,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def strip_url(url)
-    url.andand.sub /(https?:\/\/)?/, ''
+    url.andand.sub(/(https?:\/\/)?/, '')
   end
 
   def set_unused_address_fields
