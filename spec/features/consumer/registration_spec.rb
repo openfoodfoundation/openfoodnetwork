@@ -3,8 +3,7 @@ require 'spec_helper'
 feature "Registration", js: true do
   include WebHelper
 
-  # TODO fix this after removal of is_distributor.
-  pending "Registering a Profile" do
+  describe "Registering a Profile" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
     it "Allows a logged in user to register a profile" do
@@ -18,7 +17,7 @@ feature "Registration", js: true do
       # Enter Login details
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_login_and_ensure_content "This wizard will step you through creating a profile"
+      click_login_and_ensure_content "Hi there!"
 
       expect(URI.parse(current_url).path).to eq registration_path
 
@@ -45,8 +44,11 @@ feature "Registration", js: true do
 
       # Choosing a type
       expect(page).to have_content 'Last step to create your enterprise!'
-      click_link 'both-panel'
+      click_link 'producer-panel'
       click_button 'Continue'
+      sleep 2
+      click_button 'Continue'
+      save_screenshot '/Users/rob/Desktop/ss.png'
 
       # Enterprise should be created
       expect(page).to have_content 'Nice one!'
@@ -107,7 +109,7 @@ feature "Registration", js: true do
       # Enter Login details
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_login_and_ensure_content "This wizard will step you through creating a profile"
+      click_login_and_ensure_content "Hi there!"
 
       expect(URI.parse(current_url).path).to eq store_registration_path
 

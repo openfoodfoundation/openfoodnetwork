@@ -7,11 +7,11 @@ class RegistrationController < BaseController
   layout 'registration'
 
   def index
-    @enterprise_attributes = { type: 'profile' }
+    @enterprise_attributes = { sells: 'none' }
   end
 
   def store
-    @enterprise_attributes = { is_distributor: true, is_primary_producer: true, type: 'single' }
+    @enterprise_attributes = { is_primary_producer: true, sells: 'own' }
     render :index
   end
 
