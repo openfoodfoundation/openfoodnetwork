@@ -266,8 +266,7 @@ module Spree
           should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
         end
 
-        #TODO clarify :for_order_cycle and its purpose - and possibly rename it.
-        it "should be able to do something with order cycles (??)" do
+        it "should be able to add enterprises to order cycles" do
           should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
         end
       end
