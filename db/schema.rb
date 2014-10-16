@@ -268,7 +268,9 @@ ActiveRecord::Schema.define(:version => 20140927005043) do
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
+  add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"
 
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"
