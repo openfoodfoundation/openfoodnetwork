@@ -18,6 +18,5 @@
 
     .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
       .small-12.columns
-        %input.button.primary{ type: "button", value: "Back", ng: { click: "imageSelect('logo')" } }
-        &nbsp;
-        %input.button.primary{ type: "submit", value: "Continue" }
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "imageSelect('logo')" } }
+        %input.button.primary.right{ type: "submit", value: "Continue" }
