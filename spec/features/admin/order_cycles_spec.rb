@@ -572,7 +572,27 @@ feature %q{
       occ = OrderCycle.last
       occ.name.should == "COPY OF #{oc.name}"
     end
+  end
 
+
+  describe "as an enterprise user selling only my own produce" do
+    let(:user) { create_enterprise_user }
+    let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
+
+    use_short_wait
+
+    before do
+      user.enterprise_roles.create! enterprise: enterprise
+      login_to_admin_as user
+    end
+
+    it "shows me an index of order cycles without enterprise columns" do
+      create(:order_cycle, coordinator: enterprise)
+      visit admin_order_cycles_path
+      page.should_not have_selector 'th', text: 'SUPPLIERS'
+      page.should_not have_selector 'th', text: 'COORDINATOR'
+      page.should_not have_selector 'th', text: 'DISTRIBUTORS'
+    end
   end
 
 
