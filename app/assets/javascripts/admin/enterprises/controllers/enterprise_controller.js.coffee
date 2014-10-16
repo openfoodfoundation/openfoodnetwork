@@ -1,15 +1,13 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, longDescription, Enterprise, PaymentMethods, ShippingMethods, NavigationCheck) ->
+  .controller "enterpriseCtrl", ($scope, longDescription, Enterprise, PaymentMethods, ShippingMethods) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
     # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
     $scope.htmlVariable = longDescription
     # Provide a callback for a warning message displayed when leaving the page.
-    navigationCallback = ->
+    $scope.navigationCallback = ->
       "You are editing an enterprise!"
-
-    NavigationCheck.register navigationCallback
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
