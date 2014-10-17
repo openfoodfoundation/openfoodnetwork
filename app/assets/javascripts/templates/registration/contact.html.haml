@@ -5,9 +5,7 @@
       %header
         %h2 Greetings!
         %h5
-          Who is responsible for managing
-          %span.turquoise
-            {{ enterprise.name }}?
+          Who is responsible for managing {{ enterprise.name }}?
   
   %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
     .row.content
