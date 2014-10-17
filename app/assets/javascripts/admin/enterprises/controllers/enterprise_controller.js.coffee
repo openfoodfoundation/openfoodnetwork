@@ -6,7 +6,7 @@ angular.module("admin.enterprises")
     # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
     $scope.htmlVariable = longDescription
     # Provide a callback for a warning message displayed when leaving the page.
-    $scope.navigationCallback = ->
+    $scope.enterpriseNavCallback = ->
       "You are editing an enterprise!"
 
     for payment_method in $scope.PaymentMethods
