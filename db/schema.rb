@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904003026) do
+ActiveRecord::Schema.define(:version => 20140927005043) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -238,7 +238,6 @@ ActiveRecord::Schema.define(:version => 20140904003026) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
-    t.boolean  "is_distributor"
     t.string   "contact"
     t.string   "phone"
     t.string   "email"
@@ -249,8 +248,8 @@ ActiveRecord::Schema.define(:version => 20140904003026) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -264,12 +263,14 @@ ActiveRecord::Schema.define(:version => 20140904003026) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.string   "type",                     :default => "profile", :null => false
-    t.integer  "owner_id",                                        :null => false
+    t.integer  "owner_id",                                     :null => false
+    t.string   "sells",                    :default => "none", :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
+  add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"
 
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"

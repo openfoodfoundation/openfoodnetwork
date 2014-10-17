@@ -44,8 +44,8 @@ describe OrderCycle do
   end
 
   it "finds order cycles accessible by a user" do
-    e1 = create(:enterprise, is_primary_producer: true, is_distributor: true)
-    e2 = create(:enterprise, is_primary_producer: true, is_distributor: true)
+    e1 = create(:enterprise, is_primary_producer: true, sells: "any")
+    e2 = create(:enterprise, is_primary_producer: true, sells: "any")
     user = create(:user, enterprises: [e2], spree_roles: [])
     user.spree_roles = []
 

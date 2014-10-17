@@ -594,10 +594,12 @@ Spree::Admin::ReportsController.class_eval do
   private
 
   def load_data
+    # Load distributors either owned by the user or selling their enterprises products.
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
     distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
     @distributors = my_distributors | distributors_of_my_products
+    # Load suppliers either owned by the user or supplying products their enterprises distribute.
     suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @suppliers = my_suppliers | suppliers_of_products_I_distribute
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')

@@ -92,7 +92,7 @@ FactoryGirl.define do
   factory :enterprise, :class => Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
-    type 'full'
+    sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'
@@ -101,12 +101,12 @@ FactoryGirl.define do
 
   factory :supplier_enterprise, :parent => :enterprise do
     is_primary_producer true
-    is_distributor false
+    sells "none"
   end
 
   factory :distributor_enterprise, :parent => :enterprise do
     is_primary_producer false
-    is_distributor true
+    sells "any"
   end
 
   factory :enterprise_relationship do

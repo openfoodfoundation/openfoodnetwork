@@ -28,7 +28,7 @@ class AbilityDecorator
 
   # Users can manage orders if they have a sells own/any enterprise.
   def can_manage_orders?(user)
-    ( user.enterprises.map(&:type) & %w(single full) ).any?
+    ( user.enterprises.map(&:sells) & %w(own any) ).any?
   end
 
   def can_manage_relationships?(user)
@@ -80,7 +80,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
     # Reports page
-    can [:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
   def add_order_management_abilities(user)
