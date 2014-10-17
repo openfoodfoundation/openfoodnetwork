@@ -131,16 +131,16 @@ feature %q{
     page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some fees
-    OrderCycle.last.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
-    OrderCycle.last.coordinator_fees.should                         == [coordinator_fee]
-    OrderCycle.last.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
+    oc = OrderCycle.last
+    oc.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
+    oc.coordinator_fees.should                         == [coordinator_fee]
+    oc.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
 
     # And it should have some variants selected
-    OrderCycle.last.exchanges.first.variants.count.should == 2
-    OrderCycle.last.exchanges.last.variants.count.should == 2
+    oc.exchanges.first.variants.count.should == 2
+    oc.exchanges.last.variants.count.should == 2
 
     # And my pickup time and instructions should have been saved
-    oc = OrderCycle.last
     exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
@@ -575,9 +575,14 @@ feature %q{
   end
 
 
-  describe "as an enterprise user selling only my own produce" do
+  describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create_enterprise_user }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
+    let!(:p1) { create(:simple_product, supplier: enterprise) }
+    let!(:p2) { create(:simple_product, supplier: enterprise) }
+    let!(:p3) { create(:simple_product, supplier: enterprise) }
+    let!(:v) { create(:variant, product: p3) }
+    let!(:fee) { create(:enterprise_fee, enterprise: enterprise, name: 'Coord fee') }
 
     use_short_wait
 
@@ -592,6 +597,51 @@ feature %q{
       page.should_not have_selector 'th', text: 'SUPPLIERS'
       page.should_not have_selector 'th', text: 'COORDINATOR'
       page.should_not have_selector 'th', text: 'DISTRIBUTORS'
+    end
+
+    it "creates order cycles", js: true do
+      # When I go to the new order cycle page
+      visit admin_order_cycles_path
+      click_link 'New Order Cycle'
+
+      # And I fill in the basic fields
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
+      # Then my products / variants should already be selected
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # When I unselect a product
+      uncheck "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+
+      # And I add a fee and save
+      click_button 'Add coordinator fee'
+      select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
+      click_button 'Create'
+
+      # Then my order cycle should have been created
+      page.should have_content 'Your order cycle has been created.'
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
+      page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
+
+      # And it should have some variants selected
+      oc = OrderCycle.last
+      oc.exchanges.incoming.first.variants.count.should == 2
+      oc.exchanges.outgoing.first.variants.count.should == 2
+
+      # And it should have the fee
+      oc.coordinator_fees.should == [fee]
+
+      # And my pickup time and instructions should have been saved
+      ex = oc.exchanges.outgoing.first
+      ex.pickup_time.should == 'pickup time'
+      ex.pickup_instructions.should == 'pickup instructions'
     end
   end
 

@@ -63,7 +63,7 @@ module OrderCyclesHelper
   end
 
   def order_cycles_simple_view
-    !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+    @order_cycles_simple_view ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
   end
 
   def order_cycles_enabled?
