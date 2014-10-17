@@ -263,12 +263,12 @@ ActiveRecord::Schema.define(:version => 20141010043405) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.integer  "owner_id",                                        :null => false
-    t.string   "sells",                    :default => "none", :null => false
+    t.integer  "owner_id",                                     :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "sells",                    :default => "none", :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
