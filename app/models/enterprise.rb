@@ -10,8 +10,6 @@ class Enterprise < ActiveRecord::Base
 
   before_create :check_email
 
-  after_create :send_creation_email
-
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
@@ -270,10 +268,6 @@ class Enterprise < ActiveRecord::Base
 
   def check_email
     skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
-  end
-
-  def send_creation_email
-    EnterpriseMailer.creation_confirmation(self).deliver
   end
 
   def strip_url(url)
