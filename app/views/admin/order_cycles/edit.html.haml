@@ -1,4 +1,4 @@
 %h1 Edit Order Cycle
 
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'order_cycle', 'ng-controller' => 'AdminEditOrderCycleCtrl', 'ng-submit' => 'submit()'} do |f|
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.order_cycles', 'ng-controller' => 'AdminEditOrderCycleCtrl', 'ng-submit' => 'submit()'} do |f|
   = render 'form', :f => f
