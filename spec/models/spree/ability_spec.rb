@@ -152,11 +152,11 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+          should have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], for: :reports)
         end
 
         it "should not be able to read other reports" do
-          should_not have_ability([:sales_total, :group_buys, :bulk_coop, :payments], for: :reports)
+          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors], for: :reports)
         end
 
       end
@@ -247,7 +247,7 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :reports)
         end
 
         it "should not be able to read other reports" do
