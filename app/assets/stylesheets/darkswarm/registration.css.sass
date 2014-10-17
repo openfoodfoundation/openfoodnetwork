@@ -118,20 +118,32 @@
 
 #registration-type
   #enterprise-types
-    a.panel
+    a.btnpanel
       display: block
+      padding: 1rem
+      margin-bottom: 1rem
       background-color: #efefef
       color: black
-      @media all and (min-width: 768px)
-        min-height: 200px
+      text-align: center
+      border: 1px solid transparent
+      i
+        font-size: 3rem
+      h4
+        margin-top: 1rem
+
       &:hover
         background-color: #fff
+
       &#producer-panel:hover
+        border: 1px solid $clr-turquoise
         &, & *
           color: $clr-turquoise
+
       &#hub-panel:hover, &#both-panel:hover
+        border: 1px solid $clr-brick
         &, & *
           color: $clr-brick
+
       &.selected
         &, &  *
           color: #fff
