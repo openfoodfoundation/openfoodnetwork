@@ -23,7 +23,7 @@ class AbilityDecorator
 
   # Users can manage products if they have an enterprise.
   def can_manage_products?(user)
-    can_manage_enterprises? user
+    can_manage_enterprises?(user) && user.enterprises.is_primary_producer.present?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
