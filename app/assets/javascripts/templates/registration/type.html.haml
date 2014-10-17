@@ -6,30 +6,36 @@
     .small-12.columns
       %header
         %h2
-          Last step to add 
+          Last step to add
           %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
             {{ enterprise.name }}!
         %h4
-          Are you a producer? 
+          Are you a producer?
 
   %form{ name: 'type', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(type)" } }
     .row#enterprise-types{ 'data-equalizer' => true, bo: { if: "enterprise.type != 'own'" } }
       .small-12.columns.field
         .row
           .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
-            %a.btnpanel#producer-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = true", class: "{selected: (enterprise.is_primary_producer)}" } }
+            %a.btnpanel#producer-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = true", class: "{selected: enterprise.is_primary_producer}" } }
               %i.ofn-i_059-producer
               %h4 Yes, I'm a producer
-              
+
           .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
-            %a.btnpanel#hub-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = false", class: "{selected: (!enterprise.is_primary_producer)}" } }
+            %a.btnpanel#hub-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = false", class: "{selected: enterprise.is_primary_producer == false}" } }
               %i.ofn-i_063-hub
               %h4 No, I'm not a producer
+
+        .row
+          .small-12.columns
+            %input.chunky{ id: 'enterprise_is_primary_producer', name: 'is_primary_producer', hidden: true, required: true, ng: { model: 'enterprise.is_primary_producer' } }
+            %span.error{ ng: { show: "type.is_primary_producer.$error.required && submitted" } }
+              Please choose one. Are you are producer?
         .row
           .small-12.columns
             .panel.callout
-              .left 
-                %i.ofn-i_013-help 
+              .left
+                %i.ofn-i_013-help
                 &nbsp;
               %p Producers make yummy things to eat &amp;/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
               / %p Hubs connect the producer to the eater. Hubs can be co-ops, independent retailers, buying groups, wholesalers, CSA box schemes, farm-gate stalls, etc.
@@ -38,4 +44,3 @@
       .small-12.columns
         %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('contact')" } }
         %input.button.primary.right{ type: "submit", value: "Continue" }
-        
