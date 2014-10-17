@@ -6,18 +6,18 @@ describe Enterprise do
   describe "sending emails" do
     describe "on creation" do
       let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
-      let!(:enterprise) { create(:enterprise, owner: user, confirmed_at: Time.now) }
+      let!(:enterprise) { create(:enterprise, owner: user) }
 
       it "when the email address has not already been confirmed" do
         mail_message = double "Mail::Message"
         EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
         mail_message.should_receive :deliver
-        create(:enterprise, owner: user, email: "unknown@email.com" )
+        create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
       end
 
       it "when the email address has already been confirmed" do
         EnterpriseMailer.should_not_receive(:confirmation_instructions)
-        e = create(:enterprise, owner: user, email: enterprise.email)
+        e = create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
       end
     end
   end
@@ -133,8 +133,8 @@ describe Enterprise do
 
     describe "confirmed" do
       it "find enterprises with a confirmed date" do
-        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
-        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s1 = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
         s2 = create(:supplier_enterprise, confirmed_at: nil)
         d2 = create(:distributor_enterprise, confirmed_at: nil)
         expect(Enterprise.confirmed).to include s1, d1
@@ -144,8 +144,8 @@ describe Enterprise do
 
     describe "unconfirmed" do
       it "find enterprises without a confirmed date" do
-        s1 = create(:supplier_enterprise, confirmed_at: Time.now)
-        d1 = create(:distributor_enterprise, confirmed_at: Time.now)
+        s1 = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
         s2 = create(:supplier_enterprise, confirmed_at: nil)
         d2 = create(:distributor_enterprise, confirmed_at: nil)
         expect(Enterprise.unconfirmed).to_not include s1, d1
