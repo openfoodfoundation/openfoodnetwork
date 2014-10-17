@@ -32,7 +32,7 @@ feature "Registration", js: true do
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
       select 'Australia', from: 'enterprise_country'
-      select 'Vic', from: 'enterprise_state'
+      select 'VIC', from: 'enterprise_state'
       click_button 'Continue'
 
       # Filling in Contact Details
@@ -43,7 +43,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Choosing a type
-      expect(page).to have_content 'Last step to create your enterprise!'
+      expect(page).to have_content 'Last step to add My Awesome Enterprise!'
       click_link 'producer-panel'
       click_button 'Continue'
 
@@ -77,7 +77,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Filling in social
-      expect(page).to have_content 'Almost there!'
+      expect(page).to have_content 'How can people find My Awesome Enterprise online?'
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
@@ -86,7 +86,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Done
-      expect(page).to have_content "That's all of the details we need for My Awesome Enterprise"
+      expect(page).to have_content "Finished!"
       e.reload
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
