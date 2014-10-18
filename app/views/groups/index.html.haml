@@ -40,8 +40,9 @@
         %h5 Our hubs &amp; producers
         %ul.small-block-grid-2
           %li{"ng-repeat" => "enterprise in group.enterprises", "scroll-after-load" => true}
-            %hub-modal{"ng-if" => "enterprise.is_distributor"}  
-            %producer-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
+            %enterprise-modal{"ng-if" => "enterprise.is_distributor"}  
+              {{ enterprise.name }}
+            %enterprise-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
               {{ enterprise.name }}
 
 

@@ -1,4 +1,4 @@
-Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redirections)->
+Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redirections, Loading)->
 
   new class AuthenticationService
     selectedPath: "/login"
@@ -25,4 +25,9 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
     active: Navigation.active
 
     close: ->
-      Navigation.navigate "/"
+      if location.pathname == "/"
+        Navigation.navigate "/"
+      else
+        Loading.message = "Taking you back to the home page"
+        location.hash = ""
+        location.pathname = "/"

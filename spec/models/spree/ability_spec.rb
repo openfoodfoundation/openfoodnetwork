@@ -9,13 +9,13 @@ module Spree
     describe "broad permissions" do
       subject { AbilityDecorator.new(user) }
       let(:user) { create(:user) }
-      let(:enterprise_full) { create(:enterprise, type: 'full') }
-      let(:enterprise_single) { create(:enterprise, type: 'single') }
-      let(:enterprise_profile) { create(:enterprise, type: 'profile') }
+      let(:enterprise_any) { create(:enterprise, sells: 'any') }
+      let(:enterprise_own) { create(:enterprise, sells: 'own') }
+      let(:enterprise_none) { create(:enterprise, sells: 'none') }
 
-      context "as manager of a 'full' type enterprise" do
+      context "as manager of a 'any' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_full
+          user.enterprise_roles.create! enterprise: enterprise_any
         end
 
         it { subject.can_manage_products?(user).should be_true }
@@ -23,9 +23,9 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'single' type enterprise" do
+      context "as manager of a 'own' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_single
+          user.enterprise_roles.create! enterprise: enterprise_own
         end
 
         it { subject.can_manage_products?(user).should be_true }
@@ -33,9 +33,9 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'profile' type enterprise" do
+      context "as manager of a 'none' type enterprise" do
         before do
-          user.enterprise_roles.create! enterprise: enterprise_profile
+          user.enterprise_roles.create! enterprise: enterprise_none
         end
 
         it { subject.can_manage_products?(user).should be_true }
@@ -239,15 +239,15 @@ module Spree
         end
       end
 
-      context 'Order Cycle co-ordinator' do
-
+      context 'Order Cycle co-ordinator, distriutor enterprise manager' do
         let (:user) do
           user = create(:user)
           user.spree_roles = []
-          s1.enterprise_roles.build(user: user).save
+          d1.enterprise_roles.build(user: user).save
           user
         end
-        let(:oc1) { create(:simple_order_cycle, {coordinator: s1}) }
+
+        let(:oc1) { create(:simple_order_cycle, {coordinator: d1}) }
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
@@ -264,6 +264,10 @@ module Spree
 
         it "should be able to read/write EnterpriseFees" do
           should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
+        end
+
+        it "should be able to add enterprises to order cycles" do
+          should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
         end
       end
 
@@ -284,7 +288,7 @@ module Spree
         end
 
         it 'should have the ability administrate and create enterpises' do
-          should have_ability([:admin, :index, :for_order_cycle, :create], for: Enterprise)
+          should have_ability([:admin, :index, :create], for: Enterprise)
         end
       end
     end

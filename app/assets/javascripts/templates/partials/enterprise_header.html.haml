@@ -1,11 +1,11 @@
-.highlight{"ng-class" => "{'has_shopfront' : enterprise.has_shopfront}"}
+.highlight{"ng-class" => "{'is_distributor' : enterprise.is_distributor}"}
   .highlight-top.row
     .small-12.medium-7.large-8.columns
-      %h3{"ng-if" => "enterprise.has_shopfront"}
+      %h3{"ng-if" => "enterprise.is_distributor"}
         %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise", bindonce: true}
           %i{"ng-class" => "enterprise.icon_font"}
           %span {{ enterprise.name }}
-      %h3{"ng-if" => "!enterprise.has_shopfront", "ng-class" => "{'is_producer' : enterprise.is_primary_producer}"}
+      %h3{"ng-if" => "!enterprise.is_distributor", "ng-class" => "{'is_producer' : enterprise.is_primary_producer}"}
         %i{"ng-class" => "enterprise.icon_font"}
         %span {{ enterprise.name }}
     .small-12.medium-5.large-4.columns.text-right.small-only-text-left

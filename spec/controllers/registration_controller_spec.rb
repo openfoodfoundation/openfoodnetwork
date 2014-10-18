@@ -7,11 +7,6 @@ describe RegistrationController do
       get :index
       response.should redirect_to registration_auth_path(anchor: "signup?after_login=/register")
     end
-
-    it "store" do
-      get :store
-      response.should redirect_to registration_auth_path(anchor: "signup?after_login=/register/store")
-    end
   end
 
   describe "redirecting when user has reached enterprise ownership limit" do
@@ -38,13 +33,6 @@ describe RegistrationController do
     describe "index" do
       it "loads the spree api key" do
         get :index
-        expect(assigns(:spree_api_key)).to eq user.spree_api_key
-      end
-    end
-
-    describe "store" do
-      it "loads the spree api key" do
-        get :store
         expect(assigns(:spree_api_key)).to eq user.spree_api_key
       end
     end

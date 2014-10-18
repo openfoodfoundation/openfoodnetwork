@@ -1,12 +1,13 @@
 .container#registration-contact
-  .header
-    %h2 Last step to create your enterprise!
-    %h5
-      Who is responsible for managing
-      %span{ ng: { class: "{brick: enterprise.is_distributor, turquoise: !enterprise.is_distributor}" } }
-        {{ enterprise.name }}?
   %ng-include{ src: "'registration/steps.html'" }
-  %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(contact)" } }
+  .row
+    .small-12.columns
+      %header
+        %h2 Greetings!
+        %h5
+          Who is responsible for managing {{ enterprise.name }}?
+  
+  %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
     .row.content
       .small-12.medium-12.large-7.columns
         .row
@@ -39,8 +40,8 @@
         /   .small-12.columns
         /     %label.indent-checkbox
         /       %input{ type: 'checkbox', id: 'contact_phone_profile', ng: { model: 'enterprise.phone_in_profile' } } &nbsp; Display phone in profile
+
     .row.buttons
       .small-12.columns
-        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('address')" } }
-        &nbsp;
-        %input.button.primary{ type: "submit", value: "Continue" }
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('details')" } }
+        %input.button.primary.right{ type: "submit", value: "Continue" }

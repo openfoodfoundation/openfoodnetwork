@@ -1,6 +1,6 @@
+- if can? :admin, EnterpriseFee
+  = render 'sidebar_enterprise_fees', f: f
 - if can? :admin, Spree::PaymentMethod
   = render 'sidebar_payment_methods', f: f
 - if can? :admin, Spree::ShippingMethod
   = render 'sidebar_shipping_methods', f: f
-- if can? :admin, EnterpriseFee
-  = render 'sidebar_enterprise_fees', f: f
