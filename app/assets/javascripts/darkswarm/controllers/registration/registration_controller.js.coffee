@@ -3,7 +3,7 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.enterprise = EnterpriseRegistrationService.enterprise
   $scope.select = RegistrationService.select
 
-  $scope.steps = ['details','address','contact','about','images','social']
+  $scope.steps = ['details','contact','type','about','images','social']
 
   $scope.countries = availableCountries
 

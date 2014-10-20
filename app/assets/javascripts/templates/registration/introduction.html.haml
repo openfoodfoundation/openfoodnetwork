@@ -1,39 +1,45 @@
-%div
-  .header
-    %h2 Hi there!
-    %h4 This wizard will step you through creating a profile
-  .row
-    .small-12.medium-3.large-2.columns.text-right.hide-for-small-only
-      %img{:src => "/assets/potatoes.png"}
-    .small-12.medium-9.large-10.columns
-      %p
-        Your profile gives you an online presence on the
-        %strong Open Food Network,
-        allowing you to easily connect with potential customers or partners. You can always choose to update your info later, as well as choose to upgrade your Profile to and Online Store, where you can sell products, track orders and receive payments. Creating a profile takes about 5-10 minutes.
-  .row{ 'data-equalizer' => true }
-    .small-12.medium-6.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
-      %h5 You'll need the following:
-      %ul.check-list
-        %li
-          Your enterprise address and contact details
-        %li
-          Your logo image
-        %li
-          A pretty picture for your profile header
-        %li
-          Some 'About Us' text
-
-    .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true}
-      .highlight-box
-        %h5 Your profile entitles you to:
-        %ul.small-block-grid-1
-          %li
-            %i.ofn-i_020-search
-            A searchable listing
-          %li
-            %i.ofn-i_040-hub
-            A pin on the OFN map
-  .row
-    .small-12.columns
+.row
+  .small-12.columns
+    %header
+      %h2 Hi there!
+      %h4
+        %small
+          %i.ofn-i_040-hub
+        Create your enterprise profile
+    .hide-for-large-up
       %hr
-      %input.button.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } }
+      %input.button.small.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } } 
+    %hr 
+
+.row{ 'data-equalizer' => true }
+  .small-12.medium-12.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
+    %h5 You'll need:
+    %ul.check-list
+      %li 
+        5-10 minutes
+      %li 
+        Enterprise address
+      %li 
+        Primary contact details
+      %li 
+        Your logo image
+      %li 
+        Landscape image for your profile  
+      %li 
+        'About Us' text
+
+  .small-9.medium-8.large-5.columns.pad-top.end{ 'data-equalizer-watch' => true}
+    %h5
+      What do I get?
+    %p 
+      Your profile helps people
+      %strong find 
+      and 
+      %strong contact 
+      you on the Open Food Network. 
+    %p Use this space to tell the story of your enterprise, to help drive connections to your social and online presence. 
+
+.row.show-for-large-up
+  .small-12.columns
+    %hr
+    %input.button.primary.right{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } }

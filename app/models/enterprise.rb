@@ -1,11 +1,14 @@
 class Enterprise < ActiveRecord::Base
   SELLS = %w(none own any)
   ENTERPRISE_SEARCH_RADIUS = 100
+
+  devise :confirmable, reconfirmable: true
+
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
 
-  after_create :send_creation_email
+  before_create :check_email
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
@@ -33,7 +36,7 @@ class Enterprise < ActiveRecord::Base
     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: "1200x260#", medium: "720x156#",  thumb: "100x100>" },
+    styles: { large: ["1200x260#", :jpg], medium: ["720x156#", :jpg],  thumb: ["100x100>", :jpg] },
     url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
@@ -59,6 +62,8 @@ class Enterprise < ActiveRecord::Base
 
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
+  scope :confirmed, where('confirmed_at IS NOT NULL')
+  scope :unconfirmed, where('confirmed_at IS NULL')
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
@@ -254,10 +259,16 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  protected
+
+  def devise_mailer
+    EnterpriseMailer
+  end
+
   private
 
-  def send_creation_email
-    EnterpriseMailer.creation_confirmation(self).deliver
+  def check_email
+    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
   end
 
   def strip_url(url)

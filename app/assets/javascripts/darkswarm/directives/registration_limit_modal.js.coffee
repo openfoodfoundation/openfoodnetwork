@@ -3,7 +3,7 @@ Darkswarm.directive "ofnRegistrationLimitModal", (Navigation, $modal, Loading) -
   link: (scope, elem, attr)->
     scope.modalInstance = $modal.open
       templateUrl: 'registration/limit_reached.html'
-      windowClass: "login-modal large"
+      windowClass: "login-modal register-modal xlarge"
       backdrop: 'static'
 
     scope.modalInstance.result.then scope.close, scope.close
