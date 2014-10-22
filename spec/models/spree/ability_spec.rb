@@ -185,11 +185,11 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+          should have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], for: :report)
         end
 
         it "should not be able to read other reports" do
-          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors], for: :reports)
+          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors], for: :report)
         end
 
       end
@@ -280,16 +280,16 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :reports)
+          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :report)
         end
 
         it "should not be able to read other reports" do
-          should_not have_ability([:sales_total], for: :reports)
+          should_not have_ability([:sales_total], for: :report)
         end
 
       end
 
-      context 'Order Cycle co-ordinator, distriutor enterprise manager' do
+      context 'Order Cycle co-ordinator, distributor enterprise manager' do
         let (:user) do
           user = create(:user)
           user.spree_roles = []
