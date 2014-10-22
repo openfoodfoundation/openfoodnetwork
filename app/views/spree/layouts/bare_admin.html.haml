@@ -1,0 +1,23 @@
+%html{ lang: "en" }
+  %head{"data-hook" => "admin_inside_head"}= render :partial => 'spree/admin/shared/head'
+  %body.admin{"data-ajax-root-path" => spree.root_path}
+    #wrapper{"data-hook" => ""}
+      - if flash[:error]
+        .flash.error= flash[:error]
+      - if notice
+        .flash.notice= notice
+      - if flash[:success]
+        .flash.success= flash[:success]
+      #progress
+        .wrapper
+          #spinner
+          .progress-message
+            = t(:loading)
+            \...
+      = render :partial => 'spree/admin/shared/alert', :collection => session[:alerts]
+      .container
+        .row
+          #content{"data-hook" => ""}
+            %div{:class => "sixteen columns"}
+              = yield
+    %div{"data-hook" => "admin_footer_scripts"}

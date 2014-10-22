@@ -1,1 +1,60 @@
-Welcome
+#welcome_page.sixteen.columns.alpha{ ng: { controller: 'WelcomeCtrl' } }
+  #welcome
+    %h1 Welcome to the Open Food Network!
+    %h6= "You have successfully created a#{" producer" if @enterprise.is_primary_producer} profile"
+
+  #next_steps
+    %h1 Next Steps
+    .plain_text
+      Choose how you would like to use
+      %br/
+      the Open Food Network
+
+  .options.sixteen.columns.alpha
+    - if @enterprise.is_primary_producer
+      .basic_producer.option.one-third.column.alpha
+        .selector
+          .top
+            %h2 Basic Producer
+            .plain_text Supply only
+          .bottom
+            %h5 ALWAYS FREE
+        .description
+          You want to use OFN as a place for people to find and contact you.
+          You can also add your products, allowing customers to see your product range and allowing you to act as a supplier to other shopfronts.
+
+      .producer_shop.option.one-third.column
+        .selector
+          .top
+            %h2 Producer with Shop
+            .plain_text Sell your products through an OFN shopfront
+          .bottom
+            %h5 30 DAY TRIAL
+        .description
+          Test out having your own shopfront with full access to all Shopfront features for 30 days.
+          After your trial expires you can keep your Shopfront for a subscription cost of $50 per month.
+
+      .full_hub.option.one-third.column.omega.disabled
+        .selector
+          .top.center
+            %h2 Full Hub
+            .plain_text Sell other producers' products through an OFN shopfront
+          .bottom.center
+            %h5 COMING SOON
+        .description
+          You want to offer other producers' products for sale as well as your own, establish and coodinate trading relationships with other enterprises and
+          A full hub subscription gives you access to our complete suite of features for managing your food enterprise.
+
+    - else
+      .shop_profile.option.one-third.column.alpha
+        .button
+          .top.center
+            %h2 Shop Profile
+            .plain_text Get a listing
+          .bottom.center
+            %h5 ALWAYS FREE
+        .description
+          You want to use OFN as a place for people to find and contact you.
+
+      // Coming soon - Full Hub
+      // Email us if you want this option

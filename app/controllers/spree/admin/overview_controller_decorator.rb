@@ -8,7 +8,7 @@ Spree::Admin::OverviewController.class_eval do
     if spree_current_user.manages_one_enterprise?
       @enterprise = @enterprises.first
       if @enterprise.sells == "unspecified"
-        render "welcome"
+        render "welcome", layout: "spree/layouts/bare_admin"
       else
         render "single_enterprise_dashboard"
       end
