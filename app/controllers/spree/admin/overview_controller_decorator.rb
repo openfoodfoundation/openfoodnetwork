@@ -7,7 +7,11 @@ Spree::Admin::OverviewController.class_eval do
 
     if spree_current_user.manages_one_enterprise?
       @enterprise = @enterprises.first
-      render "single_enterprise_dashboard"
+      if @enterprise.sells == "unspecified"
+        render "welcome"
+      else
+        render "single_enterprise_dashboard"
+      end
     else
       render "multi_enterprise_dashboard"
     end

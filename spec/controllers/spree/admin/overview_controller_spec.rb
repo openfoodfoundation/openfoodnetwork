@@ -16,6 +16,18 @@ describe Spree::Admin::OverviewController do
         spree_get :index
         response.should render_template "single_enterprise_dashboard"
       end
+
+      context "when the enterprise sells property has not been set" do
+        before do
+          enterprise.sells = "unspecified"
+          enterprise.save
+        end
+
+        it "renders the welcome page" do
+          spree_get :index
+          response.should render_template "welcome"
+        end
+      end
     end
 
     context "when user owns multiple enterprises" do
