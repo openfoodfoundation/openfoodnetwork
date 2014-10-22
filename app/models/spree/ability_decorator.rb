@@ -50,7 +50,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :set_sells], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
