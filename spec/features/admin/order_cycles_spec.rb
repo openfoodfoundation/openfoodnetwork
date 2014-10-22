@@ -627,8 +627,8 @@ feature %q{
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
-      page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
+      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
 
       # And it should have some variants selected
       oc = OrderCycle.last
