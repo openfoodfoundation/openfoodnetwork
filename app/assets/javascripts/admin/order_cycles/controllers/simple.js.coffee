@@ -3,6 +3,7 @@ angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl
     enterprise = enterprises[Object.keys(enterprises)[0]]
     OrderCycle.addSupplier enterprise.id
     OrderCycle.addDistributor enterprise.id
+    $scope.outgoing_exchange = OrderCycle.order_cycle.outgoing_exchanges[0]
 
     OrderCycle.setExchangeVariants(OrderCycle.order_cycle.incoming_exchanges[0],
       Enterprise.suppliedVariants(enterprise.id), true)
