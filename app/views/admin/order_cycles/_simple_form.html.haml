@@ -1,11 +1,19 @@
 = render 'name_and_timing_form', f: f
 
-= text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Ready for (ie. Date / Time)', 'ng-model' => 'outgoing_exchange.pickup_time'
-%br/
-= text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up instructions', 'ng-model' => 'outgoing_exchange.pickup_instructions'
+.row
+  .alpha.two.columns
+    = label_tag 'Pickup time'
+  .six.columns
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Ready for (ie. Date / Time)', 'ng-model' => 'outgoing_exchange.pickup_time'
+  .two.columns
+    = label_tag 'Pickup instructions'
+  .six.columns.omega
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up instructions', 'ng-model' => 'outgoing_exchange.pickup_instructions'
 
-%div{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
-  = render 'exchange_supplied_products_form'
+%table.exchanges
+  %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
+    %tr.products
+      = render 'exchange_supplied_products_form'
 
 = render 'coordinator_fees', f: f
 

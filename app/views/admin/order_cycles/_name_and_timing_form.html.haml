@@ -1,11 +1,15 @@
-= f.label :name
-= f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
-%br/
+.row
+  .alpha.two.columns
+    = f.label :name
+  .fourteen.columns.omega
+    = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
 
-.date-field
-  = f.label :orders_open_at, 'Orders open'
-  = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
-.date-field
-  = f.label :orders_close_at, 'Orders close'
-  = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
-%br/
+.row
+  .alpha.two.columns
+    = f.label :orders_open_at, 'Orders open'
+  .six.columns
+    = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
+  .two.columns
+    = f.label :orders_close_at, 'Orders close'
+  .six.columns.omega
+    = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
