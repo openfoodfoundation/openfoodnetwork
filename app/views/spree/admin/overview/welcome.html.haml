@@ -1,7 +1,7 @@
 #welcome_page.sixteen.columns.alpha{ ng: { app: "admin.welcome", controller: 'welcomeCtrl' } }
   #welcome
-    %h1 Welcome to the Open Food Network!
-    %h6= "You have successfully created a#{" producer" if @enterprise.is_primary_producer} profile"
+    .big Welcome to the Open Food Network!
+    %h4= "You have successfully created a#{" producer" if @enterprise.is_primary_producer} profile"
 
   #next_steps
     %h1 Next Steps
