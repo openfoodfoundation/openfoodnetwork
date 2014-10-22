@@ -1,4 +1,4 @@
-#welcome_page.sixteen.columns.alpha{ ng: { controller: 'WelcomeCtrl' } }
+#welcome_page.sixteen.columns.alpha{ ng: { app: "admin.welcome", controller: 'welcomeCtrl' } }
   #welcome
     %h1 Welcome to the Open Food Network!
     %h6= "You have successfully created a#{" producer" if @enterprise.is_primary_producer} profile"
@@ -13,7 +13,7 @@
   .options.sixteen.columns.alpha
     - if @enterprise.is_primary_producer
       .basic_producer.option.one-third.column.alpha
-        .selector
+        .selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
           .top
             %h2 Basic Producer
             .plain_text Supply only
@@ -24,7 +24,7 @@
           You can also add your products, allowing customers to see your product range and allowing you to act as a supplier to other shopfronts.
 
       .producer_shop.option.one-third.column
-        .selector
+        .selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
           .top
             %h2 Producer with Shop
             .plain_text Sell your products through an OFN shopfront
@@ -47,7 +47,7 @@
 
     - else
       .shop_profile.option.one-third.column.alpha
-        .button
+        .selector{ ng: { class: "{selected: sells=='none'}" } }
           .top.center
             %h2 Shop Profile
             .plain_text Get a listing

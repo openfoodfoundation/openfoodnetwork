@@ -23,6 +23,7 @@
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
 //= require ./users/users
+//= require ./welcome/welcome
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
 
