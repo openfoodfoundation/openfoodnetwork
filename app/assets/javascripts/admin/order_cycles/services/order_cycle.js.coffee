@@ -164,5 +164,14 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
         exchange.enterprise_fee_ids = (fee.id for fee in exchange.enterprise_fees)
         delete exchange.enterprise_fees
       order_cycle
-  })
 
+    # In the simple UI, we don't list outgoing products. Instead, all products are considered
+    # part of both incoming and outgoing enterprises. This method mirrors the former to the
+    # latter **for order cycles with a single incoming and outgoing exchange only**.
+    mirrorIncomingToOutgoingProducts: ->
+      incoming = this.order_cycle.incoming_exchanges[0]
+      outgoing = this.order_cycle.outgoing_exchanges[0]
+
+      for id, active of incoming.variants
+        outgoing.variants[id] = active
+  })
