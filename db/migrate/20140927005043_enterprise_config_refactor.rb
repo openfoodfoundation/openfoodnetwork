@@ -1,22 +1,17 @@
 class EnterpriseConfigRefactor < ActiveRecord::Migration
+  class Enterprise < ActiveRecord::Base
+    self.inheritance_column = nil
+  end
+
   def up
     add_column :enterprises, :sells, :string, null: false, default: 'none'
     add_index :enterprises, :sells
     add_index :enterprises, [:is_primary_producer, :sells]
 
-    # Combine is_distributor and type into sells.
-    db.select_values("SELECT id FROM enterprises").each do |enterprise_id|
-      distributor = db.select_values("SELECT is_distributor FROM enterprises WHERE id = #{db.quote(enterprise_id)}")
-      primary_producer = db.select_value("SELECT is_distributor FROM enterprises WHERE id = #{db.quote(enterprise_id)}")
-      type = db.select_value("SELECT type FROM enterprises WHERE id = #{db.quote(enterprise_id)}")
-      if type == "single" && (distributor || primary_producer)
-        sells = "own" 
-      elsif !distributor || type == "profile"
-        sells = "none"
-      else
-        sells = "any"
-      end
-      db.update("UPDATE enterprises SET sells = #{db.quote(sells)} WHERE id = #{db.quote(enterprise_id)}")
+    Enterprise.reset_column_information
+
+    Enterprise.all.each do |enterprise|
+      enterprise.update_attributes!({:sells => sells_what?(enterprise)})
     end
 
     remove_column :enterprises, :type
@@ -28,25 +23,35 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     add_column :enterprises, :type, :string, null: false, default: 'profile'
     add_column :enterprises, :is_distributor, :boolean
 
-    # Combine is_distributor and type into sells.
-    db.select_values("SELECT id FROM enterprises").each do |enterprise_id|
-      sells = db.select_value("SELECT sells FROM enterprises WHERE id = #{db.quote(enterprise_id)}")
-      case sells
-      when "own"
-        type = "single" 
-      when "any"
-        type = "full"
-      else
-        type = "profile"
-      end
-      distributor = sells != "none"
-      db.update("UPDATE enterprises SET type = #{db.quote(type)}, is_distributor = #{db.quote(distributor)}  WHERE id = #{db.quote(enterprise_id)}")
+    Enterprise.reset_column_information
+
+    Enterprise.all.each do |enterprise|
+      enterprise.update_attributes!({
+        :type => type?(enterprise),
+        :is_distributor => distributes?(enterprise)
+      })
     end
 
     remove_column :enterprises, :sells
   end
 
-  def db
-    ActiveRecord::Base.connection
+  def sells_what?(enterprise)
+    is_distributor = enterprise.read_attribute(:is_distributor)
+    is_primary_producer = enterprise.read_attribute(:is_primary_producer)
+    type = enterprise.read_attribute(:type)
+    return "own" if type == "single" && (is_distributor || is_primary_producer)
+    return "none" if !is_distributor || type == "profile"
+    return "any"
+  end
+
+  def distributes?(enterprise)
+    enterprise.read_attribute(:sells) != "none"
+  end
+
+  def type?(enterprise)
+    sells = enterprise.read_attribute(:sells)
+    return "profile" if sells == "none"
+    return "single" if sells == "own"
+    return "full"
   end
 end
