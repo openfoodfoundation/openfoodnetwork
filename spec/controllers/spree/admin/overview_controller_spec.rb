@@ -14,7 +14,7 @@ describe Spree::Admin::OverviewController do
 
       it "renders the single enterprise dashboard" do
         spree_get :index
-        response.should render_template partial: "_single_enterprise_dashboard"
+        response.should render_template "single_enterprise_dashboard"
       end
     end
 
@@ -24,7 +24,7 @@ describe Spree::Admin::OverviewController do
 
       it "renders the multi enterprise dashboard" do
         spree_get :index
-        response.should render_template partial: "_multi_enterprise_dashboard"
+        response.should render_template "multi_enterprise_dashboard"
       end
     end
   end

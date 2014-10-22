@@ -7,9 +7,9 @@ Spree::Admin::OverviewController.class_eval do
 
     if spree_current_user.manages_one_enterprise?
       @enterprise = @enterprises.first
-      render partial: "single_enterprise_dashboard"
+      render "single_enterprise_dashboard"
     else
-      render partial: "multi_enterprise_dashboard"
+      render "multi_enterprise_dashboard"
     end
   end
 end
