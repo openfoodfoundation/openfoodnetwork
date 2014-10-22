@@ -621,6 +621,11 @@ feature %q{
 
       # And I add a fee and save
       click_button 'Add coordinator fee'
+      click_button 'Add coordinator fee'
+      click_link 'order_cycle_coordinator_fee_1_remove'
+      page.should     have_select 'order_cycle_coordinator_fee_0_id'
+      page.should_not have_select 'order_cycle_coordinator_fee_1_id'
+
       select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
       click_button 'Create'
 

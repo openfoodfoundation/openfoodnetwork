@@ -23,6 +23,10 @@ angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl
     $event.preventDefault()
     OrderCycle.addCoordinatorFee()
 
+  $scope.removeCoordinatorFee = ($event, index) ->
+    $event.preventDefault()
+    OrderCycle.removeCoordinatorFee(index)
+
   $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
     EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
