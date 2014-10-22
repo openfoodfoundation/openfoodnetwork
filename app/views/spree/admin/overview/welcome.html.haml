@@ -13,7 +13,7 @@
   .options.sixteen.columns.alpha
     - if @enterprise.is_primary_producer
       .basic_producer.option.one-third.column.alpha
-        .selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+        %a.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
           .top
             %h2 Basic Producer
             .plain_text Supply only
@@ -24,7 +24,7 @@
           You can also add your products, allowing customers to see your product range and allowing you to act as a supplier to other shopfronts.
 
       .producer_shop.option.one-third.column
-        .selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+        %a.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
           .top
             %h2 Producer with Shop
             .plain_text Sell your products through an OFN shopfront
@@ -35,7 +35,7 @@
           After your trial expires you can keep your Shopfront for a subscription cost of $50 per month.
 
       .full_hub.option.one-third.column.omega.disabled
-        .selector
+        %a.selector
           .top.center
             %h2 Full Hub
             .plain_text Sell other producers' products through an OFN shopfront
@@ -47,7 +47,7 @@
 
     - else
       .shop_profile.option.one-third.column.alpha
-        .selector{ ng: { class: "{selected: sells=='none'}" } }
+        %a.selector{ ng: { class: "{selected: sells=='none'}" } }
           .top.center
             %h2 Shop Profile
             .plain_text Get a listing
