@@ -4,6 +4,13 @@ Spree::Admin::OverviewController.class_eval do
     @enterprises = Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
     @product_count = Spree::Product.active.managed_by(spree_current_user).count
     @order_cycle_count = OrderCycle.active.managed_by(spree_current_user).count
+
+    if spree_current_user.manages_one_enterprise?
+      @enterprise = @enterprises.first
+      render partial: "single_enterprise_dashboard"
+    else
+      render partial: "multi_enterprise_dashboard"
+    end
   end
 end
 
