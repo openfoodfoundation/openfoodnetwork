@@ -1,5 +1,5 @@
 class Enterprise < ActiveRecord::Base
-  SELLS = %w(unconfirmed none own any)
+  SELLS = %w(unspecified none own any)
   ENTERPRISE_SEARCH_RADIUS = 100
 
   devise :confirmable, reconfirmable: true
