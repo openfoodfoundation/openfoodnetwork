@@ -1,10 +1,17 @@
 %h1{ :style => 'margin-bottom: 30px'} Dashboard
 
+- if @enterprises.unconfirmed.any?
+
+  = render partial: "spree/admin/overview/unconfirmed"
+
+  %hr
+
 - if @enterprises.empty?
 
   = render partial: "spree/admin/overview/enterprises"
 
 - else
+
   - if can? :admin, Spree::Product
     = render partial: "spree/admin/overview/products"
 

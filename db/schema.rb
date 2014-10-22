@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140927005043) do
+ActiveRecord::Schema.define(:version => 20141010043405) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -264,10 +264,15 @@ ActiveRecord::Schema.define(:version => 20140927005043) do
     t.string   "instagram"
     t.string   "linkedin"
     t.integer  "owner_id",                                     :null => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.string   "sells",                    :default => "none", :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
   add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"

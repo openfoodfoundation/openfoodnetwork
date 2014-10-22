@@ -1,8 +1,14 @@
 class EnterpriseConfigRefactor < ActiveRecord::Migration
+  class Enterprise < ActiveRecord::Base
+    self.inheritance_column = nil
+  end
+
   def up
     add_column :enterprises, :sells, :string, null: false, default: 'none'
     add_index :enterprises, :sells
     add_index :enterprises, [:is_primary_producer, :sells]
+
+    Enterprise.reset_column_information
 
     Enterprise.all.each do |enterprise|
       enterprise.update_attributes!({:sells => sells_what?(enterprise)})
@@ -16,6 +22,8 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     # This process is lossy. Producer profiles wont exist.
     add_column :enterprises, :type, :string, null: false, default: 'profile'
     add_column :enterprises, :is_distributor, :boolean
+
+    Enterprise.reset_column_information
 
     Enterprise.all.each do |enterprise|
       enterprise.update_attributes!({

@@ -3,8 +3,7 @@ require 'spec_helper'
 feature "Registration", js: true do
   include WebHelper
 
-  # TODO fix this after removal of is_distributor.
-  pending "Registering a Profile" do
+  describe "Registering a Profile" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
     it "Allows a logged in user to register a profile" do
@@ -18,25 +17,22 @@ feature "Registration", js: true do
       # Enter Login details
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      click_login_and_ensure_content "This wizard will step you through creating a profile"
+      click_login_and_ensure_content "Hi there!"
 
       expect(URI.parse(current_url).path).to eq registration_path
 
       # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know what sort of enterprise you are:"
+      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know a little bit about your enterprise:"
 
       # Filling in details
       fill_in 'enterprise_name', with: "My Awesome Enterprise"
-      click_link 'both-panel'
-
-      click_button_and_ensure_content "Continue", "Greetings My Awesome Enterprise"
 
       # Filling in address
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
       select 'Australia', from: 'enterprise_country'
-      select 'Vic', from: 'enterprise_state'
+      select 'VIC', from: 'enterprise_state'
       click_button 'Continue'
 
       # Filling in Contact Details
@@ -44,6 +40,11 @@ feature "Registration", js: true do
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       page.should have_field 'enterprise_email', with: user.email
       fill_in 'enterprise_phone', with: '12 3456 7890'
+      click_button 'Continue'
+
+      # Choosing a type
+      expect(page).to have_content 'Last step to add My Awesome Enterprise!'
+      click_link 'producer-panel'
       click_button 'Continue'
 
       # Enterprise should be created
@@ -76,7 +77,7 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Filling in social
-      expect(page).to have_content 'Last step!'
+      expect(page).to have_content 'How can people find My Awesome Enterprise online?'
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
@@ -85,38 +86,13 @@ feature "Registration", js: true do
       click_button 'Continue'
 
       # Done
-      expect(page).to have_content "You have successfully completed the profile for My Awesome Enterprise"
+      expect(page).to have_content "Finished!"
       e.reload
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
       expect(e.twitter).to eq "@TwItTeR"
       expect(e.instagram).to eq "@InStAgRaM"
-    end
-
-    it "Allows a logged in user to register a store" do
-      visit store_registration_path
-
-      expect(URI.parse(current_url).path).to eq registration_auth_path
-
-      page.has_selector? "dd", text: "Log in"
-      switch_to_login_tab
-
-      # Enter Login details
-      fill_in "Email", with: user.email
-      fill_in "Password", with: user.password
-      click_login_and_ensure_content "This wizard will step you through creating a profile"
-
-      expect(URI.parse(current_url).path).to eq store_registration_path
-
-      # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know the name of your farm:"
-
-      # Details Page
-      expect(page).to have_content "Woot! First we need to know the name of your farm:"
-      expect(page).to_not have_selector '#enterprise-types'
-
-      # Everything from here should be covered in 'profile' spec
     end
   end
 
