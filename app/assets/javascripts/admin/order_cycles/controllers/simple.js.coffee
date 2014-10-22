@@ -19,6 +19,12 @@ angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl
 
   $scope.removeDistributionOfVariant = angular.noop
 
+  $scope.setExchangeVariants = (exchange, variants, selected) ->
+    OrderCycle.setExchangeVariants(exchange, variants, selected)
+
+  $scope.suppliedVariants = (enterprise_id) ->
+    Enterprise.suppliedVariants(enterprise_id)
+
   $scope.addCoordinatorFee = ($event) ->
     $event.preventDefault()
     OrderCycle.addCoordinatorFee()
