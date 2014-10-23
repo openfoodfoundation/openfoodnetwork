@@ -2,19 +2,22 @@
 
 .row
   .alpha.two.columns
-    = label_tag 'Pickup time'
+    = label_tag 'Ready for'
   .six.columns
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Ready for (ie. Date / Time)', 'ng-model' => 'outgoing_exchange.pickup_time'
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Date / time', 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
   .two.columns
-    = label_tag 'Pickup instructions'
+    = label_tag 'Customer instructions'
   .six.columns.omega
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up instructions', 'ng-model' => 'outgoing_exchange.pickup_instructions'
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up or delivery notes', 'ng-model' => 'outgoing_exchange.pickup_instructions', 'size' => 30
 
+= label_tag 'Products'
 %table.exchanges
   %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
     %tr.products
       = render 'exchange_supplied_products_form'
 
+%br/
+= label_tag 'Fees'
 = render 'coordinator_fees', f: f
 
 .actions
