@@ -648,6 +648,37 @@ feature %q{
       ex.pickup_time.should == 'pickup time'
       ex.pickup_instructions.should == 'pickup instructions'
     end
+
+    scenario "editing an order cycle" do
+      # Given an order cycle
+      fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee])
+
+      # And the order cycle has a pickup time and pickup instructions
+      ex = oc.exchanges.outgoing.first
+      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+
+      # When I edit it
+      login_to_admin_section
+      click_link 'Order Cycles'
+      click_link oc.name
+      wait_until { page.find('#order_cycle_name').value.present? }
+
+      # Then I should see the basic settings
+      page.should have_field 'order_cycle_name', with: oc.name
+      page.should have_field 'order_cycle_orders_open_at', with: oc.orders_open_at.to_s
+      page.should have_field 'order_cycle_orders_close_at', with: oc.orders_close_at.to_s
+      page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
+      # And I should see the products
+      page.should have_checked_field   "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # And I should see the coordinator fees
+      page.should have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
+    end
   end
 
 

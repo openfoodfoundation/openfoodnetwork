@@ -84,7 +84,7 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
       for exchange in this.order_cycle.outgoing_exchanges
         exchange.variants[variant_id] = false
 
-    load: (order_cycle_id) ->
+    load: (order_cycle_id, callback=null) ->
       service = this
       OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
     	  angular.extend(service.order_cycle, oc)
@@ -103,6 +103,8 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
     
         delete(service.order_cycle.exchanges)
         service.loaded = true
+
+        (callback || angular.noop)(service.order_cycle)
 
       this.order_cycle
 
