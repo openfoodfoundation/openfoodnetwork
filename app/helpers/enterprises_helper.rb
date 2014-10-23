@@ -23,7 +23,7 @@ module EnterprisesHelper
     # TODO: When we can distinguish between profiles and producers that supply only (without
     #       their own store), include it here.
     # profile, supplier only, shopfront
-    enterprise.sells == 'none' ? 'profile' : 'shopfront'
+    enterprise.sells == 'none' ? 'Profile' : 'Has Shopfront'
   end
 
 
