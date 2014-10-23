@@ -110,7 +110,7 @@ module Admin
       end
     end
 
-    describe "setting 'sells' on an enterprise" do
+    describe "set_sells" do
       let(:enterprise) { create(:enterprise, sells: 'none') }
 
       before do
@@ -131,9 +131,18 @@ module Admin
 
         context "allows setting 'sells' to 'none'" do
           it "is allowed" do
-            spree_post :set_sells, { id: enterprise.id, sells: 'own' }
+            spree_post :set_sells, { id: enterprise.id, sells: 'none' }
             expect(response).to redirect_to spree.admin_path
             expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+            expect(enterprise.reload.sells).to eq 'none'
+          end
+
+          context "setting producer_profile_only to true" do
+            it "is allowed" do
+              spree_post :set_sells, { id: enterprise.id, sells: 'none', producer_profile_only: true }
+              expect(response).to redirect_to spree.admin_path
+              expect(enterprise.reload.producer_profile_only).to eq true
+            end
           end
         end
 
@@ -156,6 +165,14 @@ module Admin
               expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
               expect(enterprise.reload.sells).to eq 'own'
               expect(enterprise.reload.shop_trial_start_date).to be > Time.now-(1.minute)
+            end
+          end
+
+          context "setting producer_profile_only to true" do
+            it "is ignored" do
+              spree_post :set_sells, { id: enterprise.id, sells: 'own', producer_profile_only: true }
+              expect(response).to redirect_to spree.admin_path
+              expect(enterprise.reload.producer_profile_only).to be false
             end
           end
         end

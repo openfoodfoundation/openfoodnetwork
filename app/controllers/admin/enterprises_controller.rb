@@ -19,6 +19,7 @@ module Admin
     def set_sells
       enterprise = Enterprise.find(params[:id])
       attributes = { sells: params[:sells] }
+      attributes[:producer_profile_only] = !!params[:producer_profile_only] if params[:sells] == 'none'
       attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
 
       if %w(none own).include?(params[:sells])

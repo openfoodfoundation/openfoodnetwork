@@ -1,6 +1,7 @@
 angular.module("admin.welcome")
   .controller "welcomeCtrl", ($scope) ->
     $scope.sells = "unspecified"
+    $scope.producer_profile_only = true
     $scope.submitted = false
 
     $scope.valid = (form) ->

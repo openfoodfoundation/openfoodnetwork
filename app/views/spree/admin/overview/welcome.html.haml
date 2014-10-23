@@ -12,11 +12,12 @@
 
   = form_for @enterprise, url: main_app.set_sells_admin_enterprise_path(@enterprise), html: { name: "enterprise", novalidate: true } do |enterprise_form|
     -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
-    %input{ hidden: "true", id: "sells", name: "sells", ng: { required: true, pattern: "/^(none|own)$/", model: 'sells', value: "sells"} }
+    %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own)$/", model: 'sells', value: "sells"} }
     .options.sixteen.columns.alpha
       - if @enterprise.is_primary_producer
+        %input{ type: 'checkbox', hidden: true, name: "producer_profile_only", ng: { required: true, model: 'producer_profile_only', value: "producer_profile_only"} }
         .basic_producer.option.one-third.column.alpha
-          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+          %a.full-width.button.selector{ ng: { click: "sells='none';producer_profile_only=true;", class: "{selected: sells=='none' && producer_profile_only==true}" } }
             .top
               %h3 Producer Profile
               %p Connect through OFN
@@ -25,7 +26,7 @@
             You want to use Open Food Network as a place for people to find and contact you.
 
         .producer_shop.option.one-third.column
-          %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+          %a.full-width.button.selector{ ng: { click: "sells='none';producer_profile_only=false;", class: "{selected: sells=='none' && producer_profile_only==false}" } }
             .top
               %h3 Sell products
               %p As a supplier
@@ -34,7 +35,7 @@
             Add your products to Open Food Network, allowing customers to see your product range, and allowing you to act as a supplier to other shopfronts.
 
         .full_hub.option.one-third.column.omega.disabled
-          %a.full-width.button.selector
+          %a.full-width.button.selector{ ng: { click: "sells='own';producer_profile_only=false;", class: "{selected: sells=='own' && producer_profile_only==false}" } }
             .top
               %h3 Sell products
               %p Through an OFN shopfront
@@ -49,7 +50,7 @@
               %h3 Shop Profile
               %p Get a listing
             .bottom ALWAYS FREE
-          .description
+          %p.description
             You want to use OFN as a place for people to find and contact you.
 
     .sixteen.columns.alpha
