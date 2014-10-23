@@ -4,6 +4,12 @@ module OpenFoodNetwork
       @user = user
     end
 
+    def can_manage_complex_order_cycles?
+      managed_and_related_enterprises_with(:add_to_order_cycle).any? do |e|
+        e.sells == 'any'
+      end
+    end
+
     # Find enterprises that an admin is allowed to add to an order cycle
     def order_cycle_enterprises
       managed_and_related_enterprises_with :add_to_order_cycle

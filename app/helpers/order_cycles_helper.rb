@@ -62,6 +62,10 @@ module OrderCyclesHelper
     OrderCycle.active.with_distributor(@distributor).present?
   end
 
+  def order_cycles_simple_view
+    @order_cycles_simple_view ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+  end
+
   def order_cycles_enabled?
     OpenFoodNetwork::FeatureToggle.enabled? :order_cycles
   end

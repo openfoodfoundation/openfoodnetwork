@@ -1,14 +1,4 @@
-= f.label :name
-= f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
-%br/
-
-.date-field
-  = f.label :orders_open_at, 'Orders open'
-  = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
-.date-field
-  = f.label :orders_close_at, 'Orders close'
-  = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
-%br/
+= render 'name_and_timing_form', f: f
 
 
 %h2 Incoming

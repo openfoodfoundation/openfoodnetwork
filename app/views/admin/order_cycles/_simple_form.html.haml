@@ -1,0 +1,26 @@
+= render 'name_and_timing_form', f: f
+
+.row
+  .alpha.two.columns
+    = label_tag 'Pickup time'
+  .six.columns
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Ready for (ie. Date / Time)', 'ng-model' => 'outgoing_exchange.pickup_time'
+  .two.columns
+    = label_tag 'Pickup instructions'
+  .six.columns.omega
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up instructions', 'ng-model' => 'outgoing_exchange.pickup_instructions'
+
+%table.exchanges
+  %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
+    %tr.products
+      = render 'exchange_supplied_products_form'
+
+= render 'coordinator_fees', f: f
+
+.actions
+  = f.submit @order_cycle.new_record? ? 'Create' : 'Update', 'ng-disabled' => '!loaded()'
+  %span{'ng-show' => 'loaded()'}
+    or
+    = link_to 'Cancel', main_app.admin_order_cycles_path
+  %span{'ng-hide' => 'loaded()'} Loading...
+
