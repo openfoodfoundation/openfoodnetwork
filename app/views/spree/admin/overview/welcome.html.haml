@@ -1,58 +1,51 @@
 #welcome_page.sixteen.columns.alpha{ ng: { app: "admin.welcome", controller: 'welcomeCtrl' } }
-  #welcome
-    .big Welcome to the Open Food Network!
-    %h4= "You have successfully created a#{" producer" if @enterprise.is_primary_producer} profile"
+  %header
+    %h1 Welcome to the Open Food Network!
+    %p
+      You have successfully created a
+      %strong 
+        = "#{"producer " if @enterprise.is_primary_producer}profile"
 
-  #next_steps
-    %h1 Next Steps
-    .plain_text
-      Choose how you would like to use
-      %br/
-      the Open Food Network
+    %section
+      %h2 Next step
+      %p Choose one:
 
   .options.sixteen.columns.alpha
     - if @enterprise.is_primary_producer
       .basic_producer.option.one-third.column.alpha
-        %a.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+        %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
           .top
-            %h2 Basic Producer
-            .plain_text Supply only
-          .bottom
-            %h5 ALWAYS FREE
-        .description
-          You want to use OFN as a place for people to find and contact you.
-          You can also add your products, allowing customers to see your product range and allowing you to act as a supplier to other shopfronts.
+            %h3 Producer Profile
+            %p Connect through OFN
+          .bottom ALWAYS FREE
+        %p.description
+          You want to use Open Food Network as a place for people to find and contact you.
 
       .producer_shop.option.one-third.column
-        %a.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+        %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
           .top
-            %h2 Producer with Shop
-            .plain_text Sell your products through an OFN shopfront
-          .bottom
-            %h5 30 DAY TRIAL
-        .description
-          Test out having your own shopfront with full access to all Shopfront features for 30 days.
-          After your trial expires you can keep your Shopfront for a subscription cost of $50 per month.
+            %h3 Sell products
+            %p As a supplier
+          .bottom ALWAYS FREE
+        %p.description
+          Add your products to Open Food Network, allowing customers to see your product range, and allowing you to act as a supplier to other shopfronts. 
 
       .full_hub.option.one-third.column.omega.disabled
-        %a.selector
-          .top.center
-            %h2 Full Hub
-            .plain_text Sell other producers' products through an OFN shopfront
-          .bottom.center
-            %h5 COMING SOON
-        .description
-          You want to offer other producers' products for sale as well as your own, establish and coodinate trading relationships with other enterprises and
-          A full hub subscription gives you access to our complete suite of features for managing your food enterprise.
+        %a.full-width.button.selector
+          .top
+            %h3 Sell products
+            %p Through an OFN shopfront
+          .bottom 30 DAY TRIAL
+        %p.description
+          Test out having your own shopfront with full access to all Shopfront features for 30 days. After your trial expires you can keep your Shopfront for a subscription cost of $50 per month.
 
     - else
       .shop_profile.option.one-third.column.alpha
         %a.selector{ ng: { class: "{selected: sells=='none'}" } }
-          .top.center
-            %h2 Shop Profile
-            .plain_text Get a listing
-          .bottom.center
-            %h5 ALWAYS FREE
+          .top
+            %h3 Shop Profile
+            %p Get a listing
+          .bottom ALWAYS FREE
         .description
           You want to use OFN as a place for people to find and contact you.
 
