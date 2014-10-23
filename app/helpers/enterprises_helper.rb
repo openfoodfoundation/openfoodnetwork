@@ -19,6 +19,13 @@ module EnterprisesHelper
     enterprises.map(&:name).sort.join(', ')
   end
 
+  def enterprise_type_name(enterprise)
+    # TODO: When we can distinguish between profiles and producers that supply only (without
+    #       their own store), include it here.
+    enterprise.sells == 'none' ? 'profile' : 'shopfront'
+  end
+
+
   def enterprise_confirm_delete_message(enterprise)
     if enterprise.supplied_products.present?
       "This will also delete the #{pluralize enterprise.supplied_products.count, 'product'} that this enterprise supplies. Are you sure you want to continue?"

@@ -1,17 +1,39 @@
--# - if @enterprise.sells == "unconfirmed"
--#   %h1 Welcome to the Open Food Network
+#enterprise
+  %h1= @enterprise.name
+  %h2= enterprise_type_name(@enterprise)
+
+  -# We need an action to render the welcome template, that this button can link to
+  %button Change type
+
+#message
+  Message bar
+
+.row
+  .alpha.seven.columns
+    See your profile live on the Open Food Network map.
+    %br/
+    -# Can we pass an anchor here to zoom to our enterprise?
+    = link_to "#{@enterprise.name} live", main_app.map_path
+
+  .two.columns
+
+  .seven.columns.omega
+    Change or tweak any of the details of your profile
+    %br/
+    = link_to "Manage #{@enterprise.name}", main_app.edit_admin_enterprise_path(@enterprise)
 
 
-- if @enterprise.is_primary_producer
-  // Basic Producer
+.row
+  .alpha.seven.columns
+    - if can? :admin, Spree::Product
+      Add and manage products
+      %br/
+      = link_to "Manage products", bulk_edit_admin_products_path
 
-  // Producer with Shopfront
+  .two.columns
 
-  // Coming soon - Full Hub
-  // Email us if you want this option
-
-- else
-  // Shop Profile
-
-  // Coming soon - Full Hub
-  // Email us if you want this option
+  .seven.columns.omega
+    - if can? :admin, OrderCycle
+      Add and manage order cycles
+      %br/
+      = link_to "Manage order cycles", main_app.admin_order_cycles_path
