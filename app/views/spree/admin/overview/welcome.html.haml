@@ -53,6 +53,11 @@
             You want to use OFN as a place for people to find and contact you.
 
     .sixteen.columns.alpha
-      %span.error{ ng: { show: "(enterprise.sells.$error.pattern || enterprise.sells.$error.pattern) && submitted" } }
-        Please select an option
-    %input{ type: 'submit', ng: { click: "submit(enterprise)" } }
+      .admin-cta
+        %span.error{ ng: { show: "(enterprise.sells.$error.pattern || enterprise.sells.$error.pattern) && submitted" } }
+          Please choose one of the options above.
+        %input{ type: 'submit', value: 'Next', ng: { click: "submit(enterprise)" } }
+        
+
+
+
