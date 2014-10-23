@@ -10,8 +10,9 @@
       %br/
       the Open Food Network
 
-  %form{ name: :sells, method: :put, action: main_app.set_sells_admin_enterprise_path(@enterprise) }
-    %input{ type: "hidden", id: "sells", name: "sells", ng: { value: "sells" } }
+  = form_for @enterprise, url: main_app.set_sells_admin_enterprise_path(@enterprise), novalidate: true do |enterprise_form|
+    -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
+    %input{ hidden: "true", id: "sells", name: "sells", ng: { required: true, pattern: "/^(none|own)$/", model: 'sells', value: "sells"} }
     .options.sixteen.columns.alpha
       - if @enterprise.is_primary_producer
         .basic_producer.option.one-third.column.alpha
@@ -60,4 +61,7 @@
 
         // Coming soon - Full Hub
         // Email us if you want this option
-    %input{ type: 'submit' }
+    .sixteen.columns.alpha
+      %span.error{ ng: { show: "(enterprise.sells.$error.pattern || enterprise.sells.$error.pattern) && submitted" } }
+        Please select an option
+    %input{ type: 'submit', ng: { click: "submit(enterprise)" } }
