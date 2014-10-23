@@ -1,4 +1,5 @@
-= form_for @enterprise, url: main_app.set_sells_admin_enterprise_path(@enterprise), html: { name: "enterprise", novalidate: true } do |enterprise_form|
+= form_for @enterprise, url: main_app.set_sells_admin_enterprise_path(@enterprise),
+  html: { name: "enterprise", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'sellsCtrl' } do |enterprise_form|
   -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
   %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own)$/", model: 'sells', value: "sells"} }
   .options.sixteen.columns.alpha

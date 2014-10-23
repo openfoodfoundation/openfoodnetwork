@@ -1,5 +1,5 @@
-angular.module("admin.welcome")
-  .controller "welcomeCtrl", ($scope) ->
+angular.module("admin.enterprises")
+  .controller "sellsCtrl", ($scope) ->
     $scope.sells = "unspecified"
     $scope.producer_profile_only = true
     $scope.submitted = false
