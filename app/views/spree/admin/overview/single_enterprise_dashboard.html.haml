@@ -1,5 +1,5 @@
 - content_for :page_title do
-  %h1 
+  %h1
     = @enterprise.name
     %span.small
       (
@@ -7,8 +7,16 @@
       )
 
 - content_for :page_actions do
-  -# We need an action to render the welcome template, that this button can link to
-  %button Change type
+  :javascript
+    function toggleType(){
+      $("#type_selection").slideToggle()
+    }
+  #type_button
+    %button#toggle_type{ onClick: 'toggleType()' } Change type
+
+
+#type_selection{ hidden: true }
+  = render partial: "change_type_form"
 
 #message
   Message bar
