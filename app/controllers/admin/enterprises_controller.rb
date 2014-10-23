@@ -16,6 +16,22 @@ module Admin
       @collection = order_cycle_permitted_enterprises
     end
 
+    def set_sells
+      enterprise = Enterprise.find(params[:id])
+      attributes = { sells: params[:sells] }
+      attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
+
+      if %w(none own).include?(params[:sells])
+        if params[:sells] == 'own' && enterprise.shop_trial_start_date
+          flash[:error] = "You've already started your trial!"
+        elsif enterprise.update_attributes(attributes)
+          flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
+        end
+      else
+        flash[:error] = "Unauthorised"
+      end
+      redirect_to admin_path
+    end
 
     def bulk_update
       @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
