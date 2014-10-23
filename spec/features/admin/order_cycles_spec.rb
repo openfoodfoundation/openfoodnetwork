@@ -650,11 +650,9 @@ feature %q{
     end
 
     scenario "editing an order cycle" do
-      # Given an order cycle
+      # Given an order cycle with pickup time and instructions
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee])
-
-      # And the order cycle has a pickup time and pickup instructions
       ex = oc.exchanges.outgoing.first
       ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
@@ -678,6 +676,60 @@ feature %q{
 
       # And I should see the coordinator fees
       page.should have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
+    end
+
+    scenario "updating an order cycle" do
+      # Given an order cycle with pickup time and instructions
+      fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
+      fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee1])
+      ex = oc.exchanges.outgoing.first
+      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+
+      # When I edit it
+      login_to_admin_section
+      visit edit_admin_order_cycle_path oc
+      wait_until { page.find('#order_cycle_name').value.present? }
+
+      # And I fill in the basic fields
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'xy'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
+
+      # And I make some product selections
+      uncheck "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # And I select some fees and update
+      click_link 'order_cycle_coordinator_fee_0_remove'
+      page.should_not have_select 'order_cycle_coordinator_fee_0_id'
+      click_button 'Add coordinator fee'
+      select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
+
+      click_button 'Update'
+
+      # Then my order cycle should have been updated
+      page.should have_content 'Your order cycle has been updated.'
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
+
+      # And it should have a variant selected
+      oc = OrderCycle.last
+      oc.exchanges.incoming.first.variants.should == [p2.master]
+      oc.exchanges.outgoing.first.variants.should == [p2.master]
+
+      # And it should have the fee
+      oc.coordinator_fees.should == [fee2]
+
+      # And my pickup time and instructions should have been saved
+      ex = oc.exchanges.outgoing.first
+      ex.pickup_time.should == 'xy'
+      ex.pickup_instructions.should == 'zzy'
     end
   end
 
