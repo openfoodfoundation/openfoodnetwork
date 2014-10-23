@@ -5,7 +5,7 @@ Spree::Admin::OverviewController.class_eval do
     @product_count = Spree::Product.active.managed_by(spree_current_user).count
     @order_cycle_count = OrderCycle.active.managed_by(spree_current_user).count
 
-    if spree_current_user.manages_one_enterprise?
+    if OpenFoodNetwork::Permissions.new(spree_current_user).manages_one_enterprise?
       @enterprise = @enterprises.first
       if @enterprise.sells == "unspecified"
         render "welcome", layout: "spree/layouts/bare_admin"

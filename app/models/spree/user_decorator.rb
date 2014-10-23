@@ -19,10 +19,6 @@ Spree.user_class.class_eval do
     end
   end
 
-  def manages_one_enterprise?
-    enterprises.length == 1
-  end
-
   def send_signup_confirmation
     Spree::UserMailer.signup_confirmation(self).deliver
   end
