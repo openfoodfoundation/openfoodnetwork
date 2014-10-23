@@ -1,62 +1,137 @@
+@import ../darkswarm/branding
+@import ../darkswarm/mixins
+
 #welcome_page
-  color: #000000
-  h1, h2, h3, h4, h5, h6
-    color: #000000
-
-  .big
-    font-weight: bold
-    font-size: 36px
-
-  .plain_text
-    font-size: 16px
-
-  #welcome
+  header
     text-align: center
-    margin: 50px 0px
-    h1
-      margin-bottom: 10px
+    padding: 4em 2em
+    @include fullbg
+    background-image: url('/assets/home/tagline-bg.jpg')
+    background-repeat: no-repeat
+    background-position: center center
+    margin-bottom: 2em
+    p
+      text-transform: uppercase
+      font-weight: 300
+    &, & *
+      color: white
+  section
+    margin: 2em 0 0 0
+    &, & *
+      color: #5498da
 
-  #next_steps
+  .description
+    background-color: #eff5fc
+    margin-top: -2em
+    margin-bottom: 2em
+    padding: 4em 2em 2em 1em 
+  
+  a.selector
+    position: relative
+    border: 2px solid black
     text-align: center
-    margin-bottom: 50px
-    h1
-      margin-bottom: 10px
+    width: 100%
+    cursor: pointer
+    &, & *
+      color: white
+    &:after, &:before
+      top: 100%
+      left: 50%
+      border: solid transparent
+      content: " "
+      height: 0
+      width: 0
+      position: absolute
+      pointer-events: none
+    &:after
+      border-color: rgba(136, 183, 213, 0)
+      border-top-color: #5498da
+      border-width: 12px
+      margin-left: -12px
+    &:hover
+      &:after
+        border-top-color: #9fc820    
+    &:before
+      border-color: rgba(84, 152, 218, 0)
+      border-top-color: black
+      border-width: 15px
+      margin-left: -15px
+    .bottom
+      background-image: url('/assets/stripe.png')
+      margin-top: 1em
+      margin-left: -15px
+      margin-right: -15px
+      padding: 5px
+      text-transform: uppercase
+    &.selected
+      background-color: black
+      &:after, &:hover &:after
+        border-top-color: black
 
-  .options
-    .option
-      .selector
-        border: 3px solid black
-        border-radius: 12px 12px 0px 0px
-        text-align: center
-        margin-bottom: 20px
-        .top
-          min-height: 113px
-          padding: 15px 8px
-          h2
-            margin-bottom: 10px
-        .bottom
-          border-top: 3px solid black
-          padding: 8px 0px
 
-        &:hover
-          cursor: 'pointer'
 
-        &.selected
-          color: #ffffff
-          background-color: #ff4444
-          border-color: #000000
-          h1, h2, h3, h4, h5, h6
-            color: #ffffff
+// #welcome_page
+//   color: #000000
+//   h1, h2, h3, h4, h5, h6
+//     color: #000000
 
-      &.disabled
-        color: #b0b0b0
-        .selector
-          border-color: #b0b0b0
-          h1, h2, h3, h4, h5, h6
-            color: #b0b0b0
-          .bottom
-            border-top-color: #b0b0b0
+//   .big
+//     font-weight: bold
+//     font-size: 36px
 
-      .description
-        font-size: 16px
-        text-align: justify
+//   .plain_text
+//     font-size: 16px
+
+//   #welcome
+//     text-align: center
+//     margin: 50px 0px
+//     h1
+//       margin-bottom: 10px
+
+//   #next_steps
+//     text-align: center
+//     margin-bottom: 50px
+//     h1
+//       margin-bottom: 10px
+
+//   .options
+//     .option
+//       a.selector
+//         opacity: 1
+//         display: block
+//         cursor: pointer
+//         border: 3px solid black
+//         border-radius: 12px 12px 0px 0px
+//         text-align: center
+//         margin-bottom: 20px
+//         .top
+//           min-height: 113px
+//           padding: 15px 8px
+//           h2
+//             margin-bottom: 10px
+//         .bottom
+//           border-top: 3px solid black
+//           padding: 8px 0px
+
+//         &:hover
+//           opacity: 0.8
+
+//         &.selected
+//           color: #ffffff
+//           background-color: #ff4444
+//           border-color: #000000
+//           h1, h2, h3, h4, h5, h6
+//             color: #ffffff
+
+//       &.disabled
+//         color: #b0b0b0
+//         .selector
+//           border-color: #b0b0b0
+//           h1, h2, h3, h4, h5, h6
+//             color: #b0b0b0
+//           .bottom
+//             border-top-color: #b0b0b0
+
+//       .description
+//         font-size: 16px
+//         text-align: justify
