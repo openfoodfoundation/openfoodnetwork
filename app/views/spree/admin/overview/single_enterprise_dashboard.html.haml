@@ -1,7 +1,12 @@
-#enterprise
-  %h1= @enterprise.name
-  %h2= enterprise_type_name(@enterprise)
+- content_for :page_title do
+  %h1 
+    = @enterprise.name
+    %span.small
+      (
+      = enterprise_type_name(@enterprise)
+      )
 
+- content_for :page_actions do
   -# We need an action to render the welcome template, that this button can link to
   %button Change type
 
