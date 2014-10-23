@@ -15,6 +15,12 @@
             = t(:loading)
             \...
       = render :partial => 'spree/admin/shared/alert', :collection => session[:alerts]
+
+      %header#header{"data-hook" => ""}
+        .container
+          %figure.columns.five{"data-hook" => "logo-wrapper"}= link_to image_tag(Spree::Config[:admin_interface_logo], :id => 'logo'), spree.admin_path
+          %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
+
       .container
         .row
           #content{"data-hook" => ""}
