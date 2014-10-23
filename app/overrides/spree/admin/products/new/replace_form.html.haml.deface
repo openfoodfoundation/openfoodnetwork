@@ -38,6 +38,7 @@
     .twelve.columns.alpha
       .six.columns.alpha
         = render 'spree/admin/products/primary_taxon_form', f: f
+        = render 'spree/admin/products/tax_category_form', f: f
       .three.columns
         = f.field_container :price do
           = f.label :price, t(:price)
