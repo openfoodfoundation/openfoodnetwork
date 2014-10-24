@@ -24,16 +24,23 @@
 #type_selection{ hidden: true }
   = render partial: "change_type_form"
 
-// Contextual messages. Hide if not being used:
-.alert-box{"data-alert" => ""}
-  Alert box. Timely and contextual messages go here. Should animate in and be closeable.
-  %a.close{:href => "#"} ×
-  
+
+- if @enterprise.visible
+  .alert-box
+    %strong Hint:
+    To allow people to find you, turn on your visibility under
+    %strong Edit profile details.
+    %a.close{ href: "#" } ×
+
+  :javascript
+    $('a.close').click(function(){
+       $(this).parent().slideUp(250);
+    });
 
 .row
   .alpha.seven.columns.dashboard_item
-    .header 
-      %h3 
+    .header
+      %h3
         %span.icon-map-marker
         Your profile live
       %p on the Open Food Network map
@@ -41,29 +48,29 @@
       /-# Can we pass an anchor here to zoom to our enterprise?
       %a.button.bottom{href: main_app.map_path, target: '_blank'}
         See
-        = @enterprise.name 
+        = @enterprise.name
         live
         %span.icon-arrow-right
   .two.columns
     &nbsp;
 
   .seven.columns.omega.dashboard_item
-    .header 
-      %h3 
-        %span.icon-edit 
+    .header
+      %h3
+        %span.icon-edit
         Edit profile details
       %p Change your profile description, images, etc.
     .list
       %a.button.bottom{href: main_app.edit_admin_enterprise_path(@enterprise)}
         Manage
-        = @enterprise.name 
+        = @enterprise.name
         %span.icon-arrow-right
 
 .row
   .seven.columns.alpha.dashboard_item
     - if can? :admin, Spree::Product
-      .header 
-        %h3 
+      .header
+        %h3
           %span.icon-th-large
           Add &amp; manage products
       .list
@@ -76,8 +83,8 @@
 
   .seven.columns.omega.dashboard_item
     - if can? :admin, OrderCycle
-      .header 
-        %h3 
+      .header
+        %h3
           %span.icon-shopping-cart
           Add &amp; manage order cycles
       .list
