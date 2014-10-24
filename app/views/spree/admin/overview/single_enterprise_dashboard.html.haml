@@ -16,6 +16,7 @@
 #type_selection{ hidden: true }
   = render partial: "change_type_form"
 
+// Contextual messages. Hide if not being used:
 .alert-box{"data-alert" => ""}
   Alert box. Timely and contextual messages go here. Should animate in and be closeable.
   %a.close{:href => "#"} ×
@@ -29,6 +30,7 @@
     = link_to "#{@enterprise.name} live", main_app.map_path
 
   .two.columns
+    &nbsp;
 
   .seven.columns.omega
     Change or tweak any of the details of your profile
