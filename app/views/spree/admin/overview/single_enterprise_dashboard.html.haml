@@ -9,6 +9,12 @@
 - content_for :page_actions do
   :javascript
     function toggleType(){
+      if( $('#type_selection').is(":visible") ){
+        $('button#toggle_type i').switchClass("icon-chevron-up","icon-chevron-down")
+      }
+      else {
+        $('button#toggle_type i').switchClass("icon-chevron-down","icon-chevron-up")
+      }
       $("#type_selection").slideToggle()
     }
   #type_button
