@@ -45,7 +45,7 @@
     });
 
 .row
-  .alpha.seven.columns.dashboard_item#map
+  .alpha.seven.columns.dashboard_item.single-ent#map
     .header
       %h3
         %span.icon-map-marker
@@ -61,7 +61,7 @@
   .two.columns
     &nbsp;
 
-  .seven.columns.omega.dashboard_item#edit
+  .seven.columns.omega.dashboard_item.single-ent#edit
     .header
       %h3
         %span.icon-edit
@@ -75,7 +75,7 @@
 
 .row
   - if can? :admin, Spree::Product
-    .seven.columns.alpha.dashboard_item#products
+    .seven.columns.alpha.dashboard_item.single-ent#products
       .header
         %h3
           %span.icon-th-large
@@ -89,7 +89,7 @@
     &nbsp;
 
   - if can? :admin, OrderCycle
-    .seven.columns.omega.dashboard_item#order_cycles
+    .seven.columns.omega.dashboard_item.single-ent#order_cycles
       .header
         %h3
           %span.icon-shopping-cart
