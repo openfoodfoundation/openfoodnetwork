@@ -25,11 +25,11 @@
   = render partial: "change_type_form"
 
 
-- if @enterprise.visible
+- if !@enterprise.visible
   .alert-box
     %strong Hint:
     To allow people to find you, turn on your visibility under
-    %strong Edit profile details.
+    %strong= "Manage #{@enterprise.name}."
     %a.close{ href: "#" } ×
 
   :javascript
