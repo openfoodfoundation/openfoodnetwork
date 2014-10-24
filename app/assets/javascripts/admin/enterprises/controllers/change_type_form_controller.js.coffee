@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "sellsCtrl", ($scope) ->
+  .controller "changeTypeFormCtrl", ($scope) ->
     $scope.sells = "unspecified"
     $scope.producer_profile_only = true
     $scope.submitted = false
