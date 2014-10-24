@@ -21,9 +21,10 @@ class AbilityDecorator
     user.enterprises.present?
   end
 
-  # Users can manage products if they have an enterprise.
+  # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
-    can_manage_enterprises? user
+    can_manage_enterprises?(user) &&
+    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage orders if they have a sells own/any enterprise.

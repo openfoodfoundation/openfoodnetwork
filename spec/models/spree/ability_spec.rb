@@ -38,9 +38,29 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_none
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_false }
+        context "as a non profile" do
+          before do
+            enterprise_none.is_primary_producer = true
+            enterprise_none.producer_profile_only = false
+            enterprise_none.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_true }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
+
+        context "as a profile" do
+          before do
+            enterprise_none.is_primary_producer = true
+            enterprise_none.producer_profile_only = true
+            enterprise_none.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_false }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
       end
 
       context "as a new user with no enterprises" do

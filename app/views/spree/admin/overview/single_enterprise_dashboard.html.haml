@@ -25,6 +25,13 @@
   = render partial: "change_type_form"
 
 
+- if @enterprise.confirmed_at.nil?
+  .alert-box
+    Please confirm the email address for
+    %strong= "#{@enterprise.name}."
+    We've sent an email to
+    %strong= "#{@enterprise.email}."
+    %a.close{ href: "#" } ×
 - if !@enterprise.visible
   .alert-box
     %strong Hint:
@@ -38,7 +45,7 @@
     });
 
 .row
-  .alpha.seven.columns.dashboard_item
+  .alpha.seven.columns.dashboard_item#map
     .header
       %h3
         %span.icon-map-marker
@@ -54,7 +61,7 @@
   .two.columns
     &nbsp;
 
-  .seven.columns.omega.dashboard_item
+  .seven.columns.omega.dashboard_item#edit
     .header
       %h3
         %span.icon-edit
@@ -67,8 +74,8 @@
         %span.icon-arrow-right
 
 .row
-  .seven.columns.alpha.dashboard_item
-    - if can? :admin, Spree::Product
+  - if can? :admin, Spree::Product
+    .seven.columns.alpha.dashboard_item#products
       .header
         %h3
           %span.icon-th-large
@@ -81,8 +88,8 @@
   .two.columns
     &nbsp;
 
-  .seven.columns.omega.dashboard_item
-    - if can? :admin, OrderCycle
+  - if can? :admin, OrderCycle
+    .seven.columns.omega.dashboard_item#order_cycles
       .header
         %h3
           %span.icon-shopping-cart

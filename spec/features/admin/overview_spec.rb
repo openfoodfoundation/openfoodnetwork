@@ -28,6 +28,56 @@ feature %q{
       end
     end
 
+    context "with an enterprise" do
+      let(:d1) { create(:distributor_enterprise) }
+
+      before :each do
+        @enterprise_user.enterprise_roles.build(enterprise: d1).save
+      end
+
+      it "displays a link to the map page" do
+        visit '/admin'
+        page.should have_selector ".dashboard_item h3", text: "Your profile live"
+        page.should have_selector ".dashboard_item .button.bottom", text: "SEE #{d1.name.upcase} LIVE"
+      end
+
+      context "when enterprise has not been confirmed" do
+        before do
+          d1.confirmed_at = nil
+          d1.save!
+        end
+
+        it "displays a message telling to user to confirm" do
+          visit '/admin'
+          page.should have_selector ".alert-box", text: "Please confirm the email address for #{d1.name}. We've sent an email to #{d1.email}."
+        end
+      end
+
+      context "when visibilty is set to false" do
+        before do
+          d1.visible = false
+          d1.save!
+        end
+
+        it "displays a message telling how to set visibility" do
+          visit '/admin'
+          page.should have_selector ".alert-box", text: "To allow people to find you, turn on your visibility under Manage #{d1.name}."
+        end
+      end
+
+      pending "when user is a profile only" do
+        before do
+          d1.sells = "none"
+          d1.save!
+        end
+
+        it "does not show a products item" do
+          visit '/admin'
+          page.should_not have_selector "#products"
+        end
+      end
+    end
+
     context "with multiple enterprises" do
       let(:d1) { create(:distributor_enterprise) }
       let(:d2) { create(:distributor_enterprise) }
