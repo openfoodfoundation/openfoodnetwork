@@ -28,11 +28,13 @@ feature %q{
       end
     end
 
-    context "with an enterprise" do
+    context "with multiple enterprises" do
       let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
 
       before :each do
         @enterprise_user.enterprise_roles.build(enterprise: d1).save
+        @enterprise_user.enterprise_roles.build(enterprise: d2).save
       end
 
       it "displays information about the enterprise" do
