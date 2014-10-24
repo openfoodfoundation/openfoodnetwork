@@ -48,4 +48,7 @@
     .admin-cta
       %span.error{ ng: { show: "(change_type.sells.$error.pattern || change_type.sells.$error.pattern) && submitted" } }
         Please choose one of the options above.
-      %input{ type: 'submit', value: 'Next', ng: { click: "submit(change_type)" } }
+      - if @enterprise.sells == 'unspecified'
+        %input{ type: 'submit', value: 'Next', ng: { click: "submit(change_type)" } }
+      - else
+        %input{ type: 'submit', value: 'Change Type', ng: { click: "submit(change_type)" } }
