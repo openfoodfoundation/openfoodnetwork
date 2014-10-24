@@ -124,8 +124,8 @@ describe Enterprise do
   end
 
   describe "scopes" do
-    describe 'active' do
-      it 'find active enterprises' do
+    describe 'visible' do
+      it 'find visible enterprises' do
         d1 = create(:distributor_enterprise, visible: false)
         s1 = create(:supplier_enterprise)
         Enterprise.visible.should == [s1]
@@ -151,6 +151,19 @@ describe Enterprise do
         d2 = create(:distributor_enterprise, confirmed_at: nil)
         expect(Enterprise.unconfirmed).to_not include s1, d1
         expect(Enterprise.unconfirmed).to include s2, d2
+      end
+    end
+
+    describe "activated" do
+      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.now) ;}
+      let!(:inactive_enterprise2) { create(:enterprise, sells: "none", confirmed_at: nil) }
+      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.now) }
+
+      it "finds enterprises that have a sells property other than 'unspecified' and that are confirmed" do
+        activated_enterprises = Enterprise.activated
+        expect(activated_enterprises).to include active_enterprise
+        expect(activated_enterprises).to_not include inactive_enterprise1
+        expect(activated_enterprises).to_not include inactive_enterprise2
       end
     end
 

@@ -48,6 +48,10 @@ Openfoodnetwork::Application.routes.draw do
         post :bulk_update, as: :bulk_update
       end
 
+      member do
+        put :set_sells
+      end
+
       resources :producer_properties do
         post :update_positions, on: :collection
       end

@@ -31,6 +31,10 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :manage_products
     end
 
+    def manages_one_enterprise?
+      @user.enterprises.length == 1
+    end
+
 
     private
 

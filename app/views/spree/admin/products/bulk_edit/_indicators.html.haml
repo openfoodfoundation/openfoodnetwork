@@ -5,5 +5,12 @@
   %img.spinner{ src: "/assets/loading.gif" }
   %h1 LOADING PRODUCTS
 
-%div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0' }
-  %h1#no_results No products found.
+%div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0 && query.length==0' }
+  %h1#no_results No products yet. Why don't you add some?
+
+%div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0 && query.length!=0' }
+  %h1#no_results 
+    Sorry, no results match 
+    '
+    {{query}}
+    '
