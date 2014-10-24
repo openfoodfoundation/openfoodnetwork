@@ -23,32 +23,60 @@
   
 
 .row
-  .alpha.seven.columns
-    See your profile live on the Open Food Network map.
-    %br/
-    -# Can we pass an anchor here to zoom to our enterprise?
-    = link_to "#{@enterprise.name} live", main_app.map_path
+  .alpha.seven.columns.dashboard_item
+    .header 
+      %h3 
+        %span.icon-map-marker
+        Your profile live
+      %p on the Open Food Network map
+    .list
+      /-# Can we pass an anchor here to zoom to our enterprise?
+      %a.button.bottom{href: main_app.map_path, target: '_blank'}
+        See
+        = @enterprise.name 
+        live
+        %span.icon-arrow-right
+  .two.columns
+    &nbsp;
+
+  .seven.columns.omega.dashboard_item
+    .header 
+      %h3 
+        %span.icon-edit 
+        Edit profile details
+      %p Change your profile description, images, etc.
+    .list
+      %a.button.bottom{href: main_app.edit_admin_enterprise_path(@enterprise)}
+        Manage
+        = @enterprise.name 
+        %span.icon-arrow-right
+
+.row
+  .seven.columns.alpha.dashboard_item
+    - if can? :admin, Spree::Product
+      .header 
+        %h3 
+          %span.icon-plus
+          Add &amp; manage products
+      .list
+        %a.button.bottom{href: bulk_edit_admin_products_path}
+          Manage products
+          %span.icon-arrow-right
 
   .two.columns
     &nbsp;
 
   .seven.columns.omega
-    Change or tweak any of the details of your profile
-    %br/
-    = link_to "Manage #{@enterprise.name}", main_app.edit_admin_enterprise_path(@enterprise)
-
-
-.row
-  .alpha.seven.columns
-    - if can? :admin, Spree::Product
-      Add and manage products
-      %br/
-      = link_to "Manage products", bulk_edit_admin_products_path
-
-  .two.columns
-
-  .seven.columns.omega
     - if can? :admin, OrderCycle
-      Add and manage order cycles
-      %br/
-      = link_to "Manage order cycles", main_app.admin_order_cycles_path
+      .header 
+        %h3 
+          %span.icon-shopping-cart
+          Add &amp; manage order cycles
+      .list
+        %a.button.bottom{href: main_app.admin_order_cycles_path}
+          Manage order cycles
+          %span.icon-arrow-right
+
+
+
+
