@@ -1,5 +1,6 @@
 class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any)
+  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
   devise :confirmable, reconfirmable: true
@@ -257,6 +258,16 @@ class Enterprise < ActiveRecord::Base
       joins(:products).
       where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
+  end
+
+  def shop_trial_in_progress?
+    !!shop_trial_start_date &&
+    (shop_trial_start_date + SHOP_TRIAL_LENGTH.days > Time.now) &&
+    %w(own any).include?(sells)
+  end
+
+  def remaining_trial_days
+    distance_of_time_in_words(Time.now, shop_trial_start_date + SHOP_TRIAL_LENGTH.days)
   end
 
   protected

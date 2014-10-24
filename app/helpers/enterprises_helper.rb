@@ -10,7 +10,7 @@ module EnterprisesHelper
   def managed_enterprises
     Enterprise.managed_by(spree_current_user)
   end
-  
+
   def enterprises_options enterprises
     enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
   end
@@ -20,12 +20,12 @@ module EnterprisesHelper
   end
 
   def enterprise_type_name(enterprise)
-    # TODO: When we can distinguish between profiles and producers that supply only (without
-    #       their own store), include it here.
-    # profile, supplier only, shopfront
-    enterprise.sells == 'none' ? 'profile' : 'shopfront'
+    if enterprise.sells == 'none'
+      enterprise.producer_profile_only ? 'Profile' : 'Supplier Only'
+    else
+      "Has Shopfront"
+    end
   end
-
 
   def enterprise_confirm_delete_message(enterprise)
     if enterprise.supplied_products.present?
