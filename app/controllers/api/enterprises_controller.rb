@@ -4,6 +4,7 @@ module Api
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
     before_filter :override_sells, only: [:create, :update]
+    before_filter :override_visiblity, only: [:create, :update]
     respond_to :json
 
     def managed
@@ -63,6 +64,10 @@ module Api
 
     def override_sells
       params[:enterprise][:sells] = 'unspecified'
+    end
+
+    def override_visible
+      params[:enterprise][:visible] = false
     end
   end
 end
