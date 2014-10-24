@@ -19,12 +19,19 @@ module Admin
     def set_sells
       enterprise = Enterprise.find(params[:id])
       attributes = { sells: params[:sells] }
-      attributes[:producer_profile_only] = !!params[:producer_profile_only] if params[:sells] == 'none'
+      attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
       attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
 
       if %w(none own).include?(params[:sells])
         if params[:sells] == 'own' && enterprise.shop_trial_start_date
-          flash[:error] = "You've already started your trial!"
+          expiry = enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days
+          if Time.now > expiry
+            flash[:error] = "Sorry, but you've already had a trial. Expired on: #{expiry.strftime('%Y-%m-%d')}"
+          else
+            attributes.delete :shop_trial_start_date
+            enterprise.update_attributes(attributes)
+            flash[:notice] = "Welcome back! Your trial expires on: #{expiry.strftime('%Y-%m-%d')}"
+          end
         elsif enterprise.update_attributes(attributes)
           flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
         end
