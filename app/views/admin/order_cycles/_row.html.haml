@@ -4,15 +4,17 @@
   %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
   %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
   %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
-  %td.suppliers
-    - order_cycle.suppliers.managed_by(spree_current_user).each do |s|
-      = s.name
-      %br/
-  %td= order_cycle.coordinator.name
-  %td.distributors
-    - order_cycle.distributors.managed_by(spree_current_user).each do |d|
-      = d.name
-      %br/
+
+  - unless order_cycles_simple_view
+    %td.suppliers
+      - order_cycle.suppliers.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises).each do |s|
+        = s.name
+        %br/
+    %td= order_cycle.coordinator.name
+    %td.distributors
+      - order_cycle.distributors.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises).each do |d|
+        = d.name
+        %br/
 
   %td.products
     - variant_images = capture do

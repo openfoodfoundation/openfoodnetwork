@@ -121,6 +121,8 @@ class AbilityDecorator
       (user.enterprises & shipping_method.distributors).any?
     end
 
+    # Reports page
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
 

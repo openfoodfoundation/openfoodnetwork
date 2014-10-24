@@ -55,6 +55,7 @@ class Enterprise < ActiveRecord::Base
   validates :email, presence: true
   validates_presence_of :owner
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates_length_of :description, :maximum => 255
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
