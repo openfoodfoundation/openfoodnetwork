@@ -47,10 +47,11 @@
             You want to use OFN as a place for people to find and contact you.
   .row
     .sixteen.columns.alpha
-      .admin-cta
-        %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
-          Please choose one of the options above.
-        - if @enterprise.sells == 'unspecified'
-          %input.big_button{ type: 'submit', value: 'Next', ng: { click: "submit(change_type)" } }
-        - else
-          %input.big_button{ type: 'submit', value: 'Change Type', ng: { click: "submit(change_type)" } }
+      %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
+        Please choose one of the options above.
+      - if @enterprise.sells == 'unspecified'
+        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)" } }
+      - else
+        %input.button.big{ type: 'submit', value: 'Change now', ng: { click: "submit(change_type)" } }
+      %br &nbsp;
+      %hr
