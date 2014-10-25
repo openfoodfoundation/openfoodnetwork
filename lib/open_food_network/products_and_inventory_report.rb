@@ -13,7 +13,7 @@ module OpenFoodNetwork
           "Producer Suburb",
           "Product",
           "Product Properties",
-          "Taxon",
+          "Taxons",
           "Variant Value",
           "Price",
           "Group Buy Unit Quantity",
