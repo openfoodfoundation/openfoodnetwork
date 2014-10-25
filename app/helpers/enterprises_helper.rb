@@ -10,13 +10,21 @@ module EnterprisesHelper
   def managed_enterprises
     Enterprise.managed_by(spree_current_user)
   end
-  
+
   def enterprises_options enterprises
     enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
   end
 
   def enterprises_to_names(enterprises)
     enterprises.map(&:name).sort.join(', ')
+  end
+
+  def enterprise_type_name(enterprise)
+    if enterprise.sells == 'none'
+      enterprise.producer_profile_only ? 'Profile' : 'Supplier Only'
+    else
+      "Has Shopfront"
+    end
   end
 
   def enterprise_confirm_delete_message(enterprise)

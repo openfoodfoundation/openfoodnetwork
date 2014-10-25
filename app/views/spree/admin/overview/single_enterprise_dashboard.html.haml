@@ -1,0 +1,104 @@
+- content_for :page_title do
+  %h1
+    = @enterprise.name
+    %span.small<
+      = "(#{enterprise_type_name(@enterprise)})"
+
+- content_for :page_actions do
+  :javascript
+    function toggleType(){
+      if( $('#type_selection').is(":visible") ){
+        $('button#toggle_type i').switchClass("icon-chevron-up","icon-chevron-down")
+      }
+      else {
+        $('button#toggle_type i').switchClass("icon-chevron-down","icon-chevron-up")
+      }
+      $("#type_selection").slideToggle()
+    }
+  #type_button
+    %button#toggle_type{ onClick: 'toggleType()' }
+      Change type
+      %i.icon-chevron-down
+
+
+#type_selection{ hidden: true }
+  = render partial: "change_type_form"
+
+
+- if @enterprise.confirmed_at.nil?
+  .alert-box
+    Please confirm the email address for
+    %strong= "#{@enterprise.name}."
+    We've sent an email to
+    %strong= "#{@enterprise.email}."
+    %a.close{ href: "#" } ×
+- if !@enterprise.visible
+  .alert-box
+    %strong Hint:
+    To allow people to find you, turn on your visibility under
+    %strong= "Manage #{@enterprise.name}."
+    %a.close{ href: "#" } ×
+
+  :javascript
+    $('a.close').click(function(){
+       $(this).parent().slideUp(250);
+    });
+
+.row
+  .alpha.seven.columns.dashboard_item.single-ent#map
+    .header
+      %h3
+        %span.icon-map-marker
+        Your profile live
+      %p on the Open Food Network map
+    .list
+      /-# Can we pass an anchor here to zoom to our enterprise?
+      %a.button.bottom{href: main_app.map_path, target: '_blank'}
+        See
+        = @enterprise.name
+        live
+        %span.icon-arrow-right
+  .two.columns
+    &nbsp;
+
+  .seven.columns.omega.dashboard_item.single-ent#edit
+    .header
+      %h3
+        %span.icon-edit
+        Edit profile details
+      %p Change your profile description, images, etc.
+    .list
+      %a.button.bottom{href: main_app.edit_admin_enterprise_path(@enterprise)}
+        Manage
+        = @enterprise.name
+        %span.icon-arrow-right
+
+.row
+  - if can? :admin, Spree::Product
+    .seven.columns.alpha.dashboard_item.single-ent#products
+      .header
+        %h3
+          %span.icon-th-large
+          Add &amp; manage products
+      .list
+        %a.button.bottom{href: bulk_edit_admin_products_path}
+          Manage products
+          %span.icon-arrow-right
+
+  .two.columns
+    &nbsp;
+
+  - if can? :admin, OrderCycle
+    .seven.columns.omega.dashboard_item.single-ent#order_cycles
+      .header
+        %h3
+          %span.icon-shopping-cart
+          Add &amp; manage order cycles
+      .list
+        %a.button.bottom{href: main_app.admin_order_cycles_path}
+          Manage order cycles
+          %span.icon-arrow-right
+
+
+
+

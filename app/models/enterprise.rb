@@ -1,5 +1,6 @@
 class Enterprise < ActiveRecord::Base
-  SELLS = %w(none own any)
+  SELLS = %w(unspecified none own any)
+  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
   devise :confirmable, reconfirmable: true
@@ -64,6 +65,7 @@ class Enterprise < ActiveRecord::Base
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
+  scope :activated, where('confirmed_at IS NOT NULL AND sells <> \'unspecified\'')
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
@@ -257,6 +259,16 @@ class Enterprise < ActiveRecord::Base
       joins(:products).
       where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
+  end
+
+  def shop_trial_in_progress?
+    !!shop_trial_start_date &&
+    (shop_trial_start_date + SHOP_TRIAL_LENGTH.days > Time.now) &&
+    %w(own any).include?(sells)
+  end
+
+  def remaining_trial_days
+    distance_of_time_in_words(Time.now, shop_trial_start_date + SHOP_TRIAL_LENGTH.days)
   end
 
   protected

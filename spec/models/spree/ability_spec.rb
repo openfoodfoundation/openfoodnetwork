@@ -21,7 +21,7 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_any
         end
 
-        it { subject.can_manage_products?(user).should be_false }
+        it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
       end
@@ -31,7 +31,7 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_own
         end
 
-        it { subject.can_manage_products?(user).should be_false }
+        it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
       end
@@ -71,9 +71,29 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_none_producer
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_false }
+        context "as a non profile" do
+          before do
+            enterprise_none_producer.is_primary_producer = true
+            enterprise_none_producer.producer_profile_only = false
+            enterprise_none_producer.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_true }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
+
+        context "as a profile" do
+          before do
+            enterprise_none_producer.is_primary_producer = true
+            enterprise_none_producer.producer_profile_only = true
+            enterprise_none_producer.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_false }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
       end
 
       context "as a new user with no enterprises" do
@@ -330,11 +350,11 @@ module Spree
         end
 
         it 'should have the ability to read and edit enterprises that I manage' do
-          should have_ability([:read, :edit, :update, :bulk_update], for: s1)
+          should have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s1)
         end
 
         it 'should not have the ability to read and edit enterprises that I do not manage' do
-          should_not have_ability([:read, :edit, :update, :bulk_update], for: s2)
+          should_not have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s2)
         end
 
         it 'should have the ability administrate and create enterpises' do
