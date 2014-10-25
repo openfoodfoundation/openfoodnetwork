@@ -2,44 +2,25 @@
 @import mixins
 
 #registration-modal
-  .header
+  header
     text-align: center
-    background-color: #efefef
-    padding-bottom: 1rem
+    // background-color: #efefef
+    @media all and (max-width: 64em)
+      text-align: left
   .container
     background-color: #ffffff
-  .content
-    // margin-bottom: 15px
 
   i
     font-size: 150%
 
-  .buttons
-
-  ofn-inline-flash
-    display: block
-    padding: 15px
-    position: relative
-    margin-bottom: 10px
-    &.brick
-      background-color: $clr-brick-light
-      border: 2px solid $clr-brick
-      color: $clr-brick
-    &.turquoise
-      background-color: $clr-turquoise-light
-      border: 2px solid $clr-turquoise
-      color: $clr-turquoise
-    .close-button
-      position: absolute
-      top: 0px
-      right: 0px
-
   .field
-    margin-bottom: 15px
+    margin-bottom: 1em
 
-  input.chunky
+  .chunky
     padding: 8px
-    font-size: 105%
+    font-size: 1rem
+    margin: 0
+    width: 100%
 
   label.indent-checkbox
     display: block
@@ -51,9 +32,9 @@
   label
     margin-bottom: 3px
 
-  ol, ul
-    // font-size: 80%
+  ol, ul, p
     font-size: 0.875rem
+  ol, ul
     padding: 0
     margin: 0
   ol
@@ -62,22 +43,24 @@
   .highlight-box
     background: white
     padding: 1rem 1.2rem
-    @media all and (max-width: 640px)
+    @media all and (max-width: 64em)
       margin-top: 1rem
 
   #progress-bar
     margin-bottom: 15px
     .item
-      padding: 12px 0px
+      font-size: 0.75rem
+      padding: 10px 0px
       text-transform: uppercase
       text-align: center
-      background-color: #333
-      border: 2px solid #333
+      background-color: $clr-blue
+      border: 2px solid $clr-blue
       color: #fff
     .item.active
-      background-color: #cccccc
-      border: 2px solid #333
-      color: #333
+      background-color: $disabled-light
+      border: 2px solid $clr-blue
+      color: $clr-blue
+      font-weight: 700
       @include box-shadow(inset 0 0 1px 0 #fff)
 
 
@@ -110,39 +93,57 @@
     font-size: 18px
     font-weight: bold
     color: #373737
-    background-color: #e1e1e1
+    background-color: #f1f1f1
     text-align: center
     border: 3px dashed #494949
     margin-left: auto
     margin-right: auto
+    .spinner
+      width: 100px
     &.logo
       .message
         padding-top: 6em
+      .loading
+        padding-top: 4em
       width:  306px
       height: 306px
     &.promo
       .message
         padding-top: 4em
+      .loading
+        padding-top: 1em
       width:  726px
       height: 166px
 
 
-#registration-details
+#registration-type
   #enterprise-types
-    a.panel
+    a.btnpanel
       display: block
+      padding: 1rem
+      margin-bottom: 1rem
       background-color: #efefef
       color: black
-      @media all and (min-width: 768px)
-        min-height: 200px
+      text-align: center
+      border: 1px solid transparent
+      i
+        font-size: 3rem
+      h4
+        margin-top: 1rem
+
       &:hover
         background-color: #fff
+
       &#producer-panel:hover
+        border: 1px solid $clr-turquoise
         &, & *
           color: $clr-turquoise
+
       &#hub-panel:hover, &#both-panel:hover
+        border: 1px solid $clr-brick
         &, & *
           color: $clr-brick
+
       &.selected
         &, &  *
           color: #fff

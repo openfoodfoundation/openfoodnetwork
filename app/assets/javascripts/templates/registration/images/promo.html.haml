@@ -34,6 +34,10 @@
       .row.pad-top
         .small-12.columns.center
           #image-placeholder.promo
-            %img{ ng: { show: "imageSrc()", src: '{{ imageSrc() }}' } }
-            .message{ ng: { hide: "imageSrc()" } }
+            %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
+            .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
               Your logo will appear here for review once uploaded
+            .loading{ ng: { hide: "!imageUploader.isUploading" } }
+              %img.spinner{ src: "/assets/loading.gif" }
+              %br/
+              Uploading...

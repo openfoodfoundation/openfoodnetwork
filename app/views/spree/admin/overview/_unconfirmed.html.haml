@@ -1,0 +1,4 @@
+- @enterprises.unconfirmed.each do |enterprise|
+  .alert
+    %h6= "Action Required: Please confirm the email address for #{enterprise.name}."
+    %span.message= "We've sent a confirmation email to #{enterprise.email}, so please check there for further instructions. Thanks!"

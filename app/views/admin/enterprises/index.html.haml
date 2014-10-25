@@ -8,7 +8,7 @@
 
 = render 'admin/shared/enterprises_sub_menu'
 
-= form_for @enterprise_set, :url => main_app.bulk_update_admin_enterprises_path do |f|
+= form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   %table#listing_enterprises.index
     %colgroup
       %col{style: "width: 25%;"}/
@@ -23,9 +23,9 @@
       %tr{"data-hook" => "enterprises_header"}
         %th Name
         %th Role
-        %th Visible?
         - if spree_current_user.admin?
-          %th Type
+          %th Sells
+        %th Visible?
         - if spree_current_user.admin?
           %th Owner
         %th
@@ -37,12 +37,9 @@
           %td
             = enterprise_form.check_box :is_primary_producer
             Producer
-            %br/
-            = enterprise_form.check_box :is_distributor
-            Hub
-          %td= enterprise_form.check_box :visible
           - if spree_current_user.admin?
-            %td= enterprise_form.select :type, Enterprise::TYPES, {}, class: 'select2 fullwidth'
+            %td= enterprise_form.select :sells, Enterprise::SELLS, {}, class: 'select2 fullwidth'
+          %td= enterprise_form.check_box :visible
           - if spree_current_user.admin?
             %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
           %td{"data-hook" => "admin_users_index_row_actions"}

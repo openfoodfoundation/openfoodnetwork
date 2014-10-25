@@ -16,7 +16,7 @@ feature %q{
 
     within("tr.enterprise-#{s.id}") do
       expect(page).to have_content s.name
-      expect(page).to have_select "enterprise_set_collection_attributes_1_type"
+      expect(page).to have_select "enterprise_set_collection_attributes_1_sells"
       expect(page).to have_content "Edit Profile"
       expect(page).to have_content "Delete"
       expect(page).to_not have_content "Payment Methods"
@@ -26,7 +26,7 @@ feature %q{
 
     within("tr.enterprise-#{d.id}") do
       expect(page).to have_content d.name
-      expect(page).to have_select "enterprise_set_collection_attributes_0_type"
+      expect(page).to have_select "enterprise_set_collection_attributes_0_sells"
       expect(page).to have_content "Edit Profile"
       expect(page).to have_content "Delete"
       expect(page).to have_content "Payment Methods"
@@ -37,7 +37,7 @@ feature %q{
 
   scenario "editing enterprises in bulk" do
     s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise, type: 'profile')
+    d = create(:distributor_enterprise, sells: 'none')
     d_manager = create_enterprise_user
     d_manager.enterprise_roles.build(enterprise: d).save
     expect(d.owner).to_not eq d_manager
@@ -48,14 +48,14 @@ feature %q{
     within("tr.enterprise-#{d.id}") do
       expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
       uncheck "enterprise_set_collection_attributes_0_visible"
-      select 'full', from: "enterprise_set_collection_attributes_0_type"
+      select 'any', from: "enterprise_set_collection_attributes_0_sells"
       select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
     end
     click_button "Update"
     flash_message.should == 'Enterprises updated successfully'
     distributor = Enterprise.find(d.id)
     expect(distributor.visible).to eq false
-    expect(distributor.type).to eq 'full'
+    expect(distributor.sells).to eq 'any'
     expect(distributor.owner).to eq d_manager
   end
 
@@ -82,15 +82,16 @@ feature %q{
     click_link 'New Enterprise'
 
     # Checking shipping and payment method sidebars work
+    choose "Any"
     uncheck 'enterprise_is_primary_producer'
-    check 'enterprise_is_distributor'
+
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     # Filling in details
     fill_in 'enterprise_name', :with => 'Eaterprises'
     select2_search admin.email, from: 'Owner'
-    choose 'Full'
+    choose 'Any'
     check "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
     select2_search eg1.name, from: 'Groups'
@@ -134,7 +135,7 @@ feature %q{
     end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
-    choose 'Single'
+    choose 'Own'
     select2_search user.email, from: 'Owner'
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
     long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
@@ -142,14 +143,23 @@ feature %q{
 
     # Check Angularjs switching of sidebar elements
     uncheck 'enterprise_is_primary_producer'
-    uncheck 'enterprise_is_distributor'
+    choose 'None'
+    page.should have_selector "#enterprise_fees", visible: false
     page.should have_selector "#payment_methods", visible: false
     page.should have_selector "#shipping_methods", visible: false
-    page.should have_selector "#enterprise_fees", visible: false
-    check 'enterprise_is_distributor'
+    check 'enterprise_is_primary_producer'
+    page.should have_selector "#enterprise_fees"
+    page.should have_selector "#payment_methods", visible: false
+    page.should have_selector "#shipping_methods", visible: false
+    uncheck 'enterprise_is_primary_producer'
+    choose 'Own'
+    page.should have_selector "#enterprise_fees"
     page.should have_selector "#payment_methods"
     page.should have_selector "#shipping_methods"
+    choose 'Any'
     page.should have_selector "#enterprise_fees"
+    page.should have_selector "#payment_methods"
+    page.should have_selector "#shipping_methods"
 
     select2_search eg1.name, from: 'Groups'
 
@@ -277,16 +287,14 @@ feature %q{
 
         within("tr.enterprise-#{distributor1.id}") do
           expect(page).to have_content distributor1.name
-          expect(page).to have_checked_field "enterprise_set_collection_attributes_0_is_distributor"
           expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_0_type"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_0_sells"
         end
 
         within("tr.enterprise-#{supplier1.id}") do
           expect(page).to have_content supplier1.name
-          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_distributor"
           expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_1_type"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
         end
 
         expect(page).to_not have_content "supplier2.name"

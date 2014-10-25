@@ -5,8 +5,6 @@
   %li#new_order_cycle_link
     = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'icon-plus', :id => 'admin_new_order_cycle_link'
 
-
-
 = form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|
   %table.index#listing_order_cycles
     %colgroup

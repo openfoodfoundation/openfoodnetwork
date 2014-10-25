@@ -32,13 +32,9 @@
 
     .row
       .three.columns.alpha
-        %label Enterprise Type(s)
-        .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food. Select 'Hub' if you want a shop-front. You can choose either or both."}
+        %label Primary Producer
+        .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
           %a What's this?
-      .two.columns
-        = f.check_box :is_distributor, 'ng-model' => 'Enterprise.is_distributor'
-        &nbsp;
-        = f.label :is_distributor, 'Hub'
       .five.columns.omega
         = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
         &nbsp;
@@ -47,21 +43,21 @@
       .row
         .alpha.eleven.columns
           .three.columns.alpha
-            = f.label :type, 'Profile type'
-            .with-tip{'data-powertip' => "Full - enterprise may have products and relationships.<br />Single - enterprise may have products but no relationships.<br />Profile - enterprise has a profile but no products or relationships.<br />"}
+            = f.label :sells, 'Sells'
+            .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
               %a What's this?
           .two.columns
-            = f.radio_button :type, "full"
+            = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
             &nbsp;
-            = f.label :type, "Full", value: "full"
+            = f.label :sells, "None", value: "none"
           .two.columns
-            = f.radio_button :type, "single"
+            = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
             &nbsp;
-            = f.label :type, "Single", value: "single"
+            = f.label :sells, "Own", value: "own"
           .four.columns.omega
-            = f.radio_button :type, "profile"
+            = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
             &nbsp;
-            = f.label :type, "Profile", value: "profile"
+            = f.label :sells, "Any", value: "any"
     .row
       .three.columns.alpha
         %label Visible in search?
@@ -177,7 +173,7 @@
       .alpha.three.columns
         = f.label :description, 'Short Description'
       .omega.eight.columns
-        = f.text_field :description, placeholder: 'Tell us about your enterprise in one or two sentences'
+        = f.text_field :description, maxlength: 255, placeholder: 'Tell us about your enterprise in one or two sentences'
     .row
       .alpha.three.columns
         = f.label :long_description, 'About Us'
