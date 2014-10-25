@@ -1,23 +1,22 @@
-= render partial: 'shared/components/filter_controls'
+.row
+  = render partial: 'shared/components/filter_controls'
+  = render partial: 'shared/components/show_profiles'
 
 .row.animate-show{"ng-show" => "filtersActive"}
-  .small-12.columns    
+  .small-12.columns
     .row.filter-box
       .small-12.large-9.columns
-        %h5.tdhead 
+        %h5.tdhead
           .light Filter by
           Type
         %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5
-          %taxon-selector{objects: "hubs | hubs:query", 
+          %taxon-selector{objects: "Enterprises.hubs | searchEnterprises:query",
             results: "activeTaxons"}
       .small-12.large-3.columns
-        %h5.tdhead 
+        %h5.tdhead
           .light Filter by
           Delivery
         %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-2
-          %shipping-type-selector{results: "shippingTypes"} 
-    .row.filter-box.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
-      .small-12.columns
-        %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 
-          %i.ofn-i_009-close
-          Clear all filters
+          %shipping-type-selector{results: "shippingTypes"}
+
+= render partial: 'shared/components/filter_box'

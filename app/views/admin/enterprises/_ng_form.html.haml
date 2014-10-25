@@ -1,8 +1,9 @@
 = admin_inject_enterprise
+= admin_inject_enterprise_long_description
 = admin_inject_payment_methods
 = admin_inject_shipping_methods
 
-.sixteen.columns.alpha{ ng: { app: 'admin.enterprises', controller: 'enterpriseCtrl' } }
+.sixteen.columns.alpha{ ng: { app: 'admin.enterprises', controller: 'enterpriseCtrl' }, nav: { check: '',  callback: 'enterpriseNavCallback()' }}
   .eleven.columns.alpha
     = render 'form', f: f
   .one.column &nbsp;

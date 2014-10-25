@@ -6,24 +6,6 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 
 Spree::Admin::ReportsController.class_eval do
-  # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory]
-
-  # Render a partial for orders and fulfillment description
-  respond_override :index => { :html => { :success => lambda {
-    @reports[:orders_and_fulfillment][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
-    @reports[:products_and_inventory][:description] =
-      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
-    @reports[:customers][:description] =
-      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
-  } } }
-
-  # OVERRIDING THIS so we use a method not a constant for available reports
-  def index
-    @reports = available_reports
-    respond_with(@reports)
-  end
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
@@ -41,6 +23,26 @@ Spree::Admin::ReportsController.class_eval do
       ["Addresses", :addresses]
     ]
   }
+
+  # Fetches user's distributors, suppliers and order_cycles
+  before_filter :load_data, only: [:customers, :products_and_inventory]
+
+  # Render a partial for orders and fulfillment description
+  respond_override :index => { :html => { :success => lambda {
+    @reports[:orders_and_fulfillment][:description] =
+      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
+    @reports[:products_and_inventory][:description] =
+      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
+    @reports[:customers][:description] =
+      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
+  } } }
+
+
+  # Overide spree reports list.
+  def index
+    @reports = authorized_reports
+    respond_with(@reports)
+  end
 
   # This action is short because we refactored it like bosses
   def customers
@@ -592,28 +594,29 @@ Spree::Admin::ReportsController.class_eval do
   private
 
   def load_data
+    # Load distributors either owned by the user or selling their enterprises products.
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
     distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
     @distributors = my_distributors | distributors_of_my_products
+    # Load suppliers either owned by the user or supplying products their enterprises distribute.
     suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @suppliers = my_suppliers | suppliers_of_products_I_distribute
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
   end
 
-  def available_reports
+  def authorized_reports
     reports = {
       :orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"},
       :bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"},
       :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
       :customers => {:name => "Customers", :description => 'Customer details'},
-      :products_and_inventory => {:name => "Products & Inventory", :description => ''}
+      :products_and_inventory => {:name => "Products & Inventory", :description => ''},
+      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" }
     }
-    if spree_current_user.has_spree_role? 'admin'
-      reports[:sales_total] = { :name => "Sales Total", :description => "Sales Total For All Orders" }
-    end
-    reports
+    # Return only reports the user is authorized to view.
+    reports.select { |action| can? action, :report }
   end
 
   def total_units(line_items)

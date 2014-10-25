@@ -6,7 +6,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/map", to: "map#index", as: :map
 
   get "/register", to: "registration#index", as: :registration
-  get "/register/store", to: "registration#store", as: :store_registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
 
   resource :shop, controller: "shop" do
@@ -34,6 +33,8 @@ Openfoodnetwork::Application.routes.draw do
       get :shop # old world
     end
   end
+
+  devise_for :enterprise
 
   namespace :admin do
     resources :order_cycles do
@@ -67,6 +68,7 @@ Openfoodnetwork::Application.routes.draw do
 
   namespace :api do
     resources :enterprises do
+      post :update_image, on: :member
       get :managed, on: :collection
       get :accessible, on: :collection
     end

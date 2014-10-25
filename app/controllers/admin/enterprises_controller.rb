@@ -3,10 +3,11 @@ module Admin
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
-    before_filter :check_type, only: :update
-    before_filter :check_bulk_type, only: :bulk_update
+    before_filter :check_can_change_sells, only: :update
+    before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
-    before_filter :check_owner, only: :update
+    before_filter :check_can_change_owner, only: :update
+    before_filter :check_can_change_bulk_owner, only: :bulk_update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -49,7 +50,8 @@ module Admin
     end
 
     def collection
-      Enterprise.managed_by(spree_current_user).order('is_distributor DESC, is_primary_producer ASC, name')
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
+      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -62,25 +64,33 @@ module Admin
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
     end
 
-    def check_bulk_type
+    def check_can_change_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
-          enterprise_params.delete :type
+          enterprise_params.delete :sells
         end
       end
     end
 
-    def check_type
-      params[:enterprise].delete :type unless spree_current_user.admin?
+    def check_can_change_sells
+      params[:enterprise].delete :sells unless spree_current_user.admin?
     end
 
     def override_owner
       params[:enterprise][:owner_id] = spree_current_user.id unless spree_current_user.admin?
     end
 
-    def check_owner
-      unless spree_current_user == @enterprise.owner || spree_current_user.admin?
+    def check_can_change_owner
+      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
         params[:enterprise].delete :owner_id
+      end
+    end
+
+    def check_can_change_bulk_owner
+      unless spree_current_user.admin?
+        params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
+          enterprise_params.delete :owner_id
+        end
       end
     end
 

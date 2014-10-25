@@ -1,3 +1,3 @@
 class Api::PaymentMethodSerializer < ActiveModel::Serializer
-  attributes :name, :id, :method_type
+  attributes :name, :description, :id, :method_type
 end

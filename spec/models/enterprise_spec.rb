@@ -3,6 +3,25 @@ require 'spec_helper'
 describe Enterprise do
   include AuthenticationWorkflow
 
+  describe "sending emails" do
+    describe "on creation" do
+      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
+      let!(:enterprise) { create(:enterprise, owner: user) }
+
+      it "when the email address has not already been confirmed" do
+        mail_message = double "Mail::Message"
+        EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
+        mail_message.should_receive :deliver
+        create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
+      end
+
+      it "when the email address has already been confirmed" do
+        EnterpriseMailer.should_not_receive(:confirmation_instructions)
+        e = create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+      end
+    end
+  end
+
   describe "associations" do
     it { should belong_to(:owner) }
     it { should have_many(:supplied_products) }
@@ -85,6 +104,8 @@ describe Enterprise do
   describe "validations" do
     subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
     it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:email) }
+    it { should ensure_length_of(:description).is_at_most(255) }
 
     it "requires an owner" do
       expect{
@@ -101,12 +122,35 @@ describe Enterprise do
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
   end
+
   describe "scopes" do
     describe 'active' do
       it 'find active enterprises' do
         d1 = create(:distributor_enterprise, visible: false)
         s1 = create(:supplier_enterprise)
         Enterprise.visible.should == [s1]
+      end
+    end
+
+    describe "confirmed" do
+      it "find enterprises with a confirmed date" do
+        s1 = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.confirmed).to include s1, d1
+        expect(Enterprise.confirmed).to_not include s2, d2
+      end
+    end
+
+    describe "unconfirmed" do
+      it "find enterprises without a confirmed date" do
+        s1 = create(:supplier_enterprise)
+        d1 = create(:distributor_enterprise)
+        s2 = create(:supplier_enterprise, confirmed_at: nil)
+        d2 = create(:distributor_enterprise, confirmed_at: nil)
+        expect(Enterprise.unconfirmed).to_not include s1, d1
+        expect(Enterprise.unconfirmed).to include s2, d2
       end
     end
 
@@ -499,6 +543,27 @@ describe Enterprise do
       supplier.producer_properties.count.should == 1
       supplier.producer_properties.first.value.should == 'NASAA 12345'
       supplier.producer_properties.first.property.presentation.should == 'Organic Certified'
+    end
+  end
+
+  describe "provide enterprise category" do
+    let(:producer_sell_all) { build(:enterprise, is_primary_producer: true,  sells: "any") }
+    let(:producer_sell_own) { build(:enterprise, is_primary_producer: true,  sells: "own") }
+    let(:producer_sell_none) { build(:enterprise, is_primary_producer: true,  sells: "none") }
+    let(:non_producer_sell_all) { build(:enterprise, is_primary_producer: false,  sells: "any") }
+    let(:non_producer_sell_own) { build(:enterprise, is_primary_producer: false,  sells: "own") }
+    let(:non_producer_sell_none) { build(:enterprise, is_primary_producer: false, sells: "none") }
+
+    it "should output enterprise categories" do
+      producer_sell_all.is_primary_producer.should == true
+      producer_sell_all.sells.should == "any"
+
+      producer_sell_all.category.should == :producer_hub
+      producer_sell_own.category.should == :producer_shop
+      producer_sell_none.category.should == :producer
+      non_producer_sell_all.category.should == :hub
+      non_producer_sell_own.category.should == :hub
+      non_producer_sell_none.category.should == :hub_profile
     end
   end
 end

@@ -32,6 +32,11 @@
         span
           text-decoration: underline
 
+      &.is_distributor, &.is_distributor i.ofn-i_059-producer, &.is_distributor i.ofn-i_060-producer-reversed
+        color: $clr-brick
+        &:hover, &:active, &:focus
+          color: $clr-brick-bright
+
     a.cta-hub
       &:hover, &:focus, &:active
         &.secondary
@@ -51,9 +56,11 @@
     .fat-taxons
       background-color: $clr-turquoise-light
 
+    .producer-name
+      color: $clr-turquoise
+
     //Open row
     &.open
-      
       .active_table_row
         border-left: 1px solid $clr-turquoise-bright
         border-right: 1px solid $clr-turquoise-bright

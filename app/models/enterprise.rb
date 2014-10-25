@@ -1,12 +1,14 @@
 class Enterprise < ActiveRecord::Base
-  TYPES = %w(full single profile)
+  SELLS = %w(none own any)
   ENTERPRISE_SEARCH_RADIUS = 100
+
+  devise :confirmable, reconfirmable: true
 
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
 
-  after_create :send_creation_email
+  before_create :check_email
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
@@ -34,7 +36,7 @@ class Enterprise < ActiveRecord::Base
     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: "1200x260#", thumb: "100x100>" },
+    styles: { large: ["1200x260#", :jpg], medium: ["720x156#", :jpg],  thumb: ["100x100>", :jpg] },
     url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
@@ -47,19 +49,23 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
-  validates :type, presence: true, inclusion: {in: TYPES}
+  validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
+  validates :email, presence: true
   validates_presence_of :owner
-  validate :enforce_ownership_limit, if: lambda { owner_id_changed? }
+  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates_length_of :description, :maximum => 255
 
-  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? }
+  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
+  scope :confirmed, where('confirmed_at IS NOT NULL')
+  scope :unconfirmed, where('confirmed_at IS NULL')
   scope :is_primary_producer, where(:is_primary_producer => true)
-  scope :is_distributor, where(:is_distributor => true)
+  scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -210,6 +216,33 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
+  def is_distributor
+    self.sells != "none"
+  end
+
+  # Simplify enterprise categories for frontend logic and icons, and maybe other things.
+  def category
+    # Make this crazy logic human readable so we can argue about it sanely.
+    cat = self.is_primary_producer ? "producer_" : "non_producer_"
+    cat << "sells_" + self.sells
+
+    # Map backend cases to front end cases.
+    case cat
+      when "producer_sells_any"
+        :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
+      when "producer_sells_own"
+        :producer_shop # Producer with shopfront and supplies other hubs.
+      when "producer_sells_none"
+        :producer # Producer only supplies through others.
+      when "non_producer_sells_any"
+        :hub # Hub selling others products in order cycles.
+      when "non_producer_sells_own"
+        :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+      when "non_producer_sells_none"
+        :hub_profile # Hub selling outside the system.
+    end
+  end
+
   # Return all taxons for all distributed products
   def distributed_taxons
     Spree::Taxon.
@@ -226,15 +259,20 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  protected
+
+  def devise_mailer
+    EnterpriseMailer
+  end
 
   private
 
-  def send_creation_email
-    EnterpriseMailer.creation_confirmation(self).deliver
+  def check_email
+    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
   end
 
   def strip_url(url)
-    url.andand.sub /(https?:\/\/)?/, ''
+    url.andand.sub(/(https?:\/\/)?/, '')
   end
 
   def set_unused_address_fields

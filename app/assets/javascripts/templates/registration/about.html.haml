@@ -1,44 +1,47 @@
 .container#registration-about
-  .header
-    %h2 Nice one!
-    %h5
-      Now let's flesh out the details about
-      %span.brick{"ng-show" => "enterprise.is_distributor"}
-        {{ enterprise.name }}
-      %span.turquoise{"ng-show" => "!enterprise.is_distributor" }
-        {{ enterprise.name }}
-
   %ng-include{ src: "'registration/steps.html'" }
-  %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('social',about)" } }
+  .row
+    .small-12.columns
+      %header
+        %h2 Nice one!
+        %h5
+          Now let's flesh out the details about
+          %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
+            {{ enterprise.name }}
+
+  %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('images',about)" } }
     .row
       .small-12.columns
-        .alert-box.alert{"data-alert" => ""}
-          {{ enterprise.name }} won't be visible on the Open Food Network until you enter a long and short description.
-          %a.close{:href => "#"} &times;
-
-        .alert-box.info{"data-alert" => ""}
-          {{ enterprise.name }} has been created on the Open Food Network. If you leave at any point from here onwards, your enterprise will be saved, and you can always login to the admin section to update or continue filling out your enterprise details.
-          %a.close{:href => "#"} &times;
+        .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }
+          %h6 Success! {{ enterprise.name }} added to the Open Food Network 
+          %span If you exit the wizard at any stage, login and go to admin to edit or update your enterprise details.
+          %a.close{ ng: { click: "close()" } } &times;
 
       .small-12.large-8.columns
         .row
           .small-12.columns
-            %label{ for: 'enterprise_description' } Short Description:
-            %input.chunky.small-12.columns{ id: 'enterprise_description', placeholder: "A short sentence describing your enterprise", ng: { model: 'enterprise.description' } }
+            .field
+              %label{ for: 'enterprise_description' } Short Description:
+              %input.chunky{ id: 'enterprise_description', placeholder: "A short sentence describing your enterprise", ng: { model: 'enterprise.description' } }
         .row
           .small-12.columns
-            %label{ for: 'enterprise_long_desc' } Long Description:
-            %textarea.chunky.small-12.columns{ id: 'enterprise_long_desc', placeholder: "We recommend keeping your description to under 600 characters or 150 words. Why? Cus people are lazy, and don't like to read too much text online. ;)", ng: { model: 'enterprise.long_description' } }
-            %small {{ enterprise.long_description.length }} characters used
+            .field
+              %label{ for: 'enterprise_long_desc' } Long Description:
+              %textarea.chunky{ id: 'enterprise_long_desc',  rows: 6, placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words.", ng: { model: 'enterprise.long_description' } }
+              %small {{ enterprise.long_description.length }} characters / up to 600 recommended
       .small-12.large-4.columns
         .row
           .small-12.columns
-            %label{ for: 'enterprise_abn' } ABN:
-            %input.chunky.small-12.columns{ id: 'enterprise_abn', placeholder: "eg. 99 123 456 789", ng: { model: 'enterprise.abn' } }
+            .field
+              %label{ for: 'enterprise_abn' } ABN:
+              %input.chunky{ id: 'enterprise_abn', placeholder: "eg. 99 123 456 789", ng: { model: 'enterprise.abn' } }
         .row
           .small-12.columns
-            %label{ for: 'enterprise_acn' } ACN:
-            %input.chunky.small-12.columns{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
+            .field
+              %label{ for: 'enterprise_acn' } ACN:
+              %input.chunky{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
+
     .row.buttons.pad-top
       .small-12.columns
-        %input.button.primary{ type: "submit", value: "Continue" }
+        %input.button.primary.right{ type: "submit", value: "Continue" }
+        

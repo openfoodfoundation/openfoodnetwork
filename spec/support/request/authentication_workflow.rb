@@ -37,12 +37,9 @@ module AuthenticationWorkflow
     visit spree.admin_path
   end
 
-  def create_enterprise_user(enterprises = [])
-    new_user = create(:user, password: 'blahblah', :password_confirmation => 'blahblah')
+  def create_enterprise_user( attrs = {} )
+    new_user = create(:user, attrs)
     new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
-    for enterprise in enterprises do
-      new_user.enterprise_roles.build(enterprise: enterprise).save
-    end
     new_user.save
     new_user
   end

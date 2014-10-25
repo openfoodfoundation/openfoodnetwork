@@ -1,14 +1,14 @@
 #tabs{"ng-controller" => "TabsCtrl"}
   .row
     %tabset.small-12.columns
-      // WILL can we add some logic here to make the distributor name not appear at small sizes? e.g. add a class?)
+      -# Build all tabs.
       - for name, heading in { about: "About #{current_distributor.name}", 
         producers: "Producers", 
         groups: "Groups", 
         contact: "Contact"} 
-
+        -# tabs take tab path in 'active' and 'select' functions defined in TabsCtrl.
         %tab{heading: heading, 
         id: "tab_#{name}",
-        active: "active(#{name}.path)",
-        select: "select(#{name})"}
+        active: "active(\'#{name}\')",
+        select: "select(\'#{name}\')"}
           = render "shopping_shared/#{name}"

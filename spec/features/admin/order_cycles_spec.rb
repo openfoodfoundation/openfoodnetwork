@@ -471,6 +471,10 @@ feature %q{
       # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
+      
+      # The order cycle should show enterprises that I manage
+      page.should have_selector 'td.suppliers',    text: supplier_managed.name
+      page.should have_selector 'td.distributors', text: distributor_managed.name
 
       # The order cycle should not show enterprises that I don't manage
       page.should_not have_selector 'td.suppliers',    text: supplier_unmanaged.name

@@ -1,4 +1,4 @@
-Darkswarm.factory "RegistrationService", (Navigation, $modal, Loading)->
+angular.module('Darkswarm').factory "RegistrationService", (Navigation, $modal, Loading)->
 
   new class RegistrationService
     constructor: ->

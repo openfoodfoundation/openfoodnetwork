@@ -15,6 +15,7 @@ tmp/
 .#*
 *~
 *.~lock.*
+tags
 .emacs.desktop
 .DS_Store
 *.sublime-project*
@@ -36,7 +37,4 @@ config/initializers/feature_toggle.rb
 NERD_tree*
 coverage
 libpeerconnection.log
-tags
-
-# Ignore application configuration
 /config/application.yml

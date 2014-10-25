@@ -1,14 +1,22 @@
-.container#registration-images
-  .header
-    %h2 Thanks!
-    %h5 Let's upload some pretty pictures so your profile looks great! :)
+.container#registration-images{ 'nv-file-drop' => true, uploader: "imageUploader", options:"{ alias: imageStep }", ng: { controller: "EnterpriseImageCtrl" } }
   %ng-include{ src: "'registration/steps.html'" }
-  .row.content
-
-  .row.buttons
+  .row
     .small-12.columns
-      %input.button.primary.left{ type: "button", value: "Back", ng: { click: "select('about')" } }
-      &nbsp;
-      %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "select('social')" } }
-      
-      
+      %header
+        %h2 Thanks!
+        %h5 Let's upload some pretty pictures so your profile looks great! :)
+        
+  %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
+    .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
+      %ng-include{ src: "'registration/images/'+ image_step + '.html'" }
+
+    .row.buttons.pad-top{ ng: { if: "imageStep == 'logo'" } }
+      .small-12.columns
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('about')" } }
+        &nbsp;
+        %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "imageSelect('promo')" } }
+
+    .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
+      .small-12.columns
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "imageSelect('logo')" } }
+        %input.button.primary.right{ type: "submit", value: "Continue" }

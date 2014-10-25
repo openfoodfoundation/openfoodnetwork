@@ -1,4 +1,4 @@
-.sidebar_item.four.columns.alpha#payment_methods{ ng: { show: 'Enterprise.is_distributor' } }
+.sidebar_item.four.columns.alpha#payment_methods{ ng: { show: 'Enterprise.sells != "none"' } }
   .four.columns.alpha.header{ ng: { class: "paymentMethodsColor()" } }
     %span.four.columns.alpha.centered Payment Methods
   .four.columns.alpha.list{ ng: { class: "paymentMethodsColor()" } }
@@ -6,10 +6,13 @@
       -# = hidden_field_tag "enterprise[payment_method_ids][]", []
       - @payment_methods.each do |payment_method|
         %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
-          %a.three.columns.alpha{ href: "#{edit_admin_payment_method_path(payment_method)}" }
-            = payment_method.name
-          %span.one.column.omega
-            = f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
+          %span.four.columns
+            %span.three.columns.alpha
+              %label
+                = f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
+                = payment_method.name
+            %a.one.columns.omega{ href: "#{edit_admin_payment_method_path(payment_method)}" }
+              %span.icon-arrow-right
     - else
       .four.columns.alpha.list-item
         %span.three.columns.alpha None Available

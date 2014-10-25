@@ -1,8 +1,16 @@
+require 'devise/mailers/helpers'
 class EnterpriseMailer < Spree::BaseMailer
-  def creation_confirmation(enterprise)
-    find_enterprise(enterprise)
-    subject = "#{@enterprise.name} is now on #{Spree::Config[:site_name]}"
-    mail(:to => @enterprise.owner.email, :from => from_address, :subject => subject)
+  include Devise::Mailers::Helpers
+
+  def confirmation_instructions(record, token, opts={})
+    @token = token
+    find_enterprise(record)
+    opts = {
+      subject: "Please confirm your email for #{@enterprise.name}",
+      to: [ @enterprise.owner.email, @enterprise.email ].uniq,
+      from: from_address,
+    }
+    devise_mail(record, :confirmation_instructions, opts)
   end
 
   private

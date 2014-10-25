@@ -11,10 +11,10 @@ feature %q{
   let!(:user) { create_enterprise_user }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
-  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', type: 'profile') }
+  let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', sells: 'none') }
   let!(:distributor1) { create(:distributor_enterprise, name: 'Distributor 3') }
   let!(:distributor2) { create(:distributor_enterprise, name: 'Distributor 4') }
-  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', type: 'profile') }
+  let(:distributor_profile) { create(:distributor_enterprise, name: 'Distributor profile', sells: 'none') }
 
   describe "creating an enterprise user" do
     context "with a limitted number of owned enterprises" do
@@ -53,7 +53,10 @@ feature %q{
     end
   end
 
-  describe "with only a profile-level enterprise" do
+  # This case no longer exists as anyone with an enterprise can supply into the system. 
+  # Or can they?? There is no producer profile anyway.
+  # TODO discuss what parts of this are still necessary in which cases.
+  pending "with only a profile-level enterprise" do
     before do
       user.enterprise_roles.create! enterprise: supplier_profile
       user.enterprise_roles.create! enterprise: distributor_profile
@@ -64,7 +67,7 @@ feature %q{
       page.should have_admin_menu_item 'Dashboard'
       page.should have_admin_menu_item 'Enterprises'
 
-      ['Orders', 'Products', 'Reports', 'Configuration', 'Promotions', 'Users', 'Order Cycles'].each do |menu_item_name|
+      ['Orders', 'Reports', 'Configuration', 'Promotions', 'Users', 'Order Cycles'].each do |menu_item_name|
         page.should_not have_admin_menu_item menu_item_name
       end
     end
@@ -79,15 +82,15 @@ feature %q{
         end
       end
 
-      it "does not show me product management controls" do
-        page.should_not have_selector '#products'
+      it "shows me product management controls, but not order_cycle controls" do
+        page.should have_selector '#products'
         page.should_not have_selector '#order_cycles'
       end
 
-      it "does not show me enterprise product info, payment methods, shipping methods or enterprise fees" do
+      it "shows me enterprise product info but not payment methods, shipping methods or enterprise fees" do
         # Producer product info
-        page.should_not have_selector '.producers_tab span', text: 'Total Products'
-        page.should_not have_selector '.producers_tab span', text: 'Active Products'
+        page.should have_selector '.producers_tab span', text: 'Total Products'
+        page.should have_selector '.producers_tab span', text: 'Active Products'
         page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
 
         # Payment methods, shipping methods, enterprise fees

@@ -10,21 +10,29 @@ FactoryGirl.define do
 
     after(:create) do |oc|
       # Suppliers
+      supplier1 = create(:supplier_enterprise)
+      supplier2 = create(:supplier_enterprise)
+
+      # Incoming Exchanges
       ex1 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
+                   :sender => supplier1, :receiver => oc.coordinator)
       ex2 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => create(:supplier_enterprise), :receiver => oc.coordinator)
+                   :sender => supplier2, :receiver => oc.coordinator)
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
       ExchangeFee.create!(exchange: ex2,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
-      # Distributors
+      #Distributors
+      distributor1 = create(:distributor_enterprise)
+      distributor2 = create(:distributor_enterprise)
+
+      # Outgoing Exchanges
       ex3 = create(:exchange, :order_cycle => oc, :incoming => false,
-                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :sender => oc.coordinator, :receiver => distributor1,
                    :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
       ex4 = create(:exchange, :order_cycle => oc, :incoming => false,
-                   :sender => oc.coordinator, :receiver => create(:distributor_enterprise),
+                   :sender => oc.coordinator, :receiver => distributor2,
                    :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
       ExchangeFee.create!(exchange: ex3,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
@@ -84,21 +92,22 @@ FactoryGirl.define do
   factory :enterprise, :class => Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
-    type 'full'
+    sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'
     address { FactoryGirl.create(:address) }
+    confirmed_at { Time.now }
   end
 
   factory :supplier_enterprise, :parent => :enterprise do
     is_primary_producer true
-    is_distributor false
+    sells "none"
   end
 
   factory :distributor_enterprise, :parent => :enterprise do
     is_primary_producer false
-    is_distributor true
+    sells "any"
   end
 
   factory :enterprise_relationship do

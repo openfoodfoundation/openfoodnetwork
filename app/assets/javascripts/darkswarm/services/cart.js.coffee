@@ -3,7 +3,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
   new class Cart
     dirty: false
     order: CurrentOrder.order
-    line_items: CurrentOrder.order?.line_items || [] 
+    line_items: CurrentOrder.order?.line_items || []
     constructor: ->
       for line_item in @line_items
         line_item.variant.line_item = line_item
@@ -22,13 +22,13 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
         # TODO what shall we do here?
 
     data: =>
-      variants = {} 
+      variants = {}
       for li in @line_items_present()
-        variants[li.variant.id] = 
+        variants[li.variant.id] =
           quantity: li.quantity
           max_quantity: li.max_quantity
       {variants: variants}
-  
+
 
     saved: =>
       @dirty = false
@@ -48,15 +48,15 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
 
     total: =>
       @line_items_present().map (li)->
-        li.variant.getPrice()
+        li.variant.totalPrice()
       .reduce (t, price)->
         t + price
       , 0
 
     register_variant: (variant)=>
       exists = @line_items.some (li)-> li.variant == variant
-      @create_line_item(variant) unless exists 
-        
+      @create_line_item(variant) unless exists
+
     create_line_item: (variant)->
       variant.line_item =
         variant: variant
