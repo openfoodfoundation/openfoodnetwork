@@ -18,6 +18,7 @@ module OpenFoodNetwork
           "Producer Suburb",
           "Product",
           "Product Properties",
+          "Taxon",
           "Variant Value",
           "Price",
           "Group Buy Unit Quantity",
@@ -34,6 +35,7 @@ module OpenFoodNetwork
         variant.stub_chain(:product, :supplier, :address, :city).and_return("A city")
         variant.stub_chain(:product, :name).and_return("Product Name")
         variant.stub_chain(:product, :properties).and_return [double(name: "test"), double(name: "foo")]
+        variant.stub_chain(:product, :taxons).and_return [double(name: "test"), double(name: "foo")]
         variant.stub_chain(:product, :group_buy_unit_size).and_return(21)
         subject.stub(:variants).and_return [variant]
 
