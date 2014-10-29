@@ -11,22 +11,12 @@ module OrderCyclesHelper
     order_cycle_permitted_enterprises.is_primary_producer.by_name
   end
 
-  def coordinating_enterprises
+  def order_cycle_coordinating_enterprises
     order_cycle_hub_enterprises
   end
 
   def order_cycle_hub_enterprises
     order_cycle_permitted_enterprises.is_distributor.by_name
-  end
-
-  def order_cycle_local_remote_class(distributor, order_cycle)
-    if distributor.nil? || order_cycle.nil?
-      ''
-    elsif order_cycle.distributors.include? distributor
-      ' local'
-    else
-      ' remote'
-    end
   end
 
   def order_cycle_status_class(order_cycle)
@@ -41,11 +31,6 @@ module OrderCyclesHelper
     end
   end
 
-
-  def distributor_options(distributors, current_distributor, order_cycle)
-    options = distributors.map { |d| [d.name, d.id, {:class => order_cycle_local_remote_class(d, order_cycle).strip}] }
-    options_for_select(options, current_distributor)
-  end
 
   def order_cycle_options
     @order_cycles.

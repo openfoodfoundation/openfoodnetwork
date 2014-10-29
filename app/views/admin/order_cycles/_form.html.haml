@@ -21,7 +21,7 @@
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
+= f.collection_select :coordinator_id, order_cycle_coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 = render 'coordinator_fees', f: f
 
 
