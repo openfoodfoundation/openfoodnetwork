@@ -12,11 +12,28 @@ module OrderCyclesHelper
   end
 
   def order_cycle_coordinating_enterprises
-    order_cycle_hub_enterprises
+    order_cycle_permitted_enterprises.is_distributor.by_name
   end
 
   def order_cycle_hub_enterprises
-    order_cycle_permitted_enterprises.is_distributor.by_name
+    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
+
+    enterprises.map do |e|
+      disabled_message = nil
+      if e.shipping_methods.empty? && e.payment_methods.empty?
+        disabled_message = 'no shipping or payment methods'
+      elsif e.shipping_methods.empty?
+        disabled_message = 'no shipping methods'
+      elsif e.payment_methods.empty?
+        disabled_message = 'no payment methods'
+      end
+
+      if disabled_message
+        ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
+      else
+        [e.name, e.id]
+      end
+    end
   end
 
   def order_cycle_status_class(order_cycle)

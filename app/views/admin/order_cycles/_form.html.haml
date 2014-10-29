@@ -40,7 +40,7 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 
-= select_tag :new_distributor_id, options_from_collection_for_select(order_cycle_hub_enterprises, :id, :name), {'ng-model' => 'new_distributor_id'}
+= select_tag :new_distributor_id, options_for_select(order_cycle_hub_enterprises), {'ng-model' => 'new_distributor_id'}
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions

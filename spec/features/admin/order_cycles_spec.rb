@@ -66,6 +66,9 @@ feature %q{
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
     distributor = create(:distributor_enterprise, name: 'My distributor')
+    create(:shipping_method, distributors: [distributor])
+    create(:payment_method, distributors: [distributor])
+
 
     # And some enterprise fees
     supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
@@ -248,6 +251,8 @@ feature %q{
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
     distributor = create(:distributor_enterprise, name: 'My distributor')
+    create(:shipping_method, distributors: [distributor])
+    create(:payment_method, distributors: [distributor])
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
@@ -443,6 +448,9 @@ feature %q{
     let!(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Unmanaged Distributor') }
     let!(:distributor_permitted) { create(:distributor_enterprise, name: 'Permitted distributor') }
     let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
+    let!(:shipping_method) { create(:shipping_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
+    let!(:payment_method) { create(:payment_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
+
     let!(:supplier_permitted_relationship) do
       create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed,
              permissions_list: [:add_to_order_cycle])
@@ -587,8 +595,6 @@ feature %q{
     let!(:p3) { create(:simple_product, supplier: enterprise) }
     let!(:v) { create(:variant, product: p3) }
     let!(:fee) { create(:enterprise_fee, enterprise: enterprise, name: 'Coord fee') }
-
-    use_short_wait
 
     before do
       user.enterprise_roles.create! enterprise: enterprise
