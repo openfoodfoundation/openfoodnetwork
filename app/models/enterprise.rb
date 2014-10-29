@@ -65,7 +65,13 @@ class Enterprise < ActiveRecord::Base
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
-  scope :activated, where('confirmed_at IS NOT NULL AND sells <> \'unspecified\'')
+  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :ready_for_checkout, lambda {
+    joins(:shipping_methods).
+    joins(:payment_methods).
+    merge(Spree::PaymentMethod.available).
+    select('DISTINCT enterprises.*')
+  }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
