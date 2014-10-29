@@ -14,7 +14,7 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :tax_category_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
+  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
   validates_associated :master, message: "^Price and On Hand must be valid"
