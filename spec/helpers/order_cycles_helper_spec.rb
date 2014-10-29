@@ -18,6 +18,12 @@ describe OrderCyclesHelper do
       helper.order_cycle_hub_enterprises.should == [['enterprise (no payment methods)', e.id, {disabled: true}]]
     end
 
+    it "returns enterprises with unavailable payment methods as disabled" do
+      create(:shipping_method, distributors: [e])
+      create(:payment_method, distributors: [e], active: false)
+      helper.order_cycle_hub_enterprises.should == [['enterprise (no payment methods)', e.id, {disabled: true}]]
+    end
+
     it "returns enterprises with neither shipping nor payment methods as disabled" do
       helper.order_cycle_hub_enterprises.should == [['enterprise (no shipping or payment methods)', e.id, {disabled: true}]]
     end

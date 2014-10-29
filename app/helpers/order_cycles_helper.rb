@@ -20,11 +20,11 @@ module OrderCyclesHelper
 
     enterprises.map do |e|
       disabled_message = nil
-      if e.shipping_methods.empty? && e.payment_methods.empty?
+      if e.shipping_methods.empty? && e.payment_methods.available.empty?
         disabled_message = 'no shipping or payment methods'
       elsif e.shipping_methods.empty?
         disabled_message = 'no shipping methods'
-      elsif e.payment_methods.empty?
+      elsif e.payment_methods.available.empty?
         disabled_message = 'no payment methods'
       end
 
