@@ -1,7 +1,9 @@
 %nav.top-bar.show-for-large-up{'data-topbar' => true}
   %section.top-bar-section
     %ul.left{}
-      %li.ofn-logo= link_to image_tag("ofn_logo_small.png"), root_path      
+      %li.ofn-logo
+        %a{href: root_path} 
+          %img{src: "/assets/open-food-network-beta.png", srcset: "/assets/open-food-network-beta.svg", width: "110", height: "26"}
       %li.divider
       - if current_page? root_path
         %li
