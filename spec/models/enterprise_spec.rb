@@ -96,7 +96,7 @@ describe Enterprise do
         expect{
           e2.owner = u1
           e2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: You are not permitted to own own any more enterprises (limit is 1)."
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u1.email} is not permitted to own any more enterprises (limit is 1)."
       end
     end
   end

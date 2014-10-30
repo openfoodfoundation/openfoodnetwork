@@ -301,7 +301,7 @@ class Enterprise < ActiveRecord::Base
 
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
-      errors.add(:owner, "^You are not permitted to own own any more enterprises (limit is #{owner.enterprise_limit}).")
+      errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
     end
   end
 end
