@@ -52,8 +52,13 @@
           #ship_address{"ng-if" => "Checkout.requireShipAddress()"}
             %div.visible{"ng-if" => "!Checkout.ship_address_same_as_billing"}
               .row
+                .small-6.columns
+                  = validated_input "First Name", "order.ship_address.firstname", "ofn-focus" => "accordion['shipping']"
+                .small-6.columns
+                  = validated_input "Last Name", "order.ship_address.lastname"
+              .row
                 .small-12.columns
-                  = validated_input "Address", "order.ship_address.address1", "ofn-focus" => "accordion['shipping']"
+                  = validated_input "Address", "order.ship_address.address1"
               .row
                 .small-12.columns
                   = validated_input "Address (contd.)", "order.ship_address.address2", required: false
@@ -69,11 +74,7 @@
                 .small-6.columns.right
                   = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
                     "ng-model" => "order.ship_address.country_id", required: true
-              .row
-                .small-6.columns
-                  = validated_input "First Name", "order.ship_address.firstname"
-                .small-6.columns
-                  = validated_input "Last Name", "order.ship_address.lastname"
+              
               .row
                 .small-6.columns
                   = validated_input "Phone", "order.ship_address.phone"
