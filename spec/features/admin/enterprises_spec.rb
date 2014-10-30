@@ -35,28 +35,63 @@ feature %q{
     end
   end
 
-  scenario "editing enterprises in bulk" do
-    s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise, sells: 'none')
-    d_manager = create_enterprise_user
-    d_manager.enterprise_roles.build(enterprise: d).save
-    expect(d.owner).to_not eq d_manager
+  context "editing enterprises in bulk" do
+    let!(:s){ create(:supplier_enterprise) }
+    let!(:d){ create(:distributor_enterprise, sells: 'none') }
+    let!(:d_manager) { create_enterprise_user(enterprise_limit: 1) }
 
-    login_to_admin_section
-    click_link 'Enterprises'
-
-    within("tr.enterprise-#{d.id}") do
-      expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
-      uncheck "enterprise_set_collection_attributes_0_visible"
-      select 'any', from: "enterprise_set_collection_attributes_0_sells"
-      select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
+    before do
+      d_manager.enterprise_roles.build(enterprise: d).save
+      expect(d.owner).to_not eq d_manager
     end
-    click_button "Update"
-    flash_message.should == 'Enterprises updated successfully'
-    distributor = Enterprise.find(d.id)
-    expect(distributor.visible).to eq false
-    expect(distributor.sells).to eq 'any'
-    expect(distributor.owner).to eq d_manager
+
+    context "without violating rules" do
+      before do
+        login_to_admin_section
+        click_link 'Enterprises'
+      end
+
+      it "updates the enterprises" do
+        within("tr.enterprise-#{d.id}") do
+          expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
+          uncheck "enterprise_set_collection_attributes_0_visible"
+          select 'any', from: "enterprise_set_collection_attributes_0_sells"
+          select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
+        end
+        click_button "Update"
+        flash_message.should == 'Enterprises updated successfully'
+        distributor = Enterprise.find(d.id)
+        expect(distributor.visible).to eq false
+        expect(distributor.sells).to eq 'any'
+        expect(distributor.owner).to eq d_manager
+      end
+    end
+
+    context "with data that violates rules" do
+      let!(:second_distributor) { create(:distributor_enterprise, sells: 'none') }
+
+      before do
+        d_manager.enterprise_roles.build(enterprise: second_distributor).save
+        expect(d.owner).to_not eq d_manager
+
+        login_to_admin_section
+        click_link 'Enterprises'
+      end
+
+      it "does not update the enterprises and displays errors" do
+        within("tr.enterprise-#{d.id}") do
+          select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
+        end
+        within("tr.enterprise-#{second_distributor.id}") do
+          select d_manager.email, from: 'enterprise_set_collection_attributes_1_owner_id'
+        end
+        click_button "Update"
+        flash_message.should == 'Update failed'
+        expect(page).to have_content "#{d_manager.email} is not permitted to own any more enterprises (limit is 1)."
+        second_distributor.reload
+        expect(second_distributor.owner).to_not eq d_manager
+      end
+    end
   end
 
   scenario "viewing an enterprise" do
@@ -350,7 +385,7 @@ feature %q{
 
           # Then it should show me an error
           expect(page).to_not have_content 'Enterprise "zzz" has been successfully created!'
-          expect(page).to have_content "You are not permitted to own own any more enterprises (limit is 1)."
+          expect(page).to have_content "#{enterprise_user.email} is not permitted to own any more enterprises (limit is 1)."
         end
       end
     end

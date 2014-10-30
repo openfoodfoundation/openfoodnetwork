@@ -47,6 +47,7 @@ module Admin
         flash[:success] = 'Enterprises updated successfully'
         redirect_to main_app.admin_enterprises_path
       else
+        flash[:error] = 'Update failed'
         render :index
       end
     end

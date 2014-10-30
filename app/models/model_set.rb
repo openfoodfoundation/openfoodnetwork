@@ -26,7 +26,10 @@ class ModelSet
   end
 
   def errors
-    @collection.map { |ef| ef.errors.full_messages }.flatten
+    errors = ActiveModel::Errors.new self
+    full_messages = @collection.map { |ef| ef.errors.full_messages }.flatten
+    full_messages.each { |fm| errors.add(:base, fm) }
+    errors
   end
 
   def save
