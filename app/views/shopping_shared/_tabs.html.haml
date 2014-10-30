@@ -1,14 +1,16 @@
 #tabs{"ng-controller" => "TabsCtrl"}
   .row
-    %tabset.small-12.columns
+    %tabset
       -# Build all tabs.
-      - for name, heading in { about: "About #{current_distributor.name}", 
-        producers: "Producers", 
-        groups: "Groups", 
-        contact: "Contact"} 
+      - for name, heading_cols in { about: ["About #{current_distributor.name}", 4], 
+        producers: ["Producers",3], 
+        groups: ["Groups",2], 
+        contact: ["Contact",3]} 
         -# tabs take tab path in 'active' and 'select' functions defined in TabsCtrl.
-        %tab{heading: heading, 
+        - heading, cols = heading_cols
+        %tab.columns{heading: heading,
         id: "tab_#{name}",
         active: "active(\'#{name}\')",
-        select: "select(\'#{name}\')"}
+        select: "select(\'#{name}\')",
+        class: "small-12 medium-#{cols}" }
           = render "shopping_shared/#{name}"
