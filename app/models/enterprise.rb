@@ -72,6 +72,16 @@ class Enterprise < ActiveRecord::Base
     merge(Spree::PaymentMethod.available).
     select('DISTINCT enterprises.*')
   }
+  scope :not_ready_for_checkout, lambda {
+    # When ready_for_checkout is empty, ActiveRecord generates the SQL:
+    # id NOT IN (NULL)
+    # I would have expected this to return all rows, but instead it returns none. To
+    # work around this, we use the "OR ?=0" clause to return all rows when there are
+    # no enterprises ready for checkout.
+    where('id NOT IN (?) OR ?=0',
+          Enterprise.ready_for_checkout,
+          Enterprise.ready_for_checkout.count)
+  }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }

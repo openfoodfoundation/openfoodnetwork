@@ -439,6 +439,36 @@ feature %q{
   end
 
 
+  describe "ensuring that hubs in order cycles have valid shipping and payment methods" do
+    context "when they don't" do
+      let(:hub) { create(:distributor_enterprise) }
+      let!(:oc) { create(:simple_order_cycle, distributors: [hub]) }
+
+      it "displays a warning on the dashboard" do
+        login_to_admin_section
+        page.should have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+      end
+
+      it "displays a warning on the order cycles screen" do
+        login_to_admin_section
+        visit admin_order_cycles_path
+        page.should have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+      end
+    end
+
+    context "when they do" do
+      let(:hub) { create(:distributor_enterprise) }
+      let!(:shipping_method) { create(:shipping_method, distributors: [hub]) }
+      let!(:payment_method) { create(:payment_method, distributors: [hub]) }
+      let!(:oc) { create(:simple_order_cycle, distributors: [hub]) }
+
+      it "does not display the warning on the dashboard" do
+        login_to_admin_section
+        page.should_not have_content "does not have valid shipping and payment methods"
+      end
+    end
+  end
+
   context "as an enterprise user" do
 
     let!(:supplier_managed) { create(:supplier_enterprise, name: 'Managed supplier') }

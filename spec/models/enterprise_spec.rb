@@ -193,6 +193,32 @@ describe Enterprise do
       end
     end
 
+    describe "not_ready_for_checkout" do
+      let!(:e) { create(:enterprise) }
+
+      it "shows enterprises with no payment methods" do
+        create(:shipping_method, distributors: [e])
+        Enterprise.not_ready_for_checkout.should include e
+      end
+
+      it "shows enterprises with no shipping methods" do
+        create(:payment_method, distributors: [e])
+        Enterprise.not_ready_for_checkout.should include e
+      end
+
+      it "shows enterprises with unavailable payment methods" do
+        create(:shipping_method, distributors: [e])
+        create(:payment_method, distributors: [e], active: false)
+        Enterprise.not_ready_for_checkout.should include e
+      end
+
+      it "does not show enterprises with available payment and shipping methods" do
+        create(:shipping_method, distributors: [e])
+        create(:payment_method, distributors: [e])
+        Enterprise.not_ready_for_checkout.should_not include e
+      end
+    end
+
     describe "distributors_with_active_order_cycles" do
       it "finds active distributors by order cycles" do
         s = create(:supplier_enterprise)
