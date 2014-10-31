@@ -65,10 +65,7 @@ feature %q{
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
-    distributor = create(:distributor_enterprise, name: 'My distributor')
-    create(:shipping_method, distributors: [distributor])
-    create(:payment_method, distributors: [distributor])
-
+    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
 
     # And some enterprise fees
     supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
@@ -250,9 +247,7 @@ feature %q{
     # And a coordinating, supplying and distributing enterprise with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
-    distributor = create(:distributor_enterprise, name: 'My distributor')
-    create(:shipping_method, distributors: [distributor])
-    create(:payment_method, distributors: [distributor])
+    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
@@ -457,9 +452,7 @@ feature %q{
     end
 
     context "when they do" do
-      let(:hub) { create(:distributor_enterprise) }
-      let!(:shipping_method) { create(:shipping_method, distributors: [hub]) }
-      let!(:payment_method) { create(:payment_method, distributors: [hub]) }
+      let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
       let!(:oc) { create(:simple_order_cycle, distributors: [hub]) }
 
       it "does not display the warning on the dashboard" do
