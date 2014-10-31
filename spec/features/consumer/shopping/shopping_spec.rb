@@ -82,7 +82,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
-          page.should have_content product.master.display_name.capitalize
+          page.should have_content product.master.display_name
           page.should have_content product.master.display_as
 
           open_product_modal product
