@@ -2,6 +2,8 @@ require 'devise/mailers/helpers'
 class EnterpriseMailer < Spree::BaseMailer
   include Devise::Mailers::Helpers
 
+  layout 'mailer'
+
   def confirmation_instructions(record, token, opts={})
     @token = token
     find_enterprise(record)
