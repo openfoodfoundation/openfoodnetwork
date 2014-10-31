@@ -277,6 +277,10 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  def ready_for_checkout?
+    shipping_methods.any? && payment_methods.available.any?
+  end
+
   def shop_trial_in_progress?
     !!shop_trial_start_date &&
     (shop_trial_start_date + SHOP_TRIAL_LENGTH.days > Time.now) &&
