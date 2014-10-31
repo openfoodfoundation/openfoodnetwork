@@ -9,7 +9,7 @@ class EnterpriseMailer < Spree::BaseMailer
     find_enterprise(record)
     opts = {
       subject: "Please confirm your email for #{@enterprise.name}",
-      to: [ @enterprise.owner.email, @enterprise.email ].uniq,
+      to: @enterprise.email,
       from: from_address,
     }
     devise_mail(record, :confirmation_instructions, opts)
