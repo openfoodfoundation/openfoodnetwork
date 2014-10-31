@@ -33,7 +33,12 @@ class ApplicationController < ActionController::Base
   end
 
   def check_hub_ready_for_checkout
-    if current_distributor && !current_distributor.ready_for_checkout?
+    # This condition is more rigourous than required by development to avoid coupling this
+    # condition to every controller spec
+    if current_distributor && current_order &&
+        current_distributor.respond_to?(:ready_for_checkout?) &&
+        !current_distributor.ready_for_checkout?
+
       current_order.empty!
       current_order.set_distribution! nil, nil
       flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."

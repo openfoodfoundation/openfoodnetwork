@@ -20,6 +20,7 @@ describe BaseController do
 
     get :index
 
+    session[:expired_order_cycle_id].should == oc.id
     response.should redirect_to root_url
     flash[:info].should == "The order cycle you've selected has just closed. Please try again!"
   end
