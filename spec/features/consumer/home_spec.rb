@@ -5,6 +5,8 @@ feature 'Home', js: true do
   include UIComponentHelper
 
   let!(:distributor) { create(:distributor_enterprise) }
+  let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+  let!(:payment_method) { create(:payment_method, distributors: [distributor]) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }

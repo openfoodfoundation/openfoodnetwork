@@ -10,6 +10,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     let(:distributor) { create(:distributor_enterprise) }
     let(:supplier) { create(:supplier_enterprise) }
+    let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+    let(:payment_method) { create(:payment_method, distributors: [distributor]) }
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
     let(:oc2) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now) }
     let(:product) { create(:simple_product, supplier: supplier) }
@@ -64,6 +66,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
         
         it "shows products after selecting an order cycle" do
+          # Hubs cannot be selected without a valid shipping and payment method
+          shipping_method
+          payment_method
+
           product.master.update_attribute(:display_name, "kitten")
           product.master.update_attribute(:display_as, "rabbit")
           exchange1.variants << product.master ## add product to exchange
