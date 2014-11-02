@@ -4,6 +4,7 @@ require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
+require 'open_food_network/order_cycle_management_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -21,11 +22,14 @@ Spree::Admin::ReportsController.class_eval do
     customers: [
       ["Mailing List", :mailing_list],
       ["Addresses", :addresses]
+    ],
+    order_cycle_management: [
+      ["Payment Methods Report", :payment_methods_report]
     ]
   }
 
   # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory]
+  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management]
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -35,6 +39,8 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
     @reports[:customers][:description] =
       render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
+    @reports[:order_cycle_management][:description] =
+      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
   } } }
 
 
@@ -50,6 +56,18 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
 
+    render_report(@report.header, @report.table, params[:csv], "customers.csv")
+  end
+
+  def order_cycle_management
+    @report_types = REPORT_TYPES[:order_cycle_management]
+    @report_type = params[:report_type]
+    @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params
+
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
+
+    @orders = @search.result
+ 
     render_report(@report.header, @report.table, params[:csv], "customers.csv")
   end
 
@@ -613,7 +631,8 @@ Spree::Admin::ReportsController.class_eval do
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
       :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
-      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" }
+      :order_cycle_management => {:name => "UK Order Cycle Management", :description => ''}
+      
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
