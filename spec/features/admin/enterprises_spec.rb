@@ -104,7 +104,7 @@ feature %q{
     page.should have_content e.name
   end
 
-  scenario "creating a new enterprise", js:true do
+  scenario "creating a new enterprise", js: true do
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -125,6 +125,10 @@ feature %q{
 
     # Filling in details
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    # This call intermittently fails to complete, leaving the select2 box open obscuring the
+    # fields below it (which breaks the remainder of our specs). Calling it twice seems to
+    # solve the problem.
+    select2_search admin.email, from: 'Owner'
     select2_search admin.email, from: 'Owner'
     choose 'Any'
     check "enterprise_payment_method_ids_#{payment_method.id}"
