@@ -8,3 +8,4 @@ en:
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
   home: "OFN"
+  search_by_name: Search by name or suburb...
