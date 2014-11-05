@@ -5,8 +5,9 @@ Spree::OrdersController.class_eval do
   before_filter :update_distribution, :only => :update
   before_filter :filter_order_params, :only => :update
 
-  prepend_before_filter :require_order_cycle, only: [:edit]
-  prepend_before_filter :require_distributor_chosen, only: [:edit]
+  prepend_before_filter :require_order_cycle, only: :edit
+  prepend_before_filter :require_distributor_chosen, only: :edit
+  before_filter :check_hub_ready_for_checkout, only: :edit
 
   include OrderCyclesHelper
   layout 'darkswarm'

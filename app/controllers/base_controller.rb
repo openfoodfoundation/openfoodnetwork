@@ -10,7 +10,6 @@ class BaseController < ApplicationController
   # include Spree::ProductsHelper so that method is available on the controller
   include Spree::ProductsHelper
 
-  before_filter :check_hub_ready_for_checkout
   before_filter :check_order_cycle_expiry
   
   def load_active_distributors

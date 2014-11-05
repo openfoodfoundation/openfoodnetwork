@@ -25,19 +25,6 @@ describe BaseController do
     flash[:info].should == "The order cycle you've selected has just closed. Please try again!"
   end
 
-  it "redirects to home with message if hub is not ready for checkout" do
-    hub.stub(:ready_for_checkout?) { false }
-    controller.stub(:current_order).and_return(order)
-
-    order.should_receive(:empty!)
-    order.should_receive(:set_distribution!).with(nil, nil)
-
-    get :index
-
-    response.should redirect_to root_url
-    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
-  end
-
   it "loads active_distributors" do
     Enterprise.stub_chain(:distributors_with_active_order_cycles, :ready_for_checkout) { 'active distributors' }
     controller.load_active_distributors.should == 'active distributors'
