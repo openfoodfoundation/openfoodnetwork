@@ -36,7 +36,18 @@ module CheckoutHelper
       "ng-class" => "{error: !fieldValid('#{path}')}" 
     }.merge args
     
-    render partial: "shared/validated_input", locals: {name: name, path: path, attributes: attributes}
+    render "shared/validated_input", name: name, path: path, attributes: attributes
+  end
+
+  def validated_select(name, path, options, args = {})
+    attributes = {
+      required: true,
+      id: path,
+      "ng-model" => path,
+      "ng-class" => "{error: !fieldValid('#{path}')}"
+    }.merge args
+
+    render "shared/validated_select", name: name, path: path, options: options, attributes: attributes
   end
 
   def reset_order
