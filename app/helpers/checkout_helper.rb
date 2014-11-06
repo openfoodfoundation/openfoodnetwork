@@ -25,8 +25,14 @@ module CheckoutHelper
     order.display_item_total.money.to_f + checkout_adjustments_total(order).money.to_f
   end
 
-  def checkout_state_options
-    [[]] + @order.billing_address.country.states.map { |c| [c.name, c.id] }
+  def checkout_state_options(source_address)
+    if source_address == :billing
+      address = @order.billing_address
+    elsif source_address == :shipping
+      address = @order.shipping_address
+    end
+
+    [[]] + address.country.states.map { |c| [c.name, c.id] }
   end
 
   def checkout_country_options

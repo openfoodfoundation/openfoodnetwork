@@ -39,7 +39,7 @@
             = validated_input "City", "order.bill_address.city"
 
           .small-6.columns
-            = validated_select "State", "order.bill_address.state_id", checkout_state_options
+            = validated_select "State", "order.bill_address.state_id", checkout_state_options(:billing)
         .row
           .small-6.columns
             = validated_input "Postcode", "order.bill_address.zipcode"

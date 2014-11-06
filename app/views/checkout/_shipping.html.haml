@@ -66,14 +66,12 @@
                 .small-6.columns
                   = validated_input "City", "order.ship_address.city"
                 .small-6.columns
-                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
-                    "ng-model" => "order.ship_address.state_id", required: true
+                  = validated_select "State", "order.ship_address.state_id", checkout_state_options(:shipping)
               .row
                 .small-6.columns
                   = validated_input "Postcode", "order.ship_address.zipcode"
                 .small-6.columns.right
-                  = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
-                    "ng-model" => "order.ship_address.country_id", required: true
+                  = validated_select "Country", "order.ship_address.country_id", checkout_country_options
               
               .row
                 .small-6.columns
