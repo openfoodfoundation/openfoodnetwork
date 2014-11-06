@@ -48,34 +48,8 @@
           = @order.order_cycle.pickup_time_for(@order.distributor)
 
       = f.fields_for :ship_address, @order.ship_address do |sa|
-        .small-12.columns
-          #ship_address{"ng-if" => "Checkout.requireShipAddress()"}
-            %div.visible{"ng-if" => "!Checkout.ship_address_same_as_billing"}
-              .row
-                .small-6.columns
-                  = validated_input "First Name", "order.ship_address.firstname", "ofn-focus" => "accordion['shipping']"
-                .small-6.columns
-                  = validated_input "Last Name", "order.ship_address.lastname"
-              .row
-                .small-12.columns
-                  = validated_input "Address", "order.ship_address.address1"
-              .row
-                .small-12.columns
-                  = validated_input "Address (contd.)", "order.ship_address.address2", required: false
-              .row
-                .small-6.columns
-                  = validated_input "City", "order.ship_address.city"
-                .small-6.columns
-                  = validated_select "State", "order.ship_address.state_id", checkout_state_options(:shipping)
-              .row
-                .small-6.columns
-                  = validated_input "Postcode", "order.ship_address.zipcode"
-                .small-6.columns.right
-                  = validated_select "Country", "order.ship_address.country_id", checkout_country_options
-              
-              .row
-                .small-6.columns
-                  = validated_input "Phone", "order.ship_address.phone"
+        = render 'checkout/shipping_ship_address'
+
       .row
         .small-12.columns
           = f.text_area :special_instructions, label: "Any notes or custom delivery instructions?", size: "60x4", "ng-model" => "order.special_instructions"
