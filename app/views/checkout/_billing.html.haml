@@ -45,8 +45,7 @@
             = validated_input "Postcode", "order.bill_address.zipcode"
 
           .small-6.columns.right
-            = ba.select :country_id, checkout_country_options,
-              "ng-model" => "order.bill_address.country_id", required: true
+            = validated_select "Country", "order.bill_address.country_id", checkout_country_options
 
       .row
         .small-12.columns.text-right
