@@ -10,14 +10,32 @@ describe Enterprise do
 
       it "when the email address has not already been confirmed" do
         mail_message = double "Mail::Message"
-        EnterpriseMailer.should_receive(:confirmation_instructions).and_return mail_message
+        expect(EnterpriseMailer).to receive(:confirmation_instructions).and_return mail_message
         mail_message.should_receive :deliver
         create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
       end
 
       it "when the email address has already been confirmed" do
-        EnterpriseMailer.should_not_receive(:confirmation_instructions)
+        expect(EnterpriseMailer).to_not receive(:confirmation_instructions)
         e = create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+      end
+    end
+
+    describe "on update of email" do
+      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
+      let!(:enterprise) { create(:enterprise, owner: user) }
+
+      it "when the email address has not already been confirmed" do
+        mail_message = double "Mail::Message"
+        expect(EnterpriseMailer).to receive(:confirmation_instructions).and_return mail_message
+        mail_message.should_receive :deliver
+        enterprise.update_attributes(email: "unknown@email.com")
+      end
+
+      it "when the email address has already been confirmed" do
+        create(:enterprise, owner: user, email: "second.known.email@email.com") # Another enterpise with same owner but different email
+        expect(EnterpriseMailer).to_not receive(:confirmation_instructions)
+        enterprise.update_attributes!(email: "second.known.email@email.com")
       end
     end
   end

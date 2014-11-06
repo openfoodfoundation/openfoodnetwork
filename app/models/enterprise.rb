@@ -9,8 +9,6 @@ class Enterprise < ActiveRecord::Base
 
   acts_as_gmappable :process_geocoding => false
 
-  before_create :check_email
-
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
@@ -56,6 +54,8 @@ class Enterprise < ActiveRecord::Base
   validates_presence_of :owner
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
+
+  before_save :email_check, if: lambda{ email_changed? }
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
@@ -299,8 +299,11 @@ class Enterprise < ActiveRecord::Base
 
   private
 
-  def check_email
-    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
+  def email_check
+    # Skip confirmation/reconfirmation if the new email has already been confirmed
+    if owner.enterprises.confirmed.map(&:email).include?(email)
+      new_record? ? skip_confirmation! : skip_reconfirmation!
+    end
   end
 
   def strip_url(url)
