@@ -31,6 +31,7 @@
     %strong= "#{@enterprise.name}."
     We've sent an email to
     %strong= "#{@enterprise.email}."
+    = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } ), method: :post)
     %a.close{ href: "#" } ×
 - if !@enterprise.visible
   .alert-box

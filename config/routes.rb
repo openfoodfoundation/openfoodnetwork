@@ -34,7 +34,7 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  devise_for :enterprise
+  devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
   namespace :admin do
     resources :order_cycles do

@@ -3,7 +3,7 @@ class Enterprise < ActiveRecord::Base
   SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
-  devise :confirmable, reconfirmable: true
+  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
   self.inheritance_column = nil
 

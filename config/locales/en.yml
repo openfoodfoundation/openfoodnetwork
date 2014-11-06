@@ -7,5 +7,11 @@ en:
       invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
+    enterprise_confirmations:
+      enterprise:
+        confirmed: Thankyou, your email address has been confirmed.
+        not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
+        confirmation_sent: "Confirmation email sent!"
+        confirmation_not_sent: "Could not send a confirmation email."
   home: "OFN"
   search_by_name: Search by name or suburb...
