@@ -137,7 +137,7 @@ class Enterprise < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
     end
   }
 
