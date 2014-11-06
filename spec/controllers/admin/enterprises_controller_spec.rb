@@ -254,6 +254,15 @@ module Admin
           expect(profile_enterprise1.owner).to eq original_owner
           expect(profile_enterprise2.owner).to eq original_owner
         end
+
+        it "cuts down the list of enterprises displayed when error received on bulk update" do
+          EnterpriseSet.any_instance.stub(:save) { false }
+          profile_enterprise1.enterprise_roles.build(user: new_owner).save
+          controller.stub spree_current_user: new_owner
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
+          spree_put :bulk_update, bulk_enterprise_params
+          expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
+        end
       end
 
       context "as super admin" do
