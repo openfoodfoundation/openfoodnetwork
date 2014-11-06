@@ -11,22 +11,7 @@
 
     %accordion-group{"is-open" => "accordion.payment",
       "ng-class" => "{valid: payment.$valid, open: accordion.payment}"}
-      %accordion-heading
-        .row
-          .small-8.medium-10.columns
-            %em
-              %small
-                {{ Checkout.paymentMethod().name }}
-            %small
-          .small-4.medium-2.columns.text-right
-            %span.accordion-up
-              %em
-                %small Hide
-              %i.ofn-i_053-point-up
-            %span.accordion-down
-              %em
-                %small Expand
-              %i.ofn-i_052-point-down
+      = render 'checkout/accordion_heading'
 
       -# TODO render this in Angular instead of server-side
       -# The problem being how to render the partials

@@ -11,22 +11,8 @@
 
     %accordion-group{"is-open" => "accordion.billing",
       "ng-class" => "{valid: billing.$valid, open: accordion.billing}"}
-      %accordion-heading
-        .row
-          .small-8.medium-10.columns
-            %em
-              %small
-                {{ summary() | printArray }}
-          .small-4.medium-2.columns.text-right
-            %span.accordion-up
-              %em
-                %small Hide
-              %i.ofn-i_053-point-up
-            %span.accordion-down
-              %em
-                %small Expand
-              %i.ofn-i_052-point-down
-
+      = render 'checkout/accordion_heading'
+      
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .small-12.columns
