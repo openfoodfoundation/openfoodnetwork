@@ -2,7 +2,7 @@
   html: {name: "checkout",
     id: "checkout_form",
     novalidate: true,
-    "ng-submit" => "purchase($event)"} do |f|
+    "ng-submit" => "purchase($event, checkout)"} do |f|
 
   = inject_available_shipping_methods
   = inject_available_payment_methods

@@ -43,16 +43,12 @@ describe "CheckoutCtrl", ->
         scope.submitted = false
 
       it "delegates to the service when valid", ->
-        scope.checkout =
-          $valid: true
-        scope.purchase(event)
+        scope.purchase(event, {$valid: true})
         expect(Checkout.submit).toHaveBeenCalled()
         expect(scope.submitted).toBe(true)
 
       it "does nothing when invalid", ->
-        scope.checkout =
-          $valid: false
-        scope.purchase(event)
+        scope.purchase(event, {$valid: false})
         expect(Checkout.submit).not.toHaveBeenCalled()
         expect(scope.submitted).toBe(true)
 
