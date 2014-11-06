@@ -33,13 +33,28 @@ describe "CheckoutCtrl", ->
         spyOn(storage, "bind").andCallThrough()
         scope = $rootScope.$new() 
         ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: {}}
-  
-    it "delegates to the service on submit", ->
+
+    describe "submitting", ->
       event = 
         preventDefault: ->
-      spyOn(Checkout, "submit")
-      scope.purchase(event)
-      expect(Checkout.submit).toHaveBeenCalled()
+
+      beforeEach ->
+        spyOn(Checkout, "submit")
+        scope.submitted = false
+
+      it "delegates to the service when valid", ->
+        scope.checkout =
+          $valid: true
+        scope.purchase(event)
+        expect(Checkout.submit).toHaveBeenCalled()
+        expect(scope.submitted).toBe(true)
+
+      it "does nothing when invalid", ->
+        scope.checkout =
+          $valid: false
+        scope.purchase(event)
+        expect(Checkout.submit).not.toHaveBeenCalled()
+        expect(scope.submitted).toBe(true)
 
     it "is enabled", ->
       expect(scope.enabled).toEqual true

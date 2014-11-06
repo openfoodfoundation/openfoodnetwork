@@ -1,5 +1,6 @@
 Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, CurrentHub) ->
   $scope.Checkout = Checkout
+  $scope.submitted = false
 
   # Bind to local storage
   $scope.fieldsToBind = ["bill_address", "email", "payment_method_id", "shipping_method_id", "ship_address"]
@@ -19,4 +20,5 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
 
   $scope.purchase = (event)->
     event.preventDefault()
-    $scope.Checkout.submit()
+    $scope.submitted = true
+    $scope.Checkout.submit() if $scope.checkout.$valid

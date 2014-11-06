@@ -12,7 +12,6 @@
   = render "checkout/shipping", f: f
   = render "checkout/payment", f: f
   %p
-    %button.button.primary{type: :submit,
-    "ng-disabled" => "checkout.$invalid"}
+    %button.button.primary{type: :submit}
       Place order now
     / {{ checkout.$valid }}
