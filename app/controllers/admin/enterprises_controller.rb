@@ -42,7 +42,7 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(params[:enterprise_set].merge collection: collection)
+      @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
       if @enterprise_set.save
         flash[:success] = 'Enterprises updated successfully'
         redirect_to main_app.admin_enterprises_path
@@ -67,7 +67,7 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new :collection => collection
+      @enterprise_set = EnterpriseSet.new collection
     end
 
     def load_countries
