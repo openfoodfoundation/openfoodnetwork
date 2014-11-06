@@ -25,6 +25,14 @@ module CheckoutHelper
     order.display_item_total.money.to_f + checkout_adjustments_total(order).money.to_f
   end
 
+  def checkout_state_options
+    [[]] + @order.billing_address.country.states.map { |c| [c.name, c.id] }
+  end
+
+  def checkout_country_options
+    available_countries.map { |c| [c.name, c.id] }
+  end
+
 
   def validated_input(name, path, args = {})
     attributes = {

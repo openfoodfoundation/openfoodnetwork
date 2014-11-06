@@ -39,13 +39,13 @@
             = validated_input "City", "order.bill_address.city"
 
           .small-6.columns
-            = validated_select "State", "order.bill_address.state_id", [[]]+@order.billing_address.country.states.map{|c|[c.name, c.id]}
+            = validated_select "State", "order.bill_address.state_id", checkout_state_options
         .row
           .small-6.columns
             = validated_input "Postcode", "order.bill_address.zipcode"
 
           .small-6.columns.right
-            = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
+            = ba.select :country_id, checkout_country_options,
               "ng-model" => "order.bill_address.country_id", required: true
 
       .row
