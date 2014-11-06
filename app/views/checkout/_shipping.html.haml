@@ -17,9 +17,13 @@
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
           %input{type: :radio,
             required: true,
+            name: "order.shipping_method_id",
             "ng-value" => "method.id",
             "ng-model" => "order.shipping_method_id"}
             {{ method.name }}
+
+        %small.error.medium.input-text{"ng-show" => "!fieldValid('order.shipping_method_id')"}
+          = "{{ fieldErrors('order.shipping_method_id') }}"
 
         %label{"ng-if" => "Checkout.requireShipAddress()"}
           %input{type: :checkbox, "ng-model" => "Checkout.ship_address_same_as_billing"}

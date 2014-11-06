@@ -23,8 +23,12 @@
                 %label
                   = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
                     required: true,
+                    name: "order.payment_method_id",
                     "ng-model" => "order.payment_method_id"
                   = method.name
+
+                %small.error.medium.input-text{"ng-show" => "!fieldValid('order.payment_method_id')"}
+                  = "{{ fieldErrors('order.payment_method_id') }}"
 
             .row{"ng-if" => "order.payment_method_id == #{method.id}"}
               .small-12.columns
