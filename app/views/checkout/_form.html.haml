@@ -7,10 +7,10 @@
   = inject_available_shipping_methods
   = inject_available_payment_methods
 
-  = render partial: "checkout/details", locals: {f: f}
-  = render partial: "checkout/billing", locals: {f: f}
-  = render partial: "checkout/shipping", locals: {f: f}
-  = render partial: "checkout/payment", locals: {f: f}
+  = render "checkout/details", f: f
+  = render "checkout/billing", f: f
+  = render "checkout/shipping", f: f
+  = render "checkout/payment", f: f
   %p
     %button.button.primary{type: :submit,
     "ng-disabled" => "checkout.$invalid"}

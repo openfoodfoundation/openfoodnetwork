@@ -15,7 +15,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
   $scope.order = Checkout.order # Ordering is important
   $scope.secrets = Checkout.secrets
 
-  $scope.enabled = if CurrentUser then true else false
+  $scope.enabled = !!CurrentUser
 
   $scope.purchase = (event)->
     event.preventDefault()
