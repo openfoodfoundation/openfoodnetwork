@@ -21,4 +21,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
   $scope.purchase = (event, form) ->
     event.preventDefault()
     $scope.submitted = true
-    $scope.Checkout.submit() if form.$valid
+    if form.$valid
+      $scope.Checkout.submit()
+    else
+      $scope.$broadcast 'purchaseFormInvalid', form
