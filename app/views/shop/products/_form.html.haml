@@ -3,7 +3,7 @@
 
   .row
     .small-12.medium-8.large-9.columns
-      %input#search.text{"ng-model" => "query", 
+      %input#search.text{"ng-model" => "query",
       placeholder: "Search by product or producer",
       "ng-debounce" => "100",
       "ofn-disable-enter" => true}
@@ -22,11 +22,14 @@
       = render partial: "shop/products/summary"
       %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants"}
       %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id"}
-    
+
     %product{"ng-show" => "Products.loading"}
       .row.summary
         .small-12.columns.text-center
           Loading products
+      .row
+        .small-12.columns.text-center
+          %img.spinner{ src: "/assets/loading.gif" }
 
     %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
       .row.summary
