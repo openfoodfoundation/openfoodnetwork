@@ -48,7 +48,11 @@ Install the project's gem dependencies:
 
     bundle install
 
-Create the development and test databases, using the settings specified in `config/database.yml`. You can then load the schema and some seed data with the following command:
+Create the development and test databases, using the settings specified in `config/database.yml`:
+
+    rake db:setup
+
+Then load the schema and some seed data with the following command:
 
     rake db:schema:load db:seed
 
