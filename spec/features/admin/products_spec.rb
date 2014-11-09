@@ -117,6 +117,8 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
+      
+      page.should have_select 'product_tax_category_id' if Spree::TaxCategory.any?
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -133,6 +135,8 @@ feature %q{
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
       visit spree.edit_admin_product_path product
+      
+      page.should have_select 'product_tax_category_id'
 
       select 'Permitted Supplier', from: 'product_supplier_id'
       click_button 'Update'

@@ -13,6 +13,16 @@ module Spree
       it "is valid when created from factory" do
         create(:product).should be_valid
       end
+      
+      it "optionally requires a tax category" do
+        product = create(:simple_product)
+        product.tax_category_id = nil
+        if Spree::Config.products_require_tax_category == true
+          product.should_not be_valid
+        elsif Spree::Config.products_require_tax_category == false
+          product.should be_valid
+        end
+      end
 
       it "requires a primary taxon" do
         product = create(:simple_product)
