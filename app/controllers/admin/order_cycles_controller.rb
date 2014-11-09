@@ -70,6 +70,27 @@ module Admin
       redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
     end
 
+    OrderCycleNotificationJob = Struct.new(:order_cycle) do
+      def perform
+        puts order_cycle
+        @suppliers = order_cycle.suppliers
+        puts @suppliers
+        @suppliers.each { |supplier| ProducerMailer.order_cycle_report(supplier, order_cycle).deliver }
+      end
+    end
+
+    # Send notifications to all producers who are part of the order cycle
+    def notifications
+      puts 'notify_producers!'
+
+      @order_cycle = OrderCycle.find params[:id]
+      # Delayed::Job.enqueue OrderCycleNotificationJob.new(@order_cycle)
+      job = OrderCycleNotificationJob.new(@order_cycle)
+      job.perform
+
+      render 'notifications'
+    end
+
 
     protected
     def collection

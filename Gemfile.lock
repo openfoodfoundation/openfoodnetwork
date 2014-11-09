@@ -221,6 +221,11 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    delayed_job (4.0.4)
+      activesupport (>= 3.0, < 4.2)
+    delayed_job_active_record (4.0.2)
+      activerecord (>= 3.0, < 4.2)
+      delayed_job (>= 3.0, < 4.1)
     devise (2.2.8)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -521,6 +526,7 @@ DEPENDENCIES
   db2fog
   debugger-linecache
   deface!
+  delayed_job_active_record
   factory_girl_rails
   foreigner
   foundation-icons-sass-rails
