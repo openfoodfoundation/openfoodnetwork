@@ -1,7 +1,7 @@
 Dear #{@producer.name},
 
-We now have all the consumer orders for the food drop on #{}.
-Please deliver to #{coordinator.address} between 9:30am and 10:30am. If this is not convenient then please call #{@coordinator.phone}.
+We now have all the consumer orders for the food drop on #{@distribution_date}.
+Please deliver to #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode} during the regular delivery time. If this is not convenient then please call #{@coordinator.phone}.
 
 NB If you have to arrange a different delivery day and time, the school has requested that you do not come on site during drop off/pick up times (8:45-9:15 and 15:00-15:30)
 
@@ -10,7 +10,7 @@ Orders summary
 
 Here is a summary of the orders for your products:
 
-- @order_cycle.exchange_for_distributor.each do |exchange|
+/ - @order_cycle.exchange_for_distributor.each do |exchange|
 
 
 Detailed orders breakdown
