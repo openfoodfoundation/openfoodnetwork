@@ -91,7 +91,9 @@ end
 
 group :test do
   gem 'webmock'
-  gem 'perftools.rb'
+
+  # See spec/spec_helper.rb for instructions
+  #gem 'perftools.rb'
 end
 
 group :development do
