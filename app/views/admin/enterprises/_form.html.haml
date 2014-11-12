@@ -110,11 +110,6 @@
         = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
   %fieldset.eleven.columns.alpha.no-border-bottom
     %legend Contact Details
-    .row
-      .alpha.three.columns
-        = f.label :contact, 'Name'
-      .omega.eight.columns
-        = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
     -if @enterprise.unconfirmed_email
       .alert-box
         Email change is pending.
@@ -122,6 +117,11 @@
         %strong= "#{@enterprise.unconfirmed_email}."
         = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.unconfirmed_email } ), method: :post)
         %a.close{ href: "#" } ×
+    .row
+      .alpha.three.columns
+        = f.label :contact, 'Name'
+      .omega.eight.columns
+        = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
     .row
       .alpha.three.columns
         = f.label :email
