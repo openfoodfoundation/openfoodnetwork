@@ -11,7 +11,12 @@
 
   = select_tag(:payment_method_name, 
       options_for_select(report_payment_method_options(@orders), params[:payment_method_name]), 
-      multiple: true, include_blank: true) 
+               multiple: true, include_blank: true) 
+  %br
+  %br
+  = select_tag(:distribution_name, 
+      options_for_select(report_distribution_options(@orders), params[:distribution_name]), 
+	       include_blank: true) 
   %br
   %br
   = check_box_tag :csv

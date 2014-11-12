@@ -7,7 +7,7 @@ module OpenFoodNetwork
     end
 
     def header
-      ["First Name", "Last Name", "Email", "Phone", "Hub", "Payment Method", "Amount ", "Amount Paid"]
+      ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount ", "Amount Paid"]
     
     end
 
@@ -20,6 +20,7 @@ module OpenFoodNetwork
           order.email,
            ba.phone,
            order.distributor.andand.name,
+           order.shipping_method.andand.name,
            order.payments.first.andand.payment_method.andand.name,
 	   order.payments.first.amount
         ]       
@@ -31,7 +32,7 @@ module OpenFoodNetwork
     end
 
     def filter(orders)
-      filter_for_user filter_active filter_to_order_cycle filter_to_payment_method orders
+      filter_for_user filter_active filter_to_order_cycle filter_to_payment_method filter_to_distribution orders
     end
   
     def filter_for_user (orders)
@@ -45,6 +46,14 @@ module OpenFoodNetwork
     def filter_to_payment_method (orders)
       if params.has_key? (:payment_method_name)
         orders.with_payment_method_name(params[:payment_method_name])
+      else
+        orders
+      end
+    end
+
+    def filter_to_distribution (orders)
+      if params.has_key? (:distribution_name)
+        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:distribution_name])
       else
         orders
       end

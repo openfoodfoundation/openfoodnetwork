@@ -22,7 +22,15 @@ module Spree
       end
     end
 
-    
+    def report_distribution_options(orders)
+      distribution_list = []
+      orders.map do |o| 
+        distribution_list << o.shipping_method.andand.name 
+      end
+      distribution_list.uniq.each do |pm|
+        [ "#{pm}".html_safe,  pm]
+      end
+    end    
 
   end
 end
