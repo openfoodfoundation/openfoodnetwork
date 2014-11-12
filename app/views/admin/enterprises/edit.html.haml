@@ -4,7 +4,9 @@
   Editing:
   = @enterprise.name
 
-= form_for [main_app, :admin, @enterprise], html: { "ng-app" => 'admin.enterprises', "ng-submit" => "navClear()", "ng-controller" => 'enterpriseCtrl' , "nav-check" => '', "nav-callback" => 'enterpriseNavCallback()' } do |f|
-  = render 'ng_form', f: f
-  .twelve.columns.alpha
-    = render partial: 'spree/admin/shared/edit_resource_links'
+- content_for :page_actions do
+  %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
+
+= render 'admin/enterprises/form_data'
+
+= render 'admin/enterprises/ng_form', action: 'edit'

@@ -55,11 +55,15 @@ class Enterprise < ActiveRecord::Base
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
-  before_save :email_check, if: lambda{ email_changed? }
+  before_save :confirmation_check, if: lambda{ email_changed? }
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
+
+  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
+  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
+  after_create :send_welcome_email, if: lambda { email_is_known? }
 
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
@@ -299,11 +303,27 @@ class Enterprise < ActiveRecord::Base
 
   private
 
-  def email_check
+  def email_is_known?
+    owner.enterprises.confirmed.map(&:email).include?(email)
+  end
+
+  def confirmation_check
     # Skip confirmation/reconfirmation if the new email has already been confirmed
-    if owner.enterprises.confirmed.map(&:email).include?(email)
+    if email_is_known?
       new_record? ? skip_confirmation! : skip_reconfirmation!
     end
+  end
+
+  def welcome_after_confirm
+    # Send welcome email if we are confirming a newly created enterprise
+    # Note: this callback only runs on email confirmation
+    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      send_welcome_email
+    end
+  end
+
+  def send_welcome_email
+    EnterpriseMailer.welcome(self).deliver
   end
 
   def strip_url(url)

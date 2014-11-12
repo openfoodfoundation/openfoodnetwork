@@ -1,12 +1,15 @@
 class AddForeignKeys < ActiveRecord::Migration
   class AdjustmentMetadata < ActiveRecord::Base; end
+  class CoordinatorFee < ActiveRecord::Base; end
+  class Enterprise < ActiveRecord::Base
+    belongs_to :address, :class_name => 'Spree::Address'
+  end
   class ExchangeVariant < ActiveRecord::Base; end
   class Spree::InventoryUnit < ActiveRecord::Base; end
   class Spree::LineItem < ActiveRecord::Base; end
   class Spree::Address < ActiveRecord::Base; end
   class Spree::Order < ActiveRecord::Base; end
   class Spree::Taxon < ActiveRecord::Base; end
-  class CoordinatorFee < ActiveRecord::Base; end
 
   def change
     setup_foreign_keys
@@ -60,6 +63,7 @@ class AddForeignKeys < ActiveRecord::Migration
 
     address = Spree::Address.create!(firstname: 'Dummy distributor', lastname: 'Dummy distributor', phone: '12345678', state: state,
                                      address1: 'Dummy distributor', city: 'Dummy distributor', zipcode: '1234', country: country)
+    Enterprise.reset_column_information
     deleted_distributor = Enterprise.create!(name: "Deleted distributor", address: address)
 
     orphaned_orders = Spree::Order.joins('LEFT OUTER JOIN enterprises ON enterprises.id=spree_orders.distributor_id').where('enterprises.id IS NULL')
