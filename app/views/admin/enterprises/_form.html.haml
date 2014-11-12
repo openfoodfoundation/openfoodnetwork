@@ -120,6 +120,13 @@
           = f.label :contact, 'Name'
         .omega.eight.columns
           = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
+      -if @enterprise.unconfirmed_email
+        .alert-box
+          Email change is pending.
+          We've sent a confirmation email to
+          %strong= "#{@enterprise.unconfirmed_email}."
+          = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.unconfirmed_email } ), method: :post)
+          %a.close{ href: "#" } ×
       .row
         .alpha.three.columns
           = f.label :email
@@ -184,7 +191,7 @@
         -# 	['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
         -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
         %text-angular{'ng-model' => 'htmlVariable', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular',
-          'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]", 
+          'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
           'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}
   %fieldset.eleven.columns.alpha.no-border-bottom
     %legend IMAGES
