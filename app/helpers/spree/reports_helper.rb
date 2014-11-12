@@ -13,14 +13,12 @@ module Spree
     #I don't like that this is done in two loops, but redundant list entries
     #  were created otherwise... 
     def report_payment_method_options(orders)
-      payment_method_list = {}
-      orders.map do |o|
-        payment_method_name = o.payments.first.payment_method.andand.name
-        payment_method_id = o.payments.first.payment_method.andand.id
-        payment_method_list[payment_method_name] = payment_method_id
+      payment_method_list = []
+      orders.map do |o| 
+        payment_method_list << o.payments.first.payment_method.andand.name
       end
-      payment_method_list.each do |key, value|
-        [ "#{value}".html_safe,  key]
+      payment_method_list.uniq.each do |pm|
+        [ "#{pm}".html_safe,  pm]
       end
     end
 
