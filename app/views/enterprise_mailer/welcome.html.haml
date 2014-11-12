@@ -1,18 +1,23 @@
 %h3{:style => "margin: 0;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #000;font-weight: 500;font-size: 27px;"}
-  = "Hi, #{@resource.contact}!"
+  = "Welcome, #{@enterprise.contact}!"
 %p.lead{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 17px;line-height: 1.6;"}
-  = "Please confirm email address for your enterprise "
   %strong
-    = "#{@resource.name}."
+    = "#{@enterprise.name}"
+  = " is now on #{Spree::Config[:site_name]}."
+
 %p &nbsp;
+
 / Callout Panel
 %p.callout{:style => "margin: 0; padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-  Click the link below to confirm email and to activate your enterprise. This link can be used only once:
+  = "Click the link below to update your profile or manage other details for "
+  %strong
+    = "#{@enterprise.name}."
   %br
   %strong
-    = link_to 'Confirm this email address »', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
-/ /Callout Panel
+    = link_to "Manage #{@enterprise.name} »", spree.admin_url
+
 %p &nbsp;
+
 %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
   We're so excited that you're joining the Open Food Network! Don't hestitate to get in touch if you have any questions.
 %p &nbsp;
