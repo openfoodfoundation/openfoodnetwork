@@ -36,6 +36,7 @@ feature %q{
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
+      product.tax_category_id.should == tax_category.id
       product.supplier.should == @supplier
       product.variant_unit.should == 'weight'
       product.variant_unit_scale.should == 1000
