@@ -14,17 +14,19 @@ feature %q{
           create(:distributor_enterprise)
         ])
       end
-      it "should not show the Sales Total report" do
+      it "does not show super admin only reports" do
         login_to_admin_as user
         click_link "Reports"
         page.should_not have_content "Sales Total"
+        page.should_not have_content "Users & Enterprises"
       end
     end
     context "As an admin user" do
-      it "shows the Sales Total report" do
+      it "shows the super admin only reports" do
         login_to_admin_section
         click_link "Reports"
         page.should have_content "Sales Total"
+        page.should have_content "Users & Enterprises"
       end
     end
   end
