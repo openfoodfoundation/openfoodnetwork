@@ -16,11 +16,13 @@ feature %q{
 
   describe "creating a product" do
     scenario "assigning a important attributes", js: true do
+      tax_category = create(:tax_category)
       login_to_admin_section
 
       click_link 'Products'
       click_link 'New Product'
 
+      select 'Test Tax Category', from: 'product_tax_category_id'
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
