@@ -4,8 +4,7 @@ describe MapController do
   it "loads active distributors" do
     active_distributors = double(:distributors)
 
-    Enterprise.stub_chain(:distributors_with_active_order_cycles, :ready_for_checkout).
-      and_return(active_distributors)
+    Enterprise.stub(:distributors_with_active_order_cycles) { active_distributors }
 
     get :index
 
