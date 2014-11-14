@@ -3,6 +3,10 @@ module OpenFoodNetwork
     attr_reader :params
     def initialize(params = {})
       @params = params
+
+      # Convert arrays of ids to comma delimited strings
+      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].kind_of? Array
+      @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].kind_of? Array
     end
 
     def header
@@ -29,21 +33,29 @@ module OpenFoodNetwork
     end
 
     def owners_and_enterprises
-      ActiveRecord::Base.connection.execute("SELECT enterprises.name, enterprises.sells, enterprises.is_primary_producer, enterprises.confirmed_at,
+      query = "SELECT enterprises.name, enterprises.sells, enterprises.is_primary_producer, enterprises.confirmed_at,
       'owns' AS relationship_type, owners.email as user_email FROM enterprises
-      LEFT JOIN spree_users AS owners ON owners.id=enterprises.owner_id ORDER BY enterprises.name DESC" )
-      .to_a
+      LEFT JOIN spree_users AS owners ON owners.id=enterprises.owner_id
+      WHERE enterprises.id IS NOT NULL
+      #{ params[:enterprise_id_in].present? ? "AND enterprises.id IN (#{ params[:enterprise_id_in] })" : "" }
+      #{ params[:user_id_in].present? ? "AND owners.id IN (#{ params[:user_id_in] })" : "" }
+      ORDER BY enterprises.name DESC"
+
+      ActiveRecord::Base.connection.execute(query).to_a
     end
 
     def managers_and_enterprises
-      ActiveRecord::Base.connection.execute("SELECT enterprises.name, enterprises.sells, enterprises.is_primary_producer, enterprises.confirmed_at,
+      query = "SELECT enterprises.name, enterprises.sells, enterprises.is_primary_producer, enterprises.confirmed_at,
       'manages' AS relationship_type, managers.email as user_email FROM enterprises
       LEFT JOIN enterprise_roles ON enterprises.id=enterprise_roles.enterprise_id
       LEFT JOIN spree_users AS managers ON enterprise_roles.user_id=managers.id
       WHERE enterprise_id IS NOT NULL
+      #{ params[:enterprise_id_in].present? ? "AND enterprise_id IN (#{ params[:enterprise_id_in] })" : "" }
       AND user_id IS NOT NULL
-      ORDER BY enterprises.name DESC, user_email DESC")
-      .to_a
+      #{ params[:user_id_in].present? ? "AND user_id IN (#{ params[:user_id_in] })" : "" }
+      ORDER BY enterprises.name DESC, user_email DESC"
+
+      ActiveRecord::Base.connection.execute(query).to_a
     end
 
     def users_and_enterprises
