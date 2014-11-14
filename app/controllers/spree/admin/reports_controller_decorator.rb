@@ -4,6 +4,7 @@ require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
+require 'open_food_network/users_and_enterprises_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -572,11 +573,14 @@ Spree::Admin::ReportsController.class_eval do
 
   def products_and_inventory
     @report_types = REPORT_TYPES[:products_and_inventory]
-
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
-    #@table = @report.table
-    #@header = @report.header
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory.csv")
+  end
+
+  def users_and_enterprises
+    # @report_types = REPORT_TYPES[:users_and_enterprises]
+    @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params
+    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises.csv")
   end
 
   def render_report (header, table, create_csv, csv_file_name)

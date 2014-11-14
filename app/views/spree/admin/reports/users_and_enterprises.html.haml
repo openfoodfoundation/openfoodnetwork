@@ -1,0 +1,39 @@
+-# = form_tag spree.users_and_enterprises_reports_url do |f|
+-#   %br
+-#   = label_tag nil, "Enterprise: "
+-#   = select_tag(:distributor_id,
+-#     options_from_collection_for_select(@distributors, :id, :name, params[:distributor_id]),
+-#     :include_blank => true)
+-#
+-#   %br
+-#   = label_tag nil, "User: "
+-#   = select_tag(:supplier_id,
+-#     options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]),
+-#     :include_blank => true)
+-#
+-#   -# Might need this later if we add different kinds of reports
+-#   -# %br
+-#   -# = label_tag nil, "Report Type: "
+-#   -# = select_tag(:report_type, options_for_select(@report_types, params[:report_type]))
+-#
+-#   %br
+-#   %br
+-#   = check_box_tag :csv
+-#   = label_tag :csv, "Download as csv"
+-#   %br
+-#   = button t(:search)
+-# %br
+-# %br
+%table
+  %thead
+    %trs
+      - @report.header.each do |heading|
+        %th=heading
+  %tbody
+    - @report.table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @report.table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)
