@@ -1,4 +1,5 @@
 Spree::UserMailer.class_eval do
+  layout 'mailer'
 
   def signup_confirmation(user)
     @user = user
