@@ -8,28 +8,12 @@ module Spree
       end
     end
 
-    #lin-d-hop
-    #Find the payment methods options for reporting. 
-    #I don't like that this is done in two loops, but redundant list entries
-    #  were created otherwise... 
     def report_payment_method_options(orders)
-      payment_method_list = []
-      orders.map do |o| 
-        payment_method_list << o.payments.first.payment_method.andand.name
-      end
-      payment_method_list.uniq.each do |pm|
-        [ "#{pm}".html_safe,  pm]
-      end
+      orders.map { |o| o.payments.first.payment_method.andand.name }.uniq
     end
 
     def report_distribution_options(orders)
-      distribution_list = []
-      orders.map do |o| 
-        distribution_list << o.shipping_method.andand.name 
-      end
-      distribution_list.uniq.each do |pm|
-        [ "#{pm}".html_safe,  pm]
-      end
+      orders.map { |o| o.shipping_method.andand.name  }.uniq      
     end    
 
   end

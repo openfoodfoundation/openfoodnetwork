@@ -631,7 +631,7 @@ Spree::Admin::ReportsController.class_eval do
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
       :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
-      :order_cycle_management => {:name => "UK Order Cycle Management", :description => ''}
+      :order_cycle_management => {:name => "Order Cycle Management", :description => ''}
       
     }
     # Return only reports the user is authorized to view.
