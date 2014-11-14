@@ -1,4 +1,4 @@
 / insert_top "[data-hook='admin_orders_index_rows']"
 
 %td.align-center
-  = order.distributor.name
+  = order.distributor.andand.name

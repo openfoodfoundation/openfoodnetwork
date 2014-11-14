@@ -26,7 +26,7 @@ describe BaseController do
   end
 
   it "loads active_distributors" do
-    Enterprise.stub_chain(:distributors_with_active_order_cycles, :ready_for_checkout) { 'active distributors' }
+    Enterprise.stub(:distributors_with_active_order_cycles) { 'active distributors' }
     controller.load_active_distributors.should == 'active distributors'
   end
 end

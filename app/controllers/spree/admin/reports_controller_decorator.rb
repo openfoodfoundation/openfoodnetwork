@@ -4,6 +4,7 @@ require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
+require 'open_food_network/users_and_enterprises_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -572,11 +573,14 @@ Spree::Admin::ReportsController.class_eval do
 
   def products_and_inventory
     @report_types = REPORT_TYPES[:products_and_inventory]
-
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
-    #@table = @report.table
-    #@header = @report.header
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory.csv")
+  end
+
+  def users_and_enterprises
+    # @report_types = REPORT_TYPES[:users_and_enterprises]
+    @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params
+    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises.csv")
   end
 
   def render_report (header, table, create_csv, csv_file_name)
@@ -613,7 +617,8 @@ Spree::Admin::ReportsController.class_eval do
       :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
       :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
-      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" }
+      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
+      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
