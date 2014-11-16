@@ -1,21 +1,22 @@
 Dear #{@producer.name},
-
+\
 We now have all the consumer orders for the food drop on #{@distribution_date}.
 Please deliver to #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode} during the regular delivery time. If this is not convenient then please call #{@coordinator.phone}.
 
-NB If you have to arrange a different delivery day and time, the school has requested that you do not come on site during drop off/pick up times (8:45-9:15 and 15:00-15:30)
+Note: If you have to arrange a different delivery day and time, it is requested that you do not come on site during drop off/pick up times.
 
+\
 Orders summary
-==============
-
+================
+\
 Here is a summary of the orders for your products:
+\
+- @line_items.each do |item|
+  #{item.variant.sku} #{raw(item.variant.product.supplier.name)} #{raw(item.variant.product.name)} #{raw(item.variant.options_text)} (QTY: #{item.quantity}) @ #{item.single_money} = #{item.display_amount}
 
-/ - @order_cycle.exchange_for_distributor.each do |exchange|
-
-
+\
 Detailed orders breakdown
-=========================
-
+===========================
 
 
 Please confirm that you have got this email.
@@ -23,5 +24,5 @@ Please confirm that you have got this email.
 Please send me an invoice for this amount so we can send you payment.
 
 If you need to phone on the day please call #{@coordinator.phone}.
-
+\
 Thanks and best wishes - #{@coordinator.name}
