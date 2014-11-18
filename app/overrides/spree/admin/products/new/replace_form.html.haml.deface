@@ -36,8 +36,10 @@
           = f.label :product_variant_unit_name, t(:unit_name)
           %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
     .twelve.columns.alpha
-      .six.columns.alpha
+      .three.columns.alpha
         = render 'spree/admin/products/primary_taxon_form', f: f
+      .three.columns.alpha
+        = render 'spree/admin/products/shipping_category_form', f: f
       .three.columns
         = f.field_container :price do
           = f.label :price, t(:price)
