@@ -23,5 +23,13 @@ feature %q{
       visit '/admin/products/override_variants'
       page.should have_select2 'hub_id', options: ['', hub.name]
     end
+
+    it "displays the hub" do
+      visit '/admin/products/override_variants'
+      select2_select hub.name, from: 'hub_id'
+      click_button 'Go'
+
+      page.should have_selector 'h2', text: hub.name
+    end
   end
 end
