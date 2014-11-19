@@ -21,7 +21,7 @@ Spree::Order.class_eval do
     go_to_state :delivery
     go_to_state :payment, :if => lambda { |order|
       # Fix for #2191
-      if order.shipping_method.andand.require_ship_address and 
+      if order.shipping_method.andand.require_ship_address and
         if order.ship_address.andand.valid?
           order.create_shipment!
           order.update_totals
@@ -76,10 +76,10 @@ Spree::Order.class_eval do
       errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
     end
   end
-  
+
   def empty_with_clear_shipping_and_payments!
     empty_without_clear_shipping_and_payments!
-    payments.clear 
+    payments.clear
     update_attributes(shipping_method_id: nil)
   end
   alias_method_chain :empty!, :clear_shipping_and_payments
@@ -170,13 +170,24 @@ Spree::Order.class_eval do
 
   # Show payment methods for this distributor
   def available_payment_methods
-    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm| 
+    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm|
       (self.distributor && (pm.distributors.include? self.distributor))
     end
   end
 
   def available_shipping_methods(display_on = nil)
     Spree::ShippingMethod.all_available(self, display_on)
+  end
+
+  # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
+  def deliver_order_confirmation_email
+    begin
+      Spree::OrderMailer.confirm_email_for_customer(self.id).deliver
+      Spree::OrderMailer.confirm_email_for_shop(self.id).deliver
+    rescue Exception => e
+      logger.error("#{e.class.name}: #{e.message}")
+      logger.error(e.backtrace * "\n")
+    end
   end
 
 
