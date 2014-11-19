@@ -3,8 +3,8 @@
     / If you delete this meta tag, Half Life 3 will never be released.
     %meta{:content => "width=device-width", :name => "viewport", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
-    %title{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"} Open Food Network
-    %link{:href => "http://rohanmitchell.com/random/template/basic-email-template/stylesheets/email.css", :rel => "stylesheet", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;", :type => "text/css"}/
+    %title{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+      Open Food Network
   %body{:bgcolor => "#FFFFFF", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;-webkit-font-smoothing: antialiased;-webkit-text-size-adjust: none;height: 100%;width: 100%!important;"}
     / HEADER
     %table.head-wrap{:bgcolor => "#333333", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 100%;"}
@@ -15,9 +15,10 @@
             %table{:bgcolor => "#333333", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 100%;"}
               %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
                 %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-                  %img{:src => "https://openfoodnetwork.org.au/assets/ofn_logo_beta-8e4dfc79deb25def2d107dea52dce492.png", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;max-width: 100%;", :width => "200"}/
+                  %img{:src => "#{ email_asset_url 'open-food-network-beta.png' }", srcset: "#{ email_asset_url 'open-food-network-beta.svg' }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;max-width: 100%;", :width => "200"}/
                 %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-                  %h6.collapse{:style => "margin: 0!important;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #999;font-weight: 900;font-size: 14px;text-transform: uppercase;"} Open Food Network
+                  %h6.collapse{:style => "margin: 0!important;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #999;font-weight: 900;font-size: 14px;text-transform: uppercase;"}
+                    Open Food Network
         %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
     / /HEADER
     / BODY
@@ -45,10 +46,10 @@
               %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
                 %td{:align => "center", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
                   %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-                    %a{:href => "https://openfoodnetwork.org.au/Terms-of-service.pdf", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+                    %a{:href => "#{ URI.join(spree.root_url, "Terms-of-service.pdf").to_s }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
                       Terms of service
                     |
-                    %a{:href => "http://www.openfoodnetwork.org.au", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+                    %a{:href => "#{ spree.root_url }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
                       Open Food Network
                     / | <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>
           / /content

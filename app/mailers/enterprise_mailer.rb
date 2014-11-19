@@ -3,6 +3,7 @@ class EnterpriseMailer < Spree::BaseMailer
   include Devise::Mailers::Helpers
 
   layout 'mailer'
+  helper Spree::MailerHelper
 
   def welcome(enterprise)
     @enterprise = enterprise
