@@ -2,6 +2,7 @@ require 'open_food_network/spree_api_key_loader'
 
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
+  include OrderCyclesHelper
   before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
   before_filter :load_spree_api_key, :only => :bulk_edit
 
@@ -47,6 +48,12 @@ Spree::Admin::ProductsController.class_eval do
       end
     end
   end
+
+  def override_variants
+    @all_enterprises = []
+    @my_enterprises = order_cycle_permitted_enterprises.by_name
+  end
+
 
   protected
   def location_after_save
