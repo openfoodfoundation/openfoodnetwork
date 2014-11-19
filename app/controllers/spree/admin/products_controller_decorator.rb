@@ -50,8 +50,7 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def override_variants
-    @all_enterprises = []
-    @my_enterprises = order_cycle_permitted_enterprises.by_name
+    @hubs = order_cycle_hub_enterprises(without_validation: true)
   end
 
 

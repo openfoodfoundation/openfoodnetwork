@@ -17,10 +17,11 @@ feature %q{
 
   describe "selecting a hub" do
     let!(:hub) { create(:distributor_enterprise) }
+    let!(:producer) { create(:supplier_enterprise) }
 
     it "displays a list of hub choices" do
       visit '/admin/products/override_variants'
-      page.should have_select2 'hub_id', with_options: [hub.name]
+      page.should have_select2 'hub_id', options: ['', hub.name]
     end
   end
 end

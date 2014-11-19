@@ -1,2 +1,2 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Enterprises) ->
-  $scope.Enterprises = Enterprises
+angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, hubs) ->
+  $scope.hubs = hubs
