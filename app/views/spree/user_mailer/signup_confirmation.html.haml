@@ -1,32 +1,32 @@
-%h3{:style => "margin: 0;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #000;font-weight: 500;font-size: 27px;"}
+%h3
 Hello!
-%p.lead{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 17px;line-height: 1.6;"}
+%p.lead
   = "Welcome to #{ Spree::Config[:site_name] }!"
 
 / Heading Panel
 %p &nbsp;
-%p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+%p.callout
+  %strong
     Your login
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   Your login email is
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %strong
     = @user.email
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   You can start shopping online now at
-  %a{:href => "#{ spree.root_url }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+  %a{:href => "#{ spree.root_url }", :target => "_blank"}
     -# Remove http:// and trailing slashes from root url if they exist
     = spree.root_url.sub(/http:\/\//,"").sub(/\/$/,"")
 %p &nbsp;
-%hr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
+%hr/
 %p &nbsp;
-%p.lead{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 17px;line-height: 1.6;"}
+%p.lead
   Thanks for joining the network. We look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   We welcome all your questions and feedback; you can use the
-  %em{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %em
     Send Feedback button on the site or email us at
-    %a{:href => "mailto:hello@openfoodnetwork.org", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+    %a{:href => "mailto:hello@openfoodnetwork.org", :target => "_blank"}
       hello@openfoodnetwork.org
 
 = render 'shared/mailers/signoff'
