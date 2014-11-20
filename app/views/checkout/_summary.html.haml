@@ -1,5 +1,5 @@
 %orderdetails
-  = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
+  = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event, checkout)"} do |f|
     %fieldset
       %legend Your order
       %table
@@ -25,7 +25,7 @@
               %th= label
               %td= total
 
-      //= f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
+      //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url} 
         %i.ofn-i_008-caret-left
         Back to Cart

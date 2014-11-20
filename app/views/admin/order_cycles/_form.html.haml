@@ -1,14 +1,4 @@
-= f.label :name
-= f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
-%br/
-
-.date-field
-  = f.label :orders_open_at, 'Orders open'
-  = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
-.date-field
-  = f.label :orders_close_at, 'Orders close'
-  = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
-%br/
+= render 'name_and_timing_form', f: f
 
 
 %h2 Incoming
@@ -31,7 +21,7 @@
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
+= f.collection_select :coordinator_id, order_cycle_coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 = render 'coordinator_fees', f: f
 
 
@@ -50,7 +40,7 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 
-= select_tag :new_distributor_id, options_from_collection_for_select(order_cycle_hub_enterprises, :id, :name), {'ng-model' => 'new_distributor_id'}
+= select_tag :new_distributor_id, options_for_select(order_cycle_hub_enterprises), {'ng-model' => 'new_distributor_id'}
 = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions

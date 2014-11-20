@@ -3,6 +3,8 @@ module Api
 
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
+    before_filter :override_sells, only: [:create, :update]
+    before_filter :override_visible, only: [:create, :update]
     respond_to :json
 
     def managed
@@ -58,6 +60,14 @@ module Api
 
     def check_type
       params[:enterprise].delete :type unless current_api_user.admin?
+    end
+
+    def override_sells
+      params[:enterprise][:sells] = 'unspecified'
+    end
+
+    def override_visible
+      params[:enterprise][:visible] = false
     end
   end
 end

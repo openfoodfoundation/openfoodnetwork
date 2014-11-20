@@ -25,7 +25,7 @@ feature %q{
     it "displays a message when number of products is zero" do
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_text "No products found."
+      expect(page).to have_text "No products yet. Why don't you add some?"
     end
 
     it "displays a select box for suppliers, with the appropriate supplier selected" do

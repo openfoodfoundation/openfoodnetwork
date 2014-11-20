@@ -12,8 +12,11 @@ module Spree
       let(:enterprise_any) { create(:enterprise, sells: 'any') }
       let(:enterprise_own) { create(:enterprise, sells: 'own') }
       let(:enterprise_none) { create(:enterprise, sells: 'none') }
+      let(:enterprise_any_producer) { create(:enterprise, sells: 'any', is_primary_producer: true) }
+      let(:enterprise_own_producer) { create(:enterprise, sells: 'own', is_primary_producer: true) }
+      let(:enterprise_none_producer) { create(:enterprise, sells: 'none', is_primary_producer: true) }
 
-      context "as manager of a 'any' type enterprise" do
+      context "as manager of an enterprise who sells 'any'" do
         before do
           user.enterprise_roles.create! enterprise: enterprise_any
         end
@@ -23,7 +26,7 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'own' type enterprise" do
+      context "as manager of an enterprise who sell 'own'" do
         before do
           user.enterprise_roles.create! enterprise: enterprise_own
         end
@@ -33,14 +36,64 @@ module Spree
         it { subject.can_manage_orders?(user).should be_true }
       end
 
-      context "as manager of a 'none' type enterprise" do
+      context "as manager of an enterprise who sells 'none'" do
         before do
           user.enterprise_roles.create! enterprise: enterprise_none
         end
 
-        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_products?(user).should be_false }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_false }
+      end
+
+      context "as manager of a producer enterprise who sells 'any'" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_any_producer
+        end
+
+        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_enterprises?(user).should be_true }
+        it { subject.can_manage_orders?(user).should be_true }
+      end
+
+      context "as manager of a producer enterprise who sell 'own'" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_own_producer
+        end
+
+        it { subject.can_manage_products?(user).should be_true }
+        it { subject.can_manage_enterprises?(user).should be_true }
+        it { subject.can_manage_orders?(user).should be_true }
+      end
+
+      context "as manager of a producer enterprise who sells 'none'" do
+        before do
+          user.enterprise_roles.create! enterprise: enterprise_none_producer
+        end
+
+        context "as a non profile" do
+          before do
+            enterprise_none_producer.is_primary_producer = true
+            enterprise_none_producer.producer_profile_only = false
+            enterprise_none_producer.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_true }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
+
+        context "as a profile" do
+          before do
+            enterprise_none_producer.is_primary_producer = true
+            enterprise_none_producer.producer_profile_only = true
+            enterprise_none_producer.save!
+          end
+
+          it { subject.can_manage_products?(user).should be_false }
+          it { subject.can_manage_enterprises?(user).should be_true }
+          it { subject.can_manage_orders?(user).should be_false }
+        end
       end
 
       context "as a new user with no enterprises" do
@@ -151,6 +204,14 @@ module Spree
           should_not have_ability(:destroy, for: er2)
         end
 
+        it "should be able to read some reports" do
+          should have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory], for: :report)
+        end
+
+        it "should not be able to read other reports" do
+          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises], for: :report)
+        end
+
       end
 
       context "when is a distributor enterprise user" do
@@ -237,9 +298,18 @@ module Spree
         it "should not be able to destroy enterprise relationships for other enterprises" do
           should_not have_ability(:destroy, for: er1)
         end
+
+        it "should be able to read some reports" do
+          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :report)
+        end
+
+        it "should not be able to read other reports" do
+          should_not have_ability([:sales_total, :users_and_enterprises], for: :report)
+        end
+
       end
 
-      context 'Order Cycle co-ordinator, distriutor enterprise manager' do
+      context 'Order Cycle co-ordinator, distributor enterprise manager' do
         let (:user) do
           user = create(:user)
           user.spree_roles = []
@@ -280,11 +350,11 @@ module Spree
         end
 
         it 'should have the ability to read and edit enterprises that I manage' do
-          should have_ability([:read, :edit, :update, :bulk_update], for: s1)
+          should have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s1)
         end
 
         it 'should not have the ability to read and edit enterprises that I do not manage' do
-          should_not have_ability([:read, :edit, :update, :bulk_update], for: s2)
+          should_not have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s2)
         end
 
         it 'should have the ability administrate and create enterpises' do

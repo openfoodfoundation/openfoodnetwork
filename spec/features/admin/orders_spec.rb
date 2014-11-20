@@ -95,7 +95,7 @@ feature %q{
     # click the 'capture' link for the order
     page.find("[data-action=capture][href*=#{@order.number}]").click
 
-    flash_message.should == "Payment Updated"
+    page.should have_content "Payment Updated"
 
     # check the order was captured
     @order.reload

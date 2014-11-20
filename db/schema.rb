@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141010043405) do
+ActiveRecord::Schema.define(:version => 20141023050324) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -269,6 +269,8 @@ ActiveRecord::Schema.define(:version => 20141010043405) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.datetime "shop_trial_start_date"
+    t.boolean  "producer_profile_only",    :default => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"

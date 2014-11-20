@@ -10,24 +10,20 @@
 @import shop-taxon-flag
 @import shop-popovers
 
-
-
 .darkswarm
 
   products
     display: block
     padding-top: 2.3em
-    
     @media all and (max-width: 768px)
       padding-top: 1em
-      
+
       input.button.right
         float: left
 
     @media all and (max-width: 480px)
       .add_to_cart
         margin-top: 2rem
-
 
     product
       @include csstrans
@@ -55,12 +51,15 @@
       .inline
         display: inline
 
-      
+      .spinner
+        width: 100px
+        margin-bottom: 20px
+
       // ICONS
       i
         font-size: 0.75em
         padding-right: 0.9375rem
-        @media all and (max-width: 640px) 
+        @media all and (max-width: 640px)
           padding-right: 0.25rem
 
       i.ofn-i_056-bulk, i.ofn-i_036-producers
@@ -69,20 +68,3 @@
 
       i.ofn-i_036-producers
         padding-left: 0.5rem
-
-      
-
-
-
-
-      
-
-      
-
-        
-      
-
-
-
-
-

@@ -25,6 +25,20 @@ module CheckoutHelper
     order.display_item_total.money.to_f + checkout_adjustments_total(order).money.to_f
   end
 
+  def checkout_state_options(source_address)
+    if source_address == :billing
+      address = @order.billing_address
+    elsif source_address == :shipping
+      address = @order.shipping_address
+    end
+
+    [[]] + address.country.states.map { |c| [c.name, c.id] }
+  end
+
+  def checkout_country_options
+    available_countries.map { |c| [c.name, c.id] }
+  end
+
 
   def validated_input(name, path, args = {})
     attributes = {
@@ -36,7 +50,18 @@ module CheckoutHelper
       "ng-class" => "{error: !fieldValid('#{path}')}" 
     }.merge args
     
-    render partial: "shared/validated_input", locals: {name: name, path: path, attributes: attributes}
+    render "shared/validated_input", name: name, path: path, attributes: attributes
+  end
+
+  def validated_select(name, path, options, args = {})
+    attributes = {
+      required: true,
+      id: path,
+      "ng-model" => path,
+      "ng-class" => "{error: !fieldValid('#{path}')}"
+    }.merge args
+
+    render "shared/validated_select", name: name, path: path, options: options, attributes: attributes
   end
 
   def reset_order

@@ -21,9 +21,10 @@ class AbilityDecorator
     user.enterprises.present?
   end
 
-  # Users can manage products if they have an enterprise.
+  # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
-    can_manage_enterprises? user
+    can_manage_enterprises?(user) &&
+    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -50,7 +51,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
@@ -120,6 +121,8 @@ class AbilityDecorator
       (user.enterprises & shipping_method.distributors).any?
     end
 
+    # Reports page
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
 

@@ -1,7 +1,7 @@
 %fieldset#shipping
   %ng-form{"ng-controller" => "ShippingCtrl", name: "shipping"}
 
-    %h5{"ng-class" => "{valid: shipping.$valid, dirty: shipping.$dirty}"}
+    %h5{"ng-class" => "{valid: shipping.$valid, dirty: shipping.$dirty || submitted}"}
       %span.right
         %label.label.round.alert.right
           %i.ofn-i_009-close
@@ -11,29 +11,19 @@
 
     %accordion-group{"is-open" => "accordion.shipping",
       "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
-      %accordion-heading
-        .row
-          .small-8.medium-10.columns
-            %em
-              %small
-                {{ Checkout.shippingMethod().name }}
-          .small-4.medium-2.columns.text-right
-            %span.accordion-up
-              %em
-                %small Hide
-              %i.ofn-i_053-point-up
-            %span.accordion-down
-              %em
-                %small Expand
-              %i.ofn-i_052-point-down
+      = render 'checkout/accordion_heading'
 
       .small-12.columns.medium-6.columns.large-6.columns
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
           %input{type: :radio,
             required: true,
+            name: "order.shipping_method_id",
             "ng-value" => "method.id",
             "ng-model" => "order.shipping_method_id"}
             {{ method.name }}
+
+        %small.error.medium.input-text{"ng-show" => "!fieldValid('order.shipping_method_id')"}
+          = "{{ fieldErrors('order.shipping_method_id') }}"
 
         %label{"ng-if" => "Checkout.requireShipAddress()"}
           %input{type: :checkbox, "ng-model" => "Checkout.ship_address_same_as_billing"}
@@ -48,39 +38,12 @@
           = @order.order_cycle.pickup_time_for(@order.distributor)
 
       = f.fields_for :ship_address, @order.ship_address do |sa|
-        .small-12.columns
-          #ship_address{"ng-if" => "Checkout.requireShipAddress()"}
-            %div.visible{"ng-if" => "!Checkout.ship_address_same_as_billing"}
-              .row
-                .small-12.columns
-                  = validated_input "Address", "order.ship_address.address1", "ofn-focus" => "accordion['shipping']"
-              .row
-                .small-12.columns
-                  = validated_input "Address (contd.)", "order.ship_address.address2", required: false
-              .row
-                .small-6.columns
-                  = validated_input "City", "order.ship_address.city"
-                .small-6.columns
-                  = sa.select :state_id, @order.shipping_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
-                    "ng-model" => "order.ship_address.state_id", required: true
-              .row
-                .small-6.columns
-                  = validated_input "Postcode", "order.ship_address.zipcode"
-                .small-6.columns.right
-                  = sa.select :country_id, available_countries.map{|c|[c.name, c.id]},
-                    "ng-model" => "order.ship_address.country_id", required: true
-              .row
-                .small-6.columns
-                  = validated_input "First Name", "order.ship_address.firstname"
-                .small-6.columns
-                  = validated_input "Last Name", "order.ship_address.lastname"
-              .row
-                .small-6.columns
-                  = validated_input "Phone", "order.ship_address.phone"
+        = render 'checkout/shipping_ship_address'
+
       .row
         .small-12.columns
           = f.text_area :special_instructions, label: "Any notes or custom delivery instructions?", size: "60x4", "ng-model" => "order.special_instructions"
 
       .row
         .small-12.columns.text-right
-          %button.primary{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)", "ofn-focus" => "accordion['shipping']"} Next
+          %button.primary{"ng-disabled" => "shipping.$invalid", "ng-click" => "next($event)"} Next

@@ -4,7 +4,7 @@ feature 'Home', js: true do
   include AuthenticationWorkflow
   include UIComponentHelper
 
-  let!(:distributor) { create(:distributor_enterprise) }
+  let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }

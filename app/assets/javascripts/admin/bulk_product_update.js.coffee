@@ -43,6 +43,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", [
     $scope.currentFilters = []
     $scope.limit = 15
     $scope.productsWithUnsavedVariants = []
+    $scope.query = ""
 
     $scope.initialise = ->
       authorise_api_reponse = ""

@@ -16,13 +16,38 @@ module Admin
       @collection = order_cycle_permitted_enterprises
     end
 
+    def set_sells
+      enterprise = Enterprise.find(params[:id])
+      attributes = { sells: params[:sells] }
+      attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
+      attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
+
+      if %w(none own).include?(params[:sells])
+        if params[:sells] == 'own' && enterprise.shop_trial_start_date
+          expiry = enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days
+          if Time.now > expiry
+            flash[:error] = "Sorry, but you've already had a trial. Expired on: #{expiry.strftime('%Y-%m-%d')}"
+          else
+            attributes.delete :shop_trial_start_date
+            enterprise.update_attributes(attributes)
+            flash[:notice] = "Welcome back! Your trial expires on: #{expiry.strftime('%Y-%m-%d')}"
+          end
+        elsif enterprise.update_attributes(attributes)
+          flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
+        end
+      else
+        flash[:error] = "Unauthorised"
+      end
+      redirect_to admin_path
+    end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
+      @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
       if @enterprise_set.save
         flash[:success] = 'Enterprises updated successfully'
         redirect_to main_app.admin_enterprises_path
       else
+        flash[:error] = 'Update failed'
         render :index
       end
     end
@@ -42,7 +67,7 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new :collection => collection
+      @enterprise_set = EnterpriseSet.new collection
     end
 
     def load_countries

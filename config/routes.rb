@@ -34,7 +34,7 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  devise_for :enterprise
+  devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
   namespace :admin do
     resources :order_cycles do
@@ -46,6 +46,10 @@ Openfoodnetwork::Application.routes.draw do
       collection do
         get :for_order_cycle
         post :bulk_update, as: :bulk_update
+      end
+
+      member do
+        put :set_sells
       end
 
       resources :producer_properties do
@@ -112,6 +116,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
+  match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via  => [:get, :post]
   match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]

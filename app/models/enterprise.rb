@@ -1,14 +1,13 @@
 class Enterprise < ActiveRecord::Base
-  SELLS = %w(none own any)
+  SELLS = %w(unspecified none own any)
+  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
-  devise :confirmable, reconfirmable: true
+  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
-
-  before_create :check_email
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
@@ -54,15 +53,39 @@ class Enterprise < ActiveRecord::Base
   validates :email, presence: true
   validates_presence_of :owner
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates_length_of :description, :maximum => 255
+
+  before_save :confirmation_check, if: lambda{ email_changed? }
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
+  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
+  after_create :send_welcome_email, if: lambda { email_is_known? }
+
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
+  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :ready_for_checkout, lambda {
+    joins(:shipping_methods).
+    joins(:payment_methods).
+    merge(Spree::PaymentMethod.available).
+    select('DISTINCT enterprises.*')
+  }
+  scope :not_ready_for_checkout, lambda {
+    # When ready_for_checkout is empty, ActiveRecord generates the SQL:
+    # id NOT IN (NULL)
+    # I would have expected this to return all rows, but instead it returns none. To
+    # work around this, we use the "OR ?=0" clause to return all rows when there are
+    # no enterprises ready for checkout.
+    where('id NOT IN (?) OR ?=0',
+          Enterprise.ready_for_checkout,
+          Enterprise.ready_for_checkout.count)
+  }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
@@ -118,7 +141,7 @@ class Enterprise < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
     end
   }
 
@@ -258,6 +281,20 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  def ready_for_checkout?
+    shipping_methods.any? && payment_methods.available.any?
+  end
+
+  def shop_trial_in_progress?
+    !!shop_trial_start_date &&
+    (shop_trial_start_date + SHOP_TRIAL_LENGTH.days > Time.now) &&
+    %w(own any).include?(sells)
+  end
+
+  def remaining_trial_days
+    distance_of_time_in_words(Time.now, shop_trial_start_date + SHOP_TRIAL_LENGTH.days)
+  end
+
   protected
 
   def devise_mailer
@@ -266,8 +303,27 @@ class Enterprise < ActiveRecord::Base
 
   private
 
-  def check_email
-    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
+  def email_is_known?
+    owner.enterprises.confirmed.map(&:email).include?(email)
+  end
+
+  def confirmation_check
+    # Skip confirmation/reconfirmation if the new email has already been confirmed
+    if email_is_known?
+      new_record? ? skip_confirmation! : skip_reconfirmation!
+    end
+  end
+
+  def welcome_after_confirm
+    # Send welcome email if we are confirming a newly created enterprise
+    # Note: this callback only runs on email confirmation
+    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      send_welcome_email
+    end
+  end
+
+  def send_welcome_email
+    EnterpriseMailer.welcome(self).deliver
   end
 
   def strip_url(url)
@@ -288,7 +344,7 @@ class Enterprise < ActiveRecord::Base
 
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
-      errors.add(:owner, "^You are not permitted to own own any more enterprises (limit is #{owner.enterprise_limit}).")
+      errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
     end
   end
 end

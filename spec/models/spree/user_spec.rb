@@ -19,7 +19,7 @@ describe Spree.user_class do
         expect {
           u2.owned_enterprises << e2
           u2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: The nominated user is not permitted to own own any more enterprises (limit is 1)."
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u2.email} is not permitted to own any more enterprises (limit is 1)."
       end
     end
   end

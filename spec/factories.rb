@@ -108,6 +108,17 @@ FactoryGirl.define do
   factory :distributor_enterprise, :parent => :enterprise do
     is_primary_producer false
     sells "any"
+
+    ignore do
+      with_payment_and_shipping false
+    end
+
+    after(:create) do |enterprise, proxy|
+      if proxy.with_payment_and_shipping
+        create(:payment_method,  distributors: [enterprise])
+        create(:shipping_method, distributors: [enterprise])
+      end
+    end
   end
 
   factory :enterprise_relationship do

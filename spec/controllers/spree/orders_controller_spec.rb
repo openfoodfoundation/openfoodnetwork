@@ -26,6 +26,20 @@ describe Spree::OrdersController do
     response.should redirect_to shop_path
   end
 
+  it "redirects home with message if hub is not ready for checkout" do
+    order = subject.current_order(true)
+    distributor.stub(:ready_for_checkout?) { false }
+    order.stub(distributor: distributor, order_cycle: order_cycle)
+
+    order.should_receive(:empty!)
+    order.should_receive(:set_distribution!).with(nil, nil)
+
+    spree_get :edit
+
+    response.should redirect_to root_url
+    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
+  end
+
   it "selects distributors" do
     d = create(:distributor_enterprise)
     p = create(:product, :distributors => [d])

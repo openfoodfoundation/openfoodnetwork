@@ -1,0 +1,6 @@
+/ insert_top "[data-hook='admin_footer_scripts']"
+
+- enterprise = spree_current_user.enterprises.first if OpenFoodNetwork::Permissions.new(spree_current_user).manages_one_enterprise?
+
+- if enterprise && enterprise.shop_trial_in_progress?
+  = render 'spree/admin/shared/trial_progress_bar', enterprise: enterprise

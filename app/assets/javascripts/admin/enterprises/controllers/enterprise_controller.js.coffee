@@ -1,9 +1,18 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, Enterprise, longDescription, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, longDescription, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
+    $scope.navClear = NavigationCheck.clear
+    # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
     $scope.htmlVariable = longDescription
+    $scope.pristineEmail = $scope.Enterprise.email
+
+    # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
+    # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
+    # and on all new uses of this contoller, and we might not want that .
+    $scope.enterpriseNavCallback = ->
+      "You are editing an enterprise!"
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
