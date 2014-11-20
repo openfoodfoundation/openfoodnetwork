@@ -2,9 +2,6 @@ require 'devise/mailers/helpers'
 class EnterpriseMailer < Spree::BaseMailer
   include Devise::Mailers::Helpers
 
-  layout 'mailer'
-  helper Spree::MailerHelper
-
   def welcome(enterprise)
     @enterprise = enterprise
     mail(:to => enterprise.email, :from => from_address,

@@ -1,6 +1,4 @@
 Spree::OrderMailer.class_eval do
-  layout 'mailer'
-  helper Spree::MailerHelper
   helper HtmlHelper
   helper CheckoutHelper
   helper SpreeCurrencyHelper
