@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiKey) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiAuth) ->
     $scope.loading = true
 
     $scope.updateStatusMessage =
@@ -45,17 +45,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.DisplayProperties = DisplayProperties
 
     $scope.initialise = ->
-      authorise_api_reponse = ""
-      dataFetcher("/api/users/authorise_api?token=" + SpreeApiKey).then (data) ->
-        authorise_api_reponse = data
-        $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
-        if $scope.spree_api_key_ok
-          $http.defaults.headers.common["X-Spree-Token"] = SpreeApiKey
-          $scope.fetchProducts()
-        else if authorise_api_reponse.hasOwnProperty("error")
-          $scope.api_error_msg = authorise_api_reponse("error")
-        else
-          api_error_msg = "You don't have an API key yet. An attempt was made to generate one, but you are currently not authorised, please contact your site administrator for access."
+      SpreeApiAuth.authorise()
+      .then ->
+        $scope.spree_api_key_ok = true
+        $scope.fetchProducts()
+      .catch (message) ->
+        $scope.api_error_msg = message
 
     $scope.$watchCollection '[query, producerFilter, categoryFilter]', ->
       $scope.limit = 15 # Reset limit whenever searching
