@@ -1,62 +1,62 @@
-%h3{:style => "margin: 0;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #000;font-weight: 500;font-size: 27px;"}
+%h3
   = "Welcome, #{@enterprise.contact}!"
-%p.lead{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 17px;line-height: 1.6;"}
+%p.lead
   Congratulations,
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %strong
     %strong= @enterprise.name
   = "is now part of #{ Spree::Config.site_name }!"
 / Heading Panel
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   Please find below all the details for viewing and editing your enterprise on
   %strong= "#{ Spree::Config.site_name }."
   We suggest keeping this email and information somewhere safe. Logging in with the account details below will allow complete access to your products and services.
 %p &nbsp;
 
-%p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+%p.callout
+  %strong
     Your enterprise details
-%table{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 100%;", :width => "100%"}
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+%table{:width => "100%"}
+  %tr
+    %td{:align => "right"}
+      %strong
         Shop URL
     %td &nbsp;
-    %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %a{:href => "#{ main_app.shop_enterprise_url(@enterprise) }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+    %td
+      %a{:href => "#{ main_app.shop_enterprise_url(@enterprise) }", :target => "_blank"}
         = main_app.shop_enterprise_url(@enterprise)
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %tr
     %td &nbsp;
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %tr
+    %td{:align => "right"}
+      %strong
         Email
     %td &nbsp;
-    %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %a{:href => "mailto: #{ @enterprise.email }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+    %td
+      %a{:href => "mailto: #{ @enterprise.email }", :target => "_blank"}
         = @enterprise.email
 
 %p &nbsp;
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   Log into
   %strong= "#{ Spree::Config.site_name } Admin"
   in order to edit your enterprise details such as website and social media links, or to start adding products to your enterprise!
 
-%p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+%p.callout
+  %strong
     OFN Admin
-%table{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 100%;", :width => "100%"}
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+%table{ :width => "100%"}
+  %tr
+    %td{:align => "right"}
+      %strong
         Admin
     %td &nbsp;
-    %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %a{:href => "#{ spree.admin_url }", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
+    %td
+      %a{:href => "#{ spree.admin_url }", :target => "_blank"}
         = spree.admin_url
 
 %p &nbsp;
 / /Heading Panel
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%p
   We're so pleased to have you as a valued member of
   %strong= "#{Spree::Config.site_name}!"
   Don't hestitate to get in touch if you have any questions.
