@@ -43,6 +43,7 @@ gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
+gem 'roadie-rails', '~> 1.0.3'
 
 gem 'foreigner'
 gem 'immigrant'
