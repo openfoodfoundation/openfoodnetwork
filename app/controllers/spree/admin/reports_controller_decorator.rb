@@ -37,7 +37,6 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
   } } }
 
-
   # Overide spree reports list.
   def index
     @reports = authorized_reports
@@ -262,8 +261,6 @@ Spree::Admin::ReportsController.class_eval do
     case params[:report_type]
     when "payments_by_payment_type"
       table_items = payments
-      
-      
 
       header = ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
 
