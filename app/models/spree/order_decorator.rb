@@ -185,6 +185,7 @@ Spree::Order.class_eval do
       Spree::OrderMailer.confirm_email_for_customer(self.id).deliver
       Spree::OrderMailer.confirm_email_for_shop(self.id).deliver
     rescue Exception => e
+      Bugsnag.notify(e)
       logger.error("#{e.class.name}: #{e.message}")
       logger.error(e.backtrace * "\n")
     end
