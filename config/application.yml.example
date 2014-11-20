@@ -11,6 +11,3 @@ DEFAULT_COUNTRY: "Australia"
 I18N_LOCALE: "en"
 # Spree zone.
 CHECKOUT_ZONE: "Australia"
-# Contact name for emails.
-CONTACT_STRING: "Joe Bloggs and the OFN Team"
-
