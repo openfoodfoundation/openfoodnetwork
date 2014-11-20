@@ -1,109 +1,79 @@
-%h3{:style => "margin: 0;padding: 0;font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;line-height: 1.1;margin-bottom: 15px;color: #000;font-weight: 500;font-size: 27px;"}
-  = "Hi #{@order.bill_address.firstname},"
-%table.social.white-bg{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;background-color: white!important;width: 100%;border: 1px solid  #ebebeb;", :width => "100%"}
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      / column 1
-      %table.column{:align => "left", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 280px;float: left;min-width: 279px;"}
-        %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-          %td{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-            %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-              %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-                = "Order confirmation ##{@order.number}"
-            %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+%h3 Hi #{@order.bill_address.firstname},
+%table.social.white-bg{:width => "100%"}
+  %tr
+    %td
+      %table.column{:align => "left"}
+        %tr
+          %td
+            %p
+              %strong Order confirmation ##{@order.number}
+            %p
               Thanks for shopping on
               %strong= "#{Spree::Config.site_name}."
               Here are your order details from
               %strong= "#{@order.distributor.name}."
-      / /column 1
-      / column 2
-      %table.column{:align => "left", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 280px;float: left;min-width: 279px;"}
-        %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-          %td{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-            %img.float-right{:src => "#{@order.distributor.logo.url(:thumb)}", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;max-width: 100%;float: right;display: block;"}/
-      / /column 2
-      %span.clear{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;display: block;clear: both;"}
-/ /intro
+      %table.column{:align => "left"}
+        %tr
+          %td
+            %img.float-right{:src => "#{@order.distributor.logo.url(:thumb)}"}/
+      %span.clear
+%p &nbsp;
 
-/ Heading Panel
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  &nbsp;
 
-%p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    Order summary
-/ /Heading Panel
-/ Order Summary
-/ <p>Order for: <strong>Rob Harrington</strong></p>
-%table.order-summary{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;width: 100%;", :width => "100%"}
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        Item
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;", :width => "25%"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        Qty
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;", :width => "25%"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        Price
+%p.callout
+  %strong Order summary
+%table.order-summary{:width => "100%"}
+  %tr
+    %td
+      %strong Item
+    %td{:align => "right", :width => "25%"}
+      %strong Qty
+    %td{:align => "right", :width => "25%"}
+      %strong Price
   - @order.line_items.each do |item|
-    %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %td{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+    %tr
+      %td
         = raw(item.variant.product.supplier.name)
         %br
         = "#{raw(item.variant.product.name)} #{raw(item.variant.options_text)}"
-      %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+      %td{:align => "right"}
         = item.quantity
-      %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+      %td{:align => "right"}
         = item.display_amount
-    %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %td{:colspan => "3", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        &nbsp;
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:align => "right", :colspan => "2", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  %tr
+    %td{:colspan => "3"} &nbsp;
+  %tr
+    %td{:align => "right", :colspan => "2"}
       Subtotal:
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+    %td{:align => "right"}
       = spree_number_to_currency checkout_cart_total_with_adjustments(@order)
   - checkout_adjustments_for_summary(@order, exclude: [:distribution]).reject{ |a| a.amount == 0 }.each do |adjustment|
-    %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %td{:align => "right", :colspan => "2", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+    %tr
+      %td{:align => "right", :colspan => "2"}
         = raw(adjustment.label)
-      %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+      %td{:align => "right"}
         = adjustment.display_amount
-  %tr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    %td{:align => "right", :colspan => "2", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        Total:
-    %td{:align => "right", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-        = @order.display_total
+  %tr
+    %td{:align => "right", :colspan => "2"}
+      %strong Total:
+    %td{:align => "right"}
+      %strong= @order.display_total
+%p &nbsp;
 
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  &nbsp;
-
--# Payment Summary
 - if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
-  / Heading Panel
-  %p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-    %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-      Payment summary
+  %p.callout
+    %strong Payment summary
   / /Heading Panel
   / Payment Summary
-  %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-    = @order.payments.first.andand.payment_method.andand.description.andand.html_safe
-
-  -# Spacer
-  %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-    &nbsp;
-
-
+  %p= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
+  %p &nbsp;
 
 - if @order.shipping_method.andand.require_ship_address
-  -# Delivery details
-  %p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-    %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  / Delivery details
+  %p.callout
+    %strong
       Delivery details
-  %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+  %p
     Your order will be delivered to:
     %br
     #{@order.ship_address.to_s}
@@ -123,11 +93,11 @@
 
 
 - else
-  -# Collection Details
-  %p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
-    %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
+  / Collection details
+  %p.callout
+    %strong
       Collection details
-  %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
+  %p
     - if @order.shipping_method.andand.description
       = @order.shipping_method.description.html_safe
       %br
@@ -152,27 +122,15 @@
     -# %a{:href => "https://goo.gl/maps/T1ArU", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
     -#   google maps
 
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  &nbsp;
-%hr{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  &nbsp;
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  Thanks for your support.
-%p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-  &nbsp;
 
--# Contact details
-%p.callout{:style => "margin: 0;padding: 15px;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 15px;font-weight: normal;font-size: 14px;line-height: 1.6;background-color: #e1f0f5;"}
+%p.callout
   #{@order.distributor.contact},
-  %br{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
-  %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    = @order.distributor.name
-  %br{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
-  %br{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
+  %br/
+  %strong= @order.distributor.name
+  %br/
   = @order.distributor.phone || ""
-  %br{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
-  %a{:href => "mailto:#{@order.distributor.email}", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;font-weight: bold;", :target => "_blank"}
+  %br/
+  %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
     = @order.distributor.email
-  %br{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}/
+  %br/
   = @order.distributor.website || ""
