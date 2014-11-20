@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "BulkProducts", (dataFetcher) ->
+angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) ->
   new class BulkProducts
     products: []
 
@@ -6,13 +6,9 @@ angular.module("ofn.admin").factory "BulkProducts", (dataFetcher) ->
       queryString = filters.reduce (qs,f) ->
         return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
       , ""
-      return dataFetcher("/api/products/bulk_products?page=1;per_page=20;#{queryString}").then (data) =>
-        @addProducts data.products
 
-        if data.pages > 1
-          for page in [2..data.pages]
-            dataFetcher("/api/products/bulk_products?page=#{page};per_page=20;#{queryString}").then (data) =>
-              @addProducts data.products
+      url = "/api/products/bulk_products?page=::page::;per_page=20;#{queryString}"
+      PagedFetcher.fetch url, (data) => @addProducts data.products
 
     cloneProduct: (product) ->
       dataFetcher("/admin/products/" + product.permalink_live + "/clone.json").then (data) =>
