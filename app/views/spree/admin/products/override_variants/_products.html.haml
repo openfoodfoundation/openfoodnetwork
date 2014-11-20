@@ -1,0 +1,13 @@
+%table.index.bulk{ng: {show: 'hub'}}
+  %thead
+    %tr
+      %th Producer
+      %th Product
+      %th Price
+      %th On hand
+  %tbody
+    %tr{ng: {repeat: 'product in products'}}
+      %td {{ producers[product.producer].name }}
+      %td {{ product.name }}
+      %td {{ product.price }}
+      %td {{ product.on_hand }}

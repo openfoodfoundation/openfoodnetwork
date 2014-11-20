@@ -15,10 +15,10 @@ feature %q{
 
   use_short_wait
 
-  describe "selecting a hub" do
-    let!(:hub) { create(:distributor_enterprise) }
-    let!(:producer) { create(:supplier_enterprise) }
+  let!(:hub) { create(:distributor_enterprise) }
+  let!(:producer) { create(:supplier_enterprise) }
 
+  describe "selecting a hub" do
     it "displays a list of hub choices" do
       visit '/admin/products/override_variants'
       page.should have_select2 'hub_id', options: ['', hub.name]
@@ -31,5 +31,22 @@ feature %q{
 
       page.should have_selector 'h2', text: hub.name
     end
+  end
+
+  context "when a hub is selected" do
+    let!(:product) { create(:simple_product, supplier: producer, price: 1.23, on_hand: 12) }
+
+    before do
+      visit '/admin/products/override_variants'
+      select2_select hub.name, from: 'hub_id'
+      click_button 'Go'
+    end
+
+    it "displays the list of products" do
+      page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
+      page.should have_table_row [producer.name, product.name, '1.23', '12']
+    end
+
+    it "products values are affected by overrides"
   end
 end

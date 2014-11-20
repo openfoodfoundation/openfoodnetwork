@@ -51,6 +51,8 @@ Spree::Admin::ProductsController.class_eval do
 
   def override_variants
     @hubs = order_cycle_hub_enterprises(without_validation: true)
+    @producers = order_cycle_producer_enterprises
+    @products = Spree::Product.not_deleted.where(supplier_id: @producers).by_producer.by_name
   end
 
 

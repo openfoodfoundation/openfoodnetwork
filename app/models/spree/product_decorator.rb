@@ -87,6 +87,9 @@ Spree::Product.class_eval do
                                                 merge(Exchange.outgoing).
                                                 where('order_cycles.id IS NOT NULL') }
 
+  scope :by_producer, joins(:supplier).order('enterprises.name')
+  scope :by_name, order('name')
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped

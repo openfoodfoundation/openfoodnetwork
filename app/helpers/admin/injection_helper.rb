@@ -33,6 +33,10 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_products
+      admin_inject_json_ams_array "ofn.admin", "products", @products, Spree::Api::ProductSerializer
+    end
+
     def admin_inject_taxons
       admin_inject_json_ams_array "ofn.admin", "taxons", @taxons, Api::Admin::TaxonSerializer
     end
