@@ -1,7 +1,10 @@
 Spree::OrderMailer.class_eval do
+  layout 'mailer'
+  helper Spree::MailerHelper
   helper HtmlHelper
   helper CheckoutHelper
   helper SpreeCurrencyHelper
+
   def confirm_email_for_customer(order, resend = false)
     find_order(order) # Finds an order instance from an id
     subject = (resend ? "[#{t(:resend).upcase}] " : '')
