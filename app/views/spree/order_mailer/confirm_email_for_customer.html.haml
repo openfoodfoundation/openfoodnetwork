@@ -10,7 +10,7 @@
             %p
               Thanks for shopping on
               %strong= "#{Spree::Config.site_name}."
-              Here are your order details from
+              Here are the details for you order from
               %strong= "#{@order.distributor.name}."
       %table.column{:align => "left"}
         %tr
@@ -39,7 +39,8 @@
       %td{:align => "right"}
         = item.quantity
       %td{:align => "right"}
-        = item.display_amount
+        = item.display_amount_with_adjustments
+
   %tr
     %td{:colspan => "3"} &nbsp;
   %tr
