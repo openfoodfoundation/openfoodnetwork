@@ -20,6 +20,7 @@ Spree::Product.class_eval do
   validates_associated :master, message: "^Price and On Hand must be valid"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
+  validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
 
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,

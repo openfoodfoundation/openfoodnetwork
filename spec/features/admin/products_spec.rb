@@ -16,11 +16,13 @@ feature %q{
 
   describe "creating a product" do
     scenario "assigning a important attributes", js: true do
+      tax_category = create(:tax_category)
       login_to_admin_section
 
       click_link 'Products'
       click_link 'New Product'
 
+      select 'Test Tax Category', from: 'product_tax_category_id'
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -34,6 +36,7 @@ feature %q{
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
+      product.tax_category_id.should == tax_category.id
       product.supplier.should == @supplier
       product.variant_unit.should == 'weight'
       product.variant_unit_scale.should == 1000
@@ -117,6 +120,8 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
+      
+      page.should have_select 'product_tax_category_id' if Spree::TaxCategory.any?
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -133,6 +138,8 @@ feature %q{
       product = create(:simple_product, name: 'a product', supplier: @supplier2)
 
       visit spree.edit_admin_product_path product
+      
+      page.should have_select 'product_tax_category_id'
 
       select 'Permitted Supplier', from: 'product_supplier_id'
       click_button 'Update'
