@@ -1,18 +1,19 @@
-angular.module("ofn.admin").directive "ofnToggleVariants", ->
+angular.module("ofn.admin").directive "ofnToggleVariants", (DisplayProperties) ->
   link: (scope, element, attrs) ->
-    if scope.displayProperties[scope.product.id].showVariants
+    if DisplayProperties.showVariants scope.product.id
       element.removeClass "icon-chevron-right"
       element.addClass "icon-chevron-down"
     else
       element.removeClass "icon-chevron-down"
       element.addClass "icon-chevron-right"
+
     element.on "click", ->
       scope.$apply ->
-        if scope.displayProperties[scope.product.id].showVariants
-          scope.displayProperties[scope.product.id].showVariants = false
+        if DisplayProperties.showVariants scope.product.id
+          DisplayProperties.setShowVariants scope.product.id, false
           element.removeClass "icon-chevron-down"
           element.addClass "icon-chevron-right"
         else
-          scope.displayProperties[scope.product.id].showVariants = true
+          DisplayProperties.setShowVariants scope.product.id, true
           element.removeClass "icon-chevron-right"
           element.addClass "icon-chevron-down"

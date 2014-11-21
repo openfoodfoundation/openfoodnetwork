@@ -25,8 +25,16 @@ module Admin
       admin_inject_json_ams_array "admin.shipping_methods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_hubs
+      admin_inject_json_ams_array "ofn.admin", "hubs", @hubs, Api::Admin::IdNameSerializer
+    end
+
     def admin_inject_producers
       admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
+    end
+
+    def admin_inject_products
+      admin_inject_json_ams_array "ofn.admin", "products", @products, Spree::Api::ProductSerializer
     end
 
     def admin_inject_taxons
@@ -49,12 +57,12 @@ module Admin
 
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
-      json = serializer.new(data).to_json
+      json = serializer.new(data, scope: spree_current_user).to_json
       render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
     end
 
     def admin_inject_json_ams_array(ngModule, name, data, serializer, opts = {})
-      json = ActiveModel::ArraySerializer.new(data, {each_serializer: serializer}.merge(opts)).to_json
+      json = ActiveModel::ArraySerializer.new(data, {each_serializer: serializer, scope: spree_current_user}.merge(opts)).to_json
       render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
     end
   end

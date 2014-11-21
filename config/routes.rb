@@ -118,6 +118,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via  => [:get, :post]
   match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
+  match '/admin/products/override_variants' => 'admin/products#override_variants', :as => "override_variants_admin_products"
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
@@ -131,8 +132,11 @@ Spree::Core::Engine.routes.prepend do
     end
 
     resources :products do
-      get :managed, on: :collection
-      get :bulk_products, on: :collection
+      collection do
+        get :managed
+        get :bulk_products
+        get :distributable
+      end
       delete :soft_delete
 
       resources :variants do

@@ -87,6 +87,9 @@ Spree::Product.class_eval do
                                                 merge(Exchange.outgoing).
                                                 where('order_cycles.id IS NOT NULL') }
 
+  scope :by_producer, joins(:supplier).order('enterprises.name')
+  scope :by_name, order('name')
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -185,7 +188,7 @@ Spree::Product.class_eval do
     if variant_unit_changed?
       option_types.delete self.class.all_variant_unit_option_types
       option_types << variant_unit_option_type if variant_unit.present?
-      variants_including_master.each { |v| v.update_units }
+      variants_including_master.each &:update_units
     end
   end
 

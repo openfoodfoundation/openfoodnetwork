@@ -97,8 +97,20 @@ Spree::Order.class_eval do
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     current_item = find_line_item_by_variant(variant)
     if current_item
-      current_item.quantity += quantity
-      current_item.max_quantity += max_quantity.to_i
+      Bugsnag.notify(RuntimeError.new("Order populator weirdness"), {
+        current_item: current_item.as_json.pretty_inspect,
+        line_items: line_items.map(&:id),
+        reloaded: line_items(:reload).map(&:id),
+        variant: variant.as_json.pretty_inspect
+      })
+      current_item.quantity = quantity
+      current_item.max_quantity = max_quantity
+
+      # This is the original behaviour, behaviour above is so that we can resolve the order populator bug
+      # current_item.quantity ||= 0
+      # current_item.max_quantity ||= 0
+      # current_item.quantity += quantity.to_i
+      # current_item.max_quantity += max_quantity.to_i
       current_item.currency = currency unless currency.nil?
       current_item.save
     else

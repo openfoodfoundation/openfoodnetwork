@@ -11,11 +11,16 @@ require 'spree/product_filters'
 
 Spree.config do |config|
   config.shipping_instructions = true
-  config.checkout_zone = 'Australia'
+  config.checkout_zone = ENV["CHECKOUT_ZONE"]
   config.address_requires_state = true
 
   # 12 should be Australia. Hardcoded for CI (Jenkins), where countries are not pre-loaded.
-  config.default_country_id = 12
+  if Rails.env.test? or Rails.env.development?
+    config.default_country_id = 12
+  else
+    country = Spree::Country.find_by_name(ENV["DEFAULT_COUNTRY"])
+    config.default_country_id = country.id if country.present?
+  end
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
