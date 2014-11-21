@@ -14,7 +14,7 @@ module Spree
         before { Spree::Config.products_require_tax_category = true }
     
         it "is invalid when a tax category is not provided" do
-          product = create(:simple_product)
+          product = create(:product)
           product.tax_category_id = nil
           product.should_not be_valid
         end
@@ -24,7 +24,7 @@ module Spree
         before { Spree::Config.products_require_tax_category = false }
     
         it "is valid when a tax category is not provided" do
-          product = create(:simple_product)
+          product = create(:product)
           product.tax_category_id = nil
           product.should be_valid
         end
