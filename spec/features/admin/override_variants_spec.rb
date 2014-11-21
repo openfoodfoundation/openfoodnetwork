@@ -17,6 +17,8 @@ feature %q{
 
   let!(:hub) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
+  let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
+                     permissions_list: [:add_to_order_cycle]) }
 
   describe "selecting a hub" do
     it "displays a list of hub choices" do
@@ -35,6 +37,8 @@ feature %q{
 
   context "when a hub is selected" do
     let!(:product) { create(:simple_product, supplier: producer, price: 1.23, on_hand: 12) }
+    let!(:producer2) { create(:supplier_enterprise) }
+    let!(:product2) { create(:simple_product, supplier: producer2, price: 1.23, on_hand: 12) }
 
     before do
       visit '/admin/products/override_variants'
@@ -45,6 +49,10 @@ feature %q{
     it "displays the list of products" do
       page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
       page.should have_table_row [producer.name, product.name, '1.23', '12']
+    end
+
+    it "filters the products to those the hub can add to an order cycle" do
+      page.should_not have_table_row [producer2.name, product2.name, '1.23', '12']
     end
 
     it "products values are affected by overrides"

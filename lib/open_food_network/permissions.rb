@@ -15,6 +15,16 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :add_to_order_cycle
     end
 
+    def order_cycle_enterprises_per_hub
+      Hash[
+           EnterpriseRelationship.
+           permitting(managed_enterprises).
+           with_permission(:add_to_order_cycle).
+           group_by { |er| er.child_id }.
+           map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
+          ]
+    end
+
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)
       enterprises = managed_enterprises + related_enterprises_with(:add_to_order_cycle)

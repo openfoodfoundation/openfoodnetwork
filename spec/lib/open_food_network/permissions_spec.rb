@@ -21,6 +21,37 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding enterprises that can be added to an order cycle, for each hub" do
+      let!(:hub) { create(:distributor_enterprise) }
+      let!(:producer) { create(:supplier_enterprise) }
+      let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
+                         permissions_list: [:add_to_order_cycle]) }
+
+      before { permissions.stub(:managed_enterprises) { [hub] } }
+
+      it "returns enterprises as hub_id => [producer, ...]" do
+        permissions.order_cycle_enterprises_per_hub.should ==
+          {hub.id => [producer.id]}
+      end
+
+      it "returns only permissions relating to managed enterprises" do
+        create(:enterprise_relationship, parent: e1, child: e2,
+                         permissions_list: [:add_to_order_cycle])
+
+        permissions.order_cycle_enterprises_per_hub.should ==
+          {hub.id => [producer.id]}
+      end
+
+      it "returns only add_to_order_cycle permissions" do
+        permissions.stub(:managed_enterprises) { [hub, e2] }
+        create(:enterprise_relationship, parent: e1, child: e2,
+                         permissions_list: [:manage_products])
+
+        permissions.order_cycle_enterprises_per_hub.should ==
+          {hub.id => [producer.id]}
+      end
+    end
+
     describe "finding exchanges of an order cycle that an admin can manage" do
       let(:oc) { create(:simple_order_cycle) }
       let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2) }
