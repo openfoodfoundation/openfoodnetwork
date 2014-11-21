@@ -1,3 +1,4 @@
 / insert_bottom "[data-hook='admin_product_sub_tabs']"
 
-= tab :override_details, url: override_variants_admin_products_path, match_path: '/products/override_variants'
+-# Commented out until this feature is ready
+-#= tab :override_details, url: override_variants_admin_products_path, match_path: '/products/override_variants'
