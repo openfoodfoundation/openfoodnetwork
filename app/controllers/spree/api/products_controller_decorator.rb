@@ -9,10 +9,25 @@ Spree::Api::ProductsController.class_eval do
     respond_with(@products, default_template: :index)
   end
 
+  # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
   def bulk_products
     @products = OpenFoodNetwork::Permissions.new(current_api_user).managed_products.
       merge(product_scope).
       order('created_at DESC').
+      ransack(params[:q]).result.
+      page(params[:page]).per(params[:per_page])
+
+    render text: { products: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer), pages: @products.num_pages }.to_json
+  end
+
+  def distributable
+    producers = OpenFoodNetwork::Permissions.new(current_api_user).
+      order_cycle_enterprises.is_primary_producer.by_name
+
+    @products = Spree::Product.scoped.
+      merge(product_scope).
+      where(supplier_id: producers).
+      by_producer.by_name.
       ransack(params[:q]).result.
       page(params[:page]).per(params[:per_page])
 

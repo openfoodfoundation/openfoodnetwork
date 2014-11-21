@@ -7,6 +7,9 @@ describe "OverrideVariantsCtrl", ->
 
   beforeEach ->
     module 'ofn.admin'
+    module ($provide) ->
+      $provide.value 'SpreeApiKey', 'API_KEY'
+      null
     scope = {}
 
     inject ($controller, Indexer) ->
@@ -15,6 +18,13 @@ describe "OverrideVariantsCtrl", ->
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual hubs
     expect(scope.hub).toBeNull
+
+  it "adds products", ->
+    expect(scope.products).toEqual []
+    scope.addProducts ['a', 'b']
+    expect(scope.products).toEqual ['a', 'b']
+    scope.addProducts ['c', 'd']
+    expect(scope.products).toEqual ['a', 'b', 'c', 'd']
 
   describe "selecting a hub", ->
     it "sets the chosen hub", ->

@@ -7,7 +7,7 @@
       %th On hand
   %tbody
     %tr{ng: {repeat: 'product in products'}}
-      %td {{ producers[product.producer].name }}
+      %td {{ producers[product.producer_id].name }}
       %td {{ product.name }}
       %td {{ product.price }}
       %td {{ product.on_hand }}
