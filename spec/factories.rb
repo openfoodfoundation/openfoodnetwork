@@ -165,7 +165,7 @@ FactoryGirl.define do
     end
   end
   
-  factory :tax_category, :class => Spree::TaxCategory do
+  factory :simple_tax_category, :class => Spree::TaxCategory do
     name "Test Tax Category"
     description "Test tax category description"
   end

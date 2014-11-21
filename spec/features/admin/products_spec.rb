@@ -16,7 +16,7 @@ feature %q{
 
   describe "creating a product" do
     scenario "assigning a important attributes", js: true do
-      tax_category = create(:tax_category)
+      tax_category = create(:simple_tax_category)
       login_to_admin_section
 
       click_link 'Products'
