@@ -175,6 +175,11 @@ FactoryGirl.define do
       order.reload
     end
   end
+  
+  factory :simple_tax_category, :class => Spree::TaxCategory do
+    name "Test Tax Category"
+    description "Test tax category description"
+  end
 end
 
 

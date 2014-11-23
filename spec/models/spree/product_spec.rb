@@ -8,6 +8,28 @@ module Spree
       it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
+    
+    describe "validating tax category" do
+      context "when a tax category is required" do
+        before { Spree::Config.products_require_tax_category = true }
+    
+        it "is invalid when a tax category is not provided" do
+          product = create(:product)
+          product.tax_category_id = nil
+          product.should_not be_valid
+        end
+      end
+    
+      context "when a tax category is not required" do
+        before { Spree::Config.products_require_tax_category = false }
+    
+        it "is valid when a tax category is not provided" do
+          product = create(:product)
+          product.tax_category_id = nil
+          product.should be_valid
+        end
+      end
+    end
 
     describe "validations and defaults" do
       it "is valid when created from factory" do
