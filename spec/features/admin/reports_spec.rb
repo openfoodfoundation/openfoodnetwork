@@ -82,6 +82,15 @@ feature %q{
 
     page.should have_content 'Payment State'
   end
+  
+  scenario "Sales Tax report" do
+    login_to_admin_section
+    click_link 'Reports'
+    click_link 'Sales Tax'
+
+    page.should have_content 'Total Tax'
+    page.should have_select 'distributor_id'
+  end
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
