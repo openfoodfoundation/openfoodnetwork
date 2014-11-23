@@ -1,0 +1,6 @@
+= f.field_container :tax_category_id do
+  = f.label :tax_category_id, t(:tax_category)
+  *
+  %br
+  = f.collection_select(:tax_category_id, Spree::TaxCategory.all, :id, :name, {:include_blank => Spree::TaxCategory.count > 1}, {:class => "select2 fullwidth"})
+  = f.error_message_on :tax_category_id
