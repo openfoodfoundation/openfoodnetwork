@@ -30,13 +30,11 @@ module OpenFoodNetwork
         
         shipping_cost = order.adjustments.find_by_label("Shipping").andand.amount
         shipping_cost = (shipping_cost == nil) ? 0.0 : shipping_cost
-        shipping_tax = (Spree::Config[:shipment_inc_vat] && shipping_cost != nil) ? shipping_cost * 0.2 : 0.0
-        
-        #config option for charging tax on shipping fee or not? exists, need to set rate...
-        #calculate additional tax for shipping...
-        #ignore non-shipping adjustments? any potential issues?
-        #show payment status? other necessary/useful info?
-        #check which orders are pulled, and which are filtered out... maybe have a dropdown to make it explicit...?
+        if Spree::Config[:shipment_inc_vat] && shipping_cost != nil
+          shipping_tax = shipping_cost * Spree::Config[:shipping_tax_rate]
+        else
+          shipping_tax = 0.0
+        end
         
         sales_tax_details << [order.number, order.created_at, totals["items"], totals["items_total"],
           totals["taxable_total"], totals["sales_tax"], shipping_cost, shipping_tax, totals["sales_tax"] + shipping_tax,
