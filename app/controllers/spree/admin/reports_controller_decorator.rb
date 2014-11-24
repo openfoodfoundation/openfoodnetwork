@@ -27,6 +27,7 @@ Spree::Admin::ReportsController.class_eval do
 
   # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory]
+  before_filter :set_currency_symbol
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -257,14 +258,12 @@ Spree::Admin::ReportsController.class_eval do
 
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
-    
-    currency_symbol = Money.new(1, Spree::Config[:currency]).symbol
-    
+
     case params[:report_type]
     when "payments_by_payment_type"
       table_items = payments
 
-      header = ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
+      header = ["Payment State", "Distributor", "Payment Type", "Total (#{@currency_symbol})"]
 
       columns = [ proc { |payments| payments.first.order.payment_state },
         proc { |payments| payments.first.order.distributor.name },
@@ -281,7 +280,7 @@ Spree::Admin::ReportsController.class_eval do
     when "itemised_payment_totals"
       table_items = orders
 
-      header = ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})", "Total (#{currency_symbol})"]
+      header = ["Payment State", "Distributor", "Product Total (#{@currency_symbol})", "Shipping Total (#{@currency_symbol})", "Outstanding Balance (#{@currency_symbol})", "Total (#{@currency_symbol})"]
 
       columns = [ proc { |orders| orders.first.payment_state },
         proc { |orders| orders.first.distributor.name },
@@ -298,7 +297,7 @@ Spree::Admin::ReportsController.class_eval do
     when "payment_totals"
       table_items = orders
 
-      header = ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Total (#{currency_symbol})", "EFT (#{currency_symbol})", "PayPal (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})"]
+      header = ["Payment State", "Distributor", "Product Total (#{@currency_symbol})", "Shipping Total (#{@currency_symbol})", "Total (#{@currency_symbol})", "EFT (#{@currency_symbol})", "PayPal (#{@currency_symbol})", "Outstanding Balance (#{@currency_symbol})"]
 
       columns = [ proc { |orders| orders.first.payment_state },
         proc { |orders| orders.first.distributor.name },
@@ -317,7 +316,7 @@ Spree::Admin::ReportsController.class_eval do
     else
       table_items = payments
 
-      header = ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
+      header = ["Payment State", "Distributor", "Payment Type", "Total (#{@currency_symbol})"]
 
       columns = [ proc { |payments| payments.first.order.payment_state },
         proc { |payments| payments.first.order.distributor.name },
@@ -477,7 +476,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Dist (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{@currency_symbol})", "Dist (#{@currency_symbol})", "Ship (#{@currency_symbol})", "Total (#{@currency_symbol})", "Paid?",
                 "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes"]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
@@ -598,6 +597,10 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   private
+  
+  def set_currency_symbol
+    @currency_symbol = Spree::Money.currency_symbol
+  end
 
   def load_data
     # Load distributors either owned by the user or selling their enterprises products.
