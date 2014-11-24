@@ -3,6 +3,8 @@ ruby "1.9.3"
 
 gem 'rails', '3.2.19'
 
+gem 'nokogiri'
+
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
 gem 'spree_i18n', :github => 'spree/spree_i18n'

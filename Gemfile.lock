@@ -546,6 +546,7 @@ DEPENDENCIES
   letter_opener
   momentjs-rails
   newrelic_rpm
+  nokogiri
   oj
   paperclip
   perftools.rb
