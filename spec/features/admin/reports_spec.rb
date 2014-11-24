@@ -105,7 +105,6 @@ feature %q{
     click_link 'Sales Tax'
 
     page.should have_content 'Total Tax'
-    page.should have_select 'distributor_id'
   end
 
   describe "orders & fulfilment reports" do
