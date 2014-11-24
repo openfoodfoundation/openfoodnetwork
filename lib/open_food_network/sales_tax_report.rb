@@ -7,8 +7,10 @@ module OpenFoodNetwork
     end
 
     def header
-      ["Order number", "Date", "Items", "Items total", "Taxable Items Total", "Sales Tax", 
-        "Delivery Charge", "Tax on Delivery", "Total Tax", "Customer", "Distributor"]
+      currency_symbol = Spree::Money.currency_symbol
+      ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
+        "Sales Tax", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})",
+        "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
     end
 
     def table
