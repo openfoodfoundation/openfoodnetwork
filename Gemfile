@@ -46,6 +46,7 @@ gem 'rack-ssl', :require => 'rack/ssl'
 gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'foreigner'
 gem 'immigrant'
 

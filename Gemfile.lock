@@ -209,6 +209,7 @@ GEM
       compass (>= 0.12.2, < 0.14)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
+    daemons (1.1.9)
     dalli (2.7.2)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
@@ -521,6 +522,7 @@ DEPENDENCIES
   comfortable_mexican_sofa
   compass-rails
   custom_error_message!
+  daemons
   dalli
   database_cleaner (= 0.7.1)
   db2fog
