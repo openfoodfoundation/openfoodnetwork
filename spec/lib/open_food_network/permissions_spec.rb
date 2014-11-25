@@ -27,7 +27,9 @@ module OpenFoodNetwork
       let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
                          permissions_list: [:add_to_order_cycle]) }
 
-      before { permissions.stub(:managed_enterprises) { [hub] } }
+      before do
+        permissions.stub(:managed_enterprises) { Enterprise.where(id: hub.id) }
+      end
 
       it "returns enterprises as hub_id => [producer, ...]" do
         permissions.order_cycle_enterprises_per_hub.should ==
@@ -43,12 +45,20 @@ module OpenFoodNetwork
       end
 
       it "returns only add_to_order_cycle permissions" do
-        permissions.stub(:managed_enterprises) { [hub, e2] }
+        permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub, e2]) }
         create(:enterprise_relationship, parent: e1, child: e2,
                          permissions_list: [:manage_products])
 
         permissions.order_cycle_enterprises_per_hub.should ==
           {hub.id => [producer.id]}
+      end
+
+      it "also returns managed producers" do
+        producer2 = create(:supplier_enterprise)
+        permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub, producer2]) }
+
+        permissions.order_cycle_enterprises_per_hub.should ==
+          {hub.id => [producer.id, producer2.id]}
       end
     end
 
