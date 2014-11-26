@@ -140,19 +140,23 @@ module Spree
         let(:order) {create(:order)}
 
         it "should be able to read/write their enterprises' products and variants" do
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
+          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :override_variants, :clone, :destroy], for: p1)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p1.master)
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
           er_p
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p_related)
+          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :override_variants, :clone, :destroy], for: p_related)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p_related.master)
         end
 
         it "should not be able to read/write other enterprises' products and variants" do
-          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
+          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :override_variants, :clone, :destroy], for: p2)
           should_not have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p2.master)
+        end
+
+        it "should be able to override_variants on nil (required for override_variants)" do
+          should have_ability :override_variants, for: nil
         end
 
         it "should not be able to access admin actions on orders" do
