@@ -49,6 +49,10 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "users", @users, Api::Admin::UserSerializer
     end
 
+    def admin_inject_variant_overrides
+      admin_inject_json_ams_array "ofn.admin", "variantOverrides", @variant_overrides, Api::Admin::VariantOverrideSerializer
+    end
+
     def admin_inject_spree_api_key
       render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
     end
