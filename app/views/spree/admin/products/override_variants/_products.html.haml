@@ -6,7 +6,7 @@
       %th Price
       %th On hand
   %tbody
-    %tr{ng: {repeat: 'product in products'}}
+    %tr{ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id'}}
       %td {{ producers[product.producer_id].name }}
       %td {{ product.name }}
       %td {{ product.price }}
