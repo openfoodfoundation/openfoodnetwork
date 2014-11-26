@@ -14,11 +14,11 @@
         %br/
 
   %td.cart-item-price{"data-hook" => "cart_item_price"}
-    = line_item.single_money.to_html
+    = line_item.single_display_amount_with_adjustments.to_html
   %td.cart-item-quantity{"data-hook" => "cart_item_quantity"}
     = item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5
   %td.cart-item-total{"data-hook" => "cart_item_total"}
-    = line_item.display_amount.to_html unless line_item.quantity.nil?
+    = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
   %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
     {{ quantity }}

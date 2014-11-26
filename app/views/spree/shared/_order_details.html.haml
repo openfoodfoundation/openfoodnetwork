@@ -84,10 +84,10 @@
         %b
           Produce:
       %td.total
-        %span= checkout_subtotal(@order)
+        %span= display_checkout_subtotal(@order)
 
   %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-    - checkout_adjustments_for_summary(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
       %tr.total
         %td{:colspan => "4"}
           %strong= adjustment.label + ":"

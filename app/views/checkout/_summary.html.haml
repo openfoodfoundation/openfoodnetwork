@@ -5,9 +5,9 @@
       %table
         %tr
           %th Cart total
-          %td.cart-total.text-right= spree_number_to_currency checkout_subtotal(@order)
+          %td.cart-total.text-right= display_checkout_subtotal(@order)
 
-        - checkout_adjustments_for_summary(current_order, exclude: [:shipping, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
+        - checkout_adjustments_for(current_order, exclude: [:shipping, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
           %tr
             %th= adjustment.label
             %td.text-right= adjustment.display_amount.to_html

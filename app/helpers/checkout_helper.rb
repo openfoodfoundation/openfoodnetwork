@@ -1,5 +1,5 @@
 module CheckoutHelper
-  def checkout_adjustments_for_summary(order, opts={})
+  def checkout_adjustments_for(order, opts={})
     adjustments = order.adjustments.eligible
     exclude = opts[:exclude] || {}
 
@@ -8,8 +8,8 @@ module CheckoutHelper
     adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if exclude.include? :shipping
     adjustments.reject! { |a| a.source_type == 'Spree::LineItem' } if exclude.include? :line_item
 
-    enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' }
-    adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' }
+    enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
+    adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     unless exclude.include? :admin_and_handling
       adjustments << Spree::Adjustment.new(label: 'Admin & Handling', amount: enterprise_fee_adjustments.sum(&:amount))
     end
@@ -17,13 +17,21 @@ module CheckoutHelper
     adjustments
   end
 
+  def display_checkout_admin_and_handling_adjustments_total_for(order)
+    adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee',  'Spree::LineItem' )
+    Spree::Money.new( adjustments.sum( &:amount ) , { :currency => order.currency })
+  end
+
   def checkout_line_item_adjustments(order)
-    adjustments = order.adjustments.eligible.where( source_type: "Spree::LineItem")
-    Spree::Money.new( adjustments.sum(&:amount) , { :currency => order.currency })
+    order.adjustments.eligible.where( source_type: "Spree::LineItem")
   end
 
   def checkout_subtotal(order)
-    order.display_item_total.money.to_f + checkout_line_item_adjustments(order).money.to_f
+    order.item_total + checkout_line_item_adjustments(order).sum( &:amount )
+  end
+
+  def display_checkout_subtotal(order)
+    Spree::Money.new( checkout_subtotal(order) , { :currency => order.currency })
   end
 
   def checkout_state_options(source_address)

@@ -47,8 +47,8 @@
     %td{:align => "right", :colspan => "2"}
       Subtotal:
     %td{:align => "right"}
-      = spree_number_to_currency checkout_subtotal(@order)
-  - checkout_adjustments_for_summary(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+      = display_checkout_subtotal(@order)
+  - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
     %tr
       %td{:align => "right", :colspan => "2"}
         = "#{raw(adjustment.label)}:"
