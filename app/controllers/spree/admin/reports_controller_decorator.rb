@@ -51,7 +51,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
 
-    render_report(@report.header, @report.table, params[:csv], "customers.csv")
+    render_report(@report.header, @report.table, params[:csv], "customers_"+Time.now.strftime("%Y%m%d")+".csv")
   end
 
   def orders_and_distributors
@@ -79,7 +79,7 @@ Spree::Admin::ReportsController.class_eval do
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string, :filename => "orders_and_distributors.csv"
+      send_data csv_string, :filename => "orders_and_distributors_"+Time.now.strftime("%Y%m%d")+".csv"
     end
   end
 
@@ -231,7 +231,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(@line_items)
-    csv_file_name = "bulk_coop.csv"
+    csv_file_name = "bulk_coop_"+Time.now.strftime("%Y%m%d")+".csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
   end
@@ -335,7 +335,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
-    csv_file_name = "payments.csv"
+    csv_file_name = "payments_"+Time.now.strftime("%Y%m%d")+".csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
@@ -565,7 +565,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
-    csv_file_name = "#{__method__}.csv"
+    csv_file_name = params[:report_type]+"_"+Time.now.strftime("%Y%m%d")+".csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
