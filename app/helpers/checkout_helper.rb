@@ -6,23 +6,24 @@ module CheckoutHelper
     # Remove empty tax adjustments and (optionally) shipping fees
     adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
     adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if exclude.include? :shipping
+    adjustments.reject! { |a| a.source_type == 'Spree::LineItem' } if exclude.include? :line_item
 
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' }
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' }
-    unless exclude.include? :distribution
-      adjustments << Spree::Adjustment.new(label: 'Distribution', amount: enterprise_fee_adjustments.sum(&:amount))
+    unless exclude.include? :admin_and_handling
+      adjustments << Spree::Adjustment.new(label: 'Admin & Handling', amount: enterprise_fee_adjustments.sum(&:amount))
     end
 
     adjustments
   end
 
-  def checkout_adjustments_total(order)
-    adjustments = checkout_adjustments_for_summary(order, exclude: [:shipping])
-    adjustments.sum &:display_amount
+  def checkout_line_item_adjustments(order)
+    adjustments = order.adjustments.eligible.where( source_type: "Spree::LineItem")
+    Spree::Money.new( adjustments.sum(&:amount) , { :currency => order.currency })
   end
 
-  def checkout_cart_total_with_adjustments(order)
-    order.display_item_total.money.to_f + checkout_adjustments_total(order).money.to_f
+  def checkout_subtotal(order)
+    order.display_item_total.money.to_f + checkout_line_item_adjustments(order).money.to_f
   end
 
   def checkout_state_options(source_address)
@@ -47,9 +48,9 @@ module CheckoutHelper
       name: path,
       id: path,
       "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}" 
+      "ng-class" => "{error: !fieldValid('#{path}')}"
     }.merge args
-    
+
     render "shared/validated_input", name: name, path: path, attributes: attributes
   end
 

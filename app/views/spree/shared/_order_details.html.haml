@@ -53,10 +53,10 @@
           = truncated_product_description(item.variant.product)
           = "(" + item.variant.options_text + ")" unless item.variant.option_values.empty?
         %td.price{"data-hook" => "order_item_price"}
-          %span= item.single_money.to_html
+          %span= item.single_display_amount_with_adjustments.to_html
         %td{"data-hook" => "order_item_qty"}= item.quantity
         %td.total{"data-hook" => "order_item_total"}
-          %span= item.display_amount.to_html
+          %span= item.display_amount_with_adjustments.to_html
 
   %tfoot#order-total{"data-hook" => "order_details_total"}
     %tr.total
@@ -82,12 +82,12 @@
     %tr#subtotal-row.total
       %td{colspan: "4"}
         %b
-          Produce: 
+          Produce:
       %td.total
-        %span= @order.display_item_total.to_html
+        %span= checkout_subtotal(@order)
 
   %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-    - checkout_adjustments_for_summary(@order).reverse_each do |adjustment|
+    - checkout_adjustments_for_summary(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
       %tr.total
         %td{:colspan => "4"}
           %strong= adjustment.label + ":"
