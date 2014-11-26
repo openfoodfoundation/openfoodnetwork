@@ -5,14 +5,13 @@
     - else
       = link_to image_tag(variant.images.first.attachment.url(:small)), variant.product
 
-  %td.cart-item-description{"data-hook" => "cart_item_description"}
-    %h4= link_to variant.product.name, product_path(variant.product)
+  %td.cart-item-description{'data-hook' => "cart_item_description"}
+    %h4= variant.product.name
     = variant.options_text
     - if @order.insufficient_stock_lines.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
-        %br
-    = line_item_description(variant)
+        %br/
 
   %td.cart-item-price{"data-hook" => "cart_item_price"}
     = line_item.single_money.to_html
