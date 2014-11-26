@@ -10,30 +10,31 @@
   Please find below all the details for viewing and editing your enterprise on
   %strong= "#{ Spree::Config.site_name }."
   We suggest keeping this email and information somewhere safe. Logging in with the account details below will allow complete access to your products and services.
-%p &nbsp;
 
-%p.callout
-  %strong
-    Your enterprise details
-%table{:width => "100%"}
-  %tr
-    %td{:align => "right"}
-      %strong
-        Shop URL
-    %td &nbsp;
-    %td
-      %a{:href => "#{ main_app.shop_enterprise_url(@enterprise) }", :target => "_blank"}
-        = main_app.shop_enterprise_url(@enterprise)
-  %tr
-    %td &nbsp;
-  %tr
-    %td{:align => "right"}
-      %strong
-        Email
-    %td &nbsp;
-    %td
-      %a{:href => "mailto:#{ @enterprise.email }", :target => "_blank"}
-        = @enterprise.email
+-#%p &nbsp;
+
+-# %p.callout
+-#   %strong
+-#     Your enterprise details
+-# %table{:width => "100%"}
+-#   %tr
+-#     %td{:align => "right"}
+-#       %strong
+-#         Shop URL
+-#     %td &nbsp;
+-#     %td
+-#       %a{:href => "#{ main_app.shop_enterprise_url(@enterprise) }", :target => "_blank"}
+-#         = main_app.shop_enterprise_url(@enterprise)
+-#   %tr
+-#     %td &nbsp;
+-#   %tr
+-#     %td{:align => "right"}
+-#       %strong
+-#         Email
+-#     %td &nbsp;
+-#     %td
+-#       %a{:href => "mailto:#{ @enterprise.email }", :target => "_blank"}
+-#         = @enterprise.email
 
 %p &nbsp;
 %p
