@@ -56,7 +56,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_distributors
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
