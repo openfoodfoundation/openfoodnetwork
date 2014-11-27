@@ -28,9 +28,17 @@ require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
 require 'spree/core/testing_support/authorization_helpers'
 
-require 'active_record/fixtures'
-fixtures_dir = File.expand_path('../../db/default', __FILE__)
-ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/countries'])
+if Spree::Country.first.nil?
+  Spree::Country.create!({"name"=>"Australia", "iso3"=>"AUS", "iso"=>"AU", "iso_name"=>"AUSTRALIA", "numcode"=>"36"}, :without_protection => true)
+  country = Spree::Country.find_by_name('Australia')
+  Spree::State.create!({"name"=>"Victoria", "abbr"=>"Vic", :country=>country}, :without_protection => true)
+  Spree::State.create!({"name"=>"New South Wales", "abbr"=>"NSW", :country=>country}, :without_protection => true)
+end
+
+# TODO: remove duplicate code with config/initializers/spree.rb
+Spree.config do |config|
+  config.default_country_id = Spree::Country.find_by_name('Australia').id
+end
 
 # Capybara config
 require 'capybara/poltergeist'
