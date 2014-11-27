@@ -47,24 +47,40 @@ feature %q{
       before do
         # Remove 'S' option value
         variant.option_values.first.destroy
-
-        visit '/admin/products/override_variants'
-        select2_select hub.name, from: 'hub_id'
-        click_button 'Go'
       end
 
-      it "displays the list of products with variants" do
-        page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
-        page.should have_table_row [producer.name, product.name, '', '']
-        page.should have_table_row ['', '1g', '1.23', '12']
+      context "with no overrides" do
+        before do
+          visit '/admin/products/override_variants'
+          select2_select hub.name, from: 'hub_id'
+          click_button 'Go'
+        end
+
+        it "displays the list of products with variants" do
+          page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
+          page.should have_table_row [producer.name, product.name, '', '']
+          page.should have_table_row ['', '1g', '1.23 -', '12 -']
+        end
+
+        it "filters the products to those the hub can add to an order cycle" do
+          page.should_not have_content producer2.name
+          page.should_not have_content product2.name
+        end
       end
 
-      it "filters the products to those the hub can add to an order cycle" do
-        page.should_not have_content producer2.name
-        page.should_not have_content product2.name
-      end
+      context "with overrides" do
+        let!(:override) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
 
-      it "products values are affected by overrides"
+        before do
+          visit '/admin/products/override_variants'
+          select2_select hub.name, from: 'hub_id'
+          click_button 'Go'
+        end
+
+        it "product values are affected by overrides" do
+          page.should have_table_row ['', '1g', '1.23 - 77.77', '12 - 11111']
+        end
+      end
     end
   end
 end

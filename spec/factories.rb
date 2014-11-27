@@ -89,6 +89,11 @@ FactoryGirl.define do
     incoming    false
   end
 
+  factory :variant_override, :class => VariantOverride do
+    price         77.77
+    count_on_hand 11111
+  end
+
   factory :enterprise, :class => Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }

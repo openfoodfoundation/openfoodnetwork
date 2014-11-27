@@ -1,9 +1,10 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, hubs, producers, hubPermissions) ->
+angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, hubs, producers, hubPermissions, variantOverrides) ->
   $scope.hubs = hubs
   $scope.hub = null
   $scope.products = []
   $scope.producers = Indexer.index producers
   $scope.hubPermissions = hubPermissions
+  $scope.variantOverrides = Indexer.index variantOverrides, 'variant_id'
 
   $scope.initialise = ->
     SpreeApiAuth.authorise()

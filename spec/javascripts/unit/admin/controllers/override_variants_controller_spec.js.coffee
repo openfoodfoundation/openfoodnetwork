@@ -5,6 +5,7 @@ describe "OverrideVariantsCtrl", ->
   producers = [{id: 2, name: 'Producer'}]
   products = [{id: 1, name: 'Product'}]
   hubPermissions = {}
+  variantOverrides = {}
 
   beforeEach ->
     module 'ofn.admin'
@@ -14,7 +15,7 @@ describe "OverrideVariantsCtrl", ->
     scope = {}
 
     inject ($controller, Indexer) ->
-      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions}
+      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, variantOverrides: variantOverrides}
 
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual hubs
