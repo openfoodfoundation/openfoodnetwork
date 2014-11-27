@@ -98,10 +98,10 @@ Spree::Order.class_eval do
     current_item = find_line_item_by_variant(variant)
     if current_item
       Bugsnag.notify(RuntimeError.new("Order populator weirdness"), {
-        current_item: current_item.as_json.pretty_inspect,
+        current_item: current_item.as_json,
         line_items: line_items.map(&:id),
         reloaded: line_items(:reload).map(&:id),
-        variant: variant.as_json.pretty_inspect
+        variant: variant.as_json
       })
       current_item.quantity = quantity
       current_item.max_quantity = max_quantity
