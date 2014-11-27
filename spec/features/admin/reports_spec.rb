@@ -116,7 +116,7 @@ feature %q{
     let(:tax_category2) { create(:tax_category) }
     let(:country) { create(:country, :name => "Spec Republic") }
     let(:state) { create(:state, :country => country, :name => "Specville") }
-    #let(:zone) { create(:zone, :name => "Test Tax Zone") }
+    let(:zone) { create(:zone, :name => "Test Tax Zone") }
     #let(:zoneable) { create(:zoneable, :zoneable => country) }
     let(:tax_rate1) { create(:tax_rate, :amount => 0.0, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category1, :zone => zone) }
     let(:tax_rate2) { create(:tax_rate, :amount => 0.2, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category2, :zone => zone) }
@@ -128,9 +128,9 @@ feature %q{
     
     let(:product_distribution1) { create(:product_distribution, :product => variant1.product, :distributor => user1.enterprises.first) }
     let(:product_distribution2) { create(:product_distribution, :product => variant2.product, :distributor => user2.enterprises.first) }
-    let(:address) { create(:address) } #
-    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
-    let(:order1) { create(:order, :distributor => user1.enterprises.first, :shipping_method => shipping_method, bill_address: address, ship_address: address) }
+    let(:address) { create(:address, :state => state, :country => country) } #
+    let(:shipping_method) { create(:shipping_method, :name => "Shipping", :description => "Expensive", :calculator => Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:order1) { create(:order, :distributor => user1.enterprises.first, :shipping_method => shipping_method, :bill_address => address, :ship_address => address) }
     let(:line_item1) { create(:line_item, :variant => variant1, :price => 12.54, :quantity => 1, :order => order1) }
     let(:line_item2) { create(:line_item, :variant => variant2, :price => 500.15, :quantity => 3, :order => order1) }
     let(:adjustment) { create(:adjustment, :adjustable => order1, :label => "Shipping", :amount => 100.55) }
