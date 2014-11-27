@@ -77,6 +77,11 @@
           %a What's this?
       .eight.columns.omega
         = main_app.shop_enterprise_url(@enterprise)
+  -# redo denoting required fields in the whole project
+  .row
+    Required fields are denoted with an asterisk (
+    %span.required *
+    )
 
 
 = f.fields_for :address do |af|
