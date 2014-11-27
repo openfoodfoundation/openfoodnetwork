@@ -100,8 +100,6 @@ feature %q{
   end
   
   describe "Sales Tax report" do    
-    include AuthenticationWorkflow
-    include WebHelper
     let(:user1) do
       create_enterprise_user(enterprises: [
         create(:distributor_enterprise)
