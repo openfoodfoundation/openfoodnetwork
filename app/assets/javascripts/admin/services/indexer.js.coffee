@@ -6,8 +6,8 @@
 
 angular.module("ofn.admin").factory 'Indexer', ->
   new class Indexer
-    index: (data) ->
-      index = []
+    index: (data, key='id') ->
+      index = {}
       for e in data
-        index[e.id] = e
+        index[e[key]] = e
       index
