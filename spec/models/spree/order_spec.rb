@@ -77,7 +77,7 @@ describe Spree::Order do
       subject.update_distribution_charge!
     end
 
-    it "ensures the correct adjustment(s) are created for order cycles" do
+    it "ensures the correct adjustment(s) are created for order cycles" do 
       EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
@@ -320,13 +320,37 @@ describe Spree::Order do
     end
   end
 
-   describe "scopes" do
+  describe "scopes" do
     describe "not_state" do
       it "finds only orders not in specified state" do
         o = FactoryGirl.create(:completed_order_with_totals)
         o.cancel!
-
         Spree::Order.not_state(:canceled).should_not include o
+      end
+    end
+
+    describe "with payment method name" do
+      
+      it "returns the order with payment method name" do
+        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
+        my_order = FactoryGirl.create(:order) 
+        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
+	Spree::Order.with_payment_method_name("PM Test").should include my_order
+      end
+     
+      it "doesn't return rows with a different payment method name" do
+        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
+        my_order = FactoryGirl.create(:order) 
+        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
+        Spree::Order.with_payment_method_name("PM Test2").should_not include my_order
+      end
+  
+      it "doesn't return duplicate rows" do
+        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
+        my_order = FactoryGirl.create(:order) 
+        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method) 
+        payment2 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
+	Spree::Order.with_payment_method_name("PM Test").length.should == 1
       end
     end
   end
@@ -365,5 +389,4 @@ describe Spree::Order do
       order.create_shipment!
     end
   end
-
 end
