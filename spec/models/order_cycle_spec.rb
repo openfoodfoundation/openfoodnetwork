@@ -349,23 +349,30 @@ describe OrderCycle do
   end
 
   it "clones itself" do
-    oc = create(:order_cycle)
-    occ = oc.clone!
+    coordinator = create(:enterprise);
+    oc = create(:simple_order_cycle, coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)])
+    ex1 = create(:exchange, order_cycle: oc)
+    ex2 = create(:exchange, order_cycle: oc)
+    oc.clone!
 
     occ = OrderCycle.last
     occ.name.should == "COPY OF #{oc.name}"
     occ.orders_open_at.should be_nil
     occ.orders_close_at.should be_nil
+    occ.coordinator.should_not be_nil
     occ.coordinator.should == oc.coordinator
 
+    occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
     
-    #(0..occ.exchanges.count).all? { |i| occ.exchanges[i].eql? oc.exchanges[i] }.should be_true
-    
     # to_h gives us a unique hash for each exchange
+    # check that the clone has no additional exchanges
     occ.exchanges.map(&:to_h).all? do |ex|
       oc.exchanges.map(&:to_h).include? ex
     end
+    # check that the clone has original exchanges
+    occ.exchanges.map(&:to_h).include? ex1.to_h
+    occ.exchanges.map(&:to_h).include? ex2.to_h
   end
 
   describe "finding recently closed order cycles" do
