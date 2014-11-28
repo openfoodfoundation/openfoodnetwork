@@ -45,3 +45,11 @@ angular.module("admin.enterprises")
         count++ if shipping_method.selected
         count
       , 0
+
+    $scope.$watch "Enterprise.is_primary_producer", (newValue, oldValue) ->
+      if newValue
+        $scope.menu.hide_item_by_name('Shipping Methods')
+        $scope.menu.hide_item_by_name('Payment Methods')
+      else if !newValue
+        $scope.menu.show_item_by_name('Shipping Methods')
+        $scope.menu.show_item_by_name('Payment Methods')

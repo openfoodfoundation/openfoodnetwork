@@ -15,8 +15,8 @@ describe "menuCtrl", ->
     # ShippingMethods =
     #   shippingMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
 
-    inject ($controller, _SideMenu_) ->
-      scope = {}
+    inject ($rootScope, $controller, _SideMenu_) ->
+      scope = $rootScope
       SideMenu = _SideMenu_
       spyOn(SideMenu, "select").andCallThrough()
       spyOn(SideMenu, "setItems").andCallThrough()
