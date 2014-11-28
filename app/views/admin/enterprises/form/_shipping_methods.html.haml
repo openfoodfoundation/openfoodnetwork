@@ -1,0 +1,33 @@
+- if @shipping_methods.count > 0
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Applies?
+        %th
+      - @shipping_methods.each do |shipping_method|
+        %tbody
+          %tr{ ng: { controller: 'shippingMethodCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
+            %td= shipping_method.name
+            %td= f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
+            %td= link_to "Edit", edit_admin_shipping_method_path(shipping_method)
+  %br
+  .row
+    .six.columns.alpha
+      %a.button{ href: "#{admin_shipping_methods_path}"}
+        Manage Shipping Methods
+        %i.icon-arrow-right
+    .five.columns.omega.text-right
+      %a.button{ href: "#{new_admin_shipping_method_path}"}
+        Create New Shipping Method
+        %i.icon-plus
+
+- else
+  %p.text-center
+    You don't have any shipping methods yet.
+
+  %br
+  .text-center
+    %a.button{ href: "#{new_admin_shipping_method_path}"}
+      Create One Now
+      %i.icon-arrow-right

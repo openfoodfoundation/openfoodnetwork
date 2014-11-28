@@ -27,6 +27,10 @@
   %legend Images
   = render 'admin/enterprises/form/images', f: f
 
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shipping Methods'" } }
+  %legend Shipping Methods
+  = render 'admin/enterprises/form/shipping_methods', f: f
+
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Enterprise Fees'" } }
   %legend Enterprise Fees
   = render 'admin/enterprises/form/enterprise_fees', f: f
