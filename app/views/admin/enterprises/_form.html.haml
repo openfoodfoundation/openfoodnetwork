@@ -31,6 +31,10 @@
   %legend Shipping Methods
   = render 'admin/enterprises/form/shipping_methods', f: f
 
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Payment Methods'" } }
+  %legend Payment Methods
+  = render 'admin/enterprises/form/payment_methods', f: f
+
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Enterprise Fees'" } }
   %legend Enterprise Fees
   = render 'admin/enterprises/form/enterprise_fees', f: f
