@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, longDescription, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, longDescription, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
@@ -7,6 +7,7 @@ angular.module("admin.enterprises")
     # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
     $scope.htmlVariable = longDescription
     $scope.pristineEmail = $scope.Enterprise.email
+    $scope.menu = SideMenu
 
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,

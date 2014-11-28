@@ -28,7 +28,7 @@ describe "menuCtrl", ->
 
     it "sets the item list", ->
       expect(SideMenu.setItems).toHaveBeenCalled
-      expect(scope.menu).toBe SideMenu.items
+      expect(scope.menu.items).toBe SideMenu.items
 
     it "sets the initally selected value", ->
       expect(SideMenu.select).toHaveBeenCalledWith 0
@@ -38,4 +38,4 @@ describe "menuCtrl", ->
     it "selects an item by performing setting the selected property on the item to true", ->
       scope.select 4
       expect(SideMenu.select).toHaveBeenCalledWith 4
-      expect(scope.menu[4].selected).toBe true
+      expect(scope.menu.items[4].selected).toBe true

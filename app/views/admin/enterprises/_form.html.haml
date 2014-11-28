@@ -1,6 +1,24 @@
-= render 'admin/enterprises/form/primary_details', f: f
-= render 'admin/enterprises/form/address', f: f
-= render 'admin/enterprises/form/contact_and_social', f: f
-= render 'admin/enterprises/form/business_details', f: f
-= render 'admin/enterprises/form/about_us', f: f
-= render 'admin/enterprises/form/images', f: f
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Primary Details'" } }
+  %legend Primary Details
+  = render 'admin/enterprises/form/primary_details', f: f
+
+= f.fields_for :address do |af|
+  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Address'" } }
+    %legend Address
+    = render 'admin/enterprises/form/address', af: af
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact & Social'" } }
+  %legend Contact & Social
+  = render 'admin/enterprises/form/contact_and_social', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Business Details'" } }
+  %legend Business Details
+  = render 'admin/enterprises/form/business_details', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
+  %legend About Us
+  = render 'admin/enterprises/form/about_us', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
+  %legend Images
+  = render 'admin/enterprises/form/images', f: f
