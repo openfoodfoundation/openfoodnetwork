@@ -1,0 +1,21 @@
+%fieldset.eleven.columns.alpha.no-border-bottom
+  %legend IMAGES
+  .row
+    .alpha.three.columns
+      = f.label :logo
+      %br
+      100 x 100 pixels
+    .omega.eight.columns
+      = image_tag @object.logo(:medium) if @object.logo.present?
+      = f.file_field :logo
+  .row
+    .alpha.three.columns
+      = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
+      %br/
+      %span{ style: 'font-weight:bold' } PLEASE NOTE:
+      Any promo image uploaded here will be cropped to 1200 x 260.
+      The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+
+    .omega.eight.columns
+      = image_tag @object.promo_image(:large) if @object.promo_image.present?
+      = f.file_field :promo_image

@@ -1,0 +1,19 @@
+%fieldset.eleven.columns.alpha.no-border-bottom
+  %legend About Us
+  .row
+    .alpha.three.columns
+      = f.label :description, 'Short Description'
+    .omega.eight.columns
+      = f.text_field :description, maxlength: 255, placeholder: 'Tell us about your enterprise in one or two sentences'
+  .row
+    .alpha.three.columns
+      = f.label :long_description, 'About Us'
+    .omega.eight.columns
+      -# textAngular toolbar options, add to the ta-toolbar array below and separate into groups with extra ],[ if needed:
+      -# 	['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+      -# 	['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+      -# 	['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
+      -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
+      %text-angular{'ng-model' => 'htmlVariable', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular',
+        'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
+        'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}

@@ -1,0 +1,79 @@
+%fieldset.eleven.columns.alpha.no-border-bottom
+  %legend Primary Details
+  .row
+    .alpha.eleven.columns
+      .three.columns.alpha
+        = f.label :name
+        %span.required *
+      .eight.columns.omega
+        = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
+  .row
+    .alpha.eleven.columns
+      .three.columns.alpha
+        = f.label :group_ids, 'Groups'
+        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+          %a What's this?
+
+      .eight.columns.omega
+        = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+  - if spree_current_user.admin?
+    .row
+      .three.columns.alpha
+        =f.label :owner_id, 'Owner'
+        %span.required *
+        .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
+          %a What's this?
+      .eight.columns
+        - owner_email = @enterprise.andand.owner.andand.email || ""
+        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: owner_email
+
+  .row
+    .three.columns.alpha
+      %label Primary Producer
+      .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
+        %a What's this?
+    .five.columns.omega
+      = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
+      &nbsp;
+      = f.label :is_primary_producer, 'Producer'
+  - if spree_current_user.admin?
+    .row
+      .alpha.eleven.columns
+        .three.columns.alpha
+          = f.label :sells, 'Sells'
+          .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
+            %a What's this?
+        .two.columns
+          = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
+          &nbsp;
+          = f.label :sells, "None", value: "none"
+        .two.columns
+          = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
+          &nbsp;
+          = f.label :sells, "Own", value: "own"
+        .four.columns.omega
+          = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
+          &nbsp;
+          = f.label :sells, "Any", value: "any"
+  .row
+    .three.columns.alpha
+      %label Visible in search?
+      .with-tip{'data-powertip' => "Determines whether this enterprise will be visible to customers when searching the site."}
+        %a What's this?
+    .two.columns
+      = f.radio_button :visible, true
+      &nbsp;
+      = f.label :visible, "Visible", :value => "true"
+    .five.columns.omega
+      = f.radio_button :visible, false
+      &nbsp;
+      = f.label :visible, "Not Visible", :value => "false"
+  - if @enterprise.is_distributor
+  - # TODO: Angularise this
+    .row
+      .three.columns.alpha
+        %label Link to shop front
+        .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+          %a What's this?
+      .eight.columns.omega
+        = main_app.shop_enterprise_url(@enterprise)
