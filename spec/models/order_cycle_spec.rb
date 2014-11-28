@@ -91,25 +91,25 @@ describe OrderCycle do
   end
 
   it "finds the most recently closed order cycles" do
-    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
-    oc2 = create(:order_cycle, orders_close_at: 1.hour.ago)
-    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+    oc1 = create(:simple_order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:simple_order_cycle, orders_close_at: 1.hour.ago)
+    oc3 = create(:simple_order_cycle, orders_close_at: 1.hour.from_now)
 
     OrderCycle.most_recently_closed.should == [oc2, oc1]
   end
 
   it "finds the soonest opening order cycles" do
-    oc1 = create(:order_cycle, orders_open_at: 1.weeks.from_now)
-    oc2 = create(:order_cycle, orders_open_at: 2.hours.from_now)
-    oc3 = create(:order_cycle, orders_open_at: 1.hour.ago)
+    oc1 = create(:simple_order_cycle, orders_open_at: 1.weeks.from_now)
+    oc2 = create(:simple_order_cycle, orders_open_at: 2.hours.from_now)
+    oc3 = create(:simple_order_cycle, orders_open_at: 1.hour.ago)
 
     OrderCycle.soonest_opening.should == [oc2, oc1]
   end
 
   it "finds the soonest closing order cycles" do
-    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
-    oc2 = create(:order_cycle, orders_close_at: 2.hour.from_now)
-    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+    oc1 = create(:simple_order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:simple_order_cycle, orders_close_at: 2.hour.from_now)
+    oc3 = create(:simple_order_cycle, orders_close_at: 1.hour.from_now)
 
     OrderCycle.soonest_closing.should == [oc3, oc2]
   end
@@ -311,7 +311,7 @@ describe OrderCycle do
   end
 
   describe "checking status" do
-    let(:oc) { create(:order_cycle) }
+    let(:oc) { create(:simple_order_cycle) }
 
     it "reports status when an order cycle is upcoming" do
       Timecop.freeze(oc.orders_open_at - 1.second) do
