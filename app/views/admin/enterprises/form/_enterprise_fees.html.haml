@@ -1,16 +1,18 @@
 - if @enterprise_fees.count > 0
   %table
-    %tr
-      %th Name
-      %th Fee Type
-      -# %th Calculator
-      -# %th Calculator Values
-    - @enterprise_fees.each do |enterprise_fee|
+    %thead
       %tr
-        %td= enterprise_fee.name
-        %td= enterprise_fee.fee_type
-        -# %td= enterprise_fee.calculator.preferred_flat_percent
-        -# %td= enterprise_fee.fee_type
+        %th Name
+        %th Fee Type
+        -# %th Calculator
+        -# %th Calculator Values
+    %tbody
+      - @enterprise_fees.each do |enterprise_fee|
+        %tr
+          %td= enterprise_fee.name
+          %td= enterprise_fee.fee_type
+          -# %td= enterprise_fee.calculator.preferred_flat_percent
+          -# %td= enterprise_fee.fee_type
   %br
   %div
     %a.button{ href: "#{main_app.admin_enterprise_fees_path}"}
