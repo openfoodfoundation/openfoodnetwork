@@ -26,3 +26,7 @@
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
   %legend Images
   = render 'admin/enterprises/form/images', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Enterprise Fees'" } }
+  %legend Enterprise Fees
+  = render 'admin/enterprises/form/enterprise_fees', f: f
