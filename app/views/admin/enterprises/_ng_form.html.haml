@@ -11,11 +11,13 @@
   } do |f|
   .row
     .sixteen.columns.alpha
-      .four.columns.omega
+      .four.columns.alpha
         = render 'side_menu'
       .one.column &nbsp;
-      .eleven.columns.alpha.fullwidth_inputs
+      .eleven.columns.omega.fullwidth_inputs
         = render 'form', f: f
   .row
-    .twelve.columns.alpha
+    .five.columns.alpha
+      &nbsp;
+    .eleven.columns.alpha
       = render partial: "spree/admin/shared/#{action}_resource_links"
