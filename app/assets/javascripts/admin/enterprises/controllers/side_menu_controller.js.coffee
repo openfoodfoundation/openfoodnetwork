@@ -1,6 +1,7 @@
 angular.module("admin.enterprises")
   .controller "sideMenuCtrl", ($scope, Enterprise, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
+    $scope.menu = SideMenu
     $scope.select = SideMenu.select
 
     SideMenu.setItems [
@@ -17,4 +18,3 @@ angular.module("admin.enterprises")
     ]
 
     $scope.select(0)
-    $scope.menu = SideMenu.items
