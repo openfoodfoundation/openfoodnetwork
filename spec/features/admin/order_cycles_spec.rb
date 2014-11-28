@@ -360,9 +360,9 @@ feature %q{
 
   scenario "updating many order cycle opening/closing times at once" do
     # Given three order cycles
-    oc1 = create(:order_cycle)
-    oc2 = create(:order_cycle)
-    oc3 = create(:order_cycle)
+    oc1 = create(:simple_order_cycle)
+    oc2 = create(:simple_order_cycle)
+    oc3 = create(:simple_order_cycle)
 
     # When I go to the order cycles page
     login_to_admin_section
@@ -394,7 +394,7 @@ feature %q{
 
   scenario "cloning an order cycle" do
     # Given an order cycle
-    oc = create(:order_cycle)
+    oc = create(:simple_order_cycle)
 
     # When I clone it
     login_to_admin_section
@@ -625,7 +625,7 @@ feature %q{
     end
 
     it "shows me an index of order cycles without enterprise columns" do
-      create(:order_cycle, coordinator: enterprise)
+      create(:simple_order_cycle, coordinator: enterprise)
       visit admin_order_cycles_path
       page.should_not have_selector 'th', text: 'SUPPLIERS'
       page.should_not have_selector 'th', text: 'COORDINATOR'
