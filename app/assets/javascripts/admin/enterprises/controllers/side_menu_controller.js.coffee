@@ -7,13 +7,14 @@ angular.module("admin.enterprises")
     SideMenu.setItems [
       { name: 'Primary Details' }
       { name: 'Address' }
-      { name: "Shipping Methods"}
-      { name: "Payment Methods"}
-      { name: "Enterprise Fees"}
-      { name: 'Contact & Social' }
+      { name: 'Contact' }
+      { name: 'Social' }
       { name: 'About' }
       { name: "Business Details"}
       { name: 'Images' }
+      { name: "Shipping Methods"}
+      { name: "Payment Methods"}
+      { name: "Enterprise Fees"}
       { name: "Preferences"}
     ]
 

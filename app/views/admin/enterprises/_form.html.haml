@@ -7,9 +7,13 @@
     %legend Address
     = render 'admin/enterprises/form/address', af: af
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact & Social'" } }
-  %legend Contact & Social
-  = render 'admin/enterprises/form/contact_and_social', f: f
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
+  %legend Contact
+  = render 'admin/enterprises/form/contact', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Social'" } }
+  %legend Social
+  = render 'admin/enterprises/form/social', f: f
 
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Business Details'" } }
   %legend Business Details
