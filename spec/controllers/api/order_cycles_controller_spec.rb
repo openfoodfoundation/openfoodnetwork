@@ -6,8 +6,8 @@ module Api
     include Spree::Api::TestingSupport::Helpers
     render_views
 
-    let!(:oc1) { FactoryGirl.create(:order_cycle) }
-    let!(:oc2) { FactoryGirl.create(:order_cycle) }
+    let!(:oc1) { FactoryGirl.create(:simple_order_cycle) }
+    let!(:oc2) { FactoryGirl.create(:simple_order_cycle) }
     let(:coordinator) { oc1.coordinator }
     let(:attributes) { [:id, :name, :suppliers, :distributors] }
 
@@ -70,7 +70,7 @@ module Api
         user.save!
         user
       end
-      let!(:order_cycle) { create(:order_cycle, suppliers: [oc_supplier], distributors: [oc_distributor]) }
+      let!(:order_cycle) { create(:simple_order_cycle, suppliers: [oc_supplier], distributors: [oc_distributor]) }
 
       context "as the user of a supplier to an order cycle" do
         before :each do
