@@ -1,1 +1,1 @@
-angular.module("admin.enterprises", ["admin.payment_methods", "admin.utils", "admin.shipping_methods", "admin.users", "textAngular"])
+angular.module("admin.enterprises", [  "admin.payment_methods",  "admin.utils",  "admin.shipping_methods",  "admin.users",  "textAngular",  "admin.side_menu"])
