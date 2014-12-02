@@ -65,7 +65,7 @@ feature %q{
 
     scenario "order payment method report" do
       click_link "Order Cycle Management"
-      rows = find("table#listing_order_payment_method").all("thead tr")
+      rows = find("table#listing_order_payment_methods").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
         ["First Name", "Last Name", "Email", "Phone", "Hub", "Payment Method", "Amount", "Amount Paid"]
