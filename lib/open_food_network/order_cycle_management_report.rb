@@ -40,7 +40,7 @@ module OpenFoodNetwork
     end	
 
     def filter_active (orders)
-       orders.complete.where("spree_orders.state != ?", :cancelled)
+       orders.complete.where("spree_orders.state != ?", :canceled)
     end
 
     def filter_to_payment_method (orders)
