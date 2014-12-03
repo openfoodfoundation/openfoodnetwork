@@ -3,7 +3,7 @@
     %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
     %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
   %td.producer{ 'ng-show' => 'columns.producer.visible' }
-    %select.select2.fullwidth{ 'ng-model' => 'product.producer', :name => 'producer', 'ofn-track-product' => 'producer', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+    %select.select2.fullwidth{ 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
   %td.name{ 'ng-show' => 'columns.name.visible' }
     %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
   %td.unit{ 'ng-show' => 'columns.unit.visible' }
@@ -19,7 +19,7 @@
     %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
     %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
   %td.category{ 'ng-if' => 'columns.category.visible' }
-    %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category", 'ng-model' => 'product.category', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category' }
+    %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category_id", 'ng-model' => 'product.category_id', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category_id' }
   %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
     %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
   %td.actions

@@ -5,21 +5,20 @@
     - else
       = link_to image_tag(variant.images.first.attachment.url(:small)), variant.product
 
-  %td.cart-item-description{"data-hook" => "cart_item_description"}
-    %h4= link_to variant.product.name, product_path(variant.product)
+  %td.cart-item-description{'data-hook' => "cart_item_description"}
+    %h4= variant.product.name
     = variant.options_text
     - if @order.insufficient_stock_lines.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
-        %br
-    = line_item_description(variant)
+        %br/
 
   %td.cart-item-price{"data-hook" => "cart_item_price"}
-    = line_item.single_money.to_html
+    = line_item.single_display_amount_with_adjustments.to_html
   %td.cart-item-quantity{"data-hook" => "cart_item_quantity"}
     = item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5
   %td.cart-item-total{"data-hook" => "cart_item_total"}
-    = line_item.display_amount.to_html unless line_item.quantity.nil?
+    = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
   %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
     {{ quantity }}

@@ -285,16 +285,6 @@ class Enterprise < ActiveRecord::Base
     shipping_methods.any? && payment_methods.available.any?
   end
 
-  def shop_trial_in_progress?
-    !!shop_trial_start_date &&
-    (shop_trial_start_date + SHOP_TRIAL_LENGTH.days > Time.now) &&
-    %w(own any).include?(sells)
-  end
-
-  def remaining_trial_days
-    distance_of_time_in_words(Time.now, shop_trial_start_date + SHOP_TRIAL_LENGTH.days)
-  end
-
   protected
 
   def devise_mailer

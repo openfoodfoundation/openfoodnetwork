@@ -5,20 +5,16 @@ feature %q{
   I want to be able to manage orders in bulk
 } , js: true do
   include AuthenticationWorkflow
-  include AuthorizationHelpers
   include WebHelper
-  after { Warden.test_reset! }
-  stub_authorization!
 
   context "listing orders" do
     before :each do
-      admin_user = quick_login_as_admin
+      login_to_admin_section
     end
 
     it "displays a message when number of line items is zero" do
       visit '/admin/orders/bulk_management'
       page.should have_text "No orders found."
-
     end
 
     context "displaying the list of line items" do

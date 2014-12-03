@@ -80,6 +80,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "on the checkout page with payments open" do
       before do
+        ActionMailer::Base.deliveries.clear
         visit checkout_path
         checkout_as_guest
         toggle_payment
@@ -118,6 +119,8 @@ feature "As a consumer I want to check out my cart", js: true do
             choose pm1.name
           end
 
+
+          ActionMailer::Base.deliveries.length.should == 0
           place_order
           page.should have_content "Your order has been processed successfully"
           ActionMailer::Base.deliveries.length.should == 2
@@ -211,6 +214,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "when the customer has a pre-set shipping and billing address" do
       before do
+        ActionMailer::Base.deliveries.clear
         # Load up the customer's order and give them a shipping and billing address
         # This is equivalent to when the customer has ordered before and their addresses
         # are pre-populated.
@@ -227,9 +231,10 @@ feature "As a consumer I want to check out my cart", js: true do
         toggle_payment
         choose pm1.name
 
+        expect(ActionMailer::Base.deliveries.length).to be 0
         place_order
         page.should have_content "Your order has been processed successfully"
-        ActionMailer::Base.deliveries.length.should == 2
+        expect(ActionMailer::Base.deliveries.length).to be 2
       end
     end
   end

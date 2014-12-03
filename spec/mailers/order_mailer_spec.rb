@@ -20,18 +20,24 @@ describe Spree::OrderMailer do
     ActionMailer::Base.deliveries = []
   end
 
-  it "should send an email when given an order" do
-    Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.count.should == 1
+  describe "order confirmation for customers" do
+    it "should send an email to the customer when given an order" do
+      Spree::OrderMailer.confirm_email_for_customer(@order1.id).deliver
+      ActionMailer::Base.deliveries.count.should == 1
+      ActionMailer::Base.deliveries.first.to.should == [@order1.email]
+    end
+
+    it "sets a reply-to of the enterprise email" do
+      Spree::OrderMailer.confirm_email_for_customer(@order1.id).deliver
+      ActionMailer::Base.deliveries.first.reply_to.should == [@distributor.email]
+    end
   end
 
-  it "sets a reply-to of the enterprise email" do
-    Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.first.reply_to.should == [@distributor.email]
-  end
-
-  it "ccs the enterprise" do
-    Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.first.cc.should == [@distributor.email]
+  describe "order confirmation for shops" do
+    it "sends an email to the shop owner when given an order" do
+      Spree::OrderMailer.confirm_email_for_shop(@order1.id).deliver
+      ActionMailer::Base.deliveries.count.should == 1
+      ActionMailer::Base.deliveries.first.to.should == [@distributor.email]
+    end
   end
 end

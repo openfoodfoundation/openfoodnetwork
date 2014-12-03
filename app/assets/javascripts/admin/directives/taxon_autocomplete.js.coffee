@@ -7,7 +7,7 @@ angular.module("ofn.admin").directive "ofnTaxonAutocomplete", (Taxons) ->
         placeholder: "Category"
         multiple: false
         initSelection: (element, callback) ->
-          callback Taxons.findByID(scope.product.category)
+          callback Taxons.findByID(scope.product.category_id)
         query: (query) ->
           query.callback { results: Taxons.findByTerm(query.term) }
         formatResult: (taxon) ->

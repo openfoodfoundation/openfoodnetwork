@@ -8,7 +8,7 @@ feature 'Home', js: true do
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }
-  let!(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 

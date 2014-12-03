@@ -14,4 +14,7 @@ en:
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
   home: "OFN"
+  welcome_to: 'Welcome to '
   search_by_name: Search by name or suburb...
+  producers: Aussie Producers
+  producers_join: Australian producers are now welcome to join the Open Food Network.

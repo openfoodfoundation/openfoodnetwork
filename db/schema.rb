@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141023050324) do
+ActiveRecord::Schema.define(:version => 20141113053004) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -1033,6 +1033,15 @@ ActiveRecord::Schema.define(:version => 20141023050324) do
     t.integer "state_id"
   end
 
+  create_table "variant_overrides", :force => true do |t|
+    t.integer "variant_id"
+    t.integer "hub_id"
+    t.decimal "price",         :precision => 8, :scale => 2
+    t.integer "count_on_hand"
+  end
+
+  add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"
+
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id"
 
@@ -1189,5 +1198,8 @@ ActiveRecord::Schema.define(:version => 20141023050324) do
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
 
   add_foreign_key "suburbs", "spree_states", name: "suburbs_state_id_fk", column: "state_id"
+
+  add_foreign_key "variant_overrides", "enterprises", name: "variant_overrides_hub_id_fk", column: "hub_id"
+  add_foreign_key "variant_overrides", "spree_variants", name: "variant_overrides_variant_id_fk", column: "variant_id"
 
 end

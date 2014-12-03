@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby "1.9.3"
 
 gem 'rails', '3.2.19'
+gem 'rails-i18n', '~> 3.0.0'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
@@ -43,6 +44,8 @@ gem 'spinjs-rails'
 gem 'rack-ssl', :require => 'rack/ssl'
 gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
+gem 'roadie-rails', '~> 1.0.3'
+gem 'figaro'
 
 gem 'foreigner'
 gem 'immigrant'

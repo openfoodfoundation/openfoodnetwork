@@ -26,7 +26,7 @@
 
 .row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
   .columns.small-12.medium-6.large-5.skinny-head
-    %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+    %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
       %i{ng: {class: "hub.icon_font"}}
       %span.margin-top.hub-name-listing {{ hub.name | truncate:40}}
 
@@ -36,5 +36,5 @@
     %span.margin-top {{ hub.address.state_name | uppercase }}
 
   .columns.small-6.medium-3.large-4.text-right
-    %span.margin-top{ bo: { if: "!current()" } } 
+    %span.margin-top{ bo: { if: "!current()" } }
       %em Profile only

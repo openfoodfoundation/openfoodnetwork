@@ -37,8 +37,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_select "producer", with_options: [s1.name,s2.name,s3.name], selected: s2.name
-      expect(page).to have_select "producer", with_options: [s1.name,s2.name,s3.name], selected: s3.name
+      expect(page).to have_select "producer_id", with_options: [s1.name,s2.name,s3.name], selected: s2.name
+      expect(page).to have_select "producer_id", with_options: [s1.name,s2.name,s3.name], selected: s3.name
     end
 
     it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
@@ -302,19 +302,19 @@ feature %q{
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
-      expect(page).to have_select "producer", selected: s1.name
+      expect(page).to have_select "producer_id", selected: s1.name
       expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
       expect(page).to have_field "price", with: "10.0"
-      expect(page).to have_selector "div#s2id_p#{p.id}_category a.select2-choice"
+      expect(page).to have_selector "div#s2id_p#{p.id}_category_id a.select2-choice"
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_field "on_hand", with: "6"
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select s2.name, :from => 'producer'
+      select s2.name, :from => 'producer_id'
       fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
       fill_in "price", with: "20"
       select "Weight (kg)", from: "variant_unit_with_scale"
-      select2_select t1.name, from: "p#{p.id}_category"
+      select2_select t1.name, from: "p#{p.id}_category_id"
       fill_in "on_hand", with: "18"
       fill_in "display_as", with: "Big Bag"
     end
@@ -654,13 +654,13 @@ feature %q{
         end
         expect(page).to have_selector "a.clone-product", :count => 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
-        expect(page).to have_select "producer", selected: "#{p1.supplier.name}"
+        expect(page).to have_select "producer_id", selected: "#{p1.supplier.name}"
 
         visit '/admin/products/bulk_edit'
 
         expect(page).to have_selector "a.clone-product", :count => 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
-        expect(page).to have_select "producer", selected: "#{p1.supplier.name}"
+        expect(page).to have_select "producer_id", selected: "#{p1.supplier.name}"
       end
     end
   end
@@ -764,8 +764,8 @@ feature %q{
     it "shows only suppliers that I manage or have permission to" do
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_select 'producer', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name], selected: supplier_managed1.name
-      expect(page).to have_no_select 'producer', with_options: [supplier_unmanaged.name]
+      expect(page).to have_select 'producer_id', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name], selected: supplier_managed1.name
+      expect(page).to have_no_select 'producer_id', with_options: [supplier_unmanaged.name]
     end
 
     it "shows inactive products that I supply" do
@@ -807,13 +807,13 @@ feature %q{
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
-        expect(page).to have_select "producer", selected: supplier_permitted.name
+        expect(page).to have_select "producer_id", selected: supplier_permitted.name
         expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
         expect(page).to have_field "price", with: "10.0"
         expect(page).to have_field "on_hand", with: "6"
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
-        select(supplier_managed2.name, :from => 'producer')
+        select supplier_managed2.name, :from => 'producer_id'
         fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
         fill_in "price", with: "20"
         select "Weight (kg)", from: "variant_unit_with_scale"

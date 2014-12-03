@@ -5,11 +5,11 @@
       %table
         %tr
           %th Cart total
-          %td.cart-total.text-right= spree_number_to_currency(checkout_cart_total_with_adjustments(current_order))
+          %td.cart-total.text-right= display_checkout_subtotal(@order)
 
-        - checkout_adjustments_for_summary(current_order, exclude: [:shipping, :distribution]).each do |adjustment|
+        - checkout_adjustments_for(current_order, exclude: [:shipping, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
           %tr
-            %th= adjustment.label 
+            %th= adjustment.label
             %td.text-right= adjustment.display_amount.to_html
 
         %tr
@@ -17,7 +17,7 @@
           %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
 
         %tr
-          %th Total 
+          %th Total
           %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
@@ -26,7 +26,7 @@
               %td= total
 
       //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
-      %a.button.secondary{href: cart_url} 
+      %a.button.secondary{href: cart_url}
         %i.ofn-i_008-caret-left
         Back to Cart
 
