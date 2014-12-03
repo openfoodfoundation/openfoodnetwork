@@ -359,8 +359,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
         p1.should be_in_distributor d1
         p1.should_not be_in_distributor d2
@@ -371,8 +371,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
         p1.should be_in_order_cycle oc1
         p1.should_not be_in_order_cycle oc2

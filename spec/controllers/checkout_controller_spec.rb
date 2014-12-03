@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CheckoutController do
   let(:distributor) { double(:distributor) }
-  let(:order_cycle) { create(:order_cycle) }
+  let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
   before do
     order.stub(:checkout_allowed?).and_return true
