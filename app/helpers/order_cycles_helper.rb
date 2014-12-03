@@ -3,17 +3,40 @@ module OrderCyclesHelper
     @current_order_cycle ||= current_order(false).andand.order_cycle
   end
 
-  def coordinating_enterprises
-    Enterprise.is_distributor.managed_by(spree_current_user).order('name')
+  def order_cycle_permitted_enterprises
+    OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
   end
 
-  def order_cycle_local_remote_class(distributor, order_cycle)
-    if distributor.nil? || order_cycle.nil?
-      ''
-    elsif order_cycle.distributors.include? distributor
-      ' local'
+  def order_cycle_producer_enterprises
+    order_cycle_permitted_enterprises.is_primary_producer.by_name
+  end
+
+  def order_cycle_coordinating_enterprises
+    order_cycle_permitted_enterprises.is_distributor.by_name
+  end
+
+  def order_cycle_hub_enterprises(options={})
+    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
+
+    if options[:without_validation]
+      enterprises
     else
-      ' remote'
+      enterprises.map do |e|
+        disabled_message = nil
+        if e.shipping_methods.empty? && e.payment_methods.available.empty?
+          disabled_message = 'no shipping or payment methods'
+        elsif e.shipping_methods.empty?
+          disabled_message = 'no shipping methods'
+        elsif e.payment_methods.available.empty?
+          disabled_message = 'no payment methods'
+        end
+
+        if disabled_message
+          ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
+        else
+          [e.name, e.id]
+        end
+      end
     end
   end
 
@@ -30,11 +53,6 @@ module OrderCyclesHelper
   end
 
 
-  def distributor_options(distributors, current_distributor, order_cycle)
-    options = distributors.map { |d| [d.name, d.id, {:class => order_cycle_local_remote_class(d, order_cycle).strip}] }
-    options_for_select(options, current_distributor)
-  end
-
   def order_cycle_options
     @order_cycles.
       with_distributor(current_distributor).
@@ -48,6 +66,10 @@ module OrderCyclesHelper
 
   def active_order_cycle_for_distributor?(distributor)
     OrderCycle.active.with_distributor(@distributor).present?
+  end
+
+  def order_cycles_simple_view
+    @order_cycles_simple_view ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
   end
 
   def order_cycles_enabled?

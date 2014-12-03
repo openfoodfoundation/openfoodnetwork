@@ -20,4 +20,8 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout) ->
   $scope.years = [moment().year()..(moment().year()+15)]
   $scope.secrets.card_month = "1"
   $scope.secrets.card_year = moment().year()
+
+  $scope.summary = ->
+    [$scope.Checkout.paymentMethod()?.name]
+
   $timeout $scope.onTimeout

@@ -1,0 +1,24 @@
+.container#registration-finished
+  .row
+    .small-12.columns.pad-top
+      %header
+        %h2 Finished!
+        .panel.callout
+          %p
+            Thanks for filling out the details for 
+            %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
+              {{ enterprise.name }}
+          %p You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin.
+  .row
+    .small-12.columns.text-center
+      %h4 
+        Activate
+        %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
+          {{ enterprise.name }}
+
+      %p 
+        We've sent a confirmation email to 
+        %strong {{ enterprise.email }}.
+        %br Please follow the instructions there to make your enterprise visible on the Open Food Network.
+
+      %a.button.primary{ type: "button", href: "/" } Open Food Network home &gt;

@@ -11,5 +11,4 @@
   %table#enterprise-relationships
     %tbody
       = render 'form'
-      %tr{"ng-repeat" => "enterprise_relationship in EnterpriseRelationships.enterprise_relationships | filter:query"}
-        = render 'enterprise_relationship'
+      = render 'enterprise_relationship'

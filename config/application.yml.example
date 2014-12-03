@@ -1,0 +1,13 @@
+# Add application configuration variables here, as shown below.
+#
+# Change this, it has serious security implications. 
+# Minimum 30 but usually 128 characters. To obtain run 'rake secret', or faster, 'openssl rand -hex 128'
+SECRET_TOKEN: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+TIMEZONE: "Melbourne"
+# Default country for dropdowns etc.
+DEFAULT_COUNTRY: "Australia"
+# Locale for translation.
+I18N_LOCALE: "en"
+# Spree zone.
+CHECKOUT_ZONE: "Australia"

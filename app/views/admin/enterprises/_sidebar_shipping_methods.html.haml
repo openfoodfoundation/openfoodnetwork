@@ -1,14 +1,17 @@
-.sidebar_item.four.columns.alpha#shipping_methods{ ng: { show: 'Enterprise.is_distributor' } }
+.sidebar_item.four.columns.alpha#shipping_methods{ ng: { show: 'Enterprise.sells != "none"' } }
   .four.columns.alpha.header{ ng: { class: "shippingMethodsColor()" } }
     %span.four.columns.alpha.centered Shipping Methods
   .four.columns.alpha.list{ ng: { class: "shippingMethodsColor()" } }
     - if @shipping_methods.count > 0
       - @shipping_methods.each do |shipping_method|
         %span.four.columns.alpha.list-item{ class: "#{cycle('odd','even')}", ng: { controller: 'shippingMethodCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
-          %a.three.columns.alpha{ href: "#{edit_admin_shipping_method_path(shipping_method)}" }
-            = shipping_method.name
-          %span.one.column.omega
-            = f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
+          %span.four.columns
+            %span.three.columns.alpha
+              %label
+                = f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
+                = shipping_method.name
+            %a.one.columns.omega{ href: "#{edit_admin_shipping_method_path(shipping_method)}" }
+              %span.one.column.alpha.icon-arrow-right
     - else
       .four.columns.alpha.list-item
         %span.three.columns.alpha None Available

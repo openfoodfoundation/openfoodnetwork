@@ -8,6 +8,9 @@ class ModelSet
   def initialize(klass, collection, reject_if=nil, attributes={})
     @klass, @collection, @reject_if = klass, collection, reject_if
 
+    # Set here first, to ensure that we apply collection_attributes to the right collection
+    @collection = attributes[:collection] if attributes[:collection]
+
     attributes.each do |name, value|
       send("#{name}=", value)
     end
@@ -26,7 +29,10 @@ class ModelSet
   end
 
   def errors
-    @collection.map { |ef| ef.errors.full_messages }.flatten
+    errors = ActiveModel::Errors.new self
+    full_messages = @collection.map { |ef| ef.errors.full_messages }.flatten
+    full_messages.each { |fm| errors.add(:base, fm) }
+    errors
   end
 
   def save

@@ -7,7 +7,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include CheckoutWorkflow
   include UIComponentHelper
 
-  let(:distributor) { create(:distributor_enterprise) }
+  let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let(:product) { create(:simple_product, supplier: supplier) }

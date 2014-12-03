@@ -1,6 +1,6 @@
 .row
   .columns.small-12.large-6
-    %img.product-img{"ng-src" => "{{product.primaryImage}}", "ng-if" => "product.primaryImage"} 
+    %img.product-img{"ng-src" => "{{product.largeImage}}", "ng-if" => "product.largeImage"}
   .columns.small-12.large-6.product-header
     %h2 
       / %render-svg{path: "{{product.primary_taxon.icon}}"}

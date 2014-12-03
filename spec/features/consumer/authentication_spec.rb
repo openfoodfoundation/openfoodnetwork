@@ -10,7 +10,6 @@ feature "Authentication", js: true do
         visit groups_path(anchor: "login?after_login=#{producers_path}")
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
-        save_screenshot "/Users/willmarshall/Desktop/wtf.png"
         click_login_button
         page.should have_content "Find local producers"
         current_path.should == producers_path

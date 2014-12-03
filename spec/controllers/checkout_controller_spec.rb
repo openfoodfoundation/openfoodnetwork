@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CheckoutController do
   let(:distributor) { double(:distributor) }
-  let(:order_cycle) { create(:order_cycle) }
+  let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
   before do
     order.stub(:checkout_allowed?).and_return true
@@ -18,6 +18,20 @@ describe CheckoutController do
     controller.stub(:current_distributor).and_return(distributor)
     get :edit
     response.should redirect_to shop_path
+  end
+
+  it "redirects home with message if hub is not ready for checkout" do
+    distributor.stub(:ready_for_checkout?) { false }
+    order.stub(distributor: distributor, order_cycle: order_cycle)
+    controller.stub(:current_order).and_return(order)
+
+    order.should_receive(:empty!)
+    order.should_receive(:set_distribution!).with(nil, nil)
+
+    get :edit
+
+    response.should redirect_to root_url
+    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
   it "redirects to the shop when no line items are present" do

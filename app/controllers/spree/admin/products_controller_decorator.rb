@@ -1,11 +1,16 @@
+require 'open_food_network/spree_api_key_loader'
+
 Spree::Admin::ProductsController.class_eval do
-  before_filter :load_bpe_data, :only => :bulk_edit
+  include OpenFoodNetwork::SpreeApiKeyLoader
+  include OrderCyclesHelper
+  before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
+  before_filter :load_spree_api_key, :only => [:bulk_edit, :override_variants]
 
   alias_method :location_after_save_original, :location_after_save
 
   respond_to :json, :only => :clone
 
-  respond_override create: { html: { 
+  respond_override create: { html: {
     success: lambda {
       if params[:button] == "add_another"
         redirect_to new_admin_product_path
@@ -30,6 +35,9 @@ Spree::Admin::ProductsController.class_eval do
       "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
     end
 
+    # Ensure we're authorised to update all products
+    product_set.collection.each { |p| authorize! :update, p }
+
     if product_set.save
       redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
@@ -40,6 +48,12 @@ Spree::Admin::ProductsController.class_eval do
       end
     end
   end
+
+  def override_variants
+    @hubs = order_cycle_hub_enterprises(without_validation: true)
+    @producers = order_cycle_producer_enterprises
+  end
+
 
   protected
   def location_after_save
@@ -82,10 +96,8 @@ Spree::Admin::ProductsController.class_eval do
 
   private
 
-  def load_bpe_data
-    current_user.generate_spree_api_key! unless spree_current_user.spree_api_key
-    @spree_api_key = spree_current_user.spree_api_key
-    @producers = Enterprise.managed_by(spree_current_user).is_primary_producer.order(:name)
+  def load_form_data
+    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
   end
 end

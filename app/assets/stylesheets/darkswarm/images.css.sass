@@ -11,12 +11,16 @@
   @include box-shadow(0 1px 2px 1px rgba(0,0,0,0.25))
 
 .hero-img
-  border-bottom: 1px solid $disabled-bright
+  outline: 1px solid $disabled-bright
+  border-color: transparent
+  @include box-shadow(none)
   width: 100%
-  min-height: 56px
+  min-height: 80px
   height: inherit
   max-height: 260px
   overflow: hidden
+  @media all and (max-width: 640px)
+    min-height: 68px
 
 .hero-img-small
   background-color: #333

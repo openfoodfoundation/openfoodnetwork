@@ -1,0 +1,51 @@
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    / If you delete this meta tag, Half Life 3 will never be released.
+    %meta{:content => "width=device-width", :name => "viewport" }/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title
+      Open Food Network
+    = stylesheet_link_tag 'mail/all'
+  %body{:bgcolor => "#FFFFFF" }
+    %table.head-wrap{:bgcolor => "#333333"}
+      %tr
+        %td
+        %td.header.container
+          .content
+            %table{:bgcolor => "#333333"}
+              %tr
+                %td
+                  %img{:src => "#{ asset_path 'open-food-network-beta.png' }", :width => "200"}/
+                %td{:align => "right"}
+                  %h6.collapse
+                    Open Food Network
+        %td
+
+    %table.body-wrap
+      %tr
+        %td
+        %td.container{:bgcolor => "#FFFFFF"}
+          .content
+            %table
+              %tr
+                %td
+
+                  = yield
+        %td
+
+    %table.footer-wrap
+      %tr
+        %td
+        %td.container
+          .content
+            %table
+              %tr
+                %td{:align => "center"}
+                  %p
+                    %a{:href => "#{ URI.join(spree.root_url, "Terms-of-service.pdf").to_s }", :target => "_blank"}
+                      Terms of service
+                    |
+                    %a{:href => "#{ spree.root_url }"}
+                      Open Food Network
+                    / | <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>
+        %td

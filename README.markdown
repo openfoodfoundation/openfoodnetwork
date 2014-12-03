@@ -48,11 +48,20 @@ Install the project's gem dependencies:
 
     bundle install
 
-Create the development and test databases, using the settings specified in `config/database.yml`. You can then load the schema and some seed data with the following command:
+Configure the site:
+
+    cp config/application.yml.example config/application.yml
+    edit config/application.yml
+
+Create the development and test databases, using the settings specified in `config/database.yml`:
+
+    rake db:setup
+
+Then load the schema and some seed data with the following command:
 
     rake db:schema:load db:seed
 
-Load some default data for your environment
+Load some default data for your environment:
 
     rake openfoodnetwork:dev:load_sample_data
 
@@ -65,7 +74,7 @@ At long last, your dreams of spinning up a development server can be realised:
 
 Tests, both unit and integration, are based on RSpec. To run the test suite, first prepare the test database:
 
-    bundle exec rake db:test:load
+    bundle exec rake db:test:prepare
 
 Then the tests can be run with:
 
@@ -86,7 +95,7 @@ usage instructions.
 * David Cook (http://github.com/dacook)
 * Will Marshall (http://soundcloud.com/willmarshall)
 * Laura Summers (https://github.com/summerscope)
-
+* Maikel Linke (https://github.com/mkllnk)
 
 ## Licence
 

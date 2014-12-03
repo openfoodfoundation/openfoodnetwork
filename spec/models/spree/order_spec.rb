@@ -27,13 +27,13 @@ describe Spree::Order do
     let(:order) { build(:order, distributor: order_distributor) }
     let(:pm1) { create(:payment_method, distributors: [order_distributor])}
     let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
-    
+
     it "finds the correct payment methods" do
-      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2] 
+      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2]
       order.available_payment_methods.include?(pm2).should == false
       order.available_payment_methods.include?(pm1).should == true
     end
-    
+
   end
 
   describe "updating the distribution charge" do
@@ -245,7 +245,7 @@ describe Spree::Order do
       subject.should_not_receive(:empty!)
       subject.set_order_cycle! subject.order_cycle
     end
-  
+
     it "sets the order cycle when no distributor is set" do
       subject.set_order_cycle! oc
       subject.order_cycle.should == oc
@@ -363,6 +363,18 @@ describe Spree::Order do
       order.shipping_method = create(:shipping_method, require_ship_address: false)
       #Shipment.should_not_r
       order.create_shipment!
+    end
+  end
+
+  describe "sending confirmation emails" do
+    it "sends confirmation emails to both the user and the shop owner" do
+      customer_confirm_fake = double(:confirm_email_for_customer)
+      shop_confirm_fake = double(:confirm_email_for_shop)
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return customer_confirm_fake
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return shop_confirm_fake
+      expect(customer_confirm_fake).to receive :deliver
+      expect(shop_confirm_fake).to receive :deliver
+      create(:order).deliver_order_confirmation_email
     end
   end
 

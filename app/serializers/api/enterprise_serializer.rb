@@ -4,7 +4,7 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   end
 
   private
-  
+
   def cached_serializer_hash
     Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
   end
@@ -24,17 +24,19 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   def active
     @options[:active_distributors].andand.include? object
   end
+
+
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   cached
   delegate :cache_key, to: :object
 
-  attributes :name, :id, :description, :latitude, :longitude, 
-    :long_description, :website, :instagram, :linkedin, :twitter, 
+  attributes :name, :id, :description, :latitude, :longitude,
+    :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :icon, :path,
-    :pickup, :delivery
+    :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
+    :icon, :icon_font, :producer_icon_font, :category
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
@@ -67,19 +69,47 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     object.promo_image(:large) if object.promo_image.exists?
   end
 
-  def icon
-    if object.is_primary_producer? and object.is_distributor?
-      "/assets/map-icon-both.svg"
-    elsif object.is_primary_producer?
-      "/assets/map-icon-producer.svg"
-    else
-      "/assets/map-icon-hub.svg"
-    end
-  end
-
   # TODO when ActiveSerializers supports URL helpers
   # Then refactor. See readme https://github.com/rails-api/active_model_serializers
   def path
     "/enterprises/#{object.to_param}/shop"
+  end
+
+  # Map svg icons.
+  def icon
+    icons = {
+      :hub => "/assets/map_005-hub.svg",
+      :hub_profile => "/assets/map_006-hub-profile.svg",
+      :producer_hub => "/assets/map_005-hub.svg",
+      :producer_shop => "/assets/map_003-producer-shop.svg",
+      :producer => "/assets/map_001-producer-only.svg",
+    }
+    icons[object.category]
+  end
+
+  # Choose regular icon font for enterprises.
+  def icon_font
+    icon_fonts = {
+      :hub => "ofn-i_063-hub",
+      :hub_profile => "ofn-i_064-hub-reversed",
+      :producer_hub => "ofn-i_063-hub",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
+    }
+    icon_fonts[object.category]
+  end
+
+  # Choose producer page icon font - yes, sadly its got to be different.
+  # This duplicates some code but covers the producer page edge case where
+  # producer-hub has a producer icon without needing to duplicate the category logic in angular.
+  def producer_icon_font
+    icon_fonts = {
+      :hub => "",
+      :hub_profile => "",
+      :producer_hub => "ofn-i_059-producer",
+      :producer_shop => "ofn-i_059-producer",
+      :producer => "ofn-i_059-producer",
+    }
+    icon_fonts[object.category]
   end
 end

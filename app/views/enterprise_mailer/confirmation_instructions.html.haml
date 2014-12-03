@@ -1,0 +1,21 @@
+%h3
+  = "Hi, #{@resource.contact}!"
+%p.lead
+  = "Please confirm your email address for "
+  %strong
+    = "#{@resource.name}."
+%p &nbsp;
+
+%p.callout
+  Click the link below to confirm your email and to activate your enterprise. This link can be used only once:
+  %br
+  %strong
+    = link_to 'Confirm this email address »', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
+
+%p &nbsp;
+%p
+  = "We're so excited that you're joining the #{ Spree::Config[:site_name] }! Don't hestitate to get in touch if you have any questions."
+
+= render 'shared/mailers/signoff'
+
+= render 'shared/mailers/social_and_contact'

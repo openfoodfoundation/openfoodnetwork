@@ -8,7 +8,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
   describe "Viewing a distributor" do
 
-    let(:distributor) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
     let(:oc2) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now) }
@@ -76,7 +76,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "Next order closing in 2 days" 
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name 
-          page.should have_content product.master.display_name.capitalize
+          page.should have_content product.master.display_name
           page.should have_content product.master.display_as
 
           open_product_modal product
@@ -167,15 +167,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
         end
         
-        it "should save group buy data to ze cart" do
+        it "should save group buy data to the cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           page.should have_in_cart product.name
+
+          wait_until { !cart_dirty }
+
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          while li == nil
-            sleep 0.1
-            li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          end
           li.max_quantity.should == 7
           li.quantity.should == 6
         end

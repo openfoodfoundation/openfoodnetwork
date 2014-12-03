@@ -10,21 +10,23 @@ feature %q{
   context "Permissions for different reports" do
     context "As an enterprise user" do
       let(:user) do
-        create_enterprise_user([
-          create(:distributor_enterprise) 
+        create_enterprise_user(enterprises: [
+          create(:distributor_enterprise)
         ])
       end
-      it "should not show the Sales Total report" do
+      it "does not show super admin only reports" do
         login_to_admin_as user
         click_link "Reports"
         page.should_not have_content "Sales Total"
+        page.should_not have_content "Users & Enterprises"
       end
     end
     context "As an admin user" do
-      it "shows the Sales Total report" do
+      it "shows the super admin only reports" do
         login_to_admin_section
         click_link "Reports"
         page.should have_content "Sales Total"
+        page.should have_content "Users & Enterprises"
       end
     end
   end
@@ -99,7 +101,7 @@ feature %q{
       let(:shipping_instructions) { "pick up on thursday please!" }
       let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
       let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      
+
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
         Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
@@ -144,7 +146,7 @@ feature %q{
       variant_2.update_column(:count_on_hand, 20)
       product_2.master.update_column(:count_on_hand, 9)
       variant_1.option_values = [create(:option_value, :presentation => "Test")]
-      
+
       login_to_admin_section
       click_link 'Reports'
 
@@ -157,12 +159,57 @@ feature %q{
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
 
       table.sort.should == [
-        ["Supplier",              "Producer Suburb",                "Product",      "Product Properties",             "Variant Value",  "Price",  "Group Buy Unit Quantity",      "Amount"],
-        [product_1.supplier.name, product_1.supplier.address.city,  "Product Name", product_1.properties.join(", "),  "Test",     "100.0",  product_1.group_buy_unit_size.to_s,  ""],
-        [product_1.supplier.name, product_1.supplier.address.city,  "Product Name", product_1.properties.join(", "),  "S",        "80.0",   product_1.group_buy_unit_size.to_s,  ""],
-        [product_2.supplier.name, product_1.supplier.address.city,  "Product 2",    product_1.properties.join(", "),  "",                "99.0",  product_1.group_buy_unit_size.to_s,  ""]
+        ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                    "Variant Value", "Price", "Group Buy Unit Quantity",     "Amount"],
+        [product_1.supplier.name, product_1.supplier.address.city, "Product Name", product_1.properties.join(", "), product_1.primary_taxon.name, "Test",     "100.0", product_1.group_buy_unit_size.to_s, ""],
+        [product_1.supplier.name, product_1.supplier.address.city, "Product Name", product_1.properties.join(", "), product_1.primary_taxon.name, "S",        "80.0", product_1.group_buy_unit_size.to_s, ""],
+        [product_2.supplier.name, product_1.supplier.address.city, "Product 2",    product_1.properties.join(", "), product_2.primary_taxon.name, "",         "99.0", product_1.group_buy_unit_size.to_s, ""]
+      ].sort
+    end
+  end
+
+  describe "users and enterprises report" do
+    let!(:enterprise1) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise2) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise3) { create( :enterprise, owner: create_enterprise_user ) }
+
+    before do
+      enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
+
+      login_to_admin_section
+      click_link 'Reports'
+
+      click_link 'Users & Enterprises'
+    end
+
+    it "shows users and enterprises report" do
+      rows = find("table#users_and_enterprises").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
+
+      table.sort.should == [
+        [ "User", "Relationship", "Enterprise" ],
+        [ enterprise1.owner.email, "owns", enterprise1.name ],
+        [ enterprise1.owner.email, "manages", enterprise1.name ],
+        [ enterprise2.owner.email, "owns", enterprise2.name ],
+        [ enterprise2.owner.email, "manages", enterprise2.name ],
+        [ enterprise3.owner.email, "owns", enterprise3.name ],
+        [ enterprise3.owner.email, "manages", enterprise3.name ],
+        [ enterprise1.owner.email, "manages", enterprise3.name ]
+      ].sort
+    end
+
+    it "filters the list" do
+      select enterprise3.name, from:  "enterprise_id_in"
+      select enterprise1.owner.email, from:  "user_id_in"
+
+      click_button "Search"
+
+      rows = find("table#users_and_enterprises").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
+
+      table.sort.should == [
+        [ "User", "Relationship", "Enterprise" ],
+        [ enterprise1.owner.email, "manages", enterprise3.name ]
       ].sort
     end
   end
 end
-

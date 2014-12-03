@@ -1,6 +1,9 @@
 class Enterprise < ActiveRecord::Base
-  TYPES = %w(full single profile)
+  SELLS = %w(unspecified none own any)
+  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
+
+  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
   self.inheritance_column = nil
 
@@ -16,6 +19,7 @@ class Enterprise < ActiveRecord::Base
   has_many :enterprise_fees
   has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
+  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
@@ -31,7 +35,7 @@ class Enterprise < ActiveRecord::Base
     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: "1200x260#", thumb: "100x100>" },
+    styles: { large: ["1200x260#", :jpg], medium: ["720x156#", :jpg],  thumb: ["100x100>", :jpg] },
     url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
@@ -44,16 +48,46 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
-  validates :type, presence: true, inclusion: {in: TYPES}
+  validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
+  validates :email, presence: true
+  validates_presence_of :owner
+  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates_length_of :description, :maximum => 255
 
+  before_save :confirmation_check, if: lambda{ email_changed? }
+
+  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
+  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
+  after_create :send_welcome_email, if: lambda { email_is_known? }
+
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
+  scope :confirmed, where('confirmed_at IS NOT NULL')
+  scope :unconfirmed, where('confirmed_at IS NULL')
+  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :ready_for_checkout, lambda {
+    joins(:shipping_methods).
+    joins(:payment_methods).
+    merge(Spree::PaymentMethod.available).
+    select('DISTINCT enterprises.*')
+  }
+  scope :not_ready_for_checkout, lambda {
+    # When ready_for_checkout is empty, ActiveRecord generates the SQL:
+    # id NOT IN (NULL)
+    # I would have expected this to return all rows, but instead it returns none. To
+    # work around this, we use the "OR ?=0" clause to return all rows when there are
+    # no enterprises ready for checkout.
+    where('id NOT IN (?) OR ?=0',
+          Enterprise.ready_for_checkout,
+          Enterprise.ready_for_checkout.count)
+  }
   scope :is_primary_producer, where(:is_primary_producer => true)
-  scope :is_distributor, where(:is_distributor => true)
+  scope :is_distributor, where('sells != ?', 'none')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -107,7 +141,7 @@ class Enterprise < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
     end
   }
 
@@ -204,6 +238,33 @@ class Enterprise < ActiveRecord::Base
     Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
+  def is_distributor
+    self.sells != "none"
+  end
+
+  # Simplify enterprise categories for frontend logic and icons, and maybe other things.
+  def category
+    # Make this crazy logic human readable so we can argue about it sanely.
+    cat = self.is_primary_producer ? "producer_" : "non_producer_"
+    cat << "sells_" + self.sells
+
+    # Map backend cases to front end cases.
+    case cat
+      when "producer_sells_any"
+        :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
+      when "producer_sells_own"
+        :producer_shop # Producer with shopfront and supplies other hubs.
+      when "producer_sells_none"
+        :producer # Producer only supplies through others.
+      when "non_producer_sells_any"
+        :hub # Hub selling others products in order cycles.
+      when "non_producer_sells_own"
+        :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+      when "non_producer_sells_none"
+        :hub_profile # Hub selling outside the system.
+    end
+  end
+
   # Return all taxons for all distributed products
   def distributed_taxons
     Spree::Taxon.
@@ -220,11 +281,43 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  def ready_for_checkout?
+    shipping_methods.any? && payment_methods.available.any?
+  end
+
+  protected
+
+  def devise_mailer
+    EnterpriseMailer
+  end
 
   private
 
+  def email_is_known?
+    owner.enterprises.confirmed.map(&:email).include?(email)
+  end
+
+  def confirmation_check
+    # Skip confirmation/reconfirmation if the new email has already been confirmed
+    if email_is_known?
+      new_record? ? skip_confirmation! : skip_reconfirmation!
+    end
+  end
+
+  def welcome_after_confirm
+    # Send welcome email if we are confirming a newly created enterprise
+    # Note: this callback only runs on email confirmation
+    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      send_welcome_email
+    end
+  end
+
+  def send_welcome_email
+    EnterpriseMailer.welcome(self).deliver
+  end
+
   def strip_url(url)
-    url.andand.sub /(https?:\/\/)?/, ''
+    url.andand.sub(/(https?:\/\/)?/, '')
   end
 
   def set_unused_address_fields
@@ -233,5 +326,15 @@ class Enterprise < ActiveRecord::Base
 
   def geocode_address
     address.geocode if address.changed?
+  end
+
+  def ensure_owner_is_manager
+    users << owner unless users.include?(owner) || owner.admin?
+  end
+
+  def enforce_ownership_limit
+    unless owner.can_own_more_enterprises?
+      errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
+    end
   end
 end

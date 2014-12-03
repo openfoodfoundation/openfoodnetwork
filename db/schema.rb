@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140826043521) do
+ActiveRecord::Schema.define(:version => 20141113053004) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -238,7 +238,6 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
-    t.boolean  "is_distributor"
     t.string   "contact"
     t.string   "phone"
     t.string   "email"
@@ -249,8 +248,8 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -264,10 +263,21 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.string   "type",                     :default => "profile", :null => false
+    t.integer  "owner_id",                                     :null => false
+    t.string   "sells",                    :default => "none", :null => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.datetime "shop_trial_start_date"
+    t.boolean  "producer_profile_only",    :default => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
+  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
+  add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
+  add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
+  add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"
 
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"
@@ -969,6 +979,7 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.string   "spree_api_key",          :limit => 48
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
+    t.integer  "enterprise_limit",                     :default => 1, :null => false
   end
 
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
@@ -1022,6 +1033,15 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
     t.integer "state_id"
   end
 
+  create_table "variant_overrides", :force => true do |t|
+    t.integer "variant_id"
+    t.integer "hub_id"
+    t.decimal "price",         :precision => 8, :scale => 2
+    t.integer "count_on_hand"
+  end
+
+  add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"
+
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id"
 
@@ -1069,6 +1089,7 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
   add_foreign_key "enterprise_roles", "spree_users", name: "enterprise_roles_user_id_fk", column: "user_id"
 
   add_foreign_key "enterprises", "spree_addresses", name: "enterprises_address_id_fk", column: "address_id"
+  add_foreign_key "enterprises", "spree_users", name: "enterprises_owner_id_fk", column: "owner_id"
 
   add_foreign_key "exchange_fees", "enterprise_fees", name: "exchange_fees_enterprise_fee_id_fk"
   add_foreign_key "exchange_fees", "exchanges", name: "exchange_fees_exchange_id_fk"
@@ -1177,5 +1198,8 @@ ActiveRecord::Schema.define(:version => 20140826043521) do
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
 
   add_foreign_key "suburbs", "spree_states", name: "suburbs_state_id_fk", column: "state_id"
+
+  add_foreign_key "variant_overrides", "enterprises", name: "variant_overrides_hub_id_fk", column: "hub_id"
+  add_foreign_key "variant_overrides", "spree_variants", name: "variant_overrides_variant_id_fk", column: "variant_id"
 
 end

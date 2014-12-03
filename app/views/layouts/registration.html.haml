@@ -1,0 +1,36 @@
+%html
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
+
+    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
+    - if Rails.env.production?
+      = favicon_link_tag
+    - else
+      = favicon_link_tag "/favicon-staging.ico"
+    %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
+
+    = yield :scripts
+    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places&sensor=false"}
+    = stylesheet_link_tag "darkswarm/all"
+    = javascript_include_tag "darkswarm/all"
+
+
+    = render "layouts/bugherd_script"
+    = csrf_meta_tags
+
+  %body.off-canvas{"ng-app" => "Darkswarm", style: 'background-image: url("/assets/home/ofn_bg_1.jpg")' }
+    / [if lte IE 8]
+      = render partial: "shared/ie_warning"
+      = javascript_include_tag "iehack"
+
+    = inject_json "user", "current_user"
+
+    .off-canvas-wrap{offcanvas: true}
+      .inner-wrap
+
+        %section{ role: "main" }
+          = yield
+
+          #footer
+    %loading

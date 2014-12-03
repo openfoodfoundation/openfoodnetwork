@@ -27,18 +27,18 @@ module Spree
         product.should_not be_valid
       end
 
-      it "defaults available_on to now" do
-        Timecop.freeze
-        product = Product.new
-        product.available_on.should == Time.now
-      end
-
       it "does not save when master is invalid" do
         s = create(:supplier_enterprise)
         t = create(:taxon)
         product = Product.new supplier_id: s.id, name: "Apples", price: 1, primary_taxon_id: t.id
         product.on_hand = "10,000"
         product.save.should be_false
+      end
+
+      it "defaults available_on to now" do
+        Timecop.freeze
+        product = Product.new
+        product.available_on.should == Time.now
       end
 
       context "when the product has variants" do
@@ -359,8 +359,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
         p1.should be_in_distributor d1
         p1.should_not be_in_distributor d2
@@ -371,8 +371,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
+        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
         p1.should be_in_order_cycle oc1
         p1.should_not be_in_order_cycle oc2

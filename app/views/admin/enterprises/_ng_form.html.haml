@@ -1,9 +1,11 @@
-= admin_inject_enterprise
-= admin_inject_payment_methods
-= admin_inject_shipping_methods
-
-.sixteen.columns.alpha{ ng: { app: 'admin.enterprises', controller: 'enterpriseCtrl' } }
-  .twelve.columns.alpha
-    = render 'form', f: f
-  .four.columns.omega
-    = render 'sidebar', f: f
+= form_for [main_app, :admin, @enterprise], html: { name: "enterprise", "ng-app" => 'admin.enterprises', "ng-submit" => "navClear()", "ng-controller" => 'enterpriseCtrl' , "nav-check" => '', "nav-callback" => 'enterpriseNavCallback()' } do |f|
+  .row
+    .sixteen.columns.alpha
+      .eleven.columns.alpha.fullwidth_inputs
+        = render 'form', f: f
+      .one.column &nbsp;
+      .four.columns.omega
+        = render 'sidebar', f: f
+  .row
+    .twelve.columns.alpha
+      = render partial: "spree/admin/shared/#{action}_resource_links"

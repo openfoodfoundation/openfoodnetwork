@@ -2,7 +2,7 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
   new class EnterpriseRelationships
     create_errors: ""
     all_permissions: [
-      'add_products_to_order_cycle'
+      'add_to_order_cycle'
       'manage_products'
     ]
 
@@ -24,5 +24,5 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
 
     permission_presentation: (permission) ->
       switch permission
-        when "add_products_to_order_cycle" then "can add products to order cycle from"
-        when "manage_products" then "can manage the products of"
+        when "add_to_order_cycle" then "to add to order cycle"
+        when "manage_products" then "to manage products"

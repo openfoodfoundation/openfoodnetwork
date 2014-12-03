@@ -48,6 +48,9 @@ small, .small
 .turquoise
   color: $clr-turquoise
 
+.brick
+  color: $clr-brick
+
 @mixin avenir
   font-family: "AvenirBla_IE", "AvenirBla"
 
@@ -55,8 +58,8 @@ h1, h2, h3, h4, h5, h6, .avenir
   @include avenir
   padding: 0px
 
-ul.bullet-list
-  margin: 0
+ul.bullet-list, ul.check-list
+  margin: 0 0 0 1.25em !important
   li
     list-style: none
     line-height: 1.5
@@ -64,12 +67,16 @@ ul.bullet-list
   li:before
     content: "\e609"
     font-family: "OFN"
+    margin-left: -1.25em
     display: inline-block
     font-weight: normal
     font-style: normal
     font-variant: normal
     text-transform: none
-    
+
+ul.check-list
+  li:before
+    content: "\e632"
 
 .light-grey
   color: #666666

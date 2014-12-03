@@ -1,0 +1,49 @@
+.container#registration-social
+  %ng-include{ src: "'registration/steps.html'" }
+
+  .row
+    .small-12.columns
+      %header
+        %h2 Final step!
+        %h5 
+          How can people find 
+          %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
+            {{ enterprise.name }}
+          online?
+
+  %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
+    .row.content
+      .small-12.large-7.columns
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_website' } Website:
+              %input.chunky{ id: 'enterprise_website', placeholder: "eg. openfoodnetwork.org.au", ng: { model: 'enterprise.website' } }
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_facebook' } Facebook:
+              %input.chunky{ id: 'enterprise_facebook', placeholder: "eg. www.facebook.com/PageNameHere", ng: { model: 'enterprise.facebook' } }
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_linkedin' } LinkedIn:
+              %input.chunky{ id: 'enterprise_linkedin', placeholder: "eg. www.linkedin.com/YourNameHere", ng: { model: 'enterprise.linkedin' } }
+      .small-12.large-5.columns
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_twitter' } Twitter:
+              %input.chunky{ id: 'enterprise_twitter', placeholder: "eg. @twitter_handle", ng: { model: 'enterprise.twitter' } }
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_instagram' } Instagram:
+              %input.chunky{ id: 'enterprise_instagram', placeholder: "eg. @instagram_handle", ng: { model: 'enterprise.instagram' } }
+
+    .row.buttons
+      .small-12.columns
+        %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('images')" } }
+        %input.button.primary.right{ type: "submit", value: "Continue" }
+
+

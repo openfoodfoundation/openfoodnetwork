@@ -1,0 +1,67 @@
+%h3
+  = "Welcome, #{@enterprise.contact}!"
+%p.lead
+  Congratulations,
+  %strong
+    %strong= @enterprise.name
+  = "is now part of #{ Spree::Config.site_name }!"
+/ Heading Panel
+%p
+  Please find below all the details for viewing and editing your enterprise on
+  %strong= "#{ Spree::Config.site_name }."
+  We suggest keeping this email and information somewhere safe. Logging in with the account details below will allow complete access to your products and services.
+
+-#%p &nbsp;
+
+-# %p.callout
+-#   %strong
+-#     Your enterprise details
+-# %table{:width => "100%"}
+-#   %tr
+-#     %td{:align => "right"}
+-#       %strong
+-#         Shop URL
+-#     %td &nbsp;
+-#     %td
+-#       %a{:href => "#{ main_app.shop_enterprise_url(@enterprise) }", :target => "_blank"}
+-#         = main_app.shop_enterprise_url(@enterprise)
+-#   %tr
+-#     %td &nbsp;
+-#   %tr
+-#     %td{:align => "right"}
+-#       %strong
+-#         Email
+-#     %td &nbsp;
+-#     %td
+-#       %a{:href => "mailto:#{ @enterprise.email }", :target => "_blank"}
+-#         = @enterprise.email
+
+%p &nbsp;
+%p
+  Log into
+  %strong= "#{ Spree::Config.site_name } Admin"
+  in order to edit your enterprise details such as website and social media links, or to start adding products to your enterprise!
+
+%p.callout
+  %strong
+    OFN Admin
+%table{ :width => "100%"}
+  %tr
+    %td{:align => "right"}
+      %strong
+        Admin
+    %td &nbsp;
+    %td
+      %a{:href => "#{ spree.admin_url }", :target => "_blank"}
+        = spree.admin_url
+
+%p &nbsp;
+/ /Heading Panel
+%p
+  We're so pleased to have you as a valued member of
+  %strong= "#{Spree::Config.site_name}!"
+  Don't hestitate to get in touch if you have any questions.
+
+= render 'shared/mailers/signoff'
+
+= render 'shared/mailers/social_and_contact'

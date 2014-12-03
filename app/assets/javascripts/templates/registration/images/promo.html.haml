@@ -1,0 +1,43 @@
+.small-12.medium-12.large-12.columns
+  .row
+    .small-12.columns.center
+      %h4
+        Step 3. Select Promo Image
+  .row
+    .small-12.medium-12.large-5.columns.center
+      .row
+        .small-12.columns.center
+          %span.small
+            Tip: Shown as a banner, preferred size is 1200&times;260px
+      .row.pad-top
+        .small-12.columns
+          .image-select.small-12.columns
+            %label.small-12.columns.button{ for: 'image-select' } Choose a promo image
+            %input#image-select{ type: 'file', hidden: true, 'nv-file-select' => true, uploader: "imageUploader", options: '{ alias: imageStep }' }
+    .large-2.columns
+      %span#or.horizontal.large-12.columns
+        OR
+    .large-5.columns
+      #image-over{ 'nv-file-over' => true, uploader: "imageUploader" }
+        Drag and drop your promo here
+.small-12.medium-12.large-12.columns.pad-top
+  .row
+    .small-12.columns.center
+      %h4
+        Step 4. Review Your Promo Banner
+  .row
+    .small-12.columns.center
+      .row
+        .small-12.columns.center
+          %span.small
+            Tip: for best results, your promo image should fill the available space
+      .row.pad-top
+        .small-12.columns.center
+          #image-placeholder.promo
+            %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
+            .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
+              Your logo will appear here for review once uploaded
+            .loading{ ng: { hide: "!imageUploader.isUploading" } }
+              %img.spinner{ src: "/assets/loading.gif" }
+              %br/
+              Uploading...

@@ -65,7 +65,7 @@ feature %q{
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
-    distributor = create(:distributor_enterprise, name: 'My distributor')
+    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
 
     # And some enterprise fees
     supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
@@ -131,16 +131,16 @@ feature %q{
     page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And it should have some fees
-    OrderCycle.last.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
-    OrderCycle.last.coordinator_fees.should                         == [coordinator_fee]
-    OrderCycle.last.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
+    oc = OrderCycle.last
+    oc.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
+    oc.coordinator_fees.should                         == [coordinator_fee]
+    oc.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
 
     # And it should have some variants selected
-    OrderCycle.last.exchanges.first.variants.count.should == 2
-    OrderCycle.last.exchanges.last.variants.count.should == 2
+    oc.exchanges.first.variants.count.should == 2
+    oc.exchanges.last.variants.count.should == 2
 
     # And my pickup time and instructions should have been saved
-    oc = OrderCycle.last
     exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
@@ -247,7 +247,7 @@ feature %q{
     # And a coordinating, supplying and distributing enterprise with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
-    distributor = create(:distributor_enterprise, name: 'My distributor')
+    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
     product = create(:product, supplier: supplier)
     v1 = create(:variant, product: product)
     v2 = create(:variant, product: product)
@@ -360,9 +360,9 @@ feature %q{
 
   scenario "updating many order cycle opening/closing times at once" do
     # Given three order cycles
-    oc1 = create(:order_cycle)
-    oc2 = create(:order_cycle)
-    oc3 = create(:order_cycle)
+    oc1 = create(:simple_order_cycle)
+    oc2 = create(:simple_order_cycle)
+    oc3 = create(:simple_order_cycle)
 
     # When I go to the order cycles page
     login_to_admin_section
@@ -394,7 +394,7 @@ feature %q{
 
   scenario "cloning an order cycle" do
     # Given an order cycle
-    oc = create(:order_cycle)
+    oc = create(:simple_order_cycle)
 
     # When I clone it
     login_to_admin_section
@@ -434,38 +434,82 @@ feature %q{
   end
 
 
+  describe "ensuring that hubs in order cycles have valid shipping and payment methods" do
+    context "when they don't" do
+      let(:hub) { create(:distributor_enterprise) }
+      let!(:oc) { create(:simple_order_cycle, distributors: [hub]) }
+
+      it "displays a warning on the dashboard" do
+        login_to_admin_section
+        page.should have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+      end
+
+      it "displays a warning on the order cycles screen" do
+        login_to_admin_section
+        visit admin_order_cycles_path
+        page.should have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+      end
+    end
+
+    context "when they do" do
+      let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+      let!(:oc) { create(:simple_order_cycle, distributors: [hub]) }
+
+      it "does not display the warning on the dashboard" do
+        login_to_admin_section
+        page.should_not have_content "does not have valid shipping and payment methods"
+      end
+    end
+  end
+
   context "as an enterprise user" do
 
-    let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
-    let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
-    let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
-    let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
-    let!(:distributor1_fee) { create(:enterprise_fee, enterprise: distributor1, name: 'First Distributor Fee') }
-    before(:each) do
-      product = create(:product, supplier: supplier1)
-      product.distributors << distributor1
-      product.save!
+    let!(:supplier_managed) { create(:supplier_enterprise, name: 'Managed supplier') }
+    let!(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Unmanaged supplier') }
+    let!(:supplier_permitted) { create(:supplier_enterprise, name: 'Permitted supplier') }
+    let!(:distributor_managed) { create(:distributor_enterprise, name: 'Managed distributor') }
+    let!(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Unmanaged Distributor') }
+    let!(:distributor_permitted) { create(:distributor_enterprise, name: 'Permitted distributor') }
+    let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
+    let!(:shipping_method) { create(:shipping_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
+    let!(:payment_method) { create(:payment_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
 
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed,
+             permissions_list: [:add_to_order_cycle])
+    end
+    let!(:distributor_permitted_relationship) do
+      create(:enterprise_relationship, parent: distributor_permitted, child: distributor_managed,
+             permissions_list: [:add_to_order_cycle])
+    end
+    let!(:product_managed) { create(:product, supplier: supplier_managed) }
+    let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
+
+    before do
       @new_user = create_enterprise_user
-      @new_user.enterprise_roles.build(enterprise: supplier1).save
-      @new_user.enterprise_roles.build(enterprise: distributor1).save
+      @new_user.enterprise_roles.build(enterprise: supplier_managed).save
+      @new_user.enterprise_roles.build(enterprise: distributor_managed).save
 
       login_to_admin_as @new_user
     end
 
     scenario "viewing a list of order cycles I am coordinating" do
-      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
-      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
+      oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
+      oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier_unmanaged, name: 'Order Cycle 2' } )
 
       click_link "Order Cycles"
 
       # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
+      
+      # The order cycle should show enterprises that I manage
+      page.should have_selector 'td.suppliers',    text: supplier_managed.name
+      page.should have_selector 'td.distributors', text: distributor_managed.name
 
       # The order cycle should not show enterprises that I don't manage
-      page.should_not have_selector 'td.suppliers',    text: supplier2.name
-      page.should_not have_selector 'td.distributors', text: distributor2.name
+      page.should_not have_selector 'td.suppliers',    text: supplier_unmanaged.name
+      page.should_not have_selector 'td.distributors', text: distributor_unmanaged.name
     end
 
     scenario "creating a new order cycle" do
@@ -476,57 +520,84 @@ feature %q{
       fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
       fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
 
-      select 'First Supplier', from: 'new_supplier_id'
+      select 'Managed supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
+      select 'Permitted supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
 
-      select 'First Distributor', from: 'order_cycle_coordinator_id'
-      click_button 'Add coordinator fee'
-      select 'First Distributor Fee', from: 'order_cycle_coordinator_fee_0_id'
+      select_incoming_variant supplier_managed, 0, product_managed.master
+      select_incoming_variant supplier_permitted, 1, product_permitted.master
 
-      select 'First Distributor', from: 'new_distributor_id'
+      select 'Managed distributor', from: 'order_cycle_coordinator_id'
+      click_button 'Add coordinator fee'
+      select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
+
+      select 'Managed distributor', from: 'new_distributor_id'
+      click_button 'Add distributor'
+      select 'Permitted distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
 
-      # Should only have suppliers / distributors listed which the user can manage
-      within "#new_supplier_id" do
-        page.should_not have_content supplier2.name
-      end
-      within "#new_distributor_id" do
-        page.should_not have_content distributor2.name
-      end
-      within "#order_cycle_coordinator_id" do
-        page.should_not have_content distributor2.name
-        page.should_not have_content supplier1.name
-        page.should_not have_content supplier2.name
+      # Should only have suppliers / distributors listed which the user is managing or
+      # has E2E permission to add products to order cycles
+      page.should_not have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
+      page.should_not have_select 'new_distributor_id', with_options: [distributor_unmanaged.name]
+
+      [distributor_unmanaged.name, supplier_managed.name, supplier_unmanaged.name].each do |enterprise_name|
+        page.should_not have_select 'order_cycle_coordinator_id', with_options: [enterprise_name]
       end
 
       click_button 'Create'
 
       flash_message.should == "Your order cycle has been created."
       order_cycle = OrderCycle.find_by_name('My order cycle')
-      order_cycle.coordinator.should == distributor1
+      order_cycle.suppliers.sort.should == [supplier_managed, supplier_permitted].sort
+      order_cycle.coordinator.should == distributor_managed
+      order_cycle.distributors.sort.should == [distributor_managed, distributor_permitted].sort
     end
 
-    scenario "editing an order cycle" do
-      oc = create(:simple_order_cycle, { suppliers: [supplier1, supplier2], coordinator: supplier1, distributors: [distributor1, distributor2], name: 'Order Cycle 1' } )
+    scenario "editing an order cycle does not affect exchanges we don't manage" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
       visit edit_admin_order_cycle_path(oc)
 
-      # I should not see exchanges for supplier2 or distributor2
-      page.all('tr.supplier').count.should == 1
-      page.all('tr.distributor').count.should == 1
+      # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
+      page.all('tr.supplier').count.should == 2
+      page.all('tr.distributor').count.should == 2
 
       # When I save, then those exchanges should remain
       click_button 'Update'
       page.should have_content "Your order cycle has been updated."
 
       oc.reload
-      oc.suppliers.sort.should == [supplier1, supplier2]
-      oc.coordinator.should == supplier1
-      oc.distributors.sort.should == [distributor1, distributor2]
+      oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
+      oc.coordinator.should == supplier_managed
+      oc.distributors.sort.should == [distributor_managed, distributor_permitted, distributor_unmanaged].sort
     end
 
+    scenario "editing an order cycle" do
+      oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: supplier_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+
+      visit edit_admin_order_cycle_path(oc)
+
+      # When I remove all the exchanges and save
+      page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
+      page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
+      page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+      click_button 'Update'
+
+      # Then the exchanges should be removed
+      page.should have_content "Your order cycle has been updated."
+
+      oc.reload
+      oc.suppliers.should == [supplier_unmanaged]
+      oc.coordinator.should == supplier_managed
+      oc.distributors.should == [distributor_unmanaged]
+    end
+
+
     scenario "cloning an order cycle" do
-      oc = create(:simple_order_cycle)
+      oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
       click_link "Order Cycles"
       first('a.clone-order-cycle').click
@@ -536,7 +607,170 @@ feature %q{
       occ = OrderCycle.last
       occ.name.should == "COPY OF #{oc.name}"
     end
-
   end
 
+
+  describe "simplified interface for enterprise users selling only their own produce" do
+    let(:user) { create_enterprise_user }
+    let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
+    let!(:p1) { create(:simple_product, supplier: enterprise) }
+    let!(:p2) { create(:simple_product, supplier: enterprise) }
+    let!(:p3) { create(:simple_product, supplier: enterprise) }
+    let!(:v) { create(:variant, product: p3) }
+    let!(:fee) { create(:enterprise_fee, enterprise: enterprise, name: 'Coord fee') }
+
+    before do
+      user.enterprise_roles.create! enterprise: enterprise
+      login_to_admin_as user
+    end
+
+    it "shows me an index of order cycles without enterprise columns" do
+      create(:simple_order_cycle, coordinator: enterprise)
+      visit admin_order_cycles_path
+      page.should_not have_selector 'th', text: 'SUPPLIERS'
+      page.should_not have_selector 'th', text: 'COORDINATOR'
+      page.should_not have_selector 'th', text: 'DISTRIBUTORS'
+    end
+
+    it "creates order cycles", js: true do
+      # When I go to the new order cycle page
+      visit admin_order_cycles_path
+      click_link 'New Order Cycle'
+
+      # And I fill in the basic fields
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
+      # Then my products / variants should already be selected
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # When I unselect a product
+      uncheck "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+
+      # And I add a fee and save
+      click_button 'Add coordinator fee'
+      click_button 'Add coordinator fee'
+      click_link 'order_cycle_coordinator_fee_1_remove'
+      page.should     have_select 'order_cycle_coordinator_fee_0_id'
+      page.should_not have_select 'order_cycle_coordinator_fee_1_id'
+
+      select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
+      click_button 'Create'
+
+      # Then my order cycle should have been created
+      page.should have_content 'Your order cycle has been created.'
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
+
+      # And it should have some variants selected
+      oc = OrderCycle.last
+      oc.exchanges.incoming.first.variants.count.should == 2
+      oc.exchanges.outgoing.first.variants.count.should == 2
+
+      # And it should have the fee
+      oc.coordinator_fees.should == [fee]
+
+      # And my pickup time and instructions should have been saved
+      ex = oc.exchanges.outgoing.first
+      ex.pickup_time.should == 'pickup time'
+      ex.pickup_instructions.should == 'pickup instructions'
+    end
+
+    scenario "editing an order cycle" do
+      # Given an order cycle with pickup time and instructions
+      fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee])
+      ex = oc.exchanges.outgoing.first
+      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+
+      # When I edit it
+      login_to_admin_section
+      click_link 'Order Cycles'
+      click_link oc.name
+      wait_until { page.find('#order_cycle_name').value.present? }
+
+      # Then I should see the basic settings
+      page.should have_field 'order_cycle_name', with: oc.name
+      page.should have_field 'order_cycle_orders_open_at', with: oc.orders_open_at.to_s
+      page.should have_field 'order_cycle_orders_close_at', with: oc.orders_close_at.to_s
+      page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+
+      # And I should see the products
+      page.should have_checked_field   "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # And I should see the coordinator fees
+      page.should have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
+    end
+
+    scenario "updating an order cycle" do
+      # Given an order cycle with pickup time and instructions
+      fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
+      fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee1])
+      ex = oc.exchanges.outgoing.first
+      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+
+      # When I edit it
+      login_to_admin_section
+      visit edit_admin_order_cycle_path oc
+      wait_until { page.find('#order_cycle_name').value.present? }
+
+      # And I fill in the basic fields
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'xy'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
+
+      # And I make some product selections
+      uncheck "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v.id}"
+
+      # And I select some fees and update
+      click_link 'order_cycle_coordinator_fee_0_remove'
+      page.should_not have_select 'order_cycle_coordinator_fee_0_id'
+      click_button 'Add coordinator fee'
+      select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
+
+      click_button 'Update'
+
+      # Then my order cycle should have been updated
+      page.should have_content 'Your order cycle has been updated.'
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
+
+      # And it should have a variant selected
+      oc = OrderCycle.last
+      oc.exchanges.incoming.first.variants.should == [p2.master]
+      oc.exchanges.outgoing.first.variants.should == [p2.master]
+
+      # And it should have the fee
+      oc.coordinator_fees.should == [fee2]
+
+      # And my pickup time and instructions should have been saved
+      ex = oc.exchanges.outgoing.first
+      ex.pickup_time.should == 'xy'
+      ex.pickup_instructions.should == 'zzy'
+    end
+  end
+
+
+  private
+
+  def select_incoming_variant(supplier, exchange_no, variant)
+    page.find("table.exchanges tr.supplier-#{supplier.id} td.products input").click
+    check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
+  end
 end

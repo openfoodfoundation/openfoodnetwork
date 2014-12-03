@@ -1,12 +1,20 @@
-.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open()}"}
+.row.active_table_row{"ng-click" => "toggle()", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
   .columns.small-12.medium-4.large-4.skinny-head
-    %i.ofn-i_036-producers
-    %strong {{ producer.name }}
+    %span{"bo-if" => "producer.is_distributor" }
+      %a.is_distributor{"bo-href" => "producer.path" } 
+        %i{ng: {class: "producer.producer_icon_font"}}
+        %span.margin-top 
+          %strong {{ producer.name }}
+    %span.producer-name{"bo-if" => "!producer.is_distributor" }
+      %i{ng: {class: "producer.producer_icon_font"}}
+      %span.margin-top 
+        %strong {{ producer.name }}
+
+        
   .columns.small-6.medium-3.large-3
-    {{ producer.address.city }}
+    %span.margin-top {{ producer.address.city }}
   .columns.small-4.medium-3.large-4
-    {{ producer.address.state_name | uppercase }}
+    %span.margin-top {{ producer.address.state_name | uppercase }}
   .columns.small-2.medium-2.large-1.text-right
-    / This forces line-height to be triggered
-    %span &nbsp;
-    %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+    %span.margin-top 
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}

@@ -12,5 +12,5 @@ describe "enterprise relationships", ->
     EnterpriseRelationships = _EnterpriseRelationships_
 
   it "presents permission names", ->
-    expect(EnterpriseRelationships.permission_presentation("add_products_to_order_cycle")).toEqual "can add products to order cycle from"
-    expect(EnterpriseRelationships.permission_presentation("manage_products")).toEqual "can manage the products of"
+    expect(EnterpriseRelationships.permission_presentation("add_to_order_cycle")).toEqual "to add to order cycle"
+    expect(EnterpriseRelationships.permission_presentation("manage_products")).toEqual "to manage products"

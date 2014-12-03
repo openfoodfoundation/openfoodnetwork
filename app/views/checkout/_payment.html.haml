@@ -1,7 +1,7 @@
 %fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
 
-    %h5{"ng-class" => "{valid: payment.$valid, dirty: payment.$dirty}"}
+    %h5{"ng-class" => "{valid: payment.$valid, dirty: payment.$dirty || submitted}"}
       %span.right
         %label.label.round.alert.right
           %i.ofn-i_009-close
@@ -11,34 +11,28 @@
 
     %accordion-group{"is-open" => "accordion.payment",
       "ng-class" => "{valid: payment.$valid, open: accordion.payment}"}
-      %accordion-heading
-        .row
-          .small-8.medium-10.columns
-            %em
-              %small
-                {{ Checkout.paymentMethod().name }}
-          .small-4.medium-2.columns.text-right
-            %span.accordion-up
-              %em
-                %small Hide
-              %i.ofn-i_053-point-up
-            %span.accordion-down
-              %em
-                %small Expand
-              %i.ofn-i_052-point-down
+      = render 'checkout/accordion_heading'
 
       -# TODO render this in Angular instead of server-side
       -# The problem being how to render the partials
-      - current_order.available_payment_methods.each do |method|
-        .row
-          .small-12.columns
-            %label
-              = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
-                required: true,
-                "ng-model" => "order.payment_method_id"
-              = method.name
+      .row
+        .small-6.columns
+          - current_order.available_payment_methods.each do |method|
+            .row
+              .small-12.columns
+                %label
+                  = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
+                    required: true,
+                    name: "order.payment_method_id",
+                    "ng-model" => "order.payment_method_id"
+                  = method.name
 
-        .row{"ng-if" => "order.payment_method_id == #{method.id}"}
-          .small-12.columns
-            = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
+                %small.error.medium.input-text{"ng-show" => "!fieldValid('order.payment_method_id')"}
+                  = "{{ fieldErrors('order.payment_method_id') }}"
 
+            .row{"ng-if" => "order.payment_method_id == #{method.id}"}
+              .small-12.columns
+                = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
+        .small-12.columns.medium-6.columns.large-6.columns
+          #distributor_address.panel{"ng-show" => "Checkout.paymentMethod().description"}
+            %span{ style: "white-space: pre-wrap;" }{{ Checkout.paymentMethod().description }}

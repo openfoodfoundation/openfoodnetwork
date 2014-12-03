@@ -1,5 +1,5 @@
 - enterprise_fees_color = @enterprise_fees.count > 0 ? "blue" : "red"
-.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'Enterprise.is_distributor' } }
+.sidebar_item.four.columns.alpha#enterprise_fees{ ng: { show: 'Enterprise.category != "producer_hub"' } }
   .four.columns.alpha.header{ class: "#{enterprise_fees_color}" }
     %span.four.columns.alpha.centered Enterprise Fees
   .four.columns.alpha.list{ class: "#{enterprise_fees_color}" }

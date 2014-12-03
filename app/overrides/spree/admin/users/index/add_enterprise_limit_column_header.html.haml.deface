@@ -1,0 +1,3 @@
+/ insert_before "th[data-hook='admin_users_index_header_actions']"
+
+%th= sort_link @search,:enterprise_limit, t(:enterprise_limit)

@@ -1,0 +1,9 @@
+%div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
+  %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
+
+    = render 'spree/admin/products/bulk_edit/products_head'
+
+    %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+
+      = render 'spree/admin/products/bulk_edit/products_product'
+      = render 'spree/admin/products/bulk_edit/products_variant'

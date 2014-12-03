@@ -22,13 +22,13 @@
   %tfoot#edit-cart
     %tr
       %td
-        Product 
+        Produce Subtotal
         \:
-        %span.order-total.item-total= number_to_currency @order.item_total
+        %span.order-total.item-total= display_checkout_subtotal(@order)
       %td
-        Distribution
+        Admin & Handling
         \:
-        %span.order-total.distribution-total= order_distribution_subtotal(@order)
+        %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
       %td
       %td
         = button_tag :class => 'secondary radius expand small', :id => 'update-button' do

@@ -21,11 +21,11 @@ node :promo_image do |enterprise|
 end
 
 node :icon do |e|
-  if e.is_primary_producer? and e.is_distributor?
-    image_path "map-icon-both.svg"
-  elsif e.is_primary_producer?
-    image_path "map-icon-producer.svg"
+  if e.is_primary_producer and e.is_distributor
+    image_path "map_003-producer-shop.svg"
+  elsif e.is_primary_producer
+    image_path "map_001-producer-only.svg"
   else
-    image_path "map-icon-hub.svg"
+    image_path "map_005-hub.svg"
   end
 end

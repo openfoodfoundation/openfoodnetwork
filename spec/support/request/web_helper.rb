@@ -129,6 +129,7 @@ module WebHelper
     targetted_select2(value, options)
   end
 
+  # Deprecated: Use have_select2 instead (spec/support/matchers/select2_matchers.rb)
   def have_select2_option(value, options)
     container = options[:dropdown_css] || ".select2-with-searchbox"
     page.execute_script %Q{$('#{options[:from]}').select2('open')}

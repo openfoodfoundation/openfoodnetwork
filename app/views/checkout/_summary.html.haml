@@ -1,32 +1,32 @@
 %orderdetails
-  = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event)"} do |f|
+  = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event, checkout)"} do |f|
     %fieldset
       %legend Your order
       %table
         %tr
           %th Cart total
-          %td.cart-total.text-right= number_to_currency checkout_cart_total_with_adjustments(current_order)
+          %td.cart-total.text-right= display_checkout_subtotal(@order)
 
-        - checkout_adjustments_for_summary(current_order, exclude: [:shipping, :distribution]).each do |adjustment|
+        - checkout_adjustments_for(current_order, exclude: [:shipping, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
           %tr
-            %th= adjustment.label 
+            %th= adjustment.label
             %td.text-right= adjustment.display_amount.to_html
 
         %tr
           %th Shipping
-          %td.shipping.text-right {{ Checkout.shippingPrice() | currency }}
+          %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
 
         %tr
-          %th Total 
-          %td.total.text-right {{ Checkout.cartTotal() | currency }}
+          %th Total
+          %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
         - if current_order.price_adjustment_totals.present?
           - current_order.price_adjustment_totals.each do |label, total|
             %tr
               %th= label
               %td= total
 
-      //= f.submit "Purchase", class: "button", "ng-disabled" => "checkout.$invalid", "ofn-focus" => "accordion['payment']"
-      %a.button.secondary{href: cart_url} 
+      //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
+      %a.button.secondary{href: cart_url}
         %i.ofn-i_008-caret-left
         Back to Cart
 

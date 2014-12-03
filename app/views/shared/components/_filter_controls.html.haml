@@ -1,10 +1,9 @@
-.row
-  .small-12.columns
-    %a.button.success.tiny.filterbtn{"ng-click" => "filtersActive = !filtersActive",
-    "ng-show" => "FilterSelectorsService.selectors.length > 0"}
-      {{ filterText(filtersActive) }}
-      %i.ofn-i_005-caret-down{"ng-show" => "!filtersActive"}
-      %i.ofn-i_006-caret-up{"ng-show" => "filtersActive"}
+.small-12.medium-6.columns
+  %a.button.success.tiny.filterbtn{"ng-click" => "filtersActive = !filtersActive",
+  "ng-show" => "FilterSelectorsService.selectors.length > 0"}
+    {{ filterText(filtersActive) }}
+    %i.ofn-i_005-caret-down{"ng-show" => "!filtersActive"}
+    %i.ofn-i_006-caret-up{"ng-show" => "filtersActive"}
 
-    %a.button.secondary.tiny.filterbtn.disabled{"ng-show" => "FilterSelectorsService.selectors.length == 0"}
-      No filters
+  %a.button.secondary.tiny.filterbtn.disabled{"ng-show" => "FilterSelectorsService.selectors.length == 0"}
+    No filters

@@ -1,0 +1,45 @@
+.row
+  .small-12.columns
+    %header
+      %h2 Hi there!
+      %h4
+        %small
+          %i.ofn-i_040-hub
+        Create your enterprise profile
+    .hide-for-large-up
+      %hr
+      %input.button.small.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } } 
+    %hr 
+
+.row{ 'data-equalizer' => true }
+  .small-12.medium-12.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
+    %h5 You'll need:
+    %ul.check-list
+      %li 
+        5-10 minutes
+      %li 
+        Enterprise address
+      %li 
+        Primary contact details
+      %li 
+        Your logo image
+      %li 
+        Landscape image for your profile  
+      %li 
+        'About Us' text
+
+  .small-9.medium-8.large-5.columns.pad-top.end{ 'data-equalizer-watch' => true}
+    %h5
+      What do I get?
+    %p 
+      Your profile helps people
+      %strong find 
+      and 
+      %strong contact 
+      you on the Open Food Network. 
+    %p Use this space to tell the story of your enterprise, to help drive connections to your social and online presence. 
+
+.row.show-for-large-up
+  .small-12.columns
+    %hr
+    %input.button.primary.right{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } }

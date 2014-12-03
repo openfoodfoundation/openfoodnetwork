@@ -6,7 +6,7 @@
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           {{taxon.name}} 
-    %div{"bo-if" => "!hub.taxons"}
+    %div.show-for-medium-up{"bo-if" => "hub.taxons.length==0"}
       &nbsp;
   .columns.small-12.medium-3.large-2.fat
     %div{"bo-if" => "hub.pickup || hub.delivery"}
@@ -23,9 +23,9 @@
       %label Our producers
       %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2
         %li{"ng-repeat" => "enterprise in hub.producers"}
-          %producer-modal
+          %enterprise-modal
             %i.ofn-i_036-producers
             %span
               {{ enterprise.name }}
-    %div{"bo-if" => "!hub.producers"}
+    %div.show-for-medium-up{"bo-if" => "hub.producers.length==0"}
       &nbsp;

@@ -1,40 +1,22 @@
 = inject_enterprises 
-#hubs.hubs{"ng-controller" => "HubsCtrl"}
+#hubs.hubs{"ng-controller" => "EnterprisesCtrl"}
   .row
     .small-12.columns
-      %h1 Find hubs in your area...
-      / %div 
-      /   Shop a 
-      /   %ofn-modal{title: "food hub"}
-      /     = render partial: "modals/food_hub"
-      /   from the list below:
+      %h1 Shop in your local area
 
-  #active-table-search.row.pad-top
-    .small-12.columns
-      / %i.ofn-i_020-search
-      %input{type: :text, 
-      "ng-model" => "query", 
-      placeholder: "Search by Hub or Suburb name",
-      "ng-debounce" => "150",
-      "ofn-disable-enter" => true}
-
+  = render partial: "shared/components/enterprise_search"
   = render partial: "home/filters"
 
   .row{bindonce: true}
     .small-12.columns
       .active_table
-        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredHubs = (hubs | hubs:query  | taxons:activeTaxons | shipping:shippingTypes)",
-        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+        "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
         "scroll-after-load" => true,
         "ng-controller" => "HubNodeCtrl",
-        id: "{{hub.hash}}"} 
+        id: "{{hub.hash}}"}
           .small-12.columns
             = render partial: 'home/skinny'
             = render partial: 'home/fat'
 
-        .row{"ng-show" => "filteredHubs.length == 0"}
-          .columns.small-12
-            %p.no-results
-              Sorry, no results found for
-              %strong {{query}}.
-              Try another search?
+        = render partial: 'shared/components/enterprise_no_results'

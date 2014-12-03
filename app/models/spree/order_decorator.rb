@@ -21,7 +21,7 @@ Spree::Order.class_eval do
     go_to_state :delivery
     go_to_state :payment, :if => lambda { |order|
       # Fix for #2191
-      if order.shipping_method.andand.require_ship_address and 
+      if order.shipping_method.andand.require_ship_address and
         if order.ship_address.andand.valid?
           order.create_shipment!
           order.update_totals
@@ -76,10 +76,10 @@ Spree::Order.class_eval do
       errors.add(:distributor_id, "cannot supply the products in your cart") unless DistributionChangeValidator.new(self).can_change_to_distributor?(distributor)
     end
   end
-  
+
   def empty_with_clear_shipping_and_payments!
     empty_without_clear_shipping_and_payments!
-    payments.clear 
+    payments.clear
     update_attributes(shipping_method_id: nil)
   end
   alias_method_chain :empty!, :clear_shipping_and_payments
@@ -97,8 +97,20 @@ Spree::Order.class_eval do
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     current_item = find_line_item_by_variant(variant)
     if current_item
-      current_item.quantity += quantity
-      current_item.max_quantity += max_quantity.to_i
+      Bugsnag.notify(RuntimeError.new("Order populator weirdness"), {
+        current_item: current_item.as_json,
+        line_items: line_items.map(&:id),
+        reloaded: line_items(:reload).map(&:id),
+        variant: variant.as_json
+      })
+      current_item.quantity = quantity
+      current_item.max_quantity = max_quantity
+
+      # This is the original behaviour, behaviour above is so that we can resolve the order populator bug
+      # current_item.quantity ||= 0
+      # current_item.max_quantity ||= 0
+      # current_item.quantity += quantity.to_i
+      # current_item.max_quantity += max_quantity.to_i
       current_item.currency = currency unless currency.nil?
       current_item.save
     else
@@ -170,13 +182,25 @@ Spree::Order.class_eval do
 
   # Show payment methods for this distributor
   def available_payment_methods
-    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm| 
+    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm|
       (self.distributor && (pm.distributors.include? self.distributor))
     end
   end
 
   def available_shipping_methods(display_on = nil)
     Spree::ShippingMethod.all_available(self, display_on)
+  end
+
+  # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
+  def deliver_order_confirmation_email
+    begin
+      Spree::OrderMailer.confirm_email_for_customer(self.id).deliver
+      Spree::OrderMailer.confirm_email_for_shop(self.id).deliver
+    rescue Exception => e
+      Bugsnag.notify(e)
+      logger.error("#{e.class.name}: #{e.message}")
+      logger.error(e.backtrace * "\n")
+    end
   end
 
 

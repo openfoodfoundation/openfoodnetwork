@@ -32,6 +32,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_hub_ready_for_checkout
+    # This condition is more rigourous than required by development to avoid coupling this
+    # condition to every controller spec
+    if current_distributor && current_order &&
+        current_distributor.respond_to?(:ready_for_checkout?) &&
+        !current_distributor.ready_for_checkout?
+
+      current_order.empty!
+      current_order.set_distribution! nil, nil
+      flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."
+      redirect_to root_url
+    end
+  end
+
   def check_order_cycle_expiry
     if current_order_cycle.andand.closed?
       session[:expired_order_cycle_id] = current_order_cycle.id

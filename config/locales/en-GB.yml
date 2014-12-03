@@ -1,0 +1,23 @@
+# Localization file for British English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en-GB:
+  activerecord:
+    errors:
+      models:
+        spree/user:
+          attributes:
+            password:
+              confirmation: you have successfully registered
+              too_short: pick a longer name
+  devise:
+    failure:
+      invalid: |
+        Invalid email or password.
+        Were you a guest last time?  Perhaps you need to create an account or reset your password.
+  home: "OFN"
+
+  welcome_to: 'Welcome to '
+  search_by_name: Search by name...
+  producers: UK Producers
+  producers_join: UK producers are now welcome to join Open Food Network UK.

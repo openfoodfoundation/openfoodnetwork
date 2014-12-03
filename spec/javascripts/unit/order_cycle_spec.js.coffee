@@ -38,7 +38,7 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
-      module('order_cycle')
+      module('admin.order_cycles')
       inject ($controller) ->
         ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
@@ -198,7 +198,7 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
-      module('order_cycle')
+      module('admin.order_cycles')
       inject ($controller) ->
         ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
@@ -323,11 +323,11 @@ describe 'OrderCycle services', ->
     Enterprise = null
 
     beforeEach ->
-      module 'order_cycle'
+      module 'admin.order_cycles'
       inject ($injector, _$httpBackend_)->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
-        $httpBackend.whenGET('/admin/enterprises.json').respond [
+        $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
           {id: 1, name: 'One', supplied_products: [1, 2]}
           {id: 2, name: 'Two', supplied_products: [3, 4]}
           {id: 3, name: 'Three', supplied_products: [5, 6]}
@@ -389,7 +389,7 @@ describe 'OrderCycle services', ->
     EnterpriseFee = null
 
     beforeEach ->
-      module 'order_cycle'
+      module 'admin.order_cycles'
       inject ($injector, _$httpBackend_)->
         EnterpriseFee = $injector.get('EnterpriseFee')
         $httpBackend = _$httpBackend_
@@ -431,7 +431,7 @@ describe 'OrderCycle services', ->
     beforeEach ->
       $window = {navigator: {userAgent: 'foo'}}
 
-      module 'order_cycle', ($provide)->
+      module 'admin.order_cycles', ($provide)->
         $provide.value('$window', $window)
         null
 
@@ -516,30 +516,44 @@ describe 'OrderCycle services', ->
         ]
 
     describe 'removing exchanges', ->
-      it 'removes incoming exchanges', ->
-        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
-        OrderCycle.order_cycle.incoming_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+      exchange = null
 
-      it 'removes outgoing exchanges', ->
-        exchange = {enterprise_id: '123', active: true, variants: {}, enterprise_fees: []}
-        OrderCycle.order_cycle.outgoing_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
-
-      it 'removes distribution of all exchange variants', ->
+      beforeEach ->
         spyOn(OrderCycle, 'removeDistributionOfVariant')
         exchange =
           enterprise_id: '123'
           active: true
+          incoming: false
           variants: {1: true, 2: false, 3: true}
           enterprise_fees: []
-        OrderCycle.order_cycle.incoming_exchanges = [exchange]
-        OrderCycle.removeExchange(exchange)
-        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('1')
-        expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalledWith('2')
-        expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('3')
+    
+      describe "removing incoming exchanges", ->
+        beforeEach ->
+          exchange.incoming = true
+          OrderCycle.order_cycle.incoming_exchanges = [exchange]
+
+        it 'removes the exchange', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+
+        it 'removes distribution of all exchange variants', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('1')
+          expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalledWith('2')
+          expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('3')
+
+      describe "removing outgoing exchanges", ->
+        beforeEach ->
+          exchange.incoming = false
+          OrderCycle.order_cycle.outgoing_exchanges = [exchange]
+
+        it 'removes the exchange', ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
+
+        it "does not remove distribution of any variants", ->
+          OrderCycle.removeExchange(exchange)
+          expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalled()
 
     it 'adds coordinator fees', ->
       OrderCycle.addCoordinatorFee()

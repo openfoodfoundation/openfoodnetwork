@@ -1,6 +1,7 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer",
-  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey"
+  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey) ->
+    $scope.loading = true
 
     $scope.initialiseVariables = ->
       start = daysFromToday -7
@@ -32,14 +33,14 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
 
-    $scope.initialise = (spree_api_key) ->
+    $scope.initialise = ->
       $scope.initialiseVariables()
       authorise_api_reponse = ""
-      dataFetcher("/api/users/authorise_api?token=" + spree_api_key).then (data) ->
+      dataFetcher("/api/users/authorise_api?token=" + SpreeApiKey).then (data) ->
         authorise_api_reponse = data
         $scope.spree_api_key_ok = data.hasOwnProperty("success") and data["success"] == "Use of API Authorised"
         if $scope.spree_api_key_ok
-          $http.defaults.headers.common["X-Spree-Token"] = spree_api_key
+          $http.defaults.headers.common["X-Spree-Token"] = SpreeApiKey
           dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             $scope.suppliers.unshift blankOption()

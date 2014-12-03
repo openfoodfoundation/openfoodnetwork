@@ -22,4 +22,24 @@ Spree::LineItem.class_eval do
     joins(:product).
     where('spree_products.supplier_id IN (?)', enterprises)
   }
+
+  def price_with_adjustments
+    # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
+    # so line_item.adjustments returns an empty array
+    price + order.adjustments.where(source_id: id).sum(&:amount) / quantity
+  end
+
+  def single_display_amount_with_adjustments
+    Spree::Money.new(price_with_adjustments, { :currency => currency })
+  end
+
+  def amount_with_adjustments
+    # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
+    # so line_item.adjustments returns an empty array
+    amount + order.adjustments.where(source_id: id).sum(&:amount)
+  end
+
+  def display_amount_with_adjustments
+    Spree::Money.new(amount_with_adjustments, { :currency => currency })
+  end
 end

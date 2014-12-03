@@ -22,5 +22,9 @@
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
+//= require ./utils/utils
+//= require ./users/users
+//= require textAngular.min.js
+//= require textAngular-sanitize.min.js
 
 //= require_tree .

@@ -2,25 +2,34 @@
   Enterprises
 
 - content_for :page_actions do
-  %li#new_product_link
-    = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
+  - if spree_current_user.can_own_more_enterprises?
+    %li#new_product_link
+      = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
 
 = render 'admin/shared/enterprises_sub_menu'
 
-= form_for @enterprise_set, :url => main_app.bulk_update_admin_enterprises_path do |f|
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_set }
+
+= form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   %table#listing_enterprises.index
     %colgroup
-      %col{style: "width: 20%;"}/
-      %col{style: "width: 10%;"}/
+      %col{style: "width: 25%;"}/
+      %col{style: "width: 15%;"}/
       %col{style: "width: 5%;"}/
-      %col/
-      %col{style: "width: 20%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 12%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 18%;"}/
+      %col{style: "width: 25%;"}/
     %thead
       %tr{"data-hook" => "enterprises_header"}
         %th Name
         %th Role
+        - if spree_current_user.admin?
+          %th Sells
         %th Visible?
-        %th Description
+        - if spree_current_user.admin?
+          %th Owner
         %th
     %tbody
       = f.fields_for :collection do |enterprise_form|
@@ -28,16 +37,13 @@
         %tr{class: "enterprise-#{enterprise.id}"}
           %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
-            - if enterprise.is_primary_producer && enterprise.is_distributor
-              Producer &amp; Distributor
-            - elsif enterprise.is_distributor
-              Distributor
-            - elsif enterprise.is_primary_producer
-              Producer
-            - else
-              %h1.icon-exclamation-sign.with-tip{"data-powertip" => "This enterprise does not have any roles", style: "text-align: center;color: #DA5354"}
+            = enterprise_form.check_box :is_primary_producer
+            Producer
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :sells, Enterprise::SELLS, {}, class: 'select2 fullwidth'
           %td= enterprise_form.check_box :visible
-          %td= enterprise.description
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
           %td{"data-hook" => "admin_users_index_row_actions"}
             = render 'actions', enterprise: enterprise
       - if @enterprises.empty?
