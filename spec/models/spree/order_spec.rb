@@ -330,27 +330,25 @@ describe Spree::Order do
     end
 
     describe "with payment method name" do
-      
+      let!(:o1) { create(:order) }
+      let!(:o2) { create(:order) }
+      let!(:pm1) { create(:payment_method, name: 'foo') }
+      let!(:pm2) { create(:payment_method, name: 'bar') }
+      let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
+      let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
+
       it "returns the order with payment method name" do
-        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
-        my_order = FactoryGirl.create(:order) 
-        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
-	Spree::Order.with_payment_method_name("PM Test").should include my_order
+	Spree::Order.with_payment_method_name('foo').should == [o1]
       end
      
       it "doesn't return rows with a different payment method name" do
-        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
-        my_order = FactoryGirl.create(:order) 
-        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
-        Spree::Order.with_payment_method_name("PM Test2").should_not include my_order
+        Spree::Order.with_payment_method_name('foobar').should_not include o1
+        Spree::Order.with_payment_method_name('foobar').should_not include o2
       end
   
       it "doesn't return duplicate rows" do
-        my_payment_method = FactoryGirl.create(:payment_method, :name => "PM Test") 
-        my_order = FactoryGirl.create(:order) 
-        payment1 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method) 
-        payment2 = FactoryGirl.create(:payment, :order => my_order, :payment_method => my_payment_method)
-	Spree::Order.with_payment_method_name("PM Test").length.should == 1
+        p2 = FactoryGirl.create(:payment, :order => o1, :payment_method => pm1)
+	Spree::Order.with_payment_method_name('foo').length.should == 1
       end
     end
   end
