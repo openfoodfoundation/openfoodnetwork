@@ -16,6 +16,16 @@ module WebHelper
     end
   end
 
+  def have_input(name, opts={})
+    selector  = "[name='#{name}']"
+    selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
+
+    element = page.all(selector).first
+    element.value.should == opts[:with] if element && opts.key?(:with)
+
+    have_selector selector
+  end
+
 
   def current_path_should_be path
     current_path = URI.parse(current_url).path

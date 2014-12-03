@@ -59,7 +59,8 @@ feature %q{
         it "displays the list of products with variants" do
           page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
           page.should have_table_row [producer.name, product.name, '', '']
-          page.should have_table_row ['', '1g', '1.23 -', '12 -']
+          page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
+          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", placeholder: '12'
         end
 
         it "filters the products to those the hub can add to an order cycle" do
@@ -78,7 +79,8 @@ feature %q{
         end
 
         it "product values are affected by overrides" do
-          page.should have_table_row ['', '1g', '1.23 - 77.77', '12 - 11111']
+          page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
+          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '11111', placeholder: '12'
         end
       end
     end
