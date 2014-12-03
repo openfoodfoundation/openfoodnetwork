@@ -4,6 +4,7 @@
     .alpha.eleven.columns
       .three.columns.alpha
         = f.label :name
+        %span.required *
       .eight.columns.omega
         = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
   .row
@@ -19,6 +20,7 @@
     .row
       .three.columns.alpha
         =f.label :owner_id, 'Owner'
+        %span.required *
         .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
           %a What's this?
       .eight.columns
@@ -75,6 +77,11 @@
           %a What's this?
       .eight.columns.omega
         = main_app.shop_enterprise_url(@enterprise)
+  -# redo denoting required fields in the whole project
+  .row
+    Required fields are denoted with an asterisk (
+    %span.required *
+    )
 
 
 = f.fields_for :address do |af|
@@ -83,6 +90,7 @@
     .row
       .three.columns.alpha
         = af.label :address1
+        %span.required *
       .eight.columns.omega
         = af.text_field :address1, { placeholder: "eg. 123 High Street"}
     .row
@@ -95,6 +103,7 @@
         = af.label :city, 'Suburb'
         \/
         = af.label :zipcode, 'Postcode'
+        %span.required *
       .four.columns
         = af.text_field :city, { placeholder: "eg. Northcote"}
       .four.columns.omega
@@ -104,6 +113,7 @@
         = af.label :state_id, 'State'
         \/
         = af.label :country_id, 'Country'
+        %span.required *
       .four.columns
         = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
       .four.columns.omega
@@ -125,6 +135,7 @@
     .row
       .alpha.three.columns
         = f.label :email
+        %span.required *
       .omega.eight.columns
         = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
     .row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
