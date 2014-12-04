@@ -2,6 +2,7 @@
   %div.four.columns.alpha
     %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
   %div.nine.columns
+    = render 'spree/admin/shared/status_message'
     %h6{ id: "update-status-message", ng: { style: 'StatusMessage.statusMessage.style' } }
       {{ StatusMessage.statusMessage.text || "&nbsp;" }}
   %div.three.columns.omega
