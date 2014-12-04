@@ -62,7 +62,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.resetProducts = ->
       DirtyProducts.clear()
-      StatusMessage.clearMessage()
+      StatusMessage.clear()
 
     # $scope.matchProducer = (product) ->
     #   for producer in $scope.producers
@@ -180,7 +180,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if productsToSubmit.length > 0
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
-        StatusMessage.displayMessage 'No changes to save.', 'alert'
+        StatusMessage.display 'No changes to save.', 'alert'
 
 
     $scope.updateProducts = (productsToSubmit) ->
@@ -248,23 +248,23 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
     $scope.displayUpdating = ->
-      StatusMessage.displayMessage 'Saving...', 'progress'
+      StatusMessage.display 'Saving...', 'progress'
 
 
     $scope.displaySuccess = ->
-      StatusMessage.displayMessage 'Changes saved.', 'success'
+      StatusMessage.display 'Changes saved.', 'success'
 
 
     $scope.displayFailure = (failMessage) ->
-      StatusMessage.displayMessage "Saving failed. #{failMessage}", 'failure'
+      StatusMessage.display "Saving failed. #{failMessage}", 'failure'
 
 
     $scope.displayDirtyProducts = ->
       if DirtyProducts.count() > 0
         message = if DirtyProducts.count() == 1 then "one product" else DirtyProducts.count() + " products"
-        StatusMessage.displayMessage "Changes to #{message} remain unsaved.", 'notice'
+        StatusMessage.display "Changes to #{message} remain unsaved.", 'notice'
       else
-        StatusMessage.clearMessage()
+        StatusMessage.clear()
 
 
 filterSubmitProducts = (productsToFilter) ->
