@@ -6,3 +6,14 @@ angular.module("ofn.admin").factory "VariantOverrides", (variantOverrides, Index
       for vo in variantOverrides
         @variantOverrides[vo.hub_id] ||= {}
         @variantOverrides[vo.hub_id][vo.variant_id] = vo
+
+    ensureDataFor: (hubs, products) ->
+      for hub in hubs
+        @variantOverrides[hub.id] ||= {}
+        for product in products
+          for variant in product.variants
+            @variantOverrides[hub.id][variant.id] ||=
+              variant_id: variant.id
+              hub_id: hub.id
+              price: ''
+              count_on_hand: ''

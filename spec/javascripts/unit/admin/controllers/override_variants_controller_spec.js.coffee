@@ -5,6 +5,7 @@ describe "OverrideVariantsCtrl", ->
   producers = [{id: 2, name: 'Producer'}]
   products = [{id: 1, name: 'Product'}]
   hubPermissions = {}
+  VariantOverrides = null
   variantOverrides = {}
 
   beforeEach ->
@@ -15,19 +16,22 @@ describe "OverrideVariantsCtrl", ->
       null
     scope = {}
 
-    inject ($controller, Indexer, VariantOverrides) ->
-      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: VariantOverrides}
+    inject ($controller, Indexer, _VariantOverrides_) ->
+      VariantOverrides = _VariantOverrides_
+      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_}
 
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual hubs
-    expect(scope.hub).toBeNull
+    expect(scope.hub).toBeNull()
 
   it "adds products", ->
+    spyOn(VariantOverrides, "ensureDataFor")
     expect(scope.products).toEqual []
     scope.addProducts ['a', 'b']
     expect(scope.products).toEqual ['a', 'b']
     scope.addProducts ['c', 'd']
     expect(scope.products).toEqual ['a', 'b', 'c', 'd']
+    expect(VariantOverrides.ensureDataFor).toHaveBeenCalled()
 
   describe "selecting a hub", ->
     it "sets the chosen hub", ->

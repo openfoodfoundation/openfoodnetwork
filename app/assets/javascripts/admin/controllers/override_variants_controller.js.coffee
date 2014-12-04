@@ -22,6 +22,7 @@ angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Ind
 
   $scope.addProducts = (products) ->
     $scope.products = $scope.products.concat products
+    VariantOverrides.ensureDataFor hubs, products
 
 
   $scope.selectHub = ->
