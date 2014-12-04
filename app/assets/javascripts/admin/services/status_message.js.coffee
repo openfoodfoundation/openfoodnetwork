@@ -11,7 +11,7 @@ angular.module("ofn.admin").factory "StatusMessage", ($timeout) ->
       text: ""
       style: {}
 
-    display: (text, type) ->
+    display: (type, text) ->
       @statusMessage.text = text
       @statusMessage.style = @types[type].style
       $timeout.cancel @statusMessage.timeout  if @statusMessage.timeout
