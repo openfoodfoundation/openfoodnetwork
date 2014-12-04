@@ -2,8 +2,8 @@
   %div.four.columns.alpha
     %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
   %div.nine.columns
-    %h6{ id: "update-status-message", ng: { style: 'updateStatusMessage.style' } }
-      {{ updateStatusMessage.text || "&nbsp;" }}
+    %h6{ id: "update-status-message", ng: { style: 'StatusMessage.statusMessage.style' } }
+      {{ StatusMessage.statusMessage.text || "&nbsp;" }}
   %div.three.columns.omega
     %div.ofn_drop_down.three.columns.omega{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
       %span{ :class => 'icon-reorder' } &nbsp; Columns
