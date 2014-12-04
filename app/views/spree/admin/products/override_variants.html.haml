@@ -4,6 +4,8 @@
 %div{ ng: { app: 'ofn.admin', controller: 'AdminOverrideVariantsCtrl', init: 'initialise()' } }
   = render 'spree/admin/products/override_variants/hub_choice'
 
-  %h2{ng: {show: 'hub'}} {{ hub.name }}
+  %div{ng: {show: 'hub'}}
+    %h2 {{ hub.name }}
+    = render 'spree/admin/products/override_variants/actions'
 
   = render 'spree/admin/products/override_variants/products'

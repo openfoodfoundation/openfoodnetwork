@@ -1,10 +1,11 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, hubs, producers, hubPermissions, VariantOverrides) ->
+angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides) ->
   $scope.hubs = hubs
   $scope.hub = null
   $scope.products = []
   $scope.producers = Indexer.index producers
   $scope.hubPermissions = hubPermissions
   $scope.variantOverrides = VariantOverrides.variantOverrides
+  $scope.StatusMessage = StatusMessage
 
   $scope.initialise = ->
     SpreeApiAuth.authorise()
@@ -27,3 +28,7 @@ angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Ind
 
   $scope.selectHub = ->
     $scope.hub = (hub for hub in hubs when hub.id == $scope.hub_id)[0]
+
+
+  $scope.update = ->
+    StatusMessage.display 'success', 'Changes saved.'
