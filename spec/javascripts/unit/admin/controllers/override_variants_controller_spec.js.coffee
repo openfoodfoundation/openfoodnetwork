@@ -11,11 +11,12 @@ describe "OverrideVariantsCtrl", ->
     module 'ofn.admin'
     module ($provide) ->
       $provide.value 'SpreeApiKey', 'API_KEY'
+      $provide.value 'variantOverrides', variantOverrides
       null
     scope = {}
 
-    inject ($controller, Indexer) ->
-      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, variantOverrides: variantOverrides}
+    inject ($controller, Indexer, VariantOverrides) ->
+      ctrl = $controller 'AdminOverrideVariantsCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: VariantOverrides}
 
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual hubs
