@@ -3,4 +3,6 @@ angular.module("ofn.admin").factory "VariantOverrides", (variantOverrides, Index
     variantOverrides: {}
 
     constructor: ->
-      @variantOverrides = Indexer.index variantOverrides, 'variant_id'
+      for vo in variantOverrides
+        @variantOverrides[vo.hub_id] ||= {}
+        @variantOverrides[vo.hub_id][vo.variant_id] = vo

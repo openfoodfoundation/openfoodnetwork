@@ -2,7 +2,7 @@
   %td
   %td {{ variant.options_text }}
   %td
-    %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[variant.id].price'}, placeholder: '{{ variant.price }}'}
+    %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].price'}, placeholder: '{{ variant.price }}'}
 
   %td
-    %input{name: 'variant-overrides-{{ variant.id }}-count-on-hand', type: 'text', ng: {model: 'variantOverrides[variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}'}
+    %input{name: 'variant-overrides-{{ variant.id }}-count-on-hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}'}
