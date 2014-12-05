@@ -60,7 +60,11 @@ module OpenFoodNetwork
     def filter(variants)
       # NOTE: Ordering matters.
       # filter_to_order_cycle and filter_to_distributor return Arrays not Arel
-      filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier variants
+      filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier filter_not_deleted variants
+    end
+
+    def filter_not_deleted(variants)
+      variants.where("spree_variants.deleted_at is null")
     end
 
     def filter_on_hand(variants)
