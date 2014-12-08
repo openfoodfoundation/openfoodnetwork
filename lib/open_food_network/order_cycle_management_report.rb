@@ -28,23 +28,15 @@ module OpenFoodNetwork
     end
 
     def orders
-      filter Spree::Order
+      filter Spree::Order.managed_by(@user).distributed_by_user(@user).complete.where("spree_orders.state != ?", :canceled)
     end
 
     def filter(orders)
-      filter_for_user filter_active filter_to_order_cycle filter_to_payment_method filter_to_distribution orders
-    end
-  
-    def filter_for_user (orders)
-       orders.managed_by(@user).distributed_by_user(@user)
-    end	
-
-    def filter_active (orders)
-       orders.complete.where("spree_orders.state != ?", :canceled)
+      filter_to_order_cycle filter_to_payment_method filter_to_distribution orders
     end
 
     def filter_to_payment_method (orders)
-      if params[:payment_method_name].present?
+      if params[:payment_method_name].to_i > 0
         orders.with_payment_method_name(params[:payment_method_name])
       else
         orders
@@ -52,7 +44,7 @@ module OpenFoodNetwork
     end
 
     def filter_to_distribution (orders)
-      if params[:distribution_name].present?
+      if params[:distribution_name].to_i > 0
         orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:distribution_name])
       else
         orders
