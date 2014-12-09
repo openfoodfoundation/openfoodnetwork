@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides) ->
+angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = hubs
   $scope.hub = null
   $scope.products = []
@@ -31,6 +31,11 @@ angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Ind
 
 
   $scope.displayDirty = ->
+    if DirtyVariantOverrides.count() > 0
+      num = if DirtyVariantOverrides.count() == 1 then "one override" else "#{DirtyVariantOverrides.count()} overrides"
+      StatusMessage.display 'notice', "Changes to #{num} remain unsaved."
+    else
+      StatusMessage.clear()
 
 
   $scope.update = ->
