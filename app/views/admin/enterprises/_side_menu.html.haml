@@ -5,4 +5,5 @@
     class: '{ selected: item.selected}',
     'class-odd' => "'odd'",
     'class-even' => "'even'" } }
-    {{ item.name }}
+    %i{ class: "{{item.icon_class}}" }
+    %span {{ item.name }}
