@@ -237,15 +237,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if $scope.limit < $scope.products.length
         $scope.limit = $scope.limit + 5
 
-    $scope.setMessage = (model, text, style, timeout) ->
-      model.text = text
-      model.style = style
-      $timeout.cancel model.timeout  if model.timeout
-      if timeout
-        model.timeout = $timeout(->
-          $scope.setMessage model, "", {}, false
-        , timeout, true)
-
 
     $scope.displayUpdating = ->
       StatusMessage.display 'progress', 'Saving...'
