@@ -30,5 +30,8 @@ angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Ind
     $scope.hub = (hub for hub in hubs when hub.id == $scope.hub_id)[0]
 
 
+  $scope.displayDirty = ->
+
+
   $scope.update = ->
     StatusMessage.display 'success', 'Changes saved.'
