@@ -92,6 +92,7 @@ module Openfoodnetwork
     config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js', 'iehack.js']
     config.assets.precompile += ['admin/all.css', 'admin/restore_spree_from_cms.css', 'admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all.js']
+    config.assets.precompile += ['mail/all.css']
     config.assets.precompile += ['comfortable_mexican_sofa/*']
     config.assets.precompile += ['search/all.css', 'search/*.js']
     config.assets.precompile += ['shared/*']
