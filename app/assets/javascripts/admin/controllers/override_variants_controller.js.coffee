@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, $timeout, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $timeout, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = hubs
   $scope.hub = null
   $scope.products = []
