@@ -87,7 +87,7 @@ feature %q{
       end
 
       context "with overrides" do
-        let!(:override) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
+        let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
 
         before do
           visit '/admin/variant_overrides'
@@ -98,6 +98,23 @@ feature %q{
         it "product values are affected by overrides" do
           page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
           page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '11111', placeholder: '12'
+        end
+
+        it "updates existing overrides" do
+          fill_in "variant-overrides-#{variant.id}-price", with: '22.22'
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '8888'
+          page.should have_content "Changes to one override remain unsaved."
+
+          expect do
+            click_button 'Save Changes'
+            page.should have_content "Changes saved."
+          end.to change(VariantOverride, :count).by(0)
+
+          vo.reload
+          vo.variant_id.should == variant.id
+          vo.hub_id.should == hub.id
+          vo.price.should == 22.22
+          vo.count_on_hand.should == 8888
         end
       end
     end
