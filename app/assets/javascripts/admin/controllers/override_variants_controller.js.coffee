@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, $timeout, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = hubs
   $scope.hub = null
   $scope.products = []
@@ -39,4 +39,14 @@ angular.module("ofn.admin").controller "AdminOverrideVariantsCtrl", ($scope, Ind
 
 
   $scope.update = ->
-    StatusMessage.display 'success', 'Changes saved.'
+    if DirtyVariantOverrides.count() == 0
+      StatusMessage.display 'alert', 'No changes to save.'
+    else
+      StatusMessage.display 'progress', 'Saving...'
+      DirtyVariantOverrides.save
+        success: (data) ->
+          DirtyVariantOverrides.clear()
+          #VariantOverrides.update data.variant_overrides
+          $timeout -> StatusMessage.display 'success', 'Changes saved.'
+        error: (data, status) ->
+          $timeout -> StatusMessage.display 'failure', 'Oh no!'
