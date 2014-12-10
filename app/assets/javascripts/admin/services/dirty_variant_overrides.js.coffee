@@ -24,6 +24,6 @@ angular.module("ofn.admin").factory "DirtyVariantOverrides", ($http) ->
     save: ->
       $http
         method: "POST"
-        url: "/admin/products/variant_overrides"
+        url: "/admin/variant_overrides/bulk_update"
         data:
           variant_overrides: @all()

@@ -6,6 +6,5 @@
       %th Price
       %th On hand
   %tbody{ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id'}}
-    = render 'spree/admin/products/variant_overrides/products_product'
-    = render 'spree/admin/products/variant_overrides/products_variants'
-
+    = render 'admin/variant_overrides/products_product'
+    = render 'admin/variant_overrides/products_variants'

@@ -23,12 +23,12 @@ feature %q{
 
     describe "selecting a hub" do
       it "displays a list of hub choices" do
-        visit '/admin/products/variant_overrides'
+        visit '/admin/variant_overrides'
         page.should have_select2 'hub_id', options: ['', hub.name, hub2.name]
       end
 
       it "displays the hub" do
-        visit '/admin/products/variant_overrides'
+        visit '/admin/variant_overrides'
         select2_select hub.name, from: 'hub_id'
         click_button 'Go'
 
@@ -51,7 +51,7 @@ feature %q{
 
       context "with no overrides" do
         before do
-          visit '/admin/products/variant_overrides'
+          visit '/admin/variant_overrides'
           select2_select hub.name, from: 'hub_id'
           click_button 'Go'
         end
@@ -73,7 +73,7 @@ feature %q{
         let!(:override) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
 
         before do
-          visit '/admin/products/variant_overrides'
+          visit '/admin/variant_overrides'
           select2_select hub.name, from: 'hub_id'
           click_button 'Go'
         end

@@ -49,14 +49,6 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
 
-  def variant_overrides
-    @hubs = order_cycle_hub_enterprises(without_validation: true)
-    @producers = order_cycle_producer_enterprises
-    @hub_permissions = OpenFoodNetwork::Permissions.new(spree_current_user).
-      order_cycle_enterprises_per_hub
-    @variant_overrides = VariantOverride.for_hubs(@hubs)
-  end
-
 
   protected
   def location_after_save
