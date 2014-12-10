@@ -21,13 +21,9 @@ angular.module("ofn.admin").factory "DirtyVariantOverrides", ($http) ->
         all_vos.push vo for variant_id, vo of vos
       all_vos
 
-    save: (callbacks={}) ->
+    save: ->
       $http
         method: "POST"
         url: "/admin/products/override_variants"
         data:
           variant_overrides: @all()
-      .success (data) ->
-        (callbacks.success || Angular.noop) data
-      .error (data, status) ->
-        (callbacks.error || Angular.noop) data, status
