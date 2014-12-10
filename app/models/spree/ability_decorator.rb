@@ -65,15 +65,16 @@ class AbilityDecorator
   def add_product_management_abilities(user)
     # Enterprise User can only access products that they are a supplier for
     can [:create], Spree::Product
-    can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :variant_overrides, :clone, :destroy], Spree::Product do |product|
+    can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], Spree::Product do |product|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
     end
-    can :variant_overrides, nil
 
     can [:create], Spree::Variant
     can [:admin, :index, :read, :edit, :update, :search, :destroy], Spree::Variant do |variant|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
+
+    can [:admin, :index], VariantOverride
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
     can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image

@@ -137,26 +137,26 @@ module Spree
           user
         end
 
-        let(:order) {create(:order)}
+        let(:order) { create(:order) }
 
         it "should be able to read/write their enterprises' products and variants" do
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :variant_overrides, :clone, :destroy], for: p1)
+          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p1.master)
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
           er_p
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :variant_overrides, :clone, :destroy], for: p_related)
+          should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p_related)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p_related.master)
         end
 
         it "should not be able to read/write other enterprises' products and variants" do
-          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :variant_overrides, :clone, :destroy], for: p2)
+          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p2)
           should_not have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p2.master)
         end
 
-        it "should be able to variant_overrides on nil (required for variant_overrides)" do
-          should have_ability :variant_overrides, for: nil
+        it "should be able to read/write variant overrides" do
+          should have_ability([:admin, :index], for: VariantOverride)
         end
 
         it "should not be able to access admin actions on orders" do
