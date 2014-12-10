@@ -67,6 +67,23 @@ feature %q{
           page.should_not have_content producer2.name
           page.should_not have_content product2.name
         end
+
+        it "creates new overrides" do
+          fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          page.should have_content "Changes to one override remain unsaved."
+
+          expect do
+            click_button 'Save Changes'
+            page.should have_content "Changes saved."
+          end.to change(VariantOverride, :count).by(1)
+
+          vo = VariantOverride.last
+          vo.variant_id.should == variant.id
+          vo.hub_id.should == hub.id
+          vo.price.should == 777.77
+          vo.count_on_hand.should == 123
+        end
       end
 
       context "with overrides" do

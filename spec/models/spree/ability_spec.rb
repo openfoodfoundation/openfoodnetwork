@@ -155,10 +155,6 @@ module Spree
           should_not have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p2.master)
         end
 
-        it "should be able to read/write variant overrides" do
-          should have_ability([:admin, :index], for: VariantOverride)
-        end
-
         it "should not be able to access admin actions on orders" do
           should_not have_ability([:admin], for: Spree::Order)
         end
@@ -241,6 +237,23 @@ module Spree
           o = create(:order, distributor: nil, bill_address: create(:address))
           create(:line_item, order: o, product: p1)
           o
+        end
+
+        let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
+        let(:vo2) { create(:variant_override, hub: d2, variant: p2.master) }
+
+        describe "variant overrides" do
+          it "should be able to access variant overrides page" do
+            should have_ability([:admin, :index, :bulk_update], for: VariantOverride)
+          end
+
+          it "should be able to read/write their own variant overrides" do
+            should have_ability([:admin, :index, :read, :update], for: vo1)
+          end
+
+          it "should not be able to read/write other enterprises' variant overrides" do
+            should_not have_ability([:admin, :index, :read, :update], for: vo2)
+          end
         end
 
         it "should be able to read/write their enterprises' orders" do
