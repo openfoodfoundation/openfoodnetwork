@@ -4,7 +4,7 @@ Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   include OrderCyclesHelper
   before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
-  before_filter :load_spree_api_key, :only => [:bulk_edit, :override_variants]
+  before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -49,7 +49,7 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
 
-  def override_variants
+  def variant_overrides
     @hubs = order_cycle_hub_enterprises(without_validation: true)
     @producers = order_cycle_producer_enterprises
     @hub_permissions = OpenFoodNetwork::Permissions.new(spree_current_user).
