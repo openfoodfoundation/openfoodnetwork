@@ -64,7 +64,7 @@ module OpenFoodNetwork
     end
 
     def filter_not_deleted(variants)
-      variants.where("spree_variants.deleted_at is null")
+      variants.not_deleted
     end
 
     def filter_on_hand(variants)
