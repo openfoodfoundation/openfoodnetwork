@@ -15,7 +15,8 @@ angular.module("admin.utils")
       onBeforeUnloadHandler: ($event) =>
         message = @getMessage()
         if message
-          ($event or $window.event).preventDefault()
+          # following: https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+          ($event or $window.event).returnValue = message
           message
 
       # Action for angular navigation.
