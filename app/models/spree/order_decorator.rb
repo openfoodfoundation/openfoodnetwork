@@ -176,8 +176,8 @@ Spree::Order.class_eval do
     line_items.map(&:variant)
   end
 
-  def distribution_total
-    adjustments.eligible.where(originator_type: 'EnterpriseFee').sum(&:amount)
+  def admin_and_handling_total
+    adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
   end
 
   # Show payment methods for this distributor

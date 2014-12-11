@@ -147,34 +147,42 @@ describe Spree::Order do
     end
   end
 
-  describe "getting the distribution charge" do
+  describe "getting the admin and handling charge" do
     let(:o) { create(:order) }
     let(:li) { create(:line_item, order: o) }
 
     it "returns the sum of eligible enterprise fee adjustments" do
-      ef = create(:enterprise_fee)
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+      a = ef.create_locked_adjustment("adjustment", o, o, true)
 
-      o.distribution_total.should == 123.45
+      o.admin_and_handling_total.should == 123.45
     end
 
     it "does not include ineligible adjustments" do
-      ef = create(:enterprise_fee)
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+      a = ef.create_locked_adjustment("adjustment", o, o, true)
 
       a.update_column :eligible, false
 
-      o.distribution_total.should == 0
+      o.admin_and_handling_total.should == 0
     end
 
     it "does not include adjustments that do not originate from enterprise fees" do
-      sm = create(:shipping_method)
+      sm = create(:shipping_method, calculator: Spree::Calculator::FlatRate.new )
       sm.calculator.set_preference :amount, 123.45
-      sm.create_adjustment("adjustment", li.order, li, true)
+      sm.create_adjustment("adjustment", o, o, true)
 
-      o.distribution_total.should == 0
+      o.admin_and_handling_total.should == 0
+    end
+
+    it "does not include adjustments whose source is a line item" do
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new )
+      ef.calculator.set_preference :amount, 123.45
+      ef.create_adjustment("adjustment", li.order, li, true)
+
+      o.admin_and_handling_total.should == 0
     end
   end
 
