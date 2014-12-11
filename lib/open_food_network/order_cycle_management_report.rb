@@ -36,7 +36,7 @@ module OpenFoodNetwork
     end
 
     def filter_to_payment_method (orders)
-      if params[:payment_method_name].to_i > 0
+      if params[:payment_method_name].present?
         orders.with_payment_method_name(params[:payment_method_name])
       else
         orders
@@ -44,7 +44,7 @@ module OpenFoodNetwork
     end
 
     def filter_to_distribution (orders)
-      if params[:distribution_name].to_i > 0
+      if params[:distribution_name].present?
         orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:distribution_name])
       else
         orders
@@ -52,7 +52,7 @@ module OpenFoodNetwork
     end
 
     def filter_to_order_cycle(orders)
-      if params[:order_cycle_id].to_i > 0
+      if params[:order_cycle_id].present?
         orders.where(order_cycle_id: params[:order_cycle_id])
       else
         orders
