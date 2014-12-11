@@ -1,6 +1,6 @@
 class Spree::ProductSet < ModelSet
   def initialize(attributes={})
-    super(Spree::Product, [], proc { |attrs| attrs[:product_id].blank? }, attributes)
+    super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
   end
 
   # A separate method of updating products was required due to an issue with the way Rails' assign_attributes and updates_attributes behave when delegated attributes of a nested

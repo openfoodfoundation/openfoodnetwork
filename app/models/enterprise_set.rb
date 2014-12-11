@@ -1,5 +1,5 @@
 class EnterpriseSet < ModelSet
   def initialize(collection, attributes={})
-    super(Enterprise, collection, nil, attributes)
+    super(Enterprise, collection, attributes)
   end
 end

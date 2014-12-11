@@ -1,5 +1,5 @@
 class VariantOverrideSet < ModelSet
   def initialize(attributes={})
-    super(VariantOverride, VariantOverride.all, nil, attributes)
+    super(VariantOverride, VariantOverride.all, attributes)
   end
 end

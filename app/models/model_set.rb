@@ -5,7 +5,7 @@ class ModelSet
 
   attr_accessor :collection
 
-  def initialize(klass, collection, reject_if=nil, attributes={})
+  def initialize(klass, collection, attributes={}, reject_if=nil)
     @klass, @collection, @reject_if = klass, collection, reject_if
 
     # Set here first, to ensure that we apply collection_attributes to the right collection
