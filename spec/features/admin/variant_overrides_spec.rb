@@ -9,8 +9,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  use_short_wait
-
   let!(:hub) { create(:distributor_enterprise) }
   let!(:hub2) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
