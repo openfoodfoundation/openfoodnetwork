@@ -1,4 +1,4 @@
-= form_for [main_app, :admin, @enterprise], html: { name: "enterprise", "ng-app" => 'admin.enterprises', "ng-submit" => "navClear()", "ng-controller" => 'enterpriseCtrl' , "nav-check" => '', "nav-callback" => 'enterpriseNavCallback' } do |f|
+= form_for [main_app, :admin, @enterprise], html: { name: "enterprise", "ng-app" => 'admin.enterprises', "ng-submit" => "navClear()", "ng-controller" => 'enterpriseCtrl', "nav-check-callback" => 'enterpriseNavCallback' } do |f|
   .row
     .sixteen.columns.alpha
       .eleven.columns.alpha.fullwidth_inputs
