@@ -43,3 +43,15 @@ describe "VariantOverridesCtrl", ->
       scope.hub_id = ''
       scope.selectHub
       expect(scope.hub).toBeNull
+
+  describe "updating", ->
+    describe "error messages", ->
+      it "returns an unauthorised message upon 401", ->
+        expect(scope.updateError({}, 401)).toEqual "I couldn't get authorisation to save those changes, so they remain unsaved."
+
+      it "returns errors when they are provided", ->
+        data = {errors: {base: ["Hub can't be blank", "Variant can't be blank"]}}
+        expect(scope.updateError(data, 400)).toEqual "I had some trouble saving: Hub can't be blank, Variant can't be blank"
+
+      it "returns a generic message otherwise", ->
+        expect(scope.updateError({}, 500)).toEqual "Oh no! I was unable to save your changes."

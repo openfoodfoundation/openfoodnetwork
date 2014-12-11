@@ -14,7 +14,7 @@ feature %q{
   let!(:hub) { create(:distributor_enterprise) }
   let!(:hub2) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
+  let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub,
                      permissions_list: [:add_to_order_cycle]) }
 
   context "as an enterprise user" do
@@ -41,7 +41,7 @@ feature %q{
       let!(:variant) { create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12) }
       let!(:producer2) { create(:supplier_enterprise) }
       let!(:product2) { create(:simple_product, supplier: producer2) }
-      let!(:er) { create(:enterprise_relationship, parent: producer2, child: hub2,
+      let!(:er2) { create(:enterprise_relationship, parent: producer2, child: hub2,
                          permissions_list: [:add_to_order_cycle]) }
 
       before do
@@ -83,6 +83,34 @@ feature %q{
           vo.hub_id.should == hub.id
           vo.price.should == 777.77
           vo.count_on_hand.should == 123
+        end
+
+        it "displays an error when unauthorised to access the page" do
+          fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          page.should have_content "Changes to one override remain unsaved."
+
+          user.enterprises.clear
+
+          expect do
+            click_button 'Save Changes'
+            page.should have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+          end.to change(VariantOverride, :count).by(0)
+        end
+
+        it "displays an error when unauthorised to update a particular override" do
+          fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          page.should have_content "Changes to one override remain unsaved."
+
+          EnterpriseRole.where(user_id: user).where('enterprise_id != ?', producer).destroy_all
+          er1.destroy
+          er2.destroy
+
+          expect do
+            click_button 'Save Changes'
+            page.should have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+          end.to change(VariantOverride, :count).by(0)
         end
       end
 

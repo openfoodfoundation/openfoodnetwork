@@ -46,7 +46,21 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
       DirtyVariantOverrides.save()
       .success (data) ->
         DirtyVariantOverrides.clear()
-        #VariantOverrides.update data.variant_overrides
         $timeout -> StatusMessage.display 'success', 'Changes saved.'
       .error (data, status) ->
-        $timeout -> StatusMessage.display 'failure', 'Oh no!'
+        $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
+
+
+  $scope.updateError = (data, status) ->
+    if status == 401
+      "I couldn't get authorisation to save those changes, so they remain unsaved."
+
+    else if status == 400 && data.errors?
+      errors = []
+      for field, field_errors of data.errors
+        errors = errors.concat field_errors
+      errors = errors.join ', '
+      "I had some trouble saving: #{errors}"
+
+    else
+      "Oh no! I was unable to save your changes."
