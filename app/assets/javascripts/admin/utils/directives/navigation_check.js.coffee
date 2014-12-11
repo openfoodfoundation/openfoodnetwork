@@ -4,6 +4,7 @@ angular.module("admin.utils").directive "navCheck", (NavigationCheck)->
     navCallback: '&'
   link: (scope,element,attributes) ->
     # Define navigationCallback on a controller in scope, otherwise this default will be used:
-    scope.navCallback ||= ->
+    callback = scope.navCallback()
+    callback ||= ->
       "You will lose any unsaved work!"
-    NavigationCheck.register(scope.navCallback)
+    NavigationCheck.register(callback)
