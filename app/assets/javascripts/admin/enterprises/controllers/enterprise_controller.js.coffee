@@ -12,7 +12,8 @@ angular.module("admin.enterprises")
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that .
     $scope.enterpriseNavCallback = ->
-      "You are editing an enterprise!"
+      if $scope.enterprise.$dirty
+        "Your changes to the enterprise are not saved yet."
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
