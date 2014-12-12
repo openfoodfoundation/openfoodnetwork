@@ -5,8 +5,8 @@ class ModelSet
 
   attr_accessor :collection
 
-  def initialize(klass, collection, attributes={}, reject_if=nil)
-    @klass, @collection, @reject_if = klass, collection, reject_if
+  def initialize(klass, collection, attributes={}, reject_if=nil, delete_if=nil)
+    @klass, @collection, @reject_if, @delete_if = klass, collection, reject_if, delete_if
 
     # Set here first, to ensure that we apply collection_attributes to the right collection
     @collection = attributes[:collection] if attributes[:collection]
@@ -36,7 +36,16 @@ class ModelSet
   end
 
   def save
-    collection.all?(&:save)
+    collection_to_delete.each &:destroy
+    collection_to_keep.all? &:save
+  end
+
+  def collection_to_delete
+    collection.select { |e| @delete_if.andand.call(e.attributes) }
+  end
+
+  def collection_to_keep
+    collection.reject { |e| @delete_if.andand.call(e.attributes) }
   end
 
   def persisted?

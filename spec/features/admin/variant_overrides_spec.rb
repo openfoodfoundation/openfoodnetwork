@@ -142,6 +142,19 @@ feature %q{
           vo.price.should == 22.22
           vo.count_on_hand.should == 8888
         end
+
+        it "deletes overrides when values are cleared" do
+          fill_in "variant-overrides-#{variant.id}-price", with: ''
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: ''
+          page.should have_content "Changes to one override remain unsaved."
+
+          expect do
+            click_button 'Save Changes'
+            page.should have_content "Changes saved."
+          end.to change(VariantOverride, :count).by(-1)
+
+          VariantOverride.where(id: vo.id).should be_empty
+        end
       end
     end
   end
