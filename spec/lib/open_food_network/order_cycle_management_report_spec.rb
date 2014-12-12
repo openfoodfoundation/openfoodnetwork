@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include AuthenticationWorkflow
+
 module OpenFoodNetwork
   describe OrderCycleManagementReport do
     context "as a site admin" do
@@ -26,12 +28,7 @@ module OpenFoodNetwork
     end
 
     context "as an enterprise user" do
-      let(:user) do 
-        user = create(:user)
-        user.spree_roles = []
-        user.save!
-        user
-      end
+       let!(:user) { create_enterprise_user }
 
       subject { OrderCycleManagementReport.new user }
 
@@ -66,17 +63,22 @@ module OpenFoodNetwork
       end
 
       describe "filtering orders" do
-        let(:orders) { Spree::Order.scoped }
-        let(:supplier) { create(:supplier_enterprise) }
+        let!(:orders) { Spree::Order.scoped }
+        let!(:supplier) { create(:supplier_enterprise) }
 
-        it "returns all orders sans-params" do
+        let!(:oc1) { create(:simple_order_cycle) }
+        let!(:pm1) { create(:payment_method, name: "PM1") }
+        let!(:sm1) { create(:shipping_method, name: "ship1") }
+        let!(:order1) { create(:order, shipping_method: sm1, order_cycle: oc1) }
+        let!(:payment1) { create(:payment, order: order1, payment_method: pm1) }
+   
+	it "returns all orders sans-params" do
           subject.filter(orders).should == orders
         end
 
         it "filters to a specific order cycle" do
-          oc1 = create(:simple_order_cycle)
+          
           oc2 = create(:simple_order_cycle)
-          order1 = create(:order, order_cycle: oc1)
           order2 = create(:order, order_cycle: oc2)
 
           subject.stub(:params).and_return(order_cycle_id: oc1.id)
@@ -84,39 +86,31 @@ module OpenFoodNetwork
         end
 
 	it "filters to a payment method" do
-          pm1 = create(:payment_method, name: "PM1")
-          pm2 = create(:payment_method, name: "PM2")
-	  order1 = create(:order)
+          
+          pm2 = create(:payment_method, name: "PM2")  
 	  order2 = create(:order)
-	  payment1 = create(:payment, :order => order1, :payment_method => pm1)
-	  payment2 = create(:payment, :order => order2, :payment_method => pm2)
+	  payment2 = create(:payment, order: order2, payment_method: pm2)
 
           subject.stub(:params).and_return(payment_method_name: pm1.name)
           subject.filter(orders).should == [order1]
         end
 
 	it "filters to a shipping method" do
-          sm1 = create(:shipping_method, name: "ship1")
+         
           sm2 = create(:shipping_method, name: "ship2")
-          order1 = create(:order, shipping_method: sm1)
           order2 = create(:order, shipping_method: sm2)
 
-          subject.stub(:params).and_return(distribution_name: sm1.name)
+          subject.stub(:params).and_return(shipping_method_name: sm1.name)
           subject.filter(orders).should == [order1]
         end
 
         it "should do all the filters at once" do
-          pm1 = create(:payment_method, name: "PM1")
-          sm1 = create(:shipping_method, name: "ship1")
-          oc1 = create(:simple_order_cycle)
-          order1 = create(:order, order_cycle: oc1,shipping_method: sm1)
-	  payment1 = create(:payment, :order => order1, :payment_method => pm1)
 
           subject.stub(:params).and_return(
             order_cycle_id: oc1.id,
-            distribution_name: sm1.name,
+            shipping_method_name: sm1.name,
             payment_method_name: pm1.name)
-          subject.filter(orders)
+          subject.filter(orders).should == [order1]
 
          end
 

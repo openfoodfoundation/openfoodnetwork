@@ -43,7 +43,7 @@ module OpenFoodNetwork
       end
     end
 
-    def filter_to_shipping_method (orders)
+    def filter_to_shipping_method (orders)  
       if params[:shipping_method_name].present?
         orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
       else
