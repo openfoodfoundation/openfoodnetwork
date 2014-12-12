@@ -44,8 +44,9 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
     else
       StatusMessage.display 'progress', 'Saving...'
       DirtyVariantOverrides.save()
-      .success (data) ->
+      .success (updatedVos) ->
         DirtyVariantOverrides.clear()
+        VariantOverrides.updateIds updatedVos
         $timeout -> StatusMessage.display 'success', 'Changes saved.'
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)

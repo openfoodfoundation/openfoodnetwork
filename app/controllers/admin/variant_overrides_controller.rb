@@ -23,7 +23,8 @@ module Admin
       vo_set.collection.each { |vo| authorize! :update, vo }
 
       if vo_set.save
-        render json: {}
+        # Return saved VOs with IDs
+        render json: vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
       else
         if vo_set.errors.present?
           render json: { errors: vo_set.errors }, status: 400

@@ -51,3 +51,18 @@ describe "VariantOverrides service", ->
         300: {       hub_id: 30, variant_id: 300, price: '', count_on_hand: ''}
         400: {       hub_id: 30, variant_id: 400, price: '', count_on_hand: ''}
         500: {       hub_id: 30, variant_id: 500, price: '', count_on_hand: ''}
+
+  it "updates the IDs of variant overrides", ->
+    VariantOverrides.variantOverrides[2] = {}
+    VariantOverrides.variantOverrides[2][3] = {hub_id: 2, variant_id: 3, price: "4.0", count_on_hand: 5}
+    VariantOverrides.variantOverrides[2][8] = {hub_id: 2, variant_id: 8, price: "9.0", count_on_hand: 10}
+
+    updatedVos = [
+      {id: 1, hub_id: 2, variant_id: 3, price: "4.0", count_on_hand: 5}
+      {id: 6, hub_id: 2, variant_id: 8, price: "9.0", count_on_hand: 10}
+    ]
+
+    VariantOverrides.updateIds updatedVos
+
+    expect(VariantOverrides.variantOverrides[2][3].id).toEqual 1
+    expect(VariantOverrides.variantOverrides[2][8].id).toEqual 6

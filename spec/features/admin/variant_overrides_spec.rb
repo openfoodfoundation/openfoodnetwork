@@ -83,6 +83,38 @@ feature %q{
           vo.count_on_hand.should == 123
         end
 
+        describe "creating and then updating the new override" do
+          it "updates the same override instead of creating a duplicate" do
+            # When I create a new override
+            fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+            fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+            page.should have_content "Changes to one override remain unsaved."
+
+            expect do
+              click_button 'Save Changes'
+              page.should have_content "Changes saved."
+            end.to change(VariantOverride, :count).by(1)
+
+            # And I update its settings without reloading the page
+            fill_in "variant-overrides-#{variant.id}-price", with: '111.11'
+            fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '111'
+            page.should have_content "Changes to one override remain unsaved."
+
+            # Then I shouldn't see a new override
+            expect do
+              click_button 'Save Changes'
+              page.should have_content "Changes saved."
+            end.to change(VariantOverride, :count).by(0)
+
+            # And the override should be updated
+            vo = VariantOverride.last
+            vo.variant_id.should == variant.id
+            vo.hub_id.should == hub.id
+            vo.price.should == 111.11
+            vo.count_on_hand.should == 111
+          end
+        end
+
         it "displays an error when unauthorised to access the page" do
           fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
           fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
