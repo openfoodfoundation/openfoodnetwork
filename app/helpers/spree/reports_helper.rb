@@ -12,7 +12,7 @@ module Spree
       orders.map { |o| o.payments.first.payment_method.andand.name }.uniq
     end
 
-    def report_distribution_options(orders)
+    def report_shipping_options(orders)
       orders.map { |o| o.shipping_method.andand.name  }.uniq      
     end    
 

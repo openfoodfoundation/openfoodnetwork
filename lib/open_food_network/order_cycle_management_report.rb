@@ -32,7 +32,7 @@ module OpenFoodNetwork
     end
 
     def filter(orders)
-      filter_to_order_cycle filter_to_payment_method filter_to_distribution orders
+      filter_to_order_cycle filter_to_payment_method filter_to_shipping_method orders
     end
 
     def filter_to_payment_method (orders)
@@ -43,9 +43,9 @@ module OpenFoodNetwork
       end
     end
 
-    def filter_to_distribution (orders)
-      if params[:distribution_name].present?
-        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:distribution_name])
+    def filter_to_shipping_method (orders)
+      if params[:shipping_method_name].present?
+        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
       else
         orders
       end
