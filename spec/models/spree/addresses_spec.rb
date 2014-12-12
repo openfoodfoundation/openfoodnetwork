@@ -9,23 +9,43 @@ describe Spree::Address do
     it { should delegate(:name).to(:state).with_prefix }
   end
 
-  describe "full address" do
+  describe "geocode address" do
     let(:address) { FactoryGirl.build(:address) }
 
     it "should include address1, address2, zipcode, city, state and country" do
-      address.full_address.should include(address.address1)
-      address.full_address.should include(address.address2)
-      address.full_address.should include(address.zipcode)
-      address.full_address.should include(address.city)
-      address.full_address.should include(address.state.name)
-      address.full_address.should include(address.country.name)
+      address.geocode_address.should include(address.address1)
+      address.geocode_address.should include(address.address2)
+      address.geocode_address.should include(address.zipcode)
+      address.geocode_address.should include(address.city)
+      address.geocode_address.should include(address.state.name)
+      address.geocode_address.should include(address.country.name)
     end
 
     it "should not include empty fields" do
       address.address2 = nil
       address.city = ""
 
-      address.full_address.split(',').length.should eql(4)
+      address.geocode_address.split(',').length.should eql(4)
+    end
+  end
+
+  describe "full address" do
+    let(:address) { FactoryGirl.build(:address) }
+
+    it "should include address1, address2, zipcode, city and state" do
+      address.full_address.should include(address.address1)
+      address.full_address.should include(address.address2)
+      address.full_address.should include(address.zipcode)
+      address.full_address.should include(address.city)
+      address.full_address.should include(address.state.name)
+      address.full_address.should_not include(address.country.name)
+    end
+
+    it "should not include empty fields" do
+      address.address2 = nil
+      address.city = ""
+
+      address.full_address.split(',').length.should eql(3)
     end
   end
 
