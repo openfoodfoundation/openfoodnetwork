@@ -12,7 +12,7 @@ module OpenFoodNetwork
     end
 
     def price
-      VariantOverride.price_for(@variant, @hub) || @variant.price
+      VariantOverride.price_for(@hub, @variant) || @variant.price
     end
 
 

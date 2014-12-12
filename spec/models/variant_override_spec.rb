@@ -19,11 +19,11 @@ describe VariantOverride do
 
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)
-      VariantOverride.price_for(variant, hub).should == 12.34
+      VariantOverride.price_for(hub, variant).should == 12.34
     end
 
     it "returns nil otherwise" do
-      VariantOverride.price_for(variant, hub).should be_nil
+      VariantOverride.price_for(hub, variant).should be_nil
     end
   end
 end

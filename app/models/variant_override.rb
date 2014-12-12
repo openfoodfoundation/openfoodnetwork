@@ -8,7 +8,7 @@ class VariantOverride < ActiveRecord::Base
     where(hub_id: hubs)
   }
 
-  def self.price_for(variant, hub)
+  def self.price_for(hub, variant)
     VariantOverride.where(variant_id: variant, hub_id: hub).first.andand.price
   end
 end
