@@ -475,7 +475,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Dist ($)", "Ship ($)", "Total ($)", "Paid?",
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Item + Fees ($)", "Dist ($)", "Ship ($)", "Total ($)", "Paid?",
                 "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes"]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
@@ -488,6 +488,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.full_name },
         proc { |line_items| line_items.sum { |li| li.quantity } },
+        proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
         proc { |line_items| "" },
         proc { |line_items| "" },
@@ -516,6 +517,7 @@ Spree::Admin::ReportsController.class_eval do
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
         proc { |line_items| "" },
+        proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.admin_and_handling_total } },
         proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
