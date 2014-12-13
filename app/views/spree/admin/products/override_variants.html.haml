@@ -1,9 +1,0 @@
-= render 'spree/admin/products/override_variants/header'
-= render 'spree/admin/products/override_variants/data'
-
-%div{ ng: { app: 'ofn.admin', controller: 'AdminOverrideVariantsCtrl', init: 'initialise()' } }
-  = render 'spree/admin/products/override_variants/hub_choice'
-
-  %h2{ng: {show: 'hub'}} {{ hub.name }}
-
-  = render 'spree/admin/products/override_variants/products'

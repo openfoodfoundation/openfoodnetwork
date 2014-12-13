@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141113053004) do
+ActiveRecord::Schema.define(:version => 20141210233407) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -1034,8 +1034,8 @@ ActiveRecord::Schema.define(:version => 20141113053004) do
   end
 
   create_table "variant_overrides", :force => true do |t|
-    t.integer "variant_id"
-    t.integer "hub_id"
+    t.integer "variant_id",                                  :null => false
+    t.integer "hub_id",                                      :null => false
     t.decimal "price",         :precision => 8, :scale => 2
     t.integer "count_on_hand"
   end

@@ -10,7 +10,7 @@
             %p
               Thanks for shopping on
               %strong= "#{Spree::Config.site_name}."
-              Here are the details for you order from
+              Here are the details for your order from
               %strong= "#{@order.distributor.name}."
       %table.column{:align => "left"}
         %tr
@@ -77,24 +77,28 @@
   %p
     Your order will be delivered to:
     %br
-    #{@order.ship_address.to_s}
+    #{@order.ship_address.full_name}
     %br
+    #{@order.ship_address.full_address}
+    %br
+    #{@order.ship_address.phone}
 
     - if @order.shipping_method.andand.description
+      %br
+      %br
       #{@order.shipping_method.description.html_safe}
-      %br
-      %br
 
     - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+      %br
+      %br
       Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}
-      %br
-      %br
 
     - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+      %br
+      %br
       Other delivery information: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-      %br
-      %br
 
+    %br
 
 - else
   / Collection details
@@ -103,24 +107,26 @@
       Collection details
   %p
     - if @order.shipping_method.andand.description
+      %br
+      %br
       = @order.shipping_method.description.html_safe
-      %br
-      %br
 
     - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+      %br
+      %br
       Ready for collection: #{@order.order_cycle.pickup_time_for(@order.distributor)}
-      %br
-      %br
 
     - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+      %br
+      %br
       Collection instructions: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-      %br
-      %br
 
     - if @order.special_instructions.present?
+      %br
+      %br
       Notes: #{@order.special_instructions}
-      %br
-      %br
+
+    %br
 
     -# Your order will be ready for collection on
     -# %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}

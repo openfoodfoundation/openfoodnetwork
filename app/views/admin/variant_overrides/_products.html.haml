@@ -1,0 +1,10 @@
+%table.index.bulk{ng: {show: 'hub'}}
+  %thead
+    %tr
+      %th Producer
+      %th Product
+      %th Price
+      %th On hand
+  %tbody{ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id'}}
+    = render 'admin/variant_overrides/products_product'
+    = render 'admin/variant_overrides/products_variants'

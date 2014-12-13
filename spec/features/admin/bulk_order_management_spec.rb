@@ -168,119 +168,159 @@ feature %q{
     end
 
     context "using drop down seletors" do
-      let!(:oc1) { FactoryGirl.create(:order_cycle) }
-      let!(:oc2) { FactoryGirl.create(:order_cycle) }
-      let!(:s1) { oc1.suppliers.first }
-      let!(:s2) { oc2.suppliers.last }
-      let!(:d1) { oc1.distributors.first }
-      let!(:d2) { oc2.distributors.last }
-      let!(:p1) { FactoryGirl.create(:product, supplier: s1) }
-      let!(:p2) { FactoryGirl.create(:product, supplier: s2) }
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: oc1 ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: oc2 ) }
-      let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
-      let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
+      context "supplier filter" do
+        let!(:s1) { create(:supplier_enterprise) }
+        let!(:s2) { create(:supplier_enterprise) }
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
 
-      before :each do
-        visit '/admin/orders/bulk_management'
+        before :each do
+          visit '/admin/orders/bulk_management'
+        end
+
+        it "displays a select box for producers, which filters line items by the selected supplier" do
+          supplier_names = ["All"]
+          Enterprise.is_primary_producer.each{ |e| supplier_names << e.name }
+          find("div.select2-container#s2id_supplier_filter").click
+          supplier_names.each { |sn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: sn }
+          find("div.select2-container#s2id_supplier_filter").click
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+          select2_select s1.name, from: "supplier_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}"
+        end
+
+        it "displays all line items when 'All' is selected from supplier filter" do
+          select2_select s1.name, from: "supplier_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select "All", from: "supplier_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
       end
 
-      it "displays a select box for producers, which filters line items by the selected supplier" do
-        supplier_names = ["All"]
-        Enterprise.is_primary_producer.each{ |e| supplier_names << e.name }
-        find("div.select2-container#s2id_supplier_filter").click
-        supplier_names.each { |sn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: sn }
-        find("div.select2-container#s2id_supplier_filter").click
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-        select2_select s1.name, from: "supplier_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}"
+      context "distributor filter" do
+        let!(:d1) { create(:distributor_enterprise) }
+        let!(:d2) { create(:distributor_enterprise) }
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+
+        before :each do
+          visit '/admin/orders/bulk_management'
+        end
+
+        it "displays a select box for distributors, which filters line items by the selected distributor" do
+          distributor_names = ["All"]
+          Enterprise.is_distributor.each{ |e| distributor_names << e.name }
+          find("div.select2-container#s2id_distributor_filter").click
+          distributor_names.each { |dn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: dn }
+          find("div.select2-container#s2id_distributor_filter").click
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+          select2_select d1.name, from: "distributor_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        end
+
+        it "displays all line items when 'All' is selected from distributor filter" do
+          select2_select d1.name, from: "distributor_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select "All", from: "distributor_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
       end
 
-      it "displays all line items when 'All' is selected from supplier filter" do
-        select2_select s1.name, from: "supplier_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select "All", from: "supplier_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
+      context "order_cycle filter" do
+        let!(:oc1) { FactoryGirl.create(:simple_order_cycle ) }
+        let!(:oc2) { FactoryGirl.create(:simple_order_cycle ) }
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc1 ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc2 ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
+
+        before :each do
+          visit '/admin/orders/bulk_management'
+        end
+
+        it "displays a select box for order cycles, which filters line items by the selected order cycle" do
+          order_cycle_names = ["All"]
+          OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
+          find("div.select2-container#s2id_order_cycle_filter").click
+          order_cycle_names.each { |ocn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
+          find("div.select2-container#s2id_order_cycle_filter").click
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+          select2_select oc1.name, from: "order_cycle_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+        end
+
+        it "displays all line items when 'All' is selected from order_cycle filter" do
+          select2_select oc1.name, from: "order_cycle_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select "All", from: "order_cycle_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
       end
 
-      it "displays a select box for distributors, which filters line items by the selected distributor" do
-        distributor_names = ["All"]
-        Enterprise.is_distributor.each{ |e| distributor_names << e.name }
-        find("div.select2-container#s2id_distributor_filter").click
-        distributor_names.each { |dn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: dn }
-        find("div.select2-container#s2id_distributor_filter").click
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-        select2_select d1.name, from: "distributor_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-      end
+      context "combination of filters" do
+        let!(:s1) { create(:supplier_enterprise) }
+        let!(:s2) { create(:supplier_enterprise) }
+        let!(:d1) { create(:distributor_enterprise) }
+        let!(:d2) { create(:distributor_enterprise) }
+        let!(:oc1) { FactoryGirl.create(:simple_order_cycle, suppliers: [s1], distributors: [d1] ) }
+        let!(:oc2) { FactoryGirl.create(:simple_order_cycle, suppliers: [s2], distributors: [d2] ) }
+        let!(:p1) { FactoryGirl.create(:product, supplier: s1) }
+        let!(:p2) { FactoryGirl.create(:product, supplier: s2) }
+        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: oc1 ) }
+        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: oc2 ) }
+        let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
+        let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
 
-      it "displays all line items when 'All' is selected from distributor filter" do
-        select2_select d1.name, from: "distributor_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select "All", from: "distributor_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-      end
+        before :each do
+          visit '/admin/orders/bulk_management'
+        end
 
-      it "displays a select box for order cycles, which filters line items by the selected order cycle" do
-        order_cycle_names = ["All"]
-        OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
-        find("div.select2-container#s2id_order_cycle_filter").click
-        order_cycle_names.each { |ocn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
-        find("div.select2-container#s2id_order_cycle_filter").click
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-        select2_select oc1.name, from: "order_cycle_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-      end
+        it "allows filters to be used in combination" do
+          select2_select oc1.name, from: "order_cycle_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select d1.name, from: "distributor_filter"
+          select2_select s1.name, from: "supplier_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select d2.name, from: "distributor_filter"
+          select2_select s2.name, from: "supplier_filter"
+          page.should_not have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          select2_select oc2.name, from: "order_cycle_filter"
+          page.should_not have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
 
-      it "displays all line items when 'All' is selected from order_cycle filter" do
-        select2_select oc1.name, from: "order_cycle_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select "All", from: "order_cycle_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-      end
-
-      it "allows filters to be used in combination" do
-        select2_select oc1.name, from: "order_cycle_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select d1.name, from: "distributor_filter"
-        select2_select s1.name, from: "supplier_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select d2.name, from: "distributor_filter"
-        select2_select s2.name, from: "supplier_filter"
-        page.should_not have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        select2_select oc2.name, from: "order_cycle_filter"
-        page.should_not have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
-      end
-
-      it "displays a 'Clear All' button which sets all select filters to 'All'" do
-        select2_select oc1.name, from: "order_cycle_filter"
-        select2_select d1.name, from: "distributor_filter"
-        select2_select s1.name, from: "supplier_filter"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should_not have_selector "tr#li_#{li2.id}", visible: true
-        page.should have_button "Clear All"
-        click_button "Clear All"
-        page.should have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
-        page.should have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
-        page.should have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
-        page.should have_selector "tr#li_#{li1.id}", visible: true
-        page.should have_selector "tr#li_#{li2.id}", visible: true
+        it "displays a 'Clear All' button which sets all select filters to 'All'" do
+          select2_select oc1.name, from: "order_cycle_filter"
+          select2_select d1.name, from: "distributor_filter"
+          select2_select s1.name, from: "supplier_filter"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          page.should have_button "Clear All"
+          click_button "Clear All"
+          page.should have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
+          page.should have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
+          page.should have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
+          page.should have_selector "tr#li_#{li1.id}", visible: true
+          page.should have_selector "tr#li_#{li2.id}", visible: true
+        end
       end
     end
 

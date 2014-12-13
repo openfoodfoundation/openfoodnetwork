@@ -1,9 +1,7 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, producers, Taxons, SpreeApiAuth) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth) ->
     $scope.loading = true
 
-    $scope.updateStatusMessage =
-      text: ""
-      style: {}
+    $scope.StatusMessage = StatusMessage
 
     $scope.columns =
       producer:     {name: "Producer",      visible: true}
@@ -64,7 +62,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.resetProducts = ->
       DirtyProducts.clear()
-      $scope.setMessage $scope.updateStatusMessage, "", {}, false
+      StatusMessage.clear()
 
     # $scope.matchProducer = (product) ->
     #   for producer in $scope.producers
@@ -182,7 +180,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if productsToSubmit.length > 0
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
-        $scope.setMessage $scope.updateStatusMessage, "No changes to save.", color: "grey", 3000
+        StatusMessage.display 'alert', 'No changes to save.'
 
 
     $scope.updateProducts = (productsToSubmit) ->
@@ -239,42 +237,25 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if $scope.limit < $scope.products.length
         $scope.limit = $scope.limit + 5
 
-    $scope.setMessage = (model, text, style, timeout) ->
-      model.text = text
-      model.style = style
-      $timeout.cancel model.timeout  if model.timeout
-      if timeout
-        model.timeout = $timeout(->
-          $scope.setMessage model, "", {}, false
-        , timeout, true)
-
 
     $scope.displayUpdating = ->
-      $scope.setMessage $scope.updateStatusMessage, "Saving...",
-        color: "#FF9906"
-      , false
+      StatusMessage.display 'progress', 'Saving...'
 
 
     $scope.displaySuccess = ->
-      $scope.setMessage $scope.updateStatusMessage, "Changes saved.",
-        color: "#9fc820"
-      , 3000
+      StatusMessage.display 'success', 'Changes saved.'
 
 
     $scope.displayFailure = (failMessage) ->
-      $scope.setMessage $scope.updateStatusMessage, "Saving failed. " + failMessage,
-        color: "#DA5354"
-      , false
+      StatusMessage.display 'failure', "Saving failed. #{failMessage}"
 
 
     $scope.displayDirtyProducts = ->
       if DirtyProducts.count() > 0
         message = if DirtyProducts.count() == 1 then "one product" else DirtyProducts.count() + " products"
-        $scope.setMessage $scope.updateStatusMessage, "Changes to " + message + " remain unsaved.",
-          color: "gray"
-        , false
+        StatusMessage.display 'notice', "Changes to #{message} remain unsaved."
       else
-        $scope.setMessage $scope.updateStatusMessage, "", {}, false
+        StatusMessage.clear()
 
 
 filterSubmitProducts = (productsToFilter) ->

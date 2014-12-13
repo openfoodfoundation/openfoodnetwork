@@ -28,10 +28,6 @@ require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
 require 'spree/core/testing_support/authorization_helpers'
 
-require 'active_record/fixtures'
-fixtures_dir = File.expand_path('../../db/default', __FILE__)
-ActiveRecord::Fixtures.create_fixtures(fixtures_dir, ['spree/states', 'spree/countries'])
-
 # Capybara config
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist

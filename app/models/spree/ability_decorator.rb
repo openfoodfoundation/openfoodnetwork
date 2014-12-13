@@ -74,6 +74,12 @@ class AbilityDecorator
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
 
+    can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+      OpenFoodNetwork::Permissions.new(user).
+        order_cycle_enterprises.is_distributor.
+        include? vo.hub
+    end
+
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
     can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
 

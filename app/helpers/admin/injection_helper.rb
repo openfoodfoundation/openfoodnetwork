@@ -33,6 +33,10 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_hub_permissions
+      render partial: "admin/json/injection_ams", locals: {ngModule: "ofn.admin", name: "hubPermissions", json: @hub_permissions.to_json}
+    end
+
     def admin_inject_products
       admin_inject_json_ams_array "ofn.admin", "products", @products, Spree::Api::ProductSerializer
     end
@@ -43,6 +47,10 @@ module Admin
 
     def admin_inject_users
       admin_inject_json_ams_array "ofn.admin", "users", @users, Api::Admin::UserSerializer
+    end
+
+    def admin_inject_variant_overrides
+      admin_inject_json_ams_array "ofn.admin", "variantOverrides", @variant_overrides, Api::Admin::VariantOverrideSerializer
     end
 
     def admin_inject_spree_api_key

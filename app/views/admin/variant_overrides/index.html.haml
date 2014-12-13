@@ -1,0 +1,11 @@
+= render 'admin/variant_overrides/header'
+= render 'admin/variant_overrides/data'
+
+%div{ ng: { app: 'ofn.admin', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
+  = render 'admin/variant_overrides/hub_choice'
+
+  %div{ng: {show: 'hub'}}
+    %h2 {{ hub.name }}
+    = render 'admin/variant_overrides/actions'
+
+  = render 'admin/variant_overrides/products'
