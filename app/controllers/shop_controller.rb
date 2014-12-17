@@ -1,3 +1,5 @@
+require 'open_food_network/scope_product_to_hub'
+
 class ShopController < BaseController
   layout "darkswarm"
   before_filter :require_distributor_chosen
@@ -10,10 +12,13 @@ class ShopController < BaseController
   def products
     # Can we make this query less slow?
     #
-    if @products = current_order_cycle.andand
-      .valid_products_distributed_by(current_distributor).andand
-      .select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.andand
-      .sort_by {|p| p.name }
+    if current_order_cycle
+      @products = current_order_cycle.
+        valid_products_distributed_by(current_distributor).
+        each { |p| p.scope_to_hub current_distributor }.
+        select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }.
+        sort_by(&:name)
+
       render status: 200,
         json: ActiveModel::ArraySerializer.new(@products, each_serializer: Api::ProductSerializer, 
         current_order_cycle: current_order_cycle, current_distributor: current_distributor).to_json 

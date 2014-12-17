@@ -137,7 +137,7 @@ Spree::Product.class_eval do
     # This product has stock for a distribution if it is available on-demand
     # or if one of its variants in the distribution is in stock
     (!has_variants? && on_demand) ||
-      variants_distributed_by(order_cycle, distributor).any? { |v| v.in_stock? }
+      variants_distributed_by(order_cycle, distributor).any?(&:in_stock?)
   end
 
   def variants_distributed_by(order_cycle, distributor)
