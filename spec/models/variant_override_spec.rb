@@ -26,4 +26,18 @@ describe VariantOverride do
       VariantOverride.price_for(hub, variant).should be_nil
     end
   end
+
+  describe "looking up count on hand" do
+    let(:variant) { create(:variant) }
+    let(:hub)     { create(:distributor_enterprise) }
+
+    it "returns the numeric stock level when present" do
+      VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12)
+      VariantOverride.count_on_hand_for(hub, variant).should == 12
+    end
+
+    it "returns nil otherwise" do
+      VariantOverride.count_on_hand_for(hub, variant).should be_nil
+    end
+  end
 end
