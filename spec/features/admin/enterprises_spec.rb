@@ -192,7 +192,7 @@ feature %q{
 
     click_link "About"
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
+    long_description = find :css, "text-angular#enterprise_long_description div.ta-scroll-window div.ta-bind"
     long_description.set 'This is an interesting long description'
 
     # Check Angularjs switching of sidebar elements
@@ -247,7 +247,8 @@ feature %q{
     select2_search 'Victoria', :from => 'State'
 
     click_link "Shop Preferences"
-    fill_in 'enterprise_preferred_shopfront_message', :with => 'This is my shopfront message.'
+    shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
+    shopfront_message.set 'This is my shopfront message.'
 
     click_button 'Update'
 
@@ -269,7 +270,7 @@ feature %q{
     page.should have_content 'This is an interesting long description'
 
     click_link "Shop Preferences"
-    page.should have_field 'enterprise_preferred_shopfront_message', :text => 'This is my shopfront message.'
+    page.should have_content 'This is my shopfront message.'
   end
 
   describe "producer properties" do
