@@ -199,13 +199,13 @@ feature %q{
     click_link "Primary Details"
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    page.should have_selector "#enterprise_fees", visible: false
-    page.should have_selector "#payment_methods", visible: false
-    page.should have_selector "#shipping_methods", visible: false
+    page.should_not have_selector "#enterprise_fees"
+    page.should_not have_selector "#payment_methods"
+    page.should_not have_selector "#shipping_methods"
     check 'enterprise_is_primary_producer'
     page.should have_selector "#enterprise_fees"
-    page.should have_selector "#payment_methods", visible: false
-    page.should have_selector "#shipping_methods", visible: false
+    page.should_not have_selector "#payment_methods"
+    page.should_not have_selector "#shipping_methods"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
     page.should have_selector "#enterprise_fees"
