@@ -4,6 +4,7 @@ class Enterprise < ActiveRecord::Base
   ENTERPRISE_SEARCH_RADIUS = 100
 
   preference :shopfront_message, :text, default: ""
+  preference :shopfront_closed_message, :text, default: ""
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 

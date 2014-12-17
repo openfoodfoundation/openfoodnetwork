@@ -5,4 +5,12 @@
     .eight.columns.omega
       %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_message', 'id' => 'enterprise_preferred_shopfront_message', 'name' => 'enterprise[preferred_shopfront_message]', 'class' => 'text-angular',
         'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-        'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}
+        'placeholder' => 'An optional explanation for customers detailing how your shopfront works, to be displayed above the product list on your shop page.'}
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label "preferred_shopfront_closed_message", t(:shopfront_closed_message)
+    .eight.columns.omega
+      %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_closed_message', 'id' => 'enterprise_preferred_shopfront_closed_message', 'name' => 'enterprise[preferred_shopfront_closed_message]', 'class' => 'text-angular',
+        'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
+        'placeholder' => 'A message which provides a more detailed explanation about why your shop is closed and/or when customers can expect it to open again. This is displayed on your shop only when you have no active order cycles (ie. shop is closed).'}

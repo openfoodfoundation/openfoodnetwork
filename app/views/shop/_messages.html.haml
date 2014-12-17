@@ -1,8 +1,9 @@
 - if @order_cycles and @order_cycles.empty?
-  .row
-    .small-12.columns
-      .shopfront_closed_message
-        = current_distributor.preferred_shopfront_message.html_safe
+  - if current_distributor.preferred_shopfront_closed_message.present?
+    .row
+      .small-12.columns
+        .shopfront_closed_message
+          = current_distributor.preferred_shopfront_closed_message.html_safe
 - elsif current_distributor.preferred_shopfront_message.present?
   .row
     .small-12.columns
