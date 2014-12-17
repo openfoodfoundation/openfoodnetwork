@@ -1,3 +1,5 @@
+require 'open_food_network/variant_proxy'
+
 class Api::ProductSerializer < ActiveModel::Serializer
   # TODO
   # Prices can't be cached? How?
@@ -43,6 +45,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   def variants
     object.variants.
       for_distribution(options[:current_order_cycle], options[:current_distributor]).
-      in_stock
+      in_stock.
+      map { |v| OpenFoodNetwork::VariantProxy.new(v, options[:current_distributor]) }
   end
 end

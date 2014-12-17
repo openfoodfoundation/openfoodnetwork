@@ -1,3 +1,5 @@
+require 'open_food_network/variant_proxy'
+
 module OpenFoodNetwork
   # Variants can have several fields overridden on a per-enterprise basis by the
   # VariantOverride model. These overrides can be applied to variants by wrapping their

@@ -15,6 +15,10 @@ module OpenFoodNetwork
       VariantOverride.price_for(@hub, @variant) || @variant.price
     end
 
+    def price_with_fees(distributor, order_cycle)
+      price + @variant.fees_for(distributor, order_cycle)
+    end
+
 
     def method_missing(name, *args, &block)
       @variant.send(name, *args, &block)
