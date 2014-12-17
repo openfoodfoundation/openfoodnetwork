@@ -66,12 +66,10 @@
     = f.radio_button :visible, false
     &nbsp;
     = f.label :visible, "Not Visible", :value => "false"
-- if @enterprise.is_distributor
-- # TODO: Angularise this
-  .row
-    .three.columns.alpha
-      %label Link to shop front
-      .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
-        %a What's this?
-    .eight.columns.omega
-      = main_app.shop_enterprise_url(@enterprise)
+.row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
+  .three.columns.alpha
+    %label Link to shop front
+    .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+      %a What's this?
+  .eight.columns.omega
+    = main_app.shop_enterprise_url(@enterprise)
