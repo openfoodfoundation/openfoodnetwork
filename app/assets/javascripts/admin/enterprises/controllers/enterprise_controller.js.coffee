@@ -1,11 +1,10 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, longDescription, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods, SideMenu) ->
+  .controller "enterpriseCtrl", ($scope, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
     # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
-    $scope.htmlVariable = longDescription
     $scope.pristineEmail = $scope.Enterprise.email
     $scope.menu = SideMenu
 
