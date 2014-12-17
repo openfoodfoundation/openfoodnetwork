@@ -2,9 +2,9 @@
   .row
     .small-12.columns
       .shopfront_closed_message
-        = current_distributor.preferred_shopfront_message
+        = current_distributor.preferred_shopfront_message.html_safe
 - elsif current_distributor.preferred_shopfront_message.present?
   .row
     .small-12.columns
       .shopfront_message
-        = current_distributor.preferred_shopfront_message
+        = current_distributor.preferred_shopfront_message.html_safe

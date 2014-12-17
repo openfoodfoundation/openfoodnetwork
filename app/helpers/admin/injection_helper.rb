@@ -5,8 +5,8 @@ module Admin
     end
 
     def admin_inject_enterprises
-      admin_inject_json_ams_array("ofn.admin", "my_enterprises", @my_enterprises, Api::Admin::EnterpriseSerializer) +
-        admin_inject_json_ams_array("ofn.admin", "all_enterprises", @all_enterprises, Api::Admin::EnterpriseSerializer)
+      admin_inject_json_ams_array("ofn.admin", "my_enterprises", @my_enterprises, Api::Admin::BasicEnterpriseSerializer) +
+        admin_inject_json_ams_array("ofn.admin", "all_enterprises", @all_enterprises, Api::Admin::BasicEnterpriseSerializer)
     end
 
     def admin_inject_enterprise_relationships
