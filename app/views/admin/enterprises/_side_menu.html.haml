@@ -1,5 +1,6 @@
 .side_menu{ ng: { controller: 'sideMenuCtrl' } }
-  .menu_item{ ng: { repeat: '(index,item) in menu.items',
+  %a.menu_item{ href: "#", id: "{{ item.name.toLowerCase().replace(' ', '_') }}",
+    ng: { repeat: '(index,item) in menu.items',
     show: "item.visible",
     click: 'select(index)',
     class: '{ selected: item.selected}',

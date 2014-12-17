@@ -3,6 +3,8 @@ class Enterprise < ActiveRecord::Base
   SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
+  preference :shopfront_message, :text, default: ""
+
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
   self.inheritance_column = nil

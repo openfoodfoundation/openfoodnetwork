@@ -47,9 +47,21 @@ angular.module("admin.enterprises")
       , 0
 
     $scope.$watch "Enterprise.is_primary_producer", (newValue, oldValue) ->
-      if newValue
+      if !newValue && $scope.Enterprise.sells == "none"
+        $scope.menu.hide_item_by_name('Enterprise Fees')
+      else
+        $scope.menu.show_item_by_name('Enterprise Fees')
+
+
+    $scope.$watch "Enterprise.sells", (newValue, oldValue) ->
+      if newValue == "none"
         $scope.menu.hide_item_by_name('Shipping Methods')
         $scope.menu.hide_item_by_name('Payment Methods')
-      else if !newValue
+        if $scope.Enterprise.is_primary_producer
+          $scope.menu.show_item_by_name('Enterprise Fees')
+        else
+          $scope.menu.hide_item_by_name('Enterprise Fees')
+      else
         $scope.menu.show_item_by_name('Shipping Methods')
         $scope.menu.show_item_by_name('Payment Methods')
+        $scope.menu.show_item_by_name('Enterprise Fees')

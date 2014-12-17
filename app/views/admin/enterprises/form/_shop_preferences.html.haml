@@ -1,1 +1,9 @@
-Something
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label "preferred_shopfront_message", t(:shopfront_message)
+    .eight.columns.omega
+      -# %text-angular{'ng-model' => 'longDescription', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular',
+      -#   'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
+      -#   'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}
+      = f.text_area :preferred_shopfront_message, rows: 6, class: "fullwidth", placeholder: "An option explanation for customers detailing how your shopfront works. This text will appear at the top of your shop page, immediately above your products."
