@@ -41,6 +41,8 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_one :master, serializer: Api::VariantSerializer
 
   def variants
-    object.variants_for(options[:current_order_cycle], options[:current_distributor]).in_stock
+    object.variants.
+      for_distribution(options[:current_order_cycle], options[:current_distributor]).
+      in_stock
   end
 end

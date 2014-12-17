@@ -39,6 +39,10 @@ Spree::Variant.class_eval do
     select('DISTINCT spree_variants.*')
   }
 
+  scope :for_distribution, lambda { |order_cycle, distributor|
+    where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+  }
+
 
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
