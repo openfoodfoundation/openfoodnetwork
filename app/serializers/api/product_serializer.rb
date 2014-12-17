@@ -1,4 +1,4 @@
-require 'open_food_network/variant_proxy'
+require 'open_food_network/scope_variant_to_hub'
 
 class Api::ProductSerializer < ActiveModel::Serializer
   # TODO
@@ -43,9 +43,13 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_one :master, serializer: Api::VariantSerializer
 
   def variants
+    # We use the in_stock? method here instead of the in_stock scope because we need to
+    # look up the stock as overridden by VariantOverrides, and the scope method is not affected
+    # by them.
+
     object.variants.
       for_distribution(options[:current_order_cycle], options[:current_distributor]).
-      in_stock.
-      map { |v| OpenFoodNetwork::VariantProxy.new(v, options[:current_distributor]) }
+      each { |v| v.scope_to_hub options[:current_distributor] }.
+      select(&:in_stock?)
   end
 end
