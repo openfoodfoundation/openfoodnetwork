@@ -19,7 +19,7 @@
     %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
     %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
   %td.category{ 'ng-if' => 'columns.category.visible' }
-    %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category_id", 'ng-model' => 'product.category_id', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category_id' }
+    %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category_id", 'ng-model' => 'product.category_id', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category_id', 'multiple-selection' => 'false', placeholder: 'Category' }
   %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
     %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
   %td.actions
