@@ -54,7 +54,14 @@ feature "shopping with variant overrides defined", js: true do
       page.should have_selector 'li.total div', text: '= $61.11'
     end
 
-    it "shows the overridden price with fees in the quick cart"
+    it "shows the overridden price with fees in the quick cart" do
+      fill_in "variants[#{v1.id}]", with: "2"
+      show_cart
+      page.should have_selector "#cart-variant-#{v1.id} .quantity", text: '2'
+      page.should have_selector "#cart-variant-#{v1.id} .price", text: '61.11'
+      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: '122.22'
+    end
+
     it "shows the correct prices in the shopping cart"
     it "shows the correct prices in the checkout"
     it "creates the order with the correct prices"

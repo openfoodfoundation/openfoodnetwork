@@ -12,7 +12,7 @@
       %h5 Your shopping cart
       %ul
         %li.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
-        "ng-controller" => "LineItemCtrl"}
+        "ng-controller" => "LineItemCtrl", "id" => "cart-variant-{{ line_item.variant.id }}"}
           .row
             .columns.small-7
               %small
@@ -20,15 +20,15 @@
                 %em {{ line_item.variant.unit_to_display }}
             .columns.small-3.text-right
               %small
-                {{line_item.quantity}}
+                %span.quantity {{ line_item.quantity }}
                 %i.ofn-i_009-close
-                {{ line_item.variant.price_with_fees | localizeCurrency }}    
+                %span.price {{ line_item.variant.price_with_fees | localizeCurrency }}
         
             .columns.small-2
               %small
                 \=
                 %strong 
-                  .right {{ line_item.variant.totalPrice() | localizeCurrency }}
+                  .total-price.right {{ line_item.variant.totalPrice() | localizeCurrency }}
 
         %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
           .row
