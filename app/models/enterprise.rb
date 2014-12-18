@@ -56,6 +56,7 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
+  validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
@@ -339,6 +340,12 @@ class Enterprise < ActiveRecord::Base
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
       errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
+    end
+  end
+
+  def shopfront_taxons
+    unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
+      errors.add(:shopfront_taxon_order, "must contain a list of taxons.")
     end
   end
 end
