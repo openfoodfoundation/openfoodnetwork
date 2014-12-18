@@ -5,6 +5,7 @@ require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
+require 'open_food_network/sales_tax_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -55,7 +56,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_distributors
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -80,6 +81,36 @@ Spree::Admin::ReportsController.class_eval do
         @report.table.each { |row| csv << row }
       end
       send_data csv_string, :filename => "orders_and_distributors.csv"
+    end
+  end
+  
+  def sales_tax
+    params[:q] = {} unless params[:q]
+
+    if params[:q][:completed_at_gt].blank?
+      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+    else
+      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
+    end
+
+    if params[:q] && !params[:q][:completed_at_lt].blank?
+      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]).end_of_day rescue ""
+    end
+    params[:q][:meta_sort] ||= "completed_at.desc"
+
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
+    orders = @search.result
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+
+    @report = OpenFoodNetwork::SalesTaxReport.new orders
+    unless params[:csv]
+      render :html => @report
+    else
+      csv_string = CSV.generate do |csv|
+        csv << @report.header
+        @report.table.each { |row| csv << row }
+      end
+      send_data csv_string, :filename => "sales_tax.csv"
     end
   end
 
@@ -620,7 +651,8 @@ Spree::Admin::ReportsController.class_eval do
       :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
-      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" }
+      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
+      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

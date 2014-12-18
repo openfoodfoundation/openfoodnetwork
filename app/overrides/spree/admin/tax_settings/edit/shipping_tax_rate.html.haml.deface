@@ -1,0 +1,5 @@
+/ insert_after "[data-hook='shipment_vat']"
+
+%div.field.align-center{ "data-hook" => "shipping_tax_rate" }
+  = number_field_tag "preferences[shipping_tax_rate]", Spree::Config[:shipping_tax_rate].to_f, in: 0.0..1.0, step: 0.01
+  = label_tag nil, t(:shipping_tax_rate)

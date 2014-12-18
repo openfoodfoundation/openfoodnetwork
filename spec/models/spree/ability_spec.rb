@@ -317,7 +317,7 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :report)
+          should have_ability([:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], for: :report)
         end
 
         it "should not be able to read other reports" do

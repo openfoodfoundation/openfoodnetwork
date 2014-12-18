@@ -1,0 +1,40 @@
+= form_for @search, :url => spree.sales_tax_admin_reports_path  do |s|
+  = label_tag nil, t(:date_range)
+  %br
+  %br
+  .date-range-filter
+    = label_tag nil, t(:start), :class => 'inline'
+    = s.text_field :completed_at_gt, :class => 'datepicker datepicker-from'
+    %span.range-divider
+      %i.icon-arrow-right
+    = s.text_field :completed_at_lt, :class => 'datepicker datepicker-to'
+    = label_tag nil, t(:stop), :class => 'inline'
+  %br
+  %div{"class" => "row"}
+    %div{"class" => "four columns alpha"}
+      = label_tag nil, "Distributor: "
+      = s.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
+  = check_box_tag :csv
+  = label_tag :csv, "Download as csv"
+  %br
+  = button t(:search)
+%br
+%br
+%table#listing_orders.index
+  %thead
+    %tr{'data-hook' => "orders_header"}
+      - @report.header.each do |heading|
+        %th=heading
+  %tbody
+    - @report.table.each do |row|
+      %tr
+        - row.each_with_index do |column, i|
+          -if i==0
+            %td
+              %a{:class => "edit-order", 'href' => "/admin/orders/#{column}"} #{column}
+          -else
+            %td= column
+    - if @report.table.empty?
+      %tr
+        %td{:colspan => "12"}= t(:none)
+
