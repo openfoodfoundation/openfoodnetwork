@@ -77,7 +77,7 @@ describe Spree::Order do
       subject.update_distribution_charge!
     end
 
-    it "ensures the correct adjustment(s) are created for order cycles" do 
+    it "ensures the correct adjustment(s) are created for order cycles" do
       EnterpriseFee.stub(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
       subject.stub(:line_items) { [line_item] }
@@ -348,12 +348,12 @@ describe Spree::Order do
       it "returns the order with payment method name" do
 	Spree::Order.with_payment_method_name('foo').should == [o1]
       end
-     
+
       it "doesn't return rows with a different payment method name" do
         Spree::Order.with_payment_method_name('foobar').should_not include o1
         Spree::Order.with_payment_method_name('foobar').should_not include o2
       end
-  
+
       it "doesn't return duplicate rows" do
         p2 = FactoryGirl.create(:payment, :order => o1, :payment_method => pm1)
 	Spree::Order.with_payment_method_name('foo').length.should == 1

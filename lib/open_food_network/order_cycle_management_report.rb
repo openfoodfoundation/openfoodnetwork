@@ -8,7 +8,6 @@ module OpenFoodNetwork
 
     def header
       ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
-    
     end
 
     def table
@@ -16,14 +15,14 @@ module OpenFoodNetwork
         ba = order.billing_address
         da = order.distributor.andand.address
         [ba.firstname,
-          ba.lastname,
-          order.email,
-           ba.phone,
-           order.distributor.andand.name,
-           order.shipping_method.andand.name,
-           order.payments.first.andand.payment_method.andand.name,
-	   order.payments.first.amount
-        ]       
+         ba.lastname,
+         order.email,
+         ba.phone,
+         order.distributor.andand.name,
+         order.shipping_method.andand.name,
+         order.payments.first.andand.payment_method.andand.name,
+         order.payments.first.amount
+        ]
       end
     end
 
@@ -35,7 +34,7 @@ module OpenFoodNetwork
       filter_to_order_cycle filter_to_payment_method filter_to_shipping_method orders
     end
 
-    def filter_to_payment_method (orders)
+    def filter_to_payment_method(orders)
       if params[:payment_method_name].present?
         orders.with_payment_method_name(params[:payment_method_name])
       else
@@ -43,7 +42,7 @@ module OpenFoodNetwork
       end
     end
 
-    def filter_to_shipping_method (orders)  
+    def filter_to_shipping_method(orders)
       if params[:shipping_method_name].present?
         orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
       else
@@ -58,8 +57,5 @@ module OpenFoodNetwork
         orders
       end
     end
-
-  
   end
 end
-

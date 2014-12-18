@@ -13,8 +13,8 @@ module Spree
     end
 
     def report_shipping_method_options(orders)
-      orders.map { |o| o.shipping_method.andand.name  }.uniq      
-    end    
+      orders.map { |o| o.shipping_method.andand.name  }.uniq
+    end
 
   end
 end

@@ -72,7 +72,7 @@ module OpenFoodNetwork
         let!(:order1) { create(:order, shipping_method: sm1, order_cycle: oc1) }
         let!(:payment1) { create(:payment, order: order1, payment_method: pm1) }
 
-	it "returns all orders sans-params" do
+        it "returns all orders sans-params" do
           subject.filter(orders).should == orders
         end
 
@@ -84,16 +84,16 @@ module OpenFoodNetwork
           subject.filter(orders).should == [order1]
         end
 
-	it "filters to a payment method" do
-          pm2 = create(:payment_method, name: "PM2")  
-	  order2 = create(:order)
-	  payment2 = create(:payment, order: order2, payment_method: pm2)
+        it "filters to a payment method" do
+          pm2 = create(:payment_method, name: "PM2")
+          order2 = create(:order)
+          payment2 = create(:payment, order: order2, payment_method: pm2)
 
           subject.stub(:params).and_return(payment_method_name: pm1.name)
           subject.filter(orders).should == [order1]
         end
 
-	it "filters to a shipping method" do
+        it "filters to a shipping method" do
           sm2 = create(:shipping_method, name: "ship2")
           order2 = create(:order, shipping_method: sm2)
 

@@ -68,7 +68,7 @@ Spree::Admin::ReportsController.class_eval do
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
 
     @orders = @search.result
- 
+
     render_report(@report.header, @report.table, params[:csv], "customers.csv")
   end
 
