@@ -638,7 +638,7 @@ Spree::Admin::ReportsController.class_eval do
       :customers => {:name => "Customers", :description => 'Customer details'},
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
-      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" }
+      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''}
     }
     # Return only reports the user is authorized to view.
