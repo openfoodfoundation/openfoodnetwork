@@ -25,5 +25,27 @@ module Spree
         LineItem.supplied_by_any([s1, s2]).sort.should == [li1, li2].sort
       end
     end
+
+    describe "calculating price with adjustments" do
+      it "does not return fractional cents" do
+        li = LineItem.new
+
+        li.stub(:price) { 55.55 }
+        li.stub_chain(:order, :adjustments, :where, :sum) { 11.11 }
+        li.stub(:quantity) { 2 }
+        li.price_with_adjustments.should == 61.11
+      end
+    end
+
+    describe "calculating amount with adjustments" do
+      it "returns a value consistent with price_with_adjustments" do
+        li = LineItem.new
+
+        li.stub(:price) { 55.55 }
+        li.stub_chain(:order, :adjustments, :where, :sum) { 11.11 }
+        li.stub(:quantity) { 2 }
+        li.amount_with_adjustments.should == 122.22
+      end
+    end
   end
 end
