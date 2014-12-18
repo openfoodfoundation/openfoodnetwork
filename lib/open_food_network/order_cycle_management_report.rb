@@ -7,7 +7,7 @@ module OpenFoodNetwork
     end
 
     def header
-      ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount ", "Amount Paid"]
+      ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
     
     end
 
