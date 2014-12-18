@@ -39,9 +39,9 @@ module OpenFoodNetwork
 
         it "only shows orders managed by the current user" do
           d1 = create(:distributor_enterprise)
-          d1.enterprise_roles.build(user: user).save
+          d1.enterprise_roles.create!(user: user)
           d2 = create(:distributor_enterprise)
-          d2.enterprise_roles.build(user: create(:user)).save
+          d2.enterprise_roles.create!(user: create(:user))
 
           o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
@@ -53,7 +53,7 @@ module OpenFoodNetwork
 
         it "does not show orders through a hub that the current user does not manage" do
           # Given a supplier enterprise with an order for one of its products
-          supplier.enterprise_roles.build(user: user).save
+          supplier.enterprise_roles.create!(user: user)
           order.line_items << create(:line_item, product: product)
 
           # When I fetch orders, I should see no orders
