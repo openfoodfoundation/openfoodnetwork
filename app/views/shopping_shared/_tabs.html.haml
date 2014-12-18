@@ -11,6 +11,6 @@
         %tab.columns{heading: heading,
         id: "tab_#{name}",
         active: "active(\'#{name}\')",
-        select: "select(\'#{name}\')",
+        select: "toggle(\'#{name}\')",
         class: "small-12 medium-#{cols}" }
           = render "shopping_shared/#{name}"
