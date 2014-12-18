@@ -17,11 +17,11 @@
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id ", "id" => "product-{{ product.id }}"}
 
       = render partial: "shop/products/summary"
-      %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants"}
-      %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id"}
+      %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants", "id" => "variant-{{ product.master.id }}"}
+      %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id", "id" => "variant-{{ variant.id }}"}
 
     %product{"ng-show" => "Products.loading"}
       .row.summary
