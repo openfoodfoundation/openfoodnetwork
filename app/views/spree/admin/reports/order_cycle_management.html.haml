@@ -16,7 +16,7 @@
   %br
   = label_tag nil, "Shipping Method: "
   = select_tag(:shipping_method_name, 
-      options_for_select(report_shipping_options(@orders), params[:shipping_method_name]), 
+      options_for_select(report_shipping_method_options(@orders), params[:shipping_method_name]),
 	       include_blank: true) 
   %br
   %br
