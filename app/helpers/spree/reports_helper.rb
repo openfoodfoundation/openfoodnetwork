@@ -7,5 +7,14 @@ module Spree
         [ "#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id ]
       end
     end
+
+    def report_payment_method_options(orders)
+      orders.map { |o| o.payments.first.payment_method.andand.name }.uniq
+    end
+
+    def report_shipping_options(orders)
+      orders.map { |o| o.shipping_method.andand.name  }.uniq      
+    end    
+
   end
 end
