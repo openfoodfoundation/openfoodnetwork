@@ -1,9 +1,10 @@
-angular.module("ofn.admin").directive "ofnTaxonAutocomplete", (Taxons) ->
+angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons) ->
   # Adapted from Spree's existing taxon autocompletion
   scope: true
   link: (scope,element,attrs) ->
     multiple = scope.$eval attrs.multipleSelection
     placeholder = attrs.placeholder
+    initalSelection = scope.$eval attrs.ngModel
 
     setTimeout ->
       element.select2
@@ -11,9 +12,9 @@ angular.module("ofn.admin").directive "ofnTaxonAutocomplete", (Taxons) ->
         multiple: multiple
         initSelection: (element, callback) ->
           if multiple
-            callback Taxons.findByIDs(scope.product.category_id)
+            callback Taxons.findByIDs(initalSelection)
           else
-            callback Taxons.findByID(scope.product.category_id)
+            callback Taxons.findByID(initalSelection)
         query: (query) ->
           query.callback { results: Taxons.findByTerm(query.term) }
         formatResult: (taxon) ->

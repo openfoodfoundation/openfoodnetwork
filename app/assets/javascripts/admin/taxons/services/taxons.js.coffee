@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "Taxons", (taxons, $filter) ->
+angular.module("admin.taxons").factory "Taxons", (taxons, $filter) ->
   new class Taxons
     constructor: ->
       @taxons = taxons
