@@ -18,21 +18,23 @@ feature "shopping with variant overrides defined", js: true do
     let(:v1) { create(:variant, product: p1, price: 11.11, unit_value: 1) }
     let(:v2) { create(:variant, product: p1, price: 22.22, unit_value: 2) }
     let(:v3) { create(:variant, product: p2, price: 33.33, unit_value: 3) }
-    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 99.99) }
+    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55) }
     let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
     let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
+    let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
 
     before do
       outgoing_exchange.variants << v1
       outgoing_exchange.variants << v2
       outgoing_exchange.variants << v3
+      outgoing_exchange.enterprise_fees << ef
       visit shop_path
       click_link hub.name
     end
 
     it "shows the overridden price" do
       page.should_not have_price "$11.11"
-      page.should have_price "$99.99"
+      page.should have_price "$61.11"
     end
 
     it "looks up stock from the override" do
@@ -44,7 +46,14 @@ feature "shopping with variant overrides defined", js: true do
       page.should_not have_content v3.options_text
     end
 
-    it "calculates fees correctly"
+    it "calculates fees correctly" do
+      page.find("#variant-#{v1.id} .graph-button").click
+      page.find(".price_breakdown a").click
+      page.should have_selector 'li.cost div', text: '$55.55'
+      page.should have_selector 'li.packing-fee div', text: '$5.56'
+      page.should have_selector 'li.total div', text: '= $61.11'
+    end
+
     it "shows the overridden price with fees in the quick cart"
     it "shows the correct prices in the shopping cart"
     it "shows the correct prices in the checkout"
