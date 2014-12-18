@@ -1,0 +1,42 @@
+%div{style: "padding: 1.5em;"}
+  %img{"src" => @group.promo_image, style: "display: block"}
+  %div{style: "margin-bottom: 1em"}
+    %img{"src" => @group.logo}
+    %div{style: "display: inline-block; vertical-align: middle"}
+      %h2{style: "margin-bottom: 0em"}= @group.name
+      %div= @group.description
+
+  #div{"ng-controller" => "TabsCtrl", style: "clear: both"}
+    %tabset
+      %tab{heading: 'Map',
+          active: "active(\'\')",
+          select: "select(\'\')"}
+        %p TODO: show a map of enterprises
+      %tab{heading: 'About us',
+          active: "active(\'hi\')",
+          select: "select(\'hi\')"}
+        %h3 About us
+        %p= @group.long_description
+      %tab{heading: 'Our producers',
+          active: "active(\'producers\')",
+          select: "select(\'producers\')"}
+        %h3 Our producers
+        %ul
+          - @group.enterprises.is_primary_producer.each do |enterprise|
+            %li= link_to enterprise.name, enterprise
+      %tab{heading: 'Our hubs',
+          active: "active(\'hubs\')",
+          select: "select(\'hubs\')"}
+        %h3 Our producers
+        %ul
+          - @group.enterprises.is_distributor.each do |enterprise|
+            %li= link_to enterprise.name, enterprise
+      %tab{heading: 'Contact us',
+          active: "active(\'contact\')",
+          select: "select(\'contact\')"}
+        %h3 Contact us
+        %p TODO: provide contact information
+
+  %p TODO: show the group's contact footer
+
+= render partial: "shared/footer"

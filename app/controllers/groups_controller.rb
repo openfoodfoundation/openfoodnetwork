@@ -5,4 +5,8 @@ class GroupsController < BaseController
   def index
     @groups = EnterpriseGroup.on_front_page.by_position
   end
+
+  def show
+    @group = EnterpriseGroup.find params[:id]
+  end
 end
