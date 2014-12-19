@@ -1,4 +1,4 @@
-%tr.line-item
+%tr.line-item{class: "variant-#{variant.id}"}
   %td.cart-item-image{"data-hook" => "cart_item_image"}
     - if variant.images.length == 0
       = link_to small_image(variant.product), variant.product

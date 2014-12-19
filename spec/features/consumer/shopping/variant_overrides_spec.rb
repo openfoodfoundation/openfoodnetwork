@@ -9,7 +9,7 @@ feature "shopping with variant overrides defined", js: true do
   use_short_wait
 
   describe "viewing products" do
-    let(:hub) { create(:distributor_enterprise) }
+    let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:producer) { create(:supplier_enterprise) }
     let(:oc) { create(:simple_order_cycle, suppliers: [producer], coordinator: hub, distributors: [hub]) }
     let(:outgoing_exchange) { oc.exchanges.outgoing.first }
@@ -54,15 +54,29 @@ feature "shopping with variant overrides defined", js: true do
       page.should have_selector 'li.total div', text: '= $61.11'
     end
 
+    # The two specs below reveal an unrelated issue with fee calculation. See:
+    # https://github.com/openfoodfoundation/openfoodnetwork/issues/312
+
     it "shows the overridden price with fees in the quick cart" do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
       page.should have_selector "#cart-variant-#{v1.id} .quantity", text: '2'
-      page.should have_selector "#cart-variant-#{v1.id} .price", text: '61.11'
-      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: '122.22'
+      page.should have_selector "#cart-variant-#{v1.id} .price", text: '$61.11'
+      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: '$122.22'
     end
 
-    it "shows the correct prices in the shopping cart"
+    it "shows the correct prices in the shopping cart" do
+      fill_in "variants[#{v1.id}]", with: "2"
+      add_to_cart
+
+      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: '$61.11'
+      page.should have_field "order[line_items_attributes][0][quantity]", with: '2'
+      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: '$122.21'
+
+      page.should have_selector "#edit-cart .item-total", text: '$122.21'
+      page.should have_selector "#edit-cart .grand-total", text: '$122.21'
+    end
+
     it "shows the correct prices in the checkout"
     it "creates the order with the correct prices"
     it "subtracts stock from the override"
