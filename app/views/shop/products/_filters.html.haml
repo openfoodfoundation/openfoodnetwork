@@ -1,17 +1,20 @@
-.row
-  = render partial: 'shared/components/filter_controls'
-  .small-12.medium-6.columns.text-right
-    &nbsp;
-
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
-    .row.filter-box
-      .small-12.columns
-        %h5.tdhead
+    = render partial: 'shared/components/filter_controls_shopfront'
+
+.row.filter-box.filter-box-shopfront.animate-hide{"ng-hide" => "filtersActive"}
+  .small-12.columns
+    .row.tdhead
+      .small-12.medium-6.columns
+        %h5
           .light Filter by
-          Type
+          Category
+      .small-12.medium-6.columns.text-right
+        = render partial: 'shared/components/filter_controls_shopfront'
+        = render partial: 'shared/components/filter_box_shopfront'
+    .row
+      .small-12.columns
         %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
           %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
             results: "activeTaxons"}
 
-= render partial: 'shared/components/filter_box'
