@@ -56,6 +56,7 @@ angular.module("admin.enterprises")
       if newValue == "none"
         $scope.menu.hide_item_by_name('Shipping Methods')
         $scope.menu.hide_item_by_name('Payment Methods')
+        $scope.menu.hide_item_by_name('Shop Preferences')
         if $scope.Enterprise.is_primary_producer
           $scope.menu.show_item_by_name('Enterprise Fees')
         else
@@ -63,4 +64,5 @@ angular.module("admin.enterprises")
       else
         $scope.menu.show_item_by_name('Shipping Methods')
         $scope.menu.show_item_by_name('Payment Methods')
+        $scope.menu.show_item_by_name('Shop Preferences')
         $scope.menu.show_item_by_name('Enterprise Fees')
