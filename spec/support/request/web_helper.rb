@@ -133,6 +133,10 @@ module WebHelper
     end
   end
 
+  def wait_until_enabled(selector)
+    wait_until(10) { first("#{selector}:not([disabled='disabled'])") }
+  end
+
   def select2_select(value, options)
     id = options[:from]
     options[:from] = "#s2id_#{id}"

@@ -77,7 +77,17 @@ feature "shopping with variant overrides defined", js: true do
       page.should have_selector "#edit-cart .grand-total", text: '$122.21'
     end
 
-    it "shows the correct prices in the checkout"
+    it "shows the correct prices in the checkout" do
+      fill_in "variants[#{v1.id}]", with: "2"
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      click_link 'Quick checkout'
+
+      page.should have_selector 'form.edit_order .cart-total', text: '$122.21'
+      page.should have_selector 'form.edit_order .shipping', text: '$0.00'
+      page.should have_selector 'form.edit_order .total', text: '$122.21'
+    end
+
     it "creates the order with the correct prices"
     it "subtracts stock from the override"
   end
