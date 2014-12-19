@@ -165,9 +165,11 @@ describe Enterprise do
   end
 
   describe "validations" do
-    subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+    subject { FactoryGirl.create(:distributor_enterprise) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:permalink) }
+    it { should validate_uniqueness_of(:permalink) }
     it { should ensure_length_of(:description).is_at_most(255) }
 
     it "requires an owner" do

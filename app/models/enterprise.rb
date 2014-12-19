@@ -56,6 +56,7 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
+  validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
@@ -332,7 +333,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def geocode_address
-    address.geocode if address.changed?
+    address.geocode if address.andand.changed?
   end
 
   def ensure_owner_is_manager
