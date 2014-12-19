@@ -328,13 +328,35 @@ describe Spree::Order do
     end
   end
 
-   describe "scopes" do
+  describe "scopes" do
     describe "not_state" do
       it "finds only orders not in specified state" do
         o = FactoryGirl.create(:completed_order_with_totals)
         o.cancel!
-
         Spree::Order.not_state(:canceled).should_not include o
+      end
+    end
+
+    describe "with payment method name" do
+      let!(:o1) { create(:order) }
+      let!(:o2) { create(:order) }
+      let!(:pm1) { create(:payment_method, name: 'foo') }
+      let!(:pm2) { create(:payment_method, name: 'bar') }
+      let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
+      let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
+
+      it "returns the order with payment method name" do
+	Spree::Order.with_payment_method_name('foo').should == [o1]
+      end
+
+      it "doesn't return rows with a different payment method name" do
+        Spree::Order.with_payment_method_name('foobar').should_not include o1
+        Spree::Order.with_payment_method_name('foobar').should_not include o2
+      end
+
+      it "doesn't return duplicate rows" do
+        p2 = FactoryGirl.create(:payment, :order => o1, :payment_method => pm1)
+	Spree::Order.with_payment_method_name('foo').length.should == 1
       end
     end
   end
@@ -385,5 +407,4 @@ describe Spree::Order do
       create(:order).deliver_order_confirmation_email
     end
   end
-
 end
