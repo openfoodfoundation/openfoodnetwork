@@ -3,9 +3,9 @@ class Enterprise < ActiveRecord::Base
   SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
-  preference :shopfront_message, :text, default: nil
-  preference :shopfront_closed_message, :text, default: nil
-  preference :shopfront_taxon_order, :string, default: nil
+  preference :shopfront_message, :text, default: ""
+  preference :shopfront_closed_message, :text, default: ""
+  preference :shopfront_taxon_order, :string, default: ""
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
@@ -345,7 +345,7 @@ class Enterprise < ActiveRecord::Base
 
   def shopfront_taxons
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
-      errors.add(:shopfront_taxon_order, "must contain a list of taxons.")
+      errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
     end
   end
 end

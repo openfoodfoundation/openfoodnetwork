@@ -17,7 +17,7 @@
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | orderBy:ordering.order) track by product.id "}
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons) track by product.id "}
 
       = render partial: "shop/products/summary"
       %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants"}

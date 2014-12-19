@@ -6,7 +6,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
   end
 
   private
-  
+
   def cached_serializer_hash
     Api::CachedProductSerializer.new(object, @options).serializable_hash
   end

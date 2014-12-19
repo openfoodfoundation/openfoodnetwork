@@ -21,3 +21,10 @@ angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons) ->
           taxon.name
         formatSelection: (taxon) ->
           taxon.name
+
+      #Allows drag and drop
+      if multiple
+        element.select2("container").find("ul.select2-choices").sortable
+          containment: 'parent'
+          start: -> element.select2("onSortStart")
+          update: -> element.select2("onSortEnd")

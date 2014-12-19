@@ -119,7 +119,8 @@ class OrderCycle < ActiveRecord::Base
   def valid_products_distributed_by(distributor)
     variants = variants_distributed_by(distributor)
     products = variants.map(&:product).uniq
-    products.reject { |p| product_has_only_obsolete_master_in_distribution?(p, variants) }
+    product_ids = products.reject{ |p| product_has_only_obsolete_master_in_distribution?(p, variants) }.map(&:id)
+    Spree::Product.where(id: product_ids)
   end
 
   def products
