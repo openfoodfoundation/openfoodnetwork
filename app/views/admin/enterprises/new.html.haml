@@ -6,6 +6,10 @@
 - content_for :page_actions do
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
-= render 'admin/enterprises/form_data'
 
-= render 'admin/enterprises/ng_form', action: 'new'
+-# Form
+
+= form_for [main_app, :admin, @enterprise], html: { "nav-check" => '', "nav-callback" => '' } do |f|
+  .row
+    .twelve.columns.fullwidth_inputs
+      = render 'new_form', f: f

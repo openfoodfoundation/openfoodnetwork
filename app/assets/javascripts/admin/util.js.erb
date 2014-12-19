@@ -28,3 +28,10 @@ show_flash_error = function(message) {
     }
   }
 }
+
+$(document).ready(function(){
+    $('a.close').click(function(event){
+      event.preventDefault();
+      $(this).parent().slideUp(250);
+    });
+});
