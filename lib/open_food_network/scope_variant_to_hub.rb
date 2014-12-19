@@ -4,6 +4,10 @@ module OpenFoodNetwork
       VariantOverride.price_for(@hub, self) || super
     end
 
+    def price_in(currency)
+      Spree::Price.new(amount: price, currency: currency)
+    end
+
     def count_on_hand
       VariantOverride.count_on_hand_for(@hub, self) || super
     end

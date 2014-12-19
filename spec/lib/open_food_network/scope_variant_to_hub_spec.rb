@@ -19,6 +19,19 @@ module OpenFoodNetwork
       end
     end
 
+    describe "overriding price_in" do
+      it "returns the overridden price when one is present" do
+        vo
+        v.scope_to_hub hub
+        v.price_in('AUD').amount.should == 22.22
+      end
+
+      it "returns the variant's price otherwise" do
+        v.scope_to_hub hub
+        v.price_in('AUD').amount.should == 11.11
+      end
+    end
+
     describe "overriding stock levels" do
       it "returns the overridden stock level when one is present" do
         vo
