@@ -5,6 +5,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText
   $scope.FilterSelectorsService =  FilterSelectorsService
+  $scope.filtersActive = true
   $scope.limit = 3
   $scope.order_cycle = OrderCycle.order_cycle
 
