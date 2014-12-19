@@ -98,27 +98,30 @@ describe ShopController do
         t1 = create(:taxon)
         t2 = create(:taxon)
         d.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
-        p1 = create(:product, primary_taxon_id: t2.id)
-        p2 = create(:product, primary_taxon_id: t1.id)
-        p3 = create(:product, primary_taxon_id: t2.id)
-        p4 = create(:product, primary_taxon_id: t1.id)
+        p1 = create(:product, primary_taxon_id: t2.id, name: 'abc')
+        p2 = create(:product, primary_taxon_id: t1.id, name: 'def')
+        p3 = create(:product, primary_taxon_id: t2.id, name: 'abcd')
+        p4 = create(:product, primary_taxon_id: t1.id, name: 'defg')
         exchange.variants << p1.master
         exchange.variants << p2.master
         exchange.variants << p3.master
         exchange.variants << p4.master
         controller.stub(:current_order_cycle).and_return order_cycle
+        order_cycle.stub(:valid_products_distributed_by) { Spree::Product.where( id: [p1, p2, p3, p4] ) }
         xhr :get, :products
-        assigns[:products].should == [p2, p4, p1, p3, product]
+        assigns[:products].should == [p2, p4, p1, p3]
       end
 
-      it "alphabetizes products" do
+      it "alphabetizes products by name when taxon list is not set" do
+        d.stub(:preferred_shopfront_taxon_order) {""}
         p1 = create(:product, name: "abc")
         p2 = create(:product, name: "def")
         exchange.variants << p1.master
         exchange.variants << p2.master
         controller.stub(:current_order_cycle).and_return order_cycle
+        order_cycle.stub(:valid_products_distributed_by) { Spree::Product.where( id: [p1, p2] ) }
         xhr :get, :products
-        assigns[:products].should == [p1, p2, product].sort_by{|p| p.name }
+        assigns[:products].should == [p1, p2]
       end
 
       it "does not return products if no order_cycle is selected" do
