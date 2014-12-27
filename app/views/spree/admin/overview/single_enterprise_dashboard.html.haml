@@ -40,11 +40,6 @@
     %strong= "Manage #{@enterprise.name}."
     %a.close{ href: "#" } ×
 
-  :javascript
-    $('a.close').click(function(){
-       $(this).parent().slideUp(250);
-    });
-
 .row
   .alpha.seven.columns.dashboard_item.single-ent#map
     .header

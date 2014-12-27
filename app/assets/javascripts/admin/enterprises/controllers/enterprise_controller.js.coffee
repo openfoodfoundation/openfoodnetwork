@@ -1,12 +1,12 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, longDescription, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods) ->
+  .controller "enterpriseCtrl", ($scope, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.PaymentMethods = PaymentMethods.paymentMethods
     $scope.ShippingMethods = ShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
     # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
-    $scope.htmlVariable = longDescription
     $scope.pristineEmail = $scope.Enterprise.email
+    $scope.menu = SideMenu
 
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
@@ -44,3 +44,25 @@ angular.module("admin.enterprises")
         count++ if shipping_method.selected
         count
       , 0
+
+    $scope.$watch "Enterprise.is_primary_producer", (newValue, oldValue) ->
+      if !newValue && $scope.Enterprise.sells == "none"
+        $scope.menu.hide_item_by_name('Enterprise Fees')
+      else
+        $scope.menu.show_item_by_name('Enterprise Fees')
+
+
+    $scope.$watch "Enterprise.sells", (newValue, oldValue) ->
+      if newValue == "none"
+        $scope.menu.hide_item_by_name('Shipping Methods')
+        $scope.menu.hide_item_by_name('Payment Methods')
+        $scope.menu.hide_item_by_name('Shop Preferences')
+        if $scope.Enterprise.is_primary_producer
+          $scope.menu.show_item_by_name('Enterprise Fees')
+        else
+          $scope.menu.hide_item_by_name('Enterprise Fees')
+      else
+        $scope.menu.show_item_by_name('Shipping Methods')
+        $scope.menu.show_item_by_name('Payment Methods')
+        $scope.menu.show_item_by_name('Shop Preferences')
+        $scope.menu.show_item_by_name('Enterprise Fees')

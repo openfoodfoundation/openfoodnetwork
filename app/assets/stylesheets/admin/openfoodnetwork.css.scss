@@ -1,6 +1,19 @@
+.text-center {
+  text-align: center;
+}
+
+.text-right{
+  text-align: right;
+}
+
 table .blank-action {
   display: inline-block;
   width: 29px;
+}
+
+text-angular .ta-editor {
+  border: 1px solid #cee1f4;
+  border-radius: 3px;
 }
 
 #header #logo {
