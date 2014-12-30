@@ -22,6 +22,9 @@ r.element :order_cycle, @order_cycle do
       r.element :enterprise_id
     end
 
+    r.element :receival_time
+    r.element :receival_instructions
+
     r.element :pickup_time
     r.element :pickup_instructions
   end

@@ -44,7 +44,6 @@ module Admin
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, order_cycle_permitted_enterprises).go!
-
           flash[:notice] = 'Your order cycle has been updated.'
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
@@ -70,19 +69,10 @@ module Admin
       redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
     end
 
-    OrderCycleNotificationJob = Struct.new(:order_cycle) do
-      def perform
-        @suppliers = order_cycle.suppliers
-        @suppliers.each { |supplier| ProducerMailer.order_cycle_report(supplier, order_cycle).deliver }
-      end
-    end
-
     # Send notifications to all producers who are part of the order cycle
     def notifications
       @order_cycle = OrderCycle.find params[:id]
       Delayed::Job.enqueue OrderCycleNotificationJob.new(@order_cycle)
-
-      render 'notifications'
     end
 
 

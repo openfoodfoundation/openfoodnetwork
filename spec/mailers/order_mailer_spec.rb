@@ -22,7 +22,7 @@ describe Spree::OrderMailer do
 
   it "should send an email when given an order" do
     Spree::OrderMailer.confirm_email(@order1.id).deliver
-    ActionMailer::Base.deliveries.count.should == 1
+    ActionMailer::Base.deliveries.count.should == 3
   end
 
   it "sets a reply-to of the enterprise email" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141124210549) do
+ActiveRecord::Schema.define(:version => 20141229094516) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -323,6 +323,8 @@ ActiveRecord::Schema.define(:version => 20141124210549) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.boolean  "incoming",              :default => false, :null => false
+    t.string   "receival_time"
+    t.string   "receival_instructions"
   end
 
   add_index "exchanges", ["order_cycle_id"], :name => "index_exchanges_on_order_cycle_id"
