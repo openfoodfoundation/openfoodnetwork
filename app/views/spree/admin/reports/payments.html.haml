@@ -11,15 +11,18 @@
       %br
       = label_tag nil, t(:stop)
   %br
-  = label_tag nil, "Distributor: "
-  = f.collection_select(:distributor_id_eq, @distributors, :id, :name, :include_blank => 'All')
-  %br
+  %div{"class" => "row"} 
+    %div{"class" => "four columns alpha"} 
+      = label_tag nil, "Distributor: "
+      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
   = label_tag nil, "Report Type: "
+  %br
   = select_tag(:report_type, options_for_select([['Payments By Type',:payments_by_payment_type],['Itemised Payment Totals',:itemised_payment_totals],['Payment Totals',:payment_totals]], @report_type))
   %br
   %br
   = check_box_tag :csv
   = label_tag :csv, "Download as csv"
+  %br
   %br
   = button t(:search)
 %br

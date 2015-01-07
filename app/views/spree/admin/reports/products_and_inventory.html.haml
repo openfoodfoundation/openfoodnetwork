@@ -1,24 +1,28 @@
 = form_tag spree.products_and_inventory_admin_reports_url do |f|
   %br
-  = label_tag nil, "Distributor: "
-  = select_tag(:distributor_id,
-    options_from_collection_for_select(@distributors, :id, :name, params[:distributor_id]),
-    :include_blank => true)
+  %div{"class" => "row"} 
+    %div{"class" => "four columns alpha"} 
+      = label_tag nil, "Distributor: "
+      = select_tag(:distributor_id,
+        options_from_collection_for_select(@distributors, :id, :name, params[:distributor_id]),
+        {:include_blank => true, :class => "select2 fullwidth"})
 
-  %br
-  = label_tag nil, "Supplier: "
-  = select_tag(:supplier_id,
-    options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]),
-    :include_blank => true)
+  
+    %div{"class" => "four columns"} 
+      = label_tag nil, "Supplier: "
+      = select_tag(:supplier_id,
+        options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]),
+        {:include_blank => true, :class => "select2 fullwidth"})
 
-  %br
-  = label_tag nil, "Order Cycle: "
-  = select_tag(:order_cycle_id,
-    options_for_select(report_order_cycle_options(@order_cycles), params[:order_cycle_id]),
-              include_blank: true)
+  
+    %div{"class" => "six columns"} 
+      = label_tag nil, "Order Cycle: "
+      = select_tag(:order_cycle_id,
+        options_for_select(report_order_cycle_options(@order_cycles), params[:order_cycle_id]),
+        {:include_blank => true, :class => "select2 fullwidth"})
 
-  %br
   = label_tag nil, "Report Type: "
+  %br
   = select_tag(:report_type, options_for_select(@report_types, params[:report_type]))
 
   %br
