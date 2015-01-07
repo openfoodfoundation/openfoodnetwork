@@ -1,3 +1,5 @@
+require 'spree/money_decorator'
+
 module Spree
   module ReportsHelper
     def report_order_cycle_options(order_cycles)
@@ -16,5 +18,8 @@ module Spree
       orders.map { |o| o.shipping_method.andand.name  }.uniq
     end
 
+    def currency_symbol
+      Spree::Money.currency_symbol
+    end
   end
 end
