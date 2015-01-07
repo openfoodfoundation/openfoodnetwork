@@ -6,6 +6,7 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
+require 'spree/money_decorator'
 
 Spree::Admin::ReportsController.class_eval do
 
