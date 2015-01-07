@@ -75,7 +75,7 @@ feature "shopping with variant overrides defined", js: true do
 
       page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: '$61.11'
       page.should have_field "order[line_items_attributes][0][quantity]", with: '2'
-      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: '$122.21'
+      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: '$122.22'
 
       page.should have_selector "#edit-cart .item-total", text: '$122.21'
       page.should have_selector "#edit-cart .grand-total", text: '$122.21'

@@ -1,6 +1,6 @@
 module ShopWorkflow
   def add_to_cart
-    wait_until_button_enabled 'input.add_to_cart'
+    wait_until_enabled 'input.add_to_cart'
     first("input.add_to_cart:not([disabled='disabled'])").click
   end
 
