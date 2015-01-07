@@ -12,6 +12,12 @@
           active: "active(\'\')",
           select: "select(\'\')"}
         %p TODO: show a map of enterprises
+        = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer
+        .map-container
+          %map{"ng-controller" => "MapCtrl"}
+            %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+              %markers{models: "OfnMap.enterprises", fit: "true",
+              coords: "'self'", icon: "'icon'", click: "'reveal'"}
       %tab{heading: 'About us',
           active: "active(\'hi\')",
           select: "select(\'hi\')"}
