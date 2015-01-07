@@ -6,9 +6,10 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
-require 'spree/money_decorator'
 
 Spree::Admin::ReportsController.class_eval do
+
+  include Spree::ReportsHelper
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
@@ -617,10 +618,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   private
-  
-  def currency_symbol
-    Spree::Money.currency_symbol
-  end
 
   def load_data
     # Load distributors either owned by the user or selling their enterprises products.
