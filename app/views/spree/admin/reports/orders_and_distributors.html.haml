@@ -2,11 +2,11 @@
   = label_tag nil, t(:date_range)
   %br
   .date-range-filter
-    %div{"class" => "left sub-field"}
+    .left.sub-field
       = s.text_field :completed_at_gt, :class => 'datepicker'
       %br
       = label_tag nil, t(:start), :class => 'sub'
-    %div{"class" => "right sub-field"}
+    .right.sub-field
       = s.text_field :completed_at_lt, :class => 'datepicker'
       %br
       = label_tag nil, t(:stop)

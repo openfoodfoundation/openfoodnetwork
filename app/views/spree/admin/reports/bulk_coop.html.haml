@@ -2,17 +2,17 @@
   = label_tag nil, t(:date_range)
   %br
   .date-range-filter
-    %div{"class" => "left sub-field"}
+    .left.sub-field
       = f.text_field :completed_at_gt, :class => 'datepicker'
       %br
       = label_tag nil, t(:start), :class => 'sub'
-    %div{"class" => "right sub-field"}
+    .right.sub-field
       = f.text_field :completed_at_lt, :class => 'datepicker'
       %br
       = label_tag nil, t(:stop)
   %br
-  %div{"class" => "row"} 
-    %div{"class" => "four columns alpha"} 
+  .row
+    .four.columns.alpha
       = label_tag nil, "Distributor: "
       = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
   = label_tag nil, "Report Type: "
