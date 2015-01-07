@@ -98,37 +98,8 @@ feature "shopping with variant overrides defined", js: true do
       wait_until_enabled 'li.cart a.button'
       click_link 'Quick checkout'
 
-      checkout_as_guest
+      complete_checkout
 
-      within "#details" do
-        fill_in "First Name", with: "Some"
-        fill_in "Last Name", with: "One"
-        fill_in "Email", with: "test@example.com"
-        fill_in "Phone", with: "0456789012"
-      end
-
-      toggle_billing
-      within "#billing" do
-        fill_in "Address", with: "123 Street"
-        select "Australia", from: "Country"
-        select "Victoria", from: "State"
-        fill_in "City", with: "Melbourne"
-        fill_in "Postcode", with: "3066"
-      end
-
-      toggle_shipping
-      within "#shipping" do
-        choose sm.name
-      end
-
-      toggle_payment
-      within "#payment" do
-        choose pm.name
-      end
-
-      ActionMailer::Base.deliveries.length.should == 0
-      place_order
-      page.should have_content "Your order has been processed successfully"
       ActionMailer::Base.deliveries.length.should == 2
       email = ActionMailer::Base.deliveries.last
 
@@ -141,5 +112,44 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "subtracts stock from the override"
+  end
+
+
+  private
+
+  def complete_checkout
+    checkout_as_guest
+
+    within "#details" do
+      fill_in "First Name", with: "Some"
+      fill_in "Last Name", with: "One"
+      fill_in "Email", with: "test@example.com"
+      fill_in "Phone", with: "0456789012"
+    end
+
+    toggle_billing
+    within "#billing" do
+      fill_in "Address", with: "123 Street"
+      select "Australia", from: "Country"
+      select "Victoria", from: "State"
+      fill_in "City", with: "Melbourne"
+      fill_in "Postcode", with: "3066"
+    end
+
+    toggle_shipping
+    within "#shipping" do
+      choose sm.name
+    end
+
+    toggle_payment
+    within "#payment" do
+      choose pm.name
+    end
+
+    place_order
+    #sleep 5
+    using_wait_time 10 do
+      page.should have_content "Your order has been processed successfully"
+    end
   end
 end
