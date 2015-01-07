@@ -7,7 +7,7 @@ feature "shopping with variant overrides defined", js: true do
   include CheckoutWorkflow
   include UIComponentHelper
 
-  use_short_wait
+  use_short_wait 10
 
   describe "viewing products" do
     let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }

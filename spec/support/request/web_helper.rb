@@ -11,8 +11,8 @@ module WebHelper
     #   use_short_wait
     #   ...
     # end
-    def use_short_wait
-      around { |example| Capybara.using_wait_time(2) { example.run } }
+    def use_short_wait(seconds=2)
+      around { |example| Capybara.using_wait_time(seconds) { example.run } }
     end
   end
 
