@@ -1,16 +1,6 @@
 = form_for @search, :url => spree.payments_admin_reports_path do |f|
-  = label_tag nil, t(:date_range)
-  %br
-  .date-range-filter
-    .left.sub-field
-      = f.text_field :completed_at_gt, :class => 'datepicker'
-      %br
-      = label_tag nil, t(:start), :class => 'sub'
-    .right.sub-field
-      = f.text_field :completed_at_lt, :class => 'datepicker'
-      %br
-      = label_tag nil, t(:stop)
-  %br
+  = render 'date_range_form', f: f
+
   .row
     .four.columns.alpha
       = label_tag nil, "Distributor: "
