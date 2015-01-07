@@ -6,6 +6,8 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
+
+
   let!(:taxon) { create(:taxon) }
 
   background do
@@ -15,8 +17,9 @@ feature %q{
   end
 
   describe "creating a product" do
+    let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
+
     scenario "assigning important attributes", js: true do
-      tax_category = create(:tax_category, name: 'Test Tax Category')
       login_to_admin_section
 
       click_link 'Products'
@@ -88,6 +91,7 @@ feature %q{
   end
 
   context "as an enterprise user" do
+    let!(:tax_category) { create(:tax_category) }
 
     before do
       @new_user = create_enterprise_user
@@ -120,7 +124,7 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
-      page.should have_select 'product_tax_category_id' if Spree::TaxCategory.any?
+      select tax_category.name, from: "product_tax_category_id"
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -131,6 +135,7 @@ feature %q{
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier2
+      product.tax_category.should == tax_category
     end
 
     scenario "editing a product" do
@@ -138,12 +143,13 @@ feature %q{
 
       visit spree.edit_admin_product_path product
 
-      page.should have_select 'product_tax_category_id'
       select 'Permitted Supplier', from: 'product_supplier_id'
+      select tax_category.name, from: 'product_tax_category_id'
       click_button 'Update'
       flash_message.should == 'Product "a product" has been successfully updated!'
       product.reload
       product.supplier.should == @supplier_permitted
+      product.tax_category.should == tax_category
     end
 
     scenario "editing product distributions" do
