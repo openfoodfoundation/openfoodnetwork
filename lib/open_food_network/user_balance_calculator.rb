@@ -10,8 +10,8 @@ module OpenFoodNetwork
       order_total = orders.sum &:total
 	
       payments = Spree::Payment.where(order_id: orders)
-      payment_total = payments.sum { |p| p.amount }
-      payment_total-order_total
+      payment_total = payments.sum &:amount
+      payment_total - order_total
     end
   end
 end
