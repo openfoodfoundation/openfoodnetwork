@@ -99,44 +99,38 @@ feature %q{
     page.should have_content 'Payment State'
   end
   
-  describe "Sales Tax report" do    
+  describe "Sales Tax report" do
     let(:user1) do
-      create_enterprise_user(enterprises: [
-        create(:distributor_enterprise)
-      ])
+      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
     end
     let(:user2) do
-      create_enterprise_user(enterprises: [
-        create(:distributor_enterprise)
-      ])
+      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
     end
     let(:tax_category1) { create(:tax_category) }
     let(:tax_category2) { create(:tax_category) }
     let(:country) { create(:country, :name => "Spec Republic") }
     let(:state) { create(:state, :country => country, :name => "Specville") }
     let(:zone) { create(:zone, :name => "Test Tax Zone") }
-    #let(:zoneable) { create(:zoneable, :zoneable => country) }
-    let(:tax_rate1) { create(:tax_rate, :amount => 0.0, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category1, :zone => zone) }
-    let(:tax_rate2) { create(:tax_rate, :amount => 0.2, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category2, :zone => zone) }
-    
+    let!(:tax_rate1) { create(:tax_rate, :amount => 0.0, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category1, :zone => zone) }
+    let!(:tax_rate2) { create(:tax_rate, :amount => 0.2, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category2, :zone => zone) }
+
     let(:product1) { create(:product, :tax_category => tax_category1) }
     let(:product2) { create(:product, :tax_category => tax_category2) }
     let(:variant1) { create(:variant, price: 12.54, :product => product1) }
     let(:variant2) { create(:variant, price: 500.15, :product => product2) }
-    
-    let(:product_distribution1) { create(:product_distribution, :product => variant1.product, :distributor => user1.enterprises.first) }
-    let(:product_distribution2) { create(:product_distribution, :product => variant2.product, :distributor => user2.enterprises.first) }
-    let(:address) { create(:address, :state => state, :country => country) } #
+
+    let(:address) { create(:address, :state => state, :country => country) }
     let(:shipping_method) { create(:shipping_method, :name => "Shipping", :description => "Expensive", :calculator => Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
-    let(:order1) { create(:order, :distributor => user1.enterprises.first, :shipping_method => shipping_method, :bill_address => address, :ship_address => address) }
-    let(:line_item1) { create(:line_item, :variant => variant1, :price => 12.54, :quantity => 1, :order => order1) }
-    let(:line_item2) { create(:line_item, :variant => variant2, :price => 500.15, :quantity => 3, :order => order1) }
-    let(:adjustment) { create(:adjustment, :adjustable => order1, :label => "Shipping", :amount => 100.55) }
-    
+    let(:order1) { create(:order, :distributor => user1.enterprises.first, :shipping_method => shipping_method, :bill_address => address) }
+    let!(:line_item1) { create(:line_item, :variant => variant1, :price => 12.54, :quantity => 1, :order => order1) }
+    let!(:line_item2) { create(:line_item, :variant => variant2, :price => 500.15, :quantity => 3, :order => order1) }
+    let!(:adjustment) { create(:adjustment, :adjustable => order1, :label => "Shipping", :amount => 100.55) }
+
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.2
       order1.finalize!
+
       login_to_admin_as user1
       click_link "Reports"
       click_link "Sales Tax"
