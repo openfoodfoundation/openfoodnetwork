@@ -130,29 +130,24 @@ feature %q{
       click_link "Sales Tax"
     end
   
-    it "displays the report" do
+    it "reports" do
+      # Then it should give me access only to managed enterprises
       page.should     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]
       page.should_not have_select 'q_distributor_id_eq', with_options: [user2.enterprises.first.name]
 
+      # When I filter to just one distributor
       select user1.enterprises.first.name, from: 'q_distributor_id_eq'
       click_button 'Search'
-      
+
+      # Then I should see the relevant order
       page.should have_content "#{order1.number}"
-    end
 
-    it "calculates sales tax on orders" do
-      select user1.enterprises.first.name, from: 'q_distributor_id_eq'
-      click_button 'Search'
-      
-      page.should have_content "1512.99" #items total
-      page.should have_content "1500.45" #taxable items total
-      page.should have_content "300.09" #sales tax
-    end
+      # And the totals and sales tax should be correct
+      page.should have_content "1512.99" # items total
+      page.should have_content "1500.45" # taxable items total
+      page.should have_content "300.09" # sales tax
 
-    it "calculates shipping tax on orders" do
-      select user1.enterprises.first.name, from: 'q_distributor_id_eq'
-      click_button 'Search'
-      
+      # And the shipping cost and tax should be correct
       page.should have_content "100.55" #shipping cost
       page.should have_content "20.11" #shipping tax
     end
