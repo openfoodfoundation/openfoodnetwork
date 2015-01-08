@@ -1,13 +1,12 @@
-
 module OpenFoodNetwork
   class SalesTaxReport
+    include Spree::ReportsHelper
 
     def initialize orders
       @orders = orders
     end
 
     def header
-      currency_symbol = Spree::Money.currency_symbol
       ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
         "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})",
         "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
