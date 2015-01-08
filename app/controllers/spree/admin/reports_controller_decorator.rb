@@ -105,7 +105,7 @@ Spree::Admin::ReportsController.class_eval do
   end
   
   def sales_tax
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -135,7 +135,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -288,7 +288,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def payments
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
