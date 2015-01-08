@@ -14,8 +14,7 @@ module OpenFoodNetwork
     end
 
     def table
-      sales_tax_details = []
-      @orders.each do |order|
+      @orders.map do |order|
         totals = {items: 0, items_total: 0.0, taxable_total: 0.0, sales_tax: 0.0}
         
         order.line_items.each do |line_item|
@@ -38,12 +37,10 @@ module OpenFoodNetwork
           shipping_tax = 0.0
         end
         
-        sales_tax_details << [order.number, order.created_at, totals[:items], totals[:items_total],
-          totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, totals[:sales_tax] + shipping_tax,
-          order.bill_address.full_name, order.distributor.andand.name]
-        
+        [order.number, order.created_at, totals[:items], totals[:items_total],
+         totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, totals[:sales_tax] + shipping_tax,
+         order.bill_address.full_name, order.distributor.andand.name]
       end
-      sales_tax_details
     end
   end
 end
