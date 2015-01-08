@@ -108,17 +108,17 @@ feature %q{
     end
     let(:tax_category1) { create(:tax_category) }
     let(:tax_category2) { create(:tax_category) }
-    let!(:tax_rate1) { create(:tax_rate, :amount => 0.0, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category1) }
-    let!(:tax_rate2) { create(:tax_rate, :amount => 0.2, :calculator => Spree::Calculator::DefaultTax.new, :tax_category => tax_category2) }
+    let!(:tax_rate1) { create(:tax_rate, amount: 0.0, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category1) }
+    let!(:tax_rate2) { create(:tax_rate, amount: 0.2, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category2) }
 
-    let(:product1) { create(:product, price: 12.54,  :tax_category => tax_category1) }
-    let(:product2) { create(:product, price: 500.15, :tax_category => tax_category2) }
+    let(:product1) { create(:product, price: 12.54,  tax_category: tax_category1) }
+    let(:product2) { create(:product, price: 500.15, tax_category: tax_category2) }
 
-    let(:shipping_method) { create(:shipping_method, :name => "Shipping", :description => "Expensive", :calculator => Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
-    let(:order1) { create(:order, :distributor => user1.enterprises.first, :shipping_method => shipping_method, :bill_address => create(:address)) }
-    let!(:line_item1) { create(:line_item, :variant => product1.master, :price => 12.54, :quantity => 1, :order => order1) }
-    let!(:line_item2) { create(:line_item, :variant => product2.master, :price => 500.15, :quantity => 3, :order => order1) }
-    let!(:adjustment) { create(:adjustment, :adjustable => order1, :label => "Shipping", :amount => 100.55) }
+    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:order1) { create(:order, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
+    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+    let!(:adjustment) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
 
     before do
       Spree::Config.shipment_inc_vat = true
