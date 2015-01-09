@@ -18,6 +18,7 @@ feature %q{
 
   describe "creating a product" do
     let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
+    let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
     scenario "assigning important attributes", js: true do
       login_to_admin_section
@@ -25,7 +26,6 @@ feature %q{
       click_link 'Products'
       click_link 'New Product'
 
-      select 'Test Tax Category', from: 'product_tax_category_id'
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -33,13 +33,14 @@ feature %q{
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      select 'Test Shipping Category', from: 'product_shipping_category_id'
       fill_in 'product_description', with: "A description..."
 
       click_button 'Create'
 
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
-      product.tax_category_id.should == tax_category.id
       product.supplier.should == @supplier
       product.variant_unit.should == 'weight'
       product.variant_unit_scale.should == 1000
@@ -49,6 +50,8 @@ feature %q{
       product.primary_taxon_id.should == taxon.id
       product.price.to_s.should == '19.99'
       product.on_hand.should == 5
+      product.tax_category_id.should == tax_category.id
+      product.shipping_category.should == shipping_category
       product.description.should == "A description..."
       product.group_buy.should be_false
       product.master.option_values.map(&:name).should == ['5kg']
