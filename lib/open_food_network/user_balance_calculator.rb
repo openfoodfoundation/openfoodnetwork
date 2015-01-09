@@ -4,14 +4,29 @@ module OpenFoodNetwork
       @user = user
       @distributor = distributor
     end
-	
+
     def balance
-      orders = Spree::Order.where(distributor_id: @distributor, user_id: @user)
-      order_total = orders.sum &:total
-	
-      payments = Spree::Payment.where(order_id: orders)
-      payment_total = payments.sum &:amount
       payment_total - order_total
+    end
+
+
+    private
+
+    def order_total
+      orders.sum &:total
+    end
+
+    def payment_total
+      payments.sum &:amount
+    end
+
+
+    def orders
+      Spree::Order.where(distributor_id: @distributor, user_id: @user)
+    end
+
+    def payments
+      Spree::Payment.where(order_id: orders)
     end
   end
 end

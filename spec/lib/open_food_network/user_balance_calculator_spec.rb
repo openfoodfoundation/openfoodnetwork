@@ -39,6 +39,6 @@ module OpenFoodNetwork
           UserBalanceCalculator.new(user2, hub1).balance.should == 10
         end
       end
-    end 
+    end
   end
 end
