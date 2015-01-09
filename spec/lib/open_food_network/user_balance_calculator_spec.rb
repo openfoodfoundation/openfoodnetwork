@@ -18,20 +18,26 @@ module OpenFoodNetwork
         UserBalanceCalculator.new(user1, hub1).balance.to_i.should == 5
       end
 
-      it "does not find the balance for other enterprises" do
-        hub2 = create(:distributor_enterprise)
-        o3 = create(:order_with_totals_and_distribution, 
-                    user: user1, distributor: hub2) #total=10
-        p3 = create(:payment, order: o3, amount: 10.00)
-        UserBalanceCalculator.new(user1, hub2).balance.to_i.should == 0
+      context "with another hub" do
+        let!(:hub2) { create(:distributor_enterprise) }
+        let!(:o3) { create(:order_with_totals_and_distribution,
+                           user: user1, distributor: hub2) } #total=10
+        let!(:p3) { create(:payment, order: o3, amount: 10.00) }
+
+        it "does not find the balance for other enterprises" do
+          UserBalanceCalculator.new(user1, hub2).balance.to_i.should == 0
+        end
       end
 
-      it "does not find the balance for other users" do
-        user2 = create(:user)
-        o4 = create(:order_with_totals_and_distribution, 
-                    user: user2, distributor: hub1) #total=10
-        p3 = create(:payment, order: o4, amount: 20.00)
-        UserBalanceCalculator.new(user2, hub1).balance.to_i.should == 10
+      context "with another user" do
+        let!(:user2) { create(:user) }
+        let!(:o4) { create(:order_with_totals_and_distribution,
+                           user: user2, distributor: hub1) } #total=10
+        let!(:p3) { create(:payment, order: o4, amount: 20.00) }
+
+        it "does not find the balance for other users" do
+          UserBalanceCalculator.new(user2, hub1).balance.to_i.should == 10
+        end
       end
     end 
   end
