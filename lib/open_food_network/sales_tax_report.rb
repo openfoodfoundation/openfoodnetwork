@@ -38,7 +38,7 @@ module OpenFoodNetwork
 
         if tax_rate != nil && tax_rate != 0
           totals[:taxable_total] += line_item.amount
-          totals[:sales_tax] += line_item.amount * tax_rate
+          totals[:sales_tax] += (line_item.amount * tax_rate / (1 + tax_rate)).round(2)
         end
       end
 
