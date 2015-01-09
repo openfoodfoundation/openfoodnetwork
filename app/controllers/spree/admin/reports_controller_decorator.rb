@@ -71,7 +71,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @orders = @search.result
 
-    render_report(@report.header, @report.table, params[:csv], "customers.csv")
+    render_report(@report.header, @report.table, params[:csv], "order_cycle_management_#{timestamp}.csv")
   end
 
   def orders_and_distributors
@@ -602,7 +602,7 @@ Spree::Admin::ReportsController.class_eval do
   def users_and_enterprises
     # @report_types = REPORT_TYPES[:users_and_enterprises]
     @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params
-    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises.csv")
+    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
 
   def render_report (header, table, create_csv, csv_file_name)
