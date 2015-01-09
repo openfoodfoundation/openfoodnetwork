@@ -15,7 +15,7 @@ module OpenFoodNetwork
       let!(:p2) { create(:payment, order: o2, amount: 10.00) }
 
       it "finds the user balance for this enterprise" do
-        UserBalanceCalculator.new(user1, hub1).balance.to_i.should == 5
+        UserBalanceCalculator.new(user1, hub1).balance.should == 5
       end
 
       context "with another hub" do
@@ -25,7 +25,7 @@ module OpenFoodNetwork
         let!(:p3) { create(:payment, order: o3, amount: 10.00) }
 
         it "does not find the balance for other enterprises" do
-          UserBalanceCalculator.new(user1, hub2).balance.to_i.should == 0
+          UserBalanceCalculator.new(user1, hub2).balance.should == 0
         end
       end
 
@@ -36,7 +36,7 @@ module OpenFoodNetwork
         let!(:p3) { create(:payment, order: o4, amount: 20.00) }
 
         it "does not find the balance for other users" do
-          UserBalanceCalculator.new(user2, hub1).balance.to_i.should == 10
+          UserBalanceCalculator.new(user2, hub1).balance.should == 10
         end
       end
     end 
