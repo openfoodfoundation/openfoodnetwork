@@ -51,15 +51,23 @@ module OpenFoodNetwork
     end
 
     def shipping_tax_on(shipping_cost)
-      if Spree::Config[:shipment_inc_vat] && shipping_cost != nil
-        shipping_cost * Spree::Config[:shipping_tax_rate]
+      if shipment_inc_vat && shipping_cost.present?
+        (shipping_cost * shipping_tax_rate / (1 + shipping_tax_rate)).round(2)
       else
-        0.0
+        0
       end
     end
 
     def tax_rate_on(line_item)
       Spree::TaxRate.find_by_tax_category_id(line_item.variant.product.tax_category_id).andand.amount
+    end
+
+    def shipment_inc_vat
+      Spree::Config.shipment_inc_vat
+    end
+
+    def shipping_tax_rate
+      Spree::Config.shipping_tax_rate
     end
   end
 end
