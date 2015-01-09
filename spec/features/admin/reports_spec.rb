@@ -145,11 +145,11 @@ feature %q{
       # And the totals and sales tax should be correct
       page.should have_content "1512.99" # items total
       page.should have_content "1500.45" # taxable items total
-      page.should have_content "300.09" # sales tax
+      page.should have_content "250.08" # sales tax
 
       # And the shipping cost and tax should be correct
       page.should have_content "100.55" #shipping cost
-      page.should have_content "20.11" #shipping tax
+      page.should have_content "16.76" #shipping tax
     end
   end
 
