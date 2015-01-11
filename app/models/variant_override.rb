@@ -20,6 +20,20 @@ class VariantOverride < ActiveRecord::Base
     count_on_hand_for(hub, variant).present?
   end
 
+  def self.decrement_stock!(hub, variant, quantity)
+    vo = self.for(hub, variant)
+
+    if vo.nil?
+      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level for a variant without a VariantOverride."
+
+    elsif vo.count_on_hand.blank?
+      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
+
+    else
+      vo.decrement! :count_on_hand, quantity
+    end
+  end
+
 
   private
 

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe VariantOverride do
+  let(:variant) { create(:variant) }
+  let(:hub)     { create(:distributor_enterprise) }
+
   describe "scopes" do
     let(:hub1) { create(:distributor_enterprise) }
     let(:hub2) { create(:distributor_enterprise) }
@@ -14,9 +17,6 @@ describe VariantOverride do
   end
 
   describe "looking up prices" do
-    let(:variant) { create(:variant) }
-    let(:hub)     { create(:distributor_enterprise) }
-
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)
       VariantOverride.price_for(hub, variant).should == 12.34
@@ -28,9 +28,6 @@ describe VariantOverride do
   end
 
   describe "looking up count on hand" do
-    let(:variant) { create(:variant) }
-    let(:hub)     { create(:distributor_enterprise) }
-
     it "returns the numeric stock level when present" do
       VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12)
       VariantOverride.count_on_hand_for(hub, variant).should == 12
@@ -42,21 +39,38 @@ describe VariantOverride do
   end
 
   describe "checking if stock levels have been overriden" do
-    let(:variant) { create(:variant) }
-    let(:hub)     { create(:distributor_enterprise) }
-
     it "returns true when stock level has been overridden" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
+      create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
       VariantOverride.stock_overridden?(hub, variant).should be_true
     end
 
     it "returns false when the override has no stock level" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
+      create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
       VariantOverride.stock_overridden?(hub, variant).should be_false
     end
 
     it "returns false when there is no override for the hub/variant" do
       VariantOverride.stock_overridden?(hub, variant).should be_false
+    end
+  end
+
+  describe "decrementing stock" do
+    it "decrements stock" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
+      VariantOverride.decrement_stock! hub, variant, 2
+      vo.reload.count_on_hand.should == 10
+    end
+
+    it "silently logs an error if the variant override doesn't have a stock level" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
+      Bugsnag.should_receive(:notify)
+      VariantOverride.decrement_stock! hub, variant, 2
+      vo.reload.count_on_hand.should be_nil
+    end
+
+    it "silently logs an error if the variant override does not exist" do
+      Bugsnag.should_receive(:notify)
+      VariantOverride.decrement_stock! hub, variant, 2
     end
   end
 end
