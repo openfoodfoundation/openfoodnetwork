@@ -40,4 +40,23 @@ describe VariantOverride do
       VariantOverride.count_on_hand_for(hub, variant).should be_nil
     end
   end
+
+  describe "checking if stock levels have been overriden" do
+    let(:variant) { create(:variant) }
+    let(:hub)     { create(:distributor_enterprise) }
+
+    it "returns true when stock level has been overridden" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
+      VariantOverride.stock_overridden?(hub, variant).should be_true
+    end
+
+    it "returns false when the override has no stock level" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
+      VariantOverride.stock_overridden?(hub, variant).should be_false
+    end
+
+    it "returns false when there is no override for the hub/variant" do
+      VariantOverride.stock_overridden?(hub, variant).should be_false
+    end
+  end
 end

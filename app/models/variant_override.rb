@@ -16,6 +16,10 @@ class VariantOverride < ActiveRecord::Base
     self.for(hub, variant).andand.count_on_hand
   end
 
+  def self.stock_overridden?(hub, variant)
+    count_on_hand_for(hub, variant).present?
+  end
+
 
   private
 
