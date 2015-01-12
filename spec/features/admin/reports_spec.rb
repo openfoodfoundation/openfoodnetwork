@@ -59,6 +59,22 @@ feature %q{
     end
   end
 
+  describe "Order cycle management report" do
+    before do
+      login_to_admin_section
+      click_link "Reports"
+    end
+
+    scenario "order payment method report" do
+      click_link "Order Cycle Management"
+      rows = find("table#listing_order_payment_methods").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
+      ].sort
+    end
+  end
+
   scenario "orders and distributors report" do
     login_to_admin_section
     click_link 'Reports'

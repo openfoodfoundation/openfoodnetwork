@@ -4,24 +4,22 @@ describe "enterpriseCtrl", ->
   Enterprise = null
   PaymentMethods = null
   ShippingMethods = null
-  longDescriptionMock = ["long description text"]
 
   beforeEach ->
     module('admin.enterprises')
-    module ($provide)->
-      $provide.value "longDescription", longDescriptionMock
-      null
     Enterprise =
       enterprise:
         payment_method_ids: [ 1, 3 ]
         shipping_method_ids: [ 2, 4 ]
+        is_primary_producer: true
+        sells: "none"
     PaymentMethods =
       paymentMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
     ShippingMethods =
       shippingMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
 
-    inject ($controller) ->
-      scope = {}
+    inject ($rootScope, $controller) ->
+      scope = $rootScope
       ctrl = $controller 'enterpriseCtrl', {$scope: scope, Enterprise: Enterprise, PaymentMethods: PaymentMethods, ShippingMethods: ShippingMethods}
 
   describe "initialisation", ->

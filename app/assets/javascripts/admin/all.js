@@ -22,6 +22,8 @@
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
+//= require ./side_menu/side_menu
+//= require ./taxons/taxons
 //= require ./utils/utils
 //= require ./users/users
 //= require textAngular.min.js

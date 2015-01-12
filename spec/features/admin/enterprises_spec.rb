@@ -131,26 +131,17 @@ feature %q{
     select2_search admin.email, from: 'Owner'
     select2_search admin.email, from: 'Owner'
     choose 'Any'
-    check "enterprise_payment_method_ids_#{payment_method.id}"
-    check "enterprise_shipping_method_ids_#{shipping_method.id}"
-    select2_search eg1.name, from: 'Groups'
+
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
-    fill_in 'enterprise_twitter', :with => '@eaterprises'
-    fill_in 'enterprise_facebook', :with => 'facebook.com/eaterprises'
-    fill_in 'enterprise_instagram', :with => 'eaterprises'
-    fill_in 'enterprise_abn', :with => '09812309823'
-    fill_in 'enterprise_acn', :with => ''
 
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select2_search 'Australia', :from => 'Country'
     select2_search 'Victoria', :from => 'State'
-    long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
-    long_description.set 'Connecting farmers and eaters'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
@@ -176,20 +167,23 @@ feature %q{
     fill_in 'enterprise_name', :with => 'Eaterprises'
     choose 'Own'
     select2_search user.email, from: 'Owner'
+
+    click_link "About"
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    long_description = find :css, "text-angular div.ta-scroll-window div.ta-bind"
+    long_description = find :css, "text-angular#enterprise_long_description div.ta-scroll-window div.ta-bind"
     long_description.set 'This is an interesting long description'
 
     # Check Angularjs switching of sidebar elements
+    click_link "Primary Details"
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    page.should have_selector "#enterprise_fees", visible: false
-    page.should have_selector "#payment_methods", visible: false
-    page.should have_selector "#shipping_methods", visible: false
+    page.should_not have_selector "#enterprise_fees"
+    page.should_not have_selector "#payment_methods"
+    page.should_not have_selector "#shipping_methods"
     check 'enterprise_is_primary_producer'
     page.should have_selector "#enterprise_fees"
-    page.should have_selector "#payment_methods", visible: false
-    page.should have_selector "#shipping_methods", visible: false
+    page.should_not have_selector "#payment_methods"
+    page.should_not have_selector "#shipping_methods"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
     page.should have_selector "#enterprise_fees"
@@ -202,25 +196,37 @@ feature %q{
 
     select2_search eg1.name, from: 'Groups'
 
+    click_link "Payment Methods"
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
-    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
-
     check "enterprise_payment_method_ids_#{payment_method.id}"
+
+    click_link "Shipping Methods"
+    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
+    click_link "Contact"
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
+
+    click_link "Social"
     fill_in 'enterprise_twitter', :with => '@eaterprises'
+
+    click_link "Business Details"
     fill_in 'enterprise_abn', :with => '09812309823'
     fill_in 'enterprise_acn', :with => ''
 
+    click_link "Address"
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select2_search 'Australia', :from => 'Country'
     select2_search 'Victoria', :from => 'State'
+
+    click_link "Shop Preferences"
+    shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
+    shopfront_message.set 'This is my shopfront message.'
 
     click_button 'Update'
 
@@ -229,10 +235,20 @@ feature %q{
     @enterprise.reload
     expect(@enterprise.owner).to eq user
 
+    click_link "Payment Methods"
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+
+    click_link "Shipping Methods"
     page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
-    page.should have_selector "a.list-item", text: enterprise_fee.name
+
+    click_link "Enterprise Fees"
+    page.should have_selector "td", text: enterprise_fee.name
+
+    click_link "About"
     page.should have_content 'This is an interesting long description'
+
+    click_link "Shop Preferences"
+    page.should have_content 'This is my shopfront message.'
   end
 
   describe "producer properties" do
