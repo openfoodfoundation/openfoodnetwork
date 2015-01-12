@@ -1,7 +1,10 @@
+require 'open_food_network/scope_variant_to_hub'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/option_value_namer'
 
 Spree::Variant.class_eval do
+  include OpenFoodNetwork::VariantScopableToHub
+
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
 

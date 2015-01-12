@@ -20,11 +20,11 @@ module OpenFoodNetwork
       end
     end
   end
-end
 
-Spree::Variant.class_eval do
-  def scope_to_hub(hub)
-    extend OpenFoodNetwork::ScopeVariantToHub
-    @hub = hub
+  module VariantScopableToHub
+    def scope_to_hub(hub)
+      extend OpenFoodNetwork::ScopeVariantToHub
+      @hub = hub
+    end
   end
 end

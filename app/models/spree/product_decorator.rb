@@ -1,4 +1,8 @@
+require 'open_food_network/scope_product_to_hub'
+
 Spree::Product.class_eval do
+  include OpenFoodNetwork::ProductScopableToHub
+
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618

@@ -6,11 +6,11 @@ module OpenFoodNetwork
       super.each { |v| v.scope_to_hub @hub }
     end
   end
-end
 
-Spree::Product.class_eval do
-  def scope_to_hub(hub)
-    extend OpenFoodNetwork::ScopeProductToHub
-    @hub = hub
+  module ProductScopableToHub
+    def scope_to_hub(hub)
+      extend OpenFoodNetwork::ScopeProductToHub
+      @hub = hub
+    end
   end
 end
