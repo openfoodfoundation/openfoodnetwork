@@ -35,7 +35,7 @@ feature "shopping with variant overrides defined", js: true do
 
   describe "viewing products" do
     it "shows the overridden price" do
-      page.should_not have_price "$11.11"
+      page.should_not have_price "$12.22" # $11.11 + 10% fee
       page.should have_price "$61.11"
     end
 
@@ -54,6 +54,14 @@ feature "shopping with variant overrides defined", js: true do
       page.should have_selector 'li.cost div', text: '$55.55'
       page.should have_selector 'li.packing-fee div', text: '$5.56'
       page.should have_selector 'li.total div', text: '= $61.11'
+    end
+
+    it "shows the correct prices when products are in the cart" do
+      fill_in "variants[#{v1.id}]", with: "2"
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      visit shop_path
+      page.should_not have_price '$12.22'
     end
 
     # The two specs below reveal an unrelated issue with fee calculation. See:
