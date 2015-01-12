@@ -22,7 +22,7 @@ feature "shopping with variant overrides defined", js: true do
     let(:v2) { create(:variant, product: p1, price: 22.22, unit_value: 2) }
     let(:v3) { create(:variant, product: p2, price: 33.33, unit_value: 3) }
     let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
-    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55) }
+    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil) }
     let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
     let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
     let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3) }
@@ -124,7 +124,17 @@ feature "shopping with variant overrides defined", js: true do
       end.to change { vo4.reload.count_on_hand }.by(-2)
     end
 
-    it "does not subtract stock from overrides that do not override count_on_hand"
+    it "does not subtract stock from overrides that do not override count_on_hand" do
+      fill_in "variants[#{v1.id}]", with: "2"
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      click_link 'Quick checkout'
+
+      expect do
+        complete_checkout
+      end.to change { v1.reload.count_on_hand }.by(-2)
+      vo1.reload.count_on_hand.should be_nil
+    end
   end
 
 
