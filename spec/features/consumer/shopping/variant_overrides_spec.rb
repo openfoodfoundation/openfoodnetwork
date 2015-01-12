@@ -7,35 +7,33 @@ feature "shopping with variant overrides defined", js: true do
   include CheckoutWorkflow
   include UIComponentHelper
 
-  #use_short_wait 10
+  let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+  let(:producer) { create(:supplier_enterprise) }
+  let(:oc) { create(:simple_order_cycle, suppliers: [producer], coordinator: hub, distributors: [hub]) }
+  let(:outgoing_exchange) { oc.exchanges.outgoing.first }
+  let(:sm) { hub.shipping_methods.first }
+  let(:pm) { hub.payment_methods.first }
+  let(:p1) { create(:simple_product, supplier: producer) }
+  let(:p2) { create(:simple_product, supplier: producer) }
+  let(:v1) { create(:variant, product: p1, price: 11.11, unit_value: 1) }
+  let(:v2) { create(:variant, product: p1, price: 22.22, unit_value: 2) }
+  let(:v3) { create(:variant, product: p2, price: 33.33, unit_value: 3) }
+  let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
+  let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil) }
+  let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
+  let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
+  let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3) }
+  let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
+
+  before do
+    ActionMailer::Base.deliveries.clear
+    outgoing_exchange.variants = [v1, v2, v3, v4]
+    outgoing_exchange.enterprise_fees << ef
+    visit shop_path
+    click_link hub.name
+  end
 
   describe "viewing products" do
-    let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let(:producer) { create(:supplier_enterprise) }
-    let(:oc) { create(:simple_order_cycle, suppliers: [producer], coordinator: hub, distributors: [hub]) }
-    let(:outgoing_exchange) { oc.exchanges.outgoing.first }
-    let(:sm) { hub.shipping_methods.first }
-    let(:pm) { hub.payment_methods.first }
-    let(:p1) { create(:simple_product, supplier: producer) }
-    let(:p2) { create(:simple_product, supplier: producer) }
-    let(:v1) { create(:variant, product: p1, price: 11.11, unit_value: 1) }
-    let(:v2) { create(:variant, product: p1, price: 22.22, unit_value: 2) }
-    let(:v3) { create(:variant, product: p2, price: 33.33, unit_value: 3) }
-    let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
-    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil) }
-    let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
-    let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
-    let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3) }
-    let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
-
-    before do
-      ActionMailer::Base.deliveries.clear
-      outgoing_exchange.variants = [v1, v2, v3, v4]
-      outgoing_exchange.enterprise_fees << ef
-      visit shop_path
-      click_link hub.name
-    end
-
     it "shows the overridden price" do
       page.should_not have_price "$11.11"
       page.should have_price "$61.11"
@@ -91,7 +89,10 @@ feature "shopping with variant overrides defined", js: true do
       page.should have_selector 'form.edit_order .shipping', text: '$0.00'
       page.should have_selector 'form.edit_order .total', text: '$122.21'
     end
+  end
 
+
+  describe "creating orders" do
     it "creates the order with the correct prices" do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
