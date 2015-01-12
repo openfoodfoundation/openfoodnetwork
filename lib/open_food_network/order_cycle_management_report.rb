@@ -1,3 +1,5 @@
+require 'open_food_network/user_balance_calculator'
+
 module OpenFoodNetwork
   class OrderCycleManagementReport
     attr_reader :params
@@ -7,22 +9,45 @@ module OpenFoodNetwork
     end
 
     def header
-      ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
+      if is_payment_methods?
+        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+      else
+        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+      end
     end
 
     def table
-      orders.map do |order|
-        ba = order.billing_address
-        da = order.distributor.andand.address
-        [ba.firstname,
-         ba.lastname,
-         order.email,
-         ba.phone,
-         order.distributor.andand.name,
-         order.shipping_method.andand.name,
-         order.payments.first.andand.payment_method.andand.name,
-         order.payments.first.amount
-        ]
+      if is_payment_methods?
+        orders.map do |order|
+          ba = order.billing_address
+          da = order.distributor.andand.address
+          [ba.firstname,
+           ba.lastname,
+           order.email,
+           ba.phone,
+           order.distributor.andand.name,
+           order.shipping_method.andand.name,
+           order.payments.first.andand.payment_method.andand.name,
+           order.payments.first.amount,
+	   OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance
+          ]
+        end
+      else
+        orders.map do |order|
+          ba = order.billing_address
+          da = order.distributor.andand.address
+          [ba.firstname,
+           ba.lastname,
+           "#{ba.address1} #{ba.address2} #{ba.city}",
+           ba.zipcode,
+           ba.phone,
+           order.distributor.andand.name,
+           order.shipping_method.andand.name,
+           order.payments.first.andand.payment_method.andand.name,
+           order.payments.first.amount,
+	   OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance
+          ]
+        end
       end
     end
 
@@ -56,6 +81,10 @@ module OpenFoodNetwork
       else
         orders
       end
+    end
+
+    def is_payment_methods?
+      params[:report_type] == "payment_methods"
     end
   end
 end
