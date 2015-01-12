@@ -61,6 +61,7 @@ Spree::Admin::ReportsController.class_eval do
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
 
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
+
   end
 
   def order_cycle_management
@@ -100,7 +101,11 @@ Spree::Admin::ReportsController.class_eval do
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
+<<<<<<< HEAD
       send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
+=======
+      send_data csv_string, :filename => "orders_and_distributors.csv"
+>>>>>>> 8d8f27961b8dfeeac6052b8e9ee88fbf1783791f
     end
   end
 
@@ -252,7 +257,11 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(@line_items)
+<<<<<<< HEAD
     csv_file_name = "bulk_coop_#{timestamp}.csv"
+=======
+    csv_file_name = "bulk_coop.csv"
+>>>>>>> 8d8f27961b8dfeeac6052b8e9ee88fbf1783791f
 
     render_report(@header, @table, params[:csv], csv_file_name)
   end
@@ -356,7 +365,11 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
+<<<<<<< HEAD
     csv_file_name = "payments_#{timestamp}.csv"
+=======
+    csv_file_name = "payments.csv"
+>>>>>>> 8d8f27961b8dfeeac6052b8e9ee88fbf1783791f
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
@@ -588,7 +601,11 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
+<<<<<<< HEAD
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+=======
+    csv_file_name = "#{__method__}.csv"
+>>>>>>> 8d8f27961b8dfeeac6052b8e9ee88fbf1783791f
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
@@ -597,7 +614,11 @@ Spree::Admin::ReportsController.class_eval do
   def products_and_inventory
     @report_types = REPORT_TYPES[:products_and_inventory]
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
+<<<<<<< HEAD
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
+=======
+    render_report(@report.header, @report.table, params[:csv], "products_and_inventory.csv")
+>>>>>>> 8d8f27961b8dfeeac6052b8e9ee88fbf1783791f
   end
 
   def users_and_enterprises
