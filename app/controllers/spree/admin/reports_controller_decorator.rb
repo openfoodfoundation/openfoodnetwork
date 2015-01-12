@@ -27,7 +27,8 @@ Spree::Admin::ReportsController.class_eval do
       ["Addresses", :addresses]
     ],
     order_cycle_management: [
-      ["Payment Methods Report", :payment_methods_report]
+      ["Payment Methods Report", :payment_methods],
+      ["Delivery Report", :delivery]
     ]
   }
 
