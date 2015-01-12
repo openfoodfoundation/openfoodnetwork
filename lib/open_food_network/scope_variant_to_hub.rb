@@ -11,6 +11,14 @@ module OpenFoodNetwork
     def count_on_hand
       VariantOverride.count_on_hand_for(@hub, self) || super
     end
+
+    def decrement!(attribute, by=1)
+      if attribute == :count_on_hand && VariantOverride.stock_overridden?(@hub, self)
+        VariantOverride.decrement_stock! @hub, self, by
+      else
+        super
+      end
+    end
   end
 end
 

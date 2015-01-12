@@ -7,7 +7,7 @@ feature "shopping with variant overrides defined", js: true do
   include CheckoutWorkflow
   include UIComponentHelper
 
-  use_short_wait 10
+  #use_short_wait 10
 
   describe "viewing products" do
     let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
@@ -21,16 +21,16 @@ feature "shopping with variant overrides defined", js: true do
     let(:v1) { create(:variant, product: p1, price: 11.11, unit_value: 1) }
     let(:v2) { create(:variant, product: p1, price: 22.22, unit_value: 2) }
     let(:v3) { create(:variant, product: p2, price: 33.33, unit_value: 3) }
+    let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
     let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55) }
     let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
     let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
+    let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3) }
     let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
 
     before do
       ActionMailer::Base.deliveries.clear
-      outgoing_exchange.variants << v1
-      outgoing_exchange.variants << v2
-      outgoing_exchange.variants << v3
+      outgoing_exchange.variants = [v1, v2, v3, v4]
       outgoing_exchange.enterprise_fees << ef
       visit shop_path
       click_link hub.name
@@ -111,7 +111,20 @@ feature "shopping with variant overrides defined", js: true do
       email.body.should include "$122.21"
     end
 
-    it "subtracts stock from the override"
+    it "subtracts stock from the override" do
+      fill_in "variants[#{v4.id}]", with: "2"
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      click_link 'Quick checkout'
+
+      expect do
+        expect do
+          complete_checkout
+        end.to change { v4.reload.count_on_hand }.by(0)
+      end.to change { vo4.reload.count_on_hand }.by(-2)
+    end
+
+    it "does not subtract stock from overrides that do not override count_on_hand"
   end
 
 
@@ -147,9 +160,6 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     place_order
-    #sleep 5
-    using_wait_time 10 do
-      page.should have_content "Your order has been processed successfully"
-    end
+    page.should have_content "Your order has been processed successfully"
   end
 end
