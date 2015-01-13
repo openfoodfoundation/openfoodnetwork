@@ -21,6 +21,15 @@ module OpenFoodNetwork
         totals[:items_total].should == 36
       end
 
+      context "when floating point math would result in fractional cents" do
+        let(:li1) { double(:line_item, quantity: 1, amount: 0.11) }
+        let(:li2) { double(:line_item, quantity: 2, amount: 0.12) }
+
+        it "rounds to the nearest cent" do
+          totals[:items_total].should == 0.23
+        end
+      end
+
       it "calculates the taxable total price" do
         totals[:taxable_total].should == 36
       end

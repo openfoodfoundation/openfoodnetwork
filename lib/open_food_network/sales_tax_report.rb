@@ -42,6 +42,10 @@ module OpenFoodNetwork
         end
       end
 
+      totals.each_pair do |k, v|
+        totals[k] = totals[k].round(2)
+      end
+
       totals
     end
 
