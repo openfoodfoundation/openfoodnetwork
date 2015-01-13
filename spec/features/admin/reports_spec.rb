@@ -65,12 +65,21 @@ feature %q{
       click_link "Reports"
     end
 
-    scenario "order payment method report" do
-      click_link "Order Cycle Management"
+    scenario "payment method report" do
+      click_link "Payment Methods Report"
       rows = find("table#listing_order_payment_methods").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
-        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
+        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+      ].sort
+    end
+
+    scenario "payment method report" do
+      click_link "Delivery Report"
+      rows = find("table#listing_order_payment_methods").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
       ].sort
     end
   end
