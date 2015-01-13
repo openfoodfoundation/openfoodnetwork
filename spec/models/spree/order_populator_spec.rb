@@ -48,6 +48,7 @@ module Spree
     describe "attempt_cart_add" do
       it "performs additional validations" do
         variant = double(:variant)
+        variant.stub(:scope_to_hub)
         quantity = 123
         Spree::Variant.stub(:find).and_return(variant)
 
