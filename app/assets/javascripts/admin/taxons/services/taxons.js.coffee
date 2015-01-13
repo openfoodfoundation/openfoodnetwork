@@ -13,7 +13,7 @@ angular.module("admin.taxons").factory "Taxons", (taxons, $filter) ->
 
     # For finding multiple Taxons represented by comma delimited string
     findByIDs: (ids) ->
-      @taxonsByID[taxon_id] for taxon_id in ids.split(",")
+      @taxonsByID[taxon_id] for taxon_id in ids.split(",") when @taxonsByID[taxon_id]
 
     findByTerm: (term) ->
       $filter('filter')(@taxons, term)
