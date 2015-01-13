@@ -99,7 +99,7 @@ feature %q{
     page.should have_content 'Payment State'
   end
   
-  describe "Sales Tax report" do
+  describe "Sales tax report" do
     let(:user1) do
       create_enterprise_user(enterprises: [create(:distributor_enterprise)])
     end
@@ -118,7 +118,9 @@ feature %q{
     let(:order1) { create(:order, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
-    let!(:adjustment) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+    let!(:adj_li2_tax) { create(:adjustment, adjustable: line_item2, source: line_item2, originator: tax_rate2, label: "RandomTax", amount: 123.00) }
 
     before do
       Spree::Config.shipment_inc_vat = true
@@ -145,11 +147,12 @@ feature %q{
       # And the totals and sales tax should be correct
       page.should have_content "1512.99" # items total
       page.should have_content "1500.45" # taxable items total
-      page.should have_content "250.08" # sales tax
+      page.should have_content "123.0" # sales tax (from adj_li2_tax, not calculated on the fly)
+      page.should_not have_content "250.08" # the number that would have been calculated on the fly
 
       # And the shipping cost and tax should be correct
-      page.should have_content "100.55" #shipping cost
-      page.should have_content "16.76" #shipping tax
+      page.should have_content "100.55" # shipping cost
+      page.should have_content "16.76" # shipping tax  # TODO: do not calculate on the fly
     end
   end
 

@@ -10,7 +10,7 @@ module OpenFoodNetwork
       let(:totals) { report.send(:totals_of, [li1, li2]) }
 
       before do
-        report.stub(:tax_rate_on) { 0.2 }
+        report.stub(:tax_included_in).and_return(2, 4)
       end
 
       it "calculates total quantity" do
@@ -31,7 +31,7 @@ module OpenFoodNetwork
 
       context "when there is no tax on a line item" do
         before do
-          report.stub(:tax_rate_on) { nil }
+          report.stub(:tax_included_in) { 0 }
         end
 
         it "does not appear in taxable total" do

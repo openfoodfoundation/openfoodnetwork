@@ -34,11 +34,11 @@ module OpenFoodNetwork
         totals[:items] += line_item.quantity
         totals[:items_total] += line_item.amount
 
-        tax_rate = tax_rate_on line_item
+        sales_tax = tax_included_in line_item
 
-        if tax_rate != nil && tax_rate != 0
+        if sales_tax > 0
           totals[:taxable_total] += line_item.amount
-          totals[:sales_tax] += (line_item.amount * tax_rate / (1 + tax_rate)).round(2)
+          totals[:sales_tax] += sales_tax
         end
       end
 
@@ -58,8 +58,8 @@ module OpenFoodNetwork
       end
     end
 
-    def tax_rate_on(line_item)
-      Spree::TaxRate.find_by_tax_category_id(line_item.variant.product.tax_category_id).andand.amount
+    def tax_included_in(line_item)
+      line_item.adjustments.included_tax.sum &:amount
     end
 
     def shipment_inc_vat
