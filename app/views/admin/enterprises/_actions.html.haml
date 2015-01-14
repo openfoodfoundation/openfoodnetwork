@@ -1,8 +1,9 @@
 = link_to_with_icon('icon-edit', 'Edit Profile', main_app.edit_admin_enterprise_path(enterprise), class: 'edit')
 %br/
 
-= link_to_delete_enterprise enterprise
-%br/
+- if can? :destroy, enterprise
+  = link_to_delete_enterprise enterprise
+  %br/
 
 - if enterprise.is_primary_producer
   = link_to_with_icon 'icon-dashboard', 'Properties', main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise.id)
