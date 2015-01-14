@@ -21,6 +21,19 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding enterprises whose profiles can be edited" do
+      let(:e) { double(:enterprise) }
+
+      it "returns managed and related enterprises with edit_profile permission" do
+        permissions.
+          should_receive(:managed_and_related_enterprises_with).
+          with(:edit_profile).
+          and_return([e])
+
+        permissions.editable_enterprises.should == [e]
+      end
+    end
+
     describe "finding enterprises that can be added to an order cycle, for each hub" do
       let!(:hub) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }
