@@ -145,7 +145,7 @@ module Spree
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
-          er_p
+          er_ps
           should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p_related)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p_related.master)
         end
