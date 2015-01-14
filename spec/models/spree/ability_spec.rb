@@ -123,7 +123,7 @@ module Spree
 
       let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
       let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
-      let(:er_p) { create(:enterprise_relationship, parent: s_related, child: s1, permissions_list: [:manage_products]) }
+      let(:er_ps) { create(:enterprise_relationship, parent: s_related, child: s1, permissions_list: [:manage_products]) }
 
       subject { user }
       let(:user) { nil }
@@ -241,6 +241,19 @@ module Spree
 
         let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
         let(:vo2) { create(:variant_override, hub: d2, variant: p2.master) }
+
+        describe "editing enterprises" do
+          let!(:d_related) { create(:distributor_enterprise) }
+          let!(:er_pd) { create(:enterprise_relationship, parent: d_related, child: d1, permissions_list: [:edit_profile]) }
+
+          it "should be able to edit enterprises it manages" do
+            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d1)
+          end
+
+          it "should be able to edit enterprises it has permission to" do
+            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d_related)
+          end
+        end
 
         describe "variant overrides" do
           it "should be able to access variant overrides page" do

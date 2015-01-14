@@ -52,7 +52,7 @@ class AbilityDecorator
 
     can [:admin, :index, :create], Enterprise
     can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
-      user.enterprises.include? enterprise
+      OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
     end
 
     # All enterprises can have fees, though possibly suppliers don't need them?
