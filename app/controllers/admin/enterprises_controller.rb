@@ -76,8 +76,10 @@ module Admin
     end
 
     def collection
-      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
-      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+      OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_enterprises.
+        order('is_primary_producer ASC, name')
     end
 
     def collection_actions

@@ -324,7 +324,9 @@ feature %q{
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_user) { create_enterprise_user }
+    let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
@@ -410,15 +412,26 @@ feature %q{
       end
     end
 
-    scenario "editing enterprises I have permission to" do
+    scenario "editing enterprises I manage" do
       click_link 'Enterprises'
-      within('#listing_enterprises tbody tr:first') { click_link 'Edit Profile' }
+      within("#listing_enterprises tr.enterprise-#{distributor1.id}") { click_link 'Edit Profile' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
       click_button 'Update'
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-      page.should have_field 'enterprise_name', :with => 'Eaterprises'
+      distributor1.reload.name.should == 'Eaterprises'
+    end
+
+    scenario "editing enterprises I have permission to" do
+      click_link 'Enterprises'
+      within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+
+      fill_in 'enterprise_name', :with => 'Eaterprises'
+      click_button 'Update'
+
+      flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+      distributor3.reload.name.should == 'Eaterprises'
     end
 
     scenario "editing images for an enterprise" do
