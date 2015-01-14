@@ -1,0 +1,2 @@
+/ insert_bottom "[data-hook='admin_tabs'], #admin_tabs[data-hook]"
+= tab :order_cycles, :url => main_app.admin_order_cycles_path
