@@ -1,7 +1,7 @@
 module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => :index
+    before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
@@ -53,6 +53,18 @@ module Admin
       end
     end
 
+    def check_permalink
+      path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
+      if path && path[:controller] == "cms_content"
+        respond_to do |format|
+          format.js { render nothing: true, status: 200 }
+        end
+      else
+        respond_to do |format|
+          format.js { render nothing: true, status: 409 }
+        end
+      end
+    end
 
     protected
 

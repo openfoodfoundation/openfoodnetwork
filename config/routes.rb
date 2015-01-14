@@ -46,6 +46,7 @@ Openfoodnetwork::Application.routes.draw do
       collection do
         get :for_order_cycle
         post :bulk_update, as: :bulk_update
+        get :check_permalink
       end
 
       member do
