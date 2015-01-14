@@ -326,11 +326,12 @@ feature %q{
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_user) { create_enterprise_user }
-    let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
+    let(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+      er
 
       login_to_admin_as enterprise_user
     end
@@ -348,10 +349,16 @@ feature %q{
           expect(page).to_not have_select "enterprise_set_collection_attributes_0_sells"
         end
 
+        within("tr.enterprise-#{distributor3.id}") do
+          expect(page).to have_content distributor3.name
+          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
+        end
+
         within("tr.enterprise-#{supplier1.id}") do
           expect(page).to have_content supplier1.name
-          expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
+          expect(page).to have_checked_field "enterprise_set_collection_attributes_2_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_2_sells"
         end
 
         expect(page).to_not have_content "supplier2.name"
