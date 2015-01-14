@@ -8,35 +8,74 @@
 
   #div{"ng-controller" => "TabsCtrl", style: "clear: both"}
     %tabset
+
       %tab{heading: 'Map',
           active: "active(\'\')",
           select: "select(\'\')"}
-        %p TODO: show a map of enterprises
         = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer
         .map-container
-          %map{"ng-controller" => "MapCtrl"}
+          %map{"ng-controller" => "MapCtrl", "ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
             %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
               %markers{models: "OfnMap.enterprises", fit: "true",
               coords: "'self'", icon: "'icon'", click: "'reveal'"}
+
       %tab{heading: 'About us',
-          active: "active(\'hi\')",
-          select: "select(\'hi\')"}
+          active: "active(\'about\')",
+          select: "select(\'about\')"}
         %h3 About us
         %p= @group.long_description
+
       %tab{heading: 'Our producers',
           active: "active(\'producers\')",
           select: "select(\'producers\')"}
-        %h3 Our producers
-        %ul
-          - @group.enterprises.is_primary_producer.each do |enterprise|
-            %li= link_to enterprise.name, enterprise
+        .producers.pad-top{"ng-controller" => "GroupEnterprisesCtrl"}
+          .row
+            .small-12.columns.pad-top
+              %h1 Our Producers
+          = render partial: "shared/components/enterprise_search"
+          -# TODO: find out why this is not working
+          -#= render partial: "producers/filters"
+
+          .row{bindonce: true}
+            .small-12.columns
+              .active_table
+                %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+                "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                "ng-controller" => "GroupEnterpriseNodeCtrl",
+                "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+                id: "{{producer.hash}}"}
+
+                  .small-12.columns
+                    = render partial: 'producers/skinny'
+                    = render partial: 'producers/fat'
+
+                = render partial: 'shared/components/enterprise_no_results'
+
       %tab{heading: 'Our hubs',
           active: "active(\'hubs\')",
           select: "select(\'hubs\')"}
-        %h3 Our producers
-        %ul
-          - @group.enterprises.is_distributor.each do |enterprise|
-            %li= link_to enterprise.name, enterprise
+        #hubs.hubs{"ng-controller" => "GroupEnterprisesCtrl"}
+          .row
+            .small-12.columns
+              %h1 Our Hubs
+
+          = render partial: "shared/components/enterprise_search"
+          -# TODO: find out why this is not working
+          -#= render partial: "home/filters"
+
+          .row{bindonce: true}
+            .small-12.columns
+              .active_table
+                %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
+                "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+                "ng-controller" => "GroupEnterpriseNodeCtrl"}
+                  .small-12.columns
+                    = render partial: 'home/skinny'
+                    = render partial: 'home/fat'
+
+                = render partial: 'shared/components/enterprise_no_results'
+
       %tab{heading: 'Contact us',
           active: "active(\'contact\')",
           select: "select(\'contact\')"}
