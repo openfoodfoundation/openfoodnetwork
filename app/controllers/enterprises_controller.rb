@@ -69,4 +69,17 @@ class EnterprisesController < BaseController
 
     redirect_to main_app.shop_path
   end
+
+  def check_permalink
+    path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
+    if path && path[:controller] == "cms_content"
+      respond_to do |format|
+        format.js { render nothing: true, status: 200 }
+      end
+    else
+      respond_to do |format|
+        format.js { render nothing: true, status: 409 }
+      end
+    end
+  end
 end
