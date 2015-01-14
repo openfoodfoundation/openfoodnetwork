@@ -1,9 +1,10 @@
-Darkswarm.filter 'shipping', ()-> 
+Darkswarm.filter 'shipping', ()->
   (objects, options)->
     objects ||= []
-    options ?= null
-    
-    if options.pickup and !options.delivery
+
+    if !options
+      objects
+    else if options.pickup and !options.delivery
       objects.filter (obj)->
         obj.pickup
     else if options.delivery and !options.pickup
