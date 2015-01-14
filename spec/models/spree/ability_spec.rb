@@ -253,6 +253,14 @@ module Spree
           it "should be able to edit enterprises it has permission to" do
             should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d_related)
           end
+
+          it "should be able to manage shipping methods, payment methods and enterprise fees for enterprises it manages" do
+            should have_ability([:manage_shipping_methods, :manage_payment_methods, :manage_enterprise_fees], for: d1)
+          end
+
+          it "should not be able to manage shipping methods, payment methods and enterprise fees for enterprises it has edit profile permission to" do
+            should_not have_ability([:manage_shipping_methods, :manage_payment_methods, :manage_enterprise_fees], for: d_related)
+          end
         end
 
         describe "variant overrides" do

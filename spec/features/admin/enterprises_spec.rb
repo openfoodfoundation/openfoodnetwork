@@ -430,15 +430,26 @@ feature %q{
       distributor1.reload.name.should == 'Eaterprises'
     end
 
-    scenario "editing enterprises I have permission to" do
-      click_link 'Enterprises'
-      within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+    describe "enterprises I have edit permission for, but do not manage" do
+      it "allows me to edit them" do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
 
-      fill_in 'enterprise_name', :with => 'Eaterprises'
-      click_button 'Update'
+        fill_in 'enterprise_name', :with => 'Eaterprises'
+        click_button 'Update'
 
-      flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-      distributor3.reload.name.should == 'Eaterprises'
+        flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+        distributor3.reload.name.should == 'Eaterprises'
+      end
+
+      it "does not show links to manage payment methods, shipping methods or enterprise fees" do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") do
+          page.should_not have_link 'Payment Methods'
+          page.should_not have_link 'Shipping Methods'
+          page.should_not have_link 'Enterprise Fees'
+        end
+      end
     end
 
     scenario "editing images for an enterprise" do
