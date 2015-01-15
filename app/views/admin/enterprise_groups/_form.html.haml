@@ -1,43 +1,11 @@
-= f.field_container :name do
-  = f.label :name
-  %br/
-  = f.text_field :name
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise }
 
-= f.field_container :description do
-  = f.label :description
-  %br/
-  = f.text_field :description
-
-= f.field_container :long_description do
-  = f.label :long_description
-  %br/
-  = f.text_area :long_description
-
-= f.field_container :on_front_page do
-  = f.label :on_front_page, 'On front page?'
-  %br/
-  = f.check_box :on_front_page
-
-= f.field_container :enterprise_ids do
-  = f.label :enterprise_ids, 'Enterprises'
-  %br/
-  = f.collection_select :enterprise_ids, Enterprise.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
-
-
-.row
-  .alpha.three.columns
-    = f.label :logo, class: 'with-tip', 'data-powertip' => 'This is the logo'
-    .with-tip{'data-powertip' => 'This is the logo'}
-      %a What's this?
-  .omega.eight.columns
-    = image_tag @object.logo.url if @object.logo.present?
-    = f.file_field :logo
-
-.row
-  .alpha.three.columns
-    = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed at the top of the Group profile'
-    .with-tip{'data-powertip' => 'This image is displayed at the top of the Group profile'}
-      %a What's this?
-  .omega.eight.columns
-    = image_tag @object.promo_image.url if @object.promo_image.present?
-    = f.file_field :promo_image
+= form_for [main_app, :admin, @enterprise_group] do |f|
+  .row{ ng: {app: 'admin.enterprise_groups', controller: 'enterpriseGroupCtrl'} }
+    .sixteen.columns.alpha
+      .four.columns.alpha
+        = render 'admin/shared/side_menu'
+      .one.column &nbsp;
+      .eleven.columns.omega.fullwidth_inputs
+        = render :partial => 'inputs', :locals => { :f => f }
+  = render partial: "spree/admin/shared/#{action}_resource_links"
