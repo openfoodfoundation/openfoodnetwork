@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "sideMenuCtrl", ($scope, Enterprise, SideMenu) ->
+  .controller "sideMenuCtrl", ($scope, $parse, Enterprise, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.menu = SideMenu
     $scope.select = SideMenu.select
@@ -12,10 +12,23 @@ angular.module("admin.enterprises")
       { name: 'About', icon_class: "icon-pencil" }
       { name: 'Business Details', icon_class: "icon-briefcase" }
       { name: 'Images', icon_class: "icon-picture" }
-      { name: "Shipping Methods", icon_class: "icon-truck" }
-      { name: "Payment Methods", icon_class: "icon-money" }
-      { name: "Enterprise Fees", icon_class: "icon-tasks" }
-      { name: "Shop Preferences", icon_class: "icon-shopping-cart" }
+      { name: "Shipping Methods", icon_class: "icon-truck", show: "showExtraPrefs()" }
+      { name: "Payment Methods", icon_class: "icon-money", show: "showExtraPrefs()" }
+      { name: "Enterprise Fees", icon_class: "icon-tasks", show: "showEnterpriseFees()" }
+      { name: "Shop Preferences", icon_class: "icon-shopping-cart", show: "showExtraPrefs()" }
     ]
 
     $scope.select(0)
+
+
+    $scope.showItem = (item) ->
+      if item.show?
+        $parse(item.show)($scope)
+      else
+        true
+
+    $scope.showExtraPrefs = ->
+      $scope.Enterprise.sells != "none"
+
+    $scope.showEnterpriseFees = ->
+      $scope.Enterprise.sells != "none" || $scope.Enterprise.is_primary_producer
