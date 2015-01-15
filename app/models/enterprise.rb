@@ -60,12 +60,13 @@ class Enterprise < ActiveRecord::Base
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
-  before_save :confirmation_check, if: lambda{ email_changed? }
+  before_save :confirmation_check, if: lambda { email_changed? }
 
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  after_create :relate_to_owners_hubs
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
   after_create :send_welcome_email, if: lambda { email_is_known? }
@@ -93,6 +94,7 @@ class Enterprise < ActiveRecord::Base
   }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
+  scope :is_hub, where(sells: 'any')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -340,6 +342,18 @@ class Enterprise < ActiveRecord::Base
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
       errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
+    end
+  end
+
+  def relate_to_owners_hubs
+    hubs = owner.owned_enterprises.is_hub.where('enterprises.id != ?', self)
+
+    hubs.each do |hub|
+      EnterpriseRelationship.create!(parent: self,
+                                     child: hub,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :manage_products,
+                                                        :edit_profile])
     end
   end
 
