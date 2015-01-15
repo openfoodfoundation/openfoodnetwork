@@ -1,7 +1,8 @@
 @import ../darkswarm/mixins
 
 .alert-box
-  display: block 
+  position: relative
+  display: block
   background-color: #eff5dc
   border: 1px solid #9fc820
   color: #666
@@ -11,7 +12,10 @@
   transition: opacity 300ms ease-out
   padding: 0.77778em 1.33333em 0.77778em 0.77778em
   a.close
-    float: right
+    position: absolute
+    right: 5px
+    top: 0px
+    font-size: 1.5em
 
 
 .dashboard_item.single-ent
@@ -20,7 +24,7 @@
     height: auto !important
   .list
     .button.bottom
-      width: 100% 
+      width: 100%
 
 .button.big
   width: 100%

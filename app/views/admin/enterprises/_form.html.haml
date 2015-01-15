@@ -1,227 +1,44 @@
-%fieldset.eleven.columns.alpha.no-border-bottom
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Primary Details'" } }
   %legend Primary Details
-  .row
-    .alpha.eleven.columns
-      .three.columns.alpha
-        = f.label :name
-        %span.required *
-      .eight.columns.omega
-        = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
-  .row
-    .alpha.eleven.columns
-      .three.columns.alpha
-        = f.label :group_ids, 'Groups'
-        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
-          %a What's this?
-
-      .eight.columns.omega
-        = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
-  - if spree_current_user.admin?
-    .row
-      .three.columns.alpha
-        =f.label :owner_id, 'Owner'
-        %span.required *
-        .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
-          %a What's this?
-      .eight.columns
-        - owner_email = @enterprise.andand.owner.andand.email || ""
-        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: owner_email
-
-  .row
-    .three.columns.alpha
-      %label Primary Producer
-      .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
-        %a What's this?
-    .five.columns.omega
-      = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
-      &nbsp;
-      = f.label :is_primary_producer, 'Producer'
-  - if spree_current_user.admin?
-    .row
-      .alpha.eleven.columns
-        .three.columns.alpha
-          = f.label :sells, 'Sells'
-          .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
-            %a What's this?
-        .two.columns
-          = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
-          &nbsp;
-          = f.label :sells, "None", value: "none"
-        .two.columns
-          = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
-          &nbsp;
-          = f.label :sells, "Own", value: "own"
-        .four.columns.omega
-          = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
-          &nbsp;
-          = f.label :sells, "Any", value: "any"
-  .row
-    .three.columns.alpha
-      %label Visible in search?
-      .with-tip{'data-powertip' => "Determines whether this enterprise will be visible to customers when searching the site."}
-        %a What's this?
-    .two.columns
-      = f.radio_button :visible, true
-      &nbsp;
-      = f.label :visible, "Visible", :value => "true"
-    .five.columns.omega
-      = f.radio_button :visible, false
-      &nbsp;
-      = f.label :visible, "Not Visible", :value => "false"
-  - if @enterprise.is_distributor
-  - # TODO: Angularise this
-    .row
-      .three.columns.alpha
-        %label Link to shop front
-        .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
-          %a What's this?
-      .eight.columns.omega
-        = main_app.shop_enterprise_url(@enterprise)
-  -# redo denoting required fields in the whole project
-  .row
-    Required fields are denoted with an asterisk (
-    %span.required *
-    )
+  = render 'admin/enterprises/form/primary_details', f: f
 
 = f.fields_for :address do |af|
-  %fieldset.eleven.columns.alpha.no-border-bottom
+  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Address'" } }
     %legend Address
-    .row
-      .three.columns.alpha
-        = af.label :address1
-        %span.required *
-      .eight.columns.omega
-        = af.text_field :address1, { placeholder: "eg. 123 High Street"}
-    .row
-      .alpha.three.columns
-        = af.label :address2
-      .eight.columns.omega
-        = af.text_field :address2
-    .row
-      .three.columns.alpha
-        = af.label :city, 'Suburb'
-        \/
-        = af.label :zipcode, 'Postcode'
-        %span.required *
-      .four.columns
-        = af.text_field :city, { placeholder: "eg. Northcote"}
-      .four.columns.omega
-        = af.text_field :zipcode, { placeholder: "eg. 3070"}
-    .row
-      .three.columns.alpha
-        = af.label :state_id, 'State'
-        \/
-        = af.label :country_id, 'Country'
-        %span.required *
-      .four.columns
-        = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
-      .four.columns.omega
-        = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
-  %fieldset.eleven.columns.alpha.no-border-bottom
-    %legend Contact Details
-    -if @enterprise.unconfirmed_email
-      .alert-box
-        Email change is pending.
-        We've sent a confirmation email to
-        %strong= "#{@enterprise.unconfirmed_email}."
-        = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.unconfirmed_email } ), method: :post)
-        %a.close{ href: "#" } ×
-    .row
-      .alpha.three.columns
-        = f.label :contact, 'Name'
-      .omega.eight.columns
-        = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
-    .row
-      .alpha.three.columns
-        = f.label :email
-        %span.required *
-      .omega.eight.columns
-        = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
-    .row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
-      .alpha.three.columns
-        &nbsp;
-      .omega.eight.columns
-        Note: A new email address may need to be confirmed prior to use
+    = render 'admin/enterprises/form/address', af: af
 
-    .row
-      .alpha.three.columns
-        = f.label :phone
-      .omega.eight.columns
-        = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
-  %fieldset.eleven.columns.alpha.no-border-bottom
-    %legend Enterprise Details
-    .row
-      .alpha.three.columns
-        = f.label :abn, 'ABN'
-      .omega.eight.columns
-        = f.text_field :abn, { placeholder: "eg. 99 123 456 789"}
-    .row
-      .alpha.three.columns
-        = f.label :acn, 'ACN'
-      .omega.eight.columns
-        = f.text_field :acn, { placeholder: "eg. 123 456 789"}
-    .row
-      .alpha.three.columns
-        = f.label :website
-      .omega.eight.columns
-        = f.text_field :website, { placeholder: "eg. www.truffles.com"}
-    .row
-      .alpha.three.columns
-        = f.label :facebook, 'Facebook'
-      .omega.eight.columns
-        = f.text_field :facebook
-    .row
-      .alpha.three.columns
-        = f.label :instagram, 'Instagram'
-      .omega.eight.columns
-        = f.text_field :instagram
-    .row
-      .alpha.three.columns
-        = f.label :linkedin, 'LinkedIn'
-      .omega.eight.columns
-        = f.text_field :linkedin
-    .row
-      .alpha.three.columns
-        = f.label :twitter
-      .omega.eight.columns
-        = f.text_field :twitter, { placeholder: "eg. @the_prof" }
-%fieldset.eleven.columns.alpha.no-border-bottom
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
+  %legend Contact
+  = render 'admin/enterprises/form/contact', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Social'" } }
+  %legend Social
+  = render 'admin/enterprises/form/social', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Business Details'" } }
+  %legend Business Details
+  = render 'admin/enterprises/form/business_details', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
   %legend About Us
-  .row
-    .alpha.three.columns
-      = f.label :description, 'Short Description'
-    .omega.eight.columns
-      = f.text_field :description, maxlength: 255, placeholder: 'Tell us about your enterprise in one or two sentences'
-  .row
-    .alpha.three.columns
-      = f.label :long_description, 'About Us'
-    .omega.eight.columns
-      -# textAngular toolbar options, add to the ta-toolbar array below and separate into groups with extra ],[ if needed:
-      -# 	['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-      -# 	['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-      -# 	['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
-      -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
-      %text-angular{'ng-model' => 'htmlVariable', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular',
-        'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-        'placeholder' => 'Tell customers about yourself. This information appears on your public profile.'}
-%fieldset.eleven.columns.alpha.no-border-bottom
-  %legend IMAGES
-  .row
-    .alpha.three.columns
-      = f.label :logo
-      %br
-      100 x 100 pixels
-    .omega.eight.columns
-      = image_tag @object.logo(:medium) if @object.logo.present?
-      = f.file_field :logo
-  .row
-    .alpha.three.columns
-      = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed in "About Us"'
-      %br/
-      %span{ style: 'font-weight:bold' } PLEASE NOTE:
-      Any promo image uploaded here will be cropped to 1200 x 260.
-      The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+  = render 'admin/enterprises/form/about_us', f: f
 
-    .omega.eight.columns
-      = image_tag @object.promo_image(:large) if @object.promo_image.present?
-      = f.file_field :promo_image
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
+  %legend Images
+  = render 'admin/enterprises/form/images', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shipping Methods'" } }
+  %legend Shipping Methods
+  = render 'admin/enterprises/form/shipping_methods', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Payment Methods'" } }
+  %legend Payment Methods
+  = render 'admin/enterprises/form/payment_methods', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Enterprise Fees'" } }
+  %legend Enterprise Fees
+  = render 'admin/enterprises/form/enterprise_fees', f: f
+
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shop Preferences'" } }
+  %legend Shop Preferences
+  = render 'admin/enterprises/form/shop_preferences', f: f

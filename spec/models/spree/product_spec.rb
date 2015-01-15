@@ -8,23 +8,18 @@ module Spree
       it { should belong_to(:primary_taxon) }
       it { should have_many(:product_distributions) }
     end
-
+    
     describe "validations and defaults" do
-      it "is valid when created from factory" do
-        create(:product).should be_valid
+      it "is valid when built from factory" do
+        build(:product).should be_valid
       end
 
       it "requires a primary taxon" do
-        product = create(:simple_product)
-        product.taxons = []
-        product.primary_taxon = nil
-        product.should_not be_valid
+        build(:simple_product, taxons: [], primary_taxon: nil).should_not be_valid
       end
 
       it "requires a supplier" do
-        product = create(:simple_product)
-        product.supplier = nil
-        product.should_not be_valid
+        build(:simple_product, supplier: nil).should_not be_valid
       end
 
       it "does not save when master is invalid" do
@@ -40,6 +35,25 @@ module Spree
         product = Product.new
         product.available_on.should == Time.now
       end
+
+      describe "tax category" do
+        context "when a tax category is required" do
+          before { Spree::Config.products_require_tax_category = true }
+
+          it "is invalid when a tax category is not provided" do
+            build(:product, tax_category_id: nil).should_not be_valid
+          end
+        end
+
+        context "when a tax category is not required" do
+          before { Spree::Config.products_require_tax_category = false }
+
+          it "is valid when a tax category is not provided" do
+            build(:product, tax_category_id: nil).should be_valid
+          end
+        end
+      end
+
 
       context "when the product has variants" do
         let(:product) do
@@ -379,41 +393,6 @@ module Spree
       end
     end
 
-    describe "finding variants for an order cycle and hub" do
-      let(:oc) { create(:simple_order_cycle) }
-      let(:s) { create(:supplier_enterprise) }
-      let(:d1) { create(:distributor_enterprise) }
-      let(:d2) { create(:distributor_enterprise) }
-
-      let(:p1) { create(:simple_product) }
-      let(:p2) { create(:simple_product) }
-      let(:v1) { create(:variant, product: p1) }
-      let(:v2) { create(:variant, product: p2) }
-
-      let(:p_external) { create(:simple_product) }
-      let(:v_external) { create(:variant, product: p_external) }
-
-      let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
-                            incoming: true, variants: [v1, v2]) }
-      let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
-                              incoming: false, variants: [v1]) }
-      let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
-                              incoming: false, variants: [v2]) }
-
-      it "returns variants in the order cycle and distributor" do
-        p1.variants_for(oc, d1).should == [v1]
-        p2.variants_for(oc, d2).should == [v2]
-      end
-
-      it "does not return variants in the order cycle but not the distributor" do
-        p1.variants_for(oc, d2).should be_empty
-        p2.variants_for(oc, d1).should be_empty
-      end
-
-      it "does not return variants not in the order cycle" do
-        p_external.variants_for(oc, d1).should be_empty
-      end
-    end
 
     describe "variant units" do
       context "when the product initially has no variant unit" do

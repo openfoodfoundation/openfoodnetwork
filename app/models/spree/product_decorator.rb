@@ -1,4 +1,8 @@
+require 'open_food_network/scope_product_to_hub'
+
 Spree::Product.class_eval do
+  include OpenFoodNetwork::ProductScopableToHub
+
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
@@ -20,7 +24,8 @@ Spree::Product.class_eval do
   validates_associated :master, message: "^Price and On Hand must be valid"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
-
+  validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
+  
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,
                         if: -> p { %w(weight volume).include? p.variant_unit }
@@ -128,10 +133,6 @@ Spree::Product.class_eval do
     self.product_distributions.find_by_distributor_id(distributor)
   end
 
-  def variants_for(order_cycle, distributor)
-    self.variants.where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
-  end
-
   # overriding to check self.on_demand as well
   def has_stock?
     has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
@@ -141,7 +142,7 @@ Spree::Product.class_eval do
     # This product has stock for a distribution if it is available on-demand
     # or if one of its variants in the distribution is in stock
     (!has_variants? && on_demand) ||
-      variants_distributed_by(order_cycle, distributor).any? { |v| v.in_stock? }
+      variants_distributed_by(order_cycle, distributor).any?(&:in_stock?)
   end
 
   def variants_distributed_by(order_cycle, distributor)

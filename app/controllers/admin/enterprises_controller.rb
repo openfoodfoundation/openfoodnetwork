@@ -3,6 +3,7 @@ module Admin
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => :index
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
+    before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
@@ -75,8 +76,10 @@ module Admin
     end
 
     def collection
-      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
-      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+      OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_enterprises.
+        order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -87,6 +90,10 @@ module Admin
       @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
       @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
+    end
+
+    def load_taxons
+      @taxons = Spree::Taxon.order(:name)
     end
 
     def check_can_change_bulk_sells

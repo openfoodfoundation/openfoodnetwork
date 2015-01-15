@@ -1,0 +1,9 @@
+.row.date-range-filter
+  = label_tag nil, t(:date_range)
+  %br
+  = label_tag nil, t(:start), :class => 'inline'
+  = f.text_field :completed_at_gt, :class => 'datetimepicker datepicker-from'
+  %span.range-divider
+    %i.icon-arrow-right
+  = f.text_field :completed_at_lt, :class => 'datetimepicker datepicker-to'
+  = label_tag nil, t(:end), :class => 'inline'

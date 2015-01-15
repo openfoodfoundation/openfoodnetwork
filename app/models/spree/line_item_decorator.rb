@@ -26,7 +26,7 @@ Spree::LineItem.class_eval do
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
-    price + order.adjustments.where(source_id: id).sum(&:amount) / quantity
+    (price + order.adjustments.where(source_id: id).sum(&:amount) / quantity).round(2)
   end
 
   def single_display_amount_with_adjustments
@@ -34,9 +34,9 @@ Spree::LineItem.class_eval do
   end
 
   def amount_with_adjustments
-    # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
-    # so line_item.adjustments returns an empty array
-    amount + order.adjustments.where(source_id: id).sum(&:amount)
+    # We calculate from price_with_adjustments here rather than building our own value because
+    # rounding errors can produce discrepencies of $0.01.
+    price_with_adjustments * quantity
   end
 
   def display_amount_with_adjustments

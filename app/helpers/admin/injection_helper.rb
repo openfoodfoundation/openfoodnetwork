@@ -5,8 +5,8 @@ module Admin
     end
 
     def admin_inject_enterprises
-      admin_inject_json_ams_array("ofn.admin", "my_enterprises", @my_enterprises, Api::Admin::EnterpriseSerializer) +
-        admin_inject_json_ams_array("ofn.admin", "all_enterprises", @all_enterprises, Api::Admin::EnterpriseSerializer)
+      admin_inject_json_ams_array("ofn.admin", "my_enterprises", @my_enterprises, Api::Admin::BasicEnterpriseSerializer) +
+        admin_inject_json_ams_array("ofn.admin", "all_enterprises", @all_enterprises, Api::Admin::BasicEnterpriseSerializer)
     end
 
     def admin_inject_enterprise_relationships
@@ -33,6 +33,15 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_enterprise_permissions
+      permissions =
+        {can_manage_shipping_methods: can?(:manage_shipping_methods, @enterprise),
+         can_manage_payment_methods:  can?(:manage_payment_methods, @enterprise),
+         can_manage_enterprise_fees:  can?(:manage_enterprise_fees,  @enterprise)}
+
+      render partial: "admin/json/injection_ams", locals: {ngModule: "admin.enterprises", name: "enterprisePermissions", json: permissions.to_json}
+    end
+
     def admin_inject_hub_permissions
       render partial: "admin/json/injection_ams", locals: {ngModule: "ofn.admin", name: "hubPermissions", json: @hub_permissions.to_json}
     end
@@ -42,7 +51,7 @@ module Admin
     end
 
     def admin_inject_taxons
-      admin_inject_json_ams_array "ofn.admin", "taxons", @taxons, Api::Admin::TaxonSerializer
+      admin_inject_json_ams_array "admin.taxons", "taxons", @taxons, Api::Admin::TaxonSerializer
     end
 
     def admin_inject_users
@@ -56,13 +65,6 @@ module Admin
     def admin_inject_spree_api_key
       render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
     end
-
-    def admin_inject_enterprise_long_description
-      # Clean line breaks and quotes.
-      long_description = @enterprise.long_description.blank? ? "" : @enterprise.long_description.gsub("\r\n", "<br />").gsub("\"", "&#34;").gsub("'","&#39;")
-      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.enterprises', name: 'longDescription', json: "'#{long_description}'"}
-    end
-
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
       json = serializer.new(data, scope: spree_current_user).to_json

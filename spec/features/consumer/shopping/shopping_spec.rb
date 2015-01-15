@@ -119,7 +119,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         page.should have_price "$53.00"
 
         # Product price should be listed as the lesser of these
-        #page.should have_selector 'tr.product > td', text: "from $43.00"
         page.should have_price "$43.00"
       end
     end

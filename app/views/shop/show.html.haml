@@ -1,4 +1,4 @@
-= inject_enterprises 
+= inject_enterprises
 
 %shop.darkswarm
   - content_for :order_cycle_form do
@@ -12,14 +12,16 @@
 
       / Will this label should be a variable to reflect 'Ready for pickup / delivery' as appropriate
 
-      %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id", 
+      %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
               "ng-change" => "changeOrderCycle()",
               "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
               "popover-placement" => "left", "popover" => "Choose when you want your order:", "popover-trigger" => "openTrigger"}
 
-       
+
 
   = render partial: "shopping_shared/details"
+
+  = render partial: 'shop/messages'
 
   .row
     = render partial: "shop/products/form"

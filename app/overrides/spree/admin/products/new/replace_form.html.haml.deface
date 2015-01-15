@@ -53,6 +53,16 @@
           = f.text_field :on_hand, class: 'fullwidth'
           = f.error_message_on :on_hand
     .twelve.columns.alpha
+      .six.columns.alpha &nbsp;
+      .three.columns
+        - if Spree::TaxCategory.any?
+          = render 'spree/admin/products/tax_category_form', f: f
+        - else
+          &nbsp;
+      .three.columns.omega
+        = render 'spree/admin/products/shipping_category_form', f: f
+
+    .twelve.columns.alpha
       = f.field_container :description do
         = f.label :product_description, t(:product_description)
         %br/

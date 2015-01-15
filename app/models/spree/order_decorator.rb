@@ -66,6 +66,12 @@ Spree::Order.class_eval do
     where("state != ?", state)
   }
 
+  scope :with_payment_method_name, lambda { |payment_method_name|
+    joins(:payments => :payment_method).
+      where('spree_payment_methods.name = ?', payment_method_name).
+      select('DISTINCT spree_orders.*')
+  }
+
 
   # -- Methods
   def products_available_from_new_distribution
@@ -95,6 +101,7 @@ Spree::Order.class_eval do
 
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
+    line_items(:reload)
     current_item = find_line_item_by_variant(variant)
     if current_item
       Bugsnag.notify(RuntimeError.new("Order populator weirdness"), {

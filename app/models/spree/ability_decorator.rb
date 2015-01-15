@@ -52,6 +52,9 @@ class AbilityDecorator
 
     can [:admin, :index, :create], Enterprise
     can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+      OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
@@ -128,7 +131,7 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
   end
 
 
