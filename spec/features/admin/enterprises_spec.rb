@@ -442,11 +442,22 @@ feature %q{
         distributor3.reload.name.should == 'Eaterprises'
       end
 
-      it "does not show links to manage payment methods, shipping methods or enterprise fees" do
+      it "does not show links to manage shipping methods, payment methods or enterprise fees" do
         click_link 'Enterprises'
         within("#listing_enterprises tr.enterprise-#{distributor3.id}") do
-          page.should_not have_link 'Payment Methods'
           page.should_not have_link 'Shipping Methods'
+          page.should_not have_link 'Payment Methods'
+          page.should_not have_link 'Enterprise Fees'
+        end
+      end
+
+      it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page", js: true do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+
+        within(".side_menu") do
+          page.should_not have_link 'Shipping Methods'
+          page.should_not have_link 'Payment Methods'
           page.should_not have_link 'Enterprise Fees'
         end
       end

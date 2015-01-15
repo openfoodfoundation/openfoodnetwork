@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "sideMenuCtrl", ($scope, $parse, Enterprise, SideMenu) ->
+  .controller "sideMenuCtrl", ($scope, $parse, Enterprise, SideMenu, enterprisePermissions) ->
     $scope.Enterprise = Enterprise.enterprise
     $scope.menu = SideMenu
     $scope.select = SideMenu.select
@@ -12,10 +12,10 @@ angular.module("admin.enterprises")
       { name: 'About', icon_class: "icon-pencil" }
       { name: 'Business Details', icon_class: "icon-briefcase" }
       { name: 'Images', icon_class: "icon-picture" }
-      { name: "Shipping Methods", icon_class: "icon-truck", show: "showExtraPrefs()" }
-      { name: "Payment Methods", icon_class: "icon-money", show: "showExtraPrefs()" }
+      { name: "Shipping Methods", icon_class: "icon-truck", show: "showShippingMethods()" }
+      { name: "Payment Methods", icon_class: "icon-money", show: "showPaymentMethods()" }
       { name: "Enterprise Fees", icon_class: "icon-tasks", show: "showEnterpriseFees()" }
-      { name: "Shop Preferences", icon_class: "icon-shopping-cart", show: "showExtraPrefs()" }
+      { name: "Shop Preferences", icon_class: "icon-shopping-cart", show: "showShopPreferences()" }
     ]
 
     $scope.select(0)
@@ -27,8 +27,15 @@ angular.module("admin.enterprises")
       else
         true
 
-    $scope.showExtraPrefs = ->
-      $scope.Enterprise.sells != "none"
+    $scope.showShippingMethods = ->
+      enterprisePermissions.can_manage_shipping_methods && $scope.Enterprise.sells != "none"
+
+    $scope.showPaymentMethods = ->
+      enterprisePermissions.can_manage_payment_methods && $scope.Enterprise.sells != "none"
 
     $scope.showEnterpriseFees = ->
-      $scope.Enterprise.sells != "none" || $scope.Enterprise.is_primary_producer
+      enterprisePermissions.can_manage_enterprise_fees && ($scope.Enterprise.sells != "none" || $scope.Enterprise.is_primary_producer)
+
+    $scope.showShopPreferences = ->
+      $scope.Enterprise.sells != "none"
+
