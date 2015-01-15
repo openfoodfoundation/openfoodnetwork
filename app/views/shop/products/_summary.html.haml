@@ -4,19 +4,17 @@
     %img{"bo-src" => "product.primaryImageOrMissing", "ng-click" => "triggerProductModal()"}
 
 .row.summary
-  .small-9.medium-10.large-11.columns.summary-header
+  .small-10.medium-10.large-11.columns.summary-header
     %h3
       %a{"ng-click" => "triggerProductModal()"}
         {{ product.name }}
         %i.ofn-i_057-expand
-
     %small
       %em from 
       %span
         %enterprise-modal 
           %i.ofn-i_036-producers
           {{ enterprise.name }}
-
-  .small-3.medium-2.large-1.columns.text-center
+  .small-2.medium-2.large-1.columns.text-center
     .taxon-flag
       %render-svg{path: "{{product.primary_taxon.icon}}"}
