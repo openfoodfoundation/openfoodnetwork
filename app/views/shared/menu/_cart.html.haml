@@ -1,6 +1,6 @@
-%span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty }"}
+%span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty() }"}
   %a#cart.icon{cart: true}
-    %span.nav-branded 
+    %span.nav-branded
       %i.ofn-i_027-shopping-cart
       %span
         {{ Cart.line_items_present().length }}
@@ -23,19 +23,19 @@
                 %span.quantity {{ line_item.quantity }}
                 %i.ofn-i_009-close
                 %span.price {{ line_item.variant.price_with_fees | localizeCurrency }}
-        
+
             .columns.small-2
               %small
                 \=
-                %strong 
+                %strong
                   .total-price.right {{ line_item.variant.totalPrice() | localizeCurrency }}
 
         %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
           .row
             .columns.small-6
-              %em Total: 
+              %em Total:
             .columns.small-6.text-right
-              %strong {{ Cart.total()  | localizeCurrency }}        
+              %strong {{ Cart.total()  | localizeCurrency }}
 
       .text-right
-        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty"} Quick checkout
+        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"} Quick checkout
