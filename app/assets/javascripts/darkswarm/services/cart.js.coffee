@@ -8,6 +8,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       for line_item in @line_items
         line_item.variant.line_item = line_item
         Variants.register line_item.variant
+      @dirty = @empty()
 
     orderChanged: =>
       @unsaved()
@@ -31,7 +32,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
 
 
     saved: =>
-      @dirty = false
+      @dirty = @empty()
       $(window).unbind "beforeunload"
 
     unsaved: =>
