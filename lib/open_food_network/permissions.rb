@@ -15,6 +15,11 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :add_to_order_cycle
     end
 
+    # Find enterprises for which an admin is allowed to edit their profile
+    def editable_enterprises
+      managed_and_related_enterprises_with :edit_profile
+    end
+
     # For every hub that an admin manages, show all the producers that that hub may add
     # to the order cycle
     # {hub1_id => [producer1_id, producer2_id, ...], ...}

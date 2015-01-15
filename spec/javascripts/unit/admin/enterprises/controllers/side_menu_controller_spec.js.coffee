@@ -20,7 +20,7 @@ describe "menuCtrl", ->
       SideMenu = _SideMenu_
       spyOn(SideMenu, "select").andCallThrough()
       spyOn(SideMenu, "setItems").andCallThrough()
-      ctrl = $controller 'sideMenuCtrl', {$scope: scope, Enterprise: Enterprise, SideMenu: SideMenu}
+      ctrl = $controller 'sideMenuCtrl', {$scope: scope, Enterprise: Enterprise, SideMenu: SideMenu, enterprisePermissions: {}}
 
   describe "initialisation", ->
     it "stores enterprise", ->

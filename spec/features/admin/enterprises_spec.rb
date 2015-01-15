@@ -324,11 +324,14 @@ feature %q{
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
+    let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_user) { create_enterprise_user }
+    let(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
+      er
 
       login_to_admin_as enterprise_user
     end
@@ -346,10 +349,16 @@ feature %q{
           expect(page).to_not have_select "enterprise_set_collection_attributes_0_sells"
         end
 
+        within("tr.enterprise-#{distributor3.id}") do
+          expect(page).to have_content distributor3.name
+          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
+        end
+
         within("tr.enterprise-#{supplier1.id}") do
           expect(page).to have_content supplier1.name
-          expect(page).to have_checked_field "enterprise_set_collection_attributes_1_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
+          expect(page).to have_checked_field "enterprise_set_collection_attributes_2_is_primary_producer"
+          expect(page).to_not have_select "enterprise_set_collection_attributes_2_sells"
         end
 
         expect(page).to_not have_content "supplier2.name"
@@ -410,15 +419,48 @@ feature %q{
       end
     end
 
-    scenario "editing enterprises I have permission to" do
+    scenario "editing enterprises I manage" do
       click_link 'Enterprises'
-      within('#listing_enterprises tbody tr:first') { click_link 'Edit Profile' }
+      within("#listing_enterprises tr.enterprise-#{distributor1.id}") { click_link 'Edit Profile' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
       click_button 'Update'
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-      page.should have_field 'enterprise_name', :with => 'Eaterprises'
+      distributor1.reload.name.should == 'Eaterprises'
+    end
+
+    describe "enterprises I have edit permission for, but do not manage" do
+      it "allows me to edit them" do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+
+        fill_in 'enterprise_name', :with => 'Eaterprises'
+        click_button 'Update'
+
+        flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
+        distributor3.reload.name.should == 'Eaterprises'
+      end
+
+      it "does not show links to manage shipping methods, payment methods or enterprise fees" do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") do
+          page.should_not have_link 'Shipping Methods'
+          page.should_not have_link 'Payment Methods'
+          page.should_not have_link 'Enterprise Fees'
+        end
+      end
+
+      it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page", js: true do
+        click_link 'Enterprises'
+        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+
+        within(".side_menu") do
+          page.should_not have_link 'Shipping Methods'
+          page.should_not have_link 'Payment Methods'
+          page.should_not have_link 'Enterprise Fees'
+        end
+      end
     end
 
     scenario "editing images for an enterprise" do

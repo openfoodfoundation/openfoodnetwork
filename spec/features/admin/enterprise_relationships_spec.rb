@@ -42,13 +42,14 @@ feature %q{
       check 'to add to order cycle'
       check 'to manage products'
       uncheck 'to manage products'
+      check 'to edit profile'
       select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_relationship e1, e2, ['to add to order cycle']
+      page.should have_relationship e1, e2, ['to add to order cycle', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       er.should be_present
-      er.permissions.map(&:name).should == ['add_to_order_cycle']
+      er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'edit_profile'].sort
     end
 
 
