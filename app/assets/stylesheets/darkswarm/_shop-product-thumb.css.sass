@@ -44,10 +44,17 @@
             @include transform-scale(scale(1.1))
 
         @media all and (max-width: 768px)
+          top: 2px
           width: 4rem
           height: 4rem
-
-        @media all and (max-width: 480px)
+          &:hover, &:focus, &:active
+            i
+              left: 30%
+              top: 30%
+              font-size: 2rem
+        @media all and (max-width: 640px)
           display: none
           width: 0rem
           height: 0rem
+
+          
