@@ -77,7 +77,9 @@
             color: $med-drk-grey
           @media all and (max-width: 640px)
             background: #777
-            color: white
+            color: $disabled-med
+            .filled
+              color: white
             .table-cell
               height: 27px
 
@@ -101,8 +103,6 @@
           @media all and (max-width: 768px)
             padding-left: 4.9375rem
           @media all and (max-width: 640px)
-            padding-left: 4.5rem
-          @media all and (max-width:480px)
             padding-left: 0.9375rem
           small
             font-size: 80%
