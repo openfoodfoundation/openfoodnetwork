@@ -580,6 +580,41 @@ describe Enterprise do
     end
   end
 
+  describe "callbacks" do
+    describe "after creation" do
+      let(:owner) { create(:user, enterprise_limit: 10) }
+
+      let(:hub1) { create(:distributor_enterprise, owner: owner) }
+      let(:hub2) { create(:distributor_enterprise, owner: owner) }
+      let(:producer) { create(:supplier_enterprise, owner: owner) }
+
+      let(:er1) { EnterpriseRelationship.where(child_id: hub1).last }
+      let(:er2) { EnterpriseRelationship.where(child_id: hub2).last }
+
+      it "establishes relationships with the owner's hubs" do
+        hub1
+        hub2
+        enterprise = nil
+
+        expect do
+          enterprise = create(:enterprise, owner: owner)
+        end.to change(EnterpriseRelationship, :count).by(2)
+
+        [er1, er2].each do |er|
+          er.parent.should == enterprise
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile'].sort
+        end
+      end
+
+      it "doesn't relate to enterprises that aren't sells=='any'" do
+        producer
+        expect do
+          enterprise = create(:enterprise, owner: owner)
+        end.to change(EnterpriseRelationship, :count).by(0)
+      end
+    end
+  end
+
   describe "has_supplied_products_on_hand?" do
     before :each do
       @supplier = create(:supplier_enterprise)
