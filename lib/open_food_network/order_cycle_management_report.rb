@@ -58,7 +58,7 @@ module OpenFoodNetwork
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,
        OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance,
-       #orders with chilled or frozen items,
+       has_chilled_or_frozen_items(order),
        order.special_instructions
       ]
     end
@@ -88,6 +88,14 @@ module OpenFoodNetwork
         orders.where(order_cycle_id: params[:order_cycle_id])
       else
         orders
+      end
+    end
+
+    def has_chilled_or_frozen_items(order)
+      if (order.line_items.find{ |line_item| line_item.product.shipping_category_id == 1 || line_item.product.shipping_category_id == 2 })
+        "Yes"
+      else
+        "No"
       end
     end
 
