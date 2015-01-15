@@ -12,7 +12,7 @@ module OpenFoodNetwork
       if is_payment_methods?
         ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
       else
-        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
       end
     end
 
@@ -57,7 +57,9 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance
+       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance,
+       #orders with chilled or frozen items,
+       order.special_instructions
       ]
     end
 
