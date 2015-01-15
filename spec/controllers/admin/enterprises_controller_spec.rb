@@ -90,7 +90,7 @@ module Admin
         it "does not allow 'sells' to be changed" do
           profile_enterprise.enterprise_roles.build(user: user).save
           controller.stub spree_current_user: user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
@@ -101,7 +101,7 @@ module Admin
       context "as super admin" do
         it "allows 'sells' to be changed" do
           controller.stub spree_current_user: admin_user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
@@ -131,7 +131,7 @@ module Admin
 
         context "allows setting 'sells' to 'none'" do
           it "is allowed" do
-            spree_post :set_sells, { id: enterprise.id, sells: 'none' }
+            spree_post :set_sells, { id: enterprise, sells: 'none' }
             expect(response).to redirect_to spree.admin_path
             expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
             expect(enterprise.reload.sells).to eq 'none'
@@ -139,7 +139,7 @@ module Admin
 
           context "setting producer_profile_only to true" do
             it "is allowed" do
-              spree_post :set_sells, { id: enterprise.id, sells: 'none', producer_profile_only: true }
+              spree_post :set_sells, { id: enterprise, sells: 'none', producer_profile_only: true }
               expect(response).to redirect_to spree.admin_path
               expect(enterprise.reload.producer_profile_only).to eq true
             end
@@ -159,7 +159,7 @@ module Admin
             end
 
             it "is disallowed" do
-              spree_post :set_sells, { id: enterprise.id, sells: 'own' }
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
               expect(response).to redirect_to spree.admin_path
               trial_expiry = Date.today.strftime("%Y-%m-%d")
               expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
@@ -175,7 +175,7 @@ module Admin
             end
 
             it "is allowed, but trial start date is not reset" do
-              spree_post :set_sells, { id: enterprise.id, sells: 'own' }
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
               expect(response).to redirect_to spree.admin_path
               trial_expiry = (Date.today + 30.days).strftime("%Y-%m-%d")
               expect(flash[:notice]).to eq "Welcome back! Your trial expires on: #{trial_expiry}"
@@ -186,7 +186,7 @@ module Admin
 
           context "if a trial has not started" do
             it "is allowed" do
-              spree_post :set_sells, { id: enterprise.id, sells: 'own' }
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
               expect(response).to redirect_to spree.admin_path
               expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
               expect(enterprise.reload.sells).to eq 'own'
@@ -196,7 +196,7 @@ module Admin
 
           context "setting producer_profile_only to true" do
             it "is ignored" do
-              spree_post :set_sells, { id: enterprise.id, sells: 'own', producer_profile_only: true }
+              spree_post :set_sells, { id: enterprise, sells: 'own', producer_profile_only: true }
               expect(response).to redirect_to spree.admin_path
               expect(enterprise.reload.producer_profile_only).to be false
             end
@@ -205,7 +205,7 @@ module Admin
 
         context "setting 'sells' to any" do
           it "is not allowed" do
-            spree_post :set_sells, { id: enterprise.id, sells: 'any' }
+            spree_post :set_sells, { id: enterprise, sells: 'any' }
             expect(response).to redirect_to spree.admin_path
             expect(flash[:error]).to eq "Unauthorised"
             expect(enterprise.reload.sells).to eq 'none'
@@ -214,7 +214,7 @@ module Admin
 
         context "settiing 'sells' to 'unspecified'" do
           it "is not allowed" do
-            spree_post :set_sells, { id: enterprise.id, sells: 'unspecified' }
+            spree_post :set_sells, { id: enterprise, sells: 'unspecified' }
             expect(response).to redirect_to spree.admin_path
             expect(flash[:error]).to eq "Unauthorised"
             expect(enterprise.reload.sells).to eq 'none'

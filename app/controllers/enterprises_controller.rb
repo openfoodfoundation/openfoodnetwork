@@ -24,7 +24,7 @@ class EnterprisesController < BaseController
   end
 
   def show
-    @enterprise = Enterprise.find params[:id]
+    @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
 
     # User can view this page if they've already chosen their distributor, or if this page
     # is for a supplier, they may use it to select a distributor that sells this supplier's
@@ -53,7 +53,7 @@ class EnterprisesController < BaseController
   end
 
   def shop
-    distributor = Enterprise.is_distributor.find params[:id]
+    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
     if order.distributor and order.distributor != distributor

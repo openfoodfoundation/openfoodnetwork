@@ -18,7 +18,7 @@ module Admin
     end
 
     def set_sells
-      enterprise = Enterprise.find(params[:id])
+      enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       attributes = { sells: params[:sells] }
       attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
       attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
@@ -63,6 +63,11 @@ module Admin
     end
     alias_method_chain :build_resource, :address
 
+    # Overriding method on Spree's resource controller,
+    # so that resources are found using permalink
+    def find_resource
+      Enterprise.find_by_permalink(params[:id])
+    end
 
     private
 
