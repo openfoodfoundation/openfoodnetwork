@@ -79,7 +79,7 @@ feature %q{
       rows = find("table#listing_order_payment_methods").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
-        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
       ].sort
     end
   end
