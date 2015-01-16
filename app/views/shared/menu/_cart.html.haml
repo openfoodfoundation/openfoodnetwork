@@ -38,5 +38,5 @@
               %strong {{ Cart.total()  | localizeCurrency }}
 
       .text-right
-        %input.small.button.secondary.add_to_cart{type: :submit, value: "Edit your cart", "ng-disabled" => "Cart.dirty || Cart.empty()" }
-        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}  Checkout now
+        %input.button.secondary.tiny.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
+        %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}  Checkout now
