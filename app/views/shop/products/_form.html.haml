@@ -26,10 +26,10 @@
     %product{"ng-show" => "Products.loading"}
       .row.summary
         .small-12.columns.text-center
-          Loading products
+          Loading products...
       .row
         .small-12.columns.text-center
-          %img.spinner{ src: "/assets/loading.gif" }
+          %img.spinner{ src: "/assets/spinning-circles.svg" }
 
     %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
       .row.summary
