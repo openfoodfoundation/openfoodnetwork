@@ -91,7 +91,7 @@ feature "shopping with variant overrides defined", js: true do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Quick checkout'
+      click_link 'Checkout now'
 
       page.should have_selector 'form.edit_order .cart-total', text: '$122.21'
       page.should have_selector 'form.edit_order .shipping', text: '$0.00'
@@ -105,7 +105,7 @@ feature "shopping with variant overrides defined", js: true do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Quick checkout'
+      click_link 'Checkout now'
 
       complete_checkout
 
@@ -124,7 +124,7 @@ feature "shopping with variant overrides defined", js: true do
       fill_in "variants[#{v4.id}]", with: "2"
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Quick checkout'
+      click_link 'Checkout now'
 
       expect do
         expect do
@@ -137,7 +137,7 @@ feature "shopping with variant overrides defined", js: true do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Quick checkout'
+      click_link 'Checkout now'
 
       expect do
         complete_checkout
