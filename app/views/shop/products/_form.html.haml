@@ -12,8 +12,8 @@
 
     %form{action: cart_path}
       .small-12.medium-4.large-3.columns
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Your shopping cart",
-        "ng-disabled" => "Cart.dirty || Cart.empty()"}
+        %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
+        %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : 'Edit your cart' }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
@@ -41,6 +41,6 @@
   .row
     .small-12.columns
       %form{action: cart_path}
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Your shopping cart",
-        "ng-disabled" => "Cart.dirty || Cart.empty()"}
+        %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
+        %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : 'Edit your cart' }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 

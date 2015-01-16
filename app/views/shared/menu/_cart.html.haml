@@ -38,4 +38,5 @@
               %strong {{ Cart.total()  | localizeCurrency }}
 
       .text-right
-        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"} Quick checkout
+        %input.small.button.secondary.add_to_cart{type: :submit, value: "Edit your cart", "ng-disabled" => "Cart.dirty || Cart.empty()" }
+        %a.button.primary.small{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}  Checkout now
