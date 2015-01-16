@@ -3,10 +3,9 @@ require 'open_food_network/scope_product_to_hub'
 class ShopController < BaseController
   layout "darkswarm"
   before_filter :require_distributor_chosen
-  before_filter :set_order_cycles
-  before_filter :load_active_distributors
 
   def show
+    redirect_to main_app.enterprise_shop_path(current_distributor)
   end
 
   def products
@@ -35,15 +34,6 @@ class ShopController < BaseController
   end
 
   private
-
-  def set_order_cycles
-    @order_cycles = OrderCycle.with_distributor(@distributor).active
-
-    # And default to the only order cycle if there's only the one
-    if @order_cycles.count == 1
-      current_order(true).set_order_cycle! @order_cycles.first
-    end
-  end
 
   def products_for_shop
     if current_order_cycle

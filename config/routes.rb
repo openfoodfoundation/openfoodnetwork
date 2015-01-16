@@ -34,6 +34,7 @@ Openfoodnetwork::Application.routes.draw do
       get :shop # old world
     end
   end
+  get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
 
   devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 

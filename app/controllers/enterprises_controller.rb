@@ -1,6 +1,9 @@
 class EnterprisesController < BaseController
+  layout "darkswarm"
   helper Spree::ProductsHelper
   include OrderCyclesHelper
+  before_filter :set_order_cycles, only: :shop
+  before_filter :load_active_distributors, only: :shop
 
   def index
     @enterprises = Enterprise.all
@@ -66,8 +69,6 @@ class EnterprisesController < BaseController
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
     order.save!
-
-    redirect_to main_app.shop_path
   end
 
   def check_permalink
@@ -80,6 +81,17 @@ class EnterprisesController < BaseController
       respond_to do |format|
         format.js { render nothing: true, status: 409 }
       end
+    end
+  end
+
+  private
+
+  def set_order_cycles
+    @order_cycles = OrderCycle.with_distributor(@distributor).active
+
+    # And default to the only order cycle if there's only the one
+    if @order_cycles.count == 1
+      current_order(true).set_order_cycle! @order_cycles.first
     end
   end
 end
