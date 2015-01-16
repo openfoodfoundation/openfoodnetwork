@@ -69,10 +69,8 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     object.promo_image(:large) if object.promo_image.exists?
   end
 
-  # TODO when ActiveSerializers supports URL helpers
-  # Then refactor. See readme https://github.com/rails-api/active_model_serializers
   def path
-    "/enterprises/#{object.to_param}/shop"
+    enterprise_shop_path(object)
   end
 
   # Map svg icons.
