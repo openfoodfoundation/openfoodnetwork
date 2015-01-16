@@ -43,6 +43,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       @line_items.filter (li)->
         li.quantity > 0
 
+    total_item_count: =>
+      @line_items_present().reduce (sum,li) ->
+        sum = sum + li.quantity
+      , 0
+
     empty: =>
       @line_items_present().length == 0
 

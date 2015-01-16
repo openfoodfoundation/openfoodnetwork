@@ -3,7 +3,7 @@
     %span.nav-branded
       %i.ofn-i_027-shopping-cart
       %span
-        {{ Cart.line_items_present().length }}
+        {{ Cart.total_item_count() }}
         items
 
   .joyride-tip-guide{"ng-class" => "{ in: open }", "ng-show" => "open"}
