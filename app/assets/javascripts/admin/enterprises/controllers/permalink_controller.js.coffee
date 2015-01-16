@@ -1,6 +1,6 @@
 angular.module("admin.enterprises")
-  .controller "permalinkCtrl", ($scope, Enterprise, PermalinkChecker) ->
-    $scope.pristinePermalink = Enterprise.permalink
+  .controller "permalinkCtrl", ($scope, PermalinkChecker) ->
+    $scope.pristinePermalink = $scope.Enterprise.permalink
     $scope.availablility = ""
     $scope.checking = false
 

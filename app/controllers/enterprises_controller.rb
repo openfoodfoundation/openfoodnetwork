@@ -5,6 +5,8 @@ class EnterprisesController < BaseController
   before_filter :set_order_cycles, only: :shop
   before_filter :load_active_distributors, only: :shop
 
+  respond_to :js, only: :permalink_checker
+
   def index
     @enterprises = Enterprise.all
   end
@@ -72,15 +74,13 @@ class EnterprisesController < BaseController
   end
 
   def check_permalink
+    return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
+
     path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
     if path && path[:controller] == "cms_content"
-      respond_to do |format|
-        format.js { render text: params[:permalink], status: 200 }
-      end
+      render text: params[:permalink], status: 200
     else
-      respond_to do |format|
-        format.js { render text: params[:permalink], status: 409 }
-      end
+      render text: params[:permalink], status: 409
     end
   end
 

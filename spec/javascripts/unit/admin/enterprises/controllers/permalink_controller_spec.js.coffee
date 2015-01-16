@@ -9,15 +9,15 @@ describe "permalinkCtrl", ->
 
   beforeEach ->
     module('admin.enterprises')
-    Enterprise = {
+    Enterprise =
       permalink: "something"
-    }
 
     inject ($rootScope, $controller, _$q_, _PermalinkChecker_) ->
       $scope = $rootScope
+      $scope.Enterprise = Enterprise
       $q = _$q_
       PermalinkChecker = _PermalinkChecker_
-      $ctrl = $controller 'permalinkCtrl', {$scope: $scope, Enterprise: Enterprise, PermalinkChecker: PermalinkChecker}
+      $ctrl = $controller 'permalinkCtrl', {$scope: $scope, PermalinkChecker: PermalinkChecker}
 
   describe "checking permalink", ->
     deferred = null
