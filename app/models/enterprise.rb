@@ -72,6 +72,8 @@ class Enterprise < ActiveRecord::Base
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
   after_create :send_welcome_email, if: lambda { email_is_known? }
 
+  after_rollback :restore_permalink
+
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
@@ -362,5 +364,10 @@ class Enterprise < ActiveRecord::Base
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
       errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
     end
+  end
+
+  def restore_permalink
+    # If the permalink has errors, reset it to it's original value, so we can update the form
+    self.permalink = permalink_was if permalink_changed? && errors[:permalink].present?
   end
 end

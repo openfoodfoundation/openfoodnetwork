@@ -223,6 +223,16 @@ describe Enterprise do
     it { should delegate(:state_name).to(:address) }
   end
 
+  describe "callbacks" do
+    it "restores permalink to original value when it is changed and invalid" do
+      e1 = create(:enterprise, permalink: "taken")
+      e2 = create(:enterprise, permalink: "not_taken")
+      e2.permalink = "taken"
+      e2.save
+      expect(e2.permalink).to eq "not_taken"
+    end
+  end
+
   describe "scopes" do
     describe 'visible' do
       it 'find visible enterprises' do
