@@ -32,16 +32,26 @@ describe "permalinkCtrl", ->
       $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
       expect(PermalinkChecker.check).toHaveBeenCalled()
 
-    it "sets available to 'Available' when PermalinkChecker resolves", ->
-      deferred.resolve("")
+    it "sets available to '' when PermalinkChecker resolves permalink to the existing permalink on Enterprise ", ->
+      deferred.resolve({permalink: "something"})
       promise = deferred.promise
       spyOn(PermalinkChecker, "check").andReturn promise
       $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
+      expect($scope.availability).toEqual ""
+
+    it "sets available and permalink when PermalinkChecker resolves", ->
+      deferred.resolve({ available: "Available", permalink: "permalink"})
+      promise = deferred.promise
+      spyOn(PermalinkChecker, "check").andReturn promise
+      $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
+      expect(Enterprise.permalink).toEqual "permalink"
       expect($scope.availability).toEqual "Available"
 
-    it "sets available to 'Unavailable' when PermalinkChecker rejects", ->
+    it "does nothing when PermalinkChecker rejects", ->
+      $scope.availability = "Some Availability"
       deferred.reject()
       promise = deferred.promise
       spyOn(PermalinkChecker, "check").andReturn promise
       $scope.$apply Enterprise.permalink = "somethingelse" # Change the permalink
-      expect($scope.availability).toEqual "Unavailable"
+      expect($scope.availability).toEqual "Some Availability"
+      expect(Enterprise.permalink).toEqual "somethingelse"
