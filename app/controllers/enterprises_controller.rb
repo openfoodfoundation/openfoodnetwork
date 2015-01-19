@@ -4,6 +4,7 @@ class EnterprisesController < BaseController
   include OrderCyclesHelper
   before_filter :set_order_cycles, only: :shop
   before_filter :load_active_distributors, only: :shop
+  before_filter :clean_permalink, only: :check_permalink
 
   respond_to :js, only: :permalink_checker
 
@@ -85,6 +86,10 @@ class EnterprisesController < BaseController
   end
 
   private
+
+  def clean_permalink
+    params[:permalink] = params[:permalink].delete "^a-zA-Z1-9-_"
+  end
 
   def set_order_cycles
     @order_cycles = OrderCycle.with_distributor(@distributor).active
