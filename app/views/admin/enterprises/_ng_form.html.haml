@@ -1,12 +1,10 @@
--# Not all inputs are ng inputs, they don't make the form dirty on change.
+-# Not all inputs are ng inputs, they don't make the ng-form dirty on change.
 -# ng-change is only valid for inputs, not for a form.
 -# So we use onchange and have to get the scope to access the ng controller
--# The nav-check-callback is warning on leave if the form is dirty.
 = form_for [main_app, :admin, @enterprise], html: { name: "enterprise",
   "ng-app" => 'admin.enterprises',
   "ng-submit" => "navClear()",
   "ng-controller" => 'enterpriseCtrl',
-  "nav-check-callback" => 'enterpriseNavCallback',
   'onchange' => 'angular.element(enterprise).scope().enterprise.$setDirty()',
   } do |f|
   .row

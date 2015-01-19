@@ -11,9 +11,12 @@ angular.module("admin.enterprises")
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that .
-    $scope.enterpriseNavCallback = ->
+    enterpriseNavCallback = ->
       if $scope.enterprise.$dirty
         "Your changes to the enterprise are not saved yet."
+
+    # Register the NavigationCheck callback
+    NavigationCheck.register(enterpriseNavCallback)
 
     for payment_method in $scope.PaymentMethods
       payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
