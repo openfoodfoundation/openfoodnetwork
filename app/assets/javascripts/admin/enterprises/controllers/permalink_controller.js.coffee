@@ -1,17 +1,23 @@
 angular.module("admin.enterprises")
   .controller "permalinkCtrl", ($scope, PermalinkChecker) ->
-    $scope.pristinePermalink = $scope.Enterprise.permalink
+    # locals
+    initialPermalink = $scope.Enterprise.permalink
+    pendingRequest = null
+
+    # variables on $scope
     $scope.availablility = ""
     $scope.checking = false
 
     $scope.$watch "Enterprise.permalink", (newValue, oldValue) ->
-      if newValue == $scope.pristinePermalink
-        $scope.availability = ""
-      else
-        $scope.checking = true
-        PermalinkChecker.check(newValue).then (data) ->
-          $scope.availability = 'Available'
-          $scope.checking = false
-        , (data) ->
-          $scope.availability = 'Unavailable'
-          $scope.checking = false
+      $scope.checking = true
+      pendingRequest = PermalinkChecker.check(newValue)
+
+      pendingRequest.then (data) ->
+        if data.permalink == initialPermalink
+          $scope.availability = ""
+        else
+          $scope.availability = data.available
+        $scope.Enterprise.permalink = data.permalink
+        $scope.checking = false
+      , (data) ->
+        # Do nothing (this is hopefully an aborted request)
