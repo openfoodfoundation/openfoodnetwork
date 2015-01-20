@@ -63,6 +63,7 @@ class Enterprise < ActiveRecord::Base
 
   before_save :confirmation_check, if: lambda { email_changed? }
 
+  before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
@@ -295,6 +296,21 @@ class Enterprise < ActiveRecord::Base
     shipping_methods.any? && payment_methods.available.any?
   end
 
+  def self.find_available_permalink(test_permalink)
+    test_permalink = test_permalink.parameterize
+    existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
+    if existing.empty?
+      test_permalink
+    else
+      used_indices = existing.map do |p|
+        p.slice!(/^#{test_permalink}/)
+        p.match(/^\d+$/).to_s.to_i
+      end.select{ |p| p }
+      options = (1..existing.length).to_a - used_indices
+      test_permalink + options.first.to_s
+    end
+  end
+
   protected
 
   def devise_mailer
@@ -369,5 +385,9 @@ class Enterprise < ActiveRecord::Base
   def restore_permalink
     # If the permalink has errors, reset it to it's original value, so we can update the form
     self.permalink = permalink_was if permalink_changed? && errors[:permalink].present?
+  end
+
+  def initialize_permalink
+    self.permalink = Enterprise.find_available_permalink(name)
   end
 end

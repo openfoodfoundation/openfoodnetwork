@@ -802,4 +802,42 @@ describe Enterprise do
       non_producer_sell_none.category.should == :hub_profile
     end
   end
+
+  describe "finding and automatically assigning a permalink" do
+    let(:enterprise) { build(:enterprise, name: "Name To Turn Into A Permalink") }
+    it "assigns permalink when initialized" do
+      allow(Enterprise).to receive(:find_available_permalink).and_return("available_permalink")
+      Enterprise.should_receive(:find_available_permalink).with("Name To Turn Into A Permalink")
+      expect(
+        lambda { enterprise.send(:initialize_permalink) }
+      ).to change{
+        enterprise.permalink
+      }.to(
+        "available_permalink"
+      )
+    end
+
+    describe "finding a permalink" do
+      let!(:enterprise1) { create(:enterprise, permalink: "permalink") }
+      let!(:enterprise2) { create(:enterprise, permalink: "permalink1") }
+
+      it "parameterizes the value provided" do
+        expect(Enterprise.find_available_permalink("Some Unused Permalink")).to eq "some-unused-permalink"
+      end
+
+      it "finds and index value based on existing permalinks" do
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+
+      it "ignores permalinks with characters after the index value" do
+        create(:enterprise, permalink: "permalink2xxx")
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+
+      it "finds gaps in the indices of existing permalinks" do
+        create(:enterprise, permalink: "permalink3")
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+    end
+  end
 end
