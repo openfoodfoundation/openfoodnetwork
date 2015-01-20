@@ -89,7 +89,7 @@ class EnterprisesController < BaseController
   private
 
   def clean_permalink
-    params[:permalink] = params[:permalink].delete "^a-zA-Z1-9-_"
+    params[:permalink] = params[:permalink].parameterize
   end
 
   def set_order_cycles
