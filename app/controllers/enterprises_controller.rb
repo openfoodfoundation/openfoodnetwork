@@ -92,13 +92,4 @@ class EnterprisesController < BaseController
   def clean_permalink
     params[:permalink] = params[:permalink].parameterize
   end
-
-  def set_order_cycles
-    @order_cycles = OrderCycle.with_distributor(@distributor).active
-
-    # And default to the only order cycle if there's only the one
-    if @order_cycles.count == 1
-      current_order(true).set_order_cycle! @order_cycles.first
-    end
-  end
 end
