@@ -12,6 +12,9 @@ class EnterpriseGroup < ActiveRecord::Base
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
   attr_accessible :logo, :promo_image
+  attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
+
+  delegate :phone, :to => :address
 
   has_attached_file :logo,
     styles: {medium: "100x100"},

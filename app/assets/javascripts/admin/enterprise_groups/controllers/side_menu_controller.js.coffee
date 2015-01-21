@@ -8,6 +8,7 @@ angular.module("admin.enterprise_groups")
       { name: 'About', icon_class: "icon-pencil" }
       { name: 'Images', icon_class: "icon-picture" }
       { name: 'Contact', icon_class: "icon-phone" }
+      { name: 'Web', icon_class: "icon-globe" }
     ]
 
     $scope.select(0)

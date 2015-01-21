@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150115050935) do
+ActiveRecord::Schema.define(:version => 20150121030627) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -198,6 +198,12 @@ ActiveRecord::Schema.define(:version => 20150115050935) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "address_id"
+    t.string   "email"
+    t.string   "website"
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "linkedin"
+    t.string   "twitter"
   end
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
