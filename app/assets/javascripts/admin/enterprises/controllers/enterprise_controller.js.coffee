@@ -12,7 +12,7 @@ angular.module("admin.enterprises")
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that .
     enterpriseNavCallback = ->
-      if $scope.enterprise.$dirty
+      if $scope.Enterprise.$dirty
         "Your changes to the enterprise are not saved yet."
 
     # Register the NavigationCheck callback
