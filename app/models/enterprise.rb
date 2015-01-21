@@ -298,6 +298,7 @@ class Enterprise < ActiveRecord::Base
 
   def self.find_available_permalink(test_permalink)
     test_permalink = test_permalink.parameterize
+    test_permalink = "my-enterprise" if test_permalink.blank?
     existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
     if existing.empty?
       test_permalink

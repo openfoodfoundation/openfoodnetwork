@@ -824,6 +824,11 @@ describe Enterprise do
         expect(Enterprise.find_available_permalink("Some Unused Permalink")).to eq "some-unused-permalink"
       end
 
+      it "sets the permalink to 'my-enterprise' if parametized permalink is blank" do
+        expect(Enterprise.find_available_permalink("")).to eq "my-enterprise"
+        expect(Enterprise.find_available_permalink("$$%{$**}$%}")).to eq "my-enterprise"
+      end
+
       it "finds and index value based on existing permalinks" do
         expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
       end
