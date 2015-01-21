@@ -74,7 +74,8 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = ->
+    $scope.submit = (event) ->
+      event.preventDefault()
       OrderCycle.create()
   ])
 
@@ -154,7 +155,8 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = ->
+    $scope.submit = (event) ->
+      event.preventDefault()
       OrderCycle.update()
   ])
 
