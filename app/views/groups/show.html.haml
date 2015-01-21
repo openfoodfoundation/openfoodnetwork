@@ -142,6 +142,18 @@
               %br
               = @group.address.country
 
-  %p TODO: show the group's contact footer
+  .text-center
+    %p
+      = @group.name
+    %p
+      -if @group.facebook
+        %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/' + @group.facebook, target: '_blank'}
+          %i.ofn-i_044-facebook
+      -if @group.email
+        %a{title:'Email us', href: @group.email.reverse, mailto: true}
+          %i.ofn-i_050-mail-circle
+      -if @group.website
+        %a{title:'Visit our website', href: 'http://' + @group.website, target: '_blank'}
+          %i.ofn-i_049-web
 
 = render partial: "shared/footer"
