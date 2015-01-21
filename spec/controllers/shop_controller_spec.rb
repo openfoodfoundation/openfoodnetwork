@@ -80,60 +80,65 @@ describe ShopController do
     end
 
     describe "returning products" do
-      let(:product) { create(:product) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
       let(:exchange) { Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) }
 
-      before do
-        exchange.variants << product.master
+      describe "requests and responses" do
+        let(:product) { create(:product) }
+        before do
+          exchange.variants << product.master
+        end
+
+        it "returns products via json" do
+          controller.stub(:current_order_cycle).and_return order_cycle
+          xhr :get, :products
+          response.should be_success
+        end
+
+        it "does not return products if no order_cycle is selected" do
+          controller.stub(:current_order_cycle).and_return nil
+          xhr :get, :products
+          response.status.should == 404
+          response.body.should be_empty
+        end
       end
 
-      it "returns products via json" do
-        controller.stub(:current_order_cycle).and_return order_cycle
-        xhr :get, :products
-        response.should be_success
-      end
+      describe "sorting" do
+        let(:t1) { create(:taxon) }
+        let(:t2) { create(:taxon) }
+        let!(:p1) { create(:product, name: "abc", primary_taxon_id: t2.id) }
+        let!(:p2) { create(:product, name: "def", primary_taxon_id: t1.id) }
+        let!(:p3) { create(:product, name: "ghi", primary_taxon_id: t2.id) }
+        let!(:p4) { create(:product, name: "jkl", primary_taxon_id: t1.id) }
 
-      it "sorts products by the distributor's preferred taxon list" do
-        t1 = create(:taxon)
-        t2 = create(:taxon)
-        d.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
-        p1 = create(:product, primary_taxon_id: t2.id, name: 'abc')
-        p2 = create(:product, primary_taxon_id: t1.id, name: 'def')
-        p3 = create(:product, primary_taxon_id: t2.id, name: 'abcd')
-        p4 = create(:product, primary_taxon_id: t1.id, name: 'defg')
-        exchange.variants << p1.master
-        exchange.variants << p2.master
-        exchange.variants << p3.master
-        exchange.variants << p4.master
-        controller.stub(:current_order_cycle).and_return order_cycle
-        order_cycle.stub(:valid_products_distributed_by) { Spree::Product.where( id: [p1, p2, p3, p4] ) }
-        xhr :get, :products
-        assigns[:products].should == [p2, p4, p1, p3]
-      end
+        before do
+          exchange.variants << p1.master
+          exchange.variants << p2.master
+          exchange.variants << p3.master
+          exchange.variants << p4.master
+        end
 
-      it "alphabetizes products by name when taxon list is not set" do
-        d.stub(:preferred_shopfront_taxon_order) {""}
-        p1 = create(:product, name: "abc")
-        p2 = create(:product, name: "def")
-        exchange.variants << p1.master
-        exchange.variants << p2.master
-        controller.stub(:current_order_cycle).and_return order_cycle
-        order_cycle.stub(:valid_products_distributed_by) { Spree::Product.where( id: [p1, p2] ) }
-        xhr :get, :products
-        assigns[:products].should == [p1, p2]
-      end
+        it "sorts products by the distributor's preferred taxon list" do
+          d.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
+          controller.stub(:current_order_cycle).and_return order_cycle
+          xhr :get, :products
+          assigns[:products].should == [p2, p4, p1, p3]
+        end
 
-      it "does not return products if no order_cycle is selected" do
-        controller.stub(:current_order_cycle).and_return nil
-        xhr :get, :products
-        response.status.should == 404
-        response.body.should be_empty
+        it "alphabetizes products by name when taxon list is not set" do
+          d.stub(:preferred_shopfront_taxon_order) {""}
+          controller.stub(:current_order_cycle).and_return order_cycle
+          xhr :get, :products
+          assigns[:products].should == [p1, p2, p3, p4]
+        end
       end
 
       context "RABL tests" do
         render_views
+        let(:product) { create(:product) }
+
         before do
+          exchange.variants << product.master
           controller.stub(:current_order_cycle).and_return order_cycle
         end
         it "only returns products for the current order cycle" do
