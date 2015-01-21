@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141210233407) do
+ActiveRecord::Schema.define(:version => 20150115050935) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20141210233407) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.integer  "address_id"
   end
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
@@ -573,9 +574,9 @@ ActiveRecord::Schema.define(:version => 20141210233407) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -1076,6 +1077,8 @@ ActiveRecord::Schema.define(:version => 20141210233407) do
   add_foreign_key "distributors_shipping_methods", "spree_shipping_methods", name: "distributors_shipping_methods_shipping_method_id_fk", column: "shipping_method_id"
 
   add_foreign_key "enterprise_fees", "enterprises", name: "enterprise_fees_enterprise_id_fk"
+
+  add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"

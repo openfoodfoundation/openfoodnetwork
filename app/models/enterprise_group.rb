@@ -2,6 +2,10 @@ class EnterpriseGroup < ActiveRecord::Base
   acts_as_list
 
   has_and_belongs_to_many :enterprises
+  belongs_to :address, :class_name => 'Spree::Address'
+  accepts_nested_attributes_for :address
+  validates :address, presence: true, associated: true
+  before_validation :set_unused_address_fields
 
   validates :name, presence: true
   validates :description, presence: true
@@ -28,4 +32,9 @@ class EnterpriseGroup < ActiveRecord::Base
 
   scope :by_position, order('position ASC')
   scope :on_front_page, where(on_front_page: true)
+
+  def set_unused_address_fields
+    address.firstname = address.lastname = address.phone = 'unused' if address.present?
+  end
+
 end
