@@ -6,7 +6,7 @@
   %br/
 
 - if enterprise.is_primary_producer
-  = link_to_with_icon 'icon-dashboard', 'Properties', main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise.id)
+  = link_to_with_icon 'icon-dashboard', 'Properties', main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise)
   (#{enterprise.producer_properties.count})
   %br/
 
