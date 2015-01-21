@@ -79,8 +79,68 @@
       %tab{heading: 'Contact us',
           active: "active(\'contact\')",
           select: "select(\'contact\')"}
-        %h3 Contact us
-        %p TODO: provide contact information
+        .row
+          .small-6.columns
+            %h3 Contact us
+            - if @group.phone
+              .row
+                .small-2.columns
+                  Call
+                .small-10.columns
+                  = @group.phone
+            - if @group.email
+              .row
+                .small-2.columns
+                  Email
+                .small-10.columns
+                  = @group.email
+            - if @group.website
+              .row
+                .small-2.columns
+                  Website
+                .small-10.columns
+                  = @group.website
+          .small-6.columns
+            %h3 Follow us
+            - if @group.facebook
+              .row
+                .small-2.columns
+                  Facebook
+                .small-10.columns
+                  = @group.facebook
+            - if @group.instagram
+              .row
+                .small-2.columns
+                  Instagram
+                .small-10.columns
+                  = @group.instagram
+            - if @group.linkedin
+              .row
+                .small-2.columns
+                  LinkedIn
+                .small-10.columns
+                  = @group.linkedin
+            - if @group.twitter
+              .row
+                .small-2.columns
+                  Twitter
+                .small-10.columns
+                  = @group.twitter
+        .row
+          .small-6.columns
+            %h3 Address
+            %p
+              = @group.address.address1
+              - if @group.address.address2
+                %br
+                = @group.address.address2
+              %br
+              = @group.address.city
+              ,
+              = @group.address.state
+              = @group.address.zipcode
+              %br
+              = @group.address.country
 
   %p TODO: show the group's contact footer
 
