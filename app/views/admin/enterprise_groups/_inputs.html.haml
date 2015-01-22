@@ -52,9 +52,10 @@
     %legend Contact
     .row
       .alpha.three.columns
-        = f.label :phone
+        = af.label :phone
+        %span.required *
       .omega.eight.columns
-        = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+        = af.text_field :phone, { placeholder: "eg. 98 7654 3210"}
     .row
       .three.columns.alpha
         = af.label :address1

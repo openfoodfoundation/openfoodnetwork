@@ -12,6 +12,7 @@ class EnterpriseGroup < ActiveRecord::Base
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
   attr_accessible :logo, :promo_image
+  attr_accessible :address_attributes
   attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
 
   delegate :phone, :to => :address
@@ -37,7 +38,7 @@ class EnterpriseGroup < ActiveRecord::Base
   scope :on_front_page, where(on_front_page: true)
 
   def set_unused_address_fields
-    address.firstname = address.lastname = address.phone = 'unused' if address.present?
+    address.firstname = address.lastname = 'unused' if address.present?
   end
 
 end
