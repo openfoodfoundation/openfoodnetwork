@@ -58,6 +58,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:customers]
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
+    
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
   end
 
@@ -251,6 +252,7 @@ Spree::Admin::ReportsController.class_eval do
     @header = header
     @table = order_grouper.table(@line_items)
     csv_file_name = "bulk_coop_#{timestamp}.csv"
+
     render_report(@header, @table, params[:csv], csv_file_name)
   end
 
@@ -354,6 +356,7 @@ Spree::Admin::ReportsController.class_eval do
     @header = header
     @table = order_grouper.table(table_items)
     csv_file_name = "payments_#{timestamp}.csv"
+
     render_report(@header, @table, params[:csv], csv_file_name)
 
   end
@@ -585,6 +588,7 @@ Spree::Admin::ReportsController.class_eval do
     @header = header
     @table = order_grouper.table(table_items)
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+
     render_report(@header, @table, params[:csv], csv_file_name)
 
   end
