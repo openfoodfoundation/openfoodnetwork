@@ -136,6 +136,7 @@ FactoryGirl.define do
     name 'Enterprise group'
     description 'this is a group'
     on_front_page false
+    address { FactoryGirl.build(:address) }
   end
 
   sequence(:calculator_amount)
