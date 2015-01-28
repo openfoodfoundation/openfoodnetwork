@@ -26,7 +26,23 @@ module OpenFoodNetwork
     describe "sorting results" do
       let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new {} }
 
-      it "sorts by name first" do
+      it "sorts unconfirmed enterprises to the top" do
+        uae_mock = [
+          { "confirmed_at" => "2015-01-01", "name" => "aaa" },
+          { "confirmed_at" => nil, "name" => "bbb" }
+        ]
+        expect(subject.sort uae_mock).to eq [ uae_mock[1], uae_mock[0] ]
+      end
+
+      it "then sorts by confirmation date" do
+        uae_mock = [
+          { "confirmed_at" => "2015-01-01", "name" => "bbb" },
+          { "confirmed_at" => "2015-01-02", "name" => "aaa" }
+        ]
+        expect(subject.sort uae_mock).to eq [ uae_mock[1], uae_mock[0] ]
+      end
+
+      it "then sorts by name" do
         uae_mock = [
           { "name" => "aaa", "relationship_type" => "bbb", "user_email" => "bbb" },
           { "name" => "bbb", "relationship_type" => "aaa", "user_email" => "aaa" }
@@ -34,7 +50,7 @@ module OpenFoodNetwork
         expect(subject.sort uae_mock).to eq [ uae_mock[0], uae_mock[1] ]
       end
 
-      it "sorts by relationship type (reveresed) second" do
+      it "then sorts by relationship type (reveresed)" do
         uae_mock = [
           { "name" => "aaa", "relationship_type" => "bbb", "user_email" => "bbb" },
           { "name" => "aaa", "relationship_type" => "aaa", "user_email" => "aaa" },
@@ -43,7 +59,7 @@ module OpenFoodNetwork
         expect(subject.sort uae_mock).to eq [ uae_mock[2], uae_mock[0], uae_mock[1] ]
       end
 
-      it "sorts by user_email third" do
+      it "then sorts by user_email" do
         uae_mock = [
           { "name" => "aaa", "relationship_type" => "bbb", "user_email" => "aaa" },
           { "name" => "aaa", "relationship_type" => "aaa", "user_email" => "aaa" },
