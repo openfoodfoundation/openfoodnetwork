@@ -3,7 +3,7 @@
 :javascript
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
 
-#groups{"ng-controller" => "GroupsCtrl"}
+#groups.pad-top{"ng-controller" => "GroupsCtrl"}
   #active-table-search.row.pad-top
     .small-12.columns
       %h1 Groups / regions
