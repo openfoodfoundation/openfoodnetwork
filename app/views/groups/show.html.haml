@@ -1,25 +1,140 @@
-.row.pad-top
+#group-page.row.pad-top
   .small-12.columns.pad-top
     %header
       .row
         .small-12.columns
           %img{"src" => @group.promo_image}
-      .row.pad-top
-        .small-3.medium-2.columns
-          %img{"src" => @group.logo}
-        .small-9.medium-10.columns
-          %h2= @group.name
+      .row
+        .small-12.medium-2.large-2.columns.pad-top
+          %img.group-logo{"src" => @group.logo}
+        .small-12.medium-10.large-10.columns.pad-top
+          %h2.group-name= @group.name
           %p= @group.description
 
-
-.row.pad-top
   .small-12.columns.pad-top
-    %p
-      123
-    %p
-      456
-    %p
-      789
+    .row.pad-top
+      .small-12.medium-7.columns
+        %div{"ng-controller" => "TabsCtrl"}
+          %tabset
+            %tab{heading: 'Map',
+                active: "active(\'\')",
+                select: "select(\'\')"}
+              = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer
+              .map-container
+                %map{"ng-controller" => "MapCtrl", "ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
+                  %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+                    %markers{models: "OfnMap.enterprises", fit: "true",
+                    coords: "'self'", icon: "'icon'", click: "'reveal'"}
+
+            %tab{heading: 'About us',
+                active: "active(\'about\')",
+                select: "select(\'about\')"}
+              %h3.pad-top About us
+              %p= @group.long_description
+
+            %tab{heading: 'Our producers',
+                active: "active(\'producers\')",
+                select: "select(\'producers\')"}
+              .producers.pad-top{"ng-controller" => "GroupEnterprisesCtrl"}
+                .row
+                  .small-12.columns.pad-top
+                    %h1 Our Producers
+                = render partial: "shared/components/enterprise_search"
+                -# TODO: find out why this is not working
+                -#= render partial: "producers/filters"
+
+                .row{bindonce: true}
+                  .small-12.columns
+                    .active_table
+                      %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
+                      "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+                      "ng-controller" => "GroupEnterpriseNodeCtrl"}
+                        .small-12.columns
+                          = render partial: 'home/skinny'
+                          = render partial: 'home/fat'
+
+                      = render partial: 'shared/components/enterprise_no_results'
+      
+      .small-12.medium-4.medium-offset-1.columns
+        %h4 Contact us
+        - if @group.phone
+          .row
+            .small-2.columns
+              Call
+            .small-10.columns
+              = @group.phone
+        - if @group.email
+          .row
+            .small-2.columns
+              Email
+            .small-10.columns
+              = @group.email
+        - if @group.website
+          .row
+            .small-2.columns
+              Website
+            .small-10.columns
+              = @group.website
+        %p &nbsp;
+        %h6 Address
+        %p
+        = @group.address.address1
+        - if @group.address.address2
+          %br
+          = @group.address.address2
+        %br
+        = @group.address.city
+        ,
+        = @group.address.state
+        = @group.address.zipcode
+        %br
+        = @group.address.country
+        %p
+        %h6 Follow us
+        - if @group.facebook
+          .row
+            .small-2.columns
+              Facebook
+            .small-10.columns
+              = @group.facebook
+        - if @group.instagram
+          .row
+            .small-2.columns
+              Instagram
+            .small-10.columns
+              = @group.instagram
+        - if @group.linkedin
+          .row
+            .small-2.columns
+              LinkedIn
+            .small-10.columns
+              = @group.linkedin
+        - if @group.twitter
+          .row
+            .small-2.columns
+              Twitter
+            .small-10.columns
+              = @group.twitter
+
+  .small-12.columns.pad-top
+    .row.pad-top
+      .small-12.columns.text-center.small
+        %hr
+        Copyright this year
+        = @group.name
+        %p
+          -if @group.facebook
+            %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/' + @group.facebook, target: '_blank'}
+              %i.ofn-i_044-facebook
+          -if @group.email
+            %a{title:'Email us', href: @group.email.reverse, mailto: true}
+              %i.ofn-i_050-mail-circle
+          -if @group.website
+            %a{title:'Visit our website', href: 'http://' + @group.website, target: '_blank'}
+              %i.ofn-i_049-web
+        %p
+          &nbsp;
 
 / %div{style: "padding: 1.5em;"}
 /   %img{"src" => @group.promo_image, style: "display: block"}
