@@ -1,7 +1,7 @@
 class AddStandardVariantToProducts < ActiveRecord::Migration
   def up
     # Find products without any standard variants
-    products_with_only_master = Spree::Product.find(:all, :include => "variants", :conditions => ["spree_variants.id IS NULL"])
+    products_with_only_master = Spree::Product.includes(:variants).where('spree_variants.id IS NULL')
 
     products_with_only_master.each do |product|
       # Run the callback to add a copy of the master variant as a standard variant
@@ -39,9 +39,7 @@ class AddStandardVariantToProducts < ActiveRecord::Migration
       # Exchange Variants
       # Strategy: Replace all references to existing master in exchanges with new_variant
       exchange_variants = ExchangeVariant.where(variant_id: existing_master.id)
-      exchange_variants.each do |exchange_variant|
-        exchange_variant.update_attributes(variant_id: new_variant.id )
-      end
+      exchange_variants.update_all(variant_id: new_variant.id)
     end
   end
 end
