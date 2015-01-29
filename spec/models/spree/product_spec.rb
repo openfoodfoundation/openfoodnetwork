@@ -61,7 +61,7 @@ module Spree
       end
 
 
-      it "does not allow only standard variant to be deleted" do
+      it "does not allow the last variant to be deleted" do
         product = create(:simple_product)
         expect(product.variants(:reload).length).to eq 1
         product.variants = []
