@@ -120,9 +120,10 @@ module Spree
             expect(standard_variant.price).to eq product.master.price
           end
 
-          it "only duplicates master variant on initial save" do
+          it "only duplicates master variant on create" do
+            expect(product).to_not receive :ensure_standard_variant
+            product.name = "Something else"
             product.save!
-            expect(product.variants(:reload).length).to eq 1
           end
         end
 
