@@ -144,6 +144,18 @@ feature "shopping with variant overrides defined", js: true do
       end.to change { v1.reload.count_on_hand }.by(-2)
       vo1.reload.count_on_hand.should be_nil
     end
+
+    it "does not show out of stock flags on order confirmation page" do
+      v4.update_attribute :count_on_hand, 0
+      fill_in "variants[#{v4.id}]", with: "2"
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      click_link 'Checkout now'
+
+      complete_checkout
+
+      page.should_not have_content "Out of Stock"
+    end
   end
 
 
