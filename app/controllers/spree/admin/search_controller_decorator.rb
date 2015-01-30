@@ -1,6 +1,5 @@
 Spree::Admin::SearchController.class_eval do
   def known_users
-    binding.pry
     if exact_match = Spree.user_class.find_by_email(params[:q])
       @users = [exact_match]
     else

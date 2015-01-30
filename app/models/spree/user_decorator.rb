@@ -12,9 +12,13 @@ Spree.user_class.class_eval do
   validate :limit_owned_enterprises
 
   def known_users
-    Spree::User
-    .includes(:enterprises)
-    .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
+    if admin?
+      Spree::User.all
+    else
+      Spree::User
+      .includes(:enterprises)
+      .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
+    end
   end
 
   def build_enterprise_roles

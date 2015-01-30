@@ -1,4 +1,6 @@
 describe Spree.user_class do
+  include AuthenticationWorkflow
+
   describe "associations" do
     it { should have_many(:owned_enterprises) }
 
@@ -32,20 +34,26 @@ describe Spree.user_class do
   end
 
   describe "known_users" do
-    let(:u1) { create(:user) }
-    let(:u2) { create(:user) }
-    let(:u3) { create(:user) }
+    let!(:u1) { create_enterprise_user }
+    let!(:u2) { create_enterprise_user }
+    let!(:u3) { create_enterprise_user }
     let!(:e1) { create(:enterprise, owner: u1, users: [u1, u2]) }
 
-    it "returns a list of users which manage shared enterprises" do
-      t1 = Time.now
-      expect(u1.known_users).to include u1, u2
-      expect(u1.known_users).to_not include u3
-      expect(u2.known_users).to include u1,u2
-      expect(u2.known_users).to_not include u3
-      expect(u3.known_users).to_not include u1,u2,u3
-      t2 = Time.now
-      binding.pry
+    describe "as an enterprise user" do
+      it "returns a list of users which manage shared enterprises" do
+        expect(u1.known_users).to include u1, u2
+        expect(u1.known_users).to_not include u3
+        expect(u2.known_users).to include u1,u2
+        expect(u2.known_users).to_not include u3
+        expect(u3.known_users).to_not include u1,u2,u3
+      end
+    end
+
+    describe "as admin" do
+      let(:admin) { quick_login_as_admin }
+      it "returns all users" do
+        expect(admin.known_users).to include u1, u2, u3
+      end
     end
   end
 end
