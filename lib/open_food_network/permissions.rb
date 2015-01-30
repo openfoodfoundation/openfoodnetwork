@@ -46,7 +46,7 @@ module OpenFoodNetwork
 
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)
-      enterprises = managed_enterprises + related_enterprises_with(:add_to_order_cycle)
+      enterprises = managed_and_related_enterprises_with :add_to_order_cycle
       order_cycle.exchanges.to_enterprises(enterprises).from_enterprises(enterprises)
     end
 

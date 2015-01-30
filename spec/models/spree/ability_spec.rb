@@ -216,7 +216,7 @@ module Spree
 
       context "when is a distributor enterprise user" do
         # create distributor_enterprise1 user without full admin access
-        let (:user) do
+        let(:user) do
           user = create(:user)
           user.spree_roles = []
           d1.enterprise_roles.build(user: user).save
