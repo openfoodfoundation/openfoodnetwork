@@ -63,6 +63,8 @@ class AbilityDecorator
     can [:admin, :read, :edit, :bulk_update, :destroy], EnterpriseFee do |enterprise_fee|
       user.enterprises.include? enterprise_fee.enterprise
     end
+
+    can [:admin, :known_users], :search
   end
 
   def add_product_management_abilities(user)

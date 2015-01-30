@@ -410,6 +410,11 @@ module Spree
         it 'should have the ability administrate and create enterpises' do
           should have_ability([:admin, :index, :create], for: Enterprise)
         end
+
+        it "should have the ability to search for users which share management of its enterprises" do
+          should have_ability([:admin, :known_users], for: :search)
+          should_not have_ability([:users], for: :search)
+        end
       end
     end
   end
