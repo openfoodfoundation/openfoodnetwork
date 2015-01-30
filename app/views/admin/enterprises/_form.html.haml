@@ -2,6 +2,10 @@
   %legend Primary Details
   = render 'admin/enterprises/form/primary_details', f: f
 
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Users'" } }
+  %legend Users
+  = render 'admin/enterprises/form/users', f: f
+
 = f.fields_for :address do |af|
   %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Address'" } }
     %legend Address

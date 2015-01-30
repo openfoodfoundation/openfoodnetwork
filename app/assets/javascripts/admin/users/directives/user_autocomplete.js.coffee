@@ -6,7 +6,7 @@ angular.module("admin.users").directive "ofnUserAutocomplete", ($http) ->
         initSelection: (element, callback) ->
           callback { id: element.val(), email: attrs.email }
         ajax:
-          url: Spree.routes.user_search
+          url: '/admin/search/known_users'
           datatype: 'json'
           data:(term, page) ->
             { q: term }

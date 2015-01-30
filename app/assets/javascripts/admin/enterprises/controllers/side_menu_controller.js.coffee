@@ -5,7 +5,8 @@ angular.module("admin.enterprises")
     $scope.select = SideMenu.select
 
     $scope.menu.setItems [
-      { name: 'Primary Details', icon_class: "icon-user" }
+      { name: 'Primary Details', icon_class: "icon-home" }
+      { name: 'Users', icon_class: "icon-user" }
       { name: 'Address', icon_class: "icon-map-marker" }
       { name: 'Contact', icon_class: "icon-phone" }
       { name: 'Social', icon_class: "icon-twitter" }
@@ -38,4 +39,3 @@ angular.module("admin.enterprises")
 
     $scope.showShopPreferences = ->
       $scope.Enterprise.sells != "none"
-

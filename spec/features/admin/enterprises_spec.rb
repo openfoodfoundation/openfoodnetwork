@@ -125,12 +125,12 @@ feature %q{
 
     # Filling in details
     fill_in 'enterprise_name', :with => 'Eaterprises'
+
     # This call intermittently fails to complete, leaving the select2 box open obscuring the
     # fields below it (which breaks the remainder of our specs). Calling it twice seems to
     # solve the problem.
     select2_search admin.email, from: 'Owner'
     select2_search admin.email, from: 'Owner'
-    choose 'Any'
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -166,6 +166,8 @@ feature %q{
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
     choose 'Own'
+
+    within (".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
 
     click_link "About"

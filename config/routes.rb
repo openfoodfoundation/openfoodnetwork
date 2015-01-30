@@ -157,6 +157,8 @@ Spree::Core::Engine.routes.prepend do
   end
 
   namespace :admin do
+    get '/search/known_users' => "search#known_users", :as => :search_known_users
+
     resources :products do
       get :product_distributions, on: :member
 
