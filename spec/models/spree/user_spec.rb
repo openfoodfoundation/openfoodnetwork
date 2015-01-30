@@ -30,4 +30,22 @@ describe Spree.user_class do
       create(:user)
     end
   end
+
+  describe "known_users" do
+    let(:u1) { create(:user) }
+    let(:u2) { create(:user) }
+    let(:u3) { create(:user) }
+    let!(:e1) { create(:enterprise, owner: u1, users: [u1, u2]) }
+
+    it "returns a list of users which manage shared enterprises" do
+      t1 = Time.now
+      expect(u1.known_users).to include u1, u2
+      expect(u1.known_users).to_not include u3
+      expect(u2.known_users).to include u1,u2
+      expect(u2.known_users).to_not include u3
+      expect(u3.known_users).to_not include u1,u2,u3
+      t2 = Time.now
+      binding.pry
+    end
+  end
 end

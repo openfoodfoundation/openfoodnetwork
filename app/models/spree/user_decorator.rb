@@ -11,6 +11,12 @@ Spree.user_class.class_eval do
 
   validate :limit_owned_enterprises
 
+  def known_users
+    Spree::User
+    .includes(:enterprises)
+    .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
+  end
+
   def build_enterprise_roles
     Enterprise.all.each do |enterprise|
       unless self.enterprise_roles.find_by_enterprise_id enterprise.id
