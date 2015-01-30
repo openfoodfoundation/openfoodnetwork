@@ -613,7 +613,7 @@ describe Enterprise do
 
         [er1, er2].each do |er|
           er.parent.should == enterprise
-          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile'].sort
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
         end
       end
 

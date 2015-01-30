@@ -373,7 +373,8 @@ class Enterprise < ActiveRecord::Base
                                      child: hub,
                                      permissions_list: [:add_to_order_cycle,
                                                         :manage_products,
-                                                        :edit_profile])
+                                                        :edit_profile,
+                                                        :create_variant_overrides])
     end
   end
 

@@ -5,6 +5,7 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
       'add_to_order_cycle'
       'manage_products'
       'edit_profile'
+      'create_variant_overrides'
     ]
 
     constructor: ->
@@ -28,3 +29,4 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
         when "add_to_order_cycle" then "to add to order cycle"
         when "manage_products" then "to manage products"
         when "edit_profile" then "to edit profile"
+        when "create_variant_overrides" then "to override variant details"
