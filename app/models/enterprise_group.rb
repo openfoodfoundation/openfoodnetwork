@@ -41,4 +41,20 @@ class EnterpriseGroup < ActiveRecord::Base
     address.firstname = address.lastname = 'unused' if address.present?
   end
 
+  def facebook_url
+    if (facebook.blank?) then
+      return nil
+    end
+    if is_url? facebook then
+      facebook
+    else
+      'https://www.facebook.com/' + facebook
+    end
+  end
+
+  private
+
+  def is_url?(s)
+    s.andand.include? '://'
+  end
 end
