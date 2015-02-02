@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150121030627) do
+ActiveRecord::Schema.define(:version => 20150202000203) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(:version => 20150121030627) do
     t.string   "instagram"
     t.string   "linkedin"
     t.string   "twitter"
+    t.integer  "owner_id"
   end
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
@@ -1085,6 +1086,7 @@ ActiveRecord::Schema.define(:version => 20150121030627) do
   add_foreign_key "enterprise_fees", "enterprises", name: "enterprise_fees_enterprise_id_fk"
 
   add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
+  add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"

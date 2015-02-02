@@ -9,6 +9,8 @@
   %thead
     %tr
       %th Name
+      - if spree_current_user.admin?
+        %th Owner
       %th On front page?
       %th Enterprises
       %th.actions
@@ -17,6 +19,8 @@
     - @enterprise_groups.each do |enterprise_group|
       %tr
         %td.name= enterprise_group.name
+        - if spree_current_user.admin?
+          %td= enterprise_group.owner.andand.email || ""
         %td= enterprise_group.on_front_page ? 'Y' : 'N'
         %td= enterprise_group.enterprises.map(&:name).join ', '
         %td.actions

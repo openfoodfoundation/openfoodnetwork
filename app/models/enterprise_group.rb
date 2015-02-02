@@ -2,6 +2,7 @@ class EnterpriseGroup < ActiveRecord::Base
   acts_as_list
 
   has_and_belongs_to_many :enterprises
+  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_groups
   belongs_to :address, :class_name => 'Spree::Address'
   accepts_nested_attributes_for :address
   validates :address, presence: true, associated: true
@@ -11,6 +12,7 @@ class EnterpriseGroup < ActiveRecord::Base
   validates :description, presence: true
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
+  attr_accessible :owner_id
   attr_accessible :logo, :promo_image
   attr_accessible :address_attributes
   attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter

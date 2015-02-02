@@ -22,6 +22,18 @@ describe Spree.user_class do
         }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u2.email} is not permitted to own any more enterprises (limit is 1)."
       end
     end
+
+    describe "group ownership" do
+      let(:u1) { create(:user) }
+      let(:u2) { create(:user) }
+      let!(:g1) { create(:enterprise_group, owner: u1) }
+      let!(:g2) { create(:enterprise_group, owner: u1) }
+
+      it "provides access to owned groups" do
+        expect(u1.owned_groups(:reload)).to include g1, g2
+      end
+
+    end
   end
 
   context "#create" do
