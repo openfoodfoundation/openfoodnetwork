@@ -17,7 +17,7 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
 
 
   $scope.fetchProducts = ->
-    url = "/api/products/distributable?page=::page::;per_page=100"
+    url = "/api/products/overridable?page=::page::;per_page=100"
     PagedFetcher.fetch url, (data) => $scope.addProducts data.products
 
 
