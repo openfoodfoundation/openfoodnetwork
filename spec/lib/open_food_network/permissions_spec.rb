@@ -34,6 +34,19 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding all producers for which we can create variant overrides" do
+      let(:e1) { create(:supplier_enterprise) }
+      let(:e2) { create(:supplier_enterprise) }
+
+      it "compiles the list from variant_override_enterprises_per_hub" do
+        permissions.stub(:variant_override_enterprises_per_hub) do
+          {1 => [e1.id], 2 => [e1.id, e2.id]}
+        end
+
+        permissions.variant_override_producers.sort.should == [e1, e2].sort
+      end
+    end
+
     describe "finding enterprises for which variant overrides can be created, for each hub" do
       let!(:hub) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }

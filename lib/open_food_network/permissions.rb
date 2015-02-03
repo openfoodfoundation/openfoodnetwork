@@ -20,6 +20,11 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :edit_profile
     end
 
+    def variant_override_producers
+      producer_ids = variant_override_enterprises_per_hub.values.flatten.uniq
+      Enterprise.where(id: producer_ids)
+    end
+
     # For every hub that an admin manages, show all the producers for which that hub may
     # override variants
     # {hub1_id => [producer1_id, producer2_id, ...], ...}
