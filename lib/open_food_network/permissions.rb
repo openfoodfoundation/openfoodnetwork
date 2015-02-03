@@ -20,29 +20,33 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :edit_profile
     end
 
-    # For every hub that an admin manages, show all the producers that that hub may add
-    # to the order cycle
+    # For every hub that an admin manages, show all the producers for which that hub may
+    # override variants
     # {hub1_id => [producer1_id, producer2_id, ...], ...}
-    def order_cycle_enterprises_per_hub
+    def variant_override_enterprises_per_hub
+      hubs = managed_and_related_enterprises_with(:add_to_order_cycle).is_distributor
+
+      # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
            EnterpriseRelationship.
-           permitting(managed_enterprises).
-           with_permission(:add_to_order_cycle).
+           permitting(hubs).
+           with_permission(:create_variant_overrides).
            group_by { |er| er.child_id }.
            map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
           ]
 
+      # We have permission to create variant overrides for any producers we manage, for any
+      # hub we can add to an order cycle
       managed_producer_ids = managed_enterprises.is_primary_producer.pluck(:id)
       if managed_producer_ids.any?
-        managed_enterprises.is_distributor.each do |hub|
-          permissions[hub.id] ||= []
-          permissions[hub.id] += managed_producer_ids
-          permissions[hub.id].uniq!
+        hubs.each do |hub|
+          permissions[hub.id] = ((permissions[hub.id] || []) + managed_producer_ids).uniq
         end
       end
 
       permissions
     end
+
 
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)

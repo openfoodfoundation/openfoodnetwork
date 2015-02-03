@@ -34,43 +34,63 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding enterprises that can be added to an order cycle, for each hub" do
+    describe "finding enterprises for which variant overrides can be created, for each hub" do
       let!(:hub) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }
       let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
-                         permissions_list: [:add_to_order_cycle]) }
+                         permissions_list: [:create_variant_overrides]) }
 
       before do
         permissions.stub(:managed_enterprises) { Enterprise.where(id: hub.id) }
       end
 
       it "returns enterprises as hub_id => [producer, ...]" do
-        permissions.order_cycle_enterprises_per_hub.should ==
+        permissions.variant_override_enterprises_per_hub.should ==
           {hub.id => [producer.id]}
       end
 
       it "returns only permissions relating to managed enterprises" do
         create(:enterprise_relationship, parent: e1, child: e2,
-                         permissions_list: [:add_to_order_cycle])
+                         permissions_list: [:create_variant_overrides])
 
-        permissions.order_cycle_enterprises_per_hub.should ==
+        permissions.variant_override_enterprises_per_hub.should ==
           {hub.id => [producer.id]}
       end
 
-      it "returns only add_to_order_cycle permissions" do
+      it "returns only create_variant_overrides permissions" do
         permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub, e2]) }
         create(:enterprise_relationship, parent: e1, child: e2,
                          permissions_list: [:manage_products])
 
-        permissions.order_cycle_enterprises_per_hub.should ==
+        permissions.variant_override_enterprises_per_hub.should ==
           {hub.id => [producer.id]}
+      end
+
+      describe "hubs connected to the user by relationships only" do
+        # producer_managed can add hub to order cycle
+        # hub can create variant overrides for producer
+        # we manage producer_managed
+        # therefore, we should be able to create variant overrides for hub on producer's products
+
+        let!(:producer_managed) { create(:supplier_enterprise) }
+        let!(:er_oc) { create(:enterprise_relationship, parent: hub, child: producer_managed,
+                              permissions_list: [:add_to_order_cycle]) }
+
+        before do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: producer_managed.id) }
+        end
+
+        it "allows the hub to create variant overrides for the producer" do
+          permissions.variant_override_enterprises_per_hub.should ==
+            {hub.id => [producer.id, producer_managed.id]}
+        end
       end
 
       it "also returns managed producers" do
         producer2 = create(:supplier_enterprise)
         permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub, producer2]) }
 
-        permissions.order_cycle_enterprises_per_hub.should ==
+        permissions.variant_override_enterprises_per_hub.should ==
           {hub.id => [producer.id, producer2.id]}
       end
     end
