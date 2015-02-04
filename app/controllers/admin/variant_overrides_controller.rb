@@ -2,15 +2,20 @@ require 'open_food_network/spree_api_key_loader'
 
 module Admin
   class VariantOverridesController < ResourceController
-    include OpenFoodNetwork::SpreeApiKeyLoader
     include OrderCyclesHelper
+    include OpenFoodNetwork::SpreeApiKeyLoader
+
     before_filter :load_spree_api_key, only: :index
 
     def index
       @hubs = order_cycle_hub_enterprises(without_validation: true)
-      @producers = order_cycle_producer_enterprises
+
+      # Used in JS to look up the name of the producer of each product
+      @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+        variant_override_producers
+
       @hub_permissions = OpenFoodNetwork::Permissions.new(spree_current_user).
-        order_cycle_enterprises_per_hub
+        variant_override_enterprises_per_hub
       @variant_overrides = VariantOverride.for_hubs(@hubs)
     end
 
