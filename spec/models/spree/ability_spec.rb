@@ -239,9 +239,6 @@ module Spree
           o
         end
 
-        let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
-        let(:vo2) { create(:variant_override, hub: d2, variant: p2.master) }
-
         describe "editing enterprises" do
           let!(:d_related) { create(:distributor_enterprise) }
           let!(:er_pd) { create(:enterprise_relationship, parent: d_related, child: d1, permissions_list: [:edit_profile]) }
@@ -264,6 +261,13 @@ module Spree
         end
 
         describe "variant overrides" do
+          let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
+          let(:vo2) { create(:variant_override, hub: d1, variant: p2.master) }
+          let(:vo3) { create(:variant_override, hub: d2, variant: p1.master) }
+          let(:vo4) { create(:variant_override, hub: d2, variant: p2.master) }
+
+          let!(:er1) { create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:create_variant_overrides]) }
+
           it "should be able to access variant overrides page" do
             should have_ability([:admin, :index, :bulk_update], for: VariantOverride)
           end
@@ -272,8 +276,16 @@ module Spree
             should have_ability([:admin, :index, :read, :update], for: vo1)
           end
 
-          it "should not be able to read/write other enterprises' variant overrides" do
+          it "should not be able to read/write variant overrides when producer of product hasn't granted permission" do
             should_not have_ability([:admin, :index, :read, :update], for: vo2)
+          end
+
+          it "should not be able to read/write variant overrides when we can't add hub to order cycle" do
+            should_not have_ability([:admin, :index, :read, :update], for: vo3)
+          end
+
+          it "should not be able to read/write other enterprises' variant overrides" do
+            should_not have_ability([:admin, :index, :read, :update], for: vo4)
           end
         end
 
