@@ -5,17 +5,17 @@
       %p.modal-header Contact
       %p 
         - if @group.phone.present? && @group.phone != 'undefined'
-            Call
-            %a{tel: @group.phone}
-              = @group.phone
+          Call
+          %a{tel: @group.phone}
+            = @group.phone
         - if @group.email.present?
-            Email
-            %a{mailto: true, href: @group.email.reverse}
-              = @group.email.gsub('@', ' at ').gsub('.', ' dot ')
+          Email
+          %a{mailto: true, href: @group.email.reverse}
+            = @group.email.gsub('@', ' at ').gsub('.', ' dot ')
         - if @group.website.present?
-            Website
-            %a{href: @group.website}
-              = @group.website
+          Website
+          %a{href: @group.website}
+            = @group.website
 
 
 %div.contact-container{bindonce: true}  
