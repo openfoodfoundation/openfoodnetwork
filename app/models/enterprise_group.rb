@@ -54,20 +54,24 @@ class EnterpriseGroup < ActiveRecord::Base
     address.phone.andand.sub('undefined', '')
   end
 
-  def facebook_url
-    if (facebook.blank?) then
-      return nil
-    end
-    if is_url? facebook then
-      facebook
-    else
-      'https://www.facebook.com/' + facebook
-    end
+  def address1
+    address.address1.andand.sub('undefined', '')
   end
 
-  private
-
-  def is_url?(s)
-    s.andand.include? '://'
+  def address2
+    address.address2.andand.sub('undefined', '')
   end
+
+  def city
+    address.city.andand.sub('undefined', '')
+  end
+
+  def state
+    address.state
+  end
+
+  def zipcode
+    address.zipcode.andand.sub('undefined', '')
+  end
+
 end

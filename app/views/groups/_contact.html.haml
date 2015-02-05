@@ -9,54 +9,42 @@
             = @group.phone
       - if @group.email.present?
         %p
-          %a{mailto: true, href: @group.email.reverse, target: "_blank" }
+          =link_to_service "", @group.email.reverse, mailto: true do
             = @group.email
       - if @group.website.present?
         %p
-          =link_to_ext @group.website
+          =link_to_url @group.website
 
 %div{bindonce: true}  
-  - if @group.facebook.present? 
+  - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
     %div.modal-centered
       %p.modal-header Follow
       .follow-icons{bindonce: true}
         %span
-        - if @group.twitter.present?
-          %a{href: "http://twitter.com/"+@group.twitter, target: "_blank"}
-            %i.ofn-i_041-twitter
+        =link_to_service "http://twitter.com/", @group.twitter do
+          %i.ofn-i_041-twitter
         %span
-        - if @group.facebook.present?
-          %a{href: @group.facebook, target: "_blank"}
-            %i.ofn-i_044-facebook
+        =link_to_service "https://www.facebook.com/", @group.facebook do
+          %i.ofn-i_044-facebook
         %span
-        - if @group.linkedin.present?
-          %a{href: @group.linkedin, target: "_blank"}
-            %i.ofn-i_042-linkedin
+        =link_to_service "https://www.linkedin.com/in/", @group.linkedin do
+          %i.ofn-i_042-linkedin
         %span
-        - if @group.instagram.present?
-          %a{href: "http://instagram.com/"+@group.instagram, target: "_blank"}
-            %i.ofn-i_043-instagram
+        =link_to_service "http://instagram.com/", @group.instagram do
+          %i.ofn-i_043-instagram
         
-        %span{"ng-if" => "enterprise.instagram"}
-          %a{"ng-href" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}  
-            %i.ofn-i_043-instagram
-
 %div{bindonce: true}  
-  - if @group.address.address1.present? ||  @group.address.address2.present? || @group.address.city.present? || @group.address.city.present? || @group.address.state.present? ||  @group.address.zipcode.present?
+  - if @group.address1.present? || @group.city.present?
     %div.modal-centered
       %p.modal-header Address
       %p
-        - if @group.address.address1.present? && @group.address.address1 != 'undefined'
-          = @group.address.address1
-        - if @group.address.address2.present? && @group.address.address2 != 'undefined'
+        = @group.address1
+        - if @group.address2.present?
           %br
-          = @group.address.address2
+          = @group.address2
         %br
-        - if @group.address.city.present? && @group.address.city != 'undefined' 
-          = @group.address.city
-        - if @group.address.state.present? &&  @group.address.state != 'undefined'
-          = @group.address.state
-        - if @group.address.zipcode? && @group.address.zipcode != 'undefined'
-          = @group.address.zipcode
+        = @group.city
+        = @group.state
+        = @group.zipcode
 
 

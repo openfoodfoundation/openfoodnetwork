@@ -152,15 +152,12 @@
         %p.text-small
           = "Copyright #{Date.today.year} #{@group.name}"
         %h2
-          -if @group.facebook
-            %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/' + @group.facebook, target: '_blank'}
-              %i.ofn-i_044-facebook
-          -if @group.email
-            %a{title:'Email us', href: @group.email.reverse, mailto: true}
-              %i.ofn-i_050-mail-circle
-          -if @group.website
-            %a{title:'Visit our website', href: 'http://' + @group.website, target: '_blank'}
-              %i.ofn-i_049-web
+          =link_to_service "https://www.facebook.com/", @group.facebook, title: 'Follow us on Facebook' do
+            %i.ofn-i_044-facebook
+          =link_to_service "", @group.email.reverse, title:'Email us', mailto: true do
+            %i.ofn-i_050-mail-circle
+          =link_to_service "http://", @group.website, title: 'Visit our website' do
+            %i.ofn-i_049-web
         %p
           &nbsp;
 
