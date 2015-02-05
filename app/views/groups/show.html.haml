@@ -5,9 +5,9 @@
         .small-12.columns
           %img{"src" => @group.promo_image}
       .row
-        .small-12.medium-2.large-2.columns.pad-top
-          %img.group-logo{"src" => @group.logo}
-        .small-12.medium-10.large-10.columns.pad-top
+        .small-12.medium-2.large-2.columns.group-logo.pad-top
+          %img{"src" => @group.logo}
+        .small-12.medium-10.large-10.columns.group-header.pad-top
           %h2.group-name= @group.name
           %p= @group.description
 

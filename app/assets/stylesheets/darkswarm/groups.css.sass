@@ -20,11 +20,15 @@
     vertical-align: middle
 
 #group-page
-  @media screen and (min-width: 768px)
-    .group-logo
-      max-height: 100px
+  .group-logo, .group-header
+    text-align: center   
   .group-name
     border-bottom: 1px solid #ccc
+  @media screen and (min-width: 768px)
+    .group-logo, .group-header
+      text-align: left
+    .group-logo img
+      max-height: 100px
 
   // Tabs
   .tabs dd a
