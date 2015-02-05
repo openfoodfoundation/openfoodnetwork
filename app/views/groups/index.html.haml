@@ -19,11 +19,13 @@
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
-      .small-6.columns
+      .small-12.medium-6.columns
         %a{"ng-href" => "groups/{{group.id}}"}
           %i.ofn-i_035-groups
           {{ group.name }}
-      .small-6.columns
+      .small-12.medium-3.columns
+        {{ group.address.state }}
+      .small-12.medium-3.columns
         {{ group.description }}
 
   .group{"ng-show" => "groups.length == 0"}

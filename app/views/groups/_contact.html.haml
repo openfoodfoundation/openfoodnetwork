@@ -1,124 +1,63 @@
 %div.contact-container{bindonce: true}  
-
   - if @group.email.present? || @group.website.present? || @group.phone.present?
     %div.modal-centered
       %p.modal-header Contact
-      %p 
-        - if @group.phone.present?
+      - if @group.phone.present?
+        %p
           Call
           %a{tel: @group.phone}
             = @group.phone
-        - if @group.email.present?
-          Email
-          %a{mailto: true, href: @group.email.reverse}
-            = @group.email.gsub('@', ' at ').gsub('.', ' dot ')
-        - if @group.website.present?
-          Website
-          %a{href: @group.website}
+      - if @group.email.present?
+        %p
+          %a{mailto: true, href: @group.email.reverse, target: "_blank" }
+            = @group.email
+      - if @group.website.present?
+        %p
+          %a{href: @group.website, target: "_blank" }
             = @group.website
 
+%div{bindonce: true}  
+  - if @group.facebook.present? 
+    %div.modal-centered
+      %p.modal-header Follow
+      .follow-icons{bindonce: true}
+        %span
+        - if @group.twitter.present?
+          %a{href: "http://twitter.com/"+@group.twitter, target: "_blank"}
+            %i.ofn-i_041-twitter
+        %span
+        - if @group.facebook.present?
+          %a{href: @group.facebook, target: "_blank"}
+            %i.ofn-i_044-facebook
+        %span
+        - if @group.linkedin.present?
+          %a{href: @group.linkedin, target: "_blank"}
+            %i.ofn-i_042-linkedin
+        %span
+        - if @group.instagram.present?
+          %a{href: "http://instagram.com/"+@group.instagram, target: "_blank"}
+            %i.ofn-i_043-instagram
+        
+        %span{"ng-if" => "enterprise.instagram"}
+          %a{"ng-href" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}  
+            %i.ofn-i_043-instagram
 
-%div.contact-container{bindonce: true}  
-  / - if @group.email || @group.website || @group.phone
-  %div.modal-centered
-    %p.modal-header Address
-    %p 
-      Container for address info
-      / = @group.phone
-
-%div.contact-container{bindonce: true}  
-  / - if @group.email || @group.website || @group.phone
-  %div.modal-centered
-    %p.modal-header Follow
-    %p 
-      Container for follow us info
-      / = @group.phone
-
-    / %p.word-wrap{"ng-if" => "enterprise.email"}
-    /   %a{"ng-href" => "{{enterprise.email | stripUrl}}", target: "_blank", mailto: true}
-    /     %span.email
-    /       {{ enterprise.email | stripUrl }}
-
-    / %p.word-wrap{"ng-if" => "enterprise.website"}
-    /   %a{"ng-href" => "http://{{enterprise.website | stripUrl}}", target: "_blank" }
-    /     {{ enterprise.website | stripUrl }}
+%div{bindonce: true}  
+  - if @group.address.address1.present? ||  @group.address.address2.present? || @group.address.city.present? || @group.address.city.present? || @group.address.state.present? ||  @group.address.zipcode.present?
+    %div.modal-centered
+      %p.modal-header Address
+      %p
+        - if @group.address.address1.present? && @group.address.address1 != 'undefined'
+          = @group.address.address1
+        - if @group.address.address2.present? && @group.address.address2 != 'undefined'
+          %br
+          = @group.address.address2
+        %br
+        - if @group.address.city.present? && @group.address.city != 'undefined' 
+          = @group.address.city
+        - if @group.address.state.present? &&  @group.address.state != 'undefined'
+          = @group.address.state
+        - if @group.address.zipcode? && @group.address.zipcode != 'undefined'
+          = @group.address.zipcode
 
 
-  /       %h4 Contact us
-  /       - if @group.phone
-  /         .row
-  /           .small-2.columns
-  /             Call
-  /           .small-10.columns
-  /             = @group.phone
-  /       - if @group.email
-  /         .row
-  /           .small-2.columns
-  /             Email
-  /           .small-10.columns
-  /             = @group.email
-  /       - if @group.website
-  /         .row
-  /           .small-2.columns
-  /             Website
-  /           .small-10.columns
-  /             = @group.website
-  /       %p &nbsp;
-  /       %h6 Address
-  /       %p
-  /       = @group.address.address1
-  /       - if @group.address.address2
-  /         %br
-  /         = @group.address.address2
-  /       %br
-  /       = @group.address.city
-  /       ,
-  /       = @group.address.state
-  /       = @group.address.zipcode
-  /       %br
-  /       = @group.address.country
-  /       %p
-  /       %h6 Follow us
-  /       - if @group.facebook
-  /         .row
-  /           .small-2.columns
-  /             Facebook
-  /           .small-10.columns
-  /             = @group.facebook
-  /       - if @group.instagram
-  /         .row
-  /           .small-2.columns
-  /             Instagram
-  /           .small-10.columns
-  /             = @group.instagram
-  /       - if @group.linkedin
-  /         .row
-  /           .small-2.columns
-  /             LinkedIn
-  /           .small-10.columns
-  /             = @group.linkedin
-  /       - if @group.twitter
-  /         .row
-  /           .small-2.columns
-  /             Twitter
-  /           .small-10.columns
-  /             = @group.twitter
-
-  / .small-12.columns.pad-top
-  /   .row.pad-top
-  /     .small-12.columns.text-center.small
-  /       %hr
-  /       Copyright this year
-  /       = @group.name
-  /       %p
-  /         -if @group.facebook
-  /           %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/' + @group.facebook, target: '_blank'}
-  /             %i.ofn-i_044-facebook
-  /         -if @group.email
-  /           %a{title:'Email us', href: @group.email.reverse, mailto: true}
-  /             %i.ofn-i_050-mail-circle
-  /         -if @group.website
-  /           %a{title:'Visit our website', href: 'http://' + @group.website, target: '_blank'}
-  /             %i.ofn-i_049-web
-  /       %p
-  /         &nbsp;
