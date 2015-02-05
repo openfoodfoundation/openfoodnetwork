@@ -5,15 +5,15 @@
         .small-12.columns
           %img{"src" => @group.promo_image}
       .row
-        .small-12.medium-2.large-2.columns.pad-top
-          %img.group-logo{"src" => @group.logo}
-        .small-12.medium-10.large-10.columns.pad-top
+        .small-12.medium-2.large-2.columns.group-logo.pad-top
+          %img{"src" => @group.logo}
+        .small-12.medium-10.large-10.columns.group-header.pad-top
           %h2.group-name= @group.name
           %p= @group.description
 
   .small-12.columns.pad-top
     .row.pad-top
-      .small-12.medium-8.columns
+      .small-12.large-8.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
             %tab{heading: 'Map',
@@ -35,9 +35,9 @@
             %tab{heading: 'Our producers',
                 active: "active(\'producers\')",
                 select: "select(\'producers\')"}
-              .producers.pad-top{"ng-controller" => "GroupEnterprisesCtrl"}
+              .producers{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
-                  .small-12.columns.pad-top
+                  .small-12.columns
                     %h1 Our Producers
                 = render partial: "shared/components/enterprise_search"
                 -# TODO: find out why this is not working
@@ -61,7 +61,7 @@
             %tab{heading: 'Our hubs',
                 active: "active(\'hubs\')",
                 select: "select(\'hubs\')"}
-              #hubs.hubs{"ng-controller" => "GroupEnterprisesCtrl"}
+              .hubs{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
                   .small-12.columns
                     %h1 Our Hubs
@@ -83,7 +83,7 @@
 
                       = render partial: 'shared/components/enterprise_no_results'
       
-      .small-12.medium-4.columns
+      .small-12.large-4.columns
         = render partial: 'contact'
   /       %h4 Contact us
   /       - if @group.phone
