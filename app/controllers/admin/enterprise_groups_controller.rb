@@ -3,6 +3,7 @@ module Admin
     before_filter :load_countries, :except => :index
 
     def index
+      @enterprise_groups = @enterprise_groups.managed_by(spree_current_user)
     end
 
     def move_up

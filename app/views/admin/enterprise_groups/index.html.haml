@@ -27,8 +27,10 @@
           = link_to '', main_app.edit_admin_enterprise_group_path(enterprise_group), class: 'edit-enterprise-group icon-edit no-text'
           = link_to_delete enterprise_group, no_text: true
 
-          - if enterprise_group.last?
-            .blank-action
-          - else
-            = link_to_with_icon 'icon-arrow-down', '', main_app.admin_enterprise_group_move_down_path(enterprise_group), class: 'move-down no-text'
-          = link_to_with_icon 'icon-arrow-up', '', main_app.admin_enterprise_group_move_up_path(enterprise_group), class: 'move-up no-text' unless enterprise_group.first?
+          - if spree_current_user.admin?
+            - if enterprise_group.last?
+              .blank-action
+            - else
+              = link_to_with_icon 'icon-arrow-down', '', main_app.admin_enterprise_group_move_down_path(enterprise_group), class: 'move-down no-text'
+            - if enterprise_group.first?
+              = link_to_with_icon 'icon-arrow-up', '', main_app.admin_enterprise_group_move_up_path(enterprise_group), class: 'move-up no-text'

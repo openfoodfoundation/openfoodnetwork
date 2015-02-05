@@ -38,6 +38,13 @@ class EnterpriseGroup < ActiveRecord::Base
 
   scope :by_position, order('position ASC')
   scope :on_front_page, where(on_front_page: true)
+  scope :managed_by, lambda { |user|
+    if user.has_spree_role?('admin')
+      scoped
+    else
+      where('owner_id = ?', user.id);
+    end
+  }
 
   def set_unused_address_fields
     address.firstname = address.lastname = 'unused' if address.present?

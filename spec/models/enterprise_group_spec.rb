@@ -51,6 +51,15 @@ describe EnterpriseGroup do
 
       EnterpriseGroup.on_front_page.should == [eg1]
     end
+
+    it "finds a user's enterprise groups" do
+      user = create(:user)
+      user.spree_roles = []
+      eg1 = create(:enterprise_group, owner: user)
+      eg2 = create(:enterprise_group)
+
+      EnterpriseGroup.managed_by(user).should == [eg1]
+    end
   end
 
   describe "urls" do

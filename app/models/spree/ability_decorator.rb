@@ -6,6 +6,7 @@ class AbilityDecorator
   def initialize(user)
     add_base_abilities user if is_new_user? user
     add_enterprise_management_abilities user if can_manage_enterprises? user
+    add_group_management_abilities user if can_manage_groups? user
     add_product_management_abilities user if can_manage_products? user
     add_order_management_abilities user if can_manage_orders? user
     add_relationship_management_abilities user if can_manage_relationships? user
@@ -19,6 +20,11 @@ class AbilityDecorator
   # Users can manage an enterprise if they have one.
   def can_manage_enterprises?(user)
     user.enterprises.present?
+  end
+
+  # Users can manage a group if they have one.
+  def can_manage_groups?(user)
+    user.owned_groups.present?
   end
 
   # Users can manage products if they have an enterprise that is not a profile.
@@ -39,6 +45,14 @@ class AbilityDecorator
   # New users can create an enterprise, and gain other permissions from doing this.
   def add_base_abilities(user)
     can [:create], Enterprise
+  end
+
+  def add_group_management_abilities(user)
+    can [:admin, :index], :overview
+    can [:admin, :index], EnterpriseGroup
+    can [:read, :edit, :update], EnterpriseGroup do |group|
+      user.owned_groups.include? group
+    end
   end
 
   def add_enterprise_management_abilities(user)
