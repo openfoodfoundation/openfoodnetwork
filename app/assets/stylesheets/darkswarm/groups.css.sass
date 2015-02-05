@@ -25,23 +25,46 @@
       max-height: 100px
   .group-name
     border-bottom: 1px solid #ccc
-  .producers
-    background-image: none
+
+  // Tabs
   .tabs dd a
+    padding: 0.35rem 0.5rem
+    font-size: 0.75rem
     border: none
-    // border-bottom: 1px solid grey
     margin-bottom: -2px
     margin-right: 2px
+  @media screen and (min-width: 400px)
+    .tabs dd a
+      padding: 0.45rem 0.75rem
+      font-size: 0.875rem
+  @media screen and (min-width: 768px)
+    .tabs dd a
+      padding: 1rem 2rem
+      font-size: 1rem
   .tabs dd.active a
     margin-bottom: -1px
     border-top: 1px solid $light-grey
     border-left: 1px solid $light-grey
     border-right: 1px solid $light-grey
     border-bottom: 1px solid white
-
   .tabs-content
     border-top: 1px solid $light-grey
     border-left: 1px solid $light-grey
     border-right: 1px solid $light-grey
     border-bottom: 1px solid $light-grey
     padding: 1.5em
+
+  // Producers tab
+  .producers
+    background-image: none
+    .active_table .active_table_node a.is_distributor, .active_table .active_table_node a.is_distributor i.ofn-i_059-producer
+      color: $clr-turquoise
+  // Hubs tab
+  .hubs
+    background-image: none
+    padding-top: 0
+    padding-bottom: 0
+
+// .hubs .active_table .active_table_node.inactive.closed a, .hubs .active_table .active_table_node.inactive.closed a *, .hubs .active_table .active_table_node.inactive.open a, .hubs .active_table .active_table_node.inactive.open a *
+
+    

@@ -13,7 +13,7 @@
 
   .small-12.columns.pad-top
     .row.pad-top
-      .small-12.medium-8.columns
+      .small-12.large-8.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
             %tab{heading: 'Map',
@@ -61,7 +61,7 @@
             %tab{heading: 'Our hubs',
                 active: "active(\'hubs\')",
                 select: "select(\'hubs\')"}
-              #hubs.hubs{"ng-controller" => "GroupEnterprisesCtrl"}
+              .hubs{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
                   .small-12.columns
                     %h1 Our Hubs
@@ -83,7 +83,7 @@
 
                       = render partial: 'shared/components/enterprise_no_results'
       
-      .small-12.medium-4.columns
+      .small-12.large-4.columns
         %ng-include{src: "'partials/group-contact.html'"}
   /       %h4 Contact us
   /       - if @group.phone
