@@ -46,6 +46,33 @@
                 .row{bindonce: true}
                   .small-12.columns
                     .active_table
+                      %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+                      "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-controller" => "GroupEnterpriseNodeCtrl",
+                      "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+                      id: "{{producer.hash}}"}
+
+                        .small-12.columns
+                          = render partial: 'producers/skinny'
+                          = render partial: 'producers/fat'
+
+                      = render partial: 'shared/components/enterprise_no_results'
+
+            %tab{heading: 'Our hubs',
+                active: "active(\'hubs\')",
+                select: "select(\'hubs\')"}
+              #hubs.hubs{"ng-controller" => "GroupEnterprisesCtrl"}
+                .row
+                  .small-12.columns
+                    %h1 Our Hubs
+
+                = render partial: "shared/components/enterprise_search"
+                -# TODO: find out why this is not working
+                -#= render partial: "home/filters"
+
+                .row{bindonce: true}
+                  .small-12.columns
+                    .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
                       "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
