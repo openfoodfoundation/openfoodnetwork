@@ -13,7 +13,7 @@
 
   .small-12.columns.pad-top
     .row.pad-top
-      .small-12.medium-7.columns
+      .small-12.medium-8.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
             %tab{heading: 'Map',
@@ -56,7 +56,7 @@
 
                       = render partial: 'shared/components/enterprise_no_results'
       
-      .small-12.medium-4.medium-offset-1.columns
+      .small-12.medium-4.columns
         %ng-include{src: "'partials/group-contact.html'"}
   /       %h4 Contact us
   /       - if @group.phone
@@ -123,8 +123,7 @@
       .small-12.columns.text-center.small
         %hr
         %p.text-small
-          Copyright this year
-          = @group.name
+          = "Copyright #{Date.today.year} #{@group.name}"
         %h2
           -if @group.facebook
             %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/' + @group.facebook, target: '_blank'}
