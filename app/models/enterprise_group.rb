@@ -50,6 +50,10 @@ class EnterpriseGroup < ActiveRecord::Base
     address.firstname = address.lastname = 'unused' if address.present?
   end
 
+  def phone
+    address.phone.andand.sub('undefined', '')
+  end
+
   def facebook_url
     if (facebook.blank?) then
       return nil

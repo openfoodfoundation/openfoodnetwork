@@ -4,7 +4,7 @@
     %div.modal-centered
       %p.modal-header Contact
       %p 
-        - if @group.phone.present? && @group.phone != 'undefined'
+        - if @group.phone.present?
           Call
           %a{tel: @group.phone}
             = @group.phone
