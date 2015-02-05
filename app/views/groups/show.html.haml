@@ -84,7 +84,7 @@
                       = render partial: 'shared/components/enterprise_no_results'
       
       .small-12.medium-4.columns
-        %ng-include{src: "'partials/group-contact.html'"}
+        = render partial: 'contact'
   /       %h4 Contact us
   /       - if @group.phone
   /         .row
