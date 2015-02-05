@@ -1,15 +1,24 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the GroupsHelper. For example:
-#
-# describe GroupsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 describe GroupsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+   describe "ext_url" do
+     it "adds http:// if missing" do
+       expect(helper.ext_url("http://example.com/")).to eq("http://example.com/")
+       expect(helper.ext_url("https://example.com/")).to eq("https://example.com/")
+       expect(helper.ext_url("example.com")).to eq("http://example.com")
+     end
+   end
+   describe "strip_url" do
+     it "removes http(s)://" do
+       expect(helper.strip_url("http://example.com/")).to eq("example.com/")
+       expect(helper.strip_url("https://example.com/")).to eq("example.com/")
+       expect(helper.strip_url("example.com")).to eq("example.com")
+     end
+   end
+   describe "link_to_ext" do
+     it "gives a link to an html external url" do
+       expect(helper.link_to_ext("example.com")).to eq('<a href="http://example.com" target="_blank">example.com</a>')
+       expect(helper.link_to_ext("https://example.com/")).to eq('<a href="https://example.com/" target="_blank">example.com/</a>')
+     end
+   end
 end

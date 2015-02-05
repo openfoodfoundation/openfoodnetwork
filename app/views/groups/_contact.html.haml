@@ -13,8 +13,7 @@
             = @group.email
       - if @group.website.present?
         %p
-          %a{href: @group.website, target: "_blank" }
-            = @group.website
+          =link_to_ext @group.website
 
 %div{bindonce: true}  
   - if @group.facebook.present? 
