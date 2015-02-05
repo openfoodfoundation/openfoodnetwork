@@ -1,12 +1,26 @@
-%div.contact-container{bindonce: true}
-  %p test 123
-  
-  / - if "@group.email || @group.website || @group.phone"
+%div.contact-container{bindonce: true}  
+  / - if @group.email || @group.website || @group.phone
   %div.modal-centered
     %p.modal-header Contact
-    %p
+    %p 
+      Container for contact info
       / = @group.phone
 
+%div.contact-container{bindonce: true}  
+  / - if @group.email || @group.website || @group.phone
+  %div.modal-centered
+    %p.modal-header Address
+    %p 
+      Container for address info
+      / = @group.phone
+
+%div.contact-container{bindonce: true}  
+  / - if @group.email || @group.website || @group.phone
+  %div.modal-centered
+    %p.modal-header Follow
+    %p 
+      Container for follow us info
+      / = @group.phone
 
     / %p.word-wrap{"ng-if" => "enterprise.email"}
     /   %a{"ng-href" => "{{enterprise.email | stripUrl}}", target: "_blank", mailto: true}
