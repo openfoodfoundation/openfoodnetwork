@@ -8,25 +8,32 @@
     .small-12.columns
       %h1 Groups / regions
       %p
-
-      %input.animate-show{type: :text, 
-      "ng-model" => "query", 
-      placeholder: "Search name or keyword",
-      "ng-debounce" => "150",
-      "ofn-disable-enter" => true}
+      / %input.animate-show{type: :text, 
+      / "ng-model" => "query", 
+      / placeholder: "Search name or keyword",
+      / "ng-debounce" => "150",
+      / "ofn-disable-enter" => true}
 
   .group{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
-      .small-12.medium-6.columns
-        %a{"ng-href" => "groups/{{group.id}}"}
+      .small-2.medium-1.columns
+        %h1
           %i.ofn-i_035-groups
-          {{ group.name }}
-      .small-12.medium-3.columns
-        {{ group.address.state }}
-      .small-12.medium-3.columns
-        {{ group.description }}
+      .small-10.medium-11.columns
+        %h4
+          %a{"ng-href" => "groups/{{group.id}}"}
+            {{ group.name }}
+        %p
+          %em
+            {{ group.description }}
+      / .small-12.medium-3.columns
+      /   {{ group.address.state }}
+      / .small-6.columns.text-right
+      /   %p
+      /     %em
+      /       {{ group.description }}
 
   .group{"ng-show" => "groups.length == 0"}
     .row.pad-top
