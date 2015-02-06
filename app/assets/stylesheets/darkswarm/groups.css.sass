@@ -24,13 +24,19 @@
 #group-page
   .group-logo, .group-header
     text-align: center   
+  .group-logo  
+    padding-bottom: 1em
+    max-height: 200px
   .group-name
     border-bottom: 1px solid #ccc
   @media screen and (min-width: 768px)
     .group-logo, .group-header
       text-align: left
-    .group-logo img
-      max-height: 100px
+    .group-logo       
+      max-height: 120px
+      float: left
+      padding-right: 1em
+      background-color: white
 
   // Tabs
   .tabs dd a // Mobile first

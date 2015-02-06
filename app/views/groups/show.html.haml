@@ -5,15 +5,18 @@
         .small-12.columns
           %img{"src" => @group.promo_image}
       .row
-        .small-12.medium-2.large-2.columns.group-logo.pad-top
-          %img{"src" => @group.logo}
-        .small-12.medium-10.large-10.columns.group-header.pad-top
+        / .small-6.medium-2.large-1.columns.group-logo.pad-top
+          
+        / .small-6.medium-10.large-11.columns.group-header.pad-top
+
+        .small-12.columns.group-header.pad-top
+          %img.group-logo{"src" => @group.logo}
           %h2.group-name= @group.name
           %p= @group.description
 
   .small-12.columns.pad-top
     .row.pad-top
-      .small-12.medium-8.large-9.columns
+      .small-12.medium-12.large-9.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
             %tab{heading: 'Map',
@@ -83,7 +86,7 @@
 
                       = render partial: 'shared/components/enterprise_no_results'
       
-      .small-12.medium-4.large-3.columns
+      .small-12.medium-12.large-3.columns
         = render partial: 'contact'
   /       %h4 Contact us
   /       - if @group.phone
