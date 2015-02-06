@@ -12,7 +12,7 @@
             Email us
       - if @group.website.present?
         %p
-          %a{href:@group.website}
+          %a{href:"http://"+@group.website, target: "_blank"}
             Visit our website
           / =link_to_url @group.website
 
