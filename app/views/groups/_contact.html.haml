@@ -4,16 +4,17 @@
       %p.modal-header Contact
       - if @group.phone.present?
         %p
-          Call
           %a{tel: @group.phone}
             = @group.phone
       - if @group.email.present?
         %p
           =link_to_service "", @group.email.reverse, mailto: true do
-            = @group.email
+            Email us
       - if @group.website.present?
         %p
-          =link_to_url @group.website
+          %a{href:@group.website}
+            Visit our website
+          / =link_to_url @group.website
 
 %div{bindonce: true}  
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
