@@ -3,14 +3,18 @@
     %header
       .row
         .small-12.columns
-          %img{"src" => @group.promo_image}
+          - if @group.promo_image.present?
+            %img{"src" => @group.promo_image}
       .row
         / .small-6.medium-2.large-1.columns.group-logo.pad-top
           
         / .small-6.medium-10.large-11.columns.group-header.pad-top
 
         .small-12.columns.group-header.pad-top
-          %img.group-logo{"src" => @group.logo}
+          - if @group.logo.present?
+            %img.group-logo{"src" => @group.logo}
+          - else
+            %img.group-logo{"src" => '/assets/noimage/group.png'}
           %h2.group-name= @group.name
           %p= @group.description
 
