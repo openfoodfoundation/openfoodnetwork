@@ -12,9 +12,8 @@
             Email us
       - if @group.website.present?
         %p
-          %a{href:"http://"+@group.website, target: "_blank"}
+          =link_to_service "http://", @group.website do
             Visit our website
-          / =link_to_url @group.website
 
 %div{bindonce: true}  
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?

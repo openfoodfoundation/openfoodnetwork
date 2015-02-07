@@ -1,11 +1,5 @@
 module GroupsHelper
 
-  def link_to_url(url, html_options = {})
-    link_to_service 'http://', url, html_options do
-      strip_url url
-    end
-  end
-
   def link_to_service(baseurl, name, html_options = {})
     if name.empty? then return end
     html_options = html_options.merge target: '_blank'
