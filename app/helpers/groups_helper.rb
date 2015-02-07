@@ -1,7 +1,7 @@
 module GroupsHelper
 
   def link_to_service(baseurl, name, html_options = {})
-    if name.empty? then return end
+    if name.blank? then return end
     html_options = html_options.merge target: '_blank'
     link_to ext_url(baseurl, name), html_options do
       yield
