@@ -2,6 +2,9 @@ class EnterprisesController < BaseController
   layout "darkswarm"
   helper Spree::ProductsHelper
   include OrderCyclesHelper
+
+  # These prepended filters are in the reverse order of execution
+  prepend_before_filter :load_active_distributors, :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
   before_filter :clean_permalink, only: :check_permalink
 
   respond_to :js, only: :permalink_checker
@@ -56,26 +59,6 @@ class EnterprisesController < BaseController
     end
   end
 
-  def shop
-    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
-    order = current_order(true)
-
-    if order.distributor and order.distributor != distributor
-      order.empty!
-      order.set_order_cycle! nil
-    end
-
-    order.distributor = distributor
-
-    order_cycle_options = OrderCycle.active.with_distributor(distributor)
-    order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
-    order.save!
-
-    require_distributor_chosen
-    set_order_cycles
-    load_active_distributors
-  end
-
   def check_permalink
     return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
 
@@ -91,5 +74,21 @@ class EnterprisesController < BaseController
 
   def clean_permalink
     params[:permalink] = params[:permalink].parameterize
+  end
+
+  def reset_order
+    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
+    order = current_order(true)
+
+    if order.distributor and order.distributor != distributor
+      order.empty!
+      order.set_order_cycle! nil
+    end
+
+    order.distributor = distributor
+
+    order_cycle_options = OrderCycle.active.with_distributor(distributor)
+    order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
+    order.save!
   end
 end
