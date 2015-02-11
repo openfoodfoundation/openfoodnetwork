@@ -9,6 +9,7 @@ module Admin
     before_filter :override_owner, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
+    before_filter :check_can_change_managers, only: :update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -127,6 +128,12 @@ module Admin
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
           enterprise_params.delete :owner_id
         end
+      end
+    end
+
+    def check_can_change_managers
+      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+        params[:enterprise].delete :user_ids
       end
     end
 
