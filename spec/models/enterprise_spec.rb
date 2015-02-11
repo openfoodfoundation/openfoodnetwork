@@ -602,8 +602,11 @@ describe Enterprise do
       let(:er1) { EnterpriseRelationship.where(child_id: hub1).last }
       let(:er2) { EnterpriseRelationship.where(child_id: hub2).last }
       let(:er3) { EnterpriseRelationship.where(child_id: producer).last }
+      let(:er4) { EnterpriseRelationship.where(parent_id: hub1).last }
+      let(:er5) { EnterpriseRelationship.where(parent_id: hub2).last }
+      let(:er6) { EnterpriseRelationship.where(parent_id: producer).last }
 
-      it "establishes relationships for new hubs with the owner's hubs and producers" do
+      it "establishes bi-directional relationships for new hubs with the owner's hubs and producers" do
         hub1
         hub2
         producer
@@ -611,21 +614,26 @@ describe Enterprise do
 
         expect do
           enterprise = create(:enterprise, owner: owner)
-        end.to change(EnterpriseRelationship, :count).by(3)
+        end.to change(EnterpriseRelationship, :count).by(6)
 
         [er1, er2, er3].each do |er|
           er.parent.should == enterprise
           er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
         end
+
+        [er4, er5, er6].each do |er|
+          er.child.should == enterprise
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+        end
       end
 
-      it "establishes relationships when producers are created" do
+      it "establishes bi-directional relationships when producers are created" do
         hub1
         hub2
 
         expect do
           producer
-        end.to change(EnterpriseRelationship, :count).by(2)
+        end.to change(EnterpriseRelationship, :count).by(4)
       end
     end
   end

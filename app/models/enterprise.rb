@@ -367,13 +367,21 @@ class Enterprise < ActiveRecord::Base
 
   def relate_to_owners_enterprises
     # When a new enterprise is created, we relate them to all enterprises owned by
-    # the same owner.
+    # the same owner, in both directions. So all enterprises owned by the same owner
+    # will have permissions to every other one, in both directions.
 
     enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
 
     enterprises.each do |enterprise|
       EnterpriseRelationship.create!(parent: self,
                                      child: enterprise,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :manage_products,
+                                                        :edit_profile,
+                                                        :create_variant_overrides])
+
+      EnterpriseRelationship.create!(parent: enterprise,
+                                     child: self,
                                      permissions_list: [:add_to_order_cycle,
                                                         :manage_products,
                                                         :edit_profile,
