@@ -29,3 +29,51 @@ describe "enterpriseCtrl", ->
 
     it "stores shipping methods", ->
       expect(scope.ShippingMethods).toBe ShippingMethods.shippingMethods
+
+  describe "adding managers", ->
+    u1 = u2 = u3 = null
+    beforeEach ->
+      u1 = { id: 1, email: 'name1@email.com' }
+      u2 = { id: 2, email: 'name2@email.com' }
+      u3 = { id: 3, email: 'name3@email.com' }
+      Enterprise.enterprise.users = [u1, u2 ,u3]
+
+    it "adds a user to the list", ->
+      u4 = { id: 4, email: "name4@email.com" }
+      scope.addManager u4
+      expect(Enterprise.enterprise.users).toContain u4
+
+    it "ignores object without an id", ->
+      u4 = { not_id: 4, email: "name4@email.com" }
+      scope.addManager u4
+      expect(Enterprise.enterprise.users).not.toContain u4
+
+    it "it ignores objects without an email", ->
+      u4 = { id: 4, not_email: "name4@email.com" }
+      scope.addManager u4
+      expect(Enterprise.enterprise.users).not.toContain u4
+
+    it "ignores objects that are already in the list, and alerts the user", ->
+      spyOn(window, "alert").andCallThrough()
+      u4 = { id: 3, email: "email-doesn't-matter.com" }
+      scope.addManager u4
+      expect(Enterprise.enterprise.users).not.toContain u4
+      expect(window.alert).toHaveBeenCalledWith "email-doesn't-matter.com is already a manager!"
+
+
+  describe "removing managers", ->
+    u1 = u2 = u3 = null
+    beforeEach ->
+      u1 = { id: 1, email: 'name1@email.com' }
+      u2 = { id: 2, email: 'name2@email.com' }
+      u3 = { id: 3, email: 'name3@email.com' }
+      Enterprise.enterprise.users = [u1, u2 ,u3]
+
+
+    it "removes a user with the given id", ->
+      scope.removeManager {id: 2}
+      expect(Enterprise.enterprise.users).not.toContain u2
+
+    it "does nothing when given object has no id attribute", ->
+      scope.removeManager {not_id: 2}
+      expect(Enterprise.enterprise.users).toEqual [u1,u2,u3]
