@@ -68,7 +68,7 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
-  after_create :relate_to_owners_hubs
+  after_create :relate_to_owners_enterprises
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
   after_create :send_welcome_email, if: lambda { email_is_known? }
@@ -365,12 +365,15 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  def relate_to_owners_hubs
-    hubs = owner.owned_enterprises.is_hub.where('enterprises.id != ?', self)
+  def relate_to_owners_enterprises
+    # When a new enterprise is created, we relate them to all enterprises owned by
+    # the same owner.
 
-    hubs.each do |hub|
+    enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
+
+    enterprises.each do |enterprise|
       EnterpriseRelationship.create!(parent: self,
-                                     child: hub,
+                                     child: enterprise,
                                      permissions_list: [:add_to_order_cycle,
                                                         :manage_products,
                                                         :edit_profile,

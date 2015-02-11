@@ -601,27 +601,31 @@ describe Enterprise do
 
       let(:er1) { EnterpriseRelationship.where(child_id: hub1).last }
       let(:er2) { EnterpriseRelationship.where(child_id: hub2).last }
+      let(:er3) { EnterpriseRelationship.where(child_id: producer).last }
 
-      it "establishes relationships with the owner's hubs" do
+      it "establishes relationships for new hubs with the owner's hubs and producers" do
         hub1
         hub2
+        producer
         enterprise = nil
 
         expect do
           enterprise = create(:enterprise, owner: owner)
-        end.to change(EnterpriseRelationship, :count).by(2)
+        end.to change(EnterpriseRelationship, :count).by(3)
 
-        [er1, er2].each do |er|
+        [er1, er2, er3].each do |er|
           er.parent.should == enterprise
           er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
         end
       end
 
-      it "doesn't relate to enterprises that aren't sells=='any'" do
-        producer
+      it "establishes relationships when producers are created" do
+        hub1
+        hub2
+
         expect do
-          enterprise = create(:enterprise, owner: owner)
-        end.to change(EnterpriseRelationship, :count).by(0)
+          producer
+        end.to change(EnterpriseRelationship, :count).by(2)
       end
     end
   end
