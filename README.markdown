@@ -53,13 +53,9 @@ Configure the site:
     cp config/application.yml.example config/application.yml
     edit config/application.yml
 
-Create the development and test databases, using the settings specified in `config/database.yml`:
+Create the development and test databases, using the settings specified in `config/database.yml`, and populate them with a schema and seed data:
 
     rake db:setup
-
-Then load the schema and some seed data with the following command:
-
-    rake db:schema:load db:seed
 
 Load some default data for your environment:
 
