@@ -13,7 +13,7 @@ Spree.user_class.class_eval do
 
   def known_users
     if admin?
-      Spree::User.all
+      Spree::User.scoped
     else
       Spree::User
       .includes(:enterprises)
