@@ -32,5 +32,5 @@
               .blank-action
             - else
               = link_to_with_icon 'icon-arrow-down', '', main_app.admin_enterprise_group_move_down_path(enterprise_group), class: 'move-down no-text'
-            - if enterprise_group.first?
+            - if !enterprise_group.first?
               = link_to_with_icon 'icon-arrow-up', '', main_app.admin_enterprise_group_move_up_path(enterprise_group), class: 'move-up no-text'

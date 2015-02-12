@@ -14,9 +14,6 @@ feature 'Groups', js: true do
 
   it "renders enterprise modals for groups" do
     visit groups_path
-    page.should have_content enterprise.name
-    open_enterprise_modal enterprise
-    modal_should_be_open_for enterprise
-    page.should have_content "Herndon, Vic"
+    page.should have_content group.name
   end
 end

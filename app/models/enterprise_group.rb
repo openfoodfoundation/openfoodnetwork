@@ -6,6 +6,7 @@ class EnterpriseGroup < ActiveRecord::Base
   belongs_to :address, :class_name => 'Spree::Address'
   accepts_nested_attributes_for :address
   validates :address, presence: true, associated: true
+  before_validation :set_undefined_address_fields
   before_validation :set_unused_address_fields
 
   validates :name, presence: true
@@ -50,28 +51,38 @@ class EnterpriseGroup < ActiveRecord::Base
     address.firstname = address.lastname = 'unused' if address.present?
   end
 
+  def set_undefined_address_fields
+    if !address.present?
+      return
+    end
+    address.phone.present? || address.phone = 'undefined'
+    address.address1.present? || address.address1 = 'undefined'
+    address.city.present? || address.city = 'undefined'
+    address.zipcode.present? || address.zipcode = 'undefined'
+  end
+
   def phone
-    address.phone.andand.sub('undefined', '')
+    address.andand.phone.andand.sub('undefined', '')
   end
 
   def address1
-    address.address1.andand.sub('undefined', '')
+    address.andand.address1.andand.sub('undefined', '')
   end
 
   def address2
-    address.address2.andand.sub('undefined', '')
+    address.andand.address2.andand.sub('undefined', '')
   end
 
   def city
-    address.city.andand.sub('undefined', '')
+    address.andand.city.andand.sub('undefined', '')
   end
 
   def state
-    address.state
+    address.andand.state
   end
 
   def zipcode
-    address.zipcode.andand.sub('undefined', '')
+    address.andand.zipcode.andand.sub('undefined', '')
   end
 
 end

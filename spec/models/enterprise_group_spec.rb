@@ -61,15 +61,4 @@ describe EnterpriseGroup do
       EnterpriseGroup.managed_by(user).should == [eg1]
     end
   end
-
-  describe "urls" do
-    it 'provides a Facebook URL' do
-      g = create(:enterprise_group)
-      g.facebook_url.should be_nil
-      g.facebook = 'test'
-      g.facebook_url.should == 'https://www.facebook.com/test'
-      g.facebook = 'http://fb.com/test'
-      g.facebook_url.should == g.facebook
-    end
-  end
 end
