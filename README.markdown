@@ -53,13 +53,10 @@ Configure the site:
     cp config/application.yml.example config/application.yml
     edit config/application.yml
 
-Create the development and test databases, using the settings specified in `config/database.yml`:
+Create the development and test databases, using the settings specified in `config/database.yml`
+and load data from `db/seeds.rb`:
 
     rake db:setup
-
-Then load the schema and some seed data with the following command:
-
-    rake db:schema:load db:seed
 
 Load some default data for your environment:
 
@@ -99,4 +96,4 @@ usage instructions.
 
 ## Licence
 
-Copyright (c) 2012 - 2013 Open Food Foundation, released under the AGPL licence.
+Copyright (c) 2012 - 2015 Open Food Foundation, released under the AGPL licence.
