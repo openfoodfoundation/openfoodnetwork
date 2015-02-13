@@ -11,8 +11,8 @@ module WebHelper
     #   use_short_wait
     #   ...
     # end
-    def use_short_wait
-      around { |example| Capybara.using_wait_time(2) { example.run } }
+    def use_short_wait(seconds=2)
+      around { |example| Capybara.using_wait_time(seconds) { example.run } }
     end
   end
 
@@ -125,12 +125,16 @@ module WebHelper
 
   # http://www.elabs.se/blog/53-why-wait_until-was-removed-from-capybara
   # Do not use this without good reason. Capybara's built-in waiting is very effective.
-  def wait_until
+  def wait_until(secs=nil)
     require "timeout"
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(secs || Capybara.default_wait_time) do
       sleep(0.1) until value = yield
       value
     end
+  end
+
+  def wait_until_enabled(selector)
+    wait_until(10) { first("#{selector}:not([disabled='disabled'])") }
   end
 
   def select2_select(value, options)

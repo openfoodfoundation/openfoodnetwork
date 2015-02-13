@@ -12,24 +12,24 @@
 
     %form{action: cart_path}
       .small-12.medium-4.large-3.columns
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Your shopping cart",
-        "ng-disabled" => "Cart.dirty"}
+        %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
+        %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons) track by product.id "}
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons) track by product.id ", "id" => "product-{{ product.id }}"}
 
       = render partial: "shop/products/summary"
-      %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants"}
-      %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id"}
+      %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants", "id" => "variant-{{ product.master.id }}"}
+      %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id", "id" => "variant-{{ variant.id }}"}
 
     %product{"ng-show" => "Products.loading"}
       .row.summary
         .small-12.columns.text-center
-          Loading products
+          Loading products...
       .row
         .small-12.columns.text-center
-          %img.spinner{ src: "/assets/loading.gif" }
+          %img.spinner{ src: "/assets/spinning-circles.svg" }
 
     %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
       .row.summary
@@ -41,6 +41,6 @@
   .row
     .small-12.columns
       %form{action: cart_path}
-        %input.button.primary.right.add_to_cart{type: :submit, value: "Your shopping cart",
-        "ng-disabled" => "Cart.dirty"}
+        %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
+        %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 

@@ -17,21 +17,25 @@ Spree::Api::ProductsController.class_eval do
       ransack(params[:q]).result.
       page(params[:page]).per(params[:per_page])
 
-    render text: { products: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer), pages: @products.num_pages }.to_json
+    render_paged_products @products
   end
 
   def distributable
     producers = OpenFoodNetwork::Permissions.new(current_api_user).
       order_cycle_enterprises.is_primary_producer.by_name
 
-    @products = Spree::Product.scoped.
-      merge(product_scope).
-      where(supplier_id: producers).
-      by_producer.by_name.
-      ransack(params[:q]).result.
-      page(params[:page]).per(params[:per_page])
+    @products = paged_products_for_producers producers
 
-    render text: { products: ActiveModel::ArraySerializer.new(@products, each_serializer: Spree::Api::ProductSerializer), pages: @products.num_pages }.to_json
+    render_paged_products @products
+  end
+
+  def overridable
+    producers = OpenFoodNetwork::Permissions.new(current_api_user).
+      variant_override_producers.by_name
+
+    @products = paged_products_for_producers producers
+
+    render_paged_products @products
   end
 
   def soft_delete
@@ -58,6 +62,19 @@ Spree::Api::ProductsController.class_eval do
     end
 
     scope.includes(:master)
+  end
+
+  def paged_products_for_producers(producers)
+    Spree::Product.scoped.
+      merge(product_scope).
+      where(supplier_id: producers).
+      by_producer.by_name.
+      ransack(params[:q]).result.
+      page(params[:page]).per(params[:per_page])
+  end
+
+  def render_paged_products(products)
+    render text: { products: ActiveModel::ArraySerializer.new(products, each_serializer: Spree::Api::ProductSerializer), pages: products.num_pages }.to_json
   end
 
 end

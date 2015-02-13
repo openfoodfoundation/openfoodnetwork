@@ -109,4 +109,22 @@ describe EnterprisesController do
       response.should redirect_to spree.root_path
     end
   end
+
+  context "checking permalink availability" do
+    # let(:enterprise) { create(:enterprise, permalink: 'enterprise_permalink') }
+
+    it "responds with status of 200 when the route does not exist" do
+      spree_get :check_permalink, { permalink: 'some_nonexistent_route', format: :js }
+      expect(response.status).to be 200
+    end
+
+    it "responds with status of 409 when the permalink matches an existing route" do
+      # spree_get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
+      # expect(response.status).to be 409
+      spree_get :check_permalink, { permalink: 'map', format: :js }
+      expect(response.status).to be 409
+      spree_get :check_permalink, { permalink: '', format: :js }
+      expect(response.status).to be 409
+    end
+  end
 end

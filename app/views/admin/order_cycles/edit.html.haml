@@ -2,7 +2,7 @@
 
 - ng_controller = order_cycles_simple_view ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
 
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.order_cycles', 'ng-controller' => ng_controller, 'ng-submit' => 'submit()'} do |f|
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.order_cycles', 'ng-controller' => ng_controller, 'ng-submit' => 'submit($event)'} do |f|
   - if order_cycles_simple_view
     = render 'simple_form', f: f
   - else

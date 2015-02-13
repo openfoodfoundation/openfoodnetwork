@@ -14,16 +14,6 @@
 
     .eight.columns.omega
       = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
-- if spree_current_user.admin?
-  .row
-    .three.columns.alpha
-      =f.label :owner_id, 'Owner'
-      %span.required *
-      .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
-        %a What's this?
-    .eight.columns
-      - owner_email = @enterprise.andand.owner.andand.email || ""
-      = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: owner_email
 
 .row
   .three.columns.alpha
@@ -66,10 +56,24 @@
     = f.radio_button :visible, false
     &nbsp;
     = f.label :visible, "Not Visible", :value => "false"
-.row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
-  .three.columns.alpha
-    %label Link to shop front
-    .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
-      %a What's this?
-  .eight.columns.omega
-    = main_app.shop_enterprise_url(@enterprise)
+.permalink{ ng: { controller: "permalinkCtrl" } }
+  .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
+    .three.columns.alpha
+      = f.label :permalink, 'Permalink (no spaces)'
+      .with-tip{'data-powertip' => "This permalink is used to create the url to your shop: #{spree.root_url}your-shop-name/shop"}
+        %a What's this?
+    .six.columns
+      = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
+    .two.columns.omega
+      %img.spinner{ src: "/assets/loading.gif", width: "30px", ng: { show: "checking" } }
+      %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
+        {{ availability }}
+        %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
+  .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
+    .three.columns.alpha
+      %label Link to shop front
+      .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+        %a What's this?
+    .eight.columns.omega
+      = surround spree.root_url, "/shop" do
+        {{Enterprise.permalink}}

@@ -153,7 +153,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle create', ->
-      scope.submit()
+      eventMock = { preventDefault: -> }
+      scope.submit(eventMock)
       expect(OrderCycle.create).toHaveBeenCalled()
 
   describe 'AdminEditOrderCycleCtrl', ->
@@ -313,7 +314,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
-      scope.submit()
+      eventMock = { preventDefault: -> }
+      scope.submit(eventMock)
       expect(OrderCycle.update).toHaveBeenCalled()
 
 
@@ -526,7 +528,7 @@ describe 'OrderCycle services', ->
           incoming: false
           variants: {1: true, 2: false, 3: true}
           enterprise_fees: []
-    
+
       describe "removing incoming exchanges", ->
         beforeEach ->
           exchange.incoming = true
@@ -844,4 +846,3 @@ describe 'OrderCycle services', ->
           expect(order_cycle.outgoing_exchanges[0].enterprise_fees).toEqual [{id: 3}, {id: 4}]
           expect(order_cycle.incoming_exchanges[0].enterprise_fee_ids).toBeUndefined()
           expect(order_cycle.outgoing_exchanges[0].enterprise_fee_ids).toBeUndefined()
-  

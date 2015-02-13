@@ -165,9 +165,10 @@ describe Enterprise do
   end
 
   describe "validations" do
-    subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+    subject { FactoryGirl.create(:distributor_enterprise) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:email) }
+    it { should validate_uniqueness_of(:permalink) }
     it { should ensure_length_of(:description).is_at_most(255) }
 
     it "requires an owner" do
@@ -219,6 +220,16 @@ describe Enterprise do
     it { should delegate(:longitude).to(:address) }
     it { should delegate(:city).to(:address) }
     it { should delegate(:state_name).to(:address) }
+  end
+
+  describe "callbacks" do
+    it "restores permalink to original value when it is changed and invalid" do
+      e1 = create(:enterprise, permalink: "taken")
+      e2 = create(:enterprise, permalink: "not_taken")
+      e2.permalink = "taken"
+      e2.save
+      expect(e2.permalink).to eq "not_taken"
+    end
   end
 
   describe "scopes" do
@@ -580,6 +591,53 @@ describe Enterprise do
     end
   end
 
+  describe "callbacks" do
+    describe "after creation" do
+      let(:owner) { create(:user, enterprise_limit: 10) }
+
+      let(:hub1) { create(:distributor_enterprise, owner: owner) }
+      let(:hub2) { create(:distributor_enterprise, owner: owner) }
+      let(:producer) { create(:supplier_enterprise, owner: owner) }
+
+      let(:er1) { EnterpriseRelationship.where(child_id: hub1).last }
+      let(:er2) { EnterpriseRelationship.where(child_id: hub2).last }
+      let(:er3) { EnterpriseRelationship.where(child_id: producer).last }
+      let(:er4) { EnterpriseRelationship.where(parent_id: hub1).last }
+      let(:er5) { EnterpriseRelationship.where(parent_id: hub2).last }
+      let(:er6) { EnterpriseRelationship.where(parent_id: producer).last }
+
+      it "establishes bi-directional relationships for new hubs with the owner's hubs and producers" do
+        hub1
+        hub2
+        producer
+        enterprise = nil
+
+        expect do
+          enterprise = create(:enterprise, owner: owner)
+        end.to change(EnterpriseRelationship, :count).by(6)
+
+        [er1, er2, er3].each do |er|
+          er.parent.should == enterprise
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+        end
+
+        [er4, er5, er6].each do |er|
+          er.child.should == enterprise
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+        end
+      end
+
+      it "establishes bi-directional relationships when producers are created" do
+        hub1
+        hub2
+
+        expect do
+          producer
+        end.to change(EnterpriseRelationship, :count).by(4)
+      end
+    end
+  end
+
   describe "has_supplied_products_on_hand?" do
     before :each do
       @supplier = create(:supplier_enterprise)
@@ -753,6 +811,49 @@ describe Enterprise do
       non_producer_sell_all.category.should == :hub
       non_producer_sell_own.category.should == :hub
       non_producer_sell_none.category.should == :hub_profile
+    end
+  end
+
+  describe "finding and automatically assigning a permalink" do
+    let(:enterprise) { build(:enterprise, name: "Name To Turn Into A Permalink") }
+    it "assigns permalink when initialized" do
+      allow(Enterprise).to receive(:find_available_permalink).and_return("available_permalink")
+      Enterprise.should_receive(:find_available_permalink).with("Name To Turn Into A Permalink")
+      expect(
+        lambda { enterprise.send(:initialize_permalink) }
+      ).to change{
+        enterprise.permalink
+      }.to(
+        "available_permalink"
+      )
+    end
+
+    describe "finding a permalink" do
+      let!(:enterprise1) { create(:enterprise, permalink: "permalink") }
+      let!(:enterprise2) { create(:enterprise, permalink: "permalink1") }
+
+      it "parameterizes the value provided" do
+        expect(Enterprise.find_available_permalink("Some Unused Permalink")).to eq "some-unused-permalink"
+      end
+
+      it "sets the permalink to 'my-enterprise' if parametized permalink is blank" do
+        expect(Enterprise.find_available_permalink("")).to eq "my-enterprise"
+        expect(Enterprise.find_available_permalink("$$%{$**}$%}")).to eq "my-enterprise"
+      end
+
+      it "finds and index value based on existing permalinks" do
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+
+      it "ignores permalinks with characters after the index value" do
+        create(:enterprise, permalink: "permalink2xxx")
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+
+      it "finds gaps in the indices of existing permalinks" do
+        create(:enterprise, permalink: "permalink3")
+        expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
     end
   end
 end

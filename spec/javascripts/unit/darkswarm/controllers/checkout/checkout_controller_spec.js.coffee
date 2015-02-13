@@ -3,7 +3,7 @@ describe "CheckoutCtrl", ->
   scope = null
   Checkout = null
   CurrentUser = null
-  CurrentHubMock = 
+  CurrentHubMock =
     hub:
       id: 1
   storage = null
@@ -13,9 +13,9 @@ describe "CheckoutCtrl", ->
     angular.module('Darkswarm').value('user', {})
     angular.module('Darkswarm').value('currentHub', {id: 1})
     module ($provide)->
-      $provide.value "CurrentHub", CurrentHubMock 
+      $provide.value "CurrentHub", CurrentHubMock
       null
-    Checkout = 
+    Checkout =
       submit: ->
       navigate: ->
       bindFieldsToLocalStorage: ->
@@ -25,17 +25,18 @@ describe "CheckoutCtrl", ->
         user_id: 1
       secrets:
         card_number: "this is a secret"
-     
+
   describe "with user", ->
     beforeEach ->
       inject ($controller, $rootScope, _storage_) ->
         storage = _storage_
         spyOn(storage, "bind").andCallThrough()
-        scope = $rootScope.$new() 
-        ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: {}}
+        scope = $rootScope.$new()
+        CurrentUser = { id: 1 }
+        ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: CurrentUser }
 
     describe "submitting", ->
-      event = 
+      event =
         preventDefault: ->
 
       beforeEach ->
@@ -57,14 +58,15 @@ describe "CheckoutCtrl", ->
 
     describe "Local storage", ->
       it "binds to localStorage when given a scope", ->
-        prefix = "order_#{scope.order.id}#{CurrentUser?.id}#{CurrentHubMock.hub.id}"
+        prefix = "order_#{scope.order.id}#{CurrentUser.id or ""}#{CurrentHubMock.hub.id}"
+        console.log prefix
         field = scope.fieldsToBind[0]
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.order.#{field}", {storeName: "#{prefix}_#{field}"})
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
 
       it "it can retrieve data from localstorage", ->
-        prefix = "order_#{scope.order.id}#{CurrentUser?.id}#{CurrentHubMock.hub.id}"
-        expect(localStorage.getItem("#{prefix}_email")).toMatch "public" 
+        prefix = "order_#{scope.order.id}#{CurrentUser.id or ""}#{CurrentHubMock.hub.id}"
+        expect(localStorage.getItem("#{prefix}_email")).toMatch "public"
 
       it "does not store secrets in local storage", ->
         Checkout.secrets =
@@ -76,8 +78,8 @@ describe "CheckoutCtrl", ->
   describe "without user", ->
     beforeEach ->
       inject ($controller, $rootScope) ->
-        scope = $rootScope.$new() 
-        ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: undefined}
+        scope = $rootScope.$new()
+        ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: {}}
 
     it "is disabled", ->
       expect(scope.enabled).toEqual false

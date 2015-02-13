@@ -1,68 +1,34 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, NavigationCheck, Enterprise, PaymentMethods, ShippingMethods, SideMenu) ->
+  .controller "enterpriseCtrl", ($scope, NavigationCheck, Enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu) ->
     $scope.Enterprise = Enterprise.enterprise
-    $scope.PaymentMethods = PaymentMethods.paymentMethods
-    $scope.ShippingMethods = ShippingMethods.shippingMethods
+    $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
+    $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
-    # htmlVariable is used by textAngular wysiwyg for the long descrtiption.
     $scope.pristineEmail = $scope.Enterprise.email
     $scope.menu = SideMenu
+    $scope.newManager = { id: '', email: 'Add a manager...' }
 
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that .
-    $scope.enterpriseNavCallback = ->
-      if $scope.enterprise.$dirty
+    enterpriseNavCallback = ->
+      if $scope.Enterprise.$dirty
         "Your changes to the enterprise are not saved yet."
 
-    for payment_method in $scope.PaymentMethods
-      payment_method.selected = payment_method.id in $scope.Enterprise.payment_method_ids
+    # Register the NavigationCheck callback
+    NavigationCheck.register(enterpriseNavCallback)
 
-    $scope.paymentMethodsColor = ->
-      if $scope.PaymentMethods.length > 0
-        if $scope.selectedPaymentMethodsCount() > 0 then "blue" else "red"
-      else
-        "red"
+    $scope.removeManager = (manager) ->
+      if manager.id?
+        for i, user of $scope.Enterprise.users when user.id == manager.id
+          $scope.Enterprise.users.splice i, 1
 
-    $scope.selectedPaymentMethodsCount = ->
-      $scope.PaymentMethods.reduce (count, payment_method) ->
-        count++ if payment_method.selected
-        count
-      , 0
-
-    for shipping_method in $scope.ShippingMethods
-      shipping_method.selected = shipping_method.id in $scope.Enterprise.shipping_method_ids
-
-    $scope.shippingMethodsColor = ->
-      if $scope.ShippingMethods.length > 0
-        if $scope.selectedShippingMethodsCount() > 0 then "blue" else "red"
-      else
-        "red"
-
-    $scope.selectedShippingMethodsCount = ->
-      $scope.ShippingMethods.reduce (count, shipping_method) ->
-        count++ if shipping_method.selected
-        count
-      , 0
-
-    $scope.$watch "Enterprise.is_primary_producer", (newValue, oldValue) ->
-      if !newValue && $scope.Enterprise.sells == "none"
-        $scope.menu.hide_item_by_name('Enterprise Fees')
-      else
-        $scope.menu.show_item_by_name('Enterprise Fees')
-
-
-    $scope.$watch "Enterprise.sells", (newValue, oldValue) ->
-      if newValue == "none"
-        $scope.menu.hide_item_by_name('Shipping Methods')
-        $scope.menu.hide_item_by_name('Payment Methods')
-        $scope.menu.hide_item_by_name('Shop Preferences')
-        if $scope.Enterprise.is_primary_producer
-          $scope.menu.show_item_by_name('Enterprise Fees')
+    $scope.addManager = (manager) ->
+      if manager.id? and manager.email?
+        manager =
+          id: manager.id
+          email: manager.email
+        if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
+          $scope.Enterprise.users.push manager
         else
-          $scope.menu.hide_item_by_name('Enterprise Fees')
-      else
-        $scope.menu.show_item_by_name('Shipping Methods')
-        $scope.menu.show_item_by_name('Payment Methods')
-        $scope.menu.show_item_by_name('Shop Preferences')
-        $scope.menu.show_item_by_name('Enterprise Fees')
+          alert "#{manager.email} is already a manager!"

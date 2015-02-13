@@ -2,7 +2,7 @@
   {{ api_error_msg }}
 
 %div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
-  %img.spinner{ src: "/assets/loading.gif" }
+  %img.spinner{ src: "/assets/spinning-circles.svg" }
   %h1 LOADING PRODUCTS
 
 %div.sixteen.columns.alpha{ 'ng-show' => '!loading && filteredProducts.length == 0 && query.length==0' }

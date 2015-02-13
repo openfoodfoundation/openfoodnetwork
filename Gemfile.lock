@@ -86,11 +86,13 @@ GIT
 
 GIT
   remote: git://github.com/spree/spree_i18n.git
-  revision: a96bee02340e008e60549295a4f09e047fd2e628
+  revision: 752eb67204e9c5a4e22b62591a8fd55fe2285e43
+  branch: 1-3-stable
   specs:
     spree_i18n (1.0.0)
       i18n (~> 0.5)
-      spree (~> 1.1)
+      rails-i18n
+      spree_core (>= 1.1)
 
 GIT
   remote: git://github.com/willrjmarshall/foundation_rails_helper.git
@@ -105,12 +107,12 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (3.2.19)
-      actionpack (= 3.2.19)
+    actionmailer (3.2.21)
+      actionpack (= 3.2.21)
       mail (~> 2.5.4)
-    actionpack (3.2.19)
-      activemodel (= 3.2.19)
-      activesupport (= 3.2.19)
+    actionpack (3.2.21)
+      activemodel (= 3.2.21)
+      activesupport (= 3.2.21)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -121,29 +123,23 @@ GEM
     active_link_to (1.0.0)
     active_model_serializers (0.8.1)
       activemodel (>= 3.0)
-    active_utils (2.2.3)
-      activesupport (>= 2.3.11)
-      i18n
-    activemerchant (1.44.1)
-      active_utils (~> 2.2.0)
+    activemerchant (1.46.0)
       activesupport (>= 3.2.14, < 5.0.0)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
-      json (~> 1.7)
       nokogiri (~> 1.4)
-      offsite_payments (~> 2.0.0)
-    activemodel (3.2.19)
-      activesupport (= 3.2.19)
+    activemodel (3.2.21)
+      activesupport (= 3.2.21)
       builder (~> 3.0.0)
-    activerecord (3.2.19)
-      activemodel (= 3.2.19)
-      activesupport (= 3.2.19)
+    activerecord (3.2.21)
+      activemodel (= 3.2.21)
+      activesupport (= 3.2.21)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.19)
-      activemodel (= 3.2.19)
-      activesupport (= 3.2.19)
-    activesupport (3.2.19)
+    activeresource (3.2.21)
+      activemodel (= 3.2.21)
+      activesupport (= 3.2.21)
+    activesupport (3.2.21)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     acts_as_list (0.1.4)
@@ -185,7 +181,7 @@ GEM
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
-    cocaine (0.5.4)
+    cocaine (0.5.5)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -195,7 +191,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    colorize (0.7.3)
+    colorize (0.7.5)
     columnize (0.3.6)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
@@ -269,6 +265,9 @@ GEM
       railties (>= 3.1.0)
       sass (>= 3.2.0)
     fssm (0.2.10)
+    fuubar (1.3.3)
+      rspec (>= 2.14.0, < 3.1.0)
+      ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
     gmaps4rails (1.5.6)
     guard (2.2.4)
@@ -305,7 +304,7 @@ GEM
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.1)
+    json (1.8.2)
     json_spec (1.1.1)
       multi_json (~> 1.0)
       rspec (~> 2.0)
@@ -328,7 +327,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.25.1)
-    mini_portile (0.6.1)
+    mini_portile (0.6.2)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
     money (5.1.1)
@@ -339,16 +338,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
     newrelic_rpm (3.6.7.152)
-    nokogiri (1.6.4.1)
+    nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    offsite_payments (2.0.1)
-      active_utils (~> 2.2.0)
-      activesupport (>= 3.2.14, < 5.0.0)
-      builder (>= 2.1.2, < 4.0.0)
-      i18n (~> 0.5)
-      json (~> 1.7)
-      money (< 7.0.0)
-      nokogiri (~> 1.4)
     oj (2.1.2)
     orm_adapter (0.5.0)
     paperclip (3.5.4)
@@ -387,28 +378,28 @@ GEM
       rack
     rack-ssl (1.3.4)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
-    rails (3.2.19)
-      actionmailer (= 3.2.19)
-      actionpack (= 3.2.19)
-      activerecord (= 3.2.19)
-      activeresource (= 3.2.19)
-      activesupport (= 3.2.19)
+    rails (3.2.21)
+      actionmailer (= 3.2.21)
+      actionpack (= 3.2.21)
+      activerecord (= 3.2.21)
+      activeresource (= 3.2.21)
+      activesupport (= 3.2.21)
       bundler (~> 1.0)
-      railties (= 3.2.19)
+      railties (= 3.2.21)
     rails-i18n (3.0.1)
       i18n (~> 0.5)
       rails (>= 3.0.0, < 4.0.0)
-    railties (3.2.19)
-      actionpack (= 3.2.19)
-      activesupport (= 3.2.19)
+    railties (3.2.21)
+      actionpack (= 3.2.21)
+      activesupport (= 3.2.21)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.9.0)
-    rake (10.3.2)
+    rake (10.4.2)
     ransack (0.7.2)
       actionpack (~> 3.0)
       activerecord (~> 3.0)
@@ -449,6 +440,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     ruby-hmac (0.4.0)
+    ruby-progressbar (1.7.1)
     safe_yaml (0.9.5)
     sass (3.2.19)
     sass-rails (3.2.6)
@@ -489,7 +481,7 @@ GEM
       sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
-    tzinfo (0.3.42)
+    tzinfo (0.3.43)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
@@ -528,7 +520,7 @@ DEPENDENCIES
   andand
   angular-rails-templates
   angularjs-file-upload-rails (~> 1.1.0)
-  angularjs-rails
+  angularjs-rails (= 1.2.13)
   awesome_print
   aws-sdk
   bugsnag
@@ -548,6 +540,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   foundation_rails_helper!
+  fuubar
   geocoder
   gmaps4rails
   guard
@@ -556,6 +549,7 @@ DEPENDENCIES
   guard-rspec
   guard-zeus
   haml
+  i18n (~> 0.6.11)
   immigrant
   jquery-rails
   json_spec
@@ -570,7 +564,7 @@ DEPENDENCIES
   rabl
   rack-livereload
   rack-ssl
-  rails (= 3.2.19)
+  rails (= 3.2.21)
   rails-i18n (~> 3.0.0)
   representative_view
   roadie-rails (~> 1.0.3)

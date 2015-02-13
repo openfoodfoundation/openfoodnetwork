@@ -1,0 +1,42 @@
+- owner_email = @enterprise.andand.owner.andand.email || ""
+- full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise.andand.owner)
+
+.row
+  .three.columns.alpha
+    =f.label :owner_id, 'Owner'
+    - if full_permissions
+      %span.required *
+    .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
+      %a What's this?
+  .eight.columns.omega
+    - if full_permissions
+      = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
+    - else
+      = owner_email
+
+.row
+  .three.columns.alpha
+    =f.label :user_ids, 'Managers'
+    - if full_permissions
+      %span.required *
+    .with-tip{'data-powertip' => "The other users with permission to manage this enterprise."}
+      %a What's this?
+  .eight.columns.omega
+    - if full_permissions
+      %table
+        %tr
+          %td
+            - # Ignore this input in the submit
+            = hidden_field_tag :ignored, :new_manager, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
+          %td.actions
+            %a{ 'ng-click' => 'addManager(newManager)', :class => "icon-plus no-text" }
+        %tr.animate-repeat{ ng: { repeat: 'manager in Enterprise.users' }}
+          %td
+            = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
+            {{ manager.email }}
+          %td.actions
+            %a{ 'ng-click' => 'removeManager(manager)', :class => "icon-trash no-text" }
+    - else
+      - @enterprise.users.each do |manager|
+        = manager.email
+        %br

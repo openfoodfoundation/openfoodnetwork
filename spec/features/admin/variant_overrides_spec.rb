@@ -12,16 +12,17 @@ feature %q{
   let!(:hub) { create(:distributor_enterprise) }
   let!(:hub2) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub,
-                     permissions_list: [:add_to_order_cycle]) }
+  let!(:er1) { create(:enterprise_relationship, parent: hub, child: producer,
+                      permissions_list: [:add_to_order_cycle]) }
 
   context "as an enterprise user" do
-    let(:user) { create_enterprise_user enterprises: [hub, hub2, producer] }
+    let(:user) { create_enterprise_user enterprises: [hub2, producer] }
     before { quick_login_as user }
 
     describe "selecting a hub" do
       it "displays a list of hub choices" do
         visit '/admin/variant_overrides'
+
         page.should have_select2 'hub_id', options: ['', hub.name, hub2.name]
       end
 
@@ -37,10 +38,16 @@ feature %q{
     context "when a hub is selected" do
       let!(:product) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
       let!(:variant) { create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12) }
-      let!(:producer2) { create(:supplier_enterprise) }
-      let!(:product2) { create(:simple_product, supplier: producer2) }
-      let!(:er2) { create(:enterprise_relationship, parent: producer2, child: hub2,
-                         permissions_list: [:add_to_order_cycle]) }
+
+      let!(:producer_related) { create(:supplier_enterprise) }
+      let!(:product_related) { create(:simple_product, supplier: producer_related) }
+      let!(:variant_related) { create(:variant, product: product_related, unit_value: 2, price: 2.34, on_hand: 23) }
+      let!(:er2) { create(:enterprise_relationship, parent: producer_related, child: hub,
+                          permissions_list: [:create_variant_overrides]) }
+
+      let!(:producer_unrelated) { create(:supplier_enterprise) }
+      let!(:product_unrelated) { create(:simple_product, supplier: producer_unrelated) }
+
 
       before do
         # Remove 'S' option value
@@ -56,14 +63,19 @@ feature %q{
 
         it "displays the list of products with variants" do
           page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
+
           page.should have_table_row [producer.name, product.name, '', '']
           page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
           page.should have_input "variant-overrides-#{variant.id}-count-on-hand", placeholder: '12'
+
+          page.should have_table_row [producer_related.name, product_related.name, '', '']
+          page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
+          page.should have_input "variant-overrides-#{variant_related.id}-count-on-hand", placeholder: '23'
         end
 
-        it "filters the products to those the hub can add to an order cycle" do
-          page.should_not have_content producer2.name
-          page.should_not have_content product2.name
+        it "filters the products to those the hub can override" do
+          page.should_not have_content producer_unrelated.name
+          page.should_not have_content product_unrelated.name
         end
 
         it "creates new overrides" do
@@ -129,12 +141,10 @@ feature %q{
         end
 
         it "displays an error when unauthorised to update a particular override" do
-          fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          fill_in "variant-overrides-#{variant_related.id}-price", with: '777.77'
+          fill_in "variant-overrides-#{variant_related.id}-count-on-hand", with: '123'
           page.should have_content "Changes to one override remain unsaved."
 
-          EnterpriseRole.where(user_id: user).where('enterprise_id != ?', producer).destroy_all
-          er1.destroy
           er2.destroy
 
           expect do

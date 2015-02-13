@@ -1,7 +1,7 @@
 module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => :index
+    before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
@@ -9,6 +9,7 @@ module Admin
     before_filter :override_owner, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
+    before_filter :check_can_change_managers, only: :update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -18,7 +19,7 @@ module Admin
     end
 
     def set_sells
-      enterprise = Enterprise.find(params[:id])
+      enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       attributes = { sells: params[:sells] }
       attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
       attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
@@ -53,7 +54,6 @@ module Admin
       end
     end
 
-
     protected
 
     def build_resource_with_address
@@ -64,6 +64,11 @@ module Admin
     end
     alias_method_chain :build_resource, :address
 
+    # Overriding method on Spree's resource controller,
+    # so that resources are found using permalink
+    def find_resource
+      Enterprise.find_by_permalink(params[:id])
+    end
 
     private
 
@@ -76,8 +81,10 @@ module Admin
     end
 
     def collection
-      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
-      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+      OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_enterprises.
+        order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -121,6 +128,12 @@ module Admin
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
           enterprise_params.delete :owner_id
         end
+      end
+    end
+
+    def check_can_change_managers
+      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+        params[:enterprise].delete :user_ids
       end
     end
 

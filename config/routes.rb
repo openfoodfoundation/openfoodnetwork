@@ -26,6 +26,7 @@ Openfoodnetwork::Application.routes.draw do
       get :suppliers
       get :distributors
       post :search
+      get :check_permalink
     end
 
     member do
@@ -33,6 +34,7 @@ Openfoodnetwork::Application.routes.draw do
       get :shop # old world
     end
   end
+  get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
 
   devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
@@ -140,6 +142,7 @@ Spree::Core::Engine.routes.prepend do
         get :managed
         get :bulk_products
         get :distributable
+        get :overridable
       end
       delete :soft_delete
 
@@ -154,6 +157,8 @@ Spree::Core::Engine.routes.prepend do
   end
 
   namespace :admin do
+    get '/search/known_users' => "search#known_users", :as => :search_known_users
+
     resources :products do
       get :product_distributions, on: :member
 
@@ -162,8 +167,6 @@ Spree::Core::Engine.routes.prepend do
   end
 
   resources :orders do
-    get :select_distributor, :on => :member
-    get :deselect_distributor, :on => :collection
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end

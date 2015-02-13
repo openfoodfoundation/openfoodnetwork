@@ -1,4 +1,5 @@
 @import branding.css.sass
+@import animations.sass
 
 .darkswarm
   products
@@ -71,9 +72,14 @@
         // Total price
         .total-price
           padding-left: 0rem
+          color: $disabled-med
+          .filled
+            color: $med-drk-grey
           @media all and (max-width: 640px)
             background: #777
-            color: white
+            color: $disabled-med
+            .filled
+              color: white
             .table-cell
               height: 27px
 
@@ -97,17 +103,19 @@
           @media all and (max-width: 768px)
             padding-left: 4.9375rem
           @media all and (max-width: 640px)
-            padding-left: 4.5rem
-          @media all and (max-width:480px)
             padding-left: 0.9375rem
+          small
+            font-size: 80%
           h3
             font-size: 1.5rem
             margin: 0
           h3 a
             color: #222
+            i
+              @include csstrans
+              font-size: 0.6em
             &:hover, &:focus, &:active
-              color: black
-
-
-
+              color: $clr-brick
+              i
+                font-size: 0.8em
 

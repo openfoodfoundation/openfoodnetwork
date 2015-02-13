@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 Spree::OrderPopulator.class_eval do
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
@@ -31,6 +33,7 @@ Spree::OrderPopulator.class_eval do
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
     variant = Spree::Variant.find(variant_id)
+    variant.scope_to_hub @distributor
     if quantity > 0
       if check_stock_levels(variant, quantity) &&
           check_order_cycle_provided_for(variant) &&

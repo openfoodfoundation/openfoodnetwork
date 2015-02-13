@@ -56,19 +56,24 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
+  validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
-  before_save :confirmation_check, if: lambda{ email_changed? }
+  before_save :confirmation_check, if: lambda { email_changed? }
 
+  before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  after_create :relate_to_owners_enterprises
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
   after_create :send_welcome_email, if: lambda { email_is_known? }
+
+  after_rollback :restore_permalink
 
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
@@ -93,6 +98,7 @@ class Enterprise < ActiveRecord::Base
   }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
+  scope :is_hub, where(sells: 'any')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -199,7 +205,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{name.parameterize}"
+    permalink
   end
 
   def relatives
@@ -290,6 +296,22 @@ class Enterprise < ActiveRecord::Base
     shipping_methods.any? && payment_methods.available.any?
   end
 
+  def self.find_available_permalink(test_permalink)
+    test_permalink = test_permalink.parameterize
+    test_permalink = "my-enterprise" if test_permalink.blank?
+    existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
+    if existing.empty?
+      test_permalink
+    else
+      used_indices = existing.map do |p|
+        p.slice!(/^#{test_permalink}/)
+        p.match(/^\d+$/).to_s.to_i
+      end.select{ |p| p }
+      options = (1..existing.length).to_a - used_indices
+      test_permalink + options.first.to_s
+    end
+  end
+
   protected
 
   def devise_mailer
@@ -330,7 +352,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def geocode_address
-    address.geocode if address.changed?
+    address.geocode if address.andand.changed?
   end
 
   def ensure_owner_is_manager
@@ -343,9 +365,42 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
+  def relate_to_owners_enterprises
+    # When a new enterprise is created, we relate them to all enterprises owned by
+    # the same owner, in both directions. So all enterprises owned by the same owner
+    # will have permissions to every other one, in both directions.
+
+    enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
+
+    enterprises.each do |enterprise|
+      EnterpriseRelationship.create!(parent: self,
+                                     child: enterprise,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :manage_products,
+                                                        :edit_profile,
+                                                        :create_variant_overrides])
+
+      EnterpriseRelationship.create!(parent: enterprise,
+                                     child: self,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :manage_products,
+                                                        :edit_profile,
+                                                        :create_variant_overrides])
+    end
+  end
+
   def shopfront_taxons
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
       errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
     end
+  end
+
+  def restore_permalink
+    # If the permalink has errors, reset it to it's original value, so we can update the form
+    self.permalink = permalink_was if permalink_changed? && errors[:permalink].present?
+  end
+
+  def initialize_permalink
+    self.permalink = Enterprise.find_available_permalink(name)
   end
 end

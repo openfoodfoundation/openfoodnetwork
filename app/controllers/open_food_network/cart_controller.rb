@@ -20,7 +20,7 @@ module OpenFoodNetwork
 
     def add_variant
       @cart = Cart.find(params[:cart_id])
-      distributor = Enterprise.find(params[:distributor_id])
+      distributor = Enterprise.find_by_permalink(params[:distributor_id])
       order_cycle = OrderCycle.find(params[:order_cycle_id]) if params[:order_cycle_id]
 
       if @cart.add_variant params[:variant_id], params[:quantity], distributor, order_cycle, current_currency

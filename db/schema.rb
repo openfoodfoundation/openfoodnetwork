@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(:version => 20150202000203) do
     t.string   "unconfirmed_email"
     t.datetime "shop_trial_start_date"
     t.boolean  "producer_profile_only",    :default => false
+    t.string   "permalink",                                    :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"

@@ -1,12 +1,15 @@
-angular.module("admin.users").directive "ofnUserAutocomplete", ($http) ->
+angular.module("admin.users").directive "userSelect", ->
+  scope:
+    user: '&userSelect'
+    model: '=ngModel'
   link: (scope,element,attrs) ->
     setTimeout ->
       element.select2
         multiple: false
         initSelection: (element, callback) ->
-          callback { id: element.val(), email: attrs.email }
+          callback {id: scope.user().id, email: scope.user().email}
         ajax:
-          url: Spree.routes.user_search
+          url: '/admin/search/known_users'
           datatype: 'json'
           data:(term, page) ->
             { q: term }
@@ -15,4 +18,6 @@ angular.module("admin.users").directive "ofnUserAutocomplete", ($http) ->
         formatResult: (user) ->
           user.email
         formatSelection: (user) ->
+          scope.$apply ->
+            scope.model = user if scope.model?
           user.email

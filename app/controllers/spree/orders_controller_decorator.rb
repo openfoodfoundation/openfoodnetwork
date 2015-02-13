@@ -33,25 +33,6 @@ Spree::OrdersController.class_eval do
     end
   end
 
-  def select_distributor
-    distributor = Enterprise.is_distributor.find params[:id]
-
-    order = current_order(true)
-    order.distributor = distributor
-    order.save!
-
-    redirect_to main_app.enterprise_path(distributor)
-  end
-
-  def deselect_distributor
-    order = current_order(true)
-
-    order.distributor = nil
-    order.save!
-
-    redirect_to root_path
-  end
-
   def update_distribution
     @order = current_order(true)
 

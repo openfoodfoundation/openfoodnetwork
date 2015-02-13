@@ -2,9 +2,9 @@
   -#.row
     -#.panel
       -#%p
-        -#%strong= link_to "Manage my account", account_path 
+        -#%strong= link_to "Manage my account", account_path
         -#- if enterprise_user?
-          -#%strong= link_to "Enterprise admin", admin_path 
+          -#%strong= link_to "Enterprise admin", admin_path
       -#- if order = last_completed_order
         -#%dl
           -#%dt Current Hub:
@@ -13,8 +13,8 @@
           -#%dt Last hub:
           -#%dd
             -#- if order.distributor != current_distributor
-              -#= link_to "#{order.distributor.name}".html_safe, "", 
+              -#= link_to "#{order.distributor.name}".html_safe, "",
                 -#{class: distributor_link_class(order.distributor),
-                -#"ng-click" => "emptyCart('#{main_app.shop_enterprise_path(order.distributor)}', $event)"}
+                -#"ng-click" => "emptyCart('#{main_app.enterprise_shop_path(order.distributor)}', $event)"}
             -#- else
               -#= order.distributor.name

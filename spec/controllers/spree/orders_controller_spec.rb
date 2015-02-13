@@ -40,32 +40,6 @@ describe Spree::OrdersController do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
-  it "selects distributors" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-
-    spree_get :select_distributor, :id => d.id
-    response.should be_redirect
-
-    order = subject.current_order(false)
-    order.distributor.should == d
-  end
-
-  it "deselects distributors" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-    
-    order = subject.current_order(true)
-    order.distributor = d
-    order.save!
-
-    spree_get :deselect_distributor
-    response.should be_redirect
-
-    order.reload
-    order.distributor.should be_nil
-  end
-
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
       distributor_product = create(:distributor_enterprise)

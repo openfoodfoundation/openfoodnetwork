@@ -14,3 +14,5 @@ describe "enterprise relationships", ->
   it "presents permission names", ->
     expect(EnterpriseRelationships.permission_presentation("add_to_order_cycle")).toEqual "to add to order cycle"
     expect(EnterpriseRelationships.permission_presentation("manage_products")).toEqual "to manage products"
+    expect(EnterpriseRelationships.permission_presentation("edit_profile")).toEqual "to edit profile"
+    expect(EnterpriseRelationships.permission_presentation("create_variant_overrides")).toEqual "to override variant details"

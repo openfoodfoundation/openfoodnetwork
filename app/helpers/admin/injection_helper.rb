@@ -33,6 +33,15 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_enterprise_permissions
+      permissions =
+        {can_manage_shipping_methods: can?(:manage_shipping_methods, @enterprise),
+         can_manage_payment_methods:  can?(:manage_payment_methods, @enterprise),
+         can_manage_enterprise_fees:  can?(:manage_enterprise_fees,  @enterprise)}
+
+      render partial: "admin/json/injection_ams", locals: {ngModule: "admin.enterprises", name: "enterprisePermissions", json: permissions.to_json}
+    end
+
     def admin_inject_hub_permissions
       render partial: "admin/json/injection_ams", locals: {ngModule: "ofn.admin", name: "hubPermissions", json: @hub_permissions.to_json}
     end

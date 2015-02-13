@@ -123,7 +123,7 @@ module Spree
 
       let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
       let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
-      let(:er_p) { create(:enterprise_relationship, parent: s_related, child: s1, permissions_list: [:manage_products]) }
+      let(:er_ps) { create(:enterprise_relationship, parent: s_related, child: s1, permissions_list: [:manage_products]) }
 
       subject { user }
       let(:user) { nil }
@@ -145,7 +145,7 @@ module Spree
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
-          er_p
+          er_ps
           should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p_related)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p_related.master)
         end
@@ -216,7 +216,7 @@ module Spree
 
       context "when is a distributor enterprise user" do
         # create distributor_enterprise1 user without full admin access
-        let (:user) do
+        let(:user) do
           user = create(:user)
           user.spree_roles = []
           d1.enterprise_roles.build(user: user).save
@@ -239,10 +239,35 @@ module Spree
           o
         end
 
-        let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
-        let(:vo2) { create(:variant_override, hub: d2, variant: p2.master) }
+        describe "editing enterprises" do
+          let!(:d_related) { create(:distributor_enterprise) }
+          let!(:er_pd) { create(:enterprise_relationship, parent: d_related, child: d1, permissions_list: [:edit_profile]) }
+
+          it "should be able to edit enterprises it manages" do
+            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d1)
+          end
+
+          it "should be able to edit enterprises it has permission to" do
+            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d_related)
+          end
+
+          it "should be able to manage shipping methods, payment methods and enterprise fees for enterprises it manages" do
+            should have_ability([:manage_shipping_methods, :manage_payment_methods, :manage_enterprise_fees], for: d1)
+          end
+
+          it "should not be able to manage shipping methods, payment methods and enterprise fees for enterprises it has edit profile permission to" do
+            should_not have_ability([:manage_shipping_methods, :manage_payment_methods, :manage_enterprise_fees], for: d_related)
+          end
+        end
 
         describe "variant overrides" do
+          let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
+          let(:vo2) { create(:variant_override, hub: d1, variant: p2.master) }
+          let(:vo3) { create(:variant_override, hub: d2, variant: p1.master) }
+          let(:vo4) { create(:variant_override, hub: d2, variant: p2.master) }
+
+          let!(:er1) { create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:create_variant_overrides]) }
+
           it "should be able to access variant overrides page" do
             should have_ability([:admin, :index, :bulk_update], for: VariantOverride)
           end
@@ -251,8 +276,16 @@ module Spree
             should have_ability([:admin, :index, :read, :update], for: vo1)
           end
 
-          it "should not be able to read/write other enterprises' variant overrides" do
+          it "should not be able to read/write variant overrides when producer of product hasn't granted permission" do
             should_not have_ability([:admin, :index, :read, :update], for: vo2)
+          end
+
+          it "should not be able to read/write variant overrides when we can't add hub to order cycle" do
+            should_not have_ability([:admin, :index, :read, :update], for: vo3)
+          end
+
+          it "should not be able to read/write other enterprises' variant overrides" do
+            should_not have_ability([:admin, :index, :read, :update], for: vo4)
           end
         end
 
@@ -376,6 +409,11 @@ module Spree
 
         it 'should have the ability administrate and create enterpises' do
           should have_ability([:admin, :index, :create], for: Enterprise)
+        end
+
+        it "should have the ability to search for users which share management of its enterprises" do
+          should have_ability([:admin, :known_users], for: :search)
+          should_not have_ability([:users], for: :search)
         end
       end
     end

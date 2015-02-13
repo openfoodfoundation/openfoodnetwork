@@ -13,13 +13,13 @@ feature 'Home', js: true do
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
-    visit "/" 
+    visit "/"
   end
 
   it "shows hubs" do
     page.should have_content distributor.name
     expand_active_table_node distributor.name
-    page.should have_content "OUR PRODUCERS" 
+    page.should have_content "OUR PRODUCERS"
   end
 
   it "does not show invisible hubs" do
@@ -35,7 +35,7 @@ feature 'Home', js: true do
 
   it "should link to the hub page" do
     follow_active_table_node distributor.name
-    current_path.should == "/shop"
+    current_path.should == enterprise_shop_path(distributor)
   end
 
   it "should show hub producer modals" do

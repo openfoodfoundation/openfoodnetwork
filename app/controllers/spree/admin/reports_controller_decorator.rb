@@ -9,6 +9,8 @@ require 'open_food_network/order_cycle_management_report'
 
 Spree::Admin::ReportsController.class_eval do
 
+  include Spree::ReportsHelper
+
   REPORT_TYPES = {
     orders_and_fulfillment: [
       ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
@@ -56,8 +58,8 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:customers]
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
-
-    render_report(@report.header, @report.table, params[:csv], "customers.csv")
+    
+    render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
   end
 
   def order_cycle_management
@@ -69,7 +71,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @orders = @search.result
 
-    render_report(@report.header, @report.table, params[:csv], "customers.csv")
+    render_report(@report.header, @report.table, params[:csv], "order_cycle_management_#{timestamp}.csv")
   end
 
   def orders_and_distributors
@@ -97,7 +99,7 @@ Spree::Admin::ReportsController.class_eval do
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string, :filename => "orders_and_distributors.csv"
+      send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
     end
   end
 
@@ -249,7 +251,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(@line_items)
-    csv_file_name = "bulk_coop.csv"
+    csv_file_name = "bulk_coop_#{timestamp}.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
   end
@@ -280,7 +282,7 @@ Spree::Admin::ReportsController.class_eval do
     when "payments_by_payment_type"
       table_items = payments
 
-      header = ["Payment State", "Distributor", "Payment Type", "Total ($)"]
+      header = ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
 
       columns = [ proc { |payments| payments.first.order.payment_state },
         proc { |payments| payments.first.order.distributor.name },
@@ -297,7 +299,7 @@ Spree::Admin::ReportsController.class_eval do
     when "itemised_payment_totals"
       table_items = orders
 
-      header = ["Payment State", "Distributor", "Product Total ($)", "Shipping Total ($)", "Outstanding Balance ($)", "Total ($)"]
+      header = ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})", "Total (#{currency_symbol})"]
 
       columns = [ proc { |orders| orders.first.payment_state },
         proc { |orders| orders.first.distributor.name },
@@ -314,7 +316,7 @@ Spree::Admin::ReportsController.class_eval do
     when "payment_totals"
       table_items = orders
 
-      header = ["Payment State", "Distributor", "Product Total ($)", "Shipping Total ($)", "Total ($)", "EFT ($)", "PayPal ($)", "Outstanding Balance ($)"]
+      header = ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Total (#{currency_symbol})", "EFT (#{currency_symbol})", "PayPal (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})"]
 
       columns = [ proc { |orders| orders.first.payment_state },
         proc { |orders| orders.first.distributor.name },
@@ -333,7 +335,7 @@ Spree::Admin::ReportsController.class_eval do
     else
       table_items = payments
 
-      header = ["Payment State", "Distributor", "Payment Type", "Total ($)"]
+      header = ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
 
       columns = [ proc { |payments| payments.first.order.payment_state },
         proc { |payments| payments.first.order.distributor.name },
@@ -353,7 +355,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
-    csv_file_name = "payments.csv"
+    csv_file_name = "payments_#{timestamp}.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
@@ -493,7 +495,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item ($)", "Item + Fees ($)", "Dist ($)", "Ship ($)", "Total ($)", "Paid?",
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Dist (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
                 "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes"]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
@@ -585,7 +587,7 @@ Spree::Admin::ReportsController.class_eval do
 
     @header = header
     @table = order_grouper.table(table_items)
-    csv_file_name = "#{__method__}.csv"
+    csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
     render_report(@header, @table, params[:csv], csv_file_name)
 
@@ -594,13 +596,13 @@ Spree::Admin::ReportsController.class_eval do
   def products_and_inventory
     @report_types = REPORT_TYPES[:products_and_inventory]
     @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
-    render_report(@report.header, @report.table, params[:csv], "products_and_inventory.csv")
+    render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
   end
 
   def users_and_enterprises
     # @report_types = REPORT_TYPES[:users_and_enterprises]
     @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params
-    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises.csv")
+    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
 
   def render_report (header, table, create_csv, csv_file_name)
@@ -652,5 +654,9 @@ Spree::Admin::ReportsController.class_eval do
       li.quantity * li.variant.unit_value / scale_factor
     end
     total_units.round(3)
+  end
+
+  def timestamp
+    Time.now.strftime("%Y%m%d")
   end
 end

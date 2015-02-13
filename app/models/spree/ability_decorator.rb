@@ -66,6 +66,9 @@ class AbilityDecorator
 
     can [:admin, :index, :create], Enterprise
     can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+      OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
@@ -74,6 +77,8 @@ class AbilityDecorator
     can [:admin, :read, :edit, :bulk_update, :destroy], EnterpriseFee do |enterprise_fee|
       user.enterprises.include? enterprise_fee.enterprise
     end
+
+    can [:admin, :known_users], :search
   end
 
   def add_product_management_abilities(user)
@@ -89,9 +94,15 @@ class AbilityDecorator
     end
 
     can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
-      OpenFoodNetwork::Permissions.new(user).
+      hub_auth = OpenFoodNetwork::Permissions.new(user).
         order_cycle_enterprises.is_distributor.
         include? vo.hub
+
+      producer_auth = OpenFoodNetwork::Permissions.new(user).
+        variant_override_producers.
+        include? vo.variant.product.supplier
+
+      hub_auth && producer_auth
     end
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty

@@ -87,20 +87,21 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
     load: (order_cycle_id, callback=null) ->
       service = this
       OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
-    	  angular.extend(service.order_cycle, oc)
-    	  service.order_cycle.incoming_exchanges = []
-    	  service.order_cycle.outgoing_exchanges = []
-    	  for exchange in service.order_cycle.exchanges
-    	    if exchange.incoming
-    	      angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true})
-    	      delete(exchange.receiver_id)
-    	      service.order_cycle.incoming_exchanges.push(exchange)
-    
-    	    else
-    	      angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
-    	      delete(exchange.sender_id)
-    	      service.order_cycle.outgoing_exchanges.push(exchange)
-    
+        delete oc.$promise
+        delete oc.$resolved
+        angular.extend(service.order_cycle, oc)
+        service.order_cycle.incoming_exchanges = []
+        service.order_cycle.outgoing_exchanges = []
+        for exchange in service.order_cycle.exchanges
+          if exchange.incoming
+            angular.extend(exchange, {enterprise_id: exchange.sender_id, active: true})
+            delete(exchange.receiver_id)
+            service.order_cycle.incoming_exchanges.push(exchange)
+          else
+            angular.extend(exchange, {enterprise_id: exchange.receiver_id, active: true})
+            delete(exchange.sender_id)
+            service.order_cycle.outgoing_exchanges.push(exchange)
+
         delete(service.order_cycle.exchanges)
         service.loaded = true
 
