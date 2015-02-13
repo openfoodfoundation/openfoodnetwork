@@ -198,12 +198,12 @@ ActiveRecord::Schema.define(:version => 20150202000203) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "address_id"
-    t.string   "email"
-    t.string   "website"
-    t.string   "facebook"
-    t.string   "instagram"
-    t.string   "linkedin"
-    t.string   "twitter"
+    t.string   "email",                    :default => "", :null => false
+    t.string   "website",                  :default => "", :null => false
+    t.string   "facebook",                 :default => "", :null => false
+    t.string   "instagram",                :default => "", :null => false
+    t.string   "linkedin",                 :default => "", :null => false
+    t.string   "twitter",                  :default => "", :null => false
     t.integer  "owner_id"
   end
 
