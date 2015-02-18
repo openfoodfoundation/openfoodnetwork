@@ -1,4 +1,4 @@
-= render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise }
+= render 'spree/shared/error_messages', target: @enterprise
 
 = form_for [main_app, :admin, @enterprise_group] do |f|
   .row{ ng: {app: 'admin.enterprise_groups', controller: 'enterpriseGroupCtrl'} }
@@ -7,5 +7,5 @@
         = render 'admin/shared/side_menu'
       .one.column &nbsp;
       .eleven.columns.omega.fullwidth_inputs
-        = render :partial => 'inputs', :locals => { :f => f }
-  = render partial: "spree/admin/shared/#{action}_resource_links"
+        = render 'inputs', f: f
+  = render "spree/admin/shared/#{action}_resource_links"

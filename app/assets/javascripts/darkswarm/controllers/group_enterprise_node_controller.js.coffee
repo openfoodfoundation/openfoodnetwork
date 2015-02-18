@@ -2,7 +2,7 @@ Darkswarm.controller "GroupEnterpriseNodeCtrl", ($scope, CurrentHub) ->
 
   $scope.active = false
 
-  $scope.toggle = () ->
+  $scope.toggle = ->
     $scope.active = !$scope.active
 
   $scope.open = ->

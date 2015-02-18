@@ -1,7 +1,7 @@
 module GroupsHelper
 
   def link_to_service(baseurl, name, html_options = {})
-    if name.blank? then return end
+    return if name.blank?
     html_options = html_options.merge target: '_blank'
     link_to ext_url(baseurl, name), html_options do
       yield
@@ -9,10 +9,10 @@ module GroupsHelper
   end
 
   def ext_url(prefix, url)
-    if (url =~ /^https?:\/\//i)
-      return url
+    if url =~ /^https?:\/\//i
+      url
     else
-      return prefix + url
+      prefix + url
     end
   end
 

@@ -43,7 +43,7 @@ class EnterpriseGroup < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      where('owner_id = ?', user.id);
+      where('owner_id = ?', user.id)
     end
   }
 
@@ -52,9 +52,7 @@ class EnterpriseGroup < ActiveRecord::Base
   end
 
   def set_undefined_address_fields
-    if !address.present?
-      return
-    end
+    return unless address.present?
     address.phone.present? || address.phone = 'undefined'
     address.address1.present? || address.address1 = 'undefined'
     address.city.present? || address.city = 'undefined'
