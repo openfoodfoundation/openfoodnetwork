@@ -49,6 +49,8 @@ module Admin
         flash[:success] = 'Enterprises updated successfully'
         redirect_to main_app.admin_enterprises_path
       else
+        touched_ids = params[:enterprise_set][:collection_attributes].values.map { |v| v[:id].to_i }
+        @enterprise_set.collection.select! { |e| touched_ids.include? e.id }
         flash[:error] = 'Update failed'
         render :index
       end
