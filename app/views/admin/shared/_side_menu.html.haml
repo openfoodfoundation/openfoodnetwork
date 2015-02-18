@@ -2,7 +2,7 @@
   %a.menu_item{ href: "", id: "{{ item.name.toLowerCase().replace(' ', '_') }}",
     ng: { repeat: '(index,item) in menu.items | filter:{visible:true}',
     click: 'select(index)',
-    show: 'showItem(item)',
+    show: 'showItem(item) !== false',
     class: '{ selected: item.selected}',
     'class-odd' => "'odd'",
     'class-even' => "'even'" } }
