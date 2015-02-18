@@ -12,3 +12,6 @@ angular.module("admin.enterprise_groups")
     ]
 
     $scope.select(0)
+
+    $scope.showItem = (item) ->
+      true
