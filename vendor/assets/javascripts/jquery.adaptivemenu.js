@@ -10,7 +10,7 @@ jQuery.fn.AdaptiveMenu = function(options){
 
 	var options = jQuery.extend({
 		text: "More...",
-		accuracy:0,
+		accuracy:0, // originally 70, but not needed anymore
 		'class':null,
 		'classLinckMore':null
 	},options);
@@ -26,6 +26,7 @@ jQuery.fn.AdaptiveMenu = function(options){
 	});
 
 	var buildingMenu = function(){
+		// Using parent width instead of given window width
 		var windowWidth = $(menu.parent()).width()  - options.accuracy;
 		for(var i = 0; i<widthLi.length; i++ ){
 			if ( widthLi[i] > windowWidth )
@@ -55,6 +56,7 @@ jQuery.fn.AdaptiveMenu = function(options){
 		}
 	}
 
+	// calling buildingMenu without parameter jQuery(window).width()
 	jQuery(window).resize(buildingMenu);
 
 	jQuery(window).ready(buildingMenu);
