@@ -63,13 +63,11 @@
     .row
       .alpha.three.columns
         = af.label :phone
-        %span.required *
       .omega.eight.columns
         = af.text_field :phone, { placeholder: "eg. 98 7654 3210"}
     .row
       .three.columns.alpha
         = af.label :address1
-        %span.required *
       .eight.columns.omega
         = af.text_field :address1, { placeholder: "eg. 123 High Street"}
     .row
@@ -82,7 +80,6 @@
         = af.label :city, 'Suburb'
         \/
         = af.label :zipcode, 'Postcode'
-        %span.required *
       .four.columns
         = af.text_field :city, { placeholder: "eg. Northcote"}
       .four.columns.omega
@@ -92,7 +89,6 @@
         = af.label :state_id, 'State'
         \/
         = af.label :country_id, 'Country'
-        %span.required *
       .four.columns
         = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
       .four.columns.omega

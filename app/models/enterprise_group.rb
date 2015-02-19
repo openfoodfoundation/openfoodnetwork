@@ -8,6 +8,8 @@ class EnterpriseGroup < ActiveRecord::Base
   validates :address, presence: true, associated: true
   before_validation :set_undefined_address_fields
   before_validation :set_unused_address_fields
+  after_find :unset_undefined_address_fields
+  after_save :unset_undefined_address_fields
 
   validates :name, presence: true
   validates :description, presence: true
@@ -18,7 +20,7 @@ class EnterpriseGroup < ActiveRecord::Base
   attr_accessible :address_attributes
   attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
 
-  delegate :phone, :to => :address
+  delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, :to => :address
 
   has_attached_file :logo,
     styles: {medium: "100x100"},
@@ -59,28 +61,12 @@ class EnterpriseGroup < ActiveRecord::Base
     address.zipcode.present? || address.zipcode = 'undefined'
   end
 
-  def phone
-    address.andand.phone.andand.sub('undefined', '')
-  end
-
-  def address1
-    address.andand.address1.andand.sub('undefined', '')
-  end
-
-  def address2
-    address.andand.address2.andand.sub('undefined', '')
-  end
-
-  def city
-    address.andand.city.andand.sub('undefined', '')
-  end
-
-  def state
-    address.andand.state
-  end
-
-  def zipcode
-    address.andand.zipcode.andand.sub('undefined', '')
+  def unset_undefined_address_fields
+    return unless address.present?
+    address.phone.sub!(/^undefined$/, '')
+    address.address1.sub!(/^undefined$/, '')
+    address.city.sub!(/^undefined$/, '')
+    address.zipcode.sub!(/^undefined$/, '')
   end
 
 end
