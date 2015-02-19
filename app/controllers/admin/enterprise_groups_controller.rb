@@ -7,14 +7,18 @@ module Admin
     end
 
     def move_up
-      @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
-      @enterprise_group.move_higher
+      EnterpriseGroup.with_isolation_level_serializable do
+        @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
+        @enterprise_group.move_higher
+      end
       redirect_to main_app.admin_enterprise_groups_path
     end
 
     def move_down
-      @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
-      @enterprise_group.move_lower
+      EnterpriseGroup.with_isolation_level_serializable do
+        @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
+        @enterprise_group.move_lower
+      end
       redirect_to main_app.admin_enterprise_groups_path
     end
 

@@ -1,3 +1,5 @@
+require 'open_food_network/locking'
+
 class EnterpriseGroup < ActiveRecord::Base
   acts_as_list
 
