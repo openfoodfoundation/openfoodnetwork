@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150202000203) do
+ActiveRecord::Schema.define(:version => 20150219021742) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -206,6 +206,8 @@ ActiveRecord::Schema.define(:version => 20150202000203) do
     t.string   "twitter",                  :default => "", :null => false
     t.integer  "owner_id"
   end
+
+  add_index "enterprise_groups", ["owner_id"], :name => "index_enterprise_groups_on_owner_id"
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
     t.integer "enterprise_group_id"
