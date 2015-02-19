@@ -28,7 +28,7 @@
   = f.field_container :enterprise_ids do
     = f.label :enterprise_ids, 'Enterprises'
     %br/
-    = f.collection_select :enterprise_ids, Enterprise.all, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
+    = f.collection_select :enterprise_ids, Enterprise.activated, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
 
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
   %legend About
