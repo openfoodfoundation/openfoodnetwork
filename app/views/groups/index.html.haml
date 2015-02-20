@@ -7,36 +7,58 @@
   #active-table-search.row.pad-top
     .small-12.columns
       %h1 Groups / regions
-      %p
-        %input.animate-show{type: :text,
-        "ng-model" => "query",
-        placeholder: "Search name or keyword",
-        "ng-debounce" => "150",
-        "ofn-disable-enter" => true}
+      / TODO: Maikel this search input still doesn't work.
+      / %p
+      /   %input.animate-show{type: :text,
+      /   "ng-model" => "query",
+      /   placeholder: "Search name or keyword",
+      /   "ng-debounce" => "150",
+      /   "ofn-disable-enter" => true}
 
   .group{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
-      .small-2.medium-1.columns
-        %h1
+      .small-12.medium-6.columns
+        %a{"ng-href" => "groups/{{group.id}}"}
           %i.ofn-i_035-groups
-      .small-10.medium-11.columns
-        %h4
-          %a{"ng-href" => "groups/{{group.id}}"}
+          %span.group-name
             {{ group.name }}
+          / %br
+          / %small
+          /   %em
+          /     {{ group.description }}
+      .small-4.medium-2.columns
         %p
-          %em
-            {{ group.description }}
-            /{{ group.state }}
-            /{{ group.email }}
-            /{{ group.twitter }}
-      / .small-12.medium-3.columns
-      /   {{ group.address.state }}
-      / .small-6.columns.text-right
-      /   %p
-      /     %em
-      /       {{ group.description }}
+          {{ group.state }}
+      .small-8.medium-4.columns.text-right
+
+        / TODO: Maikel can we use the same logic on contacts partial to render these? doesn't work with the angular binding...
+
+        / .follow-icons{bindonce: true}
+        /   %span
+        /     =link_to_service "http://twitter.com/", @group.twitter do
+        /       %i.ofn-i_041-twitter
+        /   %span
+        /     =link_to_service "https://www.facebook.com/", @group.facebook do
+        /       %i.ofn-i_044-facebook
+        /   %span
+        /     =link_to_service "https://www.linkedin.com/in/", @group.linkedin do
+        /       %i.ofn-i_042-linkedin
+        /   %span
+        /     =link_to_service "http://instagram.com/", @group.instagram do
+        /       %i.ofn-i_043-instagram
+
+        %p
+          {{ group.facebook }}
+          %br
+          {{ group.twitter }}
+          %br
+          {{ group.instagram }}
+          %br
+          {{ group.email }}
+          %br
+          {{ group.website }}
 
   .group{"ng-show" => "groups.length == 0"}
     .row.pad-top
