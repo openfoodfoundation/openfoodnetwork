@@ -1,36 +1,36 @@
 require 'spec_helper'
 
 describe OrderCyclesHelper do
-  describe "finding producer enterprises" do
+  describe "finding producer enterprise options" do
     before do
-      helper.stub_chain(:order_cycle_permitted_enterprises, :is_primary_producer, :by_name) { "enterprise list" }
+      helper.stub(:order_cycle_producer_enterprises) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
-      helper.order_cycle_producer_enterprises
+      helper.order_cycle_producer_enterprise_options
     end
   end
 
-  describe "finding coodinator enterprises" do
+  describe "finding coodinator enterprise options" do
     before do
-      helper.stub_chain(:order_cycle_permitted_enterprises, :is_distributor, :by_name) { "enterprise list" }
+      helper.stub(:order_cycle_coordinating_enterprises) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
-      helper.order_cycle_coordinating_enterprises
+      helper.order_cycle_coordinating_enterprise_options
     end
   end
 
-  describe "finding hub enterprises" do
+  describe "finding hub enterprise options" do
     before do
-      helper.stub_chain(:order_cycle_permitted_enterprises, :is_distributor, :by_name) { "enterprise list" }
+      helper.stub(:order_cycle_hub_enterprises) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true, shipping_and_payment_methods: true})
-      helper.order_cycle_hub_enterprises
+      helper.order_cycle_hub_enterprise_options
     end
   end
 

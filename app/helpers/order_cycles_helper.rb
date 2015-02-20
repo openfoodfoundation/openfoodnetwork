@@ -7,34 +7,28 @@ module OrderCyclesHelper
     OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
   end
 
-  def order_cycle_producer_enterprises(options={})
-    enterprises = order_cycle_permitted_enterprises.is_primary_producer.by_name
-
-    if options[:without_validation]
-      enterprises
-    else
-      validated_enterprise_options enterprises, confirmed: true
-    end
+  def order_cycle_producer_enterprises
+    order_cycle_permitted_enterprises.is_primary_producer.by_name
   end
 
-  def order_cycle_coordinating_enterprises(options={})
-    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
-
-    if options[:without_validation]
-      enterprises
-    else
-      validated_enterprise_options enterprises, confirmed: true
-    end
+  def order_cycle_producer_enterprise_options
+    validated_enterprise_options order_cycle_producer_enterprises, confirmed: true
   end
 
-  def order_cycle_hub_enterprises(options={})
-    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
+  def order_cycle_coordinating_enterprises
+    order_cycle_permitted_enterprises.is_distributor.by_name
+  end
 
-    if options[:without_validation]
-      enterprises
-    else
-      validated_enterprise_options enterprises, confirmed: true, shipping_and_payment_methods: true
-    end
+  def order_cycle_coordinating_enterprise_options
+    validated_enterprise_options order_cycle_coordinating_enterprises, confirmed: true
+  end
+
+  def order_cycle_hub_enterprises
+    order_cycle_permitted_enterprises.is_distributor.by_name
+  end
+
+  def order_cycle_hub_enterprise_options
+    validated_enterprise_options order_cycle_hub_enterprises, confirmed: true, shipping_and_payment_methods: true
   end
 
   def order_cycle_status_class(order_cycle)
