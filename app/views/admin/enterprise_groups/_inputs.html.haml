@@ -17,8 +17,7 @@
         .with-tip{'data-powertip' => "The primary user responsible for this group."}
           %a What's this?
       .eight.columns.omega
-        - owner_email = @enterprise_group.andand.owner.andand.email || ""
-        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: owner_email
+        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: @owner_email
 
   = f.field_container :on_front_page do
     = f.label :on_front_page, 'On front page?'
@@ -28,7 +27,7 @@
   = f.field_container :enterprise_ids do
     = f.label :enterprise_ids, 'Enterprises'
     %br/
-    = f.collection_select :enterprise_ids, Enterprise.activated, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
+    = f.collection_select :enterprise_ids, @enterprises, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
 
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
   %legend About

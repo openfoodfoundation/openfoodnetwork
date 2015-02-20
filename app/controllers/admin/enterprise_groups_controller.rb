@@ -1,6 +1,7 @@
 module Admin
   class EnterpriseGroupsController < ResourceController
-    before_filter :load_countries, :except => :index
+    before_filter :load_data, except: :index
+    before_filter :load_object_data, only: [:new, :edit, :create, :update]
 
     def index
       @enterprise_groups = @enterprise_groups.managed_by(spree_current_user)
@@ -34,9 +35,15 @@ module Admin
 
     private
 
-    def load_countries
+    def load_data
       @countries = Spree::Country.order(:name)
+      @enterprises = Enterprise.activated
     end
+
+    def load_object_data
+      @owner_email = @enterprise_group.andand.owner.andand.email || ""
+    end
+
 
     def collection
       EnterpriseGroup.by_position
