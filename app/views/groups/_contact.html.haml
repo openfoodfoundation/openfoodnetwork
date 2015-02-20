@@ -17,25 +17,25 @@
 
 %div{bindonce: true}  
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
-    %div.modal-centered
+    %div.modal-centered.pad-top
       %p.modal-header Follow
       .follow-icons{bindonce: true}
         %span
-        =link_to_service "http://twitter.com/", @group.twitter do
-          %i.ofn-i_041-twitter
+          =link_to_service "http://twitter.com/", @group.twitter do
+            %i.ofn-i_041-twitter
         %span
-        =link_to_service "https://www.facebook.com/", @group.facebook do
-          %i.ofn-i_044-facebook
+          =link_to_service "https://www.facebook.com/", @group.facebook do
+            %i.ofn-i_044-facebook
         %span
-        =link_to_service "https://www.linkedin.com/in/", @group.linkedin do
-          %i.ofn-i_042-linkedin
+          =link_to_service "https://www.linkedin.com/in/", @group.linkedin do
+            %i.ofn-i_042-linkedin
         %span
-        =link_to_service "http://instagram.com/", @group.instagram do
-          %i.ofn-i_043-instagram
+          =link_to_service "http://instagram.com/", @group.instagram do
+            %i.ofn-i_043-instagram
         
 %div{bindonce: true}  
   - if @group.address1.present? || @group.city.present?
-    %div.modal-centered
+    %div.modal-centered.pad-top
       %p.modal-header Address
       %p
         = @group.address1
