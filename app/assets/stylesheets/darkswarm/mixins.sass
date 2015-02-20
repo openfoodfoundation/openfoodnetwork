@@ -120,5 +120,21 @@
   background-repeat: no-repeat
   background-size: 100% auto
 
-
+@mixin gradient($gradient-clr1, $gradient-clr2)
+  background: $gradient-clr1
+  // Old browsers
+  background: -moz-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%)
+  // FF3.6+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $gradient-clr1), color-stop(100%, $gradient-clr2))
+  // Chrome,Safari4+
+  background: -webkit-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%)
+  // Chrome10+,Safari5.1+
+  background: -o-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%)
+  // Opera 11.10+
+  background: -ms-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%)
+  // IE10+
+  background: linear-gradient(to bottom, $gradient-clr1 0%, $gradient-clr2 100%)
+  // W3C
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradient-clr1', endColorstr='$gradient-clr2',GradientType=0 )
+  // IE6-8
 
