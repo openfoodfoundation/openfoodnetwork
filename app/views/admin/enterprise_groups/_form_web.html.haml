@@ -1,0 +1,32 @@
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Web'" } }
+  %legend Web Resources
+  .row
+    .alpha.three.columns
+      = f.label :website
+    .omega.eight.columns
+      = f.text_field :website, { placeholder: "eg. www.truffles.com"}
+  .row
+    .alpha.three.columns
+      = f.label :email
+    .omega.eight.columns
+      = f.text_field :email
+  .row
+    .alpha.three.columns
+      = f.label :facebook, 'Facebook'
+    .omega.eight.columns
+      = f.text_field :facebook
+  .row
+    .alpha.three.columns
+      = f.label :instagram, 'Instagram'
+    .omega.eight.columns
+      = f.text_field :instagram
+  .row
+    .alpha.three.columns
+      = f.label :linkedin, 'LinkedIn'
+    .omega.eight.columns
+      = f.text_field :linkedin
+  .row
+    .alpha.three.columns
+      = f.label :twitter
+    .omega.eight.columns
+      = f.text_field :twitter, { placeholder: "eg. @the_prof" }

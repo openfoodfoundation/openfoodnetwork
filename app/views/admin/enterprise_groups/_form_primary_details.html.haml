@@ -1,0 +1,30 @@
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Primary Details'" } }
+  %legend Primary Details
+  = f.field_container :name do
+    = f.label :name
+    %br/
+    = f.text_field :name
+
+  = f.field_container :description do
+    = f.label :description
+    %br/
+    = f.text_field :description
+
+  - if spree_current_user.admin?
+    .row
+      .three.columns.alpha
+        =f.label :owner_id, 'Owner'
+        .with-tip{'data-powertip' => "The primary user responsible for this group."}
+          %a What's this?
+      .eight.columns.omega
+        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: @owner_email
+
+  = f.field_container :on_front_page do
+    = f.label :on_front_page, 'On front page?'
+    %br/
+    = f.check_box :on_front_page
+
+  = f.field_container :enterprise_ids do
+    = f.label :enterprise_ids, 'Enterprises'
+    %br/
+    = f.collection_select :enterprise_ids, @enterprises, :id, :name, {}, {class: "select2 fullwidth", multiple: true}

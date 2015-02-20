@@ -7,5 +7,9 @@
         = render 'admin/shared/side_menu'
       .one.column &nbsp;
       .eleven.columns.omega.fullwidth_inputs
-        = render 'inputs', f: f
+        = render 'form_primary_details', f: f
+        = render 'form_about', f: f
+        = render 'form_images', f: f
+        = render 'form_address', f: f
+        = render 'form_web', f: f
   = render "spree/admin/shared/#{action}_resource_links"

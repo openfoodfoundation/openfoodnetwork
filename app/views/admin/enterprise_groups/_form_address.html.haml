@@ -1,0 +1,36 @@
+= f.fields_for :address do |af|
+  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
+    %legend Contact
+    .row
+      .alpha.three.columns
+        = af.label :phone
+      .omega.eight.columns
+        = af.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+    .row
+      .three.columns.alpha
+        = af.label :address1
+      .eight.columns.omega
+        = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+    .row
+      .alpha.three.columns
+        = af.label :address2
+      .eight.columns.omega
+        = af.text_field :address2
+    .row
+      .three.columns.alpha
+        = af.label :city, 'Suburb'
+        \/
+        = af.label :zipcode, 'Postcode'
+      .four.columns
+        = af.text_field :city, { placeholder: "eg. Northcote"}
+      .four.columns.omega
+        = af.text_field :zipcode, { placeholder: "eg. 3070"}
+    .row
+      .three.columns.alpha
+        = af.label :state_id, 'State'
+        \/
+        = af.label :country_id, 'Country'
+      .four.columns
+        = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
+      .four.columns.omega
+        = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
