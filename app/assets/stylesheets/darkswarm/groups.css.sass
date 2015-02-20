@@ -40,25 +40,32 @@
 
   // Tabs
   .tabs dd a // Mobile first
-    padding: 0.35rem 0.5rem
+    padding: 0.25rem 0.45rem 0rem
     font-size: 0.75rem
     border: none
     margin-bottom: -2px
     margin-right: 2px
+    text-transform: capitalize
+    @include avenir
+    @include border-radius(1em 0.25em 0 0) 
+    @include gradient($disabled-light, $disabled-bright)
   @media screen and (min-width: 768px)
     .tabs dd a
-      padding: 0.45rem 0.75rem
+      padding: 0.5rem 1rem 0.25em
       font-size: 0.875rem
+      @include border-radius(1.5em 0.25em 0 0) 
   @media screen and (min-width: 1024px)
     .tabs dd a
-      padding: 1rem 2rem
+      padding: 0.75rem 1.5rem 0.5em
       font-size: 1rem
+      @include border-radius(2em 0.25em 0 0) 
   .tabs dd.active a
+    @include gradient(white, white)
     margin-bottom: -1px
     border-top: 1px solid $light-grey
     border-left: 1px solid $light-grey
     border-right: 1px solid $light-grey
-    border-bottom: 1px solid white
+    border-bottom: 0
   .tabs-content
     border-top: 1px solid $light-grey
     border-left: 1px solid $light-grey
