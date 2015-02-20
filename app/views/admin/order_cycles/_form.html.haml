@@ -15,13 +15,14 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
 
-= select_tag :new_supplier_id, options_from_collection_for_select(order_cycle_producer_enterprises, :id, :name), {'ng-model' => 'new_supplier_id'}
+= select_tag :new_supplier_id, options_for_select(order_cycle_producer_enterprises), {'ng-model' => 'new_supplier_id'}
+
 = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
 
 
 %h2 Coordinator
 = f.label :coordinator_id, 'Coordinator'
-= f.collection_select :coordinator_id, order_cycle_coordinating_enterprises, :id, :name, {include_blank: true}, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
+= f.select :coordinator_id, order_cycle_coordinating_enterprises, { include_blank: true }, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
 = render 'coordinator_fees', f: f
 
 

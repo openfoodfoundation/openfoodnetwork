@@ -7,12 +7,24 @@ module OrderCyclesHelper
     OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
   end
 
-  def order_cycle_producer_enterprises
-    order_cycle_permitted_enterprises.is_primary_producer.by_name
+  def order_cycle_producer_enterprises(options={})
+    enterprises = order_cycle_permitted_enterprises.is_primary_producer.by_name
+
+    if options[:without_validation]
+      enterprises
+    else
+      validated_enterprise_options enterprises, confirmed: true
+    end
   end
 
-  def order_cycle_coordinating_enterprises
-    order_cycle_permitted_enterprises.is_distributor.by_name
+  def order_cycle_coordinating_enterprises(options={})
+    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
+
+    if options[:without_validation]
+      enterprises
+    else
+      validated_enterprise_options enterprises, confirmed: true
+    end
   end
 
   def order_cycle_hub_enterprises(options={})
@@ -21,22 +33,7 @@ module OrderCyclesHelper
     if options[:without_validation]
       enterprises
     else
-      enterprises.map do |e|
-        disabled_message = nil
-        if e.shipping_methods.empty? && e.payment_methods.available.empty?
-          disabled_message = 'no shipping or payment methods'
-        elsif e.shipping_methods.empty?
-          disabled_message = 'no shipping methods'
-        elsif e.payment_methods.available.empty?
-          disabled_message = 'no payment methods'
-        end
-
-        if disabled_message
-          ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
-        else
-          [e.name, e.id]
-        end
-      end
+      validated_enterprise_options enterprises, confirmed: true, shipping_and_payment_methods: true
     end
   end
 
@@ -80,4 +77,28 @@ module OrderCyclesHelper
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end
 
+  private
+
+  def validated_enterprise_options(enterprises, options={})
+    enterprises.map do |e|
+      disabled_message = nil
+      if options[:shipping_and_payment_methods] && (e.shipping_methods.empty? || e.payment_methods.available.empty?)
+        if e.shipping_methods.empty? && e.payment_methods.available.empty?
+          disabled_message = 'no shipping or payment methods'
+        elsif e.shipping_methods.empty?
+          disabled_message = 'no shipping methods'
+        elsif e.payment_methods.available.empty?
+          disabled_message = 'no payment methods'
+        end
+      elsif options[:confirmed] && !e.confirmed?
+        disabled_message = 'unconfirmed'
+      end
+
+      if disabled_message
+        ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
+      else
+        [e.name, e.id]
+      end
+    end
+  end
 end
