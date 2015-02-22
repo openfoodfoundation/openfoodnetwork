@@ -1,9 +1,7 @@
-Darkswarm.filter "ext_url", () ->
+Darkswarm.filter "ext_url", ->
   urlPattern = /^https?:\/\//
   (url, prefix) ->
-    if (!url)
-      return url
-    if (url.match(urlPattern))
-      return url
+    if !url || url.match(urlPattern)
+      url
     else
-      return prefix + url
+      prefix + url
