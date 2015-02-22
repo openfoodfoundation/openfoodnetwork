@@ -32,33 +32,13 @@
         %p
           {{ group.state }}
       .small-8.medium-4.columns.text-right
-
-        / TODO: Maikel can we use the same logic on contacts partial to render these? doesn't work with the angular binding...
-
-        / .follow-icons{bindonce: true}
-        /   %span
-        /     =link_to_service "http://twitter.com/", @group.twitter do
-        /       %i.ofn-i_041-twitter
-        /   %span
-        /     =link_to_service "https://www.facebook.com/", @group.facebook do
-        /       %i.ofn-i_044-facebook
-        /   %span
-        /     =link_to_service "https://www.linkedin.com/in/", @group.linkedin do
-        /       %i.ofn-i_042-linkedin
-        /   %span
-        /     =link_to_service "http://instagram.com/", @group.instagram do
-        /       %i.ofn-i_043-instagram
-
         %p
-          {{ group.facebook }}
-          %br
-          {{ group.twitter }}
-          %br
-          {{ group.instagram }}
-          %br
-          {{ group.email }}
-          %br
-          {{ group.website }}
+          %link-to-service.ofn-i_050-mail-circle{service: '""', ref: 'group.email.split("").reverse().join("")', mailto: true}
+          %link-to-service.ofn-i_049-web{service: '"http://"', ref: 'group.website'}
+          %link-to-service.ofn-i_041-twitter{service: '"http://twitter.com/"', ref: 'group.twitter'}
+          %link-to-service.ofn-i_044-facebook{service: '"https://www.facebook.com/"', ref: 'group.facebook'}
+          %link-to-service.ofn-i_042-linkedin{service: '"https://www.linkedin.com/in/"', ref: 'group.linkedin'}
+          %link-to-service.ofn-i_043-instagram{service: '"http://instagram.com/"', ref: 'group.instagram'}
 
   .group{"ng-show" => "groups.length == 0"}
     .row.pad-top
