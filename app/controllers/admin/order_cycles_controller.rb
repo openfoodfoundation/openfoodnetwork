@@ -6,7 +6,7 @@ module Admin
     include OrderCyclesHelper
 
     before_filter :load_order_cycle_set, :only => :index
-    before_filter :set_coordinator, only: :new
+    before_filter :require_coordinator, only: :new
 
     def show
       respond_to do |format|
@@ -87,7 +87,7 @@ module Admin
       @order_cycle_set = OrderCycleSet.new :collection => collection
     end
 
-    def set_coordinator
+    def require_coordinator
       if params[:coordinator_id] && @coordinator = order_cycle_coordinating_enterprises.find_by_id(params[:coordinator_id])
         return
       end
