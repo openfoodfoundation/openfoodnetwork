@@ -13,12 +13,27 @@
     &:hover, &:focus, &:active
       text-decoration: underline
 
+  .groups-icons
+    text-align: right
+    a
+      font-size: 1.5em
+  
+  .groups-header
+    border: 2px solid $clr-brick-light-bright
+    @include border-radius-mixed(0.5em, 0.5em, 0, 0)
+    margin: -1rem 0 1rem
+    padding: 1rem 0.9375rem
+    @media screen and (min-width: 640px)   
+      border: 0 none
+      @include border-radius(0)
+      margin: 0
+      padding: 0
+
 .group
   padding-bottom: 0.5em
   .row div
     font-size: 110%
   .row a
-    font-weight: 500
     vertical-align: middle
   .ofn-i_035-groups
     font-size: 120%

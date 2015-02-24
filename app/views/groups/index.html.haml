@@ -8,30 +8,27 @@
     .small-12.columns
       %h1 Groups / regions
       / TODO: Maikel this search input still doesn't work.
-      / %p
-      /   %input.animate-show{type: :text,
-      /   "ng-model" => "query",
-      /   placeholder: "Search name or keyword",
-      /   "ng-debounce" => "150",
-      /   "ofn-disable-enter" => true}
+      %p
+        %input.animate-show{type: :text,
+        "ng-model" => "query",
+        placeholder: "Search name or keyword",
+        "ng-debounce" => "150",
+        "ofn-disable-enter" => true}
 
   .group{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
       .small-12.medium-6.columns
-        %a{"ng-href" => "groups/{{group.id}}"}
-          %i.ofn-i_035-groups
-          %span.group-name
-            {{ group.name }}
-          / %br
-          / %small
-          /   %em
-          /     {{ group.description }}
-      .small-4.medium-2.columns
+        .groups-header
+          %a{"ng-href" => "groups/{{group.id}}"}
+            %i.ofn-i_035-groups
+            %span.group-name
+              {{ group.name }}
+      .small-3.medium-2.columns
         %p
           {{ group.state }}
-      .small-8.medium-4.columns.text-right
+      .small-9.medium-4.columns.groups-icons
         %p
           %link-to-service.ofn-i_050-mail-circle{service: '""', ref: 'group.email.split("").reverse().join("")', mailto: true}
           %link-to-service.ofn-i_049-web{service: '"http://"', ref: 'group.website'}
