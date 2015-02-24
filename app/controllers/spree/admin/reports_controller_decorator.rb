@@ -27,7 +27,8 @@ Spree::Admin::ReportsController.class_eval do
       ["Addresses", :addresses]
     ],
     order_cycle_management: [
-      ["Payment Methods Report", :payment_methods_report]
+      ["Payment Methods Report", :payment_methods],
+      ["Delivery Report", :delivery]
     ]
   }
 
@@ -58,7 +59,6 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:customers]
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
-    
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
   end
 
@@ -68,7 +68,6 @@ Spree::Admin::ReportsController.class_eval do
     @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params
 
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-
     @orders = @search.result
 
     render_report(@report.header, @report.table, params[:csv], "order_cycle_management_#{timestamp}.csv")

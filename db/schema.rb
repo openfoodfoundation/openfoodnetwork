@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141219034321) do
+ActiveRecord::Schema.define(:version => 20150216075336) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -154,6 +154,17 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
 
   add_index "coordinator_fees", ["enterprise_fee_id"], :name => "index_coordinator_fees_on_enterprise_fee_id"
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
+
+  create_table "customers", :force => true do |t|
+    t.string   "email"
+    t.integer  "enterprise_id"
+    t.string   "code"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "customers", ["email"], :name => "index_customers_on_email"
+  add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
 
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
@@ -574,9 +585,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -837,8 +848,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.boolean  "temperature_controlled"
   end
 
   create_table "spree_shipping_methods", :force => true do |t|
