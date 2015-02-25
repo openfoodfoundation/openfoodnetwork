@@ -9,7 +9,7 @@ class EnterpriseFee < ActiveRecord::Base
 
   calculated_adjustments
 
-  attr_accessible :enterprise_id, :fee_type, :name, :calculator_type
+  attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type
 
   FEE_TYPES = %w(packing transport admin sales fundraising)
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']

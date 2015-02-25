@@ -3,7 +3,7 @@ class EnterpriseFeePresenter
     @controller, @enterprise_fee, @index = controller, enterprise_fee, index
   end
 
-  delegate :id, :enterprise_id, :fee_type, :name, :calculator_type, :to => :enterprise_fee
+  delegate :id, :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :to => :enterprise_fee
 
   def enterprise_fee
     @enterprise_fee

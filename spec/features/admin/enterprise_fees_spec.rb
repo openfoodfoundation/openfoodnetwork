@@ -6,9 +6,12 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
-  
+
+  let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
+  let!(:tax_category_gst_exempt) { create(:tax_category, name: 'GST exempt') }
+
   scenario "listing enterprise fees" do
-    fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing')
+    fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing', tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
 
     login_to_admin_section
@@ -18,6 +21,7 @@ feature %q{
     page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
     page.should have_selector "option[selected]", text: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
+    page.should have_selector "option[selected]", text: 'GST'
     page.should have_selector "option[selected]", text: 'Flat Rate (per item)'
     page.should have_selector "input[value='#{amount}']"
   end
@@ -35,6 +39,7 @@ feature %q{
     select 'Feedme', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
     select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
     fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Hello!'
+    select 'GST', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
     select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
     click_button 'Update'
 
@@ -64,6 +69,7 @@ feature %q{
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
     select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
     fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
+    select 'GST exempt', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
     select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
     click_button 'Update'
 
@@ -71,6 +77,7 @@ feature %q{
     page.should have_selector "option[selected]", text: 'Foo'
     page.should have_selector "option[selected]", text: 'Admin'
     page.should have_selector "input[value='Greetings!']"
+    page.should have_selector "option[selected]", text: 'GST exempt'
     page.should have_selector "option[selected]", text: 'Flat Percent'
   end
 
@@ -137,6 +144,7 @@ feature %q{
 
       select distributor1.name, :from => 'enterprise_fee_set_collection_attributes_0_enterprise_id'
       fill_in 'enterprise_fee_set_collection_attributes_0_name', :with => 'foo'
+      select 'GST', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
       select 'Flat Percent', :from => 'enterprise_fee_set_collection_attributes_0_calculator_type'
       click_button 'Update'
 
