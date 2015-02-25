@@ -24,7 +24,7 @@ module OrderCyclesHelper
   end
 
   def order_cycle_hub_enterprises
-    order_cycle_permitted_enterprises.is_distributor.by_name
+    order_cycle_permitted_enterprises.is_hub.by_name
   end
 
   def order_cycle_hub_enterprise_options
