@@ -33,8 +33,8 @@ describe Spree.user_class do
       let!(:g3) { create(:enterprise_group, owner: u2) }
 
       it "provides access to owned groups" do
-        expect(u1.owned_groups(:reload)).to eq [g1, g2]
-        expect(u2.owned_groups(:reload)).to eq [g3]
+        expect(u1.owned_groups(:reload)).to match_array([g1, g2])
+        expect(u2.owned_groups(:reload)).to match_array([g3])
       end
 
     end
