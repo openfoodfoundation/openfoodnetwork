@@ -7,7 +7,6 @@
   #active-table-search.row.pad-top
     .small-12.columns
       %h1 Groups / regions
-      / TODO: Maikel this search input still doesn't work.
       %p
         %input.animate-show{type: :text,
         "ng-model" => "query",
@@ -21,7 +20,7 @@
     .row.pad-top{bindonce: true}
       .small-12.medium-6.columns
         .groups-header
-          %a{"ng-href" => "groups/{{group.id}}"}
+          %a{"ng-href" => "/groups/{{group.id}}"}
             %i.ofn-i_035-groups
             %span.group-name
               {{ group.name }}
