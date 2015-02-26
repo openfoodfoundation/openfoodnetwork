@@ -21,10 +21,12 @@
 
 
 %h2 Coordinator
-= f.label :coordinator_id, 'Coordinator'
-= f.select :coordinator_id, order_cycle_coordinating_enterprise_options, { include_blank: true }, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
-= render 'coordinator_fees', f: f
-
+-if current_user.enterprises.include? @order_cycle.coordinator
+  = f.label :coordinator_id, 'Coordinator'
+  = f.select :coordinator_id, order_cycle_coordinating_enterprise_options, { include_blank: true }, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
+  = render 'coordinator_fees', f: f
+- else
+  = @order_cycle.coordinator.name
 
 %h2 Outgoing
 %table.exchanges
