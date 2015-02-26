@@ -10,15 +10,6 @@
     %br/
     = f.text_field :description
 
-  - if spree_current_user.admin?
-    .row
-      .three.columns.alpha
-        =f.label :owner_id, 'Owner'
-        .with-tip{'data-powertip' => "The primary user responsible for this group."}
-          %a What's this?
-      .eight.columns.omega
-        = f.hidden_field :owner_id, class: "select2 fullwidth", 'ofn-user-autocomplete' => true, email: @owner_email
-
   = f.field_container :on_front_page do
     = f.label :on_front_page, 'On front page?'
     %br/

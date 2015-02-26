@@ -1,0 +1,14 @@
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Users'" } }
+  %legend Users
+  .row
+    .three.columns.alpha
+      =f.label :owner_id, 'Owner'
+      .with-tip{'data-powertip' => "The primary user responsible for this group."}
+        %a What's this?
+    .eight.columns.omega
+    - if spree_current_user.admin?
+      = f.hidden_field :owner_id,
+        class: "select2 fullwidth",
+        'user-select' => "{id:'#{@enterprise_group.owner.andand.id}', email:'#{@enterprise_group.owner.andand.email}'}"
+    - else
+      = @enterprise_group.owner.andand.email
