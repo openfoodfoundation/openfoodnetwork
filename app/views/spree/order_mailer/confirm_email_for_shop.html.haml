@@ -66,20 +66,36 @@
 
 - if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
   %p.callout
+    %span{:style => "float:right;"}
+      - if @order.paid?
+        PAID
+      - else
+        NOT PAID
     %strong Payment summary
-  / /Heading Panel
-  / Payment Summary
-  %p= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
+  %h4
+    Paying via:
+    %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
+  %p
+    %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
   %p &nbsp;
 
 - if @order.shipping_method.andand.require_ship_address
   / Delivery details
   %p.callout
     %strong
-      Delivery details
+      - if @order.shipping_method.andand.name
+        #{@order.shipping_method.name.html_safe}
+      - else
+        Delivery details
+
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+    %h4 
+      Delivery on:
+      %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+    %br &nbsp;
+  
+  %h4 Delivery address:
   %p
-    Your order will be delivered to:
-    %br
     #{@order.ship_address.full_name}
     %br
     #{@order.ship_address.full_address}
@@ -87,57 +103,53 @@
     #{@order.ship_address.phone}
 
     - if @order.shipping_method.andand.description
-      %br
-      %br
-      #{@order.shipping_method.description.html_safe}
-
-    - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
-      %br
-      %br
-      Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}
+      %p #{@order.shipping_method.description.html_safe}
+      %br &nbsp;
 
     - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %br
-      %br
-      Other delivery information: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-
-    %br
+      %h4 Other delivery info:
+      %p
+        %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
 - else
   / Collection details
   %p.callout
     %strong
-      Collection details
-  %p
-    - if @order.shipping_method.andand.description
-      %br
-      %br
-      = @order.shipping_method.description.html_safe
+      - if @order.shipping_method.andand.name
+        #{@order.shipping_method.name.html_safe}
+      - else
+        Collection details
+  
+  - if @order.shipping_method.andand.description
+    %p 
+      @order.shipping_method.description.html_safe
 
-    - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+    %h4 
+      Ready for collection:
+      %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+  
+  - if @order.ship_address.full_address
+    %p
+      %strong Collecting from: 
       %br
-      %br
-      Ready for collection: #{@order.order_cycle.pickup_time_for(@order.distributor)}
+      #{@order.ship_address.full_address}
 
-    - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %br
-      %br
-      Collection instructions: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      - if @order.shipping_method.andand.description
+        %br
+        %em #{@order.shipping_method.description.html_safe}
 
-    - if @order.special_instructions.present?
-      %br
-      %br
-      Notes: #{@order.special_instructions}
+      - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+        %br
+        %em #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      
+  - if @order.special_instructions.present?
+    %p
+      %small
+        %strong Customer notes / custom delivery instructions:
+        %br
+        #{@order.special_instructions}
 
-    %br
-
-    -# Your order will be ready for collection on
-    -# %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    -#   Tuesday 07 Dec
-    -# %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-    -#   Pick-up your order at the rear of 34 Mason Street, Warragul. See it on
-    -# %a{:href => "https://goo.gl/maps/T1ArU", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
-    -#   google maps
-
-
+%p &nbsp;
+= render 'shared/mailers/signoff'
 = render 'shared/mailers/social_and_contact'
