@@ -67,7 +67,9 @@ table.order-summary
     h4
       margin-top: 15px
   tfoot 
-    border-top: 1px solid black
+    tr:first-child td
+      border-top: 1px solid black
+      padding-top: 5px
     tr td
       padding-left: 5px
       padding-right: 5px
@@ -257,6 +259,10 @@ ul
 .column
   width: 300px
   float: left
+  tr td
+    padding: 15px
+
+.pad
   tr td
     padding: 15px
 
