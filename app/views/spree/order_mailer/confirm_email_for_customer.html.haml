@@ -6,67 +6,62 @@
           %td
             %h3 
               Hi #{@order.bill_address.firstname},
-              %br
-              %br
+            %h4
               Thanks for shopping at 
-              %strong= "#{@order.distributor.name}"
-              !
+              %strong= "#{@order.distributor.name}!"
       %table.column{:align => "left"}
         %tr
-          %td
-            %img.float-right{:src => "#{@order.distributor.logo.url(:small)}"}/
+          %td{:align => "right"}
+            %img.float-right{:src => "#{@order.distributor.logo.url(:medium)}"}/
       %span.clear
+
 %p &nbsp;
 %h4
   Order confirmation 
   %strong ##{@order.number}
 %p
-  / Thanks for shopping on
-  / %strong= "#{Spree::Config.site_name}."
-  Here are the details for your order from
+  Here are your order details from
   %strong= "#{@order.distributor.name}:"  
-%p &nbsp;
-%p.callout
-  %strong Order summary
-%table.order-summary{:width => "100%"}
-  %tr
-    %td
-      %strong Item
-    %td{:align => "right", :width => "25%"}
-      %strong Qty
-    %td{:align => "right", :width => "25%"}
-      %strong Price
-  - @order.line_items.each do |item|
-    %tr
-      %td
-        = "#{raw(item.variant.product.name)} #{raw(item.variant.options_text)}"
-        %br
-        %small
-          %em= raw(item.variant.product.supplier.name)
-        
-      %td{:align => "right"}
-        = item.quantity
-      %td{:align => "right"}
-        = item.display_amount_with_adjustments
 
-  %tr
-    %td{:colspan => "3"} &nbsp;
-  %tr
-    %td{:align => "right", :colspan => "2"}
-      Subtotal:
-    %td{:align => "right"}
-      = display_checkout_subtotal(@order)
-  - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+%table.order-summary{:width => "100%"}
+  %thead
+    %tr
+      %th{:align => "left"}
+        %h4 Item
+      %th{:align => "right", :width => "25%"}
+        %h4 Qty
+      %th{:align => "right", :width => "25%"}
+        %h4 Price
+  %tbody
+    - @order.line_items.each do |item|
+      %tr
+        %td
+          %strong= "#{raw(item.variant.product.name)}" 
+          = "#{raw(item.variant.options_text)}"
+          %br
+          %small
+            %em= raw(item.variant.product.supplier.name)
+        %td{:align => "right"}
+          = item.quantity
+        %td{:align => "right"}
+          = item.display_amount_with_adjustments
+  %tfoot
     %tr
       %td{:align => "right", :colspan => "2"}
-        = "#{raw(adjustment.label)}:"
+        Subtotal:
       %td{:align => "right"}
-        = adjustment.display_amount
-  %tr
-    %td{:align => "right", :colspan => "2"}
-      %strong Total:
-    %td{:align => "right"}
-      %strong= @order.display_total
+        = display_checkout_subtotal(@order)
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+      %tr
+        %td{:align => "right", :colspan => "2"}
+          = "#{raw(adjustment.label)}:"
+        %td{:align => "right"}
+          = adjustment.display_amount
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong Total:
+      %td{:align => "right"}
+        %strong= @order.display_total
 %p &nbsp;
 
 - if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
@@ -143,18 +138,18 @@
     -#   Pick-up your order at the rear of 34 Mason Street, Warragul. See it on
     -# %a{:href => "https://goo.gl/maps/T1ArU", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
     -#   google maps
-
+%br
 %p.callout
   Kind regards,
   %br
   #{@order.distributor.contact}
   %br
   %br
-  %strong= @order.distributor.name
-  %br/
+  = @order.distributor.name
+  %br
   = @order.distributor.phone || ""
-  %br/
+  %br
   %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
     = @order.distributor.email
-  %br/
+  %br
   = @order.distributor.website || ""
