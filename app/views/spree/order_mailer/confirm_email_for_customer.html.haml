@@ -142,10 +142,11 @@
   - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
     %p
       %strong Collection instructions:
-    %br
-    %em #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      %br
+      #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
       
 - if @order.special_instructions.present?
+  %br
   %p
     %small
       %strong Customer notes / custom delivery instructions:
