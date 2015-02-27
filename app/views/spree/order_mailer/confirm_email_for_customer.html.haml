@@ -67,7 +67,7 @@
 - if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
   %p.callout
     %span{:style => "float:right;"}
-      PAID or NOT PAID
+      PAID / NOT PAID
     %strong Payment summary
   %h4
     Paying via:
