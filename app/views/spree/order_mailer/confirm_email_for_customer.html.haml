@@ -1,25 +1,31 @@
-%h3 Hi #{@order.bill_address.firstname},
 %table.social.white-bg{:width => "100%"}
   %tr
     %td
       %table.column{:align => "left"}
         %tr
           %td
-            %p
-              %strong Order confirmation ##{@order.number}
-            %p
-              Thanks for shopping on
-              %strong= "#{Spree::Config.site_name}."
-              Here are the details for your order from
-              %strong= "#{@order.distributor.name}."
+            %h3 
+              Hi #{@order.bill_address.firstname},
+              %br
+              %br
+              Thanks for shopping at 
+              %strong= "#{@order.distributor.name}"
+              !
       %table.column{:align => "left"}
         %tr
           %td
-            %img.float-right{:src => "#{@order.distributor.logo.url(:thumb)}"}/
+            %img.float-right{:src => "#{@order.distributor.logo.url(:small)}"}/
       %span.clear
 %p &nbsp;
-
-
+%h4
+  Order confirmation 
+  %strong ##{@order.number}
+%p
+  / Thanks for shopping on
+  / %strong= "#{Spree::Config.site_name}."
+  Here are the details for your order from
+  %strong= "#{@order.distributor.name}:"  
+%p &nbsp;
 %p.callout
   %strong Order summary
 %table.order-summary{:width => "100%"}
@@ -33,9 +39,11 @@
   - @order.line_items.each do |item|
     %tr
       %td
-        = raw(item.variant.product.supplier.name)
-        %br
         = "#{raw(item.variant.product.name)} #{raw(item.variant.options_text)}"
+        %br
+        %small
+          %em= raw(item.variant.product.supplier.name)
+        
       %td{:align => "right"}
         = item.quantity
       %td{:align => "right"}
@@ -76,7 +84,7 @@
       Delivery details
   %p
     Your order will be delivered to:
-    %br
+  %p
     #{@order.ship_address.full_name}
     %br
     #{@order.ship_address.full_address}
@@ -84,49 +92,49 @@
     #{@order.ship_address.phone}
 
     - if @order.shipping_method.andand.description
-      %br
-      %br
-      #{@order.shipping_method.description.html_safe}
+      %p
+        #{@order.shipping_method.description.html_safe}
 
     - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
-      %br
-      %br
-      Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}
+      %p
+        Delivery on: 
+        %br
+        %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
 
     - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %br
-      %br
-      Other delivery information: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-
-    %br
+      %p
+        Other delivery information: 
+        %br
+        %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
 - else
   / Collection details
   %p.callout
     %strong
       Collection details
-  %p
-    - if @order.shipping_method.andand.description
-      %br
-      %br
-      = @order.shipping_method.description.html_safe
+  
+  - if @order.shipping_method.andand.description
+    %p 
+      @order.shipping_method.description.html_safe
 
-    - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+    %p
+      Ready for collection: 
       %br
-      %br
-      Ready for collection: #{@order.order_cycle.pickup_time_for(@order.distributor)}
+      %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
 
-    - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+    %p
+      Collection instructions: 
       %br
-      %br
-      Collection instructions: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
-    - if @order.special_instructions.present?
-      %br
-      %br
-      Notes: #{@order.special_instructions}
-
-    %br
+  - if @order.special_instructions.present?
+    %p
+      %small
+        Customer notes: 
+        %br
+        #{@order.special_instructions}
 
     -# Your order will be ready for collection on
     -# %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
@@ -136,10 +144,12 @@
     -# %a{:href => "https://goo.gl/maps/T1ArU", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
     -#   google maps
 
-
 %p.callout
-  #{@order.distributor.contact},
-  %br/
+  Kind regards,
+  %br
+  #{@order.distributor.contact}
+  %br
+  %br
   %strong= @order.distributor.name
   %br/
   = @order.distributor.phone || ""
