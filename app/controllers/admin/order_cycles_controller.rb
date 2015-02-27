@@ -88,7 +88,7 @@ module Admin
     end
 
     def require_coordinator
-      if params[:coordinator_id] && @coordinator = order_cycle_coordinating_enterprises.find_by_id(params[:coordinator_id])
+      if params[:coordinator_id] && @order_cycle.coordinator = order_cycle_coordinating_enterprises.find_by_id(params[:coordinator_id])
         return
       end
 
@@ -98,7 +98,7 @@ module Admin
         flash[:error] = "None of your enterprises have permission to coordinate an order cycle"
         redirect_to main_app.admin_order_cycles_path
       when 1
-        @coordinator = available_coordinators.first
+        @order_cycle.coordinator = available_coordinators.first
       else
         flash[:error] = "You don't have permission to create an order cycle coordinated by that enterprise" if params[:coordinator_id]
         render :set_coordinator
