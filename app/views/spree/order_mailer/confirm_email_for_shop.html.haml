@@ -106,10 +106,10 @@
       %p #{@order.shipping_method.description.html_safe}
       %br &nbsp;
 
-    - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %h4 Other delivery info:
-      %p
-        %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+    / - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+    /   %h4 Other delivery info:
+    /   %p
+    /     %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
 - else
   / Collection details
@@ -135,20 +135,22 @@
       %br
       #{@order.ship_address.full_address}
 
-      - if @order.shipping_method.andand.description
-        %br
-        %em #{@order.shipping_method.description.html_safe}
+  - if @order.shipping_method.andand.description
+    %br
+    %em #{@order.shipping_method.description.html_safe}
 
-      - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-        %br
-        %em #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-      
-  - if @order.special_instructions.present?
+  - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
     %p
-      %small
-        %strong Customer notes / custom delivery instructions:
-        %br
-        #{@order.special_instructions}
+      %strong Collection instructions:
+    %br
+    %em #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      
+- if @order.special_instructions.present?
+  %p
+    %small
+      %strong Customer notes / custom delivery instructions:
+      %br
+      #{@order.special_instructions}
 
 %p &nbsp;
 = render 'shared/mailers/signoff'
