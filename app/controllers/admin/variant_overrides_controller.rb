@@ -8,7 +8,7 @@ module Admin
     before_filter :load_spree_api_key, only: :index
 
     def index
-      @hubs = order_cycle_hub_enterprises(without_validation: true)
+      @hubs = order_cycle_hub_enterprises
 
       # Used in JS to look up the name of the producer of each product
       @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
