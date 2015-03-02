@@ -416,7 +416,7 @@ ActiveRecord::Schema.define(:version => 20150225232938) do
     t.string   "originator_type"
     t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
-    t.decimal  "included_tax",    :precision => 10, :scale => 2
+    t.decimal  "included_tax",    :precision => 10, :scale => 2, :default => 0.0,  :null => false
   end
 
   add_index "spree_adjustments", ["adjustable_id"], :name => "index_adjustments_on_order_id"
