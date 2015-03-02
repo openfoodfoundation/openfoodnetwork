@@ -156,15 +156,17 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
   create_table "customers", :force => true do |t|
-    t.string   "email"
-    t.integer  "enterprise_id"
-    t.string   "code"
+    t.string   "email",         :null => false
+    t.integer  "enterprise_id", :null => false
+    t.string   "code",          :null => false
+    t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
   add_index "customers", ["email"], :name => "index_customers_on_email"
   add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
+  add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
 
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
@@ -1092,6 +1094,9 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
 
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
+
+  add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
+  add_foreign_key "customers", "spree_users", name: "customers_user_id_fk", column: "user_id"
 
   add_foreign_key "distributors_payment_methods", "enterprises", name: "distributors_payment_methods_distributor_id_fk", column: "distributor_id"
   add_foreign_key "distributors_payment_methods", "spree_payment_methods", name: "distributors_payment_methods_payment_method_id_fk", column: "payment_method_id"
