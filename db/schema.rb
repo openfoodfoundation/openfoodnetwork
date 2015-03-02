@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150225111538) do
+ActiveRecord::Schema.define(:version => 20150225232938) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -416,6 +416,7 @@ ActiveRecord::Schema.define(:version => 20150225111538) do
     t.string   "originator_type"
     t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
+    t.decimal  "included_tax",    :precision => 10, :scale => 2
   end
 
   add_index "spree_adjustments", ["adjustable_id"], :name => "index_adjustments_on_order_id"
