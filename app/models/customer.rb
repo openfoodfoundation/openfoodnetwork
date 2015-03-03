@@ -1,5 +1,4 @@
 class Customer < ActiveRecord::Base
-
   belongs_to :enterprise
 
   validates :code, presence: true, uniqueness: {scope: :enterprise_id}
