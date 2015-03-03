@@ -7,12 +7,12 @@
 
   - unless order_cycles_simple_index
     %td.suppliers
-      - order_cycle.suppliers.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises).each do |s|
+      - order_cycle.suppliers.merge(order_cycle_permitted_enterprises).each do |s|
         = s.name
         %br/
     %td= order_cycle.coordinator.name
     %td.distributors
-      - order_cycle.distributors.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises).each do |d|
+      - order_cycle.distributors.merge(order_cycle_permitted_enterprises).each do |d|
         = d.name
         %br/
 
