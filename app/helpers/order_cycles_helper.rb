@@ -16,7 +16,7 @@ module OrderCyclesHelper
   end
 
   def order_cycle_coordinating_enterprises
-    order_cycle_permitted_enterprises.is_distributor.by_name
+    Enterprise.managed_by(spree_current_user).is_distributor.by_name
   end
 
   def order_cycle_coordinating_enterprise_options
