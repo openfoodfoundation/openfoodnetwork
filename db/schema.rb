@@ -156,26 +156,17 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
   create_table "customers", :force => true do |t|
-<<<<<<< HEAD
     t.string   "email",         :null => false
     t.integer  "enterprise_id", :null => false
     t.string   "code",          :null => false
     t.integer  "user_id"
-=======
-    t.string   "email"
-    t.integer  "enterprise_id"
-    t.string   "code"
->>>>>>> a3df4bf0262154d8dfa3667f6e20d09fc8dca77c
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
   add_index "customers", ["email"], :name => "index_customers_on_email"
   add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
-<<<<<<< HEAD
   add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
-=======
->>>>>>> a3df4bf0262154d8dfa3667f6e20d09fc8dca77c
 
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
