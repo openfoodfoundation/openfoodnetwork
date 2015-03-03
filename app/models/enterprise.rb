@@ -253,6 +253,10 @@ class Enterprise < ActiveRecord::Base
     self.sells != "none"
   end
 
+  def is_hub
+    self.sells == 'any'
+  end
+
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
@@ -366,26 +370,33 @@ class Enterprise < ActiveRecord::Base
   end
 
   def relate_to_owners_enterprises
-    # When a new enterprise is created, we relate them to all enterprises owned by
-    # the same owner, in both directions. So all enterprises owned by the same owner
-    # will have permissions to every other one, in both directions.
+    # When a new producer is created, it grants permissions to all pre-existing hubs
+    # When a new hub is created,
+    # - it grants permissions to all pre-existing hubs
+    # - all producers grant permission to it
 
     enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
 
-    enterprises.each do |enterprise|
+    # We grant permissions to all pre-existing hubs
+    enterprises.is_hub.each do |enterprise|
       EnterpriseRelationship.create!(parent: self,
                                      child: enterprise,
                                      permissions_list: [:add_to_order_cycle,
                                                         :manage_products,
                                                         :edit_profile,
                                                         :create_variant_overrides])
+    end
 
-      EnterpriseRelationship.create!(parent: enterprise,
-                                     child: self,
-                                     permissions_list: [:add_to_order_cycle,
-                                                        :manage_products,
-                                                        :edit_profile,
-                                                        :create_variant_overrides])
+    # All pre-existing producers grant permission to new hubs
+    if is_hub
+      enterprises.is_primary_producer.each do |enterprise|
+        EnterpriseRelationship.create!(parent: enterprise,
+                                       child: self,
+                                       permissions_list: [:add_to_order_cycle,
+                                                          :manage_products,
+                                                          :edit_profile,
+                                                          :create_variant_overrides])
+      end
     end
   end
 

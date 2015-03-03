@@ -2,9 +2,7 @@
   %a.menu_item{ href: "", id: "{{ item.name.toLowerCase().replace(' ', '_') }}",
     ng: { repeat: '(index,item) in menu.items | filter:{visible:true}',
     click: 'select(index)',
-    show: 'showItem(item)',
-    class: '{ selected: item.selected}',
-    'class-odd' => "'odd'",
-    'class-even' => "'even'" } }
+    show: '!showItem || showItem(item)',
+    class: '{ selected: item.selected }' } }
     %i{ class: "{{item.icon_class}}" }
     %span {{ item.name }}

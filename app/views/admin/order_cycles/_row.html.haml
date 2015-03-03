@@ -5,7 +5,7 @@
   %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
   %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
 
-  - unless order_cycles_simple_view
+  - unless order_cycles_simple_index
     %td.suppliers
       - order_cycle.suppliers.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises).each do |s|
         = s.name

@@ -7,6 +7,7 @@ module Spree
             user = stub_model(Spree::LegacyUser)
             user.stub(:has_spree_role?).with("admin").and_return(false)
             user.stub(:enterprises) { [] }
+            user.stub(:owned_groups) { [] }
             user
           end
         end
@@ -33,6 +34,7 @@ module Spree
 
             # Stub enterprises, needed for cancan ability checks
             user.stub(:enterprises) { [] }
+            user.stub(:owned_groups) { [] }
 
             user
           end

@@ -1,0 +1,6 @@
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
+  %legend About
+  = f.field_container :long_description do
+    = f.label :long_description
+    %br/
+    = f.text_area :long_description

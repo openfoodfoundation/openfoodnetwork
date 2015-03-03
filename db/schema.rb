@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141219034321) do
+ActiveRecord::Schema.define(:version => 20150220035501) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -155,6 +155,28 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
   add_index "coordinator_fees", ["enterprise_fee_id"], :name => "index_coordinator_fees_on_enterprise_fee_id"
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
+  create_table "customers", :force => true do |t|
+<<<<<<< HEAD
+    t.string   "email",         :null => false
+    t.integer  "enterprise_id", :null => false
+    t.string   "code",          :null => false
+    t.integer  "user_id"
+=======
+    t.string   "email"
+    t.integer  "enterprise_id"
+    t.string   "code"
+>>>>>>> a3df4bf0262154d8dfa3667f6e20d09fc8dca77c
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "customers", ["email"], :name => "index_customers_on_email"
+  add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
+<<<<<<< HEAD
+  add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
+=======
+>>>>>>> a3df4bf0262154d8dfa3667f6e20d09fc8dca77c
+
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
     t.integer "payment_method_id"
@@ -197,7 +219,18 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.integer  "address_id"
+    t.string   "email",                    :default => "", :null => false
+    t.string   "website",                  :default => "", :null => false
+    t.string   "facebook",                 :default => "", :null => false
+    t.string   "instagram",                :default => "", :null => false
+    t.string   "linkedin",                 :default => "", :null => false
+    t.string   "twitter",                  :default => "", :null => false
+    t.integer  "owner_id"
   end
+
+  add_index "enterprise_groups", ["address_id"], :name => "index_enterprise_groups_on_address_id"
+  add_index "enterprise_groups", ["owner_id"], :name => "index_enterprise_groups_on_owner_id"
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
     t.integer "enterprise_group_id"
@@ -574,9 +607,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -837,8 +870,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.boolean  "temperature_controlled"
   end
 
   create_table "spree_shipping_methods", :force => true do |t|
@@ -1070,6 +1104,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
 
+  add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
+  add_foreign_key "customers", "spree_users", name: "customers_user_id_fk", column: "user_id"
+
   add_foreign_key "distributors_payment_methods", "enterprises", name: "distributors_payment_methods_distributor_id_fk", column: "distributor_id"
   add_foreign_key "distributors_payment_methods", "spree_payment_methods", name: "distributors_payment_methods_payment_method_id_fk", column: "payment_method_id"
 
@@ -1077,6 +1114,9 @@ ActiveRecord::Schema.define(:version => 20141219034321) do
   add_foreign_key "distributors_shipping_methods", "spree_shipping_methods", name: "distributors_shipping_methods_shipping_method_id_fk", column: "shipping_method_id"
 
   add_foreign_key "enterprise_fees", "enterprises", name: "enterprise_fees_enterprise_id_fk"
+
+  add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
+  add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"

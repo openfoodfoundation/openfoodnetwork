@@ -1,82 +1,101 @@
-%h3 Hi #{@order.bill_address.firstname},
 %table.social.white-bg{:width => "100%"}
   %tr
     %td
       %table.column{:align => "left"}
         %tr
           %td
-            %p
-              %strong Order confirmation ##{@order.number}
-            %p
-              Thanks for shopping on
-              %strong= "#{Spree::Config.site_name}."
-              Here are the details for your order from
-              %strong= "#{@order.distributor.name}."
+            %h3 
+              Hi #{@order.bill_address.firstname},
+            %h4
+              Thanks for shopping at 
+              %strong= "#{@order.distributor.name}!"
       %table.column{:align => "left"}
         %tr
-          %td
-            %img.float-right{:src => "#{@order.distributor.logo.url(:thumb)}"}/
+          %td{:align => "right"}
+            %img.float-right{:src => "#{@order.distributor.logo.url(:medium)}"}/
       %span.clear
+
 %p &nbsp;
+%h4
+  Order confirmation 
+  %strong ##{@order.number}
+%p
+  Here are your order details from
+  %strong= "#{@order.distributor.name}:"  
 
-
-%p.callout
-  %strong Order summary
 %table.order-summary{:width => "100%"}
-  %tr
-    %td
-      %strong Item
-    %td{:align => "right", :width => "25%"}
-      %strong Qty
-    %td{:align => "right", :width => "25%"}
-      %strong Price
-  - @order.line_items.each do |item|
+  %thead
     %tr
-      %td
-        = raw(item.variant.product.supplier.name)
-        %br
-        = "#{raw(item.variant.product.name)} #{raw(item.variant.options_text)}"
-      %td{:align => "right"}
-        = item.quantity
-      %td{:align => "right"}
-        = item.display_amount_with_adjustments
-
-  %tr
-    %td{:colspan => "3"} &nbsp;
-  %tr
-    %td{:align => "right", :colspan => "2"}
-      Subtotal:
-    %td{:align => "right"}
-      = display_checkout_subtotal(@order)
-  - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+      %th{:align => "left"}
+        %h4 Item
+      %th{:align => "right", :width => "25%"}
+        %h4 Qty
+      %th{:align => "right", :width => "25%"}
+        %h4 Price
+  %tbody
+    - @order.line_items.each do |item|
+      %tr
+        %td
+          %strong= "#{raw(item.variant.product.name)}" 
+          = "#{raw(item.variant.options_text)}"
+          %br
+          %small
+            %em= raw(item.variant.product.supplier.name)
+        %td{:align => "right"}
+          = item.quantity
+        %td{:align => "right"}
+          = item.display_amount_with_adjustments
+  %tfoot
     %tr
       %td{:align => "right", :colspan => "2"}
-        = "#{raw(adjustment.label)}:"
+        Subtotal:
       %td{:align => "right"}
-        = adjustment.display_amount
-  %tr
-    %td{:align => "right", :colspan => "2"}
-      %strong Total:
-    %td{:align => "right"}
-      %strong= @order.display_total
+        = display_checkout_subtotal(@order)
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+      %tr
+        %td{:align => "right", :colspan => "2"}
+          = "#{raw(adjustment.label)}:"
+        %td{:align => "right"}
+          = adjustment.display_amount
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong Total:
+      %td{:align => "right"}
+        %strong= @order.display_total
 %p &nbsp;
 
 - if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
   %p.callout
+    %span{:style => "float:right;"}
+      - if @order.paid?
+        PAID
+      - else
+        NOT PAID
     %strong Payment summary
-  / /Heading Panel
-  / Payment Summary
-  %p= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
+  %h4
+    Paying via:
+    %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
+  %p
+    %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
   %p &nbsp;
 
 - if @order.shipping_method.andand.require_ship_address
   / Delivery details
   %p.callout
     %strong
-      Delivery details
+      - if @order.shipping_method.andand.name
+        #{@order.shipping_method.name.html_safe}
+      - else
+        Delivery details
+
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+    %h4 
+      Delivery on:
+      %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+    %br &nbsp;
+  
+  %h4 Delivery address:
   %p
-    Your order will be delivered to:
-    %br
     #{@order.ship_address.full_name}
     %br
     #{@order.ship_address.full_address}
@@ -84,67 +103,70 @@
     #{@order.ship_address.phone}
 
     - if @order.shipping_method.andand.description
-      %br
-      %br
-      #{@order.shipping_method.description.html_safe}
+      %p #{@order.shipping_method.description.html_safe}
+      %br &nbsp;
 
-    - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
-      %br
-      %br
-      Delivery on: #{@order.order_cycle.pickup_time_for(@order.distributor)}
-
-    - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %br
-      %br
-      Other delivery information: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-
-    %br
+    / - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+    /   %h4 Other delivery info:
+    /   %p
+    /     %strong #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
 
 - else
   / Collection details
   %p.callout
     %strong
-      Collection details
-  %p
-    - if @order.shipping_method.andand.description
-      %br
-      %br
-      = @order.shipping_method.description.html_safe
+      - if @order.shipping_method.andand.name
+        #{@order.shipping_method.name.html_safe}
+      - else
+        Collection details
+  
+  - if @order.shipping_method.andand.description
+    %p 
+      @order.shipping_method.description.html_safe
 
-    - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+    %h4 
+      Ready for collection:
+      %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+  
+  - if @order.ship_address.full_address
+    %p
+      %strong Collecting from: 
       %br
-      %br
-      Ready for collection: #{@order.order_cycle.pickup_time_for(@order.distributor)}
+      #{@order.ship_address.full_address}
 
-    - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
-      %br
-      %br
-      Collection instructions: #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-
-    - if @order.special_instructions.present?
-      %br
-      %br
-      Notes: #{@order.special_instructions}
-
+  - if @order.shipping_method.andand.description
     %br
+    %em #{@order.shipping_method.description.html_safe}
 
-    -# Your order will be ready for collection on
-    -# %strong{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;"}
-    -#   Tuesday 07 Dec
-    -# %p{:style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 14px;line-height: 1.6;"}
-    -#   Pick-up your order at the rear of 34 Mason Street, Warragul. See it on
-    -# %a{:href => "https://goo.gl/maps/T1ArU", :style => "margin: 0;padding: 0;font-family: \"Helvetica Neue\", \"Helvetica\", Helvetica, Arial, sans-serif;color: #0096ad;", :target => "_blank"}
-    -#   google maps
+  - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+    %p
+      %strong Collection instructions:
+      %br
+      #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+      
+- if @order.special_instructions.present?
+  %br
+  %p
+    %small
+      %strong Customer notes / custom delivery instructions:
+      %br
+      #{@order.special_instructions}
 
-
+%br
 %p.callout
-  #{@order.distributor.contact},
-  %br/
-  %strong= @order.distributor.name
-  %br/
+  Kind regards,
+  %br
+  #{@order.distributor.contact}
+  %br
+  %br
+  = @order.distributor.name
+  %br
   = @order.distributor.phone || ""
-  %br/
+  %br
   %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
     = @order.distributor.email
-  %br/
+  %br
   = @order.distributor.website || ""
+
+

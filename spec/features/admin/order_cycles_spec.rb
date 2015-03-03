@@ -77,11 +77,14 @@ feature %q{
     click_link 'Order Cycles'
     click_link 'New Order Cycle'
 
+    # Select a coordinator since there are two available
+    select2_select 'My coordinator', from: 'coordinator_id'
+    click_button "Continue >"
+
     # And I fill in the basic fields
     fill_in 'order_cycle_name', with: 'Plums & Avos'
     fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
-    select 'My coordinator', from: 'order_cycle_coordinator_id'
 
     # And I add a coordinator fee
     click_button 'Add coordinator fee'
@@ -502,7 +505,7 @@ feature %q{
       # I should see only the order cycle I am coordinating
       page.should have_content oc_user_coordinating.name
       page.should_not have_content oc_for_other_user.name
-      
+
       # The order cycle should show enterprises that I manage
       page.should have_selector 'td.suppliers',    text: supplier_managed.name
       page.should have_selector 'td.distributors', text: distributor_managed.name
@@ -515,6 +518,14 @@ feature %q{
     scenario "creating a new order cycle" do
       click_link "Order Cycles"
       click_link 'New Order Cycle'
+
+      save_screenshot '/Users/rob/Desktop/ss.png'
+
+      # Select a coordinator since there are two available
+      select2_select 'Managed distributor', from: 'coordinator_id'
+      click_button "Continue >"
+
+      save_screenshot '/Users/rob/Desktop/ss1.png'
 
       fill_in 'order_cycle_name', with: 'My order cycle'
       fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'

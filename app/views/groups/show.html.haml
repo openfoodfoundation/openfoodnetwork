@@ -1,0 +1,108 @@
+#group-page.row.pad-top
+  .small-12.columns.pad-top
+    %header
+      .row
+        .small-12.columns
+          - if @group.promo_image.present?
+            %img{"src" => @group.promo_image}
+      .row
+        .small-12.columns.group-header.pad-top
+          - if @group.logo.present?
+            %img.group-logo{"src" => @group.logo}
+          - else
+            %img.group-logo{"src" => '/assets/noimage/group.png'}
+          %h2.group-name= @group.name
+          %p= @group.description
+
+  .small-12.columns.pad-top
+    .row
+      .small-12.medium-12.large-9.columns
+        %div{"ng-controller" => "TabsCtrl"}
+          %tabset
+            %tab{heading: 'Map',
+                active: "active(\'\')",
+                select: "select(\'\')"}
+              = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer
+              .map-container
+                %map{"ng-controller" => "MapCtrl", "ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
+                  %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+                    %markers{models: "OfnMap.enterprises", fit: "true",
+                    coords: "'self'", icon: "'icon'", click: "'reveal'"}
+
+            %tab{heading: 'About us',
+                active: "active(\'about\')",
+                select: "select(\'about\')"}
+              %h1 About Us
+              %p= @group.long_description
+
+            %tab{heading: 'Our producers',
+                active: "active(\'producers\')",
+                select: "select(\'producers\')"}
+              .producers{"ng-controller" => "GroupEnterprisesCtrl"}
+                .row
+                  .small-12.columns
+                    %h1 Our Producers
+                = render partial: "shared/components/enterprise_search"
+                -# TODO: find out why this is not working
+                -#= render partial: "producers/filters"
+
+                .row{bindonce: true}
+                  .small-12.columns
+                    .active_table
+                      %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+                      "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-controller" => "GroupEnterpriseNodeCtrl",
+                      "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+                      id: "{{producer.hash}}"}
+
+                        .small-12.columns
+                          = render partial: 'producers/skinny'
+                          = render partial: 'producers/fat'
+
+                      = render partial: 'shared/components/enterprise_no_results'
+
+            %tab{heading: 'Our hubs',
+                active: "active(\'hubs\')",
+                select: "select(\'hubs\')"}
+              .hubs{"ng-controller" => "GroupEnterprisesCtrl"}
+                .row
+                  .small-12.columns
+                    %h1 Our Hubs
+
+                = render partial: "shared/components/enterprise_search"
+                -# TODO: find out why this is not working
+                -#= render partial: "home/filters"
+
+                .row{bindonce: true}
+                  .small-12.columns
+                    .active_table
+                      %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
+                      "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+                      "ng-controller" => "GroupEnterpriseNodeCtrl"}
+                        .small-12.columns
+                          = render partial: 'home/skinny'
+                          = render partial: 'home/fat'
+
+                      = render partial: 'shared/components/enterprise_no_results'
+      
+      .small-12.medium-12.large-3.columns
+        = render partial: 'contact'
+
+  .small-12.columns.pad-top
+    .row.pad-top
+      .small-12.columns.text-center.small
+        %hr
+        %p.text-small
+          = "Copyright #{Date.today.year} #{@group.name}"
+        %h2
+          =link_to_service "https://www.facebook.com/", @group.facebook, title: 'Follow us on Facebook' do
+            %i.ofn-i_044-facebook
+          =link_to_service "", @group.email.reverse, title:'Email us', mailto: true do
+            %i.ofn-i_050-mail-circle
+          =link_to_service "http://", @group.website, title: 'Visit our website' do
+            %i.ofn-i_049-web
+        %p
+          &nbsp;
+
+= render partial: "shared/footer"
