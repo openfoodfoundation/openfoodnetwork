@@ -7,12 +7,12 @@
 
   - unless order_cycles_simple_index
     %td.suppliers
-      - order_cycle.suppliers.merge(order_cycle_permitted_enterprises).each do |s|
+      - order_cycle_permitted_in(order_cycle.suppliers).each do |s|
         = s.name
         %br/
     %td= order_cycle.coordinator.name
     %td.distributors
-      - order_cycle.distributors.merge(order_cycle_permitted_enterprises).each do |d|
+      - order_cycle_permitted_in(order_cycle.distributors).each do |d|
         = d.name
         %br/
 
