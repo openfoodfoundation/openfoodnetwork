@@ -863,7 +863,7 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
     t.string   "name"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
-    t.boolean  "temperature_controlled"
+    t.boolean  "temperature_controlled", :null => false
   end
 
   create_table "spree_shipping_methods", :force => true do |t|
