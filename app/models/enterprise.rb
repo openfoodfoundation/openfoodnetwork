@@ -1,14 +1,17 @@
 class Enterprise < ActiveRecord::Base
-  SELLS = %w(none own any)
+  SELLS = %w(unspecified none own any)
+  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
-  devise :confirmable, reconfirmable: true
+  preference :shopfront_message, :text, default: ""
+  preference :shopfront_closed_message, :text, default: ""
+  preference :shopfront_taxon_order, :string, default: ""
+
+  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
 
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
-
-  before_create :check_email
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
@@ -53,18 +56,49 @@ class Enterprise < ActiveRecord::Base
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
+  validates :permalink, uniqueness: true, presence: true
+  validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates_length_of :description, :maximum => 255
 
+  before_save :confirmation_check, if: lambda { email_changed? }
+
+  before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
+
+  after_create :relate_to_owners_enterprises
+  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
+  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
+  after_create :send_welcome_email, if: lambda { email_is_known? }
+
+  after_rollback :restore_permalink
 
   scope :by_name, order('name')
   scope :visible, where(:visible => true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
+  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :ready_for_checkout, lambda {
+    joins(:shipping_methods).
+    joins(:payment_methods).
+    merge(Spree::PaymentMethod.available).
+    select('DISTINCT enterprises.*')
+  }
+  scope :not_ready_for_checkout, lambda {
+    # When ready_for_checkout is empty, ActiveRecord generates the SQL:
+    # id NOT IN (NULL)
+    # I would have expected this to return all rows, but instead it returns none. To
+    # work around this, we use the "OR ?=0" clause to return all rows when there are
+    # no enterprises ready for checkout.
+    where('id NOT IN (?) OR ?=0',
+          Enterprise.ready_for_checkout,
+          Enterprise.ready_for_checkout.count)
+  }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
+  scope :is_hub, where(sells: 'any')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
@@ -118,7 +152,7 @@ class Enterprise < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
     end
   }
 
@@ -171,7 +205,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{name.parameterize}"
+    permalink
   end
 
   def relatives
@@ -219,6 +253,10 @@ class Enterprise < ActiveRecord::Base
     self.sells != "none"
   end
 
+  def is_hub
+    self.sells == 'any'
+  end
+
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
@@ -258,6 +296,26 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  def ready_for_checkout?
+    shipping_methods.any? && payment_methods.available.any?
+  end
+
+  def self.find_available_permalink(test_permalink)
+    test_permalink = test_permalink.parameterize
+    test_permalink = "my-enterprise" if test_permalink.blank?
+    existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
+    if existing.empty?
+      test_permalink
+    else
+      used_indices = existing.map do |p|
+        p.slice!(/^#{test_permalink}/)
+        p.match(/^\d+$/).to_s.to_i
+      end.select{ |p| p }
+      options = (1..existing.length).to_a - used_indices
+      test_permalink + options.first.to_s
+    end
+  end
+
   protected
 
   def devise_mailer
@@ -266,8 +324,27 @@ class Enterprise < ActiveRecord::Base
 
   private
 
-  def check_email
-    skip_confirmation! if owner.enterprises.confirmed.map(&:email).include?(email)
+  def email_is_known?
+    owner.enterprises.confirmed.map(&:email).include?(email)
+  end
+
+  def confirmation_check
+    # Skip confirmation/reconfirmation if the new email has already been confirmed
+    if email_is_known?
+      new_record? ? skip_confirmation! : skip_reconfirmation!
+    end
+  end
+
+  def welcome_after_confirm
+    # Send welcome email if we are confirming a newly created enterprise
+    # Note: this callback only runs on email confirmation
+    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      send_welcome_email
+    end
+  end
+
+  def send_welcome_email
+    EnterpriseMailer.welcome(self).deliver
   end
 
   def strip_url(url)
@@ -279,7 +356,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def geocode_address
-    address.geocode if address.changed?
+    address.geocode if address.andand.changed?
   end
 
   def ensure_owner_is_manager
@@ -288,7 +365,53 @@ class Enterprise < ActiveRecord::Base
 
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
-      errors.add(:owner, "^You are not permitted to own own any more enterprises (limit is #{owner.enterprise_limit}).")
+      errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
     end
+  end
+
+  def relate_to_owners_enterprises
+    # When a new producer is created, it grants permissions to all pre-existing hubs
+    # When a new hub is created,
+    # - it grants permissions to all pre-existing hubs
+    # - all producers grant permission to it
+
+    enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
+
+    # We grant permissions to all pre-existing hubs
+    enterprises.is_hub.each do |enterprise|
+      EnterpriseRelationship.create!(parent: self,
+                                     child: enterprise,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :manage_products,
+                                                        :edit_profile,
+                                                        :create_variant_overrides])
+    end
+
+    # All pre-existing producers grant permission to new hubs
+    if is_hub
+      enterprises.is_primary_producer.each do |enterprise|
+        EnterpriseRelationship.create!(parent: enterprise,
+                                       child: self,
+                                       permissions_list: [:add_to_order_cycle,
+                                                          :manage_products,
+                                                          :edit_profile,
+                                                          :create_variant_overrides])
+      end
+    end
+  end
+
+  def shopfront_taxons
+    unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
+      errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
+    end
+  end
+
+  def restore_permalink
+    # If the permalink has errors, reset it to it's original value, so we can update the form
+    self.permalink = permalink_was if permalink_changed? && errors[:permalink].present?
+  end
+
+  def initialize_permalink
+    self.permalink = Enterprise.find_available_permalink(name)
   end
 end

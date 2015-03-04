@@ -6,6 +6,7 @@ class AbilityDecorator
   def initialize(user)
     add_base_abilities user if is_new_user? user
     add_enterprise_management_abilities user if can_manage_enterprises? user
+    add_group_management_abilities user if can_manage_groups? user
     add_product_management_abilities user if can_manage_products? user
     add_order_management_abilities user if can_manage_orders? user
     add_relationship_management_abilities user if can_manage_relationships? user
@@ -21,9 +22,15 @@ class AbilityDecorator
     user.enterprises.present?
   end
 
-  # Users can manage products if they have an enterprise.
+  # Users can manage a group if they have one.
+  def can_manage_groups?(user)
+    user.owned_groups.present?
+  end
+
+  # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
-    can_manage_enterprises? user
+    can_manage_enterprises?(user) &&
+    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -40,6 +47,14 @@ class AbilityDecorator
     can [:create], Enterprise
   end
 
+  def add_group_management_abilities(user)
+    can [:admin, :index], :overview
+    can [:admin, :index], EnterpriseGroup
+    can [:read, :edit, :update], EnterpriseGroup do |group|
+      user.owned_groups.include? group
+    end
+  end
+
   def add_enterprise_management_abilities(user)
     # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
     # when searching for variants to add to the order
@@ -50,7 +65,10 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+      OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
@@ -59,6 +77,8 @@ class AbilityDecorator
     can [:admin, :read, :edit, :bulk_update, :destroy], EnterpriseFee do |enterprise_fee|
       user.enterprises.include? enterprise_fee.enterprise
     end
+
+    can [:admin, :known_users], :search
   end
 
   def add_product_management_abilities(user)
@@ -71,6 +91,18 @@ class AbilityDecorator
     can [:create], Spree::Variant
     can [:admin, :index, :read, :edit, :update, :search, :destroy], Spree::Variant do |variant|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
+    end
+
+    can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+      hub_auth = OpenFoodNetwork::Permissions.new(user).
+        order_cycle_enterprises.is_distributor.
+        include? vo.hub
+
+      producer_auth = OpenFoodNetwork::Permissions.new(user).
+        variant_override_producers.
+        include? vo.variant.product.supplier
+
+      hub_auth && producer_auth
     end
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
@@ -120,6 +152,8 @@ class AbilityDecorator
       (user.enterprises & shipping_method.distributors).any?
     end
 
+    # Reports page
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
   end
 
 

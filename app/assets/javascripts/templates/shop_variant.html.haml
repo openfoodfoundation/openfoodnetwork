@@ -58,5 +58,5 @@
 
   .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
-      %strong
+      %strong{"ng-class" => "{filled: variant.totalPrice()}"}
         {{ variant.totalPrice() | localizeCurrency }} 

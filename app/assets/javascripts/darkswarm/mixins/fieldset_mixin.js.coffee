@@ -20,7 +20,7 @@ window.FieldsetMixin = ($scope)->
     not ($scope.dirty(path) and $scope.invalid(path))
 
   $scope.dirty = (name)->
-    $scope.field(name).$dirty
+    $scope.field(name).$dirty || $scope.submitted
 
   $scope.invalid = (name)->
     $scope.field(name).$invalid

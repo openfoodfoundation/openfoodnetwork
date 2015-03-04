@@ -44,12 +44,18 @@ describe EnterpriseRelationship do
       end
     end
 
-    it "finds relationships that grant permissions to some enterprises" do
-      er1 = create(:enterprise_relationship, parent: e2, child: e1)
-      er2 = create(:enterprise_relationship, parent: e3, child: e2)
-      er3 = create(:enterprise_relationship, parent: e1, child: e3)
+    describe "finding by permission" do
+      let!(:er1) { create(:enterprise_relationship, parent: e2, child: e1) }
+      let!(:er2) { create(:enterprise_relationship, parent: e3, child: e2) }
+      let!(:er3) { create(:enterprise_relationship, parent: e1, child: e3) }
 
-      EnterpriseRelationship.permitting([e1, e2]).sort.should == [er1, er2]
+      it "finds relationships that grant permissions to some enterprises" do
+        EnterpriseRelationship.permitting([e1, e2]).sort.should == [er1, er2].sort
+      end
+
+      it "finds relationships that are granted by particular enterprises" do
+        EnterpriseRelationship.permitted_by([e1, e2]).sort.should == [er1, er3].sort
+      end
     end
 
     it "finds relationships that grant a particular permission" do

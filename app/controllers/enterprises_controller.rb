@@ -1,6 +1,13 @@
 class EnterprisesController < BaseController
+  layout "darkswarm"
   helper Spree::ProductsHelper
   include OrderCyclesHelper
+
+  # These prepended filters are in the reverse order of execution
+  prepend_before_filter :load_active_distributors, :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
+  before_filter :clean_permalink, only: :check_permalink
+
+  respond_to :js, only: :permalink_checker
 
   def index
     @enterprises = Enterprise.all
@@ -24,7 +31,7 @@ class EnterprisesController < BaseController
   end
 
   def show
-    @enterprise = Enterprise.find params[:id]
+    @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
 
     # User can view this page if they've already chosen their distributor, or if this page
     # is for a supplier, they may use it to select a distributor that sells this supplier's
@@ -52,8 +59,25 @@ class EnterprisesController < BaseController
     end
   end
 
-  def shop
-    distributor = Enterprise.is_distributor.find params[:id]
+  def check_permalink
+    return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
+
+    path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
+    if path && path[:controller] == "cms_content"
+      render text: params[:permalink], status: 200
+    else
+      render text: params[:permalink], status: 409
+    end
+  end
+
+  private
+
+  def clean_permalink
+    params[:permalink] = params[:permalink].parameterize
+  end
+
+  def reset_order
+    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
     if order.distributor and order.distributor != distributor
@@ -66,7 +90,5 @@ class EnterprisesController < BaseController
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
     order.save!
-
-    redirect_to main_app.shop_path
   end
 end

@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.19'
+gem 'rails', '3.2.21'
+gem 'rails-i18n', '~> 3.0.0'
+gem 'i18n', '~> 0.6.11'
 
 gem 'nokogiri'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
-gem 'spree_i18n', :github => 'spree/spree_i18n'
+gem 'spree_i18n', :github => 'spree/spree_i18n', :branch => '1-3-stable'
 gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
 
 # Waiting on merge of PR #117
@@ -22,7 +24,7 @@ gem 'comfortable_mexican_sofa'
 gem 'simple_form', :github => 'RohanM/simple_form'
 
 gem 'unicorn'
-gem 'angularjs-rails'
+gem 'angularjs-rails', '1.2.13'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
@@ -47,6 +49,8 @@ gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'roadie-rails', '~> 1.0.3'
+gem 'figaro'
 gem 'foreigner'
 gem 'immigrant'
 
@@ -78,6 +82,7 @@ gem 'jquery-rails'
 group :test, :development do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
+  gem 'fuubar'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
@@ -94,7 +99,9 @@ end
 
 group :test do
   gem 'webmock'
-  gem 'perftools.rb'
+
+  # See spec/spec_helper.rb for instructions
+  #gem 'perftools.rb'
 end
 
 group :development do

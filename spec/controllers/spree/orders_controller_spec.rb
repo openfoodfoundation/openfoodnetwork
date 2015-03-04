@@ -26,30 +26,18 @@ describe Spree::OrdersController do
     response.should redirect_to shop_path
   end
 
-  it "selects distributors" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-
-    spree_get :select_distributor, :id => d.id
-    response.should be_redirect
-
-    order = subject.current_order(false)
-    order.distributor.should == d
-  end
-
-  it "deselects distributors" do
-    d = create(:distributor_enterprise)
-    p = create(:product, :distributors => [d])
-    
+  it "redirects home with message if hub is not ready for checkout" do
     order = subject.current_order(true)
-    order.distributor = d
-    order.save!
+    distributor.stub(:ready_for_checkout?) { false }
+    order.stub(distributor: distributor, order_cycle: order_cycle)
 
-    spree_get :deselect_distributor
-    response.should be_redirect
+    order.should_receive(:empty!)
+    order.should_receive(:set_distribution!).with(nil, nil)
 
-    order.reload
-    order.distributor.should be_nil
+    spree_get :edit
+
+    response.should redirect_to root_url
+    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
   context "adding a group buy product to the cart" do

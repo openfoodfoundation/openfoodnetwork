@@ -4,7 +4,7 @@
     / Will add in long description available once clean up HTML formatting producer.long_description
     %div{"bo-if" => "producer.description"}
       %label About us
-      %img.right.show-for-medium-up{src: "{{ producer.logo }}" }
+      %img.right.show-for-medium-up{"ng-src" => "{{producer.logo}}" }
       %p.text-small
         {{ producer.description }}
     %div.show-for-medium-up{"bo-if" => "producer.description.length==0"}

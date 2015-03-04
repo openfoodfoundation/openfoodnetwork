@@ -13,6 +13,7 @@ module OpenFoodNetwork
           "Producer Suburb",
           "Product",
           "Product Properties",
+          "Taxons",
           "Variant Value",
           "Price",
           "Group Buy Unit Quantity",
@@ -26,6 +27,7 @@ module OpenFoodNetwork
         variant.product.supplier.address.city,
         variant.product.name,
         variant.product.properties.map(&:name).join(", "),
+        variant.product.taxons.map(&:name).join(", "),
         variant.full_name,
         variant.price,
         variant.product.group_buy_unit_size,
@@ -58,7 +60,11 @@ module OpenFoodNetwork
     def filter(variants)
       # NOTE: Ordering matters.
       # filter_to_order_cycle and filter_to_distributor return Arrays not Arel
-      filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier variants
+      filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier filter_not_deleted variants
+    end
+
+    def filter_not_deleted(variants)
+      variants.not_deleted
     end
 
     def filter_on_hand(variants)

@@ -1,9 +1,10 @@
 Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, CurrentHub) ->
   $scope.Checkout = Checkout
+  $scope.submitted = false
 
   # Bind to local storage
   $scope.fieldsToBind = ["bill_address", "email", "payment_method_id", "shipping_method_id", "ship_address"]
-  prefix = "order_#{Checkout.order.id}#{CurrentUser?.id}#{CurrentHub.hub.id}"
+  prefix = "order_#{Checkout.order.id}#{CurrentUser.id or ""}#{CurrentHub.hub.id}"
 
   for field in $scope.fieldsToBind
     storage.bind $scope, "Checkout.order.#{field}",
@@ -15,8 +16,12 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
   $scope.order = Checkout.order # Ordering is important
   $scope.secrets = Checkout.secrets
 
-  $scope.enabled = if CurrentUser then true else false
+  $scope.enabled = !!CurrentUser.id?
 
-  $scope.purchase = (event)->
+  $scope.purchase = (event, form) ->
     event.preventDefault()
-    $scope.Checkout.submit()
+    $scope.submitted = true
+    if form.$valid
+      $scope.Checkout.submit()
+    else
+      $scope.$broadcast 'purchaseFormInvalid', form

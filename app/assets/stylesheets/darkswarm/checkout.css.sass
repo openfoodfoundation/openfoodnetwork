@@ -1,5 +1,6 @@
 @import mixins
 @import branding
+@import animations
 
 checkout
   display: block
@@ -56,9 +57,13 @@ checkout
   // Logic to swap out up / down accordion icons
 
   //Foundation overrides 
+  dd > a
+    @include csstrans
+    background: $disabled-light !important
+
   dd > a:hover
-    background: $clr-brick-ultra-light !important
-    color: $clr-brick
+    background: $disabled-v-dark !important
+    color: white
   
   dd
     span.accordion-up

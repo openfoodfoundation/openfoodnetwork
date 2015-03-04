@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141229094516) do
+ActiveRecord::Schema.define(:version => 20150220035501) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -213,7 +213,18 @@ ActiveRecord::Schema.define(:version => 20141229094516) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.integer  "address_id"
+    t.string   "email",                    :default => "", :null => false
+    t.string   "website",                  :default => "", :null => false
+    t.string   "facebook",                 :default => "", :null => false
+    t.string   "instagram",                :default => "", :null => false
+    t.string   "linkedin",                 :default => "", :null => false
+    t.string   "twitter",                  :default => "", :null => false
+    t.integer  "owner_id"
   end
+
+  add_index "enterprise_groups", ["address_id"], :name => "index_enterprise_groups_on_address_id"
+  add_index "enterprise_groups", ["owner_id"], :name => "index_enterprise_groups_on_owner_id"
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
     t.integer "enterprise_group_id"
@@ -285,6 +296,9 @@ ActiveRecord::Schema.define(:version => 20141229094516) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.datetime "shop_trial_start_date"
+    t.boolean  "producer_profile_only",    :default => false
+    t.string   "permalink",                                    :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
@@ -1049,6 +1063,15 @@ ActiveRecord::Schema.define(:version => 20141229094516) do
     t.integer "state_id"
   end
 
+  create_table "variant_overrides", :force => true do |t|
+    t.integer "variant_id",                                  :null => false
+    t.integer "hub_id",                                      :null => false
+    t.decimal "price",         :precision => 8, :scale => 2
+    t.integer "count_on_hand"
+  end
+
+  add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"
+
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id"
 
@@ -1083,6 +1106,9 @@ ActiveRecord::Schema.define(:version => 20141229094516) do
   add_foreign_key "distributors_shipping_methods", "spree_shipping_methods", name: "distributors_shipping_methods_shipping_method_id_fk", column: "shipping_method_id"
 
   add_foreign_key "enterprise_fees", "enterprises", name: "enterprise_fees_enterprise_id_fk"
+
+  add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
+  add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"
 
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"
@@ -1205,5 +1231,8 @@ ActiveRecord::Schema.define(:version => 20141229094516) do
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
 
   add_foreign_key "suburbs", "spree_states", name: "suburbs_state_id_fk", column: "state_id"
+
+  add_foreign_key "variant_overrides", "enterprises", name: "variant_overrides_hub_id_fk", column: "hub_id"
+  add_foreign_key "variant_overrides", "spree_variants", name: "variant_overrides_variant_id_fk", column: "variant_id"
 
 end

@@ -1,12 +1,13 @@
 .content
-  .row
-    .small-12.columns.panel
-      - if current_distributor.groups.length > 0
-        %h5
-          =current_distributor.name 
-          is part of: 
-        %ul.bullet-list
-          - for group in current_distributor.groups
-            %li
-              %a{href: main_app.groups_path + "/#/#group#{group.id}"}
-                = group.name 
+  .panel
+    .row
+      .small-12.large-4.columns
+        - if current_distributor.groups.length > 0
+          %h5
+            =current_distributor.name 
+            is part of: 
+          %ul.bullet-list
+            - for group in current_distributor.groups
+              %li
+                %a{href: main_app.groups_path + "/#/#group#{group.id}"}
+                  = group.name 

@@ -27,13 +27,13 @@ describe Spree::Order do
     let(:order) { build(:order, distributor: order_distributor) }
     let(:pm1) { create(:payment_method, distributors: [order_distributor])}
     let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
-    
+
     it "finds the correct payment methods" do
-      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2] 
+      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2]
       order.available_payment_methods.include?(pm2).should == false
       order.available_payment_methods.include?(pm1).should == true
     end
-    
+
   end
 
   describe "updating the distribution charge" do
@@ -147,34 +147,42 @@ describe Spree::Order do
     end
   end
 
-  describe "getting the distribution charge" do
+  describe "getting the admin and handling charge" do
     let(:o) { create(:order) }
     let(:li) { create(:line_item, order: o) }
 
     it "returns the sum of eligible enterprise fee adjustments" do
-      ef = create(:enterprise_fee)
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+      a = ef.create_locked_adjustment("adjustment", o, o, true)
 
-      o.distribution_total.should == 123.45
+      o.admin_and_handling_total.should == 123.45
     end
 
     it "does not include ineligible adjustments" do
-      ef = create(:enterprise_fee)
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", li.order, li, true)
+      a = ef.create_locked_adjustment("adjustment", o, o, true)
 
       a.update_column :eligible, false
 
-      o.distribution_total.should == 0
+      o.admin_and_handling_total.should == 0
     end
 
     it "does not include adjustments that do not originate from enterprise fees" do
-      sm = create(:shipping_method)
+      sm = create(:shipping_method, calculator: Spree::Calculator::FlatRate.new )
       sm.calculator.set_preference :amount, 123.45
-      sm.create_adjustment("adjustment", li.order, li, true)
+      sm.create_adjustment("adjustment", o, o, true)
 
-      o.distribution_total.should == 0
+      o.admin_and_handling_total.should == 0
+    end
+
+    it "does not include adjustments whose source is a line item" do
+      ef = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new )
+      ef.calculator.set_preference :amount, 123.45
+      ef.create_adjustment("adjustment", li.order, li, true)
+
+      o.admin_and_handling_total.should == 0
     end
   end
 
@@ -245,7 +253,7 @@ describe Spree::Order do
       subject.should_not_receive(:empty!)
       subject.set_order_cycle! subject.order_cycle
     end
-  
+
     it "sets the order cycle when no distributor is set" do
       subject.set_order_cycle! oc
       subject.order_cycle.should == oc
@@ -320,13 +328,35 @@ describe Spree::Order do
     end
   end
 
-   describe "scopes" do
+  describe "scopes" do
     describe "not_state" do
       it "finds only orders not in specified state" do
         o = FactoryGirl.create(:completed_order_with_totals)
         o.cancel!
-
         Spree::Order.not_state(:canceled).should_not include o
+      end
+    end
+
+    describe "with payment method name" do
+      let!(:o1) { create(:order) }
+      let!(:o2) { create(:order) }
+      let!(:pm1) { create(:payment_method, name: 'foo') }
+      let!(:pm2) { create(:payment_method, name: 'bar') }
+      let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
+      let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
+
+      it "returns the order with payment method name" do
+	Spree::Order.with_payment_method_name('foo').should == [o1]
+      end
+
+      it "doesn't return rows with a different payment method name" do
+        Spree::Order.with_payment_method_name('foobar').should_not include o1
+        Spree::Order.with_payment_method_name('foobar').should_not include o2
+      end
+
+      it "doesn't return duplicate rows" do
+        p2 = FactoryGirl.create(:payment, :order => o1, :payment_method => pm1)
+	Spree::Order.with_payment_method_name('foo').length.should == 1
       end
     end
   end
@@ -366,4 +396,15 @@ describe Spree::Order do
     end
   end
 
+  describe "sending confirmation emails" do
+    it "sends confirmation emails to both the user and the shop owner" do
+      customer_confirm_fake = double(:confirm_email_for_customer)
+      shop_confirm_fake = double(:confirm_email_for_shop)
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return customer_confirm_fake
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return shop_confirm_fake
+      expect(customer_confirm_fake).to receive :deliver
+      expect(shop_confirm_fake).to receive :deliver
+      create(:order).deliver_order_confirmation_email
+    end
+  end
 end

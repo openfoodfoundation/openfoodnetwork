@@ -1,0 +1,33 @@
+- if @payment_methods.count > 0
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Applies?
+        %th
+    %tbody
+      - @payment_methods.each do |payment_method|
+        %tr{ ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
+          %td= payment_method.name
+          %td= f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
+          %td= link_to "Edit", edit_admin_payment_method_path(payment_method)
+  %br
+  .row
+    .six.columns.alpha
+      %a.button{ href: "#{admin_payment_methods_path}"}
+        Manage Payment Methods
+        %i.icon-arrow-right
+    .five.columns.omega.text-right
+      %a.button{ href: "#{new_admin_payment_method_path}"}
+        Create New Payment Method
+        %i.icon-plus
+
+- else
+  %p.text-center
+    You don't have any payment methods yet.
+
+  %br
+  .text-center
+    %a.button{ href: "#{new_admin_payment_method_path}"}
+      Create One Now
+      %i.icon-arrow-right

@@ -3,52 +3,38 @@
 :javascript
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
 
-#groups{"ng-controller" => "GroupsCtrl"}
+#groups.pad-top{"ng-controller" => "GroupsCtrl"}
   #active-table-search.row.pad-top
-    .small-12.columns.text-center
-      %h1 Groups / Regions
-      %div 
-        Check out our 
-        %ofn-modal{title: "food groups"}
-          = render partial: "modals/groups"  
-        below
+    .small-12.columns
+      %h1 Groups / regions
       %p
-
-      %input.animate-show{type: :text, 
-      "ng-model" => "query", 
-      placeholder: "Search group name",
-      "ng-debounce" => "150",
-      "ofn-disable-enter" => true}
+        %input.animate-show{type: :text,
+        "ng-model" => "query",
+        placeholder: "Search name or keyword",
+        "ng-debounce" => "150",
+        "ofn-disable-enter" => true}
 
   .group{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
-      .small-12.columns
-        .group-hero
-          %img.group-hero-img{"bo-src" => "group.promo_image"} 
-          %img.group-logo{"bo-src" => "group.logo", "bo-if" => "group.logo"}
-          %h3.group-name 
+      .small-12.medium-6.columns
+        .groups-header
+          %a{"ng-href" => "/groups/{{group.id}}"}
             %i.ofn-i_035-groups
-            {{ group.name }}
-          %h5.group-description {{ group.description }}
-          
-    .row.pad-top{bindonce: true}
-      .small-6.columns
-        %p {{ group.long_description }}
-      .small-6.columns
-        %h5 Our hubs &amp; producers
-        %ul.small-block-grid-2
-          %li{"ng-repeat" => "enterprise in group.enterprises", "scroll-after-load" => true}
-            %enterprise-modal{"ng-if" => "enterprise.is_distributor"}  
-              {{ enterprise.name }}
-            %enterprise-modal{"ng-if" => "!enterprise.is_distributor", "show-hub-actions" => 'true'}  
-              {{ enterprise.name }}
-
-
-    .row.group_footer
-      .small-12.columns
-        %hr
+            %span.group-name
+              {{ group.name }}
+      .small-3.medium-2.columns
+        %p
+          {{ group.state }}
+      .small-9.medium-4.columns.groups-icons
+        %p
+          %link-to-service.ofn-i_050-mail-circle{service: '""', ref: 'group.email.split("").reverse().join("")', mailto: true}
+          %link-to-service.ofn-i_049-web{service: '"http://"', ref: 'group.website'}
+          %link-to-service.ofn-i_041-twitter{service: '"http://twitter.com/"', ref: 'group.twitter'}
+          %link-to-service.ofn-i_044-facebook{service: '"https://www.facebook.com/"', ref: 'group.facebook'}
+          %link-to-service.ofn-i_042-linkedin{service: '"https://www.linkedin.com/in/"', ref: 'group.linkedin'}
+          %link-to-service.ofn-i_043-instagram{service: '"http://instagram.com/"', ref: 'group.instagram'}
 
   .group{"ng-show" => "groups.length == 0"}
     .row.pad-top

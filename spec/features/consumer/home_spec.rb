@@ -4,22 +4,22 @@ feature 'Home', js: true do
   include AuthenticationWorkflow
   include UIComponentHelper
 
-  let!(:distributor) { create(:distributor_enterprise) }
+  let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
   let(:d1) { create(:distributor_enterprise) }
   let(:d2) { create(:distributor_enterprise) }
-  let!(:order_cycle) { create(:order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
+  let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
-    visit "/" 
+    visit "/"
   end
 
   it "shows hubs" do
     page.should have_content distributor.name
     expand_active_table_node distributor.name
-    page.should have_content "OUR PRODUCERS" 
+    page.should have_content "OUR PRODUCERS"
   end
 
   it "does not show invisible hubs" do
@@ -35,7 +35,7 @@ feature 'Home', js: true do
 
   it "should link to the hub page" do
     follow_active_table_node distributor.name
-    current_path.should == "/shop"
+    current_path.should == enterprise_shop_path(distributor)
   end
 
   it "should show hub producer modals" do

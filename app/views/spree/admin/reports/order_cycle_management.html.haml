@@ -1,0 +1,44 @@
+= form_tag spree.order_cycle_management_admin_reports_url do |f|
+  %br
+  = label_tag nil, "Order Cycle: "
+  = select_tag(:order_cycle_id,
+    options_for_select(report_order_cycle_options(@order_cycles), params[:order_cycle_id]),
+              include_blank: true)
+  %br
+  %br
+  = label_tag nil, "Payment Methods (hold Ctrl to select multiple payment methods)"
+  %br
+
+  = select_tag(:payment_method_name,
+      options_for_select(report_payment_method_options(@orders), params[:payment_method_name]),
+               multiple: true, include_blank: true, size: 10)
+  %br
+  %br
+  = label_tag nil, "Shipping Method: "
+  = select_tag(:shipping_method_name,
+      options_for_select(report_shipping_method_options(@orders), params[:shipping_method_name]),
+	       include_blank: true)
+  %br
+  %br
+  = check_box_tag :csv
+  = label_tag :csv, "Download as csv"
+  %br
+  %br
+  = button t(:search)
+
+%br
+%br
+%table#listing_order_payment_methods.index
+  %thead
+    %tr{'data-hook' => "orders_header"}
+      - @report.header.each do |heading|
+        %th=heading
+  %tbody
+    - @report.table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @report.table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)
+

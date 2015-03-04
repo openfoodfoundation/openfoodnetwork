@@ -1,4 +1,5 @@
 @import mixins
+@import animations
 @import variables
 @import branding
 @import big-input
@@ -10,17 +11,14 @@
 @import shop-taxon-flag
 @import shop-popovers
 
-
-
 .darkswarm
 
   products
     display: block
     padding-top: 2.3em
-    
     @media all and (max-width: 768px)
       padding-top: 1em
-      
+
       input.button.right
         float: left
 
@@ -28,6 +26,20 @@
       .add_to_cart
         margin-top: 2rem
 
+    form
+      input.small.button.primary.right.add_to_cart
+        &.dirty
+          padding-left: 3.2rem
+      i.cart-spinner
+        position: absolute
+        top: 14px
+        right: 146px
+        color: white
+        font-size: 1.2em
+        // Necessary to be below Z index of cart popover:
+        z-index: 98
+        -webkit-animation: spin 2s infinite linear
+        animation: spin 2s infinite linear
 
     product
       @include csstrans
@@ -37,7 +49,7 @@
       margin-bottom: 20px !important
       position: relative
       display: block
-      color: #444
+      color: $med-drk-grey
 
       &:hover, &:focus, &:active
         border-bottom: 1px solid $clr-brick-med-bright
@@ -55,34 +67,33 @@
       .inline
         display: inline
 
-      
+      .spinner
+        width: 100px
+        margin-bottom: 20px
+
       // ICONS
       i
         font-size: 0.75em
         padding-right: 0.9375rem
-        @media all and (max-width: 640px) 
+        @media all and (max-width: 640px)
           padding-right: 0.25rem
 
-      i.ofn-i_056-bulk, i.ofn-i_036-producers
+      i.ofn-i_056-bulk
         font-size: 1rem
         padding-right: 0rem
 
       i.ofn-i_036-producers
-        padding-left: 0.5rem
+        padding-left: 0.2rem
+        padding-right: 0rem
+        font-size: 0.8rem
 
-      
+  .shopfront_message, .shopfront_closed_message
+    padding: 15px
+    border-radius: 5px
+    border: 2px solid #eb4c46
 
+  .shopfront_message
+    margin-top: 2em
 
-
-
-      
-
-      
-
-        
-      
-
-
-
-
-
+  .shopfront_closed_message
+    margin: 2em 0em

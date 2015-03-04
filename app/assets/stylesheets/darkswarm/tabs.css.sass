@@ -30,34 +30,42 @@
     border-color: $clr-brick-bright
     background-color: rgba(255, 255, 255, 0)
 
-  dl dd a
-    @include avenir
-    background: transparent
-    text-transform: uppercase
-    line-height: 50px
-    font-size: 0.875em
-    text-shadow: 0 -1px 1px #ffffff
-    &:hover, &:focus, &:active
-      color: $clr-brick-bright
-    @media all and (max-width: 768px)
-      line-height: 30px !important
-    border: none
-    &, &:hover
-      background: none
-    padding: 0px 2.2em
-    @media all and (max-width: 768px)
-      line-height: inherit !important
+  dl dd 
+
+    text-align: center
+    @media all and (max-width: 640px)
+      text-align: left
+
+    a
+      @include avenir
+      background: transparent
+      text-transform: uppercase
+      line-height: 1
+      font-size: 0.875em
+      text-shadow: 0 -1px 1px #ffffff
+      padding: 1em
+      border: none
+      &:hover, &:focus, &:active
+        color: $clr-brick-bright
+      &, &:hover
+        background: none
+      
+      @media all and (max-width: 640px)
+        padding: 0.35em 0 0.65em 0
+        text-shadow: none
   
   // inactive nav link
-
   dl  
     dd
       border-top: 4px solid transparent
+      
       a:after
         padding-left: 8px
-        content: "\e634"
+        content: "\e633"
         visibility: hidden
         @include icon-font
+        @media all and (max-width: 640px)
+          content: "\e633"
     dd:hover
       a:after
         visibility: visible
@@ -67,12 +75,19 @@
   dl
     dd.active
       border-top: 4px solid $clr-brick
+      @media all and (max-width: 640px)
+        border-top: 4px solid transparent
+        background-color: $clr-brick
       a
         color: $clr-brick
+        @media all and (max-width: 640px)
+          color: white
       a:after
-        content: "\e633"
+        content: "\e634"
         visibility: visible
         @include icon-font
+        @media all and (max-width: 640px)
+          content: "\e633"
 
   // content revealed in accordion
 

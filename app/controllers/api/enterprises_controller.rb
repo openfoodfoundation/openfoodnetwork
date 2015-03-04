@@ -3,6 +3,8 @@ module Api
 
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
+    before_filter :override_sells, only: [:create, :update]
+    before_filter :override_visible, only: [:create, :update]
     respond_to :json
 
     def managed
@@ -27,7 +29,7 @@ module Api
     end
 
     def update
-      @enterprise = Enterprise.find(params[:id])
+      @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
       if @enterprise.update_attributes(params[:enterprise])
@@ -38,7 +40,7 @@ module Api
     end
 
     def update_image
-      @enterprise = Enterprise.find(params[:id])
+      @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
       if params[:logo] && @enterprise.update_attributes( { logo: params[:logo] } )
@@ -58,6 +60,14 @@ module Api
 
     def check_type
       params[:enterprise].delete :type unless current_api_user.admin?
+    end
+
+    def override_sells
+      params[:enterprise][:sells] = 'unspecified'
+    end
+
+    def override_visible
+      params[:enterprise][:visible] = false
     end
   end
 end

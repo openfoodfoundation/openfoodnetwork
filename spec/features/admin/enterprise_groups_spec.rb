@@ -15,28 +15,33 @@ feature %q{
     e = create(:enterprise)
     group = create(:enterprise_group, enterprises: [e], on_front_page: true)
 
-    click_link 'Configuration'
-    click_link 'Enterprise Groups'
+    click_link 'Groups'
 
     page.should have_selector 'td', text: group.name
     page.should have_selector 'td', text: 'Y'
     page.should have_selector 'td', text: e.name
   end
 
-  scenario "creating a new enterprise group" do
+  scenario "creating a new enterprise group", js: true do
     e1 = create(:enterprise)
     e2 = create(:enterprise)
     e3 = create(:enterprise)
 
-    click_link 'Configuration'
-    click_link 'Enterprise Groups'
+    click_link 'Groups'
     click_link 'New Enterprise Group'
 
     fill_in 'enterprise_group_name', with: 'EGEGEG'
     fill_in 'enterprise_group_description', with: 'This is a description'
     check 'enterprise_group_on_front_page'
-    select e1.name, from: 'enterprise_group_enterprise_ids'
-    select e2.name, from: 'enterprise_group_enterprise_ids'
+    select2_search e1.name, from: 'Enterprises'
+    select2_search e2.name, from: 'Enterprises'
+    click_link 'Contact'
+    fill_in 'enterprise_group_address_attributes_phone', with: '000'
+    fill_in 'enterprise_group_address_attributes_address1', with: 'My Street'
+    fill_in 'enterprise_group_address_attributes_city', with: 'Block'
+    fill_in 'enterprise_group_address_attributes_zipcode', with: '0000'
+    select2_search 'Australia', :from => 'Country'
+    select2_search 'Victoria', :from => 'State'
     click_button 'Create'
 
     page.should have_content 'Enterprise group "EGEGEG" has been successfully created!'
@@ -53,8 +58,7 @@ feature %q{
     e2 = create(:enterprise)
     eg = create(:enterprise_group, name: 'EGEGEG', on_front_page: true, enterprises: [e1, e2])
 
-    click_link 'Configuration'
-    click_link 'Enterprise Groups'
+    click_link 'Groups'
     first("a.edit-enterprise-group").click
 
     page.should have_field 'enterprise_group_name', with: 'EGEGEG'
@@ -80,8 +84,7 @@ feature %q{
     eg1 = create(:enterprise_group, name: 'A')
     eg2 = create(:enterprise_group, name: 'B')
 
-    click_link 'Configuration'
-    click_link 'Enterprise Groups'
+    click_link 'Groups'
 
     page.all('td.name').map(&:text).should == ['A', 'B']
     all("a.move-down").first.click
@@ -93,8 +96,7 @@ feature %q{
   scenario "deleting an enterprise group", js: true do
     eg = create(:enterprise_group, name: 'EGEGEG')
 
-    click_link 'Configuration'
-    click_link 'Enterprise Groups'
+    click_link 'Groups'
     first("a.delete-resource").click
 
     page.should have_no_content 'EGEGEG'

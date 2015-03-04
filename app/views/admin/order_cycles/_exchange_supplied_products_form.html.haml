@@ -9,13 +9,13 @@
 
     .exchange-product-details
       %label
-        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants', 'ng-disabled' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
+        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants.length > 0', 'ng-disabled' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
         %img{'ng-src' => '{{ product.image_url }}'}
         {{ product.name }}
 
     -# When the master variant is in the order cycle but the product has variants, we want to
     -# be able to remove the master variant, since it serves no purpose. Display a checkbox to do so.
-    .exchange-product-variant{'ng-show' => 'exchange.variants[product.master_id] && product.variants'}
+    .exchange-product-variant{'ng-show' => 'exchange.variants[product.master_id] && product.variants.length > 0'}
       %label
         = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
         Obsolete master

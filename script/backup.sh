@@ -4,4 +4,5 @@
 
 set -e
 
+mkdir -p db/backup
 ssh $1 "pg_dump -h localhost -U openfoodweb openfoodweb_production |gzip" > db/backup/$1-`date +%Y%m%d`.sql.gz

@@ -9,9 +9,10 @@
         margin-top: -1.1rem
         padding-top: 0.25rem
         z-index: 999999
-
-        @media all and (max-width: 768px)
-          margin-top: -0.85rem
+        @media all and (max-width: 480px)
+          background-size: 28px 32px
+          min-height: 32px
+          width: 28px
 
         render-svg
           svg
@@ -19,3 +20,12 @@
             height: 24px
             path
               fill: #999
+
+        @media all and (max-width: 768px)
+          margin-top: -0.85rem
+
+        @media all and (max-width: 480px)
+          render-svg
+            svg
+              width: 18px
+              height: 18px

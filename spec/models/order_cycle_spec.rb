@@ -91,25 +91,25 @@ describe OrderCycle do
   end
 
   it "finds the most recently closed order cycles" do
-    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
-    oc2 = create(:order_cycle, orders_close_at: 1.hour.ago)
-    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+    oc1 = create(:simple_order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:simple_order_cycle, orders_close_at: 1.hour.ago)
+    oc3 = create(:simple_order_cycle, orders_close_at: 1.hour.from_now)
 
     OrderCycle.most_recently_closed.should == [oc2, oc1]
   end
 
   it "finds the soonest opening order cycles" do
-    oc1 = create(:order_cycle, orders_open_at: 1.weeks.from_now)
-    oc2 = create(:order_cycle, orders_open_at: 2.hours.from_now)
-    oc3 = create(:order_cycle, orders_open_at: 1.hour.ago)
+    oc1 = create(:simple_order_cycle, orders_open_at: 1.weeks.from_now)
+    oc2 = create(:simple_order_cycle, orders_open_at: 2.hours.from_now)
+    oc3 = create(:simple_order_cycle, orders_open_at: 1.hour.ago)
 
     OrderCycle.soonest_opening.should == [oc2, oc1]
   end
 
   it "finds the soonest closing order cycles" do
-    oc1 = create(:order_cycle, orders_close_at: 2.hours.ago)
-    oc2 = create(:order_cycle, orders_close_at: 2.hour.from_now)
-    oc3 = create(:order_cycle, orders_close_at: 1.hour.from_now)
+    oc1 = create(:simple_order_cycle, orders_close_at: 2.hours.ago)
+    oc2 = create(:simple_order_cycle, orders_close_at: 2.hour.from_now)
+    oc3 = create(:simple_order_cycle, orders_close_at: 1.hour.from_now)
 
     OrderCycle.soonest_closing.should == [oc3, oc2]
   end
@@ -311,7 +311,7 @@ describe OrderCycle do
   end
 
   describe "checking status" do
-    let(:oc) { create(:order_cycle) }
+    let(:oc) { create(:simple_order_cycle) }
 
     it "reports status when an order cycle is upcoming" do
       Timecop.freeze(oc.orders_open_at - 1.second) do
@@ -349,23 +349,30 @@ describe OrderCycle do
   end
 
   it "clones itself" do
-    oc = create(:order_cycle)
-    occ = oc.clone!
+    coordinator = create(:enterprise);
+    oc = create(:simple_order_cycle, coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)])
+    ex1 = create(:exchange, order_cycle: oc)
+    ex2 = create(:exchange, order_cycle: oc)
+    oc.clone!
 
     occ = OrderCycle.last
     occ.name.should == "COPY OF #{oc.name}"
     occ.orders_open_at.should be_nil
     occ.orders_close_at.should be_nil
+    occ.coordinator.should_not be_nil
     occ.coordinator.should == oc.coordinator
 
+    occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
     
-    #(0..occ.exchanges.count).all? { |i| occ.exchanges[i].eql? oc.exchanges[i] }.should be_true
-    
     # to_h gives us a unique hash for each exchange
+    # check that the clone has no additional exchanges
     occ.exchanges.map(&:to_h).all? do |ex|
       oc.exchanges.map(&:to_h).include? ex
     end
+    # check that the clone has original exchanges
+    occ.exchanges.map(&:to_h).include? ex1.to_h
+    occ.exchanges.map(&:to_h).include? ex2.to_h
   end
 
   describe "finding recently closed order cycles" do

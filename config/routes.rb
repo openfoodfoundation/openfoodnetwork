@@ -26,6 +26,7 @@ Openfoodnetwork::Application.routes.draw do
       get :suppliers
       get :distributors
       post :search
+      get :check_permalink
     end
 
     member do
@@ -33,8 +34,9 @@ Openfoodnetwork::Application.routes.draw do
       get :shop # old world
     end
   end
+  get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
 
-  devise_for :enterprise
+  devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
   namespace :admin do
     resources :order_cycles do
@@ -48,6 +50,10 @@ Openfoodnetwork::Application.routes.draw do
       collection do
         get :for_order_cycle
         post :bulk_update, as: :bulk_update
+      end
+
+      member do
+        put :set_sells
       end
 
       resources :producer_properties do
@@ -65,6 +71,10 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprise_groups do
       get :move_up
       get :move_down
+    end
+
+    resources :variant_overrides do
+      post :bulk_update, on: :collection
     end
   end
 
@@ -110,10 +120,12 @@ end
 
 Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
+  match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/group_buys' => 'admin/reports#group_buys', :as => "group_buys_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
+  match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via  => [:get, :post]
   match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
@@ -128,8 +140,12 @@ Spree::Core::Engine.routes.prepend do
     end
 
     resources :products do
-      get :managed, on: :collection
-      get :bulk_products, on: :collection
+      collection do
+        get :managed
+        get :bulk_products
+        get :distributable
+        get :overridable
+      end
       delete :soft_delete
 
       resources :variants do
@@ -143,6 +159,8 @@ Spree::Core::Engine.routes.prepend do
   end
 
   namespace :admin do
+    get '/search/known_users' => "search#known_users", :as => :search_known_users
+
     resources :products do
       get :product_distributions, on: :member
 
@@ -151,8 +169,6 @@ Spree::Core::Engine.routes.prepend do
   end
 
   resources :orders do
-    get :select_distributor, :on => :member
-    get :deselect_distributor, :on => :collection
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end

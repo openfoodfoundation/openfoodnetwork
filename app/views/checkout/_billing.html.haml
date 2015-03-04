@@ -1,7 +1,7 @@
 %fieldset#billing
   %ng-form{"ng-controller" => "BillingCtrl", name: "billing"}
 
-    %h5{"ng-class" => "{valid: billing.$valid, dirty: billing.$dirty}"}
+    %h5{"ng-class" => "{valid: billing.$valid, dirty: billing.$dirty || submitted}"}
       %span.right
         %label.label.round.alert.right
           %i.ofn-i_009-close
@@ -11,22 +11,8 @@
 
     %accordion-group{"is-open" => "accordion.billing",
       "ng-class" => "{valid: billing.$valid, open: accordion.billing}"}
-      %accordion-heading
-        .row
-          .small-8.medium-10.columns
-            %em
-              %small
-                {{ summary() | printArray }}
-          .small-4.medium-2.columns.text-right
-            %span.accordion-up
-              %em
-                %small Hide
-              %i.ofn-i_053-point-up
-            %span.accordion-down
-              %em
-                %small Expand
-              %i.ofn-i_052-point-down
-
+      = render 'checkout/accordion_heading'
+      
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .small-12.columns
@@ -39,15 +25,13 @@
             = validated_input "City", "order.bill_address.city"
 
           .small-6.columns
-            = ba.select :state_id, @order.billing_address.country.states.map{|c|[c.name, c.id]}, {include_blank: false},
-              "ng-model" => "order.bill_address.state_id", required: true
+            = validated_select "State", "order.bill_address.state_id", checkout_state_options(:billing)
         .row
           .small-6.columns
             = validated_input "Postcode", "order.bill_address.zipcode"
 
           .small-6.columns.right
-            = ba.select :country_id, available_countries.map{|c|[c.name, c.id]},
-              "ng-model" => "order.bill_address.country_id", required: true
+            = validated_select "Country", "order.bill_address.country_id", checkout_country_options
 
       .row
         .small-12.columns.text-right

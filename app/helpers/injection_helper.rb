@@ -1,6 +1,6 @@
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
+    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
   end
 
   def inject_current_order
@@ -28,7 +28,7 @@ module InjectionHelper
   def inject_spree_api_key
     render partial: "json/injection_ams", locals: {name: 'spreeApiKey', json: "'#{@spree_api_key.to_s}'"}
   end
-  
+
   def inject_available_countries
     inject_json_ams "availableCountries", available_countries, Api::CountrySerializer
   end

@@ -1,13 +1,5 @@
 = form_for @search, :url => spree.orders_and_fulfillment_admin_reports_path do |f|
-  .row.date-range-filter
-    = label_tag nil, t(:date_range)
-    %br
-    = label_tag nil, t(:start), :class => 'inline'
-    = f.text_field :completed_at_gt, :class => 'datetimepicker datepicker-from'    
-    %span.range-divider
-      %i.icon-arrow-right
-    = f.text_field :completed_at_lt, :class => 'datetimepicker datepicker-to'
-    = label_tag nil, t(:end), :class => 'inline'
+  = render 'date_range_form', f: f
 
   .row
     .alpha.two.columns= label_tag nil, "Hubs: "

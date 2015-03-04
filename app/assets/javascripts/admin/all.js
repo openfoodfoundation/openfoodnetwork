@@ -19,9 +19,13 @@
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ./admin
 //= require ./enterprises/enterprises
+//= require ./enterprise_groups/enterprise_groups
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
+//= require ./side_menu/side_menu
+//= require ./taxons/taxons
+//= require ./utils/utils
 //= require ./users/users
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js

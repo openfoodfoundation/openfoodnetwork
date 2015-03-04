@@ -6,6 +6,8 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
+
+
   let!(:taxon) { create(:taxon) }
 
   background do
@@ -15,7 +17,10 @@ feature %q{
   end
 
   describe "creating a product" do
-    scenario "assigning a important attributes", js: true do
+    let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
+    let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
+
+    scenario "assigning important attributes", js: true do
       login_to_admin_section
 
       click_link 'Products'
@@ -28,6 +33,8 @@ feature %q{
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      select 'Test Shipping Category', from: 'product_shipping_category_id'
       fill_in 'product_description', with: "A description..."
 
       click_button 'Create'
@@ -43,6 +50,8 @@ feature %q{
       product.primary_taxon_id.should == taxon.id
       product.price.to_s.should == '19.99'
       product.on_hand.should == 5
+      product.tax_category_id.should == tax_category.id
+      product.shipping_category.should == shipping_category
       product.description.should == "A description..."
       product.group_buy.should be_false
       product.master.option_values.map(&:name).should == ['5kg']
@@ -85,6 +94,7 @@ feature %q{
   end
 
   context "as an enterprise user" do
+    let!(:tax_category) { create(:tax_category) }
 
     before do
       @new_user = create_enterprise_user
@@ -117,6 +127,7 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
+      select tax_category.name, from: "product_tax_category_id"
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -127,6 +138,7 @@ feature %q{
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier2
+      product.tax_category.should == tax_category
     end
 
     scenario "editing a product" do
@@ -135,10 +147,12 @@ feature %q{
       visit spree.edit_admin_product_path product
 
       select 'Permitted Supplier', from: 'product_supplier_id'
+      select tax_category.name, from: 'product_tax_category_id'
       click_button 'Update'
       flash_message.should == 'Product "a product" has been successfully updated!'
       product.reload
       product.supplier.should == @supplier_permitted
+      product.tax_category.should == tax_category
     end
 
     scenario "editing product distributions" do

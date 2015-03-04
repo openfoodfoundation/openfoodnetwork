@@ -1,6 +1,7 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
+      before_filter :force_environment, only: [:create, :update]
       skip_before_filter :load_resource, only: [:show_provider_preferences]
       before_filter :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
@@ -45,6 +46,10 @@ module Spree
       end
 
       private
+
+      def force_environment
+        params[:payment_method][:environment] = Rails.env unless spree_current_user.admin?
+      end
 
       def load_data
         if spree_current_user.admin? || Rails.env.test?

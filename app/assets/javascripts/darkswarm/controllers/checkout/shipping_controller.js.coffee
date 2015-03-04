@@ -3,5 +3,8 @@ Darkswarm.controller "ShippingCtrl", ($scope, $timeout, ShippingMethods) ->
   $scope.ShippingMethods = ShippingMethods
   $scope.name = "shipping"
   $scope.nextPanel = "payment"
+
+  $scope.summary = ->
+    [$scope.Checkout.shippingMethod()?.name]
   
   $timeout $scope.onTimeout 

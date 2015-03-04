@@ -1,13 +1,15 @@
 module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => :index
+    before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
+    before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
+    before_filter :check_can_change_managers, only: :update
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -16,17 +18,43 @@ module Admin
       @collection = order_cycle_permitted_enterprises
     end
 
+    def set_sells
+      enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
+      attributes = { sells: params[:sells] }
+      attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
+      attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
+
+      if %w(none own).include?(params[:sells])
+        if params[:sells] == 'own' && enterprise.shop_trial_start_date
+          expiry = enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days
+          if Time.now > expiry
+            flash[:error] = "Sorry, but you've already had a trial. Expired on: #{expiry.strftime('%Y-%m-%d')}"
+          else
+            attributes.delete :shop_trial_start_date
+            enterprise.update_attributes(attributes)
+            flash[:notice] = "Welcome back! Your trial expires on: #{expiry.strftime('%Y-%m-%d')}"
+          end
+        elsif enterprise.update_attributes(attributes)
+          flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
+        end
+      else
+        flash[:error] = "Unauthorised"
+      end
+      redirect_to admin_path
+    end
 
     def bulk_update
-      @enterprise_set = EnterpriseSet.new(params[:enterprise_set])
+      @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
       if @enterprise_set.save
         flash[:success] = 'Enterprises updated successfully'
         redirect_to main_app.admin_enterprises_path
       else
+        touched_ids = params[:enterprise_set][:collection_attributes].values.map { |v| v[:id].to_i }
+        @enterprise_set.collection.select! { |e| touched_ids.include? e.id }
+        flash[:error] = 'Update failed'
         render :index
       end
     end
-
 
     protected
 
@@ -38,11 +66,16 @@ module Admin
     end
     alias_method_chain :build_resource, :address
 
+    # Overriding method on Spree's resource controller,
+    # so that resources are found using permalink
+    def find_resource
+      Enterprise.find_by_permalink(params[:id])
+    end
 
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new :collection => collection
+      @enterprise_set = EnterpriseSet.new collection
     end
 
     def load_countries
@@ -50,8 +83,10 @@ module Admin
     end
 
     def collection
-      # TODO was ordered with is_distributor DESC as well, not sure why or how we want ot sort this now
-      Enterprise.managed_by(spree_current_user).order('is_primary_producer ASC, name')
+      # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+      OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_enterprises.
+        order('is_primary_producer ASC, name')
     end
 
     def collection_actions
@@ -62,6 +97,10 @@ module Admin
       @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
       @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
+    end
+
+    def load_taxons
+      @taxons = Spree::Taxon.order(:name)
     end
 
     def check_can_change_bulk_sells
@@ -91,6 +130,12 @@ module Admin
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
           enterprise_params.delete :owner_id
         end
+      end
+    end
+
+    def check_can_change_managers
+      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+        params[:enterprise].delete :user_ids
       end
     end
 

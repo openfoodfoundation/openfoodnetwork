@@ -8,6 +8,6 @@ Darkswarm.directive "ofnEmptiesCart", (CurrentHub, Cart, Navigation, storage) ->
     if CurrentHub.hub?.id and CurrentHub.hub.id isnt scope.hub.id and !Cart.empty()
       elm.bind 'click', (ev)->
         ev.preventDefault()
-        if confirm "Are you sure? This will change your selected Hub and remove any items in you shopping cart."
+        if confirm "Are you sure? This will change your selected Hub and remove any items in your shopping cart."
           storage.clearAll() # One day this will have to be moar GRANULAR
           Navigation.go scope.hub.path 

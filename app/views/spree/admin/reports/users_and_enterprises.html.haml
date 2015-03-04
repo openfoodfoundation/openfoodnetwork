@@ -1,0 +1,34 @@
+= form_tag spree.users_and_enterprises_admin_reports_url do |f|
+  .row
+    .alpha.two.columns= label_tag nil, "Enterprises: "
+    .omega.fourteen.columns= select_tag(:enterprise_id_in, options_from_collection_for_select(Enterprise.all, :id, :name, params[:enterprise_id_in].andand.split(",")), {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .alpha.two.columns= label_tag nil, "Users: "
+    .omega.fourteen.columns= select_tag(:user_id_in, options_from_collection_for_select(Spree::User.all, :id, :email, params[:user_id_in].andand.split(",")), {class: "select2 fullwidth", multiple: true})
+
+  -# Might need this later if we add different kinds of reports
+  -# .row
+  -#   .alpha.two.columns= label_tag nil, "Report Type: "
+  -#   .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, params[:report_type]))
+
+  .row
+    = check_box_tag :csv
+    = label_tag :csv, "Download as csv"
+  .row
+    = button t(:search)
+%br
+%br
+%table#users_and_enterprises
+  %thead
+    %tr
+      - @report.header.each do |heading|
+        %th=heading
+  %tbody
+    - @report.table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @report.table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)

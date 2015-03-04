@@ -10,7 +10,9 @@
 
 %aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
-    %li= link_to image_tag("ofn_logo_small.png"), root_path
+    %li.ofn-logo
+      %a{href: root_path} 
+        %img{src: "/assets/open-food-network-beta.png", srcset: "/assets/open-food-network-beta.svg", width: "110", height: "26"}
     
     - if current_page? root_path
       %li.li-menu

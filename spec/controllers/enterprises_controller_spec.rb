@@ -54,8 +54,8 @@ describe EnterprisesController do
   describe "shopping for a distributor" do
 
     before(:each) do
-      @current_distributor = create(:distributor_enterprise)
-      @distributor = create(:distributor_enterprise)
+      @current_distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
+      @distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
       @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor])
       @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor])
       controller.current_order(true).distributor = @current_distributor
@@ -110,19 +110,21 @@ describe EnterprisesController do
     end
   end
 
-  describe "BaseController: handling order cycles closing mid-order" do
-    it "clears the order and displays an expiry message" do
-      oc = double(:order_cycle, id: 123, closed?: true)
-      controller.stub(:current_order_cycle) { oc }
+  context "checking permalink availability" do
+    # let(:enterprise) { create(:enterprise, permalink: 'enterprise_permalink') }
 
-      order = double(:order)
-      order.should_receive(:empty!)
-      order.should_receive(:set_order_cycle!).with(nil)
-      controller.stub(:current_order) { order }
+    it "responds with status of 200 when the route does not exist" do
+      spree_get :check_permalink, { permalink: 'some_nonexistent_route', format: :js }
+      expect(response.status).to be 200
+    end
 
-      spree_get :index
-      session[:expired_order_cycle_id].should == 123
-      response.should redirect_to root_url
+    it "responds with status of 409 when the permalink matches an existing route" do
+      # spree_get :check_permalink, { permalink: 'enterprise_permalink', format: :js }
+      # expect(response.status).to be 409
+      spree_get :check_permalink, { permalink: 'map', format: :js }
+      expect(response.status).to be 409
+      spree_get :check_permalink, { permalink: '', format: :js }
+      expect(response.status).to be 409
     end
   end
 end

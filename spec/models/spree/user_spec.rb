@@ -1,4 +1,6 @@
 describe Spree.user_class do
+  include AuthenticationWorkflow
+
   describe "associations" do
     it { should have_many(:owned_enterprises) }
 
@@ -19,8 +21,22 @@ describe Spree.user_class do
         expect {
           u2.owned_enterprises << e2
           u2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: The nominated user is not permitted to own own any more enterprises (limit is 1)."
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u2.email} is not permitted to own any more enterprises (limit is 1)."
       end
+    end
+
+    describe "group ownership" do
+      let(:u1) { create(:user) }
+      let(:u2) { create(:user) }
+      let!(:g1) { create(:enterprise_group, owner: u1) }
+      let!(:g2) { create(:enterprise_group, owner: u1) }
+      let!(:g3) { create(:enterprise_group, owner: u2) }
+
+      it "provides access to owned groups" do
+        expect(u1.owned_groups(:reload)).to match_array([g1, g2])
+        expect(u2.owned_groups(:reload)).to match_array([g3])
+      end
+
     end
   end
 
@@ -28,6 +44,30 @@ describe Spree.user_class do
     it "should send a signup email" do
       Spree::UserMailer.should_receive(:signup_confirmation).and_return(double(:deliver => true))
       create(:user)
+    end
+  end
+
+  describe "known_users" do
+    let!(:u1) { create_enterprise_user }
+    let!(:u2) { create_enterprise_user }
+    let!(:u3) { create_enterprise_user }
+    let!(:e1) { create(:enterprise, owner: u1, users: [u1, u2]) }
+
+    describe "as an enterprise user" do
+      it "returns a list of users which manage shared enterprises" do
+        expect(u1.known_users).to include u1, u2
+        expect(u1.known_users).to_not include u3
+        expect(u2.known_users).to include u1,u2
+        expect(u2.known_users).to_not include u3
+        expect(u3.known_users).to_not include u1,u2,u3
+      end
+    end
+
+    describe "as admin" do
+      let(:admin) { quick_login_as_admin }
+      it "returns all users" do
+        expect(admin.known_users).to include u1, u2, u3
+      end
     end
   end
 end

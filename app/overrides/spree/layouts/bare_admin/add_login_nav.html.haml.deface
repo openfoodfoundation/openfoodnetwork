@@ -1,0 +1,3 @@
+/ insert_top "[data-hook='admin_login_navigation_bar']"
+
+= render partial: "spree/layouts/admin/login_nav"

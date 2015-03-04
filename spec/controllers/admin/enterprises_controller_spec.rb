@@ -3,16 +3,16 @@ require 'spec_helper'
 module Admin
   describe EnterprisesController do
     include AuthenticationWorkflow
-    let(:distributor_owner) do
-      user = create(:user)
-      user.spree_roles = []
-      user
-    end
-    let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
-    let(:user) do
+    let(:user) { create_enterprise_user }
+    let(:distributor_manager) do
       user = create(:user)
       user.spree_roles = []
       distributor.enterprise_roles.build(user: user).save
+      user
+    end
+    let(:distributor_owner) do
+      user = create(:user)
+      user.spree_roles = []
       user
     end
     let(:admin_user) do
@@ -21,18 +21,21 @@ module Admin
       user
     end
 
+    let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
+
+
     describe "creating an enterprise" do
       let(:country) { Spree::Country.find_by_name 'Australia' }
       let(:state) { Spree::State.find_by_name 'Victoria' }
-      let(:enterprise_params) { {enterprise: {name: 'zzz', email: "bob@example.com", address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
+      let(:enterprise_params) { {enterprise: {name: 'zzz', permalink: 'zzz', email: "bob@example.com", address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
 
       it "grants management permission if the current user is an enterprise user" do
-        controller.stub spree_current_user: user
-        enterprise_params[:enterprise][:owner_id] = user
+        controller.stub spree_current_user: distributor_manager
+        enterprise_params[:enterprise][:owner_id] = distributor_manager
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
-        user.enterprise_roles.where(enterprise_id: enterprise).first.should be
+        distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
 
       it "does not grant management permission to admins" do
@@ -45,41 +48,12 @@ module Admin
       end
 
       it "it overrides the owner_id submitted by the user unless current_user is super admin" do
-        controller.stub spree_current_user: user
-        enterprise_params[:enterprise][:owner_id] = admin_user
+        controller.stub spree_current_user: distributor_manager
+        enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
-        user.enterprise_roles.where(enterprise_id: enterprise).first.should be
-      end
-    end
-
-    describe "updating an enterprise" do
-      it "allows current owner to change ownership" do
-        controller.stub spree_current_user: distributor_owner
-        update_params = { id: distributor, enterprise: { owner_id: user } }
-        spree_post :update, update_params
-
-        distributor.reload
-        expect(distributor.owner).to eq user
-      end
-
-      it "allows super admin to change ownership" do
-        controller.stub spree_current_user: admin_user
-        update_params = { id: distributor, enterprise: { owner_id: user } }
-        spree_post :update, update_params
-
-        distributor.reload
-        expect(distributor.owner).to eq user
-      end
-
-      it "does not allow managers to change ownership" do
-        controller.stub spree_current_user: user
-        update_params = { id: distributor, enterprise: { owner_id: user } }
-        spree_post :update, update_params
-
-        distributor.reload
-        expect(distributor.owner).to eq distributor_owner
+        distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
     end
 
@@ -88,24 +62,194 @@ module Admin
 
       context "as manager" do
         it "does not allow 'sells' to be changed" do
-          profile_enterprise.enterprise_roles.build(user: user).save
-          controller.stub spree_current_user: user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
+          profile_enterprise.enterprise_roles.build(user: distributor_manager).save
+          controller.stub spree_current_user: distributor_manager
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
           expect(profile_enterprise.sells).to eq 'none'
+        end
+
+        it "does not allow owner to be changed" do
+          controller.stub spree_current_user: distributor_manager
+          update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.owner).to eq distributor_owner
+        end
+
+        it "does not allow managers to be changed" do
+          controller.stub spree_current_user: distributor_manager
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.users).to_not include user
+        end
+      end
+
+      context "as owner" do
+        it "allows owner to be changed" do
+          controller.stub spree_current_user: distributor_owner
+          update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.owner).to eq distributor_manager
+        end
+
+        it "allows managers to be changed" do
+          controller.stub spree_current_user: distributor_owner
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.users).to include user
         end
       end
 
       context "as super admin" do
         it "allows 'sells' to be changed" do
           controller.stub spree_current_user: admin_user
-          enterprise_params = { id: profile_enterprise.id, enterprise: { sells: 'any' } }
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
 
           spree_put :update, enterprise_params
           profile_enterprise.reload
           expect(profile_enterprise.sells).to eq 'any'
+        end
+
+
+        it "allows owner to be changed" do
+          controller.stub spree_current_user: admin_user
+          update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.owner).to eq distributor_manager
+        end
+
+        it "allows managers to be changed" do
+          controller.stub spree_current_user: admin_user
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          spree_post :update, update_params
+
+          distributor.reload
+          expect(distributor.users).to include user
+        end
+      end
+    end
+
+    describe "set_sells" do
+      let(:enterprise) { create(:enterprise, sells: 'none') }
+
+      before do
+        controller.stub spree_current_user: distributor_manager
+      end
+
+      context "as a normal user" do
+        it "does not allow 'sells' to be set" do
+          spree_post :set_sells, { id: enterprise.id, sells: 'none' }
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "as a manager" do
+        before do
+          enterprise.enterprise_roles.build(user: distributor_manager).save
+        end
+
+        context "allows setting 'sells' to 'none'" do
+          it "is allowed" do
+            spree_post :set_sells, { id: enterprise, sells: 'none' }
+            expect(response).to redirect_to spree.admin_path
+            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+            expect(enterprise.reload.sells).to eq 'none'
+          end
+
+          context "setting producer_profile_only to true" do
+            it "is allowed" do
+              spree_post :set_sells, { id: enterprise, sells: 'none', producer_profile_only: true }
+              expect(response).to redirect_to spree.admin_path
+              expect(enterprise.reload.producer_profile_only).to eq true
+            end
+          end
+        end
+
+        context "setting 'sells' to 'own'" do
+          before do
+            enterprise.sells = 'own'
+            enterprise.save!
+          end
+
+          context "if the trial has finished" do
+            before do
+              enterprise.shop_trial_start_date = (Date.today - 30.days).to_time
+              enterprise.save!
+            end
+
+            it "is disallowed" do
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
+              expect(response).to redirect_to spree.admin_path
+              trial_expiry = Date.today.strftime("%Y-%m-%d")
+              expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
+              expect(enterprise.reload.sells).to eq 'own'
+              expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+            end
+          end
+
+          context "if the trial has not finished" do
+            before do
+              enterprise.shop_trial_start_date = Date.today.to_time
+              enterprise.save!
+            end
+
+            it "is allowed, but trial start date is not reset" do
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
+              expect(response).to redirect_to spree.admin_path
+              trial_expiry = (Date.today + 30.days).strftime("%Y-%m-%d")
+              expect(flash[:notice]).to eq "Welcome back! Your trial expires on: #{trial_expiry}"
+              expect(enterprise.reload.sells).to eq 'own'
+              expect(enterprise.reload.shop_trial_start_date).to eq Date.today.to_time
+            end
+          end
+
+          context "if a trial has not started" do
+            it "is allowed" do
+              spree_post :set_sells, { id: enterprise, sells: 'own' }
+              expect(response).to redirect_to spree.admin_path
+              expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+              expect(enterprise.reload.sells).to eq 'own'
+              expect(enterprise.reload.shop_trial_start_date).to be > Time.now-(1.minute)
+            end
+          end
+
+          context "setting producer_profile_only to true" do
+            it "is ignored" do
+              spree_post :set_sells, { id: enterprise, sells: 'own', producer_profile_only: true }
+              expect(response).to redirect_to spree.admin_path
+              expect(enterprise.reload.producer_profile_only).to be false
+            end
+          end
+        end
+
+        context "setting 'sells' to any" do
+          it "is not allowed" do
+            spree_post :set_sells, { id: enterprise, sells: 'any' }
+            expect(response).to redirect_to spree.admin_path
+            expect(flash[:error]).to eq "Unauthorised"
+            expect(enterprise.reload.sells).to eq 'none'
+          end
+        end
+
+        context "settiing 'sells' to 'unspecified'" do
+          it "is not allowed" do
+            spree_post :set_sells, { id: enterprise, sells: 'unspecified' }
+            expect(response).to redirect_to spree.admin_path
+            expect(flash[:error]).to eq "Unauthorised"
+            expect(enterprise.reload.sells).to eq 'none'
+          end
         end
       end
     end
@@ -140,6 +284,15 @@ module Admin
           expect(profile_enterprise2.sells).to eq 'none'
           expect(profile_enterprise1.owner).to eq original_owner
           expect(profile_enterprise2.owner).to eq original_owner
+        end
+
+        it "cuts down the list of enterprises displayed when error received on bulk update" do
+          EnterpriseSet.any_instance.stub(:save) { false }
+          profile_enterprise1.enterprise_roles.build(user: new_owner).save
+          controller.stub spree_current_user: new_owner
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
+          spree_put :bulk_update, bulk_enterprise_params
+          expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
         end
       end
 

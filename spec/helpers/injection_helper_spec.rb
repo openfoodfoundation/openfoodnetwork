@@ -12,12 +12,17 @@ describe InjectionHelper do
     helper.inject_enterprises.should match enterprise.facebook
   end
 
+  it "only injects activated enterprises" do
+    inactive_enterprise = create(:enterprise, sells: 'unspecified')
+    helper.inject_enterprises.should_not match inactive_enterprise.name
+  end
+
   it "injects shipping_methods" do
     sm = create(:shipping_method)
     helper.stub(:current_order).and_return order = create(:order)
     helper.stub_chain(:current_distributor, :shipping_methods, :uniq).and_return [sm]
     helper.inject_available_shipping_methods.should match sm.id.to_s
-    helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s 
+    helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
   end
 
   it "injects payment methods" do
@@ -28,7 +33,7 @@ describe InjectionHelper do
   end
 
   it "injects current order" do
-    helper.stub(:current_order).and_return order = create(:order) 
+    helper.stub(:current_order).and_return order = create(:order)
     helper.inject_current_order.should match order.id.to_s
   end
 

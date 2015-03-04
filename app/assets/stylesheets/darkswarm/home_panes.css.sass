@@ -32,11 +32,23 @@
 
 #producers.pane
   @include turqbg
+  @include panepadding
+  background-image: url("/assets/home/producers-bg.svg")
+  background-repeat: no-repeat
+  background-position: center center
+  background-size: 80% 80%
+
+  @media all and (max-width: 768px)
+    background-position: center top
+    background-size: 100% 100%
   .row
-    @include panepadding
-    background-image: url("/assets/home/producers-bg.svg")
-    background-repeat: no-repeat
-    background-position: right center
+    .pricing-table
+      .title
+        color: $clr-turquoise-light
+      .price
+        background-color: rgba(240, 240, 240, 0.6)
+      .description, .bullet-item, .cta-button
+        background-color: rgba(255, 255, 255, 0.8)
 
 // Responsive 
 @media all and (max-width: 768px)

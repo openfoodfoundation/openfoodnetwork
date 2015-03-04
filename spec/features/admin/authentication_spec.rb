@@ -5,7 +5,11 @@ feature "Authentication", js: true do
   let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
   scenario "logging into admin redirects home, then back to admin" do
-    visit spree.admin_path
+    # This is the first admin spec, so give a little extra load time for slow systems
+    Capybara.using_wait_time(60) do
+      visit spree.admin_path
+    end
+
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
     click_login_button

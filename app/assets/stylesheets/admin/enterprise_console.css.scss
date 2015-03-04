@@ -1,0 +1,14 @@
+span.unavailable, span.available {
+  font-weight: bold;
+  i {
+    font-size: 150%;
+  }
+}
+
+span.available {
+  color: #9fc820;
+}
+
+span.unavailable {
+  color: #DA5354;
+}

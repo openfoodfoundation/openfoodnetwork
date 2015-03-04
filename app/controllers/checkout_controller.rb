@@ -1,6 +1,7 @@
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
 
+  prepend_before_filter :check_hub_ready_for_checkout
   prepend_before_filter :check_order_cycle_expiry
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
