@@ -1,32 +1,67 @@
 .row
-  - if order.has_step?("address")
-    .columns.large-3
-      %h6
-        = t(:shipping_address)
+  .columns.large-6
+    .order-summary.text-small
+      .right
+        - if @order.paid?
+          PAID
+        - else
+          NOT PAID
+      %span 
+        Total order
+        %strong
+          = order.display_total.to_html
+          / = link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed?
+    %p.text-big
+      Paying via:
+      %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe  
+      %br
+      %span.text-small
+        %em
+          = order.payments.first.andand.payment_method.andand.description.andand.html_safe
+    .order-summary.text-small
+      %strong
+        Billing address
         = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-      .address
-        = order.ship_address
-    .columns.large-3
-      %h6
-        = t(:billing_address)
-        = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-      .address
-        = order.bill_address
+    %p.text-small
+      = order.bill_address.firstname + " " + order.bill_address.lastname
+      %br
+      = order.bill_address.full_address
+
+  .columns.large-6
+    .order-summary.text-small
+      %strong= order.shipping_method.name
+
     - if @order.has_step?("delivery")
-      .columns.large-2
-        %h6
-          = t(:shipping_method)
-        .delivery
-          = order.shipping_method.name
-  .columns.large-4
-    %h6
-      = t(:payment_information)
-      = link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed?
-    .payment-info
-      = render order.payments.valid
+      %p.text-big
+        Delivery on
+        %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+        %br
+        %span.text-small
+          %em= order.shipping_method.description.html_safe
+      .order-summary.text-small
+        %strong Delivery address
+      %p.text-small
+        = order.ship_address.firstname + " " + order.ship_address.lastname
+        %br
+        = order.ship_address.full_address
+  
+    - else
+      .order-summary.text-small
+        %strong
+          Shipping address
+          = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
+      %p.text-small
+        = order.ship_address.firstname + " " + order.ship_address.lastname
+        %br
+        = order.ship_address.full_address
 
-%hr/
-
+    %p.light
+      %small
+        %strong Your notes / custom instructions:
+        %br
+        = order.special_instructions
+      
+%br
 %table#line-items{"data-hook" => "order_details"}
   %col{halign: "center", valign: "middle", width: "15%"}/
   %col{valign: "middle", width: "70%"}/
@@ -48,10 +83,14 @@
             = link_to small_image(item.variant.product), item.variant.product
           - else
             = link_to image_tag(item.variant.images.first.attachment.url(:small)), item.variant.product
-        %td{"data-hook" => "order_item_description"}
-          %h4= item.variant.product.name
-          = truncated_product_description(item.variant.product)
-          = "(" + item.variant.options_text + ")" unless item.variant.option_values.empty?
+        %td(data-hook = "order_item_description")
+          - if item.variant.product.name == item.variant.name_to_display
+            %h5= item.variant.product.name
+          - else
+            %h5
+              %span= item.variant.product.name
+              %span= "- " + item.variant.name_to_display
+          %p= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
         %td.price{"data-hook" => "order_item_price"}
           %span= item.single_display_amount_with_adjustments.to_html
         %td{"data-hook" => "order_item_qty"}= item.quantity
@@ -81,8 +120,7 @@
   %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
     %tr#subtotal-row.total
       %td{colspan: "4"}
-        %b
-          Produce:
+        Produce:
       %td.total
         %span= display_checkout_subtotal(@order)
 
@@ -90,6 +128,6 @@
     - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
       %tr.total
         %td{:colspan => "4"}
-          %strong= adjustment.label + ":"
+          = adjustment.label + ":"
         %td.total
           %span= adjustment.display_amount.to_html
