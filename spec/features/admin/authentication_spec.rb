@@ -2,6 +2,9 @@ require 'spec_helper'
 
 feature "Authentication", js: true do
   include UIComponentHelper
+  include AuthenticationWorkflow
+  include WebHelper
+
   let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
   scenario "logging into admin redirects home, then back to admin" do
@@ -15,5 +18,11 @@ feature "Authentication", js: true do
     click_login_button
     page.should have_content "Dashboard"
     current_path.should == spree.admin_path
+  end
+
+  scenario "viewing my account" do
+    login_to_admin_section
+    click_link "Account"
+    current_path.should == spree.account_path
   end
 end
