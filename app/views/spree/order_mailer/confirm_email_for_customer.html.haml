@@ -36,8 +36,14 @@
     - @order.line_items.each do |item|
       %tr
         %td
-          %strong= "#{raw(item.variant.product.name)}" 
-          = "#{raw(item.variant.options_text)}"
+          - if item.variant.product.name == item.variant.name_to_display
+            %strong= "#{raw(item.variant.product.name)}"
+          - else
+            %strong
+              %span= "#{raw(item.variant.product.name)}"
+              %span.light= "- " + "#{raw(item.variant.name_to_display)}"
+          - if item.variant.options_text
+            = "(" + "#{raw(item.variant.options_text)}" + ")"
           %br
           %small
             %em= raw(item.variant.product.supplier.name)
