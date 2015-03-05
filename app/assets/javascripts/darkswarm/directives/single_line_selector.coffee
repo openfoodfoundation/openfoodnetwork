@@ -1,9 +1,6 @@
 Darkswarm.directive 'singleLineSelector', ($timeout) ->
   restrict: 'E'
   link: (scope,element,attrs) ->
-    scope.activeTaxons = []
-    scope.taxonSelectors = []
-
     # From: http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
     debouncer = (func, timeout) ->
       timeoutID = undefined
