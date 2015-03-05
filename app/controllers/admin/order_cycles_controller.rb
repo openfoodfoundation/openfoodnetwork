@@ -79,7 +79,7 @@ module Admin
       ocs.undated +
         ocs.soonest_closing +
         ocs.soonest_opening +
-        ocs.most_recently_closed
+        ocs.recently_closed
     end
 
     private
