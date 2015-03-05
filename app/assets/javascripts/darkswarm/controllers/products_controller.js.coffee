@@ -25,3 +25,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
     $scope.activeTaxons.map( (taxon_id) ->
       Taxons.taxons_by_id[taxon_id].name
     ).join(" & ") if $scope.activeTaxons?
+
+  $scope.clearAll = ->
+    $scope.query = ""
+    FilterSelectorsService.clearAll()
