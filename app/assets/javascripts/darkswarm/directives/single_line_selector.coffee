@@ -1,5 +1,6 @@
-Darkswarm.directive 'singleLineSelector', ($timeout, $filter) ->
+Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
   restrict: 'E'
+  templateUrl: "single_line_selectors.html"
   link: (scope,element,attrs) ->
     scope.fitting = false
 

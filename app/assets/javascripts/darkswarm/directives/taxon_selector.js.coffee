@@ -45,3 +45,9 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
             taxon: taxon
           selectors.push selector
       selectors
+
+    scope.ifDefined = (value, if_undefined) ->
+      if angular.isDefined(value)
+        value
+      else
+        if_undefined

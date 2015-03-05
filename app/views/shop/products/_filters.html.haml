@@ -1,38 +1,5 @@
 .filter-box.filter-box-shopfront.animate-hide.text-right
-  %single-line-selector
-    %ul
-      %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
-        "active-taxons" => "activeTaxons", "taxon-selectors" => "taxonSelectors" }
-
-      %li.more{ ng: { show: "overFlowSelectors().length > 0 || fitting", class: "{active: selectedOverFlowSelectors().length > 0}" } }
-        %a.dropdown{ dropdown: { toggle: "#more-taxons" } }
-          %span
-            + {{ overFlowSelectors().length }} more
-          %i.ofn-i_052-point-down
-      .f-dropdown.content#more-taxons
-        %ul
-          %active-selector{ ng: { repeat: "selector in overFlowSelectors()", hide: "selector.fits" } }
-            %render-svg{path: "{{selector.taxon.icon}}"}
-            %span {{ selector.taxon.name }}
-
-      / TODO: Needs controller for Angular Bootstrap directive for dropdown:
-      / {"ng-controller" => "DropdownCtrl"}
-
-      / %li
-      /   .btn-group{:dropdown => "", "is-open" => "status.isopen"}
-      /     %button.btn.btn-primary.dropdown-toggle{"dropdown-toggle" => "", "ng-disabled" => "disabled", :type => "button"}
-      /       + 7 more
-      /       %span.caret
-      /     %ul.dropdown-menu{:role => "menu"}
-      /       %li
-      /         %a{:href => "#"} Action
-      /       %li
-      /         %a{:href => "#"} Another action
-      /       %li
-      /         %a{:href => "#"} Something else here
-      /       %li.divider
-      /       %li
-      /         %a{:href => "#"} Separated link
+  %single-line-selectors
 
 -# .filter-box.property-box-shopfront.animate-hide.text-right
 -#   %ul

@@ -1,0 +1,14 @@
+%ul
+  %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
+    "active-taxons" => "activeTaxons", "taxon-selectors" => "taxonSelectors" }
+
+  %li.more{ ng: { show: "overFlowSelectors().length > 0 || fitting", class: "{active: selectedOverFlowSelectors().length > 0}" } }
+    %a.dropdown{ dropdown: { toggle: "#more-taxons" } }
+      %span
+        + {{ overFlowSelectors().length }} more
+      %i.ofn-i_052-point-down
+  .f-dropdown.content#more-taxons
+    %ul
+      %active-selector{ ng: { repeat: "selector in overFlowSelectors()", hide: "selector.fits" } }
+        %render-svg{path: "{{selector.taxon.icon}}"}
+        %span {{ selector.taxon.name }}

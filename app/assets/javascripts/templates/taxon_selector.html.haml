@@ -1,3 +1,3 @@
-%active-selector{"ng-repeat" => "selector in taxonSelectors", "ng-show" => "selector.fits"}
+%active-selector{ ng: { repeat: "selector in selectors()", show: "ifDefined(selector.fits, true)" } }
   %render-svg{path: "{{selector.taxon.icon}}"}
   %span {{ selector.taxon.name }}
