@@ -9,6 +9,9 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
   $scope.limit = 3
   $scope.order_cycle = OrderCycle.order_cycle
 
+  $scope.$watch "Products.loading", (newValue, oldValue) ->
+    $scope.$broadcast("loadTaxonSelectors") if !newValue
+
   $scope.incrementLimit = ->
     if $scope.limit < Products.products.length
       $scope.limit = $scope.limit + 1

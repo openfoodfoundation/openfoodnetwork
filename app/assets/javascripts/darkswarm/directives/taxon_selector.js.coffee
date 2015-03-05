@@ -5,7 +5,8 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
   replace: true
   scope:
     objects: "&"
-    results: "="
+    activeTaxons: "="
+    taxonSelectors: "="
   templateUrl: "taxon_selector.html"
 
   link: (scope, elem, attr)->
@@ -13,14 +14,17 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
     selectors = null  # To get scoping/closure right
 
     scope.emit = ->
-      scope.results = selectors.filter (selector)->
+      scope.activeTaxons = selectors.filter (selector)->
         selector.active
       .map (selector)->
         selector.taxon.id
 
+    scope.$on 'loadTaxonSelectors', ->
+      scope.taxonSelectors = scope.selectors()
+
     # Build hash of unique taxons, each of which gets an ActiveSelector
     scope.selectors = ->
-      taxons = {} 
+      taxons = {}
       selectors = []
       for object in scope.objects()
         for taxon in object.taxons
@@ -28,7 +32,7 @@ Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
         if object.supplied_taxons
           for taxon in object.supplied_taxons
             taxons[taxon.id] = taxon
-      
+
       # Generate a selector for each taxon.
       # NOTE: THESE ARE MEMOIZED to stop new selectors from being created constantly, otherwise function always returns non-identical results
       # This means the $digest cycle can never close and times out

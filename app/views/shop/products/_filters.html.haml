@@ -1,45 +1,43 @@
 .filter-box.filter-box-shopfront.animate-hide.text-right
-  %ul
-    %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
-      results: "activeTaxons"}
+  %single-line-selector
+    %ul
+      %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
+        "active-taxons" => "activeTaxons", "taxon-selectors" => "taxonSelectors" }
 
-    %li
-      %a
-        %span
-          + 7 more
-        %i.ofn-i_052-point-down
+      %li.more
+        %a
+          %span
+            + {{ (taxonSelectors | filter:{ fits: false }).length }} more
+          %i.ofn-i_052-point-down
 
-    / TODO: Needs controller for Angular Bootstrap directive for dropdown:
-    / {"ng-controller" => "DropdownCtrl"}
-    
-    / %li
-    /   .btn-group{:dropdown => "", "is-open" => "status.isopen"}
-    /     %button.btn.btn-primary.dropdown-toggle{"dropdown-toggle" => "", "ng-disabled" => "disabled", :type => "button"}
-    /       + 7 more
-    /       %span.caret
-    /     %ul.dropdown-menu{:role => "menu"}
-    /       %li
-    /         %a{:href => "#"} Action
-    /       %li
-    /         %a{:href => "#"} Another action
-    /       %li
-    /         %a{:href => "#"} Something else here
-    /       %li.divider
-    /       %li
-    /         %a{:href => "#"} Separated link
+      / TODO: Needs controller for Angular Bootstrap directive for dropdown:
+      / {"ng-controller" => "DropdownCtrl"}
 
-.filter-box.property-box-shopfront.animate-hide.text-right
-  %ul
-    %li
-      %a Organic Certified
-    %li
-      %a Free Range
-    %li
-      %a Biodynamic
-    %li
-      %a
-        + 2 more
-        %span.caret
+      / %li
+      /   .btn-group{:dropdown => "", "is-open" => "status.isopen"}
+      /     %button.btn.btn-primary.dropdown-toggle{"dropdown-toggle" => "", "ng-disabled" => "disabled", :type => "button"}
+      /       + 7 more
+      /       %span.caret
+      /     %ul.dropdown-menu{:role => "menu"}
+      /       %li
+      /         %a{:href => "#"} Action
+      /       %li
+      /         %a{:href => "#"} Another action
+      /       %li
+      /         %a{:href => "#"} Something else here
+      /       %li.divider
+      /       %li
+      /         %a{:href => "#"} Separated link
 
-          
-          
+-# .filter-box.property-box-shopfront.animate-hide.text-right
+-#   %ul
+-#     %li
+-#       %a Organic Certified
+-#     %li
+-#       %a Free Range
+-#     %li
+-#       %a Biodynamic
+-#     %li
+-#       %a
+-#         + 2 more
+-#         %span.caret
