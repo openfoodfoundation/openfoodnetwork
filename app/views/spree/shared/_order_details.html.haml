@@ -11,55 +11,69 @@
         %strong
           = order.display_total.to_html
           / = link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed?
-    %p.text-big
-      Paying via:
-      %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe  
-      %br
-      %span.text-small
-        %em
-          = order.payments.first.andand.payment_method.andand.description.andand.html_safe
+    .pad
+      %p.text-big
+        Paying via:
+        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe  
+        %br
+        %span.text-small
+          %em
+            = order.payments.first.andand.payment_method.andand.description.andand.html_safe
     .order-summary.text-small
       %strong
         Billing address
         = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-    %p.text-small
-      = order.bill_address.firstname + " " + order.bill_address.lastname
-      %br
-      = order.bill_address.full_address
+    .pad  
+      %p.text-small
+        = order.bill_address.firstname + " " + order.bill_address.lastname
+        %br
+        = order.bill_address.full_address
+        %br
+        = order.bill_address.phone
 
   .columns.large-6
     .order-summary.text-small
       %strong= order.shipping_method.name
 
     - if @order.has_step?("delivery")
-      %p.text-big
-        Delivery on
-        %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
-        %br
-        %span.text-small
-          %em= order.shipping_method.description.html_safe
+      .pad  
+        %p.text-big
+          Delivery on
+          %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+          %br
+          %span.text-small
+            %em= order.shipping_method.description.html_safe
       .order-summary.text-small
         %strong Delivery address
-      %p.text-small
-        = order.ship_address.firstname + " " + order.ship_address.lastname
-        %br
-        = order.ship_address.full_address
+      .pad  
+        %p.text-small
+          = order.ship_address.firstname + " " + order.ship_address.lastname
+          %br
+          = order.ship_address.full_address
+          %br
+          = order.ship_address.phone
+          
+        %p.light.small
+          %strong Your notes:
+          %br
+          = order.special_instructions
   
     - else
       .order-summary.text-small
         %strong
           Shipping address
           = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-      %p.text-small
-        = order.ship_address.firstname + " " + order.ship_address.lastname
-        %br
-        = order.ship_address.full_address
-
-    %p.light
-      %small
-        %strong Your notes / custom instructions:
-        %br
-        = order.special_instructions
+      .pad
+        %p.text-small
+          = order.ship_address.firstname + " " + order.ship_address.lastname
+          %br
+          = order.ship_address.full_address
+          %br
+          = order.ship_address.phone
+        %p.light.small
+          %strong Your notes:
+          %br
+          = order.special_instructions
       
 %br
 %table#line-items{"data-hook" => "order_details"}
