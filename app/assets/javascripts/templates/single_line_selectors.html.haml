@@ -1,14 +1,14 @@
 %ul
-  %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
-    "active-taxons" => "activeTaxons", "taxon-selectors" => "taxonSelectors" }
+  -# In order for the single-line-selector scope to have access to the available selectors,
+  %filter-selector{objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
 
   %li.more{ ng: { show: "overFlowSelectors().length > 0 || fitting", class: "{active: selectedOverFlowSelectors().length > 0}" } }
-    %a.dropdown{ dropdown: { toggle: "#more-taxons" } }
+    %a.dropdown{ dropdown: { toggle: "#show-more" } }
       %span
         + {{ overFlowSelectors().length }} more
       %i.ofn-i_052-point-down
-  .f-dropdown.content#more-taxons
+  .f-dropdown.content#show-more
     %ul
       %active-selector{ ng: { repeat: "selector in overFlowSelectors()", hide: "selector.fits" } }
-        %render-svg{path: "{{selector.taxon.icon}}"}
-        %span {{ selector.taxon.name }}
+        %render-svg{path: "{{selector.object.icon}}"}
+        %span {{ selector.object.name }}
