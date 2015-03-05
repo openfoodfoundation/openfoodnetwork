@@ -1,11 +1,11 @@
 %thead
   %tr{"data-hook" => "cart_adjustments_headers"}
-    %th.cart-adjustment-header{colspan: "6"}
+    %th.cart-adjustment-header{colspan: "5"}
       %a{ href: "#" } Fees...
 
 %tbody#cart_adjustments{"data-hook" => ""}
   - checkout_line_item_adjustments(@order).each do |adjustment|
     %tr
-      %td{colspan: "4"}= adjustment.label
-      %td= adjustment.display_amount.to_html
+      %td{colspan: "3"}= adjustment.label
+      %td.text-right= adjustment.display_amount.to_html
       %td

@@ -1,13 +1,23 @@
 %tr.line-item{class: "variant-#{variant.id}"}
-  %td.cart-item-image{"data-hook" => "cart_item_image"}
-    - if variant.images.length == 0
-      = link_to small_image(variant.product), variant.product
-    - else
-      = link_to image_tag(variant.images.first.attachment.url(:small)), variant.product
+  
+  / %td.cart-item-image{"data-hook" => "cart_item_image"}
+  /   - if variant.images.length == 0
+  /     = link_to small_image(variant.product), variant.product
+  /   - else
+  /     = link_to image_tag(variant.images.first.attachment.url(:small)), variant.product
 
   %td.cart-item-description{'data-hook' => "cart_item_description"}
-    %h4= variant.product.name
-    = variant.options_text
+    / %h4= variant.product.name
+    - if variant.product.name == variant.name_to_display
+      %h5
+        %span= variant.product.name
+        %span.text-small.text-skinny= " (" + variant.options_text + ")" unless variant.options_text.empty?
+    - else
+      %h5
+        %span= variant.product.name
+        %span= "- " + variant.name_to_display
+        %span.text-small.text-skinny= " (" + variant.options_text + ")" unless variant.options_text.empty?
+    
     - if @order.insufficient_stock_lines.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
@@ -15,9 +25,14 @@
 
   %td.cart-item-price{"data-hook" => "cart_item_price"}
     = line_item.single_display_amount_with_adjustments.to_html
+    -# Now in a template in app/assets/javascripts/templates !
+    %price-breakdown{"price-breakdown" => "_", variant: "variant", 
+      "price-breakdown-append-to-body" => "true",
+      "price-breakdown-placement" => "left",
+      "price-breakdown-animation" => true}
   %td.cart-item-quantity{"data-hook" => "cart_item_quantity"}
     = item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5
-  %td.cart-item-total{"data-hook" => "cart_item_total"}
+  %td.cart-item-total.text-right{"data-hook" => "cart_item_total"}
     = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
   %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}

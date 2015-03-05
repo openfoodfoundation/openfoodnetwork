@@ -1,45 +1,59 @@
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
 
-%table#cart-detail{"data-hook" => ""}
-  %col{halign: "center", valign: "middle", width: "30%"}/
-  %col{valign: "middle", width: "25%"}/
-  %col{halign: "center", valign: "middle", width: "15%"}/
-  %col{halign: "center", valign: "middle", width: "15%"}/
-  %col{halign: "center", valign: "middle", width: "10%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %thead
-    %tr{"data-hook" => "cart_items_headers"}
-      %th.cart-item-description-header{colspan: "2"}= t(:item)
-      %th.cart-item-price-header= t(:price)
-      %th.cart-item-quantity-header= t(:qty)
-      %th.cart-item-total-header= t(:total)
-      %th.cart-item-delete-header
+.row
+  .columns.large-12
+    %table#cart-detail{"data-hook" => ""}
+      / %col{halign: "center", valign: "middle", width: "30%"}/
+      %col{halign: "left", valign: "middle"}/
+      %col{halign: "left", valign: "middle", width: "15%"}/
+      %col{halign: "center", valign: "middle", width: "10%"}/
+      %col{halign: "center", valign: "middle", width: "10%"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %thead
+        %tr{"data-hook" => "cart_items_headers"}
+          %th.cart-item-description-header= t(:item)
+          %th.cart-item-price-header= t(:price)
+          %th.cart-item-quantity-header= t(:qty)
+          %th.cart-item-total-header.text-right= t(:total)
+          %th.cart-item-delete-header
 
-  %tbody#line_items{"data-hook" => ""}
-    = order_form.fields_for :line_items do |item_form|
-      = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
+      %tbody#line_items{"data-hook" => ""}
+        = order_form.fields_for :line_items do |item_form|
+          = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
+      
+      %tfoot#edit-cart
+        %tr
+          %td{colspan:"2"}
+          %td
+            = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
+              %i.ofn-i_023-refresh
+              = t(:update)
+          %td
+          %td#empty-cart.text-center
+            %span#clear_cart_link{"data-hook" => ""}
+              = link_to "Empty cart", empty_cart_path, method: :put, :class => 'not-bold small'
+              -#= form_tag empty_cart_path, :method => :put do
+                -#= submit_tag t(:empty_cart), :class => 'button alert expand small'    
+        %tr
+          %td.text-right{colspan:"3"} Produce subtotal
+          %td.text-right
+            %span.order-total.item-total= display_checkout_subtotal(@order)
+          %td
 
-  %tfoot#edit-cart
-    %tr
-      %td
-        Produce Subtotal
-        \:
-        %span.order-total.item-total= display_checkout_subtotal(@order)
-      %td
-        Admin & Handling
-        \:
-        %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
-      %td
-      %td
-        = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
-          %i.ofn-i_023-refresh
-          = t(:update)
-      %td
-        %h5.order-total.grand-total= @order.display_total
-      %td#empty-cart.text-center
-        %span#clear_cart_link{"data-hook" => ""}
-          = link_to "Empty cart", empty_cart_path, method: :put, :class => 'not-bold small'
-          -#= form_tag empty_cart_path, :method => :put do
-            -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
+        %tr
+          %td.text-right{colspan:"3"} Admin & handling
+          %td.text-right
+            %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
+          %td
 
-  = render "spree/orders/adjustments" unless @order.adjustments.eligible.blank?
+        / %tr
+        /   %td{colspan:"5"} 
+        /     = render "spree/orders/adjustments" unless @order.adjustments.eligible.blank?
+
+        %tr
+          %td.text-right{colspan:"3"}
+            %h5 Total
+          %td.text-right
+            %h5.order-total.grand-total= @order.display_total
+          %td
+
