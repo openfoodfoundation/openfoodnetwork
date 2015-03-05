@@ -19,8 +19,9 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
       .map (selector)->
         selector.object.id
 
-    # This can be called from a parent controller
-    # when data has been loaded
+    # This can be called from a parent scope
+    # when data has been loaded, in order to pass
+    # selectors up
     scope.$on 'loadFilterSelectors', ->
       scope.allSelectors = scope.selectors()
 
