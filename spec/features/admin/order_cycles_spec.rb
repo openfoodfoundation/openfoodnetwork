@@ -83,8 +83,8 @@ feature %q{
 
     # And I fill in the basic fields
     fill_in 'order_cycle_name', with: 'Plums & Avos'
-    fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
-    fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+    fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
+    fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
 
     # And I add a coordinator fee
     click_button 'Add coordinator fee'
@@ -126,8 +126,8 @@ feature %q{
 
     page.should have_selector 'a', text: 'Plums & Avos'
 
-    page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
-    page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
+    page.should have_selector "input[value='2040-11-06 06:00:00 +1100']"
+    page.should have_selector "input[value='2040-11-13 17:00:00 +1100']"
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
@@ -271,8 +271,8 @@ feature %q{
 
     # And I update it
     fill_in 'order_cycle_name', with: 'Plums & Avos'
-    fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
-    fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+    fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
+    fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
     select 'My coordinator', from: 'order_cycle_coordinator_id'
 
     # And I configure some coordinator fees
@@ -335,8 +335,8 @@ feature %q{
 
     page.should have_selector 'a', text: 'Plums & Avos'
 
-    page.should have_selector "input[value='2012-11-06 06:00:00 +1100']"
-    page.should have_selector "input[value='2012-11-13 17:00:00 +1100']"
+    page.should have_selector "input[value='2040-11-06 06:00:00 +1100']"
+    page.should have_selector "input[value='2040-11-13 17:00:00 +1100']"
     page.should have_content 'My coordinator'
 
     page.should have_selector 'td.suppliers', text: 'My supplier'
@@ -373,18 +373,18 @@ feature %q{
 
     # And I fill in some new opening/closing times and save them
     within("tr.order-cycle-#{oc1.id}") do
-      all('input').first.set '2012-12-01 12:00:00'
-      all('input').last.set '2012-12-01 12:00:01'
+      all('input').first.set '2040-12-01 12:00:00'
+      all('input').last.set '2040-12-01 12:00:01'
     end
 
     within("tr.order-cycle-#{oc2.id}") do
-      all('input').first.set '2012-12-01 12:00:02'
-      all('input').last.set '2012-12-01 12:00:03'
+      all('input').first.set '2040-12-01 12:00:02'
+      all('input').last.set '2040-12-01 12:00:03'
     end
 
     within("tr.order-cycle-#{oc3.id}") do
-      all('input').first.set '2012-12-01 12:00:04'
-      all('input').last.set '2012-12-01 12:00:05'
+      all('input').first.set '2040-12-01 12:00:04'
+      all('input').last.set '2040-12-01 12:00:05'
     end
 
     click_button 'Update'
@@ -528,8 +528,8 @@ feature %q{
       save_screenshot '/Users/rob/Desktop/ss1.png'
 
       fill_in 'order_cycle_name', with: 'My order cycle'
-      fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
-      fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+      fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
 
       select 'Managed supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
@@ -650,8 +650,8 @@ feature %q{
 
       # And I fill in the basic fields
       fill_in 'order_cycle_name', with: 'Plums & Avos'
-      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
-      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_orders_open_at', with: '2040-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2040-10-24 17:00:00'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
@@ -676,8 +676,8 @@ feature %q{
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
-      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
+      page.should have_selector "input[value='2040-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2040-10-24 17:00:00 +1100']"
 
       # And it should have some variants selected
       oc = OrderCycle.last
@@ -737,8 +737,8 @@ feature %q{
 
       # And I fill in the basic fields
       fill_in 'order_cycle_name', with: 'Plums & Avos'
-      fill_in 'order_cycle_orders_open_at', with: '2014-10-17 06:00:00'
-      fill_in 'order_cycle_orders_close_at', with: '2014-10-24 17:00:00'
+      fill_in 'order_cycle_orders_open_at', with: '2040-10-17 06:00:00'
+      fill_in 'order_cycle_orders_close_at', with: '2040-10-24 17:00:00'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'xy'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
 
@@ -759,8 +759,8 @@ feature %q{
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='2014-10-17 06:00:00 +1100']"
-      page.should have_selector "input[value='2014-10-24 17:00:00 +1100']"
+      page.should have_selector "input[value='2040-10-17 06:00:00 +1100']"
+      page.should have_selector "input[value='2040-10-24 17:00:00 +1100']"
 
       # And it should have a variant selected
       oc = OrderCycle.last
