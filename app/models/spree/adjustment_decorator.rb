@@ -7,8 +7,13 @@ module Spree
 
     attr_accessible :included_tax
 
-    def set_included_tax!(fraction)
-      update_attributes! included_tax: (amount * fraction).round(2)
+    def set_included_tax!(rate)
+      tax = amount - (amount / (1 + rate))
+      set_absolute_included_tax! tax
+    end
+
+    def set_absolute_included_tax!(tax)
+      update_attributes! included_tax: tax.round(2)
     end
   end
 end

@@ -62,7 +62,11 @@ module Spree
           end
 
           it "takes the shipment adjustment tax included from the system setting" do
-            adjustment.included_tax.should == 12.50
+            # Finding the tax included in an amount that's already inclusive of tax:
+            # total - ( total / (1 + rate) )
+            # 50    - ( 50    / (1 + 0.25) )
+            # = 10
+            adjustment.included_tax.should == 10.00
           end
 
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
@@ -75,12 +79,12 @@ module Spree
         end
       end
 
-      describe "setting the included tax by fraction" do
-        let(:adjustment) { Adjustment.new label: 'foo', amount: 123.45 }
+      describe "setting the included tax by tax rate" do
+        let(:adjustment) { Adjustment.new label: 'foo', amount: 50 }
 
         it "sets it, rounding to two decimal places" do
-          adjustment.set_included_tax! 0.1
-          adjustment.included_tax.should == 12.35
+          adjustment.set_included_tax! 0.25
+          adjustment.included_tax.should == 10.00
         end
       end
     end
