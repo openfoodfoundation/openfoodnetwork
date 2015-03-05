@@ -92,6 +92,7 @@ describe OrderCycle do
 
   describe "#recently_closed" do
     it "finds the orders closed in the last 30 days sorted in descending order" do
+      create(:simple_order_cycle, orders_close_at: 3.days.from_now)
       oc1 = create(:simple_order_cycle, orders_close_at: 1.day.ago)
       oc2 = create(:simple_order_cycle, orders_close_at: 30.days.ago)
       create(:simple_order_cycle, orders_close_at: 31.days.ago)
