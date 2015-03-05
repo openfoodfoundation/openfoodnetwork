@@ -79,6 +79,57 @@ module Spree
         end
       end
 
+      describe "EnterpriseFee adjustments" do
+        let!(:zone)        { create(:zone, default_tax: true) }
+        let!(:zone_member) { ZoneMember.create!(zone: zone, zoneable: Country.find_by_name('Australia')) }
+        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
+        let(:tax_category_untaxed) { create(:tax_category) }
+
+        let(:coordinator)    { create(:distributor_enterprise) }
+        let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+        let(:order_cycle)    { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator]) }
+        let!(:order)         { create(:order, order_cycle: order_cycle, distributor: coordinator) }
+        let!(:line_item)     { create(:line_item, order: order) }
+        let(:adjustment)     { order.adjustments(:reload).enterprise_fee.first }
+
+        before do
+          order.update_distribution_charge!
+        end
+
+        context "when enterprise fees are taxed" do
+          it "records the tax on the enterprise fee adjustments" do
+            # The fee is $50, tax is 10%, and the fee is inclusive of tax
+            # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+
+            adjustment.included_tax.should == 4.55
+          end
+
+          context "when the tax rate does not include the tax in the price" do
+            before do
+              tax_rate.update_attribute :included_in_price, false
+              order.update_distribution_charge!
+            end
+
+            it "treats it as inclusive anyway" do
+              adjustment.included_tax.should == 4.55
+            end
+          end
+        end
+
+        context "when enterprise fees have no tax" do
+          before do
+            enterprise_fee.tax_category = tax_category_untaxed
+            enterprise_fee.save!
+            order.update_distribution_charge!
+          end
+
+          it "records no tax as charged" do
+            adjustment.included_tax.should == 0
+          end
+        end
+      end
+
       describe "setting the included tax by tax rate" do
         let(:adjustment) { Adjustment.new label: 'foo', amount: 50 }
 
