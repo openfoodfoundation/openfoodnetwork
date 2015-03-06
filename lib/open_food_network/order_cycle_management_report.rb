@@ -1,3 +1,5 @@
+require 'open_food_network/user_balance_calculator'
+
 module OpenFoodNetwork
   class OrderCycleManagementReport
     attr_reader :params
@@ -7,27 +9,58 @@ module OpenFoodNetwork
     end
 
     def header
-      ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
-    end
-
-    def table
-      orders.map do |order|
-        ba = order.billing_address
-        da = order.distributor.andand.address
-        [ba.firstname,
-         ba.lastname,
-         order.email,
-         ba.phone,
-         order.distributor.andand.name,
-         order.shipping_method.andand.name,
-         order.payments.first.andand.payment_method.andand.name,
-         order.payments.first.amount
-        ]
+      if is_payment_methods?
+        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance"]
+      else
+        ["First Name", "Last Name", "Delivery Address", "Delivery Postcode", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
       end
     end
 
+    def table
+      if is_payment_methods?
+        orders.map { |o| payment_method_row o }
+      else
+        orders.map { |o| delivery_row o }
+      end     
+    end 
+
     def orders
       filter Spree::Order.managed_by(@user).distributed_by_user(@user).complete.where("spree_orders.state != ?", :canceled)
+    end
+
+    private 
+
+    def payment_method_row (order)
+      ba = order.billing_address
+      da = order.distributor.andand.address
+      [ba.firstname,
+       ba.lastname,
+       order.email,
+       ba.phone,
+       order.distributor.andand.name,
+       order.shipping_method.andand.name,
+       order.payments.first.andand.payment_method.andand.name,
+       order.payments.first.amount,
+       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance
+      ]
+    end
+
+    def delivery_row (order)
+      ba = order.billing_address
+      da = order.distributor.andand.address
+      [ba.firstname,
+       ba.lastname,
+       "#{ba.address1} #{ba.address2} #{ba.city}",
+       ba.zipcode,
+       ba.phone,
+       order.distributor.andand.name,
+       order.shipping_method.andand.name,
+       order.payments.first.andand.payment_method.andand.name,
+       order.payments.first.amount,
+       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance,
+       has_chilled_or_frozen_items(order),
+       order.special_instructions
+      ]
     end
 
     def filter(orders)
@@ -56,6 +89,18 @@ module OpenFoodNetwork
       else
         orders
       end
+    end
+
+    def has_chilled_or_frozen_items(order)
+      if (order.line_items.find{ |line_item| line_item.product.shipping_category_id == 1 || line_item.product.shipping_category_id == 2 })
+        "Yes"
+      else
+        "No"
+      end
+    end
+
+    def is_payment_methods?
+      params[:report_type] == "payment_methods"
     end
   end
 end
