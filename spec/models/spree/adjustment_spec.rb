@@ -36,7 +36,7 @@ module Spree
           adjustment.amount.should == 50
         end
 
-        context "when tax on shipping is disabled" do
+        describe "when tax on shipping is disabled" do
           it "records 0% tax on shipment adjustments" do
             Config.shipment_inc_vat = false
             Config.shipping_tax_rate = 0
@@ -54,7 +54,7 @@ module Spree
           end
         end
 
-        context "when tax on shipping is enabled" do
+        describe "when tax on shipping is enabled" do
           before do
             Config.shipment_inc_vat = true
             Config.shipping_tax_rate = 0.25
@@ -107,7 +107,7 @@ module Spree
             adjustment.included_tax.should == 4.55
           end
 
-          context "when the tax rate does not include the tax in the price" do
+          describe "when the tax rate does not include the tax in the price" do
             before do
               tax_rate.update_attribute :included_in_price, false
               order.update_distribution_charge!
@@ -118,7 +118,7 @@ module Spree
             end
           end
 
-          context "when enterprise fees have no tax" do
+          describe "when enterprise fees have no tax" do
             before do
               enterprise_fee.tax_category = tax_category_untaxed
               enterprise_fee.save!
