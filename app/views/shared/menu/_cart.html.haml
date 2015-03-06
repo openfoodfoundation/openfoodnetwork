@@ -10,34 +10,33 @@
     %span.joyride-nub.top
     .joyride-content-wrapper
       %h5 Your shopping cart
-      %ul
-        %li.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
+      %table
+        %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
         "ng-controller" => "LineItemCtrl", "id" => "cart-variant-{{ line_item.variant.id }}"}
-          .row
-            .columns.small-7
-              %small
-                %strong {{ line_item.variant.name_to_display }}
-                %em {{ line_item.variant.unit_to_display }}
-            .columns.small-3.text-right
-              %small
-                %span.quantity {{ line_item.quantity }}
-                %i.ofn-i_009-close
-                %span.price {{ line_item.variant.price_with_fees | localizeCurrency }}
+          %td
+            %small
+              %strong {{ line_item.variant.name_to_display }}
+              %em {{ line_item.variant.unit_to_display }}
+          %td.text-right
+            %small
+              %span.quantity {{ line_item.quantity }}
+              %i.ofn-i_009-close
+              %span.price {{ line_item.variant.price_with_fees | localizeCurrency }}
 
-            .columns.small-2
-              %small
-                \=
-                %strong
-                  .total-price.right {{ line_item.variant.totalPrice() | localizeCurrency }}
+          %td
+            %small
+              \=
+              %strong
+                .total-price.right {{ line_item.variant.totalPrice() | localizeCurrency }}
 
-        %li.total-cart{"ng-show" => "Cart.line_items_present().length > 0"}
-          .row
-            .columns.small-6
-              %em Total:
-            .columns.small-6.text-right
-              %strong {{ Cart.total()  | localizeCurrency }}
+      %table{"ng-show" => "Cart.line_items_present().length > 0"}
+        %tr.total-cart
+          %td
+            %em Total:
+          %td.text-right
+            %strong {{ Cart.total()  | localizeCurrency }}
 
-      .text-right
+      .buttons.text-right
         %a.button.secondary.tiny.add_to_cart{ href: cart_path, type: :submit, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
           {{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}
         %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}  Checkout now
