@@ -1,15 +1,5 @@
 .filter-box.filter-box-shopfront.animate-hide.text-right
   %single-line-selectors{ objects: "Products.products | products:query | taxonsOf", "active-selectors" => "activeTaxons"}
 
--# .filter-box.property-box-shopfront.animate-hide.text-right
--#   %ul
--#     %li
--#       %a Organic Certified
--#     %li
--#       %a Free Range
--#     %li
--#       %a Biodynamic
--#     %li
--#       %a
--#         + 2 more
--#         %span.caret
+.filter-box.property-box-shopfront.animate-hide.text-right
+  %single-line-selectors{ objects: "Products.products | products:query | propertiesOf", "active-selectors" => "activeProperties"}

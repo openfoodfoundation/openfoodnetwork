@@ -15,7 +15,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     let(:product) { create(:simple_product, supplier: supplier) }
     let(:order) { create(:order, distributor: distributor) }
 
-    before do 
+    before do
       set_order order
     end
 
@@ -28,23 +28,23 @@ feature "As a consumer I want to shop with a distributor", js: true do
       visit shop_path
       page.should have_text distributor.name
       find("#tab_about a").click
-      first("distributor img")['src'].should == distributor.logo.url(:thumb) 
+      first("distributor img")['src'].should == distributor.logo.url(:thumb)
     end
 
     it "shows the producers for a distributor" do
-      exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) 
+      exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
       exchange.variants << product.master
 
       visit shop_path
       find("#tab_producers a").click
-      page.should have_content supplier.name 
+      page.should have_content supplier.name
     end
 
     describe "selecting an order cycle" do
       let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       it "selects an order cycle if only one is open" do
-        exchange1.update_attribute :pickup_time, "turtles" 
+        exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
         page.should have_selector "option[selected]", text: 'turtles'
       end
@@ -52,8 +52,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
       describe "with multiple order cycles" do
         let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
         before do
-          exchange1.update_attribute :pickup_time, "frogs" 
-          exchange2.update_attribute :pickup_time, "turtles" 
+          exchange1.update_attribute :pickup_time, "frogs"
+          exchange2.update_attribute :pickup_time, "turtles"
         end
 
         it "shows a select with all order cycles, but doesn't show the products by default" do
@@ -62,20 +62,20 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector "option", text: 'turtles'
           page.should_not have_selector("input.button.right", visible: true)
         end
-        
+
         it "shows products after selecting an order cycle" do
           product.master.update_attribute(:display_name, "kitten")
           product.master.update_attribute(:display_as, "rabbit")
           exchange1.variants << product.master ## add product to exchange
           visit shop_path
-          page.should_not have_content product.name 
+          page.should_not have_content product.name
           Spree::Order.last.order_cycle.should == nil
 
           select "frogs", :from => "order_cycle_id"
           page.should have_selector "products"
-          page.should have_content "Next order closing in 2 days" 
+          page.should have_content "Next order closing in 2 days"
           Spree::Order.last.order_cycle.should == oc1
-          page.should have_content product.name 
+          page.should have_content product.name
           page.should have_content product.master.display_name
           page.should have_content product.master.display_as
 
@@ -88,10 +88,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product: product, price: 20) }
       let(:variant2) { create(:variant, product: product, price: 30) }
-      let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) } 
+      let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       before do
-        exchange.update_attribute :pickup_time, "frogs" 
+        exchange.update_attribute :pickup_time, "frogs"
         exchange.variants << product.master
         exchange.variants << variant1
         exchange.variants << variant2
@@ -134,7 +134,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           set_order_cycle(order, oc1)
           visit shop_path
         end
-        
+
         it "should save group buy data to ze cart" do
           fill_in "variants[#{product.master.id}]", with: 5
           fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
@@ -145,7 +145,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           li.max_quantity.should == 9
           li.quantity.should == 5
         end
-      
+
         # TODO move to controller test
         pending "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
           fill_in "variants[#{product.master.id}]", with: 5
@@ -165,7 +165,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           set_order_cycle(order, oc1)
           visit shop_path
         end
-        
+
         it "should save group buy data to the cart" do
           fill_in "variants[#{variant.id}]", with: 6
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
@@ -213,4 +213,3 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
   end
 end
-
