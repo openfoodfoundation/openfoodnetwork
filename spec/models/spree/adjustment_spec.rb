@@ -80,24 +80,26 @@ module Spree
       end
 
       describe "EnterpriseFee adjustments" do
-        let!(:zone)        { create(:zone, default_tax: true) }
-        let!(:zone_member) { ZoneMember.create!(zone: zone, zoneable: Country.find_by_name('Australia')) }
-        let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
-        let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
+        let!(:zone)                { create(:zone, default_tax: true) }
+        let!(:zone_member)         { ZoneMember.create!(zone: zone, zoneable: Country.find_by_name('Australia')) }
+        let(:tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:tax_category)         { create(:tax_category, tax_rates: [tax_rate]) }
         let(:tax_category_untaxed) { create(:tax_category) }
 
-        let(:coordinator)    { create(:distributor_enterprise) }
-        let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
-        let(:order_cycle)    { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator]) }
-        let!(:order)         { create(:order, order_cycle: order_cycle, distributor: coordinator) }
-        let!(:line_item)     { create(:line_item, order: order) }
-        let(:adjustment)     { order.adjustments(:reload).enterprise_fee.first }
+        let(:coordinator) { create(:distributor_enterprise) }
+        let(:variant)     { create(:variant) }
+        let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
+        let!(:order)      { create(:order, order_cycle: order_cycle, distributor: coordinator) }
+        let!(:line_item)  { create(:line_item, order: order, variant: variant) }
+        let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
 
         before do
-          order.update_distribution_charge!
+          order.reload.update_distribution_charge!
         end
 
-        context "when enterprise fees are taxed" do
+        context "when enterprise fees are taxed per-order" do
+          let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+
           it "records the tax on the enterprise fee adjustments" do
             # The fee is $50, tax is 10%, and the fee is inclusive of tax
             # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
@@ -115,17 +117,26 @@ module Spree
               adjustment.included_tax.should == 4.55
             end
           end
+
+          context "when enterprise fees have no tax" do
+            before do
+              enterprise_fee.tax_category = tax_category_untaxed
+              enterprise_fee.save!
+              order.update_distribution_charge!
+            end
+
+            it "records no tax as charged" do
+              adjustment.included_tax.should == 0
+            end
+          end
         end
 
-        context "when enterprise fees have no tax" do
-          before do
-            enterprise_fee.tax_category = tax_category_untaxed
-            enterprise_fee.save!
-            order.update_distribution_charge!
-          end
 
-          it "records no tax as charged" do
-            adjustment.included_tax.should == 0
+        context "when enterprise fees are taxed per-item" do
+          let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
+
+          it "records the tax on the enterprise fee adjustments" do
+            adjustment.included_tax.should == 4.55
           end
         end
       end

@@ -4,6 +4,8 @@ module OpenFoodNetwork
       a = enterprise_fee.create_locked_adjustment(line_item_adjustment_label, line_item.order, line_item, true)
 
       AdjustmentMetadata.create! adjustment: a, enterprise: enterprise_fee.enterprise, fee_name: enterprise_fee.name, fee_type: enterprise_fee.fee_type, enterprise_role: role
+
+      a.set_absolute_included_tax! adjustment_tax(line_item.order, a)
     end
 
     def create_order_adjustment(order)
