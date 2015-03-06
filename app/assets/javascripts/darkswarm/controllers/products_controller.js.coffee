@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.totalActive =  FilterSelectorsService.totalActive
@@ -21,10 +21,15 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
     if code == 13
       e.preventDefault()
 
-  $scope.appliedTaxonsList = () ->
+  $scope.appliedTaxonsList = ->
     $scope.activeTaxons.map( (taxon_id) ->
       Taxons.taxons_by_id[taxon_id].name
     ).join(" & ") if $scope.activeTaxons?
+
+  $scope.appliedPropertiesList = ->
+    $scope.activeProperties.map( (property_id) ->
+      Properties.properties_by_id[property_id].name
+    ).join(" & ") if $scope.activeProperties?
 
   $scope.clearAll = ->
     $scope.query = ""

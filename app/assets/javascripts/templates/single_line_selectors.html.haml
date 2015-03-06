@@ -7,7 +7,7 @@
       %span
         + {{ overFlowSelectors().length }} more
       %i.ofn-i_052-point-down
-  .f-dropdown.content#show-more
+  .f-dropdown.right.text-left.medium.content#show-more
     %ul
       %active-selector{ ng: { repeat: "selector in overFlowSelectors()", hide: "selector.fits" } }
         %render-svg{path: "{{selector.object.icon}}"}

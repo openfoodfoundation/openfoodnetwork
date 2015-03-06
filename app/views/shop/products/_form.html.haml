@@ -10,8 +10,10 @@
           %i.ofn-i_009-close
         %span.filter-label
           Showing:
+          %span{ ng: { show: "!query && !appliedPropertiesList() && !appliedTaxonsList()"} }
+            All
           %span.applied-properties
-            Certified Organic
+            {{ appliedPropertiesList() }}
           %span.applied-taxons
             {{ appliedTaxonsList() }}
           %span.applied-search{ ng: { hide: "!query"} }
@@ -28,7 +30,7 @@
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons) track by product.id ", "id" => "product-{{ product.id }}"}
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | properties: activeProperties) track by product.id ", "id" => "product-{{ product.id }}"}
       = render partial: "shop/products/summary"
       %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants", "id" => "variant-{{ product.master.id }}"}
       %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id", "id" => "variant-{{ variant.id }}"}
