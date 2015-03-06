@@ -17,11 +17,7 @@
         %br/
 
   %td.products
-    - variant_images = capture do
-      - order_cycle.variants.each do |v|
-        = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
-        %br/
-    %span.with-tip{'data-powertip' => variant_images}= "#{order_cycle.variants.count} variants"
+    %span= "#{order_cycle.variants.count} variants"
 
   %td.actions
     = link_to '', main_app.edit_admin_order_cycle_path(order_cycle), class: 'edit-order-cycle icon-edit no-text'
