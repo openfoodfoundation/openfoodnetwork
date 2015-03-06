@@ -84,7 +84,6 @@ module Spree
         let!(:zone_member)         { ZoneMember.create!(zone: zone, zoneable: Country.find_by_name('Australia')) }
         let(:tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
         let(:tax_category)         { create(:tax_category, tax_rates: [tax_rate]) }
-        let(:tax_category_untaxed) { create(:tax_category) }
 
         let(:coordinator) { create(:distributor_enterprise) }
         let(:variant)     { create(:variant) }
@@ -120,7 +119,7 @@ module Spree
 
           describe "when enterprise fees have no tax" do
             before do
-              enterprise_fee.tax_category = tax_category_untaxed
+              enterprise_fee.tax_category = nil
               enterprise_fee.save!
               order.update_distribution_charge!
             end
