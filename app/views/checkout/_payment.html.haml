@@ -35,4 +35,4 @@
                 = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
         .small-12.columns.medium-6.columns.large-6.columns
           #distributor_address.panel{"ng-show" => "Checkout.paymentMethod().description"}
-            %span{ style: "white-space: pre-wrap;" }{{ Checkout.paymentMethod().description }}
+            %span.pre-wrap {{ Checkout.paymentMethod().description }}
