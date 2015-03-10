@@ -11,8 +11,8 @@ Orders summary
 \
 Here is a summary of the orders for your products:
 \
-- @line_items.each do |item|
-  #{item.variant.sku} #{raw(item.variant.product.supplier.name)} #{raw(item.variant.product.name)} #{raw(item.variant.options_text)} (QTY: #{item.quantity}) @ #{item.single_money} = #{item.display_amount}
+- @line_items.each_pair do |variant, data|
+  #{variant.sku} #{raw(variant.product.supplier.name)} #{raw(variant.product.name)} #{raw(variant.options_text)} (QTY: #{data[:quantity]}) @ #{data[:line_item].single_money} = #{variant.display_amount}
 
 \
 Detailed orders breakdown

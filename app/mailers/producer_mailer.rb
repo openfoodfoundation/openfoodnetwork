@@ -21,7 +21,7 @@ class ProducerMailer < Spree::BaseMailer
     # Create a single flat list of all line items
     @line_items = @orders.map(&:line_items).flatten
     # Arrange the items in a hash to group quantities
-    @line_items.inject({}) do |lis, li|
+    @line_items = @line_items.inject({}) do |lis, li|
       lis[li.variant] ||= {line_item: li, quantity: 0}
       lis[li.variant][:quantity] += li.quantity
       lis
