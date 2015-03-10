@@ -92,9 +92,12 @@
           %tr{"data-hook" => "order_details_line_item_row"}
             %td(data-hook = "order_item_description")
 
-              %div.item-thumb-image 
-                placeholder
-                
+              %div.item-thumb-image{"data-hook" => "order_item_image"}
+                - if item.variant.images.length == 0
+                  = link_to mini_image(item.variant.product), item.variant.product
+                - else
+                  = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
+                      
 
               - if item.variant.product.name == item.variant.name_to_display
                 %h5
