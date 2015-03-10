@@ -73,72 +73,76 @@
   
       
 %br
-%table#line-items{"data-hook" => "order_details"}
-  %col{halign: "center", valign: "middle", width: "15%"}/
-  %col{valign: "middle", width: "70%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %thead{"data-hook" => ""}
-    %tr{"data-hook" => "order_details_line_items_headers"}
-      %th{colspan: "2"}= t(:item)
-      %th.price= t(:price)
-      %th.qty= t(:qty)
-      %th.total
-        %span= t(:total)
-  %tbody{"data-hook" => ""}
-    - @order.line_items.each do |item|
-      %tr{"data-hook" => "order_details_line_item_row"}
-        %td{"data-hook" => "order_item_image"}
-          - if item.variant.images.length == 0
-            = link_to small_image(item.variant.product), item.variant.product
-          - else
-            = link_to image_tag(item.variant.images.first.attachment.url(:small)), item.variant.product
-        %td(data-hook = "order_item_description")
-          - if item.variant.product.name == item.variant.name_to_display
-            %h5= item.variant.product.name
-          - else
-            %h5
-              %span= item.variant.product.name
-              %span= "- " + item.variant.name_to_display
-          %p= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
-        %td.price{"data-hook" => "order_item_price"}
-          %span= item.single_display_amount_with_adjustments.to_html
-        %td{"data-hook" => "order_item_qty"}= item.quantity
-        %td.total{"data-hook" => "order_item_total"}
-          %span= item.display_amount_with_adjustments.to_html
+.row
+  .columns.large-12
+    %table#line-items{"data-hook" => "order_details"}
+      %col{valign: "middle"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %thead{"data-hook" => ""}
+        %tr{"data-hook" => "order_details_line_items_headers"}
+          %th= t(:item)
+          %th.price= t(:price)
+          %th.text-center.qty= t(:qty)
+          %th.text-right.total
+            %span= t(:total)
+      %tbody{"data-hook" => ""}
+        - @order.line_items.each do |item|
+          %tr{"data-hook" => "order_details_line_item_row"}
+            %td(data-hook = "order_item_description")
 
-  %tfoot#order-total{"data-hook" => "order_details_total"}
-    %tr.total
-      %td{colspan: "4"}
-        %b
-          = t(:order_total)
-          \:
-      %td.total
-        %span#order_total= @order.display_total.to_html
+              %div.item-thumb-image 
+                placeholder
+                
 
-  - if order.price_adjustment_totals.present?
-    %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
-      - @order.price_adjustment_totals.each do |key, total|
+              - if item.variant.product.name == item.variant.name_to_display
+                %h5
+                  %span= item.variant.product.name
+                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+              - else
+                %h5
+                  %span= item.variant.product.name
+                  %span= "- " + item.variant.name_to_display
+                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+             
+            %td.text-right.price{"data-hook" => "order_item_price"}
+              %span= item.single_display_amount_with_adjustments.to_html
+            %td.text-center{"data-hook" => "order_item_qty"}= item.quantity
+            %td.text-right.total{"data-hook" => "order_item_total"}
+              %span= item.display_amount_with_adjustments.to_html
+
+      %tfoot#order-total{"data-hook" => "order_details_total"}
         %tr.total
-          %td{colspan: "4"}
+          %td.text-right{colspan: "3"}
+            %h5
+              Total
+          %td.text-right.total
+            %h5#order_total= @order.display_total.to_html
+
+      - if order.price_adjustment_totals.present?
+        %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
+          - @order.price_adjustment_totals.each do |key, total|
+            %tr.total
+              %td.text-right{colspan: "3"}
+                %strong
+                  = key
+              %td.text-right.total
+                %span= total
+
+      %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
+        %tr#subtotal-row.total
+          %td.text-right{colspan: "3"}
             %strong
-              = key
-              \:
-          %td.total
-            %span= total
+              Produce
+          %td.text-right.total
+            %span= display_checkout_subtotal(@order)
 
-  %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
-    %tr#subtotal-row.total
-      %td{colspan: "4"}
-        Produce:
-      %td.total
-        %span= display_checkout_subtotal(@order)
-
-  %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
-      %tr.total
-        %td{:colspan => "4"}
-          = adjustment.label + ":"
-        %td.total
-          %span= adjustment.display_amount.to_html
+      %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
+        - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+          %tr.total
+            %td.text-right{:colspan => "3"}
+              %strong
+                = adjustment.label
+            %td.text-right.total
+              %span= adjustment.display_amount.to_html
