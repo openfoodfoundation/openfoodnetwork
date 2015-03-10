@@ -11,13 +11,12 @@
         %strong
           = order.display_total.to_html
     .pad
-      %p.text-big
+      .text-big
         Paying via:
-        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe  
-        %br
-        %span.text-small
-          %em
-            = order.payments.first.andand.payment_method.andand.description.andand.html_safe
+        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe      
+      %p.text-small.text-skinny.pre-line
+        %em= order.payments.first.andand.payment_method.andand.description.andand.html_safe
+              
     .order-summary.text-small
       %strong
         Billing address
@@ -30,17 +29,16 @@
         = order.bill_address.phone
 
   .columns.large-6
-    // Delivery option
     - if @order.shipping_method.andand.require_ship_address
+      // Delivery option
       .order-summary.text-small
         %strong= order.shipping_method.name
       .pad  
-        %p.text-big
-            Delivery on
-          %strong= @order.order_cycle.pickup_time_for(@order.distributor)
-          %br
-          %span.text-small
-            %em= order.shipping_method.description.html_safe
+        .text-big
+          Delivery on
+          %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+        %p.text-small.text-skinny.pre-line
+          %em= order.shipping_method.description.html_safe
       .order-summary.text-small
         %strong
           Delivery address
@@ -51,34 +49,42 @@
           = order.ship_address.full_address
           %br
           = order.ship_address.phone
-    // Collection option
+        - if order.special_instructions
+          %br
+          %p.light.small
+            %strong Your notes:
+            %br
+            = order.special_instructions
     - else
+      // Collection option
       .order-summary.text-small
         %strong= order.shipping_method.name
       .pad  
-        %p.text-big
+        .text-big
           Ready for collection 
           %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
-          %br
-          %span.text-small
-            %em= order.shipping_method.description.html_safe
+        %p.text-small.text-skinny.pre-line
+          %em= order.shipping_method.description.html_safe
       .order-summary.text-small
         %strong 
           Collection Address
       .pad  
         %p.text-small
           = order.ship_address.full_address
-      .order-summary.text-small
-        %strong 
-          Collection Instructions
-      .pad  
-        %p.text-small #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-          
-    %p.light.small
-      %strong Your notes:
-      %br
-      = order.special_instructions
-  
+        
+        - if @order.order_cycle.pickup_instructions_for(@order.distributor)
+          %br
+          %p.text-small
+            %strong 
+              Collection Instructions  
+            %br
+            #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
+        - if order.special_instructions
+          %br
+          %p.light.small
+            %strong Your notes:
+            %br
+            = order.special_instructions
       
 %br
 .row
