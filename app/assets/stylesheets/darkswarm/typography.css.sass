@@ -16,9 +16,8 @@
 @font-face
   font-family: 'AvenirMed'
   src: url("/AvenirLTStd-Medium.otf") format("opentype")
-        
-body 
-  font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+
+$font-helvetica: "Helvetica Neue", "HelveticaNeue", "Helvetica", Helvetica, Arial, sans-serif
   
 a
   color: $clr-brick
@@ -36,19 +35,26 @@ small, .small
 .text-small
   font-size: 0.875rem
   margin-bottom: 0.5rem
+  font-family: $font-helvetica
   &, & *
     font-size: 0.875rem
 
 .text-normal
   font-weight: 400
-  font-family: 'Open Sans'
+  font-family: $font-helvetica
 
 .text-skinny
   font-weight: 300
-  font-family: 'Open Sans'
+  font-family: $font-helvetica
 
 .word-wrap
   word-wrap: break-word
+
+.pre-wrap
+  white-space: pre-wrap
+
+.pre-line
+  white-space: pre-line
   
 .light
   color: #999
