@@ -5,7 +5,7 @@ module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
 
-    before_filter :load_order_cycle_set, :only => :index
+    before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
 
     def show
@@ -73,19 +73,20 @@ module Admin
 
 
     protected
-    def collection
+    def collection(show_more=false)
       ocs = OrderCycle.managed_by(spree_current_user)
 
       ocs.undated +
         ocs.soonest_closing +
         ocs.soonest_opening +
-        ocs.recently_closed
+        (show_more ? ocs.closed : ocs.recently_closed)
     end
 
     private
-    def load_order_cycle_set
+    def load_data_for_index
+      @show_more = !!params[:show_more]
       @order_cycle_enterprises = OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
-      @order_cycle_set = OrderCycleSet.new :collection => collection
+      @order_cycle_set = OrderCycleSet.new :collection => collection(@show_more)
     end
 
     def require_coordinator
