@@ -84,6 +84,7 @@ module Admin
 
     private
     def load_order_cycle_set
+      @order_cycle_enterprises = OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
       @order_cycle_set = OrderCycleSet.new :collection => collection
     end
 
