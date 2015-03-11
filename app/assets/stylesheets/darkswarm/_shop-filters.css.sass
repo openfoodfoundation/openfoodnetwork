@@ -3,6 +3,51 @@
 @import big-input
 @import animations
 
+@mixin filter-selector($base-clr, $border-clr, $hover-clr)
+  li
+    display: inline-block
+    @include border-radius(0)
+    padding: 0
+    margin: 0 0 0.25rem 0.25rem
+    &:hover, &:focus
+      background: transparent
+
+    a
+      @include border-radius(0.5em)
+      border: 1px solid $border-clr
+      padding: 0.625em
+      font-size: 0.875em
+      color: $base-clr
+      font-size: 0.75em
+      i
+        font-size: 1.25rem
+        margin-left: 0.25rem
+
+      render-svg
+        width: 1.25rem
+        height: 1.25rem
+        svg
+          width: 1.25rem
+          height: 1.25rem
+          path
+            @include csstrans
+            fill: $base-clr
+      &:hover, &:focus
+        color: $hover-clr
+        render-svg
+          svg
+            path
+              fill: $hover-clr
+      &.active, &.active:hover, &.active:focus
+        border: 1px solid $base-clr
+        background: $base-clr
+        color: white
+        render-svg
+          svg
+            path
+              fill: white
+
+
 // Alert when search, taxon, filter is triggered
 
 .alert-box.search-alert
@@ -23,8 +68,7 @@
   span.filter-label
     opacity: 0.75
 
-// Shopfront taxons
-.filter-box.filter-box-shopfront, .filter-box.property-box-shopfront
+.filter-box.taxon-selectors, .filter-box.property-selectors
   background: transparent
 
   single-line-selectors
@@ -39,61 +83,13 @@
     margin: 0
   ul, ul li
     list-style: none
-  li
-    display: inline-block
-    @include border-radius(0)
-    padding: 0
-    margin: 0 0 0.25rem 0.25rem
-    &:hover, &:focus
-      background: transparent
 
-  li.active
-    @include box-shadow(none)
-    a, a:hover, a:focus, a:active, a.active
-      border: 1px solid $clr-blue
-      background: $clr-blue
-      color: white
-      render-svg
-        svg
-          path
-            fill: white
-  li a
-    @include border-radius(0.5em)
-    border: 1px solid $clr-blue-light
-    padding: 0.625em
-    font-size: 0.875em
-    color: $clr-blue
-    font-size: 0.75em
-    i
-      font-size: 1.25rem
-      margin-left: 0.25rem
-    render-svg
-      width: 1.25rem
-      height: 1.25rem
-      svg
-        width: 1.25rem
-        height: 1.25rem
-        path
-          @include csstrans
-          fill: $clr-blue
-    &:hover, &:focus
-      color: $clr-blue-bright
-      render-svg
-        svg
-          path
-            fill: $clr-blue-bright
 
-// Shopfront properties
-.filter-box.property-box-shopfront
-  li.active
-    @include box-shadow(none)
-    a, a:hover, a:focus, a:active, a.active
-      border: 1px solid #333
-      background: #333
-      color: white
-  li a
-    border: 1px solid #ccc
-    color: #888
-    &:hover, &:focus
-      border: 1px solid #999
-      color: #666
+.filter-box
+  // Shopfront taxons
+  &.taxon-selectors
+    @include filter-selector($clr-blue, $clr-blue-light, $clr-blue-bright)
+
+  // Shopfront properties
+  &.property-selectors
+    @include filter-selector(#666, #ccc, #666)
