@@ -23,4 +23,7 @@
   %td.actions
     = link_to '', main_app.edit_admin_order_cycle_path(order_cycle), class: 'edit-order-cycle icon-edit no-text'
   %td.actions
-    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'
+    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'  
+  - if can_delete?(order_cycle)
+    %td.actions
+      = link_to '', main_app.admin_order_cycle_path(order_cycle), class: 'delete-product icon-trash no-text', :method => :delete,  data: { confirm: "Are you sure?" }

@@ -75,6 +75,10 @@ module OrderCyclesHelper
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end
 
+  def can_delete?(order_cycle)
+    Spree::Order.where(order_cycle_id: order_cycle).none?
+  end
+
   private
 
   def validated_enterprise_options(enterprises, options={})
