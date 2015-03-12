@@ -864,9 +864,9 @@ ActiveRecord::Schema.define(:version => 20150225232938) do
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-    t.boolean  "temperature_controlled", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.boolean  "temperature_controlled", :default => false, :null => false
   end
 
   create_table "spree_shipping_methods", :force => true do |t|
