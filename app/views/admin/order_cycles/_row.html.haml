@@ -8,26 +8,23 @@
   - unless order_cycles_simple_index
     %td.suppliers
       - suppliers = order_cycle_permitted_in(order_cycle.suppliers)
+      - supplier_list = suppliers.map(&:name).sort.join ', '
       - if suppliers.count > 3
-        - supplier_list = suppliers.map(&:name).sort.join ', '
         %span.with-tip{'data-powertip' => supplier_list}
           = suppliers.count
           suppliers
       - else
-        - suppliers.each do |s|
-          = s.name
-        %br/
+        = supplier_list
     %td= order_cycle.coordinator.name
     %td.distributors
       - distributors = order_cycle_permitted_in(order_cycle.distributors)
+      - distributor_list = distributors.map(&:name).sort.join ', '
       - if distributors.count > 3
-        - distributor_list = distributors.map(&:name).sort.join ', '
         %span.with-tip{'data-powertip' => distributor_list}
           = distributors.count
           distributors
       - else
-        - distributors.each do |d|
-          = d.name
+        = distributor_list
         %br/
 
   %td.products
