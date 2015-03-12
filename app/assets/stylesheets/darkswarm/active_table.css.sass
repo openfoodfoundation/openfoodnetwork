@@ -30,20 +30,20 @@
       text-decoration: underline
 
   span.margin-top
-    margin-top: 0.5rem    
+    margin-top: 0.5rem
     display: inline-block
 
   // Generic text resize
-  @media all and (max-width: 640px) 
+  @media all and (max-width: 640px)
     &, & *
-      font-size: 0.875rem    
+      font-size: 0.875rem
     fat > div label
-      &, & *    
-        font-size: 0.75rem 
+      &, & *
+        font-size: 0.75rem
 
-
-  .active_table_row // Inherits from active_table
-    border: 1px solid transparent 
+  // Inherits from active_table
+  .active_table_row
+    border: 1px solid transparent
     @include border-radius(0.5em)
 
     // Foundation overrides
@@ -76,15 +76,15 @@
     .active_table_row:last-child
       border-bottom: 1px solid $disabled-bright
       @include border-radius-mixed(0, 0, 0.5em, 0.5em)
-      
-      
+
+
     //Open row sections
     .fat > div
       border-top: 1px solid #aaa
-      @media all and (max-width: 640px) 
+      @media all and (max-width: 640px)
         margin-top: 1em
 
-      ul, ol 
+      ul, ol
         font-size: 0.875rem
 
       [class*="block-grid-"] > li
@@ -96,10 +96,10 @@
         margin-top: 0.25rem
         margin-bottom: 0.25rem
         color: #777
-    
+
     p.trans-sentence
       text-transform: capitalize
-  
+
   &.closed
     &:hover, &:active, &:focus
       .active_table_row.closed
@@ -112,7 +112,3 @@
     &.open
       .active_table_row:first-child
         color: $dark-grey
-
-
-
-
