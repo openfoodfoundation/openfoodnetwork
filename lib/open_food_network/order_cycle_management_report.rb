@@ -35,7 +35,7 @@ module OpenFoodNetwork
 
     private 
 
-    def payment_method_row (order)
+    def payment_method_row(order)
       ba = order.billing_address
       da = order.distributor.andand.address
       [ba.firstname,
@@ -51,7 +51,7 @@ module OpenFoodNetwork
       ]
     end
 
-    def delivery_row (order)
+    def delivery_row(order)
       ba = order.billing_address
       da = order.distributor.andand.address
       [ba.firstname,
@@ -102,7 +102,7 @@ module OpenFoodNetwork
       params[:report_type] == "payment_methods"
     end
 
-    def customer_code (email)
+    def customer_code(email)
       customer = Customer.where(email: email).first
       customer.nil? ? "" : customer.code
     end
