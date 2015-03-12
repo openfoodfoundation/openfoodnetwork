@@ -6,21 +6,21 @@
           PAID
         - else
           NOT PAID
-      %span 
+      %span
         Total order
         %strong
           = order.display_total.to_html
     .pad
       .text-big
         Paying via:
-        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe      
+        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
       %p.text-small.text-skinny.pre-line
         %em= order.payments.first.andand.payment_method.andand.description.andand.html_safe
-              
+
     .order-summary.text-small
       %strong
         Billing address
-    .pad  
+    .pad
       %p.text-small
         = order.bill_address.firstname + " " + order.bill_address.lastname
         %br
@@ -33,16 +33,16 @@
       // Delivery option
       .order-summary.text-small
         %strong= order.shipping_method.name
-      .pad  
+      .pad
         .text-big
           Delivery on
           %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
         %p.text-small.text-skinny.pre-line
-          %em= order.shipping_method.description.html_safe
+          %em= order.shipping_method.description.andand.html_safe || ""
       .order-summary.text-small
         %strong
           Delivery address
-      .pad  
+      .pad
         %p.text-small
           = order.ship_address.firstname + " " + order.ship_address.lastname
           %br
@@ -59,24 +59,24 @@
       // Collection option
       .order-summary.text-small
         %strong= order.shipping_method.name
-      .pad  
+      .pad
         .text-big
-          Ready for collection 
+          Ready for collection
           %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
         %p.text-small.text-skinny.pre-line
-          %em= order.shipping_method.description.html_safe
+          %em= order.shipping_method.description.andand.html_safe || ""
       .order-summary.text-small
-        %strong 
+        %strong
           Collection Address
-      .pad  
+      .pad
         %p.text-small
           = order.ship_address.full_address
-        
+
         - if @order.order_cycle.pickup_instructions_for(@order.distributor)
           %br
           %p.text-small
-            %strong 
-              Collection Instructions  
+            %strong
+              Collection Instructions
             %br
             #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
         - if order.special_instructions
@@ -85,7 +85,7 @@
             %strong Your notes:
             %br
             = order.special_instructions
-      
+
 %br
 .row
   .columns.large-12
@@ -111,7 +111,7 @@
                   = link_to mini_image(item.variant.product), item.variant.product
                 - else
                   = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
-                      
+
 
               - if item.variant.product.name == item.variant.name_to_display
                 %h5
@@ -122,7 +122,7 @@
                   %span= item.variant.product.name
                   %span= "- " + item.variant.name_to_display
                   %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
-             
+
             %td.text-right.price{"data-hook" => "order_item_price"}
               %span= item.single_display_amount_with_adjustments.to_html
             %td.text-center{"data-hook" => "order_item_qty"}= item.quantity
