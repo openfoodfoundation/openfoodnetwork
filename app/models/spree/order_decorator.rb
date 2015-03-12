@@ -68,7 +68,7 @@ Spree::Order.class_eval do
 
   scope :with_payment_method_name, lambda { |payment_method_name|
     joins(:payments => :payment_method).
-      where('spree_payment_methods.name = ?', payment_method_name).
+      where('spree_payment_methods.name IN (?)', payment_method_name).
       select('DISTINCT spree_orders.*')
   }
 
