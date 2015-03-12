@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150220035501) do
+ActiveRecord::Schema.define(:version => 20150225232938) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -177,11 +177,13 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
     t.integer  "enterprise_id"
     t.string   "fee_type"
     t.string   "name"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "tax_category_id"
   end
 
   add_index "enterprise_fees", ["enterprise_id"], :name => "index_enterprise_fees_on_enterprise_id"
+  add_index "enterprise_fees", ["tax_category_id"], :name => "index_enterprise_fees_on_tax_category_id"
 
   create_table "enterprise_groups", :force => true do |t|
     t.string   "name"
@@ -414,6 +416,7 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
     t.string   "originator_type"
     t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
+    t.decimal  "included_tax",    :precision => 10, :scale => 2, :default => 0.0,  :null => false
   end
 
   add_index "spree_adjustments", ["adjustable_id"], :name => "index_adjustments_on_order_id"
@@ -1088,6 +1091,7 @@ ActiveRecord::Schema.define(:version => 20150220035501) do
   add_foreign_key "distributors_shipping_methods", "spree_shipping_methods", name: "distributors_shipping_methods_shipping_method_id_fk", column: "shipping_method_id"
 
   add_foreign_key "enterprise_fees", "enterprises", name: "enterprise_fees_enterprise_id_fk"
+  add_foreign_key "enterprise_fees", "spree_tax_categories", name: "enterprise_fees_tax_category_id_fk", column: "tax_category_id"
 
   add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
   add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"

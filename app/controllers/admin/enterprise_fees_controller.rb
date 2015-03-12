@@ -59,6 +59,7 @@ module Admin
 
     def load_data
       @calculators = EnterpriseFee.calculators.sort_by(&:name)
+      @tax_categories = Spree::TaxCategory.order('is_default DESC, name ASC')
     end
 
     def collection

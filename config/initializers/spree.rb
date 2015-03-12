@@ -14,8 +14,12 @@ Spree.config do |config|
   config.checkout_zone = ENV["CHECKOUT_ZONE"]
   config.address_requires_state = true
 
-  country = Spree::Country.find_by_name(ENV["DEFAULT_COUNTRY"])
-  config.default_country_id = country.id if country.present?
+  if Spree::Country.table_exists?
+    country = Spree::Country.find_by_name(ENV["DEFAULT_COUNTRY"])
+    config.default_country_id = country.id if country.present?
+  else
+    config.default_country_id = 12  # Australia
+  end
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.

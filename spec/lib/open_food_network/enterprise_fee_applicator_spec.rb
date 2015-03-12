@@ -65,4 +65,33 @@ module OpenFoodNetwork
       efa.send(:order_adjustment_label).should == "Whole order - packing fee by distributor Ballantyne"
     end
   end
+
+  describe "ensuring that tax rate is marked as tax included_in_price" do
+    let(:efa) { EnterpriseFeeApplicator.new nil, nil, nil }
+    let(:tax_rate) { create(:tax_rate, included_in_price: false, calculator: Spree::Calculator::DefaultTax.new) }
+
+    it "sets included_in_price to true" do
+      efa.send(:with_tax_included_in_price, tax_rate) do
+        tax_rate.included_in_price.should be_true
+      end
+    end
+
+    it "sets the included_in_price value accessible to the calculator to true" do
+      efa.send(:with_tax_included_in_price, tax_rate) do
+        tax_rate.calculator.calculable.included_in_price.should be_true
+      end
+    end
+
+    it "passes through the return value of the block" do
+      efa.send(:with_tax_included_in_price, tax_rate) do
+        'asdf'
+      end.should == 'asdf'
+    end
+
+    it "restores both values to their original afterwards" do
+      efa.send(:with_tax_included_in_price, tax_rate) {}
+      tax_rate.included_in_price.should be_false
+      tax_rate.calculator.calculable.included_in_price.should be_false
+    end
+  end
 end
