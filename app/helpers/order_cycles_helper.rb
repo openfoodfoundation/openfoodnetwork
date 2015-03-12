@@ -11,33 +11,24 @@ module OrderCyclesHelper
     order_cycle_permitted_enterprises.is_primary_producer.by_name
   end
 
+  def order_cycle_producer_enterprise_options
+    validated_enterprise_options order_cycle_producer_enterprises, confirmed: true
+  end
+
   def order_cycle_coordinating_enterprises
     order_cycle_permitted_enterprises.is_distributor.by_name
   end
 
-  def order_cycle_hub_enterprises(options={})
-    enterprises = order_cycle_permitted_enterprises.is_distributor.by_name
+  def order_cycle_coordinating_enterprise_options
+    validated_enterprise_options order_cycle_coordinating_enterprises, confirmed: true
+  end
 
-    if options[:without_validation]
-      enterprises
-    else
-      enterprises.map do |e|
-        disabled_message = nil
-        if e.shipping_methods.empty? && e.payment_methods.available.empty?
-          disabled_message = 'no shipping or payment methods'
-        elsif e.shipping_methods.empty?
-          disabled_message = 'no shipping methods'
-        elsif e.payment_methods.available.empty?
-          disabled_message = 'no payment methods'
-        end
+  def order_cycle_hub_enterprises
+    order_cycle_permitted_enterprises.is_hub.by_name
+  end
 
-        if disabled_message
-          ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
-        else
-          [e.name, e.id]
-        end
-      end
-    end
+  def order_cycle_hub_enterprise_options
+    validated_enterprise_options order_cycle_hub_enterprises, confirmed: true, shipping_and_payment_methods: true
   end
 
   def order_cycle_status_class(order_cycle)
@@ -68,8 +59,12 @@ module OrderCyclesHelper
     OrderCycle.active.with_distributor(@distributor).present?
   end
 
-  def order_cycles_simple_view
-    @order_cycles_simple_view ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+  def order_cycles_simple_index
+    @order_cycles_simple_index ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+  end
+
+  def order_cycles_simple_form
+    @order_cycles_simple_form ||= @order_cycle.coordinator.sells == 'own'
   end
 
   def order_cycles_enabled?
@@ -80,4 +75,28 @@ module OrderCyclesHelper
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end
 
+  private
+
+  def validated_enterprise_options(enterprises, options={})
+    enterprises.map do |e|
+      disabled_message = nil
+      if options[:shipping_and_payment_methods] && (e.shipping_methods.empty? || e.payment_methods.available.empty?)
+        if e.shipping_methods.empty? && e.payment_methods.available.empty?
+          disabled_message = 'no shipping or payment methods'
+        elsif e.shipping_methods.empty?
+          disabled_message = 'no shipping methods'
+        elsif e.payment_methods.available.empty?
+          disabled_message = 'no payment methods'
+        end
+      elsif options[:confirmed] && !e.confirmed?
+        disabled_message = 'unconfirmed'
+      end
+
+      if disabled_message
+        ["#{e.name} (#{disabled_message})", e.id, {disabled: true}]
+      else
+        [e.name, e.id]
+      end
+    end
+  end
 end

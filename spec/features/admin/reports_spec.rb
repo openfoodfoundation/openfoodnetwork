@@ -98,6 +98,63 @@ feature %q{
 
     page.should have_content 'Payment State'
   end
+  
+  describe "Sales tax report" do
+    let(:user1) do
+      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
+    end
+    let(:user2) do
+      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
+    end
+    let(:tax_category1) { create(:tax_category) }
+    let(:tax_category2) { create(:tax_category) }
+    let!(:tax_rate1) { create(:tax_rate, amount: 0.0, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category1) }
+    let!(:tax_rate2) { create(:tax_rate, amount: 0.2, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category2) }
+
+    let(:product1) { create(:product, price: 12.54,  tax_category: tax_category1) }
+    let(:product2) { create(:product, price: 500.15, tax_category: tax_category2) }
+
+    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:order1) { create(:order, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
+    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+    let!(:adj_li2_tax) { create(:adjustment, adjustable: line_item2, source: line_item2, originator: tax_rate2, label: "RandomTax", amount: 123.00) }
+
+    before do
+      Spree::Config.shipment_inc_vat = true
+      Spree::Config.shipping_tax_rate = 0.2
+      order1.finalize!
+
+      login_to_admin_as user1
+      click_link "Reports"
+      click_link "Sales Tax"
+    end
+  
+    it "reports" do
+      # Then it should give me access only to managed enterprises
+      page.should     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]
+      page.should_not have_select 'q_distributor_id_eq', with_options: [user2.enterprises.first.name]
+
+      # When I filter to just one distributor
+      select user1.enterprises.first.name, from: 'q_distributor_id_eq'
+      click_button 'Search'
+
+      # Then I should see the relevant order
+      page.should have_content "#{order1.number}"
+
+      # And the totals and sales tax should be correct
+      page.should have_content "1512.99" # items total
+      page.should have_content "1500.45" # taxable items total
+      page.should have_content "123.0" # sales tax (from adj_li2_tax, not calculated on the fly)
+      page.should_not have_content "250.08" # the number that would have been calculated on the fly
+
+      # And the shipping cost and tax should be correct
+      page.should have_content "100.55" # shipping cost
+      page.should have_content "16.76" # shipping tax  # TODO: do not calculate on the fly
+    end
+  end
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do

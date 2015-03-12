@@ -1,10 +1,11 @@
 angular.module('admin.order_cycles', ['ngResource'])
-  .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, OrderCycle, Enterprise, EnterpriseFee) ->
+  .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
     $scope.enterprises = Enterprise.index()
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index()
 
     $scope.order_cycle = OrderCycle.order_cycle
+    $scope.order_cycle.coordinator_id = ocInstance.coordinator_id
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded

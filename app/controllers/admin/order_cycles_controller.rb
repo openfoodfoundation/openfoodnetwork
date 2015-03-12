@@ -6,6 +6,7 @@ module Admin
     include OrderCyclesHelper
 
     before_filter :load_order_cycle_set, :only => :index
+    before_filter :require_coordinator, only: :new
 
     def show
       respond_to do |format|
@@ -84,6 +85,24 @@ module Admin
     private
     def load_order_cycle_set
       @order_cycle_set = OrderCycleSet.new :collection => collection
+    end
+
+    def require_coordinator
+      if params[:coordinator_id] && @order_cycle.coordinator = order_cycle_coordinating_enterprises.find_by_id(params[:coordinator_id])
+        return
+      end
+
+      available_coordinators = order_cycle_coordinating_enterprises.select(&:confirmed?)
+      case available_coordinators.count
+      when 0
+        flash[:error] = "None of your enterprises have permission to coordinate an order cycle"
+        redirect_to main_app.admin_order_cycles_path
+      when 1
+        @order_cycle.coordinator = available_coordinators.first
+      else
+        flash[:error] = "You don't have permission to create an order cycle coordinated by that enterprise" if params[:coordinator_id]
+        render :set_coordinator
+      end
     end
   end
 end
