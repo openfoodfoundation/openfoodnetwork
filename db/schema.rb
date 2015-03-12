@@ -1096,9 +1096,6 @@ ActiveRecord::Schema.define(:version => 20150225232938) do
   add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
   add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"
 
-  add_foreign_key "enterprise_groups", "spree_addresses", name: "enterprise_groups_address_id_fk", column: "address_id"
-  add_foreign_key "enterprise_groups", "spree_users", name: "enterprise_groups_owner_id_fk", column: "owner_id"
-
   add_foreign_key "enterprise_groups_enterprises", "enterprise_groups", name: "enterprise_groups_enterprises_enterprise_group_id_fk"
   add_foreign_key "enterprise_groups_enterprises", "enterprises", name: "enterprise_groups_enterprises_enterprise_id_fk"
 
