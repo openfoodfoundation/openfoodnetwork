@@ -11,6 +11,7 @@ feature %q{
 
   let!(:hub) { create(:distributor_enterprise) }
   let!(:hub2) { create(:distributor_enterprise) }
+  let!(:hub3) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:er1) { create(:enterprise_relationship, parent: hub, child: producer,
                       permissions_list: [:add_to_order_cycle]) }
@@ -156,6 +157,7 @@ feature %q{
 
       context "with overrides" do
         let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
+        let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub3, price: 1, count_on_hand: 2) }
 
         before do
           visit '/admin/variant_overrides'
