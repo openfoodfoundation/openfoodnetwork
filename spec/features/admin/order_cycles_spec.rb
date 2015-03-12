@@ -85,6 +85,7 @@ feature %q{
     fill_in 'order_cycle_name', with: 'Plums & Avos'
     fill_in 'order_cycle_orders_open_at', with: '2012-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2012-11-13 17:00:00'
+    select 'My coordinator', from: 'order_cycle_coordinator_id'
 
     # And I add a coordinator fee
     click_button 'Add coordinator fee'

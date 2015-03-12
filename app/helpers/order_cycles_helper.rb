@@ -3,6 +3,10 @@ module OrderCyclesHelper
     @current_order_cycle ||= current_order(false).andand.order_cycle
   end
 
+  def order_cycle_permitted_in(enterprises)
+    enterprises.merge(order_cycle_permitted_enterprises)
+  end
+
   def order_cycle_permitted_enterprises
     OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
   end
