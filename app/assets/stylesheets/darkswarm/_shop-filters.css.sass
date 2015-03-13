@@ -15,22 +15,23 @@
       box-shadow: none
 
     a
+      display: block
+      padding-top: 0.5rem
       @include border-radius(0.5em)
       border: 1px solid $border-clr
-      padding: 0.625em
+      padding: 0.5em 0.625em
       font-size: 0.875em
       color: $base-clr
       font-size: 0.75em
       i
-        font-size: 1.25rem
-        margin-left: 0.25rem
+        padding-left: 0.25rem
 
       render-svg
-        width: 1.25rem
-        height: 1.25rem
-        svg
-          width: 1.25rem
-          height: 1.25rem
+        &, & svg
+          width: 1rem
+          height: 1rem
+          float: left
+          padding-right: 0.25rem
           path
             @include csstrans
             fill: $base-clr
@@ -89,6 +90,7 @@
 
 
 .filter-shopfront
+
   // Shopfront taxons
   &.taxon-selectors
     @include filter-selector($clr-blue, $clr-blue-light, $clr-blue-bright)
@@ -96,3 +98,5 @@
   // Shopfront properties
   &.property-selectors
     @include filter-selector(#666, #ccc, #666)
+
+
