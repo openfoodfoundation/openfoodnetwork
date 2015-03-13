@@ -11,6 +11,8 @@
     margin: 0 0 0.25rem 0.25rem
     &:hover, &:focus
       background: transparent
+    &.active 
+      box-shadow: none
 
     a
       @include border-radius(0.5em)
@@ -69,7 +71,7 @@
   span.filter-label
     opacity: 0.75
 
-.filter-box.taxon-selectors, .filter-box.property-selectors
+.filter-shopfront.taxon-selectors, .filter-shopfront.property-selectors
   background: transparent
 
   single-line-selectors
@@ -86,7 +88,7 @@
     list-style: none
 
 
-.filter-box
+.filter-shopfront
   // Shopfront taxons
   &.taxon-selectors
     @include filter-selector($clr-blue, $clr-blue-light, $clr-blue-bright)

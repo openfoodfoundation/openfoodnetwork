@@ -6,14 +6,6 @@
       %em from
       %span.avenir {{ enterprise.name }}
 
-    .filter-box.taxon-selectors
-      %div{ objects: "[product] | taxonsOf"}
-
-    %hr
-
-    .filter-box.property-selectors
-      %single-line-selectors{ objects: "[product] | propertiesOf"}
-
 
     / %render-svg{path: "{{product.primary_taxon.icon}}"}
       

@@ -35,7 +35,7 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
 
     fit = ->
       used = $(element).find("li.more").outerWidth(true)
-      available = $(element).parent(".filter-box").innerWidth()
+      available = $(element).parent(".filter-shopfront").innerWidth()
       $(element).find("li").not(".more").each (i) ->
         used += $(this).outerWidth(true)
         scope.allSelectors[i].fits = used <= available
