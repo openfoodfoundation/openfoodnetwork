@@ -122,12 +122,12 @@
       - else
         Collection details
 
-  - if @order.order_cycle.andand.pickup_time_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_time_for(@order.distributor).present?
     %h4 
       Ready for collection:
       %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
   
-  - if @order.shipping_method.andand.description
+  - if @order.shipping_method.andand.description.present?
     %p
       %em #{@order.shipping_method.description.html_safe}
       %br &nbsp;
@@ -138,7 +138,7 @@
       %br
       #{@order.ship_address.full_address}
 
-  - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor)
+  - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor).present? 
     %p
       %strong Collection instructions:
       %br

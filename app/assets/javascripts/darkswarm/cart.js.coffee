@@ -11,9 +11,9 @@ $ ->
 
 # Temporarily handles the cart showing stuff
 $(document).ready ->
-  $('#cart_adjustments').hide()
+  $('.cart_adjustment').hide()
 
-  $('th.cart-adjustment-header a').click ->
-    $('#cart_adjustments').toggle()
+  $('td.cart-adjustments a').click ->
+    $('.cart_adjustment').toggle()
     $(this).html('Item Handling Fees (included in item totals)')
     false

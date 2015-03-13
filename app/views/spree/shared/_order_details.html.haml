@@ -2,7 +2,7 @@
   .columns.large-6
     .order-summary.text-small
       .right
-        - if @order.paid?
+        - if order.paid?
           PAID
         - else
           NOT PAID
@@ -13,7 +13,7 @@
     .pad
       .text-big
         Paying via:
-        %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
+        %strong=  order.payments.first.andand.payment_method.andand.name.andand.html_safe
       %p.text-small.text-skinny.pre-line
         %em= order.payments.first.andand.payment_method.andand.description.andand.html_safe
 
@@ -29,14 +29,14 @@
         = order.bill_address.phone
 
   .columns.large-6
-    - if @order.shipping_method.andand.require_ship_address
+    - if order.shipping_method.andand.require_ship_address
       // Delivery option
       .order-summary.text-small
         %strong= order.shipping_method.name
       .pad
         .text-big
           Delivery on
-          %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
         %p.text-small.text-skinny.pre-line
           %em= order.shipping_method.description.andand.html_safe || ""
       .order-summary.text-small
@@ -49,7 +49,7 @@
           = order.ship_address.full_address
           %br
           = order.ship_address.phone
-        - if order.special_instructions
+        - if order.special_instructions.present?
           %br
           %p.light.small
             %strong Your notes:
@@ -62,7 +62,7 @@
       .pad
         .text-big
           Ready for collection
-          %strong #{@order.order_cycle.pickup_time_for(@order.distributor)}
+          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
         %p.text-small.text-skinny.pre-line
           %em= order.shipping_method.description.andand.html_safe || ""
       .order-summary.text-small
@@ -72,14 +72,15 @@
         %p.text-small
           = order.ship_address.full_address
 
-        - if @order.order_cycle.pickup_instructions_for(@order.distributor)
+        - if order.order_cycle.pickup_instructions_for(order.distributor).present?
           %br
           %p.text-small
             %strong
               Collection Instructions
             %br
-            #{@order.order_cycle.pickup_instructions_for(@order.distributor)}
-        - if order.special_instructions
+            #{order.order_cycle.pickup_instructions_for(order.distributor)}
+
+        - if order.special_instructions.present?
           %br
           %p.light.small
             %strong Your notes:
@@ -102,7 +103,7 @@
           %th.text-right.total
             %span= t(:total)
       %tbody{"data-hook" => ""}
-        - @order.line_items.each do |item|
+        - order.line_items.each do |item|
           %tr{"data-hook" => "order_details_line_item_row"}
             %td(data-hook = "order_item_description")
 
@@ -135,11 +136,11 @@
             %h5
               Total
           %td.text-right.total
-            %h5#order_total= @order.display_total.to_html
+            %h5#order_total= order.display_total.to_html
 
       - if order.price_adjustment_totals.present?
         %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
-          - @order.price_adjustment_totals.each do |key, total|
+          - order.price_adjustment_totals.each do |key, total|
             %tr.total
               %td.text-right{colspan: "3"}
                 %strong
@@ -153,10 +154,10 @@
             %strong
               Produce
           %td.text-right.total
-            %span= display_checkout_subtotal(@order)
+            %span= display_checkout_subtotal(order)
 
       %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-        - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+        - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
           %tr.total
             %td.text-right{:colspan => "3"}
               %strong

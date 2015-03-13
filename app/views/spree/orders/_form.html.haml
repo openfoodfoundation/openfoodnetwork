@@ -19,7 +19,7 @@
       %tbody#line_items{"data-hook" => ""}
         = order_form.fields_for :line_items do |item_form|
           = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
-      
+
       %tfoot#edit-cart
         %tr
           %td{colspan:"2"}
@@ -32,7 +32,12 @@
             %span#clear_cart_link{"data-hook" => ""}
               = link_to "Empty cart", empty_cart_path, method: :put, :class => 'not-bold small'
               -#= form_tag empty_cart_path, :method => :put do
-                -#= submit_tag t(:empty_cart), :class => 'button alert expand small'    
+                -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
+
+        / This is the fees row which we want to replace with the pop-over
+        -# - unless @order.adjustments.eligible.blank?
+        -#   = render "spree/orders/adjustments"
+
         %tr
           %td.text-right{colspan:"3"} Produce subtotal
           %td.text-right
@@ -44,11 +49,6 @@
           %td.text-right
             %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
           %td
-        
-        / This is the fees row which we want to replace with the pop-over
-        / %tr
-        /   %td{colspan:"5"} 
-        /     = render "spree/orders/adjustments" unless @order.adjustments.eligible.blank?
 
         %tr
           %td.text-right{colspan:"3"}
@@ -56,4 +56,3 @@
           %td.text-right
             %h5.order-total.grand-total= @order.display_total
           %td
-
