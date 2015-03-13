@@ -15,13 +15,14 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_supplied_products_form'
 
-= select_tag :new_supplier_id, options_for_select(order_cycle_producer_enterprise_options), {'ng-model' => 'new_supplier_id'}
+- if spree_current_user.enterprises.include? @order_cycle.coordinator
+  = select_tag :new_supplier_id, options_for_select(order_cycle_producer_enterprise_options), {'ng-model' => 'new_supplier_id'}
 
-= f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
+  = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
 
 
 %h2 Coordinator
--if current_user.enterprises.include? @order_cycle.coordinator
+-if spree_current_user.enterprises.include? @order_cycle.coordinator
   = f.label :coordinator_id, 'Coordinator'
   = f.select :coordinator_id, order_cycle_coordinating_enterprise_options, { include_blank: true }, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
   = render 'coordinator_fees', f: f
@@ -43,8 +44,9 @@
     %tr.products{'ng-show' => 'exchange.showProducts'}
       = render 'exchange_distributed_products_form'
 
-= select_tag :new_distributor_id, options_for_select(order_cycle_hub_enterprise_options), {'ng-model' => 'new_distributor_id'}
-= f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
+- if spree_current_user.enterprises.include? @order_cycle.coordinator
+  = select_tag :new_distributor_id, options_for_select(order_cycle_hub_enterprise_options), {'ng-model' => 'new_distributor_id'}
+  = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
 
 .actions
   = f.submit @order_cycle.new_record? ? 'Create' : 'Update', 'ng-disabled' => '!loaded()'
