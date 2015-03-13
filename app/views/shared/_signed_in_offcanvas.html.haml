@@ -1,13 +1,14 @@
 - if admin_user? or enterprise_user?
   %li
-    %a{href: spree.admin_path} 
+    %a{href: spree.admin_path, target:'_blank'} 
       %i.ofn-i_021-tools
       Admin
 
 %li
   %a{href: spree.account_path}
     %i.ofn-i_015-user
-    = spree_current_user.email
+    Account
+    / = spree_current_user.email
 
 %li
   %a{title: 'Log Out', href:'/logout' } 
