@@ -64,6 +64,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       @create_line_item(variant) unless exists
 
     create_line_item: (variant)->
+      variant.extended_name = @extendedVariantName(variant)
       variant.line_item =
         variant: variant
         quantity: null
