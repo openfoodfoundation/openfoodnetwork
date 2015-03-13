@@ -7,9 +7,11 @@ module Admin
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
+    before_filter :override_sells, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update
+
 
     helper 'spree/products'
     include OrderCyclesHelper
@@ -117,6 +119,13 @@ module Admin
 
     def override_owner
       params[:enterprise][:owner_id] = spree_current_user.id unless spree_current_user.admin?
+    end
+
+    def override_sells
+      unless spree_current_user.admin?
+        has_hub = spree_current_user.enterprises.is_hub.any?
+        params[:enterprise][:sells] = has_hub ? 'any' : 'none'
+      end
     end
 
     def check_can_change_owner

@@ -3,25 +3,16 @@ require 'spec_helper'
 module Admin
   describe EnterprisesController do
     include AuthenticationWorkflow
-    let(:user) { create_enterprise_user }
-    let(:distributor_manager) do
-      user = create(:user)
-      user.spree_roles = []
-      distributor.enterprise_roles.build(user: user).save
-      user
-    end
-    let(:distributor_owner) do
-      user = create(:user)
-      user.spree_roles = []
-      user
-    end
-    let(:admin_user) do
-      user = create(:user)
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
-      user
-    end
+
+    let(:user) { create(:user) }
+    let(:admin_user) { create(:admin_user) }
+    let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }
+    let(:supplier_manager) { create(:user, enterprise_limit: 10, enterprises: [supplier]) }
+    let(:distributor_owner) { create(:user) }
+    let(:supplier_owner) { create(:user) }
 
     let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
+    let(:supplier) { create(:supplier_enterprise, owner: supplier_owner) }
 
 
     describe "creating an enterprise" do
@@ -47,13 +38,57 @@ module Admin
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
       end
 
-      it "it overrides the owner_id submitted by the user unless current_user is super admin" do
+      it "overrides the owner_id submitted by the user unless current_user is super admin" do
         controller.stub spree_current_user: distributor_manager
         enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
+      end
+
+      context "when I already have a hub" do
+        it "creates the new enterprise as a hub" do
+          controller.stub spree_current_user: distributor_manager
+          enterprise_params[:enterprise][:owner_id] = distributor_manager
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'any'
+        end
+
+        it "doesn't affect the hub status for super admins" do
+          admin_user.enterprises << create(:distributor_enterprise)
+
+          controller.stub spree_current_user: admin_user
+          enterprise_params[:enterprise][:owner_id] = admin_user
+          enterprise_params[:enterprise][:sells] = 'none'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
+        end
+      end
+
+      context "when I do not have a hub" do
+        it "does not create the new enterprise as a hub" do
+          controller.stub spree_current_user: supplier_manager
+          enterprise_params[:enterprise][:owner_id] = supplier_manager
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
+        end
+
+        it "doesn't affect the hub status for super admins" do
+          controller.stub spree_current_user: admin_user
+          enterprise_params[:enterprise][:owner_id] = admin_user
+          enterprise_params[:enterprise][:sells] = 'any'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'any'
+        end
       end
     end
 

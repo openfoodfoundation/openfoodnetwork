@@ -1,5 +1,6 @@
 module AuthenticationWorkflow
   include Warden::Test::Helpers
+
   def quick_login_as(user)
     login_as user
   end

@@ -219,7 +219,7 @@ FactoryGirl.modify do
     country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
   end
 
-  factory :payment  do
+  factory :payment do
     ignore do
       distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     end
@@ -233,6 +233,18 @@ FactoryGirl.modify do
   factory :option_type do
     # Prevent inconsistent ordering in specs when all option types have the same (0) position
     sequence(:position)
+  end
+
+  factory :user do
+    after(:create) do |user|
+      user.spree_roles.clear # Remove admin role
+    end
+  end
+
+  factory :admin_user do
+    after(:create) do |user|
+      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+    end
   end
 end
 
