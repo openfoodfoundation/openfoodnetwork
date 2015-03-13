@@ -8,6 +8,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       for line_item in @line_items
         line_item.variant.line_item = line_item
         Variants.register line_item.variant
+        line_item.variant.extended_name = @extendedVariantName(line_item.variant)
 
     orderChanged: =>
       @unsaved()
@@ -68,3 +69,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
         quantity: null
         max_quantity: null
       @line_items.push variant.line_item
+
+    extendedVariantName: (variant) =>
+      if variant.product_name == variant.name_to_display
+        variant.product_name
+      else
+        name =  "#{variant.product_name} - #{variant.name_to_display}"
+        name += " (#{variant.options_text})" if variant.options_text
+        name
