@@ -23,6 +23,11 @@ module Spree
           adjustment.amount.should be > 0
           adjustment.included_tax.should == adjustment.amount
         end
+
+        it "does not crash when order data has been updated previously" do
+          order.price_adjustments.first.destroy
+          tax_rate.adjust(order)
+        end
       end
 
       describe "Shipment adjustments" do
