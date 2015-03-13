@@ -21,10 +21,10 @@
             "ng-value" => "method.id",
             "ng-model" => "order.shipping_method_id"}
             {{ method.name }}
-            // TODO: Laura - this is not working correctly, need to show shipping price regardless of if selected!?
-            %em.light{"ng-show" => "!Checkout.shippingPrice()"} (Free)
-            %em.light{"ng-show" => "order.shipping_method.andand.require_ship_address"}
-              {{ Checkout.shippingPrice() | localizeCurrency }}
+            %em.light{"ng-show" => "!method.price || method.price == 0"}
+              (Free)
+            %em.light{"ng-hide" => "!method.price || method.price == 0"}
+              ({{ method.price | localizeCurrency }})
 
         %small.error.medium.input-text{"ng-show" => "!fieldValid('order.shipping_method_id')"}
           = "{{ fieldErrors('order.shipping_method_id') }}"
