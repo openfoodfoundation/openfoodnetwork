@@ -6,6 +6,7 @@ feature "Authentication", js: true do
   include WebHelper
 
   let(:user) { create(:user, password: "password", password_confirmation: "password") }
+  let!(:enterprise) { create(:enterprise, owner: user) } # Required for access to admin
 
   scenario "logging into admin redirects home, then back to admin" do
     # This is the first admin spec, so give a little extra load time for slow systems
@@ -16,7 +17,7 @@ feature "Authentication", js: true do
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
     click_login_button
-    page.should have_content "Dashboard"
+    page.should have_content "DASHBOARD"
     current_path.should == spree.admin_path
   end
 
