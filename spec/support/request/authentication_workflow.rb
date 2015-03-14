@@ -38,6 +38,7 @@ module AuthenticationWorkflow
     visit spree.admin_path
   end
 
+  # TODO: Should probably just rename this to create_user
   def create_enterprise_user( attrs = {} )
     new_user = create(:user, attrs)
     new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
@@ -55,11 +56,8 @@ module AuthenticationWorkflow
   end
 
   def login_to_consumer_section
-    # The first user is given the admin role by Spree, so create a dummy user if this is the first
-    create(:user) if Spree::User.admin.empty?
-
     user_role = Spree::Role.find_or_create_by_name!('user')
-    user = Spree::User.create!({
+    user = create_enterprise_user({
       :email => 'someone@ofn.org',
       :password => 'passw0rd',
       :password_confirmation => 'passw0rd',
