@@ -368,17 +368,18 @@ feature %q{
 
         expect(find("#content-header")).to have_link "New Enterprise"
       end
+    end
 
-      context "when I have reached my enterprise ownership limit" do
-        it "does not display the link to create a new enterprise" do
-          enterprise_user.owned_enterprises.push [supplier1]
+    context "when I have reached my enterprise ownership limit", js: true do
+      it "does not display the link to create a new enterprise" do
+        supplier1.reload
+        enterprise_user.owned_enterprises.push [supplier1]
 
-          click_link "Enterprises"
+        click_link "Enterprises"
 
-          page.should have_content supplier1.name
-          page.should have_content distributor1.name
-          expect(find("#content-header")).to_not have_link "New Enterprise"
-        end
+        page.should have_content supplier1.name
+        page.should have_content distributor1.name
+        expect(find("#content-header")).to_not have_link "New Enterprise"
       end
     end
 
