@@ -33,22 +33,39 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
           func.apply subject, Array::slice.call(args)
         , timeout)
 
+    loadWidths = ->
+      $(element).find("li").not(".more").each (i) ->
+        scope.allSelectors[i].width = $(this).outerWidth(true)
+        return null # So we don't exit the loop weirdly
+
+
     fit = ->
       used = $(element).find("li.more").outerWidth(true)
-      available = $(element).parent(".filter-shopfront").innerWidth()
-      $(element).find("li").not(".more").each (i) ->
-        used += $(this).outerWidth(true)
-        scope.allSelectors[i].fits = used <= available
-        return null # So we don't exit the loop on false
+      used += selector.width for selector in scope.allSelectors when selector.fits
+      available = $(element).parent(".filter-shopfront").innerWidth() - used
+      if available > 0
+        for selector in scope.allSelectors when !selector.fits
+          available -= selector.width
+          selector.fits = true if available > 0
+      else
+        for i in [scope.allSelectors.length-1..0]
+          selector = scope.allSelectors[i]
+          if !selector.fits
+            continue
+          else
+            if available < 0
+              selector.fits = false
+              available += selector.width
       scope.fitting = false
 
     scope.$watchCollection "allSelectors", ->
       if scope.allSelectors?
         scope.fitting = true
         selector.fits = true for selector in scope.allSelectors
-        $timeout fit, 0, true
+        loadWidths()
+        fit()
 
     $(window).resize debouncer (e) ->
       scope.fitting = true
-      scope.$apply -> selector.fits = true for selector in scope.allSelectors
-      $timeout fit, 0, true
+      if scope.allSelectors?
+        $timeout fit, 0, true
