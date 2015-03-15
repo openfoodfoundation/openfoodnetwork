@@ -62,8 +62,8 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
       if scope.allSelectors?
         scope.fitting = true
         selector.fits = true for selector in scope.allSelectors
-        loadWidths()
-        fit()
+        $timeout(loadWidths, 0, true).then ->
+          $timeout fit, 0, true
 
     $(window).resize debouncer (e) ->
       scope.fitting = true

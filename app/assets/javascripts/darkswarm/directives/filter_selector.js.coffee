@@ -25,6 +25,9 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
     scope.$on 'loadFilterSelectors', ->
       scope.allSelectors = scope.selectors()
 
+    scope.$watchCollection "selectors()", (newValue, oldValue) ->
+      scope.allSelectors = scope.selectors()
+
     # Build a list of selectors
     scope.selectors = ->
       # Generate a selector for each object.
