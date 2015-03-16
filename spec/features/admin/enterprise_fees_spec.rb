@@ -8,7 +8,6 @@ feature %q{
   include WebHelper
 
   let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
-  let!(:tax_category_gst_exempt) { create(:tax_category, name: 'GST exempt') }
 
   scenario "listing enterprise fees" do
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing', tax_category: tax_category_gst)
@@ -69,7 +68,7 @@ feature %q{
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
     select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
     fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
-    select 'GST exempt', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
+    select '', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
     select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
     click_button 'Update'
 
@@ -77,7 +76,7 @@ feature %q{
     page.should have_selector "option[selected]", text: 'Foo'
     page.should have_selector "option[selected]", text: 'Admin'
     page.should have_selector "input[value='Greetings!']"
-    page.should have_selector "option[selected]", text: 'GST exempt'
+    page.should have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: ''
     page.should have_selector "option[selected]", text: 'Flat Percent'
   end
 
