@@ -783,7 +783,7 @@ feature %q{
     login_to_admin_section
     click_link 'Order Cycles'
     page.should have_content("Translusent Berries")
-    first('a.delete-product').click
+    first('a.delete-order-cycle').click
     page.should_not have_content("Translusent Berries")
   end
 
