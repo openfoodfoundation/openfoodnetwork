@@ -132,7 +132,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
 
     can [:create], OrderCycle
-    can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
+    can [:admin, :index, :read, :edit, :update, :bulk_update, :clone, :destroy], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end
     can [:for_order_cycle], Enterprise
