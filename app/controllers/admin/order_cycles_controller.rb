@@ -7,6 +7,8 @@ module Admin
 
     before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
+    around_filter :protect_invalid_destroy, only: :destroy
+
 
     def show
       respond_to do |format|
@@ -104,6 +106,15 @@ module Admin
       else
         flash[:error] = "You don't have permission to create an order cycle coordinated by that enterprise" if params[:coordinator_id]
         render :set_coordinator
+      end
+    end
+
+    def protect_invalid_destroy
+      begin
+        yield
+      rescue ActiveRecord::InvalidForeignKey
+        redirect_to main_app.admin_order_cycles_url
+        flash[:error] = "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
       end
     end
   end
