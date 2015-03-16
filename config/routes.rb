@@ -1,7 +1,9 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
+
   get "/#/login", to: "home#index", as: :spree_login
+  get "/login", to: redirect("/#/login")
 
   get "/map", to: "map#index", as: :map
 

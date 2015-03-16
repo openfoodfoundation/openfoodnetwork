@@ -1,5 +1,6 @@
 - order_cycle = order_cycle_form.object
 - klass = "order-cycle-#{order_cycle.id} #{order_cycle_status_class order_cycle}"
+
 %tr{class: klass}
   %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
   %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
@@ -7,7 +8,7 @@
 
   - unless order_cycles_simple_index
     %td.suppliers
-      - suppliers = order_cycle_permitted_in(order_cycle.suppliers)
+      - suppliers = order_cycle.suppliers.merge(@order_cycle_enterprises)
       - supplier_list = suppliers.map(&:name).sort.join ', '
       - if suppliers.count > 3
         %span.with-tip{'data-powertip' => supplier_list}
@@ -17,7 +18,7 @@
         = supplier_list
     %td= order_cycle.coordinator.name
     %td.distributors
-      - distributors = order_cycle_permitted_in(order_cycle.distributors)
+      - distributors = order_cycle.distributors.merge(@order_cycle_enterprises)
       - distributor_list = distributors.map(&:name).sort.join ', '
       - if distributors.count > 3
         %span.with-tip{'data-powertip' => distributor_list}
@@ -25,16 +26,14 @@
           distributors
       - else
         = distributor_list
-        %br/
 
   %td.products
-    - variant_images = capture do
-      - order_cycle.variants.each do |v|
-        = image_tag(v.images.first.attachment.url(:mini)) if v.images.present?
-        %br/
-    %span.with-tip{'data-powertip' => variant_images}= "#{order_cycle.variants.count} variants"
+    %span= "#{order_cycle.variants.count} variants"
 
   %td.actions
     = link_to '', main_app.edit_admin_order_cycle_path(order_cycle), class: 'edit-order-cycle icon-edit no-text'
   %td.actions
-    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'
+    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'  
+  - if can_delete?(order_cycle)
+    %td.actions
+      = link_to '', main_app.admin_order_cycle_path(order_cycle), class: 'delete-product icon-trash no-text', :method => :delete,  data: { confirm: "Are you sure?" }

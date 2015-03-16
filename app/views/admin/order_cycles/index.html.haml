@@ -4,6 +4,12 @@
 = content_for :page_actions do
   %li#new_order_cycle_link
     = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'icon-plus', :id => 'admin_new_order_cycle_link'
+  - if @show_more
+    %li
+      = button_link_to "Show less", main_app.admin_order_cycles_path
+  - else
+    %li
+      = button_link_to "Show more", main_app.admin_order_cycles_path(params: { show_more: true })
 
 = form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|
   %table.index#listing_order_cycles
@@ -25,7 +31,7 @@
         %th Open
         %th Close
         - unless order_cycles_simple_index
-          %th Suppliers
+          %th Supplier
           %th Coordinator
           %th Distributors
         %th Products
