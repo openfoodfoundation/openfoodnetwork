@@ -118,6 +118,8 @@ feature %q{
     end
 
     scenario "creating a new product" do
+      Spree::Config.products_require_tax_category = false
+
       click_link 'Products'
       click_link 'New Product'
 
@@ -127,7 +129,7 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
-      select tax_category.name, from: "product_tax_category_id"
+      select 'None', from: "product_tax_category_id"
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -138,7 +140,7 @@ feature %q{
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier2
-      product.tax_category.should == tax_category
+      product.tax_category.should be_nil
     end
 
     scenario "editing a product" do
