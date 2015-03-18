@@ -122,19 +122,19 @@ module OpenFoodNetwork
         permissions.order_cycle_exchanges(oc).should == [ex]
       end
 
-      it "returns exchanges involving enterprises with E2E permission" do
+      it "does not return exchanges involving enterprises with E2E permission" do
         permissions.stub(:related_enterprises_with) { Enterprise.where(id: [e1, e2]) }
+        permissions.order_cycle_exchanges(oc).should == []
+      end
+
+      it "returns exchanges involving only the sender" do
+        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
         permissions.order_cycle_exchanges(oc).should == [ex]
       end
 
-      it "does not return exchanges involving only the sender" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
-        permissions.order_cycle_exchanges(oc).should == []
-      end
-
-      it "does not return exchanges involving only the receiver" do
+      it "returns exchanges involving only the receiver" do
         permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
-        permissions.order_cycle_exchanges(oc).should == []
+        permissions.order_cycle_exchanges(oc).should == [ex]
       end
     end
 

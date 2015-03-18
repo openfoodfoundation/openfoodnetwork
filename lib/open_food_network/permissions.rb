@@ -55,8 +55,9 @@ module OpenFoodNetwork
 
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)
-      enterprises = managed_and_related_enterprises_with :add_to_order_cycle
-      order_cycle.exchanges.to_enterprises(enterprises).from_enterprises(enterprises)
+      ids = order_cycle_exchange_ids_involving_my_enterprises(order_cycle)
+
+      Exchange.where(id: ids, order_cycle_id: order_cycle)
     end
 
     def managed_products
@@ -102,6 +103,11 @@ module OpenFoodNetwork
 
     def related_enterprise_products
       Spree::Product.where('supplier_id IN (?)', related_enterprises_with(:manage_products))
+    end
+
+    def order_cycle_exchange_ids_involving_my_enterprises(order_cycle)
+      # Any exchanges that my managed enterprises are involved in directly
+      order_cycle.exchanges.involving(managed_enterprises).pluck :id
     end
   end
 end
