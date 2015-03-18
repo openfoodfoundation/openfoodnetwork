@@ -55,7 +55,7 @@ module OpenFoodNetwork
 
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)
-      ids = order_cycle_exchange_ids_involving_my_enterprises(order_cycle)
+      ids = order_cycle_exchange_ids_involving_my_enterprises(order_cycle) | order_cycle_exchange_ids_distributing_my_variants(order_cycle)
 
       Exchange.where(id: ids, order_cycle_id: order_cycle)
     end
@@ -97,6 +97,16 @@ module OpenFoodNetwork
       Enterprise.where('id IN (?)', parent_ids)
     end
 
+    # Related enterprises receiving 'permission' FROM 'enterprises'
+    def related_enterprises_receiving(permission, enterprises)
+      child_ids = EnterpriseRelationship.
+        permitted_by(enterprises).
+        with_permission(permission).
+        pluck(:child_id)
+
+      Enterprise.where('id IN (?)', child_ids)
+    end
+
     def managed_enterprise_products
       Spree::Product.managed_by(@user)
     end
@@ -108,6 +118,21 @@ module OpenFoodNetwork
     def order_cycle_exchange_ids_involving_my_enterprises(order_cycle)
       # Any exchanges that my managed enterprises are involved in directly
       order_cycle.exchanges.involving(managed_enterprises).pluck :id
+    end
+
+    def order_cycle_exchange_ids_distributing_my_variants(order_cycle)
+      # Any outgoing exchange where the distributor has been granted P-OC by one or more of my producers
+      hubs = related_enterprises_receiving(:add_to_order_cycle, managed_enterprises.is_primary_producer).is_hub.pluck(:id)
+      permitted_exchanges = order_cycle.exchanges.outgoing.where(receiver_id: hubs)
+
+      # TODO: remove active_exchanges when we think it is safe to do so
+      # active_exchanges is for backward compatability, before we restricted variants in each
+      # outgoing exchange to those where the producer had granted P-OC to the distributor
+      # For any of my managed producers, any outgoing exchanges with their variants
+      variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
+      active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants).pluck :id
+
+      permitted_exchanges | active_exchanges
     end
   end
 end

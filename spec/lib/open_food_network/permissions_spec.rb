@@ -136,6 +136,39 @@ module OpenFoodNetwork
         permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
         permissions.order_cycle_exchanges(oc).should == [ex]
       end
+
+      describe "special permissions for managers of producers" do
+        let!(:producer) { create(:supplier_enterprise) }
+        before do
+          ex.incoming = false
+          ex.save
+        end
+
+        it "returns outgoing exchanges where the hub has been granted P-OC by a supplier I manage" do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+          create(:enterprise_relationship, parent: producer, child: e2, permissions_list: [:add_to_order_cycle])
+
+          permissions.order_cycle_exchanges(oc).should == [ex]
+        end
+
+
+        it "does not return outgoing exchanges where only the coordinator has been granted P-OC by a producer I manage" do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+          create(:enterprise_relationship, parent: producer, child: e1, permissions_list: [:add_to_order_cycle])
+
+          permissions.order_cycle_exchanges(oc).should == []
+        end
+
+        # TODO: this is testing legacy behaviour for backwards compatability, remove when behaviour no longer required
+        it "returns outgoing exchanges which include variants produced by a producer I manage" do
+          product = create(:product, supplier: producer)
+          variant = create(:variant, product: product)
+          ex.variants << variant
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+
+          permissions.order_cycle_exchanges(oc).should == [ex]
+        end
+      end
     end
 
     describe "finding managed products" do
