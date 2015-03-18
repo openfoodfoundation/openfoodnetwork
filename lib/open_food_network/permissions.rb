@@ -52,7 +52,6 @@ module OpenFoodNetwork
       permissions
     end
 
-
     # Find the exchanges of an order cycle that an admin can manage
     def order_cycle_exchanges(order_cycle)
       ids = order_cycle_exchange_ids_involving_my_enterprises(order_cycle) | order_cycle_exchange_ids_distributing_my_variants(order_cycle)
@@ -97,14 +96,22 @@ module OpenFoodNetwork
       Enterprise.where('id IN (?)', parent_ids)
     end
 
-    # Related enterprises receiving 'permission' FROM 'enterprises'
-    def related_enterprises_receiving(permission, enterprises)
+    def granting(permission, options={})
+      parent_ids = EnterpriseRelationship.
+        permitting(options[:to] || managed_enterprises).
+        with_permission(permission).
+        pluck(:parent_id)
+
+        (options[:scope] || Enterprise).where('id IN (?)', parent_ids)
+    end
+
+    def granted(permission, options={})
       child_ids = EnterpriseRelationship.
-        permitted_by(enterprises).
+        permitted_by(options[:by] || managed_enterprises).
         with_permission(permission).
         pluck(:child_id)
 
-      Enterprise.where('id IN (?)', child_ids)
+        (options[:scope] || Enterprise).where('id IN (?)', child_ids)
     end
 
     def managed_enterprise_products
@@ -122,7 +129,7 @@ module OpenFoodNetwork
 
     def order_cycle_exchange_ids_distributing_my_variants(order_cycle)
       # Any outgoing exchange where the distributor has been granted P-OC by one or more of my producers
-      hubs = related_enterprises_receiving(:add_to_order_cycle, managed_enterprises.is_primary_producer).is_hub.pluck(:id)
+      hubs = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer, scope: Enterprise.is_hub).pluck(:id)
       permitted_exchanges = order_cycle.exchanges.outgoing.where(receiver_id: hubs)
 
       # TODO: remove active_exchanges when we think it is safe to do so
