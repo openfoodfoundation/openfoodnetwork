@@ -10,6 +10,10 @@
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_set }
 
+-# For purposes of debugging bulk_update. See Admin/Enterprises#bulk_update.
+- if flash[:action]
+  %p= flash[:action]
+
 = form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
   %table#listing_enterprises.index
     %colgroup

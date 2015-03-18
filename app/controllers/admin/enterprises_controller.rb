@@ -14,6 +14,7 @@ module Admin
 
 
     helper 'spree/products'
+    include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
 
     def for_order_cycle
@@ -47,12 +48,20 @@ module Admin
 
     def bulk_update
       @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
+      touched_enterprises = @enterprise_set.collection.select(&:changed?)
       if @enterprise_set.save
-        flash[:success] = 'Enterprises updated successfully'
+        flash[:success] = "Enterprises updated successfully"
+
+        # 18-3-2015: It seems that the form for this action sometimes loads bogus values for
+        # the 'sells' field, and submitting that form results in a bunch of enterprises with
+        # values that have mysteriously changed. This statement is here to help debug that
+        # issue, and should be removed (along with its display in index.html.haml) when the
+        # issue has been resolved.
+        flash[:action] = "Updated #{pluralize(touched_enterprises.count, 'enterprise')}: #{touched_enterprises.map(&:name).join(', ')}"
+
         redirect_to main_app.admin_enterprises_path
       else
-        touched_ids = params[:enterprise_set][:collection_attributes].values.map { |v| v[:id].to_i }
-        @enterprise_set.collection.select! { |e| touched_ids.include? e.id }
+        @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
         flash[:error] = 'Update failed'
         render :index
       end
