@@ -89,7 +89,6 @@ module Admin
     private
     def load_data_for_index
       @show_more = !!params[:show_more]
-      @order_cycle_enterprises = OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
       @order_cycle_set = OrderCycleSet.new :collection => collection(@show_more)
     end
 
