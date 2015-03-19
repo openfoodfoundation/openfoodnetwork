@@ -13,7 +13,9 @@ module Admin
     def show
       respond_to do |format|
         format.html
-        format.json
+        format.json do
+          render json: Api::Admin::OrderCycleSerializer.new(@order_cycle, current_user: spree_current_user).to_json
+        end
       end
     end
 
