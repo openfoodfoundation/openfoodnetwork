@@ -144,7 +144,6 @@ Spree::Core::Engine.routes.prepend do
       collection do
         get :managed
         get :bulk_products
-        get :distributable
         get :overridable
       end
       delete :soft_delete

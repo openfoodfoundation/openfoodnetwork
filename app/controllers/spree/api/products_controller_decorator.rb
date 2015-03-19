@@ -20,15 +20,6 @@ Spree::Api::ProductsController.class_eval do
     render_paged_products @products
   end
 
-  def distributable
-    producers = OpenFoodNetwork::Permissions.new(current_api_user).
-      order_cycle_enterprises.is_primary_producer.by_name
-
-    @products = paged_products_for_producers producers
-
-    render_paged_products @products
-  end
-
   def overridable
     producers = OpenFoodNetwork::Permissions.new(current_api_user).
       variant_override_producers.by_name
