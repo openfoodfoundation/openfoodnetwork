@@ -1,20 +1,20 @@
 .row
   
   .columns.small-12.large-6.product-header
-    %h2 {{product.name}}
+    %h3 {{product.name}}
     %span 
       %em from
       %span.avenir {{ enterprise.name }}
-
-
+      
     / %render-svg{path: "{{product.primary_taxon.icon}}"}
       
     %div{"ng-if" => "product.description"}
       %hr
-      .text-small {{product.description}}
+      %p.text-small {{product.description}}
       %hr
 
   .columns.small-12.large-6
     %img.product-img{"ng-src" => "{{product.largeImage}}", "ng-if" => "product.largeImage"}
+    %img.product-img.placeholder{"ng-src" => "/assets/noimage/large.png", "ng-if" => "!product.largeImage"}
 
 %ng-include{src: "'partials/close.html'"}
