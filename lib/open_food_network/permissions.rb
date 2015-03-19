@@ -59,6 +59,36 @@ module OpenFoodNetwork
       Exchange.where(id: ids, order_cycle_id: order_cycle)
     end
 
+    # Find the variants within an exchange that a user can POTENTIALLY see
+    # Note that this does not determine whether they actually appear in outgoing exchanges
+    # as this requires first that the variant is included in an incoming exchange
+    def visible_variants_within(exchange)
+      if exchange.incoming
+        if managed_enterprises.pluck(:id).include?(exchange.receiver_id) || managed_enterprises.pluck(:id).include?(exchange.sender_id)
+          # All variants belonging to the producer
+          Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', exchange.sender_id)
+        else
+          [] # None
+        end
+      else
+        if managed_enterprises.pluck(:id).include?(exchange.receiver_id) || managed_enterprises.pluck(:id).include?(exchange.sender_id)
+          # Any variants of any producers that have granted the receiver P-OC
+          producers = granting(:add_to_order_cycle, to: [exchange.receiver], scope: Enterprise.is_primary_producer)
+          permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
+          # PLUS any variants that are already in the exchange, so things don't break
+          active_variants = exchange.variants
+          Spree::Variant.where(id: permitted_variants | active_variants)
+        else
+          # Any variants produced by MY PRODUCERS, where my producer has granted P-OC to the receiver
+          producers = granting(:add_to_order_cycle, to: [exchange.receiver], scope: managed_enterprises.is_primary_producer)
+          permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
+          # PLUS any of my producers variants that are already in the exchange, so things don't break
+          active_variants = exchange.variants.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
+          Spree::Variant.where(id: permitted_variants | active_variants)
+        end
+      end
+    end
+
     def managed_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
       permitted_enterprise_products_ids = related_enterprise_products.pluck :id
