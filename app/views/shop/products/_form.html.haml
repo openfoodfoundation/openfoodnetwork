@@ -2,7 +2,7 @@
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
   // TODO: Needs an ng-show to slide content down
-  .row.animate-hide.animate-show{ "ng-show" => "query || appliedPropertiesList() || appliedTaxonsList()" }
+  .row.animate-slide{ "ng-show" => "query || appliedPropertiesList() || appliedTaxonsList()" }
     .small-12.columns
       .alert-box.search-alert.ng-scope
         %a.right{"ng-click" => "clearAll()"}
