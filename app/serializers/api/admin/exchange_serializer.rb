@@ -4,9 +4,6 @@ class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
   has_many :enterprise_fees, serializer: Api::Admin::EnterpriseFeeSerializer
 
   def variants
-    Hash[
-      OpenFoodNetwork::Permissions.new(options[:current_user]).
-      visible_variants_within(object).map { |v| [v.id, true] }
-    ]
+    Hash[ object.variants.map { |v| [v.id, true] } ]
   end
 end
