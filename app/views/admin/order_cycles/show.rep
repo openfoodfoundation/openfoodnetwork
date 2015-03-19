@@ -15,7 +15,7 @@ r.element :order_cycle, @order_cycle do
     r.element :receiver_id
     r.element :incoming
 
-    r.element :variants, Hash[ exchange.variants.map { |v| [v.id, true] } ], {}
+    r.element :variants, Hash[ OpenFoodNetwork::Permissions.new(spree_current_user).visible_variants_within(exchange).map { |v| [v.id, true] } ], {}
 
     r.list_of :enterprise_fees do |fee|
       r.element :id
