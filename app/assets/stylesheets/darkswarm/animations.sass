@@ -2,6 +2,26 @@
 
 // ANIMATION FUNCTIONS
 
+
+@-webkit-keyframes heightSlideIn
+  0%
+    opacity: 0
+    height: 0
+  100%
+    opacity: 100
+    height: 30px
+
+@keyframes heightSlideIn
+  0%
+    opacity: 0
+    height: 0
+  100%
+    opacity: 100
+    height: 30px
+
+
+
+//
 @-webkit-keyframes slideInDown
   0%
     opacity: 0
@@ -21,6 +41,8 @@
     -webkit-transform: translateY(0)
     -ms-transform: translateY(0)
     transform: translateY(0)
+
+
 
 @-webkit-keyframes slideOutUp
   0%
@@ -153,6 +175,35 @@ product.animate-repeat
   // padding: 0 10px
 
 .row.animate-show ~ .row
+  -webkit-animation-name: fadeIn
+  animation-name: fadeIn
+  -webkit-animation-duration: 0.5s
+  animation-duration: 0.5s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+
+//
+
+.animate-slide
+  -webkit-animation-name: heightSlideIn
+  animation-name: heightSlideIn
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  -webkit-transition: all 500ms ease-in-out
+  -moz-transition: all 500ms ease-in-out
+  -ms-transition: all 500ms ease-in-out
+  -o-transition: all 500ms ease-in-out
+  transition: all 500ms ease-in-out
+
+.animate-slide.ng-hide
+  -webkit-animation-name: slideOutUp
+  animation-name: slideOutUp
+  -webkit-animation-duration: 0.15s
+  animation-duration: 0.15s
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+
+.row.animate-slide ~ .row
   -webkit-animation-name: fadeIn
   animation-name: fadeIn
   -webkit-animation-duration: 0.5s
