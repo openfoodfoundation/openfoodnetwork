@@ -49,6 +49,10 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :edit_profile
     end
 
+    def variant_override_hubs
+      managed_and_related_enterprises_with(:add_to_order_cycle).is_hub
+    end
+
     def variant_override_producers
       producer_ids = variant_override_enterprises_per_hub.values.flatten.uniq
       Enterprise.where(id: producer_ids)

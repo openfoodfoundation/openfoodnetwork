@@ -103,7 +103,7 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
       hub_auth = OpenFoodNetwork::Permissions.new(user).
-        order_cycle_enterprises.is_distributor.
+        variant_override_hubs.
         include? vo.hub
 
       producer_auth = OpenFoodNetwork::Permissions.new(user).
