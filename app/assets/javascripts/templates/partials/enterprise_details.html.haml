@@ -1,5 +1,21 @@
 .row{bindonce: true} 
   .small-12.large-8.columns
+    / TODO: Rob - add in taxons and properties and property pop-overs
+    .pad-top{"ng-if" => "1 > 0"}
+      %span.filter-shopfront.taxon-selectors
+        %ul.inline-block
+          %li
+            %a.button.tiny.disabled Grains
+          %li
+            %a.button.tiny.disabled Dairy 
+
+      %span.filter-shopfront.property-selectors.pad-top
+        %ul.inline-block
+          %li
+            %a.button.tiny Organic certified
+            / TODO: Rob - need popover, use will's directive or this? http://pineconellc.github.io/angular-foundation/
+
+
     %div{"ng-if" => "enterprise.long_description.length > 0 || enterprise.logo"}
       %p.modal-header About
       .about-container

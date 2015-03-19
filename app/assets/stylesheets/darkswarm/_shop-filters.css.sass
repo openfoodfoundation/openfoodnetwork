@@ -4,6 +4,9 @@
 @import animations
 
 @mixin filter-selector($base-clr, $border-clr, $hover-clr)
+  ul.inline-block
+    display: inline-block
+
   li
     display: inline-block
     @include border-radius(0)
@@ -14,7 +17,7 @@
     &.active 
       box-shadow: none
 
-    a
+    a, a.button
       display: block
       padding-top: 0.5rem
       @include border-radius(0.5em)
@@ -23,6 +26,8 @@
       font-size: 0.875em
       color: $base-clr
       font-size: 0.75em
+      background: white
+      margin: 0
       i
         padding-left: 0.25rem
 
@@ -35,12 +40,27 @@
           path
             @include csstrans
             fill: $base-clr
+
       &:hover, &:focus
+        border-color: $hover-clr
         color: $hover-clr
         render-svg
           svg
             path
               fill: $hover-clr
+     
+      &.disabled
+        opacity: 0.6
+        
+        &:hover, &:focus
+          border-color: $border-clr
+          color:  $base-clr
+          render-svg
+            svg
+              path
+                fill: $base-clr
+
+
       &.active, &.active:hover, &.active:focus
         border: 1px solid $base-clr
         background: $base-clr
@@ -97,6 +117,6 @@
 
   // Shopfront properties
   &.property-selectors
-    @include filter-selector(#666, #ccc, #666)
+    @include filter-selector(#666, #ccc, #777)
 
 
