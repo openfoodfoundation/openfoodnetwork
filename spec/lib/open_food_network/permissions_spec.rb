@@ -21,6 +21,132 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding enterprises that can be viewed in the order cycle interface" do
+      let(:coordinator) { create(:distributor_enterprise) }
+      let(:hub) { create(:distributor_enterprise) }
+      let(:producer) { create(:supplier_enterprise) }
+      let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+
+      context "as a manager of the coordinator" do
+        it "returns enterprises which have granted P-OC to the coordinator" do
+          create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          enterprises = permissions.enterprises_for(oc)
+          expect(enterprises).to include hub
+          expect(enterprises).to_not include producer
+        end
+
+        it "returns the coordinator itself" do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          expect(permissions.enterprises_for(oc)).to include coordinator
+        end
+      end
+
+      context "as a manager of a hub that has granted P-OC to the coordinator" do
+        before do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub]) }
+        end
+
+        context "that has granted P-OC to the coordinator" do
+          before do
+            create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
+          end
+
+          it "returns my hub" do
+            enterprises = permissions.enterprises_for(oc)
+            expect(enterprises).to include hub
+            expect(enterprises).to_not include producer, coordinator
+          end
+
+          context "and has also granted P-OC to a producer" do
+            before do
+              create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
+            end
+            it "does not return that producer" do
+              enterprises = permissions.enterprises_for(oc)
+              expect(enterprises).to_not include producer
+            end
+          end
+        end
+
+        context "that has not granted P-OC to the coordinator" do
+          it "does not return my hub" do
+            enterprises = permissions.enterprises_for(oc)
+            expect(enterprises).to_not include hub, producer, coordinator
+          end
+
+          context "but is already in the order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+
+            it "returns my hub" do
+              enterprises = permissions.enterprises_for(oc)
+              expect(enterprises).to include hub
+              expect(enterprises).to_not include producer, coordinator
+            end
+          end
+        end
+      end
+
+      context "as a manager of a producer" do
+        before do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+        end
+
+        context "which has granted P-OC to the coordinator" do
+          before do
+            create(:enterprise_relationship, parent: producer, child: coordinator, permissions_list: [:add_to_order_cycle])
+          end
+
+          it "returns my producer, and the coordindator itself" do
+            enterprises = permissions.enterprises_for(oc)
+            expect(enterprises).to include producer, coordinator
+            expect(enterprises).to_not include hub
+          end
+
+          context "and has also granted P-OC to a hub" do
+            before do
+              create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+            end
+
+            it "returns that hub as well" do
+              enterprises = permissions.enterprises_for(oc)
+              expect(enterprises).to include producer, coordinator, hub
+            end
+          end
+        end
+
+        context "which has not granted P-OC to the coordinator" do
+          it "does not return my producer" do
+            enterprises = permissions.enterprises_for(oc)
+            expect(enterprises).to_not include producer
+          end
+
+          context "but is already in the order cycle" do
+            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+
+            # TODO: update this when we are confident about P-OCs
+            it "returns my producer" do
+              enterprises = permissions.enterprises_for(oc)
+              expect(enterprises).to include producer
+              expect(enterprises).to_not include hub, coordinator
+            end
+
+            context "and has variants distributed by an outgoing hub" do
+              let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+              before { ex_outgoing.variants << create(:variant, product: create(:product, supplier: producer)) }
+
+              # TODO: update this when we are confident about P-OCs
+              it "returns that hub as well" do
+                enterprises = permissions.enterprises_for(oc)
+                expect(enterprises).to include producer, hub
+                expect(enterprises).to_not include coordinator
+              end
+            end
+          end
+        end
+      end
+    end
+
     describe "finding enterprises whose profiles can be edited" do
       let(:e) { double(:enterprise) }
 
