@@ -27,6 +27,12 @@ module OpenFoodNetwork
       let(:producer) { create(:supplier_enterprise) }
       let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
 
+      context "when no order_cycle or coordinator are provided for reference" do
+        it "returns an empty scope" do
+          expect(permissions.order_cycle_enterprises_for()).to be_empty
+        end
+      end
+
       context "as a manager of the coordinator" do
         it "returns the coordinator itself" do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }

@@ -379,8 +379,7 @@ module Admin
       context "when no order_cycle or coordinator is provided in params" do
         before { spree_get :for_order_cycle }
         it "returns an empty scope" do
-          expect(assigns(:collection)).to be_empty
-          expect(permission_mock).to_not have_received :order_cycle_enterprises_for
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with({})
         end
       end
 
@@ -400,8 +399,8 @@ module Admin
 
       context "when both an order cycle and a coordinator are provided in params" do
         before { spree_get :for_order_cycle, order_cycle_id: 1, coordinator_id: 1 }
-        it "calls order_cycle_enterprises_for() with an :order_cycle option" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(order_cycle: "instance of OrderCycle")
+        it "calls order_cycle_enterprises_for() with both options" do
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(coordinator: "instance of Enterprise", order_cycle: "instance of OrderCycle")
         end
       end
     end
