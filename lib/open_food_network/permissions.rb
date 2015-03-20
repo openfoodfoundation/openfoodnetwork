@@ -15,31 +15,48 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :add_to_order_cycle
     end
 
-    # List of any enterprises whose exchanges I should be able to see in order_cycles
-    def enterprises_for(order_cycle)
+    # List of any enterprises whose exchanges I should be able to see in order_cycle
+    # NOTE: the enterprises a given user can see actually in the OC interface depend on the relationships
+    # of their enterprises to the coordinator of the order cycle, rather than on the order cycle itself
+    # (until such time as we implement friends of friends)
+    def order_cycle_enterprises_for(options={})
+      # Can provide a coordinator OR an order cycle. Use just coordinator for new order cycles
+      # if both are provided, coordinator will be ignored, and the coordinator of the OC will be used
+      return Enterprise.where("1=0") unless options[:coordinator] || options[:order_cycle]
+      coordinator = options[:coordinator]
+      order_cycle = nil
+      if options[:order_cycle]
+        order_cycle = options[:order_cycle]
+        coordinator = order_cycle.coordinator
+      end
+
       # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
       # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
       coordinator_permitted = []
-      if managed_enterprises.include? order_cycle.coordinator
-        coordinator_permitted = granting(:add_to_order_cycle, to: [order_cycle.coordinator]).pluck(:id)
-        coordinator_permitted << order_cycle.coordinator
+      if managed_enterprises.include? coordinator
+        coordinator_permitted = granting(:add_to_order_cycle, to: [coordinator]).pluck(:id)
+        coordinator_permitted << coordinator
       end
 
       # Any enterprises that I manage directly, which have granted P-OC to the coordinator
-      managed_permitted = granting(:add_to_order_cycle, to: [order_cycle.coordinator], scope: managed_enterprises).pluck(:id)
-
-      # TODO: remove this when permissions are all sorted out
-      # Any enterprises that I manage that are already in the order_cycle
-      managed_active = managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors).pluck(:id)
+      managed_permitted = granting(:add_to_order_cycle, to: [coordinator], scope: managed_enterprises).pluck(:id)
 
       # Any hubs that have been granted P-OC by producers I manage
       hubs_permitted = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer, scope: Enterprise.is_hub).pluck(:id)
 
-      # TODO: Remove this when all P-OC are sorted out
-      # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
-      variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
-      active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants)
-      hubs_active = active_exchanges.map(&:receiver_id)
+      managed_active = []
+      hubs_active = []
+      if order_cycle
+        # TODO: remove this when permissions are all sorted out
+        # Any enterprises that I manage that are already in the order_cycle
+        managed_active = managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors).pluck(:id)
+
+        # TODO: Remove this when all P-OC are sorted out
+        # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
+        variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
+        active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants)
+        hubs_active = active_exchanges.map(&:receiver_id)
+      end
 
       Enterprise.where(id: coordinator_permitted | managed_permitted | managed_active | hubs_permitted | hubs_active)
     end
