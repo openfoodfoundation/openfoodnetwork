@@ -3,24 +3,6 @@
 // ANIMATION FUNCTIONS
 
 
-@-webkit-keyframes heightSlideIn
-  0%
-    opacity: 0
-    height: 0
-  100%
-    opacity: 100
-    height: 30px
-
-@keyframes heightSlideIn
-  0%
-    opacity: 0
-    height: 0
-  100%
-    opacity: 100
-    height: 30px
-
-
-
 //
 @-webkit-keyframes slideInDown
   0%
@@ -185,31 +167,29 @@ product.animate-repeat
 //
 
 .animate-slide
-  -webkit-animation-name: heightSlideIn
-  animation-name: heightSlideIn
-  -webkit-animation-fill-mode: both
-  animation-fill-mode: both
-  -webkit-transition: all 500ms ease-in-out
-  -moz-transition: all 500ms ease-in-out
-  -ms-transition: all 500ms ease-in-out
-  -o-transition: all 500ms ease-in-out
-  transition: all 500ms ease-in-out
+  max-height: 500px
+  opacity: 1 !important
+  -webkit-transition: all 300ms ease-in-out
+  -moz-transition: all 300ms ease-in-out
+  -o-transition: all 300ms ease-in-out
+  transition: all 300ms ease-in-out
 
-.animate-slide.ng-hide
-  -webkit-animation-name: slideOutUp
-  animation-name: slideOutUp
-  -webkit-animation-duration: 0.15s
-  animation-duration: 0.15s
-  -webkit-animation-fill-mode: both
-  animation-fill-mode: both
+  &.ng-hide
+    overflow: hidden
+    max-height: 0
+    opacity: 0 !important
+ 
+  // &.ng-hide-add-active, &.ng-hide-remove-active
 
-.row.animate-slide ~ .row
-  -webkit-animation-name: fadeIn
-  animation-name: fadeIn
-  -webkit-animation-duration: 0.5s
-  animation-duration: 0.5s
-  -webkit-animation-fill-mode: both
-  animation-fill-mode: both
+  &.ng-hide-add, &.ng-hide-remove
+    /* IMPORTANT: this needs to be here to make it visible during the animation
+     since the .ng-hide class is already on the element rendering
+     it as hidden. */
+    display: block !important
+
+  
+ 
+ 
 
 
 @mixin csstrans
