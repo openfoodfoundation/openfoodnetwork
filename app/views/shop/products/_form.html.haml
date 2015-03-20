@@ -14,8 +14,10 @@
             {{ appliedPropertiesList() }}
           %span.applied-taxons
             {{ appliedTaxonsList() }}
-          %span.applied-search{ ng: { hide: "!query"} }
-            with {{ query }}
+          %span{ ng: { hide: "!query"} }
+            %span{ "ng-show" => "appliedPropertiesList() || appliedTaxonsList()" }
+              with
+            %span.applied-search "{{ query }}"
   .row
     .small-12.medium-6.large-5.columns
       %input#search.text{"ng-model" => "query",
