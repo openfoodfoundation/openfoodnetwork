@@ -186,6 +186,27 @@ describe Spree::Order do
     end
   end
 
+  describe "getting the shipping tax" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
+
+    context "with a taxed shipment" do
+      before do
+        Spree::Config.shipment_inc_vat = true
+        Spree::Config.shipping_tax_rate = 0.25
+        order.create_shipment!
+      end
+
+      it "returns the shipping tax" do
+        order.shipping_tax.should == 10
+      end
+    end
+
+    it "returns zero when the order has not been shipped" do
+      order.shipping_tax.should == 0
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
