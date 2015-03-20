@@ -1,6 +1,6 @@
 angular.module('admin.order_cycles', ['ngResource'])
   .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
-    $scope.enterprises = Enterprise.index()
+    $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index()
 
@@ -81,11 +81,11 @@ angular.module('admin.order_cycles', ['ngResource'])
   ])
 
   .controller('AdminEditOrderCycleCtrl', ['$scope', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $location, OrderCycle, Enterprise, EnterpriseFee) ->
-    $scope.enterprises = Enterprise.index()
+    order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
+    $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index()
 
-    order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
 
     $scope.loaded = ->
