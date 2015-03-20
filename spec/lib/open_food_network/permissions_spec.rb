@@ -28,17 +28,32 @@ module OpenFoodNetwork
       let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
 
       context "as a manager of the coordinator" do
-        it "returns enterprises which have granted P-OC to the coordinator" do
-          create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
-          permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
-          enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-          expect(enterprises).to include hub
-          expect(enterprises).to_not include producer
-        end
-
         it "returns the coordinator itself" do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
           expect(permissions.order_cycle_enterprises_for(order_cycle: oc)).to include coordinator
+        end
+
+        context "where P-OC has been granted to the coordinator by other enterprises" do
+          before do
+            create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
+            permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+          end
+
+          context "where the coordinator sells own" do
+            it "returns enterprises which have granted P-OC to the coordinator" do
+              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+              expect(enterprises).to include hub
+              expect(enterprises).to_not include producer
+            end
+          end
+
+          context "where the coordinator sells 'own'" do
+            before { coordinator.stub(:sells) { 'own' } }
+            it "returns just the coordinator" do
+              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+              expect(enterprises).to_not include hub, producer
+            end
+          end
         end
       end
 

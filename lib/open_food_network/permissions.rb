@@ -30,35 +30,49 @@ module OpenFoodNetwork
         coordinator = order_cycle.coordinator
       end
 
-      # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
-      # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
-      coordinator_permitted = []
-      if managed_enterprises.include? coordinator
-        coordinator_permitted = granting(:add_to_order_cycle, to: [coordinator]).pluck(:id)
-        coordinator_permitted << coordinator
+
+      if coordinator.sells == "own"
+
+        # Coordinators that sell own can only see themselves in the OC interface
+        coordinator_permitted = []
+        if managed_enterprises.include? coordinator
+          coordinator_permitted << coordinator
+        end
+        Enterprise.where(id: coordinator_permitted)
+
+      else
+        # If the coordinator sells any, relationships come into play
+
+        # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
+        # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
+        coordinator_permitted = []
+        if managed_enterprises.include? coordinator
+          coordinator_permitted = granting(:add_to_order_cycle, to: [coordinator]).pluck(:id)
+          coordinator_permitted << coordinator
+        end
+
+        # Any enterprises that I manage directly, which have granted P-OC to the coordinator
+        managed_permitted = granting(:add_to_order_cycle, to: [coordinator], scope: managed_enterprises).pluck(:id)
+
+        # Any hubs that have been granted P-OC by producers I manage
+        hubs_permitted = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer, scope: Enterprise.is_hub).pluck(:id)
+
+        managed_active = []
+        hubs_active = []
+        if order_cycle
+          # TODO: remove this when permissions are all sorted out
+          # Any enterprises that I manage that are already in the order_cycle
+          managed_active = managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors).pluck(:id)
+
+          # TODO: Remove this when all P-OC are sorted out
+          # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
+          variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
+          active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants)
+          hubs_active = active_exchanges.map(&:receiver_id)
+        end
+
+        Enterprise.where(id: coordinator_permitted | managed_permitted | managed_active | hubs_permitted | hubs_active)
       end
-
-      # Any enterprises that I manage directly, which have granted P-OC to the coordinator
-      managed_permitted = granting(:add_to_order_cycle, to: [coordinator], scope: managed_enterprises).pluck(:id)
-
-      # Any hubs that have been granted P-OC by producers I manage
-      hubs_permitted = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer, scope: Enterprise.is_hub).pluck(:id)
-
-      managed_active = []
-      hubs_active = []
-      if order_cycle
-        # TODO: remove this when permissions are all sorted out
-        # Any enterprises that I manage that are already in the order_cycle
-        managed_active = managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors).pluck(:id)
-
-        # TODO: Remove this when all P-OC are sorted out
-        # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
-        variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
-        active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants)
-        hubs_active = active_exchanges.map(&:receiver_id)
-      end
-
-      Enterprise.where(id: coordinator_permitted | managed_permitted | managed_active | hubs_permitted | hubs_active)
     end
 
     # Find enterprises for which an admin is allowed to edit their profile
