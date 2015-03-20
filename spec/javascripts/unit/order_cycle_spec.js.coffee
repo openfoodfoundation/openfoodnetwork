@@ -37,10 +37,11 @@ describe 'OrderCycle controllers', ->
       EnterpriseFee =
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
+      ocInstance = {}
 
       module('admin.order_cycles')
       inject ($controller) ->
-        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
+        ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
 
     it 'Loads enterprises and supplied products', ->
