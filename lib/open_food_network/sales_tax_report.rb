@@ -16,7 +16,7 @@ module OpenFoodNetwork
       @orders.map do |order|
         totals = totals_of order.line_items
         shipping_cost = shipping_cost_for order
-        shipping_tax = shipping_tax_on shipping_cost
+        shipping_tax = order.shipping_tax
         
         [order.number, order.created_at, totals[:items], totals[:items_total],
          totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, totals[:sales_tax] + shipping_tax,
@@ -52,14 +52,6 @@ module OpenFoodNetwork
     def shipping_cost_for(order)
       shipping_cost = order.adjustments.find_by_label("Shipping").andand.amount
       shipping_cost = shipping_cost.nil? ? 0.0 : shipping_cost
-    end
-
-    def shipping_tax_on(shipping_cost)
-      if shipment_inc_vat && shipping_cost.present?
-        (shipping_cost * shipping_tax_rate / (1 + shipping_tax_rate)).round(2)
-      else
-        0
-      end
     end
 
     def tax_included_in(line_item)

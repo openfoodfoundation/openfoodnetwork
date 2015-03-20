@@ -109,6 +109,8 @@ feature %q{
   end
   
   describe "Sales tax report" do
+    let!(:payment_method) { create(:payment_method, distributors: [user1.enterprises.first]) }
+
     let(:user1) do
       create_enterprise_user(enterprises: [create(:distributor_enterprise)])
     end
@@ -134,6 +136,8 @@ feature %q{
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.2
+
+      order1.create_shipment!
       order1.finalize!
 
       login_to_admin_as user1
