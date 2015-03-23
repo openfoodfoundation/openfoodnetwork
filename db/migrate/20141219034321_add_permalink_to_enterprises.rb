@@ -13,7 +13,7 @@ class AddPermalinkToEnterprises < ActiveRecord::Migration
         counter += 1
       end
 
-      enterprise.update_attributes!(permalink: permalink)
+      enterprise.update_attribute('permalink', permalink)
     end
 
     change_column :enterprises, :permalink, :string, null: false
