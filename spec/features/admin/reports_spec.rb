@@ -110,6 +110,8 @@ feature %q{
   
   describe "Sales tax report" do
     let!(:payment_method) { create(:payment_method, distributors: [user1.enterprises.first]) }
+    let!(:zone)           { create(:zone, default_tax: true) }
+    let!(:zone_member)    { Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by_name('Australia')) }
 
     let(:user1) do
       create_enterprise_user(enterprises: [create(:distributor_enterprise)])
@@ -119,8 +121,8 @@ feature %q{
     end
     let(:tax_category1) { create(:tax_category) }
     let(:tax_category2) { create(:tax_category) }
-    let!(:tax_rate1) { create(:tax_rate, amount: 0.0, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category1) }
-    let!(:tax_rate2) { create(:tax_rate, amount: 0.2, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category2) }
+    let!(:tax_rate1) { create(:tax_rate, amount: 0.0, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category1, zone: zone) }
+    let!(:tax_rate2) { create(:tax_rate, amount: 0.2, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category2, zone: zone) }
 
     let(:product1) { create(:product, price: 12.54,  tax_category: tax_category1) }
     let(:product2) { create(:product, price: 500.15, tax_category: tax_category2) }
@@ -137,7 +139,7 @@ feature %q{
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.2
 
-      order1.create_shipment!
+      3.times { order1.next }
       order1.finalize!
 
       login_to_admin_as user1
