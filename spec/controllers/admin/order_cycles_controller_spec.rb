@@ -56,5 +56,21 @@ module Admin
         end
       end
     end
+
+    describe "destroy" do
+      let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
+
+      describe "when an order cycle becomes non-deletable, and we attempt to delete it" do
+        let!(:oc)    { create(:simple_order_cycle, coordinator: distributor) }
+        let!(:order) { create(:order, order_cycle: oc) }
+
+        before { spree_get :destroy, id: oc.id }
+
+        it "displays an error message" do
+          expect(response).to redirect_to admin_order_cycles_path
+          expect(flash[:error]).to eq "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
+        end
+      end
+    end
   end
 end
