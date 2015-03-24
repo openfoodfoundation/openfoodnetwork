@@ -31,7 +31,7 @@ module Admin
 
       respond_to do |format|
         if @order_cycle.save
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, order_cycle_permitted_enterprises).go!
+          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, permitted_enterprises_for(@order_cycle)).go!
 
           flash[:notice] = 'Your order cycle has been created.'
           format.html { redirect_to admin_order_cycles_path }
@@ -48,7 +48,7 @@ module Admin
 
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, order_cycle_permitted_enterprises).go!
+          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, permitted_enterprises_for(@order_cycle)).go!
 
           flash[:notice] = 'Your order cycle has been updated.'
           format.html { redirect_to admin_order_cycles_path }
@@ -93,11 +93,11 @@ module Admin
     end
 
     def require_coordinator
-      if params[:coordinator_id] && @order_cycle.coordinator = order_cycle_coordinating_enterprises.find_by_id(params[:coordinator_id])
+      if params[:coordinator_id] && @order_cycle.coordinator = permitted_coordinating_enterprises_for(@order_cycle).find_by_id(params[:coordinator_id])
         return
       end
 
-      available_coordinators = order_cycle_coordinating_enterprises.select(&:confirmed?)
+      available_coordinators = permitted_coordinating_enterprises_for(@order_cycle).select(&:confirmed?)
       case available_coordinators.count
       when 0
         flash[:error] = "None of your enterprises have permission to coordinate an order cycle"

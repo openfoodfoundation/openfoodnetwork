@@ -7,7 +7,7 @@
     .two.columns.alpha
       &nbsp;
     .ten.columns
-      = select_tag :coordinator_id, options_for_select(order_cycle_coordinating_enterprise_options), { 'required' => true, class: 'select2 fullwidth'}
+      = select_tag :coordinator_id, options_for_select(permitted_coordinating_enterprise_options_for(@order_cycle)), { 'required' => true, class: 'select2 fullwidth'}
     .two.columns.alpha
       = f.submit "Continue >"
 
