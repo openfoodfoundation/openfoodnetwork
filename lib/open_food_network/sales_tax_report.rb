@@ -18,7 +18,7 @@ module OpenFoodNetwork
         shipping_cost = shipping_cost_for order
         shipping_tax = order.shipping_tax
         enterprise_fee_tax = order.enterprise_fee_tax
-        total_tax = (order.adjustments + order.price_adjustments).sum(&:included_tax)
+        total_tax = order.total_tax
 
         [order.number, order.created_at, totals[:items], totals[:items_total],
          totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, enterprise_fee_tax, total_tax,

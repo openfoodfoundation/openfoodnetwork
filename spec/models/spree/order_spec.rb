@@ -219,6 +219,24 @@ describe Spree::Order do
     end
   end
 
+  describe "getting the total tax" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
+    let(:enterprise_fee)  { create(:enterprise_fee) }
+    let!(:adjustment)     { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
+
+    before do
+      Spree::Config.shipment_inc_vat = true
+      Spree::Config.shipping_tax_rate = 0.25
+      order.create_shipment!
+      order.reload
+    end
+
+    it "returns a sum of all tax on the order" do
+      order.total_tax.should == 12
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
