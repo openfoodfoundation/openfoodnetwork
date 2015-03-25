@@ -8,7 +8,7 @@ module OpenFoodNetwork
 
     def header
       ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
-        "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})",
+        "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})", "Tax on Fees (#{currency_symbol})",
         "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
     end
 
@@ -17,9 +17,10 @@ module OpenFoodNetwork
         totals = totals_of order.line_items
         shipping_cost = shipping_cost_for order
         shipping_tax = order.shipping_tax
-        
+        enterprise_fee_tax = order.enterprise_fee_tax
+
         [order.number, order.created_at, totals[:items], totals[:items_total],
-         totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, totals[:sales_tax] + shipping_tax,
+         totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, enterprise_fee_tax, totals[:sales_tax] + shipping_tax + enterprise_fee_tax,
          order.bill_address.full_name, order.distributor.andand.name]
       end
     end
