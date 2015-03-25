@@ -113,9 +113,10 @@ feature %q{
     let(:user2) { create_enterprise_user enterprises: [create(:distributor_enterprise, with_payment_and_shipping: true)] }
     let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
 
-    let(:order1) { create(:zoned_order, distributor: user1.enterprises.first, shipping_method: shipping_method) }
-    let(:product1) { create(:taxed_product, zone: order1.tax_zone, price: 12.54, tax_rate_amount: 0) }
-    let(:product2) { create(:taxed_product, zone: order1.tax_zone, price: 500.15, tax_rate_amount: 0.2) }
+    let!(:zone) { create(:zone_with_member) }
+    let(:order1) { create(:order, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
 
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }

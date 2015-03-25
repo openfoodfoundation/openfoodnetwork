@@ -7,7 +7,8 @@ module Spree
 
     describe "recording included tax" do
       describe "TaxRate adjustments" do
-        let!(:order)       { create(:zoned_order) }
+        let!(:zone)        { create(:zone_with_member) }
+        let!(:order)       { create(:order, bill_address: create(:address)) }
         let!(:line_item)   { create(:line_item, order: order) }
         let(:tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::FlatRate.new(preferred_amount: 0.1)) }
         let(:adjustment)   { line_item.adjustments(:reload).first }
@@ -83,8 +84,7 @@ module Spree
       end
 
       describe "EnterpriseFee adjustments" do
-        let!(:zone)                { create(:zone, default_tax: true) }
-        let!(:zone_member)         { ZoneMember.create!(zone: zone, zoneable: Country.find_by_name('Australia')) }
+        let!(:zone)                { create(:zone_with_member) }
         let(:tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
         let(:tax_category)         { create(:tax_category, tax_rates: [tax_rate]) }
 

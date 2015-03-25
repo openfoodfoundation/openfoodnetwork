@@ -183,14 +183,11 @@ FactoryGirl.define do
     end
   end
 
-  factory :zoned_order, :parent => :order do
-    after(:create) do |order|
-      zone = create(:zone, default_tax: true)
+  factory :zone_with_member, :parent => :zone do
+    default_tax true
+
+    after(:create) do |zone|
       Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by_name('Australia'))
-      unless order.bill_address
-        order.bill_address = create(:address)
-        order.save!
-      end
     end
   end
 
