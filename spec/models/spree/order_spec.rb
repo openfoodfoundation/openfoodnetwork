@@ -207,6 +207,18 @@ describe Spree::Order do
     end
   end
 
+  describe "getting the enterprise fee tax" do
+    let!(:order) { create(:order) }
+    let(:enterprise_fee1) { create(:enterprise_fee) }
+    let(:enterprise_fee2) { create(:enterprise_fee) }
+    let!(:adjustment1) { create(:adjustment, adjustable: order, originator: enterprise_fee1, label: "EF 1", amount: 123, included_tax: 10.00) }
+    let!(:adjustment2) { create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2", amount: 123, included_tax: 2.00) }
+
+    it "returns a sum of the tax included in all enterprise fees" do
+      order.reload.enterprise_fee_tax.should == 12
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)

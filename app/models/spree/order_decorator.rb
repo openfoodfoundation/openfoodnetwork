@@ -202,6 +202,10 @@ Spree::Order.class_eval do
     adjustments(:reload).shipping.first.andand.included_tax || 0
   end
 
+  def enterprise_fee_tax
+    adjustments(:reload).enterprise_fee.sum(&:included_tax)
+  end
+
 
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   def deliver_order_confirmation_email
