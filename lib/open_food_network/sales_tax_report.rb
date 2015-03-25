@@ -16,12 +16,9 @@ module OpenFoodNetwork
       @orders.map do |order|
         totals = totals_of order.line_items
         shipping_cost = shipping_cost_for order
-        shipping_tax = order.shipping_tax
-        enterprise_fee_tax = order.enterprise_fee_tax
-        total_tax = order.total_tax
 
         [order.number, order.created_at, totals[:items], totals[:items_total],
-         totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, enterprise_fee_tax, total_tax,
+         totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
          order.bill_address.full_name, order.distributor.andand.name]
       end
     end
