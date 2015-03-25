@@ -318,7 +318,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding the variants within a given exchange which are visible to a user" do
+    describe "finding the variants within a hypothetical exchange between two enterprises which are visible to a user" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
       let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
@@ -326,15 +326,13 @@ module OpenFoodNetwork
       let(:oc) { create(:simple_order_cycle) }
 
       describe "incoming exchanges" do
-        let!(:ex) { create(:exchange, order_cycle: oc, sender: producer1, receiver: e1, incoming: true) }
-
         context "as a manager of the coordinator" do
           before do
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
           end
 
           it "returns all variants belonging to the sending producer" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
             expect(visible).to include v1
             expect(visible).to_not include v2
           end
@@ -346,7 +344,7 @@ module OpenFoodNetwork
           end
 
           it "returns all variants belonging to the sending producer" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
             expect(visible).to include v1
             expect(visible).to_not include v2
           end
@@ -359,15 +357,13 @@ module OpenFoodNetwork
           end
 
           it "returns no variants" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
             expect(visible).to eq []
           end
         end
       end
 
       describe "outgoing exchanges" do
-        let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
-
         context "as a manager of the coordinator" do
           before do
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
@@ -375,9 +371,22 @@ module OpenFoodNetwork
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
             expect(visible).to include v1
             expect(visible).to_not include v2
+          end
+
+          # TODO: for backwards compatability, remove later
+          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
+            # producer2 produces v2 and has not granted P-OC to e2 (or e1 for that matter)
+            before { ex.variants << v2 }
+
+            it "returns those variants that are in the exchange" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
+              expect(visible).to include v1, v2
+            end
           end
         end
 
@@ -388,9 +397,22 @@ module OpenFoodNetwork
           end
 
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
             expect(visible).to include v1
             expect(visible).to_not include v2
+          end
+
+          # TODO: for backwards compatability, remove later
+          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
+            # producer2 produces v2 and has not granted P-OC to e2
+            before { ex.variants << v2 }
+
+            it "returns those variants that are in the exchange" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
+              expect(visible).to include v1, v2
+            end
           end
         end
 
@@ -401,7 +423,7 @@ module OpenFoodNetwork
           end
 
           it "returns all of my produced variants" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
             expect(visible).to include v1
             expect(visible).to_not include v2
           end
@@ -414,12 +436,14 @@ module OpenFoodNetwork
           end
 
           it "returns an empty array" do
-            expect(permissions.visible_variants_within(ex)).to eq []
+            expect(permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)).to eq []
           end
         end
 
         # TODO: for backwards compatability, remove later
         context "as the manager of a producer which has not granted P-OC to the outgoing hub, but which has variants already in the exchange" do
+          let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
           # This one won't be in the exchange, and so shouldn't be visible
           let!(:v3) { create(:variant, product: create(:simple_product, supplier: producer2)) }
 
@@ -430,7 +454,7 @@ module OpenFoodNetwork
           end
 
           it "returns those variants that are in the exchange" do
-            visible = permissions.visible_variants_within(ex)
+            visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
             expect(visible).to_not include v1, v3
             expect(visible).to include v2
           end
