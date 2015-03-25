@@ -200,7 +200,7 @@ FactoryGirl.define do
     tax_category { create(:tax_category) }
 
     after(:create) do |product, proxy|
-      create(:tax_rate, amount: proxy.tax_rate_amount, calculator: Spree::Calculator::DefaultTax.new, tax_category: product.tax_category, zone: proxy.zone)
+      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
     end
   end
 end
