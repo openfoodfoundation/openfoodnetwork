@@ -11,9 +11,11 @@ require 'spree/product_filters'
 
 Spree.config do |config|
   config.shipping_instructions = true
-  config.checkout_zone = ENV["CHECKOUT_ZONE"]
   config.address_requires_state = true
 
+  # Settings dependent on locale
+  config.checkout_zone = ENV["CHECKOUT_ZONE"]
+  config.currency = ENV['CURRENCY']
   if Spree::Country.table_exists?
     country = Spree::Country.find_by_name(ENV["DEFAULT_COUNTRY"])
     config.default_country_id = country.id if country.present?
