@@ -6,8 +6,9 @@ module OpenFoodNetwork
   # as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
     # The applicator will only touch exchanges where a permitted enterprise is the participant
-    def initialize(order_cycle, permitted_enterprises)
+    def initialize(order_cycle, spree_current_user, permitted_enterprises)
       @order_cycle = order_cycle
+      @spree_current_user = spree_current_user
       @permitted_enterprises = permitted_enterprises
     end
 
@@ -16,7 +17,7 @@ module OpenFoodNetwork
 
       @order_cycle.incoming_exchanges ||= []
       @order_cycle.incoming_exchanges.each do |exchange|
-        variant_ids = exchange_variant_ids(exchange)
+        variant_ids = incoming_exchange_variant_ids(exchange)
         enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id, true)
@@ -30,7 +31,7 @@ module OpenFoodNetwork
 
       @order_cycle.outgoing_exchanges ||= []
       @order_cycle.outgoing_exchanges.each do |exchange|
-        variant_ids = exchange_variant_ids(exchange)
+        variant_ids = outgoing_exchange_variant_ids(exchange)
         enterprise_fee_ids = exchange[:enterprise_fee_ids]
 
         if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id], false)
@@ -92,9 +93,65 @@ module OpenFoodNetwork
       @permitted_enterprises.include? exchange.participant
     end
 
+    # TODO Need to use editable rather than visible
+    def editable_variant_ids_for_incoming_exchange_between(sender, receiver)
+      OpenFoodNetwork::Permissions.new(@spree_current_user).
+        visible_variants_for_incoming_exchanges_between(sender, receiver).
+        pluck(:id)
+    end
 
-    def exchange_variant_ids(exchange)
-      exchange[:variants].select { |k, v| v }.keys.map { |k| k.to_i }
+    # TODO Need to use editable rather than visible
+    def editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
+      OpenFoodNetwork::Permissions.new(@spree_current_user).
+      visible_variants_for_outgoing_exchanges_between(sender, receiver, order_cycle: @order_cycle).
+      pluck(:id)
+    end
+
+    def find_incoming_exchange(attrs)
+      @order_cycle.exchanges.
+      where(:sender_id => attrs[:enterprise_id], :receiver_id => @order_cycle.coordinator_id, :incoming => true).first
+    end
+
+    def find_outgoing_exchange(attrs)
+      @order_cycle.exchanges.
+      where(:sender_id => @order_cycle.coordinator_id, :receiver_id => attrs[:enterprise_id], :incoming => false).first
+    end
+
+    def persisted_variants_hash(exchange)
+      exchange ||= OpenStruct.new(variants: [])
+      Hash[ exchange.variants.map{ |v| [v.id, true] } ]
+    end
+
+    def incoming_exchange_variant_ids(attrs)
+      exchange = find_incoming_exchange(attrs)
+      variants = persisted_variants_hash(exchange)
+
+      sender = exchange.andand.sender || Enterprise.find(attrs[:enterprise_id])
+      receiver = @order_cycle.coordinator
+      permitted = editable_variant_ids_for_incoming_exchange_between(sender, receiver)
+
+      # Only change visibility for variants I have permission to edit
+      attrs[:variants].each do |variant_id, value|
+        variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
+      end
+
+      variants.select { |k, v| v }.keys.map { |k| k.to_i }.sort
+    end
+
+    def outgoing_exchange_variant_ids(attrs)
+      exchange = find_outgoing_exchange(attrs)
+      variants = persisted_variants_hash(exchange)
+
+      sender = @order_cycle.coordinator
+      receiver = exchange.andand.receiver || Enterprise.find(attrs[:enterprise_id])
+      permitted = editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
+
+      # Only change visibility for variants I have permission to edit
+      attrs[:variants].each do |variant_id, value|
+        variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
+      end
+
+      variants.select { |k, v| v }.keys.map { |k| k.to_i }.sort
     end
   end
 end
