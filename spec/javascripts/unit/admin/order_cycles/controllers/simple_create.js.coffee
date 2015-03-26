@@ -21,10 +21,11 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
       suppliedVariants: jasmine.createSpy().andReturn('supplied variants')
     EnterpriseFee =
       index: jasmine.createSpy()
+    ocInstance = {}
 
     module('admin.order_cycles')
     inject ($controller) ->
-      ctrl = $controller 'AdminSimpleCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
+      ctrl = $controller 'AdminSimpleCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
   describe "initialisation", ->
     enterprise = {id: 123}
