@@ -1,14 +1,12 @@
 angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) ->
-  OrderCycle = $resource '/admin/order_cycles/:order_cycle_id.json', {}, {
+  OrderCycle = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
+    'new'   : { method: 'GET', params: { action_name: "new" } }
 		'create': { method: 'POST'}
 		'update': { method: 'PUT'}}
 
   {
-    order_cycle:
-      incoming_exchanges: []
- 	    outgoing_exchanges: []
-      coordinator_fees: []
+    order_cycle: {}
 
     loaded: false
 
@@ -83,6 +81,20 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
     removeDistributionOfVariant: (variant_id) ->
       for exchange in this.order_cycle.outgoing_exchanges
         exchange.variants[variant_id] = false
+
+    new: (params, callback=null) ->
+      OrderCycle.new params, (oc) =>
+        delete oc.$promise
+        delete oc.$resolved
+        angular.extend(@order_cycle, oc)
+        @order_cycle.incoming_exchanges = []
+        @order_cycle.outgoing_exchanges = []
+        delete(@order_cycle.exchanges)
+        @loaded = true
+
+        (callback || angular.noop)(@order_cycle)
+
+      @order_cycle
 
     load: (order_cycle_id, callback=null) ->
       service = this

@@ -4,8 +4,7 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index()
 
-    $scope.order_cycle = OrderCycle.order_cycle
-    $scope.order_cycle.coordinator_id = ocInstance.coordinator_id
+    $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded

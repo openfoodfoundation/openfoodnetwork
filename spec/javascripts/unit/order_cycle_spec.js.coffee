@@ -13,7 +13,6 @@ describe 'OrderCycle controllers', ->
       event =
         preventDefault: jasmine.createSpy('preventDefault')
       OrderCycle =
-        order_cycle: 'my order cycle'
         exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
         productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
         variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
@@ -29,6 +28,7 @@ describe 'OrderCycle controllers', ->
         removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
         create: jasmine.createSpy('create')
+        new: jasmine.createSpy('new').andReturn "my order cycle"
       Enterprise =
         index: jasmine.createSpy('index').andReturn('enterprises list')
         supplied_products: 'supplied products'
@@ -450,12 +450,15 @@ describe 'OrderCycle services', ->
             {sender_id: 1, receiver_id: 456, incoming: true}
             {sender_id: 456, receiver_id: 2, incoming: false}
             ]
+        $httpBackend.whenGET('/admin/order_cycles/new.json').respond
+          id: 123
+          name: 'New Order Cycle'
+          coordinator_id: 456
+          coordinator_fees: []
+          exchanges: []
 
     it 'initialises order cycle', ->
-      expect(OrderCycle.order_cycle).toEqual
-        incoming_exchanges: []
-        outgoing_exchanges: []
-        coordinator_fees: []
+      expect(OrderCycle.order_cycle).toEqual {}
 
     it 'counts selected variants in an exchange', ->
       result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
@@ -503,6 +506,11 @@ describe 'OrderCycle services', ->
     describe 'adding suppliers', ->
       exchange = null
 
+      beforeEach ->
+        # Initialise OC
+        OrderCycle.new()
+        $httpBackend.flush()
+
       it 'adds the supplier to incoming exchanges', ->
         OrderCycle.addSupplier('123')
         expect(OrderCycle.order_cycle.incoming_exchanges).toEqual [
@@ -511,6 +519,11 @@ describe 'OrderCycle services', ->
 
     describe 'adding distributors', ->
       exchange = null
+
+      beforeEach ->
+        # Initialise OC
+        OrderCycle.new()
+        $httpBackend.flush()
 
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
@@ -559,6 +572,9 @@ describe 'OrderCycle services', ->
           expect(OrderCycle.removeDistributionOfVariant).not.toHaveBeenCalled()
 
     it 'adds coordinator fees', ->
+      # Initialise OC
+      OrderCycle.new()
+      $httpBackend.flush()
       OrderCycle.addCoordinatorFee()
       expect(OrderCycle.order_cycle.coordinator_fees).toEqual [{}]
 
@@ -680,7 +696,25 @@ describe 'OrderCycle services', ->
         $httpBackend.flush()
         expect(OrderCycle.loaded).toBe(true)
 
-    describe 'loading an order cycle', ->
+    describe 'loading a new order cycle', ->
+      beforeEach ->
+        OrderCycle.new()
+        $httpBackend.flush()
+
+
+      it 'loads basic fields', ->
+        expect(OrderCycle.order_cycle.id).toEqual(123)
+        expect(OrderCycle.order_cycle.name).toEqual('New Order Cycle')
+        expect(OrderCycle.order_cycle.coordinator_id).toEqual(456)
+
+      it 'initialises the incoming and outgoing exchanges', ->
+        expect(OrderCycle.order_cycle.incoming_exchanges).toEqual []
+        expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual []
+
+      it 'removes the original exchanges array', ->
+        expect(OrderCycle.order_cycle.exchanges).toBeUndefined()
+
+    describe 'loading an existing order cycle', ->
       beforeEach ->
         OrderCycle.load('123')
         $httpBackend.flush()
@@ -705,8 +739,8 @@ describe 'OrderCycle services', ->
           active: true
           ]
 
-      it 'removes original exchanges array', ->
-        expect(OrderCycle.order_cycle.exchanges).toEqual(undefined)
+      it 'removes the original exchanges array', ->
+        expect(OrderCycle.order_cycle.exchanges).toBeUndefined()
 
     describe 'creating an order cycle', ->
       it 'redirects to the order cycles page on success', ->
