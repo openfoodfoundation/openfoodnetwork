@@ -1,5 +1,5 @@
-angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee) ->
-  $scope.enterprises = Enterprise.index {}, (enterprises) =>
+angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
+  $scope.enterprises = Enterprise.index {coordinator_id: ocInstance.coordinator_id}, (enterprises) =>
     $scope.init(enterprises)
   $scope.enterprise_fees = EnterpriseFee.index()
   $scope.order_cycle = OrderCycle.order_cycle
