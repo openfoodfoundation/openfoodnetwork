@@ -139,6 +139,7 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
 
     dataForSubmit: ->
       data = this.deepCopy()
+      data = this.stripNonSubmittableAttributes(data)
       data = this.removeInactiveExchanges(data)
       data = this.translateCoordinatorFees(data)
       data = this.translateExchangeFees(data)
@@ -158,6 +159,11 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
           exchange.enterprise_fees = (angular.extend {}, fee for fee in exchange.enterprise_fees)
 
       data
+
+    stripNonSubmittableAttributes: (order_cycle) ->
+      delete order_cycle.id
+      delete order_cycle.visible_variants_for_outgoing_exchanges
+      order_cycle
 
     removeInactiveExchanges: (order_cycle) ->
       order_cycle.incoming_exchanges =
