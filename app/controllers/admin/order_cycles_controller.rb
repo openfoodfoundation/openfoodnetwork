@@ -33,7 +33,7 @@ module Admin
 
       respond_to do |format|
         if @order_cycle.save
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user, permitted_enterprises_for(@order_cycle)).go!
+          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
 
           flash[:notice] = 'Your order cycle has been created.'
           format.html { redirect_to admin_order_cycles_path }
@@ -50,7 +50,7 @@ module Admin
 
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user, permitted_enterprises_for(@order_cycle)).go!
+          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
 
           flash[:notice] = 'Your order cycle has been updated.'
           format.html { redirect_to admin_order_cycles_path }

@@ -15,7 +15,7 @@ module OpenFoodNetwork
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange], :outgoing_exchanges => [])
 
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(false)
@@ -33,7 +33,7 @@ module OpenFoodNetwork
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [], :outgoing_exchanges => [outgoing_exchange])
 
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(false)
@@ -55,7 +55,7 @@ module OpenFoodNetwork
                     :incoming_exchanges => [incoming_exchange],
                     :outgoing_exchanges => [])
 
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(true)
@@ -77,7 +77,7 @@ module OpenFoodNetwork
                     :incoming_exchanges => [],
                     :outgoing_exchanges => [outgoing_exchange])
 
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(true)
@@ -99,7 +99,7 @@ module OpenFoodNetwork
                       :incoming_exchanges => [],
                       :outgoing_exchanges => [])
 
-          applicator = OrderCycleFormApplicator.new(oc, user, [])
+          applicator = OrderCycleFormApplicator.new(oc, user)
 
           applicator.should_receive(:destroy_untouched_exchanges)
 
@@ -112,7 +112,7 @@ module OpenFoodNetwork
           e2 = double(:exchange2, id: 1, foo: 2)
           oc = double(:order_cycle, :exchanges => [e1])
 
-          applicator = OrderCycleFormApplicator.new(oc, user, [])
+          applicator = OrderCycleFormApplicator.new(oc, user)
           applicator.instance_eval do
             @touched_exchanges = [e2]
           end
@@ -121,7 +121,8 @@ module OpenFoodNetwork
         end
 
         it "does not destroy exchanges involving enterprises it does not have permission to touch" do
-          applicator = OrderCycleFormApplicator.new(nil, user, [])
+          applicator = OrderCycleFormApplicator.new(nil, user)
+          applicator.stub(:user_manages_coordinator?) { true }
           exchanges = double(:exchanges)
           permitted_exchanges = [double(:exchange), double(:exchange)]
 
@@ -131,12 +132,21 @@ module OpenFoodNetwork
 
           applicator.send(:destroy_untouched_exchanges)
         end
+
+        it "does not destroy any exchanges when it is not the coordinator" do
+          applicator = OrderCycleFormApplicator.new(nil, user)
+          applicator.stub(:user_manages_coordinator?) { false }
+
+          expect(applicator).to_not receive(:with_permission)
+
+          applicator.send(:destroy_untouched_exchanges)
+        end
       end
 
       describe "finding alterable exchange variants" do
         let(:coordinator_mock) { double(:enterprise) }
         let(:oc) { double(:oc, coordinator: coordinator_mock ) }
-        let!(:applicator) { OrderCycleFormApplicator.new(oc, user, []) }
+        let!(:applicator) { OrderCycleFormApplicator.new(oc, user) }
 
         describe "converting the existing variants of an exchange to a hash" do
           context "when nil is passed in" do
@@ -229,7 +239,9 @@ module OpenFoodNetwork
             e = double(:enterprise)
             ex = double(:exchange, participant: e)
 
-            applicator = OrderCycleFormApplicator.new(nil, user, [e])
+            applicator = OrderCycleFormApplicator.new(nil, user)
+            applicator.stub(:permitted_enterprises) { [e] }
+
             applicator.send(:permission_for, ex).should be_true
           end
 
@@ -237,7 +249,9 @@ module OpenFoodNetwork
             e = double(:enterprise)
             ex = double(:exchange, participant: e)
 
-            applicator = OrderCycleFormApplicator.new(nil, user, [])
+            applicator = OrderCycleFormApplicator.new(nil, user)
+            applicator.stub(:permitted_enterprises) { [] }
+
             applicator.send(:permission_for, ex).should be_false
           end
         end
@@ -245,7 +259,7 @@ module OpenFoodNetwork
         describe "filtering many exchanges" do
           it "returns exchanges involving enterprises we have permission to touch" do
             ex1, ex2 = double(:exchange), double(:exchange)
-            applicator = OrderCycleFormApplicator.new(nil, user, [])
+            applicator = OrderCycleFormApplicator.new(nil, user)
             applicator.stub(:permission_for).and_return(true, false)
             applicator.send(:with_permission, [ex1, ex2]).should == [ex1]
           end
@@ -261,7 +275,7 @@ module OpenFoodNetwork
       it "checks whether exchanges exist" do
         oc = FactoryGirl.create(:simple_order_cycle)
         exchange = FactoryGirl.create(:exchange, order_cycle: oc)
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming).should be_true
         applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, !exchange.incoming).should be_false
@@ -275,7 +289,8 @@ module OpenFoodNetwork
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)
         oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user, [sender, receiver])
+        applicator = OrderCycleFormApplicator.new(oc, user)
+        applicator.stub(:permitted_enterprises) { [sender, receiver] }
         incoming = true
         variant1 = FactoryGirl.create(:variant)
         variant2 = FactoryGirl.create(:variant)
@@ -299,7 +314,8 @@ module OpenFoodNetwork
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)
         oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user, [sender, receiver])
+        applicator = OrderCycleFormApplicator.new(oc, user)
+        applicator.stub(:permitted_enterprises) { [sender, receiver] }
 
         incoming = true
         variant1 = FactoryGirl.create(:variant)
@@ -324,7 +340,7 @@ module OpenFoodNetwork
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)
         oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
         incoming = true
 
         expect do
@@ -337,7 +353,7 @@ module OpenFoodNetwork
         sender = FactoryGirl.create(:enterprise)
         receiver = FactoryGirl.create(:enterprise)
         oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user, [])
+        applicator = OrderCycleFormApplicator.new(oc, user)
         incoming = true
         exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming)
         variant1 = FactoryGirl.create(:variant)

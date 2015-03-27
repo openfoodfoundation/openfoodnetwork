@@ -6,10 +6,9 @@ module OpenFoodNetwork
   # as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
     # The applicator will only touch exchanges where a permitted enterprise is the participant
-    def initialize(order_cycle, spree_current_user, permitted_enterprises)
+    def initialize(order_cycle, spree_current_user)
       @order_cycle = order_cycle
       @spree_current_user = spree_current_user
-      @permitted_enterprises = permitted_enterprises
     end
 
     def go!
@@ -77,7 +76,9 @@ module OpenFoodNetwork
     end
 
     def destroy_untouched_exchanges
-      with_permission(untouched_exchanges).each(&:destroy)
+      if user_manages_coordinator?
+        with_permission(untouched_exchanges).each(&:destroy)
+      end
     end
 
     def untouched_exchanges
@@ -90,7 +91,18 @@ module OpenFoodNetwork
     end
 
     def permission_for(exchange)
-      @permitted_enterprises.include? exchange.participant
+      permitted_enterprises.include? exchange.participant
+    end
+
+    def permitted_enterprises
+      return @permitted_enterprises unless @permitted_enterprises.nil?
+      @permitted_enterprises = OpenFoodNetwork::Permissions.new(@spree_current_user).
+      order_cycle_enterprises_for(order_cycle: @order_cycle)
+    end
+
+    def user_manages_coordinator?
+      return @user_manages_coordinator unless @user_manages_coordinator.nil?
+      @user_manages_coordinator = Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
     end
 
     # TODO Need to use editable rather than visible
