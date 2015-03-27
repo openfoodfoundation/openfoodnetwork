@@ -12,12 +12,12 @@ module Api
       Enterprise.stub(:find).and_return(enterprise)
     end
 
-    describe "as an enterprise manager" do
-      let(:enterprise_manager) { create_enterprise_user }
+    context "as an enterprise owner" do
+      let(:enterprise_owner) { create_enterprise_user enterprise_limit: 10 }
+      let(:enterprise) { create(:distributor_enterprise, owner: enterprise_owner) }
 
       before do
-        enterprise_manager.enterprise_roles.build(enterprise: enterprise).save
-        Spree.user_class.stub :find_by_spree_api_key => enterprise_manager
+        Spree.user_class.stub :find_by_spree_api_key => enterprise_owner
       end
 
       describe "creating an enterprise" do
@@ -31,6 +31,15 @@ module Api
           enterprise = Enterprise.last
           enterprise.sells.should == 'any'
         end
+      end
+    end
+
+    context "as an enterprise manager" do
+      let(:enterprise_manager) { create_enterprise_user }
+
+      before do
+        enterprise_manager.enterprise_roles.build(enterprise: enterprise).save
+        Spree.user_class.stub :find_by_spree_api_key => enterprise_manager
       end
 
       describe "submitting a valid image" do

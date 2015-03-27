@@ -132,7 +132,7 @@ module Admin
 
     def override_sells
       unless spree_current_user.admin?
-        has_hub = spree_current_user.enterprises.is_hub.any?
+        has_hub = spree_current_user.owned_enterprises.is_hub.any?
         new_enterprise_is_producer = !!params[:enterprise][:is_primary_producer]
         params[:enterprise][:sells] = (has_hub && !new_enterprise_is_producer) ? 'any' : 'none'
       end

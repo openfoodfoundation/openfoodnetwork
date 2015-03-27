@@ -8,7 +8,7 @@ module Admin
     let(:admin_user) { create(:admin_user) }
     let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }
     let(:supplier_manager) { create(:user, enterprise_limit: 10, enterprises: [supplier]) }
-    let(:distributor_owner) { create(:user) }
+    let(:distributor_owner) { create(:user, enterprise_limit: 10) }
     let(:supplier_owner) { create(:user) }
 
     let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
@@ -47,10 +47,12 @@ module Admin
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
 
-      context "when I already have a hub" do
+      context "when I already own a hub" do
+        before { distributor }
+
         it "creates new non-producers as hubs" do
-          controller.stub spree_current_user: distributor_manager
-          enterprise_params[:enterprise][:owner_id] = distributor_manager
+          controller.stub spree_current_user: distributor_owner
+          enterprise_params[:enterprise][:owner_id] = distributor_owner
 
           spree_put :create, enterprise_params
           enterprise = Enterprise.find_by_name 'zzz'
@@ -58,8 +60,8 @@ module Admin
         end
 
         it "creates new producers as sells none" do
-          controller.stub spree_current_user: distributor_manager
-          enterprise_params[:enterprise][:owner_id] = distributor_manager
+          controller.stub spree_current_user: distributor_owner
+          enterprise_params[:enterprise][:owner_id] = distributor_owner
           enterprise_params[:enterprise][:is_primary_producer] = '1'
 
           spree_put :create, enterprise_params
