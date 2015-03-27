@@ -139,6 +139,12 @@ module OpenFoodNetwork
     def visible_variants_for_outgoing_exchanges_between(coordinator, hub, options={})
       return Spree::Variant.where("1=0") unless options[:order_cycle]
       if managed_enterprises.pluck(:id).include?(hub.id) || managed_enterprises.pluck(:id).include?(coordinator.id)
+        # Any variants produced by the coordinator, for outgoing exchanges with itself
+        coordinator_variants = []
+        if hub == coordinator
+          coordinator_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', coordinator)
+        end
+
         # Any variants of any producers that have granted the hub P-OC
         producers = granting(:add_to_order_cycle, to: [hub], scope: Enterprise.is_primary_producer)
         permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
@@ -150,7 +156,7 @@ module OpenFoodNetwork
           active_variants = exchange.variants
         end
 
-        Spree::Variant.where(id: permitted_variants | active_variants)
+        Spree::Variant.where(id: coordinator_variants | permitted_variants | active_variants)
       else
         # Any variants produced by MY PRODUCERS, where my producer has granted P-OC to the hub
         producers = granting(:add_to_order_cycle, to: [hub], scope: managed_enterprises.is_primary_producer)

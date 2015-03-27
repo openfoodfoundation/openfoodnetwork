@@ -376,6 +376,22 @@ module OpenFoodNetwork
             expect(visible).to_not include v2
           end
 
+          context "where the coordinator produces products" do
+            let!(:v3) { create(:variant, product: create(:simple_product, supplier: e1)) }
+
+            it "returns any variants produced by the coordinator itself for exchanges with 'self'" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e1, order_cycle: oc)
+              expect(visible).to include v3
+              expect(visible).to_not include v1, v2
+            end
+
+            it "does not return coordinator's variants for exchanges with other hubs, when permission has not been granted" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
+              expect(visible).to include v1
+              expect(visible).to_not include v2, v3
+            end
+          end
+
           # TODO: for backwards compatability, remove later
           context "when an exchange exists between the coordinator and the hub within this order cycle" do
             let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
