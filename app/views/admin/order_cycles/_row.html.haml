@@ -8,7 +8,7 @@
 
   - unless order_cycles_simple_index
     %td.suppliers
-      - suppliers = order_cycle.suppliers.merge(OpenFoodNetwork::Permissions.new(spree_current_user).enterprises_for(order_cycle: order_cycle)))
+      - suppliers = order_cycle.suppliers.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises_for(order_cycle: order_cycle))
       - supplier_list = suppliers.map(&:name).sort.join ', '
       - if suppliers.count > 3
         %span.with-tip{'data-powertip' => supplier_list}
@@ -18,7 +18,7 @@
         = supplier_list
     %td= order_cycle.coordinator.name
     %td.distributors
-      - distributors = order_cycle.distributors.merge(OpenFoodNetwork::Permissions.new(spree_current_user).enterprises_for(order_cycle: order_cycle)))
+      - distributors = order_cycle.distributors.merge(OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises_for(order_cycle: order_cycle))
       - distributor_list = distributors.map(&:name).sort.join ', '
       - if distributors.count > 3
         %span.with-tip{'data-powertip' => distributor_list}
