@@ -20,6 +20,19 @@ module Api
         Spree.user_class.stub :find_by_spree_api_key => enterprise_manager
       end
 
+      describe "creating an enterprise" do
+        let(:australia) { Spree::Country.find_by_name('Australia') }
+        let(:new_enterprise_params) { {enterprise: {name: 'name', email: 'email@example.com', address_attributes: {address1: '123 Abc Street', city: 'Northcote', zipcode: '3070', state_id: australia.states.first, country_id: australia.id } } } }
+
+        it "creates as sells=any when it is not a producer" do
+          spree_post :create, new_enterprise_params
+          response.should be_success
+
+          enterprise = Enterprise.last
+          enterprise.sells.should == 'any'
+        end
+      end
+
       describe "submitting a valid image" do
         before do
           enterprise.stub(:update_attributes).and_return(true)

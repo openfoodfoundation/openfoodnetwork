@@ -63,7 +63,9 @@ module Api
     end
 
     def override_sells
-      params[:enterprise][:sells] = 'unspecified'
+      has_hub = current_api_user.enterprises.is_hub.any?
+      new_enterprise_is_producer = !!params[:enterprise][:is_primary_producer]
+      params[:enterprise][:sells] = (has_hub && !new_enterprise_is_producer) ? 'any' : 'unspecified'
     end
 
     def override_visible
