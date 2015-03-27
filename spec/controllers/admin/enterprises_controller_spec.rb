@@ -48,13 +48,23 @@ module Admin
       end
 
       context "when I already have a hub" do
-        it "creates the new enterprise as a hub" do
+        it "creates new non-producers as hubs" do
           controller.stub spree_current_user: distributor_manager
           enterprise_params[:enterprise][:owner_id] = distributor_manager
 
           spree_put :create, enterprise_params
           enterprise = Enterprise.find_by_name 'zzz'
           enterprise.sells.should == 'any'
+        end
+
+        it "creates new producers as sells none" do
+          controller.stub spree_current_user: distributor_manager
+          enterprise_params[:enterprise][:owner_id] = distributor_manager
+          enterprise_params[:enterprise][:is_primary_producer] = '1'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
         end
 
         it "doesn't affect the hub status for super admins" do
