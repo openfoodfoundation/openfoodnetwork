@@ -15,6 +15,7 @@ class Enterprise < ActiveRecord::Base
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
+  has_many :properties, through: :producer_properties
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'

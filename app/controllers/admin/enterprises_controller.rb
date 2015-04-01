@@ -11,6 +11,7 @@ module Admin
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update
+    before_filter :strip_new_properties, only: [:create, :update]
 
 
     helper 'spree/products'
@@ -159,6 +160,15 @@ module Admin
     def check_can_change_managers
       unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
         params[:enterprise].delete :user_ids
+      end
+    end
+
+    def strip_new_properties
+      unless spree_current_user.admin? || params[:enterprise][:producer_properties_attributes].nil?
+        names = Spree::Property.pluck(:name)
+        params[:enterprise][:producer_properties_attributes].each do |key, property|
+          params[:enterprise][:producer_properties_attributes].delete key unless names.include? property[:property_name]
+        end
       end
     end
 
