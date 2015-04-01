@@ -5,6 +5,7 @@ Spree::Admin::ProductsController.class_eval do
   include OrderCyclesHelper
   before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
   before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
+  before_filter :strip_new_properties, only: [:create, :update]
 
   alias_method :location_after_save_original, :location_after_save
 
@@ -94,5 +95,14 @@ Spree::Admin::ProductsController.class_eval do
   def load_form_data
     @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
+  end
+
+  def strip_new_properties
+    unless spree_current_user.admin? || params[:product][:product_properties_attributes].nil?
+      names = Spree::Property.pluck(:name)
+      params[:product][:product_properties_attributes].each do |key, property|
+        params[:product][:product_properties_attributes].delete key unless names.include? property[:property_name]
+      end
+    end
   end
 end
