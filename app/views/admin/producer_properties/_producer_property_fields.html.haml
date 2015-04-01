@@ -4,7 +4,10 @@
     %span.handle
     = f.hidden_field :id
   %td.property_name
-    = f.text_field :property_name, :class => 'autocomplete'
+    - if spree_current_user.admin?
+      = f.text_field :property_name, :class => 'autocomplete'
+    - else
+      = f.select :property_name, @properties, { :include_blank => true }, { class: 'select2 fullwidth' }
   %td.value
     = f.text_field :value, :class => 'autocomplete'
   %td.actions
