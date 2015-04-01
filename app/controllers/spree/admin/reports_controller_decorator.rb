@@ -102,7 +102,7 @@ Spree::Admin::ReportsController.class_eval do
       send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
     end
   end
-  
+
   def sales_tax
     params[:q] ||= {}
 
@@ -525,7 +525,7 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Dist (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Admin & Handling (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
                 "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes"]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
