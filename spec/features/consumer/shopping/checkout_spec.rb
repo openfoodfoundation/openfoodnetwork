@@ -8,11 +8,12 @@ feature "As a consumer I want to check out my cart", js: true do
   include WebHelper
   include UIComponentHelper
 
+  let!(:zone) { create(:zone_with_member) }
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.master]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23) }
-  let(:product) { create(:simple_product, supplier: supplier, price: 10) }
+  let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
   before do
@@ -57,6 +58,11 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_selector 'orderdetails .cart-total', text: "$11.23"
         page.should have_selector 'orderdetails .shipping', text: "$4.56"
         page.should have_selector 'orderdetails .total', text: "$15.79"
+
+        # Tax should not be displayed in checkout, as the customer's choice of shipping method
+        # affects the tax and we haven't written code to live-update the tax amount when they
+        # make a change.
+        page.should_not have_content product.tax_category.name
       end
 
       it "shows all shipping methods, but doesn't show ship address when not needed" do
