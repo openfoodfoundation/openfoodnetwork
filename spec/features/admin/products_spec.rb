@@ -66,7 +66,7 @@ feature %q{
       select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
 
       click_button 'Update'
-      
+
       product.reload
       product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
 
@@ -186,16 +186,16 @@ feature %q{
 
       # When I navigate to the product properties page
       visit spree.admin_product_product_properties_path(p)
-      page.should have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
-      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+      page.should have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
+      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
       # And I delete the property
       page.all('a.remove_fields').first.click
       wait_until { p.reload.property('fooprop').nil? }
 
       # Then the property should have been deleted
-      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
-      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
+      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
     end
 
 
@@ -205,13 +205,13 @@ feature %q{
       Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
       visit spree.admin_product_images_path(product)
-      page.should have_selector "table[data-hook='images_table'] td img", visible: true
+      page.should have_selector "table[data-hook='images_table'] td img"
       product.reload.images.count.should == 1
 
       page.find('a.delete-resource').click
       wait_until { product.reload.images.count == 0 }
 
-      page.should_not have_selector "table[data-hook='images_table'] td img", visible: true
+      page.should_not have_selector "table[data-hook='images_table'] td img"
     end
   end
 end
