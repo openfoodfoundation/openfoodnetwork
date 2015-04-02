@@ -43,4 +43,10 @@
         %strong Total:
       %td{:align => "right"}
         %strong= @order.display_total
+
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        (includes tax):
+      %td{:align => "right"}
+        = display_checkout_tax_total(@order)
 %p &nbsp;

@@ -126,25 +126,37 @@ feature "As a consumer I want to check out my cart", js: true do
             choose pm1.name
           end
 
-
           expect do
             place_order
             page.should have_content "Your order has been processed successfully"
           end.to enqueue_job ConfirmOrderJob
 
+          # And the order's special instructions should be set
           o = Spree::Order.complete.first
           expect(o.special_instructions).to eq "SpEcIaL NoTeS"
 
-          # The Spree tax summary should not be displayed
+          # And the Spree tax summary should not be displayed
           page.should_not have_content product.tax_category.name
 
-          # The total tax for the order, including shipping and fee tax, should be displayed
+          # And the total tax for the order, including shipping and fee tax, should be displayed
           # product tax    ($10.00 @ 10% = $0.91)
           # + fee tax      ($ 1.23 @ 10% = $0.11)
           # + shipping tax ($ 4.56 @ 25% = $0.91)
           #                              = $1.93
           page.should have_content "(includes tax)"
           page.should have_content "$1.93"
+
+
+          ActionMailer::Base.deliveries.each do |email|
+            email.subject.should include "#{Spree::Config.site_name} Order Confirmation"
+
+            # The Spree tax summary should not be included in the confirmation email
+            email.body.should_not include product.tax_category.name
+
+            # The total tax should also be included in the confirmation email
+            email.body.include?("(includes tax)").should be_true
+            email.body.include?("$1.93").should be_true
+          end
         end
 
         context "with basic details filled" do
