@@ -21,10 +21,10 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     # For each enterprise that the current user is able to see in this order cycle,
     # work out which variants should be visible within outgoing exchanges from that enterprise
     visible = {}
-    enterprises = OpenFoodNetwork::Permissions.new(options[:current_user]).order_cycle_enterprises_for(order_cycle: object)
+    permissions = OpenFoodNetwork::Permissions.new(options[:current_user])
+    enterprises = permissions.order_cycle_enterprises_for(order_cycle: object)
     enterprises.each do |enterprise|
-      variants = OpenFoodNetwork::Permissions.new(options[:current_user]).
-        visible_variants_for_outgoing_exchanges_between(object.coordinator, enterprise, order_cycle: object).pluck(:id)
+      variants = permissions.visible_variants_for_outgoing_exchanges_between(object.coordinator, enterprise, order_cycle: object).pluck(:id)
       visible[enterprise.id] = variants if variants.any?
     end
     visible
