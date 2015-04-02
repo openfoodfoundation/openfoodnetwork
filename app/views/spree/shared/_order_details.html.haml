@@ -130,37 +130,36 @@
             %td.text-right.total{"data-hook" => "order_item_total"}
               %span= item.display_amount_with_adjustments.to_html
 
-      %tfoot#order-total{"data-hook" => "order_details_total"}
-        %tr.total
-          %td.text-right{colspan: "3"}
-            %h5
-              Total
-          %td.text-right.total
-            %h5#order_total= order.display_total.to_html
-
-      - if order.price_adjustment_totals.present?
-        %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
-          - order.price_adjustment_totals.each do |key, total|
-            %tr.total
-              %td.text-right{colspan: "3"}
-                %strong
-                  = key
-              %td.text-right.total
-                %span= total
-
-      %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
-        %tr#subtotal-row.total
-          %td.text-right{colspan: "3"}
-            %strong
-              Produce
-          %td.text-right.total
-            %span= display_checkout_subtotal(order)
-
-      %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-        - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
-          %tr.total
-            %td.text-right{:colspan => "3"}
+      %tfoot
+        #subtotal{"data-hook" => "order_details_subtotal"}
+          %tr#subtotal-row.total
+            %td.text-right{colspan: "3"}
               %strong
-                = adjustment.label
+                Produce
             %td.text-right.total
-              %span= adjustment.display_amount.to_html
+              %span= display_checkout_subtotal(order)
+
+        #order-charges{"data-hook" => "order_details_adjustments"}
+          - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+            %tr.total
+              %td.text-right{:colspan => "3"}
+                %strong
+                  = adjustment.label
+              %td.text-right.total
+                %span= adjustment.display_amount.to_html
+
+        #order-total{"data-hook" => "order_details_total"}
+          %tr.total
+            %td.text-right{colspan: "3"}
+              %h5
+                Total
+            %td.text-right.total
+              %h5#order_total= order.display_total.to_html
+
+        - if order.total_tax > 0
+          #tax{"data-hook" => "order_details_tax"}
+            %tr#tax-row.total
+              %td.text-right{colspan: "3"}
+                (includes tax)
+              %td.text-right.total
+                %span= display_checkout_tax_total(order)

@@ -12,11 +12,14 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.master]) }
-  let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23) }
+  let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
   before do
+    Spree::Config.shipment_inc_vat = true
+    Spree::Config.shipping_tax_rate = 0.25
+
     add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart
@@ -131,6 +134,17 @@ feature "As a consumer I want to check out my cart", js: true do
 
           o = Spree::Order.complete.first
           expect(o.special_instructions).to eq "SpEcIaL NoTeS"
+
+          # The Spree tax summary should not be displayed
+          page.should_not have_content product.tax_category.name
+
+          # The total tax for the order, including shipping and fee tax, should be displayed
+          # product tax    ($10.00 @ 10% = $0.91)
+          # + fee tax      ($ 1.23 @ 10% = $0.11)
+          # + shipping tax ($ 4.56 @ 25% = $0.91)
+          #                              = $1.93
+          page.should have_content "(includes tax)"
+          page.should have_content "$1.93"
         end
 
         context "with basic details filled" do
