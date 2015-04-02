@@ -1,0 +1,46 @@
+%table.order-summary{:width => "100%"}
+  %thead
+    %tr
+      %th{:align => "left"}
+        %h4 Item
+      %th{:align => "right", :width => "25%"}
+        %h4 Qty
+      %th{:align => "right", :width => "25%"}
+        %h4 Price
+  %tbody
+    - @order.line_items.each do |item|
+      %tr
+        %td
+          - if item.variant.product.name == item.variant.name_to_display
+            %strong= "#{raw(item.variant.product.name)}"
+          - else
+            %strong
+              %span= "#{raw(item.variant.product.name)}"
+              %span= "- " + "#{raw(item.variant.name_to_display)}"
+          - if item.variant.options_text
+            = "(" + "#{raw(item.variant.options_text)}" + ")"
+          %br
+          %small
+            %em= raw(item.variant.product.supplier.name)
+        %td{:align => "right"}
+          = item.quantity
+        %td{:align => "right"}
+          = item.display_amount_with_adjustments
+  %tfoot
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        Subtotal:
+      %td{:align => "right"}
+        = display_checkout_subtotal(@order)
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+      %tr
+        %td{:align => "right", :colspan => "2"}
+          = "#{raw(adjustment.label)}:"
+        %td{:align => "right"}
+          = adjustment.display_amount
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong Total:
+      %td{:align => "right"}
+        %strong= @order.display_total
+%p &nbsp;
