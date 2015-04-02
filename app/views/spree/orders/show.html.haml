@@ -9,7 +9,7 @@
       - else
         = @order.distributor.next_collection_at
 
-  = render partial: "shopping_shared/details"
+  = render "shopping_shared/details"
 
   %fieldset#order_summary{"data-hook" => ""}
     .row
@@ -22,7 +22,7 @@
       - if params.has_key? :checkout_complete
         %h1= t(:thank_you_for_your_order)
 
-      = render :partial => 'spree/shared/order_details', :locals => { :order => @order }
+      = render 'spree/shared/order_details', order: @order
 
       .row
         .columns.large-12
