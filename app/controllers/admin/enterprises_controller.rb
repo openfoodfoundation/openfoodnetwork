@@ -184,7 +184,7 @@ module Admin
 
     # Overriding method on Spree's resource controller
     def location_after_save
-      if params[:enterprise].key? :producer_properties_attributes
+      if params[:enterprise].key? :producer_properties_attributes && request.referrer != main_app.edit_admin_enterprise_path(@enterprise)
         main_app.admin_enterprises_path
       else
         main_app.edit_admin_enterprise_path(@enterprise)
