@@ -17,11 +17,10 @@ module ShopWorkflow
   end
 
   def add_product_to_cart
-    create(:line_item, variant: product.master, order: order)
-    order.reload
+    populator = Spree::OrderPopulator.new(order, order.currency)
+    populator.populate(variants: {product.master.id => 1})
 
-    # Recalculate totals
-    order.save!
+    # Recalculate fee totals
     order.update_distribution_charge!
   end
 
