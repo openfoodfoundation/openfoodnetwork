@@ -108,7 +108,7 @@ feature %q{
     page.should have_content 'Payment State'
   end
   
-  describe "Sales tax report" do
+  describe "sales tax report" do
     let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }

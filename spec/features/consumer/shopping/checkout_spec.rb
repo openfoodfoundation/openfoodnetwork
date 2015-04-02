@@ -21,11 +21,6 @@ feature "As a consumer I want to check out my cart", js: true do
     add_product_to_cart
   end
 
-  it "shows the current distributor on checkout" do
-    visit checkout_path
-    page.should have_content distributor.name
-  end
-
   describe "with shipping and payment methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
@@ -48,6 +43,11 @@ feature "As a consumer I want to check out my cart", js: true do
       before do
         visit checkout_path
         checkout_as_guest
+      end
+
+      it "shows the current distributor" do
+        visit checkout_path
+        page.should have_content distributor.name
       end
 
       it "shows a breakdown of the order price" do
