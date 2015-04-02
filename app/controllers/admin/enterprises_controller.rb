@@ -12,6 +12,8 @@ module Admin
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update
     before_filter :strip_new_properties, only: [:create, :update]
+    before_filter :load_properties, only: [:edit, :update]
+    before_filter :setup_property, only: [:edit]
 
 
     helper 'spree/products'
@@ -170,6 +172,14 @@ module Admin
           params[:enterprise][:producer_properties_attributes].delete key unless names.include? property[:property_name]
         end
       end
+    end
+
+    def load_properties
+      @properties = Spree::Property.pluck(:name)
+    end
+
+    def setup_property
+      @enterprise.producer_properties.build
     end
 
     # Overriding method on Spree's resource controller
