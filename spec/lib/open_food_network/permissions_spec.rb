@@ -45,7 +45,7 @@ module OpenFoodNetwork
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
           end
 
-          context "where the coordinator sells own" do
+          context "where the coordinator sells any" do
             it "returns enterprises which have granted P-OC to the coordinator" do
               enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
               expect(enterprises).to include hub
@@ -63,7 +63,7 @@ module OpenFoodNetwork
         end
       end
 
-      context "as a manager of a hub that has granted P-OC to the coordinator" do
+      context "as a manager of a hub" do
         before do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub]) }
         end
@@ -256,64 +256,133 @@ module OpenFoodNetwork
     end
 
     describe "finding exchanges of an order cycle that an admin can manage" do
+      let!(:producer) { create(:supplier_enterprise) }
       let(:oc) { create(:simple_order_cycle) }
-      let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2) }
 
-      before do
-        permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
-        permissions.stub(:related_enterprises_with) { Enterprise.where('1=0') }
-      end
+      describe "as the manager of the coordinator" do
+        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: e1, incoming: true) }
+        let!(:ex_out) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
 
-      it "returns exchanges involving enterprises managed by the user" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1, e2]) }
-        permissions.order_cycle_exchanges(oc).should == [ex]
-      end
-
-      it "does not return exchanges involving enterprises with E2E permission" do
-        permissions.stub(:related_enterprises_with) { Enterprise.where(id: [e1, e2]) }
-        permissions.order_cycle_exchanges(oc).should == []
-      end
-
-      it "returns exchanges involving only the sender" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
-        permissions.order_cycle_exchanges(oc).should == [ex]
-      end
-
-      it "returns exchanges involving only the receiver" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
-        permissions.order_cycle_exchanges(oc).should == [ex]
-      end
-
-      describe "special permissions for managers of producers" do
-        let!(:producer) { create(:supplier_enterprise) }
         before do
-          ex.incoming = false
-          ex.save
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
         end
 
-        it "returns outgoing exchanges where the hub has been granted P-OC by a supplier I manage" do
-          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
-          create(:enterprise_relationship, parent: producer, child: e2, permissions_list: [:add_to_order_cycle])
+        it "returns all exchanges in the order cycle, regardless of E2E permissions" do
+          permissions.order_cycle_exchanges(oc).should include ex_in, ex_out
+        end
+      end
 
-          permissions.order_cycle_exchanges(oc).should == [ex]
+
+      describe "as the manager of a hub" do
+        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: e1, incoming: true) }
+
+        before do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
         end
 
+        context "where my hub is in the order cycle" do
+          let!(:ex_out) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
 
-        it "does not return outgoing exchanges where only the coordinator has been granted P-OC by a producer I manage" do
-          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
-          create(:enterprise_relationship, parent: producer, child: e1, permissions_list: [:add_to_order_cycle])
+          it "returns my hub's outgoing exchange" do
+            permissions.order_cycle_exchanges(oc).should == [ex_out]
+          end
 
-          permissions.order_cycle_exchanges(oc).should == []
+          context "where my hub has been granted P-OC by an incoming producer" do
+            before do
+              create(:enterprise_relationship, parent: producer, child: e2, permissions_list: [:add_to_order_cycle])
+            end
+
+            it "returns the producer's incoming exchange" do
+              permissions.order_cycle_exchanges(oc).should include ex_in
+            end
+          end
+
+          context "where my hub has not been granted P-OC by an incoming producer" do
+            it "returns the producers's incoming exchange, and my own outhoing exchange" do
+              permissions.order_cycle_exchanges(oc).should_not include ex_in
+            end
+          end
+        end
+
+        context "where my hub isn't in the order cycle" do
+          it "does not return the producer's incoming exchanges" do
+            permissions.order_cycle_exchanges(oc).should == []
+          end
         end
 
         # TODO: this is testing legacy behaviour for backwards compatability, remove when behaviour no longer required
-        it "returns outgoing exchanges which include variants produced by a producer I manage" do
-          product = create(:product, supplier: producer)
-          variant = create(:variant, product: product)
-          ex.variants << variant
-          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+        describe "legacy compatability" do
+          context "where my hub's outgoing exchange contains variants of a producer I don't manage and has not given my hub P-OC" do
+            let!(:product) { create(:product, supplier: producer) }
+            let!(:variant) { create(:variant, product: product) }
+            let!(:ex_out) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: true) }
+            before { ex_out.variants << variant }
 
-          permissions.order_cycle_exchanges(oc).should == [ex]
+            it "returns incoming exchanges supplying the variants in my outgoing exchange" do
+              permissions.order_cycle_exchanges(oc).should include ex_out
+            end
+          end
+        end
+      end
+
+      describe "as the manager of a producer" do
+        let!(:ex_out) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
+        before do
+          permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer]) }
+        end
+
+        context "where my producer supplies to the order cycle" do
+          let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: e1, incoming: true) }
+
+          it "returns my producer's incoming exchange" do
+            permissions.order_cycle_exchanges(oc).should == [ex_in]
+          end
+
+          context "my producer has granted P-OC to an outgoing hub" do
+            before do
+              create(:enterprise_relationship, parent: producer, child: e2, permissions_list: [:add_to_order_cycle])
+            end
+
+            it "returns the hub's outgoing exchange" do
+              permissions.order_cycle_exchanges(oc).should include ex_out
+            end
+          end
+
+          context "my producer has not granted P-OC to an outgoing hub" do
+            it "does not return the hub's outgoing exchange" do
+              permissions.order_cycle_exchanges(oc).should_not include ex_out
+            end
+          end
+        end
+
+        context "where my producer doesn't supply the order cycle" do
+          it "does not return the hub's outgoing exchanges" do
+            permissions.order_cycle_exchanges(oc).should == []
+          end
+        end
+
+        # TODO: this is testing legacy behaviour for backwards compatability, remove when behaviour no longer required
+        describe "legacy compatability" do
+          context "where an outgoing exchange contains variants of a producer I manage" do
+            let!(:product) { create(:product, supplier: producer) }
+            let!(:variant) { create(:variant, product: product) }
+            before { ex_out.variants << variant }
+
+            context "where my producer supplies to the order cycle" do
+              let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: e1, incoming: true) }
+
+              it "returns the outgoing exchange" do
+                permissions.order_cycle_exchanges(oc).should include ex_out
+              end
+            end
+
+            context "where my producer doesn't supply to the order cycle" do
+              it "does not return the outgoing exchange" do
+                permissions.order_cycle_exchanges(oc).should_not include ex_out
+              end
+            end
+          end
         end
       end
     end
@@ -332,7 +401,7 @@ module OpenFoodNetwork
           end
 
           it "returns all variants belonging to the sending producer" do
-            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
+            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
             expect(visible).to include v1
             expect(visible).to_not include v2
           end
@@ -344,7 +413,7 @@ module OpenFoodNetwork
           end
 
           it "returns all variants belonging to the sending producer" do
-            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
+            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
             expect(visible).to include v1
             expect(visible).to_not include v2
           end
@@ -356,9 +425,23 @@ module OpenFoodNetwork
             create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
           end
 
-          it "returns no variants" do
-            visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1)
-            expect(visible).to eq []
+          context "where the hub is in the order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
+            it "returns variants produced by that producer only" do
+              visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+              expect(visible).to include v1
+              expect(visible).to_not include v2
+            end
+          end
+
+          context "where the hub is not in the order cycle" do
+            # No outgoing exchange
+
+            it "does not return variants produced by that producer" do
+              visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+              expect(visible).to_not include v1, v2
+            end
           end
         end
       end
@@ -406,7 +489,7 @@ module OpenFoodNetwork
           end
         end
 
-        context "as manager of the outgoing hub" do
+        context "as manager of an outgoing hub" do
           before do
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
             create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
@@ -432,20 +515,33 @@ module OpenFoodNetwork
           end
         end
 
-        context "as the manager of a producer which has granted P-OC to the outgoing hub" do
+        context "as the manager of a producer which has granted P-OC to an outgoing hub" do
           before do
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer1]) }
             create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
           end
 
-          it "returns all of my produced variants" do
-            visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
-            expect(visible).to include v1
-            expect(visible).to_not include v2
+          context "where my producer is in the order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: producer1, receiver: e1, incoming: true) }
+
+            it "returns all of my produced variants" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
+              expect(visible).to include v1
+              expect(visible).to_not include v2
+            end
+          end
+
+          context "where my producer isn't in the order cycle" do
+            # No incoming exchange
+
+            it "does not return my variants" do
+              visible = permissions.visible_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
+              expect(visible).to_not include v1, v2
+            end
           end
         end
 
-        context "as the manager of a producer which has not granted P-OC to the outgoing hub" do
+        context "as the manager of a producer which has not granted P-OC to an outgoing hub" do
           before do
             permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer2]) }
             create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
@@ -457,7 +553,7 @@ module OpenFoodNetwork
         end
 
         # TODO: for backwards compatability, remove later
-        context "as the manager of a producer which has not granted P-OC to the outgoing hub, but which has variants already in the exchange" do
+        context "as the manager of a producer which has not granted P-OC to an outgoing hub, but which has variants already in the exchange" do
           let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
 
           # This one won't be in the exchange, and so shouldn't be visible

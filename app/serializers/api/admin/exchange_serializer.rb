@@ -7,7 +7,7 @@ class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
     permitted = Spree::Variant.where("1=0")
     if object.incoming
       permitted = OpenFoodNetwork::Permissions.new(options[:current_user]).
-      visible_variants_for_incoming_exchanges_between(object.sender, object.receiver)
+      visible_variants_for_incoming_exchanges_between(object.sender, object.receiver, order_cycle: object.order_cycle)
     else
       permitted = OpenFoodNetwork::Permissions.new(options[:current_user]).
       visible_variants_for_outgoing_exchanges_between(object.sender, object.receiver, order_cycle: object.order_cycle)

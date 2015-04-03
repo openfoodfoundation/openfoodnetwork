@@ -108,7 +108,7 @@ module OpenFoodNetwork
     # TODO Need to use editable rather than visible
     def editable_variant_ids_for_incoming_exchange_between(sender, receiver)
       OpenFoodNetwork::Permissions.new(@spree_current_user).
-        visible_variants_for_incoming_exchanges_between(sender, receiver).
+        visible_variants_for_incoming_exchanges_between(sender, receiver, order_cycle: @order_cycle).
         pluck(:id)
     end
 
