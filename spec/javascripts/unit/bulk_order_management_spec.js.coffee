@@ -33,8 +33,8 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
 
       expect(scope.suppliers).toEqual [{ id : '0', name : 'All' }, 'list of suppliers']
-      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ] 
-      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ]
+      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ]
 
       expect(scope.initialiseVariables.calls.length).toBe 1
       expect(scope.fetchOrders.calls.length).toBe 1
@@ -349,6 +349,33 @@ describe "AdminOrderMgmtCtrl", ->
         spyOn(VariantUnitManager, "getScale").andReturn 1000
         spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
+
+    describe "updating the price upon updating the weight of a line item", ->
+
+      it "resets the weight if the weight is set to zero", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 0 }
+        ]
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], 100)).toEqual scope.filteredLineItems[0].price
+
+      it "updates the price if the weight is changed", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 200 }
+        ]
+        old_value = scope.filteredLineItems[0].units_variant.unit_value
+        new_value = scope.filteredLineItems[0].unit_value
+        sp = scope.filteredLineItems[0].price * new_value / old_value
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+
+      it "doesn't update the price if the weight is not changed", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 100 }
+        ]
+        old_value = scope.filteredLineItems[0].unit_value
+        new_value = scope.filteredLineItems[0].unit_value
+        sp = scope.filteredLineItems[0].price
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+
 
 describe "managing pending changes", ->
   dataSubmitter = pendingChangesService = null
