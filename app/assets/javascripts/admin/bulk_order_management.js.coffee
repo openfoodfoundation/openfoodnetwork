@@ -32,7 +32,8 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
-
+        unit_value:   { name: "Weight/Volume", visible: false }
+        price:        { name: "Price",        visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
       authorise_api_reponse = ""
@@ -162,6 +163,12 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.supplierFilter = $scope.suppliers[0].id
       $scope.orderCycleFilter = $scope.orderCycles[0].id
       $scope.quickSearch = ""
+
+    $scope.weightAdjustedPrice = (lineItem, oldValue) ->
+      if lineItem.unit_value <= 0
+        lineItem.unit_value = lineItem.units_variant.unit_value
+      lineItem.price = lineItem.price * lineItem.unit_value / oldValue
+      #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
 ]
 
 daysFromToday = (days) ->
