@@ -637,18 +637,32 @@ feature %q{
     end
 
     context "that is a manager of a participating producer" do
-      before do
-        @new_user = create_enterprise_user
-        @new_user.enterprise_roles.build(enterprise: supplier_managed).save
+      let(:new_user) { create_enterprise_user }
 
-        login_to_admin_as @new_user
+      before do
+        new_user.enterprise_roles.build(enterprise: supplier_managed).save
+        login_to_admin_as new_user
       end
 
       scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
-        ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_unmanaged, incoming: false).first
-        ex.update_attributes(variant_ids: [v1.id])
+        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
+
+        # Incoming exchange
+        ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
+        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Outgoing exchange
+        ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_managed, incoming: false).first
+        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Stub editable_variants_for_outgoing_exchanges method so we can test permissions
+        serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
+        allow(Api::Admin::OrderCycleSerializer).to receive(:new) { serializer }
+        allow(serializer).to receive(:editable_variants_for_outgoing_exchanges) do
+          { "#{distributor_managed.id}" => [v1.id] }
+        end
 
         visit edit_admin_order_cycle_path(oc)
 
@@ -656,7 +670,18 @@ feature %q{
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
         page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 3
+        page.all('tr.distributor').count.should == 2
+
+        # Open the products list for managed_supplier's incoming exchange
+        within "tr.distributor-#{distributor_managed.id}" do
+          page.find("td.products input").click
+        end
+
+        # I should be able to see and toggle v1
+        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
+
+        # I should be able to see but not toggle v2, because I don't have permission
+        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
 
         # When I save, any exchanges that I can't manage remain
         click_button 'Update'
@@ -687,7 +712,7 @@ feature %q{
         ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
         ex.update_attributes(variant_ids: [v1.id, v2.id])
 
-        # # Stub editable_variants_for_incoming_exchanges method so we can test permissions
+        # Stub editable_variants_for_incoming_exchanges method so we can test permissions
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
         allow(Api::Admin::OrderCycleSerializer).to receive(:new) { serializer }
         allow(serializer).to receive(:editable_variants_for_incoming_exchanges) do
