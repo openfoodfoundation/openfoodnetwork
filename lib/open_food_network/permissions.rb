@@ -197,6 +197,45 @@ module OpenFoodNetwork
       end
     end
 
+    # Find the variants that a user is permitted edit within outgoing exchanges
+    def editable_variants_for_outgoing_exchanges_between(coordinator, hub, options={})
+      return Spree::Variant.where("1=0") unless options[:order_cycle]
+      if managed_enterprises.pluck(:id).include?(hub.id) || managed_enterprises.pluck(:id).include?(coordinator.id)
+        # Any variants produced by the coordinator, for outgoing exchanges with itself
+        coordinator_variants = []
+        if hub == coordinator
+          coordinator_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', coordinator)
+        end
+
+        # Any variants of any producers that have granted the hub P-OC
+        producers = granting(:add_to_order_cycle, to: [hub], scope: Enterprise.is_primary_producer)
+        permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
+
+        # PLUS any variants that are already in an outgoing exchange of this hub, so things don't break
+        # TODO: Remove this when all P-OC are sorted out
+        active_variants = []
+        options[:order_cycle].exchanges.outgoing.where(receiver_id: hub).limit(1).each do |exchange|
+          active_variants = exchange.variants
+        end
+
+        Spree::Variant.where(id: coordinator_variants | permitted_variants | active_variants)
+      else
+        # Any of my managed producers in this order cycle granted P-OC by the hub
+        granted_producers = granted(:add_to_order_cycle, by: [hub], scope: managed_producers_in(options[:order_cycle]))
+
+        # Any variants produced by MY PRODUCERS that are in this order cycle, where my producer has granted P-OC to the hub
+        granting_producers = granting(:add_to_order_cycle, to: [hub], scope: granted_producers)
+        permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', granting_producers)
+
+        # PLUS any of my incoming producers' variants that are already in an outgoing exchange of this hub, so things don't break
+        # TODO: Remove this when all P-OC are sorted out
+        active_variants = Spree::Variant.joins(:exchanges, :product).
+        where('exchanges.receiver_id = (?) AND spree_products.supplier_id IN (?)', hub, managed_enterprises.is_primary_producer)
+
+        Spree::Variant.where(id: permitted_variants | active_variants)
+      end
+    end
+
     def managed_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
       permitted_enterprise_products_ids = related_enterprise_products.pluck :id
