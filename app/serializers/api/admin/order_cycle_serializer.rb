@@ -1,5 +1,6 @@
 class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   attributes :id, :name, :orders_open_at, :orders_close_at, :coordinator_id, :exchanges
+  attributes :editable_variants_for_incoming_exchanges
   attributes :visible_variants_for_outgoing_exchanges
 
   has_many :coordinator_fees, serializer: Api::IdSerializer
@@ -15,6 +16,19 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   def exchanges
     scoped_exchanges = OpenFoodNetwork::Permissions.new(options[:current_user]).order_cycle_exchanges(object).order('id ASC')
     ActiveModel::ArraySerializer.new(scoped_exchanges, {each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user] })
+  end
+
+  def editable_variants_for_incoming_exchanges
+    # For each enterprise that the current user is able to see in this order cycle,
+    # work out which variants should be editable within incoming exchanges from that enterprise
+    editable = {}
+    permissions = OpenFoodNetwork::Permissions.new(options[:current_user])
+    enterprises = permissions.order_cycle_enterprises_for(order_cycle: object)
+    enterprises.each do |enterprise|
+      variants = permissions.editable_variants_for_incoming_exchanges_between(enterprise, object.coordinator, order_cycle: object).pluck(:id)
+      editable[enterprise.id] = variants if variants.any?
+    end
+    editable
   end
 
   def visible_variants_for_outgoing_exchanges

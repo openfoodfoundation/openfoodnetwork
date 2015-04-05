@@ -574,6 +574,56 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding the variants within a hypothetical exchange between two enterprises which are editable by a user" do
+      let!(:producer1) { create(:supplier_enterprise) }
+      let!(:producer2) { create(:supplier_enterprise) }
+      let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
+      let!(:v2) { create(:variant, product: create(:simple_product, supplier: producer2)) }
+      let(:oc) { create(:simple_order_cycle) }
+
+      describe "incoming exchanges" do
+        context "as a manager of the coordinator" do
+          before do
+            permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
+          end
+
+          it "returns all variants belonging to the sending producer" do
+            visible = permissions.editable_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+            expect(visible).to include v1
+            expect(visible).to_not include v2
+          end
+        end
+
+        context "as a manager of the producer" do
+          before do
+            permissions.stub(:managed_enterprises) { Enterprise.where(id: [producer1]) }
+          end
+
+          it "returns all variants belonging to the sending producer" do
+            visible = permissions.editable_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+            expect(visible).to include v1
+            expect(visible).to_not include v2
+          end
+        end
+
+        context "as a manager of a hub which has been granted P-OC by the producer" do
+          before do
+            permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
+            create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
+          end
+
+          context "where the hub is in the order cycle" do
+            let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
+
+            it "does not return variants produced by that producer" do
+              visible = permissions.editable_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+              expect(visible).to_not include v1, v2
+            end
+          end
+        end
+      end
+    end
+
     describe "finding managed products" do
       let!(:p1) { create(:simple_product) }
       let!(:p2) { create(:simple_product) }

@@ -162,6 +162,7 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
 
     stripNonSubmittableAttributes: (order_cycle) ->
       delete order_cycle.id
+      delete order_cycle.editable_variants_for_incoming_exchanges
       delete order_cycle.visible_variants_for_outgoing_exchanges
       order_cycle
 

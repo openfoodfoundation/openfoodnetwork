@@ -11,7 +11,8 @@
 
     .exchange-product-details
       %label
-        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants.length > 0', 'ng-disabled' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
+        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}',
+        'ng-disabled' => 'product.variants.length > 0 || !order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(product.master_id) < 0'
         %img{'ng-src' => '{{ product.image_url }}'}
         {{ product.name }}
 
@@ -19,10 +20,12 @@
     -# be able to remove the master variant, since it serves no purpose. Display a checkbox to do so.
     .exchange-product-variant{'ng-show' => 'exchange.variants[product.master_id] && product.variants.length > 0'}
       %label
-        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}'
+        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-model' => 'exchange.variants[product.master_id]', 'ofn-sync-distributions' => '{{ product.master_id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}',
+        'ng-disabled' => '!order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(product.master_id) < 0'
         Obsolete master
 
     .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
       %label
-        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'ofn-sync-distributions' => '{{ variant.id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}'
+        = check_box_tag 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}', 1, 1, 'ng-model' => 'exchange.variants[variant.id]', 'ofn-sync-distributions' => '{{ variant.id }}', 'id' => 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
+        'ng-disabled' => '!order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0'
         {{ variant.label }}

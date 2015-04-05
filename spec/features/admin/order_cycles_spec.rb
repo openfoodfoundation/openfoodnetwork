@@ -644,7 +644,7 @@ feature %q{
         login_to_admin_as @new_user
       end
 
-      scenario "editing an order cycle we can see only exchanges involving my producer, and any distributors of my products" do
+      scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_unmanaged, incoming: false).first
@@ -671,25 +671,45 @@ feature %q{
 
     context "that is the manager of a participating hub" do
       let(:my_distributor) { create(:distributor_enterprise) }
+      let(:new_user) { create_enterprise_user }
 
       before do
-        @new_user = create_enterprise_user
-        @new_user.enterprise_roles.build(enterprise: my_distributor).save
+        create(:enterprise_relationship, parent: supplier_managed, child: my_distributor, permissions_list: [:add_to_order_cycle])
 
-        login_to_admin_as @new_user
+        new_user.enterprise_roles.build(enterprise: my_distributor).save
+        login_to_admin_as new_user
       end
 
-      scenario "editing an order cycle we can see only exchanges involving my hub, and any suppliers of variants in my outoing exchanges" do
+      scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
         ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
-        ex.update_attributes(variant_ids: [v1.id])
+        ex.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # # Stub editable_variants_for_incoming_exchanges method so we can test permissions
+        serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
+        allow(Api::Admin::OrderCycleSerializer).to receive(:new) { serializer }
+        allow(serializer).to receive(:editable_variants_for_incoming_exchanges) do
+          { "#{supplier_managed.id}" => [v1.id] }
+        end
 
         visit edit_admin_order_cycle_path(oc)
 
-        # I should see exchanges for my_distributor, and the incoming exchange suppling v1
+        # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
         page.all('tr.supplier').count.should == 1
         page.all('tr.distributor').count.should == 1
+
+        # Open the products list for managed_supplier's incoming exchange
+        within "tr.supplier-#{supplier_managed.id}" do
+          page.find("td.products input").click
+        end
+
+        # I should be able to see and toggle v1
+        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
+
+        # I should be able to see but not toggle v2, because I don't have permission
+        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
 
         # When I save, any exchange that I can't manage remains
         click_button 'Update'
