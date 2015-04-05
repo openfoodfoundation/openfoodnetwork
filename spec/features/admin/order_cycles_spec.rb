@@ -669,7 +669,7 @@ feature %q{
       end
     end
 
-    context "that is the manager of a participating distributor" do
+    context "that is the manager of a participating hub" do
       let(:my_distributor) { create(:distributor_enterprise) }
 
       before do
@@ -679,16 +679,19 @@ feature %q{
         login_to_admin_as @new_user
       end
 
-      scenario "editing an order cycle we can see only exchanges involving my producer, and any distributors of my products" do
+      scenario "editing an order cycle we can see only exchanges involving my hub, and any suppliers of variants in my outoing exchanges" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
+        ex.update_attributes(variant_ids: [v1.id])
 
         visit edit_admin_order_cycle_path(oc)
 
-        # I should only see exchanges for my_distributor
-        page.all('tr.supplier').count.should == 0
+        # I should see exchanges for my_distributor, and the incoming exchange suppling v1
+        page.all('tr.supplier').count.should == 1
         page.all('tr.distributor').count.should == 1
 
-        # When I save, any exchange that I can't manage remain
+        # When I save, any exchange that I can't manage remains
         click_button 'Update'
         page.should have_content "Your order cycle has been updated."
 
