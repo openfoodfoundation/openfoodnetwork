@@ -131,6 +131,7 @@ class AbilityDecorator
       user.enterprises.include? order_cycle.coordinator
     end
     can [:for_order_cycle], Enterprise
+    can [:for_order_cycle], EnterpriseFee
   end
 
   def add_order_management_abilities(user)

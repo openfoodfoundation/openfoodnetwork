@@ -235,6 +235,10 @@ module Spree
             it "cannot request permitted enterprises for an order cycle" do
               should_not have_ability([:for_order_cycle], for: Enterprise)
             end
+
+            it "cannot request permitted enterprise fees for an order cycle" do
+              should_not have_ability([:for_order_cycle], for: EnterpriseFee)
+            end
           end
 
           context "where the enterprise is in an order_cycle" do
@@ -251,6 +255,10 @@ module Spree
 
             it "can request permitted enterprises for an order cycle" do
               should have_ability([:for_order_cycle], for: Enterprise)
+            end
+
+            it "can request permitted enterprise fees for an order cycle" do
+              should have_ability([:for_order_cycle], for: EnterpriseFee)
             end
           end
         end
@@ -415,6 +423,10 @@ module Spree
         it "can request permitted enterprises for an order cycle" do
           should have_ability([:for_order_cycle], for: Enterprise)
         end
+
+        it "can request permitted enterprise fees for an order cycle" do
+          should have_ability([:for_order_cycle], for: EnterpriseFee)
+        end
       end
 
       context 'Order Cycle co-ordinator, distributor enterprise manager' do
@@ -441,7 +453,7 @@ module Spree
         end
 
         it "should be able to read/write EnterpriseFees" do
-          should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
+          should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy, :for_order_cycle], for: EnterpriseFee)
         end
 
         it "should be able to add enterprises to order cycles" do
