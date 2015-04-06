@@ -34,7 +34,7 @@ angular.module('admin.order_cycles', ['ngResource'])
       OrderCycle.exchangeDirection(exchange)
 
     $scope.enterprisesWithFees = ->
-      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 1
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
@@ -115,7 +115,7 @@ angular.module('admin.order_cycles', ['ngResource'])
       OrderCycle.exchangeDirection(exchange)
 
     $scope.enterprisesWithFees = ->
-      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 1
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
