@@ -746,10 +746,9 @@ module OpenFoodNetwork
 
             before { ex.variants << v2 }
 
-            it "returns those variants that are in the exchange" do
+            it "does not return my variants" do
               visible = permissions.editable_variants_for_outgoing_exchanges_between(e1, e2, order_cycle: oc)
-              expect(visible).to_not include v1, v3
-              expect(visible).to include v2
+              expect(visible).to_not include v1, v2, v3
             end
           end
         end
