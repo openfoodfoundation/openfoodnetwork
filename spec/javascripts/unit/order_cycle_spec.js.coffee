@@ -94,12 +94,14 @@ describe 'OrderCycle controllers', ->
       expect(scope.exchangeDirection('exchange')).toEqual('exchange direction')
       expect(OrderCycle.exchangeDirection).toHaveBeenCalledWith('exchange')
 
-    it 'Finds enterprises participating in the order cycle', ->
+    it 'Finds enterprises participating in the order cycle that have fees', ->
       scope.enterprises =
         1: {id: 1, name: 'Eaterprises'}
         2: {id: 2, name: 'Pepper Tree Place'}
+        3: {id: 3, name: 'South East'}
       OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
-      expect(scope.participatingEnterprises()).toEqual([
+      EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ] # Pepper Tree Place has a fee
+      expect(scope.enterprisesWithFees()).toEqual([
         {id: 2, name: 'Pepper Tree Place'}
         ])
 
@@ -255,12 +257,14 @@ describe 'OrderCycle controllers', ->
       expect(scope.exchangeDirection('exchange')).toEqual('exchange direction')
       expect(OrderCycle.exchangeDirection).toHaveBeenCalledWith('exchange')
 
-    it 'Finds enterprises participating in the order cycle', ->
+    it 'Finds enterprises participating in the order cycle that have fees', ->
       scope.enterprises =
         1: {id: 1, name: 'Eaterprises'}
         2: {id: 2, name: 'Pepper Tree Place'}
+        3: {id: 3, name: 'South East'}
       OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
-      expect(scope.participatingEnterprises()).toEqual([
+      EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ] # Pepper Tree Place has a fee
+      expect(scope.enterprisesWithFees()).toEqual([
         {id: 2, name: 'Pepper Tree Place'}
         ])
 

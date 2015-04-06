@@ -14,11 +14,10 @@ angular.module('admin.order_cycles').factory('EnterpriseFee', ($resource) ->
     loaded: false
 
     index: (params={}) ->
-      service = this
-      EnterpriseFee.index params, (data) ->
-        service.enterprise_fees = data
-        service.loaded = true
+      EnterpriseFee.index params, (data) =>
+        @enterprise_fees = data
+        @loaded = true
 
     forEnterprise: (enterprise_id) ->
-      enterprise_fee for enterprise_fee in this.enterprise_fees when enterprise_fee.enterprise_id == enterprise_id
+      enterprise_fee for enterprise_fee in @enterprise_fees when enterprise_fee.enterprise_id == enterprise_id
   })
