@@ -152,13 +152,7 @@ module OpenFoodNetwork
 
     # Find the variants that a user can edit within incoming exchanges
     def editable_variants_for_incoming_exchanges_between(producer, coordinator, options={})
-      return Spree::Variant.where("1=0") unless options[:order_cycle]
-      if managed_enterprises.pluck(:id).include?(producer.id) || managed_enterprises.pluck(:id).include?(coordinator.id)
-        # All variants belonging to the producer
-        Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
-      else
-        Spree::Variant.where("1=0")
-      end
+      visible_variants_for_incoming_exchanges_between(producer, coordinator, options)
     end
 
     # Find the variants that a user is permitted see within outgoing exchanges
