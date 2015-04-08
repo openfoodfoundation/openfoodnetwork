@@ -1,15 +1,25 @@
+- as_coordinator = Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
 .row
   .alpha.two.columns
     = f.label :name
   .fourteen.columns.omega
-    = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
+    - if as_coordinator
+      = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
+    - else
+      {{ order_cycle.name }}
 
 .row
   .alpha.two.columns
     = f.label :orders_open_at, 'Orders open'
   .six.columns
-    = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
+    - if as_coordinator
+      = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
+    - else
+      {{ order_cycle.orders_open_at }}
   .two.columns
     = f.label :orders_close_at, 'Orders close'
   .six.columns.omega
-    = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
+    - if as_coordinator
+      = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at'
+    - else
+      {{ order_cycle.orders_close_at }}

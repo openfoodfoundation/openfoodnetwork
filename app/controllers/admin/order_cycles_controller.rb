@@ -7,6 +7,7 @@ module Admin
 
     before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
+    before_filter :remove_protected_attrs, only: [:update]
     around_filter :protect_invalid_destroy, only: :destroy
 
 
@@ -118,6 +119,14 @@ module Admin
       rescue ActiveRecord::InvalidForeignKey
         redirect_to main_app.admin_order_cycles_url
         flash[:error] = "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
+      end
+    end
+
+    def remove_protected_attrs
+      params[:order_cycle].delete :coordinator_id
+
+      unless spree_current_user.admin? || Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
+        params[:order_cycle].delete_if{ |k,v| [:name, :orders_open_at, :orders_close_at].include? k.to_sym }
       end
     end
   end
