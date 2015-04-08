@@ -62,6 +62,7 @@ module OpenFoodNetwork
 
         managed_active = []
         hubs_active = []
+        producers_active = []
         if order_cycle
           # TODO: remove this when permissions are all sorted out
           # Any enterprises that I manage that are already in the order_cycle
@@ -72,9 +73,15 @@ module OpenFoodNetwork
           variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
           active_exchanges = order_cycle.exchanges.outgoing.with_any_variant(variants)
           hubs_active = active_exchanges.map(&:receiver_id)
+
+          # TODO: Remove this when all P-OC are sorted out
+          # Any producers of variants that hubs I manage are currently distributing in this OC
+          variants = Spree::Variant.joins(:exchanges).where("exchanges.receiver_id IN (?) AND exchanges.order_cycle_id = (?) AND exchanges.incoming = 'f'", managed_hubs_in(order_cycle), order_cycle).pluck(:id).uniq
+          products = Spree::Product.joins(:variants_including_master).where("spree_variants.id IN (?)", variants).pluck(:id).uniq
+          producers_active = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", products).pluck(:id).uniq
         end
 
-        Enterprise.where(id: coordinator_permitted | managed_permitted | managed_active | hubs_permitted | producers_permitted | hubs_active)
+        Enterprise.where(id: coordinator_permitted | managed_permitted | hubs_permitted | producers_permitted | managed_active | hubs_active | producers_active )
       end
     end
 

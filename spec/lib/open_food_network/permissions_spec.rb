@@ -105,6 +105,18 @@ module OpenFoodNetwork
               expect(enterprises).to_not include producer, coordinator
             end
           end
+
+          context "and distributes variants distributed by an unmanaged and unpermitted producer" do
+            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+            before { ex_outgoing.variants << create(:variant, product: create(:product, supplier: producer)) }
+
+            # TODO: update this when we are confident about P-OCs
+            it "returns that producer as well" do
+              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+              expect(enterprises).to include producer, hub
+              expect(enterprises).to_not include coordinator
+            end
+          end
         end
       end
 
