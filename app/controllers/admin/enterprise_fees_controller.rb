@@ -76,10 +76,10 @@ module Admin
     def collection
       case action
       when :for_order_cycle
-        options = {}
-        options[:coordinator] = Enterprise.find(params[:coordinator_id]) if params[:coordinator_id]
-        options[:order_cycle] = OrderCycle.find(params[:order_cycle_id]) if params[:order_cycle_id]
-        enterprises = OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises_for(options)
+        order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
+        coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
+        order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
+        enterprises = OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises_for(order_cycle)
         return EnterpriseFee.for_enterprises(enterprises).order('enterprise_id', 'fee_type', 'name')
       else
         collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')

@@ -97,7 +97,7 @@ module OpenFoodNetwork
     def permitted_enterprises
       return @permitted_enterprises unless @permitted_enterprises.nil?
       @permitted_enterprises = OpenFoodNetwork::Permissions.new(@spree_current_user).
-      order_cycle_enterprises_for(order_cycle: @order_cycle)
+      order_cycle_enterprises_for(@order_cycle)
     end
 
     def user_manages_coordinator?

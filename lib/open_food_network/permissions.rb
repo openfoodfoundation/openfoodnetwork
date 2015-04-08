@@ -19,16 +19,9 @@ module OpenFoodNetwork
     # NOTE: the enterprises a given user can see actually in the OC interface depend on the relationships
     # of their enterprises to the coordinator of the order cycle, rather than on the order cycle itself
     # (until such time as we implement friends of friends)
-    def order_cycle_enterprises_for(options={})
-      # Can provide a coordinator OR an order cycle. Use just coordinator for new order cycles
-      # if both are provided, coordinator will be ignored, and the coordinator of the OC will be used
-      return Enterprise.where("1=0") unless options[:coordinator] || options[:order_cycle]
-      coordinator = options[:coordinator]
-      order_cycle = nil
-      if options[:order_cycle]
-        order_cycle = options[:order_cycle]
-        coordinator = order_cycle.coordinator
-      end
+    def order_cycle_enterprises_for(order_cycle)
+      return Enterprise.where("1=0") unless order_cycle.andand.coordinator.present?
+      coordinator = order_cycle.coordinator
 
       if managed_enterprises.include? coordinator
         coordinator_permitted = []

@@ -414,8 +414,9 @@ module Admin
       before do
         # As a user with permission
         controller.stub spree_current_user: user
-        Enterprise.stub find: "instance of Enterprise"
-        OrderCycle.stub find: "instance of OrderCycle"
+        OrderCycle.stub find_by_id: "existing OrderCycle"
+        Enterprise.stub find_by_id: "existing Enterprise"
+        OrderCycle.stub new: "new OrderCycle"
 
         OpenFoodNetwork::Permissions.stub(:new) { permission_mock }
         allow(permission_mock).to receive :order_cycle_enterprises_for
@@ -424,28 +425,28 @@ module Admin
       context "when no order_cycle or coordinator is provided in params" do
         before { spree_get :for_order_cycle }
         it "returns an empty scope" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with({})
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(nil)
         end
       end
 
       context "when an order_cycle_id is provided in params" do
         before { spree_get :for_order_cycle, order_cycle_id: 1 }
-        it "calls order_cycle_enterprises_for() with an :order_cycle option" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(order_cycle: "instance of OrderCycle")
+        it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
         end
       end
 
       context "when a coordinator is provided in params" do
         before { spree_get :for_order_cycle, coordinator_id: 1 }
-        it "calls order_cycle_enterprises_for() with a :coordinator option" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(coordinator: "instance of Enterprise")
+        it "calls order_cycle_enterprises_for() with a new OrderCycle" do
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("new OrderCycle")
         end
       end
 
       context "when both an order cycle and a coordinator are provided in params" do
         before { spree_get :for_order_cycle, order_cycle_id: 1, coordinator_id: 1 }
-        it "calls order_cycle_enterprises_for() with both options" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(coordinator: "instance of Enterprise", order_cycle: "instance of OrderCycle")
+        it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
+          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
         end
       end
     end
