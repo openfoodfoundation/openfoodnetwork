@@ -77,7 +77,7 @@ class Enterprise < ActiveRecord::Base
   after_rollback :restore_permalink
 
   scope :by_name, order('name')
-  scope :visible, where(:visible => true)
+  scope :visible, where(visible: true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
   scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")

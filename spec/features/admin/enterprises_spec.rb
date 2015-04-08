@@ -218,6 +218,7 @@ feature %q{
     click_link "Business Details"
     fill_in 'enterprise_abn', :with => '09812309823'
     fill_in 'enterprise_acn', :with => ''
+    choose 'Yes' # enterprise_charges_sales_tax
 
     click_link "Address"
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
@@ -236,6 +237,9 @@ feature %q{
     page.should have_field 'enterprise_name', :with => 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
+
+    click_link "Business Details"
+    page.should have_checked_field "enterprise_charges_sales_tax_true"
 
     click_link "Payment Methods"
     page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
