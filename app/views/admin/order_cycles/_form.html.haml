@@ -1,5 +1,7 @@
 = render 'name_and_timing_form', f: f
 
+-if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
+  = render 'coordinator_fees', f: f
 
 %h2 Incoming
 %table.exchanges
@@ -19,15 +21,6 @@
   = select_tag :new_supplier_id, options_for_select(permitted_producer_enterprise_options_for(@order_cycle)), {'ng-model' => 'new_supplier_id'}
 
   = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
-
-
-%h2 Coordinator
--if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
-  = f.label :coordinator_id, 'Coordinator'
-  = f.select :coordinator_id, permitted_coordinating_enterprise_options_for(@order_cycle), { include_blank: true }, {'ng-model' => 'order_cycle.coordinator_id', 'ofn-on-change' => 'order_cycle.coordinator_fees = []', 'required' => true}
-  = render 'coordinator_fees', f: f
-- else
-  = @order_cycle.coordinator.name
 
 %h2 Outgoing
 %table.exchanges

@@ -2,20 +2,24 @@
 .row
   .alpha.two.columns
     = f.label :name
-  .fourteen.columns.omega
+  .six.columns.omega
     - if as_coordinator
       = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true
     - else
       {{ order_cycle.name }}
-
-.row
-  .alpha.two.columns
+  .two.columns
     = f.label :orders_open_at, 'Orders open'
-  .six.columns
+  .omega.six.columns
     - if as_coordinator
       = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at'
     - else
       {{ order_cycle.orders_open_at }}
+
+.row
+  .alpha.two.columns
+    = f.label :coordinator
+  .six.columns.omega
+    = @order_cycle.coordinator.name
   .two.columns
     = f.label :orders_close_at, 'Orders close'
   .six.columns.omega

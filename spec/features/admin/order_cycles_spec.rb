@@ -90,7 +90,6 @@ feature %q{
     fill_in 'order_cycle_name', with: 'Plums & Avos'
     fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
     fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
-    select 'My coordinator', from: 'order_cycle_coordinator_id'
 
     # And I add a coordinator fee
     click_button 'Add coordinator fee'
@@ -170,8 +169,7 @@ feature %q{
     page.find('#order_cycle_name').value.should == oc.name
     page.find('#order_cycle_orders_open_at').value.should == oc.orders_open_at.to_s
     page.find('#order_cycle_orders_close_at').value.should == oc.orders_close_at.to_s
-    page.find('#order_cycle_coordinator_id').value.to_i.should == oc.coordinator_id
-    page.should have_selector "select[name='order_cycle_coordinator_fee_0_id']"
+    page.should have_content "COORDINATOR #{oc.coordinator.name}"
 
     # And I should see the suppliers
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
@@ -524,13 +522,11 @@ feature %q{
         page.should have_content oc_user_coordinating.name
         page.should_not have_content oc_for_other_user.name
 
-        # The order cycle should show enterprises that I manage
+        # The order cycle should show all enterprises in the order cycle
         page.should have_selector 'td.suppliers',    text: supplier_managed.name
         page.should have_selector 'td.distributors', text: distributor_managed.name
-
-        # The order cycle should not show enterprises that I don't manage
-        page.should_not have_selector 'td.suppliers',    text: supplier_unmanaged.name
-        page.should_not have_selector 'td.distributors', text: distributor_unmanaged.name
+        page.should have_selector 'td.suppliers',    text: supplier_unmanaged.name
+        page.should have_selector 'td.distributors', text: distributor_unmanaged.name
       end
 
       scenario "creating a new order cycle" do
@@ -551,7 +547,6 @@ feature %q{
         select_incoming_variant supplier_managed, 0, product_managed.master
         select_incoming_variant supplier_permitted, 1, product_permitted.master
 
-        select 'Managed distributor', from: 'order_cycle_coordinator_id'
         click_button 'Add coordinator fee'
         select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
 
