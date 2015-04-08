@@ -60,15 +60,17 @@ feature "Registration", js: true do
       fill_in 'enterprise_long_desc', with: 'Long description'
       fill_in 'enterprise_abn', with: '12345'
       fill_in 'enterprise_acn', with: '54321'
+      choose 'Yes' # enterprise_charges_sales_tax
       click_button 'Continue'
 
-      # Enterprise should be update
+      # Enterprise should be updated
       expect(page).to have_content "Let's upload some pretty pictures so your profile looks great!"
       e.reload
       expect(e.description).to eq "Short description"
       expect(e.long_description).to eq "Long description"
       expect(e.abn).to eq '12345'
       expect(e.acn).to eq '54321'
+      expect(e.charges_sales_tax).to be_true
 
       # Images
       # Move from logo page
