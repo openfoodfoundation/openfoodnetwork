@@ -30,27 +30,22 @@ module OpenFoodNetwork
         coordinator = order_cycle.coordinator
       end
 
-
-      if coordinator.sells == "own"
-
-        # Coordinators that sell own can only see themselves in the OC interface
+      if managed_enterprises.include? coordinator
         coordinator_permitted = []
-        if managed_enterprises.include? coordinator
-          coordinator_permitted << coordinator
-        end
-        Enterprise.where(id: coordinator_permitted)
 
-      else
-        # If the coordinator sells any, relationships come into play
-
-        # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
-        # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
-        coordinator_permitted = []
-        if managed_enterprises.include? coordinator
+        if coordinator.sells == "own"
+          # Coordinators that sell own can only see themselves in the OC interface
+          coordinator_permitted = [coordinator]
+        elsif coordinator.sells == "any"
+          # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
+          # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
+          # If the coordinator sells any, relationships come into play
           coordinator_permitted = granting(:add_to_order_cycle, to: [coordinator]).pluck(:id)
-          coordinator_permitted << coordinator
+          coordinator_permitted = coordinator_permitted | [coordinator]
         end
 
+        Enterprise.where(id: coordinator_permitted)
+      else
         # Any enterprises that I manage directly, which have granted P-OC to the coordinator
         managed_permitted = granting(:add_to_order_cycle, to: [coordinator], scope: managed_enterprises).pluck(:id)
 
@@ -64,7 +59,7 @@ module OpenFoodNetwork
         hubs_active = []
         producers_active = []
         if order_cycle
-          # TODO: remove this when permissions are all sorted out
+          # TODO: Remove this when all P-OC are sorted out
           # Any enterprises that I manage that are already in the order_cycle
           managed_active = managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors).pluck(:id)
 
@@ -81,7 +76,9 @@ module OpenFoodNetwork
           producers_active = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", products).pluck(:id).uniq
         end
 
-        Enterprise.where(id: coordinator_permitted | managed_permitted | hubs_permitted | producers_permitted | managed_active | hubs_active | producers_active )
+        ids = managed_permitted | hubs_permitted | producers_permitted | managed_active | hubs_active | producers_active
+
+        Enterprise.where(id: ids.sort )
       end
     end
 
