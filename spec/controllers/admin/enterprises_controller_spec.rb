@@ -14,6 +14,7 @@ module Admin
     let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
     let(:supplier) { create(:supplier_enterprise, owner: supplier_owner) }
 
+    before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
 
     describe "creating an enterprise" do
       let(:country) { Spree::Country.find_by_name 'Australia' }
@@ -142,7 +143,6 @@ module Admin
           let!(:property) { create(:property, name: "A nice name") }
 
           before do
-            @request.env['HTTP_REFERER'] = 'http://test.com/'
             login_as_enterprise_user [producer]
           end
 
