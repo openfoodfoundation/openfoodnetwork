@@ -73,19 +73,70 @@ module OpenFoodNetwork
             create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
           end
 
-          it "returns my hub" do
-            enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-            expect(enterprises).to include hub
-            expect(enterprises).to_not include producer, coordinator
+          context "where my hub is in the order cycle" do
+            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+
+            it "returns my hub" do
+              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+              expect(enterprises).to include hub
+              expect(enterprises).to_not include producer, coordinator
+            end
+
+            context "and has been granted P-OC by a producer" do
+              before do
+                create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+              end
+
+              context "where the producer is in the order cycle" do
+                let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+
+                it "returns the producer" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to include producer, hub
+                end
+              end
+
+              context "where the producer is not in the order cycle" do
+                # No incoming exchange
+
+                it "does not return the producer" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to_not include producer
+                end
+              end
+            end
+
+            context "and has granted P-OC to a producer" do
+              before do
+                create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
+              end
+
+              context "where the producer is in the order cycle" do
+                let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+
+                it "returns the producer" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to include producer, hub
+                end
+              end
+
+              context "where the producer is not in the order cycle" do
+                # No incoming exchange
+
+                it "does not return the producer" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to_not include producer
+                end
+              end
+            end
           end
 
-          context "and has also granted P-OC to a producer" do
-            before do
-              create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
-            end
-            it "does not return that producer" do
+          context "where my hub is not in the order cycle" do
+            # No outgoing exchange for my hub
+
+            it "does not return my hub" do
               enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-              expect(enterprises).to_not include producer
+              expect(enterprises).to_not include hub, producer, coordinator
             end
           end
         end
@@ -104,17 +155,16 @@ module OpenFoodNetwork
               expect(enterprises).to include hub
               expect(enterprises).to_not include producer, coordinator
             end
-          end
 
-          context "and distributes variants distributed by an unmanaged and unpermitted producer" do
-            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
-            before { ex_outgoing.variants << create(:variant, product: create(:product, supplier: producer)) }
+            context "and distributes variants distributed by an unmanaged and unpermitted producer" do
+              before { ex.variants << create(:variant, product: create(:product, supplier: producer)) }
 
-            # TODO: update this when we are confident about P-OCs
-            it "returns that producer as well" do
-              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-              expect(enterprises).to include producer, hub
-              expect(enterprises).to_not include coordinator
+              # TODO: update this when we are confident about P-OCs
+              it "returns that producer as well" do
+                enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                expect(enterprises).to include producer, hub
+                expect(enterprises).to_not include coordinator
+              end
             end
           end
         end
@@ -130,20 +180,72 @@ module OpenFoodNetwork
             create(:enterprise_relationship, parent: producer, child: coordinator, permissions_list: [:add_to_order_cycle])
           end
 
-          it "returns my producer, and the coordindator itself" do
-            enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-            expect(enterprises).to include producer, coordinator
-            expect(enterprises).to_not include hub
-          end
+          context "where my producer is in the order cycle" do
+            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
 
-          context "and has also granted P-OC to a hub" do
-            before do
-              create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+            it "returns my producer" do
+              enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+              expect(enterprises).to include producer
+              expect(enterprises).to_not include hub, coordinator
             end
 
-            it "returns that hub as well" do
+            context "and has been granted P-OC by a hub" do
+              before do
+                create(:enterprise_relationship, parent: hub, child: producer, permissions_list: [:add_to_order_cycle])
+              end
+
+              context "where the hub is also in the order cycle" do
+                let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+
+                it "returns the hub as well" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to include producer, hub
+                  expect(enterprises).to_not include coordinator
+                end
+              end
+
+              context "where the hub is not in the order cycle" do
+                # No outgoing exchange
+
+                it "does not return the hub" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to_not include hub
+                end
+              end
+            end
+
+            context "and has granted P-OC to a hub" do
+              before do
+                create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:add_to_order_cycle])
+              end
+
+              context "where the hub is also in the order cycle" do
+                let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+
+                it "returns the hub as well" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to include producer, hub
+                  expect(enterprises).to_not include coordinator
+                end
+              end
+
+              context "where the hub is not in the order cycle" do
+                # No outgoing exchange
+
+                it "does not return the hub" do
+                  enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
+                  expect(enterprises).to_not include hub
+                end
+              end
+            end
+          end
+
+          context "where my producer is not in the order cycle" do
+            # No incoming exchange for producer
+
+            it "does not return my producer" do
               enterprises = permissions.order_cycle_enterprises_for(order_cycle: oc)
-              expect(enterprises).to include producer, coordinator, hub
+              expect(enterprises).to_not include hub, producer, coordinator
             end
           end
         end
