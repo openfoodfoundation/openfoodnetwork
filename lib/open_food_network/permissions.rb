@@ -24,20 +24,21 @@ module OpenFoodNetwork
       coordinator = order_cycle.coordinator
 
       if managed_enterprises.include? coordinator
-        coordinator_permitted = []
+        coordinator_permitted = [coordinator]
+        all_active = []
 
-        if coordinator.sells == "own"
-          # Coordinators that sell own can only see themselves in the OC interface
-          coordinator_permitted = [coordinator]
-        elsif coordinator.sells == "any"
+        if coordinator.sells == "any"
           # If I manage the coordinator (or possibly in the future, if coordinator has made order cycle a friends of friend OC)
           # Any hubs that have granted the coordinator P-OC (or any enterprises that have granted mine P-OC if we do friends of friends)
           # If the coordinator sells any, relationships come into play
-          coordinator_permitted = granting(:add_to_order_cycle, to: [coordinator]).pluck(:id)
-          coordinator_permitted = coordinator_permitted | [coordinator]
+          granting(:add_to_order_cycle, to: [coordinator]).pluck(:id).each do |enterprise_id|
+            coordinator_permitted << enterprise_id
+          end
+
+          all_active = order_cycle.suppliers.pluck(:id) | order_cycle.distributors.pluck(:id)
         end
 
-        Enterprise.where(id: coordinator_permitted)
+        Enterprise.where(id: coordinator_permitted | all_active)
       else
         # Any enterprises that I manage directly, which have granted P-OC to the coordinator
         managed_permitted = granting(:add_to_order_cycle, to: [coordinator], scope: managed_enterprises_in(order_cycle) ).pluck(:id)

@@ -38,15 +38,17 @@ module OpenFoodNetwork
       end
 
       context "as a manager of the coordinator" do
-        it "returns the coordinator itself" do
+        before do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
+        end
+
+        it "returns the coordinator itself" do
           expect(permissions.order_cycle_enterprises_for(oc)).to include coordinator
         end
 
         context "where P-OC has been granted to the coordinator by other enterprises" do
           before do
             create(:enterprise_relationship, parent: hub, child: coordinator, permissions_list: [:add_to_order_cycle])
-            permissions.stub(:managed_enterprises) { Enterprise.where(id: [coordinator]) }
           end
 
           context "where the coordinator sells any" do
@@ -59,6 +61,35 @@ module OpenFoodNetwork
 
           context "where the coordinator sells 'own'" do
             before { coordinator.stub(:sells) { 'own' } }
+            it "returns just the coordinator" do
+              enterprises = permissions.order_cycle_enterprises_for(oc)
+              expect(enterprises).to_not include hub, producer
+            end
+          end
+        end
+
+        context "where P-OC has not been granted to the coordinator by other enterprises" do
+          context "where the other enterprise are already in the order cycle" do
+            let!(:ex_incoming) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
+            let!(:ex_outgoing) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
+
+            context "where the coordinator sells any" do
+              it "returns enterprises which have granted P-OC to the coordinator" do
+                enterprises = permissions.order_cycle_enterprises_for(oc)
+                expect(enterprises).to include hub, producer
+              end
+            end
+
+            context "where the coordinator sells 'own'" do
+              before { coordinator.stub(:sells) { 'own' } }
+              it "returns just the coordinator" do
+                enterprises = permissions.order_cycle_enterprises_for(oc)
+                expect(enterprises).to_not include hub, producer
+              end
+            end
+          end
+
+          context "where the other enterprises are not in the order cycle" do
             it "returns just the coordinator" do
               enterprises = permissions.order_cycle_enterprises_for(oc)
               expect(enterprises).to_not include hub, producer
