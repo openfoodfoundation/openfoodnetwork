@@ -96,7 +96,7 @@ module Spree
         let(:tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
         let(:tax_category)         { create(:tax_category, tax_rates: [tax_rate]) }
 
-        let(:coordinator) { create(:distributor_enterprise) }
+        let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:variant)     { create(:variant) }
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
         let!(:order)      { create(:order, order_cycle: order_cycle, distributor: coordinator) }
