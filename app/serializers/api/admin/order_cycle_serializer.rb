@@ -1,5 +1,6 @@
 class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   attributes :id, :name, :orders_open_at, :orders_close_at, :coordinator_id, :exchanges
+  attributes :viewing_as_coordinator
   attributes :editable_variants_for_incoming_exchanges, :editable_variants_for_outgoing_exchanges
   attributes :visible_variants_for_outgoing_exchanges
 
@@ -11,6 +12,10 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
 
   def orders_close_at
     object.orders_close_at.to_s
+  end
+
+  def viewing_as_coordinator
+    Enterprise.managed_by(options[:current_user]).include? object.coordinator
   end
 
   def exchanges
