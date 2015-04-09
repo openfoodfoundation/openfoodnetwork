@@ -756,23 +756,9 @@ module OpenFoodNetwork
             create(:enterprise_relationship, parent: producer1, child: e2, permissions_list: [:add_to_order_cycle])
           end
 
-          context "where the hub is in the order cycle" do
-            let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2, incoming: false) }
-
-            it "returns variants produced by that producer only" do
-              visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
-              expect(visible).to include v1
-              expect(visible).to_not include v2
-            end
-          end
-
-          context "where the hub is not in the order cycle" do
-            # No outgoing exchange
-
-            it "does not return variants produced by that producer" do
-              visible = permissions.visible_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
-              expect(visible).to_not include v1, v2
-            end
+          it "does not return variants produced by that producer" do
+            visible = permissions.editable_variants_for_incoming_exchanges_between(producer1, e1, order_cycle: oc)
+            expect(visible).to_not include v1, v2
           end
         end
       end
