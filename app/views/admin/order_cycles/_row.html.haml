@@ -3,8 +3,8 @@
 
 %tr{class: klass}
   %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
-  %td= order_cycle_form.text_field :orders_open_at, :class => 'datetimepicker', :value => order_cycle.orders_open_at
-  %td= order_cycle_form.text_field :orders_close_at, :class => 'datetimepicker', :value => order_cycle.orders_close_at
+  %td= order_cycle_form.text_field :orders_open_at, :class => "#{viewing_as_coordinator_of?(order_cycle) ? 'datetimepicker' : ''}", :value => order_cycle.orders_open_at, :disabled => !viewing_as_coordinator_of?(order_cycle)
+  %td= order_cycle_form.text_field :orders_close_at, :class => "#{viewing_as_coordinator_of?(order_cycle) ? 'datetimepicker' : ''}", :value => order_cycle.orders_close_at, :disabled => !viewing_as_coordinator_of?(order_cycle)
 
   - unless order_cycles_simple_index
     %td.suppliers
