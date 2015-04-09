@@ -8,6 +8,7 @@ module Admin
     before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
+    before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
     around_filter :protect_invalid_destroy, only: :destroy
 
 
@@ -125,8 +126,17 @@ module Admin
     def remove_protected_attrs
       params[:order_cycle].delete :coordinator_id
 
-      unless spree_current_user.admin? || Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
+      unless Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
         params[:order_cycle].delete_if{ |k,v| [:name, :orders_open_at, :orders_close_at].include? k.to_sym }
+      end
+    end
+
+    def remove_unauthorized_bulk_attrs
+      params[:order_cycle_set][:collection_attributes].each do |i, hash|
+        order_cycle = OrderCycle.find(hash[:id])
+        unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
+          params[:order_cycle_set][:collection_attributes].delete i
+        end
       end
     end
   end

@@ -57,6 +57,44 @@ module Admin
       end
     end
 
+    describe "bulk_update" do
+      let(:oc) { create(:simple_order_cycle) }
+      let!(:coordinator) { oc.coordinator }
+
+      context "when I manage the coordinator of an order cycle" do
+        before { create(:enterprise_role, user: distributor_owner, enterprise: coordinator) }
+
+        it "updates order cycle properties" do
+          spree_put :bulk_update, order_cycle_set: { collection_attributes: { '0' => {
+            id: oc.id,
+            orders_open_at: Date.today - 21.days,
+            orders_close_at: Date.today + 21.days,
+          } } }
+
+          oc.reload
+          expect(oc.orders_open_at.to_date).to eq Date.today - 21.days
+          expect(oc.orders_close_at.to_date).to eq Date.today + 21.days
+        end
+      end
+
+      context "when I do not manage the coordinator of an order cycle" do
+        # I need to manage a hub in order to access the bulk_update action
+        let!(:another_distributor) { create(:distributor_enterprise, users: [distributor_owner]) }
+
+        it "doesn't update order cycle properties" do
+          spree_put :bulk_update, order_cycle_set: { collection_attributes: { '0' => {
+            id: oc.id,
+            orders_open_at: Date.today - 21.days,
+            orders_close_at: Date.today + 21.days,
+          } } }
+
+          oc.reload
+          expect(oc.orders_open_at.to_date).to_not eq Date.today - 21.days
+          expect(oc.orders_close_at.to_date).to_not eq Date.today + 21.days
+        end
+      end
+    end
+
     describe "destroy" do
       let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
 
