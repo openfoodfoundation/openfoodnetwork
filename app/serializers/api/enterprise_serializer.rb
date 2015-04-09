@@ -36,12 +36,10 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
     :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
-    :icon, :icon_font, :producer_icon_font, :category
+    :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
   has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
   has_many :supplied_taxons, serializer: Api::IdSerializer
-  has_many :distributors, key: :hubs, serializer: Api::IdSerializer
-  has_many :suppliers, key: :producers, serializer: Api::IdSerializer
 
   has_one :address, serializer: Api::AddressSerializer
 
@@ -71,6 +69,14 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def path
     enterprise_shop_path(object)
+  end
+
+  def producers
+    ActiveModel::ArraySerializer.new(object.suppliers.activated, {each_serializer: Api::IdSerializer})
+  end
+
+  def hubs
+    ActiveModel::ArraySerializer.new(object.distributors.activated, {each_serializer: Api::IdSerializer})
   end
 
   # Map svg icons.
