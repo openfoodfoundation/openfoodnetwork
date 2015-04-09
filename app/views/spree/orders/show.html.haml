@@ -1,23 +1,23 @@
-= inject_enterprises 
+= inject_enterprises
 
 .darkswarm
   - content_for :order_cycle_form do
     %strong.avenir
       Order ready on
       - if @order.order_cycle
-        = pickup_time @order.order_cycle 
+        = @order.order_cycle.pickup_time_for(@order.distributor)
       - else
         = @order.distributor.next_collection_at
 
   = render partial: "shopping_shared/details"
 
-  %fieldset#order_summary{"data-hook" => ""}    
+  %fieldset#order_summary{"data-hook" => ""}
     .row
       .columns.large-12.text-center
         %h2
           Order confirmation
           = " #" + @order.number
-      
+
     #order{"data-hook" => ""}
       - if params.has_key? :checkout_complete
         %h1= t(:thank_you_for_your_order)
