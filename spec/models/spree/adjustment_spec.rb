@@ -30,7 +30,8 @@ module Spree
       end
 
       describe "Shipment adjustments" do
-        let!(:order)          { create(:order, shipping_method: shipping_method) }
+        let!(:order)          { create(:order, distributor: hub, shipping_method: shipping_method) }
+        let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let!(:line_item)      { create(:line_item, order: order) }
         let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
         let(:adjustment)      { order.adjustments(:reload).shipping.first }
@@ -77,6 +78,13 @@ module Spree
             Config.shipment_inc_vat = true
             Config.shipping_tax_rate = nil
             order.create_shipment!
+
+            adjustment.included_tax.should == 0
+          end
+
+          it "records 0% tax on shipments when the distributor does not charge sales tax" do
+            order.distributor.update_attributes! charges_sales_tax: false
+            order.reload.create_shipment!
 
             adjustment.included_tax.should == 0
           end
