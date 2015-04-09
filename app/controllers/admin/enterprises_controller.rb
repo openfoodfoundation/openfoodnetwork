@@ -66,6 +66,17 @@ module Admin
       end
     end
 
+    def for_order_cycle
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: ActiveModel::ArraySerializer.new( @collection,
+            each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user
+          ).to_json
+        end
+      end
+    end
+
     protected
 
     def build_resource_with_address
