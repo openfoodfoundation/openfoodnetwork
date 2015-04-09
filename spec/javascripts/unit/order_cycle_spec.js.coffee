@@ -502,10 +502,23 @@ describe 'OrderCycle services', ->
         expect(exchange.showProducts).toEqual(true)
 
     describe "setting exchange variants", ->
-      it "sets all variants to the provided value", ->
-        exchange = {variants: {2: false}}
-        OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
-        expect(exchange.variants).toEqual {1: true, 2: true, 3: true}
+      describe "when I have permissions to edit the variants", ->
+        beforeEach ->
+          OrderCycle.order_cycle["editable_variants_for_outgoing_exchanges"] = { 1: [1, 2, 3] }
+
+        it "sets all variants to the provided value", ->
+          exchange = { enterprise_id: 1, incoming: false, variants: {2: false}}
+          OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
+          expect(exchange.variants).toEqual {1: true, 2: true, 3: true}
+
+      describe "when I don't have permissions to edit the variants", ->
+        beforeEach ->
+          OrderCycle.order_cycle["editable_variants_for_outgoing_exchanges"] = { 1: [] }
+
+        it "does not change variants to the provided value", ->
+          exchange = { enterprise_id: 1, incoming: false, variants: {2: false}}
+          OrderCycle.setExchangeVariants(exchange, [1, 2, 3], true)
+          expect(exchange.variants).toEqual {2: false}
 
     describe 'adding suppliers', ->
       exchange = null

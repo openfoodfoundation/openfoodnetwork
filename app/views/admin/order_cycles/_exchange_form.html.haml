@@ -5,7 +5,7 @@
   - if type == 'supplier'
     {{ enterpriseTotalVariants(enterprises[exchange.enterprise_id]) }}
   - else
-    {{ (outgoingExchangeVariantsFor(exchange.enterprise_id)).length }}
+    {{ (incomingExchangeVariantsFor(exchange.enterprise_id)).length }}
   selected
 - if type == 'distributor'
   %td.collection-details

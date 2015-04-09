@@ -27,14 +27,8 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.variantSuppliedToOrderCycle = (variant) ->
       OrderCycle.variantSuppliedToOrderCycle(variant)
 
-    $scope.editableIncomingExchangeVariantsFor = (enterprise_id) ->
-      $filter('filterExchangeVariants')($scope.suppliedVariants(enterprise_id), $scope.order_cycle.editable_variants_for_incoming_exchanges[enterprise_id])
-
-    $scope.outgoingExchangeVariantsFor = (enterprise_id) ->
+    $scope.incomingExchangeVariantsFor = (enterprise_id) ->
       $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
-
-    $scope.editableOutgoingExchangeVariantsFor = (enterprise_id) ->
-      $filter('filterExchangeVariants')($scope.outgoingExchangeVariantsFor(enterprise_id), $scope.order_cycle.editable_variants_for_outgoing_exchanges[enterprise_id])
 
     $scope.exchangeDirection = (exchange) ->
       OrderCycle.exchangeDirection(exchange)
@@ -114,14 +108,8 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.variantSuppliedToOrderCycle = (variant) ->
       OrderCycle.variantSuppliedToOrderCycle(variant)
 
-    $scope.editableIncomingExchangeVariantsFor = (enterprise_id) ->
-      $filter('filterExchangeVariants')($scope.suppliedVariants(enterprise_id), $scope.order_cycle.editable_variants_for_incoming_exchanges[enterprise_id])
-
-    $scope.outgoingExchangeVariantsFor = (enterprise_id) ->
+    $scope.incomingExchangeVariantsFor = (enterprise_id) ->
       $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
-
-    $scope.editableOutgoingExchangeVariantsFor = (enterprise_id) ->
-      $filter('filterExchangeVariants')($scope.outgoingExchangeVariantsFor(enterprise_id), $scope.order_cycle.editable_variants_for_outgoing_exchanges[enterprise_id])
 
     $scope.exchangeDirection = (exchange) ->
       OrderCycle.exchangeDirection(exchange)

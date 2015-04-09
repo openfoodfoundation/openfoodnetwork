@@ -22,7 +22,9 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
     	exchange.showProducts = !exchange.showProducts
 
     setExchangeVariants: (exchange, variants, selected) ->
-      exchange.variants[variant] = selected for variant in variants
+      direction = if exchange.incoming then "incoming" else "outgoing"
+      editable = @order_cycle["editable_variants_for_#{direction}_exchanges"][exchange.enterprise_id] || []
+      exchange.variants[variant] = selected for variant in variants when variant in editable
 
     addSupplier: (new_supplier_id) ->
     	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
@@ -162,6 +164,7 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
 
     stripNonSubmittableAttributes: (order_cycle) ->
       delete order_cycle.id
+      delete order_cycle.viewing_as_coordinator
       delete order_cycle.editable_variants_for_incoming_exchanges
       delete order_cycle.editable_variants_for_outgoing_exchanges
       delete order_cycle.visible_variants_for_outgoing_exchanges
