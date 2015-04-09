@@ -79,6 +79,10 @@ module OrderCyclesHelper
     Spree::Order.where(order_cycle_id: order_cycle).none?
   end
 
+  def viewing_as_coordinator_of?(order_cycle)
+    Enterprise.managed_by(spree_current_user).include? order_cycle.coordinator
+  end
+
   private
 
   def validated_enterprise_options(enterprises, options={})
