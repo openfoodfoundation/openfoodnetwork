@@ -1,7 +1,7 @@
 Spree::TaxRate.class_eval do
   class << self
     def match_with_sales_tax_registration(order)
-      return [] unless order.distributor.charges_sales_tax
+      return [] if order.distributor && !order.distributor.charges_sales_tax
       match_without_sales_tax_registration(order)
     end
     alias_method_chain :match, :sales_tax_registration

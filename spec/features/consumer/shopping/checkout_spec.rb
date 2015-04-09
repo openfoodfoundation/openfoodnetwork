@@ -9,7 +9,7 @@ feature "As a consumer I want to check out my cart", js: true do
   include UIComponentHelper
 
   let!(:zone) { create(:zone_with_member) }
-  let(:distributor) { create(:distributor_enterprise) }
+  let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.master]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
