@@ -1,7 +1,7 @@
 describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
   let(:enterprise)       { create(:distributor_enterprise) }
   let!(:product)         { create(:simple_product, supplier: enterprise) }
-  let!(:deleted_product) { create(:simple_product, supplier: enterprise, deleted_at: Time.now) }
+  let!(:deleted_product) { create(:simple_product, supplier: enterprise, deleted_at: 24.hours.ago ) }
   let(:serialized_enterprise) { Api::Admin::ForOrderCycle::EnterpriseSerializer.new(enterprise, spree_current_user: enterprise.owner ).to_json }
 
   describe "supplied products" do
