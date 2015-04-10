@@ -45,9 +45,9 @@ feature "Authentication", js: true do
 
         describe "signing up" do
           before do
-            ActionMailer::Base.deliveries.clear
             select_login_tab "Sign up"
           end
+
           scenario "Failing to sign up because password is too short" do
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "short"
@@ -59,10 +59,11 @@ feature "Authentication", js: true do
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
             fill_in "Confirm password", with: "test12345"
-            click_signup_button
-            page.should have_content "Welcome! You have signed up successfully"
+            expect do
+              click_signup_button
+              page.should have_content "Welcome! You have signed up successfully"
+            end.to enqueue_job ConfirmSignupJob
             page.should be_logged_in_as "test@foo.com"
-            ActionMailer::Base.deliveries.last.subject.should =~ /Welcome to/
           end
         end
 
@@ -105,4 +106,3 @@ feature "Authentication", js: true do
     end
   end
 end
-

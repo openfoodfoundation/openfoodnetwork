@@ -26,9 +26,9 @@ feature "shopping with variant overrides defined", js: true do
   let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
 
   before do
-    ActionMailer::Base.deliveries.clear
     outgoing_exchange.variants = [v1, v2, v3, v4]
     outgoing_exchange.enterprise_fees << ef
+    sm.calculator.preferred_amount = 0
     visit shop_path
     click_link hub.name
   end
@@ -109,15 +109,9 @@ feature "shopping with variant overrides defined", js: true do
 
       complete_checkout
 
-      ActionMailer::Base.deliveries.length.should == 2
-      email = ActionMailer::Base.deliveries.last
-
       o = Spree::Order.complete.last
-
       o.line_items.first.price.should == 55.55
       o.total.should == 122.21
-
-      email.body.should include "$122.21"
     end
 
     it "subtracts stock from the override" do
