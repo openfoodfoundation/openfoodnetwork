@@ -22,7 +22,7 @@
             %tab{heading: 'Map',
                 active: "active(\'\')",
                 select: "select(\'\')"}
-              = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer
+              = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer, active_distributors: @active_distributors
               .map-container
                 %map{"ng-controller" => "MapCtrl", "ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
                   %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
