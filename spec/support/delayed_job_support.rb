@@ -1,11 +1,11 @@
 module DelayedJobSupport
-  # Process all pending Delayed jobs, keeping in mind jobs could spawn new 
+  # Process all pending Delayed jobs, keeping in mind jobs could spawn new
   # delayed job (so things might be added to the queue while processing)
   def flush_jobs(options = {})
     options[:ignore_exceptions] ||= false
-    
+
     Delayed::Worker.new.work_off(100)
-    
+
     unless options[:ignore_exceptions]
       Delayed::Job.all.each do |job|
         if job.last_error.present?
@@ -15,13 +15,14 @@ module DelayedJobSupport
     end
   end
 
+
   def clear_jobs
     Delayed::Job.delete_all
   end
 
 
-  # expect { foo }.to enqueue_job clazz: MyJob, field1: 'foo', field2: 'bar'
-  RSpec::Matchers.define :enqueue_job do |options = {}|
+  # expect { foo }.to enqueue_job MyJob, field1: 'foo', field2: 'bar'
+  RSpec::Matchers.define :enqueue_job do |klass, options = {}|
     match do |event_proc|
       last_job_id_before = Delayed::Job.last.id
 
@@ -33,13 +34,13 @@ module DelayedJobSupport
         job = job.payload_object
 
         match = true
-        match &= (job.class == options[:clazz]) if options.key? :clazz
+        match &= (job.class == klass)
 
         options.each_pair do |k, v|
           begin
             match &= (job[k] == v)
           rescue NameError
-            match = false unless k == :clazz
+            match = false
           end
         end
 
