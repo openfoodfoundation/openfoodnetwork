@@ -36,7 +36,14 @@ describe Spree.user_class do
         expect(u1.owned_groups(:reload)).to match_array([g1, g2])
         expect(u2.owned_groups(:reload)).to match_array([g3])
       end
+    end
 
+    it "loads a user's customer representation at a particular enterprise" do
+      u = create(:user)
+      e = create(:enterprise)
+      c = create(:customer, user: u, enterprise: e)
+
+      u.customer_of(e).should == c
     end
   end
 

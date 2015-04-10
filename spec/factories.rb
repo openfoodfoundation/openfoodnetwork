@@ -203,6 +203,13 @@ FactoryGirl.define do
       create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
     end
   end
+
+  factory :customer, :class => Customer do
+    email { Faker::Internet.email }
+    enterprise
+    code 'abc123'
+    user
+  end
 end
 
 

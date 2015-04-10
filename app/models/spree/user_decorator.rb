@@ -4,6 +4,7 @@ Spree.user_class.class_eval do
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
   has_one :cart
+  has_many :customers
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
@@ -11,6 +12,7 @@ Spree.user_class.class_eval do
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
+
 
   def known_users
     if admin?
@@ -30,6 +32,10 @@ Spree.user_class.class_eval do
     end
   end
 
+  def customer_of(enterprise)
+    customers.of(enterprise).first
+  end
+
   def send_signup_confirmation
     Spree::UserMailer.signup_confirmation(self).deliver
   end
@@ -37,6 +43,7 @@ Spree.user_class.class_eval do
   def can_own_more_enterprises?
     owned_enterprises(:reload).size < enterprise_limit
   end
+
 
   private
 
