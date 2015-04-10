@@ -525,18 +525,26 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Admin & Handling (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
-                "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes", "SKU"]
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant",
+                "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Admin & Handling (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
+                "Shipping", "Delivery?",
+                "Ship Street", "Ship Street 2", "Ship City", "Ship Postcode", "Ship State",
+                "Comments", "SKU",
+                "Order Cycle", "Payment Method", "Customer Code", "Tags",
+                "Billing Street 1", "Billing Street 2", "Billing City", "Billing Postcode", "Billing State"
+               ]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
 
-      columns = [ proc { |line_items| line_items.first.order.distributor.name },
+      columns = [
+        proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| line_items.first.order.email },
         proc { |line_items| line_items.first.order.bill_address.phone },
         proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.full_name },
+
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
@@ -547,26 +555,40 @@ Spree::Admin::ReportsController.class_eval do
 
         proc { |line_items| line_items.first.order.shipping_method.andand.name },
         proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
+
         proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.city if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
 
-        proc { |line_items| line_items.first.order.special_instructions } ,
-        proc { |line_items| line_items.first.variant.product.sku } ]
+        proc { |line_items| "" },
+        proc { |line_items| line_items.first.variant.product.sku },
+
+        proc { |line_items| line_items.first.order.order_cycle.andand.name },
+        proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
+        proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).andand.code },
+        proc { |line_items| "" },
+
+        proc { |line_items| line_items.first.order.bill_address.andand.address1 },
+        proc { |line_items| line_items.first.order.bill_address.andand.address2 },
+        proc { |line_items| line_items.first.order.bill_address.andand.city },
+        proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
+        proc { |line_items| line_items.first.order.bill_address.andand.state } ]
 
     rules = [ { group_by: proc { |line_item| line_item.order.distributor },
       sort_by: proc { |distributor| distributor.name } },
       { group_by: proc { |line_item| line_item.order },
       sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
-      summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
+      summary_columns: [
+        proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
+
         proc { |line_items| "" },
         proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
@@ -577,14 +599,27 @@ Spree::Admin::ReportsController.class_eval do
 
         proc { |line_items| "" },
         proc { |line_items| "" },
+
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
 
+        proc { |line_items| line_items.first.order.special_instructions } ,
         proc { |line_items| "" },
-        proc { |line_items| "" } ] },
+
+        proc { |line_items| line_items.first.order.order_cycle.andand.name },
+        proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" }
+      ] },
 
       { group_by: proc { |line_item| line_item.variant.product },
       sort_by: proc { |product| product.name } },
