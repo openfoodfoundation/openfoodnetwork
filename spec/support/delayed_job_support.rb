@@ -24,7 +24,7 @@ module DelayedJobSupport
   # expect { foo }.to enqueue_job MyJob, field1: 'foo', field2: 'bar'
   RSpec::Matchers.define :enqueue_job do |klass, options = {}|
     match do |event_proc|
-      last_job_id_before = Delayed::Job.last.id
+      last_job_id_before = Delayed::Job.last.andand.id || 0
 
       event_proc.call
 
