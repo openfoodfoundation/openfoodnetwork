@@ -93,6 +93,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::DistributionHelper
   config.include ActionView::Helpers::DateHelper
+  config.include OpenFoodNetwork::DelayedJobHelper
 
   # FactoryGirl
   require 'factory_girl_rails'
