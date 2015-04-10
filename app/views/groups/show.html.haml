@@ -1,4 +1,12 @@
-#group-page.row.pad-top
+-# inject all enterprises as "enterprises"
+-# it could be more efficient to inject only the enterprises that are related to the group
+= inject_enterprises
+
+-# inject enterprises in this group
+-# further hubs and producers of these enterprises can't be resoleved within this small subset
+= inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, active_distributors: @active_distributors
+
+#group-page.row.pad-top{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
     %header
       .row
@@ -22,11 +30,10 @@
             %tab{heading: 'Map',
                 active: "active(\'\')",
                 select: "select(\'\')"}
-              = inject_json_ams "enterprises", @group.enterprises, Api::EnterpriseSerializer, active_distributors: @active_distributors
               .map-container
-                %map{"ng-controller" => "MapCtrl", "ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
+                %map{"ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
                   %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
-                    %markers{models: "OfnMap.enterprises", fit: "true",
+                    %markers{models: "mapMarkers", fit: "true",
                     coords: "'self'", icon: "'icon'", click: "'reveal'"}
 
             %tab{heading: 'About us',
@@ -50,7 +57,7 @@
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | visible | searchEnterprises:query | taxons:activeTaxons)",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}
@@ -77,7 +84,7 @@
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns

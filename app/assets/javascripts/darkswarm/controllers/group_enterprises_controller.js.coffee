@@ -1,5 +1,4 @@
-Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Enterprises, Search, FilterSelectorsService) ->
-  $scope.Enterprises = Enterprises
+Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsService) ->
   $scope.totalActive =  FilterSelectorsService.totalActive
   $scope.clearAll =  FilterSelectorsService.clearAll
   $scope.filterText =  FilterSelectorsService.filterText

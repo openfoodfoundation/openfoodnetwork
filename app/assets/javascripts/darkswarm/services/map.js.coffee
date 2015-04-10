@@ -1,11 +1,13 @@
-Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter)->
+Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter) ->
   new class OfnMap
     constructor: ->
-      @enterprises = (@extend(enterprise) for enterprise in visibleFilter(Enterprises.enterprises))
+      @enterprises = @enterprise_markers(Enterprises.enterprises)
 
+    enterprise_markers: (enterprises) ->
+      @extend(enterprise) for enterprise in visibleFilter(enterprises)
 
     # Adding methods to each enterprise
-    extend: (enterprise)->
+    extend: (enterprise) ->
       new class MapMarker
         # We're whitelisting attributes because GMaps tries to crawl
         # our data, and our data is recursive, so it breaks
