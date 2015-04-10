@@ -382,13 +382,12 @@ class Enterprise < ActiveRecord::Base
     enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
 
     # We grant permissions to all pre-existing hubs
+    hub_permissions = [:add_to_order_cycle]
+    hub_permissions << :create_variant_overrides if is_primary_producer
     enterprises.is_hub.each do |enterprise|
       EnterpriseRelationship.create!(parent: self,
                                      child: enterprise,
-                                     permissions_list: [:add_to_order_cycle,
-                                                        :manage_products,
-                                                        :edit_profile,
-                                                        :create_variant_overrides])
+                                     permissions_list: hub_permissions)
     end
 
     # All pre-existing producers grant permission to new hubs
@@ -397,8 +396,6 @@ class Enterprise < ActiveRecord::Base
         EnterpriseRelationship.create!(parent: enterprise,
                                        child: self,
                                        permissions_list: [:add_to_order_cycle,
-                                                          :manage_products,
-                                                          :edit_profile,
                                                           :create_variant_overrides])
       end
     end
