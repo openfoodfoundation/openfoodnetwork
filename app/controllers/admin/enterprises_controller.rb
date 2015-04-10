@@ -68,7 +68,6 @@ module Admin
 
     def for_order_cycle
       respond_to do |format|
-        format.html
         format.json do
           render json: ActiveModel::ArraySerializer.new( @collection,
             each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user

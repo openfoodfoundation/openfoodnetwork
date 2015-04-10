@@ -419,32 +419,33 @@ module Admin
         OrderCycle.stub new: "new OrderCycle"
 
         OpenFoodNetwork::Permissions.stub(:new) { permission_mock }
-        allow(permission_mock).to receive :order_cycle_enterprises_for
+        allow(permission_mock).to receive(:order_cycle_enterprises_for)
+        allow(ActiveModel::ArraySerializer).to receive(:new) { "" }
       end
 
       context "when no order_cycle or coordinator is provided in params" do
-        before { spree_get :for_order_cycle }
+        before { spree_get :for_order_cycle, format: :json }
         it "returns an empty scope" do
           expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(nil)
         end
       end
 
       context "when an order_cycle_id is provided in params" do
-        before { spree_get :for_order_cycle, order_cycle_id: 1 }
+        before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1 }
         it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
           expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
         end
       end
 
       context "when a coordinator is provided in params" do
-        before { spree_get :for_order_cycle, coordinator_id: 1 }
+        before { spree_get :for_order_cycle, format: :json, coordinator_id: 1 }
         it "calls order_cycle_enterprises_for() with a new OrderCycle" do
           expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("new OrderCycle")
         end
       end
 
       context "when both an order cycle and a coordinator are provided in params" do
-        before { spree_get :for_order_cycle, order_cycle_id: 1, coordinator_id: 1 }
+        before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
         it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
           expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
         end
