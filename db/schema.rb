@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150225232938) do
+ActiveRecord::Schema.define(:version => 20150410043302) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -168,6 +168,22 @@ ActiveRecord::Schema.define(:version => 20150225232938) do
   add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
   add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
     t.integer "payment_method_id"
@@ -298,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20150225232938) do
     t.datetime "shop_trial_start_date"
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
+    t.boolean  "charges_sales_tax",        :default => false,  :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
