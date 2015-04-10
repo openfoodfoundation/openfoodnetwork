@@ -49,8 +49,9 @@ describe Spree.user_class do
 
   context "#create" do
     it "should send a signup email" do
-      Spree::UserMailer.should_receive(:signup_confirmation).and_return(double(:deliver => true))
-      create(:user)
+      expect do
+        create(:user)
+      end.to enqueue_job ConfirmSignupJob
     end
   end
 

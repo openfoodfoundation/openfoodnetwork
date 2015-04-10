@@ -29,10 +29,9 @@ describe Enterprise do
         end
 
         it "sends a welcome email" do
-          mail_message = double "Mail::Message"
-          expect(EnterpriseMailer).to receive(:welcome).and_return mail_message
-          mail_message.should_receive :deliver
-          create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+          expect do
+            create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+          end.to enqueue_job WelcomeEnterpriseJob
         end
       end
     end
@@ -65,10 +64,9 @@ describe Enterprise do
           unconfirmed_enterprise.unconfirmed_email = nil
           unconfirmed_enterprise.save!
 
-          mail_message = double "Mail::Message"
-          expect(EnterpriseMailer).to receive(:welcome).and_return mail_message
-          mail_message.should_receive :deliver
-          unconfirmed_enterprise.confirm!
+          expect do
+            unconfirmed_enterprise.confirm!
+          end.to enqueue_job WelcomeEnterpriseJob, enterprise_id: unconfirmed_enterprise.id
         end
       end
 

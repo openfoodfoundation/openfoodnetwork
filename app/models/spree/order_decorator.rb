@@ -216,14 +216,7 @@ Spree::Order.class_eval do
 
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   def deliver_order_confirmation_email
-    begin
-      Spree::OrderMailer.confirm_email_for_customer(self.id).deliver
-      Spree::OrderMailer.confirm_email_for_shop(self.id).deliver
-    rescue Exception => e
-      Bugsnag.notify(e)
-      logger.error("#{e.class.name}: #{e.message}")
-      logger.error(e.backtrace * "\n")
-    end
+    Delayed::Job.enqueue ConfirmOrderJob.new(id)
   end
 
 

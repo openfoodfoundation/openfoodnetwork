@@ -348,7 +348,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    EnterpriseMailer.welcome(self).deliver
+    Delayed::Job.enqueue WelcomeEnterpriseJob.new(self.id)
   end
 
   def strip_url(url)
