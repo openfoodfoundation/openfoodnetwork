@@ -76,9 +76,9 @@ Spree::Variant.class_eval do
 
   def full_name
     return unit_to_display if display_name.blank?
-    return display_name if display_name.scan(/#{unit_to_display}/i).any?
-    return unit_to_display if unit_to_display.scan(/#{display_name}/i).any?
-    display_name + " (" + unit_to_display + ")"
+    return display_name    if display_name.downcase.include? unit_to_display.downcase
+    return unit_to_display if unit_to_display.downcase.include? display_name.downcase
+    "#{display_name} (#{unit_to_display})"
   end
 
   def name_to_display
