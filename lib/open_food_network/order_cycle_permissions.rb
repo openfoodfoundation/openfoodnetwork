@@ -185,15 +185,18 @@ module OpenFoodNetwork
     private
 
     def managed_participating_enterprises
-      managed_enterprises.where(id: @order_cycle.suppliers | @order_cycle.distributors)
+      return @managed_participating_enterprises unless @managed_participating_enterprises.nil?
+      @managed_participating_enterprises = managed_enterprises.where(id: @order_cycle.suppliers | @order_cycle.distributors)
     end
 
     def managed_participating_hubs
-      managed_participating_enterprises.is_hub
+      return @managed_participating_hubs unless @managed_participating_hubs.nil?
+      @managed_participating_hubs = managed_participating_enterprises.is_hub
     end
 
     def managed_participating_producers
-      managed_participating_enterprises.is_primary_producer
+      return @managed_participating_producers unless @managed_participating_producers.nil?
+      @managed_participating_producers = managed_participating_enterprises.is_primary_producer
     end
 
     def order_cycle_exchange_ids_involving_my_enterprises
