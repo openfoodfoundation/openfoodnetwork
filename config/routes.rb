@@ -43,7 +43,7 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_update, on: :collection, as: :bulk_update
       get :clone, on: :member
 
-      post 'notifications', on: :member
+      post 'notify_producers', on: :member
     end
 
     resources :enterprises do

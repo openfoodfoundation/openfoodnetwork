@@ -74,8 +74,7 @@ module Admin
       @order_cycle = OrderCycle.find params[:id]
       Delayed::Job.enqueue OrderCycleNotificationJob.new(@order_cycle)
 
-      flash[:notice] = 'Emails to be sent to producers have been queued for sending.'
-      format.html { redirect_to admin_order_cycles_path }
+      redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
     end
 
 
