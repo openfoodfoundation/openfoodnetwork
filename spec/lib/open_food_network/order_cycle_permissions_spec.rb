@@ -312,7 +312,7 @@ module OpenFoodNetwork
         end
 
         it "returns all exchanges in the order cycle, regardless of hubE permissions" do
-          permissions.order_cycle_exchanges.should include ex_in, ex_out
+          permissions.visible_exchanges.should include ex_in, ex_out
         end
       end
 
@@ -328,7 +328,7 @@ module OpenFoodNetwork
           let!(:ex_out) { create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: false) }
 
           it "returns my hub's outgoing exchange" do
-            permissions.order_cycle_exchanges.should == [ex_out]
+            permissions.visible_exchanges.should == [ex_out]
           end
 
           context "where my hub has been granted P-OC by an incoming producer" do
@@ -337,20 +337,20 @@ module OpenFoodNetwork
             end
 
             it "returns the producer's incoming exchange" do
-              permissions.order_cycle_exchanges.should include ex_in
+              permissions.visible_exchanges.should include ex_in
             end
           end
 
           context "where my hub has not been granted P-OC by an incoming producer" do
             it "returns the producers's incoming exchange, and my own outhoing exchange" do
-              permissions.order_cycle_exchanges.should_not include ex_in
+              permissions.visible_exchanges.should_not include ex_in
             end
           end
         end
 
         context "where my hub isn't in the order cycle" do
           it "does not return the producer's incoming exchanges" do
-            permissions.order_cycle_exchanges.should == []
+            permissions.visible_exchanges.should == []
           end
         end
 
@@ -363,7 +363,7 @@ module OpenFoodNetwork
             before { ex_out.variants << variant }
 
             it "returns incoming exchanges supplying the variants in my outgoing exchange" do
-              permissions.order_cycle_exchanges.should include ex_out
+              permissions.visible_exchanges.should include ex_out
             end
           end
         end
@@ -380,7 +380,7 @@ module OpenFoodNetwork
           let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
 
           it "returns my producer's incoming exchange" do
-            permissions.order_cycle_exchanges.should == [ex_in]
+            permissions.visible_exchanges.should == [ex_in]
           end
 
           context "my producer has granted P-OC to an outgoing hub" do
@@ -389,20 +389,20 @@ module OpenFoodNetwork
             end
 
             it "returns the hub's outgoing exchange" do
-              permissions.order_cycle_exchanges.should include ex_out
+              permissions.visible_exchanges.should include ex_out
             end
           end
 
           context "my producer has not granted P-OC to an outgoing hub" do
             it "does not return the hub's outgoing exchange" do
-              permissions.order_cycle_exchanges.should_not include ex_out
+              permissions.visible_exchanges.should_not include ex_out
             end
           end
         end
 
         context "where my producer doesn't supply the order cycle" do
           it "does not return the hub's outgoing exchanges" do
-            permissions.order_cycle_exchanges.should == []
+            permissions.visible_exchanges.should == []
           end
         end
 
@@ -417,13 +417,13 @@ module OpenFoodNetwork
               let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
 
               it "returns the outgoing exchange" do
-                permissions.order_cycle_exchanges.should include ex_out
+                permissions.visible_exchanges.should include ex_out
               end
             end
 
             context "where my producer doesn't supply to the order cycle" do
               it "does not return the outgoing exchange" do
-                permissions.order_cycle_exchanges.should_not include ex_out
+                permissions.visible_exchanges.should_not include ex_out
               end
             end
           end

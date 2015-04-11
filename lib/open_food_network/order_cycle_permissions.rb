@@ -72,7 +72,7 @@ module OpenFoodNetwork
     end
 
     # Find the exchanges of an order cycle that an admin can manage
-    def order_cycle_exchanges
+    def visible_exchanges
       ids = order_cycle_exchange_ids_involving_my_enterprises |
         order_cycle_exchange_ids_distributing_my_variants |
         order_cycle_exchange_ids_with_distributable_variants
