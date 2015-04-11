@@ -14,12 +14,11 @@ class ProducerMailer < Spree::BaseMailer
     #   subject += " for #{@distribution_date}" if @distribution_date.present?
     # end
 
-    # TODO: what if producer handling orders into multiple order cycles?
-    @orders = Spree::Order.complete.not_state(:canceled).managed_by(@producer.owner)
-    # puts @orders.size
+    @line_items = Spree::LineItem.
+      joins(:order => :order_cycle, :variant => :product).
+      where('order_cycles.id = ?', order_cycle).
+      where('spree_products.supplier_id = ?', producer)
 
-    # Create a single flat list of all line items
-    @line_items = @orders.map(&:line_items).flatten
     # Arrange the items in a hash to group quantities
     @line_items = @line_items.inject({}) do |lis, li|
       lis[li.variant] ||= {line_item: li, quantity: 0}

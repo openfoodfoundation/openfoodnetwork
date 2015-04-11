@@ -5,8 +5,8 @@ describe ProducerMailer do
   let(:s2) { create(:supplier_enterprise, address: create(:address)) }
   let(:d1) { create(:distributor_enterprise, address: create(:address)) }
   let(:d2) { create(:distributor_enterprise, address: create(:address)) }
-  let(:p1) { create(:product, price: 12.34, distributors: [d1], supplier: s1) }
-  let(:p2) { create(:product, price: 23.45, distributors: [d2], supplier: s2) }
+  let(:p1) { create(:product, price: 12.34, supplier: s1) }
+  let(:p2) { create(:product, price: 23.45, supplier: s2) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:order) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
