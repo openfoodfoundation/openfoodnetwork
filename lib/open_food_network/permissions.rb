@@ -81,7 +81,7 @@ module OpenFoodNetwork
     end
 
     def managed_enterprises
-      return @managed_enterprises unless managed_enterprises.nil?
+      return @managed_enterprises unless @managed_enterprises.nil?
       @managed_enterprises = Enterprise.managed_by(@user)
     end
 
