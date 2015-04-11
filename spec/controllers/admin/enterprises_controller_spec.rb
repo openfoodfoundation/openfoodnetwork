@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/order_cycle_permissions'
 
 module Admin
   describe EnterprisesController do
@@ -418,36 +419,36 @@ module Admin
         Enterprise.stub find_by_id: "existing Enterprise"
         OrderCycle.stub new: "new OrderCycle"
 
-        OpenFoodNetwork::Permissions.stub(:new) { permission_mock }
-        allow(permission_mock).to receive(:order_cycle_enterprises_for)
+        allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permission_mock }
+        allow(permission_mock).to receive(:order_cycle_enterprises_for) { [] }
         allow(ActiveModel::ArraySerializer).to receive(:new) { "" }
       end
 
       context "when no order_cycle or coordinator is provided in params" do
         before { spree_get :for_order_cycle, format: :json }
-        it "returns an empty scope" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with(nil)
+        it "initializes permissions with nil" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, nil)
         end
       end
 
       context "when an order_cycle_id is provided in params" do
         before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1 }
-        it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
+        it "initializes permissions with the existing OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
         end
       end
 
       context "when a coordinator is provided in params" do
         before { spree_get :for_order_cycle, format: :json, coordinator_id: 1 }
-        it "calls order_cycle_enterprises_for() with a new OrderCycle" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("new OrderCycle")
+        it "initializes permissions with a new OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
         end
       end
 
       context "when both an order cycle and a coordinator are provided in params" do
         before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
-        it "calls order_cycle_enterprises_for() with the existing OrderCycle" do
-          expect(permission_mock).to have_received(:order_cycle_enterprises_for).with("existing OrderCycle")
+        it "initializes permissions with the existing OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
         end
       end
     end

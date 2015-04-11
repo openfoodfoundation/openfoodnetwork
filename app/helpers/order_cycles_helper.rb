@@ -4,7 +4,7 @@ module OrderCyclesHelper
   end
 
   def permitted_enterprises_for(order_cycle)
-    OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises_for(order_cycle)
+    OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).order_cycle_enterprises_for
   end
 
   def permitted_producer_enterprises_for(order_cycle)

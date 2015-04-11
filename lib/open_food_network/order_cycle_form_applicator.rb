@@ -102,8 +102,8 @@ module OpenFoodNetwork
 
     def permitted_enterprises
       return @permitted_enterprises unless @permitted_enterprises.nil?
-      @permitted_enterprises = OpenFoodNetwork::Permissions.new(@spree_current_user).
-      order_cycle_enterprises_for(@order_cycle)
+      @permitted_enterprises = OpenFoodNetwork::OrderCyclePermissions.
+        new(@spree_current_user, @order_cycle).order_cycle_enterprises_for
     end
 
     def manages_coordinator?
@@ -112,15 +112,13 @@ module OpenFoodNetwork
     end
 
     def editable_variant_ids_for_incoming_exchange_between(sender, receiver)
-      OpenFoodNetwork::Permissions.new(@spree_current_user).
-        editable_variants_for_incoming_exchanges_between(sender, receiver, order_cycle: @order_cycle).
-        pluck(:id)
+      OpenFoodNetwork::OrderCyclePermissions.new(@spree_current_user, @order_cycle).
+        editable_variants_for_incoming_exchanges_from(sender).pluck(:id)
     end
 
     def editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
-      OpenFoodNetwork::Permissions.new(@spree_current_user).
-      editable_variants_for_outgoing_exchanges_between(sender, receiver, order_cycle: @order_cycle).
-      pluck(:id)
+      OpenFoodNetwork::OrderCyclePermissions.new(@spree_current_user, @order_cycle).
+      editable_variants_for_outgoing_exchanges_to(receiver).pluck(:id)
     end
 
     def find_incoming_exchange(attrs)
