@@ -39,10 +39,10 @@ module OpenFoodNetwork
         hubs_permitting = granting(:add_to_order_cycle, to: managed_producers_in(@order_cycle), scope: @order_cycle.distributors).pluck(:id)
 
         # Any producers in this OC that have been granted P-OC by hubs I manage in this OC
-        producers_permitted = granted(:add_to_order_cycle, by: managed_hubs_in(@order_cycle), scope: @order_cycle.suppliers).pluck(:id)
+        producers_permitted = granted(:add_to_order_cycle, by: managed_participating_hubs, scope: @order_cycle.suppliers).pluck(:id)
 
         # Any producers in this OC that have granted P-OC to hubs I manage in this OC
-        producers_permitting = granting(:add_to_order_cycle, to: managed_hubs_in(@order_cycle), scope: @order_cycle.suppliers).pluck(:id)
+        producers_permitting = granting(:add_to_order_cycle, to: managed_participating_hubs, scope: @order_cycle.suppliers).pluck(:id)
 
         managed_active = []
         hubs_active = []
@@ -60,7 +60,7 @@ module OpenFoodNetwork
 
           # TODO: Remove this when all P-OC are sorted out
           # Any producers of variants that hubs I manage are currently distributing in this OC
-          variants = Spree::Variant.joins(:exchanges).where("exchanges.receiver_id IN (?) AND exchanges.order_cycle_id = (?) AND exchanges.incoming = 'f'", managed_hubs_in(@order_cycle), @order_cycle).pluck(:id).uniq
+          variants = Spree::Variant.joins(:exchanges).where("exchanges.receiver_id IN (?) AND exchanges.order_cycle_id = (?) AND exchanges.incoming = 'f'", managed_participating_hubs, @order_cycle).pluck(:id).uniq
           products = Spree::Product.joins(:variants_including_master).where("spree_variants.id IN (?)", variants).pluck(:id).uniq
           producers_active = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", products).pluck(:id).uniq
         end
@@ -88,7 +88,7 @@ module OpenFoodNetwork
         Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
       else
         # All variants of the producer if it has granted P-OC to any of my managed hubs that are in this order cycle
-        permitted = EnterpriseRelationship.permitting(managed_hubs_in(@order_cycle)).
+        permitted = EnterpriseRelationship.permitting(managed_participating_hubs).
         permitted_by(producer).with_permission(:add_to_order_cycle).present?
         if permitted
           Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
@@ -188,7 +188,7 @@ module OpenFoodNetwork
       managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors)
     end
 
-    def managed_hubs_in(order_cycle)
+    def managed_participating_hubs
       managed_participating_enterprises.is_hub
     end
 
@@ -203,7 +203,7 @@ module OpenFoodNetwork
 
     def order_cycle_exchange_ids_with_distributable_variants
       # Find my managed hubs in this order cycle
-      hubs = managed_hubs_in(@order_cycle)
+      hubs = managed_participating_hubs
       # Any incoming exchange where the producer has granted P-OC to one or more of those hubs
       producers = granting(:add_to_order_cycle, to: hubs, scope: Enterprise.is_primary_producer).pluck :id
       permitted_exchanges = @order_cycle.exchanges.incoming.where(sender_id: producers).pluck :id
