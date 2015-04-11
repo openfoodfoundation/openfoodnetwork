@@ -120,26 +120,27 @@ module OpenFoodNetwork
           applicator.send(:untouched_exchanges).should == []
         end
 
-        it "does not destroy exchanges involving enterprises it does not have permission to touch" do
-          applicator = OrderCycleFormApplicator.new(nil, user)
-          applicator.stub(:user_manages_coordinator?) { true }
-          exchanges = double(:exchanges)
-          permitted_exchanges = [double(:exchange), double(:exchange)]
+        context "as a manager of the coordinator" do
+          let(:applicator) { OrderCycleFormApplicator.new(nil, user) }
+          before { applicator.stub(:manages_coordinator?) { true } }
 
-          applicator.should_receive(:with_permission).with(exchanges) { permitted_exchanges }
-          applicator.stub(:untouched_exchanges) { exchanges }
-          permitted_exchanges.each { |ex| ex.should_receive(:destroy) }
+          it "destroys exchanges" do
+            exchanges = [double(:exchange), double(:exchange)]
+            expect(applicator).to receive(:untouched_exchanges) { exchanges }
+            exchanges.each { |ex| expect(ex).to receive(:destroy) }
 
-          applicator.send(:destroy_untouched_exchanges)
+            applicator.send(:destroy_untouched_exchanges)
+          end
         end
 
-        it "does not destroy any exchanges when it is not the coordinator" do
-          applicator = OrderCycleFormApplicator.new(nil, user)
-          applicator.stub(:user_manages_coordinator?) { false }
+        context "as a non-manager of the coordinator" do
+          let(:applicator) { OrderCycleFormApplicator.new(nil, user) }
+          before { applicator.stub(:manages_coordinator?) { false } }
 
-          expect(applicator).to_not receive(:with_permission)
-
-          applicator.send(:destroy_untouched_exchanges)
+          it "does not destroy any exchanges" do
+            expect(applicator).to_not receive(:with_permission)
+            applicator.send(:destroy_untouched_exchanges)
+          end
         end
       end
 
@@ -255,15 +256,6 @@ module OpenFoodNetwork
             applicator.send(:permission_for, ex).should be_false
           end
         end
-
-        describe "filtering many exchanges" do
-          it "returns exchanges involving enterprises we have permission to touch" do
-            ex1, ex2 = double(:exchange), double(:exchange)
-            applicator = OrderCycleFormApplicator.new(nil, user)
-            applicator.stub(:permission_for).and_return(true, false)
-            applicator.send(:with_permission, [ex1, ex2]).should == [ex1]
-          end
-        end
       end
     end
 
@@ -285,55 +277,119 @@ module OpenFoodNetwork
         applicator.send(:exchange_exists?, 999999, 888888, exchange.incoming).should be_false
       end
 
-      it "adds exchanges" do
-        sender = FactoryGirl.create(:enterprise)
-        receiver = FactoryGirl.create(:enterprise)
-        oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user)
-        applicator.stub(:permitted_enterprises) { [sender, receiver] }
-        incoming = true
-        variant1 = FactoryGirl.create(:variant)
-        variant2 = FactoryGirl.create(:variant)
-        enterprise_fee1 = FactoryGirl.create(:enterprise_fee)
-        enterprise_fee2 = FactoryGirl.create(:enterprise_fee)
+      describe "adding exchanges" do
+        let!(:sender) { create(:enterprise) }
+        let!(:receiver) { create(:enterprise) }
+        let!(:oc) { create(:simple_order_cycle) }
+        let!(:applicator) { OrderCycleFormApplicator.new(oc, user) }
+        let!(:incoming) { true }
+        let!(:variant1) { create(:variant) }
+        let!(:variant2) { create(:variant) }
+        let!(:enterprise_fee1) { create(:enterprise_fee) }
+        let!(:enterprise_fee2) { create(:enterprise_fee) }
 
-        applicator.send(:touched_exchanges=, [])
-        applicator.send(:add_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant2.id], :enterprise_fee_ids => [enterprise_fee1.id, enterprise_fee2.id]})
+        context "as a manager of the coorindator" do
+          before do
+            allow(applicator).to receive(:manages_coordinator?) { true }
+            applicator.send(:touched_exchanges=, [])
+            applicator.send(:add_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant2.id], :enterprise_fee_ids => [enterprise_fee1.id, enterprise_fee2.id]})
+          end
 
-        exchange = Exchange.last
-        exchange.sender.should == sender
-        exchange.receiver.should == receiver
-        exchange.incoming.should == incoming
-        exchange.variants.sort.should == [variant1, variant2].sort
-        exchange.enterprise_fees.sort.should == [enterprise_fee1, enterprise_fee2].sort
+          it "adds new exchanges" do
+            exchange = Exchange.last
+            expect(exchange.sender).to eq sender
+            expect(exchange.receiver).to eq receiver
+            expect(exchange.incoming).to eq incoming
+            expect(exchange.variants.sort).to eq [variant1, variant2].sort
+            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee1, enterprise_fee2].sort
 
-        applicator.send(:touched_exchanges).should == [exchange]
+            applicator.send(:touched_exchanges).should == [exchange]
+          end
+        end
+
+        context "as a user which does not manage the coorindator" do
+          before do
+            allow(applicator).to receive(:manages_coordinator?) { false }
+            applicator.send(:add_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant2.id], :enterprise_fee_ids => [enterprise_fee1.id, enterprise_fee2.id]})
+          end
+
+          it "does not add new exchanges" do
+            expect(Exchange.last).to be_nil
+          end
+        end
       end
 
-      it "updates exchanges" do
-        sender = FactoryGirl.create(:enterprise)
-        receiver = FactoryGirl.create(:enterprise)
-        oc = FactoryGirl.create(:simple_order_cycle)
-        applicator = OrderCycleFormApplicator.new(oc, user)
-        applicator.stub(:permitted_enterprises) { [sender, receiver] }
+      describe "updating exchanges" do
+        let!(:sender) { create(:enterprise) }
+        let!(:receiver) { create(:enterprise) }
+        let!(:oc) { create(:simple_order_cycle) }
+        let!(:applicator) { OrderCycleFormApplicator.new(oc, user) }
+        let!(:incoming) { true }
+        let!(:variant1) { create(:variant) }
+        let!(:variant2) { create(:variant) }
+        let!(:variant3) { create(:variant) }
+        let!(:enterprise_fee1) { create(:enterprise_fee) }
+        let!(:enterprise_fee2) { create(:enterprise_fee) }
+        let!(:enterprise_fee3) { create(:enterprise_fee) }
 
-        incoming = true
-        variant1 = FactoryGirl.create(:variant)
-        variant2 = FactoryGirl.create(:variant)
-        variant3 = FactoryGirl.create(:variant)
-        enterprise_fee1 = FactoryGirl.create(:enterprise_fee)
-        enterprise_fee2 = FactoryGirl.create(:enterprise_fee)
-        enterprise_fee3 = FactoryGirl.create(:enterprise_fee)
+        let!(:exchange) { create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming, variant_ids: [variant1.id, variant2.id], enterprise_fee_ids: [enterprise_fee1.id, enterprise_fee2.id]) }
 
-        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming, variant_ids: [variant1.id, variant2.id], enterprise_fee_ids: [enterprise_fee1.id, enterprise_fee2.id])
+        context "as a manager of the coorindator" do
+          before do
+            allow(applicator).to receive(:manages_coordinator?) { true }
+            allow(applicator).to receive(:manager_for) { false }
+            allow(applicator).to receive(:permission_for) { true }
+            applicator.send(:touched_exchanges=, [])
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+          end
 
-        applicator.send(:touched_exchanges=, [])
-        applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id]})
+          it "updates the variants, enterprise fees and pickup information of the exchange" do
+            exchange.reload
+            expect(exchange.variants.sort).to eq [variant1, variant3].sort
+            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee2, enterprise_fee3]
+            expect(exchange.pickup_time).to eq 'New Pickup Time'
+            expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
+            expect(applicator.send(:touched_exchanges)).to eq [exchange]
+          end
+        end
 
-        exchange.reload
-        exchange.variants.sort.should == [variant1, variant3].sort
-        exchange.enterprise_fees.sort.should == [enterprise_fee2, enterprise_fee3]
-        applicator.send(:touched_exchanges).should == [exchange]
+        context "as a manager of the participating enterprise" do
+          before do
+            allow(applicator).to receive(:manages_coordinator?) { false }
+            allow(applicator).to receive(:manager_for) { true }
+            allow(applicator).to receive(:permission_for) { true }
+            applicator.send(:touched_exchanges=, [])
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+          end
+
+          it "updates the variants, enterprise fees and pickup information of the exchange" do
+            exchange.reload
+            expect(exchange.variants.sort).to eq [variant1, variant3].sort
+            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee2, enterprise_fee3]
+            expect(exchange.pickup_time).to eq 'New Pickup Time'
+            expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
+            expect(applicator.send(:touched_exchanges)).to eq [exchange]
+          end
+        end
+
+        context "where the participating enterprise is permitted for the user" do
+          before do
+            allow(applicator).to receive(:manages_coordinator?) { false }
+            allow(applicator).to receive(:manager_for) { false }
+            allow(applicator).to receive(:permission_for) { true }
+            applicator.send(:touched_exchanges=, [])
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+          end
+
+          it "updates the variants in the exchange, but not the fees or pickup information" do
+            exchange.reload
+            expect(exchange.variants.sort).to eq [variant1, variant3].sort
+            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee1, enterprise_fee2]
+            expect(exchange.pickup_time).to_not eq 'New Pickup Time'
+            expect(exchange.pickup_instructions).to_not eq 'New Pickup Instructions'
+            expect(applicator.send(:touched_exchanges)).to eq [exchange]
+          end
+        end
       end
 
       it "does not add exchanges it is not permitted to touch" do

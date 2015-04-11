@@ -60,7 +60,7 @@ module OpenFoodNetwork
       attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming)
       exchange = @order_cycle.exchanges.build attrs
 
-      if permission_for exchange
+      if manages_coordinator?
         exchange.save!
         @touched_exchanges << exchange
       end
@@ -69,6 +69,12 @@ module OpenFoodNetwork
     def update_exchange(sender_id, receiver_id, incoming, attrs={})
       exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
 
+      unless manages_coordinator? || manager_for(exchange)
+        attrs.delete :enterprise_fee_ids
+        attrs.delete :pickup_time
+        attrs.delete :pickup_instructions
+      end
+
       if permission_for exchange
         exchange.update_attributes!(attrs)
         @touched_exchanges << exchange
@@ -76,8 +82,8 @@ module OpenFoodNetwork
     end
 
     def destroy_untouched_exchanges
-      if user_manages_coordinator?
-        with_permission(untouched_exchanges).each(&:destroy)
+      if manages_coordinator?
+        untouched_exchanges.each(&:destroy)
       end
     end
 
@@ -86,8 +92,8 @@ module OpenFoodNetwork
       @order_cycle.exchanges.reject { |ex| touched_exchange_ids.include? ex.id }
     end
 
-    def with_permission(exchanges)
-      exchanges.select { |ex| permission_for(ex) }
+    def manager_for(exchange)
+      Enterprise.managed_by(@spree_current_user).include? exchange.participant
     end
 
     def permission_for(exchange)
@@ -100,9 +106,9 @@ module OpenFoodNetwork
       order_cycle_enterprises_for(@order_cycle)
     end
 
-    def user_manages_coordinator?
-      return @user_manages_coordinator unless @user_manages_coordinator.nil?
-      @user_manages_coordinator = Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
+    def manages_coordinator?
+      return @manages_coordinator unless @manages_coordinator.nil?
+      @manages_coordinator = Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
     end
 
     def editable_variant_ids_for_incoming_exchange_between(sender, receiver)
