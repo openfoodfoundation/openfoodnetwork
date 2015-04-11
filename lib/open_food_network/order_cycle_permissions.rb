@@ -83,7 +83,8 @@ module OpenFoodNetwork
     # Find the variants that a user can POTENTIALLY see within incoming exchanges
     def visible_variants_for_incoming_exchanges_from(producer)
       return Spree::Variant.where("1=0") unless @order_cycle
-      if managed_enterprises.pluck(:id).include?(producer.id) || managed_enterprises.pluck(:id).include?(@coordinator.id)
+
+      if user_manages_coordinator_or(producer)
         # All variants belonging to the producer
         Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
       else
@@ -101,7 +102,8 @@ module OpenFoodNetwork
     # Find the variants that a user can edit within incoming exchanges
     def editable_variants_for_incoming_exchanges_from(producer)
       return Spree::Variant.where("1=0") unless @order_cycle
-      if managed_enterprises.pluck(:id).include?(producer.id) || managed_enterprises.pluck(:id).include?(@coordinator.id)
+
+      if user_manages_coordinator_or(producer)
         # All variants belonging to the producer
         Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
       else
@@ -114,7 +116,8 @@ module OpenFoodNetwork
     # as this requires first that the variant is included in an incoming exchange
     def visible_variants_for_outgoing_exchanges_to(hub)
       return Spree::Variant.where("1=0") unless @order_cycle
-      if managed_enterprises.pluck(:id).include?(hub.id) || managed_enterprises.pluck(:id).include?(@coordinator.id)
+
+      if user_manages_coordinator_or(hub)
         # Any variants produced by the coordinator, for outgoing exchanges with itself
         coordinator_variants = []
         if hub == @coordinator
@@ -150,7 +153,8 @@ module OpenFoodNetwork
     # Find the variants that a user is permitted edit within outgoing exchanges
     def editable_variants_for_outgoing_exchanges_to(hub)
       return Spree::Variant.where("1=0") unless @order_cycle
-      if managed_enterprises.pluck(:id).include?(hub.id) || managed_enterprises.pluck(:id).include?(@coordinator.id)
+
+      if user_manages_coordinator_or(hub)
         # Any variants produced by the coordinator, for outgoing exchanges with itself
         coordinator_variants = []
         if hub == @coordinator
@@ -183,6 +187,10 @@ module OpenFoodNetwork
 
 
     private
+
+    def user_manages_coordinator_or(enterprise)
+      managed_enterprises.pluck(:id).include?(@coordinator.id) || managed_enterprises.pluck(:id).include?(enterprise.id)
+    end
 
     def managed_participating_enterprises
       return @managed_participating_enterprises unless @managed_participating_enterprises.nil?
