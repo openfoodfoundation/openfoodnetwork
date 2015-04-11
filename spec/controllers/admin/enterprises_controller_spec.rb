@@ -420,7 +420,7 @@ module Admin
         OrderCycle.stub new: "new OrderCycle"
 
         allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permission_mock }
-        allow(permission_mock).to receive(:order_cycle_enterprises_for) { [] }
+        allow(permission_mock).to receive(:visible_enterprises) { [] }
         allow(ActiveModel::ArraySerializer).to receive(:new) { "" }
       end
 

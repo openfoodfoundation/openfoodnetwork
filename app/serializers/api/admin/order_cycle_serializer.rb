@@ -28,7 +28,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     # work out which variants should be editable within incoming exchanges from that enterprise
     editable = {}
     permissions = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object)
-    enterprises = permissions.order_cycle_enterprises_for
+    enterprises = permissions.visible_enterprises
     enterprises.each do |enterprise|
       variants = permissions.editable_variants_for_incoming_exchanges_from(enterprise).pluck(:id)
       editable[enterprise.id] = variants if variants.any?
@@ -41,7 +41,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     # work out which variants should be editable within incoming exchanges from that enterprise
     editable = {}
     permissions = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object)
-    enterprises = permissions.order_cycle_enterprises_for
+    enterprises = permissions.visible_enterprises
     enterprises.each do |enterprise|
       variants = permissions.editable_variants_for_outgoing_exchanges_to(enterprise).pluck(:id)
       editable[enterprise.id] = variants if variants.any?
@@ -54,7 +54,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     # work out which variants should be visible within outgoing exchanges from that enterprise
     visible = {}
     permissions = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object)
-    enterprises = permissions.order_cycle_enterprises_for
+    enterprises = permissions.visible_enterprises
     enterprises.each do |enterprise|
       variants = permissions.visible_variants_for_outgoing_exchanges_to(enterprise).pluck(:id)
       visible[enterprise.id] = variants if variants.any?
