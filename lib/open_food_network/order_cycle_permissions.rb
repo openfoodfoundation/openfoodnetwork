@@ -30,7 +30,7 @@ module OpenFoodNetwork
         Enterprise.where(id: coordinator_permitted | all_active)
       else
         # Any enterprises that I manage directly, which have granted P-OC to the coordinator
-        managed_permitted = granting(:add_to_order_cycle, to: [@coordinator], scope: managed_enterprises_in(@order_cycle) ).pluck(:id)
+        managed_permitted = granting(:add_to_order_cycle, to: [@coordinator], scope: managed_participating_enterprises ).pluck(:id)
 
         # Any hubs in this OC that have been granted P-OC by producers I manage in this OC
         hubs_permitted = granted(:add_to_order_cycle, by: managed_producers_in(@order_cycle), scope: @order_cycle.distributors).pluck(:id)
@@ -50,7 +50,7 @@ module OpenFoodNetwork
         if @order_cycle
           # TODO: Remove this when all P-OC are sorted out
           # Any enterprises that I manage that are already in the order_cycle
-          managed_active = managed_enterprises_in(@order_cycle).pluck(:id)
+          managed_active = managed_participating_enterprises.pluck(:id)
 
           # TODO: Remove this when all P-OC are sorted out
           # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
@@ -184,16 +184,16 @@ module OpenFoodNetwork
 
     private
 
-    def managed_enterprises_in(order_cycle)
+    def managed_participating_enterprises
       managed_enterprises.where(id: order_cycle.suppliers | order_cycle.distributors)
     end
 
     def managed_hubs_in(order_cycle)
-      managed_enterprises_in(order_cycle).is_hub
+      managed_participating_enterprises.is_hub
     end
 
     def managed_producers_in(order_cycle)
-      managed_enterprises_in(order_cycle).is_primary_producer
+      managed_participating_enterprises.is_primary_producer
     end
 
     def order_cycle_exchange_ids_involving_my_enterprises
