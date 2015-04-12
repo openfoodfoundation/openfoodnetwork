@@ -2,8 +2,10 @@ namespace :openfoodnetwork do
   namespace :data do
     desc "Adding relationships based on recent order cycles"
     task :create_order_cycle_relationships => :environment do
+      input = request_months
+
       # For each order cycle which was modified within the past 3 months
-      OrderCycle.where('updated_at > ?', Date.today - 3.months).each do |order_cycle|
+      OrderCycle.where('updated_at > ?', Date.today - input.months).each do |order_cycle|
         # Cycle through the incoming exchanges
         order_cycle.exchanges.incoming.each do |exchange|
           unless exchange.sender == exchange.receiver
@@ -57,6 +59,32 @@ namespace :openfoodnetwork do
           end
         end
       end
+    end
+
+    def request_months
+      # Ask how many months back we want to search for
+      puts "This task will search order cycle edited within (n) months of today's date.\nPlease enter a value for (n), or hit ENTER to use the default of three (3) months."
+      input = check_default(STDIN.gets.chomp)
+
+      while !is_integer?(input)
+        puts "'#{input}' is not an integer. Please enter an integer."
+        input = check_default(STDIN.gets.chomp)
+      end
+
+      Integer(input)
+    end
+
+    def check_default(input)
+      if input.blank?
+        puts "Using default value of three (3) months."
+        3
+      else
+        input
+      end
+    end
+
+    def is_integer?(value)
+      return true if Integer(value) rescue false
     end
   end
 end
