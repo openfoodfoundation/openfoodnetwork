@@ -1,11 +1,10 @@
 angular.module('admin.order_cycles', ['ngResource'])
-  .controller('AdminCreateOrderCycleCtrl', ['$scope', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
-    $scope.enterprises = Enterprise.index()
+  .controller('AdminCreateOrderCycleCtrl', ['$scope', '$filter', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
+    $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplied_products = Enterprise.supplied_products
-    $scope.enterprise_fees = EnterpriseFee.index()
+    $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
 
-    $scope.order_cycle = OrderCycle.order_cycle
-    $scope.order_cycle.coordinator_id = ocInstance.coordinator_id
+    $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded
@@ -28,14 +27,14 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.variantSuppliedToOrderCycle = (variant) ->
       OrderCycle.variantSuppliedToOrderCycle(variant)
 
-    $scope.incomingExchangesVariants = ->
-      OrderCycle.incomingExchangesVariants()
+    $scope.incomingExchangeVariantsFor = (enterprise_id) ->
+      $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
 
     $scope.exchangeDirection = (exchange) ->
       OrderCycle.exchangeDirection(exchange)
 
-    $scope.participatingEnterprises = ->
-      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
+    $scope.enterprisesWithFees = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()
@@ -80,12 +79,12 @@ angular.module('admin.order_cycles', ['ngResource'])
       OrderCycle.create()
   ])
 
-  .controller('AdminEditOrderCycleCtrl', ['$scope', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $location, OrderCycle, Enterprise, EnterpriseFee) ->
-    $scope.enterprises = Enterprise.index()
-    $scope.supplied_products = Enterprise.supplied_products
-    $scope.enterprise_fees = EnterpriseFee.index()
-
+  .controller('AdminEditOrderCycleCtrl', ['$scope', '$filter', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
+    $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
+    $scope.supplied_products = Enterprise.supplied_products
+    $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
+
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
 
     $scope.loaded = ->
@@ -109,14 +108,14 @@ angular.module('admin.order_cycles', ['ngResource'])
     $scope.variantSuppliedToOrderCycle = (variant) ->
       OrderCycle.variantSuppliedToOrderCycle(variant)
 
-    $scope.incomingExchangesVariants = ->
-      OrderCycle.incomingExchangesVariants()
+    $scope.incomingExchangeVariantsFor = (enterprise_id) ->
+      $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
 
     $scope.exchangeDirection = (exchange) ->
       OrderCycle.exchangeDirection(exchange)
 
-    $scope.participatingEnterprises = ->
-      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds()
+    $scope.enterprisesWithFees = ->
+      $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
     $scope.toggleProducts = ($event, exchange) ->
       $event.preventDefault()

@@ -474,11 +474,12 @@ feature %q{
     end
 
     scenario "managing producer properties", js: true do
+      create(:property, name: "Certified Organic")
       click_link 'Enterprises'
       within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
 
-      # -- Create / update
-      fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Certified Organic"
+      # -- Update only
+      select2_select "Certified Organic", from: 'enterprise_producer_properties_attributes_0_property_name'
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
       click_button 'Update'
       page.should have_selector '#listing_enterprises a', text: supplier1.name

@@ -109,31 +109,31 @@ feature %q{
   end
   
   describe "Sales tax report" do
-    let(:user1) do
-      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
-    end
-    let(:user2) do
-      create_enterprise_user(enterprises: [create(:distributor_enterprise)])
-    end
-    let(:tax_category1) { create(:tax_category) }
-    let(:tax_category2) { create(:tax_category) }
-    let!(:tax_rate1) { create(:tax_rate, amount: 0.0, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category1) }
-    let!(:tax_rate2) { create(:tax_rate, amount: 0.2, calculator: Spree::Calculator::DefaultTax.new, tax_category: tax_category2) }
-
-    let(:product1) { create(:product, price: 12.54,  tax_category: tax_category1) }
-    let(:product2) { create(:product, price: 500.15, tax_category: tax_category2) }
-
+    let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:user1) { create_enterprise_user enterprises: [distributor1] }
+    let(:user2) { create_enterprise_user enterprises: [distributor2] }
     let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
-    let(:order1) { create(:order, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
+
+    let!(:zone) { create(:zone_with_member) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
     let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
-    let!(:adj_li2_tax) { create(:adjustment, adjustable: line_item2, source: line_item2, originator: tax_rate2, label: "RandomTax", amount: 123.00) }
 
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.2
+
+      3.times { order1.next }
+      order1.reload.update_distribution_charge!
+
       order1.finalize!
 
       login_to_admin_as user1
@@ -154,14 +154,17 @@ feature %q{
       page.should have_content "#{order1.number}"
 
       # And the totals and sales tax should be correct
-      page.should have_content "1512.99" # items total
-      page.should have_content "1500.45" # taxable items total
-      page.should have_content "123.0" # sales tax (from adj_li2_tax, not calculated on the fly)
-      page.should_not have_content "250.08" # the number that would have been calculated on the fly
+      page.should     have_content "1512.99" # items total
+      page.should     have_content "1500.45" # taxable items total
+      page.should     have_content "250.08" # sales tax
+      page.should     have_content "20.0" # enterprise fee tax
 
       # And the shipping cost and tax should be correct
       page.should have_content "100.55" # shipping cost
-      page.should have_content "16.76" # shipping tax  # TODO: do not calculate on the fly
+      page.should have_content "16.76" # shipping tax
+
+      # And the total tax should be correct
+      page.should have_content "286.84" # total tax
     end
   end
 

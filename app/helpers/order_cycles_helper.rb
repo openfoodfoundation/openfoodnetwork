@@ -3,36 +3,32 @@ module OrderCyclesHelper
     @current_order_cycle ||= current_order(false).andand.order_cycle
   end
 
-  def order_cycle_permitted_in(enterprises)
-    enterprises.merge(order_cycle_permitted_enterprises)
+  def permitted_enterprises_for(order_cycle)
+    OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
   end
 
-  def order_cycle_permitted_enterprises
-    OpenFoodNetwork::Permissions.new(spree_current_user).order_cycle_enterprises
+  def permitted_producer_enterprises_for(order_cycle)
+    permitted_enterprises_for(order_cycle).is_primary_producer.by_name
   end
 
-  def order_cycle_producer_enterprises
-    order_cycle_permitted_enterprises.is_primary_producer.by_name
+  def permitted_producer_enterprise_options_for(order_cycle)
+    validated_enterprise_options permitted_producer_enterprises_for(order_cycle), confirmed: true
   end
 
-  def order_cycle_producer_enterprise_options
-    validated_enterprise_options order_cycle_producer_enterprises, confirmed: true
+  def permitted_coordinating_enterprises_for(order_cycle)
+    Enterprise.managed_by(spree_current_user).is_distributor.by_name
   end
 
-  def order_cycle_coordinating_enterprises
-    order_cycle_permitted_enterprises.is_distributor.by_name
+  def permitted_coordinating_enterprise_options_for(order_cycle)
+    validated_enterprise_options permitted_coordinating_enterprises_for(order_cycle), confirmed: true
   end
 
-  def order_cycle_coordinating_enterprise_options
-    validated_enterprise_options order_cycle_coordinating_enterprises, confirmed: true
+  def permitted_hub_enterprises_for(order_cycle)
+    permitted_enterprises_for(order_cycle).is_hub.by_name
   end
 
-  def order_cycle_hub_enterprises
-    order_cycle_permitted_enterprises.is_hub.by_name
-  end
-
-  def order_cycle_hub_enterprise_options
-    validated_enterprise_options order_cycle_hub_enterprises, confirmed: true, shipping_and_payment_methods: true
+  def permitted_hub_enterprise_options_for(order_cycle)
+    validated_enterprise_options permitted_hub_enterprises_for(order_cycle), confirmed: true, shipping_and_payment_methods: true
   end
 
   def order_cycle_status_class(order_cycle)
@@ -77,6 +73,14 @@ module OrderCyclesHelper
 
   def pickup_time(order_cycle = current_order_cycle)
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
+  end
+
+  def can_delete?(order_cycle)
+    Spree::Order.where(order_cycle_id: order_cycle).none?
+  end
+
+  def viewing_as_coordinator_of?(order_cycle)
+    Enterprise.managed_by(spree_current_user).include? order_cycle.coordinator
   end
 
   private

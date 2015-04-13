@@ -56,24 +56,5 @@ module OpenFoodNetwork
         end
       end
     end
-
-    describe "calculating the shipping tax on a shipping cost" do
-      it "returns zero when shipping does not include VAT" do
-        report.stub(:shipment_inc_vat) { false }
-        report.send(:shipping_tax_on, 12).should == 0
-      end
-
-      it "returns zero when no shipping cost is passed" do
-        report.stub(:shipment_inc_vat) { true }
-        report.send(:shipping_tax_on, nil).should == 0
-      end
-
-
-      it "returns the tax included in the price otherwise" do
-        report.stub(:shipment_inc_vat) { true }
-        report.stub(:shipping_tax_rate) { 0.2 }
-        report.send(:shipping_tax_on, 12).should == 2
-      end
-    end
   end
 end

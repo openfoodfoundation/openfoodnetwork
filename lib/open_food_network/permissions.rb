@@ -20,6 +20,10 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :edit_profile
     end
 
+    def variant_override_hubs
+      managed_and_related_enterprises_with(:add_to_order_cycle).is_hub
+    end
+
     def variant_override_producers
       producer_ids = variant_override_enterprises_per_hub.values.flatten.uniq
       Enterprise.where(id: producer_ids)
@@ -52,13 +56,6 @@ module OpenFoodNetwork
       permissions
     end
 
-
-    # Find the exchanges of an order cycle that an admin can manage
-    def order_cycle_exchanges(order_cycle)
-      enterprises = managed_and_related_enterprises_with :add_to_order_cycle
-      order_cycle.exchanges.to_enterprises(enterprises).from_enterprises(enterprises)
-    end
-
     def managed_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
       permitted_enterprise_products_ids = related_enterprise_products.pluck :id
@@ -84,7 +81,8 @@ module OpenFoodNetwork
     end
 
     def managed_enterprises
-      Enterprise.managed_by(@user)
+      return @managed_enterprises unless @managed_enterprises.nil?
+      @managed_enterprises = Enterprise.managed_by(@user)
     end
 
     def related_enterprises_with(permission)
@@ -94,6 +92,24 @@ module OpenFoodNetwork
         pluck(:parent_id)
 
       Enterprise.where('id IN (?)', parent_ids)
+    end
+
+    def granting(permission, options={})
+      parent_ids = EnterpriseRelationship.
+        permitting(options[:to] || managed_enterprises).
+        with_permission(permission).
+        pluck(:parent_id)
+
+        (options[:scope] || Enterprise).where('enterprises.id IN (?)', parent_ids)
+    end
+
+    def granted(permission, options={})
+      child_ids = EnterpriseRelationship.
+        permitted_by(options[:by] || managed_enterprises).
+        with_permission(permission).
+        pluck(:child_id)
+
+        (options[:scope] || Enterprise).where('enterprises.id IN (?)', child_ids)
     end
 
     def managed_enterprise_products

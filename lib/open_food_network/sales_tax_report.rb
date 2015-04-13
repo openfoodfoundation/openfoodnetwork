@@ -8,7 +8,7 @@ module OpenFoodNetwork
 
     def header
       ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
-        "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})",
+        "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})", "Tax on Fees (#{currency_symbol})",
         "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
     end
 
@@ -16,10 +16,9 @@ module OpenFoodNetwork
       @orders.map do |order|
         totals = totals_of order.line_items
         shipping_cost = shipping_cost_for order
-        shipping_tax = shipping_tax_on shipping_cost
-        
+
         [order.number, order.created_at, totals[:items], totals[:items_total],
-         totals[:taxable_total], totals[:sales_tax], shipping_cost, shipping_tax, totals[:sales_tax] + shipping_tax,
+         totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
          order.bill_address.full_name, order.distributor.andand.name]
       end
     end
@@ -54,16 +53,8 @@ module OpenFoodNetwork
       shipping_cost = shipping_cost.nil? ? 0.0 : shipping_cost
     end
 
-    def shipping_tax_on(shipping_cost)
-      if shipment_inc_vat && shipping_cost.present?
-        (shipping_cost * shipping_tax_rate / (1 + shipping_tax_rate)).round(2)
-      else
-        0
-      end
-    end
-
     def tax_included_in(line_item)
-      line_item.adjustments.included_tax.sum &:amount
+      line_item.adjustments.sum &:included_tax
     end
 
     def shipment_inc_vat

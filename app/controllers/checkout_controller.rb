@@ -19,6 +19,7 @@ class CheckoutController < Spree::CheckoutController
 
   def update
     if @order.update_attributes(object_params)
+      check_order_for_phantom_fees
       fire_event('spree.checkout.update')
       while @order.state != "complete"
         if @order.state == "payment"
@@ -57,6 +58,20 @@ class CheckoutController < Spree::CheckoutController
 
 
   private
+
+  def check_order_for_phantom_fees
+    phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
+    where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
+
+    if phantom_fees.any?
+      Bugsnag.notify(RuntimeError.new("Phantom Fees"), {
+        phantom_fees: {
+          phantom_total: phantom_fees.sum(&:amount).to_s,
+          phantom_fees: phantom_fees.as_json
+        }
+      })
+    end
+  end
 
   # Copied and modified from spree. Remove check for order state, since the state machine is
   # progressed all the way in one go with the one page checkout.
@@ -110,7 +125,7 @@ class CheckoutController < Spree::CheckoutController
     last_used_bill_address, last_used_ship_address = find_last_used_addresses(@order.email)
     preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
-    @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default 
+    @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
 
   def after_payment

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature "Authentication", js: true do
   include UIComponentHelper
+
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
@@ -32,7 +33,7 @@ feature "Authentication", js: true do
         scenario "failing to login" do
           fill_in "Email", with: user.email
           click_login_button
-          page.should have_content "Invalid email or password"    
+          page.should have_content "Invalid email or password"
         end
 
         scenario "logging in successfully" do
@@ -70,7 +71,7 @@ feature "Authentication", js: true do
             ActionMailer::Base.deliveries.clear
             select_login_tab "Forgot Password?"
           end
-          
+
           scenario "failing to reset password" do
             fill_in "Your email", with: "notanemail@myemail.com"
             click_reset_password_button
@@ -78,7 +79,7 @@ feature "Authentication", js: true do
           end
 
           scenario "resetting password" do
-            fill_in "Your email", with: user.email 
+            fill_in "Your email", with: user.email
             click_reset_password_button
             page.should have_reset_password
             ActionMailer::Base.deliveries.last.subject.should =~ /Password Reset/
@@ -90,29 +91,17 @@ feature "Authentication", js: true do
           browse_as_medium
         end
         scenario "showing login" do
-          open_off_canvas 
+          open_off_canvas
           open_login_modal
           page.should have_login_modal
         end
       end
     end
 
-    describe "oldskool" do
-      scenario "with valid credentials" do
-        visit "/login"
-        fill_in "Email", with: user.email
-        fill_in "Password", with: "password"
-        click_button "Login"
-        current_path.should == "/"
-      end
-
-      scenario "with invalid credentials" do
-        visit "/login"
-        fill_in "Email", with: user.email
-        fill_in "Password", with: "this isn't my password"
-        click_button "Login"
-        page.should have_content "Invalid email or password"
-      end
+    scenario "Loggin by typing login/ redirects to /#/login" do
+      visit "/login"
+      uri = URI.parse(current_url)
+      (uri.path + "#" + uri.fragment).should == '/#/login'
     end
   end
 end

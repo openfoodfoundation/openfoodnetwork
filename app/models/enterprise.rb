@@ -15,6 +15,7 @@ class Enterprise < ActiveRecord::Base
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
+  has_many :properties, through: :producer_properties
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'
@@ -114,6 +115,9 @@ class Enterprise < ActiveRecord::Base
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+  scope :with_order_cycles_as_supplier_outer,
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
   scope :with_order_cycles_as_distributor_outer,
     joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')

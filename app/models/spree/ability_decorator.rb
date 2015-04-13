@@ -8,6 +8,7 @@ class AbilityDecorator
     add_enterprise_management_abilities user if can_manage_enterprises? user
     add_group_management_abilities user if can_manage_groups? user
     add_product_management_abilities user if can_manage_products? user
+    add_order_cycle_management_abilities user if can_manage_order_cycles? user
     add_order_management_abilities user if can_manage_orders? user
     add_relationship_management_abilities user if can_manage_relationships? user
   end
@@ -31,6 +32,13 @@ class AbilityDecorator
   def can_manage_products?(user)
     can_manage_enterprises?(user) &&
     user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
+  end
+
+  # Users can manage order cycles if they manage a sells own/any enterprise
+  # OR if they manage a producer which is included in any order cycles
+  def can_manage_order_cycles?(user)
+    can_manage_orders?(user) ||
+    OrderCycle.accessible_by(user).any?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -95,7 +103,7 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
       hub_auth = OpenFoodNetwork::Permissions.new(user).
-        order_cycle_enterprises.is_distributor.
+        variant_override_hubs.
         include? vo.hub
 
       producer_auth = OpenFoodNetwork::Permissions.new(user).
@@ -115,6 +123,17 @@ class AbilityDecorator
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
   end
 
+  def add_order_cycle_management_abilities(user)
+    can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
+      OrderCycle.accessible_by(user).include? order_cycle
+    end
+    can [:bulk_update, :clone, :destroy], OrderCycle do |order_cycle|
+      user.enterprises.include? order_cycle.coordinator
+    end
+    can [:for_order_cycle], Enterprise
+    can [:for_order_cycle], EnterpriseFee
+  end
+
   def add_order_management_abilities(user)
     # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
@@ -132,10 +151,6 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
 
     can [:create], OrderCycle
-    can [:admin, :index, :read, :edit, :update, :bulk_update, :clone], OrderCycle do |order_cycle|
-      user.enterprises.include? order_cycle.coordinator
-    end
-    can [:for_order_cycle], Enterprise
 
     can [:admin, :index, :read, :create, :edit, :update], ExchangeVariant
     can [:admin, :index, :read, :create, :edit, :update], Exchange

@@ -182,6 +182,27 @@ FactoryGirl.define do
       order.reload
     end
   end
+
+  factory :zone_with_member, :parent => :zone do
+    default_tax true
+
+    after(:create) do |zone|
+      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by_name('Australia'))
+    end
+  end
+
+  factory :taxed_product, :parent => :product do
+    ignore do
+      tax_rate_amount 0
+      zone nil
+    end
+
+    tax_category { create(:tax_category) }
+
+    after(:create) do |product, proxy|
+      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
+    end
+  end
 end
 
 

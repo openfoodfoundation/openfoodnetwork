@@ -11,15 +11,14 @@ module Admin
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update
+    before_filter :strip_new_properties, only: [:create, :update]
+    before_filter :load_properties, only: [:edit, :update]
+    before_filter :setup_property, only: [:edit]
 
 
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
-
-    def for_order_cycle
-      @collection = order_cycle_permitted_enterprises
-    end
 
     def set_sells
       enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
@@ -67,6 +66,16 @@ module Admin
       end
     end
 
+    def for_order_cycle
+      respond_to do |format|
+        format.json do
+          render json: ActiveModel::ArraySerializer.new( @collection,
+            each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user
+          ).to_json
+        end
+      end
+    end
+
     protected
 
     def build_resource_with_address
@@ -94,10 +103,18 @@ module Admin
     end
 
     def collection
-      # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
-      OpenFoodNetwork::Permissions.new(spree_current_user).
-        editable_enterprises.
-        order('is_primary_producer ASC, name')
+      case action
+      when :for_order_cycle
+        order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
+        coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
+        order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
+        return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
+      else
+        # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+        OpenFoodNetwork::Permissions.new(spree_current_user).
+          editable_enterprises.
+          order('is_primary_producer ASC, name')
+      end
     end
 
     def collection_actions
@@ -132,8 +149,9 @@ module Admin
 
     def override_sells
       unless spree_current_user.admin?
-        has_hub = spree_current_user.enterprises.is_hub.any?
-        params[:enterprise][:sells] = has_hub ? 'any' : 'none'
+        has_hub = spree_current_user.owned_enterprises.is_hub.any?
+        new_enterprise_is_producer = !!params[:enterprise][:is_primary_producer]
+        params[:enterprise][:sells] = (has_hub && !new_enterprise_is_producer) ? 'any' : 'none'
       end
     end
 
@@ -157,9 +175,27 @@ module Admin
       end
     end
 
+    def strip_new_properties
+      unless spree_current_user.admin? || params[:enterprise][:producer_properties_attributes].nil?
+        names = Spree::Property.pluck(:name)
+        params[:enterprise][:producer_properties_attributes].each do |key, property|
+          params[:enterprise][:producer_properties_attributes].delete key unless names.include? property[:property_name]
+        end
+      end
+    end
+
+    def load_properties
+      @properties = Spree::Property.pluck(:name)
+    end
+
+    def setup_property
+      @enterprise.producer_properties.build
+    end
+
     # Overriding method on Spree's resource controller
     def location_after_save
-      if params[:enterprise].key? :producer_properties_attributes
+      refered_from_edit = URI(request.referer).path == main_app.edit_admin_enterprise_path(@enterprise)
+      if params[:enterprise].key?(:producer_properties_attributes) && !refered_from_edit
         main_app.admin_enterprises_path
       else
         main_app.edit_admin_enterprise_path(@enterprise)

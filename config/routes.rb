@@ -1,7 +1,9 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
+
   get "/#/login", to: "home#index", as: :spree_login
+  get "/login", to: redirect("/#/login")
 
   get "/map", to: "map#index", as: :map
 
@@ -63,7 +65,10 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprise_roles
 
     resources :enterprise_fees do
-      post :bulk_update, :on => :collection, :as => :bulk_update
+      collection do
+        get :for_order_cycle
+        post :bulk_update, :as => :bulk_update
+      end
     end
 
     resources :enterprise_groups do
@@ -142,7 +147,6 @@ Spree::Core::Engine.routes.prepend do
       collection do
         get :managed
         get :bulk_products
-        get :distributable
         get :overridable
       end
       delete :soft_delete

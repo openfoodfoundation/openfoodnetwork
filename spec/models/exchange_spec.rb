@@ -177,6 +177,12 @@ describe Exchange do
         Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
         Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
       end
+
+      it "finds exchanges involving any of a number of enterprises" do
+        Exchange.involving([supplier]).should == [incoming_exchange]
+        Exchange.involving([coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+        Exchange.involving([distributor]).should == [outgoing_exchange]
+      end
     end
 
     describe "finding exchanges supplying to a distributor" do

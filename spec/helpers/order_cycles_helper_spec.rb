@@ -1,45 +1,43 @@
 require 'spec_helper'
 
 describe OrderCyclesHelper do
+  let(:oc) { double(:order_cycle) }
+
   describe "finding producer enterprise options" do
     before do
-      helper.stub(:order_cycle_producer_enterprises) { "enterprise list" }
+      helper.stub(:permitted_producer_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
-      helper.order_cycle_producer_enterprise_options
+      helper.permitted_producer_enterprise_options_for(oc)
     end
   end
 
   describe "finding coodinator enterprise options" do
     before do
-      helper.stub(:order_cycle_coordinating_enterprises) { "enterprise list" }
+      helper.stub(:permitted_coordinating_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
-      helper.order_cycle_coordinating_enterprise_options
+      helper.permitted_coordinating_enterprise_options_for(oc)
     end
   end
 
   describe "finding hub enterprise options" do
     before do
-      helper.stub(:order_cycle_hub_enterprises) { "enterprise list" }
+      helper.stub(:permitted_hub_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
       expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true, shipping_and_payment_methods: true})
-      helper.order_cycle_hub_enterprise_options
+      helper.permitted_hub_enterprise_options_for(oc)
     end
   end
 
   describe "building a validated enterprise list" do
     let(:e) { create(:distributor_enterprise, name: 'enterprise') }
-
-    before do
-      helper.stub(:order_cycle_permitted_enterprises) { Enterprise.where(id: e.id) }
-    end
 
     it "returns enterprises without shipping methods as disabled" do
       create(:payment_method, distributors: [e])

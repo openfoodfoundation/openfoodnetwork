@@ -1,8 +1,9 @@
-angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee) ->
-  $scope.enterprises = Enterprise.index (enterprises) =>
-    $scope.init(enterprises)
-  $scope.enterprise_fees = EnterpriseFee.index()
-  $scope.order_cycle = OrderCycle.order_cycle
+angular.module('admin.order_cycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
+  $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
+    # TODO: make this a get method, which only fetches one enterprise
+    $scope.enterprises = Enterprise.index {coordinator_id: ocInstance.coordinator_id}, (enterprises) =>
+      $scope.init(enterprises)
+    $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
 
   $scope.init = (enterprises) ->
     enterprise = enterprises[Object.keys(enterprises)[0]]

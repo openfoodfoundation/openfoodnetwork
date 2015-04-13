@@ -24,6 +24,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
+        it { subject.can_manage_order_cycles?(user).should be_true }
       end
 
       context "as manager of an enterprise who sell 'own'" do
@@ -34,6 +35,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
+        it { subject.can_manage_order_cycles?(user).should be_true }
       end
 
       context "as manager of an enterprise who sells 'none'" do
@@ -44,6 +46,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_false }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_false }
+        it { subject.can_manage_order_cycles?(user).should be_false }
       end
 
       context "as manager of a producer enterprise who sells 'any'" do
@@ -54,6 +57,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
+        it { subject.can_manage_order_cycles?(user).should be_true }
       end
 
       context "as manager of a producer enterprise who sell 'own'" do
@@ -64,6 +68,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_true }
         it { subject.can_manage_enterprises?(user).should be_true }
         it { subject.can_manage_orders?(user).should be_true }
+        it { subject.can_manage_order_cycles?(user).should be_true }
       end
 
       context "as manager of a producer enterprise who sells 'none'" do
@@ -81,6 +86,7 @@ module Spree
           it { subject.can_manage_products?(user).should be_true }
           it { subject.can_manage_enterprises?(user).should be_true }
           it { subject.can_manage_orders?(user).should be_false }
+          it { subject.can_manage_order_cycles?(user).should be_false }
         end
 
         context "as a profile" do
@@ -93,6 +99,7 @@ module Spree
           it { subject.can_manage_products?(user).should be_false }
           it { subject.can_manage_enterprises?(user).should be_true }
           it { subject.can_manage_orders?(user).should be_false }
+          it { subject.can_manage_order_cycles?(user).should be_false }
         end
       end
 
@@ -100,6 +107,7 @@ module Spree
         it { subject.can_manage_products?(user).should be_false }
         it { subject.can_manage_enterprises?(user).should be_false }
         it { subject.can_manage_orders?(user).should be_false }
+        it { subject.can_manage_order_cycles?(user).should be_false }
 
         it "can create enterprises straight off the bat" do
           subject.is_new_user?(user).should be_true
@@ -212,6 +220,48 @@ module Spree
           should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises], for: :report)
         end
 
+        describe "order_cycles abilities" do
+          context "where the enterprise is not in an order_cycle" do
+            let!(:order_cycle) { create(:simple_order_cycle) }
+
+            it "should not be able to access read/update order_cycle actions" do
+              should_not have_ability([:admin, :index, :read, :edit, :update], for: order_cycle)
+            end
+
+            it "should not be able to access bulk_update, clone order cycle actions" do
+              should_not have_ability([:bulk_update, :clone], for: order_cycle)
+            end
+
+            it "cannot request permitted enterprises for an order cycle" do
+              should_not have_ability([:for_order_cycle], for: Enterprise)
+            end
+
+            it "cannot request permitted enterprise fees for an order cycle" do
+              should_not have_ability([:for_order_cycle], for: EnterpriseFee)
+            end
+          end
+
+          context "where the enterprise is in an order_cycle" do
+            let!(:order_cycle) { create(:simple_order_cycle) }
+            let!(:exchange){ create(:exchange, incoming: true, order_cycle: order_cycle, receiver: order_cycle.coordinator, sender: s1) }
+
+            it "should be able to access read/update order cycle actions" do
+              should have_ability([:admin, :index, :read, :edit, :update], for: order_cycle)
+            end
+
+            it "should not be able to access bulk/update, clone order cycle actions" do
+              should_not have_ability([:bulk_update, :clone], for: order_cycle)
+            end
+
+            it "can request permitted enterprises for an order cycle" do
+              should have_ability([:for_order_cycle], for: Enterprise)
+            end
+
+            it "can request permitted enterprise fees for an order cycle" do
+              should have_ability([:for_order_cycle], for: EnterpriseFee)
+            end
+          end
+        end
       end
 
       context "when is a distributor enterprise user" do
@@ -357,6 +407,26 @@ module Spree
           should_not have_ability([:sales_total, :users_and_enterprises], for: :report)
         end
 
+        context "for a given order_cycle" do
+          let!(:order_cycle) { create(:simple_order_cycle) }
+          let!(:exchange){ create(:exchange, incoming: false, order_cycle: order_cycle, receiver: d1, sender: order_cycle.coordinator) }
+
+          it "should be able to access read and update order cycle actions" do
+            should have_ability([:admin, :index, :read, :edit, :update], for: order_cycle)
+          end
+
+          it "should not be able to access bulk_update, clone order cycle actions" do
+            should_not have_ability([:bulk_update, :clone], for: order_cycle)
+          end
+        end
+
+        it "can request permitted enterprises for an order cycle" do
+          should have_ability([:for_order_cycle], for: Enterprise)
+        end
+
+        it "can request permitted enterprise fees for an order cycle" do
+          should have_ability([:for_order_cycle], for: EnterpriseFee)
+        end
       end
 
       context 'Order Cycle co-ordinator, distributor enterprise manager' do
@@ -371,11 +441,11 @@ module Spree
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
-          should have_ability([:admin, :index, :read, :edit, :update, :clone], for: oc1)
+          should have_ability([:admin, :index, :read, :edit, :update, :bulk_update, :clone, :destroy], for: oc1)
         end
 
         it "should not be able to read/write OrderCycles they are not the co-ordinator of" do
-          should_not have_ability([:admin, :index, :read, :create, :edit, :update, :clone], for: oc2)
+          should_not have_ability([:admin, :index, :read, :create, :edit, :update, :bulk_update, :clone, :destroy], for: oc2)
         end
 
         it "should be able to create OrderCycles" do
@@ -383,7 +453,7 @@ module Spree
         end
 
         it "should be able to read/write EnterpriseFees" do
-          should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy], for: EnterpriseFee)
+          should have_ability([:admin, :index, :read, :create, :edit, :bulk_update, :destroy, :for_order_cycle], for: EnterpriseFee)
         end
 
         it "should be able to add enterprises to order cycles" do

@@ -20,6 +20,7 @@ class EnterpriseFee < ActiveRecord::Base
 
 
   scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
+  scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
