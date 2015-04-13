@@ -1,0 +1,6 @@
+/ insert_before "div.row"
+
+%div.field{ "data-hook" => "sitewide_message" }
+  = hidden_field_tag 'preferences[sitewide_message]', '0'
+  = label_tag nil, t(:sitewide_message)
+  = text_area_tag :sitewide_message, Spree::Config.sitewide_message, {:cols => 60, :rows => 6, :class => 'fullwidth'}
