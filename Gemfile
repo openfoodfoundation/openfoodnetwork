@@ -16,6 +16,7 @@ gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_e
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
 
 gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'comfortable_mexican_sofa'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block

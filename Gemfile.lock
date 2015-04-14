@@ -207,6 +207,7 @@ GEM
       safe_yaml (~> 0.9.0)
     css_parser (1.3.5)
       addressable
+    daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
@@ -534,6 +535,7 @@ DEPENDENCIES
   comfortable_mexican_sofa
   compass-rails
   custom_error_message!
+  daemons
   dalli
   database_cleaner (= 0.7.1)
   db2fog
