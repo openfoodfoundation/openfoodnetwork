@@ -165,6 +165,8 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.quickSearch = ""
 
     $scope.weightAdjustedPrice = (lineItem, oldValue) ->
+      if oldValue <= 0
+        oldValue = lineItem.units_variant.unit_value
       if lineItem.unit_value <= 0
         lineItem.unit_value = lineItem.units_variant.unit_value
       lineItem.price = lineItem.price * lineItem.unit_value / oldValue
