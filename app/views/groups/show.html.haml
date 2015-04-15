@@ -40,7 +40,7 @@
                 active: "active(\'about\')",
                 select: "select(\'about\')"}
               %h1 About Us
-              %p= @group.long_description
+              %p!= @group.long_description
 
             %tab{heading: 'Our producers',
                 active: "active(\'producers\')",

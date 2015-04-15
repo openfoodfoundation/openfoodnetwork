@@ -1,6 +1,6 @@
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
   %legend About
   = f.field_container :long_description do
-    = f.label :long_description
-    %br/
-    = f.text_area :long_description
+    %text-angular{'id' => 'enterprise_group_long_description', 'name' => 'enterprise_group[long_description]', 'class' => 'text-angular',
+      'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]"}
+      != @enterprise_group[:long_description]
