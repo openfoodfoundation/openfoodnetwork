@@ -100,53 +100,60 @@
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && filteredLineItems.length == 0'}
     %h1#no_results No orders found.
   %div{ 'ng-hide' => 'loading || filteredLineItems.length == 0' }
-    %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
-      %thead
-        %tr
-          %th.bulk
-            %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
-          %th.order_no{ 'ng-show' => 'columns.order_no.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.number'; reverse = !reverse" } Order No.
-          %th.full_name{ 'ng-show' => 'columns.full_name.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.full_name'; reverse = !reverse" } Name
-          %th.email{ 'ng-show' => 'columns.email.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.email'; reverse = !reverse" } Email
-          %th.phone{ 'ng-show' => 'columns.phone.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.phone'; reverse = !reverse" } Phone
-          %th.date{ 'ng-show' => 'columns.order_date.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
-          %th.producer{ 'ng-show' => 'columns.producer.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
-          %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" } Order Cycle
-          %th.hub{ 'ng-show' => 'columns.hub.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" } Hub
-          %th.variant{ 'ng-show' => 'columns.variant.visible' }
-            %a{ :href => '', 'ng-click' => "predicate = 'units_variant.unit_text'; reverse = !reverse" } Product: Unit
-          %th.quantity{ 'ng-show' => 'columns.quantity.visible' } Quantity
-          %th.max{ 'ng-show' => 'columns.max.visible' } Max
-          %th.actions
-          %th.actions
-            Ask?&nbsp;
-            %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
-          %td.bulk
-            %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
-          %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
-          %td.full_name{ 'ng-show' => 'columns.full_name.visible' } {{ line_item.order.full_name }}
-          %td.email{ 'ng-show' => 'columns.email.visible' } {{ line_item.order.email }}
-          %td.phone{ 'ng-show' => 'columns.phone.visible' } {{ line_item.order.phone }}
-          %td.date{ 'ng-show' => 'columns.order_date.visible' } {{ line_item.order.completed_at }}
-          %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
-          %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
-          %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
-          %td.variant{ 'ng-show' => 'columns.variant.visible' }
-            %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
-          %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-            %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
-          %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
-          %td.actions
-            %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
-          %td.actions
-            %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
-    %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
+    %form{ 'ng-model' => "bulk_order_form" }
+      %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
+        %thead
+          %tr
+            %th.bulk
+              %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+            %th.order_no{ 'ng-show' => 'columns.order_no.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.number'; reverse = !reverse" } Order No.
+            %th.full_name{ 'ng-show' => 'columns.full_name.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.full_name'; reverse = !reverse" } Name
+            %th.email{ 'ng-show' => 'columns.email.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.email'; reverse = !reverse" } Email
+            %th.phone{ 'ng-show' => 'columns.phone.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.phone'; reverse = !reverse" } Phone
+            %th.date{ 'ng-show' => 'columns.order_date.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
+            %th.producer{ 'ng-show' => 'columns.producer.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
+            %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" } Order Cycle
+            %th.hub{ 'ng-show' => 'columns.hub.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" } Hub
+            %th.variant{ 'ng-show' => 'columns.variant.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'units_variant.unit_text'; reverse = !reverse" } Product: Unit
+            %th.quantity{ 'ng-show' => 'columns.quantity.visible' } Quantity
+            %th.max{ 'ng-show' => 'columns.max.visible' } Max
+            %th.unit_value{ 'ng-show' => 'columns.unit_value.visible' } Weight/Volume
+            %th.price{ 'ng-show' => 'columns.price.visible' } Price
+            %th.actions
+            %th.actions
+              Ask?&nbsp;
+              %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
+          %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
+            %td.bulk
+              %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
+            %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
+            %td.full_name{ 'ng-show' => 'columns.full_name.visible' } {{ line_item.order.full_name }}
+            %td.email{ 'ng-show' => 'columns.email.visible' } {{ line_item.order.email }}
+            %td.phone{ 'ng-show' => 'columns.phone.visible' } {{ line_item.order.phone }}
+            %td.date{ 'ng-show' => 'columns.order_date.visible' } {{ line_item.order.completed_at }}
+            %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
+            %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
+            %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
+            %td.variant{ 'ng-show' => 'columns.variant.visible' }
+              %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.unit_text }}
+            %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
+              %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "line_item", "attr-name" => "quantity" }
+            %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
+            %td.unit_value{ 'ng-show' => 'columns.unit_value.visible' }
+              %input{ :type => 'number', :name => 'unit_value', :id => 'unit_value', 'ng-model' => "line_item.unit_value", 'ng-change' => "weightAdjustedPrice(line_item, {{ line_item.unit_value }})", 'ofn-line-item-upd-attr' => "line_item", "attr-name" => "unit_value" }
+            %td.price{ 'ng-show' => 'columns.price.visible' }
+              %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price | currency }}', 'ng-readonly' => "true", 'ofn-line-item-upd-attr' => "line_item", "attr-name" => "price" }
+            %td.actions
+              %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
+            %td.actions
+              %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
+      %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
