@@ -1,18 +1,36 @@
 angular.module("ofn.admin").directive "ofnLineItemUpdAttr", (switchClass, pendingChanges) ->
   scope:
-    lineItem: "&ofnLineItemUpdAttr"
-    attrName: "@"
+    object: "&ofnLineItemUpdAttr"
+    type: "@ofnLineItemUpdAttr"
+    attr: "@attrName"
   link: (scope, element, attrs) ->
-    element.dbValue = scope.lineItem()[scope.attrName]
-    scope.$watch "lineItem().#{scope.attrName}", (value) ->
-      if value == element.dbValue
-        pendingChanges.remove(scope.lineItem().id, scope.attrName)
-        switchClass( element, "", ["update-pending", "update-error", "update-success"], false )
+    scope.savedValue = scope.object()[scope.attr]
+
+    scope.$watch "object().#{scope.attr}", (value) ->
+      if value == scope.savedValue
+        pendingChanges.remove(scope.object().id, scope.attr)
+        scope.clear()
       else
-        changeObj =
-          lineItem: scope.lineItem()
-          element: element
-          attrName: scope.attrName
-          url: "/api/orders/#{scope.lineItem().order.number}/line_items/#{scope.lineItem().id}?line_item[#{scope.attrName}]=#{value}"
-        pendingChanges.add(scope.lineItem().id, scope.attrName, changeObj)
-        switchClass( element, "update-pending", ["update-error", "update-success"], false )
+        change =
+          object: scope.object()
+          type: scope.type
+          attr: scope.attr
+          value: value
+          scope: scope
+        scope.pending()
+        pendingChanges.add(scope.object().id, scope.attr, change)
+
+    scope.reset = (value) ->
+      scope.savedValue = value
+
+    scope.success = ->
+      switchClass( element, "update-success", ["update-pending", "update-error"], 3000 )
+
+    scope.pending = ->
+      switchClass( element, "update-pending", ["update-error", "update-success"], false )
+
+    scope.error = ->
+      switchClass( element, "update-error", ["update-pending", "update-success"], false )
+
+    scope.clear = ->
+      switchClass( element, "", ["update-pending", "update-error", "update-success"], false )

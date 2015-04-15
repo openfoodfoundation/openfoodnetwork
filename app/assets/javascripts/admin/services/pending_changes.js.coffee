@@ -1,32 +1,29 @@
-angular.module("ofn.admin").factory "pendingChanges",[
-  "dataSubmitter"
-  (dataSubmitter) ->
-    pendingChanges: {}
+angular.module("ofn.admin").factory "pendingChanges", (dataSubmitter) ->
+  pendingChanges: {}
 
-    add: (id, attrName, changeObj) ->
-      @pendingChanges["#{id}"] = {} unless @pendingChanges.hasOwnProperty("#{id}")
-      @pendingChanges["#{id}"]["#{attrName}"] = changeObj
+  add: (id, attr, change) ->
+    @pendingChanges["#{id}"] = {} unless @pendingChanges.hasOwnProperty("#{id}")
+    @pendingChanges["#{id}"]["#{attr}"] = change
 
-    removeAll: ->
-      @pendingChanges = {}
+  removeAll: ->
+    @pendingChanges = {}
 
-    remove: (id, attrName) ->
-      if @pendingChanges.hasOwnProperty("#{id}")
-        delete @pendingChanges["#{id}"]["#{attrName}"]
-        delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
+  remove: (id, attr) ->
+    if @pendingChanges.hasOwnProperty("#{id}")
+      delete @pendingChanges["#{id}"]["#{attr}"]
+      delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
 
-    submitAll: ->
-      all = []
-      for id,lineItem of @pendingChanges
-        for attrName,changeObj of lineItem
-          all.push @submit(id, attrName, changeObj)
-      all
+  submitAll: ->
+    all = []
+    for id, objectChanges of @pendingChanges
+      for attrName, change of objectChanges
+        all.push @submit(change)
+    all
 
-    submit: (id, attrName, change) ->
-      dataSubmitter(change).then (data) =>
-        @remove id, attrName
-        change.element.dbValue = data["#{attrName}"]
+  submit: (change) ->
+    dataSubmitter(change).then (data) =>
+      @remove change.object.id, change.attr
+      change.scope.reset( data["#{change.attr}"] )
 
-    changeCount: (lineItem) ->
-      Object.keys(lineItem).length
-]
+  changeCount: (objectChanges) ->
+    Object.keys(objectChanges).length
