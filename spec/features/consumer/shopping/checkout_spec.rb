@@ -112,7 +112,7 @@ feature "As a consumer I want to check out my cart", js: true do
           toggle_shipping
           within "#shipping" do
             choose sm2.name
-            fill_in 'Any notes or custom delivery instructions?', with: "SpEcIaL NoTeS"
+            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
           end
           toggle_payment
           within "#payment" do
