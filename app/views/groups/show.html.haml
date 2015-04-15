@@ -79,6 +79,9 @@
                 = render partial: "shared/components/enterprise_search"
                 -# TODO: find out why this is not working
                 -#= render partial: "home/filters"
+                .small-12.medium-6.columns
+                  %span &nbsp;
+                = render partial: 'shared/components/show_profiles'
 
                 .row{bindonce: true}
                   .small-12.columns
