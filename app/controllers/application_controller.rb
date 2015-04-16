@@ -8,14 +8,11 @@ class ApplicationController < ActionController::Base
     super(options, response_status)
   end
 
-  def after_sign_in_path_for(resource)
+  def set_checkout_redirect
     if request.referer and referer_path = URI(request.referer).path
-      [main_app.checkout_path].include?(referer_path) ? referer_path : root_path
-    else
-      root_path
+      session["spree_user_return_to"] = [main_app.checkout_path].include?(referer_path) ? referer_path : root_path
     end
   end
-
 
   private
 
