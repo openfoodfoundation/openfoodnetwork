@@ -1,0 +1,5 @@
+- if ! Spree::Config.sitewide_message.empty?
+  .pane
+    .row
+      .small-12.columns.text-center
+        %h2 #{ Spree::Config.sitewide_message }

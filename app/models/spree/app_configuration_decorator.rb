@@ -7,4 +7,6 @@ Spree::AppConfiguration.class_eval do
   # Tax Preferences
   preference :products_require_tax_category, :boolean, default: false
   preference :shipping_tax_rate, :decimal, default: 0
+
+  preference :sitewide_message, :text, default: ''
 end
