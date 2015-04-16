@@ -283,12 +283,14 @@ module Admin
             end
 
             it "is disallowed" do
-              spree_post :set_sells, { id: enterprise, sells: 'own' }
-              expect(response).to redirect_to spree.admin_path
-              trial_expiry = Date.today.strftime("%Y-%m-%d")
-              expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
-              expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+              Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
+                spree_post :set_sells, { id: enterprise, sells: 'own' }
+                expect(response).to redirect_to spree.admin_path
+                trial_expiry = Date.today.strftime("%Y-%m-%d")
+                expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
+                expect(enterprise.reload.sells).to eq 'own'
+                expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+              end
             end
           end
 
