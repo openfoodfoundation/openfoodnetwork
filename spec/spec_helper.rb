@@ -45,6 +45,9 @@ Capybara.default_wait_time = 30
 
 require "paperclip/matchers"
 
+#Fix fixtures with foreign keys, fixed in Rails4
+require "spec/support/active_recorde_postgresql_referential_integrity_patch.rb"
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
