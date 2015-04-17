@@ -107,10 +107,10 @@ feature %q{
 
     page.should have_content 'Payment State'
   end
-  
+
   describe "sales tax report" do
-    let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
     let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
@@ -140,7 +140,7 @@ feature %q{
       click_link "Reports"
       click_link "Sales Tax"
     end
-  
+
     it "reports" do
       # Then it should give me access only to managed enterprises
       page.should     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]

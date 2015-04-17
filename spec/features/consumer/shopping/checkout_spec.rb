@@ -145,18 +145,6 @@ feature "As a consumer I want to check out my cart", js: true do
           #                              = $1.93
           page.should have_content "(includes tax)"
           page.should have_content "$1.93"
-
-
-          ActionMailer::Base.deliveries.each do |email|
-            email.subject.should include "#{Spree::Config.site_name} Order Confirmation"
-
-            # The Spree tax summary should not be included in the confirmation email
-            email.body.should_not include product.tax_category.name
-
-            # The total tax should also be included in the confirmation email
-            email.body.include?("(includes tax)").should be_true
-            email.body.include?("$1.93").should be_true
-          end
         end
 
         context "with basic details filled" do
