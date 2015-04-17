@@ -1,24 +1,28 @@
 angular.module('admin.order_cycles').factory('Enterprise', ($resource) ->
-  Enterprise = $resource('/admin/enterprises/for_order_cycle/:enterprise_id.json', {}, {'index': {method: 'GET', isArray: true}})
-
+  Enterprise = $resource('/admin/enterprises/for_order_cycle/:enterprise_id.json', {}, {
+    'index':
+      method: 'GET'
+      isArray: true
+      params:
+        order_cycle_id: '@order_cycle_id'
+        coordinator_id: '@coordinator_id'
+  })
   {
     Enterprise: Enterprise
     enterprises: {}
     supplied_products: []
     loaded: false
 
-    index: (callback=null) ->
-    	service = this
-
-    	Enterprise.index (data) ->
+    index: (params={}, callback=null) ->
+    	Enterprise.index params, (data) =>
         for enterprise in data
-          service.enterprises[enterprise.id] = enterprise
+          @enterprises[enterprise.id] = enterprise
 
           for product in enterprise.supplied_products
-            service.supplied_products.push(product)
+            @supplied_products.push(product)
 
-        service.loaded = true
-        (callback || angular.noop)(service.enterprises)
+        @loaded = true
+        (callback || angular.noop)(@enterprises)
 
     	this.enterprises
 

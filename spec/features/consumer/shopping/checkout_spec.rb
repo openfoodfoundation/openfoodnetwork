@@ -16,7 +16,6 @@ feature "As a consumer I want to check out my cart", js: true do
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
   before do
-    ActionMailer::Base.deliveries.clear
     add_enterprise_fee enterprise_fee
     set_order order
     add_product_to_cart
@@ -80,7 +79,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "on the checkout page with payments open" do
       before do
-        ActionMailer::Base.deliveries.clear
         visit checkout_path
         checkout_as_guest
         toggle_payment
@@ -112,7 +110,7 @@ feature "As a consumer I want to check out my cart", js: true do
           toggle_shipping
           within "#shipping" do
             choose sm2.name
-            fill_in 'Any notes or custom delivery instructions?', with: "SpEcIaL NoTeS"
+            fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
           end
           toggle_payment
           within "#payment" do
@@ -120,13 +118,11 @@ feature "As a consumer I want to check out my cart", js: true do
           end
 
 
-          ActionMailer::Base.deliveries.length.should == 0
-          place_order
-          page.should have_content "Your order has been processed successfully"
-          ActionMailer::Base.deliveries.length.should == 2
-          email = ActionMailer::Base.deliveries.last
-          site_name = Spree::Config[:site_name]
-          email.subject.should include "#{site_name} Order Confirmation"
+          expect do
+            place_order
+            page.should have_content "Your order has been processed successfully"
+          end.to enqueue_job ConfirmOrderJob
+
           o = Spree::Order.complete.first
           expect(o.special_instructions).to eq "SpEcIaL NoTeS"
         end
@@ -214,7 +210,6 @@ feature "As a consumer I want to check out my cart", js: true do
 
     context "when the customer has a pre-set shipping and billing address" do
       before do
-        ActionMailer::Base.deliveries.clear
         # Load up the customer's order and give them a shipping and billing address
         # This is equivalent to when the customer has ordered before and their addresses
         # are pre-populated.
@@ -231,10 +226,10 @@ feature "As a consumer I want to check out my cart", js: true do
         toggle_payment
         choose pm1.name
 
-        expect(ActionMailer::Base.deliveries.length).to be 0
-        place_order
-        page.should have_content "Your order has been processed successfully"
-        expect(ActionMailer::Base.deliveries.length).to be 2
+        expect do
+          place_order
+          page.should have_content "Your order has been processed successfully"
+        end.to enqueue_job ConfirmOrderJob
       end
     end
   end

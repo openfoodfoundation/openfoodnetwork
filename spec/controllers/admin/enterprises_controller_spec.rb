@@ -1,33 +1,26 @@
 require 'spec_helper'
+require 'open_food_network/order_cycle_permissions'
 
 module Admin
   describe EnterprisesController do
     include AuthenticationWorkflow
-    let(:user) { create_enterprise_user }
-    let(:distributor_manager) do
-      user = create(:user)
-      user.spree_roles = []
-      distributor.enterprise_roles.build(user: user).save
-      user
-    end
-    let(:distributor_owner) do
-      user = create(:user)
-      user.spree_roles = []
-      user
-    end
-    let(:admin_user) do
-      user = create(:user)
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
-      user
-    end
+
+    let(:user) { create(:user) }
+    let(:admin_user) { create(:admin_user) }
+    let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }
+    let(:supplier_manager) { create(:user, enterprise_limit: 10, enterprises: [supplier]) }
+    let(:distributor_owner) { create(:user, enterprise_limit: 10) }
+    let(:supplier_owner) { create(:user) }
 
     let(:distributor) { create(:distributor_enterprise, owner: distributor_owner ) }
+    let(:supplier) { create(:supplier_enterprise, owner: supplier_owner) }
 
+    before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
 
     describe "creating an enterprise" do
       let(:country) { Spree::Country.find_by_name 'Australia' }
       let(:state) { Spree::State.find_by_name 'Victoria' }
-      let(:enterprise_params) { {enterprise: {name: 'zzz', permalink: 'zzz', email: "bob@example.com", address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
+      let(:enterprise_params) { {enterprise: {name: 'zzz', permalink: 'zzz', is_primary_producer: '0', email: "bob@example.com", address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
 
       it "grants management permission if the current user is an enterprise user" do
         controller.stub spree_current_user: distributor_manager
@@ -47,13 +40,69 @@ module Admin
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
       end
 
-      it "it overrides the owner_id submitted by the user unless current_user is super admin" do
+      it "overrides the owner_id submitted by the user unless current_user is super admin" do
         controller.stub spree_current_user: distributor_manager
         enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
+      end
+
+      context "when I already own a hub" do
+        before { distributor }
+
+        it "creates new non-producers as hubs" do
+          controller.stub spree_current_user: distributor_owner
+          enterprise_params[:enterprise][:owner_id] = distributor_owner
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'any'
+        end
+
+        it "creates new producers as sells none" do
+          controller.stub spree_current_user: distributor_owner
+          enterprise_params[:enterprise][:owner_id] = distributor_owner
+          enterprise_params[:enterprise][:is_primary_producer] = '1'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
+        end
+
+        it "doesn't affect the hub status for super admins" do
+          admin_user.enterprises << create(:distributor_enterprise)
+
+          controller.stub spree_current_user: admin_user
+          enterprise_params[:enterprise][:owner_id] = admin_user
+          enterprise_params[:enterprise][:sells] = 'none'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
+        end
+      end
+
+      context "when I do not have a hub" do
+        it "does not create the new enterprise as a hub" do
+          controller.stub spree_current_user: supplier_manager
+          enterprise_params[:enterprise][:owner_id] = supplier_manager
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'none'
+        end
+
+        it "doesn't affect the hub status for super admins" do
+          controller.stub spree_current_user: admin_user
+          enterprise_params[:enterprise][:owner_id] = admin_user
+          enterprise_params[:enterprise][:sells] = 'any'
+
+          spree_put :create, enterprise_params
+          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise.sells.should == 'any'
+        end
       end
     end
 
@@ -87,6 +136,50 @@ module Admin
 
           distributor.reload
           expect(distributor.users).to_not include user
+        end
+
+
+        describe "enterprise properties" do
+          let(:producer) { create(:enterprise) }
+          let!(:property) { create(:property, name: "A nice name") }
+
+          before do
+            login_as_enterprise_user [producer]
+          end
+
+          context "when a submitted property does not already exist" do
+            it "does not create a new property, or product property" do
+              spree_put :update, {
+                id: producer,
+                enterprise: {
+                  producer_properties_attributes: {
+                    '0' => { property_name: 'a different name', value: 'something' }
+                  }
+                }
+              }
+              expect(Spree::Property.count).to be 1
+              expect(ProducerProperty.count).to be 0
+              property_names = producer.reload.properties.map(&:name)
+              expect(property_names).to_not include 'a different name'
+            end
+          end
+
+          context "when a submitted property exists" do
+            it "adds a product property" do
+              spree_put :update, {
+                id: producer,
+                enterprise: {
+                  producer_properties_attributes: {
+                    '0' => { property_name: 'A nice name', value: 'something' }
+                  }
+                }
+              }
+              expect(Spree::Property.count).to be 1
+              expect(ProducerProperty.count).to be 1
+              property_names = producer.reload.properties.map(&:name)
+              expect(property_names).to include 'A nice name'
+            end
+          end
         end
       end
 
@@ -190,12 +283,14 @@ module Admin
             end
 
             it "is disallowed" do
-              spree_post :set_sells, { id: enterprise, sells: 'own' }
-              expect(response).to redirect_to spree.admin_path
-              trial_expiry = Date.today.strftime("%Y-%m-%d")
-              expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
-              expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+              Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
+                spree_post :set_sells, { id: enterprise, sells: 'own' }
+                expect(response).to redirect_to spree.admin_path
+                trial_expiry = Date.today.strftime("%Y-%m-%d")
+                expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
+                expect(enterprise.reload.sells).to eq 'own'
+                expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+              end
             end
           end
 
@@ -310,6 +405,52 @@ module Admin
           expect(profile_enterprise2.sells).to eq 'any'
           expect(profile_enterprise1.owner).to eq new_owner
           expect(profile_enterprise2.owner).to eq new_owner
+        end
+      end
+    end
+
+    describe "for_order_cycle" do
+      let!(:user) { create_enterprise_user }
+      let!(:enterprise) { create(:enterprise, sells: 'any', owner: user) }
+      let(:permission_mock) { double(:permission) }
+
+      before do
+        # As a user with permission
+        controller.stub spree_current_user: user
+        OrderCycle.stub find_by_id: "existing OrderCycle"
+        Enterprise.stub find_by_id: "existing Enterprise"
+        OrderCycle.stub new: "new OrderCycle"
+
+        allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permission_mock }
+        allow(permission_mock).to receive(:visible_enterprises) { [] }
+        allow(ActiveModel::ArraySerializer).to receive(:new) { "" }
+      end
+
+      context "when no order_cycle or coordinator is provided in params" do
+        before { spree_get :for_order_cycle, format: :json }
+        it "initializes permissions with nil" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, nil)
+        end
+      end
+
+      context "when an order_cycle_id is provided in params" do
+        before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1 }
+        it "initializes permissions with the existing OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
+        end
+      end
+
+      context "when a coordinator is provided in params" do
+        before { spree_get :for_order_cycle, format: :json, coordinator_id: 1 }
+        it "initializes permissions with a new OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "new OrderCycle")
+        end
+      end
+
+      context "when both an order cycle and a coordinator are provided in params" do
+        before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
+        it "initializes permissions with the existing OrderCycle" do
+          expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
         end
       end
     end

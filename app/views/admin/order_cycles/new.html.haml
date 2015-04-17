@@ -1,9 +1,10 @@
 %h1 New Order Cycle
 
-- ng_controller = order_cycles_simple_view ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
+- ng_controller = order_cycles_simple_form ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
+= admin_inject_order_cycle_instance
 
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.order_cycles', 'ng-controller' => ng_controller, 'ng-submit' => 'submit($event)'} do |f|
-  - if order_cycles_simple_view
+  - if order_cycles_simple_form
     = render 'simple_form', f: f
   - else
     = render 'form', f: f

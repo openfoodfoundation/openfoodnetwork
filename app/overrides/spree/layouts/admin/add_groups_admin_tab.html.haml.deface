@@ -1,0 +1,2 @@
+/ insert_bottom "[data-hook='admin_tabs'], #admin_tabs[data-hook]"
+= tab :enterprise_groups, :url => main_app.admin_enterprise_groups_path, label: 'groups'

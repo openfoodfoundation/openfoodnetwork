@@ -29,10 +29,9 @@ describe Enterprise do
         end
 
         it "sends a welcome email" do
-          mail_message = double "Mail::Message"
-          expect(EnterpriseMailer).to receive(:welcome).and_return mail_message
-          mail_message.should_receive :deliver
-          create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+          expect do
+            create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
+          end.to enqueue_job WelcomeEnterpriseJob
         end
       end
     end
@@ -65,10 +64,9 @@ describe Enterprise do
           unconfirmed_enterprise.unconfirmed_email = nil
           unconfirmed_enterprise.save!
 
-          mail_message = double "Mail::Message"
-          expect(EnterpriseMailer).to receive(:welcome).and_return mail_message
-          mail_message.should_receive :deliver
-          unconfirmed_enterprise.confirm!
+          expect do
+            unconfirmed_enterprise.confirm!
+          end.to enqueue_job WelcomeEnterpriseJob, enterprise_id: unconfirmed_enterprise.id
         end
       end
 
@@ -594,46 +592,72 @@ describe Enterprise do
   describe "callbacks" do
     describe "after creation" do
       let(:owner) { create(:user, enterprise_limit: 10) }
-
       let(:hub1) { create(:distributor_enterprise, owner: owner) }
       let(:hub2) { create(:distributor_enterprise, owner: owner) }
-      let(:producer) { create(:supplier_enterprise, owner: owner) }
+      let(:hub3) { create(:distributor_enterprise, owner: owner) }
+      let(:producer1) { create(:supplier_enterprise, owner: owner) }
+      let(:producer2) { create(:supplier_enterprise, owner: owner) }
 
-      let(:er1) { EnterpriseRelationship.where(child_id: hub1).last }
-      let(:er2) { EnterpriseRelationship.where(child_id: hub2).last }
-      let(:er3) { EnterpriseRelationship.where(child_id: producer).last }
-      let(:er4) { EnterpriseRelationship.where(parent_id: hub1).last }
-      let(:er5) { EnterpriseRelationship.where(parent_id: hub2).last }
-      let(:er6) { EnterpriseRelationship.where(parent_id: producer).last }
-
-      it "establishes bi-directional relationships for new hubs with the owner's hubs and producers" do
-        hub1
-        hub2
-        producer
-        enterprise = nil
-
-        expect do
-          enterprise = create(:enterprise, owner: owner)
-        end.to change(EnterpriseRelationship, :count).by(6)
-
-        [er1, er2, er3].each do |er|
-          er.parent.should == enterprise
-          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+      describe "when a producer is created" do
+        before do
+          hub1
+          hub2
         end
 
-        [er4, er5, er6].each do |er|
-          er.child.should == enterprise
-          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+        it "creates links from the new producer to all hubs owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
+          producer1
+
+          should_have_enterprise_relationship from: producer1, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
+          should_have_enterprise_relationship from: producer1, to: hub2, with: [:add_to_order_cycle, :create_variant_overrides]
+        end
+
+        it "does not create any other links" do
+          expect do
+            producer1
+          end.to change(EnterpriseRelationship, :count).by(2)
         end
       end
 
-      it "establishes bi-directional relationships when producers are created" do
-        hub1
-        hub2
 
-        expect do
-          producer
-        end.to change(EnterpriseRelationship, :count).by(4)
+      describe "when a new hub is created" do
+        it "it creates links to the hub, from all producers owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
+          producer1
+          producer2
+          hub1
+
+          should_have_enterprise_relationship from: producer1, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
+          should_have_enterprise_relationship from: producer2, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
+        end
+
+
+        it "creates links from the new hub to all hubs owned by the same user, granting add_to_order_cycle permission" do
+          hub1
+          hub2
+          hub3
+
+          should_have_enterprise_relationship from: hub2, to: hub1, with: [:add_to_order_cycle]
+          should_have_enterprise_relationship from: hub3, to: hub1, with: [:add_to_order_cycle]
+          should_have_enterprise_relationship from: hub3, to: hub2, with: [:add_to_order_cycle]
+        end
+
+        it "does not create any other links" do
+          producer1
+          producer2
+          expect { hub1 }.to change(EnterpriseRelationship, :count).by(2) # 2 producer links
+          expect { hub2 }.to change(EnterpriseRelationship, :count).by(3) # 2 producer links + 1 hub link
+          expect { hub3 }.to change(EnterpriseRelationship, :count).by(4) # 2 producer links + 2 hub links
+        end
+      end
+
+
+      def should_have_enterprise_relationship(opts={})
+        er = EnterpriseRelationship.where(parent_id: opts[:from], child_id: opts[:to]).last
+        er.should_not be_nil
+        if opts[:with] == :all_permissions
+          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+        elsif opts.key? :with
+          er.permissions.map(&:name).sort.should == opts[:with].map(&:to_s).sort
+        end
       end
     end
   end

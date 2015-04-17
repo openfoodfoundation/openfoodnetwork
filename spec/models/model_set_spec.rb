@@ -3,14 +3,14 @@ require 'spec_helper'
 describe ModelSet do
   describe "updating" do
     it "creates new models" do
-      attrs = {collection_attributes: {'1' => {name: 'e1', description: 'foo'},
-                                       '2' => {name: 'e2', description: 'bar'}}}
+      attrs = {collection_attributes: {'1' => {name: 's1'},
+                                       '2' => {name: 's2'}}}
 
-      ms = ModelSet.new(EnterpriseGroup, EnterpriseGroup.all, attrs)
+      ms = ModelSet.new(Suburb, Suburb.all, attrs)
 
-      expect { ms.save }.to change(EnterpriseGroup, :count).by(2)
+      expect { ms.save }.to change(Suburb, :count).by(2)
 
-      EnterpriseGroup.where(name: ['e1', 'e2']).count.should == 2
+      Suburb.where(name: ['s1', 's2']).count.should == 2
     end
 
 

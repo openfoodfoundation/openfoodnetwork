@@ -137,6 +137,7 @@ FactoryGirl.define do
     name 'Enterprise group'
     description 'this is a group'
     on_front_page false
+    address { FactoryGirl.build(:address) }
   end
 
   sequence(:calculator_amount)
@@ -181,6 +182,34 @@ FactoryGirl.define do
       order.reload
     end
   end
+
+  factory :zone_with_member, :parent => :zone do
+    default_tax true
+
+    after(:create) do |zone|
+      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by_name('Australia'))
+    end
+  end
+
+  factory :taxed_product, :parent => :product do
+    ignore do
+      tax_rate_amount 0
+      zone nil
+    end
+
+    tax_category { create(:tax_category) }
+
+    after(:create) do |product, proxy|
+      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
+    end
+  end
+
+  factory :customer, :class => Customer do
+    email { Faker::Internet.email }
+    enterprise
+    code 'abc123'
+    user
+  end
 end
 
 
@@ -218,7 +247,7 @@ FactoryGirl.modify do
     country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
   end
 
-  factory :payment  do
+  factory :payment do
     ignore do
       distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     end
@@ -232,6 +261,18 @@ FactoryGirl.modify do
   factory :option_type do
     # Prevent inconsistent ordering in specs when all option types have the same (0) position
     sequence(:position)
+  end
+
+  factory :user do
+    after(:create) do |user|
+      user.spree_roles.clear # Remove admin role
+    end
+  end
+
+  factory :admin_user do
+    after(:create) do |user|
+      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+    end
   end
 end
 

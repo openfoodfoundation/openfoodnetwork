@@ -1,15 +1,17 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the GroupsHelper. For example:
-#
-# describe GroupsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 describe GroupsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+   describe "ext_url" do
+     it "adds prefix if missing" do
+       expect(helper.ext_url("http://example.com/", "http://example.com/bla")).to eq("http://example.com/bla")
+       expect(helper.ext_url("http://example.com/", "bla")).to eq("http://example.com/bla")
+     end
+   end
+   describe "strip_url" do
+     it "removes http(s)://" do
+       expect(helper.strip_url("http://example.com/")).to eq("example.com/")
+       expect(helper.strip_url("https://example.com/")).to eq("example.com/")
+       expect(helper.strip_url("example.com")).to eq("example.com")
+     end
+   end
 end

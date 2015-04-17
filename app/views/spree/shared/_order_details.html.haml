@@ -1,95 +1,166 @@
 .row
-  - if order.has_step?("address")
-    .columns.large-3
-      %h6
-        = t(:shipping_address)
-        = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-      .address
-        = order.ship_address
-    .columns.large-3
-      %h6
-        = t(:billing_address)
-        = link_to "(#{t(:edit)})", checkout_state_path(:address) unless @order.completed?
-      .address
-        = order.bill_address
-    - if @order.has_step?("delivery")
-      .columns.large-2
-        %h6
-          = t(:shipping_method)
-        .delivery
-          = order.shipping_method.name
-  .columns.large-4
-    %h6
-      = t(:payment_information)
-      = link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed?
-    .payment-info
-      = render order.payments.valid
+  .columns.large-6
+    .order-summary.text-small
+      .right
+        - if order.paid?
+          PAID
+        - else
+          NOT PAID
+      %span
+        Total order
+        %strong
+          = order.display_total.to_html
+    .pad
+      .text-big
+        Paying via:
+        %strong=  order.payments.first.andand.payment_method.andand.name.andand.html_safe
+      %p.text-small.text-skinny.pre-line
+        %em= order.payments.first.andand.payment_method.andand.description.andand.html_safe
 
-%hr/
+    .order-summary.text-small
+      %strong
+        Billing address
+    .pad
+      %p.text-small
+        = order.bill_address.firstname + " " + order.bill_address.lastname
+        %br
+        = order.bill_address.full_address
+        %br
+        = order.bill_address.phone
 
-%table#line-items{"data-hook" => "order_details"}
-  %col{halign: "center", valign: "middle", width: "15%"}/
-  %col{valign: "middle", width: "70%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %col{halign: "center", valign: "middle", width: "5%"}/
-  %thead{"data-hook" => ""}
-    %tr{"data-hook" => "order_details_line_items_headers"}
-      %th{colspan: "2"}= t(:item)
-      %th.price= t(:price)
-      %th.qty= t(:qty)
-      %th.total
-        %span= t(:total)
-  %tbody{"data-hook" => ""}
-    - @order.line_items.each do |item|
-      %tr{"data-hook" => "order_details_line_item_row"}
-        %td{"data-hook" => "order_item_image"}
-          - if item.variant.images.length == 0
-            = link_to small_image(item.variant.product), item.variant.product
-          - else
-            = link_to image_tag(item.variant.images.first.attachment.url(:small)), item.variant.product
-        %td{"data-hook" => "order_item_description"}
-          %h4= item.variant.product.name
-          = truncated_product_description(item.variant.product)
-          = "(" + item.variant.options_text + ")" unless item.variant.option_values.empty?
-        %td.price{"data-hook" => "order_item_price"}
-          %span= item.single_display_amount_with_adjustments.to_html
-        %td{"data-hook" => "order_item_qty"}= item.quantity
-        %td.total{"data-hook" => "order_item_total"}
-          %span= item.display_amount_with_adjustments.to_html
+  .columns.large-6
+    - if order.shipping_method.andand.require_ship_address
+      // Delivery option
+      .order-summary.text-small
+        %strong= order.shipping_method.name
+      .pad
+        .text-big
+          Delivery on
+          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
+        %p.text-small.text-skinny.pre-line
+          %em= order.shipping_method.description.andand.html_safe || ""
+      .order-summary.text-small
+        %strong
+          Delivery address
+      .pad
+        %p.text-small
+          = order.ship_address.firstname + " " + order.ship_address.lastname
+          %br
+          = order.ship_address.full_address
+          %br
+          = order.ship_address.phone
+        - if order.special_instructions.present?
+          %br
+          %p.light.small
+            %strong Your notes:
+            %br
+            = order.special_instructions
+    - else
+      // Collection option
+      .order-summary.text-small
+        %strong= order.shipping_method.name
+      .pad
+        .text-big
+          Ready for collection
+          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
+        %p.text-small.text-skinny.pre-line
+          %em= order.shipping_method.description.andand.html_safe || ""
+      .order-summary.text-small
+        %strong
+          Collection Address
+      .pad
+        %p.text-small
+          = order.ship_address.full_address
 
-  %tfoot#order-total{"data-hook" => "order_details_total"}
-    %tr.total
-      %td{colspan: "4"}
-        %b
-          = t(:order_total)
-          \:
-      %td.total
-        %span#order_total= @order.display_total.to_html
-
-  - if order.price_adjustment_totals.present?
-    %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
-      - @order.price_adjustment_totals.each do |key, total|
-        %tr.total
-          %td{colspan: "4"}
+        - if order.order_cycle.pickup_instructions_for(order.distributor).present?
+          %br
+          %p.text-small
             %strong
-              = key
-              \:
-          %td.total
-            %span= total
+              Collection Instructions
+            %br
+            #{order.order_cycle.pickup_instructions_for(order.distributor)}
 
-  %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
-    %tr#subtotal-row.total
-      %td{colspan: "4"}
-        %b
-          Produce:
-      %td.total
-        %span= display_checkout_subtotal(@order)
+        - if order.special_instructions.present?
+          %br
+          %p.light.small
+            %strong Your notes:
+            %br
+            = order.special_instructions
 
-  %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
-    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
-      %tr.total
-        %td{:colspan => "4"}
-          %strong= adjustment.label + ":"
-        %td.total
-          %span= adjustment.display_amount.to_html
+%br
+.row
+  .columns.large-12
+    %table#line-items{"data-hook" => "order_details"}
+      %col{valign: "middle"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %col{halign: "center", valign: "middle", width: "5%"}/
+      %thead{"data-hook" => ""}
+        %tr{"data-hook" => "order_details_line_items_headers"}
+          %th= t(:item)
+          %th.price= t(:price)
+          %th.text-center.qty= t(:qty)
+          %th.text-right.total
+            %span= t(:total)
+      %tbody{"data-hook" => ""}
+        - order.line_items.each do |item|
+          %tr{"data-hook" => "order_details_line_item_row"}
+            %td(data-hook = "order_item_description")
+
+              %div.item-thumb-image{"data-hook" => "order_item_image"}
+                - if item.variant.images.length == 0
+                  = link_to mini_image(item.variant.product), item.variant.product
+                - else
+                  = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
+
+
+              - if item.variant.product.name == item.variant.name_to_display
+                %h5
+                  %span= item.variant.product.name
+                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+              - else
+                %h5
+                  %span= item.variant.product.name
+                  %span= "- " + item.variant.name_to_display
+                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+
+            %td.text-right.price{"data-hook" => "order_item_price"}
+              %span= item.single_display_amount_with_adjustments.to_html
+            %td.text-center{"data-hook" => "order_item_qty"}= item.quantity
+            %td.text-right.total{"data-hook" => "order_item_total"}
+              %span= item.display_amount_with_adjustments.to_html
+
+      %tfoot#order-total{"data-hook" => "order_details_total"}
+        %tr.total
+          %td.text-right{colspan: "3"}
+            %h5
+              Total
+          %td.text-right.total
+            %h5#order_total= order.display_total.to_html
+
+      - if order.price_adjustment_totals.present?
+        %tfoot#price-adjustments{"data-hook" => "order_details_price_adjustments"}
+          - order.price_adjustment_totals.each do |key, total|
+            %tr.total
+              %td.text-right{colspan: "3"}
+                %strong
+                  = key
+              %td.text-right.total
+                %span= total
+
+      %tfoot#subtotal{"data-hook" => "order_details_subtotal"}
+        %tr#subtotal-row.total
+          %td.text-right{colspan: "3"}
+            %strong
+              Produce
+          %td.text-right.total
+            %span= display_checkout_subtotal(order)
+
+      %tfoot#order-charges{"data-hook" => "order_details_adjustments"}
+        - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+          %tr.total
+            %td.text-right{:colspan => "3"}
+              %strong
+                = adjustment.label
+            %td.text-right.total
+              %span= adjustment.display_amount.to_html

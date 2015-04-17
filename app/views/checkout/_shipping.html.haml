@@ -21,6 +21,10 @@
             "ng-value" => "method.id",
             "ng-model" => "order.shipping_method_id"}
             {{ method.name }}
+            %em.light{"ng-show" => "!method.price || method.price == 0"}
+              (Free)
+            %em.light{"ng-hide" => "!method.price || method.price == 0"}
+              ({{ method.price | localizeCurrency }})
 
         %small.error.medium.input-text{"ng-show" => "!fieldValid('order.shipping_method_id')"}
           = "{{ fieldErrors('order.shipping_method_id') }}"
@@ -42,7 +46,7 @@
 
       .row
         .small-12.columns
-          = f.text_area :special_instructions, label: "Any notes or custom delivery instructions?", size: "60x4", "ng-model" => "order.special_instructions"
+          = f.text_area :special_instructions, label: "Any comments or special instructions?", size: "60x4", "ng-model" => "order.special_instructions"
 
       .row
         .small-12.columns.text-right

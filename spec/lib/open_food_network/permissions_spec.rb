@@ -108,36 +108,6 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding exchanges of an order cycle that an admin can manage" do
-      let(:oc) { create(:simple_order_cycle) }
-      let!(:ex) { create(:exchange, order_cycle: oc, sender: e1, receiver: e2) }
-
-      before do
-        permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
-        permissions.stub(:related_enterprises_with) { Enterprise.where('1=0') }
-      end
-
-      it "returns exchanges involving enterprises managed by the user" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1, e2]) }
-        permissions.order_cycle_exchanges(oc).should == [ex]
-      end
-
-      it "returns exchanges involving enterprises with E2E permission" do
-        permissions.stub(:related_enterprises_with) { Enterprise.where(id: [e1, e2]) }
-        permissions.order_cycle_exchanges(oc).should == [ex]
-      end
-
-      it "does not return exchanges involving only the sender" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e1]) }
-        permissions.order_cycle_exchanges(oc).should == []
-      end
-
-      it "does not return exchanges involving only the receiver" do
-        permissions.stub(:managed_enterprises) { Enterprise.where(id: [e2]) }
-        permissions.order_cycle_exchanges(oc).should == []
-      end
-    end
-
     describe "finding managed products" do
       let!(:p1) { create(:simple_product) }
       let!(:p2) { create(:simple_product) }

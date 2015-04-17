@@ -18,13 +18,13 @@ feature %q{
     current_path.should match(/^\/admin/)
   end
 
-  scenario "anonymous user can't access CMS admin" do
+  scenario "anonymous user can't access CMS admin", js: true do
     visit cms_admin_path
     page.should_not have_content "ComfortableMexicanSofa"
-    page.should have_content "Login"
+    page.should have_content "Log in"
   end
 
-  scenario "non-admin user can't access CMS admin" do
+  scenario "non-admin user can't access CMS admin", js: true do
     login_to_consumer_section
     visit cms_admin_path
     page.should_not have_content "ComfortableMexicanSofa"

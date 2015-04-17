@@ -15,8 +15,8 @@
         "ng-controller" => "LineItemCtrl", "id" => "cart-variant-{{ line_item.variant.id }}"}
           %td
             %small
-              %strong {{ line_item.variant.name_to_display }}
-              %em {{ line_item.variant.unit_to_display }}
+              %strong
+                {{ line_item.variant.extended_name }}
           %td.text-right
             %small
               %span.quantity {{ line_item.quantity }}

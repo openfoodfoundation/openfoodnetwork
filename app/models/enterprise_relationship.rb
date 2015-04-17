@@ -28,4 +28,8 @@ class EnterpriseRelationship < ActiveRecord::Base
   def permissions_list=(perms)
     perms.andand.each { |name| permissions.build name: name }
   end
+
+  def has_permission?(name)
+    permissions.map(&:name).map(&:to_sym).include? name.to_sym
+  end
 end

@@ -1,0 +1,15 @@
+%h4.text-center Select a coordinator for your order cycle
+
+%br
+
+= form_for @order_cycle, :url => main_app.new_admin_order_cycle_path, method: :get do |f|
+  .row
+    .two.columns.alpha
+      &nbsp;
+    .ten.columns
+      = select_tag :coordinator_id, options_for_select(permitted_coordinating_enterprise_options_for(@order_cycle)), { 'required' => true, class: 'select2 fullwidth'}
+    .two.columns.alpha
+      = f.submit "Continue >"
+
+    .two.columns.omega
+      &nbsp;

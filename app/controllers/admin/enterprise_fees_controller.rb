@@ -20,6 +20,17 @@ module Admin
       end
     end
 
+    def for_order_cycle
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: ActiveModel::ArraySerializer.new( @collection,
+            each_serializer: Api::Admin::EnterpriseFeeSerializer, controller: self
+          ).to_json
+        end
+      end
+    end
+
     def bulk_update
       @enterprise_fee_set = EnterpriseFeeSet.new(params[:enterprise_fee_set])
       if @enterprise_fee_set.save
@@ -59,12 +70,26 @@ module Admin
 
     def load_data
       @calculators = EnterpriseFee.calculators.sort_by(&:name)
+      @tax_categories = Spree::TaxCategory.order('is_default DESC, name ASC')
     end
 
     def collection
-      collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
-      collection = collection.for_enterprise(current_enterprise) if current_enterprise
-      collection
+      case action
+      when :for_order_cycle
+        order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
+        coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
+        order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
+        enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
+        return EnterpriseFee.for_enterprises(enterprises).order('enterprise_id', 'fee_type', 'name')
+      else
+        collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id', 'fee_type', 'name')
+        collection = collection.for_enterprise(current_enterprise) if current_enterprise
+        collection
+      end
+    end
+
+    def collection_actions
+      [:index, :for_order_cycle]
     end
 
     def current_enterprise

@@ -1,5 +1,6 @@
 class EnterpriseFee < ActiveRecord::Base
   belongs_to :enterprise
+  belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
   has_and_belongs_to_many :order_cycles, join_table: 'coordinator_fees'
   has_many :exchange_fees, dependent: :destroy
   has_many :exchanges, through: :exchange_fees
@@ -8,7 +9,7 @@ class EnterpriseFee < ActiveRecord::Base
 
   calculated_adjustments
 
-  attr_accessible :enterprise_id, :fee_type, :name, :calculator_type
+  attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type
 
   FEE_TYPES = %w(packing transport admin sales fundraising)
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']
@@ -19,6 +20,7 @@ class EnterpriseFee < ActiveRecord::Base
 
 
   scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
+  scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')

@@ -95,4 +95,4 @@ usage instructions.
 
 ## Licence
 
-Copyright (c) 2012 - 2013 Open Food Foundation, released under the AGPL licence.
+Copyright (c) 2012 - 2015 Open Food Foundation, released under the AGPL licence.

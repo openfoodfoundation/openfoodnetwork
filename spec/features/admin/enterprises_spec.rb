@@ -368,17 +368,18 @@ feature %q{
 
         expect(find("#content-header")).to have_link "New Enterprise"
       end
+    end
 
-      context "when I have reached my enterprise ownership limit" do
-        it "does not display the link to create a new enterprise" do
-          enterprise_user.owned_enterprises.push [supplier1]
+    context "when I have reached my enterprise ownership limit", js: true do
+      it "does not display the link to create a new enterprise" do
+        supplier1.reload
+        enterprise_user.owned_enterprises.push [supplier1]
 
-          click_link "Enterprises"
+        click_link "Enterprises"
 
-          page.should have_content supplier1.name
-          page.should have_content distributor1.name
-          expect(find("#content-header")).to_not have_link "New Enterprise"
-        end
+        page.should have_content supplier1.name
+        page.should have_content distributor1.name
+        expect(find("#content-header")).to_not have_link "New Enterprise"
       end
     end
 
@@ -473,11 +474,12 @@ feature %q{
     end
 
     scenario "managing producer properties", js: true do
+      create(:property, name: "Certified Organic")
       click_link 'Enterprises'
       within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
 
-      # -- Create / update
-      fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Certified Organic"
+      # -- Update only
+      select2_select "Certified Organic", from: 'enterprise_producer_properties_attributes_0_property_name'
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
       click_button 'Update'
       page.should have_selector '#listing_enterprises a', text: supplier1.name

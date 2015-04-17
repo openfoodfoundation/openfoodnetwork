@@ -1,14 +1,12 @@
 angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) ->
-  OrderCycle = $resource '/admin/order_cycles/:order_cycle_id.json', {}, {
+  OrderCycle = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
+    'new'   : { method: 'GET', params: { action_name: "new" } }
 		'create': { method: 'POST'}
 		'update': { method: 'PUT'}}
 
   {
-    order_cycle:
-      incoming_exchanges: []
- 	    outgoing_exchanges: []
-      coordinator_fees: []
+    order_cycle: {}
 
     loaded: false
 
@@ -24,7 +22,9 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
     	exchange.showProducts = !exchange.showProducts
 
     setExchangeVariants: (exchange, variants, selected) ->
-      exchange.variants[variant] = selected for variant in variants
+      direction = if exchange.incoming then "incoming" else "outgoing"
+      editable = @order_cycle["editable_variants_for_#{direction}_exchanges"][exchange.enterprise_id] || []
+      exchange.variants[variant] = selected for variant in variants when variant in editable
 
     addSupplier: (new_supplier_id) ->
     	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
@@ -84,6 +84,20 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
       for exchange in this.order_cycle.outgoing_exchanges
         exchange.variants[variant_id] = false
 
+    new: (params, callback=null) ->
+      OrderCycle.new params, (oc) =>
+        delete oc.$promise
+        delete oc.$resolved
+        angular.extend(@order_cycle, oc)
+        @order_cycle.incoming_exchanges = []
+        @order_cycle.outgoing_exchanges = []
+        delete(@order_cycle.exchanges)
+        @loaded = true
+
+        (callback || angular.noop)(@order_cycle)
+
+      @order_cycle
+
     load: (order_cycle_id, callback=null) ->
       service = this
       OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
@@ -127,6 +141,7 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
 
     dataForSubmit: ->
       data = this.deepCopy()
+      data = this.stripNonSubmittableAttributes(data)
       data = this.removeInactiveExchanges(data)
       data = this.translateCoordinatorFees(data)
       data = this.translateExchangeFees(data)
@@ -146,6 +161,14 @@ angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) 
           exchange.enterprise_fees = (angular.extend {}, fee for fee in exchange.enterprise_fees)
 
       data
+
+    stripNonSubmittableAttributes: (order_cycle) ->
+      delete order_cycle.id
+      delete order_cycle.viewing_as_coordinator
+      delete order_cycle.editable_variants_for_incoming_exchanges
+      delete order_cycle.editable_variants_for_outgoing_exchanges
+      delete order_cycle.visible_variants_for_outgoing_exchanges
+      order_cycle
 
     removeInactiveExchanges: (order_cycle) ->
       order_cycle.incoming_exchanges =

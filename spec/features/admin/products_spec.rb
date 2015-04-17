@@ -66,7 +66,7 @@ feature %q{
       select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
 
       click_button 'Update'
-      
+
       product.reload
       product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
 
@@ -118,6 +118,8 @@ feature %q{
     end
 
     scenario "creating a new product" do
+      Spree::Config.products_require_tax_category = false
+
       click_link 'Products'
       click_link 'New Product'
 
@@ -127,7 +129,7 @@ feature %q{
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
       select taxon.name, from: "product_primary_taxon_id"
-      select tax_category.name, from: "product_tax_category_id"
+      select 'None', from: "product_tax_category_id"
 
       # Should only have suppliers listed which the user can manage
       page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
@@ -138,7 +140,7 @@ feature %q{
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier2
-      product.tax_category.should == tax_category
+      product.tax_category.should be_nil
     end
 
     scenario "editing a product" do
@@ -184,16 +186,16 @@ feature %q{
 
       # When I navigate to the product properties page
       visit spree.admin_product_product_properties_path(p)
-      page.should have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
-      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+      page.should have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
+      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
       # And I delete the property
       page.all('a.remove_fields').first.click
       wait_until { p.reload.property('fooprop').nil? }
 
       # Then the property should have been deleted
-      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop', visible: true
-      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval', visible: true
+      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
+      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
     end
 
 
@@ -203,13 +205,13 @@ feature %q{
       Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
       visit spree.admin_product_images_path(product)
-      page.should have_selector "table[data-hook='images_table'] td img", visible: true
+      page.should have_selector "table[data-hook='images_table'] td img"
       product.reload.images.count.should == 1
 
       page.find('a.delete-resource').click
       wait_until { product.reload.images.count == 0 }
 
-      page.should_not have_selector "table[data-hook='images_table'] td img", visible: true
+      page.should_not have_selector "table[data-hook='images_table'] td img"
     end
   end
 end

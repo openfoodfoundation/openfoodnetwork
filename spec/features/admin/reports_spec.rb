@@ -65,12 +65,21 @@ feature %q{
       click_link "Reports"
     end
 
-    scenario "order payment method report" do
-      click_link "Order Cycle Management"
+    scenario "payment method report" do
+      click_link "Payment Methods Report"
       rows = find("table#listing_order_payment_methods").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
-        ["First Name", "Last Name", "Email", "Phone", "Hub", "Shipping Method", "Payment Method", "Amount"]
+        ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
+      ].sort
+    end
+
+    scenario "delivery report" do
+      click_link "Delivery Report"
+      rows = find("table#listing_order_payment_methods").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
       ].sort
     end
   end
@@ -97,6 +106,66 @@ feature %q{
     click_link 'Payment Reports'
 
     page.should have_content 'Payment State'
+  end
+  
+  describe "Sales tax report" do
+    let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let(:user1) { create_enterprise_user enterprises: [distributor1] }
+    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
+
+    let!(:zone) { create(:zone_with_member) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+
+    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
+    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+
+    before do
+      Spree::Config.shipment_inc_vat = true
+      Spree::Config.shipping_tax_rate = 0.2
+
+      3.times { order1.next }
+      order1.reload.update_distribution_charge!
+
+      order1.finalize!
+
+      login_to_admin_as user1
+      click_link "Reports"
+      click_link "Sales Tax"
+    end
+  
+    it "reports" do
+      # Then it should give me access only to managed enterprises
+      page.should     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]
+      page.should_not have_select 'q_distributor_id_eq', with_options: [user2.enterprises.first.name]
+
+      # When I filter to just one distributor
+      select user1.enterprises.first.name, from: 'q_distributor_id_eq'
+      click_button 'Search'
+
+      # Then I should see the relevant order
+      page.should have_content "#{order1.number}"
+
+      # And the totals and sales tax should be correct
+      page.should     have_content "1512.99" # items total
+      page.should     have_content "1500.45" # taxable items total
+      page.should     have_content "250.08" # sales tax
+      page.should     have_content "20.0" # enterprise fee tax
+
+      # And the shipping cost and tax should be correct
+      page.should have_content "100.55" # shipping cost
+      page.should have_content "16.76" # shipping tax
+
+      # And the total tax should be correct
+      page.should have_content "286.84" # total tax
+    end
   end
 
   describe "orders & fulfilment reports" do

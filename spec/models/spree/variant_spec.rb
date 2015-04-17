@@ -104,6 +104,44 @@ module Spree
       end
     end
 
+    describe "generating the full name" do
+      let(:v) { Variant.new }
+
+      before do
+        v.stub(:display_name) { 'display_name' }
+        v.stub(:unit_to_display) { 'unit_to_display' }
+      end
+
+      it "returns unit_to_display when display_name is blank" do
+        v.stub(:display_name) { '' }
+        v.full_name.should == 'unit_to_display'
+      end
+
+      it "returns display_name when it contains unit_to_display" do
+        v.stub(:display_name) { 'DiSpLaY_name' }
+        v.stub(:unit_to_display) { 'name' }
+        v.full_name.should == 'DiSpLaY_name'
+      end
+
+      it "returns unit_to_display when it contains display_name" do
+        v.stub(:display_name) { '_to_' }
+        v.stub(:unit_to_display) { 'unit_TO_display' }
+        v.full_name.should == 'unit_TO_display'
+      end
+
+      it "returns a combination otherwise" do
+        v.stub(:display_name) { 'display_name' }
+        v.stub(:unit_to_display) { 'unit_to_display' }
+        v.full_name.should == 'display_name (unit_to_display)'
+      end
+
+      it "is resilient to regex chars" do
+        v = Variant.new display_name: ")))"
+        v.stub(:unit_to_display) { ")))" }
+        v.full_name.should == ")))"
+      end
+    end
+
     describe "calculating the price with enterprise fees" do
       it "returns the price plus the fees" do
         distributor = double(:distributor)

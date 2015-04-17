@@ -68,7 +68,7 @@ Spree::Order.class_eval do
 
   scope :with_payment_method_name, lambda { |payment_method_name|
     joins(:payments => :payment_method).
-      where('spree_payment_methods.name = ?', payment_method_name).
+      where('spree_payment_methods.name IN (?)', payment_method_name).
       select('DISTINCT spree_orders.*')
   }
 
@@ -103,13 +103,17 @@ Spree::Order.class_eval do
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     line_items(:reload)
     current_item = find_line_item_by_variant(variant)
-    if current_item
-      Bugsnag.notify(RuntimeError.new("Order populator weirdness"), {
+
+    # Notify bugsnag if we get line items with a quantity of zero
+    if quantity == 0
+      Bugsnag.notify(RuntimeError.new("Zero Quantity Line Item"), {
         current_item: current_item.as_json,
         line_items: line_items.map(&:id),
-        reloaded: line_items(:reload).map(&:id),
         variant: variant.as_json
       })
+    end
+
+    if current_item
       current_item.quantity = quantity
       current_item.max_quantity = max_quantity
 
@@ -198,16 +202,21 @@ Spree::Order.class_eval do
     Spree::ShippingMethod.all_available(self, display_on)
   end
 
+  def shipping_tax
+    adjustments(:reload).shipping.sum &:included_tax
+  end
+
+  def enterprise_fee_tax
+    adjustments(:reload).enterprise_fee.sum &:included_tax
+  end
+
+  def total_tax
+    (adjustments + price_adjustments).sum &:included_tax
+  end
+
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   def deliver_order_confirmation_email
-    begin
-      Spree::OrderMailer.confirm_email_for_customer(self.id).deliver
-      Spree::OrderMailer.confirm_email_for_shop(self.id).deliver
-    rescue Exception => e
-      Bugsnag.notify(e)
-      logger.error("#{e.class.name}: #{e.message}")
-      logger.error(e.backtrace * "\n")
-    end
+    Delayed::Job.enqueue ConfirmOrderJob.new(id)
   end
 
 

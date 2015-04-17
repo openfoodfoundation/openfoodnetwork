@@ -15,6 +15,10 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
     results << node.has_selector?(from)
 
     if results.all?
+      results << selected_option_is(from, options[:selected]) if options.key? :selected
+    end
+
+    if results.all?
       results << all_options_present(from, options[:with_options]) if options.key? :with_options
       results << exact_options_present(from, options[:options]) if options.key? :options
     end
@@ -44,6 +48,12 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
   def exact_options_present(from, options)
     with_select2_open(from) do
       @node.all("div.select2-drop-active ul.select2-results li").map(&:text) == options
+    end
+  end
+
+  def selected_option_is(from, text)
+    within find(from) do
+      find("a.select2-choice").text == text
     end
   end
 

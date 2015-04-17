@@ -15,6 +15,7 @@ class Enterprise < ActiveRecord::Base
 
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
+  has_many :properties, through: :producer_properties
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'
@@ -114,6 +115,9 @@ class Enterprise < ActiveRecord::Base
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
     joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+  scope :with_order_cycles_as_supplier_outer,
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
   scope :with_order_cycles_as_distributor_outer,
     joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
     joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
@@ -253,6 +257,10 @@ class Enterprise < ActiveRecord::Base
     self.sells != "none"
   end
 
+  def is_hub
+    self.sells == 'any'
+  end
+
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
@@ -340,7 +348,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    EnterpriseMailer.welcome(self).deliver
+    Delayed::Job.enqueue WelcomeEnterpriseJob.new(self.id)
   end
 
   def strip_url(url)
@@ -366,26 +374,30 @@ class Enterprise < ActiveRecord::Base
   end
 
   def relate_to_owners_enterprises
-    # When a new enterprise is created, we relate them to all enterprises owned by
-    # the same owner, in both directions. So all enterprises owned by the same owner
-    # will have permissions to every other one, in both directions.
+    # When a new producer is created, it grants permissions to all pre-existing hubs
+    # When a new hub is created,
+    # - it grants permissions to all pre-existing hubs
+    # - all producers grant permission to it
 
     enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
 
-    enterprises.each do |enterprise|
+    # We grant permissions to all pre-existing hubs
+    hub_permissions = [:add_to_order_cycle]
+    hub_permissions << :create_variant_overrides if is_primary_producer
+    enterprises.is_hub.each do |enterprise|
       EnterpriseRelationship.create!(parent: self,
                                      child: enterprise,
-                                     permissions_list: [:add_to_order_cycle,
-                                                        :manage_products,
-                                                        :edit_profile,
-                                                        :create_variant_overrides])
+                                     permissions_list: hub_permissions)
+    end
 
-      EnterpriseRelationship.create!(parent: enterprise,
-                                     child: self,
-                                     permissions_list: [:add_to_order_cycle,
-                                                        :manage_products,
-                                                        :edit_profile,
-                                                        :create_variant_overrides])
+    # All pre-existing producers grant permission to new hubs
+    if is_hub
+      enterprises.is_primary_producer.each do |enterprise|
+        EnterpriseRelationship.create!(parent: enterprise,
+                                       child: self,
+                                       permissions_list: [:add_to_order_cycle,
+                                                          :create_variant_overrides])
+      end
     end
   end
 

@@ -217,6 +217,7 @@ GEM
       safe_yaml (~> 0.9.0)
     css_parser (1.3.5)
       addressable
+    daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
@@ -229,6 +230,11 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    delayed_job (4.0.4)
+      activesupport (>= 3.0, < 4.2)
+    delayed_job_active_record (4.0.2)
+      activerecord (>= 3.0, < 4.2)
+      delayed_job (>= 3.0, < 4.1)
     devise (2.2.8)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -334,7 +340,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    method_source (0.8.1)
+    method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.2)
     momentjs-rails (2.5.1)
@@ -518,7 +524,7 @@ GEM
     xml-simple (1.1.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    zeus (0.13.3)
+    zeus (0.15.4)
       method_source (>= 0.6.7)
 
 PLATFORMS
@@ -538,11 +544,13 @@ DEPENDENCIES
   comfortable_mexican_sofa
   compass-rails
   custom_error_message!
+  daemons
   dalli
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
   deface!
+  delayed_job_active_record
   factory_girl_rails
   figaro
   foreigner

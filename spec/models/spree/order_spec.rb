@@ -186,6 +186,57 @@ describe Spree::Order do
     end
   end
 
+  describe "getting the shipping tax" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
+
+    context "with a taxed shipment" do
+      before do
+        Spree::Config.shipment_inc_vat = true
+        Spree::Config.shipping_tax_rate = 0.25
+        order.create_shipment!
+      end
+
+      it "returns the shipping tax" do
+        order.shipping_tax.should == 10
+      end
+    end
+
+    it "returns zero when the order has not been shipped" do
+      order.shipping_tax.should == 0
+    end
+  end
+
+  describe "getting the enterprise fee tax" do
+    let!(:order) { create(:order) }
+    let(:enterprise_fee1) { create(:enterprise_fee) }
+    let(:enterprise_fee2) { create(:enterprise_fee) }
+    let!(:adjustment1) { create(:adjustment, adjustable: order, originator: enterprise_fee1, label: "EF 1", amount: 123, included_tax: 10.00) }
+    let!(:adjustment2) { create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2", amount: 123, included_tax: 2.00) }
+
+    it "returns a sum of the tax included in all enterprise fees" do
+      order.reload.enterprise_fee_tax.should == 12
+    end
+  end
+
+  describe "getting the total tax" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
+    let(:enterprise_fee)  { create(:enterprise_fee) }
+    let!(:adjustment)     { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
+
+    before do
+      Spree::Config.shipment_inc_vat = true
+      Spree::Config.shipping_tax_rate = 0.25
+      order.create_shipment!
+      order.reload
+    end
+
+    it "returns a sum of all tax on the order" do
+      order.total_tax.should == 12
+    end
+  end
+
   describe "setting the distributor" do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
@@ -337,7 +388,7 @@ describe Spree::Order do
       end
     end
 
-    describe "with payment method name" do
+    describe "with payment method names" do
       let!(:o1) { create(:order) }
       let!(:o2) { create(:order) }
       let!(:pm1) { create(:payment_method, name: 'foo') }
@@ -345,8 +396,12 @@ describe Spree::Order do
       let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
       let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
 
-      it "returns the order with payment method name" do
-	Spree::Order.with_payment_method_name('foo').should == [o1]
+      it "returns the order with payment method name when one specified" do
+        Spree::Order.with_payment_method_name('foo').should == [o1]
+      end
+
+      it "returns the orders with payment method name when many specified" do
+        Spree::Order.with_payment_method_name(['foo', 'bar']).should include o1, o2
       end
 
       it "doesn't return rows with a different payment method name" do
@@ -355,8 +410,8 @@ describe Spree::Order do
       end
 
       it "doesn't return duplicate rows" do
-        p2 = FactoryGirl.create(:payment, :order => o1, :payment_method => pm1)
-	Spree::Order.with_payment_method_name('foo').length.should == 1
+        p2 = FactoryGirl.create(:payment, order: o1, payment_method: pm1)
+        Spree::Order.with_payment_method_name('foo').length.should == 1
       end
     end
   end
@@ -397,14 +452,10 @@ describe Spree::Order do
   end
 
   describe "sending confirmation emails" do
-    it "sends confirmation emails to both the user and the shop owner" do
-      customer_confirm_fake = double(:confirm_email_for_customer)
-      shop_confirm_fake = double(:confirm_email_for_shop)
-      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return customer_confirm_fake
-      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return shop_confirm_fake
-      expect(customer_confirm_fake).to receive :deliver
-      expect(shop_confirm_fake).to receive :deliver
-      create(:order).deliver_order_confirmation_email
+    it "sends confirmation emails" do
+      expect do
+        create(:order).deliver_order_confirmation_email
+      end.to enqueue_job ConfirmOrderJob
     end
   end
 end

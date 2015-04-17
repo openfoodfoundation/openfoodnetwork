@@ -13,6 +13,7 @@ angular.module("admin.enterprises")
       { name: 'About', icon_class: "icon-pencil" }
       { name: 'Business Details', icon_class: "icon-briefcase" }
       { name: 'Images', icon_class: "icon-picture" }
+      { name: "Properties", icon_class: "icon-tags", show: "showProperties()" }
       { name: "Shipping Methods", icon_class: "icon-truck", show: "showShippingMethods()" }
       { name: "Payment Methods", icon_class: "icon-money", show: "showPaymentMethods()" }
       { name: "Enterprise Fees", icon_class: "icon-tasks", show: "showEnterpriseFees()" }
@@ -27,6 +28,9 @@ angular.module("admin.enterprises")
         $parse(item.show)($scope)
       else
         true
+
+    $scope.showProperties = ->
+      !!$scope.Enterprise.is_primary_producer
 
     $scope.showShippingMethods = ->
       enterprisePermissions.can_manage_shipping_methods && $scope.Enterprise.sells != "none"

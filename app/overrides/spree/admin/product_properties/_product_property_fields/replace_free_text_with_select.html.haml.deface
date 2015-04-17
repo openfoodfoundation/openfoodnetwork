@@ -1,0 +1,6 @@
+/ replace_contents "td.property_name"
+
+- if spree_current_user.admin?
+  = f.text_field :property_name, :class => 'autocomplete'
+- else
+  = f.select :property_name, @properties, { :include_blank => true }, { class: 'select2 fullwidth' }

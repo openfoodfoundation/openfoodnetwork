@@ -6,6 +6,7 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
+require 'open_food_network/sales_tax_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -27,7 +28,8 @@ Spree::Admin::ReportsController.class_eval do
       ["Addresses", :addresses]
     ],
     order_cycle_management: [
-      ["Payment Methods Report", :payment_methods_report]
+      ["Payment Methods Report", :payment_methods],
+      ["Delivery Report", :delivery]
     ]
   }
 
@@ -58,7 +60,6 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:customers]
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
-    
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
   end
 
@@ -68,14 +69,13 @@ Spree::Admin::ReportsController.class_eval do
     @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params
 
     @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-
     @orders = @search.result
 
     render_report(@report.header, @report.table, params[:csv], "order_cycle_management_#{timestamp}.csv")
   end
 
   def orders_and_distributors
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -103,8 +103,38 @@ Spree::Admin::ReportsController.class_eval do
     end
   end
 
+  def sales_tax
+    params[:q] ||= {}
+
+    if params[:q][:completed_at_gt].blank?
+      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+    else
+      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
+    end
+
+    if params[:q] && !params[:q][:completed_at_lt].blank?
+      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]).end_of_day rescue ""
+    end
+    params[:q][:meta_sort] ||= "completed_at.desc"
+
+    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
+    orders = @search.result
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+
+    @report = OpenFoodNetwork::SalesTaxReport.new orders
+    unless params[:csv]
+      render :html => @report
+    else
+      csv_string = CSV.generate do |csv|
+        csv << @report.header
+        @report.table.each { |row| csv << row }
+      end
+      send_data csv_string, :filename => "sales_tax.csv"
+    end
+  end
+
   def bulk_coop
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -257,7 +287,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def payments
-    params[:q] = {} unless params[:q]
+    params[:q] ||= {}
 
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
@@ -495,18 +525,26 @@ Spree::Admin::ReportsController.class_eval do
       table_items = @line_items
       @include_blank = 'All'
 
-      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant", "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Dist (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
-                "Shipping", "Delivery?", "Ship street", "Ship street 2", "Ship city", "Ship postcode", "Ship state", "Order notes"]
+      header = ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant",
+                "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Admin & Handling (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
+                "Shipping", "Delivery?",
+                "Ship Street", "Ship Street 2", "Ship City", "Ship Postcode", "Ship State",
+                "Comments", "SKU",
+                "Order Cycle", "Payment Method", "Customer Code", "Tags",
+                "Billing Street 1", "Billing Street 2", "Billing City", "Billing Postcode", "Billing State"
+               ]
 
       rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
 
-      columns = [ proc { |line_items| line_items.first.order.distributor.name },
+      columns = [
+        proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| line_items.first.order.email },
         proc { |line_items| line_items.first.order.bill_address.phone },
         proc { |line_items| line_items.first.variant.product.supplier.name },
         proc { |line_items| line_items.first.variant.product.name },
         proc { |line_items| line_items.first.variant.full_name },
+
         proc { |line_items| line_items.sum { |li| li.quantity } },
         proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
@@ -517,25 +555,40 @@ Spree::Admin::ReportsController.class_eval do
 
         proc { |line_items| line_items.first.order.shipping_method.andand.name },
         proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
+
         proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.city if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items) },
         proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
 
-        proc { |line_items| line_items.first.order.special_instructions }]
+        proc { |line_items| "" },
+        proc { |line_items| line_items.first.variant.product.sku },
+
+        proc { |line_items| line_items.first.order.order_cycle.andand.name },
+        proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
+        proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).andand.code },
+        proc { |line_items| "" },
+
+        proc { |line_items| line_items.first.order.bill_address.andand.address1 },
+        proc { |line_items| line_items.first.order.bill_address.andand.address2 },
+        proc { |line_items| line_items.first.order.bill_address.andand.city },
+        proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
+        proc { |line_items| line_items.first.order.bill_address.andand.state } ]
 
     rules = [ { group_by: proc { |line_item| line_item.order.distributor },
       sort_by: proc { |distributor| distributor.name } },
       { group_by: proc { |line_item| line_item.order },
       sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
-      summary_columns: [ proc { |line_items| line_items.first.order.distributor.name },
+      summary_columns: [
+        proc { |line_items| line_items.first.order.distributor.name },
         proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "TOTAL" },
         proc { |line_items| "" },
+
         proc { |line_items| "" },
         proc { |line_items| line_items.sum { |li| li.amount } },
         proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
@@ -546,13 +599,27 @@ Spree::Admin::ReportsController.class_eval do
 
         proc { |line_items| "" },
         proc { |line_items| "" },
+
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
         proc { |line_items| "" },
 
-        proc { |line_items| "" } ] },
+        proc { |line_items| line_items.first.order.special_instructions } ,
+        proc { |line_items| "" },
+
+        proc { |line_items| line_items.first.order.order_cycle.andand.name },
+        proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" },
+        proc { |line_items| "" }
+      ] },
 
       { group_by: proc { |line_item| line_item.variant.product },
       sort_by: proc { |product| product.name } },
@@ -641,7 +708,8 @@ Spree::Admin::ReportsController.class_eval do
       :products_and_inventory => {:name => "Products & Inventory", :description => ''},
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
-      :order_cycle_management => {:name => "Order Cycle Management", :description => ''}
+      :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
+      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
