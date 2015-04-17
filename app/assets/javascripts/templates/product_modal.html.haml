@@ -1,28 +1,30 @@
 .row
-  
+
   .columns.small-12.large-6.product-header
     %h3 {{product.name}}
-    %span 
+    %span
       %em from
       %span.avenir {{ enterprise.name }}
-    
-    / TODO: Rob - add in taxons and properties and property pop-overs
-    / %render-svg{path: "{{product.primary_taxon.icon}}"}
-    .pad-top
-      %span.filter-shopfront.taxon-selectors
-        %ul.inline-block
-          %li
-            %a.button.tiny.disabled Grains
-          %li
-            %a.button.tiny.disabled Dairy 
 
-      %span.filter-shopfront.property-selectors.pad-top
-        %ul.inline-block
-          %li
-            %a.button.tiny Organic certified
-            / TODO: Rob - need popover, use will's directive or this? http://pineconellc.github.io/angular-foundation/
-      
-      
+
+    -# TODO: Add product taxons and properties here
+    -# / TODO: Rob - add in taxons and properties and property pop-overs
+    -# / %render-svg{path: "{{product.primary_taxon.icon}}"}
+    -# .pad-top
+    -#   %span.filter-shopfront.taxon-selectors
+    -#     %ul.inline-block
+    -#       %li
+    -#         %a.button.tiny.disabled Grains
+    -#       %li
+    -#         %a.button.tiny.disabled Dairy
+    -#
+    -#   %span.filter-shopfront.property-selectors.pad-top
+    -#     %ul.inline-block
+    -#       %li
+    -#         %a.button.tiny Organic certified
+    -#         / TODO: Rob - need popover, use will's directive or this? http://pineconellc.github.io/angular-foundation/
+
+
     %div{"ng-if" => "product.description"}
       %hr
       %p.text-small {{product.description}}
