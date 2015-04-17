@@ -60,12 +60,14 @@ feature %q{
 
   it "soft-deletes variants", js: true do
     p = create(:simple_product)
-    v = p.variants.first
+    v = create(:variant, product: p)
 
     login_to_admin_section
     visit spree.admin_product_variants_path p
 
-    page.find('a.delete-resource').click
+    within "tr#spree_variant_#{v.id}" do
+      page.find('a.delete-resource').click
+    end
     page.should_not have_content v.options_text
 
     v.reload
