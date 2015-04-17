@@ -29,11 +29,7 @@ module Spree
         product.on_hand = "10,000"
         expect(product.save).to be_false
 
-        # It is expected that master variant :count_on_hand should cause the failure to save, and it does. However, this broke with the addition of
-        # the :ensure_standard_variant callback. Evidently, normal variants are checked and their errors added to the product model before the
-        # save_master callback on product is run. Therefore, the error that is raised here is one on a normal variant, rather than one on master.
-        # expect(product.errors[:count_on_hand]).to include "is not a number"
-        expect(product.errors[:"variants.count_on_hand"]).to include "is not a number"
+        expect(product.errors[:count_on_hand]).to include "is not a number"
       end
 
       it "defaults available_on to now" do
@@ -64,9 +60,9 @@ module Spree
       it "does not allow the last variant to be deleted" do
         product = create(:simple_product)
         expect(product.variants(:reload).length).to eq 1
-        product.variants = []
-        expect(product.save).to be_false
-        expect(product.errors[:variants]).to include "Product must have at least one variant"
+        v = product.variants.last
+        v.delete
+        expect(v.errors[:product]).to include "must have at least one variant"
       end
 
       context "when the product has variants" do
