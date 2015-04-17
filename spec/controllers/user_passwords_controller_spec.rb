@@ -9,15 +9,26 @@ describe UserPasswordsController do
     ActionMailer::Base.default_url_options[:host] = "test.host"
   end
 
-  it "returns errors" do
-    spree_post :create, spree_user: {}
-    response.should be_success
-    response.should render_template "spree/user_passwords/new"
+  describe "create" do
+    it "returns errors" do
+      spree_post :create, spree_user: {}
+      response.should be_success
+      response.should render_template "spree/user_passwords/new"
+    end
+
+    it "redirects to login when data is valid" do
+      spree_post :create, spree_user: { email: user.email}
+      response.should be_redirect
+    end
   end
 
-  it "redirects to login when data is valid" do
-    spree_post :create, spree_user: { email: user.email}
-    response.should be_redirect
+  describe "edit" do
+    context "when given a redirect" do
+      it "stores the redirect path in 'spree_user_return_to'" do
+        spree_post :edit, reset_password_token: "token", return_to: "/return_path"
+        expect(session["spree_user_return_to"]).to eq "/return_path"
+      end
+    end
   end
 
   it "renders Darkswarm" do

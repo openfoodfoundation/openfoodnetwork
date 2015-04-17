@@ -32,6 +32,24 @@ class EnterpriseConfirmationsController < DeviseController
       set_flash_message(:error, :not_confirmed) if is_navigational_format?
     end
 
-    respond_with_navigational(resource){ redirect_to spree.admin_path }
+    respond_with_navigational(resource){ redirect_to redirect_path(resource) }
+  end
+
+  private
+
+  def new_user_reset_path(resource)
+    password = Devise.friendly_token.first(8)
+    user = Spree::User.create(email: resource.email, password: password, password_confirmation: password)
+    user.send_reset_password_instructions
+    resource.users << user
+    spree.edit_spree_user_password_path(user, :reset_password_token => user.reset_password_token, return_to: spree.admin_path)
+  end
+
+  def redirect_path(resource)
+    if resource.persisted? && !Spree::User.exists?(email: resource.email)
+      new_user_reset_path(resource)
+    else
+      spree.admin_path
+    end
   end
 end
