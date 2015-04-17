@@ -6,7 +6,7 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
   scope:
     objects: "&"
     activeSelectors: "="
-    allSelectors: "="
+    allSelectors: "=?" # Optional
   templateUrl: "filter_selector.html"
 
   link: (scope, elem, attr)->
