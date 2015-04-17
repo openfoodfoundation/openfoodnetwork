@@ -4,19 +4,25 @@ describe 'ProductsCtrl', ->
   event = null
   Products = null
   Cart = {}
+  Taxons = null
+  Properties = null
 
   beforeEach ->
     module('Darkswarm')
-    Products = 
+    Products =
       all: ->
       update: ->
       products: ["testy mctest"]
+      loading: false
     OrderCycle =
       order_cycle: {}
-        
-    inject ($controller) ->
-      scope = {}
-      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle, Cart: Cart}
+    Taxons:
+      taxons: []
+    Properties: {}
+
+    inject ($rootScope, $controller) ->
+      scope = $rootScope
+      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle, Cart: Cart, Taxons: Taxons, Properties: Properties}
 
   it 'fetches products from Products', ->
     expect(scope.Products.products).toEqual ['testy mctest']

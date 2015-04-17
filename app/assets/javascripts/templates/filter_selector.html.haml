@@ -1,0 +1,3 @@
+%active-selector{ ng: { repeat: "selector in selectors()", show: "ifDefined(selector.fits, true)" } }
+  %render-svg{path: "{{selector.object.icon}}", ng: { if: "selector.object.icon"} }
+  %span {{ selector.object.name }}

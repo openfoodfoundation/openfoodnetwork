@@ -6,7 +6,7 @@ describe UserRegistrationsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end
-  
+
   describe "via ajax" do
     render_views
     it "returns errors when registration fails" do
@@ -25,15 +25,31 @@ describe UserRegistrationsController do
     end
   end
 
-  it "renders new when registration fails" do
-    spree_post :create, spree_user: {}
-    response.status.should == 200
-    response.should render_template "spree/user_registrations/new"
+  context "when registration fails" do
+    it "renders new" do
+      spree_post :create, spree_user: {}
+      response.status.should == 200
+      response.should render_template "spree/user_registrations/new"
+    end
   end
 
-  it "redirects when registration succeeds" do
-    spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-    response.should be_redirect
-    assigns[:user].email.should == "test@test.com"
+  context "when registration succeeds" do
+    context "when referer is not '/checkout'" do
+      it "redirects to root" do
+        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
+        response.should redirect_to root_path
+        assigns[:user].email.should == "test@test.com"
+      end
+    end
+
+    context "when referer is '/checkout'" do
+      before { @request.env['HTTP_REFERER'] = 'http://test.com/checkout' }
+
+      it "redirects to checkout" do
+        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
+        response.should redirect_to checkout_path
+        assigns[:user].email.should == "test@test.com"
+      end
+    end
   end
 end

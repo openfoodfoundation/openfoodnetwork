@@ -28,6 +28,7 @@
     = inject_json "user", "current_user"
     = inject_json "railsFlash", "flash"
     = inject_taxons
+    = inject_properties
     = inject_current_order
     = inject_currency_config
 
@@ -37,6 +38,6 @@
 
         %section{ role: "main" }
           = yield
-          
+
           #footer
     %loading

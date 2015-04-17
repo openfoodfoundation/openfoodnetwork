@@ -2,10 +2,10 @@
   .row
     %tabset
       -# Build all tabs.
-      - for name, heading_cols in { about: ["About #{current_distributor.name}", 4], 
-        producers: ["Producers",3], 
-        groups: ["Groups",2], 
-        contact: ["Contact",3]} 
+      - for name, heading_cols in { about: ["About #{current_distributor.name}", 6], 
+        producers: ["Producers",2], 
+        contact: ["Contact",2],
+        groups: ["Groups",2]} 
         -# tabs take tab path in 'active' and 'select' functions defined in TabsCtrl.
         - heading, cols = heading_cols
         %tab.columns{heading: heading,

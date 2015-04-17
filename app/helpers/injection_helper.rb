@@ -21,6 +21,10 @@ module InjectionHelper
     inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
   end
 
+  def inject_properties
+    inject_json_ams "properties", Spree::Property.all, Api::IdNameSerializer
+  end
+
   def inject_currency_config
     inject_json_ams "currencyConfig", {}, Api::CurrencyConfigSerializer
   end

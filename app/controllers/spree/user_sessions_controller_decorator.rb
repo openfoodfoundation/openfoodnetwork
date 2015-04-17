@@ -1,4 +1,6 @@
 Spree::UserSessionsController.class_eval do
+  before_filter :set_checkout_redirect, only: :create
+
   def create
     authenticate_spree_user!
 

@@ -320,6 +320,11 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
+  # Based on a devise method, but without adding errors
+  def pending_any_confirmation?
+    !confirmed? || pending_reconfirmation?
+  end
+
   protected
 
   def devise_mailer
