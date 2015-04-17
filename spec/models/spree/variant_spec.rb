@@ -401,15 +401,17 @@ module Spree
     end
 
     context "as the last variant of a product" do
-      let!(:product) { create(:simple_product) }
-      let!(:first_variant) { product.variants(:reload).first }
-      let!(:extra_variant) { create(:variant, product: product) }
+      let!(:extra_variant) { create(:variant) }
+      let!(:product) { extra_variant.product }
+      let!(:first_variant) { product.variants.first }
+
+      before { product.reload }
 
       it "cannot be deleted" do
-        expect(product.variants(:reload).length).to eq 2
-        expect(extra_variant.destroy).to eq extra_variant
+        expect(product.variants.length).to eq 2
+        expect(extra_variant.delete).to eq extra_variant
         expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.destroy).to be_false
+        expect(first_variant.delete).to be_false
         expect(product.variants(:reload).length).to eq 1
         expect(first_variant.errors[:product]).to include "must have at least one variant"
       end

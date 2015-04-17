@@ -104,10 +104,12 @@ Spree::Variant.class_eval do
   def delete
     if product.variants == [self] # Only variant left on product
       errors.add :product, "must have at least one variant"
+      false
     else
       transaction do
         self.update_column(:deleted_at, Time.now)
         ExchangeVariant.where(variant_id: self).destroy_all
+        self
       end
     end
   end
