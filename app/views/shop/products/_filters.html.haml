@@ -1,21 +1,5 @@
-.row.animate-show{"ng-hide" => "filtersActive"}
-  .small-12.columns
-    = render partial: 'shared/components/filter_controls_shopfront'
+.filter-shopfront.taxon-selectors.text-right
+  %single-line-selectors{ objects: "Products.products | products:query | properties: activeProperties | taxonsOf", "active-selectors" => "activeTaxons"}
 
-.row.filter-box.filter-box-shopfront.animate-hide{"ng-show" => "filtersActive"}
-  .small-12.columns
-    .row.tdhead
-      .small-12.medium-6.columns
-        %h5
-          .light Filter by
-          Category
-      .small-12.medium-6.columns.text-right
-        = render partial: 'shared/components/filter_box_shopfront'
-        = render partial: 'shared/components/filter_controls_shopfront'
-        
-    .row
-      .small-12.columns
-        %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
-          %taxon-selector{objects: "Products.products | products:query | products:showProfiles",
-            results: "activeTaxons"}
-
+.filter-shopfront.property-selectors.text-right
+  %single-line-selectors{ objects: "Products.products | products:query | taxons:activeTaxons | propertiesOf", "active-selectors" => "activeProperties"}

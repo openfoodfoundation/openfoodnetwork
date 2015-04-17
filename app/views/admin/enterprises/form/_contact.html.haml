@@ -1,9 +1,10 @@
--if @enterprise.unconfirmed_email
+-if @enterprise.pending_any_confirmation?
   .alert-box
-    Email change is pending.
+    - email = @enterprise.confirmed? ? @enterprise.unconfirmed_email : @enterprise.email
+    Email confirmation is pending.
     We've sent a confirmation email to
-    %strong= "#{@enterprise.unconfirmed_email}."
-    = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.unconfirmed_email } ), method: :post)
+    %strong= "#{email}."
+    = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: email } ), method: :post)
     %a.close{ href: "#" } ×
 .row
   .alpha.three.columns

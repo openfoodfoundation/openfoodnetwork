@@ -77,7 +77,7 @@ class Enterprise < ActiveRecord::Base
   after_rollback :restore_permalink
 
   scope :by_name, order('name')
-  scope :visible, where(:visible => true)
+  scope :visible, where(visible: true)
   scope :confirmed, where('confirmed_at IS NOT NULL')
   scope :unconfirmed, where('confirmed_at IS NULL')
   scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
@@ -318,6 +318,11 @@ class Enterprise < ActiveRecord::Base
       options = (1..existing.length).to_a - used_indices
       test_permalink + options.first.to_s
     end
+  end
+
+  # Based on a devise method, but without adding errors
+  def pending_any_confirmation?
+    !confirmed? || pending_reconfirmation?
   end
 
   protected

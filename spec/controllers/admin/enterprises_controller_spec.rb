@@ -272,24 +272,19 @@ module Admin
 
         context "setting 'sells' to 'own'" do
           before do
-            enterprise.sells = 'own'
+            enterprise.sells = 'none'
             enterprise.save!
           end
 
           context "if the trial has finished" do
-            before do
-              enterprise.shop_trial_start_date = (Date.today - 30.days).to_time
-              enterprise.save!
-            end
-
             it "is disallowed" do
               Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
+                enterprise.update_attribute(:shop_trial_start_date, 30.days.ago.beginning_of_day)
                 spree_post :set_sells, { id: enterprise, sells: 'own' }
                 expect(response).to redirect_to spree.admin_path
                 trial_expiry = Date.today.strftime("%Y-%m-%d")
                 expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
-                expect(enterprise.reload.sells).to eq 'own'
-                expect(enterprise.reload.shop_trial_start_date).to eq (Date.today - 30.days).to_time
+                expect(enterprise.reload.sells).to eq 'none'
               end
             end
           end

@@ -40,6 +40,16 @@
             .field
               %label{ for: 'enterprise_acn' } ACN:
               %input.chunky{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
+        .row
+          .small-12.columns
+            .field
+              %label{ for: 'enterprise_charges_sales_tax' }= t(:charges_sales_tax)
+              %input{ id: 'enterprise_charges_sales_tax_true', type: 'radio', name: 'charges_sales_tax', value: 'true', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
+              %label{ for: 'enterprise_charges_sales_tax_true' } Yes
+              %input{ id: 'enterprise_charges_sales_tax_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
+              %label{ for: 'enterprise_charges_sales_tax_false' } No
+              %span.error.small-12.columns{ ng: { show: "about.charges_sales_tax.$error.required && submitted" } }
+                You need to make a selection.
 
     .row.buttons.pad-top
       .small-12.columns

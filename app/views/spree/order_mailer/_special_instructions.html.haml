@@ -1,0 +1,7 @@
+- if @order.special_instructions.present?
+  %br
+  %p
+    %small
+      %strong Your notes:
+      %br
+      #{@order.special_instructions}

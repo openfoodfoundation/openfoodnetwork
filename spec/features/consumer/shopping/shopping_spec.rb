@@ -125,25 +125,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
       let(:variant) { product.variants.first }
       let(:product2) { create(:simple_product, group_buy: false) }
 
-      describe "without variants" do
-        before do
-          add_product_to_order_cycle(exchange, product)
-          set_order_cycle(order, oc1)
-          visit shop_path
-        end
-
-        # TODO move to controller test
-        pending "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
-          fill_in "variants[#{variant.id}]", with: 5
-          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 1
-          add_to_cart
-          page.should have_content product.name
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          li.max_quantity.should == 5
-          li.quantity.should == 5
-        end
-      end
-
       describe "with variants on the product" do
         let(:variant) { create(:variant, product: product, on_hand: 10 ) }
         before do

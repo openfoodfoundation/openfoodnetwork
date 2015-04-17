@@ -3,8 +3,21 @@
     = f.label :abn, 'ABN'
   .omega.eight.columns
     = f.text_field :abn, { placeholder: "eg. 99 123 456 789"}
+
 .row
   .alpha.three.columns
     = f.label :acn, 'ACN'
   .omega.eight.columns
     = f.text_field :acn, { placeholder: "eg. 123 456 789"}
+
+.row
+  .three.columns.alpha
+    %label= t('charges_sales_tax')
+  .two.columns
+    = f.radio_button :charges_sales_tax, true
+    &nbsp;
+    = f.label :charges_sales_tax, "Yes", :value => "true"
+  .five.columns.omega
+    = f.radio_button :charges_sales_tax, false
+    &nbsp;
+    = f.label :charges_sales_tax, "No", :value => "false"

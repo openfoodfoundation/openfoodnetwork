@@ -1,0 +1,14 @@
+- if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
+  %p.callout
+    %span{:style => "float:right;"}
+      - if @order.paid?
+        PAID
+      - else
+        NOT PAID
+    %strong Payment summary
+  %h4
+    Paying via:
+    %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
+  %p
+    %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
+  %p &nbsp;

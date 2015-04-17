@@ -2,6 +2,8 @@
 
 // ANIMATION FUNCTIONS
 
+
+//
 @-webkit-keyframes slideInDown
   0%
     opacity: 0
@@ -21,6 +23,8 @@
     -webkit-transform: translateY(0)
     -ms-transform: translateY(0)
     transform: translateY(0)
+
+
 
 @-webkit-keyframes slideOutUp
   0%
@@ -159,6 +163,51 @@ product.animate-repeat
   animation-duration: 0.5s
   -webkit-animation-fill-mode: both
   animation-fill-mode: both
+
+//
+
+.animate-slide
+  max-height: 500px
+  opacity: 1 !important
+  -webkit-transition: all 300ms ease-in-out
+  -moz-transition: all 300ms ease-in-out
+  -o-transition: all 300ms ease-in-out
+  transition: all 300ms ease-in-out
+
+  &.ng-hide
+    overflow: hidden
+    max-height: 0
+    opacity: 0 !important
+ 
+  // &.ng-hide-add-active, &.ng-hide-remove-active
+
+  &.ng-hide-add, &.ng-hide-remove
+    /* IMPORTANT: this needs to be here to make it visible during the animation
+     since the .ng-hide class is already on the element rendering
+     it as hidden. */
+    display: block !important
+
+
+.animate-show
+  opacity: 1 !important
+  -webkit-transition: all 300ms ease-in-out
+  -moz-transition: all 300ms ease-in-out
+  -o-transition: all 300ms ease-in-out
+  transition: all 300ms ease-in-out
+
+  &.ng-hide
+    opacity: 0 !important
+ 
+  // &.ng-hide-add-active, &.ng-hide-remove-active
+
+  &.ng-hide-add, &.ng-hide-remove
+    /* IMPORTANT: this needs to be here to make it visible during the animation
+     since the .ng-hide class is already on the element rendering
+     it as hidden. */
+    display: block !important
+
+ 
+ 
 
 
 @mixin csstrans

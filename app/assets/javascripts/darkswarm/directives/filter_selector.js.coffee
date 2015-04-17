@@ -1,43 +1,51 @@
-Darkswarm.directive "taxonSelector",  (FilterSelectorsService)->
+Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
   # Automatically builds activeSelectors for taxons
   # Lots of magic here
   restrict: 'E'
   replace: true
   scope:
     objects: "&"
-    results: "="
-  templateUrl: "taxon_selector.html"
+    activeSelectors: "="
+    allSelectors: "=?" # Optional
+  templateUrl: "filter_selector.html"
 
   link: (scope, elem, attr)->
     selectors_by_id = {}
     selectors = null  # To get scoping/closure right
 
     scope.emit = ->
-      scope.results = selectors.filter (selector)->
+      scope.activeSelectors = selectors.filter (selector)->
         selector.active
       .map (selector)->
-        selector.taxon.id
+        selector.object.id
 
-    # Build hash of unique taxons, each of which gets an ActiveSelector
+    # This can be called from a parent scope
+    # when data has been loaded, in order to pass
+    # selectors up
+    scope.$on 'loadFilterSelectors', ->
+      scope.allSelectors = scope.selectors()
+
+    scope.$watchCollection "selectors()", (newValue, oldValue) ->
+      scope.allSelectors = scope.selectors()
+
+    # Build a list of selectors
     scope.selectors = ->
-      taxons = {} 
-      selectors = []
-      for object in scope.objects()
-        for taxon in object.taxons
-          taxons[taxon.id] = taxon
-        if object.supplied_taxons
-          for taxon in object.supplied_taxons
-            taxons[taxon.id] = taxon
-      
-      # Generate a selector for each taxon.
+      # Generate a selector for each object.
       # NOTE: THESE ARE MEMOIZED to stop new selectors from being created constantly, otherwise function always returns non-identical results
       # This means the $digest cycle can never close and times out
       # See http://stackoverflow.com/questions/19306452/how-to-fix-10-digest-iterations-reached-aborting-error-in-angular-1-2-fil
-      for id, taxon of taxons
+      selectors = []
+      for id, object of scope.objects()
         if selector = selectors_by_id[id]
           selectors.push selector
         else
           selector = selectors_by_id[id] = FilterSelectorsService.new
-            taxon: taxon
+            object: object
           selectors.push selector
       selectors
+
+    scope.ifDefined = (value, if_undefined) ->
+      if angular.isDefined(value)
+        value
+      else
+        if_undefined

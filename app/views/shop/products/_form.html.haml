@@ -1,24 +1,36 @@
 %products.small-12.columns{"ng-controller" => "ProductsCtrl", "ng-show" => "order_cycle.order_cycle_id != null",
 "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1"}
 
+  // TODO: Needs an ng-show to slide content down
+  .row.animate-slide{ "ng-show" => "query || appliedPropertiesList() || appliedTaxonsList()" }
+    .small-12.columns
+      .alert-box.search-alert.ng-scope
+        %a.right{"ng-click" => "clearAll()"}
+          Clear all
+          %i.ofn-i_009-close
+        %span.filter-label
+          Showing:
+          %span.applied-properties
+            {{ appliedPropertiesList() }}
+          %span.applied-taxons
+            {{ appliedTaxonsList() }}
+          %span{ ng: { hide: "!query"} }
+            %span{ "ng-show" => "appliedPropertiesList() || appliedTaxonsList()" }
+              with
+            %span.applied-search "{{ query }}"
   .row
-    .small-12.medium-8.large-9.columns
+    .small-12.medium-6.large-5.columns
       %input#search.text{"ng-model" => "query",
       placeholder: "Search by product or producer",
       "ng-debounce" => "100",
       "ofn-disable-enter" => true}
 
+    .small-12.medium-6.large-6.large-offset-1.columns
       = render partial: "shop/products/filters"
-
-    %form{action: cart_path}
-      .small-12.medium-4.large-3.columns
-        %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
-        %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 
   %div.pad-top{bindonce: true}
     %product.animate-repeat{"ng-controller" => "ProductNodeCtrl",
-      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons) track by product.id ", "id" => "product-{{ product.id }}"}
-
+      "ng-repeat" => "product in filteredProducts = (Products.products | products:query | taxons:activeTaxons | properties: activeProperties) track by product.id ", "id" => "product-{{ product.id }}"}
       = render partial: "shop/products/summary"
       %shop-variant{variant: 'product.master', "bo-if" => "!product.hasVariants", "id" => "variant-{{ product.master.id }}"}
       %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id", "id" => "variant-{{ variant.id }}"}
@@ -43,4 +55,3 @@
       %form{action: cart_path}
         %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
         %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
-

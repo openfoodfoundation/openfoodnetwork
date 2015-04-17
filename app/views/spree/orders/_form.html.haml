@@ -56,3 +56,10 @@
           %td.text-right
             %h5.order-total.grand-total= @order.display_total
           %td
+
+        - if @order.total_tax > 0
+          %tr
+            %td.text-right{colspan:"3"} (includes tax)
+            %td.text-right
+              %span.order-total.tax-total= display_checkout_tax_total(@order)
+            %td
