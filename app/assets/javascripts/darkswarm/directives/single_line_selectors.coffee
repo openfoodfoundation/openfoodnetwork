@@ -48,14 +48,15 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
           available -= selector.width
           selector.fits = true if available > 0
       else
-        for i in [scope.allSelectors.length-1..0]
-          selector = scope.allSelectors[i]
-          if !selector.fits
-            continue
-          else
-            if available < 0
-              selector.fits = false
-              available += selector.width
+        if scope.allSelectors.length > 0
+          for i in [scope.allSelectors.length-1..0]
+            selector = scope.allSelectors[i]
+            if !selector.fits
+              continue
+            else
+              if available < 0
+                selector.fits = false
+                available += selector.width
       scope.fitting = false
 
     scope.$watchCollection "allSelectors", ->
