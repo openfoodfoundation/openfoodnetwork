@@ -239,10 +239,12 @@ describe OrderCycle do
     it "returns valid products but not invalid products" do
       p_valid = create(:product)
       p_invalid = create(:product)
-      v = create(:variant, product: p_invalid)
+      v_valid = p_valid.variants.first
+      v_invalid = p_invalid.variants.first
 
       d = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, distributors: [d], variants: [p_valid.master, p_invalid.master])
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v_valid, p_invalid.master])
+
       oc.valid_products_distributed_by(d).should == [p_valid]
     end
 
@@ -313,7 +315,7 @@ describe OrderCycle do
         @oc.pickup_time_for(@d2).should == '2-8pm Friday'
       end
     end
-    
+
     describe "finding pickup instructions for a distributor" do
       it "returns the pickup instructions" do
         @oc.pickup_instructions_for(@d1).should == "Come get it!"
@@ -375,7 +377,7 @@ describe OrderCycle do
 
     occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
-    
+
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges
     occ.exchanges.map(&:to_h).all? do |ex|
@@ -402,7 +404,7 @@ describe OrderCycle do
   describe "finding order cycles opening in the future" do
     it "should give the soonest opening order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
       OrderCycle.first_opening_for(distributor).should == oc
     end
 
@@ -411,12 +413,12 @@ describe OrderCycle do
       OrderCycle.first_opening_for(distributor).should == nil
     end
   end
-  
+
   describe "finding open order cycles" do
     it "should give the soonest closing order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now) 
-      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now)
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
       OrderCycle.first_closing_for(distributor).should == oc
     end
   end

@@ -223,14 +223,16 @@ feature %q{
 
   describe "products and inventory report" do
     it "shows products and inventory report" do
-      product_1 = create(:simple_product, name: "Product Name", variant_unit: nil)
-      variant_1 = create(:variant, product: product_1, price: 100.0)
-      variant_2 = create(:variant, product: product_1, price: 80.0)
-      product_2 = create(:simple_product, name: "Product 2", price: 99.0, variant_unit: nil)
-      variant_1.update_column(:count_on_hand, 10)
-      variant_2.update_column(:count_on_hand, 20)
-      product_2.master.update_column(:count_on_hand, 9)
-      variant_1.option_values = [create(:option_value, :presentation => "Test")]
+      product1 = create(:simple_product, name: "Product Name", price: 100)
+      variant1 = product1.variants.first
+      variant2 = create(:variant, product: product1, price: 80.0)
+      product2 = create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100')
+      variant3 = product2.variants.first
+      variant1.update_column(:count_on_hand, 10)
+      variant2.update_column(:count_on_hand, 20)
+      variant3.update_column(:count_on_hand, 9)
+      variant1.option_values = [create(:option_value, :presentation => "Test")]
+      variant2.option_values = [create(:option_value, :presentation => "Something")]
 
       login_to_admin_section
       click_link 'Reports'
@@ -244,10 +246,10 @@ feature %q{
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
 
       table.sort.should == [
-        ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                    "Variant Value", "Price", "Group Buy Unit Quantity",     "Amount"],
-        [product_1.supplier.name, product_1.supplier.address.city, "Product Name", product_1.properties.join(", "), product_1.primary_taxon.name, "Test",     "100.0", product_1.group_buy_unit_size.to_s, ""],
-        [product_1.supplier.name, product_1.supplier.address.city, "Product Name", product_1.properties.join(", "), product_1.primary_taxon.name, "S",        "80.0", product_1.group_buy_unit_size.to_s, ""],
-        [product_2.supplier.name, product_1.supplier.address.city, "Product 2",    product_1.properties.join(", "), product_2.primary_taxon.name, "",         "99.0", product_1.group_buy_unit_size.to_s, ""]
+        ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                   "Variant Value",  "Price",  "Group Buy Unit Quantity",     "Amount"],
+        [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, ""],
+        [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.join(", "), product1.primary_taxon.name,   "Something",       "80.0",   product1.group_buy_unit_size.to_s, ""],
+        [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.join(", "), product2.primary_taxon.name,   "100g",           "99.0",   product1.group_buy_unit_size.to_s, ""]
       ].sort
     end
   end

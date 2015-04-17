@@ -21,9 +21,7 @@ Spree::Product.class_eval do
   attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
 
-  before_validation :ensure_standard_variant, if: :new_record?
-
-  validates_presence_of :variants, message: "Product must have at least one variant"
+  # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
   validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
@@ -34,6 +32,7 @@ Spree::Product.class_eval do
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
+  after_save :ensure_standard_variant, if: lambda { master.valid? && variants.empty? }
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   after_touch :touch_distributors

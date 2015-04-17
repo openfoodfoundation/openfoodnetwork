@@ -14,7 +14,7 @@ class Spree::ProductSet < ModelSet
     if e.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      e.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) and
+      ( attributes.except(:id, :variants_attributes, :master_attributes).present? ? e.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) and
       (attributes[:variants_attributes] ? update_variants_attributes(e, attributes[:variants_attributes]) : true ) and
       (attributes[:master_attributes] ? update_variant(e, attributes[:master_attributes]) : true )
     end

@@ -25,10 +25,11 @@ feature %q{
   end
 
 
-  scenario "editing unit value and description for a variant" do
+  scenario "editing unit value and description for a variant", js:true do
     # Given a product with unit-related option types, with a variant
     p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
-    v = create(:variant, product: p, unit_value: 1, unit_description: 'foo')
+    v = p.variants.first
+    v.update_attributes( unit_value: 1, unit_description: 'foo' )
 
     # And the product has option types for the unit-related and non-unit-related option values
     p.option_types << v.option_values.first.option_type
@@ -39,7 +40,7 @@ feature %q{
     page.find('table.index .icon-edit').click
 
     # Then I should not see a traditional option value field for the unit-related option value
-    page.all("div[data-hook='presentation'] input").count.should == 1
+    expect(page).to_not have_selector "div[data-hook='presentation'] input"
 
     # And I should see unit value and description fields for the unit-related option value
     page.should have_field "variant_unit_value", with: "1"
@@ -57,27 +58,9 @@ feature %q{
     v.unit_description.should == 'bar'
   end
 
-  it "does not show unit value or description fields when the product does not have a unit-related option type" do
-    # Given a product without unit-related option types, with a variant
-    p = create(:simple_product, variant_unit: nil, variant_unit_scale: nil)
-    v = create(:variant, product: p, unit_value: nil, unit_description: nil)
-
-    # And the product has option types for the variant's option values
-    p.option_types << v.option_values.first.option_type
-
-    # When I view the variant
-    login_to_admin_section
-    visit spree.admin_product_variants_path p
-    page.find('table.index .icon-edit').click
-
-    # Then I should not see unit value and description fields
-    page.should_not have_field "variant_unit_value"
-    page.should_not have_field "variant_unit_description"
-  end
-
   it "soft-deletes variants", js: true do
     p = create(:simple_product)
-    v = create(:variant, product: p)
+    v = p.variants.first
 
     login_to_admin_section
     visit spree.admin_product_variants_path p
