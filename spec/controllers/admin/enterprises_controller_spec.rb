@@ -277,13 +277,9 @@ module Admin
           end
 
           context "if the trial has finished" do
-            before do
-              enterprise.shop_trial_start_date = (Date.today - 30.days).to_time
-              enterprise.save!
-            end
-
             it "is disallowed" do
               Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
+                enterprise.update_attribute(:shop_trial_start_date, 30.days.ago.beginning_of_day)
                 spree_post :set_sells, { id: enterprise, sells: 'own' }
                 expect(response).to redirect_to spree.admin_path
                 trial_expiry = Date.today.strftime("%Y-%m-%d")
