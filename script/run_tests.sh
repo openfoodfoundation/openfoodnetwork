@@ -15,4 +15,4 @@ echo "--- Preparing test database"
 bundle exec rake db:test:prepare
 
 echo "--- Running tests"
-bundle exec rspec spec -f d
+bundle exec rspec spec --format progress
