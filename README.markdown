@@ -1,4 +1,4 @@
-[![Build Status](http://ci.openfood.com.au:8080/buildStatus/icon?job=openfoodweb - tests)](http://ci.openfood.com.au:8080/job/openfoodweb%20-%20tests/)
+[![Build status](https://badge.buildkite.com/e18473fffac95ed2735ca75700673bd301cac5cffc64de821a.svg?branch=master)](https://buildkite.com/open-food-foundation/open-food-network)
 [![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
