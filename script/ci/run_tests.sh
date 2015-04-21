@@ -15,8 +15,8 @@ exit_unless_master_merged
 echo "--- Bundling"
 bundle install
 
-echo "--- Preparing test database"
-bundle exec rake db:test:prepare
+echo "--- Loading test database"
+bundle exec rake db:test:load
 
 echo "--- Running tests"
 bundle exec rspec spec --format progress
