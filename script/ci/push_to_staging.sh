@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-source ./script/includes.sh
+source ./script/ci/includes.sh
 
 # Add staging git remote if required
 ST2_TEST=`git remote | grep -s 'staging2' || true`
@@ -13,7 +13,7 @@ echo "--- Verifying branch is based on current master"
 exit_unless_master_merged
 
 echo "--- Loading baseline data"
-ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/load_staging_baseline.sh"
+ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/load_staging_baseline.sh"
 
 echo "--- Pushing to staging"
 [[ $(git push staging2 $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
