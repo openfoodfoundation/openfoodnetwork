@@ -1,6 +1,7 @@
 %colgroup
   %col.actions
   %col.producer{ ng: { show: 'columns.producer.visible' } }
+  %col.sku{ ng: { show: 'columns.sku.visible' } }
   %col.name{ ng: { show: 'columns.name.visible' } }
   %col.unit{ ng: { show: 'columns.unit.visible' } }
   %col.display_as{ ng: { show: 'columns.unit.visible' } }
@@ -17,6 +18,7 @@
   %tr
     %th.left-actions
     %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
+    %th.sku{ 'ng-show' => 'columns.sku.visible' } SKU
     %th.name{ 'ng-show' => 'columns.name.visible' } Name
     %th.unit{ 'ng-show' => 'columns.unit.visible' } Unit / Value
     %th.display_as{ 'ng-show' => 'columns.unit.visible' } Display As

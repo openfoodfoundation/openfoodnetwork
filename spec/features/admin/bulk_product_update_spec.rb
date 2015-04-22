@@ -287,7 +287,7 @@ feature %q{
     s2 = FactoryGirl.create(:supplier_enterprise)
     t1 = FactoryGirl.create(:taxon)
     t2 = FactoryGirl.create(:taxon)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
     p.price = 10.0
     p.on_hand = 6;
     p.save!
@@ -300,6 +300,7 @@ feature %q{
     first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Category").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Inherits Properties?").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "SKU").click
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -310,6 +311,7 @@ feature %q{
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_field "on_hand", with: "6"
       expect(page).to have_checked_field "inherits_properties"
+      expect(page).to have_field "product_sku", with: p.sku
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
       select s2.name, :from => 'producer_id'
@@ -320,6 +322,7 @@ feature %q{
       fill_in "on_hand", with: "18"
       fill_in "display_as", with: "Big Bag"
       uncheck "inherits_properties"
+      fill_in "product_sku", with: "NEW SKU"
     end
 
     click_button 'Save Changes'
@@ -336,6 +339,7 @@ feature %q{
     expect(p.on_hand).to eq 18
     expect(p.primary_taxon).to eq t1
     expect(p.inherits_properties).to be false
+    expect(p.sku).to eq "NEW SKU"
   end
 
   scenario "updating a product with a variant unit of 'items'" do

@@ -21,7 +21,7 @@ Spree::Product.class_eval do
   attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes
   attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
-  attr_accessible :inherits_properties
+  attr_accessible :inherits_properties, :sku
 
   validates_associated :master, message: "^Price and On Hand must be valid"
   validates_presence_of :supplier

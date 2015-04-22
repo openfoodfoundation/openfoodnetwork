@@ -5,6 +5,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.columns =
       producer:             {name: "Producer",              visible: true}
+      sku:                  {name: "SKU",                   visible: false}
       name:                 {name: "Name",                  visible: true}
       unit:                 {name: "Unit",                  visible: true}
       price:                {name: "Price",                 visible: true}
@@ -286,6 +287,9 @@ filterSubmitProducts = (productsToFilter) ->
           filteredMaster ?= { id: product.master.id }
           filteredMaster.display_as = product.master.display_as
 
+        if product.hasOwnProperty("sku")
+          filteredProduct.sku = product.sku
+          hasUpdatableProperty = true
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
