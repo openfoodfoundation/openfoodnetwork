@@ -1,0 +1,26 @@
+/ insert_after 'table.index.sortable'
+
+=f.check_box :inherits_properties
+=f.label :inherits_properties, "Inherit properties from #{@product.supplier.name}? (unless overridden above)"
+%br
+%br
+
+#inherited_properties
+  %table.index
+    %thead
+      %tr{"data-hook" => "producer_properties_header"}
+        %th= t(:inherited_property)
+        %th= t(:value)
+        %th.actions
+    %tbody#producer_properties{"data-hook" => ""}
+      - @product.supplier.producer_properties.each do |producer_property|
+        %tr
+          %td= producer_property.property.presentation
+          %td= producer_property.value
+          %td.actions
+
+:coffee
+  $(document).ready ->
+    $("#inherited_properties").toggle $("input#product_inherits_properties").is(':checked')
+  $("input#product_inherits_properties").change ->
+    $("#inherited_properties").toggle $(this).is(':checked')
