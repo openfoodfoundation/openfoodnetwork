@@ -25,7 +25,7 @@ Spree::Product.class_eval do
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
   validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
-  
+
   validates_presence_of :variant_unit, if: :has_variants?
   validates_presence_of :variant_unit_scale,
                         if: -> p { %w(weight volume).include? p.variant_unit }
@@ -108,11 +108,10 @@ Spree::Product.class_eval do
 
   def properties_h
     # Product properties override producer properties
-    ps = supplier.producer_properties.inject(product_properties) do |properties, property|
-      if properties.find { |p| p.property.presentation == property.property.presentation }
-        properties
-      else
-        properties + [property]
+    ps = product_properties.all
+    supplier.producer_properties.each do |producer_property|
+      unless ps.find { |product_property| product_property.property.presentation == producer_property.property.presentation }
+        ps << producer_property
       end
     end
 
