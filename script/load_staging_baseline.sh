@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Every time staging is deployed, we load a baseline data set before running the new code's
+# migrations. This script loads the baseline data set, after first taking a backup of the
+# current database.
+
+set -e
+
+cd /home/openfoodweb/apps/openfoodweb/current
+
+echo "Stopping unicorn..."
+service unicorn_openfoodweb stop
+
+echo "Backing up current data..."
+mkdir -p db/backup
+pg_dump -h localhost -U openfoodweb openfoodweb_production |gzip > db/backup/staging-`date +%Y%m%d%H%M%S`.sql.gz
+
+echo "Loading baseline data..."
+dropdb -U openfoodweb -w openfoodweb_production
+createdb -U openfoodweb -w openfoodweb_production
+gunzip -c db/backup/staging-baseline.sql.gz |psql -h localhost -U openfoodweb openfoodweb_production
+
+echo "Restarting unicorn..."
+service unicorn_openfoodweb start
+
+echo "Done!"
