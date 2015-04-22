@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150410043302) do
+ActiveRecord::Schema.define(:version => 20150422014819) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -618,9 +618,9 @@ ActiveRecord::Schema.define(:version => 20150410043302) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -766,6 +766,7 @@ ActiveRecord::Schema.define(:version => 20150410043302) do
     t.string   "variant_unit_name"
     t.text     "notes"
     t.integer  "primary_taxon_id",                        :null => false
+    t.boolean  "inherits_properties",  :default => true,  :null => false
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"
