@@ -111,15 +111,18 @@ Spree::Product.class_eval do
   def properties_h
     # Product properties override producer properties
     ps = product_properties.all
-    supplier.producer_properties.each do |producer_property|
-      unless ps.find { |product_property| product_property.property.presentation == producer_property.property.presentation }
-        ps << producer_property
+
+    if inherits_properties
+      supplier.producer_properties.each do |producer_property|
+        unless ps.find { |product_property| product_property.property.presentation == producer_property.property.presentation }
+          ps << producer_property
+        end
       end
     end
 
     ps.
       sort_by { |pp| pp.position }.
-      map { |pp| {presentation: pp.property.presentation, value: pp.value} }
+      map { |pp| {id: pp.property.id, value: pp.value} }
   end
 
   def in_distributor?(distributor)
