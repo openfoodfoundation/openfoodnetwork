@@ -318,7 +318,7 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        product.properties_h.should == [{id: property.id, value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 12345'}]
       end
 
       it "returns producer properties as a hash" do
@@ -328,7 +328,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        product.properties_h.should == [{id: property.id, value: 'NASAA 54321'}]
+        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 54321'}]
       end
 
       it "overrides producer properties with product properties" do
@@ -339,7 +339,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        product.properties_h.should == [{id: property.id, value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 12345'}]
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -350,7 +350,7 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          product.properties_h.should == [{id: property.id, value: 'NASAA 54321'}]
+          product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 54321'}]
         end
       end
 
@@ -361,7 +361,7 @@ module Spree
         it "does not inherit producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
 
-          product.properties_h.should == []
+          product.properties_including_inherited.should == []
         end
       end
 
@@ -377,7 +377,7 @@ module Spree
         product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
         supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
 
-        product.properties_h.should ==
+        product.properties_including_inherited.should ==
           [{id: pa.id, value: '1'},
            {id: pb.id, value: '2'},
            {id: pc.id, value: '3'}]

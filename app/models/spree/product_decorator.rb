@@ -108,7 +108,7 @@ Spree::Product.class_eval do
 
   # -- Methods
 
-  def properties_h
+  def properties_including_inherited
     # Product properties override producer properties
     ps = product_properties.all
 
