@@ -318,7 +318,7 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
       end
 
       it "returns producer properties as a hash" do
@@ -328,7 +328,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 54321'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
       end
 
       it "overrides producer properties with product properties" do
@@ -339,7 +339,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -350,7 +350,7 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          product.properties_including_inherited.should == [{id: property.id, value: 'NASAA 54321'}]
+          product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
         end
       end
 
@@ -378,9 +378,9 @@ module Spree
         supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
 
         product.properties_including_inherited.should ==
-          [{id: pa.id, value: '1'},
-           {id: pb.id, value: '2'},
-           {id: pc.id, value: '3'}]
+          [{id: pa.id, name: "A", value: '1'},
+           {id: pb.id, name: "B", value: '2'},
+           {id: pc.id, name: "C", value: '3'}]
       end
     end
 
