@@ -42,7 +42,7 @@ module.exports = function(config) {
 
     autoWatch: true,
 
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     junitReporter: {
       outputFile: 'log/testacular-unit.xml',
