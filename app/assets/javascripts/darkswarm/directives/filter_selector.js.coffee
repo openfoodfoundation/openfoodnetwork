@@ -14,7 +14,7 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
     selectors = null  # To get scoping/closure right
 
     scope.readOnly = ->
-      attr.activeSelectors?
+      !attr.activeSelectors?
 
     scope.emit = ->
       scope.activeSelectors = selectors.filter (selector)->
