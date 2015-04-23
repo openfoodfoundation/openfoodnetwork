@@ -31,7 +31,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   #delegate :cache_key, to: :object
 
   attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy,
-    :notes, :description, :properties
+    :notes, :description, :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
   has_many :taxons, serializer: Api::IdSerializer
@@ -41,7 +41,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_one :master, serializer: Api::VariantSerializer
 
-  def properties
+  def properties_with_values
     object.properties_including_inherited
   end
 

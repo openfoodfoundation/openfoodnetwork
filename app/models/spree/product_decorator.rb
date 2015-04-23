@@ -122,7 +122,7 @@ Spree::Product.class_eval do
 
     ps.
       sort_by { |pp| pp.position }.
-      map { |pp| {id: pp.property.id, value: pp.value} }
+      map { |pp| {id: pp.property.id, name: pp.property.presentation, value: pp.value} }
   end
 
   def in_distributor?(distributor)
