@@ -6,10 +6,10 @@ Darkswarm.directive "activeSelector",  ->
   replace: true
   templateUrl: 'active_selector.html'
   link: (scope, elem, attr)->
-    scope.selector.emit = scope.emit
-    elem.bind "click", ->
-      scope.$apply ->
-        scope.selector.active = !scope.selector.active 
-        # This function is a convention, e.g. a callback on the scope applied when active changes
-        scope.emit() if scope.emit 
-  
+    unless scope.readOnly && scope.readOnly()
+      scope.selector.emit = scope.emit
+      elem.bind "click", ->
+        scope.$apply ->
+          scope.selector.active = !scope.selector.active
+          # This function is a convention, e.g. a callback on the scope applied when active changes
+          scope.emit() if scope.emit

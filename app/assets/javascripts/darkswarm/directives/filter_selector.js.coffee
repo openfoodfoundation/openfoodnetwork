@@ -5,13 +5,16 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
   replace: true
   scope:
     objects: "&"
-    activeSelectors: "="
+    activeSelectors: "=?"
     allSelectors: "=?" # Optional
   templateUrl: "filter_selector.html"
 
   link: (scope, elem, attr)->
     selectors_by_id = {}
     selectors = null  # To get scoping/closure right
+
+    scope.readOnly = ->
+      attr.activeSelectors?
 
     scope.emit = ->
       scope.activeSelectors = selectors.filter (selector)->
@@ -23,10 +26,10 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
     # when data has been loaded, in order to pass
     # selectors up
     scope.$on 'loadFilterSelectors', ->
-      scope.allSelectors = scope.selectors()
+      scope.allSelectors = scope.selectors() if attr.allSelectors?
 
     scope.$watchCollection "selectors()", (newValue, oldValue) ->
-      scope.allSelectors = scope.selectors()
+      scope.allSelectors = scope.selectors() if attr.allSelectors?
 
     # Build a list of selectors
     scope.selectors = ->
