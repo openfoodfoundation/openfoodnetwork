@@ -17,4 +17,13 @@ Spree::Admin::OrdersController.class_eval do
         page(params[:page]).
         per(params[:per_page] || Spree::Config[:orders_per_page])
     } } }
+
+  # Overwrite to use confirm_email_for_customer instead of confirm_email.
+  # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
+  def resend
+    Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
+    flash[:success] = t(:order_email_resent)
+
+    respond_with(@order) { |format| format.html { redirect_to :back } }
+  end
 end
