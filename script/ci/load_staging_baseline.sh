@@ -5,9 +5,8 @@
 # current database.
 
 set -e
-source ./script/ci/includes.sh
-
 cd /home/openfoodweb/apps/openfoodweb/current
+source ./script/ci/includes.sh
 
 echo "Stopping unicorn and delayed job..."
 service unicorn_openfoodweb stop
