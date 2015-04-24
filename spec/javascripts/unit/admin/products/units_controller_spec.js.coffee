@@ -53,3 +53,15 @@ describe "unitsCtrl", ->
         scope.processUnitValueWithDescription()
         expect(scope.product.master.unit_value).toEqual null
         expect(scope.product.master.unit_description).toEqual "boxes 12"
+
+      it "does not require whitespace to split unit value and description", ->
+        scope.product.master.unit_value_with_description = "12boxes"
+        scope.processUnitValueWithDescription()
+        expect(scope.product.master.unit_value).toEqual 12
+        expect(scope.product.master.unit_description).toEqual "boxes"
+
+      it "once a whitespace occurs, all subsequent numerical characters are counted as description", ->
+        scope.product.master.unit_value_with_description = "123 54 boxes"
+        scope.processUnitValueWithDescription()
+        expect(scope.product.master.unit_value).toEqual 123
+        expect(scope.product.master.unit_description).toEqual "54 boxes"

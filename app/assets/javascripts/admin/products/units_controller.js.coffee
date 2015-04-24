@@ -25,7 +25,7 @@ angular.module("admin.products")
 
     $scope.processUnitValueWithDescription = ->
       if $scope.product.master.hasOwnProperty("unit_value_with_description")
-        match = $scope.product.master.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
+        match = $scope.product.master.unit_value_with_description.match(/^([\d\.]+(?= *|$)|)( *)(.*)$/)
         if match
           $scope.product.master.unit_value  = parseFloat(match[1])
           $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
