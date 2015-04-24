@@ -4,6 +4,7 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
   scope:
     objects: "&"
     activeSelectors: "="
+    selectorName: "@activeSelectors"
   link: (scope,element,attrs) ->
     scope.fitting = false
 
