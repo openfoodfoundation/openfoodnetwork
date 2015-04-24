@@ -20,9 +20,9 @@ module Spree
       make_simple_data!
 
       context "as a line item is updated" do
-        it "apply enterprise fees on the item" do
+        it "update distribution charge on the order" do
           line_item_params = { order_id: order.number, id: line_item.id, line_item: { id: line_item.id, unit_value: 520 }, format: :json}
-          controller.should_receive(:apply_enterprise_fees).and_return(true)
+          order.should_receive(:update_distribution_charge!).and_call_original
           spree_post :update, line_item_params
         end
       end
