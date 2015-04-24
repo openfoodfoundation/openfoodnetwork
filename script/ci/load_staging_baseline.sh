@@ -9,8 +9,9 @@ source ./script/ci/includes.sh
 
 cd /home/openfoodweb/apps/openfoodweb/current
 
-echo "Stopping unicorn..."
+echo "Stopping unicorn and delayed job..."
 service unicorn_openfoodweb stop
+RAILS_ENV=staging script/delayed_job -i 0 stop
 
 echo "Backing up current data..."
 mkdir -p db/backup
@@ -22,5 +23,6 @@ gunzip -c db/backup/staging-baseline.sql.gz |psql -h localhost -U openfoodweb op
 
 echo "Restarting unicorn..."
 service unicorn_openfoodweb start
+# Delayed job is restarted by monit
 
 echo "Done!"
