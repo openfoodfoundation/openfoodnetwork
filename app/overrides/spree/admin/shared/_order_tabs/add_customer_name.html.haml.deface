@@ -1,0 +1,5 @@
+/ insert_after "code[erb-silent]:contains('content_for :page_title')"
+
+= @order.bill_address.firstname
+= @order.bill_address.lastname
+\-
