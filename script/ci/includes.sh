@@ -11,3 +11,17 @@ function exit_unless_master_merged {
 	exit 1
     fi
 }
+
+function drop_and_recreate_database {
+    # Adapted from: http://stackoverflow.com/questions/12924466/capistrano-with-postgresql-error-database-is-being-accessed-by-other-users
+    psql -U openfoodweb postgres <<EOF
+REVOKE CONNECT ON DATABASE $1 FROM public;
+ALTER DATABASE $1 CONNECTION LIMIT 0;
+SELECT pg_terminate_backend(procpid)
+FROM pg_stat_activity
+WHERE procpid <> pg_backend_pid()
+AND datname='$1';
+DROP DATABASE $1;
+CREATE DATABASE $1;
+EOF
+}
