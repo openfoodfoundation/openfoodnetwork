@@ -18,8 +18,7 @@ module Admin
         expect(Delayed::Job).to receive(:enqueue).once
         spree_post :notify_producers, {id: order_cycle.id}
 
-        # TODO: is there a better variable to use?
-        expect(response).to redirect_to spree.admin_path + '/order_cycles'
+        expect(response).to redirect_to admin_order_cycles_path
         flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
       end
     end
