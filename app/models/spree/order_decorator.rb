@@ -198,6 +198,11 @@ Spree::Order.class_eval do
     end
   end
 
+  # Does this order have shipments that can be shipped?
+  def ready_to_ship?
+    self.shipments.any?{|s| s.can_ship?}
+  end
+
   def available_shipping_methods(display_on = nil)
     Spree::ShippingMethod.all_available(self, display_on)
   end
