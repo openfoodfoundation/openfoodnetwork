@@ -6,13 +6,7 @@ class ProducerMailer < Spree::BaseMailer
     @coordinator = order_cycle.coordinator
     @order_cycle = order_cycle
 
-    subject = "[#{Spree::Config[:site_name]}] Order cycle report"
-
-    # if @order_cycle.distributors.any?
-    #   first_producer = @order_cycle.distributors.first
-    #   @distribution_date = @order_cycle.pickup_time_for first_producer
-    #   subject += " for #{@distribution_date}" if @distribution_date.present?
-    # end
+    subject = "[#{Spree::Config.site_name}] Order cycle report"
 
     @line_items = Spree::LineItem.
       joins(:order => :order_cycle, :variant => :product).
