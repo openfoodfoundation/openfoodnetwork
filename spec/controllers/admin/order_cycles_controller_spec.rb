@@ -108,14 +108,16 @@ module Admin
 
       before do
         controller.stub spree_current_user: admin_user
-        spree_post :notify_producers, {id: order_cycle.id}
       end
 
       it "enqueues a job" do
-        expect(Delayed::Job).to receive(:enqueue).once
+        expect do
+          spree_post :notify_producers, {id: order_cycle.id}
+        end.to enqueue_job OrderCycleNotificationJob
       end
 
       it "redirects back to the order cycles path with a success message" do
+        spree_post :notify_producers, {id: order_cycle.id}
         expect(response).to redirect_to admin_order_cycles_path
         flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
       end

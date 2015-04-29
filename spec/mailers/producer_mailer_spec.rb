@@ -28,7 +28,6 @@ describe ProducerMailer do
 
   it "should send an email when an order cycle is closed" do
     ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-    puts ActionMailer::Base.deliveries
     ActionMailer::Base.deliveries.count.should == 1
   end
 
