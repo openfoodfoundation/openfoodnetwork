@@ -3,6 +3,7 @@ require 'spec_helper'
 module Admin
   describe OrderCyclesController do
     include AuthenticationWorkflow
+
     let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }
 
     before do
@@ -94,6 +95,32 @@ module Admin
         end
       end
     end
+
+
+    describe "notifying producers" do
+      let(:user) { create_enterprise_user }
+      let(:admin_user) do
+        user = create(:user)
+        user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+        user
+      end
+      let(:order_cycle) { create(:simple_order_cycle) }
+
+      before do
+        controller.stub spree_current_user: admin_user
+        spree_post :notify_producers, {id: order_cycle.id}
+      end
+
+      it "enqueues a job" do
+        expect(Delayed::Job).to receive(:enqueue).once
+      end
+
+      it "redirects back to the order cycles path with a success message" do
+        expect(response).to redirect_to admin_order_cycles_path
+        flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
+      end
+    end
+
 
     describe "destroy" do
       let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }

@@ -1,0 +1,28 @@
+Dear #{@producer.name},
+\
+We now have all the consumer orders for the food drop on #{@distribution_date}.
+Please deliver to #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode} during the regular delivery time. If this is not convenient then please call #{@coordinator.phone}.
+
+Note: If you have to arrange a different delivery day and time, it is requested that you do not come on site during drop off/pick up times.
+
+\
+Orders summary
+================
+\
+Here is a summary of the orders for your products:
+\
+- @line_items.each_pair do |variant, data|
+  #{variant.sku} #{raw(variant.product.supplier.name)} #{raw(variant.product.name)} #{raw(variant.options_text)} (QTY: #{data[:quantity]}) @ #{data[:line_item].single_money} = #{data[:line_item].display_amount}
+
+\
+Detailed orders breakdown
+===========================
+
+
+Please confirm that you have got this email.
+
+Please send me an invoice for this amount so we can send you payment.
+
+If you need to phone on the day please call #{@coordinator.phone}.
+\
+Thanks and best wishes - #{@coordinator.name}
