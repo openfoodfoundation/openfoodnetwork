@@ -44,7 +44,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
           dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
             $scope.suppliers = data
             $scope.suppliers.unshift blankOption()
-            dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").then (data) ->
+            dataFetcher("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
               ocFetcher = dataFetcher("/api/order_cycles/accessible").then (data) ->

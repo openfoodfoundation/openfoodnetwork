@@ -22,7 +22,7 @@ describe "AdminOrderMgmtCtrl", ->
       returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
       httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
-      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
+      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").respond returnedDistributors
       httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
       spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
@@ -33,8 +33,8 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
 
       expect(scope.suppliers).toEqual [{ id : '0', name : 'All' }, 'list of suppliers']
-      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ] 
-      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ]
+      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ]
 
       expect(scope.initialiseVariables.calls.length).toBe 1
       expect(scope.fetchOrders.calls.length).toBe 1
