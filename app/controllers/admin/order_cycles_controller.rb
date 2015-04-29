@@ -80,8 +80,7 @@ module Admin
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
-      @order_cycle = OrderCycle.find params[:id]
-      Delayed::Job.enqueue OrderCycleNotificationJob.new(@order_cycle)
+      Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
 
       redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
     end
