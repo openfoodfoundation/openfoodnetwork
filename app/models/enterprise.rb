@@ -162,14 +162,12 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
+  # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
   scope :accessible_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
     else
-      with_order_cycles_outer.
-      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
-      select('DISTINCT enterprises.*')
+      where(id: OpenFoodNetwork::Permissions.new(user).order_cycle_enterprises)
     end
   }
 

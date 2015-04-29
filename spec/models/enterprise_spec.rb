@@ -560,20 +560,19 @@ describe Enterprise do
     end
 
     describe "accessible_by" do
-      it "shows only enterprises that are invloved in order cycles which are common to those managed by the given user" do
+      it "shows only managed enterprises and enterprises granting them P-OC" do
         user = create(:user)
         user.spree_roles = []
         e1 = create(:enterprise)
         e2 = create(:enterprise)
         e3 = create(:enterprise)
-        e4 = create(:enterprise)
         e1.enterprise_roles.build(user: user).save
-        oc = create(:simple_order_cycle, coordinator: e2, suppliers: [e1], distributors: [e3])
+        create(:enterprise_relationship, parent: e2, child: e1, permissions_list: [:add_to_order_cycle])
 
         enterprises = Enterprise.accessible_by user
-        enterprises.length.should == 3
-        enterprises.should include e1, e2, e3
-        enterprises.should_not include e4
+        enterprises.length.should == 2
+        enterprises.should include e1, e2
+        enterprises.should_not include e3
       end
 
       it "shows all enterprises for admin user" do
