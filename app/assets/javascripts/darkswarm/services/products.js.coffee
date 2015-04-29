@@ -21,6 +21,8 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
       for product in @products
         product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
+
+        product.properties = angular.copy(product.properties_with_values)
         Dereferencer.dereference product.properties, Properties.properties_by_id
 
     # May return different objects! If the variant has already been registered

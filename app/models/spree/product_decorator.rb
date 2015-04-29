@@ -18,8 +18,10 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes, :group_buy, :group_buy_unit_size
-  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value, :unit_description, :notes, :images_attributes, :display_as
+  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes
+  attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
+  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
+  attr_accessible :inherits_properties, :sku
 
   # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
@@ -107,19 +109,21 @@ Spree::Product.class_eval do
 
   # -- Methods
 
-  def properties_h
+  def properties_including_inherited
     # Product properties override producer properties
-    ps = supplier.producer_properties.inject(product_properties) do |properties, property|
-      if properties.find { |p| p.property.presentation == property.property.presentation }
-        properties
-      else
-        properties + [property]
+    ps = product_properties.all
+
+    if inherits_properties
+      supplier.producer_properties.each do |producer_property|
+        unless ps.find { |product_property| product_property.property.presentation == producer_property.property.presentation }
+          ps << producer_property
+        end
       end
     end
 
     ps.
       sort_by { |pp| pp.position }.
-      map { |pp| {presentation: pp.property.presentation, value: pp.value} }
+      map { |pp| {id: pp.property.id, name: pp.property.presentation, value: pp.value} }
   end
 
   def in_distributor?(distributor)

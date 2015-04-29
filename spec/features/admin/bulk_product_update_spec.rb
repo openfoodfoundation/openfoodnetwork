@@ -231,6 +231,55 @@ feature %q{
     expect(page).to have_selector "a.edit-variant", visible: true
   end
 
+  scenario "updating product attributes" do
+    s1 = FactoryGirl.create(:supplier_enterprise)
+    s2 = FactoryGirl.create(:supplier_enterprise)
+    t1 = FactoryGirl.create(:taxon)
+    t2 = FactoryGirl.create(:taxon)
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+
+    login_to_admin_section
+
+    visit '/admin/products/bulk_edit'
+
+    first("div#columns_dropdown", :text => "COLUMNS").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "Category").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "Inherits Properties?").click
+    first("div#columns_dropdown div.menu div.menu_item", text: "SKU").click
+
+    within "tr#p_#{p.id}" do
+      expect(page).to have_field "product_name", with: p.name
+      expect(page).to have_select "producer_id", selected: s1.name
+      expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
+      expect(page).to have_select2 "p#{p.id}_category_id", selected: t2.name
+      expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
+      expect(page).to have_checked_field "inherits_properties"
+      expect(page).to have_field "product_sku", with: p.sku
+
+      fill_in "product_name", with: "Big Bag Of Potatoes"
+      select s2.name, :from => 'producer_id'
+      fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
+      select "Weight (kg)", from: "variant_unit_with_scale"
+      select2_select t1.name, from: "p#{p.id}_category_id"
+      uncheck "inherits_properties"
+      fill_in "product_sku", with: "NEW SKU"
+    end
+
+    click_button 'Save Changes'
+    expect(page.find("#status-message")).to have_content "Changes saved."
+
+    p.reload
+    expect(p.name).to eq "Big Bag Of Potatoes"
+    expect(p.supplier).to eq s2
+    expect(p.variant_unit).to eq "weight"
+    expect(p.variant_unit_scale).to eq 1000 # Kg
+    expect(p.available_on).to eq 3.days.ago.beginning_of_day
+    expect(p.primary_taxon).to eq t1
+    expect(p.inherits_properties).to be false
+    expect(p.sku).to eq "NEW SKU"
+  end
+
   scenario "updating a product with a variant unit of 'items'" do
     p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 

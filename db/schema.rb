@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150410043302) do
+ActiveRecord::Schema.define(:version => 20150424025907) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -373,9 +373,9 @@ ActiveRecord::Schema.define(:version => 20150410043302) do
     t.string   "value"
     t.integer  "producer_id"
     t.integer  "property_id"
-    t.integer  "position"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "position",    :default => 0, :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   add_index "producer_properties", ["position"], :name => "index_producer_properties_on_position"
@@ -766,6 +766,7 @@ ActiveRecord::Schema.define(:version => 20150410043302) do
     t.string   "variant_unit_name"
     t.text     "notes"
     t.integer  "primary_taxon_id",                        :null => false
+    t.boolean  "inherits_properties",  :default => true,  :null => false
   end
 
   add_index "spree_products", ["available_on"], :name => "index_products_on_available_on"

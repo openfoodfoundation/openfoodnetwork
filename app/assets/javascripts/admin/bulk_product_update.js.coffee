@@ -4,13 +4,15 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.StatusMessage = StatusMessage
 
     $scope.columns =
-      producer:     {name: "Producer",      visible: true}
-      name:         {name: "Name",          visible: true}
-      unit:         {name: "Unit",          visible: true}
-      price:        {name: "Price",         visible: true}
-      on_hand:      {name: "On Hand",       visible: true}
-      category:     {name: "Category",      visible: false}
-      available_on: {name: "Available On",  visible: false}
+      producer:             {name: "Producer",              visible: true}
+      sku:                  {name: "SKU",                   visible: false}
+      name:                 {name: "Name",                  visible: true}
+      unit:                 {name: "Unit",                  visible: true}
+      price:                {name: "Price",                 visible: true}
+      on_hand:              {name: "On Hand",               visible: true}
+      category:             {name: "Category",              visible: false}
+      inherits_properties:  {name: "Inherits Properties?",  visible: false}
+      available_on:         {name: "Available On",          visible: false}
 
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
@@ -288,6 +290,9 @@ filterSubmitProducts = (productsToFilter) ->
           filteredMaster ?= { id: product.master.id }
           filteredMaster.display_as = product.master.display_as
 
+        if product.hasOwnProperty("sku")
+          filteredProduct.sku = product.sku
+          hasUpdatableProperty = true
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
@@ -309,6 +314,9 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("category_id")
           filteredProduct.primary_taxon_id = product.category_id
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("inherits_properties")
+          filteredProduct.inherits_properties = product.inherits_properties
           hasUpdatableProperty = true
         if product.hasOwnProperty("available_on")
           filteredProduct.available_on = product.available_on

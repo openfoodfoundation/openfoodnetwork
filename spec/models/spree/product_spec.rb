@@ -353,8 +353,9 @@ module Spree
       it "returns product properties as a hash" do
         product = create(:simple_product)
         product.set_property 'Organic Certified', 'NASAA 12345'
+        property = product.properties.last
 
-        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
       end
 
       it "returns producer properties as a hash" do
@@ -362,8 +363,9 @@ module Spree
         product = create(:simple_product, supplier: supplier)
 
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+        property = supplier.properties.last
 
-        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 54321'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
       end
 
       it "overrides producer properties with product properties" do
@@ -372,8 +374,32 @@ module Spree
 
         product.set_property 'Organic Certified', 'NASAA 12345'
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+        property = product.properties.last
 
-        product.properties_h.should == [{presentation: 'Organic Certified', value: 'NASAA 12345'}]
+        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
+      end
+
+      context "when product has an inherit_properties value set to true" do
+        let(:supplier) { create(:supplier_enterprise) }
+        let(:product) { create(:simple_product, supplier: supplier, inherits_properties: true) }
+
+        it "inherits producer properties" do
+          supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+          property = supplier.properties.last
+
+          product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
+        end
+      end
+
+      context "when product has an inherit_properties value set to true" do
+        let(:supplier) { create(:supplier_enterprise) }
+        let(:product) { create(:simple_product, supplier: supplier, inherits_properties: false) }
+
+        it "does not inherit producer properties" do
+          supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
+
+          product.properties_including_inherited.should == []
+        end
       end
 
       it "sorts by position" do
@@ -388,10 +414,10 @@ module Spree
         product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
         supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
 
-        product.properties_h.should ==
-          [{presentation: 'A', value: '1'},
-           {presentation: 'B', value: '2'},
-           {presentation: 'C', value: '3'}]
+        product.properties_including_inherited.should ==
+          [{id: pa.id, name: "A", value: '1'},
+           {id: pb.id, name: "B", value: '2'},
+           {id: pc.id, name: "C", value: '3'}]
       end
     end
 
