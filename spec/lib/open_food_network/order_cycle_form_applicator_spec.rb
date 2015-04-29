@@ -11,7 +11,7 @@ module OpenFoodNetwork
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :incoming => true, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2]}
+        incoming_exchange = {:enterprise_id => supplier_id, :incoming => true, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :receival_time => 'receival time', :receival_instructions => 'receival instructions'}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [incoming_exchange], :outgoing_exchanges => [])
 
@@ -19,7 +19,7 @@ module OpenFoodNetwork
 
         applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(false)
-        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2]})
+        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_time => 'receival time', :receival_instructions => 'receival instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -47,7 +47,7 @@ module OpenFoodNetwork
         coordinator_id = 123
         supplier_id = 456
 
-        incoming_exchange = {:enterprise_id => supplier_id, :incoming => true, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2]}
+        incoming_exchange = {:enterprise_id => supplier_id, :incoming => true, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :receival_time => 'receival time', :receival_instructions => 'receival instructions'}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
@@ -59,7 +59,7 @@ module OpenFoodNetwork
 
         applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(true)
-        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2]})
+        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_time => 'receival time', :receival_instructions => 'receival instructions'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!

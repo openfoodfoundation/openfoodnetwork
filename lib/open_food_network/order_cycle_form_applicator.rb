@@ -1,3 +1,5 @@
+require 'open_food_network/order_cycle_permissions'
+
 module OpenFoodNetwork
 
   # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
