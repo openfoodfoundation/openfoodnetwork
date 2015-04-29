@@ -65,7 +65,7 @@ Spree::Api::ProductsController.class_eval do
   end
 
   def render_paged_products(products)
-    render text: { products: ActiveModel::ArraySerializer.new(products, each_serializer: Spree::Api::ProductSerializer), pages: products.num_pages }.to_json
+    render text: { products: ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::ProductSerializer), pages: products.num_pages }.to_json
   end
 
 end

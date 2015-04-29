@@ -1,12 +1,14 @@
 %colgroup
   %col.actions
   %col.producer{ ng: { show: 'columns.producer.visible' } }
+  %col.sku{ ng: { show: 'columns.sku.visible' } }
   %col.name{ ng: { show: 'columns.name.visible' } }
   %col.unit{ ng: { show: 'columns.unit.visible' } }
   %col.display_as{ ng: { show: 'columns.unit.visible' } }
   %col.price{ ng: { show: 'columns.price.visible'} }
   %col.on_hand{ ng: { show: 'columns.on_hand.visible' } }
   %col.category{ ng: { show: 'columns.category.visible' } }
+  %col.inherits_properties{ ng: { show: 'columns.inherits_properties.visible' } }
   %col.available_on{ ng: { show: 'columns.available_on.visible' } }
   %col.actions
   %col.actions
@@ -16,12 +18,14 @@
   %tr
     %th.left-actions
     %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
+    %th.sku{ 'ng-show' => 'columns.sku.visible' } SKU
     %th.name{ 'ng-show' => 'columns.name.visible' } Name
     %th.unit{ 'ng-show' => 'columns.unit.visible' } Unit / Value
     %th.display_as{ 'ng-show' => 'columns.unit.visible' } Display As
     %th.price{ 'ng-show' => 'columns.price.visible' } Price
     %th.on_hand{ 'ng-show' => 'columns.on_hand.visible' } On Hand
     %th.category{ 'ng-show' => 'columns.category.visible' } Category
+    %th.inherits_properties{ 'ng-show' => 'columns.inherits_properties.visible' } Inherits Properties?
     %th.available_on{ 'ng-show' => 'columns.available_on.visible' } Av. On
     %th.actions
     %th.actions

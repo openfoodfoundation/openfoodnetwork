@@ -69,7 +69,7 @@ describe 'Products service', ->
     expect(Products.products[0].taxons[1]).toBe taxons[0]
 
   it "dereferences properties", ->
-    product.properties = [1]
+    product.properties_with_values = [1]
     $httpBackend.expectGET("/shop/products").respond([product])
     $httpBackend.flush()
     expect(Products.products[0].properties[1]).toBe properties[0]
