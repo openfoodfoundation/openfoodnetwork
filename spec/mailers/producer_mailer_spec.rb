@@ -17,9 +17,11 @@ describe ProducerMailer do
     order.save
     order
   end
+  let(:mail) { ActionMailer::Base.deliveries.last }
 
   before do
     ActionMailer::Base.deliveries.clear
+    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
   end
 
   after do
@@ -27,26 +29,22 @@ describe ProducerMailer do
   end
 
   it "should send an email when an order cycle is closed" do
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
     ActionMailer::Base.deliveries.count.should == 1
   end
 
   it "sets a reply-to of the enterprise email" do
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-    ActionMailer::Base.deliveries.last.reply_to.should == [s1.email]
+    mail.reply_to.should == [s1.email]
   end
 
   it "cc's the enterprise" do
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-    ActionMailer::Base.deliveries.last.cc.should == [s1.email]
+    mail.cc.should == [s1.email]
   end
 
   it "contains an aggregated list of produce" do
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-    email_body = ActionMailer::Base.deliveries.last.body
+    email_body = mail.body
     email_body.to_s.each_line do |line|
       if line.include? p1.name
-        line.include?('QTY: 2').should == true
+        line.should include 'QTY: 2'
       end
     end
   end
