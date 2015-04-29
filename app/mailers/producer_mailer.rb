@@ -11,7 +11,8 @@ class ProducerMailer < Spree::BaseMailer
     @line_items = Spree::LineItem.
       joins(:order => :order_cycle, :variant => :product).
       where('order_cycles.id = ?', order_cycle).
-      where('spree_products.supplier_id = ?', producer)
+      where('spree_products.supplier_id = ?', producer).
+      merge(Spree::Order.complete)
 
     # Arrange the items in a hash to group quantities
     @line_items = @line_items.inject({}) do |lis, li|

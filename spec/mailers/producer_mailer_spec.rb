@@ -7,6 +7,7 @@ describe ProducerMailer do
   let(:d2) { create(:distributor_enterprise, address: create(:address)) }
   let(:p1) { create(:product, price: 12.34, supplier: s1) }
   let(:p2) { create(:product, price: 23.45, supplier: s2) }
+  let(:p3) { create(:product, price: 34.56, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:order) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
@@ -17,15 +18,17 @@ describe ProducerMailer do
     order.save
     order
   end
+  let!(:order_incomplete) do
+    order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'payment')
+    order.line_items << create(:line_item, variant: p3.master)
+    order.save
+    order
+  end
   let(:mail) { ActionMailer::Base.deliveries.last }
 
   before do
     ActionMailer::Base.deliveries.clear
     ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-  end
-
-  after do
-    ActionMailer::Base.deliveries.clear
   end
 
   it "should send an email when an order cycle is closed" do
@@ -41,11 +44,14 @@ describe ProducerMailer do
   end
 
   it "contains an aggregated list of produce" do
-    email_body = mail.body
-    email_body.to_s.each_line do |line|
+    mail.body.to_s.each_line do |line|
       if line.include? p1.name
         line.should include 'QTY: 2'
       end
     end
+  end
+
+  it "does not include incomplete orders" do
+    mail.body.should_not include p3.name
   end
 end
