@@ -81,9 +81,11 @@ feature "Authentication", js: true do
 
           scenario "resetting password" do
             fill_in "Your email", with: user.email
-            click_reset_password_button
-            page.should have_reset_password
-            ActionMailer::Base.deliveries.last.subject.should =~ /Password Reset/
+            expect do
+              click_reset_password_button
+              page.should have_reset_password
+            end.to enqueue_job Delayed::PerformableMethod
+            Delayed::Job.last.payload_object.method_name.should == :send_reset_password_instructions_without_delay
           end
         end
       end

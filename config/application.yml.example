@@ -5,8 +5,8 @@
 SECRET_TOKEN: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 TIMEZONE: Melbourne
-# Default country for dropdowns etc.
-DEFAULT_COUNTRY: Australia
+# Default country for dropdowns etc. See for codes: http://en.wikipedia.org/wiki/ISO_3166-1
+DEFAULT_COUNTRY_CODE: AU
 # Locale for translation.
 LOCALE: en
 # Spree zone.
