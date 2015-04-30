@@ -9,6 +9,13 @@ Spree::Admin::OrdersController.class_eval do
   # in an auth failure as the @order object is nil for collection actions
   before_filter :check_authorization, :except => :bulk_management
 
+  # After updating an order, the fees should be updated as well
+  # Currently, adding or deleting line items does not trigger updating the
+  # fees! This is a quick fix for that.
+  # TODO: update fees when adding/removing line items
+  # instead of the update_distribution_charge method.
+  after_filter :update_distribution_charge, :only => :update
+
   respond_override :index => { :html =>
     { :success => lambda { 
       # Filter orders to only show those distributed by current user (or all for admin user)
@@ -25,5 +32,9 @@ Spree::Admin::OrdersController.class_eval do
     flash[:success] = t(:order_email_resent)
 
     respond_with(@order) { |format| format.html { redirect_to :back } }
+  end
+
+  def update_distribution_charge
+    @order.update_distribution_charge!
   end
 end
