@@ -1,0 +1,2 @@
+--format progress
+--format ParallelTests::RSpec::SummaryLogger --out tmp/spec_summary.log
