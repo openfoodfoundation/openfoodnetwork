@@ -49,6 +49,8 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
               $scope.distributors.unshift blankOption()
               ocFetcher = dataFetcher("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=#{formatDate(daysFromToday(-90))}").then (data) ->
                 $scope.orderCycles = data
+                $scope.orderCyclesByID = []
+                $scope.orderCyclesByID[oc.id] = oc for oc in $scope.orderCycles
                 $scope.orderCycles.unshift blankOption()
                 $scope.fetchOrders()
               ocFetcher.then ->
@@ -162,6 +164,11 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.supplierFilter = $scope.suppliers[0].id
       $scope.orderCycleFilter = $scope.orderCycles[0].id
       $scope.quickSearch = ""
+
+    $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
+      unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)
+        $scope.startDate = $scope.orderCyclesByID[$scope.orderCycleFilter].first_order
+        $scope.endDate = $scope.orderCyclesByID[$scope.orderCycleFilter].last_order
 ]
 
 daysFromToday = (days) ->
