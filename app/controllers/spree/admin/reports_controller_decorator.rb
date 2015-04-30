@@ -420,13 +420,17 @@ Spree::Admin::ReportsController.class_eval do
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
 
+    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+
     # My distributors and any distributors distributing products I supply
-    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    @distributors = permissions.order_cycle_enterprises.is_distributor
 
     # My suppliers and any suppliers supplying products I distribute
-    @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @suppliers = permissions.order_cycle_enterprises.is_primary_producer
 
-    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+    @order_cycles = OrderCycle.active_or_complete.
+    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
 
