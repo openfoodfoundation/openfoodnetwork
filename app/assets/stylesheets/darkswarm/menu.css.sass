@@ -2,10 +2,6 @@
 @import mixins
 @import typography
 
-
-.fixed .top-bar 
-  @include box-shadow(0 2px 3px 0 rgba(0,0,0,0.25))
-
 nav
   @include textpress
   .joyride-tip-guide .button
@@ -38,8 +34,11 @@ nav
     span
       font-size: 13px
   .nav-primary
-    @include avenir
+    @include headingFont
     font-size: 0.875rem
+    font-weight: 300
+  .left .nav-primary
+    text-transform: uppercase
 
 
 // Mobile Menu
@@ -59,7 +58,7 @@ nav
   font-size: 0.875rem
 
   .li-menu
-    @include avenir
+    @include headingFont
     font-size: 1rem
     a
       color: rgba(255, 255, 255, 0.9)

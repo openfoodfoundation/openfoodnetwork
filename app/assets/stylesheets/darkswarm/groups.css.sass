@@ -1,5 +1,6 @@
 @import branding
 @import mixins
+@import typography
 
 // Search page
 #groups
@@ -65,7 +66,7 @@
     margin-bottom: -2px
     margin-right: 2px
     text-transform: capitalize
-    @include avenir
+    @include headingFont
     @include border-radius(1em 0.25em 0 0) 
     @include gradient($disabled-light, $disabled-bright)
   @media screen and (min-width: 768px)

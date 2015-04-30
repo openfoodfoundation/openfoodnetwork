@@ -1,13 +1,14 @@
 @import foundation/components/buttons
 @import branding
 @import mixins
+@import typography
 
 // Button class extensions
 
 .neutral-btn
   @include button
   @include border-radius(0.5em)
-  font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  font-family: $bodyFont
   background-color: transparent
   border: 2px solid rgba(200, 200, 200, 1)
   color: #999
@@ -49,7 +50,7 @@
   outline: none // Turn off blue highlight on chrome
 
 .button.primary, button.primary
-  font-family: 'Open Sans', Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif
+  font-family: $bodyFont
   background: $clr-brick
   color: white
 

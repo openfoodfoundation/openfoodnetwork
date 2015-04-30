@@ -3,16 +3,11 @@
     %ul.left{}
       %li.ofn-logo
         %a{href: root_path} 
-          %img{src: "/assets/open-food-network-beta.png", srcset: "/assets/open-food-network-beta.svg", width: "110", height: "26"}
-      %li.divider
-      - if current_page? root_path
-        %li
-          %a{"ofn-scroll-to" => "hubs"}
-            %span.nav-primary Hubs
-      - else
-        %li
-          %a{href: root_path + "#/#hubs"}
-            %span.nav-primary Hubs
+          %img{src: "/assets/logo-white.png", srcset: "/assets/logo-white.svg", width: "75", height: "26"}
+      %li.divider 
+      %li
+        %a{href: main_app.shops_path}
+          %span.nav-primary Shops
       %li.divider
       %li
         %a{href: main_app.map_path}
@@ -25,6 +20,11 @@
       %li
         %a{href: main_app.groups_path}
           %span.nav-primary Groups
+      %li.divider
+      %li
+        // TODO: LAURA - About path
+        %a{href: main_app.groups_path}
+          %span.nav-primary About
       %li.divider
   %section.top-bar-section
     %ul.right

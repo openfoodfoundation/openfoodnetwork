@@ -1,24 +1,17 @@
 @import branding
-//@import mixins
 
-@font-face
-  font-family: 'AvenirBla_IE'
-  src: url("/AveniBla.eot") format("opentype")
+@mixin headingFont
+  font-family: 'Oswald', sans-serif
 
-@font-face
-  font-family: 'AvenirBla'
-  src: url("/AvenirLTStd-Black.otf") format("opentype")
+@mixin bodyFont
+  font-family: 'Roboto', Arial, sans-serif
 
-@font-face
-  font-family: 'AvenirMed_IE'
-  src: url("/AveniMed.eot") format("opentype")
+$headingFont: 'Oswald'
+$bodyFont: 'Roboto'
 
-@font-face
-  font-family: 'AvenirMed'
-  src: url("/AvenirLTStd-Medium.otf") format("opentype")
-
-$font-helvetica: "Helvetica Neue", "HelveticaNeue", "Helvetica", Helvetica, Arial, sans-serif
-  
+body
+  @include bodyFont 
+  font-weight: 400  
 a
   color: $clr-brick
   &:hover, &:focus, &:active
@@ -35,17 +28,17 @@ small, .small
 .text-small
   font-size: 0.875rem
   margin-bottom: 0.5rem
-  font-family: $font-helvetica
+  font-family: $bodyFont
   &, & *
     font-size: 0.875rem
 
 .text-normal
   font-weight: 400
-  font-family: $font-helvetica
+  font-family: $bodyFont
 
 .text-skinny
   font-weight: 300
-  font-family: $font-helvetica
+  font-family: $bodyFont
 
 .word-wrap
   word-wrap: break-word
@@ -69,11 +62,10 @@ small, .small
 .brick
   color: $clr-brick
 
-@mixin avenir
-  font-family: "AvenirBla_IE", "AvenirBla"
 
-h1, h2, h3, h4, h5, h6, .avenir
-  @include avenir
+
+h1, h2, h3, h4, h5, h6
+  @include headingFont
   padding: 0px
 
 ul.bullet-list, ul.check-list
@@ -107,9 +99,6 @@ ul.check-list
 
 .not-bold
   font-weight: normal
-
-strong.avenir
-  font-weight: normal // Avenir is basically bold anyway
 
   
 // These selectors match the default Foundation selectors

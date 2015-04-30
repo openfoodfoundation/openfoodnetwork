@@ -1,3 +1,4 @@
+@import typography
 
 .darkswarm
 
@@ -20,7 +21,7 @@
         margin-right: 12px
         
       location
-        font-family: "AvenirBla_IE", "AvenirBla"
+        @include headingFont
       @media all and (max-width: 768px)
         location, location + small
           display: block

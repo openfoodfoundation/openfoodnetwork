@@ -17,7 +17,17 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   resources :groups
-  resources :producers
+  resources :producers, only: [:index] do
+    collection do
+      get :signup
+    end
+  end
+
+  resources :shops, only: [:index] do
+    collection do
+      get :signup
+    end
+  end
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
