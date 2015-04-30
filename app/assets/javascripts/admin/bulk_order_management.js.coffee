@@ -60,7 +60,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
 
     $scope.fetchOrders = ->
       $scope.loading = true
-      dataFetcher("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[completed_at_not_null]=true;q[completed_at_gt]=#{$scope.startDate};q[completed_at_lt]=#{$scope.endDate}").then (data) ->
+      dataFetcher("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=#{$scope.startDate};q[completed_at_lt]=#{$scope.endDate}").then (data) ->
         $scope.resetOrders data
         $scope.loading = false
 
