@@ -9,7 +9,7 @@ if [[ "$PROD_TEST" != *production* ]]; then
 fi
 
 echo "--- Saving baseline data for staging"
-ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/save_staging_baseline.sh $BUILDKITE_COMMIT"
+ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/save_staging_baseline.sh $BUILDKITE_COMMIT"
 
 echo "--- Pushing to production"
 [[ $(git push production $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]

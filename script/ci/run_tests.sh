@@ -3,10 +3,11 @@
 set -e
 
 echo "--- Loading environment"
-source /var/lib/jenkins/.rvm/environments/ruby-1.9.3-p392
-if [ ! -f config/application.yml ]; then
-    ln -s application.yml.example config/application.yml
-fi
+source ./script/ci/includes.sh
+load_environment
+
+echo "--- Verifying branch is based on current master"
+exit_unless_master_merged
 
 echo "--- Bundling"
 bundle install
