@@ -47,7 +47,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
             dataFetcher("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").then (data) ->
               $scope.distributors = data
               $scope.distributors.unshift blankOption()
-              ocFetcher = dataFetcher("/api/order_cycles/accessible").then (data) ->
+              ocFetcher = dataFetcher("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=#{formatDate(daysFromToday(-90))}").then (data) ->
                 $scope.orderCycles = data
                 $scope.orderCycles.unshift blankOption()
                 $scope.fetchOrders()

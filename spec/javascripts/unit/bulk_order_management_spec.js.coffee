@@ -23,7 +23,7 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").respond returnedDistributors
-      httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
+      httpBackend.expectGET("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=SomeDate").respond returnedOrderCycles
       spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
       #spyOn(returnedSuppliers, "unshift")
