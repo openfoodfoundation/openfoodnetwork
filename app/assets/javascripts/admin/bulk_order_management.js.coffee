@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey"
-  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey) ->
+  "$scope", "$http", "$filter", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey"
+  ($scope, $http, $filter, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey) ->
     $scope.loading = true
 
     $scope.initialiseVariables = ->
@@ -42,10 +42,10 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         if $scope.spree_api_key_ok
           $http.defaults.headers.common["X-Spree-Token"] = SpreeApiKey
           dataFetcher("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").then (data) ->
-            $scope.suppliers = data
+            $scope.suppliers = $filter('orderBy')(data, 'name')
             $scope.suppliers.unshift blankOption()
             dataFetcher("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").then (data) ->
-              $scope.distributors = data
+              $scope.distributors = $filter('orderBy')(data, 'name')
               $scope.distributors.unshift blankOption()
               ocFetcher = dataFetcher("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=#{formatDate(daysFromToday(-90))}").then (data) ->
                 $scope.orderCycles = data
