@@ -8,7 +8,7 @@
   .pane
     .row
       @include panepadding
-      @include sidepaddingBg
+      // @include sidepaddingBg
 
 #brand-story.pane, #system.pane, #stats.pane
   background-color: lighten($ofn-grey, 44%)
@@ -26,3 +26,25 @@
       @include bodyFont
       font-size: 1.5rem
       font-weight: 300
+
+#system.pane
+  .home-icon-box
+    border: 2px solid lighten($ofn-grey, 24%)
+    background-color: white
+    width: 100%
+    padding: 2rem 0
+    text-align: center
+    margin-top: 2rem
+    @media all and (min-width: 642px)
+      margin-top: 0
+
+    i
+      font-size: 5rem
+      
+      @media all and (min-width: 1024px)
+        font-size: 7rem
+
+  .home-icon-box-bottom
+    background-color: lighten($ofn-grey, 38%)
+    width: 100%
+    padding: 1rem
