@@ -297,4 +297,29 @@ feature %q{
       ].sort
     end
   end
+
+  describe "Xero invoices report" do
+    let!(:enterprise1) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise2) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise3) { create( :enterprise, owner: create_enterprise_user ) }
+
+    before do
+      enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
+
+      login_to_admin_section
+      click_link 'Reports'
+
+      click_link 'Xero invoices'
+    end
+
+    it "shows Xero invoices report" do
+      rows = find("table#listing_invoices").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
+
+      table.should == [
+        %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
+        []
+      ]
+    end
+  end
 end

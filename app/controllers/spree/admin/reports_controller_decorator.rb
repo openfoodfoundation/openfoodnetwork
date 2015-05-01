@@ -7,6 +7,7 @@ require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
 require 'open_food_network/sales_tax_report'
+require 'open_food_network/xero_invoices_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -14,10 +15,10 @@ Spree::Admin::ReportsController.class_eval do
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
-      ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
-      ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
-      ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
-      ['Order Cycle Customer Totals',:order_cycle_customer_totals]
+      ['Order Cycle Supplier Totals', :order_cycle_supplier_totals],
+      ['Order Cycle Supplier Totals by Distributor', :order_cycle_supplier_totals_by_distributor],
+      ['Order Cycle Distributor Totals by Supplier', :order_cycle_distributor_totals_by_supplier],
+      ['Order Cycle Customer Totals', :order_cycle_customer_totals]
     ],
     products_and_inventory: [
       ['All products', :all_products],
@@ -30,13 +31,16 @@ Spree::Admin::ReportsController.class_eval do
     order_cycle_management: [
       ["Payment Methods Report", :payment_methods],
       ["Delivery Report", :delivery]
+    ],
+    xero_invoices: [
+      ["Xero Invoices Report", :xero_invoices]
     ]
   }
 
   # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management]
 
-  # Render a partial for orders and fulfillment description
+  # Render a partial for various section descriptions
   respond_override :index => { :html => { :success => lambda {
     @reports[:orders_and_fulfillment][:description] =
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
@@ -672,7 +676,13 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
 
-  def render_report (header, table, create_csv, csv_file_name)
+  def xero_invoices
+    @report = OpenFoodNetwork::XeroInvoicesReport.new params
+    render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
+  end
+
+
+  def render_report(header, table, create_csv, csv_file_name)
     unless create_csv
       render :html => table
     else
@@ -709,7 +719,9 @@ Spree::Admin::ReportsController.class_eval do
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
+      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
+      :xero_invoices => { :name => "Xero invoices", :description => 'Invoices for import into Xero' }
+
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
