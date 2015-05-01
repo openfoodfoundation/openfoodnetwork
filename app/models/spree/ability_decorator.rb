@@ -152,6 +152,19 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
+    can [:destroy], Spree::Adjustment do |adjustment|
+      # Sharing code with destroying a line item. This should be unified and probably applied for other actions as well.
+      binding.pry
+      if user.admin?
+        true
+      elsif adjustment.adjustable.instance_of? Spree::Order
+        order = adjustment.adjustable
+        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+      elsif adjustment.adjustable.instance_of? Spree::LineItem
+        order = adjustment.adjustable.order
+        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+      end
+    end
 
     can [:create], OrderCycle
 
