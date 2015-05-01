@@ -1,57 +1,29 @@
 @import branding
 @import mixins
+@import typography
   
 // Styling for big panes on homepage
 
-#beta.pane
+#panes
+  .pane
+    .row
+      @include panepadding
+      @include sidepaddingBg
+
+#brand-story.pane, #system.pane, #stats.pane
+  background-color: lighten($ofn-grey, 45%)
+  background-image: url("/assets/tile-wide.png")
+
+#brand-story.pane
   .row
-    @include panepadding
     background-image: url("/assets/home/macbook.png") 
     background-repeat: no-repeat
     background-position: center bottom
     padding-bottom: 280px
-    &, & *
-      max-width: 610px
+    p
+      @include bodyFont
+      font-size: 1.5rem
+      font-weight: 300
 
 
-#map.pane
-  @include darkbg
-  .row
-    @include panepadding
-    background-image: url("/assets/home/maps-bg.svg") 
-    background-repeat: no-repeat
-    background-position: left center
 
-#groups.pane
-  @include darkbg
-  .row
-    @include panepadding
-    background-image: url("/assets/home/groups-bg.svg")
-    background-repeat: no-repeat
-    background-position: left center
-
-#producers.pane
-  @include turqbg
-  @include panepadding
-  background-image: url("/assets/home/producers-bg.svg")
-  background-repeat: no-repeat
-  background-position: center center
-  background-size: 80% 80%
-
-  @media all and (max-width: 768px)
-    background-position: center top
-    background-size: 100% 100%
-  .row
-    .pricing-table
-      .title
-        color: $clr-turquoise-light
-      .price
-        background-color: rgba(240, 240, 240, 0.6)
-      .description, .bullet-item, .cta-button
-        background-color: rgba(255, 255, 255, 0.8)
-
-// Responsive 
-@media all and (max-width: 768px)
-  #map.pane, #groups.pane, #producers.pane
-    .row
-      background-position: center center
