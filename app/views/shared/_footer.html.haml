@@ -1,62 +1,134 @@
 %footer
-  .row
+  .ofn-global
+    .row
+      .small-12.columns.text-center
+        .logo
+          %img{src: "/assets/logo-global-white.png", width: "120px"}
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        .alert-box
+          %a.big-alert{href: "http://www.openfoodnetwork.org", target: "_blank"}
+            %h6
+              Interested in joining the Open Food Network?  &nbsp;
+              %strong Start here
+              %i.ofn-i_054-point-right
+    .row
+      .small-12.medium-4.medium-offset-2.columns.text-center
+        %h6 OFN Global
+        %p
+          %a{href: "http://www.openfoodnetwork.org", target: "_blank"} Home
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/news/", target: "_blank"} News
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/about/", target: "_blank"} About
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/contact/", target: "_blank"} Contact
 
-  .row.landing-page-row
-    .small-12.medium-4.columns.text-left
-      %h4 Email us
-      %p
-        %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true} 
-          %span.email
-            = "hello@openfoodnetwork.org".reverse
-      %h4 Follow us
-      %p
-        %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/OpenFoodNet', target: '_blank'} 
-          %i.ofn-i_044-facebook
-          Facebook &nbsp;&nbsp;
-        %a{title:'Follow us on Twitter', href: 'https://twitter.com/OpenFoodNet', target: '_blank'} 
-          %i.ofn-i_041-twitter
-          Twitter &nbsp;&nbsp;
-        %a{title:'Join our group on LinkedIn', href: 'http://www.linkedin.com/groups/Open-Food-Foundation-4743336', target: '_blank'} 
-          %i.ofn-i_042-linkedin
-          LinkedIn
-    .small-12.medium-3.columns.text-left
-      %h4 Getting around
-      %ul.bullet-list
-        %li
-          %a{href: "/shop"} Shop
-        %li
+
+      .small-12.medium-4.columns.text-center
+        %h6 OFN Sites
+        %p
+          %a{href: "http://dev.openfoodnetwork.org", target: "_blank"} Developer
+          %span &#124;
+          %a{href: "http://community.openfoodnetwork.org", target: "_blank"} Community
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/platform/user-guide/", target: "_blank"} User Guide
+
+      .medium-2.columns.text-center
+        / Placeholder
+
+  .ofn-local
+    
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        %p.secure-icon
+          %i.ofn-i_017-locked
+          %p.text-big.secure-text Secure and trusted. 
+          %p.secure-text Open Food Network uses ... (description of SSL and security measures goes here). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, sem nec pulvinar sodales, dolor elit condimentum est.
+        %hr.hr-light
+        %br
+
+    .row
+      .small-6.medium-3.medium-offset-2.columns.text-left
+        %h4 Keep in touch 
+        %p.social-icons
+          %a{href: "/"} 
+            %i.ofn-i_044-facebook
+          %a{href: "/"} 
+            %i.ofn-i_041-twitter
+          %a{href: "/"} 
+            %i.ofn-i_043-instagram
+          %a{href: "/"} 
+            %i.ofn-i_042-linkedin
+          %a{href: "/"} 
+            %i.ofn-i_046-g
+          %a{href: "/"} 
+            %i.ofn-i_045-pintrest
+        %p
+          %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}  Email us
+        %p
+          %a{href: "/"} Newsletter sign-up
+        %p
+          %a{href: "/"} Blog
+        %p
+          %a{href: "/"} Calendar
+
+
+      .small-6.medium-3.columns.text-left
+        %h4 Navigate
+        %p
+          %a{href: "/shops"} Shops
+        %p
           %a{href: "/map"} Map
-        %li
+        %p
           %a{href: "/producers"} Producers
-        %li
+        %p
           %a{href: "/groups"} Groups
-    .small-12.medium-2.columns.text-left
-      %h4 Producers
-      %p
-        = t :producers_join
-      %p
-        %a{href: "/register"} Register now
-    .small-12.medium-3.columns.text-left
-      %h4 About us
-      %p OFN is a network of independent online food stores that connect farmers and food hubs with individuals and local businesses.  It gives farmers and food hubs an easier and fairer way to distribute their food.
-  .row.landing-page-row
-    .small-12.columns.text-center.pad-top
-      %hr
-      %h5.pad-top
-        %a{title: 'Open Food Network', href:'http://www.openfoodnetwork.org', target: '_blank' } openfoodnetwork.org
-      %br
-      © Copyright
-      = Date.today.year
-      Open Food Foundation
-      %p
-        %small
-          %a{href:"https://creativecommons.org/licenses/by-sa/3.0/", target: "_blank" } Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
-      %p
-        %small
-          %a{href:"/Terms-of-service.pdf", target: "_blank" } Site terms & conditions
-          |
-          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank" } Open Source & developer info on GitHub
+        %p
+          %a{href: "/about"} About
 
-          // To be added when Guy's pretty landing page is up:
-          //|
-          //%a{href:'' } Developers
+      .small-12.medium-2.columns.text-left
+        %h4 Join us
+        %p
+          %a{href: "/producers/signup"} Producers sign-up
+        %p
+          %a{href: "/shops/signup"} Hubs sign-up
+
+      .medium-2.columns.text-center
+        / Placeholder
+    
+    
+
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        %hr.hr-light
+        %br
+    
+    .row
+      .small-12.medium-3.medium-offset-2.columns.text-left
+        %a{href: root_path}
+          %img{src: "/assets/logo-color.png", srcset: "/assets/logo-color.svg", width: "220px"}
+      .small-12.medium-5.columns.text-left
+        %p.text-small 
+          Read our 
+          %a{href: "/Terms-of-service.pdf"} Terms &amp; conditions
+          &#124; 
+          Find us on  
+          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} Github
+        %p.text-small
+          Open Food Network is a free and opensource software platform. Read about how the licence works at 
+          %a{href:"https://creativecommons.org/licenses/by-sa/3.0/", target: "_blank" } Creative Commons
+          / Creative Commons Attribution-ShareAlike 3
+
+
+      .medium-2.columns.text-center
+        / Placeholder
+   
+
+    / .row
+    /   .small-12.columns.text-center.pad-top
+    /     © Copyright
+    /     = Date.today.year
+    /     Open Food Foundation
+    
+
