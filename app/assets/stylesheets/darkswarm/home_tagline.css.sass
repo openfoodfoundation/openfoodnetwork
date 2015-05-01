@@ -7,16 +7,18 @@
   background-color: $dark-grey
   background-image: url("/assets/home/home.jpg")
   @include fullbg
-  height: 400px
+  height: 440px
   padding: 40px 0px
   h1, h2, p
     color: white
   h1
     margin-bottom: 3rem 
-    margin-top: 1rem 
+    margin-top: 3.5rem 
   h2
-    font-size: 3.75rem
+    font-size: 2.25rem
     margin: 0 auto
+    @media all and (min-width: 768px) 
+      font-size: 3.75rem
 
   a
     color: white
