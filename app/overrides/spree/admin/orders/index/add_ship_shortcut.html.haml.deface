@@ -1,0 +1,6 @@
+/ insert_bottom "[data-hook='admin_orders_index_row_actions']" 
+-# See also: app/overrides/add_capture_order_shortcut.rb
+
+- if order.ready_to_ship?
+  - # copied from backend/app/views/spree/admin/payments/_list.html.erb
+  = link_to_with_icon "icon-road", t(:ship), fire_admin_order_url(order, :e => 'ship'), :method => :put, :no_text => true, :data => {:action => 'ship', :confirm => t(:are_you_sure)}
