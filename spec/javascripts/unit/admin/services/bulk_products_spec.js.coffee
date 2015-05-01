@@ -61,7 +61,7 @@ describe "BulkProducts service", ->
       clonedProduct =
         id: 17
 
-      spyOn(BulkProducts, "addProducts")
+      spyOn(BulkProducts, "insertProductAfter")
       BulkProducts.products = [originalProduct]
       $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
         product: clonedProduct
