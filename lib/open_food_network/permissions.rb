@@ -56,6 +56,51 @@ module OpenFoodNetwork
       permissions
     end
 
+    # Find enterprises that an admin is allowed to add to an order cycle
+    def visible_orders
+      # Any orders that I can edit
+      editable = editable_orders.pluck(:id)
+
+      # Any orders placed through hubs that my producers have granted P-OC, and which contain my their products
+      # This is pretty complicated but it's looking for order where at least one of my producers has granted
+      # P-OC to the distributor AND the order contains products of at least one of THE SAME producers
+      granted_distributors = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
+      produced = Spree::Order.with_line_items_variants_and_products_outer.
+      where(
+      "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
+      granted_distributors,
+      granting(:add_to_order_cycle, to: granted_distributors).merge(managed_enterprises.is_primary_producer)
+      ).pluck(:id)
+
+      Spree::Order.where(id: editable | produced)
+    end
+
+    # Find enterprises that an admin is allowed to add to an order cycle
+    def editable_orders
+      # Any orders placed through any hub that I manage
+      managed = Spree::Order.where(distributor_id: managed_enterprises.pluck(:id)).pluck(:id)
+
+      # Any order that is placed through an order cycle one of my managed enterprises coordinates
+      coordinated = Spree::Order.where(order_cycle_id: coordinated_order_cycles.pluck(:id)).pluck(:id)
+
+      Spree::Order.where(id: managed | coordinated )
+    end
+
+    def visible_line_items
+      # Any line items that I can edit
+      editable = editable_line_items.pluck(:id)
+
+      # Any from visible orders, where the product is produced by one of my managed producers
+      produced = Spree::LineItem.where(order_id: visible_orders.pluck(:id)).joins(:product).
+      where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer.pluck(:id))
+
+      Spree::LineItem.where(id: editable | produced)
+    end
+
+    def editable_line_items
+      Spree::LineItem.where(order_id: editable_orders)
+    end
+
     def managed_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
       permitted_enterprise_products_ids = related_enterprise_products.pluck :id
@@ -83,6 +128,11 @@ module OpenFoodNetwork
     def managed_enterprises
       return @managed_enterprises unless @managed_enterprises.nil?
       @managed_enterprises = Enterprise.managed_by(@user)
+    end
+
+    def coordinated_order_cycles
+      return @coordinated_order_cycles unless @coordinated_order_cycles.nil?
+      @coordinated_order_cycles = OrderCycle.managed_by(@user)
     end
 
     def related_enterprises_with(permission)
