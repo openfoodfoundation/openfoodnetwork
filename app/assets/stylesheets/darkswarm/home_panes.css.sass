@@ -1,6 +1,8 @@
 @import branding
 @import mixins
 @import typography
+@import animations
+
   
 // Styling for big panes on homepage
 
@@ -13,7 +15,7 @@
 #brand-story.pane, #system.pane, #stats.pane
   background-color: lighten($ofn-grey, 44%)
 
-#cta.pane, #shops.pane, #producer-signup.pane
+#cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
   background-image: url("/assets/tile-wide.png")
   background-position: center center
 
@@ -79,7 +81,7 @@
     font-weight: 300
     font-size: 3rem
 
-#producer-signup.pane
+#producer-signup.pane, #shops-signup.pane
   background-color: lighten($clr-turquoise, 12%)
   &, h1, h2, h3, h4, h5, h6, p
     color: white
@@ -89,3 +91,54 @@
     font-weight: 300
     font-size: 3rem
 
+#producer-case-studies
+  padding-top: 100px
+  padding-bottom: 100px
+  background-color: lighten($clr-turquoise, 64%)
+  .case-study
+    background-color: lighten($clr-turquoise, 54%)
+    padding: 1rem
+    margin-top: 2rem
+    @media all and (min-width: 768px)
+      margin-top: 1rem
+    a
+      color: $clr-turquoise
+      &, & *
+        @include csstrans
+        opacity: 1
+      &:hover, &:focus, &:active
+        &, & *
+          opacity: 0.75
+
+#producer-details.pane, #hub-details.pane
+  background-color: lighten($ofn-grey, 44%)
+
+#shops-signup.pane
+  background-color: lighten($clr-brick, 30%)
+
+#producer-case-studies, #shops-case-studies
+  padding-top: 100px
+  padding-bottom: 100px
+  background-color: lighten($clr-turquoise, 64%)
+  .case-study
+    background-color: lighten($clr-turquoise, 54%)
+    padding: 1rem
+    margin-top: 2rem
+    @media all and (min-width: 768px)
+      margin-top: 1rem
+    a
+      color: $clr-turquoise
+      &, & *
+        @include csstrans
+        opacity: 1
+      &:hover, &:focus, &:active
+        &, & *
+          opacity: 0.75
+
+
+#shops-case-studies
+  background-color: lighten($clr-brick, 54%)
+  .case-study
+    background-color: lighten($clr-brick, 46%)
+    a
+      color: $clr-brick
