@@ -15,6 +15,7 @@
 
 #cta.pane
   background-image: url("/assets/tile-wide.png")
+  background-position: center center
 
 #brand-story.pane
   .row
@@ -29,22 +30,35 @@
 
 #system.pane
   .home-icon-box
-    border: 2px solid lighten($ofn-grey, 24%)
-    background-color: white
-    width: 100%
-    padding: 2rem 0
+    background-image: url("/assets/ofn-o.png")
+    background-position: center center
+    background-repeat: no-repeat
+    background-size: auto 100%
+    padding: 3rem 0
     text-align: center
     margin-top: 2rem
     @media all and (min-width: 642px)
       margin-top: 0
-
     i
-      font-size: 5rem
+      font-size: 4rem
+      color: $clr-brick
       
-      @media all and (min-width: 1024px)
-        font-size: 7rem
-
   .home-icon-box-bottom
-    background-color: lighten($ofn-grey, 38%)
+    margin-top: 1rem
     width: 100%
-    padding: 1rem
+    padding-left: 1rem
+    padding-right: 1rem
+    @media all and (min-width: 480px)
+      padding-left: 3rem
+      padding-right: 3rem
+    @media all and (min-width: 642px)
+      padding-left: 1rem
+      padding-right: 1rem
+    h5
+      color: darken($ofn-grey, 10%)
+      border-bottom: 2px solid lighten($ofn-grey, 34%)
+      text-align: center
+      padding-bottom: 0.25rem 
+
+
+
