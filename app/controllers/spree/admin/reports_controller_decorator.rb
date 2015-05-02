@@ -406,21 +406,15 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    # -- Search
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-    orders = @search.result
-    @line_items = orders.map do |o|
-      lis = o.line_items.managed_by(spree_current_user)
-      lis = lis.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
-      lis
-    end.flatten
-    #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
-
-    # -- Prepare form options
-    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
-
     permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+
+    # -- Search
+
+    @search = Spree::Order.complete.not_state(:canceled).search(params[:q])
+    orders = permissions.visible_orders.merge(@search.result)
+
+    @line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
+    @line_items = @line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
 
     # My distributors and any distributors distributing products I supply
     @distributors = permissions.order_cycle_enterprises.is_distributor
