@@ -13,7 +13,7 @@
 
   = render partial: "shopping_shared/details"
   
-  %fieldset
+  %fieldset.footer-pad
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}
         %p= t(:your_cart_is_empty)

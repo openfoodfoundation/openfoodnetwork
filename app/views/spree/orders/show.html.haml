@@ -11,7 +11,7 @@
 
   = render "shopping_shared/details"
 
-  %fieldset#order_summary{"data-hook" => ""}
+  %fieldset#order_summary.footer-pad{"data-hook" => ""}
     .row
       .columns.large-12.text-center
         %h2
@@ -30,3 +30,6 @@
           - unless params.has_key? :checkout_complete
             - if try_spree_current_user && respond_to?(:spree_account_path)
               = link_to t(:my_account), spree_account_path, :class => "button"
+
+
+= render partial: "shared/footer"
