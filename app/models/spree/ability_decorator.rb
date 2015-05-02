@@ -185,6 +185,8 @@ class AbilityDecorator
 
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
+
+    can [:admin, :index], Customer
   end
 
 
