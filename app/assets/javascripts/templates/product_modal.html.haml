@@ -1,10 +1,10 @@
-.row
+.row{bindonce: true}
 
   .columns.small-12.large-6.product-header
-    %h3 {{product.name}}
+    %h3{"bo-text" => "product.name"}
     %span
       %em from
-      %span.avenir {{ enterprise.name }}
+      %span.avenir{"bo-text" => "enterprise.name"}
 
     %br
 
@@ -18,11 +18,11 @@
 
     %div{"ng-if" => "product.description"}
       %hr
-      %p.text-small {{product.description}}
+      %p.text-small{"bo-text" => "product.description"}
       %hr
 
   .columns.small-12.large-6
-    %img.product-img{"ng-src" => "{{product.largeImage}}", "ng-if" => "product.largeImage"}
-    %img.product-img.placeholder{"ng-src" => "/assets/noimage/large.png", "ng-if" => "!product.largeImage"}
+    %img.product-img{"bo-src" => "product.largeImage", "bo-if" => "product.largeImage"}
+    %img.product-img.placeholder{"bo-src" => "'/assets/noimage/large.png'", "bo-if" => "!product.largeImage"}
 
 %ng-include{src: "'partials/close.html'"}
