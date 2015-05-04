@@ -4,10 +4,13 @@
 
 // Search page
 #groups
-  background-color: $clr-brick-light
+  background-color: lighten($clr-brick, 56%)
   background-image: url("/assets/groups.svg")
-  background-position: center 15px
+  background-position: center 50px
   background-repeat: no-repeat
+  background-size:  922px 922px
+  @include sidepaddingSm
+  @include panepadding
   a > .group-name
     &:hover, &:focus, &:active
       text-decoration: underline

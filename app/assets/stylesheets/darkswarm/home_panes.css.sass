@@ -5,18 +5,18 @@
 
   
 // Styling for big panes on homepage
-
 #panes
   .pane
     .row
       @include panepadding
-      // @include sidepaddingBg
 
 #brand-story.pane, #system.pane, #stats.pane
   background-color: lighten($ofn-grey, 44%)
 
 #cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
   background-image: url("/assets/tile-wide.png")
+  background-color: white
+  background-size: 2140px, 380px
   background-position: center center
 
 #brand-story.pane
@@ -35,7 +35,6 @@
     font-weight: 300
     text-transform: uppercase
     margin: 1.5rem 0
-    // border-bottom: 2px solid lighten($ofn-grey, 34%)
     display: inline-block
     strong
       color: $clr-brick
@@ -72,7 +71,7 @@
       padding-bottom: 0.25rem 
 
 #shops.pane
-  background-color: lighten($clr-brick, 30%)
+  background-color: lighten($clr-brick, 26%)
   &, & *
     color: white
 
@@ -81,11 +80,20 @@
     font-weight: 300
     font-size: 3rem
 
+.cta.cta-producers.pane
+  @include fullwidthbg
+  background-image: url("/assets/producers/producers-pg-bg.jpg") 
+  &, & *
+    white
+
+.cta.cta-hubs.pane
+  @include fullwidthbg
+  background-image: url("/assets/hubs-bg.jpg") 
+
 #producer-signup.pane, #shops-signup.pane
-  background-color: lighten($clr-turquoise, 12%)
+  background-color: lighten($clr-turquoise, 10%)
   &, h1, h2, h3, h4, h5, h6, p
     color: white
-
   h2
     color: white
     font-weight: 300
@@ -114,7 +122,7 @@
   background-color: lighten($ofn-grey, 44%)
 
 #shops-signup.pane
-  background-color: lighten($clr-brick, 30%)
+  background-color: lighten($clr-brick, 26%)
 
 #producer-case-studies, #shops-case-studies
   padding-top: 100px
