@@ -14,7 +14,7 @@
         "ng-debounce" => "150",
         "ofn-disable-enter" => true}
 
-  .group.animate-show{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
+  .group.animate-repeat{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
     .row.pad-top{bindonce: true}
