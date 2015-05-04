@@ -2,7 +2,9 @@
 @import mixins
 
 .producers
-  background-color: lighten($clr-turquoise, 64%)
+  background-color: lighten($ofn-grey, 43%)
+  @include sidepaddingSm
+  @include panepadding
   a
     color: $clr-turquoise
     &:hover, &:active, &:focus
