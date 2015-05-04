@@ -1,0 +1,101 @@
+@import branding
+@import mixins
+@import typography
+@import animations
+
+table.signup-table
+	width: 100%
+	border: 0
+
+
+table.signup-table.hubs-table, table.signup-table.producers-table
+	tr:nth-child(odd)
+		td
+			background-color: lighten($ofn-grey, 46.5%)
+	tr:nth-child(even)
+		td
+			background-color: white
+
+	thead
+		background-color: transparent
+		td:nth-child(1)
+			background-color: transparent
+		td:nth-child(2)
+			background: lighten($ofn-grey, 44%)
+			border-left: 1px solid lighten($ofn-grey, 44%)
+			border-right: 1px solid lighten($ofn-grey, 44%)
+			border-top: 1px solid lighten($ofn-grey, 44%)
+		td:nth-child(3)
+			background: lighten($ofn-grey, 38%)
+		td:nth-child(4)
+			&, & *
+				color: white
+			background: $clr-brick
+			border-left: 1px solid  $clr-brick
+			border-right: 1px solid  $clr-brick
+			border-top: 1px solid  $clr-brick
+	
+	
+
+
+	tr
+		td:nth-child(2)			
+			border-left: 1px solid lighten($ofn-grey, 44%)
+			border-right: 1px solid lighten($ofn-grey, 44%)
+		td:nth-child(3)			
+			border-left: 1px solid lighten($ofn-grey, 38%)
+			border-right: 1px solid lighten($ofn-grey, 38%)
+		td:nth-child(4)
+			&, & i
+				color: $clr-brick
+			border-left: 1px solid $clr-brick
+			border-right: 1px solid $clr-brick
+
+	tfoot
+		background-color: transparent
+		h2
+			.text-small
+				text-transform: uppercase
+				display: inline-block
+				font-weight: 400
+				line-height: 1.5
+				@include headingFont
+
+		td:nth-child(1)
+			background-color: transparent
+		td:nth-child(2)
+			background: lighten($ofn-grey, 44%)
+			border-left: 1px solid lighten($ofn-grey, 44%)
+			border-right: 1px solid lighten($ofn-grey, 44%)
+			border-bottom: 1px solid lighten($ofn-grey, 44%)
+		td:nth-child(3)
+			background: lighten($ofn-grey, 38%)
+		td:nth-child(4)
+			&, & *
+				color: white
+			background:  $clr-brick
+			border-left: 1px solid  $clr-brick
+			border-right: 1px solid  $clr-brick
+			border-bottom: 1px solid  $clr-brick
+
+
+
+table.signup-table.producers-table
+	thead
+		td:nth-child(4)
+			background: $clr-turquoise-bright
+			border-left: 1px solid  $clr-turquoise-bright
+			border-right: 1px solid  $clr-turquoise-bright
+			border-top: 1px solid  $clr-turquoise-bright
+	tr
+		td:nth-child(4)
+			&, & i
+				color: $clr-turquoise-bright
+			border-left: 1px solid $clr-turquoise-bright
+			border-right: 1px solid $clr-turquoise-bright
+	tfoot
+		td:nth-child(4)
+			background:  $clr-turquoise-bright
+			border-left: 1px solid  $clr-turquoise-bright
+			border-right: 1px solid  $clr-turquoise-bright
+			border-bottom: 1px solid  $clr-turquoise-bright

@@ -119,15 +119,23 @@
 #producer-case-studies, #shops-case-studies
   padding-top: 100px
   padding-bottom: 100px
-  background-color: lighten($clr-turquoise, 64%)
+  background-color: lighten($clr-turquoise, 65%)
   .case-study
-    background-color: lighten($clr-turquoise, 54%)
+    background-color: white
+    border: 1px solid rgba($clr-turquoise-bright, 0.5)
     padding: 1rem
     margin-top: 2rem
-    @media all and (min-width: 768px)
-      margin-top: 1rem
+    text-align: center
+    .case-study-img
+      background-color: white
+      margin-bottom: 1rem
+      @media all and (min-width: 768px)
+        float: right
+        margin-left: 2rem
+    @media all and (min-width: 640px)
+      text-align: left
     a
-      color: $clr-turquoise
+      color: $clr-turquoise-bright
       &, & *
         @include csstrans
         opacity: 1
@@ -135,10 +143,9 @@
         &, & *
           opacity: 0.75
 
-
 #shops-case-studies
-  background-color: lighten($clr-brick, 54%)
+  background-color: lighten($clr-brick, 56%)
   .case-study
-    background-color: lighten($clr-brick, 46%)
+    border: 1px solid rgba($clr-brick-bright, 0.5)
     a
       color: $clr-brick
