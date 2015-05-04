@@ -9,50 +9,56 @@ table.signup-table
 
 
 table.signup-table.hubs-table, table.signup-table.producers-table
-	tr:nth-child(odd)
-		td
-			background-color: lighten($ofn-grey, 46.5%)
-	tr:nth-child(even)
+	tr
 		td
 			background-color: white
-
-	thead
-		background-color: transparent
-		td:nth-child(1)
-			background-color: transparent
-		td:nth-child(2)
-			background: lighten($ofn-grey, 44%)
-			border-left: 1px solid lighten($ofn-grey, 44%)
-			border-right: 1px solid lighten($ofn-grey, 44%)
-			border-top: 1px solid lighten($ofn-grey, 44%)
-		td:nth-child(3)
-			background: lighten($ofn-grey, 38%)
-		td:nth-child(4)
-			&, & *
-				color: white
-			background: $clr-brick
-			border-left: 1px solid  $clr-brick
-			border-right: 1px solid  $clr-brick
-			border-top: 1px solid  $clr-brick
-	
-	
-
-
-	tr
+			border-bottom: 1px solid rgba($ofn-grey, 0.3)	
 		td:nth-child(2)			
-			border-left: 1px solid lighten($ofn-grey, 44%)
-			border-right: 1px solid lighten($ofn-grey, 44%)
+			background-color: lighten($ofn-grey, 46%)
 		td:nth-child(3)			
-			border-left: 1px solid lighten($ofn-grey, 38%)
-			border-right: 1px solid lighten($ofn-grey, 38%)
+			background-color: lighten($ofn-grey, 41%)
 		td:nth-child(4)
 			&, & i
 				color: $clr-brick
-			border-left: 1px solid $clr-brick
-			border-right: 1px solid $clr-brick
-
+			border-bottom: 1px solid rgba($clr-brick, 0.3)	
+			background-color: lighten($clr-brick, 48%)
+	thead
+		background-color: transparent
+		tr
+			td
+				border-bottom: 1px solid transparent
+			td:nth-child(1)
+				background-color: transparent
+			td:nth-child(2)
+				background: lighten($ofn-grey, 44%)
+			td:nth-child(3)
+				background: lighten($ofn-grey, 38%)
+			td:nth-child(4)
+				&, & *
+					color: white
+				background: $clr-brick
+		h5
+			text-transform: uppercase
+			color: $ofn-grey
+			font-weight: 400
+			font-size: 0.875rem
+			margin-bottom: 0.25em
+		
 	tfoot
 		background-color: transparent
+		tr
+			td
+				border-bottom: 1px solid transparent
+			td:nth-child(1)
+				background-color: transparent
+			td:nth-child(2)
+				background: lighten($ofn-grey, 44%)
+			td:nth-child(3)
+				background: lighten($ofn-grey, 38%)
+			td:nth-child(4)
+				&, & *
+					color: white
+				background:  $clr-brick
 		h2
 			.text-small
 				text-transform: uppercase
@@ -61,41 +67,21 @@ table.signup-table.hubs-table, table.signup-table.producers-table
 				line-height: 1.5
 				@include headingFont
 
-		td:nth-child(1)
-			background-color: transparent
-		td:nth-child(2)
-			background: lighten($ofn-grey, 44%)
-			border-left: 1px solid lighten($ofn-grey, 44%)
-			border-right: 1px solid lighten($ofn-grey, 44%)
-			border-bottom: 1px solid lighten($ofn-grey, 44%)
-		td:nth-child(3)
-			background: lighten($ofn-grey, 38%)
-		td:nth-child(4)
-			&, & *
-				color: white
-			background:  $clr-brick
-			border-left: 1px solid  $clr-brick
-			border-right: 1px solid  $clr-brick
-			border-bottom: 1px solid  $clr-brick
-
-
 
 table.signup-table.producers-table
-	thead
-		td:nth-child(4)
-			background: $clr-turquoise-bright
-			border-left: 1px solid  $clr-turquoise-bright
-			border-right: 1px solid  $clr-turquoise-bright
-			border-top: 1px solid  $clr-turquoise-bright
 	tr
 		td:nth-child(4)
 			&, & i
 				color: $clr-turquoise-bright
-			border-left: 1px solid $clr-turquoise-bright
-			border-right: 1px solid $clr-turquoise-bright
+			border-bottom: 1px solid rgba($clr-turquoise-bright, 0.2)	
+			background-color: lighten($clr-turquoise, 57%)
+	thead
+		tr
+			td:nth-child(4)
+				background: $clr-turquoise-bright	
 	tfoot
-		td:nth-child(4)
-			background:  $clr-turquoise-bright
-			border-left: 1px solid  $clr-turquoise-bright
-			border-right: 1px solid  $clr-turquoise-bright
-			border-bottom: 1px solid  $clr-turquoise-bright
+		tr
+			td:nth-child(4)
+				background: $clr-turquoise-bright
+
+
