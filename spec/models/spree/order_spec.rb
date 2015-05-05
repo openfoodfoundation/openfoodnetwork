@@ -186,6 +186,59 @@ describe Spree::Order do
     end
   end
 
+  describe "an order without shipping method" do
+    let(:order)           { create(:order) }
+
+    it "cannot be shipped" do
+      order.ready_to_ship?.should == false
+    end
+  end
+
+  describe "an unpaid order with a shipment" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method) }
+
+    before do
+      order.create_shipment!
+      order.reload
+      order.state = 'complete'
+      order.shipment.update!(order)
+    end
+
+    it "cannot be shipped" do
+      order.ready_to_ship?.should == false
+    end
+  end
+
+  describe "a paid order without a shipment" do
+    let(:order)           { create(:order) }
+
+    before do
+      order.payment_state = 'paid'
+      order.state = 'complete'
+    end
+
+    it "cannot be shipped" do
+      order.ready_to_ship?.should == false
+    end
+  end
+
+  describe "a paid order with a shipment" do
+    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:shipping_method) { create(:shipping_method) }
+
+    before do
+      order.create_shipment!
+      order.payment_state = 'paid'
+      order.state = 'complete'
+      order.shipment.update!(order)
+    end
+
+    it "can be shipped" do
+      order.ready_to_ship?.should == true
+    end
+  end
+
   describe "getting the shipping tax" do
     let(:order)           { create(:order, shipping_method: shipping_method) }
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
