@@ -16,4 +16,6 @@ echo "--- Loading baseline data"
 ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/load_staging_baseline.sh"
 
 echo "--- Pushing to staging"
-[[ $(git push staging2 $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
+output=$(git push staging2 $BUILDKITE_COMMIT:master --force 2>&1)
+echo $output
+[[ $output =~ "Done" ]]
