@@ -30,6 +30,7 @@ gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.3"
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'

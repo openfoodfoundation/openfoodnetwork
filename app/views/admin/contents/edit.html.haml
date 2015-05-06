@@ -6,14 +6,8 @@
 
 = form_tag main_app.admin_content_path, method: :put do
   #preferences
-    %fieldset.no-border-bottom
-      %legend{align: "center"} Home page
-      - @preferences.each do |key|
-        - type = ContentConfig.preference_type(key)
-        .field
-          = label_tag(key, t(key) + ': ') + tag(:br) if type != :boolean
-          = preference_field_tag(key, ContentConfig[key], :type => type)
-          = label_tag(key, t(key)) + tag(:br) if type == :boolean
+    = render 'fieldset', name: 'Home page', preferences: @preferences_home
+    = render 'fieldset', name: 'Footer', preferences: @preferences_footer
 
     .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
       = button t(:update), 'icon-refresh'

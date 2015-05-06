@@ -424,6 +424,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.2.3)
     ref (1.0.5)
     representative (1.0.5)
       activesupport (>= 2.2.2)
@@ -583,6 +584,7 @@ DEPENDENCIES
   rack-ssl
   rails (= 3.2.21)
   rails-i18n (~> 3.0.0)
+  redcarpet
   representative_view
   roadie-rails (~> 1.0.3)
   rspec-rails

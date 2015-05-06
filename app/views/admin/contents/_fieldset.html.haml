@@ -1,0 +1,8 @@
+%fieldset.no-border-bottom
+  %legend{align: "center"}= name
+  - preferences.each do |key|
+    - type = ContentConfig.preference_type(key)
+    .field
+      = label_tag(key, t(key) + ': ') + tag(:br) if type != :boolean
+      = preference_field_tag(key, ContentConfig[key], :type => type)
+      = label_tag(key, t(key)) + tag(:br) if type == :boolean

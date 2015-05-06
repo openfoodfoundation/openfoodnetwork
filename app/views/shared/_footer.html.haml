@@ -52,26 +52,28 @@
         // This is the instance-managed set of links:
         %h4 Keep in touch
         %p.social-icons
-          %a{href: "/"}
-            %i.ofn-i_044-facebook
-          %a{href: "/"}
-            %i.ofn-i_041-twitter
-          %a{href: "/"}
-            %i.ofn-i_043-instagram
-          %a{href: "/"}
-            %i.ofn-i_042-linkedin
-          %a{href: "/"}
-            %i.ofn-i_046-g
-          %a{href: "/"}
-            %i.ofn-i_045-pintrest
-        %p
-          %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}  Email us
-        %p
-          %a{href: "/"} Newsletter sign-up
-        %p
-          %a{href: "/"} Blog
-        %p
-          %a{href: "/"} Calendar
+          - if ContentConfig.footer_facebook_url.present?
+            %a{href: ContentConfig.footer_facebook_url}
+              %i.ofn-i_044-facebook
+          - if ContentConfig.footer_twitter_url.present?
+            %a{href: ContentConfig.footer_twitter_url}
+              %i.ofn-i_041-twitter
+          - if ContentConfig.footer_instagram_url.present?
+            %a{href: ContentConfig.footer_instagram_url}
+              %i.ofn-i_043-instagram
+          - if ContentConfig.footer_linkedin_url.present?
+            %a{href: ContentConfig.footer_linkedin_url}
+              %i.ofn-i_042-linkedin
+          - if ContentConfig.footer_googleplus_url.present?
+            %a{href: ContentConfig.footer_googleplus_url}
+              %i.ofn-i_046-g
+          - if ContentConfig.footer_pinterest_url.present?
+            %a{href: ContentConfig.footer_pinterest_url}
+              %i.ofn-i_045-pintrest
+        - if ContentConfig.footer_email.present?
+          %p
+            %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}  Email us
+        = render_markdown(ContentConfig.footer_links_md).html_safe
 
 
       .small-6.medium-3.columns.text-left
