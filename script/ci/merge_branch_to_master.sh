@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 source ./script/ci/includes.sh
 
 echo "--- Verifying branch is based on current master"
