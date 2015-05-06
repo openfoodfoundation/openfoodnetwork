@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # Add production git remote if required
 PROD_TEST=`git remote | grep -s 'production' || true`
@@ -12,6 +12,4 @@ echo "--- Saving baseline data for staging"
 ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/save_staging_baseline.sh $BUILDKITE_COMMIT"
 
 echo "--- Pushing to production"
-output=$(git push production $BUILDKITE_COMMIT:master --force 2>&1)
-echo "$output"
-[[ $output =~ "Done" ]]
+[[ $(git push production $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
