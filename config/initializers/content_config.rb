@@ -1,0 +1,1 @@
+ContentConfig = ContentConfiguration.new
