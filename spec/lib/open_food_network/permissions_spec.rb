@@ -13,7 +13,7 @@ module OpenFoodNetwork
 
       it "returns managed and related enterprises with add_to_order_cycle permission" do
         allow(user).to receive(:admin?) { false }
-        expect(permissions).to receive(:managed_and_related_enterprises_with).
+        expect(permissions).to receive(:managed_and_related_enterprises_granting).
           with(:add_to_order_cycle).
           and_return([e])
 
@@ -32,7 +32,7 @@ module OpenFoodNetwork
 
       it "returns managed and related enterprises with edit_profile permission" do
         permissions.
-          should_receive(:managed_and_related_enterprises_with).
+          should_receive(:managed_and_related_enterprises_granting).
           with(:edit_profile).
           and_return([e])
 
@@ -139,7 +139,7 @@ module OpenFoodNetwork
 
       it "returns managed and related enterprises with manage_products permission" do
         permissions.
-          should_receive(:managed_and_related_enterprises_with).
+          should_receive(:managed_and_related_enterprises_granting).
           with(:manage_products).
           and_return([e])
 
@@ -171,13 +171,13 @@ module OpenFoodNetwork
 
       it "returns managed enterprises" do
         permissions.should_receive(:managed_enterprises) { Enterprise.where(id: e1) }
-        permissions.send(:managed_and_related_enterprises_with, permission).should == [e1]
+        permissions.send(:managed_and_related_enterprises_granting, permission).should == [e1]
       end
 
       it "returns permitted enterprises" do
         permissions.should_receive(:related_enterprises_with).with(permission).
           and_return(Enterprise.where(id: e2))
-        permissions.send(:managed_and_related_enterprises_with, permission).should == [e2]
+        permissions.send(:managed_and_related_enterprises_granting, permission).should == [e2]
       end
     end
 

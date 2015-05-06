@@ -5,14 +5,14 @@ module OpenFoodNetwork
     end
 
     def can_manage_complex_order_cycles?
-      managed_and_related_enterprises_with(:add_to_order_cycle).any? do |e|
+      managed_and_related_enterprises_granting(:add_to_order_cycle).any? do |e|
         e.sells == 'any'
       end
     end
 
     # Find enterprises that an admin is allowed to add to an order cycle
     def order_cycle_enterprises
-      managed_and_related_enterprises_with :add_to_order_cycle
+      managed_and_related_enterprises_granting :add_to_order_cycle
     end
 
     def enterprises_managed_or_granting_add_to_order_cycle
@@ -20,17 +20,17 @@ module OpenFoodNetwork
       if admin?
         Enterprise.scoped
       else
-        managed_and_related_enterprises_with :add_to_order_cycle
+        managed_and_related_enterprises_granting :add_to_order_cycle
       end
     end
 
     # Find enterprises for which an admin is allowed to edit their profile
     def editable_enterprises
-      managed_and_related_enterprises_with :edit_profile
+      managed_and_related_enterprises_granting :edit_profile
     end
 
     def variant_override_hubs
-      managed_and_related_enterprises_with(:add_to_order_cycle).is_hub
+      managed_and_related_enterprises_granting(:add_to_order_cycle).is_hub
     end
 
     def variant_override_producers
@@ -42,7 +42,7 @@ module OpenFoodNetwork
     # override variants
     # {hub1_id => [producer1_id, producer2_id, ...], ...}
     def variant_override_enterprises_per_hub
-      hubs = managed_and_related_enterprises_with(:add_to_order_cycle).is_distributor
+      hubs = managed_and_related_enterprises_granting(:add_to_order_cycle).is_distributor
 
       # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
@@ -117,7 +117,7 @@ module OpenFoodNetwork
     end
 
     def managed_product_enterprises
-      managed_and_related_enterprises_with :manage_products
+      managed_and_related_enterprises_granting :manage_products
     end
 
     def manages_one_enterprise?
@@ -131,7 +131,7 @@ module OpenFoodNetwork
       @user.admin?
     end
 
-    def managed_and_related_enterprises_with(permission)
+    def managed_and_related_enterprises_granting(permission)
       managed_enterprise_ids = managed_enterprises.pluck :id
       permitting_enterprise_ids = related_enterprises_with(permission).pluck :id
 
