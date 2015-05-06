@@ -558,34 +558,6 @@ describe Enterprise do
         enterprises.should include e2
       end
     end
-
-    describe "accessible_by" do
-      it "shows only managed enterprises and enterprises granting them P-OC" do
-        user = create(:user)
-        user.spree_roles = []
-        e1 = create(:enterprise)
-        e2 = create(:enterprise)
-        e3 = create(:enterprise)
-        e1.enterprise_roles.build(user: user).save
-        create(:enterprise_relationship, parent: e2, child: e1, permissions_list: [:add_to_order_cycle])
-
-        enterprises = Enterprise.accessible_by user
-        enterprises.length.should == 2
-        enterprises.should include e1, e2
-        enterprises.should_not include e3
-      end
-
-      it "shows all enterprises for admin user" do
-        user = create(:admin_user)
-        e1 = create(:enterprise)
-        e2 = create(:enterprise)
-
-        enterprises = Enterprise.managed_by user
-        enterprises.length.should == 2
-        enterprises.should include e1
-        enterprises.should include e2
-      end
-    end
   end
 
   describe "callbacks" do

@@ -12,12 +12,18 @@ module OpenFoodNetwork
       let(:e) { double(:enterprise) }
 
       it "returns managed and related enterprises with add_to_order_cycle permission" do
-        permissions.
-          should_receive(:managed_and_related_enterprises_with).
+        allow(user).to receive(:admin?) { false }
+        expect(permissions).to receive(:managed_and_related_enterprises_with).
           with(:add_to_order_cycle).
           and_return([e])
 
-        permissions.order_cycle_enterprises.should == [e]
+        expect(permissions.enterprises_managed_or_granting_add_to_order_cycle).to eq [e]
+      end
+
+      it "shows all enterprises for admin user" do
+        allow(user).to receive(:admin?) { true }
+
+        expect(permissions.enterprises_managed_or_granting_add_to_order_cycle).to eq [e1, e2]
       end
     end
 

@@ -15,6 +15,15 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :add_to_order_cycle
     end
 
+    def enterprises_managed_or_granting_add_to_order_cycle
+      # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
+      if admin?
+        Enterprise.scoped
+      else
+        managed_and_related_enterprises_with :add_to_order_cycle
+      end
+    end
+
     # Find enterprises for which an admin is allowed to edit their profile
     def editable_enterprises
       managed_and_related_enterprises_with :edit_profile
@@ -117,6 +126,10 @@ module OpenFoodNetwork
 
 
     private
+
+    def admin?
+      @user.admin?
+    end
 
     def managed_and_related_enterprises_with(permission)
       managed_enterprise_ids = managed_enterprises.pluck :id

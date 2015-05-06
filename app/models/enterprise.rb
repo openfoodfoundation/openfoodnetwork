@@ -162,15 +162,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-  # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
-  scope :accessible_by, lambda { |user|
-    if user.has_spree_role?('admin')
-      scoped
-    else
-      where(id: OpenFoodNetwork::Permissions.new(user).order_cycle_enterprises)
-    end
-  }
-
   def self.find_near(suburb)
     enterprises = []
 
