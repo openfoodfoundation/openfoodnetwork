@@ -73,7 +73,7 @@ module OpenFoodNetwork
       # Any orders placed through hubs that my producers have granted P-OC, and which contain my their products
       # This is pretty complicated but it's looking for order where at least one of my producers has granted
       # P-OC to the distributor AND the order contains products of at least one of THE SAME producers
-      granted_distributors = granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
+      granted_distributors = related_enterprises_granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
       produced = Spree::Order.with_line_items_variants_and_products_outer.
       where(
       "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
@@ -157,7 +157,7 @@ module OpenFoodNetwork
         (options[:scope] || Enterprise).where('enterprises.id IN (?)', parent_ids)
     end
 
-    def granted(permission, options={})
+    def related_enterprises_granted(permission, options={})
       child_ids = EnterpriseRelationship.
         permitted_by(options[:by] || managed_enterprises).
         with_permission(permission).
