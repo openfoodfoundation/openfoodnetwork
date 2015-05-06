@@ -154,19 +154,19 @@ module OpenFoodNetwork
 
       it "returns the enterprises" do
         permissions.stub(:managed_enterprises) { e2 }
-        permissions.send(:granting, permission).should == [e1]
+        permissions.send(:related_enterprises_granting, permission).should == [e1]
       end
 
       it "returns an empty array when there are none" do
         permissions.stub(:managed_enterprises) { e1 }
-        permissions.send(:granting, permission).should == []
+        permissions.send(:related_enterprises_granting, permission).should == []
       end
     end
 
     describe "finding enterprises that are managed or with a particular permission" do
       before do
         permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
-        permissions.stub(:granting) { Enterprise.where('1=0') }
+        permissions.stub(:related_enterprises_granting) { Enterprise.where('1=0') }
       end
 
       it "returns managed enterprises" do
@@ -175,7 +175,7 @@ module OpenFoodNetwork
       end
 
       it "returns permitted enterprises" do
-        permissions.should_receive(:granting).with(permission).
+        permissions.should_receive(:related_enterprises_granting).with(permission).
           and_return(Enterprise.where(id: e2))
         permissions.send(:managed_and_related_enterprises_granting, permission).should == [e2]
       end
@@ -186,7 +186,7 @@ module OpenFoodNetwork
       let!(:p) { create(:simple_product, supplier: e) }
 
       it "returns supplied products" do
-        permissions.should_receive(:granting).with(:manage_products) { [e] }
+        permissions.should_receive(:related_enterprises_granting).with(:manage_products) { [e] }
 
         permissions.send(:related_enterprise_products).should == [p]
       end
