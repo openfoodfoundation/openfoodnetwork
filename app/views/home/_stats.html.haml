@@ -5,25 +5,23 @@
       %p.text-big Thanks for making the Open Food Network possible. Our vision is a better food system, and we're proud of what we're achieving together.
       %br
       %br
-      // Todo: make these variables live from OFN data.
-      // Todo: investigate state / postcode / location stat. Easy / hard?
-      .stat1
-        %h4     
-          %strong 4 
-          states represented 
-      .stat1
-        %h4     
-          %strong 126 
+      -# .stat1
+      -#   %h4
+      -#     %strong 44444
+      -#     states represented
+      .stat2
+        %h4
+          %strong= number_with_delimiter @num_hubs
           food shops
       .stat3
-        %h4 
-          %strong 345
+        %h4
+          %strong= number_with_delimiter @num_producers
           food producers
       .stat4
-        %h4     
-          %strong 2,201
+        %h4
+          %strong= number_with_delimiter @num_users
           happy food shoppers
       .stat5
-        %h4     
-          %strong 3,902 
+        %h4
+          %strong= number_with_delimiter @num_orders
           orders made
