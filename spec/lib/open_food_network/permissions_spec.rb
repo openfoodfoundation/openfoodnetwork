@@ -8,22 +8,36 @@ module OpenFoodNetwork
     let(:e1) { create(:enterprise) }
     let(:e2) { create(:enterprise) }
 
+    describe "finding managed and related enterprises granting a particular permission" do
+      describe "as super admin" do
+        before { allow(user).to receive(:admin?) { true } }
+
+        it "returns all enterprises" do
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e2]
+        end
+      end
+
+      describe "as an enterprise user" do
+        let(:e3) { create(:enterprise) }
+        before { allow(user).to receive(:admin?) { false } }
+
+        it "returns only my managed enterprises any that have granting them P-OC" do
+          expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
+          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3) }
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e3]
+        end
+      end
+    end
+
     describe "finding enterprises that can be added to an order cycle" do
       let(:e) { double(:enterprise) }
 
       it "returns managed and related enterprises with add_to_order_cycle permission" do
-        allow(user).to receive(:admin?) { false }
         expect(permissions).to receive(:managed_and_related_enterprises_granting).
           with(:add_to_order_cycle).
           and_return([e])
 
         expect(permissions.enterprises_managed_or_granting_add_to_order_cycle).to eq [e]
-      end
-
-      it "shows all enterprises for admin user" do
-        allow(user).to receive(:admin?) { true }
-
-        expect(permissions.enterprises_managed_or_granting_add_to_order_cycle).to eq [e1, e2]
       end
     end
 
@@ -61,6 +75,7 @@ module OpenFoodNetwork
 
       before do
         permissions.stub(:managed_enterprises) { Enterprise.where(id: hub.id) }
+        permissions.stub(:admin?) { false }
       end
 
       it "returns enterprises as hub_id => [producer, ...]" do
@@ -167,6 +182,7 @@ module OpenFoodNetwork
       before do
         permissions.stub(:managed_enterprises) { Enterprise.where('1=0') }
         permissions.stub(:related_enterprises_granting) { Enterprise.where('1=0') }
+        permissions.stub(:admin?) { false }
       end
 
       it "returns managed enterprises" do

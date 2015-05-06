@@ -17,11 +17,7 @@ module OpenFoodNetwork
 
     def enterprises_managed_or_granting_add_to_order_cycle
       # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
-      if admin?
-        Enterprise.scoped
-      else
-        managed_and_related_enterprises_granting :add_to_order_cycle
-      end
+      managed_and_related_enterprises_granting :add_to_order_cycle
     end
 
     # Find enterprises for which an admin is allowed to edit their profile
@@ -132,10 +128,14 @@ module OpenFoodNetwork
     end
 
     def managed_and_related_enterprises_granting(permission)
-      managed_enterprise_ids = managed_enterprises.pluck :id
-      permitting_enterprise_ids = related_enterprises_granting(permission).pluck :id
+      if admin?
+        Enterprise.scoped
+      else
+        managed_enterprise_ids = managed_enterprises.pluck :id
+        permitting_enterprise_ids = related_enterprises_granting(permission).pluck :id
 
-      Enterprise.where('id IN (?)', managed_enterprise_ids + permitting_enterprise_ids)
+        Enterprise.where('id IN (?)', managed_enterprise_ids + permitting_enterprise_ids)
+      end
     end
 
     def managed_enterprises
