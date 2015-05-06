@@ -17,5 +17,5 @@ ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/load_stag
 
 echo "--- Pushing to staging"
 output=$(git push staging2 $BUILDKITE_COMMIT:master --force 2>&1)
-echo $output
+echo "$output"
 [[ $output =~ "Done" ]]
