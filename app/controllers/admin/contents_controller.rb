@@ -1,7 +1,7 @@
 module Admin
   class ContentsController < Spree::Admin::BaseController
     def edit
-      @preferences = [:home_tagline_cta]
+      @preferences = [:home_tagline_cta, :home_whats_happening, :footer_about_url]
     end
 
     def update

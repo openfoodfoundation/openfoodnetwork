@@ -2,9 +2,9 @@
   %section.top-bar-section
     %ul.left{}
       %li.ofn-logo
-        %a{href: root_path} 
+        %a{href: root_path}
           %img{src: "/assets/logo-white.png", srcset: "/assets/logo-white.svg", width: "75", height: "26"}
-      %li.divider 
+      %li.divider
       %li
         %a{href: main_app.shops_path}
           %span.nav-primary Shops
@@ -22,8 +22,7 @@
           %span.nav-primary Groups
       %li.divider
       %li
-        // TODO: Rohan - About path is content manageable:
-        %a{href: main_app.groups_path}
+        %a{href: ContentConfig.footer_about_url}
           %span.nav-primary About
       %li.divider
   %section.top-bar-section
@@ -36,7 +35,7 @@
       %li.divider
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
-          %em Shopping &#64; 
+          %em Shopping &#64;
           %span.nav-primary.nav-branded {{ CurrentHub.hub.name }}
       %li.divider
       %li.cart{"ng-cloak" => true}
