@@ -133,7 +133,7 @@ module OpenFoodNetwork
 
     def managed_and_related_enterprises_granting(permission)
       managed_enterprise_ids = managed_enterprises.pluck :id
-      permitting_enterprise_ids = related_enterprises_with(permission).pluck :id
+      permitting_enterprise_ids = granting(permission).pluck :id
 
       Enterprise.where('id IN (?)', managed_enterprise_ids + permitting_enterprise_ids)
     end
@@ -146,15 +146,6 @@ module OpenFoodNetwork
     def coordinated_order_cycles
       return @coordinated_order_cycles unless @coordinated_order_cycles.nil?
       @coordinated_order_cycles = OrderCycle.managed_by(@user)
-    end
-
-    def related_enterprises_with(permission)
-      parent_ids = EnterpriseRelationship.
-        permitting(managed_enterprises).
-        with_permission(permission).
-        pluck(:parent_id)
-
-      Enterprise.where('id IN (?)', parent_ids)
     end
 
     def granting(permission, options={})
@@ -180,7 +171,7 @@ module OpenFoodNetwork
     end
 
     def related_enterprise_products
-      Spree::Product.where('supplier_id IN (?)', related_enterprises_with(:manage_products))
+      Spree::Product.where('supplier_id IN (?)', granting(:manage_products))
     end
   end
 end
