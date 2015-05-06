@@ -12,6 +12,13 @@ function exit_unless_master_merged {
     fi
 }
 
+function succeed_if_master_merged {
+    if [[ `git branch -a --merged origin/$BUILDKITE_BRANCH` == *origin/master* ]]; then
+	echo "This branch already has the current master merged."
+	exit 0
+    fi
+}
+
 function drop_and_recreate_database {
     # Adapted from: http://stackoverflow.com/questions/12924466/capistrano-with-postgresql-error-database-is-being-accessed-by-other-users
     psql -U openfoodweb postgres <<EOF
