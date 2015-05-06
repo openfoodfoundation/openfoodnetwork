@@ -29,6 +29,41 @@ module OpenFoodNetwork
       end
     end
 
+    describe "finding managed and related enterprises granting or granted a particular permission" do
+      describe "as super admin" do
+        before { allow(user).to receive(:admin?) { true } }
+
+        it "returns all enterprises" do
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e2]
+        end
+      end
+
+      describe "as an enterprise user" do
+        let(:e3) { create(:enterprise) }
+        let(:e4) { create(:enterprise) }
+        before { allow(user).to receive(:admin?) { false } }
+
+        it "returns only my managed enterprises any that have granting them P-OC" do
+          expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
+          expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3) }
+          expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) { Enterprise.where(id: e4) }
+          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to eq [e1, e3, e4]
+        end
+      end
+    end
+
+    describe "finding enterprises that can be selected in order report filters" do
+      let(:e) { double(:enterprise) }
+
+      it "returns managed and related enterprises with add_to_order_cycle permission" do
+        expect(permissions).to receive(:managed_and_related_enterprises_with).
+          with(:add_to_order_cycle).
+          and_return([e])
+
+        expect(permissions.visible_enterprises_for_order_reports).to eq [e]
+      end
+    end
+
     describe "finding enterprises that can be added to an order cycle" do
       let(:e) { double(:enterprise) }
 
@@ -37,7 +72,7 @@ module OpenFoodNetwork
           with(:add_to_order_cycle).
           and_return([e])
 
-        expect(permissions.enterprises_managed_or_granting_add_to_order_cycle).to eq [e]
+        expect(permissions.order_cycle_enterprises).to eq [e]
       end
     end
 

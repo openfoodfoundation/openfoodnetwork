@@ -13,7 +13,7 @@ module Api
     end
 
     def accessible
-      permitted = Permissions.new(current_api_user).enterprises_managed_or_granting_add_to_order_cycle
+      permitted = Permissions.new(current_api_user).order_cycle_enterprises
       @enterprises = permitted.ransack(params[:q]).result
       render params[:template] || :bulk_index
     end

@@ -426,10 +426,10 @@ Spree::Admin::ReportsController.class_eval do
     end
 
     # My distributors and any distributors distributing products I supply
-    @distributors = permissions.order_report_enterprises(:add_to_order_cycle).is_distributor
+    @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
 
     # My suppliers and any suppliers supplying products I distribute
-    @suppliers = permissions.order_report_enterprises(:add_to_order_cycle).is_primary_producer
+    @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
     @order_cycles = OrderCycle.active_or_complete.
     involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
