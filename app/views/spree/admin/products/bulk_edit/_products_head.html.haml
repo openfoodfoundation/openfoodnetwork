@@ -15,7 +15,7 @@
   %col.actions
 
 %thead
-  %tr
+  %tr{ ng: { controller: "ColumnsCtrl" } }
     %th.left-actions
     %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
     %th.sku{ 'ng-show' => 'columns.sku.visible' } SKU

@@ -1,9 +1,9 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns) ->
     $scope.loading = true
 
     $scope.StatusMessage = StatusMessage
 
-    $scope.columns =
+    $scope.columns = Columns.setColumns
       producer:             {name: "Producer",              visible: true}
       sku:                  {name: "SKU",                   visible: false}
       name:                 {name: "Name",                  visible: true}
