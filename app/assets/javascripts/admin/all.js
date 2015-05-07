@@ -18,6 +18,7 @@
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ./admin
+//= require ./customers/customers
 //= require ./enterprises/enterprises
 //= require ./enterprise_groups/enterprise_groups
 //= require ./index_utils/index_utils
