@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey"
-  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey) ->
+  "$scope", "$http", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey", "Columns"
+  ($scope, $http, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey, Columns) ->
     $scope.loading = true
 
     $scope.initialiseVariables = ->
@@ -18,9 +18,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.selectedUnitsProduct = {};
       $scope.selectedUnitsVariant = {};
       $scope.sharedResource = false
-      $scope.predicate = ""
-      $scope.reverse = false
-      $scope.columns =
+      $scope.columns = Columns.setColumns
         order_no:     { name: "Order No.",    visible: false }
         full_name:    { name: "Name",         visible: true }
         email:        { name: "Email",        visible: false }
