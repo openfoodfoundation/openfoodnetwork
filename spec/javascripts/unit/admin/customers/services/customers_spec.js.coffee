@@ -22,7 +22,7 @@ describe "Customers service", ->
       # This is super weird and freaking annoying. I think resource results have extra
       # properties ($then, $promise) that cause them to not be equal to the reponse object
       # provided to the expectGET clause above.
-      expect(Customers.customers).toEqual { 5: new CustomerResource({ id: 5, email: 'someone@email.com'}) }
+      expect(Customers.customers).toEqual [ new CustomerResource({ id: 5, email: 'someone@email.com'}) ]
 
     it "returns @customers", ->
       expect(result).toEqual Customers.customers

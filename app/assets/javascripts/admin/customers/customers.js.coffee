@@ -1,1 +1,1 @@
-angular.module("admin.customers", ['ngResource', 'admin.indexUtils'])
+angular.module("admin.customers", ['ngResource', 'admin.indexUtils', 'admin.dropdown'])

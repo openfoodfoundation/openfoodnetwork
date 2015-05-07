@@ -9,6 +9,34 @@
     .ten.columns.omega
       %input{ type: 'button', value: 'Go', ng: { click: 'initialise()' } }
 
+  .row{ 'ng-hide' => '!loaded() || lineItems.length == 0' }
+    .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
+      .three.columns.alpha
+        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+      .three.columns &nbsp;
+      -#   %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
+      -#     %span{ :class => 'icon-check' } &nbsp; Actions
+      -#     %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+      -#     %div.menu{ 'ng-show' => "expanded" }
+      -#       %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredCustomers)", 'ofn-close-on-click' => true }
+      -#         %span{ :class => 'three columns omega' } {{action.name }}
+      .seven.columns &nbsp;
+      .three.columns.omega
+        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
+          %span{ :class => 'icon-reorder' } &nbsp; Columns
+          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+          %div.menu{ 'ng-show' => "expanded" }
+            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+              %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+              %span{ :class => 'two columns omega' } {{column.name }}
+    .row
+      .sixteen.columns.alpha#loading{ 'ng-if' => 'shop_id && !loaded()' }
+        %img.spinner{ src: "/assets/spinning-circles.svg" }
+        %h1 LOADING CUSTOMERS
+    .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
+      %h1#no_results No customers found.
+
+
   .row{ ng: { show: "loaded()" } }
     %form{ name: "customers" }
       %table.index#customers{ :class => "sixteen columns alpha" }
@@ -23,7 +51,7 @@
             %th.actions
               Ask?&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-          %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{id}}" }
+          %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
             %td.bulk
               %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
             %td.email{ 'ng-show' => 'columns.email.visible' } {{ customer.email }}
