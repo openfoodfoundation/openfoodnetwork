@@ -1,1 +1,33 @@
-Customers
+= admin_inject_shops
+
+%div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
+  .row{ ng: { hide: "loaded()" } }
+    .two.columns.alpha
+      Hub
+    .four.columns
+      %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
+    .ten.columns.omega
+      %input{ type: 'button', value: 'Go', ng: { click: 'initialise()' } }
+
+  .row{ ng: { show: "loaded()" } }
+    %form{ name: "customers" }
+      %table.index#customers{ :class => "sixteen columns alpha" }
+        %thead
+          %tr{ ng: { controller: "ColumnsCtrl" } }
+            %th.bulk
+              %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+            %th.email{ 'ng-show' => 'columns.email.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" } Email
+            %th.code{ 'ng-show' => 'columns.code.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.code'; reverse = !reverse" } Code
+            %th.actions
+              Ask?&nbsp;
+              %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
+          %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{id}}" }
+            %td.bulk
+              %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
+            %td.email{ 'ng-show' => 'columns.email.visible' } {{ customer.email }}
+            %td.code{ 'ng-show' => 'columns.code.visible' } {{ customer.code }}
+            %td.actions
+              %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
+      -# %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }

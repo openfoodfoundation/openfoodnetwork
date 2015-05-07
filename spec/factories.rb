@@ -208,7 +208,7 @@ FactoryGirl.define do
   factory :customer, :class => Customer do
     email { Faker::Internet.email }
     enterprise
-    code 'abc123'
+    code { Faker::Lorem.word }
     user
   end
 end
