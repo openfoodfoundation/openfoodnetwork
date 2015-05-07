@@ -298,4 +298,64 @@ feature %q{
       ].sort
     end
   end
+
+  describe "Xero invoices report" do
+    let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:user1) { create_enterprise_user enterprises: [distributor1] }
+    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
+
+    let!(:zone) { create(:zone_with_member) }
+    let(:country) { Spree::Country.find Spree::Config.default_country_id }
+    let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: bill_address) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+
+    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
+    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
+
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+
+    before do
+      order1.update_attribute :email, 'customer@email.com'
+      Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
+
+      login_to_admin_section
+      click_link 'Reports'
+
+      click_link 'Xero invoices'
+    end
+
+    around do |example|
+      Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
+        example.yield
+      end
+    end
+
+    it "shows Xero invoices report" do
+      rows = find("table#listing_invoices").all("tr")
+      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
+
+      table.should == [
+        %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
+        xero_invoice_row('Total untaxable produce (no tax)',       0, 'GST Free Income'),
+        xero_invoice_row('Total taxable produce (tax inclusive)',  0, 'GST on Income'),
+        xero_invoice_row('Total untaxable fees (no tax)',          0, 'GST Free Income'),
+        xero_invoice_row('Total taxable fees (tax inclusive)',     0, 'GST on Income'),
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 0, 'Tax or No Tax - depending on enterprise setting')
+      ]
+    end
+
+
+    private
+
+    def xero_invoice_row(description, amount, tax_type)
+      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, order1.number, order1.number, '2015-04-26', '2015-05-10', '', description, '1', amount.to_s, '', 'food sales', tax_type, '', '', '', '', Spree::Config.currency, '']
+
+    end
+  end
 end

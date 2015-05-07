@@ -7,6 +7,7 @@ require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
 require 'open_food_network/sales_tax_report'
+require 'open_food_network/xero_invoices_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -679,7 +680,15 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
 
-  def render_report (header, table, create_csv, csv_file_name)
+  def xero_invoices
+    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
+    orders = @search.result
+    @report = OpenFoodNetwork::XeroInvoicesReport.new orders
+    render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
+  end
+
+
+  def render_report(header, table, create_csv, csv_file_name)
     unless create_csv
       render :html => table
     else
