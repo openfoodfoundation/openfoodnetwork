@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150508030524) do
+ActiveRecord::Schema.define(:version => 20150508072454) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(:version => 20150508030524) do
   create_table "customers", :force => true do |t|
     t.string   "email",         :null => false
     t.integer  "enterprise_id", :null => false
-    t.string   "code",          :null => false
+    t.string   "code"
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
