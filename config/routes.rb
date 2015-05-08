@@ -80,7 +80,7 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_update, on: :collection
     end
 
-    resources :customers, only: [:index]
+    resources :customers, only: [:index, :update]
   end
 
   namespace :api do

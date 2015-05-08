@@ -220,8 +220,8 @@ module Spree
           should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises], for: :report)
         end
 
-        it "should not be able to list customers" do
-          should_not have_ability([:admin, :index], for: Customer)
+        it "should not be able to access customer actions" do
+          should_not have_ability([:admin, :index, :update], for: Customer)
         end
 
         describe "order_cycles abilities" do
@@ -411,8 +411,8 @@ module Spree
           should_not have_ability([:sales_total, :users_and_enterprises], for: :report)
         end
 
-        it "should be able to list customers" do
-          should have_ability([:admin, :index], for: Customer)
+        it "should be able to access customer actions" do
+          should have_ability([:admin, :index, :update], for: Customer)
         end
 
         context "for a given order_cycle" do
