@@ -1,3 +1,6 @@
+- content_for :page_title do
+  %h1.page-title Customers
+
 = admin_inject_shops
 
 %div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
@@ -11,16 +14,16 @@
 
   .row{ 'ng-hide' => '!loaded() || lineItems.length == 0' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
-      .three.columns.alpha
+      .five.columns.alpha
         %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-      .three.columns &nbsp;
+      .five.columns &nbsp;
       -#   %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
       -#     %span{ :class => 'icon-check' } &nbsp; Actions
       -#     %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
       -#     %div.menu{ 'ng-show' => "expanded" }
       -#       %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredCustomers)", 'ofn-close-on-click' => true }
       -#         %span{ :class => 'three columns omega' } {{action.name }}
-      .seven.columns &nbsp;
+      .three.columns &nbsp;
       .three.columns.omega
         %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
           %span{ :class => 'icon-reorder' } &nbsp; Columns
