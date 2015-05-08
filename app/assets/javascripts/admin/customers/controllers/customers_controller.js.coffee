@@ -1,6 +1,7 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, Customers, Columns, shops) ->
+angular.module("admin.customers").controller "customersCtrl", ($scope, Customers, Columns, pendingChanges, shops) ->
   $scope.shop = null
   $scope.shops = shops
+  $scope.submitAll = pendingChanges.submitAll
 
   $scope.columns = Columns.setColumns
     email:     { name: "Email",    visible: true }

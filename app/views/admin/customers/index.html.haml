@@ -29,12 +29,12 @@
             %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
               %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
               %span{ :class => 'two columns omega' } {{column.name }}
-    .row
-      .sixteen.columns.alpha#loading{ 'ng-if' => 'shop_id && !loaded()' }
-        %img.spinner{ src: "/assets/spinning-circles.svg" }
-        %h1 LOADING CUSTOMERS
-    .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
-      %h1#no_results No customers found.
+  .row{ 'ng-if' => 'shop_id && !loaded()' }
+    .sixteen.columns.alpha#loading
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %h1 LOADING CUSTOMERS
+  .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
+    %h1#no_results No customers found.
 
 
   .row{ ng: { show: "loaded()" } }
@@ -55,7 +55,8 @@
             %td.bulk
               %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
             %td.email{ 'ng-show' => 'columns.email.visible' } {{ customer.email }}
-            %td.code{ 'ng-show' => 'columns.code.visible' } {{ customer.code }}
+            %td.code{ 'ng-show' => 'columns.code.visible' }
+              %input{ :type => 'text', :name => 'code', :id => 'code', 'ng-model' => 'customer.code', 'obj-for-update' => "customer", "attr-for-update" => "code" }
             %td.actions
               %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
-      -# %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
+      %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'submitAll()' }

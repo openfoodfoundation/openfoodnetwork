@@ -19,7 +19,7 @@ feature 'Customers' do
         visit admin_customers_path
       end
 
-      it "lists my customers", js: true do
+      it "passes the smoke test", js: true do
         # Prompts for a hub
         expect(page).to have_select2 "shop_id", with_options: [managed_distributor.name], without_options: [unmanaged_distributor.name]
 
@@ -44,6 +44,15 @@ feature 'Customers' do
         first("div#columns_dropdown div.menu div.menu_item", text: "Email").click
         expect(page).to_not have_selector "th.email"
         expect(page).to_not have_content customer1.email
+
+        # Updating attributes
+        within "tr#c_#{customer1.id}" do
+          fill_in "code", with: "new-customer-code"
+          expect(page).to have_css "input#code.update-pending"
+        end
+        click_button "Update"
+        expect(page).to have_css "input#code.update-success"
+        expect(customer1.reload.code).to eq "new-customer-code"
       end
     end
   end
