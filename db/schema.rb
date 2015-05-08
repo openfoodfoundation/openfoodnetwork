@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150424025907) do
+ActiveRecord::Schema.define(:version => 20150508030524) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -549,6 +549,7 @@ ActiveRecord::Schema.define(:version => 20150424025907) do
     t.string   "currency"
     t.decimal  "distribution_fee",     :precision => 10, :scale => 2
     t.string   "shipping_method_name"
+    t.decimal  "unit_value",           :precision => 8,  :scale => 2
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"
@@ -618,9 +619,9 @@ ActiveRecord::Schema.define(:version => 20150424025907) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
@@ -1079,6 +1080,26 @@ ActiveRecord::Schema.define(:version => 20150424025907) do
     t.float   "longitude"
     t.integer "state_id"
   end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string  "name"
+    t.integer "taggings_count", :default => 0
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "variant_overrides", :force => true do |t|
     t.integer "variant_id",                                  :null => false
