@@ -20,7 +20,7 @@ feature 'Customers' do
       end
 
       it "passes the smoke test", js: true do
-        # Prompts for a hub
+        # Prompts for a hub for a list of my managed enterprises
         expect(page).to have_select2 "shop_id", with_options: [managed_distributor.name], without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor.name, from: "shop_id"
@@ -44,15 +44,29 @@ feature 'Customers' do
         first("div#columns_dropdown div.menu div.menu_item", text: "Email").click
         expect(page).to_not have_selector "th.email"
         expect(page).to_not have_content customer1.email
+      end
 
-        # Updating attributes
+      it "allows updating of attributes", js: true do
+        select2_select managed_distributor.name, from: "shop_id"
+        click_button "Go"
+
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input#code.update-pending"
         end
+        within "tr#c_#{customer1.id}" do
+          find(:css, "tags-input .tags input").set "awesome\n"
+          expect(page).to have_css ".tag_watcher.update-pending"
+        end
         click_button "Update"
+
+        # Every says it updated
         expect(page).to have_css "input#code.update-success"
+        expect(page).to have_css ".tag_watcher.update-success"
+
+        # And it actually did
         expect(customer1.reload.code).to eq "new-customer-code"
+        expect(customer1.tag_list).to eq ["awesome"]
       end
     end
   end
