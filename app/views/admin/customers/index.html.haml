@@ -42,8 +42,8 @@
       %table.index#customers{ :class => "sixteen columns alpha" }
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
-            %th.bulk
-              %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+            -# %th.bulk
+              -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.email{ 'ng-show' => 'columns.email.visible' }
               %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" } Email
             %th.code{ 'ng-show' => 'columns.code.visible' }
@@ -52,8 +52,8 @@
               Ask?&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
           %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
-            %td.bulk
-              %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
+            -# %td.bulk
+              -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
             %td.email{ 'ng-show' => 'columns.email.visible' } {{ customer.email }}
             %td.code{ 'ng-show' => 'columns.code.visible' }
               %input{ :type => 'text', :name => 'code', :id => 'code', 'ng-model' => 'customer.code', 'obj-for-update' => "customer", "attr-for-update" => "code" }
