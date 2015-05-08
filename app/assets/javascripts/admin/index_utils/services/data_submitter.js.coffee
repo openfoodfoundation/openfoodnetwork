@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "dataSubmitter", ($http, $q, resources) ->
+angular.module("admin.indexUtils").factory "dataSubmitter", ($http, $q, resources) ->
   return (change) ->
     deferred = $q.defer()
     resources.update(change).$promise.then (data) ->

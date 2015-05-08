@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "pendingChanges", (dataSubmitter) ->
+angular.module("admin.indexUtils").factory "pendingChanges", (dataSubmitter) ->
   pendingChanges: {}
 
   add: (id, attr, change) ->
