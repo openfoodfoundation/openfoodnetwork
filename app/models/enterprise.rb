@@ -30,6 +30,7 @@ class Enterprise < ActiveRecord::Base
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
+  has_many :customers
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
