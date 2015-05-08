@@ -1,8 +1,8 @@
-angular.module("ofn.admin").directive "ofnLineItemUpdAttr", (switchClass, pendingChanges) ->
+angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendingChanges) ->
   scope:
-    object: "&ofnLineItemUpdAttr"
-    type: "@ofnLineItemUpdAttr"
-    attr: "@attrName"
+    object: "&objForUpdate"
+    type: "@objForUpdate"
+    attr: "@attrForUpdate"
   link: (scope, element, attrs) ->
     scope.savedValue = scope.object()[scope.attr]
 
