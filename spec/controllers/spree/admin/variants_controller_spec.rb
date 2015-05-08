@@ -10,12 +10,19 @@ module Spree
         let!(:p2) { create(:simple_product, name: 'Product 2') }
         let!(:v1) { p1.variants.first }
         let!(:v2) { p2.variants.first }
+        let!(:vo) { create(:variant_override, variant: v1, hub: d, count_on_hand: 44) }
         let!(:d)  { create(:distributor_enterprise) }
         let!(:oc) { create(:simple_order_cycle, distributors: [d], variants: [v1]) }
 
         it "filters by distributor" do
           spree_get :search, q: 'Prod', distributor_id: d.id.to_s
           assigns(:variants).should == [v1]
+        end
+
+        it "applies variant overrides" do
+          spree_get :search, q: 'Prod', distributor_id: d.id.to_s
+          assigns(:variants).should == [v1]
+          assigns(:variants).first.count_on_hand.should == 44
         end
 
         it "filters by order cycle" do

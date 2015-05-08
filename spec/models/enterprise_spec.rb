@@ -10,10 +10,10 @@ describe Enterprise do
 
       context "when the email address has not already been confirmed" do
         it "sends a confirmation email" do
-          mail_message = double "Mail::Message"
-          expect(EnterpriseMailer).to receive(:confirmation_instructions).and_return mail_message
-          mail_message.should_receive :deliver
-          create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
+          expect do
+            create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
+          end.to enqueue_job Delayed::PerformableMethod
+          Delayed::Job.last.payload_object.method_name.should == :send_on_create_confirmation_instructions_without_delay
         end
 
         it "does not send a welcome email" do
@@ -41,10 +41,10 @@ describe Enterprise do
       let!(:enterprise) { create(:enterprise, owner: user) }
 
       it "when the email address has not already been confirmed" do
-        mail_message = double "Mail::Message"
-        expect(EnterpriseMailer).to receive(:confirmation_instructions).and_return mail_message
-        mail_message.should_receive :deliver
-        enterprise.update_attributes(email: "unknown@email.com")
+        expect do
+          enterprise.update_attributes(email: "unknown@email.com")
+        end.to enqueue_job Delayed::PerformableMethod
+        Delayed::Job.last.payload_object.method_name.should == :send_confirmation_instructions_without_delay
       end
 
       it "when the email address has already been confirmed" do

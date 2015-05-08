@@ -16,4 +16,4 @@ echo "--- Loading test database"
 bundle exec rake db:test:load
 
 echo "--- Running tests"
-bundle exec rspec spec --format progress
+bundle exec rspec spec

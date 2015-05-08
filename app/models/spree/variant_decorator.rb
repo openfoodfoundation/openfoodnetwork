@@ -72,6 +72,12 @@ Spree::Variant.class_eval do
     self.option_values.destroy ovs
   end
 
+  # Used like "product.name - full_name". If called like this, a product with
+  # name "Bread" would be displayed as one of these:
+  #     Bread - 1kg                     # if display_name blank
+  #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg"
+  #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough"
+  #     Bread - Spelt Sourdough (1kg)   # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
   def full_name
     return unit_to_display if display_name.blank?
     return display_name    if display_name.downcase.include? unit_to_display.downcase

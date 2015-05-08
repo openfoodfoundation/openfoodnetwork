@@ -1,4 +1,6 @@
 Spree.user_class.class_eval do
+  handle_asynchronously :send_reset_password_instructions
+
   has_many :enterprise_roles, :dependent => :destroy
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner

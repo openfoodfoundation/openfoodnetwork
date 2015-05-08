@@ -32,7 +32,10 @@ describe UserPasswordsController do
   end
 
   it "renders Darkswarm" do
+    clear_jobs
     user.send_reset_password_instructions
+    flush_jobs # Send the reset password instructions
+    user.reload
     spree_get :edit, reset_password_token: user.reset_password_token
     response.should render_template "user_passwords/edit"
   end
