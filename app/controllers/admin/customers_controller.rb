@@ -1,6 +1,7 @@
 module Admin
   class CustomersController < ResourceController
     before_filter :load_managed_shops, only: :index, if: :html_request?
+    respond_to :json
 
     def index
       respond_to do |format|
