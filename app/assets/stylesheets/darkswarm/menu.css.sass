@@ -1,3 +1,4 @@
+@import compass
 @import branding
 @import mixins
 @import typography
@@ -5,6 +6,8 @@
 
 nav
   @include textpress
+  text-shadow: none
+
   .joyride-tip-guide .button
     text-shadow: none
 
@@ -14,7 +17,7 @@ nav
     vertical-align: middle
 
   .top-bar-section .has-dropdown > a
-    padding-right: 15px !important
+    padding-right: $topbar-height / 2 !important
 
     i.ofn-i_022-cog
       font-size: 24px
@@ -29,6 +32,7 @@ nav
     opacity: 0.8
     &:hover, &:focus, &:active
       opacity: 1
+    @include transition(all 0.3s ease-in-out)
 
   .nav-branded
     color: $clr-brick-light-bright
@@ -38,8 +42,11 @@ nav
     @include headingFont
     font-size: 0.875rem
     font-weight: 300
-  .left .nav-primary
+  ul .nav-primary
     text-transform: uppercase
+  ul.dropdown
+    border: 1px solid $smoke
+    border-top: none
 
 
 // Mobile Menu
