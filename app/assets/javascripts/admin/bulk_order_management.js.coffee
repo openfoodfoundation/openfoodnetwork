@@ -171,6 +171,12 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         lineItem.unit_value = lineItem.units_variant.unit_value
       lineItem.price = lineItem.price * lineItem.unit_value / oldValue
       #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
+
+    $scope.unitValueLessThanZero = (lineItem) ->
+      if lineItem.units_variant.unit_value <= 0
+        true
+      else
+        false
 ]
 
 daysFromToday = (days) ->

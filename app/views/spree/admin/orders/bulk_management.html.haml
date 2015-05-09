@@ -149,7 +149,7 @@
               %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
             %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
             %td.unit_value{ 'ng-show' => 'columns.unit_value.visible' }
-              %input{ :type => 'number', :name => 'unit_value', :id => 'unit_value', 'ng-model' => "line_item.unit_value", 'ng-change' => "weightAdjustedPrice(line_item, {{ line_item.unit_value }})", 'ofn-line-item-upd-attr' => "unit_value" }
+              %input{ :type => 'number', :name => 'unit_value', :id => 'unit_value', 'ng-model' => "line_item.unit_value", 'ng-readonly' => "unitValueLessThanZero(line_item)", 'ng-change' => "weightAdjustedPrice(line_item, {{ line_item.unit_value }})", 'ofn-line-item-upd-attr' => "unit_value" }
             %td.price{ 'ng-show' => 'columns.price.visible' }
               %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price | currency }}', 'ng-model' => "line_item.price", 'ng-readonly' => "true", 'ofn-line-item-upd-attr' => "price" }
             %td.actions
