@@ -22,7 +22,8 @@ module Spree
       context "as a line item is updated" do
         it "update distribution charge on the order" do
           line_item_params = { order_id: order.number, id: line_item.id, line_item: { id: line_item.id, unit_value: 520 }, format: :json}
-          order.should_receive(:update_distribution_charge!).and_call_original
+          allow(controller).to receive(:order) { order }
+          expect(order).to receive(:update_distribution_charge!)
           spree_post :update, line_item_params
         end
       end
