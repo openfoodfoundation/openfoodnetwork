@@ -30,9 +30,18 @@
         float: right
         margin-left: 0.5rem
 
+    //Hub Link
+    @media all and (max-width: 640px) 
+      a.hub
+        display: block
+
     //Hub Name
     span.hub-name-listing
       font-weight: 700
+      &:after
+        content: ">>"
+        display: inline-block
+        margin-left: 5px
 
     //CLOSED row
     &.closed
