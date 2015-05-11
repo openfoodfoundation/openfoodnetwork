@@ -323,7 +323,7 @@ Spree::Admin::ReportsController.class_eval do
         sort_by: proc { |payment_state| payment_state } },
         { group_by: proc { |payment| payment.order.distributor },
         sort_by: proc { |distributor| distributor.name } },
-        { group_by: proc { |payment| payment.payment_method },
+        { group_by: proc { |payment| Spree::PaymentMethod.unscoped { payment.payment_method } },
         sort_by: proc { |method| method.name } } ]
 
     when "itemised_payment_totals"

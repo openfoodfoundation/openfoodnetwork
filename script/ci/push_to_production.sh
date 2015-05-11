@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # Add production git remote if required
 PROD_TEST=`git remote | grep -s 'production' || true`
