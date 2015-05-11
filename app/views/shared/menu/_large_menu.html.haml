@@ -1,11 +1,12 @@
 %nav.top-bar.show-for-large-up{'data-topbar' => true}
   %section.top-bar-section
-    %ul.left{}
+    %ul.left
       %li.ofn-logo
         %a{href: root_path}
           -# TODO: SVGify (though this image is double-size for retina)
-          %img{src: "/assets/logo-australia.png", width: "269", height: "45"}
+          %img{src: "/assets/logo-australia.png", width: "250", height: "51"}
       %li.divider
+    %ul.center
       %li
         %a{href: main_app.shops_path}
           %span.nav-primary Shops
@@ -26,7 +27,6 @@
         %a{href: ContentConfig.footer_about_url}
           %span.nav-primary About
       %li.divider
-  %section.top-bar-section
     %ul.right
       %li.divider
       - if spree_current_user.nil?

@@ -4,9 +4,20 @@
 @import typography
 @import variables
 
+
 nav
   @include textpress
   text-shadow: none
+
+  // Create center style for nav ul (foundation provides left and right)
+  text-align: center
+  .top-bar-section
+    ul.center
+      display: inline-block
+      // By default, we center between the left and right uls, but we want to be centered
+      // relative to the whole page. The difference in width between the other uls is 74px,
+      // so we offset by that amount here.
+      margin-left: -74px
 
   .joyride-tip-guide .button
     text-shadow: none
