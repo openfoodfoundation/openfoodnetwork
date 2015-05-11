@@ -12,10 +12,6 @@ nav
     text-shadow: none
 
   // Default overrides - big menu
-  .top-bar-section ul li.ofn-logo  > a
-    display: table-cell
-    vertical-align: middle
-
   .top-bar-section .has-dropdown > a
     padding-right: $topbar-height / 2 !important
 
@@ -33,6 +29,11 @@ nav
     &:hover, &:focus, &:active
       opacity: 1
     @include transition(all 0.3s ease-in-out)
+
+  .top-bar-section ul li.ofn-logo  > a
+    display: table-cell
+    vertical-align: middle
+    opacity: 1
 
   .nav-branded
     color: $clr-brick-light-bright
