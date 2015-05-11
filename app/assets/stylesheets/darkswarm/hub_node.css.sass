@@ -83,6 +83,23 @@
           .active_table_row:first-child .skinny-head
             background-color: rgba(255,255,255,0.85)
 
+      .producers-list
+        li.more-producers-link
+          .less
+            display: none
+          a:hover
+            text-decoration: underline
+        li.additional-producer
+          display: none
+        &.show-more-producers
+          li.additional-producer
+            display: block
+          li.more-producers-link
+            .more
+              display: none
+            .less
+              display: block
+        
     //INACTIVE - closed hub
     &.inactive
       &.closed, &.open
