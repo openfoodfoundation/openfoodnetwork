@@ -2,8 +2,9 @@
 @import mixins
 @import typography
 @import animations
+@import variables
 
-  
+
 // Styling for big panes on homepage
 #panes
   .pane
@@ -18,20 +19,22 @@
 
 #cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
   background-image: url("/assets/tile-wide.png")
-  background-color: white
-  background-size: 2140px, 380px
+  background-color: $australia-orange
   background-position: center center
 
 #brand-story.pane
+  background-image: url("/assets/tile-wide.png")
+  background-color: $australia-orange
   .row
-    background-image: url("/assets/home/macbook.png") 
-    background-repeat: no-repeat
-    background-position: center bottom
-    padding-bottom: 280px
+    h2
+      color: white
     p
       @include bodyFont
       font-size: 1.5rem
       font-weight: 300
+      color: white
+    a
+      color: white
 
 #stats.pane
   h4
@@ -55,7 +58,7 @@
       margin-top: 0
     i
       font-size: 4rem
-      
+
   .home-icon-box-bottom
     margin-top: 1rem
     width: 100%
@@ -71,7 +74,7 @@
       color: darken($ofn-grey, 10%)
       border-bottom: 2px solid lighten($ofn-grey, 34%)
       text-align: center
-      padding-bottom: 0.25rem 
+      padding-bottom: 0.25rem
 
 #shops.pane
   background-color: lighten($clr-brick, 26%)
@@ -85,13 +88,13 @@
 
 .cta.cta-producers.pane
   @include fullwidthbg
-  background-image: url("/assets/producers/producers-pg-bg.jpg") 
+  background-image: url("/assets/producers/producers-pg-bg.jpg")
   &, & *
     white
 
 .cta.cta-hubs.pane
   @include fullwidthbg
-  background-image: url("/assets/hubs-bg.jpg") 
+  background-image: url("/assets/hubs-bg.jpg")
 
 #producer-signup.pane, #shops-signup.pane
   background-color: lighten($clr-turquoise, 10%)
