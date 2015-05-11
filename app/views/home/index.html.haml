@@ -6,9 +6,12 @@
       .small-12.text-center.columns
         %h1
           / TODO: Rohan - logo asset & width is content manageable:
-          %img{src: "/assets/logo-color.png", srcset: "/assets/logo-color.svg", width: "350", height: "121", title: "Open Food Network Australia"}
+          -# TODO: SVGify
+          %img{src: "/assets/logo-white-notext.png", width: "250", title: "Open Food Network Australia"}
+          %br/
+          %a.button.primary{href: "/shops"}
+            Shop now
 
-  .ng-cloak
 
   #panes
     = render partial: "home/cta1"

@@ -1,5 +1,6 @@
 @import branding
 @import mixins
+@import variables
 
 // Styling for brand intro / tagline on homepage
 
@@ -8,13 +9,11 @@
   height: 300px
   @media all and (min-width: 768px)
     height: 500px
-  &:before  
+  &:before
     content: ""
     @include fullbg
     background-color: $ofn-grey
     background-image: url("/assets/home/home.jpg")
-    -webkit-filter: brightness(0.6) contrast(80%)
-    filter: brightness(0.6) contrast(80%)
     position: fixed
     left: 0
     right: 0
@@ -24,8 +23,18 @@
     height: 100%
 
   h1
-    margin-top: 6rem 
     @media all and (min-width: 768px)
-      margin-top: 12rem 
+      margin-top: 5.5rem
     img
       max-width: 80%
+      margin-bottom: 3rem
+
+    a.button
+      font-weight: bold
+      text-transform: uppercase
+      background: rgba(0, 0, 0, 0.3)
+      border: 3px solid #fff
+      text-shadow: none
+      &:hover
+        background: rgba(0, 0, 0, 0.6)
+        color: #fff
