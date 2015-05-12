@@ -5,7 +5,7 @@
       .trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
-          {{taxon.name}} 
+          %span{"bo-text" => "taxon.name"} 
     %div.show-for-medium-up{"bo-if" => "hub.taxons.length==0"}
       &nbsp;
   .columns.small-12.medium-3.large-2.fat
@@ -25,7 +25,6 @@
         %li{"ng-repeat" => "enterprise in hub.producers"}
           %enterprise-modal
             %i.ofn-i_036-producers
-            %span
-              {{ enterprise.name }}
+            %span{"bo-text" => "enterprise.name"}
     %div.show-for-medium-up{"bo-if" => "hub.producers.length==0"}
       &nbsp;

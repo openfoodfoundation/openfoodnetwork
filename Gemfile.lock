@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/openfoodfoundation/spree.git
-  revision: 4e0075b07acb56864aca89eee3d9670136176c23
+  revision: afcc23e489eb604a3e2651598a7c8364e2acc7b3
   branch: 1-3-stable
   specs:
     spree (1.3.6.beta)
@@ -123,7 +123,7 @@ GEM
     active_link_to (1.0.0)
     active_model_serializers (0.8.1)
       activemodel (>= 3.0)
-    activemerchant (1.46.0)
+    activemerchant (1.48.0)
       activesupport (>= 3.2.14, < 5.0.0)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
@@ -181,7 +181,7 @@ GEM
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
-    cocaine (0.5.5)
+    cocaine (0.5.7)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -191,7 +191,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    colorize (0.7.5)
+    colorize (0.7.7)
     columnize (0.3.6)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
@@ -497,7 +497,7 @@ GEM
       sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
-    tzinfo (0.3.43)
+    tzinfo (0.3.44)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)

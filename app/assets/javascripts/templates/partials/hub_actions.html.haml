@@ -2,7 +2,7 @@
   .cta-container.small-12.columns
     %label 
       Shop for 
-      %strong {{enterprise.name}} 
+      %strong{"bo-text" => "enterprise.name"} 
       products at:
     %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs", 
     "bo-href" => "hub.path", 
@@ -10,7 +10,7 @@
     "ofn-empties-cart" => "hub"}
       %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
       %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
-      .hub-name {{hub.name}} 
-      .button-address {{ hub.address.city }} , {{hub.address.state_name}}
+      .hub-name{"bo-text" => "hub.name"} 
+      .button-address{"bo-bind" => "[hub.address.city, hub.address.state_name] | printArray"}
       / %i.ofn-i_007-caret-right
 

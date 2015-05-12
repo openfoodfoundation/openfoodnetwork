@@ -20,13 +20,11 @@
     .row.pad-top{bindonce: true}
       .small-12.medium-6.columns
         .groups-header
-          %a{"ng-href" => "/groups/{{group.id}}"}
+          %a{"bo-href-i" => "/groups/{{group.id}}"}
             %i.ofn-i_035-groups
-            %span.group-name
-              {{ group.name }}
+            %span.group-name{"bo-text" => "group.name"}
       .small-3.medium-2.columns
-        %p
-          {{ group.state }}
+        %p{"bo-text" => "group.state"}
       .small-9.medium-4.columns.groups-icons
         %p
           %link-to-service.ofn-i_050-mail-circle{service: '""', ref: 'group.email.split("").reverse().join("")', mailto: true}
