@@ -3,8 +3,11 @@
     .row
       .small-12.medium-6.medium-offset-3.columns.text-center
         %h2 Food hubs, unlimited.
-        %p.text-big Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of. 
-  .cta.cta-hubs.pane
+        %p.text-big Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of.
+        %br
+        %a.button.transparent{href: "/register"}
+          Join now
+  .cta.cta-hubs.pane{style: "display: none"}
     .row
       .small-12.medium-6.medium-offset-3.columns.text-center
         %h4 Ready to join OFN Australia?
@@ -15,16 +18,16 @@
   .pane
     .row
       .small-12.medium-10.medium-offset-1.columns.text-center
-        %h2 Pricing
-        %p.text-big 
+        %h2 Membership types and fees.
+        %p.text-big
           / If there is a time-sensitive offer you can write it here, e.g.
           Sign up before 30th June for an extra month free!
         %br
         %table.signup-table.hubs-table{cellpadding: "0", cellspacing: "0"}
           %thead
             %tr
-              %td 
-                %h5 
+              %td
+                %h5
               %td.text-center{width: "20%"}
                 %h5 Profile
               %td.text-center{width: "24%"}
@@ -32,20 +35,20 @@
           %tr
             %td
               %p
-                %strong Profile 
+                %strong Profile
                 %br
                 %span.text-small Get a profile on the Open Food Network - including a listing on the Shops page and a pin on the OFN Map. These help people to find and connect with you.
-            %td.text-center 
+            %td.text-center
               %i.ofn-i_003-check.text-big
             %td.text-center
               %i.ofn-i_003-check.text-big
           %tr
             %td
               %p
-                %strong Distribute 
+                %strong Distribute
                 %br
-                %span.text-small Act as a distributor or food middle-man on OFN, enabling you to work with logistics of bringing existing products and producers to other OFN shopfronts. 
-            %td.text-center 
+                %span.text-small Act as a distributor or food middle-man on OFN, enabling you to work with logistics of bringing existing products and producers to other OFN shopfronts.
+            %td.text-center
               %i.ofn-i_003-check.text-big
             %td.text-center
               %i.ofn-i_003-check.text-big
@@ -56,32 +59,32 @@
               %p.text-small Get a shopfront on OFN to sell food from multiple suppliers &amp; producers.
               %p.text-small Basic support included:
               %ul.small
-                %li User manual 
+                %li User manual
                 %li Post queries to discussion forum/via contact form
                 %li Report bugs/suggestions via bugherd
                 %li Regular release notes – what's new
-            %td.text-center 
+            %td.text-center
             %td.text-center
               %i.ofn-i_003-check.text-big
           %tfoot
             %tr
               %td
               %td.text-center{valign: "top"}
-                %h2 
+                %h2
                   Free
               %td.text-center{valign: "top"}
-                %h2 
-                  .text-small 
-                    First 
+                %h2
+                  .text-small
+                    First
                     %br
                     month
                   Free
-                %p.text-small 
+                %p.text-small
                   Then, 2% of transactions
                   %br
-                  %em 
-                    Capped at 
-                    %strong $50 
+                  %em
+                    Capped at
+                    %strong $50
                     per month
                   %br
                   %em (Special offer for 2015)
@@ -89,82 +92,73 @@
   #shops-case-studies
     .row
       .small-12.medium-10.medium-offset-1.columns
-        %h2.text-center Case studies
+        %h2.text-center Stories from our hubs.
         %br
         .row
           .small-12.medium-6.columns
             .case-study
               %img.case-study-img{src: "/assets/case-studies/bfc_logo_square.png", width: "100", height: "100", title: "Bondi Food Collective"}
               %h4 Bondi Food Collective
-              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est. 
-              %a{href: "http://www.google.com", target: "_blank"} 
-                %strong Read more
-                %i.ofn-i_054-point-right
+              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
+              %a{href: "http://www.google.com", target: "_blank"}
+                %strong More
           .small-12.medium-6.columns
             .case-study
               %img.case-study-img{src: "/assets/case-studies/bonnie-beef-growers.png", width: "100", height: "100", title: "Bonnie Beef Growers"}
               %h4 Bonnie Beef Growers
               %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
-              %a{href: "http://www.google.com", target: "_blank"} 
-                %strong Read more
-                %i.ofn-i_054-point-right
-        .row  
+              %a{href: "http://www.google.com", target: "_blank"}
+                %strong More
+        .row
           .small-12.medium-6.columns
             .case-study
               %img.case-study-img{src: "/assets/case-studies/South_East_Food_Hub.png", width: "100", height: "100", title: "South East Food Hub"}
               %h4 South East Food Hub
               %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
-              %a{href: "http://www.google.com", target: "_blank"} 
-                %strong Read more
-                %i.ofn-i_054-point-right
+              %a{href: "http://www.google.com", target: "_blank"}
+                %strong More
           .small-12.medium-6.columns
-          
+
             .case-study
               %img.case-study-img{src: "/assets/case-studies/baw-baw.png", width: "100", height: "100", title: "Baw Baw Organics"}
               %h4 Baw Baw Organics
               %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
               %a{href: "http://www.google.com", target: "_blank"}
-                %strong Read more
-                %i.ofn-i_054-point-right
+                %strong More
 
 
-  .pane
+  .pane#cta
     .row
       .small-12.medium-6.medium-offset-3.columns.text-center
-        %h2 Join now!
-        %p.text-big Start with a free profile, and expand when you're ready! Lorem ipsum sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin.
+        %h2 We're ready to help.
+        %p.text-big You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
         %br
-        %hr
-        %br
-        %h4 Create your profile on OFN Australia:
-        %br
-        %a.neutral-btn.dark{href: "/register"}
+        %a.button.transparent{href: "/register"}
           Join now
-          %i.ofn-i_054-point-right
 
   #hub-details.pane.footer-pad
     .row
       .small-12.medium-10.medium-offset-1.columns
-        %h2.text-center Hubs - the nitty gritty
+        %h2.text-center Here's the detail.
         .row
           .small-12.medium-6.columns
             %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu. 
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
             %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna. 
+            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
             %ul.text-small
               %li A bullet point
-              %li Another point 
+              %li Another point
               %li A third point goes here
             %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
           .small-12.medium-6.columns
             %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu. 
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
             %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna. 
+            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
             %ul.text-small
               %li A bullet point
-              %li Another point 
+              %li Another point
               %li A third point goes here
             %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
 

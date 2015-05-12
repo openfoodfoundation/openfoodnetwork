@@ -104,10 +104,11 @@
   h2
     font-weight: 300
     font-size: 45px
+    margin-bottom: 2rem
 
 #stats.pane
   .row.header
-    padding-bottom: 0
+    padding-bottom: 2rem
   .row.content
     padding-top: 0
 
@@ -121,14 +122,15 @@
       font-weight: normal
       font-size: 75px
 
-#shops.pane
+#shops.pane, #producer-signup.pane, #shops-signup.pane
   &, & *
     color: white
 
   h2
-    color: white
+    margin-bottom: 2rem
+    font-size: 4.4rem
     font-weight: 300
-    font-size: 70px
+    color: white
 
 .cta.cta-producers.pane
   @include fullwidthbg
@@ -142,12 +144,12 @@
 
 #producer-signup.pane, #shops-signup.pane
   background-color: lighten($clr-turquoise, 10%)
-  &, h1, h2, h3, h4, h5, h6, p
-    color: white
-  h2
-    color: white
-    font-weight: 300
-    font-size: 3rem
+
+#producer-signup.pane
+  .row.header
+    padding-bottom: 0
+  .row.content
+    padding-top: 0
 
 #producer-case-studies
   padding-top: 100px
@@ -172,7 +174,7 @@
   background-color: lighten($ofn-grey, 44%)
 
 #shops-signup.pane
-  background-color: lighten($clr-brick, 26%)
+  background-color: $australia-orange
 
 #producer-case-studies, #shops-case-studies
   padding-top: 100px
@@ -202,8 +204,16 @@
           opacity: 0.75
 
 #shops-case-studies
-  background-color: lighten($clr-brick, 56%)
+  background-image: url("/assets/hubs-bg.jpg")
+  background-position: center center
+  -webkit-filter: brightness(1.1)
+  filter: brightness(1.1)
+
+  h2
+    color: $australia-orange
+    font-size: 3rem
   .case-study
-    border: 1px solid rgba($clr-brick-bright, 0.5)
-    a
-      color: $clr-brick
+    background-color: rgba(255, 255, 255, 0.5)
+    border: none
+    h4, a
+      color: $australia-orange
