@@ -1,27 +1,22 @@
 #stats.pane
-  .row
+  .row.header
     .small-12.medium-8.medium-offset-2.columns.text-center
-      %h3 What's happening on OFN Australia?
-      %p.text-big= ContentConfig.home_whats_happening
-      %br
-      %br
-      -# .stat1
-      -#   %h4
-      -#     %strong 44444
-      -#     states represented
-      .stat2
-        %h4
-          %strong= number_with_delimiter @num_hubs
-          food shops
-      .stat3
-        %h4
-          %strong= number_with_delimiter @num_producers
-          food producers
-      .stat4
-        %h4
-          %strong= number_with_delimiter @num_users
-          happy food shoppers
-      .stat5
-        %h4
-          %strong= number_with_delimiter @num_orders
-          orders made
+      %h2 We're creating a new food system.
+
+  .row.content
+    .small-12.medium-3.columns.text-center
+      %h4
+        %strong= number_with_delimiter @num_producers
+        food producers
+    .small-12.medium-3.columns.text-center
+      %h4
+        %strong= number_with_delimiter @num_hubs
+        food shops
+    .small-12.medium-3.columns.text-center
+      %h4
+        %strong= number_with_delimiter @num_users
+        food shoppers
+    .small-12.medium-3.columns.text-center
+      %h4
+        %strong= number_with_delimiter @num_orders
+        food orders

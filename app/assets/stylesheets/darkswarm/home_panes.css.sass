@@ -14,16 +14,22 @@
       padding-bottom: 75px
 
 // Background styles
-#system.pane, #stats.pane
+#system.pane
   background-color: white
 
 #brand-story.pane, #cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
   background-image: url("/assets/tile-wide.png")
   background-color: $australia-orange
   background-position: center center
-  .row
-    h1, h2, h3, h4, h5, h6, p, a
-      color: white
+  @include paneWhite
+
+#stats.pane
+  // TODO: Fix white line at bottom
+  background-image: url("/assets/home/background-blurred-oranges.jpg")
+  background-position: center center
+  background-color: $ofn-grey
+  @include fullbg
+  @include paneWhite
 
 // Content styles
 #brand-story.pane
@@ -94,19 +100,26 @@
       padding: 1rem 0
       margin: 1.5rem 0
 
-#cta.pane
+#cta.pane, #stats.pane
   h2
     font-weight: 300
     font-size: 45px
 
 #stats.pane
+  .row.header
+    padding-bottom: 0
+  .row.content
+    padding-top: 0
+
   h4
     font-weight: 300
     text-transform: uppercase
     margin: 1.5rem 0
     display: inline-block
     strong
-      color: $clr-brick
+      display: block
+      font-weight: normal
+      font-size: 75px
 
 #shops.pane
   background-color: lighten($clr-brick, 26%)
