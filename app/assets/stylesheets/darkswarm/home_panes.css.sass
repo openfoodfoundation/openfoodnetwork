@@ -13,39 +13,31 @@
       padding-top: 75px
       padding-bottom: 75px
 
+// Background styles
 #system.pane, #stats.pane
-  background-color: lighten($ofn-grey, 44%)
-
-#brand-story.pane
   background-color: white
 
-#cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
+#brand-story.pane, #cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
   background-image: url("/assets/tile-wide.png")
   background-color: $australia-orange
   background-position: center center
+  .row
+    h1, h2, h3, h4, h5, h6, p, a
+      color: white
 
+// Content styles
 #brand-story.pane
-  background-image: url("/assets/tile-wide.png")
-  background-color: $australia-orange
   .row
     h2
-      color: white
+      font-weight: 300
+      font-size: 88px
     p
       @include bodyFont
       font-size: 1.5rem
       font-weight: 300
-      color: white
-    a
-      color: white
 
-#stats.pane
-  h4
-    font-weight: 300
-    text-transform: uppercase
-    margin: 1.5rem 0
-    display: inline-block
-    strong
-      color: $clr-brick
+  a.text-vbig i
+    font-size: 75px
 
 #system.pane
   .home-icon-box
@@ -60,6 +52,13 @@
       margin-top: 0
     i
       font-size: 4rem
+  h2
+    font-size: 70px
+    font-weight: 300
+    color: $australia-orange
+
+  a
+    color: $australia-orange
 
   .home-icon-box-bottom
     margin-top: 1rem
@@ -72,11 +71,26 @@
     @media all and (min-width: 642px)
       padding-left: 1rem
       padding-right: 1rem
-    h5
-      color: darken($ofn-grey, 10%)
-      border-bottom: 2px solid lighten($ofn-grey, 34%)
+    h4
+      color: $australia-orange
+      border-bottom: 2px solid lighten($australia-orange, 20%)
       text-align: center
-      padding-bottom: 0.25rem
+      padding: 1rem 0
+      margin: 1.5rem 0
+
+#cta.pane
+  h2
+    font-weight: 300
+    font-size: 45px
+
+#stats.pane
+  h4
+    font-weight: 300
+    text-transform: uppercase
+    margin: 1.5rem 0
+    display: inline-block
+    strong
+      color: $clr-brick
 
 #shops.pane
   background-color: lighten($clr-brick, 26%)
