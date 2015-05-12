@@ -12,22 +12,19 @@ footer
       &:hover, &:active, &:focus
         color: rgba(white, 1)
         text-decoration: underline
-  
+
   .footer-global
     background-color: $ofn-grey
-    border-top: 2px solid white
     padding-top: 60px
     padding-bottom: 40px
     .logo
       width: 200px
-      height: 100px
+      height: 200px
       background:  $ofn-grey
-      -moz-border-radius: 120px / 60px
-      -webkit-border-radius: 120px / 60px
-      border-radius: 120px / 60px
-      margin: -105px auto 0 auto
+      @include border-radius(120px)
+      margin: -140px auto 0 auto
       img
-        margin-top: 25px
+        margin-top: 36px
 
     .alert-box
       background-color: transparent
@@ -67,7 +64,7 @@ footer
       .social-icons
         margin-bottom: 0.25rem
         margin-top: 0.75rem
-        a 
+        a
           i
             font-size: 1.5rem
             color: white
@@ -76,6 +73,3 @@ footer
             i
               color: lighten($dark-grey, 60%)
               text-shadow: 2px 2px 0 black
-
-
-
