@@ -4,84 +4,82 @@
 @import animations
 
 table.signup-table
-	width: 100%
-	border: 0
+  width: 100%
+  border: 0
 
 
 table.signup-table.hubs-table, table.signup-table.producers-table
-	tr
-		td
-			background-color: white
-			border-bottom: 1px solid rgba($ofn-grey, 0.3)	
-		td:nth-child(2)			
-			background-color: lighten($ofn-grey, 46%)
-		td:nth-child(3)			
-			background-color: lighten($ofn-grey, 41%)
-		td:last-child
-			&, & i
-				color: $clr-brick
-			border-bottom: 1px solid rgba($clr-brick, 0.3)	
-			background-color: lighten($clr-brick, 48%)
-	thead
-		background-color: transparent
-		tr
-			td
-				border-bottom: 1px solid transparent
-			td:nth-child(1)
-				background-color: transparent
-			td:nth-child(2)
-				background: lighten($ofn-grey, 44%)
-			td:nth-child(3)
-				background: lighten($ofn-grey, 38%)
-			td:last-child
-				&, & *
-					color: white
-				background: $clr-brick
-		h5
-			text-transform: uppercase
-			color: $ofn-grey
-			font-weight: 400
-			font-size: 0.875rem
-			margin-bottom: 0.25em
-		
-	tfoot
-		background-color: transparent
-		tr
-			td
-				border-bottom: 1px solid transparent
-			td:nth-child(1)
-				background-color: transparent
-			td:nth-child(2)
-				background: lighten($ofn-grey, 44%)
-			td:nth-child(3)
-				background: lighten($ofn-grey, 38%)
-			td:last-child
-				&, & *
-					color: white
-				background:  $clr-brick
-		h2
-			.text-small
-				text-transform: uppercase
-				display: inline-block
-				font-weight: 400
-				line-height: 1.5
-				@include headingFont
+  tr
+    td
+      background-color: white
+      border-bottom: 1px solid rgba($ofn-grey, 0.3)
+    td:nth-child(2)
+      background-color: lighten($ofn-grey, 46%)
+    td:nth-child(3)
+      background-color: lighten($ofn-grey, 41%)
+    td:last-child
+      &, & i
+        color: $clr-brick
+      border-bottom: 1px solid rgba($clr-brick, 0.3)
+      background-color: lighten($clr-brick, 48%)
+  thead
+    background-color: transparent
+    tr
+      td
+        border-bottom: 1px solid transparent
+      td:nth-child(1)
+        background-color: transparent
+      td:nth-child(2)
+        background: lighten($ofn-grey, 44%)
+      td:nth-child(3)
+        background: lighten($ofn-grey, 38%)
+      td:last-child
+        &, & *
+          color: white
+        background: $clr-brick
+    h5
+      text-transform: uppercase
+      color: $ofn-grey
+      font-weight: 400
+      font-size: 0.875rem
+      margin-bottom: 0.25em
+
+  tfoot
+    background-color: transparent
+    tr
+      td
+        border-bottom: 1px solid transparent
+      td:nth-child(1)
+        background-color: transparent
+      td:nth-child(2)
+        background: lighten($ofn-grey, 44%)
+      td:nth-child(3)
+        background: lighten($ofn-grey, 38%)
+      td:last-child
+        &, & *
+          color: white
+        background:  $clr-brick
+    h2
+      .text-small
+        text-transform: uppercase
+        display: inline-block
+        font-weight: 400
+        line-height: 1.5
+        @include headingFont
 
 
 table.signup-table.producers-table
-	tr
-		td:last-child
-			&, & i
-				color: $clr-turquoise-bright
-			border-bottom: 1px solid rgba($clr-turquoise-bright, 0.2)	
-			background-color: lighten($clr-turquoise, 57%)
-	thead
-		tr
-			td:last-child
-				background: $clr-turquoise-bright	
-	tfoot
-		tr
-			td:last-child
-				background: $clr-turquoise-bright
-
-
+  tr
+    td:last-child
+      &, & i
+        color: $clr-turquoise-bright
+      border-bottom: 1px solid rgba($clr-turquoise-bright, 0.2)
+      background-color: lighten($clr-turquoise, 57%)
+  thead
+    tr
+      td:last-child
+        background: $clr-turquoise-bright
+  tfoot
+    tr
+      td:last-child
+        background: $clr-turquoise-bright
