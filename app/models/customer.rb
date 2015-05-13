@@ -9,4 +9,12 @@ class Customer < ActiveRecord::Base
   validates :enterprise_id, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
+
+  before_create :associate_user
+
+  private
+
+  def associate_user
+    self.user = user || Spree::User.find_by_email(email)
+  end
 end

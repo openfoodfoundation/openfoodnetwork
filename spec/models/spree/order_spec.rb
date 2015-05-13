@@ -511,4 +511,43 @@ describe Spree::Order do
       end.to enqueue_job ConfirmOrderJob
     end
   end
+
+  describe "associating a customer" do
+    let(:user) { create(:user) }
+    let(:distributor) { create(:distributor_enterprise) }
+
+    context "when a user has been set on the order" do
+      let!(:order) { create(:order, distributor: distributor, user: user) }
+      context "and a customer for order.distributor and order.user.email already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: user.email) }
+        it "associates the order with the existing customer" do
+          order.send(:associate_customer)
+          expect(order.customer).to eq customer
+        end
+      end
+      context "and a customer for order.distributor and order.user.email does not alread exist" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+        it "creates a new customer" do
+          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+        end
+      end
+    end
+
+    context "when a user has not been set on the order" do
+      let!(:order) { create(:order, distributor: distributor, user: nil) }
+      context "and a customer for order.distributor and order.email already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: order.email) }
+        it "creates a new customer" do
+          order.send(:associate_customer)
+          expect(order.customer).to eq customer
+        end
+      end
+      context "and a customer for order.distributor and order.email does not alread exist" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+        it "creates a new customer" do
+          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+        end
+      end
+    end
+  end
 end
