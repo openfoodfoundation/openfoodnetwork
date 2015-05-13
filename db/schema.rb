@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150508072454) do
+ActiveRecord::Schema.define(:version => 20150508072938) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -623,8 +623,10 @@ ActiveRecord::Schema.define(:version => 20150508072454) do
     t.string   "currency"
     t.string   "last_ip_address"
     t.integer  "cart_id"
+    t.integer  "customer_id"
   end
 
+  add_index "spree_orders", ["customer_id"], :name => "index_spree_orders_on_customer_id"
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
 
   create_table "spree_payment_methods", :force => true do |t|
@@ -1206,6 +1208,7 @@ ActiveRecord::Schema.define(:version => 20150508072454) do
   add_foreign_key "spree_option_values_variants", "spree_variants", name: "spree_option_values_variants_variant_id_fk", column: "variant_id"
 
   add_foreign_key "spree_orders", "carts", name: "spree_orders_cart_id_fk"
+  add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", name: "spree_orders_distributor_id_fk", column: "distributor_id"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", name: "spree_orders_bill_address_id_fk", column: "bill_address_id"
