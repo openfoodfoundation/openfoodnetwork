@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Home', js: true do
+feature 'Shops', js: true do
   include AuthenticationWorkflow
   include UIComponentHelper
 
@@ -13,7 +13,7 @@ feature 'Home', js: true do
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
-    visit "/"
+    visit shops_path
   end
 
   it "shows hubs" do
@@ -28,7 +28,7 @@ feature 'Home', js: true do
 
   it "should grey out hubs that are not in an order cycle" do
     create(:simple_product, distributors: [d1, d2])
-    visit root_path
+    visit shops_path
     page.should have_selector 'hub.inactive'
     page.should have_selector 'hub.inactive',   text: d2.name
   end
