@@ -5,14 +5,19 @@
 
 // Generic \\
 
+@mixin tiledPane
+  background-image: url("/assets/tile-wide.png")
+  background-color: $australia-orange
+  background-position: center center
+  @include paneWhiteText
+
 @mixin panepadding
   padding-top: 100px
   padding-bottom: 100px
 
-@mixin paneWhite
-  .row
-    h1, h2, h3, h4, h5, h6, p, a
-      color: white
+@mixin paneWhiteText
+  &, & *
+    color: white
 
 @mixin sidepaddingSm
   padding-left: 10px

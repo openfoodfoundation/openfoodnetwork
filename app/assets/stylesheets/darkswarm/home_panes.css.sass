@@ -5,33 +5,35 @@
 @import variables
 
 
-// Styling for big panes on homepage
+// Styling for big panes on homepage \\
 #panes
   .pane
     .row
       @include panepadding
       padding-top: 75px
       padding-bottom: 75px
+      &.header
+        padding-bottom: 0
+      &.content
+        padding-top: 0
 
-// Background styles
+
+// Background styles \\
 #system.pane
   background-color: white
 
-#brand-story.pane, #cta.pane, #shops.pane, #producer-signup.pane, #shops-signup.pane
-  background-image: url("/assets/tile-wide.png")
-  background-color: $australia-orange
-  background-position: center center
-  @include paneWhite
+#brand-story.pane, #cta.pane, #shops.pane
+  @include tiledPane
 
 #stats.pane
-  // TODO: Fix white line at bottom
   background-image: url("/assets/home/background-blurred-oranges.jpg")
   background-position: center center
   background-color: $ofn-grey
   @include fullbg
-  @include paneWhite
+  @include paneWhiteText
 
-// Content styles
+
+// Content styles \\
 #brand-story.pane
   .row
     h2
@@ -109,8 +111,6 @@
 #stats.pane
   .row.header
     padding-bottom: 2rem
-  .row.content
-    padding-top: 0
 
   h4
     font-weight: 300
@@ -122,97 +122,12 @@
       font-weight: normal
       font-size: 75px
 
-#shops.pane, #producer-signup.pane, #shops-signup.pane
-  &, & *
-    color: white
-
+#shops.pane
+  @include paneWhiteText
   h2
     margin-bottom: 2rem
     font-size: 4.4rem
     font-weight: 300
-    color: white
-
-.cta.cta-producers.pane
-  @include fullwidthbg
-  background-image: url("/assets/producers/producers-pg-bg.jpg")
-  &, & *
-    white
-
-.cta.cta-hubs.pane
-  @include fullwidthbg
-  background-image: url("/assets/hubs-bg.jpg")
-
-#producer-signup.pane, #shops-signup.pane
-  background-color: lighten($clr-turquoise, 10%)
-
-  .row.header
-    padding-bottom: 0
-  .row.content
-    padding-top: 0
-
-#producer-case-studies
-  padding-top: 100px
-  padding-bottom: 100px
-  background-color: lighten($clr-turquoise, 64%)
-  .case-study
-    background-color: lighten($clr-turquoise, 54%)
-    padding: 1rem
-    margin-top: 2rem
-    @media all and (min-width: 768px)
-      margin-top: 1rem
-    a
-      color: $clr-turquoise
-      &, & *
-        @include csstrans
-        opacity: 1
-      &:hover, &:focus, &:active
-        &, & *
-          opacity: 0.75
-
-#producer-details.pane, #hub-details.pane, .groups-details.pane
-  background-color: lighten($ofn-grey, 44%)
 
 #shops-signup.pane
   background-color: $australia-orange
-
-#producer-case-studies, #shops-case-studies
-  padding-top: 100px
-  padding-bottom: 100px
-  background-color: lighten($clr-turquoise, 65%)
-  .case-study
-    background-color: white
-    border: 1px solid rgba($clr-turquoise-bright, 0.5)
-    padding: 1rem
-    margin-top: 2rem
-    text-align: center
-    .case-study-img
-      background-color: white
-      margin-bottom: 1rem
-      @media all and (min-width: 768px)
-        float: right
-        margin-left: 2rem
-    @media all and (min-width: 640px)
-      text-align: left
-    a
-      color: $clr-turquoise-bright
-      &, & *
-        @include csstrans
-        opacity: 1
-      &:hover, &:focus, &:active
-        &, & *
-          opacity: 0.75
-
-#shops-case-studies
-  background-image: url("/assets/hubs-bg.jpg")
-  background-position: center center
-  -webkit-filter: brightness(1.1)
-  filter: brightness(1.1)
-
-  h2
-    color: $australia-orange
-    font-size: 3rem
-  .case-study
-    background-color: rgba(255, 255, 255, 0.5)
-    border: none
-    h4, a
-      color: $australia-orange
