@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150424025907) do
+ActiveRecord::Schema.define(:version => 20150424151117) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -619,9 +619,9 @@ ActiveRecord::Schema.define(:version => 20150424025907) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
