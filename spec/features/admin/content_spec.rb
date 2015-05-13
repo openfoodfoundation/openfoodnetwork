@@ -12,7 +12,6 @@ feature %q{
     click_link 'Configuration'
     click_link 'Content'
 
-    fill_in 'home_tagline_cta', with: 'Editable text'
     fill_in 'footer_facebook_url', with: ''
     fill_in 'footer_twitter_url', with: 'http://twitter.com/me'
     fill_in 'footer_links_md', with: '[markdown link](/)'
@@ -21,10 +20,7 @@ feature %q{
 
     visit root_path
 
-    # The content should be shown
-    page.should have_content 'Editable text'
-
-    # And social media icons are only shown if they have a value
+    # Then social media icons are only shown if they have a value
     page.should_not have_selector 'i.ofn-i_044-facebook'
     page.should     have_selector 'i.ofn-i_041-twitter'
 
