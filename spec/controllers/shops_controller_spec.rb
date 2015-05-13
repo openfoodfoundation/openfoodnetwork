@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HomeController do
+describe ShopsController do
   render_views
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
@@ -19,11 +19,10 @@ describe HomeController do
     get :index
     response.body.should have_content invisible_distributor.name
   end
-  
+
   # This is done inside the json/hubs Serializer
   it "gets the next order cycle for each hub" do
     OrderCycle.should_receive(:first_closing_for).twice
     get :index
   end
 end
-
