@@ -30,7 +30,7 @@ describe EnterpriseGroup do
 
     # it "can have an image" do
     #   eg = create(:enterprise_group)
-    #   image_file = File.open(File.expand_path('../../../app/assets/images/logo.jpg', __FILE__))
+    #   image_file = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __FILE__))
     #   image = Spree::Image.create(viewable_id: eg.id, viewable_type: 'EnterpriseGroup', attachment: image_file)
     #   eg.reload.image.should == image
     # end
