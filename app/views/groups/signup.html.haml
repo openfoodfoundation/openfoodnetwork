@@ -1,45 +1,42 @@
 #panes
   #shops-signup.pane
-    .row
-      .small-12.medium-6.medium-offset-3.columns.text-center
+    .row.header
+      .small-12.medium-12.columns.text-center
         %h2 Groups sign up
-        %p.text-big We're an amazing platform for collaborative marketing, the easiest way for your members and stakeholders to reach new markets. We're non-profit, affordable, and simple.
-        
-  .cta.cta-hubs.pane  
-    .row
+    .row.content
       .small-12.medium-6.medium-offset-3.columns.text-center
-        %h4 Want to discover what OFN can do for you?
-        %p.text-big Get in touch:
-        %a.neutral-btn.dark{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true} 
+        %p.text-big We're an amazing platform for collaborative marketing, the easiest way for your members and stakeholders to reach new markets. We're non-profit, affordable, and simple.
+        %br
+        %a.button.transparent{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}
           Email us
-          %i.ofn-i_054-point-right
+
   .groups-details.pane
     .row
       .small-12.medium-8.medium-offset-2.columns
         %h3.text-center We transform food systems fairly.
         %p.text-big It's why we get out of bed every day. We're a global non-profit, based on open source code. We play fair. You can always trust us.
-        %p.text-big We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you. 
+        %p.text-big We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.
         %br
         %h3.text-center We meet you where you are.
         %p.text-big You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.
-        %p.text-big Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation. 
+        %p.text-big Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
         %br
         %h3.text-center We make food movements make more sense.
         %p.text-big You need to activate and enable your networks, we offer a platform for conversation and action. You need real engagement. We’ll help reach all the players, all the stakeholders, all the sectors.
-        %p.text-big You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers. 
+        %p.text-big You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers.
   .pane
     .row
       .small-12.medium-10.medium-offset-1.columns.text-center
-        %h2 Pricing
-        %p.text-big 
+        %h2 Membership types and fees.
+        %p.text-big
           / If there is a time-sensitive offer you can write it here, e.g.
           Time-sensitive offer goes here!
         %br
         %table.signup-table.hubs-table{cellpadding: "0", cellspacing: "0"}
           %thead
             %tr
-              %td 
-                %h5 
+              %td
+                %h5
               %td.text-center{width: "24%"}
                 %h5 OFN Group
           %tr
@@ -53,7 +50,7 @@
           %tr
             %td
               %p
-                %strong Unique URL 
+                %strong Unique URL
                 %br
                 %span.text-small Your own organisation page/url on the Open Food Network.
             %td.text-center
@@ -61,9 +58,9 @@
           %tr
             %td
               %p
-                %strong Region map &amp; listings 
+                %strong Region map &amp; listings
                 %br
-                %span.text-small Easy search from your own list view and your own map - links through to profile pages for your member/local producers and/or food businesses.  
+                %span.text-small Easy search from your own list view and your own map - links through to profile pages for your member/local producers and/or food businesses.
             %td.text-center
               %i.ofn-i_003-check.text-big
           %tr
@@ -79,7 +76,7 @@
             %tr
               %td
               %td.text-center{valign: "top"}
-                %h2 
+                %h2
                   $5,500
 
   #shops-case-studies
@@ -92,8 +89,8 @@
             .case-study
               %img.case-study-img{src: "/assets/case-studies/bfc_logo_square.png", width: "100", height: "100", title: "Bondi Food Collective"}
               %h4 Bondi Food Collective
-              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est. 
-              %a{href: "http://www.google.com", target: "_blank"} 
+              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
+              %a{href: "http://www.google.com", target: "_blank"}
                 %strong Read more
                 %i.ofn-i_054-point-right
           .small-12.medium-6.columns
@@ -101,42 +98,41 @@
               %img.case-study-img{src: "/assets/case-studies/bonnie-beef-growers.png", width: "100", height: "100", title: "Bonnie Beef Growers"}
               %h4 Bonnie Beef Growers
               %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
-              %a{href: "http://www.google.com", target: "_blank"} 
+              %a{href: "http://www.google.com", target: "_blank"}
                 %strong Read more
                 %i.ofn-i_054-point-right
 
-  .pane
+  .pane#cta
     .row
       .small-12.medium-6.medium-offset-3.columns.text-center
         %h2 Ready to discuss?
         %p.text-big  Get in touch to discover what OFN can do for you:
-        %a.neutral-btn.dark{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true} 
+        %a.button.transparent{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}
           Email us
-          %i.ofn-i_054-point-right
 
   #hub-details.pane.footer-pad
     .row
       .small-12.medium-10.medium-offset-1.columns
-        %h2.text-center Groups / Food Systems Partners - the nitty gritty
+        %h2.text-center Here's the detail.
         .row
           .small-12.medium-6.columns
             %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu. 
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
             %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna. 
+            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
             %ul.text-small
               %li A bullet point
-              %li Another point 
+              %li Another point
               %li A third point goes here
             %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
           .small-12.medium-6.columns
             %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu. 
+            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
             %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna. 
+            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
             %ul.text-small
               %li A bullet point
-              %li Another point 
+              %li Another point
               %li A third point goes here
             %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
 
