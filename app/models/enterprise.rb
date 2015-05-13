@@ -217,12 +217,16 @@ class Enterprise < ActiveRecord::Base
     ", self.id, self.id)
   end
 
+  def relatives_including_self
+    Enterprise.where(id: relatives.pluck(:id) | [id])
+  end
+
   def distributors
-    self.relatives.is_distributor
+    self.relatives_including_self.is_distributor
   end
 
   def suppliers
-    self.relatives.is_primary_producer
+    self.relatives_including_self.is_primary_producer
   end
 
   def website
