@@ -16,11 +16,7 @@ module OpenFoodNetwork
 
       @orders.each_with_index do |order, i|
         invoice_number = invoice_number_for(order, i)
-        rows << summary_row(order, 'Total untaxable produce (no tax)',       0, invoice_number, 'GST Free Income', @opts)
-        rows << summary_row(order, 'Total taxable produce (tax inclusive)',  0, invoice_number, 'GST on Income', @opts)
-        rows << summary_row(order, 'Total untaxable fees (no tax)',          0, invoice_number, 'GST Free Income', @opts)
-        rows << summary_row(order, 'Total taxable fees (tax inclusive)',     0, invoice_number, 'GST on Income', @opts)
-        rows << summary_row(order, 'Delivery Shipping Cost (tax inclusive)', 0, invoice_number, 'Tax or No Tax - depending on enterprise setting', @opts)
+        rows += rows_for_order(order, invoice_number, @opts)
       end
 
       rows
@@ -28,6 +24,17 @@ module OpenFoodNetwork
 
 
     private
+
+    def rows_for_order(order, invoice_number, opts)
+      [
+        summary_row(order, 'Total untaxable produce (no tax)',       0, invoice_number, 'GST Free Income', opts),
+        summary_row(order, 'Total taxable produce (tax inclusive)',  0, invoice_number, 'GST on Income',   opts),
+        summary_row(order, 'Total untaxable fees (no tax)',          0, invoice_number, 'GST Free Income', opts),
+        summary_row(order, 'Total taxable fees (tax inclusive)',     0, invoice_number, 'GST on Income',   opts),
+        summary_row(order, 'Delivery Shipping Cost (tax inclusive)', 0, invoice_number, 'Tax or No Tax - depending on enterprise setting', opts)
+      ]
+    end
+
 
     def invoice_number_for(order, i)
       @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i+i : order.number
