@@ -8,7 +8,8 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, Customers
     code:      { name: "Code",     visible: true }
     tags:      { name: "Tags",     visible: true }
 
-  $scope.initialise = ->
+  $scope.$watch "shop", ->
+    Customers.loaded = false
     $scope.customers = Customers.index(enterprise_id: $scope.shop.id)
 
   $scope.loaded = ->

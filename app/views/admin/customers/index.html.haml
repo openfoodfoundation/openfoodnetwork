@@ -4,15 +4,14 @@
 = admin_inject_shops
 
 %div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
-  .row{ ng: { hide: "loaded()" } }
-    .two.columns.alpha
-      Hub
+  .row{ ng: { hide: "loaded() && filteredCustomers.length > 0" } }
+    .five.columns.alpha
+      %h3 Please select a Hub:
     .four.columns
       %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
-    .ten.columns.omega
-      %input{ type: 'button', value: 'Go', ng: { click: 'initialise()' } }
+    .seven.columns.omega &nbsp;
 
-  .row{ 'ng-hide' => '!loaded() || lineItems.length == 0' }
+  .row{ 'ng-hide' => '!loaded() || filteredCustomers.length == 0' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
       .five.columns.alpha
         %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
@@ -32,7 +31,7 @@
             %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
               %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
               %span{ :class => 'two columns omega' } {{column.name }}
-  .row{ 'ng-if' => 'shop_id && !loaded()' }
+  .row{ 'ng-if' => 'shop && !loaded()' }
     .sixteen.columns.alpha#loading
       %img.spinner{ src: "/assets/spinning-circles.svg" }
       %h1 LOADING CUSTOMERS
@@ -40,7 +39,7 @@
     %h1#no_results No customers found.
 
 
-  .row{ ng: { show: "loaded()" } }
+  .row{ ng: { show: "loaded() && filteredCustomers.length > 0" } }
     %form{ name: "customers" }
       %table.index#customers
         %col.email{ width: "20%"}
