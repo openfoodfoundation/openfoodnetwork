@@ -1,13 +1,17 @@
 describe "Pending Changes", ->
-  dataSubmitter = pendingChanges = null
+  resourcesMock = pendingChanges = null
 
   beforeEach ->
-    dataSubmitter = jasmine.createSpy('dataSubmitter').andReturn {
-      then: (thenFn) ->
-        thenFn({propertyName: "new_value"})
-    }
+
+    resourcesMock =
+      update: jasmine.createSpy('update').andCallFake (change) ->
+        $promise:
+          then: (successFn, errorFn) ->
+            return successFn({propertyName: "new_value"}) if change.success
+            errorFn("error")
+
     module 'admin.indexUtils', ($provide) ->
-      $provide.value 'dataSubmitter', dataSubmitter
+      $provide.value 'resources', resourcesMock
       return
 
     inject (_pendingChanges_) ->
@@ -77,24 +81,50 @@ describe "Pending Changes", ->
     change = null
     beforeEach ->
       object = {id: 1}
-      scope = { reset: jasmine.createSpy('reset') };
+      scope = { reset: jasmine.createSpy('reset'), success: jasmine.createSpy('success'), error: jasmine.createSpy('error') };
       attr = "propertyName"
       change = { object: object, scope: scope, attr: attr }
 
+
     it "sends the correct object to dataSubmitter", ->
       pendingChanges.submit change
-      expect(dataSubmitter.calls.length).toEqual 1
-      expect(dataSubmitter).toHaveBeenCalledWith change
+      expect(resourcesMock.update.calls.length).toEqual 1
+      expect(resourcesMock.update).toHaveBeenCalledWith change
 
-    it "calls remove with id and attribute name", ->
-      spyOn(pendingChanges, "remove").andCallFake(->)
-      pendingChanges.submit change
-      expect(pendingChanges.remove.calls.length).toEqual 1
-      expect(pendingChanges.remove).toHaveBeenCalledWith 1, "propertyName"
+    describe "successful request", ->
+      beforeEach ->
+        change.success = true
 
-    it "calls reset on the relevant scope", ->
-      pendingChanges.submit change
-      expect(change.scope.reset).toHaveBeenCalledWith "new_value"
+      it "calls remove with id and attribute name", ->
+        spyOn(pendingChanges, "remove").andCallFake(->)
+        pendingChanges.submit change
+        expect(pendingChanges.remove.calls.length).toEqual 1
+        expect(pendingChanges.remove).toHaveBeenCalledWith 1, "propertyName"
+
+      it "calls reset on the relevant scope", ->
+        pendingChanges.submit change
+        expect(change.scope.reset).toHaveBeenCalledWith "new_value"
+
+      it "calls success on the relevant scope", ->
+        pendingChanges.submit change
+        expect(change.scope.success).toHaveBeenCalled()
+
+    describe "unsuccessful request", ->
+      beforeEach ->
+        change.success = false
+
+      it "does not call remove", ->
+        spyOn(pendingChanges, "remove").andCallFake(->)
+        pendingChanges.submit change
+        expect(pendingChanges.remove).not.toHaveBeenCalled()
+
+      it "does not call reset on the relevant scope", ->
+        pendingChanges.submit change
+        expect(change.scope.reset).not.toHaveBeenCalled()
+
+      it "calls error on the relevant scope", ->
+        pendingChanges.submit change
+        expect(change.scope.error).toHaveBeenCalled()
 
   describe "cycling through all changes to submit to server", ->
     it "sends the correct object to dataSubmitter", ->

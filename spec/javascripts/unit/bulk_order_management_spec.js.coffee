@@ -350,63 +350,6 @@ describe "AdminOrderMgmtCtrl", ->
         spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
-describe "dataSubmitter service", ->
-  qMock = httpMock = {}
-  switchClassSpy = resolveSpy = rejectSpy = dataSubmitterService = null
-
-  beforeEach ->
-    resolveSpy = jasmine.createSpy('resolve')
-    rejectSpy = jasmine.createSpy('reject')
-    qMock.defer = ->
-      resolve: resolveSpy
-      reject: rejectSpy
-      promise: "promise1"
-
-    # Can't use httpBackend because the qMock interferes with it
-    httpMock.put = (url) ->
-      success: (successFn) ->
-        successFn("somedata") if url == "successURL"
-        error: (errorFn) ->
-          errorFn() if url == "errorURL"
-
-    spyOn(httpMock, "put").andCallThrough()
-    spyOn(qMock, "defer").andCallThrough()
-
-    switchClassSpy = jasmine.createSpy('switchClass')
-
-  beforeEach ->
-    module "ofn.admin" , ($provide) ->
-      $provide.value '$q', qMock
-      $provide.value '$http', httpMock
-      $provide.value 'switchClass', switchClassSpy
-      return
-
-  beforeEach inject (dataSubmitter) ->
-    dataSubmitterService = dataSubmitter
-
-  it "returns a promise", ->
-    expect(dataSubmitterService( { url: "successURL" } )).toEqual "promise1"
-    expect(qMock.defer).toHaveBeenCalled()
-
-  it "sends a PUT request with the url property of changeObj", ->
-    dataSubmitterService { url: "successURL" }
-    expect(httpMock.put).toHaveBeenCalledWith "successURL"
-
-  it "calls resolve on deferred object when request is successful", ->
-    element = { a: 1 }
-    dataSubmitterService { url: "successURL", element: element }
-    expect(resolveSpy.calls.length).toEqual 1
-    expect(rejectSpy.calls.length).toEqual 0
-    expect(resolveSpy).toHaveBeenCalledWith "somedata"
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-success", ["update-pending", "update-error"], 3000
-
-  it "calls reject on deferred object when request is erroneous", ->
-    element = { b: 2 }
-    dataSubmitterService { url: "errorURL", element: element  }
-    expect(resolveSpy.calls.length).toEqual 0
-    expect(rejectSpy.calls.length).toEqual 1
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-error", ["update-pending", "update-success"], false
-
 describe "Auxiliary functions", ->
   describe "getting a zero filled two digit number", ->
     it "returns the number as a string if its value is greater than or equal to 10", ->

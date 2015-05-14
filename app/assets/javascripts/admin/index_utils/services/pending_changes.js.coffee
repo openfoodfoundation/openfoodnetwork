@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").factory "pendingChanges", (dataSubmitter) ->
+angular.module("admin.indexUtils").factory "pendingChanges", (resources) ->
   new class pendingChanges
     pendingChanges: {}
 
@@ -22,9 +22,12 @@ angular.module("admin.indexUtils").factory "pendingChanges", (dataSubmitter) ->
       all
 
     submit: (change) ->
-      dataSubmitter(change).then (data) =>
+      resources.update(change).$promise.then (data) =>
         @remove change.object.id, change.attr
         change.scope.reset( data["#{change.attr}"] )
+        change.scope.success()
+      , (error) ->
+        change.scope.error()
 
     changeCount: (objectChanges) ->
       Object.keys(objectChanges).length
