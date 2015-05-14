@@ -1,7 +1,10 @@
 module OpenFoodNetwork
   class XeroInvoicesReport
-    def initialize(orders)
+    def initialize(orders, opts={})
       @orders = orders
+      @opts = opts.reverse_merge({invoice_date: Date.today,
+                                  due_date: 2.weeks.from_now.to_date,
+                                  account_code: 'food sales'})
     end
 
     def header
@@ -11,12 +14,13 @@ module OpenFoodNetwork
     def table
       rows = []
 
-      @orders.each do |order|
-        rows << summary_row(order, 'Total untaxable produce (no tax)',       0, 'GST Free Income')
-        rows << summary_row(order, 'Total taxable produce (tax inclusive)',  0, 'GST on Income')
-        rows << summary_row(order, 'Total untaxable fees (no tax)',          0, 'GST Free Income')
-        rows << summary_row(order, 'Total taxable fees (tax inclusive)',     0, 'GST on Income')
-        rows << summary_row(order, 'Delivery Shipping Cost (tax inclusive)', 0, 'Tax or No Tax - depending on enterprise setting')
+      @orders.each_with_index do |order, i|
+        invoice_number = invoice_number_for(order, i)
+        rows << summary_row(order, 'Total untaxable produce (no tax)',       0, invoice_number, 'GST Free Income', @opts)
+        rows << summary_row(order, 'Total taxable produce (tax inclusive)',  0, invoice_number, 'GST on Income', @opts)
+        rows << summary_row(order, 'Total untaxable fees (no tax)',          0, invoice_number, 'GST Free Income', @opts)
+        rows << summary_row(order, 'Total taxable fees (tax inclusive)',     0, invoice_number, 'GST on Income', @opts)
+        rows << summary_row(order, 'Delivery Shipping Cost (tax inclusive)', 0, invoice_number, 'Tax or No Tax - depending on enterprise setting', @opts)
       end
 
       rows
@@ -25,7 +29,11 @@ module OpenFoodNetwork
 
     private
 
-    def summary_row(order, description, amount, tax_type)
+    def invoice_number_for(order, i)
+      @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i+i : order.number
+    end
+
+    def summary_row(order, description, amount, invoice_number, tax_type, opts={})
       [order.bill_address.full_name,
        order.email,
        order.bill_address.address1,
@@ -36,16 +44,16 @@ module OpenFoodNetwork
        order.bill_address.state,
        order.bill_address.zipcode,
        order.bill_address.country.andand.name,
-       order.number, # To customise
+       invoice_number,
        order.number,
-       Date.today, # To customise
-       2.weeks.from_now.to_date, # To customise
+       opts[:invoice_date],
+       opts[:due_date],
        '',
        description,
        '1',
        amount,
        '',
-       'food sales', # To customise
+       opts[:account_code],
        tax_type,
        '',
        '',

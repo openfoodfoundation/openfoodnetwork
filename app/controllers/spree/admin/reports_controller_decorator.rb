@@ -683,7 +683,7 @@ Spree::Admin::ReportsController.class_eval do
   def xero_invoices
     @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
     orders = @search.result
-    @report = OpenFoodNetwork::XeroInvoicesReport.new orders
+    @report = OpenFoodNetwork::XeroInvoicesReport.new orders, params
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
 
@@ -725,7 +725,9 @@ Spree::Admin::ReportsController.class_eval do
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
+      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
+      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' }
+
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

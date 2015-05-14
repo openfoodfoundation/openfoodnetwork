@@ -327,7 +327,7 @@ feature %q{
       login_to_admin_section
       click_link 'Reports'
 
-      click_link 'Xero invoices'
+      click_link 'Xero Invoices'
     end
 
     around do |example|
@@ -337,10 +337,7 @@ feature %q{
     end
 
     it "shows Xero invoices report" do
-      rows = find("table#listing_invoices").all("tr")
-      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
-
-      table.should == [
+      xero_invoice_table.should match_table [
         %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
         xero_invoice_row('Total untaxable produce (no tax)',       0, 'GST Free Income'),
         xero_invoice_row('Total taxable produce (tax inclusive)',  0, 'GST on Income'),
@@ -350,11 +347,40 @@ feature %q{
       ]
     end
 
+    it "can customise a number of fields" do
+      fill_in 'initial_invoice_number', with: '5'
+      fill_in 'invoice_date', with: '2015-02-12'
+      fill_in 'due_date', with: '2015-03-12'
+      fill_in 'account_code', with: 'abc123'
+      click_button 'Search'
+
+      opts = {invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12', account_code: 'abc123'}
+
+      xero_invoice_table.should match_table [
+        %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
+        xero_invoice_row('Total untaxable produce (no tax)',       0, 'GST Free Income', opts),
+        xero_invoice_row('Total taxable produce (tax inclusive)',  0, 'GST on Income',   opts),
+        xero_invoice_row('Total untaxable fees (no tax)',          0, 'GST Free Income', opts),
+        xero_invoice_row('Total taxable fees (tax inclusive)',     0, 'GST on Income',   opts),
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 0, 'Tax or No Tax - depending on enterprise setting', opts)
+      ]
+
+      # TODO:
+      # - Amounts
+      # - Tax specification for shipping
+    end
+
 
     private
 
-    def xero_invoice_row(description, amount, tax_type)
-      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, order1.number, order1.number, '2015-04-26', '2015-05-10', '', description, '1', amount.to_s, '', 'food sales', tax_type, '', '', '', '', Spree::Config.currency, '']
+    def xero_invoice_table
+      find("table#listing_invoices")
+    end
+
+    def xero_invoice_row(description, amount, tax_type, opts={})
+      opts.reverse_merge!({invoice_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
+
+      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date], '', description, '1', amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '']
 
     end
   end

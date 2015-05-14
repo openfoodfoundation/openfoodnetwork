@@ -1,0 +1,33 @@
+= form_tag spree.xero_invoices_admin_reports_path do
+  .row
+    .four.columns.alpha= label_tag :initial_invoice_number, "Initial invoice number:"
+    .twelve.columns.omega= text_field_tag :initial_invoice_number
+  .row
+    .four.columns.alpha= label_tag :invoice_date, "Invoice date:"
+    .twelve.columns.omega= text_field_tag :invoice_date, '', class: 'datetimepicker'
+  .row
+    .four.columns.alpha= label_tag :due_date, "Due date:"
+    .twelve.columns.omega= text_field_tag :due_date, '', class: 'datetimepicker'
+  .row
+    .four.columns.alpha= label_tag :account_code, "Account code:"
+    .twelve.columns.omega= text_field_tag :account_code
+  .row
+    .four.columns.alpha= label_tag :csv, "Download as CSV:"
+    .twelve.columns.omega= check_box_tag :csv
+  .row
+    .four.columns.alpha= button t(:search)
+
+
+%table#listing_invoices.index
+  %thead
+    %tr
+      - @report.header.each do |header|
+        %th= header
+  %tbody
+    - @report.table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @report.table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)
