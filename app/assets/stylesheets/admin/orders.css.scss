@@ -8,16 +8,22 @@
 	}
 }
 
-.update-pending {
-	border: solid 1px orange;
+input, div {
+	&.update-pending {
+	  border: solid 1px orange;
+  }
 }
 
-.update-error {
-	border: solid 1px red;
+input, div {
+	&.update-error {
+		border: solid 1px red;
+	}
 }
 
-.update-success {
-	border: solid 1px #9fc820;
+input, div {
+	&.update-success {
+		border: solid 1px #9fc820;
+	}
 }
 
 .no-close .ui-dialog-titlebar-close {
