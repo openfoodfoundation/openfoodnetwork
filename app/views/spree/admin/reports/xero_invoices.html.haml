@@ -1,16 +1,16 @@
 = form_tag spree.xero_invoices_admin_reports_path do
   .row
     .four.columns.alpha= label_tag :initial_invoice_number, "Initial invoice number:"
-    .twelve.columns.omega= text_field_tag :initial_invoice_number
+    .twelve.columns.omega= text_field_tag :initial_invoice_number, params[:initial_invoice_number]
   .row
     .four.columns.alpha= label_tag :invoice_date, "Invoice date:"
-    .twelve.columns.omega= text_field_tag :invoice_date, '', class: 'datetimepicker'
+    .twelve.columns.omega= text_field_tag :invoice_date, params[:invoice_date], class: 'datetimepicker'
   .row
     .four.columns.alpha= label_tag :due_date, "Due date:"
-    .twelve.columns.omega= text_field_tag :due_date, '', class: 'datetimepicker'
+    .twelve.columns.omega= text_field_tag :due_date, params[:due_date], class: 'datetimepicker'
   .row
     .four.columns.alpha= label_tag :account_code, "Account code:"
-    .twelve.columns.omega= text_field_tag :account_code
+    .twelve.columns.omega= text_field_tag :account_code, params[:account_code]
   .row
     .four.columns.alpha= label_tag :csv, "Download as CSV:"
     .twelve.columns.omega= check_box_tag :csv

@@ -36,10 +36,12 @@ module OpenFoodNetwork
         summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts),
         summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts),
         summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)
-      ]
+      ].compact
     end
 
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
+      return nil if amount == 0
+
       [order.bill_address.full_name,
        order.email,
        order.bill_address.address1,

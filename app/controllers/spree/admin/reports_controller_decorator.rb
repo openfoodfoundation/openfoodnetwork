@@ -681,7 +681,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def xero_invoices
-    @search = Spree::Order.complete.managed_by(spree_current_user).search(params[:q])
+    @search = Spree::Order.complete.managed_by(spree_current_user).order('id DESC').search(params[:q])
     orders = @search.result
     @report = OpenFoodNetwork::XeroInvoicesReport.new orders, params
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
