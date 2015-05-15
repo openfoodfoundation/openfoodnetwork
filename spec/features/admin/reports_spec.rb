@@ -319,7 +319,7 @@ feature %q{
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
     let!(:adj_fee1) { create(:adjustment, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
     let!(:adj_fee2) { create(:adjustment, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
 
@@ -347,7 +347,7 @@ feature %q{
         xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
         xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
         xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'Tax or No Tax - depending on enterprise setting')
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income')
       ]
     end
 
@@ -366,11 +366,8 @@ feature %q{
         xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
         xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income', opts),
         xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income',   opts),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'Tax or No Tax - depending on enterprise setting', opts)
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income', opts)
       ]
-
-      # TODO:
-      # - Tax specification for shipping
     end
 
 
