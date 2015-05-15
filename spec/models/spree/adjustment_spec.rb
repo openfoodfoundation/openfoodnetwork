@@ -5,6 +5,21 @@ module Spree
       adjustment.metadata.should be
     end
 
+    describe "finding adjustments with and without tax included" do
+      let!(:adjustment_with_tax) { create(:adjustment, included_tax: 123) }
+      let!(:adjustment_without_tax) { create(:adjustment, included_tax: 0) }
+
+      it "finds adjustments with tax" do
+        Adjustment.with_tax.should     include adjustment_with_tax
+        Adjustment.with_tax.should_not include adjustment_without_tax
+      end
+
+      it "finds adjustments without tax" do
+        Adjustment.without_tax.should     include adjustment_without_tax
+        Adjustment.without_tax.should_not include adjustment_with_tax
+      end
+    end
+
     describe "recording included tax" do
       describe "TaxRate adjustments" do
         let!(:zone)        { create(:zone_with_member) }
