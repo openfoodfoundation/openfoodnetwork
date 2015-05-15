@@ -1,4 +1,15 @@
-= form_tag spree.xero_invoices_admin_reports_path do
+= form_for @search, url: spree.xero_invoices_admin_reports_path do |f|
+  = render 'date_range_form', f: f
+
+  .row
+    .four.columns.alpha= label_tag nil, "Hub: "
+    .four.columns.omega= f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
+  .row
+    .four.columns.alpha= label_tag nil, "Order Cycle: "
+    .four.columns.omega= f.select(:order_cycle_id_eq,
+      options_for_select(report_order_cycle_options(@order_cycles), params[:q][:order_cycle_id_eq]),
+      {:include_blank => true}, {:class => "select2 fullwidth"})
+
   .row
     .four.columns.alpha= label_tag :initial_invoice_number, "Initial invoice number:"
     .twelve.columns.omega= text_field_tag :initial_invoice_number, params[:initial_invoice_number]

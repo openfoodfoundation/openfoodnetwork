@@ -681,6 +681,13 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def xero_invoices
+    if request.get?
+      params[:q] ||= {}
+      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+    end
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+
     @search = Spree::Order.complete.managed_by(spree_current_user).order('id DESC').search(params[:q])
     orders = @search.result
     @report = OpenFoodNetwork::XeroInvoicesReport.new orders, params
