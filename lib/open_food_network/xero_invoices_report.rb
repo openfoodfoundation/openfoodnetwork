@@ -2,9 +2,12 @@ module OpenFoodNetwork
   class XeroInvoicesReport
     def initialize(orders, opts={})
       @orders = orders
-      @opts = opts.reverse_merge({invoice_date: Date.today,
-                                  due_date: 2.weeks.from_now.to_date,
-                                  account_code: 'food sales'})
+
+      @opts = opts.
+              reject { |k, v| v.blank? }.
+              reverse_merge({invoice_date: Date.today,
+                             due_date: 2.weeks.from_now.to_date,
+                             account_code: 'food sales'})
     end
 
     def header
