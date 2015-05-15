@@ -27,14 +27,34 @@ module OpenFoodNetwork
 
     def rows_for_order(order, invoice_number, opts)
       [
-        summary_row(order, 'Total untaxable produce (no tax)',       0, invoice_number, 'GST Free Income', opts),
-        summary_row(order, 'Total taxable produce (tax inclusive)',  0, invoice_number, 'GST on Income',   opts),
-        summary_row(order, 'Total untaxable fees (no tax)',          0, invoice_number, 'GST Free Income', opts),
-        summary_row(order, 'Total taxable fees (tax inclusive)',     0, invoice_number, 'GST on Income',   opts),
-        summary_row(order, 'Delivery Shipping Cost (tax inclusive)', 0, invoice_number, 'Tax or No Tax - depending on enterprise setting', opts)
+        summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income', opts),
+        summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',   opts),
+        summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income', opts),
+        summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',   opts),
+        summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, 'Tax or No Tax - depending on enterprise setting', opts)
       ]
     end
 
+
+    def total_untaxable_products(order)
+      order.line_items.without_tax.sum &:amount
+    end
+
+    def total_taxable_products(order)
+      order.line_items.with_tax.sum &:amount
+    end
+
+    def total_untaxable_fees(order)
+      order.adjustments.enterprise_fee.without_tax.sum &:amount
+    end
+
+    def total_taxable_fees(order)
+      order.adjustments.enterprise_fee.with_tax.sum &:amount
+    end
+
+    def total_shipping(order)
+      order.adjustments.shipping.sum &:amount
+    end
 
     def invoice_number_for(order, i)
       @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i+i : order.number

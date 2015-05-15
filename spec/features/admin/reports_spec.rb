@@ -305,8 +305,9 @@ feature %q{
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
     let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
-    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
-    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
+    let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 10)) }
+    let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 20)) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
     let(:country) { Spree::Country.find Spree::Config.default_country_id }
@@ -318,7 +319,10 @@ feature %q{
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
+    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55) }
+    let!(:adj_fee1) { create(:adjustment, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
+    let!(:adj_fee2) { create(:adjustment, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
+
 
     before do
       order1.update_attribute :email, 'customer@email.com'
@@ -339,11 +343,11 @@ feature %q{
     it "shows Xero invoices report" do
       xero_invoice_table.should match_table [
         %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
-        xero_invoice_row('Total untaxable produce (no tax)',       0, 'GST Free Income'),
-        xero_invoice_row('Total taxable produce (tax inclusive)',  0, 'GST on Income'),
-        xero_invoice_row('Total untaxable fees (no tax)',          0, 'GST Free Income'),
-        xero_invoice_row('Total taxable fees (tax inclusive)',     0, 'GST on Income'),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 0, 'Tax or No Tax - depending on enterprise setting')
+        xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
+        xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
+        xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
+        xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'Tax or No Tax - depending on enterprise setting')
       ]
     end
 
@@ -358,15 +362,14 @@ feature %q{
 
       xero_invoice_table.should match_table [
         %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
-        xero_invoice_row('Total untaxable produce (no tax)',       0, 'GST Free Income', opts),
-        xero_invoice_row('Total taxable produce (tax inclusive)',  0, 'GST on Income',   opts),
-        xero_invoice_row('Total untaxable fees (no tax)',          0, 'GST Free Income', opts),
-        xero_invoice_row('Total taxable fees (tax inclusive)',     0, 'GST on Income',   opts),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 0, 'Tax or No Tax - depending on enterprise setting', opts)
+        xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income', opts),
+        xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
+        xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income', opts),
+        xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income',   opts),
+        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'Tax or No Tax - depending on enterprise setting', opts)
       ]
 
       # TODO:
-      # - Amounts
       # - Tax specification for shipping
     end
 
