@@ -342,7 +342,7 @@ feature %q{
 
     it "shows Xero invoices report" do
       xero_invoice_table.should match_table [
-        %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
+        xero_invoice_header,
         xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
         xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
         xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
@@ -361,7 +361,7 @@ feature %q{
       opts = {invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12', account_code: 'abc123'}
 
       xero_invoice_table.should match_table [
-        %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme),
+        xero_invoice_header,
         xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income', opts),
         xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
         xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income', opts),
@@ -377,10 +377,14 @@ feature %q{
       find("table#listing_invoices")
     end
 
+    def xero_invoice_header
+      %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
+    end
+
     def xero_invoice_row(description, amount, tax_type, opts={})
       opts.reverse_merge!({invoice_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
 
-      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date], '', description, '1', amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '']
+      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date], '', description, '1', amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '', 'N']
 
     end
   end
