@@ -84,6 +84,66 @@ feature %q{
     end
   end
 
+  describe "Packing reports" do
+    before do
+      login_to_admin_section
+      click_link "Reports"
+    end
+
+    let(:bill_address1) { create(:address, lastname: "Aman") }
+    let(:bill_address2) { create(:address, lastname: "Bman") }
+    let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
+    let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+    let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
+    let(:order2) { create(:order, distributor: distributor, bill_address: bill_address2) }
+    let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
+    let(:product_1) { create(:simple_product, name: "Product 1", supplier: supplier ) }
+    let(:variant_1) { create(:variant, product: product_1, unit_description: "Big") }
+    let(:variant_2) { create(:variant, product: product_1, unit_description: "Small") }
+    let(:product_2) { create(:simple_product, name: "Product 2", supplier: supplier) }
+
+    before do
+      Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
+      Timecop.travel(Time.zone.local(2013, 4, 25, 15, 0, 0)) { order2.finalize! }
+
+      create(:line_item, variant: variant_1, quantity: 1, order: order1)
+      create(:line_item, variant: variant_2, quantity: 3, order: order1)
+      create(:line_item, variant: product_2.master, quantity: 3, order: order2)
+
+    end
+
+    scenario "Pack By Customer" do
+      click_link "Pack By Customer"
+      fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
+      fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
+      #select 'Pack By Customer', from: 'report_type'
+      click_button 'Search'
+
+      rows = find("table#listing_orders.index").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
+      ].sort
+      all('table#listing_orders tbody tr').count.should == 5 # Totals row per order
+    end
+
+    scenario "Pack By Supplier" do
+      click_link "Pack By Supplier"
+      fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
+      fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
+      #select 'Pack By Customer', from: 'report_type'
+      click_button 'Search'
+
+      rows = find("table#listing_orders").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      table.sort.should == [
+        ["Hub", "Supplier", "Code", "First Name", "Last Name", "Product", "Variant", "Quantity", "TempControlled?"]
+      ].sort
+      all('table#listing_orders tbody tr').count.should == 4 # Totals row per supplier
+    end
+  end
+
+
   scenario "orders and distributors report" do
     login_to_admin_section
     click_link 'Reports'
