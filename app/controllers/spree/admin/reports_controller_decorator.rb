@@ -6,6 +6,7 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
+require 'open_food_network/packing_report'
 require 'open_food_network/sales_tax_report'
 
 Spree::Admin::ReportsController.class_eval do
@@ -30,11 +31,15 @@ Spree::Admin::ReportsController.class_eval do
     order_cycle_management: [
       ["Payment Methods Report", :payment_methods],
       ["Delivery Report", :delivery]
+    ],
+    packing: [
+      ["Pack By Customer", :pack_by_customer],
+      ["Pack By Supplier", :pack_by_supplier]
     ]
   }
 
   # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management]
+  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -46,7 +51,9 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
     @reports[:order_cycle_management][:description] =
       render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
-  } } }
+    @reports[:packing][:description] =
+        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
+} } }
 
 
   # Overide spree reports list.
@@ -750,6 +757,7 @@ Spree::Admin::ReportsController.class_eval do
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
+      :packing => {:name => "Packing Reports", :description => ''},
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
