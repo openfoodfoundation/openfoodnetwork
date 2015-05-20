@@ -106,7 +106,7 @@ module OpenFoodNetwork
       Spree::LineItem.where(order_id: editable_orders)
     end
 
-    def managed_products
+    def editable_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
       permitted_enterprise_products_ids = related_enterprise_products.pluck :id
       Spree::Product.where('id IN (?)', managed_enterprise_products_ids + permitted_enterprise_products_ids)

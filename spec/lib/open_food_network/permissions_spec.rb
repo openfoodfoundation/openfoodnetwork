@@ -164,7 +164,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding managed products" do
+    describe "finding editable products" do
       let!(:p1) { create(:simple_product) }
       let!(:p2) { create(:simple_product) }
 
@@ -175,12 +175,12 @@ module OpenFoodNetwork
 
       it "returns products produced by managed enterprises" do
         permissions.stub(:managed_enterprise_products) { Spree::Product.where(id: p1) }
-        permissions.managed_products.should == [p1]
+        permissions.editable_products.should == [p1]
       end
 
       it "returns products produced by permitted enterprises" do
         permissions.stub(:related_enterprise_products) { Spree::Product.where(id: p2) }
-        permissions.managed_products.should == [p2]
+        permissions.editable_products.should == [p2]
       end
     end
 
