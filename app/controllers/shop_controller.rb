@@ -17,7 +17,8 @@ class ShopController < BaseController
                                                     each_serializer: Api::ProductSerializer,
                                                     current_order_cycle: current_order_cycle,
                                                     current_distributor: current_distributor,
-                                                    variants: variants_for_shop_by_id).to_json
+                                                    variants: variants_for_shop_by_id,
+                                                    master_variants: master_variants_for_shop_by_id).to_json
 
     else
       render json: "", status: 404
@@ -49,23 +50,6 @@ class ShopController < BaseController
     end
   end
 
-  def variants_for_shop_by_id
-    # We use the in_stock? method here instead of the in_stock scope because we need to
-    # look up the stock as overridden by VariantOverrides, and the scope method is not affected
-    # by them.
-    variants = Spree::Variant.
-               where(is_master: false).
-               for_distribution(current_order_cycle, current_distributor).
-               each { |v| v.scope_to_hub current_distributor }.
-               select(&:in_stock?)
-
-    variants.inject({}) do |vs, v|
-      vs[v.product_id] ||= []
-      vs[v.product_id] << v
-      vs
-    end
-  end
-
   def taxon_order
     if current_distributor.preferred_shopfront_taxon_order.present?
       current_distributor
@@ -74,6 +58,32 @@ class ShopController < BaseController
       .join(",") + ", name ASC"
     else
       "name ASC"
+    end
+  end
+
+  def all_variants_for_shop
+    # We use the in_stock? method here instead of the in_stock scope because we need to
+    # look up the stock as overridden by VariantOverrides, and the scope method is not affected
+    # by them.
+    Spree::Variant.
+      for_distribution(current_order_cycle, current_distributor).
+      each { |v| v.scope_to_hub current_distributor }.
+      select(&:in_stock?)
+  end
+
+  def variants_for_shop_by_id
+    index_by_product_id all_variants_for_shop.reject(&:is_master)
+  end
+
+  def master_variants_for_shop_by_id
+    index_by_product_id all_variants_for_shop.select(&:is_master)
+  end
+
+  def index_by_product_id(variants)
+    variants.inject({}) do |vs, v|
+      vs[v.product_id] ||= []
+      vs[v.product_id] << v
+      vs
     end
   end
 end

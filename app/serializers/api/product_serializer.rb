@@ -49,4 +49,9 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   def variants
     options[:variants][object.id] || []
   end
+
+  def master
+    options[:master_variants][object.id].andand.first
+  end
+
 end
