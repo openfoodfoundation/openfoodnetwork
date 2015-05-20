@@ -10,6 +10,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       unit:                 {name: "Unit",                  visible: true}
       price:                {name: "Price",                 visible: true}
       on_hand:              {name: "On Hand",               visible: true}
+      on_demand:            {name: "On Demand",             visible: false}
       category:             {name: "Category",              visible: false}
       inherits_properties:  {name: "Inherits Properties?",  visible: false}
       available_on:         {name: "Available On",          visible: false}
@@ -308,6 +309,9 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("on_demand")
+          filteredProduct.on_demand = product.on_demand
           hasUpdatableProperty = true
         if product.hasOwnProperty("category_id")
           filteredProduct.primary_taxon_id = product.category_id
