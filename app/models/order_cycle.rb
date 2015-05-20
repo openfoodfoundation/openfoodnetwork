@@ -26,7 +26,7 @@ class OrderCycle < ActiveRecord::Base
     closed.
     where("order_cycles.orders_close_at >= ?", 31.days.ago).
     order("order_cycles.orders_close_at DESC") }
-  
+
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
   scope :distributing_product, lambda { |product|
@@ -64,6 +64,23 @@ class OrderCycle < ActiveRecord::Base
     joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
+  scope :involving_managed_distributors_of, lambda { |user|
+    enterprises = Enterprise.managed_by(user)
+
+    # Order cycles where I managed an enterprise at either end of an outgoing exchange
+    # ie. coordinator or distibutor
+    joins(:exchanges).merge(Exchange.outgoing).
+    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises)
+  }
+
+  scope :involving_managed_producers_of, lambda { |user|
+    enterprises = Enterprise.managed_by(user)
+
+    # Order cycles where I managed an enterprise at either end of an incoming exchange
+    # ie. coordinator or producer
+    joins(:exchanges).merge(Exchange.incoming).
+    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises)
+  }
 
   def self.first_opening_for(distributor)
     with_distributor(distributor).soonest_opening.first

@@ -20,6 +20,10 @@
 	       include_blank: true)
   %br
   %br
+  = label_tag nil, "Report Type: "
+  = select_tag(:report_type, options_for_select(@report_types, @report_type))
+  %br
+  %br
   = check_box_tag :csv
   = label_tag :csv, "Download as csv"
   %br
@@ -41,4 +45,3 @@
     - if @report.table.empty?
       %tr
         %td{:colspan => "2"}= t(:none)
-
