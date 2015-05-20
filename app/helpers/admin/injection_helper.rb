@@ -47,7 +47,7 @@ module Admin
     end
 
     def admin_inject_products
-      admin_inject_json_ams_array "ofn.admin", "products", @products, Spree::Api::ProductSerializer
+      admin_inject_json_ams_array "ofn.admin", "products", @products, Api::Admin::ProductSerializer
     end
 
     def admin_inject_taxons

@@ -31,16 +31,19 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   #delegate :cache_key, to: :object
 
   attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy,
-    :notes, :description
+    :notes, :description, :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
   has_many :taxons, serializer: Api::IdSerializer
-  has_many :properties, serializer: Api::IdSerializer
   has_many :images, serializer: Api::ImageSerializer
 
   has_one :supplier, serializer: Api::IdSerializer
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_one :master, serializer: Api::VariantSerializer
+
+  def properties_with_values
+    object.properties_including_inherited
+  end
 
   def variants
     # We use the in_stock? method here instead of the in_stock scope because we need to

@@ -120,7 +120,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
   end
 
   def add_order_cycle_management_abilities(user)
@@ -144,11 +144,27 @@ class AbilityDecorator
     end
     can [:admin, :bulk_management], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
     can [:admin, :create], Spree::LineItem
+    can [:destroy], Spree::LineItem do |item|
+      user.admin? || user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+    end
 
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Shipment
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Adjustment
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::ReturnAuthorization
+    can [:destroy], Spree::Adjustment do |adjustment|
+      # Sharing code with destroying a line item. This should be unified and probably applied for other actions as well.
+      binding.pry
+      if user.admin?
+        true
+      elsif adjustment.adjustable.instance_of? Spree::Order
+        order = adjustment.adjustable
+        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+      elsif adjustment.adjustable.instance_of? Spree::LineItem
+        order = adjustment.adjustable.order
+        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+      end
+    end
 
     can [:create], OrderCycle
 

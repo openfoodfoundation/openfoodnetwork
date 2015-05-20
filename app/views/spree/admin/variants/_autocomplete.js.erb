@@ -1,0 +1,33 @@
+<script type='text/template' id='variant_autocomplete_template'>
+  <div class='variant-autocomplete-item'>
+    <figure class='variant-image'>
+      {{#if variant.image }}
+        <img src='{{variant.image}}' />
+      {{ else }}
+        <img src='/assets/noimage/mini.png' />
+      {{/if}}
+    </figure>
+
+    <div class='variant-details'>
+
+      <h6 class="variant-name">{{variant.name}}</h6>
+
+      <ul>
+        <li><strong>Producer:</strong> {{variant.producer_name}}</li>
+      </ul>
+      <ul class='variant-data'>
+        <li class='variant-sku'><strong>{{t 'sku'}}:</strong> {{variant.sku}}</li>
+        <li class='variant-on_hand'><strong>{{t 'on_hand' }}:</strong> {{variant.count_on_hand}}</li>
+      </ul>
+
+      {{#if variant.option_values}}
+        <ul class='variant-options'>
+          {{#each variant.option_values}}
+            <li><strong>{{this.option_type.presentation}}:</strong> {{this.presentation}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
+    </div>
+  </div>
+</script>

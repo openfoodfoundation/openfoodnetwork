@@ -3,12 +3,12 @@
   %filter-selector{objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
 
   %li.more{ ng: { show: "overFlowSelectors().length > 0 || fitting" } }
-    %a.dropdown{ data: { dropdown: "show-more" }, ng: { class: "{active: selectedOverFlowSelectors().length > 0}" } }
+    %a.dropdown{ data: { dropdown: "{{ 'show-more-' + selectorName }}" }, ng: { class: "{active: selectedOverFlowSelectors().length > 0}" } }
       %span
         + {{ overFlowSelectors().length }} more
       %i.ofn-i_052-point-down
-    .f-dropdown.text-right.content#show-more
+    .f-dropdown.text-right.content{ ng: { attr: { id: "{{ 'show-more-' + selectorName }}" } } }
       %ul
         %active-selector{ ng: { repeat: "selector in overFlowSelectors()", hide: "selector.fits" } }
-          %render-svg{path: "{{selector.object.icon}}"}
+          %render-svg{path: "{{selector.object.icon}}", ng: { if: "selector.object.icon"}}
           %span {{ selector.object.name }}

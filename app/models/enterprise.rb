@@ -8,6 +8,8 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_taxon_order, :string, default: ""
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
+  handle_asynchronously :send_confirmation_instructions
+  handle_asynchronously :send_on_create_confirmation_instructions
 
   self.inheritance_column = nil
 
@@ -157,17 +159,6 @@ class Enterprise < ActiveRecord::Base
       scoped
     else
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
-    end
-  }
-
-  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
-  scope :accessible_by, lambda { |user|
-    if user.has_spree_role?('admin')
-      scoped
-    else
-      with_order_cycles_outer.
-      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
-      select('DISTINCT enterprises.*')
     end
   }
 

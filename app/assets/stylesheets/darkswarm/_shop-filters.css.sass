@@ -4,7 +4,7 @@
 @import animations
 
 @mixin filter-selector($base-clr, $border-clr, $hover-clr)
-  ul.inline-block
+  &.inline-block, ul.inline-block
     display: inline-block
 
   li
@@ -14,7 +14,7 @@
     margin: 0 0 0.25rem 0.25rem
     &:hover, &:focus
       background: transparent
-    &.active 
+    &.active
       box-shadow: none
 
     a, a.button
@@ -48,10 +48,10 @@
           svg
             path
               fill: $hover-clr
-     
+
       &.disabled
         opacity: 0.6
-        
+
         &:hover, &:focus
           border-color: $border-clr
           color:  $base-clr
@@ -118,5 +118,3 @@
   // Shopfront properties
   &.property-selectors
     @include filter-selector(#666, #ccc, #777)
-
-

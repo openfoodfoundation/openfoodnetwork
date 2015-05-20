@@ -238,8 +238,9 @@ feature %q{
       end
 
       context "order_cycle filter" do
-        let!(:oc1) { FactoryGirl.create(:simple_order_cycle ) }
-        let!(:oc2) { FactoryGirl.create(:simple_order_cycle ) }
+        let!(:distributor) { create(:distributor_enterprise) }
+        let!(:oc1) { FactoryGirl.create(:simple_order_cycle, distributors: [distributor]) }
+        let!(:oc2) { FactoryGirl.create(:simple_order_cycle, distributors: [distributor]) }
         let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc1 ) }
         let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc2 ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
@@ -255,20 +256,22 @@ feature %q{
           find("div.select2-container#s2id_order_cycle_filter").click
           order_cycle_names.each { |ocn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
           find("div.select2-container#s2id_order_cycle_filter").click
-          page.should have_selector "tr#li_#{li1.id}", visible: true
-          page.should have_selector "tr#li_#{li2.id}", visible: true
+          page.should have_selector "tr#li_#{li1.id}"
+          page.should have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
-          page.should have_selector "tr#li_#{li1.id}", visible: true
-          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          page.should have_selector "#loading img.spinner"
+          page.should_not have_selector "#loading img.spinner"
+          page.should have_selector "tr#li_#{li1.id}"
+          page.should_not have_selector "tr#li_#{li2.id}"
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter" do
           select2_select oc1.name, from: "order_cycle_filter"
-          page.should have_selector "tr#li_#{li1.id}", visible: true
-          page.should_not have_selector "tr#li_#{li2.id}", visible: true
+          page.should have_selector "tr#li_#{li1.id}"
+          page.should_not have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
-          page.should have_selector "tr#li_#{li1.id}", visible: true
-          page.should have_selector "tr#li_#{li2.id}", visible: true
+          page.should have_selector "tr#li_#{li1.id}"
+          page.should have_selector "tr#li_#{li2.id}"
         end
       end
 

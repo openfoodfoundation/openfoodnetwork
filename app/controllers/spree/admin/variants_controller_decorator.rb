@@ -6,14 +6,17 @@ Spree::Admin::VariantsController.class_eval do
 
     @variants = Spree::Variant.ransack(search_params.merge(:m => 'or')).result
 
-    if params[:distributor_id].present?
-      distributor = Enterprise.find params[:distributor_id]
-      @variants = @variants.in_distributor(distributor)
-    end
-
     if params[:order_cycle_id].present?
       order_cycle = OrderCycle.find params[:order_cycle_id]
       @variants = @variants.in_order_cycle(order_cycle)
+    end
+
+    if params[:distributor_id].present?
+      distributor = Enterprise.find params[:distributor_id]
+      @variants = @variants.in_distributor(distributor)
+      # Perform scoping after all filtering is done.
+      # Filtering could be a problem on scoped variants.
+      @variants.each { |v| v.scope_to_hub(distributor) }
     end
   end
 

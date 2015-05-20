@@ -17,7 +17,7 @@ Spree.config do |config|
   config.checkout_zone = ENV["CHECKOUT_ZONE"]
   config.currency = ENV['CURRENCY']
   if Spree::Country.table_exists?
-    country = Spree::Country.find_by_name(ENV["DEFAULT_COUNTRY"])
+    country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
     config.default_country_id = country.id if country.present?
   else
     config.default_country_id = 12  # Australia
