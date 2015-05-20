@@ -68,7 +68,7 @@ describe "BulkProducts service", ->
       $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, clonedProduct
       BulkProducts.cloneProduct BulkProducts.products[0]
       $httpBackend.flush()
-      expect(BulkProducts.addProducts).toHaveBeenCalledWith [clonedProduct]
+      expect(BulkProducts.insertProductAfter).toHaveBeenCalledWith originalProduct, clonedProduct
 
 
   describe "preparing products", ->
