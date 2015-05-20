@@ -238,6 +238,10 @@ FactoryGirl.modify do
     unit_description ''
   end
 
+  factory :order do
+    distributor { create(:distributor_enterprise) }
+  end
+
   factory :shipping_method do
     distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
     display_on ''
