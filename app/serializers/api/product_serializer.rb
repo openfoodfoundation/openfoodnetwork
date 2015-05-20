@@ -30,8 +30,9 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   #cached
   #delegate :cache_key, to: :object
 
-  attributes :id, :name, :permalink, :count_on_hand, :on_demand, :group_buy,
-    :notes, :description, :properties_with_values
+  attributes :id, :name, :permalink, :count_on_hand
+  attributes :on_demand, :group_buy, :notes, :description
+  attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
   has_many :taxons, serializer: Api::IdSerializer
@@ -46,13 +47,6 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   end
 
   def variants
-    # We use the in_stock? method here instead of the in_stock scope because we need to
-    # look up the stock as overridden by VariantOverrides, and the scope method is not affected
-    # by them.
-
-    object.variants.
-      for_distribution(options[:current_order_cycle], options[:current_distributor]).
-      each { |v| v.scope_to_hub options[:current_distributor] }.
-      select(&:in_stock?)
+    options[:variants][object.id] || []
   end
 end

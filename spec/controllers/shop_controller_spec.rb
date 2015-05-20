@@ -175,4 +175,18 @@ describe ShopController do
       end
     end
   end
+
+  describe "loading variants" do
+    let(:hub) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1]) }
+    let(:p) { create(:simple_product) }
+    let!(:v1) { create(:variant, product: p, unit_value: 3) }
+    let!(:v2) { create(:variant, product: p, unit_value: 5) }
+
+    it "scopes variants to distribution" do
+      controller.stub(:current_order_cycle) { oc }
+      controller.stub(:current_distributor) { hub }
+      controller.send(:variants_for_shop_by_id).should == {p.id => [v1]}
+    end
+  end
 end

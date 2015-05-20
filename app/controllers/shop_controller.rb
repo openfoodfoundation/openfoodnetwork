@@ -10,12 +10,15 @@ class ShopController < BaseController
   end
 
   def products
-    # Can we make this query less slow?
-    #
     if @products = products_for_shop
+
       render status: 200,
-        json: ActiveModel::ArraySerializer.new(@products, each_serializer: Api::ProductSerializer,
-        current_order_cycle: current_order_cycle, current_distributor: current_distributor).to_json
+             json: ActiveModel::ArraySerializer.new(@products,
+                                                    each_serializer: Api::ProductSerializer,
+                                                    current_order_cycle: current_order_cycle,
+                                                    current_distributor: current_distributor,
+                                                    variants: variants_for_shop_by_id).to_json
+
     else
       render json: "", status: 404
     end
@@ -43,6 +46,23 @@ class ShopController < BaseController
         order(taxon_order).
         each { |p| p.scope_to_hub current_distributor }.
         select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }
+    end
+  end
+
+  def variants_for_shop_by_id
+    # We use the in_stock? method here instead of the in_stock scope because we need to
+    # look up the stock as overridden by VariantOverrides, and the scope method is not affected
+    # by them.
+    variants = Spree::Variant.
+               where(is_master: false).
+               for_distribution(current_order_cycle, current_distributor).
+               each { |v| v.scope_to_hub current_distributor }.
+               select(&:in_stock?)
+
+    variants.inject({}) do |vs, v|
+      vs[v.product_id] ||= []
+      vs[v.product_id] << v
+      vs
     end
   end
 
