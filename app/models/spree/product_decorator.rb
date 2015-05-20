@@ -108,6 +108,12 @@ Spree::Product.class_eval do
 
   # -- Methods
 
+  # Called by Spree::Product::duplicate before saving.
+  def duplicate_extra(parent)
+    # Spree sets the SKU to "COPY OF #{parent sku}".
+    self.master.sku = ''
+  end
+
   def properties_including_inherited
     # Product properties override producer properties
     ps = product_properties.all
