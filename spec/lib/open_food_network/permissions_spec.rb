@@ -165,12 +165,12 @@ module OpenFoodNetwork
     end
 
     describe "finding editable products" do
-      let!(:p1) { create(:simple_product) }
-      let!(:p2) { create(:simple_product) }
+      let!(:p1) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
+      let!(:p2) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
 
       before do
         permissions.stub(:managed_enterprise_products) { Spree::Product.where('1=0') }
-        permissions.stub(:related_enterprise_products) { Spree::Product.where('1=0') }
+        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) { Enterprise.where("1=0") }
       end
 
       it "returns products produced by managed enterprises" do
@@ -179,8 +179,38 @@ module OpenFoodNetwork
       end
 
       it "returns products produced by permitted enterprises" do
-        permissions.stub(:related_enterprise_products) { Spree::Product.where(id: p2) }
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:manage_products) { Enterprise.where(id: p2.supplier) }
         permissions.editable_products.should == [p2]
+      end
+    end
+
+    describe "finding visible products" do
+      let!(:p1) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
+      let!(:p2) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
+      let!(:p3) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
+
+      before do
+        permissions.stub(:managed_enterprise_products) { Spree::Product.where("1=0") }
+        allow(permissions).to receive(:related_enterprises_granting).with(:manage_products) { Enterprise.where("1=0") }
+        allow(permissions).to receive(:related_enterprises_granting).with(:add_to_order_cycle) { Enterprise.where("1=0") }
+      end
+
+      it "returns products produced by managed enterprises" do
+        permissions.stub(:managed_enterprise_products) { Spree::Product.where(id: p1) }
+        permissions.visible_products.should == [p1]
+      end
+
+      it "returns products produced by enterprises that have granted manage products" do
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:manage_products) { Enterprise.where(id: p2.supplier) }
+        permissions.visible_products.should == [p2]
+      end
+
+      it "returns products produced by enterprises that have granted P-OC" do
+        allow(permissions).to receive(:related_enterprises_granting).
+          with(:add_to_order_cycle) { Enterprise.where(id: p3.supplier) }
+        permissions.visible_products.should == [p3]
       end
     end
 
@@ -229,17 +259,6 @@ module OpenFoodNetwork
         permissions.should_receive(:related_enterprises_granting).with(permission).
           and_return(Enterprise.where(id: e2))
         permissions.send(:managed_and_related_enterprises_granting, permission).should == [e2]
-      end
-    end
-
-    describe "finding the supplied products of related enterprises" do
-      let!(:e) { create(:enterprise) }
-      let!(:p) { create(:simple_product, supplier: e) }
-
-      it "returns supplied products" do
-        permissions.should_receive(:related_enterprises_granting).with(:manage_products) { [e] }
-
-        permissions.send(:related_enterprise_products).should == [p]
       end
     end
 
