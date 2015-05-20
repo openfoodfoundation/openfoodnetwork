@@ -1,8 +1,8 @@
 class Api::Admin::UnitsVariantSerializer < ActiveModel::Serializer
-  attributes :id, :unit_text, :unit_value
+  attributes :id, :full_name, :unit_value
 
-  def unit_text
-    options_text = object.options_text
-    object.product.name + (options_text.empty? ? "" : ": #{options_text}")
+  def full_name
+    full_name = object.full_name
+    object.product.name + (full_name.empty? ? "" : ": #{full_name}")
   end
 end
