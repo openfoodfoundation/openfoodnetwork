@@ -18,9 +18,9 @@ feature %q{
     end
 
     context "displaying the list of line items" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o3) { FactoryGirl.create(:order, state: 'address', completed_at: nil ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order_with_distributor, state: 'address', completed_at: nil ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
       let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
@@ -41,8 +41,8 @@ feature %q{
     end
 
     context "displaying individual columns" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: FactoryGirl.create(:address) ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, bill_address: nil ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, bill_address: FactoryGirl.create(:address) ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, bill_address: nil ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: FactoryGirl.create(:product_with_option_types) ) }
 
@@ -94,7 +94,7 @@ feature %q{
     end
 
     context "tracking changes" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
       before :each do
@@ -117,7 +117,7 @@ feature %q{
     end
 
     context "submitting data to the server" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
       before :each do
@@ -141,7 +141,7 @@ feature %q{
       admin_user = quick_login_as_admin
     end
 
-    let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+    let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
     let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
     context "using column display toggle" do
@@ -171,7 +171,7 @@ feature %q{
       context "supplier filter" do
         let!(:s1) { create(:supplier_enterprise) }
         let!(:s2) { create(:supplier_enterprise) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
 
@@ -205,8 +205,8 @@ feature %q{
       context "distributor filter" do
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d2 ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -241,8 +241,8 @@ feature %q{
         let!(:distributor) { create(:distributor_enterprise) }
         let!(:oc1) { FactoryGirl.create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { FactoryGirl.create(:simple_order_cycle, distributors: [distributor]) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc1 ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, order_cycle: oc2 ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, order_cycle: oc1 ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, order_cycle: oc2 ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -284,8 +284,8 @@ feature %q{
         let!(:oc2) { FactoryGirl.create(:simple_order_cycle, suppliers: [s2], distributors: [d2] ) }
         let!(:p1) { FactoryGirl.create(:product, supplier: s1) }
         let!(:p2) { FactoryGirl.create(:product, supplier: s2) }
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: oc1 ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: oc2 ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: oc1 ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: oc2 ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: p1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2, product: p2 ) }
 
@@ -328,9 +328,9 @@ feature %q{
     end
 
     context "using quick search" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
       let!(:li3) { FactoryGirl.create(:line_item, order: o3 ) }
@@ -355,9 +355,9 @@ feature %q{
     end
 
     context "using date restriction controls" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today - 8).strftime("%F %T") ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: (Date.today + 2).strftime("%F %T") ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: (Date.today - 8).strftime("%F %T") ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: (Date.today + 2).strftime("%F %T") ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2, :quantity => 2 ) }
       let!(:li3) { FactoryGirl.create(:line_item, order: o3, :quantity => 3 ) }
@@ -429,8 +429,8 @@ feature %q{
     end
 
     context "bulk action controls" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -496,8 +496,8 @@ feature %q{
 
     context "using action buttons" do
       context "using edit buttons" do
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -515,8 +515,8 @@ feature %q{
       end
 
       context "using delete buttons" do
-        let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-        let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -539,13 +539,13 @@ feature %q{
     end
 
     context "clicking the link on variant name" do
-      let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
-      let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+      let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
       let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
       let!(:p3) { FactoryGirl.create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [FactoryGirl.create(:variant, unit_value: 1000)] ) }
       let!(:v3) { p3.variants.first }
-      let!(:o3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now ) }
+      let!(:o3) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
       let!(:li3) { FactoryGirl.create(:line_item, order: o3, variant: v3, quantity: 3, max_quantity: 6 ) }
       let!(:li4) { FactoryGirl.create(:line_item, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
 
@@ -605,8 +605,8 @@ feature %q{
     let(:s1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
-    let!(:o1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d1 ) }
-    let!(:o2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+    let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d1 ) }
+    let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d2 ) }
     let!(:line_item_distributed) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
     let!(:line_item_not_distributed) { FactoryGirl.create(:line_item, order: o2, product: create(:product, supplier: s1) ) }
 

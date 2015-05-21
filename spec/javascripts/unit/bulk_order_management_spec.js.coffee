@@ -43,7 +43,7 @@ describe "AdminOrderMgmtCtrl", ->
   describe "fetching orders", ->
     beforeEach ->
       scope.initialiseVariables()
-      httpBackend.expectGET("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=SomeDate;q[completed_at_lt]=SomeDate").respond "list of orders"
+      httpBackend.expectGET("/admin/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=SomeDate;q[completed_at_lt]=SomeDate").respond "list of orders"
 
     it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()
