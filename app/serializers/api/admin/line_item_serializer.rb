@@ -1,5 +1,5 @@
 class Api::Admin::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :supplier, :unit_value, :units_product, :units_variant
+  attributes :id, :quantity, :max_quantity, :supplier, :price, :unit_value, :units_product, :units_variant
 
   def supplier
     Api::Admin::IdNameSerializer.new(object.product.supplier).serializable_hash
