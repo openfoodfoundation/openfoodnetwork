@@ -15,7 +15,10 @@
   %td{ 'ng-show' => 'columns.on_hand.visible' }
     %input.field{ 'ng-model' => 'variant.on_hand', 'ng-change' => 'updateOnHand(product)', :name => 'variant_on_hand', 'ng-hide' => 'variant.on_demand', 'ofn-track-variant' => 'on_hand', :type => 'number' }
     %span{ 'ng-bind' => 'variant.on_hand', :name => 'variant_on_hand', 'ng-show' => 'variant.on_demand' }
+  %td{ 'ng-show' => 'columns.on_demand.visible' }
+    %input.field{ 'ng-model' => 'variant.on_demand', :name => 'variant_on_demand', 'ofn-track-variant' => 'on_demand', :type => 'checkbox' }
   %td{ 'ng-show' => 'columns.category.visible' }
+  %td{ 'ng-show' => 'columns.tax_category.visible' }
   %td{ 'ng-show' => 'columns.inherits_properties.visible' }
   %td{ 'ng-show' => 'columns.available_on.visible' }
   %td.actions

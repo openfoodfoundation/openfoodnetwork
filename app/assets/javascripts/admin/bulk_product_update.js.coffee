@@ -312,7 +312,7 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("on_demand")
+        if product.hasOwnProperty("on_demand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_demand = product.on_demand
           hasUpdatableProperty = true
         if product.hasOwnProperty("category_id")
@@ -345,6 +345,9 @@ filterSubmitVariant = (variant) ->
     filteredVariant.id = variant.id unless variant.id <= 0
     if variant.hasOwnProperty("on_hand")
       filteredVariant.on_hand = variant.on_hand
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("on_demand")
+      filteredVariant.on_demand = variant.on_demand
       hasUpdatableProperty = true
     if variant.hasOwnProperty("price")
       filteredVariant.price = variant.price
