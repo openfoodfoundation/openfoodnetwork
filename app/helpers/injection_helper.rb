@@ -69,8 +69,9 @@ module InjectionHelper
     @active_distributors ||= Enterprise.distributors_with_active_order_cycles
     @earliest_closing_times ||= OrderCycle.earliest_closing_times
     @shipping_method_services ||= Spree::ShippingMethod.services
+    @relatives ||= EnterpriseRelationship.relatives
 
-    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services}
+    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services, relatives: @relatives}
   end
 
 end

@@ -72,11 +72,13 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def producers
-    ActiveModel::ArraySerializer.new(object.suppliers.activated, {each_serializer: Api::IdSerializer})
+    relatives = options[:relatives][object.id]
+    relatives ? relatives[:producers] : []
   end
 
   def hubs
-    ActiveModel::ArraySerializer.new(object.distributors.activated, {each_serializer: Api::IdSerializer})
+    relatives = options[:relatives][object.id]
+    relatives ? relatives[:distributors] : []
   end
 
   # Map svg icons.
