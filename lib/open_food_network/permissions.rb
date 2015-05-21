@@ -106,10 +106,20 @@ module OpenFoodNetwork
       Spree::LineItem.where(order_id: editable_orders)
     end
 
-    def managed_products
+    def editable_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
-      permitted_enterprise_products_ids = related_enterprise_products.pluck :id
-      Spree::Product.where('id IN (?)', managed_enterprise_products_ids + permitted_enterprise_products_ids)
+      permitted_enterprise_products_ids = products_supplied_by(
+        related_enterprises_granting(:manage_products).pluck(:id)
+      ).pluck :id
+      Spree::Product.where('spree_products.id IN (?)', managed_enterprise_products_ids | permitted_enterprise_products_ids)
+    end
+
+    def visible_products
+      managed_enterprise_products_ids = managed_enterprise_products.pluck :id
+      permitted_enterprise_products_ids = products_supplied_by(
+        related_enterprises_granting(:manage_products).pluck(:id) | related_enterprises_granting(:add_to_order_cycle).pluck(:id)
+      ).pluck :id
+      Spree::Product.where('spree_products.id IN (?)', managed_enterprise_products_ids | permitted_enterprise_products_ids)
     end
 
     def managed_product_enterprises
@@ -181,8 +191,8 @@ module OpenFoodNetwork
       Spree::Product.managed_by(@user)
     end
 
-    def related_enterprise_products
-      Spree::Product.where('supplier_id IN (?)', related_enterprises_granting(:manage_products))
+    def products_supplied_by(suppliers)
+      Spree::Product.where('supplier_id IN (?)', suppliers)
     end
   end
 end
