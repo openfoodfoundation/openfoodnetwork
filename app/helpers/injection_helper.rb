@@ -1,6 +1,6 @@
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
+    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, active_distributors: @active_distributors, earliest_closing_times: OrderCycle.earliest_closing_times
   end
 
   def inject_current_order

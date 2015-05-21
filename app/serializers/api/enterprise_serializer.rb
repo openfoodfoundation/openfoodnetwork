@@ -18,14 +18,12 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   def orders_close_at
-    OrderCycle.first_closing_for(object).andand.orders_close_at
+    options[:earliest_closing_times][object.id]
   end
 
   def active
-    @options[:active_distributors].andand.include? object
+    options[:active_distributors].andand.include? object
   end
-
-
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
