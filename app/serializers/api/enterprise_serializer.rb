@@ -42,11 +42,13 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   has_one :address, serializer: Api::AddressSerializer
 
   def pickup
-    object.shipping_methods.where(:require_ship_address => false).present?
+    services = options[:shipping_method_services][object.id]
+    services ? services[:pickup] : false
   end
 
   def delivery
-    object.shipping_methods.where(:require_ship_address => true).present?
+    services = options[:shipping_method_services][object.id]
+    services ? services[:delivery] : false
   end
 
   def email
