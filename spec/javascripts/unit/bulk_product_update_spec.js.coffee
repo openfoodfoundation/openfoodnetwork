@@ -215,6 +215,7 @@ describe "filtering products for submission to database", ->
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
       available_on: available_on
+      tax_category_id: null
       master_attributes:
         id: 2
         unit_value: 250
