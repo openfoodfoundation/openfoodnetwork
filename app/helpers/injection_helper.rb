@@ -1,6 +1,10 @@
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, active_distributors: @active_distributors, earliest_closing_times: OrderCycle.earliest_closing_times, shipping_method_services: Spree::ShippingMethod.services
+    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, enterprise_injection_data
+  end
+
+  def inject_group_enterprises
+    inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_current_order
@@ -53,4 +57,16 @@ module InjectionHelper
     end
     render partial: "json/injection_ams", locals: {name: name, json: json}
   end
+
+
+  private
+
+  def enterprise_injection_data
+    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
+    @earliest_closing_times ||= OrderCycle.earliest_closing_times
+    @shipping_method_services ||= Spree::ShippingMethod.services
+
+    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services}
+  end
+
 end
