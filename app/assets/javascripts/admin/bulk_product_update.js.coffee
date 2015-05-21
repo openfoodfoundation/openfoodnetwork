@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, tax_categories) ->
     $scope.loading = true
 
     $scope.StatusMessage = StatusMessage
@@ -12,6 +12,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       on_hand:              {name: "On Hand",               visible: true}
       on_demand:            {name: "On Demand",             visible: false}
       category:             {name: "Category",              visible: false}
+      tax_category:         {name: "Tax Category",          visible: false}
       inherits_properties:  {name: "Inherits Properties?",  visible: false}
       available_on:         {name: "Available On",          visible: false}
 
@@ -33,6 +34,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.producers = producers
     $scope.taxons = Taxons.taxons
+    $scope.tax_categories = tax_categories
     $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
     $scope.producerFilter = "0"
@@ -315,6 +317,9 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("category_id")
           filteredProduct.primary_taxon_id = product.category_id
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("tax_category_id")
+          filteredProduct.tax_category_id = product.tax_category_id
           hasUpdatableProperty = true
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
