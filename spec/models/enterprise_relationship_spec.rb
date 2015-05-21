@@ -69,4 +69,16 @@ describe EnterpriseRelationship do
       EnterpriseRelationship.with_permission('two').sort.should == [er1, er2].sort
     end
   end
+
+  describe "finding relatives" do
+    let(:e1) { create(:supplier_enterprise) }
+    let(:e2) { create(:supplier_enterprise, sells: 'any') }
+    let!(:er) { create(:enterprise_relationship, parent: e1, child: e2) }
+
+    it "categorises enterprises into distributors and producers" do
+      EnterpriseRelationship.relatives.should ==
+        {e1.id => {distributors: [e2.id], producers: [e2.id]},
+         e2.id => {distributors: [],      producers: [e1.id]}}
+    end
+  end
 end
