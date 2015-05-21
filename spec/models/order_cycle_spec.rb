@@ -313,7 +313,7 @@ describe OrderCycle do
         @oc.pickup_time_for(@d2).should == '2-8pm Friday'
       end
     end
-    
+
     describe "finding pickup instructions for a distributor" do
       it "returns the pickup instructions" do
         @oc.pickup_instructions_for(@d1).should == "Come get it!"
@@ -375,7 +375,7 @@ describe OrderCycle do
 
     occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
-    
+
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges
     occ.exchanges.map(&:to_h).all? do |ex|
@@ -402,7 +402,7 @@ describe OrderCycle do
   describe "finding order cycles opening in the future" do
     it "should give the soonest opening order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
       OrderCycle.first_opening_for(distributor).should == oc
     end
 
@@ -411,13 +411,32 @@ describe OrderCycle do
       OrderCycle.first_opening_for(distributor).should == nil
     end
   end
-  
+
   describe "finding open order cycles" do
     it "should give the soonest closing order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now) 
-      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now)
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
       OrderCycle.first_closing_for(distributor).should == oc
+    end
+  end
+
+  describe "finding the earliest closing times for each distributor" do
+    let(:time1) { 1.week.from_now }
+    let(:time2) { 2.weeks.from_now }
+    let(:time3) { 3.weeks.from_now }
+    let(:e1) { create(:distributor_enterprise) }
+    let(:e2) { create(:distributor_enterprise) }
+    let!(:oc1) { create(:simple_order_cycle, orders_close_at: time1, distributors: [e1]) }
+    let!(:oc2) { create(:simple_order_cycle, orders_close_at: time2, distributors: [e2]) }
+    let!(:oc3) { create(:simple_order_cycle, orders_close_at: time3, distributors: [e2]) }
+
+    it "returns the closing time, indexed by enterprise id" do
+      OrderCycle.earliest_closing_times[e1.id].should == time1
+    end
+
+    it "returns the earliest closing time" do
+      OrderCycle.earliest_closing_times[e2.id].should == time2
     end
   end
 end
