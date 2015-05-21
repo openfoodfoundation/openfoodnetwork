@@ -7,6 +7,10 @@ module InjectionHelper
     inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
+  def inject_current_hub
+    inject_json_ams "currentHub", current_distributor, Api::EnterpriseSerializer, enterprise_injection_data
+  end
+
   def inject_current_order
     inject_json_ams "currentOrder", current_order, Api::CurrentOrderSerializer, current_distributor: current_distributor, current_order_cycle: current_order_cycle
   end
