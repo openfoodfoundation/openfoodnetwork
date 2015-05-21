@@ -183,6 +183,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :order_with_distributor, :parent => :order do
+    distributor { create(:distributor_enterprise) }
+  end
+
   factory :zone_with_member, :parent => :zone do
     default_tax true
 
@@ -236,10 +240,6 @@ FactoryGirl.modify do
   factory :base_variant do
     unit_value 1
     unit_description ''
-  end
-
-  factory :order do
-    distributor { create(:distributor_enterprise) }
   end
 
   factory :shipping_method do
