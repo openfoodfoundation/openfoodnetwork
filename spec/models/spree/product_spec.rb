@@ -116,10 +116,10 @@ module Spree
             expect(standard_variant.price).to eq product.master.price
           end
 
-          it "only duplicates master variant on create" do
-            expect(product).to_not receive :ensure_standard_variant
+          it "only duplicates master with after_save when no standard variants exist" do
+            expect(product).to receive :ensure_standard_variant
             product.name = "Something else"
-            product.save!
+            expect{product.save!}.to_not change{product.variants.count}
           end
         end
 
