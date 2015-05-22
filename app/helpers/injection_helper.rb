@@ -1,6 +1,8 @@
+require 'open_food_network/enterprise_injection_data'
+
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json_ams "enterprises", Enterprise.activated.includes(:address).all, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_group_enterprises
@@ -66,14 +68,8 @@ module InjectionHelper
   private
 
   def enterprise_injection_data
-    @active_distributors ||= Enterprise.distributors_with_active_order_cycles
-    @earliest_closing_times ||= OrderCycle.earliest_closing_times
-    @shipping_method_services ||= Spree::ShippingMethod.services
-    @relatives ||= EnterpriseRelationship.relatives
-    @supplied_taxons ||= Spree::Taxon.supplied_taxons
-    @distributed_taxons ||= Spree::Taxon.distributed_taxons
-
-    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services, relatives: @relatives, supplied_taxons: @supplied_taxons, distributed_taxons: @distributed_taxons}
+    @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
+    {data: @enterprise_injection_data}
   end
 
 end

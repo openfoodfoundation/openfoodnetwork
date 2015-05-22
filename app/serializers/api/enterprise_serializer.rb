@@ -21,11 +21,11 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   def orders_close_at
-    options[:earliest_closing_times][object.id]
+    options[:data].earliest_closing_times[object.id]
   end
 
   def active
-    options[:active_distributors].andand.include? object
+    options[:data].active_distributors.andand.include? object
   end
 end
 
@@ -45,20 +45,20 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
 
   def taxons
-    options[:distributed_taxons][object.id]
+    options[:data].distributed_taxons[object.id]
   end
 
   def supplied_taxons
-    options[:supplied_taxons][object.id]
+    options[:data].supplied_taxons[object.id]
   end
 
   def pickup
-    services = options[:shipping_method_services][object.id]
+    services = options[:data].shipping_method_services[object.id]
     services ? services[:pickup] : false
   end
 
   def delivery
-    services = options[:shipping_method_services][object.id]
+    services = options[:data].shipping_method_services[object.id]
     services ? services[:delivery] : false
   end
 
@@ -83,12 +83,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def producers
-    relatives = options[:relatives][object.id]
+    relatives = options[:data].relatives[object.id]
     relatives ? relatives[:producers] : []
   end
 
   def hubs
-    relatives = options[:relatives][object.id]
+    relatives = options[:data].relatives[object.id]
     relatives ? relatives[:distributors] : []
   end
 
