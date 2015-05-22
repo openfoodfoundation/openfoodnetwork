@@ -36,10 +36,17 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
     :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
-  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
-  has_many :supplied_taxons, serializer: Api::IdSerializer
+  attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
+
+  def taxons
+    options[:distributed_taxons][object.id]
+  end
+
+  def supplied_taxons
+    options[:supplied_taxons][object.id]
+  end
 
   def pickup
     services = options[:shipping_method_services][object.id]

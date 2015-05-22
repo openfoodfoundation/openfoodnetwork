@@ -70,8 +70,10 @@ module InjectionHelper
     @earliest_closing_times ||= OrderCycle.earliest_closing_times
     @shipping_method_services ||= Spree::ShippingMethod.services
     @relatives ||= EnterpriseRelationship.relatives
+    @supplied_taxons ||= Spree::Taxon.supplied_taxons
+    @distributed_taxons ||= Spree::Taxon.distributed_taxons
 
-    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services, relatives: @relatives}
+    {active_distributors: @active_distributors, earliest_closing_times: @earliest_closing_times, shipping_method_services: @shipping_method_services, relatives: @relatives, supplied_taxons: @supplied_taxons, distributed_taxons: @distributed_taxons}
   end
 
 end
