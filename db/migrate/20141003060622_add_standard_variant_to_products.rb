@@ -1,9 +1,27 @@
 class AddStandardVariantToProducts < ActiveRecord::Migration
   def up
+    # Make sure that all products have a variant_unit
+    Spree::Product.where("variant_unit IS NULL OR variant_unit = ''").update_all(variant_unit: "items", variant_unit_name: "each")
+
     # Find products without any standard variants
-    products_with_only_master = Spree::Product.includes(:variants).where('spree_variants.id IS NULL')
+    products_with_only_master = Spree::Product.includes(:variants).where('spree_variants.id IS NULL').select('DISTINCT spree_products.*')
 
     products_with_only_master.each do |product|
+      # Add a unit_value to the master variant if it doesn't have one
+      if product.unit_value.blank?
+        if product.variant_unit == "weight" && match = product.unit_description.andand.match(/^(\d+(\.\d*)?)(k?g) ?(.*)$/)
+          scale = (match[3] == "kg" ? 1000 : 1)
+          product.unit_value = (match[1].to_i*scale)
+          product.unit_description = match[4]
+          product.save!
+        else
+          unless product.variant_unit == "items" && product.unit_description.present?
+            product.unit_value = 1
+            product.save!
+          end
+        end
+      end
+
       # Run the callback to add a copy of the master variant as a standard variant
       product.send(:ensure_standard_variant)
 
