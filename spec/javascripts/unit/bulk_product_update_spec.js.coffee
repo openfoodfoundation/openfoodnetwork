@@ -239,6 +239,7 @@ describe "AdminProductEditCtrl", ->
     module ($provide)->
       $provide.value "producers", []
       $provide.value "taxons", []
+      $provide.value "tax_categories", []
       $provide.value 'SpreeApiKey', 'API_KEY'
       null
 
