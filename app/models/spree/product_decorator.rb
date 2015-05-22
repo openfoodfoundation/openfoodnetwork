@@ -34,7 +34,7 @@ Spree::Product.class_eval do
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
-  after_save :ensure_standard_variant, if: lambda { master.valid? && variants.empty? }
+  after_save :ensure_standard_variant
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   after_touch :touch_distributors
@@ -211,10 +211,12 @@ Spree::Product.class_eval do
   end
 
   def ensure_standard_variant
-    variant = self.master.dup
-    variant.product = self
-    variant.is_master = false
-    self.variants << variant
+    if master.valid? && variants.empty?
+      variant = self.master.dup
+      variant.product = self
+      variant.is_master = false
+      self.variants << variant
+    end
   end
 
   # Override Spree's old save_master method and replace it with the most recent method from spree repository
