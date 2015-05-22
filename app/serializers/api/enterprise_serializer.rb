@@ -1,4 +1,7 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
+  # We reference this here because otherwise the serializer complains about its absence
+  Api::IdSerializer
+
   def serializable_hash
     cached_serializer_hash.merge uncached_serializer_hash
   end
@@ -39,6 +42,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
+
 
   def taxons
     options[:distributed_taxons][object.id]
