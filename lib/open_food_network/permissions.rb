@@ -5,23 +5,28 @@ module OpenFoodNetwork
     end
 
     def can_manage_complex_order_cycles?
-      managed_and_related_enterprises_with(:add_to_order_cycle).any? do |e|
+      managed_and_related_enterprises_granting(:add_to_order_cycle).any? do |e|
         e.sells == 'any'
       end
     end
 
     # Find enterprises that an admin is allowed to add to an order cycle
-    def order_cycle_enterprises
+    def visible_enterprises_for_order_reports
       managed_and_related_enterprises_with :add_to_order_cycle
+    end
+
+    def order_cycle_enterprises
+      # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
+      managed_and_related_enterprises_granting :add_to_order_cycle
     end
 
     # Find enterprises for which an admin is allowed to edit their profile
     def editable_enterprises
-      managed_and_related_enterprises_with :edit_profile
+      managed_and_related_enterprises_granting :edit_profile
     end
 
     def variant_override_hubs
-      managed_and_related_enterprises_with(:add_to_order_cycle).is_hub
+      managed_and_related_enterprises_granting(:add_to_order_cycle).is_hub
     end
 
     def variant_override_producers
@@ -33,7 +38,7 @@ module OpenFoodNetwork
     # override variants
     # {hub1_id => [producer1_id, producer2_id, ...], ...}
     def variant_override_enterprises_per_hub
-      hubs = managed_and_related_enterprises_with(:add_to_order_cycle).is_distributor
+      hubs = managed_and_related_enterprises_granting(:add_to_order_cycle).is_distributor
 
       # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
@@ -56,14 +61,69 @@ module OpenFoodNetwork
       permissions
     end
 
-    def managed_products
+    # Find enterprises that an admin is allowed to add to an order cycle
+    def visible_orders
+      # Any orders that I can edit
+      editable = editable_orders.pluck(:id)
+
+      # Any orders placed through hubs that my producers have granted P-OC, and which contain my their products
+      # This is pretty complicated but it's looking for order where at least one of my producers has granted
+      # P-OC to the distributor AND the order contains products of at least one of THE SAME producers
+      granted_distributors = related_enterprises_granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
+      produced = Spree::Order.with_line_items_variants_and_products_outer.
+      where(
+      "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
+      granted_distributors,
+      related_enterprises_granting(:add_to_order_cycle, to: granted_distributors).merge(managed_enterprises.is_primary_producer)
+      ).pluck(:id)
+
+      Spree::Order.where(id: editable | produced)
+    end
+
+    # Find enterprises that an admin is allowed to add to an order cycle
+    def editable_orders
+      # Any orders placed through any hub that I manage
+      managed = Spree::Order.where(distributor_id: managed_enterprises.pluck(:id)).pluck(:id)
+
+      # Any order that is placed through an order cycle one of my managed enterprises coordinates
+      coordinated = Spree::Order.where(order_cycle_id: coordinated_order_cycles.pluck(:id)).pluck(:id)
+
+      Spree::Order.where(id: managed | coordinated )
+    end
+
+    def visible_line_items
+      # Any line items that I can edit
+      editable = editable_line_items.pluck(:id)
+
+      # Any from visible orders, where the product is produced by one of my managed producers
+      produced = Spree::LineItem.where(order_id: visible_orders.pluck(:id)).joins(:product).
+      where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer.pluck(:id))
+
+      Spree::LineItem.where(id: editable | produced)
+    end
+
+    def editable_line_items
+      Spree::LineItem.where(order_id: editable_orders)
+    end
+
+    def editable_products
       managed_enterprise_products_ids = managed_enterprise_products.pluck :id
-      permitted_enterprise_products_ids = related_enterprise_products.pluck :id
-      Spree::Product.where('id IN (?)', managed_enterprise_products_ids + permitted_enterprise_products_ids)
+      permitted_enterprise_products_ids = products_supplied_by(
+        related_enterprises_granting(:manage_products).pluck(:id)
+      ).pluck :id
+      Spree::Product.where('spree_products.id IN (?)', managed_enterprise_products_ids | permitted_enterprise_products_ids)
+    end
+
+    def visible_products
+      managed_enterprise_products_ids = managed_enterprise_products.pluck :id
+      permitted_enterprise_products_ids = products_supplied_by(
+        related_enterprises_granting(:manage_products).pluck(:id) | related_enterprises_granting(:add_to_order_cycle).pluck(:id)
+      ).pluck :id
+      Spree::Product.where('spree_products.id IN (?)', managed_enterprise_products_ids | permitted_enterprise_products_ids)
     end
 
     def managed_product_enterprises
-      managed_and_related_enterprises_with :manage_products
+      managed_and_related_enterprises_granting :manage_products
     end
 
     def manages_one_enterprise?
@@ -73,11 +133,30 @@ module OpenFoodNetwork
 
     private
 
-    def managed_and_related_enterprises_with(permission)
-      managed_enterprise_ids = managed_enterprises.pluck :id
-      permitting_enterprise_ids = related_enterprises_with(permission).pluck :id
+    def admin?
+      @user.admin?
+    end
 
-      Enterprise.where('id IN (?)', managed_enterprise_ids + permitting_enterprise_ids)
+    def managed_and_related_enterprises_granting(permission)
+      if admin?
+        Enterprise.scoped
+      else
+        managed_enterprise_ids = managed_enterprises.pluck :id
+        permitting_enterprise_ids = related_enterprises_granting(permission).pluck :id
+
+        Enterprise.where('id IN (?)', managed_enterprise_ids + permitting_enterprise_ids)
+      end
+    end
+
+    def managed_and_related_enterprises_with(permission)
+      if admin?
+        Enterprise.scoped
+      else
+        managed = managed_enterprises.pluck(:id)
+        granting = related_enterprises_granting(permission).pluck(:id)
+        granted = related_enterprises_granted(permission).pluck(:id)
+        Enterprise.where(id: managed | granting | granted)
+      end
     end
 
     def managed_enterprises
@@ -85,16 +164,12 @@ module OpenFoodNetwork
       @managed_enterprises = Enterprise.managed_by(@user)
     end
 
-    def related_enterprises_with(permission)
-      parent_ids = EnterpriseRelationship.
-        permitting(managed_enterprises).
-        with_permission(permission).
-        pluck(:parent_id)
-
-      Enterprise.where('id IN (?)', parent_ids)
+    def coordinated_order_cycles
+      return @coordinated_order_cycles unless @coordinated_order_cycles.nil?
+      @coordinated_order_cycles = OrderCycle.managed_by(@user)
     end
 
-    def granting(permission, options={})
+    def related_enterprises_granting(permission, options={})
       parent_ids = EnterpriseRelationship.
         permitting(options[:to] || managed_enterprises).
         with_permission(permission).
@@ -103,7 +178,7 @@ module OpenFoodNetwork
         (options[:scope] || Enterprise).where('enterprises.id IN (?)', parent_ids)
     end
 
-    def granted(permission, options={})
+    def related_enterprises_granted(permission, options={})
       child_ids = EnterpriseRelationship.
         permitted_by(options[:by] || managed_enterprises).
         with_permission(permission).
@@ -116,8 +191,8 @@ module OpenFoodNetwork
       Spree::Product.managed_by(@user)
     end
 
-    def related_enterprise_products
-      Spree::Product.where('supplier_id IN (?)', related_enterprises_with(:manage_products))
+    def products_supplied_by(suppliers)
+      Spree::Product.where('supplier_id IN (?)', suppliers)
     end
   end
 end

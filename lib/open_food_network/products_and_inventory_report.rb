@@ -9,7 +9,7 @@ module OpenFoodNetwork
 
     def header
       [
-          "Supplier", 
+          "Supplier",
           "Producer Suburb",
           "Product",
           "Product Properties",
@@ -36,6 +36,16 @@ module OpenFoodNetwork
       end
     end
 
+    def permissions
+      return @permissions unless @permissions.nil?
+      @permissions = OpenFoodNetwork::Permissions.new(@user)
+    end
+
+    def visible_products
+      return @visible_products unless @visible_products.nil?
+      @visible_products = permissions.visible_products
+    end
+
     def variants
       filter(child_variants) + filter(master_variants)
     end
@@ -43,7 +53,7 @@ module OpenFoodNetwork
     def child_variants
       Spree::Variant.where(:is_master => false)
       .joins(:product)
-      .merge(Spree::Product.managed_by(@user))
+      .merge(visible_products)
       .order("spree_products.name")
     end
 
@@ -53,7 +63,7 @@ module OpenFoodNetwork
       .where("(select spree_variants.id from spree_variants as other_spree_variants
                   WHERE other_spree_variants.product_id = spree_variants.product_id
                  AND other_spree_variants.is_master = 'f' LIMIT 1) IS NULL")
-      .merge(Spree::Product.managed_by(@user))
+      .merge(visible_products)
       .order("spree_products.name")
     end
 
