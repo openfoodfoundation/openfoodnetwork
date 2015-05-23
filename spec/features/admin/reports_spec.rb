@@ -211,8 +211,9 @@ feature %q{
     end
 
     it "handles order cycles with nil opening or closing times" do
-      oc = create(:simple_order_cycle, name: "My Order Cycle", orders_open_at: Time.now, orders_close_at: nil)
-      o = create(:order, order_cycle: oc)
+      distributor = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.now, orders_close_at: nil)
+      o = create(:order, order_cycle: oc, distributor: distributor)
 
       login_to_admin_section
       visit spree.orders_and_fulfillment_admin_reports_path

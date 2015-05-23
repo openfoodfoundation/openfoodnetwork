@@ -162,17 +162,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
-  scope :accessible_by, lambda { |user|
-    if user.has_spree_role?('admin')
-      scoped
-    else
-      with_order_cycles_outer.
-      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
-      select('DISTINCT enterprises.*')
-    end
-  }
-
   def self.find_near(suburb)
     enterprises = []
 

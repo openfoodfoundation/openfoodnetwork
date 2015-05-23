@@ -169,6 +169,10 @@ Spree::Core::Engine.routes.prepend do
 
       post :bulk_update, :on => :collection, :as => :bulk_update
     end
+
+    resources :orders do
+      get :managed, on: :collection
+    end
   end
 
   resources :orders do
