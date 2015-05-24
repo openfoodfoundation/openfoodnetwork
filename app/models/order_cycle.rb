@@ -26,7 +26,7 @@ class OrderCycle < ActiveRecord::Base
     closed.
     where("order_cycles.orders_close_at >= ?", 31.days.ago).
     order("order_cycles.orders_close_at DESC") }
-  
+
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
   scope :distributing_product, lambda { |product|
@@ -161,6 +161,18 @@ class OrderCycle < ActiveRecord::Base
 
   def exchange_for_distributor(distributor)
     exchanges.outgoing.to_enterprises([distributor]).first
+  end
+
+  def exchange_for_supplier(supplier)
+    exchanges.incoming.from_enterprises([supplier]).first
+  end
+
+  def receival_time_for(supplier)
+    exchange_for_supplier(supplier).andand.receival_time
+  end
+
+  def receival_instructions_for(supplier)
+    exchange_for_supplier(supplier).andand.receival_instructions
   end
 
   def pickup_time_for(distributor)
