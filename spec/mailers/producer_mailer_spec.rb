@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'yaml'
+
 describe ProducerMailer do
   let(:s1) { create(:supplier_enterprise, address: create(:address)) }
   let(:s2) { create(:supplier_enterprise, address: create(:address)) }
@@ -46,7 +47,6 @@ describe ProducerMailer do
   end
 
   it "includes receival instructions" do
-    puts mail.body
     mail.body.should include 'Outside shed.'
   end
 
