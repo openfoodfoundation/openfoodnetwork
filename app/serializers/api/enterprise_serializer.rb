@@ -3,17 +3,18 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   Api::IdSerializer
 
   def serializable_hash
+
     cached_serializer_hash.merge uncached_serializer_hash
   end
 
   private
 
   def cached_serializer_hash
-    Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
+    Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash || {}
   end
 
   def uncached_serializer_hash
-    Api::UncachedEnterpriseSerializer.new(object, @options).serializable_hash
+    Api::UncachedEnterpriseSerializer.new(object, @options).serializable_hash || {}
   end
 end
 
@@ -31,7 +32,12 @@ end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   cached
-  delegate :cache_key, to: :object
+  #delegate :cache_key, to: :object
+
+  def cache_key
+    object.andand.cache_key
+  end
+
 
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
