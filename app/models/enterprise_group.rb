@@ -19,6 +19,7 @@ class EnterpriseGroup < ActiveRecord::Base
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
   attr_accessible :owner_id
+  attr_accessible :permalink
   attr_accessible :logo, :promo_image
   attr_accessible :address_attributes
   attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
