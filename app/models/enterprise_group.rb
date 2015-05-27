@@ -15,6 +15,7 @@ class EnterpriseGroup < ActiveRecord::Base
 
   validates :name, presence: true
   validates :description, presence: true
+  validates :permalink, uniqueness: true, presence: true
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
   attr_accessible :owner_id

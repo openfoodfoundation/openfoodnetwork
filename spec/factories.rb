@@ -135,6 +135,7 @@ FactoryGirl.define do
 
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
+    sequence(:permalink) { |n| "group#{n}" }
     description 'this is a group'
     on_front_page false
     address { FactoryGirl.build(:address) }
