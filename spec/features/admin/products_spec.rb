@@ -68,10 +68,10 @@ feature %q{
       click_button 'Update'
 
       product.reload
-      product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
+      product.distributors.should match_array [@distributors[0], @distributors[2]]
 
 
-      product.product_distributions.map { |pd| pd.enterprise_fee }.sort.should == [@enterprise_fees[0], @enterprise_fees[2]].sort
+      product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
     end
 
     scenario "making a product into a group buy product" do

@@ -50,7 +50,7 @@ feature %q{
       page.should have_relationship e1, e2, ['to add to order cycle', 'to override variant details', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       er.should be_present
-      er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides'].sort
+      er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
     end
 
 

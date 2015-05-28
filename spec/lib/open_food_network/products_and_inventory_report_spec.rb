@@ -3,7 +3,7 @@ require 'spec_helper'
 module OpenFoodNetwork
   describe ProductsAndInventoryReport do
     context "As a site admin" do
-      let(:user) do 
+      let(:user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
         user
@@ -14,7 +14,7 @@ module OpenFoodNetwork
 
       it "Should return headers" do
         subject.header.should == [
-          "Supplier", 
+          "Supplier",
           "Producer Suburb",
           "Product",
           "Product Properties",
@@ -63,7 +63,7 @@ module OpenFoodNetwork
 
     context "As an enterprise user" do
       let(:supplier) { create(:supplier_enterprise) }
-      let(:enterprise_user) do 
+      let(:enterprise_user) do
         user = create(:user)
         user.enterprise_roles.create(enterprise: supplier)
         user.spree_roles = []
@@ -79,7 +79,7 @@ module OpenFoodNetwork
           variant_1 = create(:variant, product: product1)
           variant_2 = create(:variant, product: product1)
 
-          subject.child_variants.sort.should == [variant_1, variant_2].sort
+          subject.child_variants.should match_array [variant_1, variant_2]
         end
 
         it "should only return variants managed by the user" do
@@ -87,7 +87,7 @@ module OpenFoodNetwork
           product2 = create(:simple_product, supplier: supplier)
           variant_1 = create(:variant, product: product1)
           variant_2 = create(:variant, product: product2)
-          
+
           subject.child_variants.should == [variant_2]
         end
       end
@@ -96,15 +96,15 @@ module OpenFoodNetwork
         it "should only return variants managed by the user" do
           product1 = create(:simple_product, supplier: create(:supplier_enterprise))
           product2 = create(:simple_product, supplier: supplier)
-          
+
           subject.master_variants.should == [product2.master]
         end
 
         it "doesn't return master variants with siblings" do
           product = create(:simple_product, supplier: supplier)
-          create(:variant, product: product)  
-          
-          subject.master_variants.should be_empty 
+          create(:variant, product: product)
+
+          subject.master_variants.should be_empty
         end
       end
 
@@ -113,13 +113,13 @@ module OpenFoodNetwork
         it "should return unfiltered variants sans-params" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
-          subject.filter(Spree::Variant.scoped).sort.should == [product1.master, product2.master].sort
+          subject.filter(Spree::Variant.scoped).should match_array [product1.master, product2.master]
         end
         it "should filter deleted products" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
           product2.delete
-          subject.filter(Spree::Variant.scoped).sort.should == [product1.master].sort
+          subject.filter(Spree::Variant.scoped).should match_array [product1.master]
         end
         describe "based on report type" do
           it "returns only variants on hand" do

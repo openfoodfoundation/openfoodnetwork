@@ -98,7 +98,7 @@ module OpenFoodNetwork
           {1 => [e1.id], 2 => [e1.id, e2.id]}
         end
 
-        permissions.variant_override_producers.sort.should == [e1, e2].sort
+        permissions.variant_override_producers.should match_array [e1, e2]
       end
     end
 
