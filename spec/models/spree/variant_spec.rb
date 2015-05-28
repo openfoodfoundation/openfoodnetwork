@@ -25,7 +25,7 @@ module Spree
         end
 
         it "returns variants in stock or on demand, but not those that are neither" do
-          Variant.where(is_master: false).in_stock.sort.should == [@v_in_stock, @v_on_demand].sort
+          Variant.where(is_master: false).in_stock.should match_array [@v_in_stock, @v_on_demand]
         end
       end
 

@@ -13,7 +13,8 @@ module Api
     end
 
     def accessible
-      @enterprises = Enterprise.ransack(params[:q]).result.accessible_by(current_api_user)
+      permitted = OpenFoodNetwork::Permissions.new(current_api_user).order_cycle_enterprises
+      @enterprises = permitted.ransack(params[:q]).result
       render params[:template] || :bulk_index
     end
 
