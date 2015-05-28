@@ -132,25 +132,19 @@
       .small-12.medium-10.medium-offset-1.columns
         %h2.text-center Here's the detail.
         .row
-          .small-12.medium-6.columns
-            %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
-            %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
-            %ul.text-small
-              %li A bullet point
-              %li Another point
-              %li A third point goes here
-            %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
-          .small-12.medium-6.columns
-            %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
-            %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
-            %ul.text-small
-              %li A bullet point
-              %li Another point
-              %li A third point goes here
-            %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
+          .small-12.medium-4.columns
+            %h4 Join a marketplace of independent online food stores
+            %p Create an online shop front and join the network of online farmers markets on the Open Food Network. Set up a Producer Shop and sell your products direct to customers, or create a Food Hub and sell products from multiple producers.
+
+            %h4 Connect with a new source of customers
+            %p Gain access to the growing crowd of conscientious buyers on the Open Food Network, all looking to make more ethical and sustainable choices when purchasing food.
+            %h4 Manage your business online
+            %p The Open Food Network provides online tools to help with the day-to-day running of your business. Manage your product listing and stock levels. Create, receive and manage orders from your buyers, and organise payments online. Generate invoices for orders and export them to your accounting software, and access a range of reports.
+            %h4 Start with a simple listing on our directory
+            %p Create a profile on the Open Food Network and gain exposure to a new marketplace of potential buyers. Tell your story in words and images, provide your contact details, and drive connections to your social and online presence.
+            %p Access new wholesale opportunities by connecting with food hubs in your region who can sell and distribute your products to buyers on the Open Food Network.
+
+          .small-12.medium-8.columns
+            = render 'shared/enterprise_type_flowchart', type: 'producers'
 
 = render partial: "shared/footer"
