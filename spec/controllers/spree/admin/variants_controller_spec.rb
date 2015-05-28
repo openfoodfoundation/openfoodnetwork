@@ -30,7 +30,7 @@ module Spree
 
         it "does not filter when no distributor or order cycle is specified" do
           spree_get :search, q: 'Prod'
-          assigns(:variants).sort.should == [p1.master, p2.master].sort
+          assigns(:variants).should match_array [p1.master, p2.master]
         end
       end
     end

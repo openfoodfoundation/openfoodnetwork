@@ -32,7 +32,8 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
-
+        unit_value:   { name: "Weight/Volume", visible: false }
+        price:        { name: "Price",        visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
       authorise_api_reponse = ""
@@ -62,7 +63,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
 
     $scope.fetchOrders = ->
       $scope.loading = true
-      dataFetcher("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=#{$scope.startDate};q[completed_at_lt]=#{$scope.endDate}").then (data) ->
+      dataFetcher("/admin/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=#{$scope.startDate};q[completed_at_lt]=#{$scope.endDate}").then (data) ->
         $scope.resetOrders data
         $scope.loading = false
 
@@ -164,6 +165,20 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.supplierFilter = $scope.suppliers[0].id
       $scope.orderCycleFilter = $scope.orderCycles[0].id
       $scope.quickSearch = ""
+
+    $scope.weightAdjustedPrice = (lineItem, oldValue) ->
+      if oldValue <= 0
+        oldValue = lineItem.units_variant.unit_value
+      if lineItem.unit_value <= 0
+        lineItem.unit_value = lineItem.units_variant.unit_value
+      lineItem.price = lineItem.price * lineItem.unit_value / oldValue
+      #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
+
+    $scope.unitValueLessThanZero = (lineItem) ->
+      if lineItem.units_variant.unit_value <= 0
+        true
+      else
+        false
 
     $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
       unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)

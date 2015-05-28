@@ -354,7 +354,7 @@ feature %q{
     page.should have_selector 'td.distributors', text: 'My distributor'
 
     # And my coordinator fees should have been configured
-    OrderCycle.last.coordinator_fee_ids.sort.should == [coordinator_fee1.id, coordinator_fee2.id].sort
+    OrderCycle.last.coordinator_fee_ids.should match_array [coordinator_fee1.id, coordinator_fee2.id]
 
     # And my supplier fees should have been configured
     OrderCycle.last.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
@@ -364,7 +364,7 @@ feature %q{
 
     # And it should have some variants selected
     selected_initial_variants = initial_variants.take initial_variants.size - 1
-    OrderCycle.last.variants.map(&:id).sort.should == (selected_initial_variants.map(&:id) + [v1.id, v2.id]).sort
+    OrderCycle.last.variants.map(&:id).should match_array (selected_initial_variants.map(&:id) + [v1.id, v2.id])
 
     # And the collection details should have been updated
     OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
@@ -568,9 +568,9 @@ feature %q{
 
         flash_message.should == "Your order cycle has been created."
         order_cycle = OrderCycle.find_by_name('My order cycle')
-        order_cycle.suppliers.sort.should == [supplier_managed, supplier_permitted].sort
+        order_cycle.suppliers.should match_array [supplier_managed, supplier_permitted]
         order_cycle.coordinator.should == distributor_managed
-        order_cycle.distributors.sort.should == [distributor_managed, distributor_permitted].sort
+        order_cycle.distributors.should match_array [distributor_managed, distributor_permitted]
       end
 
       scenario "editing an order cycle we can see (and for now, edit) all exchanges in the order cycle" do
@@ -592,9 +592,9 @@ feature %q{
         page.should have_content "Your order cycle has been updated."
 
         oc.reload
-        oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
+        oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
         oc.coordinator.should == distributor_managed
-        oc.distributors.sort.should == [distributor_managed, distributor_permitted, distributor_unmanaged].sort
+        oc.distributors.should match_array [distributor_managed, distributor_permitted, distributor_unmanaged]
       end
 
       scenario "editing an order cycle" do
@@ -683,9 +683,9 @@ feature %q{
         page.should have_content "Your order cycle has been updated."
 
         oc.reload
-        oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
+        oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
         oc.coordinator.should == distributor_managed
-        oc.distributors.sort.should == [distributor_managed, distributor_permitted, distributor_unmanaged].sort
+        oc.distributors.should match_array [distributor_managed, distributor_permitted, distributor_unmanaged]
       end
     end
 
@@ -736,9 +736,9 @@ feature %q{
         page.should have_content "Your order cycle has been updated."
 
         oc.reload
-        oc.suppliers.sort.should == [supplier_managed, supplier_permitted, supplier_unmanaged].sort
+        oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
         oc.coordinator.should == distributor_managed
-        oc.distributors.sort.should == [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged].sort
+        oc.distributors.should match_array [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged]
       end
     end
   end

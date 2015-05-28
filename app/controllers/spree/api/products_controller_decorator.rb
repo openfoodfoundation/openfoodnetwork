@@ -11,7 +11,7 @@ Spree::Api::ProductsController.class_eval do
 
   # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
   def bulk_products
-    @products = OpenFoodNetwork::Permissions.new(current_api_user).managed_products.
+    @products = OpenFoodNetwork::Permissions.new(current_api_user).editable_products.
       merge(product_scope).
       order('created_at DESC').
       ransack(params[:q]).result.

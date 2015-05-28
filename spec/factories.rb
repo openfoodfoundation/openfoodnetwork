@@ -97,7 +97,6 @@ FactoryGirl.define do
   factory :enterprise, :class => Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
-    sequence(:permalink) { |n| "enterprise#{n}" }
     sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
@@ -135,6 +134,7 @@ FactoryGirl.define do
 
   factory :enterprise_group, :class => EnterpriseGroup do
     name 'Enterprise group'
+    sequence(:permalink) { |n| "group#{n}" }
     description 'this is a group'
     on_front_page false
     address { FactoryGirl.build(:address) }
@@ -181,6 +181,10 @@ FactoryGirl.define do
       FactoryGirl.create(:line_item, :order => order, :product => p)
       order.reload
     end
+  end
+
+  factory :order_with_distributor, :parent => :order do
+    distributor { create(:distributor_enterprise) }
   end
 
   factory :zone_with_member, :parent => :zone do

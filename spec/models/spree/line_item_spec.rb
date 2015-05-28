@@ -22,7 +22,7 @@ module Spree
       it "finds line items for products supplied by one of a number of enterprises" do
         LineItem.supplied_by_any([s1]).should == [li1]
         LineItem.supplied_by_any([s2]).should == [li2]
-        LineItem.supplied_by_any([s1, s2]).sort.should == [li1, li2].sort
+        LineItem.supplied_by_any([s1, s2]).should match_array [li1, li2]
       end
     end
 
