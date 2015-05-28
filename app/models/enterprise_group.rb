@@ -15,6 +15,8 @@ class EnterpriseGroup < ActiveRecord::Base
 
   validates :name, presence: true
   validates :description, presence: true
+
+  before_validation :sanitize_permalink
   validates :permalink, uniqueness: true, presence: true
 
   attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
@@ -73,4 +75,27 @@ class EnterpriseGroup < ActiveRecord::Base
     address.zipcode.sub!(/^undefined$/, '')
   end
 
+  private
+
+  def self.find_available_value(existing, requested)
+    return requested unless existing.include?(requested)
+    used_indices = existing.map do |p|
+      p.slice!(/^#{requested}/)
+      p.match(/^\d+$/).to_s.to_i
+    end
+    options = (1..used_indices.length + 1).to_a - used_indices
+    requested + options.first.to_s
+  end
+
+  def find_available_permalink(requested)
+    existing = self.class.where(id: !id).where("permalink LIKE ?", "#{requested}%").pluck(:permalink)
+    self.class.find_available_value(existing, requested)
+  end
+
+  def sanitize_permalink
+    if permalink.blank? || permalink_changed?
+      requested = permalink.presence || permalink_was.presence || name.presence || 'group'
+      self.permalink = find_available_permalink(requested.parameterize)
+    end
+  end
 end

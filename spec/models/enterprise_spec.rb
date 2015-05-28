@@ -845,6 +845,11 @@ describe Enterprise do
         expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
       end
 
+      it "finds available permalink similar to existing" do
+        create(:enterprise, permalink: "permalink2xxx")
+        expect(Enterprise.find_available_permalink("permalink2")).to eq "permalink2"
+      end
+
       it "finds gaps in the indices of existing permalinks" do
         create(:enterprise, permalink: "permalink3")
         expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
