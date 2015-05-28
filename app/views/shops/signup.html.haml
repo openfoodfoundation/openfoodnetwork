@@ -12,10 +12,10 @@
   .pane
     .row
       .small-12.medium-10.medium-offset-1.columns.text-center
-        %h2 Membership types and fees.
-        %p.text-big
-          / If there is a time-sensitive offer you can write it here, e.g.
-          Sign up before 30th June for an extra month free!
+        %h2 Enterprise Accounts
+        -# %p.text-big
+        -#   If there is a time-sensitive offer you can write it here, e.g.
+        -#   Sign up before 30th June for an extra month free!
         %br
         %table.signup-table.hubs-table{cellpadding: "0", cellspacing: "0"}
           %thead
@@ -29,9 +29,9 @@
           %tr
             %td
               %p
-                %strong Profile
-                %br
-                %span.text-small Get a profile on the Open Food Network - including a listing on the Shops page and a pin on the OFN Map. These help people to find and connect with you.
+                %strong Basic
+                %p
+                  %span.text-small Get a profile on the Open Food Network - including a listing on the Shops page and a pin on the OFN Map. These help people to find and connect with you.
             %td.text-center
               %i.ofn-i_003-check.text-big
             %td.text-center
@@ -39,23 +39,13 @@
           %tr
             %td
               %p
-                %strong Distribute
-                %br
-                %span.text-small Act as a distributor or food middle-man on OFN, enabling you to work with logistics of bringing existing products and producers to other OFN shopfronts.
-            %td.text-center
-              %i.ofn-i_003-check.text-big
-            %td.text-center
-              %i.ofn-i_003-check.text-big
-          %tr
-            %td
-              %p
-                %strong Shop
+                %strong Plus
               %p.text-small Get a shopfront on OFN to sell food from multiple suppliers &amp; producers.
               %p.text-small Basic support included:
               %ul.small
                 %li User manual
                 %li Post queries to discussion forum/via contact form
-                %li Report bugs/suggestions via bugherd
+                %li Report bugs/suggestions
                 %li Regular release notes – what's new
             %td.text-center
             %td.text-center
@@ -113,17 +103,15 @@
     .row
       .small-12.medium-10.medium-offset-1.columns
         %h2.text-center Here's the detail.
-        .row
-          .small-12.medium-4.columns
-            %h4 Join a marketplace of independent online food stores
-            %p Create a hub profile on the Open Food Network and gain exposure to a new marketplace of potential buyers. Tell your story in words and images, provide your contact details, and drive connections to your social and online presence.   Set up a “Hub” shop and sell products from multiple producers.
-            %h4 Connect with a new source of customers and suppliers
-            %p Gain access to the growing crowd of conscientious buyers on the Open Food Network, all looking to make more ethical and sustainable choices when purchasing food.
-            %p Access new supply opportunities by connecting with producers in your region, sell their products in your shop.
-            %h4 Manage your business online
-            %p The Open Food Network provides online tools to help with the day-to-day running of your business. Manage your product listing and stock levels. Create, receive and manage orders from your buyers, and organise payments online. Generate invoices for orders and export them to your accounting software, and access a range of reports.
+        = render 'shared/enterprise_type_flowchart', type: 'hubs'
 
-          .small-12.medium-8.columns
-            = render 'shared/enterprise_type_flowchart', type: 'hubs'
+        %h4 Join a marketplace of independent online food stores
+        %p Create a hub profile on the Open Food Network and gain exposure to a new marketplace of potential buyers. Tell your story in words and images, provide your contact details, and drive connections to your social and online presence.   Set up a “Hub” shop and sell products from multiple producers.
+        %h4 Connect with a new source of customers and suppliers
+        %p Gain access to the growing crowd of conscientious buyers on the Open Food Network, all looking to make more ethical and sustainable choices when purchasing food.
+        %p Access new supply opportunities by connecting with producers in your region, sell their products in your shop.
+        %h4 Manage your business online
+        %p The Open Food Network provides online tools to help with the day-to-day running of your business. Manage your product listing and stock levels. Create, receive and manage orders from your buyers, and organise payments online. Generate invoices for orders and export them to your accounting software, and access a range of reports.
+
 
 = render partial: "shared/footer"

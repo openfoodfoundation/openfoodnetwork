@@ -1,15 +1,16 @@
-= image_tag "enterprise-type.png"
-%br
-%br
-%br
-%br
-%br
-%p{style: "text-align: center;"}
-  %a{href: "http://global.openfoodnetwork.org/platform/features/"} More Features
-  \|
-  %a{href: "http://global.openfoodnetwork.org/platform/user-guide/"} User Guide
-  \|
-  - if type == 'hubs'
-    %a{href: "http://global.openfoodnetwork.org/platform/user-guide/faqs/hub-faqs/"} Hub FAQs
-  - elsif type == 'producers'
-    %a{href: "http://global.openfoodnetwork.org/platform/user-guide/faqs/producer-faqs/"} Producer FAQs
+.enterprise-type-flowchart
+  = image_tag "enterprise-type.png"
+  %br
+  %br
+  %br
+  %br
+  %br
+  %p{style: "text-align: center;"}
+    %a{href: "http://global.openfoodnetwork.org/platform/features/"} More Features
+    \|
+    %a{href: "http://global.openfoodnetwork.org/platform/user-guide/"} User Guide
+    \|
+    - if type == 'hubs'
+      %a{href: "http://global.openfoodnetwork.org/platform/user-guide/faqs/hub-faqs/"} Hub FAQs
+    - elsif type == 'producers'
+      %a{href: "http://global.openfoodnetwork.org/platform/user-guide/faqs/producer-faqs/"} Producer FAQs
