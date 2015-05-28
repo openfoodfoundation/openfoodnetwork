@@ -513,7 +513,7 @@ module Spree
         ot3 = create(:option_type, name: 'unit_items', presentation: 'Items')
         ot4 = create(:option_type, name: 'foo_unit_bar', presentation: 'Foo')
 
-        Spree::Product.all_variant_unit_option_types.sort.should == [ot1, ot2, ot3].sort
+        Spree::Product.all_variant_unit_option_types.should match_array [ot1, ot2, ot3]
       end
     end
 

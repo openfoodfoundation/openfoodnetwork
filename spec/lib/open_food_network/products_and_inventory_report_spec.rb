@@ -79,7 +79,7 @@ module OpenFoodNetwork
           variant_1 = product1.variants.first
           variant_2 = create(:variant, product: product1)
 
-          subject.child_variants.sort.should == [variant_1, variant_2].sort
+          subject.child_variants.should match_array [variant_1, variant_2]
         end
 
         it "should only return variants managed by the user" do
@@ -106,13 +106,13 @@ module OpenFoodNetwork
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
 
-          subject.filter(Spree::Variant.scoped).sort.should == [product1.master, product1.variants.first, product2.master, product2.variants.first].sort
+          subject.filter(Spree::Variant.scoped).should match_array [product1.master, product1.variants.first, product2.master, product2.variants.first]
         end
         it "should filter deleted products" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
           product2.delete
-          subject.filter(Spree::Variant.scoped).sort.should == [product1.master, product1.variants.first].sort
+          subject.filter(Spree::Variant.scoped).should match_array [product1.master, product1.variants.first]
         end
         describe "based on report type" do
           it "returns only variants on hand" do

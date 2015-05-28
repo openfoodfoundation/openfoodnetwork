@@ -170,17 +170,17 @@ describe Spree::Admin::ReportsController do
 
     it "should build distributors for the current user" do
       spree_get :products_and_inventory
-      assigns(:distributors).sort.should == [c1, c2, d1, d2, d3].sort
+      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
     end
 
     it "builds suppliers for the current user" do
       spree_get :products_and_inventory
-      assigns(:suppliers).sort.should == [s1, s2, s3].sort
+      assigns(:suppliers).should match_array [s1, s2, s3]
     end
 
     it "builds order cycles for the current user" do
       spree_get :products_and_inventory
-      assigns(:order_cycles).sort.should == [ocB, ocA].sort
+      assigns(:order_cycles).should match_array [ocB, ocA]
     end
 
     it "assigns report types" do
@@ -211,17 +211,17 @@ describe Spree::Admin::ReportsController do
 
     it "should build distributors for the current user" do
       spree_get :customers
-      assigns(:distributors).sort.should == [c1, c2, d1, d2, d3].sort
+      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
     end
 
     it "builds suppliers for the current user" do
       spree_get :customers
-      assigns(:suppliers).sort.should == [s1, s2, s3].sort
+      assigns(:suppliers).should match_array [s1, s2, s3]
     end
 
     it "builds order cycles for the current user" do
       spree_get :customers
-      assigns(:order_cycles).sort.should == [ocB, ocA].sort
+      assigns(:order_cycles).should match_array [ocB, ocA]
     end
 
     it "assigns report types" do
