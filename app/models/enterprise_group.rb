@@ -75,6 +75,10 @@ class EnterpriseGroup < ActiveRecord::Base
     address.zipcode.sub!(/^undefined$/, '')
   end
 
+  def to_param
+    permalink
+  end
+
   private
 
   def self.find_available_value(existing, requested)
