@@ -37,7 +37,7 @@ describe OrderCycle do
     oc_undated = create(:simple_order_cycle, orders_open_at: nil, orders_close_at: nil)
 
     OrderCycle.active.should == [oc_active]
-    OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
+    OrderCycle.inactive.should match_array [oc_not_yet_open, oc_already_closed]
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
     OrderCycle.undated.should == [oc_undated]
@@ -153,7 +153,7 @@ describe OrderCycle do
     e2 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
-    oc.suppliers.sort.should == [e1.sender, e2.sender].sort
+    oc.suppliers.should match_array [e1.sender, e2.sender]
   end
 
   it "reports its distributors" do
@@ -164,7 +164,7 @@ describe OrderCycle do
     e2 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
-    oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
+    oc.distributors.should match_array [e1.receiver, e2.receiver]
   end
 
   it "checks for existance of distributors" do
@@ -215,11 +215,11 @@ describe OrderCycle do
     end
 
     it "reports on the variants exchanged" do
-      @oc.variants.sort.should == [@p0.master, @p1.master, @p2.master, @p2_v].sort
+      @oc.variants.should match_array [@p0.master, @p1.master, @p2.master, @p2_v]
     end
 
     it "reports on the variants distributed" do
-      @oc.distributed_variants.sort.should == [@p1.master, @p2.master, @p2_v].sort
+      @oc.distributed_variants.should match_array [@p1.master, @p2.master, @p2_v]
     end
 
     it "reports on the variants distributed by a particular distributor" do
@@ -231,7 +231,7 @@ describe OrderCycle do
     end
 
     it "reports on the products exchanged" do
-      @oc.products.sort.should == [@p0, @p1, @p2]
+      @oc.products.should match_array [@p0, @p1, @p2]
     end
   end
 
@@ -313,7 +313,7 @@ describe OrderCycle do
         @oc.pickup_time_for(@d2).should == '2-8pm Friday'
       end
     end
-    
+
     describe "finding pickup instructions for a distributor" do
       it "returns the pickup instructions" do
         @oc.pickup_instructions_for(@d1).should == "Come get it!"
@@ -375,7 +375,7 @@ describe OrderCycle do
 
     occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
-    
+
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges
     occ.exchanges.map(&:to_h).all? do |ex|
@@ -402,7 +402,7 @@ describe OrderCycle do
   describe "finding order cycles opening in the future" do
     it "should give the soonest opening order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
       OrderCycle.first_opening_for(distributor).should == oc
     end
 
@@ -411,12 +411,12 @@ describe OrderCycle do
       OrderCycle.first_opening_for(distributor).should == nil
     end
   end
-  
+
   describe "finding open order cycles" do
     it "should give the soonest closing order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now) 
-      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now) 
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now)
+      oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
       OrderCycle.first_closing_for(distributor).should == oc
     end
   end
