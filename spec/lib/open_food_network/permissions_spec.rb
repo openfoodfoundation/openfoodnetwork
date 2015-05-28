@@ -47,7 +47,7 @@ module OpenFoodNetwork
           expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
           expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3) }
           expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) { Enterprise.where(id: e4) }
-          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to eq [e1, e3, e4]
+          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to match_array [e1, e3, e4]
         end
       end
     end
