@@ -86,21 +86,9 @@
         %br
         .row
           .small-12.medium-6.columns
-            .case-study
-              %img.case-study-img{src: "/assets/case-studies/bfc_logo_square.png", width: "100", height: "100", title: "Bondi Food Collective"}
-              %h4 Bondi Food Collective
-              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
-              %a{href: "http://www.google.com", target: "_blank"}
-                %strong Read more
-                %i.ofn-i_054-point-right
+            = render 'shared/case_study', img_src: "/assets/case-studies/South_East_Food_Hub.png", title: "South East Food Group", description: "the South East Food Hub also has a group page to list all its participating producers and hubs (food clubs) in one place on the Open Food Network.", link: "https://openfoodnetwork.org.au/groups/6"
           .small-12.medium-6.columns
-            .case-study
-              %img.case-study-img{src: "/assets/case-studies/bonnie-beef-growers.png", width: "100", height: "100", title: "Bonnie Beef Growers"}
-              %h4 Bonnie Beef Growers
-              %p.text-small Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus, nunc sed sollicitudin egestas, elit metus maximus nunc, non efficitur nunc massa vitae est.
-              %a{href: "http://www.google.com", target: "_blank"}
-                %strong Read more
-                %i.ofn-i_054-point-right
+            = render 'shared/case_study', img_src: "/assets/case-studies/mt-alexander.png", title: "Mt Alexander Local Produce Network", description: "This community organisation promotes local sustainable food production and consumption through its group page. Listing sources of local sustenance, direct from the grower, or through a range local shops and markets.", link: "https://openfoodnetwork.org.au/groups/10"
 
   .pane#cta
     .row
