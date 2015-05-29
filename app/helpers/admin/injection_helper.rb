@@ -50,6 +50,10 @@ module Admin
       admin_inject_json_ams_array "ofn.admin", "products", @products, Api::Admin::ProductSerializer
     end
 
+    def admin_inject_tax_categories
+      admin_inject_json_ams_array "ofn.admin", "tax_categories", @tax_categories, Api::Admin::TaxCategorySerializer
+    end
+
     def admin_inject_taxons
       admin_inject_json_ams_array "admin.taxons", "taxons", @taxons, Api::Admin::TaxonSerializer
     end
