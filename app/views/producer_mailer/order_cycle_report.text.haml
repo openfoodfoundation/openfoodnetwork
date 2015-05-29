@@ -1,6 +1,10 @@
 Dear #{@producer.name},
 \
-We now have all the consumer orders for the food drop on #{@distribution_date}.
+We now have all the consumer orders for next food drop. Please drop off your delivery at #{@receival_time}.
+
+- if @receival_instructions
+  Extra instructions: #{@receival_instructions}
+
 Please deliver to #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode} during the regular delivery time. If this is not convenient then please call #{@coordinator.phone}.
 
 Note: If you have to arrange a different delivery day and time, it is requested that you do not come on site during drop off/pick up times.

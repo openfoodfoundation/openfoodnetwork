@@ -6,6 +6,8 @@ class ProducerMailer < Spree::BaseMailer
     @coordinator = order_cycle.coordinator
     @order_cycle = order_cycle
     @line_items = aggregated_line_items_from(@order_cycle, @producer)
+    @receival_time = @order_cycle.receival_time_for @producer
+    @receival_instructions = @order_cycle.receival_instructions_for @producer
 
     subject = "[#{Spree::Config.site_name}] Order cycle report"
 

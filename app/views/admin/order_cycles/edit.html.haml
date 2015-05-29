@@ -1,6 +1,7 @@
-= content_for :page_actions do
-  %li
-    = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers'
+- if can? :notify_producers, @order_cycle
+  = content_for :page_actions do
+    %li
+      = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => 'Are you sure?'
 
 
 %h1 Edit Order Cycle
