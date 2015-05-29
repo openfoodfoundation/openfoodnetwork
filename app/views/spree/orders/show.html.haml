@@ -9,7 +9,7 @@
       - else
         = @order.distributor.next_collection_at
 
-  = render "shopping_shared/details"
+  = render "shopping_shared/details" if current_distributor.present?
 
   %fieldset#order_summary{"data-hook" => ""}
     .row
