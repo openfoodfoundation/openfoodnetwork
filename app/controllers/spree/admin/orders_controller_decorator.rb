@@ -23,6 +23,13 @@ Spree::Admin::OrdersController.class_eval do
         distributed_by_user(spree_current_user).
         page(params[:page]).
         per(params[:per_page] || Spree::Config[:orders_per_page])
+      # Filter orders by distributor
+      if params[:distributor_ids]
+        @orders = @orders.where(distributor_id: params[:distributor_ids])
+      end
+      if params[:order_cycle_ids]
+        @orders = @orders.where(order_cycle_id: params[:order_cycle_ids])
+      end
     } } }
 
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
