@@ -117,9 +117,8 @@ feature %q{
       end
     end
 
-    scenario "creating a new product" do
+    scenario "creating a new product", js: true do
       Spree::Config.products_require_tax_category = false
-
       click_link 'Products'
       click_link 'New Product'
 
@@ -128,6 +127,8 @@ feature %q{
 
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
+      select 'Weight (g)', from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value_with_description', with: '500'
       select taxon.name, from: "product_primary_taxon_id"
       select 'None', from: "product_tax_category_id"
 

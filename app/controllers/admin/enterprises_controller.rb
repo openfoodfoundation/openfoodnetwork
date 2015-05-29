@@ -3,6 +3,7 @@ module Admin
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
+    before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
@@ -125,6 +126,10 @@ module Admin
       @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
       @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
+    end
+
+    def load_groups
+      @groups = EnterpriseGroup.managed_by(spree_current_user) | @enterprise.groups
     end
 
     def load_taxons

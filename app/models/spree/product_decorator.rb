@@ -23,17 +23,18 @@ Spree::Product.class_eval do
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
   attr_accessible :inherits_properties, :sku
 
-  validates_associated :master, message: "^Price and On Hand must be valid"
+  # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
   validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
 
-  validates_presence_of :variant_unit, if: :has_variants?
+  validates_presence_of :variant_unit
   validates_presence_of :variant_unit_scale,
                         if: -> p { %w(weight volume).include? p.variant_unit }
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
+  after_save :ensure_standard_variant
   after_initialize :set_available_on_to_now, :if => :new_record?
   after_save :update_units
   after_touch :touch_distributors
@@ -209,4 +210,31 @@ Spree::Product.class_eval do
     Spree::OptionType.where('name LIKE ?', 'unit_%%')
   end
 
+  def ensure_standard_variant
+    if master.valid? && variants.empty?
+      variant = self.master.dup
+      variant.product = self
+      variant.is_master = false
+      self.variants << variant
+    end
+  end
+
+  # Override Spree's old save_master method and replace it with the most recent method from spree repository
+  # This fixes any problems arising from failing master saves, without the need for a validates_associated on
+  # master, while giving us more specific errors as to why saving failed
+  def save_master
+    begin
+      if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
+        master.save!
+      end
+
+    # If the master cannot be saved, the Product object will get its errors
+    # and will be destroyed
+    rescue ActiveRecord::RecordInvalid
+      master.errors.each do |att, error|
+        self.errors.add(att, error)
+      end
+      raise
+    end
+  end
 end

@@ -1,5 +1,5 @@
 collection @groups
-attributes :id, :name, :position, :description, :long_description, :email, :website, :facebook, :instagram, :linkedin, :twitter
+attributes :id, :permalink, :name, :position, :description, :long_description, :email, :website, :facebook, :instagram, :linkedin, :twitter
 
 child enterprises: :enterprises do
   attributes :id

@@ -13,6 +13,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
     let(:oc2) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now) }
     let(:product) { create(:simple_product, supplier: supplier) }
+    let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor: distributor) }
 
     before do
@@ -33,7 +34,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     it "shows the producers for a distributor" do
       exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
-      exchange.variants << product.master
+      exchange.variants << variant
 
       visit shop_path
       find("#tab_producers a").click
@@ -64,9 +65,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         it "shows products after selecting an order cycle" do
-          product.master.update_attribute(:display_name, "kitten")
-          product.master.update_attribute(:display_as, "rabbit")
-          exchange1.variants << product.master ## add product to exchange
+          variant.update_attribute(:display_name, "kitten")
+          variant.update_attribute(:display_as, "rabbit")
+          exchange1.variants << variant ## add product to exchange
           visit shop_path
           page.should_not have_content product.name
           Spree::Order.last.order_cycle.should == nil
@@ -76,8 +77,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_content "Next order closing in 2 days"
           Spree::Order.last.order_cycle.should == oc1
           page.should have_content product.name
-          page.should have_content product.master.display_name
-          page.should have_content product.master.display_as
+          page.should have_content variant.display_name
+          page.should have_content variant.display_as
 
           open_product_modal product
           modal_should_be_open_for product
@@ -92,15 +93,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       before do
         exchange.update_attribute :pickup_time, "frogs"
-        exchange.variants << product.master
+        exchange.variants << variant
         exchange.variants << variant1
         exchange.variants << variant2
         order.order_cycle = oc1
-      end
-
-      it "should not show quantity field for product with variants" do
-        visit shop_path
-        page.should_not have_selector("#variants_#{product.master.id}", visible: true)
       end
 
       it "uses the adjusted price" do
@@ -126,37 +122,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
     describe "group buy products" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product, group_buy: true, on_hand: 15) }
+      let(:variant) { product.variants.first }
       let(:product2) { create(:simple_product, group_buy: false) }
-
-      describe "without variants" do
-        before do
-          add_product_to_order_cycle(exchange, product)
-          set_order_cycle(order, oc1)
-          visit shop_path
-        end
-
-        it "should save group buy data to ze cart" do
-          fill_in "variants[#{product.master.id}]", with: 5
-          fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 9
-
-          wait_until { !cart_dirty }
-
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          li.max_quantity.should == 9
-          li.quantity.should == 5
-        end
-
-        # TODO move to controller test
-        pending "adding a product with a max quantity less than quantity results in max_quantity==quantity" do
-          fill_in "variants[#{product.master.id}]", with: 5
-          fill_in "variant_attributes[#{product.master.id}][max_quantity]", with: 1
-          add_to_cart
-          page.should have_content product.name
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          li.max_quantity.should == 5
-          li.quantity.should == 5
-        end
-      end
 
       describe "with variants on the product" do
         let(:variant) { create(:variant, product: product, on_hand: 10 ) }
