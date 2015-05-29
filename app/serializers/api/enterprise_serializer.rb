@@ -3,7 +3,6 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   Api::IdSerializer
 
   def serializable_hash
-
     cached_serializer_hash.merge uncached_serializer_hash
   end
 
@@ -51,11 +50,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
 
   def taxons
-    options[:data].distributed_taxons[object.id]
+    ids_to_objs options[:data].distributed_taxons[object.id]
   end
 
   def supplied_taxons
-    options[:data].supplied_taxons[object.id]
+    ids_to_objs options[:data].supplied_taxons[object.id]
   end
 
   def pickup
@@ -90,12 +89,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def producers
     relatives = options[:data].relatives[object.id]
-    relatives ? relatives[:producers] : []
+    relatives ? ids_to_objs(relatives[:producers]) : []
   end
 
   def hubs
     relatives = options[:data].relatives[object.id]
-    relatives ? relatives[:distributors] : []
+    relatives ? ids_to_objs(relatives[:distributors]) : []
   end
 
   # Map svg icons.
@@ -134,5 +133,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       :producer => "ofn-i_059-producer",
     }
     icon_fonts[object.category]
+  end
+
+
+  private
+
+  def ids_to_objs(ids)
+    ids.andand.map { |id| {id: id} }
   end
 end
