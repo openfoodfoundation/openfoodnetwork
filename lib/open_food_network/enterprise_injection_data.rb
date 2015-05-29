@@ -13,7 +13,7 @@ module OpenFoodNetwork
     end
 
     def relatives
-      @relatives ||= EnterpriseRelationship.relatives
+      @relatives ||= EnterpriseRelationship.relatives(true)
     end
 
     def supplied_taxons
