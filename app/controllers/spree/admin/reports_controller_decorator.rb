@@ -323,7 +323,7 @@ Spree::Admin::ReportsController.class_eval do
         sort_by: proc { |payment_state| payment_state } },
         { group_by: proc { |payment| payment.order.distributor },
         sort_by: proc { |distributor| distributor.name } },
-        { group_by: proc { |payment| payment.payment_method },
+        { group_by: proc { |payment| Spree::PaymentMethod.unscoped { payment.payment_method } },
         sort_by: proc { |method| method.name } } ]
 
     when "itemised_payment_totals"
@@ -406,27 +406,34 @@ Spree::Admin::ReportsController.class_eval do
     end
     params[:q][:meta_sort] ||= "completed_at.desc"
 
-    # -- Search
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-    orders = @search.result
-    @line_items = orders.map do |o|
-      lis = o.line_items.managed_by(spree_current_user)
-      lis = lis.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
-      lis
-    end.flatten
-    #payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
+    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
 
-    # -- Prepare form options
-    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+    # -- Search
+
+    @search = Spree::Order.complete.not_state(:canceled).search(params[:q])
+    orders = permissions.visible_orders.merge(@search.result)
+
+    @line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
+    @line_items = @line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
+
+    line_items_with_hidden_details = @line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
+    @line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
+      # TODO We should really be hiding customer code here too, but until we
+      # have an actual association between order and customer, it's a bit tricky
+      line_item.order.bill_address.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+      line_item.order.ship_address.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+      line_item.order.assign_attributes(email: "HIDDEN")
+    end
 
     # My distributors and any distributors distributing products I supply
-    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
 
     # My suppliers and any suppliers supplying products I distribute
-    @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+    @order_cycles = OrderCycle.active_or_complete.
+    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
 

@@ -50,7 +50,7 @@ feature %q{
     eg.name.should == 'EGEGEG'
     eg.description.should == 'This is a description'
     eg.on_front_page.should be_true
-    eg.enterprises.sort.should == [e1, e2].sort
+    eg.enterprises.should match_array [e1, e2]
   end
 
   scenario "editing an enterprise group" do

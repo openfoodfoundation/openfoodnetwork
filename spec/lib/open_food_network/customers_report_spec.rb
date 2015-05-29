@@ -3,7 +3,7 @@ require 'spec_helper'
 module OpenFoodNetwork
   describe CustomersReport do
     context "as a site admin" do
-      let(:user) do 
+      let(:user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
         user
@@ -44,14 +44,14 @@ module OpenFoodNetwork
         it "builds a table from a list of variants" do
           a = create(:address)
           d = create(:distributor_enterprise)
-          o = create(:order, distributor: d, bill_address: a) 
+          o = create(:order, distributor: d, bill_address: a)
           o.shipping_method = create(:shipping_method)
 
           subject.stub(:orders).and_return [o]
           subject.table.should == [[
-            a.firstname, a.lastname, 
-            [a.address1, a.address2, a.city].join(" "), 
-            o.email, a.phone, d.name, 
+            a.firstname, a.lastname,
+            [a.address1, a.address2, a.city].join(" "),
+            o.email, a.phone, d.name,
             [d.address.address1, d.address.address2, d.address.city].join(" "),
             o.shipping_method.name
           ]]
@@ -74,7 +74,7 @@ module OpenFoodNetwork
     end
 
     context "as an enterprise user" do
-      let(:user) do 
+      let(:user) do
         user = create(:user)
         user.spree_roles = []
         user.save!
@@ -131,7 +131,7 @@ module OpenFoodNetwork
           order2.line_items << create(:line_item, product: product2)
 
           subject.stub(:params).and_return(supplier_id: supplier.id)
-          subject.filter(orders).sort.should == [order1]
+          subject.filter(orders).should == [order1]
         end
 
         it "filters to a specific distributor" do
@@ -141,7 +141,7 @@ module OpenFoodNetwork
           order2 = create(:order, distributor: d2)
 
           subject.stub(:params).and_return(distributor_id: d1.id)
-          subject.filter(orders).sort.should == [order1]
+          subject.filter(orders).should == [order1]
         end
 
         it "filters to a specific cycle" do
@@ -151,7 +151,7 @@ module OpenFoodNetwork
           order2 = create(:order, order_cycle: oc2)
 
           subject.stub(:params).and_return(order_cycle_id: oc1.id)
-          subject.filter(orders).sort.should == [order1]
+          subject.filter(orders).should == [order1]
         end
       end
     end

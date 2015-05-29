@@ -5,15 +5,15 @@
       %span.required *
     .eight.columns.omega
       = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
-.row
-  .alpha.eleven.columns
-    .three.columns.alpha
-      = f.label :group_ids, 'Groups'
-      .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
-        %a What's this?
-
-    .eight.columns.omega
-      = f.collection_select :group_ids, EnterpriseGroup.all, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+- if @groups.present?
+  .row
+    .alpha.eleven.columns
+      .three.columns.alpha
+        = f.label :group_ids, 'Groups'
+        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+          %a What's this?
+      .eight.columns.omega
+        = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
 
 .row
   .three.columns.alpha

@@ -112,10 +112,10 @@ describe ShopController do
         let!(:p4) { create(:product, name: "jkl", primary_taxon_id: t1.id) }
 
         before do
-          exchange.variants << p1.master
-          exchange.variants << p2.master
-          exchange.variants << p3.master
-          exchange.variants << p4.master
+          exchange.variants << p1.variants.first
+          exchange.variants << p2.variants.first
+          exchange.variants << p3.variants.first
+          exchange.variants << p4.variants.first
         end
 
         it "sorts products by the distributor's preferred taxon list" do
@@ -136,19 +136,20 @@ describe ShopController do
       context "RABL tests" do
         render_views
         let(:product) { create(:product) }
+        let(:variant) { product.variants.first }
 
         before do
-          exchange.variants << product.master
+          exchange.variants << variant
           controller.stub(:current_order_cycle).and_return order_cycle
         end
+
         it "only returns products for the current order cycle" do
           xhr :get, :products
           response.body.should have_content product.name
         end
 
         it "doesn't return products not in stock" do
-          product.update_attribute(:on_demand, false)
-          product.master.update_attribute(:count_on_hand, 0)
+          variant.update_attribute(:count_on_hand, 0)
           xhr :get, :products
           response.body.should_not have_content product.name
         end
