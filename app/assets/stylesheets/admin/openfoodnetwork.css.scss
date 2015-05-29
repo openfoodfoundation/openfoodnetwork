@@ -249,3 +249,18 @@ span.required {
   color: red;
   font-size: 110%;
 }
+
+table td.actions {
+  .icon-trash, .icon-edit, icon-copy {
+    &.disabled {
+      border-color: #d0d0d0;
+      color: #c0c0c0;
+      background-color: #fafafa;
+      &:hover {
+        border-color: #a5a5a5;
+        color: #a5a5a5;
+        background-color: #fafafa;
+      }
+    }
+  }
+}

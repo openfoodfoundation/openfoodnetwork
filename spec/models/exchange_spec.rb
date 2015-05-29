@@ -170,17 +170,17 @@ describe Exchange do
 
       it "finds exchanges coming from any of a number of enterprises" do
         Exchange.from_enterprises([coordinator]).should == [outgoing_exchange]
-        Exchange.from_enterprises([supplier, coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+        Exchange.from_enterprises([supplier, coordinator]).should match_array [incoming_exchange, outgoing_exchange]
       end
 
       it "finds exchanges going to any of a number of enterprises" do
         Exchange.to_enterprises([coordinator]).should == [incoming_exchange]
-        Exchange.to_enterprises([coordinator, distributor]).sort.should == [incoming_exchange, outgoing_exchange].sort
+        Exchange.to_enterprises([coordinator, distributor]).should match_array [incoming_exchange, outgoing_exchange]
       end
 
       it "finds exchanges involving any of a number of enterprises" do
         Exchange.involving([supplier]).should == [incoming_exchange]
-        Exchange.involving([coordinator]).sort.should == [incoming_exchange, outgoing_exchange].sort
+        Exchange.involving([coordinator]).should match_array [incoming_exchange, outgoing_exchange]
         Exchange.involving([distributor]).should == [outgoing_exchange]
       end
     end

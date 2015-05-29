@@ -2,9 +2,30 @@ require 'spec_helper'
 
 describe EnterpriseGroup do
   describe "validations" do
+    it "pass with name, description and address" do
+      e = EnterpriseGroup.new
+      e.name = 'Test Group'
+      e.description = 'A valid test group.'
+      e.address = build(:address)
+      e.should be_valid
+    end
+
     it "is valid when built from factory" do
       e = build(:enterprise_group)
       e.should be_valid
+    end
+
+    it "replace empty permalink and pass" do
+      e = build(:enterprise_group, permalink: '')
+      e.should be_valid
+      e.permalink.should == e.name.parameterize
+    end
+
+    it "restores permalink and pass" do
+      e = create(:enterprise_group, permalink: 'p')
+      e.permalink = ''
+      e.should be_valid
+      e.permalink.should == 'p'
     end
 
     it "requires a name" do
@@ -59,6 +80,40 @@ describe EnterpriseGroup do
       eg2 = create(:enterprise_group)
 
       EnterpriseGroup.managed_by(user).should == [eg1]
+    end
+
+    describe "finding a permalink" do
+      it "finds available permalink" do
+        existing = []
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink"
+      end
+
+      it "finds available permalink similar to existing" do
+        existing = ["permalink1"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink"
+      end
+
+      it "adds unique number to existing permalinks" do
+        existing = ["permalink"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink1"
+        existing = ["permalink", "permalink1"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink2"
+      end
+
+      it "ignores permalinks with characters after the index value" do
+        existing = ["permalink", "permalink1", "permalink2xxx"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink2"
+      end
+
+      it "finds gaps in the indices of existing permalinks" do
+        existing = ["permalink", "permalink1", "permalink3"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink")).to eq "permalink2"
+      end
+
+      it "finds available indexed permalink" do
+        existing = ["permalink", "permalink1"]
+        expect(EnterpriseGroup.find_available_value(existing, "permalink1")).to eq "permalink11"
+      end
     end
   end
 end

@@ -13,12 +13,10 @@ Spree::Variant.class_eval do
   accepts_nested_attributes_for :images
 
   validates_presence_of :unit_value,
-    if: -> v { %w(weight volume).include? v.product.andand.variant_unit },
-    unless: :is_master
+    if: -> v { %w(weight volume).include? v.product.andand.variant_unit }
 
   validates_presence_of :unit_description,
-    if: -> v { v.product.andand.variant_unit.present? && v.unit_value.nil? },
-    unless: :is_master
+    if: -> v { v.product.andand.variant_unit.present? && v.unit_value.nil? }
 
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
   after_save :update_units
@@ -111,9 +109,15 @@ Spree::Variant.class_eval do
   end
 
   def delete
-    transaction do
-      self.update_column(:deleted_at, Time.now)
-      ExchangeVariant.where(variant_id: self).destroy_all
+    if product.variants == [self] # Only variant left on product
+      errors.add :product, "must have at least one variant"
+      false
+    else
+      transaction do
+        self.update_column(:deleted_at, Time.now)
+        ExchangeVariant.where(variant_id: self).destroy_all
+        self
+      end
     end
   end
 

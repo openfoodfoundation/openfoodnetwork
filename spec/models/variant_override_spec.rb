@@ -12,7 +12,7 @@ describe VariantOverride do
     let!(:vo2) { create(:variant_override, hub: hub2, variant: v) }
 
     it "finds variant overrides for a set of hubs" do
-      VariantOverride.for_hubs([hub1, hub2]).sort.should == [vo1, vo2].sort
+      VariantOverride.for_hubs([hub1, hub2]).should match_array [vo1, vo2]
     end
   end
 
