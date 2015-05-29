@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150424151117) do
+ActiveRecord::Schema.define(:version => 20150527004427) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -236,10 +236,12 @@ ActiveRecord::Schema.define(:version => 20150424151117) do
     t.string   "linkedin",                 :default => "", :null => false
     t.string   "twitter",                  :default => "", :null => false
     t.integer  "owner_id"
+    t.string   "permalink",                                :null => false
   end
 
   add_index "enterprise_groups", ["address_id"], :name => "index_enterprise_groups_on_address_id"
   add_index "enterprise_groups", ["owner_id"], :name => "index_enterprise_groups_on_owner_id"
+  add_index "enterprise_groups", ["permalink"], :name => "index_enterprise_groups_on_permalink", :unique => true
 
   create_table "enterprise_groups_enterprises", :id => false, :force => true do |t|
     t.integer "enterprise_group_id"
@@ -619,9 +621,9 @@ ActiveRecord::Schema.define(:version => 20150424151117) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
   end
 
