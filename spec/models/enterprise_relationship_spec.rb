@@ -74,21 +74,27 @@ describe EnterpriseRelationship do
     let(:e1) { create(:supplier_enterprise) }
     let(:e2) { create(:supplier_enterprise, sells: 'any') }
     let!(:er) { create(:enterprise_relationship, parent: e1, child: e2) }
+    let(:er_reverse) { create(:enterprise_relationship, parent: e2, child: e1) }
 
     it "categorises enterprises into distributors and producers" do
       EnterpriseRelationship.relatives.should ==
-        {e1.id => {distributors: [e2.id], producers: [e2.id]},
-         e2.id => {distributors: [],      producers: [e1.id]}}
+        {e1.id => {distributors: Set.new([e2.id]), producers: Set.new([e2.id])},
+         e2.id => {distributors: Set.new([]),      producers: Set.new([e1.id])}}
     end
 
     it "finds inactive enterprises by default" do
       e1.update_attribute :confirmed_at, nil
-      EnterpriseRelationship.relatives[e2.id][:producers].should == [e1.id]
+      EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
     end
 
     it "does not find inactive enterprises when requested" do
       e1.update_attribute :confirmed_at, nil
       EnterpriseRelationship.relatives(true)[e2.id][:producers].should be_empty
+    end
+
+    it "does not show duplicates" do
+      er_reverse
+      EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
     end
   end
 end

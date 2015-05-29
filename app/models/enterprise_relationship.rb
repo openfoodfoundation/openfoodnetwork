@@ -33,8 +33,8 @@ class EnterpriseRelationship < ActiveRecord::Base
     relatives = {}
 
     relationships.each do |r|
-      relatives[r.parent_id] ||= {distributors: [], producers: []}
-      relatives[r.child_id]  ||= {distributors: [], producers: []}
+      relatives[r.parent_id] ||= {distributors: Set.new, producers: Set.new}
+      relatives[r.child_id]  ||= {distributors: Set.new, producers: Set.new}
 
       if !activated_only || r.child.activated?
         relatives[r.parent_id][:producers]    << r.child_id if r.child.is_primary_producer
