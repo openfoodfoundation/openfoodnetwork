@@ -28,7 +28,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
   # either direction). This array is split into distributors and producers, and has the format:
   # {enterprise_id => {distributors: [id, ...], producers: [id, ...]} }
-  def self.relatives
+  def self.relatives(activated_only=false)
     relationships = EnterpriseRelationship.includes(:child, :parent)
     relatives = {}
 
@@ -36,11 +36,15 @@ class EnterpriseRelationship < ActiveRecord::Base
       relatives[r.parent_id] ||= {distributors: [], producers: []}
       relatives[r.child_id]  ||= {distributors: [], producers: []}
 
-      relatives[r.parent_id][:producers]    << r.child_id if r.child.is_primary_producer
-      relatives[r.parent_id][:distributors] << r.child_id if r.child.is_distributor
+      if !activated_only || r.child.activated?
+        relatives[r.parent_id][:producers]    << r.child_id if r.child.is_primary_producer
+        relatives[r.parent_id][:distributors] << r.child_id if r.child.is_distributor
+      end
 
-      relatives[r.child_id][:producers]    << r.parent_id if r.parent.is_primary_producer
-      relatives[r.child_id][:distributors] << r.parent_id if r.parent.is_distributor
+      if !activated_only || r.parent.activated?
+        relatives[r.child_id][:producers]    << r.parent_id if r.parent.is_primary_producer
+        relatives[r.child_id][:distributors] << r.parent_id if r.parent.is_distributor
+      end
     end
 
     relatives

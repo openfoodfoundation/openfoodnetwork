@@ -80,5 +80,15 @@ describe EnterpriseRelationship do
         {e1.id => {distributors: [e2.id], producers: [e2.id]},
          e2.id => {distributors: [],      producers: [e1.id]}}
     end
+
+    it "finds inactive enterprises by default" do
+      e1.update_attribute :confirmed_at, nil
+      EnterpriseRelationship.relatives[e2.id][:producers].should == [e1.id]
+    end
+
+    it "does not find inactive enterprises when requested" do
+      e1.update_attribute :confirmed_at, nil
+      EnterpriseRelationship.relatives(true)[e2.id][:producers].should be_empty
+    end
   end
 end
