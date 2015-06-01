@@ -16,24 +16,28 @@ module OpenFoodNetwork
       end
     end
 
-    def table
+    def search
+      Spree::Order.complete.where("spree_orders.state != ?", :canceled).managed_by(@user).search(params[:q])
+    end
+
+    def orders
+      filter search.result
+    end
+
+    def table_items
       if is_payment_methods?
         orders.map { |o| payment_method_row o }
       else
         orders.map { |o| delivery_row o }
-      end     
+      end
     end
 
-    def orders
-      filter Spree::Order.managed_by(@user).distributed_by_user(@user).complete.where("spree_orders.state != ?", :canceled)
-    end
-
-    def filter(orders)
-      filter_to_order_cycle filter_to_payment_method filter_to_shipping_method orders
+    def filter(search_result)
+      filter_to_payment_method filter_to_shipping_method search_result
     end
 
 
-    private 
+    private
 
     def payment_method_row(order)
       ba = order.billing_address
@@ -70,32 +74,28 @@ module OpenFoodNetwork
       ]
     end
 
-    def filter_to_payment_method(orders)
-      if params[:payment_method_name].present?
-        orders.with_payment_method_name(params[:payment_method_name])
+    def filter_to_payment_method(search_result)
+      if params[:payment_method_in].present?
+        search_result.with_payment_method_name(params[:payment_method_in])
       else
-        orders
+        search_result
       end
     end
 
-    def filter_to_shipping_method(orders)
-      if params[:shipping_method_name].present?
-        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
+    def filter_to_shipping_method(search_result)
+      if params[:shipping_method_in].present?
+        search_result.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_in])
       else
-        orders
-      end
-    end
-
-    def filter_to_order_cycle(orders)
-      if params[:order_cycle_id].present?
-        orders.where(order_cycle_id: params[:order_cycle_id])
-      else
-        orders
+        search_result
       end
     end
 
     def has_temperature_controlled_items?(order)
-      order.line_items.any? { |line_item| line_item.product.shipping_category.andand.temperature_controlled }
+      if order.line_items.any? { |line_item| line_item.product.shipping_category.andand.temperature_controlled }
+        "Yes"
+      else
+        "No"
+      end
     end
 
     def is_payment_methods?
