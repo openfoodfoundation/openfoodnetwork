@@ -1,4 +1,4 @@
-= form_for @search, :url => spree.payments_admin_reports_path do |f|
+= form_for @report.search, :url => spree.payments_admin_reports_path do |f|
   = render 'date_range_form', f: f
 
   .row
@@ -20,7 +20,7 @@
 %table#listing_orders.index
   %thead
     %tr{'data-hook' => "orders_header"}
-      - @header.each do |heading|
+      - @report.header.each do |heading|
         %th=heading
   %tbody
     - @table.each do |row|
