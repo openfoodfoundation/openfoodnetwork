@@ -9,6 +9,7 @@
   .row{ ng: { app: "admin.users" } }
     .three.columns.alpha
       =f.label :owner_id, 'Owner'
+      %span.required *
       .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
         %a What's this?
     .nine.columns.omega
