@@ -1,6 +1,7 @@
 .row
   .three.columns.alpha
     = f.label :name
+    %span.required *
   .nine.columns.omega
     = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles", class: "fullwidth" }
 
@@ -51,6 +52,7 @@
 .row
   .alpha.three.columns
     = f.label :email
+    %span.required *
   .omega.nine.columns
     = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
     .alert-box
@@ -72,6 +74,7 @@
   .row
     .three.columns.alpha
       = af.label :address1
+      %span.required *
     .nine.columns.omega
       = af.text_field :address1, { placeholder: "eg. 123 High Street"}
   .row
@@ -84,6 +87,7 @@
       = af.label :city, 'Suburb'
       \/
       = af.label :zipcode, 'Postcode'
+      %span.required *
     .four.columns
       = af.text_field :city, { placeholder: "eg. Northcote"}
     .five.columns.omega
