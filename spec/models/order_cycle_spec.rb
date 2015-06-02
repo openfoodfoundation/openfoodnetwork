@@ -239,10 +239,12 @@ describe OrderCycle do
     it "returns valid products but not invalid products" do
       p_valid = create(:product)
       p_invalid = create(:product)
-      v = create(:variant, product: p_invalid)
+      v_valid = p_valid.variants.first
+      v_invalid = p_invalid.variants.first
 
       d = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, distributors: [d], variants: [p_valid.master, p_invalid.master])
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v_valid, p_invalid.master])
+
       oc.valid_products_distributed_by(d).should == [p_valid]
     end
 

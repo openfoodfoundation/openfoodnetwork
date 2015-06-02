@@ -7,6 +7,6 @@ class GroupsController < BaseController
   end
 
   def show
-    @group = EnterpriseGroup.find params[:id]
+    @group = EnterpriseGroup.find_by_permalink(params[:id]) || EnterpriseGroup.find(params[:id])
   end
 end

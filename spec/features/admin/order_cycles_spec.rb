@@ -487,7 +487,9 @@ feature %q{
     let!(:shipping_method) { create(:shipping_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
     let!(:payment_method) { create(:payment_method, distributors: [distributor_managed, distributor_unmanaged, distributor_permitted]) }
     let!(:product_managed) { create(:product, supplier: supplier_managed) }
+    let!(:variant_managed) { product_managed.variants.first }
     let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
+    let!(:variant_permitted) { product_permitted.variants.first }
 
     before do
       # Relationships required for interface to work
@@ -533,8 +535,6 @@ feature %q{
         click_link "Order Cycles"
         click_link 'New Order Cycle'
 
-        # We go straight through to the new form, because only one coordinator is available
-
         fill_in 'order_cycle_name', with: 'My order cycle'
         fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
         fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
@@ -544,8 +544,8 @@ feature %q{
         select 'Permitted supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
 
-        select_incoming_variant supplier_managed, 0, product_managed.master
-        select_incoming_variant supplier_permitted, 1, product_permitted.master
+        select_incoming_variant supplier_managed, 0, variant_managed
+        select_incoming_variant supplier_permitted, 1, variant_permitted
 
         click_button 'Add coordinator fee'
         select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
@@ -750,7 +750,9 @@ feature %q{
     let!(:p1) { create(:simple_product, supplier: enterprise) }
     let!(:p2) { create(:simple_product, supplier: enterprise) }
     let!(:p3) { create(:simple_product, supplier: enterprise) }
-    let!(:v) { create(:variant, product: p3) }
+    let!(:v1) { p1.variants.first }
+    let!(:v2) { p2.variants.first }
+    let!(:v3) { p3.variants.first }
     let!(:fee) { create(:enterprise_fee, enterprise: enterprise, name: 'Coord fee') }
 
     before do
@@ -779,12 +781,12 @@ feature %q{
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
       # Then my products / variants should already be selected
-      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
-      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
-      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+      page.should have_checked_field "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
       # When I unselect a product
-      uncheck "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
       # And I add a fee and save
       click_button 'Add coordinator fee'
@@ -819,7 +821,7 @@ feature %q{
     scenario "editing an order cycle" do
       # Given an order cycle with pickup time and instructions
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
-      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee])
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [v1], coordinator_fees: [fee])
       ex = oc.exchanges.outgoing.first
       ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
@@ -837,9 +839,9 @@ feature %q{
       page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
       # And I should see the products
-      page.should have_checked_field   "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
-      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
-      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{v.id}"
+      page.should have_checked_field   "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+      page.should have_unchecked_field "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
       # And I should see the coordinator fees
       page.should have_select 'order_cycle_coordinator_fee_0_id', selected: 'my fee'
@@ -849,7 +851,7 @@ feature %q{
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
-      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [p1.master], coordinator_fees: [fee1])
+      oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [v1], coordinator_fees: [fee1])
       ex = oc.exchanges.outgoing.first
       ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
@@ -866,10 +868,10 @@ feature %q{
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
 
       # And I make some product selections
-      uncheck "order_cycle_incoming_exchange_0_variants_#{p1.master.id}"
-      check   "order_cycle_incoming_exchange_0_variants_#{p2.master.id}"
-      check   "order_cycle_incoming_exchange_0_variants_#{v.id}"
-      uncheck "order_cycle_incoming_exchange_0_variants_#{v.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v3.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
       # And I select some fees and update
       click_link 'order_cycle_coordinator_fee_0_remove'
@@ -887,8 +889,8 @@ feature %q{
 
       # And it should have a variant selected
       oc = OrderCycle.last
-      oc.exchanges.incoming.first.variants.should == [p2.master]
-      oc.exchanges.outgoing.first.variants.should == [p2.master]
+      oc.exchanges.incoming.first.variants.should == [v2]
+      oc.exchanges.outgoing.first.variants.should == [v2]
 
       # And it should have the fee
       oc.coordinator_fees.should == [fee2]

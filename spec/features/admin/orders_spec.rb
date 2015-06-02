@@ -11,7 +11,7 @@ feature %q{
     @user = create(:user)
     @product = create(:simple_product)
     @distributor = create(:distributor_enterprise)
-    @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.master])
+    @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
 
