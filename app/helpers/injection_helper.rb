@@ -1,6 +1,16 @@
+require 'open_food_network/enterprise_injection_data'
+
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.all, Api::EnterpriseSerializer, active_distributors: @active_distributors
+    inject_json_ams "enterprises", Enterprise.activated.includes(:address).all, Api::EnterpriseSerializer, enterprise_injection_data
+  end
+
+  def inject_group_enterprises
+    inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, enterprise_injection_data
+  end
+
+  def inject_current_hub
+    inject_json_ams "currentHub", current_distributor, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_current_order
@@ -53,4 +63,13 @@ module InjectionHelper
     end
     render partial: "json/injection_ams", locals: {name: name, json: json}
   end
+
+
+  private
+
+  def enterprise_injection_data
+    @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
+    {data: @enterprise_injection_data}
+  end
+
 end
