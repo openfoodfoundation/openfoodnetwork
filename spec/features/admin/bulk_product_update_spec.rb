@@ -205,8 +205,9 @@ feature %q{
     expect(page).to have_selector "a.edit-variant", count: 1
 
     # When I remove two, they should be removed
-    page.all('a.delete-variant').first.click
-    page.all('a.delete-variant').first.click
+    page.all('a.delete-variant', visible: true).first.click
+    expect(page).to have_selector "tr.variant", count: 2
+    page.all('a.delete-variant', visible: true).first.click
     expect(page).to have_selector "tr.variant", count: 1
 
     # When I fill out variant details and hit update

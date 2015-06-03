@@ -55,5 +55,32 @@ module Spree
         sm.should be_available_to_order o
       end
     end
+
+    describe "finding services offered by all distributors" do
+      let!(:d1) { create(:distributor_enterprise) }
+      let!(:d2) { create(:distributor_enterprise) }
+      let!(:d3) { create(:distributor_enterprise) }
+      let!(:d4) { create(:distributor_enterprise) }
+      let!(:d1_pickup) { create(:shipping_method, require_ship_address: false, distributors: [d1]) }
+      let!(:d1_delivery) { create(:shipping_method, require_ship_address: true, distributors: [d1]) }
+      let!(:d2_pickup) { create(:shipping_method, require_ship_address: false, distributors: [d2]) }
+      let!(:d3_delivery) { create(:shipping_method, require_ship_address: true, distributors: [d3]) }
+
+      it "reports when the services are available" do
+        ShippingMethod.services[d1.id].should == {pickup: true, delivery: true}
+      end
+
+      it "reports when only pickup is available" do
+        ShippingMethod.services[d2.id].should == {pickup: true, delivery: false}
+      end
+
+      it "reports when only delivery is available" do
+        ShippingMethod.services[d3.id].should == {pickup: false, delivery: true}
+      end
+
+      it "returns no entry when no service is available" do
+        ShippingMethod.services[d4.id].should be_nil
+      end
+    end
   end
 end
