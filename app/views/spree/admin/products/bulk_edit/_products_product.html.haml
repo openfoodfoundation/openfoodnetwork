@@ -1,6 +1,6 @@
 %tr.product{ :id => "p_{{product.id}}" }
   %td.left-actions
-    %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants icon-chevron-right", 'ng-show' => 'hasVariants(product)' }
+    %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants", 'ng-show' => 'hasVariants(product)' }
     %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
   %td.producer{ 'ng-show' => 'columns.producer.visible' }
     %select.select2.fullwidth{ 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
