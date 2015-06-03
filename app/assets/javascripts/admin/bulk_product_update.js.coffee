@@ -109,6 +109,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
+    $scope.toggleShowAllVariants = ->
+      showVariants = !DisplayProperties.showVariants 0
+      $scope.filteredProducts.forEach (product) ->
+        DisplayProperties.setShowVariants product.id, showVariants
+      DisplayProperties.setShowVariants 0, showVariants
+
     $scope.addVariant = (product) ->
       product.variants.push
         id: $scope.nextVariantId()

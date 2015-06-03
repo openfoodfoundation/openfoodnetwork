@@ -19,6 +19,8 @@
 %thead
   %tr
     %th.left-actions
+      %a{ 'ng-click' => 'toggleShowAllVariants()', :style => 'color: red' }
+        Expand All
     %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
     %th.sku{ 'ng-show' => 'columns.sku.visible' } SKU
     %th.name{ 'ng-show' => 'columns.name.visible' } Name
