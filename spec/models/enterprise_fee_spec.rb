@@ -43,7 +43,7 @@ describe EnterpriseFee do
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
         ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
-        EnterpriseFee.per_item.sort.should == [ef1, ef2, ef3, ef4].sort
+        EnterpriseFee.per_item.should match_array [ef1, ef2, ef3, ef4]
       end
     end
 
@@ -52,7 +52,7 @@ describe EnterpriseFee do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
         ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
 
-        EnterpriseFee.per_order.sort.should == [ef1, ef2].sort
+        EnterpriseFee.per_order.should match_array [ef1, ef2]
       end
 
       it "does not return fees with any other calculator" do

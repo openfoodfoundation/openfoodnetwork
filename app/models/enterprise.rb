@@ -303,7 +303,7 @@ class Enterprise < ActiveRecord::Base
     test_permalink = test_permalink.parameterize
     test_permalink = "my-enterprise" if test_permalink.blank?
     existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
-    if existing.empty?
+    unless existing.include?(test_permalink)
       test_permalink
     else
       used_indices = existing.map do |p|

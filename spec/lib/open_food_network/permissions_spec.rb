@@ -13,7 +13,7 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e2]
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -24,7 +24,7 @@ module OpenFoodNetwork
         it "returns only my managed enterprises any that have granting them P-OC" do
           expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
           expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3) }
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e3]
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e3]
         end
       end
     end
@@ -34,7 +34,7 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to eq [e1, e2]
+          expect(permissions.send(:managed_and_related_enterprises_granting, :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -47,7 +47,7 @@ module OpenFoodNetwork
           expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
           expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) { Enterprise.where(id: e3) }
           expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) { Enterprise.where(id: e4) }
-          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to eq [e1, e3, e4]
+          expect(permissions.send(:managed_and_related_enterprises_with, :some_permission)).to match_array [e1, e3, e4]
         end
       end
     end
@@ -98,7 +98,7 @@ module OpenFoodNetwork
           {1 => [e1.id], 2 => [e1.id, e2.id]}
         end
 
-        permissions.variant_override_producers.sort.should == [e1, e2].sort
+        permissions.variant_override_producers.should match_array [e1, e2]
       end
     end
 

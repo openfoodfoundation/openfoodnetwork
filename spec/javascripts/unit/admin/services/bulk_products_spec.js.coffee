@@ -61,14 +61,14 @@ describe "BulkProducts service", ->
       clonedProduct =
         id: 17
 
-      spyOn(BulkProducts, "addProducts")
+      spyOn(BulkProducts, "insertProductAfter")
       BulkProducts.products = [originalProduct]
       $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
         product: clonedProduct
       $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, clonedProduct
       BulkProducts.cloneProduct BulkProducts.products[0]
       $httpBackend.flush()
-      expect(BulkProducts.addProducts).toHaveBeenCalledWith [clonedProduct]
+      expect(BulkProducts.insertProductAfter).toHaveBeenCalledWith originalProduct, clonedProduct
 
 
   describe "preparing products", ->

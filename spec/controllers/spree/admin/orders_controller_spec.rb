@@ -143,7 +143,7 @@ describe Spree::Admin::OrdersController do
         end
 
         it "only displays line items from orders for which my enterprise is the order_cycle coorinator" do
-          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.sort.should == [line_item1.id, line_item2.id, line_item3.id].sort
+          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.should match_array [line_item1.id, line_item2.id, line_item3.id]
         end
       end
 
@@ -159,7 +159,7 @@ describe Spree::Admin::OrdersController do
         end
 
         it "only displays line items from orders for which my enterprise is a distributor" do
-          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.sort.should == [line_item1.id, line_item2.id].sort
+          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.should match_array [line_item1.id, line_item2.id]
         end
       end
     end

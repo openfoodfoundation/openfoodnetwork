@@ -37,7 +37,7 @@ describe OrderCycle do
     oc_undated = create(:simple_order_cycle, orders_open_at: nil, orders_close_at: nil)
 
     OrderCycle.active.should == [oc_active]
-    OrderCycle.inactive.sort.should == [oc_not_yet_open, oc_already_closed].sort
+    OrderCycle.inactive.should match_array [oc_not_yet_open, oc_already_closed]
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
     OrderCycle.undated.should == [oc_undated]
@@ -153,7 +153,7 @@ describe OrderCycle do
     e2 = create(:exchange, incoming: true,
                 order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
-    oc.suppliers.sort.should == [e1.sender, e2.sender].sort
+    oc.suppliers.should match_array [e1.sender, e2.sender]
   end
 
   it "reports its distributors" do
@@ -164,7 +164,7 @@ describe OrderCycle do
     e2 = create(:exchange, incoming: false,
                 order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
-    oc.distributors.sort.should == [e1.receiver, e2.receiver].sort
+    oc.distributors.should match_array [e1.receiver, e2.receiver]
   end
 
   it "checks for existance of distributors" do
@@ -215,11 +215,11 @@ describe OrderCycle do
     end
 
     it "reports on the variants exchanged" do
-      @oc.variants.sort.should == [@p0.master, @p1.master, @p2.master, @p2_v].sort
+      @oc.variants.should match_array [@p0.master, @p1.master, @p2.master, @p2_v]
     end
 
     it "reports on the variants distributed" do
-      @oc.distributed_variants.sort.should == [@p1.master, @p2.master, @p2_v].sort
+      @oc.distributed_variants.should match_array [@p1.master, @p2.master, @p2_v]
     end
 
     it "reports on the variants distributed by a particular distributor" do
@@ -231,7 +231,7 @@ describe OrderCycle do
     end
 
     it "reports on the products exchanged" do
-      @oc.products.sort.should == [@p0, @p1, @p2]
+      @oc.products.should match_array [@p0, @p1, @p2]
     end
   end
 
@@ -239,10 +239,12 @@ describe OrderCycle do
     it "returns valid products but not invalid products" do
       p_valid = create(:product)
       p_invalid = create(:product)
-      v = create(:variant, product: p_invalid)
+      v_valid = p_valid.variants.first
+      v_invalid = p_invalid.variants.first
 
       d = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, distributors: [d], variants: [p_valid.master, p_invalid.master])
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v_valid, p_invalid.master])
+
       oc.valid_products_distributed_by(d).should == [p_valid]
     end
 

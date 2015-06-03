@@ -118,7 +118,7 @@ describe Enterprise do
       let!(:er2) { create(:enterprise_relationship, parent_id: e.id, child_id: c.id) }
 
       it "finds relatives" do
-        e.relatives.sort.should == [p, c].sort
+        e.relatives.should match_array [p, c]
       end
 
       it "scopes relatives to visible distributors" do
@@ -422,7 +422,7 @@ describe Enterprise do
         create(:product, :distributors => [d1], :on_hand => 5)
         create(:product, :distributors => [d3], :on_hand => 0)
 
-        Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
+        Enterprise.with_distributed_active_products_on_hand.should match_array [d1, d2]
       end
 
       it "returns distributors with available products in stock" do
@@ -438,7 +438,7 @@ describe Enterprise do
         create(:product, :distributors => [d4], :on_hand => 0)
         create(:product, :distributors => [d5]).delete
 
-        Enterprise.with_distributed_active_products_on_hand.sort.should == [d1, d2]
+        Enterprise.with_distributed_active_products_on_hand.should match_array [d1, d2]
         Enterprise.with_distributed_active_products_on_hand.distinct_count.should == 2
       end
     end
@@ -458,7 +458,7 @@ describe Enterprise do
         create(:product, :supplier => d4, :on_hand => 0)
         create(:product, :supplier => d5).delete
 
-        Enterprise.with_supplied_active_products_on_hand.sort.should == [d1, d2]
+        Enterprise.with_supplied_active_products_on_hand.should match_array [d1, d2]
         Enterprise.with_supplied_active_products_on_hand.distinct_count.should == 2
       end
     end
@@ -485,7 +485,7 @@ describe Enterprise do
         p1 = create(:simple_product, supplier: s1)
         p2 = create(:simple_product, supplier: s2)
 
-        Enterprise.supplying_variant_in([p1.master, p2.master]).sort.should == [s1, s2].sort
+        Enterprise.supplying_variant_in([p1.master, p2.master]).should match_array [s1, s2]
       end
 
       it "does not return duplicates" do
@@ -625,9 +625,9 @@ describe Enterprise do
         er = EnterpriseRelationship.where(parent_id: opts[:from], child_id: opts[:to]).last
         er.should_not be_nil
         if opts[:with] == :all_permissions
-          er.permissions.map(&:name).sort.should == ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides'].sort
+          er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'manage_products', 'edit_profile', 'create_variant_overrides']
         elsif opts.key? :with
-          er.permissions.map(&:name).sort.should == opts[:with].map(&:to_s).sort
+          er.permissions.map(&:name).should match_array opts[:with].map(&:to_s)
         end
       end
     end
@@ -664,45 +664,38 @@ describe Enterprise do
   end
 
   describe "finding variants distributed by the enterprise" do
-    it "finds the master variant" do
+    it "finds master and other variants" do
       d = create(:distributor_enterprise)
       p = create(:product, distributors: [d])
-      d.distributed_variants.should == [p.master]
+      v = p.variants.first
+      d.distributed_variants.should match_array [p.master, v]
     end
 
-    it "finds other variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product, distributors: [d])
-      v = create(:variant, product: p)
-      d.distributed_variants.sort.should == [p.master, v].sort
-    end
-
-    it "finds variants distributed by order cycle" do
+    pending "finds variants distributed by order cycle" do
+      # there isn't actually a method for this on Enterprise?
       d = create(:distributor_enterprise)
       p = create(:product)
-      oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
-      d.distributed_variants.should == [p.master]
+      v = p.variants.first
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v])
+
+      # This method doesn't do what this test says it does...
+      d.distributed_variants.should match_array [v]
     end
   end
 
   describe "finding variants distributed by the enterprise in a product distribution only" do
-    it "finds the master variant" do
+    it "finds master and other variants" do
       d = create(:distributor_enterprise)
       p = create(:product, distributors: [d])
-      d.product_distribution_variants.should == [p.master]
-    end
-
-    it "finds other variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product, distributors: [d])
-      v = create(:variant, product: p)
-      d.product_distribution_variants.sort.should == [p.master, v].sort
+      v = p.variants.first
+      d.product_distribution_variants.should match_array [p.master, v]
     end
 
     it "does not find variants distributed by order cycle" do
       d = create(:distributor_enterprise)
       p = create(:product)
-      oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
+      v = p.variants.first
+      oc = create(:simple_order_cycle, distributors: [d], variants: [v])
       d.product_distribution_variants.should == []
     end
   end
@@ -752,12 +745,12 @@ describe Enterprise do
 
     it "gets all taxons of all distributed products" do
       Spree::Product.stub(:in_distributor).and_return [product1, product2]
-      distributor.distributed_taxons.sort.should == [taxon1, taxon2].sort
+      distributor.distributed_taxons.should match_array [taxon1, taxon2]
     end
 
     it "gets all taxons of all supplied products" do
       Spree::Product.stub(:in_supplier).and_return [product1, product2]
-      supplier.supplied_taxons.sort.should == [taxon1, taxon2].sort
+      supplier.supplied_taxons.should match_array [taxon1, taxon2]
     end
   end
 
@@ -843,6 +836,11 @@ describe Enterprise do
       it "ignores permalinks with characters after the index value" do
         create(:enterprise, permalink: "permalink2xxx")
         expect(Enterprise.find_available_permalink("permalink")).to eq "permalink2"
+      end
+
+      it "finds available permalink similar to existing" do
+        create(:enterprise, permalink: "permalink2xxx")
+        expect(Enterprise.find_available_permalink("permalink2")).to eq "permalink2"
       end
 
       it "finds gaps in the indices of existing permalinks" do

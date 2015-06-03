@@ -34,7 +34,7 @@ describe EnterpriseRelationship do
       it "creates permissions with a list" do
         er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: ['one', 'two']
         er.reload
-        er.permissions.map(&:name).sort.should == ['one', 'two'].sort
+        er.permissions.map(&:name).should match_array ['one', 'two']
       end
 
       it "does nothing when the list is nil" do
@@ -50,11 +50,11 @@ describe EnterpriseRelationship do
       let!(:er3) { create(:enterprise_relationship, parent: e1, child: e3) }
 
       it "finds relationships that grant permissions to some enterprises" do
-        EnterpriseRelationship.permitting([e1, e2]).sort.should == [er1, er2].sort
+        EnterpriseRelationship.permitting([e1, e2]).should match_array [er1, er2]
       end
 
       it "finds relationships that are granted by particular enterprises" do
-        EnterpriseRelationship.permitted_by([e1, e2]).sort.should == [er1, er3].sort
+        EnterpriseRelationship.permitted_by([e1, e2]).should match_array [er1, er3]
       end
     end
 
@@ -66,7 +66,7 @@ describe EnterpriseRelationship do
       er3 = create(:enterprise_relationship, parent: e3, child: e1,
                    permissions_list: ['three', 'four'])
 
-      EnterpriseRelationship.with_permission('two').sort.should == [er1, er2].sort
+      EnterpriseRelationship.with_permission('two').should match_array [er1, er2]
     end
   end
 

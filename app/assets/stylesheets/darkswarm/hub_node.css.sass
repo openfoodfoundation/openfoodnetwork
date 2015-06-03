@@ -65,6 +65,24 @@
       .active_table_row:nth-child(2)
         padding-bottom: 0.75rem
 
+      
+    .producers-list
+      li.more-producers-link
+        .less
+          display: none
+        a:hover
+          text-decoration: underline
+      li.additional-producer
+        display: none
+      &.show-more-producers
+        li.additional-producer
+          display: block
+        li.more-producers-link
+          .more
+            display: none
+          .less
+            display: block
+
     //CURRENT hub (shows selected hub)
     &.current
       //overwrites active_table
@@ -83,6 +101,7 @@
           .active_table_row:first-child .skinny-head
             background-color: rgba(255,255,255,0.85)
 
+        
     //INACTIVE - closed hub
     &.inactive
       &.closed, &.open
