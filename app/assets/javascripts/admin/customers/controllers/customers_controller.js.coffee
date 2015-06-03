@@ -9,8 +9,9 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, Customers
     tags:      { name: "Tags",     visible: true }
 
   $scope.$watch "shop", ->
-    Customers.loaded = false
-    $scope.customers = Customers.index(enterprise_id: $scope.shop.id)
+    if $scope.shop?
+      Customers.loaded = false
+      $scope.customers = Customers.index(enterprise_id: $scope.shop.id)
 
   $scope.loaded = ->
     Customers.loaded

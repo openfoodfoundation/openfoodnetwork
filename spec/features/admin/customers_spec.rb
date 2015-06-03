@@ -24,7 +24,6 @@ feature 'Customers' do
         expect(page).to have_select2 "shop_id", with_options: [managed_distributor.name], without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor.name, from: "shop_id"
-        click_button "Go"
 
         # Loads the right customers
         expect(page).to have_selector "tr#c_#{customer1.id}"
@@ -48,7 +47,6 @@ feature 'Customers' do
 
       it "allows updating of attributes", js: true do
         select2_select managed_distributor.name, from: "shop_id"
-        click_button "Go"
 
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: "new-customer-code"
