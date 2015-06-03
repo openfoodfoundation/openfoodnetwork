@@ -47,22 +47,12 @@ module OpenFoodNetwork
     end
 
     def variants
-      filter(child_variants) + filter(master_variants)
+      filter(child_variants)
     end
 
     def child_variants
       Spree::Variant.where(:is_master => false)
       .joins(:product)
-      .merge(visible_products)
-      .order("spree_products.name")
-    end
-
-    def master_variants
-      Spree::Variant.where(:is_master => true)
-      .joins(:product)
-      .where("(select spree_variants.id from spree_variants as other_spree_variants
-                  WHERE other_spree_variants.product_id = spree_variants.product_id
-                 AND other_spree_variants.is_master = 'f' LIMIT 1) IS NULL")
       .merge(visible_products)
       .order("spree_products.name")
     end
@@ -107,7 +97,7 @@ module OpenFoodNetwork
     def filter_to_order_cycle(variants)
       if params[:order_cycle_id].to_i > 0
         order_cycle = OrderCycle.find params[:order_cycle_id]
-        variants.select! { |v| order_cycle.variants.include? v }
+        variants.select { |v| order_cycle.variants.include? v }
       else
         variants
       end
