@@ -178,6 +178,10 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
+  def activated?
+    confirmed_at.present? && sells != 'unspecified'
+  end
+
   def set_producer_property(property_name, property_value)
     transaction do
       property = Spree::Property.where(name: property_name).first_or_create!(presentation: property_name)

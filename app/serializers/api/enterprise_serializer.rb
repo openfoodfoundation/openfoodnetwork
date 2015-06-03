@@ -1,4 +1,7 @@
 class Api::EnterpriseSerializer < ActiveModel::Serializer
+  # We reference this here because otherwise the serializer complains about its absence
+  Api::IdSerializer
+
   def serializable_hash
     cached_serializer_hash.merge uncached_serializer_hash
   end
@@ -6,11 +9,11 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
   private
 
   def cached_serializer_hash
-    Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash
+    Api::CachedEnterpriseSerializer.new(object, @options).serializable_hash || {}
   end
 
   def uncached_serializer_hash
-    Api::UncachedEnterpriseSerializer.new(object, @options).serializable_hash
+    Api::UncachedEnterpriseSerializer.new(object, @options).serializable_hash || {}
   end
 end
 
@@ -18,19 +21,22 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
 
   def orders_close_at
-    OrderCycle.first_closing_for(object).andand.orders_close_at
+    options[:data].earliest_closing_times[object.id]
   end
 
   def active
-    @options[:active_distributors].andand.include? object
+    options[:data].active_distributors.andand.include? object
   end
-
-
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   cached
-  delegate :cache_key, to: :object
+  #delegate :cache_key, to: :object
+
+  def cache_key
+    object.andand.cache_key
+  end
+
 
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
@@ -38,17 +44,27 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
     :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
-  has_many :distributed_taxons, key: :taxons, serializer: Api::IdSerializer
-  has_many :supplied_taxons, serializer: Api::IdSerializer
+  attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
 
+
+  def taxons
+    ids_to_objs options[:data].distributed_taxons[object.id]
+  end
+
+  def supplied_taxons
+    ids_to_objs options[:data].supplied_taxons[object.id]
+  end
+
   def pickup
-    object.shipping_methods.where(:require_ship_address => false).present?
+    services = options[:data].shipping_method_services[object.id]
+    services ? services[:pickup] : false
   end
 
   def delivery
-    object.shipping_methods.where(:require_ship_address => true).present?
+    services = options[:data].shipping_method_services[object.id]
+    services ? services[:delivery] : false
   end
 
   def email
@@ -72,11 +88,13 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def producers
-    ActiveModel::ArraySerializer.new(object.suppliers.activated, {each_serializer: Api::IdSerializer})
+    relatives = options[:data].relatives[object.id]
+    relatives ? ids_to_objs(relatives[:producers]) : []
   end
 
   def hubs
-    ActiveModel::ArraySerializer.new(object.distributors.activated, {each_serializer: Api::IdSerializer})
+    relatives = options[:data].relatives[object.id]
+    relatives ? ids_to_objs(relatives[:distributors]) : []
   end
 
   # Map svg icons.
@@ -115,5 +133,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       :producer => "ofn-i_059-producer",
     }
     icon_fonts[object.category]
+  end
+
+
+  private
+
+  def ids_to_objs(ids)
+    ids.andand.map { |id| {id: id} }
   end
 end
