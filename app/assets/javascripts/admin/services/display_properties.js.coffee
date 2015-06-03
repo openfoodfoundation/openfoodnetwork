@@ -3,12 +3,10 @@ angular.module("ofn.admin").factory "DisplayProperties", ->
     displayProperties: {}
 
     showVariants: (product_id) ->
-      @initProduct product_id
-      @displayProperties[product_id].showVariants
+      @productProperties(product_id).showVariants
 
     setShowVariants: (product_id, showVariants) ->
-      @initProduct product_id
-      @displayProperties[product_id].showVariants = showVariants
+      @productProperties(product_id).showVariants = showVariants
 
-    initProduct: (product_id) ->
+    productProperties: (product_id) ->
       @displayProperties[product_id] ||= {showVariants: false}

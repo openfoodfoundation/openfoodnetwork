@@ -68,10 +68,10 @@ feature %q{
       click_button 'Update'
 
       product.reload
-      product.distributors.sort.should == [@distributors[0], @distributors[2]].sort
+      product.distributors.should match_array [@distributors[0], @distributors[2]]
 
 
-      product.product_distributions.map { |pd| pd.enterprise_fee }.sort.should == [@enterprise_fees[0], @enterprise_fees[2]].sort
+      product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
     end
 
     scenario "making a product into a group buy product" do
@@ -117,9 +117,8 @@ feature %q{
       end
     end
 
-    scenario "creating a new product" do
+    scenario "creating a new product", js: true do
       Spree::Config.products_require_tax_category = false
-
       click_link 'Products'
       click_link 'New Product'
 
@@ -128,6 +127,8 @@ feature %q{
 
       page.should have_selector('#product_supplier_id')
       select 'Another Supplier', :from => 'product_supplier_id'
+      select 'Weight (g)', from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value_with_description', with: '500'
       select taxon.name, from: "product_primary_taxon_id"
       select 'None', from: "product_tax_category_id"
 

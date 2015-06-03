@@ -9,7 +9,6 @@ module Spree
     let!(:variant2) { FactoryGirl.create(:variant) }
     let!(:variant3) { FactoryGirl.create(:variant) }
     let(:attributes) { [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
-    let(:unit_attributes) { [:id, :unit_text, :unit_value] }
 
     before do
       stub_authentication!
@@ -23,12 +22,6 @@ module Spree
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
         attributes.all?{ |attr| keys.include? attr }.should == true
-      end
-
-      it "retrieves a list of variants with attributes relating to units" do
-        spree_get :show, { :id => variant1.id, :template => "units_show", :format => :json }
-        keys = json_response.keys.map{ |key| key.to_sym }
-        unit_attributes.all?{ |attr| keys.include? attr }.should == true
       end
 
       it "is denied access when trying to delete a variant" do

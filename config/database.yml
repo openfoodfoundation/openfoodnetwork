@@ -10,7 +10,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: open_food_network_test
+  database: open_food_network_test<%= ENV['TEST_ENV_NUMBER'] %>
   pool: 5
   host: localhost
   username: ofn

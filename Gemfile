@@ -113,4 +113,5 @@ group :development do
   gem 'guard-rails'
   gem 'guard-zeus'
   gem 'guard-rspec'
+  gem 'parallel_tests'
 end

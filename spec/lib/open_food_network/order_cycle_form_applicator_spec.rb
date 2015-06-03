@@ -300,8 +300,8 @@ module OpenFoodNetwork
             expect(exchange.sender).to eq sender
             expect(exchange.receiver).to eq receiver
             expect(exchange.incoming).to eq incoming
-            expect(exchange.variants.sort).to eq [variant1, variant2].sort
-            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee1, enterprise_fee2].sort
+            expect(exchange.variants).to match_array [variant1, variant2]
+            expect(exchange.enterprise_fees).to match_array [enterprise_fee1, enterprise_fee2]
 
             applicator.send(:touched_exchanges).should == [exchange]
           end
@@ -345,8 +345,8 @@ module OpenFoodNetwork
 
           it "updates the variants, enterprise fees and pickup information of the exchange" do
             exchange.reload
-            expect(exchange.variants.sort).to eq [variant1, variant3].sort
-            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee2, enterprise_fee3]
+            expect(exchange.variants).to match_array [variant1, variant3]
+            expect(exchange.enterprise_fees).to match_array [enterprise_fee2, enterprise_fee3]
             expect(exchange.pickup_time).to eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
@@ -364,8 +364,8 @@ module OpenFoodNetwork
 
           it "updates the variants, enterprise fees and pickup information of the exchange" do
             exchange.reload
-            expect(exchange.variants.sort).to eq [variant1, variant3].sort
-            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee2, enterprise_fee3]
+            expect(exchange.variants).to match_array [variant1, variant3]
+            expect(exchange.enterprise_fees).to match_array [enterprise_fee2, enterprise_fee3]
             expect(exchange.pickup_time).to eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
@@ -383,8 +383,8 @@ module OpenFoodNetwork
 
           it "updates the variants in the exchange, but not the fees or pickup information" do
             exchange.reload
-            expect(exchange.variants.sort).to eq [variant1, variant3].sort
-            expect(exchange.enterprise_fees.sort).to eq [enterprise_fee1, enterprise_fee2]
+            expect(exchange.variants).to match_array [variant1, variant3]
+            expect(exchange.enterprise_fees).to match_array [enterprise_fee1, enterprise_fee2]
             expect(exchange.pickup_time).to_not eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to_not eq 'New Pickup Instructions'
             expect(applicator.send(:touched_exchanges)).to eq [exchange]

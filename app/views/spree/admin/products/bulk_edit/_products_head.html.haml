@@ -7,7 +7,9 @@
   %col.display_as{ ng: { show: 'columns.unit.visible' } }
   %col.price{ ng: { show: 'columns.price.visible'} }
   %col.on_hand{ ng: { show: 'columns.on_hand.visible' } }
+  %col.on_demand{ ng: { show: 'columns.on_demand.visible' } }
   %col.category{ ng: { show: 'columns.category.visible' } }
+  %col.tax_category{ ng: { show: 'columns.tax_category.visible' } }
   %col.inherits_properties{ ng: { show: 'columns.inherits_properties.visible' } }
   %col.available_on{ ng: { show: 'columns.available_on.visible' } }
   %col.actions
@@ -17,6 +19,8 @@
 %thead
   %tr{ ng: { controller: "ColumnsCtrl" } }
     %th.left-actions
+      %a{ 'ng-click' => 'toggleShowAllVariants()', :style => 'color: red' }
+        Expand All
     %th.producer{ 'ng-show' => 'columns.producer.visible' } Producer
     %th.sku{ 'ng-show' => 'columns.sku.visible' } SKU
     %th.name{ 'ng-show' => 'columns.name.visible' } Name
@@ -24,7 +28,9 @@
     %th.display_as{ 'ng-show' => 'columns.unit.visible' } Display As
     %th.price{ 'ng-show' => 'columns.price.visible' } Price
     %th.on_hand{ 'ng-show' => 'columns.on_hand.visible' } On Hand
+    %th.on_demand{ 'ng-show' => 'columns.on_demand.visible' } On Demand
     %th.category{ 'ng-show' => 'columns.category.visible' } Category
+    %th.tax_category{ 'ng-show' => 'columns.tax_category.visible' } Tax Category
     %th.inherits_properties{ 'ng-show' => 'columns.inherits_properties.visible' } Inherits Properties?
     %th.available_on{ 'ng-show' => 'columns.available_on.visible' } Av. On
     %th.actions
