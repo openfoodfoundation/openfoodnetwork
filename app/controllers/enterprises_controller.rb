@@ -4,7 +4,7 @@ class EnterprisesController < BaseController
   include OrderCyclesHelper
 
   # These prepended filters are in the reverse order of execution
-  prepend_before_filter :load_active_distributors, :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
+  prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
   before_filter :clean_permalink, only: :check_permalink
 
   respond_to :js, only: :permalink_checker

@@ -54,10 +54,8 @@ module OpenFoodNetwork
 
       it "fetches variants for some params" do
         subject.should_receive(:child_variants).and_return ["children"]
-        subject.should_receive(:master_variants).and_return ["masters"]
         subject.should_receive(:filter).with(['children']).and_return ["filter_children"]
-        subject.should_receive(:filter).with(['masters']).and_return ["filter_masters"]
-        subject.variants.should == ["filter_children", "filter_masters"]
+        subject.variants.should == ["filter_children"]
       end
     end
 
@@ -89,14 +87,6 @@ module OpenFoodNetwork
           variant_2 = product2.variants.first
 
           subject.child_variants.should == [variant_2]
-        end
-      end
-
-      describe "fetching master variants" do
-        it "doesn't return master variants with siblings" do
-          product = create(:simple_product, supplier: supplier)
-
-          subject.master_variants.should be_empty
         end
       end
 
