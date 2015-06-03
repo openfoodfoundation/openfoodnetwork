@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe InjectionHelper, type: :helper do
+describe InjectionHelper, type: :helper, performance: true do
   let(:oc) { create(:simple_order_cycle) }
   let(:relative_supplier) { create(:supplier_enterprise) }
   let(:relative_distributor) { create(:distributor_enterprise) }

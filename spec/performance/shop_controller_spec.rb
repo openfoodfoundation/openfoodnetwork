@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShopController, type: :controller do
+describe ShopController, type: :controller, performance: true do
   let(:d) { create(:distributor_enterprise) }
   let(:enterprise_fee) { create(:enterprise_fee) }
   let(:order_cycle) { create(:simple_order_cycle, distributors: [d], coordinator_fees: [enterprise_fee]) }
