@@ -132,7 +132,6 @@
             %th.actions
               Ask?&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-<<<<<<< HEAD
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
@@ -157,30 +156,4 @@
             %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
-=======
-          %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
-            %td.bulk
-              %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
-            %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
-            %td.full_name{ 'ng-show' => 'columns.full_name.visible' } {{ line_item.order.full_name }}
-            %td.email{ 'ng-show' => 'columns.email.visible' } {{ line_item.order.email }}
-            %td.phone{ 'ng-show' => 'columns.phone.visible' } {{ line_item.order.phone }}
-            %td.date{ 'ng-show' => 'columns.order_date.visible' } {{ line_item.order.completed_at }}
-            %td.producer{ 'ng-show' => 'columns.producer.visible' } {{ line_item.supplier.name }}
-            %td.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' } {{ line_item.order.order_cycle.name }}
-            %td.hub{ 'ng-show' => 'columns.hub.visible' } {{ line_item.order.distributor.name }}
-            %td.variant{ 'ng-show' => 'columns.variant.visible' }
-              %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.full_name }}
-            %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-              %input{ :type => 'number', :name => 'quantity', 'ng-model' => "line_item.quantity", 'ofn-line-item-upd-attr' => "quantity" }
-            %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
-            %td.unit_value{ 'ng-show' => 'columns.unit_value.visible' }
-              %input{ :type => 'number', :name => 'unit_value', :id => 'unit_value', 'ng-model' => "line_item.unit_value", 'ng-readonly' => "unitValueLessThanZero(line_item)", 'ng-change' => "weightAdjustedPrice(line_item, {{ line_item.unit_value }})", 'ofn-line-item-upd-attr' => "unit_value" }
-            %td.price{ 'ng-show' => 'columns.price.visible' }
-              %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price | currency }}', 'ng-model' => "line_item.price", 'ng-readonly' => "true", 'ofn-line-item-upd-attr' => "price" }
-            %td.actions
-              %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
-            %td.actions
-              %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
->>>>>>> master
       %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
