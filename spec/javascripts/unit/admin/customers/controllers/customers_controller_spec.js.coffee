@@ -12,11 +12,11 @@ describe "CustomersCtrl", ->
       Customers = _Customers_
       ctrl = $controller 'customersCtrl', {$scope: scope, Customers: Customers, shops: shops}
 
-  describe "initialise()", ->
+  describe "setting the shop on scope", ->
     beforeEach ->
       spyOn(Customers, "index").andReturn "list of customers"
-      scope.shop = {id: 1}
-      scope.initialise()
+      scope.$apply ->
+        scope.shop = {id: 1}
 
     it "calls Customers#index with the correct params", ->
       expect(Customers.index).toHaveBeenCalledWith({enterprise_id: 1})
