@@ -33,5 +33,6 @@
 //= require ./users/users
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
+//= require ../shared/bindonce.min.js
 
 //= require_tree .
