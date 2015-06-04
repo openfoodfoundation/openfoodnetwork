@@ -79,6 +79,8 @@ Openfoodnetwork::Application.routes.draw do
     resources :variant_overrides do
       post :bulk_update, on: :collection
     end
+
+    resources :customers, only: [:index, :update]
   end
 
   namespace :api do
