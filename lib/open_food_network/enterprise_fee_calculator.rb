@@ -7,6 +7,24 @@ module OpenFoodNetwork
       @order_cycle = order_cycle
     end
 
+    def indexed_fees_for(variant)
+      load_applicators unless @indexed_applicators
+
+      indexed_applicators_for(variant).sum do |applicator|
+        calculate_fee_for variant, applicator
+      end
+    end
+
+    def indexed_fees_by_type_for(variant)
+      load_applicators unless @indexed_applicators
+
+      indexed_applicators_for(variant).inject({}) do |fees, applicator|
+        fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
+        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator
+        fees
+      end.select { |fee_type, amount| amount > 0 }
+    end
+
 
     def fees_for(variant)
       per_item_enterprise_fee_applicators_for(variant).sum do |applicator|
@@ -44,6 +62,48 @@ module OpenFoodNetwork
 
 
     private
+
+    def load_applicators
+      @indexed_applicators = {}
+
+      enterprise_fees = enterprise_fees_with_exchange_details
+      indexed_variants = Spree::Variant.where(id: enterprise_fees.pluck(:variant_id)).indexed
+
+      load_exchange_fee_applicators    enterprise_fees, indexed_variants
+      load_coordinator_fee_applicators enterprise_fees, indexed_variants
+    end
+
+    def enterprise_fees_with_exchange_details
+      EnterpriseFee.
+        joins(:exchanges => :exchange_variants).
+        where('exchanges.order_cycle_id = ?', @order_cycle.id).
+        select('enterprise_fees.*, exchange_variants.variant_id AS variant_id, exchanges.incoming AS exchange_incoming')
+    end
+
+    def load_exchange_fee_applicators(enterprise_fees, indexed_variants)
+      enterprise_fees.each do |enterprise_fee|
+        role = enterprise_fee.exchange_incoming ? 'supplier' : 'distributor'
+
+        @indexed_applicators[enterprise_fee.variant_id] ||= []
+        @indexed_applicators[enterprise_fee.variant_id] <<
+          OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, indexed_variants[enterprise_fee.variant_id], role)
+      end
+    end
+
+    def load_coordinator_fee_applicators(enterprise_fees, indexed_variants)
+      @order_cycle.coordinator_fees.each do |enterprise_fee|
+        indexed_variants.keys.each do |variant_id|
+          @indexed_applicators[variant_id] ||= []
+          @indexed_applicators[variant_id] <<
+            OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, indexed_variants[variant_id], 'coordinator')
+        end
+      end
+    end
+
+    def indexed_applicators_for(variant)
+      @indexed_applicators[variant.id] || []
+    end
+
 
     def calculate_fee_for(variant, applicator)
       # Spree's Calculator interface accepts Orders or LineItems,
