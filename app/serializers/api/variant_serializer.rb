@@ -7,11 +7,16 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def fees
-    options[:enterprise_fee_calculator].indexed_fees_by_type_for(object)
+    options[:enterprise_fee_calculator].andand.indexed_fees_by_type_for(object) ||
+      object.fees_by_type_for(options[:current_distributor], options[:current_order_cycle])
   end
 
   def price_with_fees
-    object.price + options[:enterprise_fee_calculator].indexed_fees_for(object)
+    if options[:enterprise_fee_calculator]
+      object.price + options[:enterprise_fee_calculator].indexed_fees_for(object)
+    else
+      object.price_with_fees(options[:current_distributor], options[:current_order_cycle])
+    end
   end
 
   def product_name
