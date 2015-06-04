@@ -104,6 +104,17 @@ module Spree
       end
     end
 
+    describe "indexing variants by id" do
+      let!(:v1) { create(:variant) }
+      let!(:v2) { create(:variant) }
+      let!(:v3) { create(:variant) }
+
+      it "indexes variants by id" do
+        Variant.where(id: [v1, v2, v3]).indexed.should ==
+          {v1.id => v1, v2.id => v2, v3.id => v3}
+      end
+    end
+
     describe "generating the full name" do
       let(:v) { Variant.new }
 

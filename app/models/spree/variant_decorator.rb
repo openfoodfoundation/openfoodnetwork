@@ -46,6 +46,13 @@ Spree::Variant.class_eval do
   }
 
 
+  def self.indexed
+    Hash[
+      scoped.map { |v| [v.id, v] }
+    ]
+  end
+
+
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end
