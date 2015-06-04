@@ -121,14 +121,18 @@ describe Enterprise do
         e.relatives.should match_array [p, c]
       end
 
+      it "finds relatives_including_self" do
+        expect(e.relatives_including_self).to include e
+      end
+
       it "scopes relatives to visible distributors" do
-        e.should_receive(:relatives).and_return(relatives = [])
+        e.should_receive(:relatives_including_self).and_return(relatives = [])
         relatives.should_receive(:is_distributor).and_return relatives
         e.distributors
       end
 
       it "scopes relatives to visible producers" do
-        e.should_receive(:relatives).and_return(relatives = [])
+        e.should_receive(:relatives_including_self).and_return(relatives = [])
         relatives.should_receive(:is_primary_producer).and_return relatives
         e.suppliers
       end

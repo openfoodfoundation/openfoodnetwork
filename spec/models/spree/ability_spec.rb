@@ -220,6 +220,10 @@ module Spree
           should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises], for: :report)
         end
 
+        it "should not be able to access customer actions" do
+          should_not have_ability([:admin, :index, :update], for: Customer)
+        end
+
         describe "order_cycles abilities" do
           context "where the enterprise is not in an order_cycle" do
             let!(:order_cycle) { create(:simple_order_cycle) }
@@ -405,6 +409,10 @@ module Spree
 
         it "should not be able to read other reports" do
           should_not have_ability([:sales_total, :users_and_enterprises], for: :report)
+        end
+
+        it "should be able to access customer actions" do
+          should have_ability([:admin, :index, :update], for: Customer)
         end
 
         context "for a given order_cycle" do

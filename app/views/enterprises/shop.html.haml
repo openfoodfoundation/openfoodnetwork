@@ -3,7 +3,7 @@
 %shop.darkswarm
   - content_for :order_cycle_form do
 
-    %div{"ng-controller" => "OrderCycleChangeCtrl"}
+    %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
       %closing{"ng-if" => "OrderCycle.selected()"}
         Next order closing
         %strong {{ OrderCycle.orders_close_at() | date_in_words }}

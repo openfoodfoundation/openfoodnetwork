@@ -21,6 +21,7 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
     if results.all?
       results << all_options_present(from, options[:with_options]) if options.key? :with_options
       results << exact_options_present(from, options[:options]) if options.key? :options
+      results << no_options_present(from, options[:without_options]) if options.key? :without_options
     end
 
     results.all?
@@ -48,6 +49,14 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
   def exact_options_present(from, options)
     with_select2_open(from) do
       @node.all("div.select2-drop-active ul.select2-results li").map(&:text) == options
+    end
+  end
+
+  def no_options_present(from, options)
+    with_select2_open(from) do
+      options.none? do |option|
+        @node.has_selector? "div.select2-drop-active ul.select2-results li", text: option
+      end
     end
   end
 

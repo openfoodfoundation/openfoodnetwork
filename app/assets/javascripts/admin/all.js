@@ -17,9 +17,13 @@
 //= require admin/spree_promo
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
+//= require ../shared/ng-tags-input.min.js
 //= require ./admin
+//= require ./customers/customers
+//= require ./dropdown/dropdown
 //= require ./enterprises/enterprises
 //= require ./enterprise_groups/enterprise_groups
+//= require ./index_utils/index_utils
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
