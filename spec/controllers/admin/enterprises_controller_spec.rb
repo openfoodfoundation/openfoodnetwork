@@ -449,5 +449,31 @@ module Admin
         end
       end
     end
+
+    describe "index" do
+      let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+      let!(:enterprise1) { create(:enterprise, sells: 'any', owner: user) }
+      let!(:enterprise2) { create(:enterprise, sells: 'own', owner: user) }
+      let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create_enterprise_user ) }
+
+      before do
+        controller.stub spree_current_user: user
+      end
+
+      context "html" do
+        it "returns an empty @collection" do
+          spree_get :index, format: :html
+          expect(assigns(:collection)).to eq []
+        end
+      end
+
+      context "json" do
+        it "scopes @collection to enterprises editable by the user" do
+          spree_get :index, format: :json
+          expect(assigns(:collection)).to include enterprise1, enterprise2
+          expect(assigns(:collection)).to_not include enterprise3
+        end
+      end
+    end
   end
 end

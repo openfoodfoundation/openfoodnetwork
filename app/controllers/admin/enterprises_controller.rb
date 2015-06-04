@@ -2,7 +2,7 @@ require 'open_food_network/referer_parser'
 
 module Admin
   class EnterprisesController < ResourceController
-    before_filter :load_enterprise_set, :only => :index
+    # before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
@@ -22,6 +22,15 @@ module Admin
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
+
+    def index
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: @collection, each_serializer: Api::Admin::BasicEnterpriseSerializer
+        end
+      end
+    end
 
     def set_sells
       enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
@@ -112,6 +121,9 @@ module Admin
         coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
         order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
         return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
+      when :index
+        return Enterprise.where("1=0") unless json_request?
+        OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises
       else
         # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
         OpenFoodNetwork::Permissions.new(spree_current_user).
