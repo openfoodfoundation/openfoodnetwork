@@ -1,9 +1,7 @@
 Spree.user_class.class_eval do
-  if method_defined? :send_reset_password_instructions_with_delay
-    Bugsnag.notify RuntimeError.new "send_reset_password_instructions already handled asyncronously - double-calling results in infinite job loop"
-  else
-    handle_asynchronously :send_reset_password_instructions
-  end
+  # handle_asynchronously will define send_reset_password_instructions_with_delay.
+  # If handle_asynchronously is called twice, we get an infinite job loop.
+  handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
 
   has_many :enterprise_roles, :dependent => :destroy
   has_many :enterprises, through: :enterprise_roles
