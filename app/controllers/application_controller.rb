@@ -1,3 +1,5 @@
+require 'open_food_network/referer_parser'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -9,7 +11,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_checkout_redirect
-    if request.referer and referer_path = URI(request.referer).path
+    referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+    if referer_path
       session["spree_user_return_to"] = [main_app.checkout_path].include?(referer_path) ? referer_path : root_path
     end
   end
