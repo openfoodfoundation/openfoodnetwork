@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Admin::CustomersController, type: :controller do
   include AuthenticationWorkflow
 
