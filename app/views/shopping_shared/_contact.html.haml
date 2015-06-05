@@ -2,7 +2,7 @@
   .panel
     .row
       .small-12.large-4.columns
-        - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode 
+        - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode
           %div.center
             .header Address
             %strong=current_distributor.name
@@ -49,7 +49,7 @@
               - unless current_distributor.linkedin.blank?
                 %span
                   %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
-                    %i.ofn-i_042-linkedin 
+                    %i.ofn-i_042-linkedin
                     / = current_distributor.linkedin
 
               - unless current_distributor.instagram.blank?

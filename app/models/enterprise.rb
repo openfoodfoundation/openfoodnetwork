@@ -30,6 +30,7 @@ class Enterprise < ActiveRecord::Base
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
+  has_many :customers
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -162,17 +163,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-  # Return enterprises that participate in order cycles that user coordinates, sends to or receives from
-  scope :accessible_by, lambda { |user|
-    if user.has_spree_role?('admin')
-      scoped
-    else
-      with_order_cycles_outer.
-      where('order_cycles.id IN (?)', OrderCycle.accessible_by(user)).
-      select('DISTINCT enterprises.*')
-    end
-  }
-
   def self.find_near(suburb)
     enterprises = []
 
@@ -187,6 +177,10 @@ class Enterprise < ActiveRecord::Base
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
     count(distinct: true)
+  end
+
+  def activated?
+    confirmed_at.present? && sells != 'unspecified'
   end
 
   def set_producer_property(property_name, property_value)
@@ -223,12 +217,16 @@ class Enterprise < ActiveRecord::Base
     ", self.id, self.id)
   end
 
+  def relatives_including_self
+    Enterprise.where(id: relatives.pluck(:id) | [id])
+  end
+
   def distributors
-    self.relatives.is_distributor
+    self.relatives_including_self.is_distributor
   end
 
   def suppliers
-    self.relatives.is_primary_producer
+    self.relatives_including_self.is_primary_producer
   end
 
   def website
@@ -310,7 +308,7 @@ class Enterprise < ActiveRecord::Base
     test_permalink = test_permalink.parameterize
     test_permalink = "my-enterprise" if test_permalink.blank?
     existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
-    if existing.empty?
+    unless existing.include?(test_permalink)
       test_permalink
     else
       used_indices = existing.map do |p|

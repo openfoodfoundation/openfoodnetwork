@@ -79,6 +79,8 @@ Openfoodnetwork::Application.routes.draw do
     resources :variant_overrides do
       post :bulk_update, on: :collection
     end
+
+    resources :customers, only: [:index, :update]
   end
 
   namespace :api do
@@ -168,6 +170,10 @@ Spree::Core::Engine.routes.prepend do
       get :product_distributions, on: :member
 
       post :bulk_update, :on => :collection, :as => :bulk_update
+    end
+
+    resources :orders do
+      get :managed, on: :collection
     end
   end
 

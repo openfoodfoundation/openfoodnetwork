@@ -22,8 +22,8 @@ describe "AdminOrderMgmtCtrl", ->
       returnedOrderCycles = [ "oc1", "oc2", "oc3" ]
       httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
-      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_distributor_eq]=true").respond returnedDistributors
-      httpBackend.expectGET("/api/order_cycles/accessible").respond returnedOrderCycles
+      httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").respond returnedDistributors
+      httpBackend.expectGET("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=SomeDate").respond returnedOrderCycles
       spyOn(scope, "initialiseVariables").andCallThrough()
       spyOn(scope, "fetchOrders").andReturn "nothing"
       #spyOn(returnedSuppliers, "unshift")
@@ -33,8 +33,8 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.flush()
 
       expect(scope.suppliers).toEqual [{ id : '0', name : 'All' }, 'list of suppliers']
-      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ] 
-      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ] 
+      expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ]
+      expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ]
 
       expect(scope.initialiseVariables.calls.length).toBe 1
       expect(scope.fetchOrders.calls.length).toBe 1
@@ -43,7 +43,7 @@ describe "AdminOrderMgmtCtrl", ->
   describe "fetching orders", ->
     beforeEach ->
       scope.initialiseVariables()
-      httpBackend.expectGET("/api/orders/managed?template=bulk_index;page=1;per_page=500;q[completed_at_not_null]=true;q[completed_at_gt]=SomeDate;q[completed_at_lt]=SomeDate").respond "list of orders"
+      httpBackend.expectGET("/admin/orders/managed?template=bulk_index;page=1;per_page=500;q[state_not_eq]=canceled;q[completed_at_not_null]=true;q[completed_at_gt]=SomeDate;q[completed_at_lt]=SomeDate").respond "list of orders"
 
     it "makes a call to dataFetcher, with current start and end date parameters", ->
       scope.fetchOrders()
@@ -350,234 +350,31 @@ describe "AdminOrderMgmtCtrl", ->
         spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
-describe "managing pending changes", ->
-  dataSubmitter = pendingChangesService = null
+    describe "updating the price upon updating the weight of a line item", ->
 
-  beforeEach ->
-    dataSubmitter = jasmine.createSpy('dataSubmitter').andReturn {
-      then: (thenFn) ->
-        thenFn({propertyName: "new_value"})
-    }
+      it "resets the weight if the weight is set to zero", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 0 }
+        ]
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], 100)).toEqual scope.filteredLineItems[0].price
 
-  beforeEach ->
-    module "ofn.admin", ($provide) ->
-      $provide.value 'dataSubmitter', dataSubmitter
-      return
+      it "updates the price if the weight is changed", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 200 }
+        ]
+        old_value = scope.filteredLineItems[0].units_variant.unit_value
+        new_value = scope.filteredLineItems[0].unit_value
+        sp = scope.filteredLineItems[0].price * new_value / old_value
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
 
-  beforeEach inject (pendingChanges) ->
-    pendingChangesService = pendingChanges
-
-  describe "adding a new change", ->
-    it "adds a new object with key of id if it does not already exist", ->
-      expect(pendingChangesService.pendingChanges).toEqual {}
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-
-    it "adds a new object with key of the altered attribute name if it does not already exist", ->
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
-
-    it "replaces the existing object when adding a change to an attribute which already exists", ->
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
-      pendingChangesService.add 1, "propertyName", { b: 2 }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { b: 2 }
-
-   it "adds an attribute to key to a line item object when one already exists", ->
-      pendingChangesService.add 1, "propertyName1", { a: 1 }
-      pendingChangesService.add 1, "propertyName2", { b: 2 }
-      expect(pendingChangesService.pendingChanges["1"]).toEqual { propertyName1: { a: 1}, propertyName2: { b: 2 } }
-
-  describe "removing all existing changes", ->
-    it "resets pendingChanges object", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName2"]).toBeDefined()
-      pendingChangesService.removeAll()
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-      expect(pendingChangesService.pendingChanges).toEqual {}
-
-  describe "removing an existing change", ->
-    it "deletes a change if it exists", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).not.toBeDefined()
-
-    it "deletes a line item object if it is empty", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-
-    it "does nothing if key with specified attribute does not exist", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName2"
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toEqual { a: 1 }
-
-    it "does nothing if key with specified id does not exist", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 2, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).toEqual { "propertyName1": { a: 1 } }
-
-  describe "submitting an individual change to the server", ->
-    it "sends the correct object to dataSubmitter", ->
-      changeObj = { element: {} }
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(dataSubmitter.calls.length).toEqual 1
-      expect(dataSubmitter).toHaveBeenCalledWith changeObj
-
-    it "calls remove with id and attribute name", ->
-      changeObj = { element: {} }
-      spyOn(pendingChangesService, "remove").andCallFake(->)
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(pendingChangesService.remove.calls.length).toEqual 1
-      expect(pendingChangesService.remove).toHaveBeenCalledWith 1, "propertyName"
-
-    it "resets the dbValue attribute of the element in question", ->
-      element = { dbValue: 2 }
-      changeObj = { element: element }
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(element.dbValue).toEqual "new_value"
-
-  describe "cycling through all changes to submit to server", ->
-    it "sends the correct object to dataSubmitter", ->
-      spyOn(pendingChangesService, "submit").andCallFake(->)
-      pendingChangesService.pendingChanges =
-        1: { "prop1": 1, "prop2": 2 }
-        2: { "prop1": 2, "prop2": 4 }
-        7: { "prop2": 5 }
-      pendingChangesService.submitAll()
-      expect(pendingChangesService.submit.calls.length).toEqual 5
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop1", 1
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop2", 2
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
-
-    it "returns an array of promises representing all sumbit requests", ->
-      spyOn(pendingChangesService, "submit").andCallFake (id,attrName,changeObj) ->
-        id
-      pendingChangesService.pendingChanges =
-        1: { "prop1": 1 }
-        2: { "prop1": 2, "prop2": 4 }
-      expect(pendingChangesService.submitAll()).toEqual [ '1','2','2' ]
-
-describe "dataSubmitter service", ->
-  qMock = httpMock = {}
-  switchClassSpy = resolveSpy = rejectSpy = dataSubmitterService = null
-
-  beforeEach ->
-    resolveSpy = jasmine.createSpy('resolve')
-    rejectSpy = jasmine.createSpy('reject')
-    qMock.defer = ->
-      resolve: resolveSpy
-      reject: rejectSpy
-      promise: "promise1"
-
-    # Can't use httpBackend because the qMock interferes with it
-    httpMock.put = (url) ->
-      success: (successFn) ->
-        successFn("somedata") if url == "successURL"
-        error: (errorFn) ->
-          errorFn() if url == "errorURL"
-
-    spyOn(httpMock, "put").andCallThrough()
-    spyOn(qMock, "defer").andCallThrough()
-
-    switchClassSpy = jasmine.createSpy('switchClass')
-
-  beforeEach ->
-    module "ofn.admin" , ($provide) ->
-      $provide.value '$q', qMock
-      $provide.value '$http', httpMock
-      $provide.value 'switchClass', switchClassSpy
-      return
-
-  beforeEach inject (dataSubmitter) ->
-    dataSubmitterService = dataSubmitter
-
-  it "returns a promise", ->
-    expect(dataSubmitterService( { url: "successURL" } )).toEqual "promise1"
-    expect(qMock.defer).toHaveBeenCalled()
-
-  it "sends a PUT request with the url property of changeObj", ->
-    dataSubmitterService { url: "successURL" }
-    expect(httpMock.put).toHaveBeenCalledWith "successURL"
-
-  it "calls resolve on deferred object when request is successful", ->
-    element = { a: 1 }
-    dataSubmitterService { url: "successURL", element: element }
-    expect(resolveSpy.calls.length).toEqual 1
-    expect(rejectSpy.calls.length).toEqual 0
-    expect(resolveSpy).toHaveBeenCalledWith "somedata"
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-success", ["update-pending", "update-error"], 3000
-
-  it "calls reject on deferred object when request is erroneous", ->
-    element = { b: 2 }
-    dataSubmitterService { url: "errorURL", element: element  }
-    expect(resolveSpy.calls.length).toEqual 0
-    expect(rejectSpy.calls.length).toEqual 1
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-error", ["update-pending", "update-success"], false
-
-describe "switchClass service", ->
-  elementMock = timeoutMock = {}
-  removeClass = addClass = switchClassService = null
-
-  beforeEach ->
-    addClass = jasmine.createSpy('addClass')
-    removeClass = jasmine.createSpy('removeClass')
-    elementMock =
-      addClass: addClass
-      removeClass: removeClass
-    timeoutMock = jasmine.createSpy('timeout').andReturn "new timeout"
-    timeoutMock.cancel = jasmine.createSpy('timeout.cancel')
-
-  beforeEach ->
-    module "ofn.admin" , ($provide) ->
-      $provide.value '$timeout', timeoutMock
-      return
-
-  beforeEach inject (switchClass) ->
-    switchClassService = switchClass
-
-  it "calls addClass on the element once", ->
-    switchClassService elementMock, "addClass", [], false
-    expect(addClass).toHaveBeenCalledWith "addClass"
-    expect(addClass.calls.length).toEqual 1
-
-  it "calls removeClass on the element for ", ->
-    switchClassService elementMock, "", ["remClass1", "remClass2", "remClass3"], false
-    expect(removeClass).toHaveBeenCalledWith "remClass1"
-    expect(removeClass).toHaveBeenCalledWith "remClass2"
-    expect(removeClass).toHaveBeenCalledWith "remClass3"
-    expect(removeClass.calls.length).toEqual 3
-
-  it "call cancel on element.timout only if it exists", ->
-    switchClassService elementMock, "", [], false
-    expect(timeoutMock.cancel).not.toHaveBeenCalled()
-    elementMock.timeout = true
-    switchClassService elementMock, "", [], false
-    expect(timeoutMock.cancel).toHaveBeenCalled()
-
-  it "doesn't set up a new timeout if 'timeout' is false", ->
-    switchClassService elementMock, "class1", ["class2"], false
-    expect(timeoutMock).not.toHaveBeenCalled()
-
-  it "doesn't set up a new timeout if 'timeout' is a string", ->
-    switchClassService elementMock, "class1", ["class2"], "string"
-    expect(timeoutMock).not.toHaveBeenCalled()
-
-  it "sets up a new timeout if 'timeout' parameter is an integer", ->
-    switchClassService elementMock, "class1", ["class2"], 1000
-    expect(timeoutMock).toHaveBeenCalled()
-    expect(elementMock.timeout).toEqual "new timeout"
+      it "doesn't update the price if the weight is not changed", ->
+        scope.filteredLineItems = [
+          { units_variant: { unit_value: 100 }, price: 2, unit_value: 100 }
+        ]
+        old_value = scope.filteredLineItems[0].unit_value
+        new_value = scope.filteredLineItems[0].unit_value
+        sp = scope.filteredLineItems[0].price
+        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
 
 describe "Auxiliary functions", ->
   describe "getting a zero filled two digit number", ->

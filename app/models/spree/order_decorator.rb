@@ -10,11 +10,14 @@ Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
   belongs_to :cart
+  belongs_to :customer
 
+  validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
+  before_validation :associate_customer, unless: :customer_is_valid?
 
   checkout_flow do
     go_to_state :address
@@ -127,6 +130,7 @@ Spree::Order.class_eval do
     else
       current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
       current_item.variant = variant
+      current_item.unit_value = variant.unit_value
       if currency
         current_item.currency = currency unless currency.nil?
         current_item.price    = variant.price_in(currency).amount
@@ -259,5 +263,25 @@ Spree::Order.class_eval do
 
   def product_distribution_for(line_item)
     line_item.variant.product.product_distribution_for self.distributor
+  end
+
+  def require_customer?
+    return true unless new_record? or state == 'cart'
+  end
+
+  def customer_is_valid?
+    return true unless require_customer?
+    customer.present? && customer.enterprise_id == distributor_id && customer.email == (user.andand.email || email)
+  end
+
+  def associate_customer
+    email_for_customer = user.andand.email || email
+    existing_customer = Customer.of(distributor).find_by_email(email_for_customer)
+    if existing_customer
+      self.customer = existing_customer
+    else
+      new_customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
+      self.customer = new_customer
+    end
   end
 end

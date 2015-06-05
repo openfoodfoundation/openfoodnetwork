@@ -25,6 +25,22 @@ Spree::ShippingMethod.class_eval do
 
   scope :by_name, order('spree_shipping_methods.name ASC')
 
+
+  # Return the services (pickup, delivery) that different distributors provide, in the format:
+  # {distributor_id => {pickup: true, delivery: false}, ...}
+  def self.services
+    Hash[
+      Spree::ShippingMethod.
+      joins(:distributor_shipping_methods).
+      group('distributor_id').
+      select("distributor_id").
+      select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
+      select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
+      map { |sm| [sm.distributor_id.to_i, {pickup: sm.pickup == 't', delivery: sm.delivery == 't'}] }
+    ]
+  end
+
+
   def available_to_order_with_distributor_check?(order, display_on=nil)
     available_to_order_without_distributor_check?(order, display_on) &&
       self.distributors.include?(order.distributor)

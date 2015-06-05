@@ -21,8 +21,20 @@
   .columns.small-12.medium-3.large-5.fat
     %div{"bo-if" => "hub.producers"}
       %label Our producers
-      %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2
-        %li{"ng-repeat" => "enterprise in hub.producers"}
+      %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2{"ng-class" => "{'show-more-producers' : toggleMoreProducers}", "class" => "producers-list"}
+        %li{"ng-repeat" => "enterprise in hub.producers | limitTo:7"}
+          %enterprise-modal
+            %i.ofn-i_036-producers
+            %span{"bo-text" => "enterprise.name"}
+        %li{"data-is-link" => "true", "class" => "more-producers-link", "bo-show" => "hub.producers.length>7"}
+          %a{"ng-click" => "toggleMoreProducers=!toggleMoreProducers"}
+            .more
+              +
+              %span{"bo-text" => "hub.producers.length-7"}
+              More
+            .less
+              Show less
+        %li{"ng-repeat" => "enterprise in hub.producers.slice(7,hub.producers.length)", "class" => "additional-producer"}
           %enterprise-modal
             %i.ofn-i_036-producers
             %span{"bo-text" => "enterprise.name"}

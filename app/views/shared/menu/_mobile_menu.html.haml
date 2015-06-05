@@ -2,7 +2,7 @@
   %section.left
     %a.left-off-canvas-toggle.menu-icon
       %span
-  %section.right
+  %section.right{"ng-cloak" => true}
     .cart
       = render partial: "shared/menu/cart"
     %a{href: main_app.shop_path}
@@ -11,34 +11,34 @@
 %aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
     %li.ofn-logo
-      %a{href: root_path} 
+      %a{href: root_path}
         %img{src: "/assets/open-food-network-beta.png", srcset: "/assets/open-food-network-beta.svg", width: "110", height: "26"}
-    
+
     - if current_page? root_path
       %li.li-menu
         %a{"ofn-scroll-to" => "hubs"}
-          %span.nav-primary 
+          %span.nav-primary
             %i.ofn-i_040-hub
             Hubs
     - else
       %li.li-menu
         %a{href: root_path + "#/#hubs"}
-          %span.nav-primary 
+          %span.nav-primary
             %i.ofn-i_040-hub
             Hubs
     %li.li-menu
       %a{href: main_app.map_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_037-map
           Map
     %li.li-menu
       %a{href: main_app.producers_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_036-producers
           Producers
     %li.li-menu
       %a{href: main_app.groups_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_035-groups
           Groups
 

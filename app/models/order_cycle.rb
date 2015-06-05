@@ -26,7 +26,7 @@ class OrderCycle < ActiveRecord::Base
     closed.
     where("order_cycles.orders_close_at >= ?", 31.days.ago).
     order("order_cycles.orders_close_at DESC") }
-  
+
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
   scope :distributing_product, lambda { |product|
@@ -64,6 +64,25 @@ class OrderCycle < ActiveRecord::Base
     joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
+  scope :involving_managed_distributors_of, lambda { |user|
+    enterprises = Enterprise.managed_by(user)
+
+    # Order cycles where I managed an enterprise at either end of an outgoing exchange
+    # ie. coordinator or distibutor
+    joins(:exchanges).merge(Exchange.outgoing).
+    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+    select('DISTINCT order_cycles.*')
+  }
+
+  scope :involving_managed_producers_of, lambda { |user|
+    enterprises = Enterprise.managed_by(user)
+
+    # Order cycles where I managed an enterprise at either end of an incoming exchange
+    # ie. coordinator or producer
+    joins(:exchanges).merge(Exchange.incoming).
+    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+    select('DISTINCT order_cycles.*')
+  }
 
   def self.first_opening_for(distributor)
     with_distributor(distributor).soonest_opening.first
@@ -73,10 +92,24 @@ class OrderCycle < ActiveRecord::Base
     with_distributor(distributor).soonest_closing.first
   end
 
-
   def self.most_recently_closed_for(distributor)
     with_distributor(distributor).most_recently_closed.first
   end
+
+  # Find the earliest closing times for each distributor in an active order cycle, and return
+  # them in the format {distributor_id => closing_time, ...}
+  def self.earliest_closing_times
+    Hash[
+      Exchange.
+      outgoing.
+      joins(:order_cycle).
+      merge(OrderCycle.active).
+      group('exchanges.receiver_id').
+      select('exchanges.receiver_id AS receiver_id, MIN(order_cycles.orders_close_at) AS earliest_close_at').
+      map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
+    ]
+  end
+
 
   def clone!
     oc = self.dup

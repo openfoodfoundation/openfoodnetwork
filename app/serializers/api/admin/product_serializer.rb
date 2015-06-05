@@ -1,7 +1,7 @@
 class Api::Admin::ProductSerializer < ActiveModel::Serializer
   attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand, :inherits_properties
 
-  attributes :on_hand, :price, :available_on, :permalink_live
+  attributes :on_hand, :price, :available_on, :permalink_live, :tax_category_id
 
   has_one :supplier, key: :producer_id, embed: :id
   has_one :primary_taxon, key: :category_id, embed: :id

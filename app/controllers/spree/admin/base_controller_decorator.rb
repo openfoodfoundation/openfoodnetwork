@@ -58,4 +58,8 @@ Spree::Admin::BaseController.class_eval do
         "Until you set these up, customers will not be able to shop at this hub."
     end
   end
+
+  def html_request?
+    request.format.html?
+  end
 end

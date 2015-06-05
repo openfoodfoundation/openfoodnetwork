@@ -9,7 +9,7 @@ module Admin
 
     def move_up
       EnterpriseGroup.with_isolation_level_serializable do
-        @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
+        @enterprise_group = EnterpriseGroup.find_by_permalink params[:enterprise_group_id]
         @enterprise_group.move_higher
       end
       redirect_to main_app.admin_enterprise_groups_path
@@ -17,7 +17,7 @@ module Admin
 
     def move_down
       EnterpriseGroup.with_isolation_level_serializable do
-        @enterprise_group = EnterpriseGroup.find params[:enterprise_group_id]
+        @enterprise_group = EnterpriseGroup.find_by_permalink params[:enterprise_group_id]
         @enterprise_group.move_lower
       end
       redirect_to main_app.admin_enterprise_groups_path
@@ -32,6 +32,12 @@ module Admin
       enterprise_group
     end
     alias_method_chain :build_resource, :address
+
+    # Overriding method on Spree's resource controller,
+    # so that resources are found using permalink
+    def find_resource
+      EnterpriseGroup.find_by_permalink(params[:id])
+    end
 
     private
 

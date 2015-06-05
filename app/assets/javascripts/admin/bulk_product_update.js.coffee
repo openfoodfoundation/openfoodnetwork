@@ -1,16 +1,18 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
     $scope.loading = true
 
     $scope.StatusMessage = StatusMessage
 
-    $scope.columns =
+    $scope.columns = Columns.setColumns
       producer:             {name: "Producer",              visible: true}
       sku:                  {name: "SKU",                   visible: false}
       name:                 {name: "Name",                  visible: true}
       unit:                 {name: "Unit",                  visible: true}
       price:                {name: "Price",                 visible: true}
       on_hand:              {name: "On Hand",               visible: true}
+      on_demand:            {name: "On Demand",             visible: false}
       category:             {name: "Category",              visible: false}
+      tax_category:         {name: "Tax Category",          visible: false}
       inherits_properties:  {name: "Inherits Properties?",  visible: false}
       available_on:         {name: "Available On",          visible: false}
 
@@ -32,6 +34,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.producers = producers
     $scope.taxons = Taxons.taxons
+    $scope.tax_categories = tax_categories
     $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
     $scope.producerFilter = "0"
@@ -106,6 +109,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
 
+    $scope.toggleShowAllVariants = ->
+      showVariants = !DisplayProperties.showVariants 0
+      $scope.filteredProducts.forEach (product) ->
+        DisplayProperties.setShowVariants product.id, showVariants
+      DisplayProperties.setShowVariants 0, showVariants
+
     $scope.addVariant = (product) ->
       product.variants.push
         id: $scope.nextVariantId()
@@ -137,15 +146,18 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
     $scope.deleteVariant = (product, variant) ->
-      if !$scope.variantSaved(variant)
-        $scope.removeVariant(product, variant)
+      if product.variants.length > 1
+        if !$scope.variantSaved(variant)
+          $scope.removeVariant(product, variant)
+        else
+          if confirm("Are you sure?")
+            $http(
+              method: "DELETE"
+              url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
+            ).success (data) ->
+              $scope.removeVariant(product, variant)
       else
-        if confirm("Are you sure?")
-          $http(
-            method: "DELETE"
-            url: "/api/products/" + product.permalink_live + "/variants/" + variant.id + "/soft_delete"
-          ).success (data) ->
-            $scope.removeVariant(product, variant)
+        alert("The last variant cannot be deleted!")
 
     $scope.removeVariant = (product, variant) ->
       product.variants.splice product.variants.indexOf(variant), 1
@@ -309,8 +321,14 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_hand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_hand = product.on_hand
           hasUpdatableProperty = true
+        if product.hasOwnProperty("on_demand") and filteredVariants.length == 0 #only update if no variants present
+          filteredProduct.on_demand = product.on_demand
+          hasUpdatableProperty = true
         if product.hasOwnProperty("category_id")
           filteredProduct.primary_taxon_id = product.category_id
+          hasUpdatableProperty = true
+        if product.hasOwnProperty("tax_category_id")
+          filteredProduct.tax_category_id = product.tax_category_id
           hasUpdatableProperty = true
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
@@ -336,6 +354,9 @@ filterSubmitVariant = (variant) ->
     filteredVariant.id = variant.id unless variant.id <= 0
     if variant.hasOwnProperty("on_hand")
       filteredVariant.on_hand = variant.on_hand
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("on_demand")
+      filteredVariant.on_demand = variant.on_demand
       hasUpdatableProperty = true
     if variant.hasOwnProperty("price")
       filteredVariant.price = variant.price

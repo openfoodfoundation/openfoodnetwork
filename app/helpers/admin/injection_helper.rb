@@ -25,6 +25,10 @@ module Admin
       admin_inject_json_ams_array "admin.shipping_methods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_shops
+      admin_inject_json_ams_array "admin.customers", "shops", @shops, Api::Admin::IdNameSerializer
+    end
+
     def admin_inject_hubs
       admin_inject_json_ams_array "ofn.admin", "hubs", @hubs, Api::Admin::IdNameSerializer
     end
@@ -48,6 +52,10 @@ module Admin
 
     def admin_inject_products
       admin_inject_json_ams_array "ofn.admin", "products", @products, Api::Admin::ProductSerializer
+    end
+
+    def admin_inject_tax_categories
+      admin_inject_json_ams_array "ofn.admin", "tax_categories", @tax_categories, Api::Admin::TaxCategorySerializer
     end
 
     def admin_inject_taxons

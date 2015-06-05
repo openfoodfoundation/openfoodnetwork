@@ -31,7 +31,7 @@ Openfoodnetwork::Application.configure do
 
   # Show emails using Letter Opener
   config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { host: "test.com" }
+  config.action_mailer.default_url_options = { host: "0.0.0.0:3000" }
 end
 
 

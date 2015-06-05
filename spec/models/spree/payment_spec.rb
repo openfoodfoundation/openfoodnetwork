@@ -7,7 +7,7 @@ module Spree
         let(:payment) { create(:payment, source: create(:credit_card)) }
 
         it "can capture and void" do
-          payment.actions.sort.should == %w(capture void).sort
+          payment.actions.should match_array %w(capture void)
         end
 
         describe "when a payment has been taken" do
@@ -17,7 +17,7 @@ module Spree
           end
 
           it "can void and credit" do
-            payment.actions.sort.should == %w(void credit).sort
+            payment.actions.should match_array %w(void credit)
           end
         end
       end

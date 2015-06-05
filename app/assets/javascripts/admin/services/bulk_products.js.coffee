@@ -19,7 +19,7 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) 
         # when a respond_overrride for the clone action is used.
         id = data.product.id
         dataFetcher("/api/products/" + id + "?template=bulk_show").then (newProduct) =>
-          @addProducts [newProduct]
+          @insertProductAfter(product, newProduct)
 
     updateVariantLists: (serverProducts, productsWithUnsavedVariants) ->
       for product in productsWithUnsavedVariants
@@ -38,6 +38,10 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) 
       for product in products
         @unpackProduct product
         @products.push product
+
+    insertProductAfter: (product, newProduct) ->
+      index = @products.indexOf(product)
+      @products.splice(index + 1, 0, newProduct)
 
     unpackProduct: (product) ->
       #$scope.matchProducer product
