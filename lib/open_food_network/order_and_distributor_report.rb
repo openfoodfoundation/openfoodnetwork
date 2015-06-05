@@ -1,4 +1,3 @@
-
 module OpenFoodNetwork
   class OrderAndDistributorReport
 
@@ -8,14 +7,15 @@ module OpenFoodNetwork
 
     def header
       ["Order date", "Order Id",
-          "Customer Name","Customer Email", "Customer Phone", "Customer City",
-          "SKU", "Item name", "Variant", "Quantity", "Max Quantity", "Cost", "Shipping cost",
-          "Payment method",
-          "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"]
+       "Customer Name","Customer Email", "Customer Phone", "Customer City",
+       "SKU", "Item name", "Variant", "Quantity", "Max Quantity", "Cost", "Shipping cost",
+       "Payment method",
+       "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"]
     end
 
     def table
       order_and_distributor_details = []
+
       @orders.each do |order|
         order.line_items.each do |line_item|
           order_and_distributor_details << [order.created_at, order.id,
@@ -25,6 +25,7 @@ module OpenFoodNetwork
             order.distributor.andand.name, order.distributor.address.address1, order.distributor.address.city, order.distributor.address.zipcode, order.special_instructions ]
         end
       end
+
       order_and_distributor_details
     end
   end

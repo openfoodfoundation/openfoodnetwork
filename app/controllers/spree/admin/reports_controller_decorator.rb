@@ -7,6 +7,7 @@ require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
 require 'open_food_network/sales_tax_report'
+require 'open_food_network/xero_invoices_report'
 
 Spree::Admin::ReportsController.class_eval do
 
@@ -679,7 +680,22 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
 
-  def render_report (header, table, create_csv, csv_file_name)
+  def xero_invoices
+    if request.get?
+      params[:q] ||= {}
+      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+    end
+    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+
+    @search = Spree::Order.complete.managed_by(spree_current_user).order('id DESC').search(params[:q])
+    orders = @search.result
+    @report = OpenFoodNetwork::XeroInvoicesReport.new orders, params
+    render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
+  end
+
+
+  def render_report(header, table, create_csv, csv_file_name)
     unless create_csv
       render :html => table
     else
@@ -716,7 +732,9 @@ Spree::Admin::ReportsController.class_eval do
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
+      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
+      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' }
+
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
