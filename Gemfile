@@ -70,7 +70,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'foundation-icons-sass-rails'
   gem 'momentjs-rails'
-  gem 'angular-rails-templates'
+  gem 'angular-rails-templates', '~> 0.2.0'
 end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
