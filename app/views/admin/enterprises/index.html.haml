@@ -46,35 +46,37 @@
         %col.type{ width: "25%"}
         %col.status{ width: "25%"}
         %col.manage{ width: "25%"}
-        -# %col.actions{ width: "10%"}
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
             %th.name{ ng: { show: 'columns.name.visible' } }
               Name
-              -# %a{ :href => '', ng: { click: "predicate = 'name'; reverse = !reverse" } } Name
             %th.type{ ng: { show: 'columns.type.visible' } } Type
             %th.status{ ng: { show: 'columns.status.visible' } } Status
             %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
-            -# %th.actions
-            -#   Ask?&nbsp;
-            -#   %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
-        %tr.enterprise{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", class: { even: "'even'", odd: "'odd'"} } }
-          %td.name{ ng: { show: 'columns.name.visible' } }
-            %span{ bo: { bind: "enterprise.name" } }
-          %td.type{ ng: { show: 'columns.type.visible' } }
-            %a.button.fullwidth{ ng: { click: ""} }
-              %span{ bo: { bind: "enterprise.category" } }
-              %i.icon-arrow-down
-          %td.status{ ng: { show: 'columns.status.visible' } }
-            %a.button.fullwidth{ ng: { click: ""} }
-              Status
-              %i.icon-arrow-down
-          %td.manage{ ng: { show: 'columns.manage.visible' } }
-            %a.button.fullwidth{ href: '#' }
-              Manage
-              %i.icon-arrow-right
-          -# %td.actions
-          -#   %a{ 'ng-click' => "deleteEnterprise(enterprise)", :class => "delete-enterprise icon-trash no-text" }
+        %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
+          %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
+            %td.name{ ng: { show: 'columns.name.visible' } }
+              %span{ bo: { bind: "enterprise.name" } }
+            %td.type{ ng: { show: 'columns.type.visible' } }
+              %panel-toggle{ name: "type", object: "enterprise" }
+                %a.button.fullwidth
+                  %span{ bo: { bind: "enterprise.category" } }
+                  %i.icon-arrow-down
+            %td.status{ ng: { show: 'columns.status.visible' } }
+              %panel-toggle{ name: "status", object: "enterprise" }
+                %a.button.fullwidth{ ng: { click: ""} }
+                  Status
+                  %i.icon-arrow-down
+            %td.manage{ ng: { show: 'columns.manage.visible' } }
+              %a.button.fullwidth{ href: '#' }
+                Manage
+                %i.icon-arrow-right
+
+          %tr.panel-row{ object: "enterprise", panels: "{type: 'enterprise_type', status: 'enterprise_status'}" }
+
+
+
+
 
 
 
