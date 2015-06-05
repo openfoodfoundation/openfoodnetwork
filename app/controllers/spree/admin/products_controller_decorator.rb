@@ -1,4 +1,5 @@
 require 'open_food_network/spree_api_key_loader'
+require 'open_food_network/referer_parser'
 
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
@@ -53,7 +54,8 @@ Spree::Admin::ProductsController.class_eval do
 
   protected
   def location_after_save
-    if URI(request.referer).path == '/admin/products/bulk_edit'
+    referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+    if referer_path == '/admin/products/bulk_edit'
       bulk_edit_admin_products_url
     else
       location_after_save_original
