@@ -1,6 +1,6 @@
 angular.module("admin.enterprises")
-  .controller "sideMenuCtrl", ($scope, $parse, Enterprise, SideMenu, enterprisePermissions) ->
-    $scope.Enterprise = Enterprise.enterprise
+  .controller "sideMenuCtrl", ($scope, $parse, enterprise, SideMenu, enterprisePermissions) ->
+    $scope.Enterprise = enterprise
     $scope.menu = SideMenu
     $scope.select = SideMenu.select
 
