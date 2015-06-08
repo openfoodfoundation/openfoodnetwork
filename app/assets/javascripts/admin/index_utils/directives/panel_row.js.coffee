@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "panelRow", (Panels) ->
+angular.module("admin.indexUtils").directive "panelRow", (Panels, Columns) ->
   restrict: "C"
   templateUrl: "admin/panel.html"
   scope:
@@ -7,6 +7,10 @@ angular.module("admin.indexUtils").directive "panelRow", (Panels) ->
   link: (scope, element, attrs) ->
     scope.template = ""
     selected = null
+    scope.columnCount = Columns.visibleCount
+
+    scope.$on "columnCount:changed", (event, count) ->
+      scope.columnCount = count
 
     setTemplate = ->
       if selected?
