@@ -1,0 +1,100 @@
+.enterprise_shop_panel
+  %form{ name: "shop", id: "shop", novalidate: true, ng: { controller: 'indexShopPanelCtrl' } }
+    -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
+    %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", value: "enterprise.sells"} }
+    %input{ hidden: "true", name: "producer_profile_only", ng: { required: "enterprise.is_primary_producer=='none'", disabled: "enterprise.is_primary_producer!='none'", value: "enterprise.producer_profile_only"} }
+
+    -# %table
+    -#   %col{ width: '25%' }
+    -#   %col{ width: '25%' }
+    -#   %col{ width: '50%' }
+    -#   %thead
+    -#     %th PRODUCER?
+    -#     %th SHOP?
+    -#     %th COST AND DESCRIPTION
+    -#   %tr
+    -#     %td.selector{ rowspan: 3, ng: { click: 'enterprise.is_primary_producer=true', class: "{selected: enterprise.is_primary_producer==true}" } }
+    -#       %h5
+    -#         PRODUCER
+    -#     %td.selector{ rowspan: 2, ng: { click: "enterprise.sells='none'", class: "{selected: enterprise.sells=='none'}" } }
+    -#       %h5
+    -#         NO SHOP
+    -#     %td.description{ rowspan: 6 }
+    -#       %p
+    -#         %strong MONTHLY COST:
+    -#         {{ "FREE" }}
+    -#
+    -#       %p
+    -#         %strong DESCRIPTION:
+    -#         %br
+    -#         %strong {{ enterprise.name }}
+    -#         is a
+    -#         %strong {{ enterprise.is_primary_producer ? "producer" : "non-producer" }}
+    -#         with a shop that sells
+    -#         =succeed "." do
+    -#           %strong {{ enterprise.sells }}
+    -#       %a.update.fullwidth.button
+    -#         UPDATE NOW
+    -#   %tr
+    -#   %tr
+    -#     %td.selector{ rowspan: 2, ng: { click: "enterprise.sells='own'", class: "{selected: enterprise.sells=='own'}" } }
+    -#       %h5
+    -#         PRODUCER SHOP
+    -#   %tr
+    -#     %td.selector{ rowspan: 3, ng: { click: 'enterprise.is_primary_producer=false', class: "{selected: enterprise.is_primary_producer==false}" } }
+    -#       %h5
+    -#         NON-PRODUCER
+    -#   %tr
+    -#     %td.selector{ rowspan: 2, ng: { click: "enterprise.sells='any'", class: "{selected: enterprise.sells=='any'}" } }
+    -#       %h5
+    -#         FULL SHOP
+    -#   %tr
+
+    .row
+      .alpha.eight.columns
+        %a.button.selector{ ng: { click: "enterprise.sells='none' && enterprise.producer_profile_only=true", class: "{selected: enterprise.sells=='none' && enterprise.producer_profile_only==true}" } }
+          .top
+            %h3 Profile Only
+            %p Connect through OFN
+          .bottom ALWAYS FREE
+        %a.button.selector{ ng: { click: "enterprise.sells='none' && enterprise.producer_profile_only=false", class: "{selected: enterprise.sells=='none' && enterprise.producer_profile_only==false}" } }
+          .top
+            %h3 No Shop
+            %p Sell through other shops
+          .bottom ALWAYS FREE
+        %a.button.selector{ ng: { click: "enterprise.sells='own' && enterprise.producer_profile_only=false", class: "{selected: enterprise.sells=='own'}" } }
+          .top
+            %h3 Producer Shop
+            %p Sell your own produce
+          .bottom
+            \%2 OF SALES
+            %br
+            CAPPED AT $50 PER MONTH
+        %a.button.selector{ ng: { click: "enterprise.sells='any' && enterprise.producer_profile_only=false", class: "{selected: enterprise.sells=='any'}" } }
+          .top
+            %h3 Producer Hub
+            %p Aggregate and sell produce
+          .bottom
+            \%2 OF SALES
+            %br
+            CAPPED AT $50 PER MONTH
+      .omega.eight.columns
+        %a.button.update.fullwidth{ ng: { class: "{disabled: saved()}" } }
+          %span{ ng: {show: "saved()" } }
+            SAVED
+            %i.icon-ok-sign
+          %span{ ng: {hide: "saved()" } }
+            SAVE
+            %i.icon-upload-alt
+
+        .info{ ng: { show: "enterprise.is_primary_producer==true && enterprise.sells='any'" } }
+          %h3 Producer Profile
+          %p Producers make yummy things to eat &amp;/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+
+          %p Being a producer does not limit an enterprise at all, producers can aggreagate food from other enterprises and sell it through shops on the Open Food Network.
+
+
+        .info{ ng: { show: "enterprise.is_primary_producer==false" } }
+          %h3 Non-Producer
+          %p
+            This enterprise does not produce any food itself, which means that it is probably involved in aggregating, selling and/or delivering food to the end eater.

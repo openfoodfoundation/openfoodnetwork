@@ -1,0 +1,41 @@
+.enterprise_producer_panel
+  %form{ name: "type", id: "type", novalidate: true, ng: { controller: 'indexProducerPanelCtrl' } }
+    -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
+    %input{ hidden: "true", name: "is_primary_producer", ng: { required: true, value: "enterprise.is_primary_producer"} }
+
+
+    .row
+      .alpha.eight.columns
+        .info{ ng: { show: "enterprise.is_primary_producer==true" } }
+          %h3 Producer
+          %p Producers make yummy things to eat &amp;/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+
+          %p Being a producer does not limit an enterprise, producers can still opt to aggregate food from other enterprises and sell it through a shop on the Open Food Network.
+
+
+        .info{ ng: { show: "enterprise.is_primary_producer==false" } }
+          %h3 Non-Producer
+          %p Non-producers do not produce any food themselves, meaning that they cannot create their own products for sale through the Open Food Network.
+
+          %p Instead, non-producers specialise in filling the other vital roles between producer and end eater, whether it be aggregating, grading, packing, selling or delivering food.
+
+      .omega.eight.columns
+        %a.button.selector{ ng: { click: 'enterprise.is_primary_producer=true', class: "{selected: enterprise.is_primary_producer==true}" } }
+          .top
+            %h3 PRODUCER
+            %p Primary producers of food
+          .bottom eg. GROWERS, BAKERS, BREWERS, MAKERS
+
+        %a.button.selector{ ng: { click: 'enterprise.is_primary_producer=false', class: "{selected: enterprise.is_primary_producer==false}" } }
+          .top
+            %h3 Non-Producer
+            %p All other food enterprises
+          .bottom eg. Grocery stores, Food co-ops, Buying groups
+
+        %a.button.update.fullwidth{ ng: { class: "{disabled: saved()}" } }
+          %span{ ng: {show: "saved()" } }
+            SAVED
+            %i.icon-ok-sign
+          %span{ ng: {hide: "saved()" } }
+            SAVE
+            %i.icon-upload-alt

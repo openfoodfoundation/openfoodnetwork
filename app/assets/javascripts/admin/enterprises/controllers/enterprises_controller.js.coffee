@@ -7,6 +7,7 @@ angular.module("admin.enterprises").controller 'enterprisesCtrl', ($scope, Enter
 
     $scope.columns = Columns.setColumns
       name:     { name: "Name",     visible: true }
-      type:     { name: "Type",     visible: true }
+      producer: { name: "Producer", visible: true }
+      shop:     { name: "Shop",     visible: true }
       status:   { name: "Status",   visible: true }
       manage:   { name: "Manage",   visible: true }

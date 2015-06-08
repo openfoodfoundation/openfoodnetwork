@@ -1,6 +1,20 @@
 tr.panel-row {
   display: none;
+
+  &:hover {
+    td {
+      background-color: #ffffff;
+    }
+  }
+
   td {
     padding: 0;
+    .panel {
+      border: 3px solid black;
+
+      .row{
+        margin: 0px -4px;
+      }
+    }
   }
 }

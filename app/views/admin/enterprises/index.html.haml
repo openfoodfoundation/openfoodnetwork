@@ -40,39 +40,45 @@
 
 
   .row{ ng: { show: "loaded() && filteredEnterprises.length > 0" }, bindonce: true }
-    %form{ name: "enterprises" }
-      %table.index#enterprises
-        %col.name{ width: "25%"}
-        %col.type{ width: "25%"}
-        %col.status{ width: "25%"}
-        %col.manage{ width: "25%"}
-        %thead
-          %tr{ ng: { controller: "ColumnsCtrl" } }
-            %th.name{ ng: { show: 'columns.name.visible' } }
-              Name
-            %th.type{ ng: { show: 'columns.type.visible' } } Type
-            %th.status{ ng: { show: 'columns.status.visible' } } Status
-            %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
-        %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
-          %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
-            %td.name{ ng: { show: 'columns.name.visible' } }
-              %span{ bo: { bind: "enterprise.name" } }
-            %td.type{ ng: { show: 'columns.type.visible' } }
-              %panel-toggle{ name: "type", object: "enterprise" }
-                %a.button.fullwidth
-                  %span{ bo: { bind: "enterprise.category" } }
-                  %i.icon-arrow-down
-            %td.status{ ng: { show: 'columns.status.visible' } }
-              %panel-toggle{ name: "status", object: "enterprise" }
-                %a.button.fullwidth{ ng: { click: ""} }
-                  Status
-                  %i.icon-arrow-down
-            %td.manage{ ng: { show: 'columns.manage.visible' } }
-              %a.button.fullwidth{ href: '#' }
-                Manage
-                %i.icon-arrow-right
+    %table.index#enterprises
+      %col.name{ width: "28%"}
+      %col.producer{ width: "18%"}
+      %col.shop{ width: "18%"}
+      %col.status{ width: "18%"}
+      %col.manage{ width: "18%"}
+      %thead
+        %tr{ ng: { controller: "ColumnsCtrl" } }
+          %th.name{ ng: { show: 'columns.name.visible' } }
+            Name
+          %th.producer{ ng: { show: 'columns.producer.visible' } } Producer?
+          %th.shop{ ng: { show: 'columns.shop.visible' } } Shop?
+          %th.status{ ng: { show: 'columns.status.visible' } } Status
+          %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
+      %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
+        %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
+          %td.name{ ng: { show: 'columns.name.visible' } }
+            %span{ bo: { bind: "enterprise.name" } }
+          %td.producer{ ng: { show: 'columns.producer.visible' } }
+            %panel-toggle{ name: "producer", object: "enterprise" }
+              %a.button.fullwidth
+                %span{ bo: { bind: "enterprise.is_primary_producer" } }
+                %i.icon-arrow-down
+          %td.shop{ ng: { show: 'columns.shop.visible' } }
+            %panel-toggle{ name: "shop", object: "enterprise" }
+              %a.button.fullwidth
+                %span{ bo: { bind: "enterprise.sells" } }
+                %i.icon-arrow-down
+          %td.status{ ng: { show: 'columns.status.visible' } }
+            %panel-toggle{ name: "status", object: "enterprise" }
+              %a.button.fullwidth{ ng: { click: ""} }
+                Status
+                %i.icon-arrow-down
+          %td.manage{ ng: { show: 'columns.manage.visible' } }
+            %a.button.fullwidth{ href: '#' }
+              Manage
+              %i.icon-arrow-right
 
-          %tr.panel-row{ object: "enterprise", panels: "{type: 'enterprise_type', status: 'enterprise_status'}" }
+        %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', shop: 'enterprise_shop', status: 'enterprise_status'}" }
 
 
 
