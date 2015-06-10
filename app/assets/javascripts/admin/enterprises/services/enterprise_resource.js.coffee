@@ -1,6 +1,8 @@
 angular.module("admin.enterprises").factory 'EnterpriseResource', ($resource) ->
-  $resource('/admin/enterprises.json', {}, {
+  $resource('/admin/enterprises/:id.json', {}, {
     'index':
       method: 'GET'
       isArray: true
+    'update':
+      method: 'PUT'
   })

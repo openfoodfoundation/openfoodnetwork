@@ -4,14 +4,12 @@ describe "EnterprisesCtrl", ->
   Enterprises = null
 
   beforeEach ->
-    shops = "list of shops"
-
     module('admin.enterprises')
     inject ($controller, $rootScope, _Enterprises_) ->
       scope = $rootScope
       Enterprises = _Enterprises_
       spyOn(Enterprises, "index").andReturn "list of enterprises"
-      ctrl = $controller 'enterprisesCtrl', {$scope: scope, Enterprises: Enterprises, shops: shops}
+      ctrl = $controller 'enterprisesCtrl', {$scope: scope, Enterprises: Enterprises}
 
   describe "setting the shop on scope", ->
     it "calls Enterprises#index with the correct params", ->

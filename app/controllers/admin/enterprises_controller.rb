@@ -32,6 +32,24 @@ module Admin
       end
     end
 
+    def update
+      invoke_callbacks(:update, :before)
+      if @object.update_attributes(params[object_name])
+        invoke_callbacks(:update, :after)
+        flash[:success] = flash_message_for(@object, :successfully_updated)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_save }
+          format.js   { render :layout => false }
+          format.json { render json: @object, serializer: Api::Admin::BasicEnterpriseSerializer }
+        end
+      else
+        invoke_callbacks(:update, :fails)
+        respond_with(@object) do |format|
+          format.json { render json: { errors: @object.errors.messages }, status: :unprocessable_entity }
+        end
+      end
+    end
+
     def set_sells
       enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       attributes = { sells: params[:sells] }

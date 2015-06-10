@@ -61,12 +61,12 @@
           %td.producer{ ng: { show: 'columns.producer.visible' } }
             %panel-toggle{ name: "producer", object: "enterprise" }
               %a.button.fullwidth
-                %span{ bo: { bind: "enterprise.is_primary_producer" } }
+                %span{ ng: { bind: "enterprise.is_primary_producer" } }
                 %i.icon-arrow-down
           %td.shop{ ng: { show: 'columns.shop.visible' } }
             %panel-toggle{ name: "shop", object: "enterprise" }
               %a.button.fullwidth
-                %span{ bo: { bind: "enterprise.sells" } }
+                %span{ ng: { bind: "enterprise.sells" } }
                 %i.icon-arrow-down
           %td.status{ ng: { show: 'columns.status.visible' } }
             %panel-toggle{ name: "status", object: "enterprise" }

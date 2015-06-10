@@ -8,9 +8,10 @@ tr.panel-row {
   }
 
   td {
+    border-color: #000000;
     padding: 0;
     .panel {
-      border: 3px solid black;
+      border: 2px solid #000000;
 
       .row{
         margin: 0px -4px;

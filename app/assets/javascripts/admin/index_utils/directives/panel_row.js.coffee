@@ -2,7 +2,7 @@ angular.module("admin.indexUtils").directive "panelRow", (Panels, Columns) ->
   restrict: "C"
   templateUrl: "admin/panel.html"
   scope:
-    object: "&"
+    object: "="
     panels: "="
   link: (scope, element, attrs) ->
     scope.template = ""
@@ -34,4 +34,4 @@ angular.module("admin.indexUtils").directive "panelRow", (Panels, Columns) ->
       element.hide 0, ->
         scope.setSelected null
 
-    Panels.register(scope.object().id, scope)
+    Panels.register(scope.object.id, scope)

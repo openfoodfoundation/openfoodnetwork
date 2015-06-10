@@ -1,9 +1,14 @@
-angular.module("admin.enterprises").controller 'indexProducerPanelCtrl', ($scope) ->
-  $scope.enterprise = angular.copy($scope.object())
-  $scope.persisted = angular.copy($scope.object())
-  $scope.attributes = ['is_primary_producer']
+angular.module("admin.enterprises").controller 'indexProducerPanelCtrl', ($scope, $controller) ->
+  angular.extend this, $controller('indexPanelCtrl', {$scope: $scope})
 
-  $scope.saved = ->
-    for attribute in $scope.attributes
-      return false if $scope.enterprise[attribute] != $scope.persisted[attribute]
-    true
+  $scope.changeToProducer = ->
+    $scope.resetAttribute('sells')
+    $scope.resetAttribute('producer_profile_only')
+    $scope.enterprise.is_primary_producer = true
+
+  $scope.changeToNonProducer = ->
+    if $scope.enterprise.sells == 'own'
+      $scope.enterprise.sells = 'any'
+    if $scope.enterprise.producer_profile_only = true
+      $scope.enterprise.producer_profile_only = false
+    $scope.enterprise.is_primary_producer = false
