@@ -4,10 +4,10 @@
 
 .home-alert
   .alert-box
-    border: 1px solid rgba($dark-grey, 0.85)
+    border: 1px solid rgba($dark-grey, 0.35)
     border-left: none
     border-right: none
-    background-color: white
+    background-color: lighten($ofn-grey, 15%)
     background-image: url("/assets/tile-wide.png")
     background-position: center center
     padding: 12px 0 8px 0
@@ -15,8 +15,8 @@
     a.alert-cta
       &, & *
         @include csstrans
-        color: rgba($dark-grey, 0.75)
+        color: #333
       &:hover, &:active, &:focus
         &, & *
           text-decoration: none
-          color: rgba($dark-grey, 1.0)
+          color: white
