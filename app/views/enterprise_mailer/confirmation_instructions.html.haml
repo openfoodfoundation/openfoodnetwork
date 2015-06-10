@@ -1,20 +1,22 @@
 %h3
   = "Hi, #{@resource.contact}!"
 %p.lead
-  = "Please confirm your email address for "
-  %strong
-    = "#{@resource.name}."
+  = "A profile for #{@resource.name} has been successfully created!"
+  To activate your Profile we need to confirm this email address.
 %p &nbsp;
 
 %p.callout
-  Click the link below to confirm your email and to activate your enterprise. This link can be used only once:
+  Please click the link below to confirm your email and to continue setting up your profile.
   %br
   %strong
     = link_to 'Confirm this email address »', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
 
 %p &nbsp;
 %p
-  = "We're so excited that you're joining the #{ Spree::Config[:site_name] }! Don't hestitate to get in touch if you have any questions."
+  After confirming your email you can access your administration account for this enterprise.
+  See the
+  = link_to 'User Guide', 'http://global.openfoodnetwork.org/platform/user-guide/'
+  = "to find out more about #{ Spree::Config[:site_name] }'s features and to start using your profile or online store."
 
 = render 'shared/mailers/signoff'
 
