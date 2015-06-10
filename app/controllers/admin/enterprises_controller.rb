@@ -171,13 +171,15 @@ module Admin
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
-          enterprise_params.delete :sells
+          enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by_id(enterprise_params[:id]).owner
         end
       end
     end
 
     def check_can_change_sells
-      params[:enterprise].delete :sells unless spree_current_user.admin?
+      unless spree_current_user.admin? || spree_current_user == @enterprise.owner
+        params[:enterprise].delete :sells
+      end
     end
 
     def override_owner

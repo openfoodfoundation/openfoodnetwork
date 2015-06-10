@@ -184,6 +184,15 @@ module Admin
       end
 
       context "as owner" do
+        it "allows 'sells' to be changed" do
+          controller.stub spree_current_user: profile_enterprise.owner
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.sells).to eq 'any'
+        end
+
         it "allows owner to be changed" do
           controller.stub spree_current_user: distributor_owner
           update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
@@ -383,6 +392,21 @@ module Admin
           bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
           spree_put :bulk_update, bulk_enterprise_params
           expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
+        end
+      end
+
+      context "as the owner of an enterprise" do
+        it "allows 'sells' and 'owner' to be changed" do
+          controller.stub spree_current_user: original_owner
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+
+          spree_put :bulk_update, bulk_enterprise_params
+          profile_enterprise1.reload
+          profile_enterprise2.reload
+          expect(profile_enterprise1.sells).to eq 'any'
+          expect(profile_enterprise2.sells).to eq 'any'
+          expect(profile_enterprise1.owner).to eq original_owner
+          expect(profile_enterprise2.owner).to eq original_owner
         end
       end
 
