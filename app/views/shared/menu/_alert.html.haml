@@ -1,8 +1,8 @@
-.text-center.home-alert
+.text-center.home-alert{ "ofn-inline-alert" => true, ng: { show: "visible" } }
   .alert-box
     %a.alert-cta{href: "http://www.openfoodnetwork.org", target: "_blank"}
       %h6
         Interested in selling food on the Open Food Network?  &nbsp;
         %strong Start here
         %i.ofn-i_054-point-right
-    %a.close{href: "#{}"} &times;
+    %a.close{ ng: { click: "close()" } } &times;
