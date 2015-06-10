@@ -47,7 +47,7 @@ Spree::Admin::OrdersController.class_eval do
 
   def managed
     permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    @orders = permissions.editable_orders.ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
+    @orders = permissions.editable_orders.order(:id).ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
     render json: @orders, each_serializer: Api::Admin::OrderSerializer
   end
 end

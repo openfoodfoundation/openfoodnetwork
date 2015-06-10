@@ -1,6 +1,4 @@
-dropDownModule = angular.module("ofn.dropdown", [])
-
-dropDownModule.directive "ofnDropDown", ($document) ->
+ angular.module("admin.dropdown").directive "ofnDropDown", ($document) ->
   link: (scope, element, attrs) ->
     outsideClickListener = (event) ->
       unless $(event.target).is("div.ofn_drop_down##{attrs.id} div.menu") ||
@@ -20,12 +18,3 @@ dropDownModule.directive "ofnDropDown", ($document) ->
         scope.$apply ->
           scope.expanded = true
           element.addClass "expanded"
-
-dropDownModule.directive "ofnCloseOnClick", ($document) ->
-  link: (scope, element, attrs) ->
-    element.click (event) ->
-      event.stopPropagation()
-      scope.$emit "offClick"
-
-dropDownModule.controller "DropDownCtrl", ($scope) ->
-  $scope.expanded = false

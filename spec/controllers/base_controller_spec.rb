@@ -24,9 +24,4 @@ describe BaseController do
     response.should redirect_to root_url
     flash[:info].should == "The order cycle you've selected has just closed. Please try again!"
   end
-
-  it "loads active_distributors" do
-    Enterprise.stub(:distributors_with_active_order_cycles) { 'active distributors' }
-    controller.load_active_distributors.should == 'active distributors'
-  end
 end

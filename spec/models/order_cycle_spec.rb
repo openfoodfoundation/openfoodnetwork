@@ -422,4 +422,23 @@ describe OrderCycle do
       OrderCycle.first_closing_for(distributor).should == oc
     end
   end
+
+  describe "finding the earliest closing times for each distributor" do
+    let(:time1) { 1.week.from_now }
+    let(:time2) { 2.weeks.from_now }
+    let(:time3) { 3.weeks.from_now }
+    let(:e1) { create(:distributor_enterprise) }
+    let(:e2) { create(:distributor_enterprise) }
+    let!(:oc1) { create(:simple_order_cycle, orders_close_at: time1, distributors: [e1]) }
+    let!(:oc2) { create(:simple_order_cycle, orders_close_at: time2, distributors: [e2]) }
+    let!(:oc3) { create(:simple_order_cycle, orders_close_at: time3, distributors: [e2]) }
+
+    it "returns the closing time, indexed by enterprise id" do
+      OrderCycle.earliest_closing_times[e1.id].should == time1
+    end
+
+    it "returns the earliest closing time" do
+      OrderCycle.earliest_closing_times[e2.id].should == time2
+    end
+  end
 end

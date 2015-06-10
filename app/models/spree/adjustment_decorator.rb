@@ -4,6 +4,8 @@ module Spree
 
     scope :enterprise_fee, where(originator_type: 'EnterpriseFee')
     scope :included_tax, where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
+    scope :with_tax,    where('spree_adjustments.included_tax > 0')
+    scope :without_tax, where('spree_adjustments.included_tax = 0')
 
     attr_accessible :included_tax
 

@@ -2,7 +2,7 @@
   %section.left
     %a.left-off-canvas-toggle.menu-icon
       %span
-  %section.right
+  %section.right{"ng-cloak" => true}
     .cart
       = render partial: "shared/menu/cart"
     %a{href: main_app.shop_path}
@@ -14,10 +14,16 @@
       %a{href: root_path}
         %img{src: "/assets/logo-black.png", srcset: "/assets/logo-black.svg", width: "75", height: "26"}
     %li.li-menu
-      %a{href: main_app.shops_path}
-        %span.nav-primary
-          %i.ofn-i_019-map-pin
-          Shops
+      - if current_page? main_app.shops_path
+        %a{"ofn-scroll-to" => "hubs"}
+          %span.nav-primary
+            %i.ofn-i_019-map-pin
+            Shops
+      - else
+        %a{href: main_app.shops_path}
+          %span.nav-primary
+            %i.ofn-i_019-map-pin
+            Shops
     %li.li-menu
       %a{href: main_app.map_path}
         %span.nav-primary

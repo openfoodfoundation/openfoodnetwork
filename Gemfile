@@ -50,6 +50,7 @@ gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'foreigner'
 gem 'immigrant'
@@ -113,4 +114,5 @@ group :development do
   gem 'guard-rails'
   gem 'guard-zeus'
   gem 'guard-rspec'
+  gem 'parallel_tests'
 end

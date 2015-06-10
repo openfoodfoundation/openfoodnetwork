@@ -128,6 +128,8 @@ module OpenFoodNetwork
         producers = related_enterprises_granting(:add_to_order_cycle, to: [hub], scope: Enterprise.is_primary_producer)
         permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
 
+        hub_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', hub)
+
         # PLUS any variants that are already in an outgoing exchange of this hub, so things don't break
         # TODO: Remove this when all P-OC are sorted out
         active_variants = []
@@ -135,7 +137,7 @@ module OpenFoodNetwork
           active_variants = exchange.variants
         end
 
-        Spree::Variant.where(id: coordinator_variants | permitted_variants | active_variants)
+        Spree::Variant.where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
       else
         # Any variants produced by MY PRODUCERS that are in this order cycle, where my producer has granted P-OC to the hub
         producers = related_enterprises_granting(:add_to_order_cycle, to: [hub], scope: managed_participating_producers)
@@ -165,6 +167,8 @@ module OpenFoodNetwork
         producers = related_enterprises_granting(:add_to_order_cycle, to: [hub], scope: Enterprise.is_primary_producer)
         permitted_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
 
+        hub_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', hub)
+
         # PLUS any variants that are already in an outgoing exchange of this hub, so things don't break
         # TODO: Remove this when all P-OC are sorted out
         active_variants = []
@@ -172,7 +176,7 @@ module OpenFoodNetwork
           active_variants = exchange.variants
         end
 
-        Spree::Variant.where(id: coordinator_variants | permitted_variants | active_variants)
+        Spree::Variant.where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
       else
         # Any of my managed producers in this order cycle granted P-OC by the hub
         granted_producers = related_enterprises_granted(:add_to_order_cycle, by: [hub], scope: managed_participating_producers)
