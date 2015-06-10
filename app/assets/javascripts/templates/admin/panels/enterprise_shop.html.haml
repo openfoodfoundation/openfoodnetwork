@@ -31,16 +31,6 @@
 
 
         -# Producer Info
-        .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='none' && enterprise.producer_profile_only==true" } }
-          %h3 Producer Profile
-
-          %p
-            %strong COST: ALWAYS FREE
-
-          %p A Producer Profile gives you the ability to list your enterprise on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
-
-          %p Profile enterprises cannot create products, and so are unable to trade with other enterprises through the Open Food Network.
-
         .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='none' && enterprise.producer_profile_only==false" } }
           %h3 No Shop
 
@@ -72,43 +62,40 @@
           %p The Open Food Network aims to support as many hub models as possible, so no matter your situation, we want to provide the tools you need to run your organisation or local food business.
 
       .omega.eight.columns
-        %a.button.selector{ ng: { if: "!enterprise.is_primary_producer", click: "enterprise.sells='none'; enterprise.producer_profile_only=false;", class: "{selected: enterprise.sells=='none'}" } }
-          .top
-            %h3 Profile Only
-            %p Sell through other shops
-          .bottom ALWAYS FREE
-        %a.button.selector{ ng: { if: "!enterprise.is_primary_producer", click: "enterprise.sells='any'; enterprise.producer_profile_only=false;", class: "{selected: enterprise.sells=='any'}" } }
-          .top
-            %h3 Hub Shop
-            %p Sell through other shops
-          .bottom ALWAYS FREE
+        %div{ ng: { if: "!enterprise.is_primary_producer"} }
+          %a.button.selector{ ng: { click: "enterprise.sells='none'", class: "{selected: enterprise.sells=='none'}" } }
+            .top
+              %h3 Profile Only
+              %p Sell through other shops
+            .bottom ALWAYS FREE
+          %a.button.selector{ ng: { click: "enterprise.sells='any'", class: "{selected: enterprise.sells=='any'}" } }
+            .top
+              %h3 Hub Shop
+              %p Sell through other shops
+            .bottom ALWAYS FREE
 
-        %a.button.selector{ ng: { if: "enterprise.is_primary_producer", click: "enterprise.sells='none'; enterprise.producer_profile_only=true;", class: "{selected: enterprise.sells=='none' && enterprise.producer_profile_only==true}" } }
-          .top
-            %h3 Profile Only
-            %p Connect through OFN
-          .bottom ALWAYS FREE
-        %a.button.selector{ ng: { if: "enterprise.is_primary_producer", click: "enterprise.sells='none'; enterprise.producer_profile_only=false;", class: "{selected: enterprise.sells=='none' && enterprise.producer_profile_only==false}" } }
-          .top
-            %h3 No Shop
-            %p Sell through other shops
-          .bottom ALWAYS FREE
-        %a.button.selector{ ng: { if: "enterprise.is_primary_producer", click: "enterprise.sells='own';enterprise.producer_profile_only=false;", class: "{selected: enterprise.sells=='own'}" } }
-          .top
-            %h3 Producer Shop
-            %p Sell your own produce
-          .bottom
-            \%2 OF SALES
-            %br
-            CAPPED AT $50 PER MONTH
-        %a.button.selector{ ng: { if: "enterprise.is_primary_producer", click: "enterprise.sells='any';enterprise.producer_profile_only=false;", class: "{selected: enterprise.sells=='any'}" } }
-          .top
-            %h3 Hub Shop
-            %p Aggregate and sell produce
-          .bottom
-            \%2 OF SALES
-            %br
-            CAPPED AT $50 PER MONTH
+        %div{ ng: { if: "enterprise.is_primary_producer"} }
+          %a.button.selector{ ng: { click: "enterprise.sells='none'", class: "{selected: enterprise.sells=='none'}" } }
+            .top
+              %h3 No Shop
+              %p Sell through other shops
+            .bottom ALWAYS FREE
+          %a.button.selector{ ng: { click: "enterprise.sells='own'", class: "{selected: enterprise.sells=='own'}" } }
+            .top
+              %h3 Producer Shop
+              %p Sell your own produce
+            .bottom
+              \%2 OF SALES
+              %br
+              CAPPED AT $50 PER MONTH
+          %a.button.selector{ ng: { click: "enterprise.sells='any';", class: "{selected: enterprise.sells=='any'}" } }
+            .top
+              %h3 Hub Shop
+              %p Aggregate and sell produce
+            .bottom
+              \%2 OF SALES
+              %br
+              CAPPED AT $50 PER MONTH
 
         %a.button.update.fullwidth{ ng: { class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
           %span{ ng: {hide: "saved() || saving" } }
