@@ -1,11 +1,12 @@
-angular.module("admin.indexUtils").directive "panelToggle", (Panels) ->
-  restrict: "E"
-  replace: true
+angular.module("admin.indexUtils").directive "panelToggle", ->
+  restrict: "C"
   transclude: true
-  template: "<div ng-transclude></div>"
+  template: '<div ng-transclude></div><i class=\'icon-chevron-down\'"></i>'
+  require: "^panelToggleRow"
   scope:
-    name: "@name"
-    object: "&object"
-  link: (scope, element, attrs) ->
+    name: "@"
+  link: (scope, element, attrs, ctrl) ->
+    scope.selected = ctrl.register(scope.name, element)
+
     element.on "click", ->
-      Panels.toggle(scope.object().id, scope.name)
+      scope.selected = ctrl.select(scope.name)

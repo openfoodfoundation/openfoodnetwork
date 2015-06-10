@@ -16,3 +16,4 @@ angular.module("admin.indexUtils").factory 'Panels', ->
           scope.open(name)
         else
           scope.setSelected(name)
+      scope.getSelected()
