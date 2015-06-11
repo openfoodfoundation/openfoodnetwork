@@ -58,10 +58,10 @@
         %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }
             %span{ bo: { bind: "enterprise.name" } }
-          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible' }, name: "producer" }
-            %h5{ ng: { bind: "producerText()" } }
-          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible' }, name: "package" }
-            %h5{ ng: { bind: "packageText()" } }
+          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: producerError}" }, name: "producer" }
+            %h5{ ng: { bind: "producer" } }
+          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: packageError}" }, name: "package" }
+            %h5{ ng: { bind: "package" } }
           %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
             %h5 Status
           %td.manage{ ng: { show: 'columns.manage.visible' } }

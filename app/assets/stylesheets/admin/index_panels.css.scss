@@ -7,8 +7,27 @@ tr.panel-toggle-row {
     -ms-user-select: none;
     user-select: none;
 
+    position: relative;
+
     i {
       font-size: 1.2rem;
+    }
+
+    &.error {
+      &::before {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        display: inline-block;
+        text-decoration: inherit;
+        color: #DA5354;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 2rem;
+        content: "\f071";
+        -webkit-font-smoothing: antialiased
+      }
     }
 
     &.selected {

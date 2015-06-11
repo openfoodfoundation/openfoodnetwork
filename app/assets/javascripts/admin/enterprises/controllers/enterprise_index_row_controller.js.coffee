@@ -16,9 +16,25 @@ angular.module("admin.enterprises").controller "EnterpriseIndexRowCtrl", ($scope
             "Shop"
           when "any"
             "Hub"
+          else
+            "Choose"
       else
         switch $scope.enterprise.sells
           when "none"
             "Profile"
-          else
+          when "any"
             "Hub"
+          else
+            "Choose"
+
+  $scope.updateRowText = ->
+    $scope.producer = $scope.producerText()
+    $scope.package = $scope.packageText()
+    $scope.producerError = ($scope.producer == "Choose")
+    $scope.packageError = ($scope.package == "Choose")
+
+
+  $scope.updateRowText()
+
+  $scope.$on "enterprise:updated", ->
+    $scope.updateRowText()

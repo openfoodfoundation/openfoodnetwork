@@ -1,106 +1,126 @@
-.enterprise_package_panel
-  %form{ name: "package", id: "package", novalidate: true, ng: { controller: 'indexPackagePanelCtrl' } }
-    -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
-    %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", value: "enterprise.sells"} }
-    %input{ hidden: "true", name: "producer_profile_only", ng: { required: "enterprise.is_primary_producer=='none'", disabled: "enterprise.is_primary_producer!='none'", value: "enterprise.producer_profile_only"} }
+.row.enterprise_package_panel{ ng: { controller: 'indexPackagePanelCtrl' } }
+  .alpha.eight.columns
+    %div{ ng: { if: "!enterprise.is_primary_producer", switch: "enterprise.sells" } }
+      .info{ ng: { switch: { when: "none" } } }
+        %h3 Hub Profile
 
-    .row
-      .alpha.eight.columns
-        -# Non-Producer Info
-        .info{ ng: { show: "!enterprise.is_primary_producer && enterprise.sells=='none'" } }
-          %h3 Hub Profile
+        %p
+          %strong COST: ALWAYS FREE
 
-          %p
-            %strong COST: ALWAYS FREE
+        %p A Hub Profile gives you the ability to list your enterprise on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
 
-          %p A Hub Profile gives you the ability to list your enterprise on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+      .info{ ng: { switch: { when: "any" } } }
+        %h3 Hub Shop
 
-        .info{ ng: { show: "!enterprise.is_primary_producer && enterprise.sells=='any'" } }
-          %h3 Hub Shop
+        %p
+          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
 
-          %p
-            %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+        %p A Hub Shop enables an enterprise to aggregate produce from other enterprises and to sell it through a shop on the Open Food Network.
 
-          %p A Hub Shop enables an enterprise to aggregate produce from other enterprises and to sell it through a shop on the Open Food Network.
+        %p Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box program, or a local grocery store.
 
-          %p Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box program, or a local grocery store.
+        %p If you also want to sell your own products, you will need to switch this enterprise to be a producer.
 
-          %p If you also want to sell your own products, you will need to switch this enterprise to be a producer.
+      .info{ ng: { switch: { default: true } } }
+        %h3
+          Please Choose a Package
+          %i.icon-arrow-right
+
+        %p
+          %strong Your enterprise will not be fully activated until a package is selected from the options on the left.
+
+        %p
+          Click on an option to see more detailed information about each package, and hit the red SAVE button when you are done!
 
 
-        -# Producer Info
-        .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='none' && enterprise.producer_profile_only==false" } }
+
+    %div{ ng: { if: "enterprise.is_primary_producer", switch: "enterprise.sells" } }
+      .info{ ng: { switch: { when: "none" } } }
+        %h3 Profile Only
+
+        %p
+          %strong COST: ALWAYS FREE
+
+        %p If you prefer to focus on producing food, and want to leave the work of selling it to someone else, you won't require a shop on the Open Food Network.
+
+        %p Producers with a profile can market their produce through the Open Food Network by connecting and trading with existing shops.
+
+      .info{ ng: { switch: { when: "own" } } }
+        %h3 Producer Shop
+
+        %p
+          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+
+        %p A Producer Shop allows producers to offer their products for sale to customers through their very own Open Food Network shop.
+
+        %p Producer Shops may sell produce that has been grown by the producer in question, but do not allow for aggregation of produce from elsewhere.
+
+      .info{ ng: { switch: { when: "any" } } }
+        %h3 Producer Hub
+
+        %p
+          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+
+        %p Producer Hubs can take many forms, whether they be a CSA, a veggie-box program, or a food co-op with a rooftop garden.
+
+        %p The Open Food Network aims to support as many hub models as possible, so no matter your situation, we want to provide the tools you need to run your organisation or local food business.
+
+      .info{ ng: { switch: { default: true } } }
+        %h3
+          Please Choose a Package
+          %i.icon-arrow-right
+
+        %p
+          %strong Your producer enterprise will not be fully activated until a package is selected from the options on the left.
+
+        %p
+          Click on an option to see more detailed information about each package, and hit the red SAVE button when you are done!
+
+  .omega.eight.columns{ ng: { switch: "enterprise.is_primary_producer" } }
+    %div{ ng: { switch: { when: "false" } } }
+      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+        .top
           %h3 Profile Only
+          %p Connect through OFN
+        .bottom ALWAYS FREE
+      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Hub Shop
+          %p Sell produce from others
+        .bottom
+          \%2 OF SALES
+          %br
+          CAPPED AT $50 PER MONTH
 
-          %p
-            %strong COST: ALWAYS FREE
-
-          %p If you prefer to focus on producing food, and want to leave the work of selling it to someone else, you won't require a shop on the Open Food Network.
-
-          %p Producers with a profile can market their produce through the Open Food Network by connecting and trading with existing shops.
-
-        .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='own' && enterprise.producer_profile_only==false" } }
+    %div{ ng: { switch: { when: "true" } } }
+      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Profile Only
+        .bottom ALWAYS FREE
+      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
+        .top
           %h3 Producer Shop
-
-          %p
-            %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
-
-          %p A Producer Shop allows producers to offer their products for sale to customers through their very own Open Food Network shop.
-
-          %p Producer Shops may sell produce that has been grown by the producer in question, but do not allow for aggregation of produce from elsewhere.
-
-        .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='any' && enterprise.producer_profile_only==false" } }
+          %p Sell your own produce
+        .bottom
+          \%2 OF SALES
+          %br
+          CAPPED AT $50 PER MONTH
+      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+        .top
           %h3 Producer Hub
+          %p Sell produce from self and others
+        .bottom
+          \%2 OF SALES
+          %br
+          CAPPED AT $50 PER MONTH
 
-          %p
-            %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
-
-          %p Producer Hubs can take many forms, whether they be a CSA, a veggie-box program, or a food co-op with a rooftop garden.
-
-          %p The Open Food Network aims to support as many hub models as possible, so no matter your situation, we want to provide the tools you need to run your organisation or local food business.
-
-      .omega.eight.columns
-        %div{ ng: { if: "!enterprise.is_primary_producer"} }
-          %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
-            .top
-              %h3 Profile Only
-              %p Connect through OFN
-            .bottom ALWAYS FREE
-          %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
-            .top
-              %h3 Hub Shop
-              %p Sell produce from others
-            .bottom ALWAYS FREE
-
-        %div{ ng: { if: "enterprise.is_primary_producer"} }
-          %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
-            .top
-              %h3 Profile Only
-            .bottom ALWAYS FREE
-          %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
-            .top
-              %h3 Producer Shop
-              %p Sell your own produce
-            .bottom
-              \%2 OF SALES
-              %br
-              CAPPED AT $50 PER MONTH
-          %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
-            .top
-              %h3 Producer Hub
-              %p Sell produce from self and others
-            .bottom
-              \%2 OF SALES
-              %br
-              CAPPED AT $50 PER MONTH
-
-        %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
-          %span{ ng: {hide: "saved() || saving" } }
-            SAVE
-            %i.icon-save
-          %span{ ng: {show: "saved() && !saving" } }
-            SAVED
-            %i.icon-ok-sign
-          %span{ ng: {show: "saving" } }
-            SAVING
-            %i.icon-refresh
+    %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
+      %span{ ng: {hide: "saved() || saving" } }
+        SAVE
+        %i.icon-save
+      %span{ ng: {show: "saved() && !saving" } }
+        SAVED
+        %i.icon-ok-sign
+      %span{ ng: {show: "saving" } }
+        SAVING
+        %i.icon-refresh

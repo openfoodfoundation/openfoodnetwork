@@ -9,6 +9,7 @@ angular.module("admin.enterprises").controller 'indexPanelCtrl', ($scope, Enterp
     unless $scope.saved()
       $scope.saving = true
       Enterprises.save($scope.enterprise).then (data) ->
+        $scope.$emit("enterprise:updated")
         $scope.saving = false
       , (response) ->
         $scope.saving = false

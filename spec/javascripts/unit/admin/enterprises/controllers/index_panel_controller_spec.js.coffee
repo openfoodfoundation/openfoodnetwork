@@ -21,6 +21,7 @@ describe "indexPanelCtrl", ->
 
       beforeEach inject ($q) ->
         spyOn(scope, "saved").andReturn false
+        spyOn(scope, "$emit")
         deferred = $q.defer()
         spyOn(Enterprises, "save").andReturn(deferred.promise)
         scope.save()
@@ -33,9 +34,11 @@ describe "indexPanelCtrl", ->
           deferred.resolve()
           $rootScope.$digest()
 
-
         it "sets scope.saving to false", ->
           expect(scope.saving).toBe false
+
+        it "emits an 'enterprise:updated' event", ->
+          expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated")
 
       describe "when the save is unsuccessful", ->
         beforeEach inject ($rootScope) ->
@@ -44,3 +47,6 @@ describe "indexPanelCtrl", ->
 
         it "sets scope.saving to false", ->
           expect(scope.saving).toBe false
+
+        it "does not emit an 'enterprise:updated' event", ->
+          expect(scope.$emit).not.toHaveBeenCalled()
