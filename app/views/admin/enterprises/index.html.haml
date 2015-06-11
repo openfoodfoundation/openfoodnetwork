@@ -41,27 +41,27 @@
 
   .row{ ng: { show: "loaded() && filteredEnterprises.length > 0" }, bindonce: true }
     %table.index#enterprises
-      %col.name{ width: "28%"}
-      %col.producer{ width: "18%"}
-      %col.shop{ width: "18%"}
-      %col.status{ width: "18%"}
-      %col.manage{ width: "18%"}
+      %col.name{ width: "28%", ng: { show: 'columns.name.visible' } }
+      %col.producer{ width: "18%", ng: { show: 'columns.producer.visible' }}
+      %col.package{ width: "18%", ng: { show: 'columns.package.visible' }}
+      %col.status{ width: "18%", ng: { show: 'columns.status.visible' }}
+      %col.manage{ width: "18%", ng: { show: 'columns.manage.visible' }}
       %thead
         %tr{ ng: { controller: "ColumnsCtrl" } }
           %th.name{ ng: { show: 'columns.name.visible' } }
             Name
           %th.producer{ ng: { show: 'columns.producer.visible' } } Producer?
-          %th.shop{ ng: { show: 'columns.shop.visible' } } Shop?
+          %th.package{ ng: { show: 'columns.package.visible' } } Package
           %th.status{ ng: { show: 'columns.status.visible' } } Status
           %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
-      %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
+      %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", controller: 'EnterpriseIndexRowCtrl' } }
         %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }
             %span{ bo: { bind: "enterprise.name" } }
           %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible' }, name: "producer" }
-            %h5{ ng: { bind: "enterprise.is_primary_producer ? 'Producer' : 'Non-Producer'" } }
-          %td.shop.panel-toggle.text-center{ ng: { show: 'columns.shop.visible' }, name: "shop" }
-            %h5{ ng: { bind: "enterprise.sells=='none' ? 'No Shop' : 'Shop'" } }
+            %h5{ ng: { bind: "producerText()" } }
+          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible' }, name: "package" }
+            %h5{ ng: { bind: "packageText()" } }
           %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
             %h5 Status
           %td.manage{ ng: { show: 'columns.manage.visible' } }
@@ -69,7 +69,7 @@
               Manage
               %i.icon-arrow-right
 
-        %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', shop: 'enterprise_shop', status: 'enterprise_status'}" }
+        %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', package: 'enterprise_package', status: 'enterprise_status'}" }
 
 
 

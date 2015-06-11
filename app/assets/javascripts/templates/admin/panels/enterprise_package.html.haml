@@ -1,5 +1,5 @@
-.enterprise_shop_panel
-  %form{ name: "shop", id: "shop", novalidate: true, ng: { controller: 'indexShopPanelCtrl' } }
+.enterprise_package_panel
+  %form{ name: "package", id: "package", novalidate: true, ng: { controller: 'indexPackagePanelCtrl' } }
     -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
     %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", value: "enterprise.sells"} }
     %input{ hidden: "true", name: "producer_profile_only", ng: { required: "enterprise.is_primary_producer=='none'", disabled: "enterprise.is_primary_producer!='none'", value: "enterprise.producer_profile_only"} }
@@ -15,31 +15,29 @@
 
           %p A Hub Profile gives you the ability to list your enterprise on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
 
-          %p Profile enterprises cannot create products, and so are unable to trade with other enterprises through the Open Food Network.
-
         .info{ ng: { show: "!enterprise.is_primary_producer && enterprise.sells=='any'" } }
           %h3 Hub Shop
 
           %p
             %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
 
-          %p A Full Shop enables an enterprise to aggregate produce and to sell it through a shop on the Open Food Network.
+          %p A Hub Shop enables an enterprise to aggregate produce from other enterprises and to sell it through a shop on the Open Food Network.
 
           %p Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box program, or a local grocery store.
 
-          %p The Open Food Network aims to support as many hub models as possible, so no matter your situation, we want to provide the tools you need to run your organisation or local food business.
+          %p If you also want to sell your own products, you will need to switch this enterprise to be a producer.
 
 
         -# Producer Info
         .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='none' && enterprise.producer_profile_only==false" } }
-          %h3 No Shop
+          %h3 Profile Only
 
           %p
             %strong COST: ALWAYS FREE
 
           %p If you prefer to focus on producing food, and want to leave the work of selling it to someone else, you won't require a shop on the Open Food Network.
 
-          %p Producers without a shop can still market their produce through the Open Food Network by connecting and trading with existing shops.
+          %p Producers with a profile can market their produce through the Open Food Network by connecting and trading with existing shops.
 
         .info{ ng: { show: "enterprise.is_primary_producer && enterprise.sells=='own' && enterprise.producer_profile_only==false" } }
           %h3 Producer Shop
@@ -66,19 +64,18 @@
           %a.button.selector{ ng: { click: "enterprise.sells='none'", class: "{selected: enterprise.sells=='none'}" } }
             .top
               %h3 Profile Only
-              %p Sell through other shops
+              %p Connect through OFN
             .bottom ALWAYS FREE
           %a.button.selector{ ng: { click: "enterprise.sells='any'", class: "{selected: enterprise.sells=='any'}" } }
             .top
               %h3 Hub Shop
-              %p Sell through other shops
+              %p Sell produce from others
             .bottom ALWAYS FREE
 
         %div{ ng: { if: "enterprise.is_primary_producer"} }
           %a.button.selector{ ng: { click: "enterprise.sells='none'", class: "{selected: enterprise.sells=='none'}" } }
             .top
-              %h3 No Shop
-              %p Sell through other shops
+              %h3 Profile Only
             .bottom ALWAYS FREE
           %a.button.selector{ ng: { click: "enterprise.sells='own'", class: "{selected: enterprise.sells=='own'}" } }
             .top
@@ -90,8 +87,8 @@
               CAPPED AT $50 PER MONTH
           %a.button.selector{ ng: { click: "enterprise.sells='any';", class: "{selected: enterprise.sells=='any'}" } }
             .top
-              %h3 Hub Shop
-              %p Aggregate and sell produce
+              %h3 Producer Hub
+              %p Sell produce from self and others
             .bottom
               \%2 OF SALES
               %br
