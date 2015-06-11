@@ -139,7 +139,9 @@ feature %q{
       ef2
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor1.id}") { click_link 'Enterprise Fees' }
+      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within(".side_menu") { click_link 'Enterprise Fees' }
+      click_link "Create One Now"
 
       select distributor1.name, :from => 'enterprise_fee_set_collection_attributes_0_enterprise_id'
       fill_in 'enterprise_fee_set_collection_attributes_0_name', :with => 'foo'
@@ -156,17 +158,21 @@ feature %q{
       enterprise_fee.enterprise.should == distributor1
     end
 
-    it "shows me only enterprise fees for the enterprise I select" do
+    pending "shows me only enterprise fees for the enterprise I select" do
       ef1
       ef2
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor1.id}") { click_link 'Enterprise Fees' }
+      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within(".side_menu") { click_link 'Enterprise Fees' }
+      click_link "Manage Enterprise Fees"
       page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       page.should_not have_field 'enterprise_fee_set_collection_attributes_1_name', with: 'Two'
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor2.id}") { click_link 'Enterprise Fees' }
+      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within(".side_menu") { click_link 'Enterprise Fees' }
+      click_link "Manage Enterprise Fees"
       page.should_not have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'Two'
     end
@@ -177,7 +183,9 @@ feature %q{
       distributor3
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor2.id}") { click_link 'Enterprise Fees' }
+      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within(".side_menu") { click_link 'Enterprise Fees' }
+      click_link "Manage Enterprise Fees"
       page.should have_select('enterprise_fee_set_collection_attributes_1_enterprise_id',
                               selected: 'Second Distributor',
                               options: ['', 'First Distributor', 'Second Distributor'])
