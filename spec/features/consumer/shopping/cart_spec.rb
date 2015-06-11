@@ -24,7 +24,6 @@ feature "full-page cart", js: true do
       end
 
       it "shows the total tax for the order, including product tax and tax on fees" do
-        save_screenshot '/home/rohan/ss.png', full: true
         page.should have_selector '.tax-total', text: '11.00' # 10 + 1
       end
     end
