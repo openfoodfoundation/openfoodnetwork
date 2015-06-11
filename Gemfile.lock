@@ -142,6 +142,8 @@ GEM
     activesupport (3.2.21)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     acts_as_list (0.1.4)
     addressable (2.3.3)
     andand (1.3.3)
@@ -249,8 +251,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.25.3)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
+    execjs (2.5.2)
     factory_girl (3.3.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (3.3.0)
@@ -326,7 +327,7 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.7.4)
+    kgio (2.9.3)
     launchy (2.1.2)
       addressable (~> 2.3)
     letter_opener (1.0.0)
@@ -362,6 +363,9 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    parallel (1.4.1)
+    parallel_tests (1.3.7)
+      parallel
     paypal-sdk-core (0.2.10)
       multi_json (~> 1.0)
       xml-simple
@@ -413,7 +417,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    raindrops (0.9.0)
+    raindrops (0.13.0)
     rake (10.4.2)
     ransack (0.7.2)
       actionpack (~> 3.0)
@@ -497,10 +501,10 @@ GEM
     turn (0.8.3)
       ansi
     tzinfo (0.3.44)
-    uglifier (1.2.4)
+    uglifier (2.7.1)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
-    unicorn (4.3.1)
+      json (>= 1.8.0)
+    unicorn (4.9.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -532,6 +536,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates
   angularjs-file-upload-rails (~> 1.1.0)
@@ -576,6 +581,7 @@ DEPENDENCIES
   nokogiri
   oj
   paperclip
+  parallel_tests
   pg
   poltergeist
   pry-debugger

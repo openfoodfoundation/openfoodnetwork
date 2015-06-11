@@ -92,10 +92,24 @@ class OrderCycle < ActiveRecord::Base
     with_distributor(distributor).soonest_closing.first
   end
 
-
   def self.most_recently_closed_for(distributor)
     with_distributor(distributor).most_recently_closed.first
   end
+
+  # Find the earliest closing times for each distributor in an active order cycle, and return
+  # them in the format {distributor_id => closing_time, ...}
+  def self.earliest_closing_times
+    Hash[
+      Exchange.
+      outgoing.
+      joins(:order_cycle).
+      merge(OrderCycle.active).
+      group('exchanges.receiver_id').
+      select('exchanges.receiver_id AS receiver_id, MIN(order_cycles.orders_close_at) AS earliest_close_at').
+      map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
+    ]
+  end
+
 
   def clone!
     oc = self.dup

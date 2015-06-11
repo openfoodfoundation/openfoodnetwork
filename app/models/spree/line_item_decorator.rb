@@ -24,6 +24,15 @@ Spree::LineItem.class_eval do
     where('spree_products.supplier_id IN (?)', enterprises)
   }
 
+  scope :with_tax, joins(:adjustments).
+                   where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+                   select('DISTINCT spree_line_items.*')
+
+  # Line items without a Spree::TaxRate-originated adjustment
+  scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
+                      where('spree_adjustments.id IS NULL')
+
+
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array

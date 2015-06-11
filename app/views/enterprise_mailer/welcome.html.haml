@@ -1,66 +1,26 @@
 %h3
   = "Welcome, #{@enterprise.contact}!"
 %p.lead
-  Congratulations,
+  Thank you for confirming your email address.
   %strong
-    %strong= @enterprise.name
+    = @enterprise.name
   = "is now part of #{ Spree::Config.site_name }!"
-/ Heading Panel
+
 %p
-  Please find below all the details for viewing and editing your enterprise on
-  %strong= "#{ Spree::Config.site_name }."
-  We suggest keeping this email and information somewhere safe. Logging in with the account details below will allow complete access to your products and services.
+  The User Guide with detailed support for setting up your Producer or Hub is here:
+  = link_to 'Open Food Network User Guide', 'http://global.openfoodnetwork.org/platform/user-guide/'
 
--#%p &nbsp;
-
--# %p.callout
--#   %strong
--#     Your enterprise details
--# %table{:width => "100%"}
--#   %tr
--#     %td{:align => "right"}
--#       %strong
--#         Shop URL
--#     %td &nbsp;
--#     %td
--#       %a{:href => "#{ main_app.enterprise_shop_url(@enterprise) }", :target => "_blank"}
--#         = main_app.enterprise_shop_url(@enterprise)
--#   %tr
--#     %td &nbsp;
--#   %tr
--#     %td{:align => "right"}
--#       %strong
--#         Email
--#     %td &nbsp;
--#     %td
--#       %a{:href => "mailto:#{ @enterprise.email }", :target => "_blank"}
--#         = @enterprise.email
-
-%p &nbsp;
 %p
-  Log into
-  %strong= "#{ Spree::Config.site_name } Admin"
-  in order to edit your enterprise details such as website and social media links, or to start adding products to your enterprise!
+  You can manage your account by logging into the
+  = link_to 'Admin Panel', spree.admin_url
+  or by clicking on the cog in the top right hand side of the homepage, and selecting Administration.
 
-%p.callout
-  %strong
-    OFN Admin
-%table{ :width => "100%"}
-  %tr
-    %td{:align => "right"}
-      %strong
-        Admin
-    %td &nbsp;
-    %td
-      %a{:href => "#{ spree.admin_url }", :target => "_blank"}
-        = spree.admin_url
-
-%p &nbsp;
-/ /Heading Panel
 %p
-  We're so pleased to have you as a valued member of
-  %strong= "#{Spree::Config.site_name}!"
-  Don't hestitate to get in touch if you have any questions.
+  We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
+  = link_to 'Join the community.', 'http://community.openfoodnetwork.org/'
+
+%p
+  If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!
 
 = render 'shared/mailers/signoff'
 

@@ -1,9 +1,9 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, tax_categories) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
     $scope.loading = true
 
     $scope.StatusMessage = StatusMessage
 
-    $scope.columns =
+    $scope.columns = Columns.setColumns
       producer:             {name: "Producer",              visible: true}
       sku:                  {name: "SKU",                   visible: false}
       name:                 {name: "Name",                  visible: true}
@@ -108,6 +108,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
+
+    $scope.toggleShowAllVariants = ->
+      showVariants = !DisplayProperties.showVariants 0
+      $scope.filteredProducts.forEach (product) ->
+        DisplayProperties.setShowVariants product.id, showVariants
+      DisplayProperties.setShowVariants 0, showVariants
 
     $scope.addVariant = (product) ->
       product.variants.push

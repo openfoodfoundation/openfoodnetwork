@@ -1,3 +1,5 @@
+require 'open_food_network/referer_parser'
+
 module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
@@ -199,7 +201,8 @@ module Admin
 
     # Overriding method on Spree's resource controller
     def location_after_save
-      refered_from_edit = URI(request.referer).path == main_app.edit_admin_enterprise_path(@enterprise)
+      referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+      refered_from_edit = referer_path == main_app.edit_admin_enterprise_path(@enterprise)
       if params[:enterprise].key?(:producer_properties_attributes) && !refered_from_edit
         main_app.admin_enterprises_path
       else

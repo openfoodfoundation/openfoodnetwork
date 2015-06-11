@@ -45,7 +45,7 @@ feature "Registration", js: true do
       # Choosing a type
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
       click_link 'producer-panel'
-      click_button 'Continue'
+      click_button 'Create Profile'
 
       # Enterprise should be created
       expect(page).to have_content 'Nice one!'

@@ -32,8 +32,9 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         if product.variants
           product.variants = (Variants.register variant for variant in product.variants)
           variant.product = product for variant in product.variants
-        product.master.product = product
-        product.master = Variants.register product.master if product.master
+        if product.master
+          product.master.product = product
+          product.master = Variants.register product.master
 
     registerVariantsWithCart: ->
       for product in @products
