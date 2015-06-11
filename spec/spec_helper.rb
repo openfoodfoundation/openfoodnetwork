@@ -91,6 +91,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
+  config.include OpenFoodNetwork::ProductsHelper
   config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
   config.include ActionView::Helpers::DateHelper
