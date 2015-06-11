@@ -27,7 +27,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render json: @collection, each_serializer: Api::Admin::BasicEnterpriseSerializer
+          render json: @collection, each_serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user
         end
       end
     end
@@ -40,7 +40,7 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render :layout => false }
-          format.json { render json: @object, serializer: Api::Admin::BasicEnterpriseSerializer }
+          format.json { render json: @object, serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user }
         end
       else
         invoke_callbacks(:update, :fails)

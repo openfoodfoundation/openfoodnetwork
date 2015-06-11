@@ -20,19 +20,19 @@
           %p Instead, non-producers specialise in linking producers to the end eater, whether it be by aggregating, grading, packing, selling or delivering food.
 
       .omega.eight.columns
-        %a.button.selector{ ng: { click: 'changeToProducer()', class: "{selected: enterprise.is_primary_producer==true}" } }
+        %a.button.selector{ ng: { click: 'enterprise.owned && changeToProducer()', class: "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" } }
           .top
             %h3 PRODUCER
             %p Primary producers of food
           .bottom eg. GROWERS, BAKERS, BREWERS, MAKERS
 
-        %a.button.selector{ ng: { click: 'changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false}" } }
+        %a.button.selector{ ng: { click: 'enterprise.owned && changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" } }
           .top
             %h3 Non-Producer
             %p All other food enterprises
           .bottom eg. Grocery stores, Food co-ops, Buying groups
 
-        %a.button.update.fullwidth{ ng: { class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
+        %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
           %span{ ng: {hide: "saved() || saving" } }
             SAVE
             %i.icon-save
