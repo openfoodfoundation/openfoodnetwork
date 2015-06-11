@@ -73,8 +73,11 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :resend_confirmation], Enterprise do |enterprise|
       OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:welcome, :register], Enterprise do |enterprise|
+      enterprise.owner == user
     end
     can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise

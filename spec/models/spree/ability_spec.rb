@@ -298,11 +298,11 @@ module Spree
           let!(:er_pd) { create(:enterprise_relationship, parent: d_related, child: d1, permissions_list: [:edit_profile]) }
 
           it "should be able to edit enterprises it manages" do
-            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d1)
+            should have_ability([:read, :edit, :update, :bulk_update, :resend_confirmation], for: d1)
           end
 
           it "should be able to edit enterprises it has permission to" do
-            should have_ability([:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], for: d_related)
+            should have_ability([:read, :edit, :update, :bulk_update, :resend_confirmation], for: d_related)
           end
 
           it "should be able to manage shipping methods, payment methods and enterprise fees for enterprises it manages" do
@@ -478,11 +478,15 @@ module Spree
         end
 
         it 'should have the ability to read and edit enterprises that I manage' do
-          should have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s1)
+          should have_ability([:read, :edit, :update, :bulk_update], for: s1)
         end
 
         it 'should not have the ability to read and edit enterprises that I do not manage' do
-          should_not have_ability([:read, :edit, :update, :bulk_update, :set_sells], for: s2)
+          should_not have_ability([:read, :edit, :update, :bulk_update], for: s2)
+        end
+
+        it 'should not have the ability to welcome and register enterprises that I do not own' do
+          should_not have_ability([:welcome, :register], for: s1)
         end
 
         it 'should have the ability administrate and create enterpises' do
@@ -492,6 +496,14 @@ module Spree
         it "should have the ability to search for users which share management of its enterprises" do
           should have_ability([:admin, :known_users], for: :search)
           should_not have_ability([:users], for: :search)
+        end
+      end
+
+      context 'enterprise owner' do
+        let (:user) { s1.owner }
+
+        it 'should have the ability to welcome and register enterprises that I own' do
+          should have_ability([:welcome, :register], for: s1)
         end
       end
     end

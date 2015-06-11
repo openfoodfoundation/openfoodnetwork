@@ -3,7 +3,7 @@ require 'open_food_network/referer_parser'
 module Admin
   class EnterprisesController < ResourceController
     # before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
+    before_filter :load_countries, :except => [:index, :register, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
@@ -18,7 +18,6 @@ module Admin
     before_filter :load_properties, only: [:edit, :update]
     before_filter :setup_property, only: [:edit]
 
-
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
@@ -31,6 +30,11 @@ module Admin
         end
       end
     end
+
+    def welcome
+      render layout: "spree/layouts/bare_admin"
+    end
+
 
     def update
       invoke_callbacks(:update, :before)
@@ -50,29 +54,25 @@ module Admin
       end
     end
 
-    def set_sells
-      enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
-      attributes = { sells: params[:sells] }
-      attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
-      attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
-
-      if %w(none own).include?(params[:sells])
-        if params[:sells] == 'own' && enterprise.shop_trial_start_date
-          expiry = enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days
-          if Time.now > expiry
-            flash[:error] = "Sorry, but you've already had a trial. Expired on: #{expiry.strftime('%Y-%m-%d')}"
-          else
-            attributes.delete :shop_trial_start_date
-            enterprise.update_attributes(attributes)
-            flash[:notice] = "Welcome back! Your trial expires on: #{expiry.strftime('%Y-%m-%d')}"
-          end
-        elsif enterprise.update_attributes(attributes)
-          flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
-        end
-      else
-        flash[:error] = "Unauthorised"
+    def register
+      if params[:sells] == 'unspecified'
+        flash[:error] = "Please select a package"
+        return render :welcome, layout: "spree/layouts/bare_admin"
       end
-      redirect_to admin_path
+
+      attributes = { sells: params[:sells], visible: true }
+
+      if ['own', 'any'].include? params[:sells]
+        attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.now
+      end
+
+      if @enterprise.update_attributes(attributes)
+        flash[:success] = "Congratulations! Registration for #{@enterprise.name} is complete!"
+        redirect_to admin_path
+      else
+        flash[:error] = "Could not complete registration for #{@enterprise.name}"
+        render :welcome, layout: "spree/layouts/bare_admin"
+      end
     end
 
     def bulk_update

@@ -53,7 +53,8 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       member do
-        put :set_sells
+        get :welcome
+        put :register
       end
 
       resources :producer_properties do

@@ -1,0 +1,104 @@
+= admin_inject_enterprise
+
+= form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
+  html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
+  -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
+  %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", model: 'sells', value: "sells"} }
+
+  .row
+    .options.sixteen.columns.alpha
+      - if @enterprise.is_primary_producer
+        .basic_producer.option.one-third.column.alpha
+          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+            .top
+              %h3 Producer Profile
+              %p Connect through OFN
+            .bottom ALWAYS FREE
+          %p.description
+            Add your products to Open Food Network, allowing customers to see your product range, and allowing you to act as a supplier to other shopfronts.
+            %br
+            %br
+            Having a profile, and making connections within your local food system through the Open Food Network will always be free.
+
+        .producer_shop.option.one-third.column
+          %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+            .top
+              %h3 Producer Shop
+              %p Sell your own produce
+            .bottom
+              \%2 OF SALES
+              %br
+              CAPPED AT $50 PER MONTH
+          %p.description
+            You can offer your products for sale to customers through your very own Open Food Network shop.
+            %br
+            %br
+            You may sell produce that has been grown or produced on site, but you cannot sell produce from elsewhere through your OFN shop.
+            %br
+            %br
+            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
+
+        .full_hub.option.one-third.column.omega
+          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+            .top
+              %h3 Producer Hub
+              %p Sell produce from self and others
+            .bottom
+              \%2 OF SALES
+              %br
+              CAPPED AT $50 PER MONTH
+          %p.description
+            Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+            %br
+            %br
+            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
+
+
+          -# %p.description
+          -#   Test out having your own shopfront with full access to all Shopfront features for 30 days.
+          -#   %br
+          -#   %br
+          -#   At the end of your trial, there is a one-off $200 fee to fully activate your account. Then you will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
+
+      - else
+        .shop_profile.option.one-third.column.alpha
+          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+            .top
+              %h3 Profile Only
+              %p Get a listing
+            .bottom ALWAYS FREE
+          %p.description
+            People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+            %br
+            %br
+            Having a profile, and making connections within your local food system through the Open Food Network will always be free.
+
+        .full_hub.option.one-third.column
+          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+            .top
+              %h3 Hub Shop
+              %p Sell produce from others
+            .bottom
+              \%2 OF SALES
+              %br
+              CAPPED AT $50 PER MONTH
+          %p.description
+            Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+            %br
+            %br
+            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
+
+
+  .row
+    .sixteen.columns.alpha
+      %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
+        Please choose one of the options above.
+      - if @enterprise.sells == 'unspecified' && @enterprise.shop_trial_start_date.nil?
+        %input.button.big{ type: 'submit', value: 'Start 30 Day Trial', ng: { click: "submit(change_type)", show: "sells=='own' || sells=='any'" } }
+        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)", hide: "sells=='own' || sells=='any'" } }
+      - elsif @enterprise.sells == 'unspecified'
+        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)" } }
+      - else
+        %input.button.big{ type: 'submit', value: 'Change now', ng: { click: "submit(change_type)" } }
+      %br &nbsp;
+      %hr
