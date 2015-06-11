@@ -82,12 +82,12 @@
 
   .omega.eight.columns{ ng: { switch: "enterprise.is_primary_producer" } }
     %div{ ng: { switch: { when: "false" } } }
-      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+      %a.button.selector.hub-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
         .top
           %h3 Profile Only
           %p Get a listing
         .bottom ALWAYS FREE
-      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+      %a.button.selector.hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
           %h3 Hub Shop
           %p Sell produce from others
@@ -97,12 +97,12 @@
           CAPPED AT $50 PER MONTH
 
     %div{ ng: { switch: { when: "true" } } }
-      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+      %a.button.selector.producer-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
         .top
           %h3 Profile Only
           %p Get a listing
         .bottom ALWAYS FREE
-      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
+      %a.button.selector.producer-shop{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
         .top
           %h3 Producer Shop
           %p Sell your own produce
@@ -110,7 +110,7 @@
           \%2 OF SALES
           %br
           CAPPED AT $50 PER MONTH
-      %a.button.selector{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+      %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
           %h3 Producer Hub
           %p Sell produce from self and others
