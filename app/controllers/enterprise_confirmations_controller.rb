@@ -40,7 +40,7 @@ class EnterpriseConfirmationsController < DeviseController
   def new_user_reset_path(resource)
     password = Devise.friendly_token.first(8)
     user = Spree::User.create(email: resource.email, password: password, password_confirmation: password)
-    user.send_reset_password_instructions
+    user.send_reset_password_instructions_without_delay
     resource.users << user
     spree.edit_spree_user_password_path(user, :reset_password_token => user.reset_password_token, return_to: spree.admin_path)
   end
