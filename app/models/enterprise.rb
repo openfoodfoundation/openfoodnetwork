@@ -8,8 +8,8 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_taxon_order, :string, default: ""
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
-  # handle_asynchronously :send_confirmation_instructions
-  # handle_asynchronously :send_on_create_confirmation_instructions
+  handle_asynchronously :send_confirmation_instructions
+  handle_asynchronously :send_on_create_confirmation_instructions
 
   self.inheritance_column = nil
 
