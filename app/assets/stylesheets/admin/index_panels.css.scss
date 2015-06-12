@@ -59,16 +59,6 @@ tr.panel-toggle-row {
       }
     }
 
-    &.selected {
-      background-color: #ffffff;
-      border-left: 2px solid #444444;
-      border-right: 2px solid #444444;
-      border-top: 2px solid #444444;
-      * {
-        color: #1b3c56;
-      }
-    }
-
     &:hover {
       cursor: pointer;
       background-color: #d0e2f6;
@@ -87,9 +77,22 @@ tr.panel-toggle-row {
       border-bottom: 2px solid #444444;
 
       &.selected {
+        background-color: #ffffff;
+        border-left: 2px solid #444444;
+        border-right: 2px solid #444444;
+        border-top: 2px solid #444444;
         border-bottom: none;
+
         &:hover {
           background-color: #ffffff;
+        }
+
+        * {
+          color: #1b3c56;
+        }
+
+        i.status::before {
+          opacity: 1.0;
         }
       }
     }

@@ -23,32 +23,34 @@ class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def issues
-    [
-      {
-        resolved: shipping_methods_ok?,
-        description: "#{object.name} currently has no shipping methods.",
-        link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>Create New</a>"
-      },
-      {
-        resolved: payment_methods_ok?,
-        description: "#{object.name} currently has no payment methods.",
-        link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
-      },
-      {
-        resolved: object.confirmed?,
-        description: "Email confirmation is pending. We've sent a confirmation email to #{object.email}.",
-        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: object.id, email: object.email } )}' method='post'>Resend Email</a>"
-      }
-    ]
+    issues = []
+
+    issues << {
+      description: "#{object.name} currently has no shipping methods.",
+      link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>Create New</a>"
+    } unless shipping_methods_ok?
+
+    issues << {
+      description: "#{object.name} currently has no payment methods.",
+      link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
+    } unless shipping_methods_ok?
+
+    issues << {
+      description: "Email confirmation is pending. We've sent a confirmation email to #{object.email}.",
+      link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: object.id, email: object.email } )}' method='post'>Resend Email</a>"
+    } unless object.confirmed?
+
+    issues
   end
 
   def warnings
-    [
-      {
-        resolved: object.visible,
-        description: "#{object.name} is not visible and so cannot be found on the map or in searches",
-        link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(object)}'>Edit</a>"
-      }
-    ]
+    warnings = []
+
+    warnings << {
+      description: "#{object.name} is not visible and so cannot be found on the map or in searches",
+      link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(object)}'>Edit</a>"
+    } unless object.visible
+
+    warnings
   end
 end

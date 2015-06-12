@@ -21,7 +21,7 @@
         %td.resolve
           %div{ ng: { bind: { html: "issue.link" } } }
       %tr{ ng: { repeat: "warning in warnings"} }
-        %td.severity.text-center
+        %td.severity
           %i.icon-warning-sign.warning
         %td.description
           %span{ bo: { bind: "warning.description" } }
