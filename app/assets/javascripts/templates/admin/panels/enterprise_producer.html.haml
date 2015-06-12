@@ -18,7 +18,7 @@
     %a.button.selector.producer{ ng: { click: 'enterprise.owned && changeToProducer()', class: "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" } }
       .top
         %h3 PRODUCER
-        %p Primary producers of food
+        %p Producers of food
       .bottom eg. GROWERS, BAKERS, BREWERS, MAKERS
 
     %a.button.selector.non-producer{ ng: { click: 'enterprise.owned && changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" } }

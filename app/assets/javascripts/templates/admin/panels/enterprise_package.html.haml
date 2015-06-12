@@ -15,7 +15,7 @@
         %h3 Hub Shop
 
         %p
-          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
 
         %p Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
 
@@ -43,27 +43,29 @@
         %p
           %strong COST: ALWAYS FREE
 
+        %p A profile makes you visible and contactable to others and is a way to share your story.
+
         %p If you prefer to focus on producing food, and want to leave the work of selling it to someone else, you won't require a shop on the Open Food Network.
 
-        %p Add your products to Open Food Network, allowing customers to see your product range, and allowing you to act as a supplier to other shopfronts.
+        %p Add your products to Open Food Network, allowing hubs to stock your products in their stores.
 
       .info{ ng: { switch: { when: "own" } } }
         %h3 Producer Shop
 
         %p
-          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
 
-        %p You can offer your products for sale to customers through your very own Open Food Network shop.
+        %p Sell your products directly to customers through your very own Open Food Network shopfront.
 
-        %p You may sell produce that has been grown or produced on site, but you cannot sell produce from elsewhere through your OFN shop.
+        %p A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
 
       .info{ ng: { switch: { when: "any" } } }
         %h3 Producer Hub
 
         %p
-          %strong COST: %2 OF SALES, CAPPED AT $50 PER MONTH
+          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
 
-        %p Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        %p Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
 
         %p Producer Hubs can take many forms, whether they be a CSA, a veggie-box program, or a food co-op with a rooftop garden.
 
@@ -92,7 +94,7 @@
           %h3 Hub Shop
           %p Sell produce from others
         .bottom
-          \%2 OF SALES
+          \2% OF SALES
           %br
           CAPPED AT $50 PER MONTH
 
@@ -107,7 +109,7 @@
           %h3 Producer Shop
           %p Sell your own produce
         .bottom
-          \%2 OF SALES
+          \2% OF SALES
           %br
           CAPPED AT $50 PER MONTH
       %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
@@ -115,7 +117,7 @@
           %h3 Producer Hub
           %p Sell produce from self and others
         .bottom
-          \%2 OF SALES
+          \2% OF SALES
           %br
           CAPPED AT $50 PER MONTH
 
