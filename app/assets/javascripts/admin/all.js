@@ -12,6 +12,7 @@
 //= require angular
 //= require angular-resource
 //= require angular-animate
+//= require angular-sanitize
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo

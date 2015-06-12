@@ -1,1 +1,29 @@
-enterprise_status {{ object.name }}
+.row.enterprise_status_panel{ ng: { controller: 'indexStatusPanelCtrl' } }
+  .alpha.sixteen.columns
+
+    %h3{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
+      %i.icon-ok-sign
+      You're all set up and ready to go!
+
+    %table{ ng: { show: "issues.length > 0 || warnings.length > 0" } }
+      %thead
+        %th.severity
+          Severity
+        %th.description
+          Description
+        %th.resolve
+          Resolve
+      %tr{ ng: { repeat: "issue in issues"} }
+        %td.severity
+          %i.icon-warning-sign.issue
+        %td.description
+          %span{ bo: { bind: "issue.description" } }
+        %td.resolve
+          %div{ ng: { bind: { html: "issue.link" } } }
+      %tr{ ng: { repeat: "warning in warnings"} }
+        %td.severity.text-center
+          %i.icon-warning-sign.warning
+        %td.description
+          %span{ bo: { bind: "warning.description" } }
+        %td.resolve
+          %div{ ng: { bind: { html: "warning.link" } } }

@@ -1,4 +1,16 @@
 angular.module("admin.enterprises").controller "EnterpriseIndexRowCtrl", ($scope) ->
+  $scope.statusText = ->
+    issueCount = (issue for issue in $scope.enterprise.issues when !issue.resolved).length
+    if issueCount > 0
+      $scope.statusClass = "issue"
+    else
+      warningCount = (warning for warning in $scope.enterprise.warnings when !warning.resolved).length
+      if warningCount > 0
+        $scope.statusClass = "warning"
+      else
+        $scope.statusClass = "ok"
+
+
   $scope.producerText = ->
     switch $scope.enterprise.is_primary_producer
       when true
@@ -30,6 +42,7 @@ angular.module("admin.enterprises").controller "EnterpriseIndexRowCtrl", ($scope
   $scope.updateRowText = ->
     $scope.producer = $scope.producerText()
     $scope.package = $scope.packageText()
+    $scope.status = $scope.statusText()
     $scope.producerError = ($scope.producer == "Choose")
     $scope.packageError = ($scope.package == "Choose")
 

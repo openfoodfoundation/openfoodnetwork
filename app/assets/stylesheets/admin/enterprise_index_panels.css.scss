@@ -1,24 +1,4 @@
 .enterprise_package_panel, .enterprise_producer_panel {
-  padding: 20px 0px;
-
-  .error {
-    display: block;
-    color: #f57e80;
-    border: 1px solid #f57e80;
-    background-color: #fde6e7;
-    // @include border-radius(3px);
-    margin-bottom: 1em;
-    padding: 0.5em;
-  }
-
-  .column.alpha, .columns.alpha {
-    padding-left: 20px;
-  }
-
-  .column.omega, .columns.omega {
-    padding-right: 20px;
-  }
-
   .info {
     p {
       font-size: 1rem;
@@ -97,6 +77,22 @@
       	border-right: 20px solid #000000;
         margin-top: -20px;
         margin-left: -20px;
+      }
+    }
+  }
+}
+
+.enterprise_status_panel {
+  td.severity {
+    i {
+      font-size: 1.5rem;
+
+      &.issue{
+        color: #da5354;
+      }
+
+      &.warning{
+        color: #ff9848;
       }
     }
   }
