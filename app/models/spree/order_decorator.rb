@@ -157,20 +157,22 @@ Spree::Order.class_eval do
   end
 
   def update_distribution_charge!
-    EnterpriseFee.clear_all_adjustments_on_order self
+    with_lock do
+      EnterpriseFee.clear_all_adjustments_on_order self
 
-    line_items.each do |line_item|
-      if provided_by_order_cycle? line_item
-        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
+      line_items.each do |line_item|
+        if provided_by_order_cycle? line_item
+          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
 
-      else
-        pd = product_distribution_for line_item
-        pd.create_adjustment_for line_item if pd
+        else
+          pd = product_distribution_for line_item
+          pd.create_adjustment_for line_item if pd
+        end
       end
-    end
 
-    if order_cycle
-      OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      if order_cycle
+        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      end
     end
   end
 
