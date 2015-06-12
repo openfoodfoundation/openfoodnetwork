@@ -1,9 +1,9 @@
 .row.enterprise_status_panel{ ng: { controller: 'indexStatusPanelCtrl' } }
   .alpha.sixteen.columns
 
-    %h3{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
+    %h4.status-ok.text-center{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
       %i.icon-ok-sign
-      You're all set up and ready to go!
+      {{ object.name }} is set up and ready to go!
 
     %table{ ng: { show: "issues.length > 0 || warnings.length > 0" } }
       %thead
