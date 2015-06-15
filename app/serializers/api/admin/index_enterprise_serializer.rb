@@ -33,7 +33,7 @@ class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
     issues << {
       description: "#{object.name} currently has no payment methods.",
       link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
-    } unless shipping_methods_ok?
+    } unless payment_methods_ok?
 
     issues << {
       description: "Email confirmation is pending. We've sent a confirmation email to #{object.email}.",
