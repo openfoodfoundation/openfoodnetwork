@@ -92,24 +92,23 @@
   span.filter-label
     opacity: 0.75
 
-.filter-shopfront.taxon-selectors, .filter-shopfront.property-selectors
-  background: transparent
-
-  single-line-selectors
-    overflow-x: hidden
-    white-space: nowrap
-
-    .f-dropdown
-      overflow-x: auto
-      white-space: normal
-
-  ul
-    margin: 0
-  ul, ul li
-    list-style: none
-
-
 .filter-shopfront
+  &.taxon-selectors, &.property-selectors
+    background: transparent
+
+    single-line-selectors
+      overflow-x: hidden
+      white-space: nowrap
+
+      .f-dropdown
+        overflow-x: auto
+        white-space: normal
+
+    ul
+      margin: 0
+      display: inline-block
+    ul, ul li
+      list-style: none
 
   // Shopfront taxons
   &.taxon-selectors
