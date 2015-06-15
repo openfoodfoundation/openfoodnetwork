@@ -1,7 +1,7 @@
-%ul
-  -# In order for the single-line-selector scope to have access to the available selectors,
-  %filter-selector{objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
+-# In order for the single-line-selector scope to have access to the available selectors,
+%filter-selector{objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
 
+%ul
   %li.more{ ng: { show: "overFlowSelectors().length > 0 || fitting" } }
     %a.dropdown{ data: { dropdown: "{{ 'show-more-' + selectorName }}" }, ng: { class: "{active: selectedOverFlowSelectors().length > 0}" } }
       %span
