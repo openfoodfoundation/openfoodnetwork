@@ -72,14 +72,20 @@ describe EnterpriseRelationship do
 
   describe "finding relatives" do
     let(:e1) { create(:supplier_enterprise) }
-    let(:e2) { create(:supplier_enterprise, sells: 'any') }
+    let(:e2) { create(:distributor_enterprise) }
     let!(:er) { create(:enterprise_relationship, parent: e1, child: e2) }
     let(:er_reverse) { create(:enterprise_relationship, parent: e2, child: e1) }
 
+    it "includes self where appropriate" do
+      EnterpriseRelationship.relatives[e2.id][:distributors].should include e2.id
+      EnterpriseRelationship.relatives[e2.id][:producers].should_not include e2.id
+    end
+
     it "categorises enterprises into distributors and producers" do
+      e2.update_attribute :is_primary_producer, true
       EnterpriseRelationship.relatives.should ==
-        {e1.id => {distributors: Set.new([e2.id]), producers: Set.new([e2.id])},
-         e2.id => {distributors: Set.new([]),      producers: Set.new([e1.id])}}
+        {e1.id => {distributors: Set.new([e2.id]), producers: Set.new([e1.id, e2.id])},
+         e2.id => {distributors: Set.new([e2.id]), producers: Set.new([e2.id, e1.id])}}
     end
 
     it "finds inactive enterprises by default" do
