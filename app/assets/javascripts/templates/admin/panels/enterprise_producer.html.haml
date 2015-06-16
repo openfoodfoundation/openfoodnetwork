@@ -1,0 +1,39 @@
+.row.enterprise_producer_panel{ ng: { controller: 'indexProducerPanelCtrl' } }
+
+  .alpha.eight.columns
+    .info{ ng: { show: "enterprise.is_primary_producer==true" } }
+      %h3 Producer
+      %p Producers make yummy things to eat &amp;/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+
+      %p Producers can also perform other functions, such as aggregating food from other enterprises and selling it through a shop on the Open Food Network.
+
+
+    .info{ ng: { show: "enterprise.is_primary_producer==false" } }
+      %h3 Non-Producer
+      %p Non-producers do not produce any food themselves, meaning that they cannot create their own products for sale through the Open Food Network.
+
+      %p Instead, non-producers specialise in linking producers to the end eater, whether it be by aggregating, grading, packing, selling or delivering food.
+
+  .omega.eight.columns
+    %a.button.selector.producer{ ng: { click: 'enterprise.owned && changeToProducer()', class: "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" } }
+      .top
+        %h3 PRODUCER
+        %p Producers of food
+      .bottom eg. GROWERS, BAKERS, BREWERS, MAKERS
+
+    %a.button.selector.non-producer{ ng: { click: 'enterprise.owned && changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" } }
+      .top
+        %h3 Non-Producer
+        %p All other food enterprises
+      .bottom eg. Grocery stores, Food co-ops, Buying groups
+
+    %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
+      %span{ ng: {hide: "saved() || saving" } }
+        SAVE
+        %i.icon-save
+      %span{ ng: {show: "saved() && !saving" } }
+        SAVED
+        %i.icon-ok-sign
+      %span{ ng: {show: "saving" } }
+        SAVING
+        %i.icon-refresh

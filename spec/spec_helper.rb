@@ -80,6 +80,9 @@ RSpec.configure do |config|
   # Geocoding
   config.before(:each) { Spree::Address.any_instance.stub(:geocode).and_return([1,1]) }
 
+  # Ensure we start with consistent config settings
+  config.before(:all) { Spree::Config.products_require_tax_category = false }
+
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
@@ -91,6 +94,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
+  config.include OpenFoodNetwork::ProductsHelper
   config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
   config.include ActionView::Helpers::DateHelper

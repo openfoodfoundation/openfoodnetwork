@@ -212,7 +212,7 @@ FactoryGirl.define do
   factory :customer, :class => Customer do
     email { Faker::Internet.email }
     enterprise
-    code { Faker::Lorem.word }
+    code { SecureRandom.base64(150) }
     user
   end
 end

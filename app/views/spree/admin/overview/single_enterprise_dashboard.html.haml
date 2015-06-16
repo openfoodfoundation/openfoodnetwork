@@ -5,24 +5,26 @@
       = "(#{enterprise_type_name(@enterprise)})"
 
 - content_for :page_actions do
+  = render 'admin/shared/user_guide_link'
+
   :javascript
     function toggleType(){
-      if( $('#type_selection').is(":visible") ){
+      if( $('#package_selection').is(":visible") ){
         $('button#toggle_type i').switchClass("icon-chevron-up","icon-chevron-down")
       }
       else {
         $('button#toggle_type i').switchClass("icon-chevron-down","icon-chevron-up")
       }
-      $("#type_selection").slideToggle()
+      $("#package_selection").slideToggle()
     }
-  #type_button
+  #package_button
     %button#toggle_type{ onClick: 'toggleType()' }
-      Change type
+      Change Package
       %i.icon-chevron-down
 
 
-#type_selection{ hidden: true }
-  = render partial: "change_type_form"
+#package_selection{ hidden: true }
+  = render partial: "/admin/enterprises/change_type_form"
 
 
 - if @enterprise.confirmed_at.nil?
@@ -94,7 +96,3 @@
         %a.button.bottom{href: main_app.admin_order_cycles_path}
           Manage order cycles
           %span.icon-arrow-right
-
-
-
-

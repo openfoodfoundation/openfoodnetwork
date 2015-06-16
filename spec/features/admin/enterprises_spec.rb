@@ -7,93 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "listing enterprises" do
-    s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise)
-
-    login_to_admin_section
-    click_link 'Enterprises'
-
-    within("tr.enterprise-#{s.id}") do
-      expect(page).to have_content s.name
-      expect(page).to have_select "enterprise_set_collection_attributes_1_sells"
-      expect(page).to have_content "Edit Profile"
-      expect(page).to have_content "Delete"
-      expect(page).to_not have_content "Payment Methods"
-      expect(page).to_not have_content "Shipping Methods"
-      expect(page).to have_content "Enterprise Fees"
-    end
-
-    within("tr.enterprise-#{d.id}") do
-      expect(page).to have_content d.name
-      expect(page).to have_select "enterprise_set_collection_attributes_0_sells"
-      expect(page).to have_content "Edit Profile"
-      expect(page).to have_content "Delete"
-      expect(page).to have_content "Payment Methods"
-      expect(page).to have_content "Shipping Methods"
-      expect(page).to have_content "Enterprise Fees"
-    end
-  end
-
-  context "editing enterprises in bulk" do
-    let!(:s){ create(:supplier_enterprise) }
-    let!(:d){ create(:distributor_enterprise, sells: 'none') }
-    let!(:d_manager) { create_enterprise_user(enterprise_limit: 1) }
-
-    before do
-      d_manager.enterprise_roles.build(enterprise: d).save
-      expect(d.owner).to_not eq d_manager
-    end
-
-    context "without violating rules" do
-      before do
-        login_to_admin_section
-        click_link 'Enterprises'
-      end
-
-      it "updates the enterprises" do
-        within("tr.enterprise-#{d.id}") do
-          expect(page).to have_checked_field "enterprise_set_collection_attributes_0_visible"
-          uncheck "enterprise_set_collection_attributes_0_visible"
-          select 'any', from: "enterprise_set_collection_attributes_0_sells"
-          select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
-        end
-        click_button "Update"
-        flash_message.should == 'Enterprises updated successfully'
-        distributor = Enterprise.find(d.id)
-        expect(distributor.visible).to eq false
-        expect(distributor.sells).to eq 'any'
-        expect(distributor.owner).to eq d_manager
-      end
-    end
-
-    context "with data that violates rules" do
-      let!(:second_distributor) { create(:distributor_enterprise, sells: 'none') }
-
-      before do
-        d_manager.enterprise_roles.build(enterprise: second_distributor).save
-        expect(d.owner).to_not eq d_manager
-
-        login_to_admin_section
-        click_link 'Enterprises'
-      end
-
-      it "does not update the enterprises and displays errors" do
-        within("tr.enterprise-#{d.id}") do
-          select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
-        end
-        within("tr.enterprise-#{second_distributor.id}") do
-          select d_manager.email, from: 'enterprise_set_collection_attributes_1_owner_id'
-        end
-        click_button "Update"
-        flash_message.should == 'Update failed'
-        expect(page).to have_content "#{d_manager.email} is not permitted to own any more enterprises (limit is 1)."
-        second_distributor.reload
-        expect(second_distributor.owner).to_not eq d_manager
-      end
-    end
-  end
-
   scenario "viewing an enterprise" do
     e = create(:enterprise)
 
@@ -325,56 +238,23 @@ feature %q{
   end
 
 
-  context "as an Enterprise user" do
+  context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
     let(:enterprise_user) { create_enterprise_user }
-    let(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
+    let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
-      er
 
       login_to_admin_as enterprise_user
     end
 
-    context "listing enterprises" do
-      scenario "displays enterprises I have permission to manage" do
-        oc_user_coordinating = create(:simple_order_cycle, { coordinator: supplier1, name: 'Order Cycle 1' } )
-        oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier2, name: 'Order Cycle 2' } )
-
-        click_link "Enterprises"
-
-        within("tr.enterprise-#{distributor1.id}") do
-          expect(page).to have_content distributor1.name
-          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_0_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_0_sells"
-        end
-
-        within("tr.enterprise-#{distributor3.id}") do
-          expect(page).to have_content distributor3.name
-          expect(page).to have_unchecked_field "enterprise_set_collection_attributes_1_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_1_sells"
-        end
-
-        within("tr.enterprise-#{supplier1.id}") do
-          expect(page).to have_content supplier1.name
-          expect(page).to have_checked_field "enterprise_set_collection_attributes_2_is_primary_producer"
-          expect(page).to_not have_select "enterprise_set_collection_attributes_2_sells"
-        end
-
-        expect(page).to_not have_content "supplier2.name"
-        expect(page).to_not have_content "distributor2.name"
-
-        expect(find("#content-header")).to have_link "New Enterprise"
-      end
-    end
-
-    context "when I have reached my enterprise ownership limit", js: true do
+    context "when I have reached my enterprise ownership limit" do
       it "does not display the link to create a new enterprise" do
         supplier1.reload
         enterprise_user.owned_enterprises.push [supplier1]
@@ -428,7 +308,7 @@ feature %q{
 
     scenario "editing enterprises I manage" do
       click_link 'Enterprises'
-      within("#listing_enterprises tr.enterprise-#{distributor1.id}") { click_link 'Edit Profile' }
+      within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
       click_button 'Update'
@@ -440,7 +320,7 @@ feature %q{
     describe "enterprises I have edit permission for, but do not manage" do
       it "allows me to edit them" do
         click_link 'Enterprises'
-        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+        within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
         fill_in 'enterprise_name', :with => 'Eaterprises'
         click_button 'Update'
@@ -449,18 +329,9 @@ feature %q{
         distributor3.reload.name.should == 'Eaterprises'
       end
 
-      it "does not show links to manage shipping methods, payment methods or enterprise fees" do
+      it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page" do
         click_link 'Enterprises'
-        within("#listing_enterprises tr.enterprise-#{distributor3.id}") do
-          page.should_not have_link 'Shipping Methods'
-          page.should_not have_link 'Payment Methods'
-          page.should_not have_link 'Enterprise Fees'
-        end
-      end
-
-      it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page", js: true do
-        click_link 'Enterprises'
-        within("#listing_enterprises tr.enterprise-#{distributor3.id}") { click_link 'Edit Profile' }
+        within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
         within(".side_menu") do
           page.should_not have_link 'Shipping Methods'
@@ -472,26 +343,35 @@ feature %q{
 
     scenario "editing images for an enterprise" do
       click_link 'Enterprises'
-      first(".edit").click
-      page.should have_content "Logo"
-      page.should have_content "Promo"
+      within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
+
+      within(".side_menu") do
+        click_link "Images"
+      end
+
+      page.should have_content "LOGO"
+      page.should have_content "PROMO"
     end
 
-    scenario "managing producer properties", js: true do
+    scenario "managing producer properties" do
       create(:property, name: "Certified Organic")
       click_link 'Enterprises'
-      within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
+      within("#e_#{supplier1.id}") { click_link 'Manage' }
+      within(".side_menu") do
+        click_link "Properties"
+      end
 
       # -- Update only
       select2_select "Certified Organic", from: 'enterprise_producer_properties_attributes_0_property_name'
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
       click_button 'Update'
-      page.should have_selector '#listing_enterprises a', text: supplier1.name
       supplier1.producer_properties(true).count.should == 1
 
       # -- Destroy
       pp = supplier1.producer_properties.first
-      within(".enterprise-#{supplier1.id}") { click_link 'Properties' }
+      within(".side_menu") do
+        click_link "Properties"
+      end
 
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
       page.should_not have_selector '#progress'

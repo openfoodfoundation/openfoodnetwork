@@ -12,13 +12,17 @@ class ShopController < BaseController
   def products
     if @products = products_for_shop
 
+      enterprise_fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new current_distributor, current_order_cycle
+
       render status: 200,
              json: ActiveModel::ArraySerializer.new(@products,
                                                     each_serializer: Api::ProductSerializer,
                                                     current_order_cycle: current_order_cycle,
                                                     current_distributor: current_distributor,
                                                     variants: variants_for_shop_by_id,
-                                                    master_variants: master_variants_for_shop_by_id).to_json
+                                                    master_variants: master_variants_for_shop_by_id,
+                                                    enterprise_fee_calculator: enterprise_fee_calculator,
+                                                   ).to_json
 
     else
       render json: "", status: 404

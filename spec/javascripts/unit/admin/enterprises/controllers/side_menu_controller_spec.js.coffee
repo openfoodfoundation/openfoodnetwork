@@ -1,15 +1,14 @@
 describe "menuCtrl", ->
   ctrl = null
   scope = null
-  Enterprise = null
+  enterprise = null
   SideMenu = SideMenu
 
   beforeEach ->
     module('admin.enterprises')
-    Enterprise =
-      enterprise:
-        payment_method_ids: [ 1, 3 ]
-        shipping_method_ids: [ 2, 4 ]
+    enterprise =
+      payment_method_ids: [ 1, 3 ]
+      shipping_method_ids: [ 2, 4 ]
     # PaymentMethods =
     #   paymentMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
     # ShippingMethods =
@@ -20,11 +19,11 @@ describe "menuCtrl", ->
       SideMenu = _SideMenu_
       spyOn(SideMenu, "select").andCallThrough()
       spyOn(SideMenu, "setItems").andCallThrough()
-      ctrl = $controller 'sideMenuCtrl', {$scope: scope, Enterprise: Enterprise, SideMenu: SideMenu, enterprisePermissions: {}}
+      ctrl = $controller 'sideMenuCtrl', {$scope: scope, enterprise: enterprise, SideMenu: SideMenu, enterprisePermissions: {}}
 
   describe "initialisation", ->
     it "stores enterprise", ->
-      expect(scope.Enterprise).toEqual Enterprise.enterprise
+      expect(scope.Enterprise).toEqual enterprise
 
     it "sets the item list", ->
       expect(SideMenu.setItems).toHaveBeenCalled

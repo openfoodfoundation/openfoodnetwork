@@ -6,7 +6,7 @@
 %div{"ng-app" => "ofn.admin", "ng-controller" => "AdminEnterpriseRelationshipsCtrl"}
   = render 'data'
 
-  %input.search{"ng-model" => "query", "placeholder" => "Search"}
+  = render 'search_input'
 
   %table#enterprise-relationships
     %tbody

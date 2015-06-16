@@ -61,7 +61,7 @@ feature 'shipping methods' do
     end
   end
 
-  context "as an enterprise user" do
+  context "as an enterprise user", js: true do
     let(:enterprise_user) { create_enterprise_user }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
@@ -78,8 +78,11 @@ feature 'shipping methods' do
 
     it "creating a shipping method" do
       click_link 'Enterprises'
-      within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
-      click_link 'New Shipping Method'
+      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within(".side_menu") do
+        click_link "Shipping Methods"
+      end
+      click_link 'Create One Now'
 
       # Show the correct fields
       page.should have_field 'shipping_method_name'
@@ -119,17 +122,24 @@ feature 'shipping methods' do
       page.all('td', text: 'Two').count.should == 1
     end
 
-    it "shows me only shipping methods for the enterprise I select" do
+    pending "shows me only shipping methods for the enterprise I select" do
       sm1
       sm2
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor1.id}") { click_link 'Shipping Methods' }
+      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within(".side_menu") do
+        click_link "Shipping Methods"
+      end
       page.should     have_content sm1.name
       page.should     have_content sm2.name
 
       click_link 'Enterprises'
-      within(".enterprise-#{distributor2.id}") { click_link 'Shipping Methods' }
+      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within(".side_menu") do
+        click_link "Shipping Methods"
+      end
+
       page.should_not have_content sm1.name
       page.should     have_content sm2.name
     end

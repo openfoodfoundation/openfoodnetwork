@@ -40,7 +40,7 @@ module Spree
 
       describe "tax category" do
         context "when a tax category is required" do
-          before { Spree::Config.products_require_tax_category = true }
+          around { |example| with_products_require_tax_category(true) { example.run } }
 
           it "is invalid when a tax category is not provided" do
             build(:product, tax_category_id: nil).should_not be_valid
@@ -48,7 +48,7 @@ module Spree
         end
 
         context "when a tax category is not required" do
-          before { Spree::Config.products_require_tax_category = false }
+          around { |example| with_products_require_tax_category(false) { example.run } }
 
           it "is valid when a tax category is not provided" do
             build(:product, tax_category_id: nil).should be_valid

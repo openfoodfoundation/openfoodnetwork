@@ -17,7 +17,7 @@ module Admin
     private
 
     def collection
-      return Customer.where("1=0") if html_request? || params[:enterprise_id].nil?
+      return Customer.where("1=0") unless json_request? && params[:enterprise_id].present?
       enterprise = Enterprise.managed_by(spree_current_user).find_by_id(params[:enterprise_id])
       Customer.of(enterprise)
     end

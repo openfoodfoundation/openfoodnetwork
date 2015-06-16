@@ -3,7 +3,7 @@ require 'open_food_network/referer_parser'
 module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => [:index, :set_sells, :check_permalink]
+    before_filter :load_countries, :except => [:index, :register, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
@@ -18,34 +18,61 @@ module Admin
     before_filter :load_properties, only: [:edit, :update]
     before_filter :setup_property, only: [:edit]
 
-
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
 
-    def set_sells
-      enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
-      attributes = { sells: params[:sells] }
-      attributes[:producer_profile_only] = params[:sells] == "none" && !!params[:producer_profile_only]
-      attributes[:shop_trial_start_date] = Time.now if params[:sells] == "own"
+    def index
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: @collection, each_serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user
+        end
+      end
+    end
 
-      if %w(none own).include?(params[:sells])
-        if params[:sells] == 'own' && enterprise.shop_trial_start_date
-          expiry = enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days
-          if Time.now > expiry
-            flash[:error] = "Sorry, but you've already had a trial. Expired on: #{expiry.strftime('%Y-%m-%d')}"
-          else
-            attributes.delete :shop_trial_start_date
-            enterprise.update_attributes(attributes)
-            flash[:notice] = "Welcome back! Your trial expires on: #{expiry.strftime('%Y-%m-%d')}"
-          end
-        elsif enterprise.update_attributes(attributes)
-          flash[:success] = "Congratulations! Registration for #{enterprise.name} is complete!"
+    def welcome
+      render layout: "spree/layouts/bare_admin"
+    end
+
+
+    def update
+      invoke_callbacks(:update, :before)
+      if @object.update_attributes(params[object_name])
+        invoke_callbacks(:update, :after)
+        flash[:success] = flash_message_for(@object, :successfully_updated)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_save }
+          format.js   { render :layout => false }
+          format.json { render json: @object, serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user }
         end
       else
-        flash[:error] = "Unauthorised"
+        invoke_callbacks(:update, :fails)
+        respond_with(@object) do |format|
+          format.json { render json: { errors: @object.errors.messages }, status: :unprocessable_entity }
+        end
       end
-      redirect_to admin_path
+    end
+
+    def register
+      if params[:sells] == 'unspecified'
+        flash[:error] = "Please select a package"
+        return render :welcome, layout: "spree/layouts/bare_admin"
+      end
+
+      attributes = { sells: params[:sells], visible: true }
+
+      if ['own', 'any'].include? params[:sells]
+        attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.now
+      end
+
+      if @enterprise.update_attributes(attributes)
+        flash[:success] = "Congratulations! Registration for #{@enterprise.name} is complete!"
+        redirect_to admin_path
+      else
+        flash[:error] = "Could not complete registration for #{@enterprise.name}"
+        render :welcome, layout: "spree/layouts/bare_admin"
+      end
     end
 
     def bulk_update
@@ -98,7 +125,7 @@ module Admin
     private
 
     def load_enterprise_set
-      @enterprise_set = EnterpriseSet.new collection
+      @enterprise_set = EnterpriseSet.new(collection) if spree_current_user.admin?
     end
 
     def load_countries
@@ -112,6 +139,16 @@ module Admin
         coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
         order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
         return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
+      when :index
+        if spree_current_user.admin?
+          OpenFoodNetwork::Permissions.new(spree_current_user).
+            editable_enterprises.
+            order('is_primary_producer ASC, name')
+        elsif json_request?
+          OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises
+        else
+          Enterprise.where("1=0") unless json_request?
+        end
       else
         # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
         OpenFoodNetwork::Permissions.new(spree_current_user).
@@ -141,13 +178,15 @@ module Admin
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
-          enterprise_params.delete :sells
+          enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by_id(enterprise_params[:id]).owner
         end
       end
     end
 
     def check_can_change_sells
-      params[:enterprise].delete :sells unless spree_current_user.admin?
+      unless spree_current_user.admin? || spree_current_user == @enterprise.owner
+        params[:enterprise].delete :sells
+      end
     end
 
     def override_owner

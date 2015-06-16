@@ -117,31 +117,34 @@ feature %q{
       end
     end
 
-    scenario "creating a new product", js: true do
-      Spree::Config.products_require_tax_category = false
-      click_link 'Products'
-      click_link 'New Product'
+    context "products do not require a tax category" do
+      around { |example| with_products_require_tax_category(false) { example.run } }
 
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
+      scenario "creating a new product", js: true do
+        click_link 'Products'
+        click_link 'New Product'
 
-      page.should have_selector('#product_supplier_id')
-      select 'Another Supplier', :from => 'product_supplier_id'
-      select 'Weight (g)', from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: '500'
-      select taxon.name, from: "product_primary_taxon_id"
-      select 'None', from: "product_tax_category_id"
+        fill_in 'product_name', :with => 'A new product !!!'
+        fill_in 'product_price', :with => '19.99'
 
-      # Should only have suppliers listed which the user can manage
-      page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
-      page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
+        page.should have_selector('#product_supplier_id')
+        select 'Another Supplier', :from => 'product_supplier_id'
+        select 'Weight (g)', from: 'product_variant_unit_with_scale'
+        fill_in 'product_unit_value_with_description', with: '500'
+        select taxon.name, from: "product_primary_taxon_id"
+        select 'None', from: "product_tax_category_id"
 
-      click_button 'Create'
+        # Should only have suppliers listed which the user can manage
+        page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
+        page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
 
-      flash_message.should == 'Product "A new product !!!" has been successfully created!'
-      product = Spree::Product.find_by_name('A new product !!!')
-      product.supplier.should == @supplier2
-      product.tax_category.should be_nil
+        click_button 'Create'
+
+        flash_message.should == 'Product "A new product !!!" has been successfully created!'
+        product = Spree::Product.find_by_name('A new product !!!')
+        product.supplier.should == @supplier2
+        product.tax_category.should be_nil
+      end
     end
 
     scenario "editing a product" do
