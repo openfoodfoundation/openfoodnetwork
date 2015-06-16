@@ -1,0 +1,15 @@
+= render 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  Content
+
+
+= form_tag main_app.admin_content_path, method: :put do
+  #preferences
+    = render 'fieldset', name: 'Home page', preferences: @preferences_home
+    = render 'fieldset', name: 'Footer', preferences: @preferences_footer
+
+    .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
+      = button t(:update), 'icon-refresh'
+      %span.or= t(:or)
+      = link_to_with_icon 'icon-remove', t(:cancel), main_app.edit_admin_content_path, class: 'button'

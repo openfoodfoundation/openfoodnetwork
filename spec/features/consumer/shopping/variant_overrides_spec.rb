@@ -29,7 +29,7 @@ feature "shopping with variant overrides defined", js: true do
     outgoing_exchange.variants = [v1, v2, v3, v4]
     outgoing_exchange.enterprise_fees << ef
     sm.calculator.preferred_amount = 0
-    visit shop_path
+    visit shops_path
     click_link hub.name
   end
 

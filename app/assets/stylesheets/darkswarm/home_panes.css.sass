@@ -1,57 +1,139 @@
 @import branding
 @import mixins
-  
-// Styling for big panes on homepage
-
-#beta.pane
-  .row
-    @include panepadding
-    background-image: url("/assets/home/macbook.png") 
-    background-repeat: no-repeat
-    background-position: center bottom
-    padding-bottom: 280px
-    &, & *
-      max-width: 610px
+@import typography
+@import animations
+@import variables
 
 
-#map.pane
-  @include darkbg
-  .row
-    @include panepadding
-    background-image: url("/assets/home/maps-bg.svg") 
-    background-repeat: no-repeat
-    background-position: left center
-
-#groups.pane
-  @include darkbg
-  .row
-    @include panepadding
-    background-image: url("/assets/home/groups-bg.svg")
-    background-repeat: no-repeat
-    background-position: left center
-
-#producers.pane
-  @include turqbg
-  @include panepadding
-  background-image: url("/assets/home/producers-bg.svg")
-  background-repeat: no-repeat
-  background-position: center center
-  background-size: 80% 80%
-
-  @media all and (max-width: 768px)
-    background-position: center top
-    background-size: 100% 100%
-  .row
-    .pricing-table
-      .title
-        color: $clr-turquoise-light
-      .price
-        background-color: rgba(240, 240, 240, 0.6)
-      .description, .bullet-item, .cta-button
-        background-color: rgba(255, 255, 255, 0.8)
-
-// Responsive 
-@media all and (max-width: 768px)
-  #map.pane, #groups.pane, #producers.pane
+// Styling for big panes on homepage \\
+#panes
+  .pane
     .row
+      @include panepadding
+      padding-top: 75px
+      padding-bottom: 75px
+      &.header
+        padding-bottom: 0
+      &.content
+        padding-top: 0
+
+
+// Background styles \\
+#system.pane
+  background-color: white
+
+#brand-story.pane, #cta.pane, #shops.pane
+  @include tiledPane
+
+#stats.pane
+  background-image: url("/assets/home/background-blurred-oranges.jpg")
+  background-position: center center
+  background-color: $ofn-grey
+  @include fullbg
+  @include paneWhiteText
+
+
+// Content styles \\
+#brand-story.pane
+  .row
+    h2
+      font-weight: 300
+      font-size: 88px
+    p
+      @include bodyFont
+      font-size: 1.5rem
+      font-weight: 300
+
+  a.text-vbig i
+    font-size: 75px
+
+#system.pane
+  .row .row
+    padding-bottom: 0
+  @media all and (max-width: 640px)
+    .row .row
+      padding: 0
+
+  .home-icon-box
+    background-image: url("/assets/ofn-o.png")
+    background-position: center center
+    background-repeat: no-repeat
+    background-size: auto 100%
+    padding: 3rem 0
+    text-align: center
+    margin-top: 2rem
+    @media all and (min-width: 642px)
+      margin-top: 0
+    i
+      font-size: 4rem
+    a
+      display: block
+      width: 64px
+      height: 64px
+      margin: 0 auto
+      background-color: $australia-orange
       background-position: center center
+      background-repeat: no-repeat
+      background-size: auto 100%
+      &.search
+        background-image: url("/assets/icon-mask-magnifier.png")
+      &.shop
+        background-image: url("/assets/icon-mask-apple.png")
+      &.pick-up-delivery
+        background-image: url("/assets/icon-mask-truck.png")
+
+  h2
+    font-size: 70px
+    font-weight: 300
+    color: $australia-orange
+
+  a
+    color: $australia-orange
+
+  .home-icon-box-bottom
+    margin-top: 1rem
+    width: 100%
+    padding-left: 1rem
+    padding-right: 1rem
+    @media all and (min-width: 480px)
+      padding-left: 3rem
+      padding-right: 3rem
+    @media all and (min-width: 642px)
+      padding-left: 1rem
+      padding-right: 1rem
+    h4
+      color: $australia-orange
+      border-bottom: 2px solid lighten($australia-orange, 20%)
+      text-align: center
+      padding: 1rem 0
+      margin: 1.5rem 0
+
+#cta.pane, #stats.pane
+  h2
+    font-weight: 300
+    font-size: 45px
+    margin-bottom: 2rem
+
+#stats.pane
+  .row.header
+    padding-bottom: 2rem
+
+  h4
+    font-weight: 300
+    text-transform: uppercase
+    margin: 1.5rem 0
+    display: inline-block
+    strong
+      display: block
+      font-weight: normal
+      font-size: 75px
+
+#shops.pane
+  @include paneWhiteText
+  h2
+    margin-bottom: 2rem
+    font-size: 4.4rem
+    font-weight: 300
+
+#shops-signup.pane
+  background-color: $australia-orange

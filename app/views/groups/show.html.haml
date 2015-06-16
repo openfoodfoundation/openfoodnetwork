@@ -1,3 +1,6 @@
+- content_for(:title) do
+  = @group.name
+
 -# inject all enterprises as "enterprises"
 -# it could be more efficient to inject only the enterprises that are related to the group
 = inject_enterprises
@@ -6,7 +9,7 @@
 -# further hubs and producers of these enterprises can't be resolved within this small subset
 = inject_group_enterprises
 
-#group-page.row.pad-top{"ng-controller" => "GroupPageCtrl"}
+#group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
     %header
       .row

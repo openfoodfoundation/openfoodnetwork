@@ -42,7 +42,7 @@ FactoryGirl.define do
       # Products with images
       [ex1, ex2].each do |exchange|
         product = create(:product, supplier: exchange.sender)
-        image = File.open(File.expand_path('../../app/assets/images/logo.jpg', __FILE__))
+        image = File.open(File.expand_path('../../app/assets/images/logo-white.png', __FILE__))
         Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
         exchange.variants << product.variants.first

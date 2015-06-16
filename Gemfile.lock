@@ -219,6 +219,8 @@ GEM
       safe_yaml (~> 0.9.0)
     css_parser (1.3.5)
       addressable
+    css_splitter (0.4.1)
+      sprockets (>= 2.0.0)
     daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
@@ -428,6 +430,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.2.3)
     ref (1.0.5)
     representative (1.0.5)
       activesupport (>= 2.2.2)
@@ -548,6 +551,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
+  css_splitter
   custom_error_message!
   daemons
   dalli
@@ -589,6 +593,7 @@ DEPENDENCIES
   rack-ssl
   rails (= 3.2.21)
   rails-i18n (~> 3.0.0)
+  redcarpet
   representative_view
   roadie-rails (~> 1.0.3)
   rspec-rails

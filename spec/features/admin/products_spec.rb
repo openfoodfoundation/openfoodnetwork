@@ -205,7 +205,7 @@ feature %q{
 
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../../app/assets/images/logo.jpg', __FILE__))
+      image = File.open(File.expand_path('../../../../app/assets/images/logo-white.png', __FILE__))
       Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
       visit spree.admin_product_images_path(product)

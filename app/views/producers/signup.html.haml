@@ -1,0 +1,122 @@
+- content_for(:title) do
+  Sign up as a producer
+
+#panes
+  #producer-signup.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2 Food producers, empowered.
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
+        %br
+        %a.button.transparent{href: "/register"}
+          Join now
+  .pane
+    .row
+      .small-12.medium-10.medium-offset-1.columns.text-center
+        %h2 Enterprise Accounts
+        -# %p.text-big
+        -#   If there is a time-sensitive offer you can write it here, e.g.
+        -#   Sign up before 30th June for an extra month free!
+        %br
+        %table.signup-table.producers-table{cellpadding: "0", cellspacing: "0"}
+          %thead
+            %tr
+              %td
+                %h5
+              %td.text-center{width: "20%"}
+                %h5 Basic
+              %td.text-center{width: "24%"}
+                %h5 Plus
+          %tr
+            %td
+              %p
+                %strong Profile
+              %p
+                %span.text-small Get a profile on the Open Food Network - including a listing on the Producers page and a pin on the OFN Map. These help people to find and connect with you.
+              %p
+                %span.text-small Option to add and manage your products on OFN, enabling you to act as a supplier to other OFN shopfronts.
+            %td.text-center
+              %i.ofn-i_003-check.text-big
+            %td.text-center
+              %i.ofn-i_003-check.text-big
+          %tr
+            %td
+              %p
+                %strong Shop
+              %p.text-small Get a shopfront on OFN to sell your produce direct!
+              %p.text-small Basic support included:
+              %ul.small
+                %li User manual
+                %li Post queries to discussion forum/via contact form
+                %li Report bugs/suggestions
+                %li Regular release notes – what's new
+            %td.text-center
+            %td.text-center
+              %i.ofn-i_003-check.text-big
+          %tfoot
+            %tr
+              %td
+              %td.text-center{valign: "top"}
+                %h2 Free
+              %td.text-center{valign: "top"}
+                %h2
+                  .text-small
+                    first
+                    %br
+                    month
+                  Free
+                %p.text-small
+                  Then, 2% of total transactions
+                  %br
+                  %em
+                    Capped at
+                    %strong $50
+                    per month
+                  %br
+                  %em (Special offer for 2015)
+
+  #producer-case-studies
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Stories from our producers.
+        %br
+        .row
+          .small-12.medium-6.columns
+            = render 'shared/case_study', img_src: "/assets/case-studies/jonai.png", title: "Jonai Farms", description: "Jonai Farms is an ethical pork and beef “Community Supported Agriculture” farm that delivers to a range of hubs in Melbourne and central Victoria every month.", link: "http://www.jonaifarms.com.au"
+          .small-12.medium-6.columns
+            = render 'shared/case_study', img_src: "/assets/case-studies/wandiful.png", title: "Wandiful Produce", description: "Biodynamically grown in NE Victoria, Wandiful Produce supplies hazelnuts, chestnuts and associated products (bliss balls - yum!) shipped to your door.", link: "https://openfoodnetwork.org.au/wandiful-produce/shop"
+        .row
+          .small-12.medium-6.columns
+            = render 'shared/case_study', img_src: "/assets/case-studies/longley.png", title: "Longley Organic Farm", description: "Near Hobart, Longley Organic Farm provides berries and vegetables for local food cooperatives and small shops and through its roadside stall.", link: "https://openfoodnetwork.org.au/longley-organic-farm/shop"
+          .small-12.medium-6.columns
+            = render 'shared/case_study', img_src: "/assets/case-studies/jindivick.jpg", title: "Jindivick Hydroponics", description: "Selling through farmers markets and the South East Food Hub, Jindivick Hydroponics grow an ever increasing range of vegetables including tomatoes, cucumbers and beans.", link: "https://openfoodnetwork.org.au/producers#/#jindivick-hydroponics"
+
+
+  .pane#cta
+    .row
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %h2 Join now!
+        %p.text-big Start with a free profile, and expand when you're ready!
+        %a.button.transparent{href: "/register"}
+          Join now
+
+  #producer-details.pane.footer-pad
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Here's the detail.
+        = render 'shared/enterprise_type_flowchart', type: 'producers'
+        %h4 Join a marketplace of independent online food stores
+        %p Create an online shop front and join the network of online farmers markets on the Open Food Network. Set up a Producer Shop and sell your products direct to customers, or create a Food Hub and sell products from multiple producers.
+
+        %h4 Connect with a new source of customers
+        %p Gain access to the growing crowd of conscientious buyers on the Open Food Network, all looking to make more ethical and sustainable choices when purchasing food.
+        %h4 Manage your business online
+        %p The Open Food Network provides online tools to help with the day-to-day running of your business. Manage your product listing and stock levels. Create, receive and manage orders from your buyers, and organise payments online. Generate invoices for orders and export them to your accounting software, and access a range of reports.
+        %h4 Start with a simple listing on our directory
+        %p Create a profile on the Open Food Network and gain exposure to a new marketplace of potential buyers. Tell your story in words and images, provide your contact details, and drive connections to your social and online presence.
+        %p Access new wholesale opportunities by connecting with food hubs in your region who can sell and distribute your products to buyers on the Open Food Network.
+
+
+= render partial: "shared/footer"

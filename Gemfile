@@ -30,6 +30,7 @@ gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.3"
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -72,11 +73,12 @@ group :assets do
   gem 'momentjs-rails'
   gem 'angular-rails-templates', '~> 0.2.0'
 end
+
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
-
+gem 'css_splitter'
 
 
 group :test, :development do

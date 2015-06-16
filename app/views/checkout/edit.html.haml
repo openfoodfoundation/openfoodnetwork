@@ -1,6 +1,9 @@
+- content_for(:title) do
+  Checkout
+
 = inject_enterprises
 
-.darkswarm
+.darkswarm.footer-pad
   - content_for :order_cycle_form do
 
     %closing Checkout now
@@ -23,4 +26,3 @@
 
 
 = render partial: "shared/footer"
-

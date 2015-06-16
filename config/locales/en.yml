@@ -19,3 +19,15 @@ en:
   producers: Aussie Producers
   producers_join: Australian producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
+
+  home_tagline_cta: "Tagline call to action"
+  home_whats_happening: "What's happening"
+  footer_facebook_url: "Facebook URL"
+  footer_twitter_url: "Twitter URL"
+  footer_instagram_url: "Instagram URL"
+  footer_linkedin_url: "LinkedIn URL"
+  footer_googleplus_url: "Google Plus URL"
+  footer_pinterest_url: "Pinterest URL"
+  footer_email: "Email"
+  footer_links_md: "Links"
+  footer_about_url: "About URL"
