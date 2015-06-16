@@ -73,11 +73,12 @@ group :assets do
   gem 'momentjs-rails'
   gem 'angular-rails-templates'
 end
+
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
-
+gem 'css_splitter'
 
 
 group :test, :development do
