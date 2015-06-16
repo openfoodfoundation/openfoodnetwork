@@ -9,11 +9,12 @@ tr.panel-toggle-row {
 
     position: relative;
 
-    i {
+    i.icon-chevron::before {
       font-size: 1.2rem;
+      content: "\f078";
     }
 
-    &::before {
+    &.error::before {
       font-family: FontAwesome;
       font-weight: normal;
       font-style: normal;
@@ -24,23 +25,14 @@ tr.panel-toggle-row {
       right: 5px;
       font-size: 2rem;
       -webkit-font-smoothing: antialiased;
-    }
-
-    &.error::before {
       content: "\f071";
       color: #da5354;
     }
 
     &.status {
-      i.status::before {
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        display: inline-block;
-        text-decoration: inherit;
+      i.icon-status::before {
         font-size: 1.5rem;
         opacity: 0.5;
-        -webkit-font-smoothing: antialiased;
       }
 
       i.issue::before {
@@ -59,16 +51,6 @@ tr.panel-toggle-row {
       }
     }
 
-    &.selected {
-      background-color: #ffffff;
-      border-left: 2px solid #444444;
-      border-right: 2px solid #444444;
-      border-top: 2px solid #444444;
-      * {
-        color: #1b3c56;
-      }
-    }
-
     &:hover {
       cursor: pointer;
       background-color: #d0e2f6;
@@ -76,7 +58,7 @@ tr.panel-toggle-row {
         color: #1b3c56;
       }
 
-      i.status::before {
+      i.icon-status::before {
         opacity: 1.0;
       }
     }
@@ -87,9 +69,26 @@ tr.panel-toggle-row {
       border-bottom: 2px solid #444444;
 
       &.selected {
+        background-color: #ffffff;
+        border-left: 2px solid #444444;
+        border-right: 2px solid #444444;
+        border-top: 2px solid #444444;
         border-bottom: none;
+
         &:hover {
           background-color: #ffffff;
+        }
+
+        * {
+          color: #1b3c56;
+        }
+
+        i.icon-status::before {
+          opacity: 1.0;
+        }
+
+        i.icon-chevron::before {
+          content: "\f077";
         }
       }
     }
@@ -120,10 +119,6 @@ tr.panel-row {
 
         .column.alpha, .columns.alpha {
           padding-left: 20px;
-
-          &.sixteen {
-            padding-right: 20px;
-          }
         }
 
         .column.omega, .columns.omega {

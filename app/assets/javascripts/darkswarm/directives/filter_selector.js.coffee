@@ -22,17 +22,11 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
       .map (selector)->
         selector.object.id
 
-    # This can be called from a parent scope
-    # when data has been loaded, in order to pass
-    # selectors up
-    scope.$on 'loadFilterSelectors', ->
-      scope.allSelectors = scope.selectors() if attr.allSelectors?
-
-    scope.$watchCollection "selectors()", (newValue, oldValue) ->
-      scope.allSelectors = scope.selectors() if attr.allSelectors?
+    scope.$watchCollection "objects()", (newValue, oldValue) ->
+      scope.allSelectors = scope.buildSelectors()
 
     # Build a list of selectors
-    scope.selectors = ->
+    scope.buildSelectors = ->
       # Generate a selector for each object.
       # NOTE: THESE ARE MEMOIZED to stop new selectors from being created constantly, otherwise function always returns non-identical results
       # This means the $digest cycle can never close and times out

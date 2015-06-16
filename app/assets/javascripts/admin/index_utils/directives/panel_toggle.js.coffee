@@ -1,7 +1,7 @@
 angular.module("admin.indexUtils").directive "panelToggle", ->
   restrict: "C"
   transclude: true
-  template: '<div ng-transclude></div><i class=\'icon-chevron-down\'"></i>'
+  template: '<div ng-transclude></div><i class=\'icon-chevron\'></i>'
   require: "^panelToggleRow"
   scope:
     name: "@"

@@ -1,5 +1,5 @@
 .row.enterprise_status_panel{ ng: { controller: 'indexStatusPanelCtrl' } }
-  .alpha.sixteen.columns
+  .alpha.omega.sixteen.columns
 
     %h4.status-ok.text-center{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
       %i.icon-ok-sign
@@ -21,7 +21,7 @@
         %td.resolve
           %div{ ng: { bind: { html: "issue.link" } } }
       %tr{ ng: { repeat: "warning in warnings"} }
-        %td.severity.text-center
+        %td.severity
           %i.icon-warning-sign.warning
         %td.description
           %span{ bo: { bind: "warning.description" } }

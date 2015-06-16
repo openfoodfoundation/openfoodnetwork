@@ -1,4 +1,4 @@
-%div{bindonce:true, style: "display: inline-block" }
+%ul{ bindonce: true }
   %active-selector{ ng: { repeat: "selector in allSelectors", show: "ifDefined(selector.fits, true)" } }
     %render-svg{path: "{{selector.object.icon}}", ng: { if: "selector.object.icon"} }
     %span{"bo-text" => "selector.object.name"}

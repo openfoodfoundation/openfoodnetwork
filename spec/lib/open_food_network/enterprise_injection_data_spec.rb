@@ -12,6 +12,11 @@ module OpenFoodNetwork
       it "only loads activated relatives" do
         subject.relatives[enterprise.id][:producers].should_not include producer_inactive.id
       end
+
+      it "loads self where appropiate" do
+        subject.relatives[producer.id][:producers].should include producer.id
+        subject.relatives[enterprise.id][:distributors].should include enterprise.id
+      end
     end
   end
 end
