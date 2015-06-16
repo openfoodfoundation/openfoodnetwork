@@ -3,7 +3,7 @@
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
-    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
+    %title= content_for?(:title) ? "#{yield(:title)} - Open Food Network" : 'Welcome to Open Food Network'
     - if Rails.env.production?
       = favicon_link_tag
     - else

@@ -1,3 +1,6 @@
+- content_for(:title) do
+  = @group.name
+
 -# inject all enterprises as "enterprises"
 -# it could be more efficient to inject only the enterprises that are related to the group
 = inject_enterprises

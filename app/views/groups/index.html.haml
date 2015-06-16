@@ -1,4 +1,7 @@
-= inject_enterprises 
+- content_for(:title) do
+  Groups
+
+= inject_enterprises
 
 :javascript
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
