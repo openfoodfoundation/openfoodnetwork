@@ -32,10 +32,13 @@ class EnterpriseRelationship < ActiveRecord::Base
     relationships = EnterpriseRelationship.includes(:child, :parent)
     relatives = {}
 
-    Enterprise.all.each do |e|
-      relatives[e.id] ||= { distributors: Set.new, producers: Set.new }
-      relatives[e.id][:producers]    << e.id if e.is_primary_producer
-      relatives[e.id][:distributors] << e.id if e.is_distributor
+    Enterprise.is_primary_producer.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:producers] << enterprise_id
+    end
+    Enterprise.is_distributor.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:distributors] << enterprise_id
     end
 
     relationships.each do |r|
