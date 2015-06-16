@@ -12,7 +12,7 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :footer_links_md, :text, default: <<-EOS
 [Newsletter sign-up](/)
 
-[Blog](/)
+[News](/)
 
 [Calendar](/)
 EOS
