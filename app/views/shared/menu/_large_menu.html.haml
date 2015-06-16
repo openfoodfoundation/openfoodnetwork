@@ -5,39 +5,30 @@
         %a{href: root_path}
           -# TODO: SVGify (though this image is double-size for retina)
           %img{src: "/assets/logo-australia.png", width: "250", height: "51"}
-      %li.divider
     %ul.center
       %li
         %a{href: main_app.shops_path}
           %span.nav-primary Shops
-      %li.divider
       %li
         %a{href: main_app.map_path}
           %span.nav-primary Map
-      %li.divider
       %li
         %a{href: main_app.producers_path}
           %span.nav-primary Producers
-      %li.divider
       %li
         %a{href: main_app.groups_path}
           %span.nav-primary Groups
-      %li.divider
       %li
         %a{href: ContentConfig.footer_about_url}
           %span.nav-primary About
-      %li.divider
     %ul.right
-      %li.divider
       - if spree_current_user.nil?
         = render 'shared/signed_out'
       - else
         = render 'shared/signed_in'
-      %li.divider
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
           %em Shopping &#64;
           %span.nav-primary.nav-branded {{ CurrentHub.hub.name }}
-      %li.divider
       %li.cart{"ng-cloak" => true}
         = render partial: "shared/menu/cart"

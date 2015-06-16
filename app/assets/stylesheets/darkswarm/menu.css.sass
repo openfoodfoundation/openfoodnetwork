@@ -12,6 +12,10 @@ nav
   // Create center style for nav ul (foundation provides left and right)
   text-align: center
   .top-bar-section
+    // Avoid menu items blocking logo
+    li:not(.has-form), li:not(.has-form) a:not(.button), li:not(.has-form) a:not(.button):hover
+      background-color: transparent
+
     ul.center
       display: inline-block
       // By default, we center between the left and right uls, but we want to be centered
@@ -103,12 +107,24 @@ nav
   margin-right: 0.25rem
 
 
+
 // Responsive
+
+@media screen and (max-width: 1350px)
+  nav .top-bar-section
+    ul li a, .has-dropdown > a
+      padding: 0 $topbar-height / 4 !important
+
+    ul.center
+      margin-left: -24px
+
 
 @media screen and (min-width: 1025px)
   body.off-canvas
     // padding required to placehold for fixed menu bar
     padding-top: $topbar-height
+
+
 @media screen and (max-width: 1025px)
   body.off-canvas
     // padding required to placehold for fixed menu bar
