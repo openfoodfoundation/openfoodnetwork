@@ -56,6 +56,7 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
+  validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
   validates :email, presence: true
@@ -332,6 +333,15 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def name_is_unique
+    dups = Enterprise.where(name: name)
+    dups = dups.where('id != ?', id) unless new_record?
+
+    if dups.any?
+      errors.add :name, "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at #{dups.first.owner.email}."
+    end
+  end
 
   def email_is_known?
     owner.enterprises.confirmed.map(&:email).include?(email)

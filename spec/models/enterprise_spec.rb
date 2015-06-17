@@ -179,6 +179,31 @@ describe Enterprise do
         }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Owner can't be blank"
     end
 
+    describe "name uniqueness" do
+      let(:owner) { create(:user, email: 'owner@example.com') }
+      let!(:enterprise) { create(:enterprise, name: 'Enterprise', owner: owner) }
+
+      it "prevents duplicate names for new records" do
+        e = Enterprise.new name: enterprise.name
+        e.should_not be_valid
+        e.errors[:name].first.should ==
+          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+      end
+
+      it "prevents duplicate names for existing records" do
+        e = create(:enterprise, name: 'foo')
+        e.name = enterprise.name
+        e.should_not be_valid
+        e.errors[:name].first.should ==
+          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+      end
+
+      it "does not prohibit the saving of an enterprise with no name clash" do
+        enterprise.email = 'new@email.com'
+        enterprise.should be_valid
+      end
+    end
+
     describe "preferred_shopfront_taxon_order" do
       it "empty strings are valid" do
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: "")
