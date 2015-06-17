@@ -19,6 +19,21 @@ function succeed_if_master_merged {
     fi
 }
 
+function set_ofn_commit {
+    echo "Setting commit to $1"
+    buildkite-agent meta-data set "openfoodnetwork:git:commit" $1
+}
+
+function get_ofn_commit {
+    echo `git rev-parse $BUILDKITE_BRANCH`
+}
+
+function checkout_ofn_commit {
+    OFN_COMMIT=`buildkite-agent meta-data get "openfoodnetwork:git:commit"`
+    echo "Checking out stored commit $OFN_COMMIT"
+    git checkout -qf "$OFN_COMMIT"
+}
+
 function drop_and_recreate_database {
     # Adapted from: http://stackoverflow.com/questions/12924466/capistrano-with-postgresql-error-database-is-being-accessed-by-other-users
     psql -U openfoodweb postgres <<EOF
