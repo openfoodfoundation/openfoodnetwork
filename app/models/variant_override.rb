@@ -8,6 +8,12 @@ class VariantOverride < ActiveRecord::Base
     where(hub_id: hubs)
   }
 
+  def self.indexed(hub)
+    Hash[
+      for_hubs(hub).map { |vo| [vo.variant, vo] }
+    ]
+  end
+
   def self.price_for(hub, variant)
     self.for(hub, variant).andand.price
   end
