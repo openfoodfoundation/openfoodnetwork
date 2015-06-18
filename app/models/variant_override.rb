@@ -25,12 +25,21 @@ class VariantOverride < ActiveRecord::Base
 
     if vo.nil?
       Bugsnag.notify RuntimeError.new "Attempting to decrement stock level for a variant without a VariantOverride."
-
-    elsif vo.count_on_hand.blank?
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
-
     else
-      vo.decrement! :count_on_hand, quantity
+      vo.decrement_stock! quantity
+    end
+  end
+
+
+  def stock_overridden?
+    count_on_hand.present?
+  end
+
+  def decrement_stock!(quantity)
+    if stock_overridden?
+      decrement! :count_on_hand, quantity
+    else
+      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
     end
   end
 

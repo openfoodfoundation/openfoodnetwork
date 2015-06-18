@@ -50,6 +50,7 @@ module Spree
         variant = double(:variant)
         quantity = 123
         Spree::Variant.stub(:find).and_return(variant)
+        VariantOverride.stub(:for).and_return(nil)
 
         op.should_receive(:check_stock_levels).with(variant, quantity).and_return(true)
         op.should_receive(:check_order_cycle_provided_for).with(variant).and_return(true)

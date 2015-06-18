@@ -7,12 +7,13 @@ module OpenFoodNetwork
     def scope(variant)
       variant.send :extend, OpenFoodNetwork::ScopeVariantToHub::ScopeVariantToHub
       variant.instance_variable_set :@hub, @hub
+      variant.instance_variable_set :@variant_override, VariantOverride.send(:for, @hub, variant)
     end
 
 
     module ScopeVariantToHub
       def price
-        VariantOverride.price_for(@hub, self) || super
+        @variant_override.andand.price || super
       end
 
       def price_in(currency)
@@ -20,12 +21,12 @@ module OpenFoodNetwork
       end
 
       def count_on_hand
-        VariantOverride.count_on_hand_for(@hub, self) || super
+        @variant_override.andand.count_on_hand || super
       end
 
       def decrement!(attribute, by=1)
-        if attribute == :count_on_hand && VariantOverride.stock_overridden?(@hub, self)
-          VariantOverride.decrement_stock! @hub, self, by
+        if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
+          @variant_override.decrement_stock! by
         else
           super
         end
