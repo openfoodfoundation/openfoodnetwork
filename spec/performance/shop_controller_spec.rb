@@ -8,11 +8,12 @@ describe ShopController, type: :controller, performance: true do
   before do
     controller.stub(:current_distributor) { d }
     controller.stub(:current_order_cycle) { order_cycle }
+    Spree::Config.currency = 'AUD'
   end
 
   describe "fetching products" do
     let(:exchange) { order_cycle.exchanges.to_enterprises(d).outgoing.first }
-    let(:image) { File.open(File.expand_path('../../../app/assets/images/logo.jpg', __FILE__)) }
+    let(:image) { File.open(File.expand_path('../../../app/assets/images/logo-white.png', __FILE__)) }
 
     before do
       11.times do
