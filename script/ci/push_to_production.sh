@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+source ./script/ci/includes.sh
 
 # Add production git remote if required
 PROD_TEST=`git remote | grep -s 'production' || true`
