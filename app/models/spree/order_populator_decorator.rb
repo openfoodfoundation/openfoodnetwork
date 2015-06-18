@@ -9,7 +9,7 @@ Spree::OrderPopulator.class_eval do
       errors.add(:base, "That distributor or order cycle can't supply all the products in your cart. Please choose another.")
     end
 
-    if valid? 
+    if valid?
       @order.with_lock do
         @order.empty! if overwrite
 
@@ -33,7 +33,7 @@ Spree::OrderPopulator.class_eval do
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
     variant = Spree::Variant.find(variant_id)
-    variant.scope_to_hub @distributor
+    OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
     if quantity > 0
       if check_stock_levels(variant, quantity) &&
           check_order_cycle_provided_for(variant) &&

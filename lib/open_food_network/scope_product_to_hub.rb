@@ -1,16 +1,21 @@
 require 'open_food_network/scope_variant_to_hub'
 
 module OpenFoodNetwork
-  module ScopeProductToHub
-    def variants_distributed_by(order_cycle, distributor)
-      super.each { |v| v.scope_to_hub @hub }
-    end
-  end
-
-  module ProductScopableToHub
-    def scope_to_hub(hub)
-      extend OpenFoodNetwork::ScopeProductToHub
+  class ScopeProductToHub
+    def initialize(hub)
       @hub = hub
+    end
+
+    def scope(product)
+      product.send :extend, OpenFoodNetwork::ScopeProductToHub::ScopeProductToHub
+      product.instance_variable_set :@hub, @hub
+    end
+
+
+    module ScopeProductToHub
+      def variants_distributed_by(order_cycle, distributor)
+        super.each { |v| ScopeVariantToHub.new(@hub).scope(v) }
+      end
     end
   end
 end
