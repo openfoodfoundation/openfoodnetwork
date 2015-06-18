@@ -25,7 +25,7 @@ function set_ofn_commit {
 }
 
 function get_ofn_commit {
-    echo `git rev-parse $BUILDKITE_BRANCH`
+    echo `buildkite-agent meta-data get "openfoodnetwork:git:commit"`
 }
 
 function checkout_ofn_commit {
