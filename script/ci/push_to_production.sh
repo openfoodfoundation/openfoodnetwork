@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -ex
+set -e
+source ./script/ci/includes.sh
 
 # Add production git remote if required
 PROD_TEST=`git remote | grep -s 'production' || true`
@@ -9,7 +10,9 @@ if [[ "$PROD_TEST" != *production* ]]; then
 fi
 
 echo "--- Saving baseline data for staging"
-ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/save_staging_baseline.sh $BUILDKITE_COMMIT"
+ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/save_staging_baseline.sh `get_ofn_commit`"
 
 echo "--- Pushing to production"
-[[ $(git push production $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
+exec 5>&1
+OUTPUT=$(git push production `get_ofn_commit`:master --force 2>&1 |tee /dev/fd/5)
+[[ $OUTPUT =~ "Done" ]]
