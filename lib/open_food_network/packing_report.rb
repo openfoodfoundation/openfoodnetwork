@@ -18,8 +18,11 @@ module OpenFoodNetwork
       Spree::Order.complete.not_state(:canceled).managed_by(@user).search(params[:q])
     end
 
+    def orders
+      search.result
+    end
+
     def table_items
-      orders = search.result
       @line_items = orders.map do |o|
         lis = o.line_items.managed_by(@user)
         lis = lis.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
