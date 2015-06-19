@@ -27,6 +27,8 @@ describe Spree::OrdersController do
   end
 
   it "redirects home with message if hub is not ready for checkout" do
+    VariantOverride.stub(:indexed).and_return({})
+
     order = subject.current_order(true)
     distributor.stub(:ready_for_checkout?) { false }
     order.stub(distributor: distributor, order_cycle: order_cycle)

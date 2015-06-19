@@ -46,10 +46,12 @@ class ShopController < BaseController
 
   def products_for_shop
     if current_order_cycle
+      scoper = OpenFoodNetwork::ScopeProductToHub.new(current_distributor)
+
       current_order_cycle.
         valid_products_distributed_by(current_distributor).
         order(taxon_order).
-        each { |p| p.scope_to_hub current_distributor }.
+        each { |p| scoper.scope(p) }.
         select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }
     end
   end
@@ -69,9 +71,10 @@ class ShopController < BaseController
     # We use the in_stock? method here instead of the in_stock scope because we need to
     # look up the stock as overridden by VariantOverrides, and the scope method is not affected
     # by them.
+    scoper = OpenFoodNetwork::ScopeVariantToHub.new(current_distributor)
     Spree::Variant.
       for_distribution(current_order_cycle, current_distributor).
-      each { |v| v.scope_to_hub current_distributor }.
+      each { |v| scoper.scope(v) }.
       select(&:in_stock?)
   end
 
