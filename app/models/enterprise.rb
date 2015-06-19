@@ -10,6 +10,7 @@ class Enterprise < ActiveRecord::Base
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
+  has_paper_trail only: [:owner_id, :sells], on: [:update]
 
   self.inheritance_column = nil
 
