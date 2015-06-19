@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150605052516) do
+ActiveRecord::Schema.define(:version => 20150612045544) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20150605052516) do
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
   add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
+  add_index "enterprises", ["name"], :name => "index_enterprises_on_name", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
   add_index "enterprises", ["permalink"], :name => "index_enterprises_on_permalink", :unique => true
   add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"
