@@ -11,6 +11,10 @@ Openfoodnetwork::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
+  # Separate cache stores when running in parallel
+  config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
+
+
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
