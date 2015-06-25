@@ -13,49 +13,62 @@ UpdateBillItems = Struct.new(:lala) do
       versions = enterprise.versions.where('created_at >= (?)', start_date)
       bill_items = []
 
+      trial_start = enterprise.shop_trial_start_date
+      trial_expiry = enterprise.shop_trial_expiry
+
       versions.each do |version|
         begins_at = bill_items.last.andand.ends_at || start_date
         ends_at = version.created_at
-        bill_items << update_bill_item(version.reify, begins_at, ends_at)
+
+        split_for_trial(version.reify, begins_at, ends_at, trial_start, trial_expiry).each do |bill_item|
+          bill_items << bill_item
+        end
       end
 
       # Update / create bill_item for current start
       begins_at = bill_items.last.andand.ends_at || start_date
       ends_at = end_date
-      update_bill_item(enterprise, begins_at, ends_at)
+
+      split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry).each do |bill_item|
+        bill_items << bill_item
+      end
     end
   end
 
-  def update_bill_item(enterprise, begins_at, ends_at)
-    trial_start = enterprise.shop_trial_start_date || begins_at
-    trial_expiry = enterprise.shop_trial_expiry || begins_at
+  def split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
+    bill_items = []
+
+    trial_start = trial_expiry = begins_at-1.day if trial_start.nil? || trial_expiry.nil?
+
+    # If the trial begins after ends_at, create a bill for the entire period
+    # Otherwise, create a normal bill_item from the begins_at until the start of the trial
+    if trial_start > begins_at
+      bill_items << update_bill_item(enterprise, begins_at, [ends_at, trial_start].min, false)
+    end
+
+    # If all or some of the trial occurs between begins_at and ends_at
+    # Create a trial bill_item from the from begins_at or trial_start, whichever occurs last, until ends_at, or trial_expiry whichever occurs first
+    if trial_expiry >= begins_at && trial_start <= ends_at
+      bill_items << update_bill_item(enterprise, [trial_start, begins_at].max, [ends_at, trial_expiry].min, true)
+    end
+
+    # If the trial finishes before begins_at, or trial has not been set, create a bill for the entire period
+    # Otherwise, create a normal bill_item from the end of the trial until ends_at
+    if trial_expiry < ends_at
+      bill_items << update_bill_item(enterprise, [trial_expiry, begins_at].max, ends_at, false)
+    end
+
+    bill_items
+  end
+
+  def update_bill_item(enterprise, begins_at, ends_at, trial)
     owner_id = enterprise.owner_id
     sells = enterprise.sells
     orders = Spree::Order.where('distributor_id = (?) AND completed_at >= (?) AND completed_at < (?)', enterprise.id, begins_at, ends_at)
 
-    if trial_start > begins_at
-      before_trial_orders = orders.where('completed_at < (?)', trial_start)
-      bill_item = BillItem.where(begins_at: begins_at, sells: sells, trial: false, owner_id: owner_id, enterprise_id: enterprise.id).first
-      bill_item ||= BillItem.new(begins_at: begins_at, sells: sells, trial: false, owner_id: owner_id, enterprise_id: enterprise.id)
-      bill_item.update_attributes({ends_at: [ends_at, trial_start].min, turnover: before_trial_orders.sum(&:total)})
-    end
-
-    if trial_expiry > begins_at && trial_start <= ends_at
-      trial_orders = orders.where('completed_at >= (?) AND completed_at < (?)', trial_start, trial_expiry)
-      bill_item = BillItem.where(begins_at: [trial_start, begins_at].max, sells: sells, trial: true, owner_id: owner_id, enterprise_id: enterprise.id).first
-      if bill_item && bill_item.begins_at != [trial_start, begins_at].max
-        # TODO: #Bugsnag
-      end
-      bill_item ||= BillItem.new(begins_at: [trial_start, begins_at].max, sells: sells, trial: true, owner_id: owner_id, enterprise_id: enterprise.id)
-      bill_item.update_attributes({ends_at: [ends_at, trial_expiry].min, turnover: trial_orders.sum(&:total)})
-    end
-
-    if trial_expiry <= ends_at
-      after_trial_orders = orders.where('completed_at >= (?)', trial_expiry)
-      bill_item = BillItem.where(begins_at: [trial_expiry, begins_at].max, sells: sells, trial: false, owner_id: owner_id, enterprise_id: enterprise.id).first
-      bill_item ||= BillItem.new(begins_at: [trial_expiry, begins_at].max, sells: sells, trial: false, owner_id: owner_id, enterprise_id: enterprise.id)
-      bill_item.update_attributes({ends_at: ends_at, turnover: after_trial_orders.sum(&:total)})
-    end
+    bill_item = BillItem.where(begins_at: begins_at, sells: sells, trial: trial, owner_id: owner_id, enterprise_id: enterprise.id).first
+    bill_item ||= BillItem.new(begins_at: begins_at, sells: sells, trial: trial, owner_id: owner_id, enterprise_id: enterprise.id)
+    bill_item.update_attributes({ends_at: ends_at, turnover: orders.sum(&:total)})
 
     bill_item
   end
