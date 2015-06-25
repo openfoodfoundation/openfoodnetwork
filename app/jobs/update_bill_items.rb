@@ -5,11 +5,11 @@ UpdateBillItems = Struct.new(:lala) do
     start_date = (Time.now - 1.day).beginning_of_month
     end_date = Time.now.beginning_of_day
 
-    enterprises = Enterprise.select([:id, :name, :owner_id, :sells, :shop_trial_start_date])
+    enterprises = Enterprise.select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
 
-    # Cycle through users
+    # Cycle through enterprises
     enterprises.each do |enterprise|
-      # Cycle through owned_enterprises
+      # Cycle through previous versions of this enterprise
       versions = enterprise.versions.where('created_at >= (?)', start_date)
       bill_items = []
 
@@ -17,7 +17,7 @@ UpdateBillItems = Struct.new(:lala) do
       trial_expiry = enterprise.shop_trial_expiry
 
       versions.each do |version|
-        begins_at = bill_items.last.andand.ends_at || start_date
+        begins_at = bill_items.last.andand.ends_at || [start_date, enterprise.created_at].max
         ends_at = version.created_at
 
         split_for_trial(version.reify, begins_at, ends_at, trial_start, trial_expiry).each do |bill_item|
@@ -26,7 +26,7 @@ UpdateBillItems = Struct.new(:lala) do
       end
 
       # Update / create bill_item for current start
-      begins_at = bill_items.last.andand.ends_at || start_date
+      begins_at = bill_items.last.andand.ends_at || [start_date, enterprise.created_at].max
       ends_at = end_date
 
       split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry).each do |bill_item|
