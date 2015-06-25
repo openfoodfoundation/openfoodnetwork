@@ -2,6 +2,12 @@
   %section.left
     %a.left-off-canvas-toggle.menu-icon
       %span
+
+  %section.left
+    .ofn-logo
+      %a{href: root_path}
+        %img{src: "/assets/logo-black.png", srcset: "/assets/logo-black.svg", width: "75", height: "26"}
+
   %section.right{"ng-cloak" => true}
     .cart
       = render partial: "shared/menu/cart"
