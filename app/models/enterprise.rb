@@ -329,6 +329,10 @@ class Enterprise < ActiveRecord::Base
     !confirmed? || pending_reconfirmation?
   end
 
+  def shop_trial_expiry
+    shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
+  end
+
   protected
 
   def devise_mailer
