@@ -88,6 +88,11 @@ describe UpdateBillItems do
 
       context "where the sells property of the enterprise has been altered within the current billing period" do
         before do
+          Timecop.travel(start_of_july + 10.days) do
+            # NOTE: Sells is changed between when order1 and order2 are placed
+            enterprise.update_attribute(:sells, 'own')
+          end
+
           Timecop.travel(start_of_july + 28.days)
         end
 
@@ -97,10 +102,6 @@ describe UpdateBillItems do
 
         context "where no trial information has been set" do
           before do
-            Timecop.travel(start_of_july + 10.days) do
-              # NOTE: Sells is changed between when order1 and order2 are placed
-              enterprise.update_attribute(:sells, 'own')
-            end
             UpdateBillItems.new('lala').perform
           end
 
@@ -145,10 +146,6 @@ describe UpdateBillItems do
         context "where a trial ended during the current billing period, before sells was changed" do
           before do
             enterprise.update_attribute(:shop_trial_start_date, start_of_july - 22.days)
-            Timecop.travel(start_of_july + 10.days) do
-              # NOTE: Sells is changed between when order1 and order2 are placed
-              enterprise.update_attribute(:sells, 'own')
-            end
             UpdateBillItems.new('lala').perform
           end
 
@@ -170,10 +167,6 @@ describe UpdateBillItems do
         context "where the trial began part-way through the current billing period, after sells was changed" do
           before do
             enterprise.update_attribute(:shop_trial_start_date, start_of_july + 18.days)
-            Timecop.travel(start_of_july + 10.days) do
-              # NOTE: Sells is changed between when order1 and order2 are placed
-              enterprise.update_attribute(:sells, 'own')
-            end
             UpdateBillItems.new('lala').perform
           end
 
@@ -195,10 +188,6 @@ describe UpdateBillItems do
         context "where the trial began part-way through the current billing period, before sells was changed" do
           before do
             enterprise.update_attribute(:shop_trial_start_date, start_of_july + 8.days)
-            Timecop.travel(start_of_july + 10.days) do
-              # NOTE: Sells is changed between when order1 and order2 are placed
-              enterprise.update_attribute(:sells, 'own')
-            end
             UpdateBillItems.new('lala').perform
           end
 
@@ -218,8 +207,11 @@ describe UpdateBillItems do
         end
       end
     end
+
+    context "where the enterprise was created after the beginning of the current billing period" do
+
+    end
   end
 
-  # context "where the enterprise was created after the beginning of the current billing period" do
-  # end
+
 end
