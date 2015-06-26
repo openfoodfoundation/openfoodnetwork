@@ -45,15 +45,12 @@ Openfoodnetwork::Application.routes.draw do
 
   resources :enterprises do
     collection do
-      get :suppliers
-      get :distributors
       post :search
       get :check_permalink
     end
 
     member do
-      get :shop_front # new world
-      get :shop # old world
+      get :shop
     end
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'

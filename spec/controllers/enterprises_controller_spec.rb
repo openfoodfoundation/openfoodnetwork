@@ -1,56 +1,6 @@
 require 'spec_helper'
 
 describe EnterprisesController do
-  it "displays suppliers" do
-    s = create(:supplier_enterprise)
-    d = create(:distributor_enterprise)
-
-    spree_get :suppliers
-
-    assigns(:suppliers).should == [s]
-  end
-
-  describe "displaying an enterprise and its products" do
-    let(:p)   { create(:simple_product, supplier: s) }
-    let(:s)   { create(:supplier_enterprise) }
-    let!(:c)  { create(:distributor_enterprise) }
-    let(:d1)  { create(:distributor_enterprise) }
-    let(:d2)  { create(:distributor_enterprise) }
-    let(:oc1) { create(:simple_order_cycle) }
-    let(:oc2) { create(:simple_order_cycle) }
-
-    it "displays products for the selected (order_cycle -> outgoing exchange)" do
-      create(:exchange, order_cycle: oc1, sender: s, receiver: c, incoming: true, variants: [p.master])
-      create(:exchange, order_cycle: oc1, sender: c, receiver: d1, incoming: false, variants: [p.master])
-
-      controller.stub(:current_distributor) { d1 }
-      controller.stub(:current_order_cycle) { oc1 }
-
-      spree_get :show, {id: d1}
-
-      assigns(:products).should include p
-    end
-
-    it "does not display other products in the order cycle or in the distributor" do
-      # Given a product that is in this order cycle on a different distributor
-      create(:exchange, order_cycle: oc1, sender: s, receiver: c, incoming: true, variants: [p.master])
-      create(:exchange, order_cycle: oc1, sender: c, receiver: d2, incoming: false, variants: [p.master])
-
-      # And is also in this distributor in a different order cycle
-      create(:exchange, order_cycle: oc2, sender: s, receiver: c, incoming: true, variants: [p.master])
-      create(:exchange, order_cycle: oc2, sender: c, receiver: d1, incoming: false, variants: [p.master])
-
-      # When I view the enterprise page for d1 x oc1
-      controller.stub(:current_distributor) { d1 }
-      controller.stub(:current_order_cycle) { oc1 }
-      spree_get :show, {id: d1}
-
-      # Then I should not see the product
-      assigns(:products).should_not include p
-    end
-
-  end
-
   describe "shopping for a distributor" do
 
     before(:each) do
@@ -99,14 +49,6 @@ describe EnterprisesController do
 
       controller.current_order.distributor.should == @distributor
       controller.current_order.order_cycle.should == @order_cycle1
-    end
-  end
-
-  context "when a distributor has not been chosen" do
-    it "redirects #show to distributor selection" do
-      @distributor = create(:distributor_enterprise)
-      spree_get :show, {id: @distributor}
-      response.should redirect_to spree.root_path
     end
   end
 
