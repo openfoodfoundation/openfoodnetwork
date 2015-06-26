@@ -25,7 +25,17 @@ function set_ofn_commit {
 }
 
 function get_ofn_commit {
-    echo `buildkite-agent meta-data get "openfoodnetwork:git:commit"`
+    OFN_COMMIT=`buildkite-agent meta-data get "openfoodnetwork:git:commit"`
+
+    # If we don't catch this failure case, push will execute:
+    # git push remote :master --force
+    # Which will delete the master branch on the server
+
+    if [[ `expr length "$OFN_COMMIT"` == 0 ]]; then
+        echo 'OFN_COMMIT_NOT_FOUND'
+    else
+        echo $OFN_COMMIT
+    fi
 }
 
 function checkout_ofn_commit {
