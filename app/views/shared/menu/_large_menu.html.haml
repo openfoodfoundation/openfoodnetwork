@@ -29,6 +29,6 @@
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
           %em Shopping &#64;
-          %span.nav-primary.nav-branded {{ CurrentHub.hub.name }}
+          %span.nav-primary.nav-branded {{ CurrentHub.hub.name | truncate:25 }}
       %li.cart{"ng-cloak" => true}
         = render partial: "shared/menu/cart"
