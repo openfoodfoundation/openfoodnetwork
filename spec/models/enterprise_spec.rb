@@ -109,6 +109,17 @@ describe Enterprise do
       Spree::Product.where(id: p.id).should be_empty
     end
 
+    it "destroys relationships upon destroy" do
+      e = create(:enterprise)
+      e_other = create(:enterprise)
+      er1 = create(:enterprise_relationship, parent: e, child: e_other)
+      er2 = create(:enterprise_relationship, child: e, parent: e_other)
+
+      e.destroy
+
+      EnterpriseRelationship.where(id: [er1, er2]).should be_empty
+    end
+
     describe "relationships to other enterprises" do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }
