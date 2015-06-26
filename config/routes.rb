@@ -6,6 +6,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/enterprises/:permalink", to: redirect("/")
   get "/products", to: redirect("/")
   get "/t/products/:id", to: redirect("/")
+  get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
@@ -114,8 +115,6 @@ Openfoodnetwork::Application.routes.draw do
       get :accessible, on: :collection
     end
   end
-
-  get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do
     resources :cart do
