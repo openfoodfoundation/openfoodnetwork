@@ -10,7 +10,7 @@
     border: 1px solid rgba($dark-grey, 0.35)
     border-left: none
     border-right: none
-    background-color: lighten($ofn-grey, 15%)
+    background-color: #bbb
     background-image: url("/assets/tile-wide.png")
     background-position: center center
     padding: 12px 0 8px 0
@@ -19,6 +19,8 @@
       &, & *
         @include csstrans
         color: #333
+      strong
+        letter-spacing: 0.5px
       &:hover, &:active, &:focus
         &, & *
           text-decoration: none
