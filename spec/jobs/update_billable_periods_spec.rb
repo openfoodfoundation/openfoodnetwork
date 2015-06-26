@@ -4,11 +4,11 @@ def travel_to(time)
   around { |example| Timecop.travel(start_of_july + time) { example.run } }
 end
 
-describe UpdateBillItems do
+describe UpdateBillablePeriods do
   describe "unit specs" do
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
-    let!(:updater) { UpdateBillItems.new }
+    let!(:updater) { UpdateBillablePeriods.new }
 
     describe "perform", versioning: true do
       let!(:enterprise) { create(:supplier_enterprise, created_at: start_of_july - 1.month, sells: 'any') }
@@ -180,12 +180,12 @@ describe UpdateBillItems do
         let(:trial_expiry) { begins_at + 3.days }
 
         before do
-          allow(updater).to receive(:update_bill_item).once
+          allow(updater).to receive(:update_billable_period).once
           updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
         end
 
-        it "calls update_bill_item once for the entire period" do
-          expect(updater).to have_received(:update_bill_item)
+        it "calls update_billable_period once for the entire period" do
+          expect(updater).to have_received(:update_billable_period)
           .with(enterprise, begins_at, ends_at, false)
         end
       end
@@ -195,12 +195,12 @@ describe UpdateBillItems do
         let(:trial_expiry) { nil }
 
         before do
-          allow(updater).to receive(:update_bill_item).once
+          allow(updater).to receive(:update_billable_period).once
           updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
         end
 
-        it "calls update_bill_item once for the entire period" do
-          expect(updater).to have_received(:update_bill_item)
+        it "calls update_billable_period once for the entire period" do
+          expect(updater).to have_received(:update_billable_period)
           .with(enterprise, begins_at, ends_at, false)
         end
       end
@@ -212,12 +212,12 @@ describe UpdateBillItems do
           let(:trial_expiry) { begins_at - 5.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).once
+            allow(updater).to receive(:update_billable_period).once
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the entire period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the entire period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, ends_at, false)
           end
         end
@@ -226,17 +226,17 @@ describe UpdateBillItems do
           let(:trial_expiry) { begins_at + 5.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).twice
+            allow(updater).to receive(:update_billable_period).twice
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the trial period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the trial period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, trial_expiry, true)
           end
 
-          it "calls update_bill_item once for the non-trial period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the non-trial period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, trial_expiry, ends_at, false)
           end
         end
@@ -245,12 +245,12 @@ describe UpdateBillItems do
           let(:trial_expiry) { ends_at + 5.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).once
+            allow(updater).to receive(:update_billable_period).once
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the entire (trial) period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the entire (trial) period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, ends_at, true)
           end
         end
@@ -264,12 +264,12 @@ describe UpdateBillItems do
           let(:trial_expiry) { ends_at + 10.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).once
+            allow(updater).to receive(:update_billable_period).once
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the entire period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the entire period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, ends_at, false)
           end
         end
@@ -278,22 +278,22 @@ describe UpdateBillItems do
           let(:trial_expiry) { ends_at - 2.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).exactly(3).times
+            allow(updater).to receive(:update_billable_period).exactly(3).times
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the non-trial period before the trial" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the non-trial period before the trial" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, trial_start, false)
           end
 
-          it "calls update_bill_item once for the trial period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the trial period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, trial_start, trial_expiry, true)
           end
 
-          it "calls update_bill_item once for the non-trial period after the trial" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the non-trial period after the trial" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, trial_expiry, ends_at, false)
           end
         end
@@ -302,33 +302,33 @@ describe UpdateBillItems do
           let(:trial_expiry) { ends_at + 5.days }
 
           before do
-            allow(updater).to receive(:update_bill_item).twice
+            allow(updater).to receive(:update_billable_period).twice
             updater.split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
           end
 
-          it "calls update_bill_item once for the non-trial period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the non-trial period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, begins_at, trial_start, false)
           end
 
-          it "calls update_bill_item once for the trial period" do
-            expect(updater).to have_received(:update_bill_item)
+          it "calls update_billable_period once for the trial period" do
+            expect(updater).to have_received(:update_billable_period)
             .with(enterprise, trial_start, ends_at, true)
           end
         end
       end
     end
 
-    describe "update_bill_item" do
+    describe "update_billable_period" do
       let!(:enterprise) { create(:enterprise, sells: 'any') }
 
-      let!(:existing) { create(:bill_item, enterprise: enterprise, begins_at: start_of_july) }
+      let!(:existing) { create(:billable_period, enterprise: enterprise, begins_at: start_of_july) }
 
-      context "when arguments match both 'begins_at' and 'enterprise_id' of an existing bill item" do
-        it "updates the existing bill item" do
+      context "when arguments match both 'begins_at' and 'enterprise_id' of an existing billable period" do
+        it "updates the existing billable period" do
           expect{
-            updater.update_bill_item(enterprise, start_of_july, start_of_july + 20.days, false)
-          }.to_not change{ BillItem.count }
+            updater.update_billable_period(enterprise, start_of_july, start_of_july + 20.days, false)
+          }.to_not change{ BillablePeriod.count }
           existing.reload
           expect(existing.owner_id).to eq enterprise.owner_id
           expect(existing.ends_at).to eq start_of_july + 20.days
@@ -337,37 +337,37 @@ describe UpdateBillItems do
         end
       end
 
-      context "when 'begins_at' does not match an existing bill item" do
+      context "when 'begins_at' does not match an existing billable period" do
         before do
           expect{
-            updater.update_bill_item(enterprise, start_of_july + 20.days, start_of_july + 30.days, false)
-          }.to change{ BillItem.count }.from(1).to(2)
+            updater.update_billable_period(enterprise, start_of_july + 20.days, start_of_july + 30.days, false)
+          }.to change{ BillablePeriod.count }.from(1).to(2)
         end
 
-        it "creates a new existing bill item" do
-          bill_item = BillItem.last
-          expect(bill_item.owner_id).to eq enterprise.owner_id
-          expect(bill_item.ends_at).to eq start_of_july + 30.days
-          expect(bill_item.sells).to eq enterprise.sells
-          expect(bill_item.trial).to eq false
+        it "creates a new existing billable period" do
+          billable_period = BillablePeriod.last
+          expect(billable_period.owner_id).to eq enterprise.owner_id
+          expect(billable_period.ends_at).to eq start_of_july + 30.days
+          expect(billable_period.sells).to eq enterprise.sells
+          expect(billable_period.trial).to eq false
         end
       end
 
-      context "when 'enterprise_id' does not match an existing bill item" do
+      context "when 'enterprise_id' does not match an existing billable period" do
         let!(:new_enterprise) { create(:enterprise, sells: 'own') }
 
         before do
           expect{
-            updater.update_bill_item(new_enterprise, start_of_july, start_of_july + 20.days, false)
-          }.to change{ BillItem.count }.from(1).to(2)
+            updater.update_billable_period(new_enterprise, start_of_july, start_of_july + 20.days, false)
+          }.to change{ BillablePeriod.count }.from(1).to(2)
         end
 
-        it "creates a new existing bill item" do
-          bill_item = BillItem.last
-          expect(bill_item.owner_id).to eq new_enterprise.owner_id
-          expect(bill_item.ends_at).to eq start_of_july + 20.days
-          expect(bill_item.sells).to eq new_enterprise.sells
-          expect(bill_item.trial).to eq false
+        it "creates a new existing billable period" do
+          billable_period = BillablePeriod.last
+          expect(billable_period.owner_id).to eq new_enterprise.owner_id
+          expect(billable_period.ends_at).to eq start_of_july + 20.days
+          expect(billable_period.sells).to eq new_enterprise.sells
+          expect(billable_period.trial).to eq false
         end
       end
     end
@@ -434,15 +434,15 @@ describe UpdateBillItems do
       travel_to(20.days)
 
       before do
-        UpdateBillItems.new.perform
+        UpdateBillablePeriods.new.perform
       end
 
-      let(:bill_items) { BillItem.order(:id) }
+      let(:billable_periods) { BillablePeriod.order(:id) }
 
-      it "creates the correct bill items" do
-        expect(bill_items.count).to eq 9
+      it "creates the correct billable periods" do
+        expect(billable_periods.count).to eq 9
 
-        expect(bill_items.map(&:begins_at)).to eq [
+        expect(billable_periods.map(&:begins_at)).to eq [
           start_of_july + 2.days,
           start_of_july + 4.days,
           start_of_july + 6.days,
@@ -454,7 +454,7 @@ describe UpdateBillItems do
           start_of_july + 18.days
         ]
 
-        expect(bill_items.map(&:ends_at)).to eq [
+        expect(billable_periods.map(&:ends_at)).to eq [
           start_of_july + 4.days,
           start_of_july + 6.days,
           start_of_july + 8.days,
@@ -466,7 +466,7 @@ describe UpdateBillItems do
           start_of_july + 20.days
         ]
 
-        expect(bill_items.map(&:owner)).to eq [
+        expect(billable_periods.map(&:owner)).to eq [
           original_owner,
           original_owner,
           new_owner,
@@ -478,7 +478,7 @@ describe UpdateBillItems do
           new_owner
         ]
 
-        expect(bill_items.map(&:sells)).to eq [
+        expect(billable_periods.map(&:sells)).to eq [
           'any',
           'own',
           'own',
@@ -490,7 +490,7 @@ describe UpdateBillItems do
           'own'
         ]
 
-        expect(bill_items.map(&:trial)).to eq [
+        expect(billable_periods.map(&:trial)).to eq [
           false,
           false,
           false,
@@ -502,7 +502,7 @@ describe UpdateBillItems do
           false
         ]
 
-        expect(bill_items.map(&:turnover)).to eq [
+        expect(billable_periods.map(&:turnover)).to eq [
           order2.total,
           order3.total,
           order4.total,

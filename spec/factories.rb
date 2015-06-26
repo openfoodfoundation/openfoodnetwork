@@ -216,7 +216,7 @@ FactoryGirl.define do
     user
   end
 
-  factory :bill_item do
+  factory :billable_period do
     begins_at { Time.now.beginning_of_month }
     ends_at { Time.now.beginning_of_month + 1.month }
     sells { ['none', 'own', 'any'].sample }

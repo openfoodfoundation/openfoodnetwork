@@ -1,4 +1,4 @@
-class BillItem < ActiveRecord::Base
+class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id
 

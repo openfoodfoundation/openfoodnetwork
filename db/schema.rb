@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
   add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
   add_index "adjustment_metadata", ["enterprise_id"], :name => "index_adjustment_metadata_on_enterprise_id"
 
-  create_table "bill_items", :force => true do |t|
+  create_table "billable_periods", :force => true do |t|
     t.integer  "enterprise_id"
     t.integer  "owner_id"
     t.datetime "begins_at"
@@ -1150,8 +1150,8 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id", dependent: :delete
 
-  add_foreign_key "bill_items", "enterprises", name: "bill_items_enterprise_id_fk"
-  add_foreign_key "bill_items", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
+  add_foreign_key "billable_periods", "enterprises", name: "bill_items_enterprise_id_fk"
+  add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
   add_foreign_key "carts", "spree_users", name: "carts_user_id_fk", column: "user_id"
 

@@ -1,4 +1,4 @@
-UpdateBillItems = Struct.new("UpdateBillItems") do
+UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
   def perform
     # If it is the first of the month, calculate turnover for the previous month up until midnight last night
     # Otherwise, calculate turnover for the current month
@@ -25,7 +25,7 @@ UpdateBillItems = Struct.new("UpdateBillItems") do
         split_for_trial(version.reify, begins_at, ends_at, trial_start, trial_expiry)
       end
 
-      # Update / create bill_item for current start
+      # Update / create billable_period for current start
       begins_at = versions.last.andand.created_at || start_for_enterprise
       ends_at = end_date
 
@@ -37,35 +37,35 @@ UpdateBillItems = Struct.new("UpdateBillItems") do
     trial_start = trial_expiry = begins_at-1.day if trial_start.nil? || trial_expiry.nil?
 
     # If the trial begins after ends_at, create a bill for the entire period
-    # Otherwise, create a normal bill_item from the begins_at until the start of the trial
+    # Otherwise, create a normal billable_period from the begins_at until the start of the trial
     if trial_start > begins_at
-      update_bill_item(enterprise, begins_at, [ends_at, trial_start].min, false)
+      update_billable_period(enterprise, begins_at, [ends_at, trial_start].min, false)
     end
 
     # If all or some of the trial occurs between begins_at and ends_at
-    # Create a trial bill_item from the from begins_at or trial_start, whichever occurs last, until ends_at, or trial_expiry whichever occurs first
+    # Create a trial billable_period from the from begins_at or trial_start, whichever occurs last, until ends_at, or trial_expiry whichever occurs first
     if trial_expiry >= begins_at && trial_start <= ends_at
-      update_bill_item(enterprise, [trial_start, begins_at].max, [ends_at, trial_expiry].min, true)
+      update_billable_period(enterprise, [trial_start, begins_at].max, [ends_at, trial_expiry].min, true)
     end
 
     # If the trial finishes before begins_at, or trial has not been set, create a bill for the entire period
-    # Otherwise, create a normal bill_item from the end of the trial until ends_at
+    # Otherwise, create a normal billable_period from the end of the trial until ends_at
     if trial_expiry < ends_at
-      update_bill_item(enterprise, [trial_expiry, begins_at].max, ends_at, false)
+      update_billable_period(enterprise, [trial_expiry, begins_at].max, ends_at, false)
     end
   end
 
-  def update_bill_item(enterprise, begins_at, ends_at, trial)
+  def update_billable_period(enterprise, begins_at, ends_at, trial)
     owner_id = enterprise.owner_id
     sells = enterprise.sells
     orders = Spree::Order.where('distributor_id = (?) AND completed_at >= (?) AND completed_at < (?)', enterprise.id, begins_at, ends_at)
 
-    # Snagging any BillItems which overlap
-    overlapping_bill_items = BillItem.where('begins_at <= (?) AND ends_at >= (?) AND enterprise_id = (?)',ends_at, begins_at, enterprise.id)
-    overlapping_bill_items.each do |bill_item|
-      if bill_item.sells != sells || bill_item.trial != trial || bill_item.owner_id != owner_id
-        Bugsnag.notify(RuntimeError.new("Duplicate BillItem"), {
-          bill_items: {
+    # Snagging any BillablePeriods which overlap
+    overlapping_billable_periods = BillablePeriod.where('begins_at <= (?) AND ends_at >= (?) AND enterprise_id = (?)',ends_at, begins_at, enterprise.id)
+    overlapping_billable_periods.each do |billable_period|
+      if billable_period.sells != sells || billable_period.trial != trial || billable_period.owner_id != owner_id
+        Bugsnag.notify(RuntimeError.new("Duplicate BillablePeriod"), {
+          billable_periods: {
             new: {
               begins_at: begins_at,
               ends_at: ends_at,
@@ -75,15 +75,15 @@ UpdateBillItems = Struct.new("UpdateBillItems") do
               owner_id: owner_id,
               enterprise_id: enterprise.id
             }.as_json,
-            existing: bill_item.as_json
+            existing: billable_period.as_json
           }
         })
       end
     end
 
-    bill_item = BillItem.where(begins_at: begins_at, enterprise_id: enterprise.id).first
-    bill_item ||= BillItem.new(begins_at: begins_at, enterprise_id: enterprise.id)
-    bill_item.update_attributes({
+    billable_period = BillablePeriod.where(begins_at: begins_at, enterprise_id: enterprise.id).first
+    billable_period ||= BillablePeriod.new(begins_at: begins_at, enterprise_id: enterprise.id)
+    billable_period.update_attributes({
       ends_at: ends_at,
       sells: sells,
       trial: trial,
@@ -91,6 +91,6 @@ UpdateBillItems = Struct.new("UpdateBillItems") do
       turnover: orders.sum(&:total)
     })
 
-    bill_item
+    billable_period
   end
 end
