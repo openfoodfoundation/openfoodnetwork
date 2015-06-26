@@ -215,6 +215,16 @@ FactoryGirl.define do
     code { SecureRandom.base64(150) }
     user
   end
+
+  factory :bill_item do
+    begins_at { Time.now.beginning_of_month }
+    ends_at { Time.now.beginning_of_month + 1.month }
+    sells { ['none', 'own', 'any'].sample }
+    trial { [true, false].sample }
+    enterprise
+    owner { FactoryGirl.create :user }
+    turnover { BigDecimal.new("#{rand(5000)}.#{rand(99)}") }
+  end
 end
 
 
