@@ -7,6 +7,7 @@ Spree.user_class.class_eval do
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
+  has_many :billable_periods, foreign_key: :owner_id, inverse_of: :owner
   has_one :cart
   has_many :customers
 
