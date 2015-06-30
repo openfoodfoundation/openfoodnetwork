@@ -75,6 +75,12 @@ module Admin
           expect(oc.orders_open_at.to_date).to eq Date.today - 21.days
           expect(oc.orders_close_at.to_date).to eq Date.today + 21.days
         end
+
+        it "does nothing when no data is supplied" do
+          expect do
+            spree_put :bulk_update
+          end.to change(oc, :orders_open_at).by(0)
+        end
       end
 
       context "when I do not manage the coordinator of an order cycle" do

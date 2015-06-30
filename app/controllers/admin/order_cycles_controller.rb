@@ -65,8 +65,8 @@ module Admin
     end
 
     def bulk_update
-      @order_cycle_set = OrderCycleSet.new(params[:order_cycle_set])
-      if @order_cycle_set.save
+      @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
+      if @order_cycle_set.andand.save
         redirect_to main_app.admin_order_cycles_path, :notice => 'Order cycles have been updated.'
       else
         render :index
@@ -132,10 +132,12 @@ module Admin
     end
 
     def remove_unauthorized_bulk_attrs
-      params[:order_cycle_set][:collection_attributes].each do |i, hash|
-        order_cycle = OrderCycle.find(hash[:id])
-        unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
-          params[:order_cycle_set][:collection_attributes].delete i
+      if params.key? :order_cycle_set
+        params[:order_cycle_set][:collection_attributes].each do |i, hash|
+          order_cycle = OrderCycle.find(hash[:id])
+          unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
+            params[:order_cycle_set][:collection_attributes].delete i
+          end
         end
       end
     end
