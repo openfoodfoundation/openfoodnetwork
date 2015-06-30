@@ -49,6 +49,12 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
+  def current_invoice
+    start_of_current_billing_period = (Time.now - 1.day).beginning_of_month
+    existing = orders.where('distributor_id = (?) AND created_at >= (?) AND completed_at IS NULL',
+      Spree::Config[:accounts_distributor_id], start_of_current_billing_period).first
+    existing || orders.new(distributor_id: Spree::Config[:accounts_distributor_id])
+  end
 
   private
 
