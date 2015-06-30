@@ -23,7 +23,7 @@ class CheckoutController < Spree::CheckoutController
           return if redirect_to_paypal_express_form_if_needed
         end
 
-        if @order.next
+        if advance_order_state(@order)
           state_callback(:after)
         else
           if @order.errors.present?
@@ -81,6 +81,19 @@ class CheckoutController < Spree::CheckoutController
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
     params[:order]
+  end
+
+  def advance_order_state(order)
+    result = false
+    tries = 3
+
+    begin
+      result = order.next
+    rescue ActiveRecord::StaleObjectError
+      retry unless (tries -= 1).zero?
+    end
+
+    result
   end
 
 
