@@ -1,0 +1,22 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(:accounts_and_billing_settings)
+
+= render 'spree/shared/error_messages', target: @settings
+
+= form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
+  .field
+    = f.label :accounts_administration_distributor, t(:accounts_administration_distributor)
+    = f.collection_select(:accounts_distributor_id, @distributors, :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
+  .field
+    = f.hidden_field :collect_billing_information, value: '0'
+    = f.check_box :collect_billing_information, value: '1'
+    = f.label :collect_billing_information, t(:collect_billing_information)
+  .field
+
+    = f.hidden_field :create_invoices_for_enterprise_users, value: '0'
+    = f.check_box :create_invoices_for_enterprise_users, value: '1'
+    = f.label :create_invoices_for_enterprise_users, t(:create_invoices_for_enterprise_users)
+  .form-buttons{"data-hook" => "buttons"}
+    = button t(:update), 'icon-refresh'

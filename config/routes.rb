@@ -102,7 +102,10 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :update]
 
+
     resource :content
+
+    resource :accounts_and_billing_settings, only: [:edit, :update]
   end
 
   namespace :api do
