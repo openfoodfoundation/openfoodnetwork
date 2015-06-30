@@ -83,17 +83,14 @@ class CheckoutController < Spree::CheckoutController
     params[:order]
   end
 
+  # Perform order.next, guarding against StaleObjectErrors
   def advance_order_state(order)
-    result = false
-    tries = 3
+    tries ||= 3
+    order.next
 
-    begin
-      result = order.next
-    rescue ActiveRecord::StaleObjectError
-      retry unless (tries -= 1).zero?
-    end
-
-    result
+  rescue ActiveRecord::StaleObjectError
+    retry unless (tries -= 1).zero?
+    false
   end
 
 
