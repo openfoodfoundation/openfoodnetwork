@@ -19,25 +19,29 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     invoice = user.current_invoice
 
     billable_periods.each do |billable_period|
-      adjustment = invoice.adjustments.where(source: billable_period).first
-      adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period) )
-      adjustment.label = adjustment_label_from(billable_period)
-      adjustment.amount = billable_period.bill
-      adjustment.save
+      adjustment = invoice.adjustments.where(source_id: billable_period).first
+      adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
+      adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
     end
 
-    finalize(invoice)
+    finalize(invoice) if Date.today.day == 1
   end
 
   def adjustment_attrs_from(billable_period)
-    { :source => billable_period,
-      :originator => billable_period,
-      :mandatory => mandatory,
-      :locked => true }
+    # We should ultimately have an EnterprisePackage model, which holds all info about shop type, producer, trials, etc.
+    # It should also implement a calculator that we can use here by specifying the package as the originator of the
+    # adjustment, meaning that adjustments are created and updated using Spree's existing architecture.
+
+    { source: billable_period,
+      originator: nil,
+      mandatory: true,
+      locked: false
+    }
   end
 
   def adjustment_label_from(billable_period)
-    category = enterprise.version_at(billable_period.begins_at).reify.category.to_s.titleize
+    enterprise = billable_period.enterprise.version_at(billable_period.begins_at)
+    category = enterprise.category.to_s.titleize
     category += (billable_period.trial ? " Trial" : "")
     begins = billable_period.begins_at.strftime("%d/%m")
     ends = billable_period.begins_at.strftime("%d/%m")
@@ -46,14 +50,8 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
   end
 
   def finalize(invoice)
-    if Date.today.day == 1
-      while @order.state != "complete"
-        @order.next
-      end
-      user.current_invoice.process
-      # Mark current invoice as completed
-      # Create a new invoice
-      user.current_invoice = new_invoice_for(user)
+    while invoice.state != "complete"
+      invoice.next
     end
   end
 end

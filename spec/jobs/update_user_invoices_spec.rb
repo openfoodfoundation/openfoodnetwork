@@ -10,12 +10,12 @@ describe UpdateUserInvoices do
 
     let!(:updater) { UpdateUserInvoices.new }
 
-    describe "perform" do
-      let!(:user) { create(:user) }
-      let!(:old_billable_period) { create(:billable_period, owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
-      let!(:billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }
-      let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
+    let!(:user) { create(:user) }
+    let!(:old_billable_period) { create(:billable_period, owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
+    let!(:billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }
+    let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
 
+    describe "perform" do
       before do
         allow(updater).to receive(:update_invoice_for)
       end
@@ -42,11 +42,55 @@ describe UpdateUserInvoices do
     end
 
     describe "update_invoice_for" do
-      let!(:user) { create(:user) }
-      let!(:billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }
-      let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
+      let(:invoice) { create(:order, user: user) }
 
+      before do
+        allow(user).to receive(:current_invoice) { invoice }
+        allow(updater).to receive(:finalize)
+      end
 
+      context "on the first of the month" do
+        travel_to(3.hours)
+
+        before do
+          allow(updater).to receive(:adjustment_label_from).exactly(1).times.and_return("Old Item")
+          allow(old_billable_period).to receive(:bill) { 666.66 }
+          updater.update_invoice_for(user, [old_billable_period])
+        end
+
+        it "creates adjustments for each billing item" do
+          adjustments = invoice.adjustments
+          expect(adjustments.map(&:source_id)).to eq [old_billable_period.id]
+          expect(adjustments.map(&:amount)).to eq [666.66]
+          expect(adjustments.map(&:label)).to eq ["Old Item"]
+        end
+
+        it "finalizes the invoice" do
+          expect(updater).to have_received(:finalize).with(invoice)
+        end
+      end
+
+      context "on other days" do
+        travel_to(20.days)
+
+        before do
+          allow(updater).to receive(:adjustment_label_from).exactly(2).times.and_return("BP1 Item", "BP2 Item")
+          allow(billable_period1).to receive(:bill) { 123.45 }
+          allow(billable_period2).to receive(:bill) { 543.21 }
+          updater.update_invoice_for(user, [billable_period1, billable_period2])
+        end
+
+        it "creates adjustments for each billing item" do
+          adjustments = invoice.adjustments
+          expect(adjustments.map(&:source_id)).to eq [billable_period1.id, billable_period2.id]
+          expect(adjustments.map(&:amount)).to eq [123.45, 543.21]
+          expect(adjustments.map(&:label)).to eq ["BP1 Item", "BP2 Item"]
+        end
+
+        it "does not finalize the invoice" do
+          expect(updater).to_not have_received(:finalize)
+        end
+      end
     end
   end
 end
