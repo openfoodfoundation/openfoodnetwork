@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
     t.string   "sells"
     t.boolean  "trial",         :default => false
     t.decimal  "turnover",      :default => 0.0
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "carts", :force => true do |t|
