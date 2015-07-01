@@ -92,5 +92,22 @@ describe UpdateUserInvoices do
         end
       end
     end
+
+    describe "finalize" do
+      let!(:pm) { create(:payment_method, name: "PM1") }
+      let!(:sm) { create(:shipping_method, name: "ship1") }
+      let!(:enterprise) { create(:distributor_enterprise, payment_methods: [pm], shipping_methods: [sm]) }
+      let!(:order) { create(:order, distributor: enterprise, shipping_method: sm) }
+
+      before do
+        order.line_items.clear
+      end
+
+      it "finalizes the order" do
+        expect(order.completed_at).to be nil
+        updater.finalize(order)
+        expect(order.completed_at).to_not be nil
+      end
+    end
   end
 end
