@@ -4,6 +4,7 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
     # Otherwise, calculate turnover for the current month
     start_date = (Time.now - 1.day).beginning_of_month
     end_date = Time.now.beginning_of_day
+    job_start_time = Time.now
 
     enterprises = Enterprise.select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
 
@@ -30,6 +31,8 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
       ends_at = end_date
 
       split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
+
+      clean_up_untouched_billable_periods_for(enterprise, start_date, job_start_time)
     end
   end
 
@@ -60,27 +63,6 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
     sells = enterprise.sells
     orders = Spree::Order.where('distributor_id = (?) AND completed_at >= (?) AND completed_at < (?)', enterprise.id, begins_at, ends_at)
 
-    # Snagging any BillablePeriods which overlap
-    overlapping_billable_periods = BillablePeriod.where('begins_at <= (?) AND ends_at >= (?) AND enterprise_id = (?)',ends_at, begins_at, enterprise.id)
-    overlapping_billable_periods.each do |billable_period|
-      if billable_period.sells != sells || billable_period.trial != trial || billable_period.owner_id != owner_id
-        Bugsnag.notify(RuntimeError.new("Duplicate BillablePeriod"), {
-          billable_periods: {
-            new: {
-              begins_at: begins_at,
-              ends_at: ends_at,
-              sells: sells,
-              trial: trial,
-              turnover: orders.sum(&:total),
-              owner_id: owner_id,
-              enterprise_id: enterprise.id
-            }.as_json,
-            existing: billable_period.as_json
-          }
-        })
-      end
-    end
-
     billable_period = BillablePeriod.where(begins_at: begins_at, enterprise_id: enterprise.id).first
     billable_period ||= BillablePeriod.new(begins_at: begins_at, enterprise_id: enterprise.id)
     billable_period.update_attributes({
@@ -92,5 +74,21 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
     })
 
     billable_period
+  end
+
+  def clean_up_untouched_billable_periods_for(enterprise, start_of_month, job_start_time)
+    # Snag and then delete any BillablePeriods which overlap
+    obsolete_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at < (?)', start_of_month, job_start_time)
+
+    if obsolete_billable_periods.any?
+      current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at >= (?)', start_of_month, job_start_time)
+
+      Bugsnag.notify(RuntimeError.new("Duplicate BillablePeriod"), {
+        current: current_billable_periods.map(&:as_json),
+        obsolete: obsolete_billable_periods.map(&:as_json)
+      })
+    end
+
+    obsolete_billable_periods.each(&:delete)
   end
 end

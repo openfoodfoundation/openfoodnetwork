@@ -14,6 +14,7 @@ describe UpdateBillablePeriods do
       let!(:enterprise) { create(:supplier_enterprise, created_at: start_of_july - 1.month, sells: 'any') }
 
       before do
+        expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
         allow(Enterprise).to receive(:select) { [enterprise] }
       end
 
@@ -371,6 +372,29 @@ describe UpdateBillablePeriods do
         end
       end
     end
+
+    context "cleaning up untouched billable periods" do
+      let(:now) { Time.now }
+      let(:enterprise) { create(:enterprise) }
+      let!(:bp1) { create(:billable_period, enterprise: enterprise, updated_at: now + 2.seconds, begins_at: start_of_july, ends_at: start_of_july + 5.days ) }
+      let!(:bp2) { create(:billable_period, enterprise: enterprise, updated_at: now + 2.seconds, begins_at: start_of_july + 5.days, ends_at: start_of_july + 10.days ) }
+      let!(:bp3) { create(:billable_period, enterprise: enterprise, updated_at: now - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days ) }
+
+      before do
+        allow(Bugsnag).to receive(:notify)
+        updater.clean_up_untouched_billable_periods_for(enterprise, start_of_july, now)
+      end
+
+      it "soft deletes untouched billable_periods" do
+        expect(bp1.reload.deleted_at).to be_nil
+        expect(bp2.reload.deleted_at).to be_nil
+        expect(bp3.reload.deleted_at).to_not be_nil
+      end
+
+      it "notifies bugsnag" do
+        expect(Bugsnag).to have_received(:notify).once
+      end
+    end
   end
 
   describe "validation spec" do
@@ -382,6 +406,14 @@ describe UpdateBillablePeriods do
     let!(:original_owner) { enterprise.owner }
 
     let!(:new_owner) { create(:user) }
+
+    # This BP was updated before the current run and so should be marked for deletion at the end of the run
+    let!(:obsolete_bp) { create(:billable_period, enterprise: enterprise, updated_at: start_of_july + 10.days, begins_at: start_of_july + 6.5.days, ends_at: start_of_july + 10.days ) }
+
+    # This one has an updated_at in the future (so that it doesn't get deleted)
+    # It also has a begins_at date which matches a period that would otherwise be created,
+    # and so it should be picked up and overwritten
+    let!(:bp_to_overwrite) { create(:billable_period, enterprise: enterprise, updated_at: start_of_july + 21.days, begins_at: start_of_july + 10.days, ends_at: start_of_july + 15.days ) }
 
     let!(:order1) { create(:order, completed_at: start_of_july + 1.days, distributor: enterprise) }
     let!(:order2) { create(:order, completed_at: start_of_july + 3.days, distributor: enterprise) }
@@ -437,9 +469,19 @@ describe UpdateBillablePeriods do
         UpdateBillablePeriods.new.perform
       end
 
-      let(:billable_periods) { BillablePeriod.order(:id) }
+      let(:billable_periods) { BillablePeriod.order(:updated_at) }
 
-      it "creates the correct billable periods" do
+      it "creates the correct billable periods and deleted obsolete ones" do
+        expect(obsolete_bp.reload.deleted_at).to_not be_nil
+
+        bp_to_overwrite.reload
+        expect(bp_to_overwrite.sells).to eq 'own'
+        expect(bp_to_overwrite.trial).to be true
+        expect(bp_to_overwrite.owner).to eq original_owner
+        expect(bp_to_overwrite.begins_at).to eq start_of_july + 10.days
+        expect(bp_to_overwrite.ends_at).to eq start_of_july + 12.days
+        expect(bp_to_overwrite.turnover).to eq order6.total
+
         expect(billable_periods.count).to eq 9
 
         expect(billable_periods.map(&:begins_at)).to eq [
