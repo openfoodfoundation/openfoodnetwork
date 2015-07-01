@@ -14,7 +14,15 @@ describe VariantOverride do
     it "finds variant overrides for a set of hubs" do
       VariantOverride.for_hubs([hub1, hub2]).should match_array [vo1, vo2]
     end
+
+    describe "fetching variant overrides indexed by variant" do
+      it "gets indexed variant overrides for one hub" do
+        VariantOverride.indexed(hub1).should == {v => vo1}
+        VariantOverride.indexed(hub2).should == {v => vo2}
+      end
+    end
   end
+
 
   describe "looking up prices" do
     it "returns the numeric price when present" do

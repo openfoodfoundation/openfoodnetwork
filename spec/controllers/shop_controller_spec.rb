@@ -162,7 +162,10 @@ describe ShopController do
         end
 
         it "returns price including fees" do
-          Spree::Variant.any_instance.stub(:price_with_fees).and_return 998.00
+          # Price is 19.99
+          OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
+            stub(:indexed_fees_for).and_return 978.01
+
           xhr :get, :products
           response.body.should have_content "998.0"
         end

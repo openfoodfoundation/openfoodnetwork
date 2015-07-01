@@ -22,7 +22,12 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
   attributes :price
 
   def price
-    object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
+    if options[:enterprise_fee_calculator]
+      object.master.price + options[:enterprise_fee_calculator].indexed_fees_for(object.master)
+    else
+      object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
+    end
+
   end
 end
 
