@@ -9,12 +9,14 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document,
   $scope.activeTaxons = []
   $scope.show_profiles = false
   $scope.filtersActive = false
+  $scope.distanceMatchesShown = false
 
 
   $scope.$watch "query", (query)->
     Enterprises.evaluateQuery query
     Search.search query
     $scope.filterEnterprises()
+    $scope.distanceMatchesShown = false
 
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
@@ -30,3 +32,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document,
     es = showHubProfilesFilter(es)
     $scope.nameMatches = enterpriseMatchesNameQueryFilter(es, true)
     $scope.distanceMatches = enterpriseMatchesNameQueryFilter(es, false)
+
+
+  $scope.showDistanceMatches = ->
+    $scope.distanceMatchesShown = true
