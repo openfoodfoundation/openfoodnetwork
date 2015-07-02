@@ -12,8 +12,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document,
 
 
   $scope.$watch "query", (query)->
-    Enterprises.flagMatching query
-    Enterprises.updateDistance query
+    Enterprises.evaluateQuery query
     Search.search query
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->

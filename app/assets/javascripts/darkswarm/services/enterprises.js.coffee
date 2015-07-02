@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo)->
   new class Enterprises
     enterprises_by_id: {}
     constructor: ->
@@ -28,6 +28,10 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
 
+    evaluateQuery: (query) ->
+      @flagMatching query
+      @calculateDistance query
+
     flagMatching: (query) ->
       for enterprise in @enterprises
         enterprise.matches_name_query = if query? && query.length > 0
@@ -35,25 +39,30 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         else
           false
 
-    updateDistance: (query) ->
+    firstMatching: ->
+      (enterprise for enterprise in @enterprises when enterprise.matches_name_query)[0]
+
+    calculateDistance: (query) ->
       if query?.length > 0
-        @calculateDistance(query)
+        if @firstMatching()?
+          @setDistanceFrom @firstMatching()
+        else
+          @calculateDistanceGeo(query)
       else
         @resetDistance()
 
-    calculateDistance: (query) ->
+    calculateDistanceGeo: (query) ->
       Geo.geocode query, (results, status) =>
         if status == Geo.OK
-          console.log "Geocoded #{query} -> #{results[0].geometry.location}."
+          #console.log "Geocoded #{query} -> #{results[0].geometry.location}."
           @setDistanceFrom results[0].geometry.location
         else
           console.log "Geocoding failed for the following reason: #{status}"
           @resetDistance()
 
-    setDistanceFrom: (location) ->
-      $rootScope.$apply =>
-        for enterprise in @enterprises
-          enterprise.distance = Geo.distanceBetween enterprise, location
+    setDistanceFrom: (locatable) ->
+      for enterprise in @enterprises
+        enterprise.distance = Geo.distanceBetween enterprise, locatable
 
     resetDistance: ->
       enterprise.distance = null for enterprise in @enterprises
