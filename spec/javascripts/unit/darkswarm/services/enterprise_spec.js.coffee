@@ -93,6 +93,11 @@ describe "Enterprises service", ->
       Enterprises.updateDistance "asdf"
       expect(Enterprises.calculateDistance).toHaveBeenCalledWith("asdf")
 
+    it "resets the distance when query is null", ->
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.updateDistance null
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
     it "resets the distance when query is blank", ->
       spyOn(Enterprises, "resetDistance")
       Enterprises.updateDistance ""

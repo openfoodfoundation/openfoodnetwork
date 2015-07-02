@@ -29,7 +29,7 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
 
     updateDistance: (query) ->
-      if query.length > 0
+      if query?.length > 0
         @calculateDistance(query)
       else
         @resetDistance()
