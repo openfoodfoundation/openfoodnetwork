@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Geo)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo)->
   new class Enterprises
     enterprises_by_id: {}
     constructor: ->
@@ -27,6 +27,13 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
       for enterprise in @enterprises
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
+
+    flagMatching: (query) ->
+      for enterprise in @enterprises
+        enterprise.matches_name_query = if query? && query.length > 0
+          Matcher.match([enterprise.name], query)
+        else
+          false
 
     updateDistance: (query) ->
       if query?.length > 0
