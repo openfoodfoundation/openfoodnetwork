@@ -17,18 +17,28 @@
     = f.hidden_field :default_accounts_shipping_method_id, value: ''
     %div{ 'method-settings-for' => 'enterprise_id' }
 
-    .row
-      .six.columns.alpha
-        .field
-          = f.hidden_field :collect_billing_information, value: '0'
-          = f.check_box :collect_billing_information, value: '1'
-          = f.label :collect_billing_information, t(:collect_billing_information)
+    -# .row
+    -#   .six.columns.alpha
+    -#     %fieldset.no-border-bottom
+    -#       %legend Billing Information
+          -# .field
+          -#   = f.hidden_field :collect_billing_information, value: '0'
+          -#   = f.check_box :collect_billing_information, value: '1'
+          -#   = f.label :collect_billing_information, t(:collect_billing_information)
+          -# .field
+          -#   = button t(:collect_now), 'icon-forward'
 
-      .six.columns.omega
-        .field
-          = f.hidden_field :create_invoices_for_enterprise_users, value: '0'
-          = f.check_box :create_invoices_for_enterprise_users, value: '1'
-          = f.label :create_invoices_for_enterprise_users, t(:create_invoices_for_enterprise_users)
+      -# .six.columns.omega
+      -#   %fieldset.no-border-bottom
+      -#     %legend User Invoices
+          -# .field
+          -#   = f.hidden_field :create_invoices_for_enterprise_users, value: '0'
+          -#   = f.check_box :create_invoices_for_enterprise_users, value: '1'
+          -#   = f.label :create_invoices_for_enterprise_users, t(:create_invoices_for_enterprise_users)
+          -# .field
+          -#   = button t(:create_now), 'icon-forward'
 
     .form-buttons{"data-hook" => "buttons"}
-      = button t(:update), 'icon-refresh'
+      = button t(:update), 'icon-refresh', value: "update"
+      or
+      = button t(:update_and_create_invoices_now), 'icon-undo', value: 'update_and_run_job'

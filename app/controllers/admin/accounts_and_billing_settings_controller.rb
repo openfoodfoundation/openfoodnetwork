@@ -14,9 +14,14 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def update
-    @settings = OpenFoodNetwork::AccountsAndBillingSettings.new(params[:settings])
+    @settings = OpenFoodNetwork::AccountsAndBillingSettings.new(params[:settings], params[:button])
     if @settings.valid?
       Spree::Config.set(params[:settings])
+
+      if params[:button] == "update_and_run_job"
+        Delayed::Job.enqueue UpdateBillablePeriods.new({create_invoices: true})
+      end
+
       flash[:success] = t(:successfully_updated, :resource => t(:billing_and_account_settings))
       redirect_to main_app.edit_admin_accounts_and_billing_settings_path
     else

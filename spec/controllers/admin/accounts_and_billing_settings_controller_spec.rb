@@ -60,24 +60,25 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
       before {allow(controller).to receive(:spree_current_user) { admin } }
       let(:params) { { settings: { } } }
 
-      context "when create_invoices_for_enterprise_users is false" do
-        before { params[:settings][:create_invoices_for_enterprise_users] = '0' }
+      context "when we are not creating user invoices" do
+        before { params[:button] = 'update' }
 
-        context "and other settings are not set" do
+        context "and settings have no values" do
           before do
             params[:settings][:accounts_distributor_id] = ''
             params[:settings][:default_accounts_payment_method_id] = '0'
             params[:settings][:default_accounts_shipping_method_id] = '0'
-            params[:settings][:collect_billing_information] = '0'
+            # params[:settings][:collect_billing_information] = '0'
             spree_get :update, params
           end
 
           it "allows them to be empty/false" do
+            expect(assigns(:settings).errors.count).to be 0
             expect(Spree::Config.accounts_distributor_id).to eq 0
             expect(Spree::Config.default_accounts_payment_method_id).to eq 0
             expect(Spree::Config.default_accounts_shipping_method_id).to eq 0
-            expect(Spree::Config.collect_billing_information).to be false
-            expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+            # expect(Spree::Config.collect_billing_information).to be false
+            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
           end
         end
 
@@ -86,7 +87,7 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
             params[:settings][:accounts_distributor_id] = new_distributor.id
             params[:settings][:default_accounts_payment_method_id] = pm2.id
             params[:settings][:default_accounts_shipping_method_id] = sm2.id
-            params[:settings][:collect_billing_information] = '1'
+            # params[:settings][:collect_billing_information] = '1'
             spree_get :update, params
           end
 
@@ -94,32 +95,32 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
             expect(Spree::Config.accounts_distributor_id).to eq new_distributor.id
             expect(Spree::Config.default_accounts_payment_method_id).to eq pm2.id
             expect(Spree::Config.default_accounts_shipping_method_id).to eq sm2.id
-            expect(Spree::Config.collect_billing_information).to be true
-            expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+            # expect(Spree::Config.collect_billing_information).to be true
+            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
           end
         end
       end
 
-      context "when create_invoices_for_enterprise_users is true" do
-        before { params[:settings][:create_invoices_for_enterprise_users] = '1' }
+      context "when we are creating user invoices" do
+        before { params[:button] = 'update_and_run_job' }
 
-        context "and other settings are not set" do
+        context "and settings have no values" do
           before do
             params[:settings][:accounts_distributor_id] = ''
             params[:settings][:default_accounts_payment_method_id] = '0'
             params[:settings][:default_accounts_shipping_method_id] = '0'
-            params[:settings][:collect_billing_information] = '0'
+            # params[:settings][:collect_billing_information] = '0'
             spree_get :update, params
           end
 
           it "does not allow them to be empty/false" do
             expect(response).to render_template :edit
-            expect(assigns(:settings).errors.count).to be 4
+            expect(assigns(:settings).errors.count).to be 3
             expect(Spree::Config.accounts_distributor_id).to eq accounts_distributor.id
             expect(Spree::Config.default_accounts_payment_method_id).to eq pm1.id
             expect(Spree::Config.default_accounts_shipping_method_id).to eq sm1.id
-            expect(Spree::Config.collect_billing_information).to be true
-            expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+            # expect(Spree::Config.collect_billing_information).to be true
+            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
           end
         end
 
@@ -128,16 +129,20 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
             params[:settings][:accounts_distributor_id] = new_distributor.id
             params[:settings][:default_accounts_payment_method_id] = pm2.id
             params[:settings][:default_accounts_shipping_method_id] = sm2.id
-            params[:settings][:collect_billing_information] = '1'
-            spree_get :update, params
+            # params[:settings][:collect_billing_information] = '1'
           end
 
           it "sets global config to the specified values" do
+            spree_get :update, params
             expect(Spree::Config.accounts_distributor_id).to eq new_distributor.id
             expect(Spree::Config.default_accounts_payment_method_id).to eq pm2.id
             expect(Spree::Config.default_accounts_shipping_method_id).to eq sm2.id
-            expect(Spree::Config.collect_billing_information).to be true
-            expect(Spree::Config.create_invoices_for_enterprise_users).to be true
+            # expect(Spree::Config.collect_billing_information).to be true
+            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+          end
+
+          it "runs the job" do
+            expect{spree_get :update, params}.to enqueue_job UpdateBillablePeriods
           end
         end
       end
