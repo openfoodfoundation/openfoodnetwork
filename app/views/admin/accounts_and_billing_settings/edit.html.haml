@@ -5,18 +5,30 @@
 
 = render 'spree/shared/error_messages', target: @settings
 
-= form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
-  .field
-    = f.label :accounts_administration_distributor, t(:accounts_administration_distributor)
-    = f.collection_select(:accounts_distributor_id, @distributors, :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
-  .field
-    = f.hidden_field :collect_billing_information, value: '0'
-    = f.check_box :collect_billing_information, value: '1'
-    = f.label :collect_billing_information, t(:collect_billing_information)
-  .field
+%div{ ng: { app: 'admin.accounts_and_billing_settings' } }
+  = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
+    .row
+      .twelve.columns.alpha.omega
+        .field
+          = f.label :accounts_distributor_id, t(:accounts_administration_distributor)
+          = f.collection_select(:accounts_distributor_id, @distributors, :id, :name, { include_blank: true }, { class: "select2 fullwidth", 'watch-value-as' => "enterprise_id"})
 
-    = f.hidden_field :create_invoices_for_enterprise_users, value: '0'
-    = f.check_box :create_invoices_for_enterprise_users, value: '1'
-    = f.label :create_invoices_for_enterprise_users, t(:create_invoices_for_enterprise_users)
-  .form-buttons{"data-hook" => "buttons"}
-    = button t(:update), 'icon-refresh'
+    = f.hidden_field :default_accounts_payment_method_id, value: ''
+    = f.hidden_field :default_accounts_shipping_method_id, value: ''
+    %div{ 'method-settings-for' => 'enterprise_id' }
+
+    .row
+      .six.columns.alpha
+        .field
+          = f.hidden_field :collect_billing_information, value: '0'
+          = f.check_box :collect_billing_information, value: '1'
+          = f.label :collect_billing_information, t(:collect_billing_information)
+
+      .six.columns.omega
+        .field
+          = f.hidden_field :create_invoices_for_enterprise_users, value: '0'
+          = f.check_box :create_invoices_for_enterprise_users, value: '1'
+          = f.label :create_invoices_for_enterprise_users, t(:create_invoices_for_enterprise_users)
+
+    .form-buttons{"data-hook" => "buttons"}
+      = button t(:update), 'icon-refresh'
