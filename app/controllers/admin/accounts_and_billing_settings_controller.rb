@@ -19,7 +19,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
       Spree::Config.set(params[:settings])
 
       if params[:button] == "update_and_run_job"
-        Delayed::Job.enqueue UpdateBillablePeriods.new({create_invoices: true})
+        Delayed::Job.enqueue UpdateBillablePeriods.new
       end
 
       flash[:success] = t(:successfully_updated, :resource => t(:billing_and_account_settings))
