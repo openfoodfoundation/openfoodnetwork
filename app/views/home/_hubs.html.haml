@@ -8,4 +8,10 @@
   = render "shared/components/enterprise_search"
   = render "home/filters"
 
-  = render "home/hubs_table", filters: "visible | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles", order_by: "['-active', '-matches_name_query', '+distance', '+orders_close_at']"
+  .row{bindonce: true}
+    .small-12.columns
+      %h2 Did you mean?
+      = render "home/hubs_table", filters: "visible | enterpriseMatchesNameQuery:true | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles", order_by: "['-active', '+distance', '+orders_close_at']"
+
+      %h2 Closest to {{ query }}...
+      = render "home/hubs_table", filters: "visible | enterpriseMatchesNameQuery:false | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles", order_by: "['-active', '+distance', '+orders_close_at']"

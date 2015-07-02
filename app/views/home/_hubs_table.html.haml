@@ -1,12 +1,10 @@
-.row{bindonce: true}
-  .small-12.columns
-    .active_table
-      %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | #{filters} | orderBy:#{order_by})",
-      "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
-      "ng-controller" => "HubNodeCtrl",
-      id: "{{hub.hash}}"}
-        .small-12.columns
-          = render partial: 'home/skinny'
-          = render partial: 'home/fat'
+.active_table
+  %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | #{filters} | orderBy:#{order_by})",
+  "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
+  "ng-controller" => "HubNodeCtrl",
+  id: "{{hub.hash}}"}
+    .small-12.columns
+      = render partial: 'home/skinny'
+      = render partial: 'home/fat'
 
-      = render partial: 'shared/components/enterprise_no_results'
+  = render partial: 'shared/components/enterprise_no_results'
