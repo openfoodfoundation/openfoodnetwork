@@ -505,10 +505,21 @@ describe Spree::Order do
   end
 
   describe "sending confirmation emails" do
+    let!(:distributor) { create(:distributor_enterprise) }
+    let!(:order) { create(:order, distributor: distributor) }
+
     it "sends confirmation emails" do
       expect do
-        create(:order).deliver_order_confirmation_email
+        order.deliver_order_confirmation_email
       end.to enqueue_job ConfirmOrderJob
+    end
+
+    it "does not send confirmation emails when distributor is the accounts_distributor" do
+      Spree::Config.set({ accounts_distributor_id: distributor.id })
+
+      expect do
+        order.deliver_order_confirmation_email
+      end.to_not enqueue_job ConfirmOrderJob
     end
   end
 

@@ -123,6 +123,11 @@ describe UpdateUserInvoices do
         expect(invoice.payments.first.payment_method).to eq pm
         expect(invoice.shipping_method).to eq sm
       end
+
+      it "does not send a confirmation email" do
+        expect(invoice).to receive(:deliver_order_confirmation_email).and_call_original
+        expect{updater.finalize(invoice)}.to_not enqueue_job ConfirmOrderJob
+      end
     end
   end
 
