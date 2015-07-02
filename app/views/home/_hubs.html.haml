@@ -17,9 +17,8 @@
       .distance-matches{"ng-show" => "nameMatches.length == 0 || distanceMatchesShown"}
         %h2
           Closest to
-          %span{"ng-show" => "nameMatches.length > 0"} {{ nameMatches[0].name }}
-          %span{"ng-hide" => "nameMatches.length > 0"} {{ query }}
-          \...
+          %span{"ng-show" => "nameMatches.length > 0"} {{ nameMatches[0].name }}...
+          %span{"ng-hide" => "nameMatches.length > 0"} {{ query }}...
 
         = render "home/hubs_table", enterprises: "distanceMatches"
 
