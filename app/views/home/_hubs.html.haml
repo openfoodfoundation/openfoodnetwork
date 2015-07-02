@@ -10,8 +10,14 @@
 
   .row{bindonce: true}
     .small-12.columns
-      %h2 Did you mean?
-      = render "home/hubs_table", enterprises: "nameMatches"
+      .name-matches{"ng-show" => "nameMatches.length > 0"}
+        %h2 Did you mean?
+        = render "home/hubs_table", enterprises: "nameMatches"
 
-      %h2 Closest to {{ query }}...
+      %h2
+        Closest to
+        %span{"ng-show" => "nameMatches.length > 0"} {{ nameMatches[0].name }}
+        %span{"ng-hide" => "nameMatches.length > 0"} {{ query }}
+        \...
+
       = render "home/hubs_table", enterprises: "distanceMatches"
