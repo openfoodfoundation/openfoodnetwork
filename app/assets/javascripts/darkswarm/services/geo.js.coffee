@@ -12,6 +12,12 @@ Darkswarm.service "Geo", ->
       geocoder = new google.maps.Geocoder()
       geocoder.geocode {'address': address}, callback
 
-    distanceBetween: (locatable, location) ->
-      latLng = new google.maps.LatLng locatable.latitude, locatable.longitude
-      google.maps.geometry.spherical.computeDistanceBetween latLng, location
+    distanceBetween: (src, dst) ->
+      google.maps.geometry.spherical.computeDistanceBetween @toLatLng(src), @toLatLng(dst)
+
+    # Wrap an object in a google.maps.LatLng if it has not been already
+    toLatLng: (locatable) ->
+      if locatable.lat?
+        locatable
+      else
+        new google.maps.LatLng locatable.latitude, locatable.longitude
