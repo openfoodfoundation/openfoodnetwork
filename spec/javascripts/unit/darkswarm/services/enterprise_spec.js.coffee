@@ -1,6 +1,18 @@
 describe "Enterprises service", ->
   Enterprises = null
   CurrentHubMock = {}
+  Geo =
+    OK: 'ok'
+    succeed: true
+    geocode: (query, callback) ->
+      if @succeed
+        results = [{geometry: {location: "location"}}]
+        callback(results, @OK)
+      else
+        callback(results, 'Oops')
+    distanceBetween: (locatable, location) ->
+      123
+
   taxons = [
     {id: 1, name: "test"}
   ]
@@ -19,6 +31,7 @@ describe "Enterprises service", ->
     module 'Darkswarm'
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock
+      $provide.value "Geo", Geo
       null
     angular.module('Darkswarm').value('enterprises', enterprises)
     angular.module('Darkswarm').value('taxons', taxons)
@@ -73,3 +86,45 @@ describe "Enterprises service", ->
     expect(Enterprises.producers).toContain Enterprises.enterprises[4]
     expect(Enterprises.producers).toContain Enterprises.enterprises[5]
     expect(Enterprises.producers).toContain Enterprises.enterprises[6]
+
+  describe "updating distance of enterprises from a location", ->
+    it "calculates the distance when a query is provided", ->
+      spyOn(Enterprises, "calculateDistance")
+      Enterprises.updateDistance "asdf"
+      expect(Enterprises.calculateDistance).toHaveBeenCalledWith("asdf")
+
+    it "resets the distance when query is blank", ->
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.updateDistance ""
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
+  describe "calculating the distance of enterprises from a location", ->
+    beforeEach ->
+      spyOn(Enterprises, "setDistanceFrom")
+
+    it "calculates distance for all enterprises when geocoding succeeds", ->
+      Geo.succeed = true
+      Enterprises.calculateDistance('query')
+      expect(Enterprises.setDistanceFrom).toHaveBeenCalledWith("location")
+
+    it "resets distance when geocoding fails", ->
+      Geo.succeed = false
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.calculateDistance('query')
+      expect(Enterprises.setDistanceFrom).not.toHaveBeenCalled()
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
+  describe "setting the distance of each enterprise from a central location", ->
+    it "sets the distances", ->
+      Enterprises.setDistanceFrom 'location'
+      for e in Enterprises.enterprises
+        expect(e.distance).toEqual 123
+
+  describe "resetting the distance measurement of all enterprises", ->
+    beforeEach ->
+      e.distance = 123 for e in Enterprises.enterprises
+
+    it "resets the distance", ->
+      Enterprises.resetDistance()
+      for e in Enterprises.enterprises
+        expect(e.distance).toBeNull()

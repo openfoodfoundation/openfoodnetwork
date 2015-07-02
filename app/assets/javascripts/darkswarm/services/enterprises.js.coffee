@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Geo)->
   new class Enterprises
     enterprises_by_id: {}
     constructor: ->
@@ -28,3 +28,24 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
 
+    updateDistance: (query) ->
+      if query.length > 0
+        @calculateDistance(query)
+      else
+        @resetDistance()
+
+    calculateDistance: (query) ->
+      Geo.geocode query, (results, status) =>
+        if status == Geo.OK
+          console.log "Geocoded #{query} -> #{results[0].geometry.location}."
+          @setDistanceFrom results[0].geometry.location
+        else
+          console.log "Geocoding failed for the following reason: #{status}"
+          @resetDistance()
+
+    setDistanceFrom: (location) ->
+      for enterprise in @enterprises
+        enterprise.distance = Geo.distanceBetween enterprise, location
+
+    resetDistance: ->
+      enterprise.distance = null for enterprise in @enterprises
