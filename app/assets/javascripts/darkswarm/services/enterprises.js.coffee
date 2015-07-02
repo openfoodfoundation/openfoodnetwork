@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope)->
   new class Enterprises
     enterprises_by_id: {}
     constructor: ->
@@ -51,8 +51,9 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
           @resetDistance()
 
     setDistanceFrom: (location) ->
-      for enterprise in @enterprises
-        enterprise.distance = Geo.distanceBetween enterprise, location
+      $rootScope.$apply =>
+        for enterprise in @enterprises
+          enterprise.distance = Geo.distanceBetween enterprise, location
 
     resetDistance: ->
       enterprise.distance = null for enterprise in @enterprises

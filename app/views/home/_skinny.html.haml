@@ -9,6 +9,7 @@
     %span.margin-top{"bo-text" => "hub.address.city"}
   .columns.small-2.medium-1.large-1
     %span.margin-top{"bo-bind" => "hub.address.state_name | uppercase"}
+    %span.margin-top{"ng-if" => "hub.distance != null"} ({{ hub.distance / 1000 | number:0 }} km)
 
   .columns.small-4.medium-3.large-3.text-right{"bo-if" => "hub.active"}
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
@@ -26,7 +27,7 @@
       %span.margin-top{ bo: { if: "!current()" } } Orders closed
 
   .columns.small-2.medium-1.large-1.text-right
-    %span.margin-top 
+    %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
 .row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
@@ -43,4 +44,3 @@
   .columns.small-6.medium-3.large-4.text-right
     %span.margin-top{ bo: { if: "!current()" } }
       %em Profile only
-
