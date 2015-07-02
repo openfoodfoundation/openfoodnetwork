@@ -24,6 +24,8 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
       adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
     end
 
+    invoice.save
+
     finalize(invoice) if Date.today.day == 1
   end
 
@@ -43,13 +45,18 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     enterprise = billable_period.enterprise.version_at(billable_period.begins_at)
     category = enterprise.category.to_s.titleize
     category += (billable_period.trial ? " Trial" : "")
-    begins = billable_period.begins_at.strftime("%d/%m")
-    ends = billable_period.begins_at.strftime("%d/%m")
+    begins = billable_period.begins_at.strftime("%d/%m/%y")
+    ends = billable_period.ends_at.strftime("%d/%m/%y")
 
-    "#{enterprise.name} (#{category}) [#{begins}-#{ends}]"
+    "#{enterprise.name} (#{category}) [#{begins} - #{ends}]"
   end
 
   def finalize(invoice)
+    # TODO: When we implement per-customer and/or per-user preferences around shipping and payment methods
+    # we can update these to read from those preferences
+    invoice.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice.total)
+    invoice.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
+
     while invoice.state != "complete"
       invoice.next
     end

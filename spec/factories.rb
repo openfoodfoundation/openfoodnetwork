@@ -219,11 +219,11 @@ FactoryGirl.define do
   factory :billable_period do
     begins_at { Time.now.beginning_of_month }
     ends_at { Time.now.beginning_of_month + 1.month }
-    sells { ['none', 'own', 'any'].sample }
-    trial { [true, false].sample }
+    sells { 'any' }
+    trial { false }
     enterprise
     owner { FactoryGirl.create :user }
-    turnover { BigDecimal.new("#{rand(5000)}.#{rand(99)}") }
+    turnover { rand(100000).to_f/100 }
   end
 end
 
