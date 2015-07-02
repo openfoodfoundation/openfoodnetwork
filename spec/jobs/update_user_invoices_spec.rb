@@ -16,27 +16,70 @@ describe UpdateUserInvoices do
     let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
 
     describe "perform" do
+      let(:accounts_distributor) { double(:accounts_distributor) }
       before do
+        allow(Enterprise).to receive(:find_by_id) { accounts_distributor }
+        allow(accounts_distributor).to receive(:payment_methods) { double(:payment_methods, find_by_id: true) }
+        allow(accounts_distributor).to receive(:shipping_methods) { double(:shipping_methods, find_by_id: true) }
         allow(updater).to receive(:update_invoice_for)
       end
 
-      context "on the first of the month" do
-        travel_to(3.hours)
+      context "when necessary global config setting have not been set" do
+        travel_to(20.days)
 
-        it "updates the user's current invoice with billable_periods from the previous month" do
-          updater.perform
-          expect(updater).to have_received(:update_invoice_for).once
-          .with(user, [old_billable_period])
+        context "when accounts_distributor has been set" do
+          before do
+            allow(Enterprise).to receive(:find_by_id) { false }
+            updater.perform
+          end
+
+          it "doesn't run" do
+            expect(updater).to_not have_received(:update_invoice_for)
+          end
+        end
+
+        context "when default payment method has been set" do
+          before do
+            allow(accounts_distributor).to receive(:payment_methods) { double(:payment_methods, find_by_id: false) }
+            updater.perform
+          end
+
+          it "doesn't run" do
+            expect(updater).to_not have_received(:update_invoice_for)
+          end
+        end
+
+        context "when default shipping method has been set" do
+          before do
+            allow(accounts_distributor).to receive(:shipping_methods) { double(:shipping_methods, find_by_id: false) }
+            updater.perform
+          end
+
+          it "doesn't run" do
+            expect(updater).to_not have_received(:update_invoice_for)
+          end
         end
       end
 
-      context "on other days" do
-        travel_to(20.days)
+      context "when necessary global config setting have been set" do
+        context "on the first of the month" do
+          travel_to(3.hours)
 
-        it "updates the user's current invoice with billable_periods from the current month" do
-          updater.perform
-          expect(updater).to have_received(:update_invoice_for).once
-          .with(user, [billable_period1, billable_period2])
+          it "updates the user's current invoice with billable_periods from the previous month" do
+            updater.perform
+            expect(updater).to have_received(:update_invoice_for).once
+            .with(user, [old_billable_period])
+          end
+        end
+
+        context "on other days" do
+          travel_to(20.days)
+
+          it "updates the user's current invoice with billable_periods from the current month" do
+            updater.perform
+            expect(updater).to have_received(:update_invoice_for).once
+            .with(user, [billable_period1, billable_period2])
+          end
         end
       end
     end

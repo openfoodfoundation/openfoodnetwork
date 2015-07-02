@@ -1,5 +1,9 @@
 UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
   def perform
+    return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
+    return unless accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
+    return unless accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
+
     # If it is the first of the month, update invoices for the previous month up until midnight last night
     # Otherwise, update invoices for the current month
     start_date = (Time.now - 1.day).beginning_of_month
