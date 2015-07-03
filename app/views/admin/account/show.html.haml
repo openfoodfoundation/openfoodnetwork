@@ -1,0 +1,22 @@
+
+- content_for :page_title do
+  = t(:account)
+
+- @enterprises.each do |enterprise|
+  %h2= enterprise.name
+  %table
+    %thead
+      %th Begins
+      %th Ends
+      %th Sells
+      %th Trial?
+      %th Turnover
+      %th Bill
+    - enterprise.billable_periods.each do |billable_period|
+      %tr
+        %td= billable_period.begins_at.strftime("%F %T")
+        %td= billable_period.ends_at.strftime("%F %T")
+        %td= billable_period.sells
+        %td= billable_period.trial?
+        %td= billable_period.display_turnover
+        %td= billable_period.display_bill

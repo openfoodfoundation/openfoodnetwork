@@ -4,6 +4,14 @@ class BillablePeriod < ActiveRecord::Base
 
   default_scope where(deleted_at: nil)
 
+  def display_turnover
+    Spree::Money.new(turnover, {currency: Spree::Config[:currency]})
+  end
+
+  def display_bill
+    Spree::Money.new(bill, {currency: Spree::Config[:currency]})
+  end
+
   def bill
     # Will make this more sophisicated in the future in that it will use global config variables to calculate
     return 0 if trial?
