@@ -53,12 +53,13 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
 
     calculateDistanceGeo: (query) ->
       Geo.geocode query, (results, status) =>
-        if status == Geo.OK
-          #console.log "Geocoded #{query} -> #{results[0].geometry.location}."
-          @setDistanceFrom results[0].geometry.location
-        else
-          console.log "Geocoding failed for the following reason: #{status}"
-          @resetDistance()
+        $rootScope.$apply =>
+          if status == Geo.OK
+            #console.log "Geocoded #{query} -> #{results[0].geometry.location}."
+            @setDistanceFrom results[0].geometry.location
+          else
+            console.log "Geocoding failed for the following reason: #{status}"
+            @resetDistance()
 
     setDistanceFrom: (locatable) ->
       for enterprise in @enterprises
