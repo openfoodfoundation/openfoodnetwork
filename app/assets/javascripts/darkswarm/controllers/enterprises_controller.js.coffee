@@ -1,4 +1,4 @@
-Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document, $rootScope, HashNavigation, FilterSelectorsService, EnterpriseModal, visibleFilter, taxonsFilter, shippingFilter, showHubProfilesFilter, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, visibleFilter, taxonsFilter, shippingFilter, showHubProfilesFilter, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.totalActive = FilterSelectorsService.totalActive
   $scope.clearAll = FilterSelectorsService.clearAll
@@ -15,8 +15,12 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, Enterprises, Search, $document,
   $scope.$watch "query", (query)->
     Enterprises.evaluateQuery query
     Search.search query
-    $scope.filterEnterprises()
+    $rootScope.$broadcast 'enterprisesChanged'
     $scope.distanceMatchesShown = false
+
+
+  $rootScope.$on "enterprisesChanged", ->
+    $scope.filterEnterprises()
 
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
