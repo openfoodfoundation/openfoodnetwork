@@ -10,7 +10,7 @@ Darkswarm.service "Geo", ->
     #     console.log "Error: #{status}"
     geocode: (address, callback) ->
       geocoder = new google.maps.Geocoder()
-      geocoder.geocode {'address': address}, callback
+      geocoder.geocode {'address': address, 'region': "<%= Spree::Country.find_by_id(Spree::Config[:default_country_id]).iso %>"}, callback
 
     distanceBetween: (src, dst) ->
       google.maps.geometry.spherical.computeDistanceBetween @toLatLng(src), @toLatLng(dst)
