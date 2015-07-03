@@ -91,8 +91,4 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
 
     obsolete_billable_periods.each(&:delete)
   end
-
-  def success(job)
-    Delayed::Job.enqueue UpdateUserInvoices.new
-  end
 end
