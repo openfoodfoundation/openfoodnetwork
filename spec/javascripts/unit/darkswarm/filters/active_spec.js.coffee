@@ -1,12 +1,8 @@
 describe 'filtering by active', ->
   filterByActive = null
   objects = [
-    {
-      active: true
-    }
-    {
-      active: false
-    }
+    {active: true}
+    {active: false}
   ]
 
 
