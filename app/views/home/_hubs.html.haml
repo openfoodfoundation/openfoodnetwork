@@ -8,13 +8,13 @@
   = render "shared/components/enterprise_search"
   = render "home/filters"
 
-  .row{bindonce: true}
+  .row
     .small-12.columns
       .name-matches{"ng-show" => "nameMatches.length > 0"}
         %h2 Did you mean?
         = render "home/hubs_table", enterprises: "nameMatches"
 
-      .distance-matches{"ng-show" => "nameMatches.length == 0 || distanceMatchesShown"}
+      .distance-matches{"ng-if" => "nameMatches.length == 0 || distanceMatchesShown"}
         %h2
           Closest to
           %span{"ng-show" => "nameMatches.length > 0"} {{ nameMatches[0].name }}...
