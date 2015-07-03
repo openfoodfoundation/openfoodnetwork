@@ -90,6 +90,8 @@ class AbilityDecorator
     end
 
     can [:admin, :known_users], :search
+
+    can [:admin, :show], :account
   end
 
   def add_product_management_abilities(user)

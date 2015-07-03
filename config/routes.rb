@@ -110,6 +110,8 @@ Openfoodnetwork::Application.routes.draw do
         get :start_job
       end
     end
+
+    resource :account, only: [:show], controller: 'account'
   end
 
   namespace :api do
