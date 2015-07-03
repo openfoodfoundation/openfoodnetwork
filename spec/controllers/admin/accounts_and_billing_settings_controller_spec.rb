@@ -40,8 +40,8 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
         expect(settings.accounts_distributor_id).to eq accounts_distributor.id
         expect(settings.default_accounts_payment_method_id).to eq pm1.id
         expect(settings.default_accounts_shipping_method_id).to eq sm1.id
-        expect(settings.collect_billing_information).to eq true
-        expect(settings.create_invoices_for_enterprise_users).to eq false
+        # expect(settings.collect_billing_information).to eq true
+        # expect(settings.create_invoices_for_enterprise_users).to eq false
       end
     end
   end
@@ -60,89 +60,150 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
       before {allow(controller).to receive(:spree_current_user) { admin } }
       let(:params) { { settings: { } } }
 
-      context "when we are not creating user invoices" do
-        before { params[:button] = 'update' }
-
-        context "and settings have no values" do
-          before do
-            params[:settings][:accounts_distributor_id] = ''
-            params[:settings][:default_accounts_payment_method_id] = '0'
-            params[:settings][:default_accounts_shipping_method_id] = '0'
-            # params[:settings][:collect_billing_information] = '0'
-            spree_get :update, params
-          end
-
-          it "allows them to be empty/false" do
-            expect(assigns(:settings).errors.count).to be 0
-            expect(Spree::Config.accounts_distributor_id).to eq 0
-            expect(Spree::Config.default_accounts_payment_method_id).to eq 0
-            expect(Spree::Config.default_accounts_shipping_method_id).to eq 0
-            # expect(Spree::Config.collect_billing_information).to be false
-            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
-          end
+      context "when settings have no values" do
+        before do
+          params[:settings][:accounts_distributor_id] = ''
+          params[:settings][:default_accounts_payment_method_id] = '0'
+          params[:settings][:default_accounts_shipping_method_id] = '0'
+          # params[:settings][:collect_billing_information] = '0'
+          spree_get :update, params
         end
 
-        context "and other settings are set" do
-          before do
-            params[:settings][:accounts_distributor_id] = new_distributor.id
-            params[:settings][:default_accounts_payment_method_id] = pm2.id
-            params[:settings][:default_accounts_shipping_method_id] = sm2.id
-            # params[:settings][:collect_billing_information] = '1'
-            spree_get :update, params
-          end
-
-          it "sets global config to the specified values" do
-            expect(Spree::Config.accounts_distributor_id).to eq new_distributor.id
-            expect(Spree::Config.default_accounts_payment_method_id).to eq pm2.id
-            expect(Spree::Config.default_accounts_shipping_method_id).to eq sm2.id
-            # expect(Spree::Config.collect_billing_information).to be true
-            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
-          end
+        it "does not allow them to be empty/false" do
+          expect(response).to render_template :edit
+          expect(assigns(:settings).errors.count).to be 3
+          expect(Spree::Config.accounts_distributor_id).to eq accounts_distributor.id
+          expect(Spree::Config.default_accounts_payment_method_id).to eq pm1.id
+          expect(Spree::Config.default_accounts_shipping_method_id).to eq sm1.id
+          # expect(Spree::Config.collect_billing_information).to be true
+          # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
         end
       end
 
-      context "when we are creating user invoices" do
-        before { params[:button] = 'update_and_run_job' }
+      context "when settings have values" do
+        before do
+          params[:settings][:accounts_distributor_id] = new_distributor.id
+          params[:settings][:default_accounts_payment_method_id] = pm2.id
+          params[:settings][:default_accounts_shipping_method_id] = sm2.id
+          # params[:settings][:collect_billing_information] = '1'
+        end
 
-        context "and settings have no values" do
+        it "sets global config to the specified values" do
+          spree_get :update, params
+          expect(Spree::Config.accounts_distributor_id).to eq new_distributor.id
+          expect(Spree::Config.default_accounts_payment_method_id).to eq pm2.id
+          expect(Spree::Config.default_accounts_shipping_method_id).to eq sm2.id
+          # expect(Spree::Config.collect_billing_information).to be true
+          # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+        end
+      end
+    end
+  end
+
+  describe "start_job" do
+    context "as an enterprise user" do
+      before do
+        allow(controller).to receive(:spree_current_user) { user }
+        spree_get :show_methods, enterprise_id: accounts_distributor.id
+      end
+
+      it "does not allow access" do
+        expect(response).to redirect_to spree.unauthorized_path
+      end
+    end
+
+    context "as super admin" do
+      before do
+        allow(controller).to receive(:spree_current_user) { admin }
+      end
+
+      context "when settings are not valid" do
+        before do
+          Spree::Config.set({ accounts_distributor_id: "" })
+          Spree::Config.set({ default_accounts_payment_method_id: "" })
+          Spree::Config.set({ default_accounts_shipping_method_id: "" })
+          spree_get :start_job, job_name: ""
+        end
+
+        it "returns immediately and renders :edit" do
+          expect(assigns(:settings).errors.count).to eq 3
+          expect(response).to render_template :edit
+        end
+      end
+
+      context "when settings are valid" do
+        before do
+          Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
+          Spree::Config.set({ default_accounts_payment_method_id: pm1.id })
+          Spree::Config.set({ default_accounts_shipping_method_id: sm1.id })
+        end
+
+        context "and job_name is not billable_periods or user_invoices" do
           before do
-            params[:settings][:accounts_distributor_id] = ''
-            params[:settings][:default_accounts_payment_method_id] = '0'
-            params[:settings][:default_accounts_shipping_method_id] = '0'
-            # params[:settings][:collect_billing_information] = '0'
-            spree_get :update, params
+            spree_get :start_job, job_name: ""
           end
 
-          it "does not allow them to be empty/false" do
-            expect(response).to render_template :edit
-            expect(assigns(:settings).errors.count).to be 3
-            expect(Spree::Config.accounts_distributor_id).to eq accounts_distributor.id
-            expect(Spree::Config.default_accounts_payment_method_id).to eq pm1.id
-            expect(Spree::Config.default_accounts_shipping_method_id).to eq sm1.id
-            # expect(Spree::Config.collect_billing_information).to be true
-            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+          it "returns immediately with an error" do
+            expect(flash[:error]).to eq "Unknown Task: "
+            expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
           end
         end
 
-        context "and other settings are set" do
-          before do
-            params[:settings][:accounts_distributor_id] = new_distributor.id
-            params[:settings][:default_accounts_payment_method_id] = pm2.id
-            params[:settings][:default_accounts_shipping_method_id] = sm2.id
-            # params[:settings][:collect_billing_information] = '1'
+        context "and job_name is billable_periods" do
+          let!(:params) { { job_name: "billable_periods" } }
+
+          context "and no jobs are currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+            end
+
+            it "runs the job" do
+              expect{spree_get :start_job, params}.to enqueue_job UpdateBillablePeriods
+              expect(flash[:success]).to eq "Task Queued"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
           end
 
-          it "sets global config to the specified values" do
-            spree_get :update, params
-            expect(Spree::Config.accounts_distributor_id).to eq new_distributor.id
-            expect(Spree::Config.default_accounts_payment_method_id).to eq pm2.id
-            expect(Spree::Config.default_accounts_shipping_method_id).to eq sm2.id
-            # expect(Spree::Config.collect_billing_information).to be true
-            # expect(Spree::Config.create_invoices_for_enterprise_users).to be false
+          context "and there are jobs currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+              controller.instance_variable_set("@billing_period_job", double(:billing_period_job))
+            end
+
+            it "does not run the job" do
+              expect{spree_get :start_job, params}.to_not enqueue_job UpdateBillablePeriods
+              expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
+          end
+        end
+
+        context "and job_name is user_invoices" do
+          let!(:params) { { job_name: "user_invoices" } }
+
+          context "and no jobs are currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+            end
+
+            it "runs the job" do
+              expect{spree_get :start_job, params}.to enqueue_job UpdateUserInvoices
+              expect(flash[:success]).to eq "Task Queued"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
           end
 
-          it "runs the job" do
-            expect{spree_get :update, params}.to enqueue_job UpdateBillablePeriods
+          context "and there are jobs currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+              controller.instance_variable_set("@user_invoice_job", double(:user_invoice_job))
+            end
+
+            it "does not run the job" do
+              expect{spree_get :start_job, params}.to_not enqueue_job UpdateUserInvoices
+              expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
           end
         end
       end

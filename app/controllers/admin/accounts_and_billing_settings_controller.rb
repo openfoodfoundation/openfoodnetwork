@@ -1,32 +1,28 @@
-require 'open_food_network/accounts_and_billing_settings'
+require 'open_food_network/accounts_and_billing_settings_validator'
 
 class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
-  before_filter :load_distributors, only: [:edit, :update]
-
-  def edit
-    @settings = OpenFoodNetwork::AccountsAndBillingSettings.new({
-      accounts_distributor_id: Spree::Config[:accounts_distributor_id],
-      default_accounts_payment_method_id: Spree::Config[:default_accounts_payment_method_id],
-      default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id],
-      collect_billing_information: Spree::Config[:collect_billing_information],
-      create_invoices_for_enterprise_users: Spree::Config[:create_invoices_for_enterprise_users]
-    })
-  end
+  before_filter :load_distributors, only: [:edit, :update, :start_job]
+  before_filter :load_jobs, only: [:edit, :update, :start_job]
+  before_filter :load_settings, only: [:edit, :update, :start_job]
+  before_filter :require_valid_settings, only: [:update, :start_job]
+  before_filter :require_known_job, only: [:start_job]
 
   def update
-    @settings = OpenFoodNetwork::AccountsAndBillingSettings.new(params[:settings], params[:button])
-    if @settings.valid?
-      Spree::Config.set(params[:settings])
+    Spree::Config.set(params[:settings])
+    flash[:success] = t(:successfully_updated, :resource => t(:billing_and_account_settings))
+    redirect_to_edit
+  end
 
-      if params[:button] == "update_and_run_job"
-        Delayed::Job.enqueue UpdateBillablePeriods.new
-      end
-
-      flash[:success] = t(:successfully_updated, :resource => t(:billing_and_account_settings))
-      redirect_to main_app.edit_admin_accounts_and_billing_settings_path
+  def start_job
+    if @billing_period_job || @user_invoice_job
+      flash[:error] = "A task is already running, please wait until it has finished"
     else
-      render :edit
+      new_job = "update_#{params[:job_name]}".camelize.constantize.new
+      Delayed::Job.enqueue new_job
+      flash[:success] = "Task Queued"
     end
+
+    redirect_to_edit
   end
 
   def show_methods
@@ -38,7 +34,38 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
 
   private
 
+  def redirect_to_edit
+    redirect_to main_app.edit_admin_accounts_and_billing_settings_path
+  end
+
+  def require_valid_settings
+    render :edit unless @settings.valid?
+  end
+
+  def require_known_job
+    known_jobs = ['user_invoices', 'billable_periods']
+    unless known_jobs.include?(params[:job_name])
+      flash[:error] = "Unknown Task: #{params[:job_name].to_s}"
+      redirect_to_edit
+    end
+  end
+
+  def load_settings
+    @settings = OpenFoodNetwork::AccountsAndBillingSettingsValidator.new(params[:settings] || {
+      accounts_distributor_id: Spree::Config[:accounts_distributor_id],
+      default_accounts_payment_method_id: Spree::Config[:default_accounts_payment_method_id],
+      default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id]
+      # collect_billing_information: Spree::Config[:collect_billing_information],
+      # create_invoices_for_enterprise_users: Spree::Config[:create_invoices_for_enterprise_users]
+    })
+  end
+
   def load_distributors
     @distributors = Enterprise.is_distributor.select([:id, :name])
+  end
+
+  def load_jobs
+    @billing_period_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateBillablePeriods%").last
+    @user_invoice_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateUserInvoices%").last
   end
 end
