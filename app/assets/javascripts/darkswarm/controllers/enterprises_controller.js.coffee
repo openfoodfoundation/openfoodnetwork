@@ -30,10 +30,6 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search
 
   $scope.filterEnterprises = ->
     es = Enterprises.hubs
-    es = visibleFilter(es)
-    es = taxonsFilter(es, $scope.activeTaxons)
-    es = shippingFilter(es, $scope.shippingTypes)
-    es = showHubProfilesFilter(es)
     $scope.nameMatches = enterpriseMatchesNameQueryFilter(es, true)
     $scope.distanceMatches = enterpriseMatchesNameQueryFilter(es, false)
     $scope.distanceMatches = distanceWithinKmFilter($scope.distanceMatches, 50)
