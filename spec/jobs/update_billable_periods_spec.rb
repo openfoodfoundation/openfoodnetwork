@@ -325,6 +325,14 @@ describe UpdateBillablePeriods do
 
       let!(:existing) { create(:billable_period, enterprise: enterprise, begins_at: start_of_july) }
 
+      before do
+        allow(Spree::Order).to receive(:where) { [
+          double(:order, total: 10),
+          double(:order, total: 20),
+          double(:order, total: 30)
+        ]}
+      end
+
       context "when arguments match both 'begins_at' and 'enterprise_id' of an existing billable period" do
         it "updates the existing billable period" do
           expect{
@@ -335,6 +343,31 @@ describe UpdateBillablePeriods do
           expect(existing.ends_at).to eq start_of_july + 20.days
           expect(existing.sells).to eq enterprise.sells
           expect(existing.trial).to eq false
+          expect(existing.turnover).to eq 60
+        end
+
+        context "when there is nothing to update" do
+          before do
+            Timecop.freeze(start_of_july + 3.days) {
+              existing.update_attributes(
+                begins_at: start_of_july,
+                ends_at: start_of_july + 20.days,
+                trial: false,
+                sells: enterprise.sells,
+                turnover: 60
+              )
+            }
+          end
+
+          it "changes updated_at anyway by touching the billable period" do
+            Timecop.freeze(start_of_july + 10.days) {
+              expect{
+                updater.update_billable_period(enterprise, start_of_july, start_of_july + 20.days, false)
+              }.to change{ existing.reload.updated_at }
+              .from(start_of_july + 3.days)
+              .to(start_of_july + 10.days)
+            }
+          end
         end
       end
 
@@ -351,6 +384,7 @@ describe UpdateBillablePeriods do
           expect(billable_period.ends_at).to eq start_of_july + 30.days
           expect(billable_period.sells).to eq enterprise.sells
           expect(billable_period.trial).to eq false
+          expect(billable_period.turnover).to eq 60
         end
       end
 
@@ -369,6 +403,7 @@ describe UpdateBillablePeriods do
           expect(billable_period.ends_at).to eq start_of_july + 20.days
           expect(billable_period.sells).to eq new_enterprise.sells
           expect(billable_period.trial).to eq false
+          expect(billable_period.turnover).to eq 60
         end
       end
     end

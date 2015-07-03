@@ -73,7 +73,7 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
       turnover: orders.sum(&:total)
     })
 
-    billable_period
+    billable_period.touch
   end
 
   def clean_up_untouched_billable_periods_for(enterprise, start_of_month, job_start_time)
@@ -82,6 +82,9 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
 
     if obsolete_billable_periods.any?
       current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at >= (?)', start_of_month, job_start_time)
+
+      Delayed::Worker.logger.info "#{enterprise.name} #{start_of_month.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
+      Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime("%F %T")}"
 
       Bugsnag.notify(RuntimeError.new("Duplicate BillablePeriod"), {
         current: current_billable_periods.map(&:as_json),
