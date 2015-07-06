@@ -18,15 +18,17 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
   end
 
   def update_invoice_for(user, billable_periods)
+    current_adjustments = []
     invoice = user.current_invoice
 
-    billable_periods.each do |billable_period|
+    billable_periods.reject{ |bp| bp.bill == 0 }.each do |billable_period|
       adjustment = invoice.adjustments.where(source_id: billable_period).first
       adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
       adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
+      current_adjustments << adjustment
     end
 
-    invoice.save
+    clean_up_and_save(invoice, current_adjustments)
   end
 
   def adjustment_attrs_from(billable_period)
@@ -49,5 +51,29 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     ends = billable_period.ends_at.strftime("%d/%m/%y")
 
     "#{enterprise.name} (#{category}) [#{begins} - #{ends}]"
+  end
+
+  def clean_up_and_save(invoice, current_adjustments)
+    # Snag and then delete any obsolete adjustments
+    obsolete_adjustments = invoice.adjustments.where('source_type = (?) AND id NOT IN (?)', "BillablePeriod", current_adjustments)
+
+    if obsolete_adjustments.any?
+      Bugsnag.notify(RuntimeError.new("Obsolete Adjustments"), {
+        current: current_adjustments.map(&:as_json),
+        obsolete: obsolete_adjustments.map(&:as_json)
+      })
+
+      obsolete_adjustments.destroy_all
+    end
+
+    if current_adjustments.any?
+      invoice.save
+    else
+      Bugsnag.notify(RuntimeError.new("Empty Persisted Invoice"), {
+        invoice: invoice.as_json
+      }) if invoice.persisted?
+
+      invoice.destroy
+    end
   end
 end

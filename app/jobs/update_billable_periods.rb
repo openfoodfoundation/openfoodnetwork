@@ -86,7 +86,7 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
       Delayed::Worker.logger.info "#{enterprise.name} #{start_of_month.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
       Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime("%F %T")}"
 
-      Bugsnag.notify(RuntimeError.new("Duplicate BillablePeriod"), {
+      Bugsnag.notify(RuntimeError.new("Obsolete BillablePeriods"), {
         current: current_billable_periods.map(&:as_json),
         obsolete: obsolete_billable_periods.map(&:as_json)
       })

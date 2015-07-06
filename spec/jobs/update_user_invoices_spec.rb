@@ -65,7 +65,7 @@ describe UpdateUserInvoices do
 
       before do
         allow(user).to receive(:current_invoice) { invoice }
-        allow(invoice).to receive(:save)
+        allow(invoice).to receive(:clean_up_and_save)
         allow(updater).to receive(:finalize)
       end
 
@@ -85,8 +85,8 @@ describe UpdateUserInvoices do
           expect(adjustments.map(&:label)).to eq ["Old Item"]
         end
 
-        it "saves the invoice" do
-          expect(invoice).to have_received(:save).once
+        it "cleans up and saves the invoice" do
+          expect(invoice).to have_received(:clean_up_and_save).once
         end
       end
 
@@ -107,8 +107,104 @@ describe UpdateUserInvoices do
           expect(adjustments.map(&:label)).to eq ["BP1 Item", "BP2 Item"]
         end
 
-        it "saves to invoice" do
-          expect(invoice).to have_received(:save).once
+        it "cleans up and saves the invoice" do
+          expect(invoice).to have_received(:clean_up_and_save).once
+        end
+      end
+    end
+
+    describe "clean_up_and_save" do
+      let!(:invoice) { create(:order) }
+      let!(:obsolete1) { create(:adjustment, adjustable: invoice) }
+      let!(:obsolete2) { create(:adjustment, adjustable: invoice) }
+      let!(:current1) { create(:adjustment, adjustable: invoice) }
+      let!(:current2) { create(:adjustment, adjustable: invoice) }
+
+      before do
+        allow(invoice).to receive(:save)
+        allow(invoice).to receive(:destroy)
+        allow(Bugsnag).to receive(:notify)
+      end
+
+      context "when current adjustments are present" do
+        let!(:current_adjustments) { [current1, current2] }
+
+        context "and obsolete adjustments are present" do
+          let!(:obsolete_adjustments) { [obsolete1, obsolete2] }
+
+          before do
+            allow(obsolete_adjustments).to receive(:destroy_all)
+            allow(invoice).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
+            updater.clean_up_and_save(invoice, current_adjustments)
+          end
+
+          it "destroys obsolete adjustments and snags a bug" do
+            expect(obsolete_adjustments).to have_received(:destroy_all)
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Obsolete Adjustments"), anything)
+          end
+
+          it "saves the invoice" do
+            expect(invoice).to have_received(:save)
+          end
+        end
+
+        context "and obsolete adjustments are not present" do
+          let!(:obsolete_adjustments) { [] }
+
+          before do
+            allow(invoice).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
+            updater.clean_up_and_save(invoice, current_adjustments)
+          end
+
+          it "has no bugs to snag" do
+            expect(Bugsnag).to_not have_received(:notify)
+          end
+
+          it "saves the invoice" do
+            expect(invoice).to have_received(:save)
+          end
+        end
+      end
+
+      context "when current adjustments are not present" do
+        let!(:current_adjustments) { [] }
+
+        context "and obsolete adjustments are present" do
+          let!(:obsolete_adjustments) { [obsolete1, obsolete2] }
+
+          before do
+            allow(obsolete_adjustments).to receive(:destroy_all)
+            allow(invoice).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
+            updater.clean_up_and_save(invoice, current_adjustments)
+          end
+
+          it "destroys obsolete adjustments and snags a bug" do
+            expect(obsolete_adjustments).to have_received(:destroy_all)
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Obsolete Adjustments"), anything)
+          end
+
+          it "destroys the invoice and snags a bug" do
+            expect(invoice).to have_received(:destroy)
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+          end
+        end
+
+        context "and obsolete adjustments are not present" do
+          let!(:obsolete_adjustments) { [] }
+
+          before do
+            allow(invoice).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
+            updater.clean_up_and_save(invoice, current_adjustments)
+          end
+
+          it "has no bugs to snag" do
+            expect(Bugsnag).to_not have_received(:notify).with(RuntimeError.new("Obsolete Adjustments"), anything)
+          end
+
+          it "destroys the invoice and snags a bug" do
+            expect(invoice).to have_received(:destroy)
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+          end
         end
       end
     end
@@ -130,16 +226,61 @@ describe UpdateUserInvoices do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
     end
 
-    context "updating an invoice" do
-      travel_to(20.days)
+    context "when no invoice currently exists" do
+      context "when relevant billable periods exist" do
+        travel_to(20.days)
 
-      it "creates an invoice when one does not already exist" do
-        expect{updater.perform}.to change{Spree::Order.count}.from(0).to(1)
-        invoice = user.orders.first
-        expect(invoice.completed_at).to be_nil
-        expect(invoice.total).to eq billable_period2.bill + billable_period3.bill
-        expect(invoice.payments.count).to eq 0
-        expect(invoice.state).to eq 'cart'
+        it "creates an invoice" do
+          expect{updater.perform}.to change{Spree::Order.count}.from(0).to(1)
+          invoice = user.orders.first
+          expect(invoice.completed_at).to be_nil
+          billable_adjustments = invoice.adjustments.where('source_type = (?)', 'BillablePeriod')
+          expect(billable_adjustments.map(&:amount)).to eq [billable_period2.bill, billable_period3.bill]
+          expect(invoice.total).to eq billable_period2.bill + billable_period3.bill
+          expect(invoice.payments.count).to eq 0
+          expect(invoice.state).to eq 'cart'
+        end
+      end
+
+      context "when no relevant billable periods exist" do
+        travel_to(1.month + 5.days)
+
+        it "does not create an invoice" do
+          expect{updater.perform}.to_not change{Spree::Order.count}.from(0)
+        end
+      end
+    end
+
+    context "when an invoice currently exists" do
+      let!(:invoice) { create(:order, user: user, distributor: accounts_distributor, created_at: start_of_july + 3.days) }
+      let!(:billable_adjustment) { create(:adjustment, adjustable: invoice, source_type: 'BillablePeriod') }
+
+      before do
+        invoice.line_items.clear
+      end
+
+      context "when relevant billable periods exist" do
+        travel_to(20.days)
+
+        it "updates the invoice, and clears any obsolete invoices" do
+          expect{updater.perform}.to_not change{Spree::Order.count}
+          invoice = user.orders.first
+          expect(invoice.completed_at).to be_nil
+          billable_adjustments = invoice.adjustments.where('source_type = (?)', 'BillablePeriod')
+          expect(billable_adjustments).to_not include billable_adjustment
+          expect(billable_adjustments.map(&:amount)).to eq [billable_period2.bill, billable_period3.bill]
+          expect(invoice.total).to eq billable_period2.bill + billable_period3.bill
+          expect(invoice.payments.count).to eq 0
+          expect(invoice.state).to eq 'cart'
+        end
+      end
+
+      context "when no relevant billable periods exist" do
+        travel_to(1.month + 5.days)
+
+        it "destroys the invoice" do
+          expect{updater.perform}.to_not change{Spree::Order.count}.from(1).to(0)
+        end
       end
     end
   end
