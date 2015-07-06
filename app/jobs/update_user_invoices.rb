@@ -1,8 +1,6 @@
 UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
   def perform
     return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
-    return unless accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
-    return unless accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
 
     # If it is the first of the month, update invoices for the previous month up until midnight last night
     # Otherwise, update invoices for the current month
@@ -29,8 +27,6 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     end
 
     invoice.save
-
-    finalize(invoice) if Date.today.day == 1
   end
 
   def adjustment_attrs_from(billable_period)
@@ -53,16 +49,5 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     ends = billable_period.ends_at.strftime("%d/%m/%y")
 
     "#{enterprise.name} (#{category}) [#{begins} - #{ends}]"
-  end
-
-  def finalize(invoice)
-    # TODO: When we implement per-customer and/or per-user preferences around shipping and payment methods
-    # we can update these to read from those preferences
-    invoice.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice.total)
-    invoice.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
-
-    while invoice.state != "complete"
-      invoice.next
-    end
   end
 end
