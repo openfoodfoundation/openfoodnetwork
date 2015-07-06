@@ -14,10 +14,10 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def start_job
-    if @billing_period_job || @user_invoice_job
+    if @update_billable_periods_job || @update_user_invoices_job || @finalize_user_invoices_job
       flash[:error] = "A task is already running, please wait until it has finished"
     else
-      new_job = "update_#{params[:job_name]}".camelize.constantize.new
+      new_job = "#{params[:job][:name]}".camelize.constantize.new
       Delayed::Job.enqueue new_job
       flash[:success] = "Task Queued"
     end
@@ -42,10 +42,13 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
     render :edit unless @settings.valid?
   end
 
+  def known_jobs
+    ['update_billable_periods', 'update_user_invoices', 'finalize_user_invoices']
+  end
+
   def require_known_job
-    known_jobs = ['user_invoices', 'billable_periods']
-    unless known_jobs.include?(params[:job_name])
-      flash[:error] = "Unknown Task: #{params[:job_name].to_s}"
+    unless known_jobs.include?(params[:job][:name])
+      flash[:error] = "Unknown Task: #{params[:job][:name].to_s}"
       redirect_to_edit
     end
   end
@@ -65,7 +68,8 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def load_jobs
-    @billing_period_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateBillablePeriods%").last
-    @user_invoice_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateUserInvoices%").last
+    @update_billable_periods_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateBillablePeriods%").last
+    @update_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateUserInvoices%").last
+    @finalize_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%Struct::FinalizeUserInvoices%").last
   end
 end

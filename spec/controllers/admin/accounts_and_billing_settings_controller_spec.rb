@@ -15,8 +15,8 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
       accounts_distributor_id: accounts_distributor.id,
       default_accounts_payment_method_id: pm1.id,
       default_accounts_shipping_method_id: sm1.id,
-      collect_billing_information: true,
-      create_invoices_for_enterprise_users: false
+      # collect_billing_information: true,
+      # create_invoices_for_enterprise_users: false
     })
   end
 
@@ -104,7 +104,7 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
     context "as an enterprise user" do
       before do
         allow(controller).to receive(:spree_current_user) { user }
-        spree_get :show_methods, enterprise_id: accounts_distributor.id
+        spree_post :start_job, enterprise_id: accounts_distributor.id
       end
 
       it "does not allow access" do
@@ -122,7 +122,7 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           Spree::Config.set({ accounts_distributor_id: "" })
           Spree::Config.set({ default_accounts_payment_method_id: "" })
           Spree::Config.set({ default_accounts_shipping_method_id: "" })
-          spree_get :start_job, job_name: ""
+          spree_post :start_job, job: { name: "" }
         end
 
         it "returns immediately and renders :edit" do
@@ -138,9 +138,9 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           Spree::Config.set({ default_accounts_shipping_method_id: sm1.id })
         end
 
-        context "and job_name is not billable_periods or user_invoices" do
+        context "and job_name is not on the known_jobs list" do
           before do
-            spree_get :start_job, job_name: ""
+            spree_post :start_job, job: { name: "" }
           end
 
           it "returns immediately with an error" do
@@ -149,8 +149,8 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           end
         end
 
-        context "and job_name is billable_periods" do
-          let!(:params) { { job_name: "billable_periods" } }
+        context "and job_name is update_billable_periods" do
+          let!(:params) { { job: { name: "update_billable_periods" } } }
 
           context "and no jobs are currently running" do
             before do
@@ -158,7 +158,7 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
             end
 
             it "runs the job" do
-              expect{spree_get :start_job, params}.to enqueue_job UpdateBillablePeriods
+              expect{spree_post :start_job, params}.to enqueue_job UpdateBillablePeriods
               expect(flash[:success]).to eq "Task Queued"
               expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
             end
@@ -167,19 +167,19 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           context "and there are jobs currently running" do
             before do
               allow(controller).to receive(:load_jobs)
-              controller.instance_variable_set("@billing_period_job", double(:billing_period_job))
+              controller.instance_variable_set("@update_billing_periods_job", double(:update_billing_periods_job))
             end
 
             it "does not run the job" do
-              expect{spree_get :start_job, params}.to_not enqueue_job UpdateBillablePeriods
+              expect{spree_post :start_job, params}.to_not enqueue_job UpdateBillablePeriods
               expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
               expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
             end
           end
         end
 
-        context "and job_name is user_invoices" do
-          let!(:params) { { job_name: "user_invoices" } }
+        context "and job_name is update_user_invoices" do
+          let!(:params) { { job: { name: "update_user_invoices" } } }
 
           context "and no jobs are currently running" do
             before do
@@ -187,7 +187,7 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
             end
 
             it "runs the job" do
-              expect{spree_get :start_job, params}.to enqueue_job UpdateUserInvoices
+              expect{spree_post :start_job, params}.to enqueue_job UpdateUserInvoices
               expect(flash[:success]).to eq "Task Queued"
               expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
             end
@@ -196,11 +196,40 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           context "and there are jobs currently running" do
             before do
               allow(controller).to receive(:load_jobs)
-              controller.instance_variable_set("@user_invoice_job", double(:user_invoice_job))
+              controller.instance_variable_set("@update_user_invoices_job", double(:update_user_invoices_job))
             end
 
             it "does not run the job" do
-              expect{spree_get :start_job, params}.to_not enqueue_job UpdateUserInvoices
+              expect{spree_post :start_job, params}.to_not enqueue_job UpdateUserInvoices
+              expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
+          end
+        end
+
+        context "and job_name is finalize_user_invoices" do
+          let!(:params) { { job: { name: "finalize_user_invoices"  } } }
+
+          context "and no jobs are currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+            end
+
+            it "runs the job" do
+              expect{spree_post :start_job, params}.to enqueue_job FinalizeUserInvoices
+              expect(flash[:success]).to eq "Task Queued"
+              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
+            end
+          end
+
+          context "and there are jobs currently running" do
+            before do
+              allow(controller).to receive(:load_jobs)
+              controller.instance_variable_set("@finalize_user_invoices_job", double(:finalize_user_invoices_job))
+            end
+
+            it "does not run the job" do
+              expect{spree_post :start_job, params}.to_not enqueue_job FinalizeUserInvoices
               expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
               expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
             end

@@ -5,6 +5,8 @@
 
 = render 'spree/shared/error_messages', target: @settings
 
+-# - month_options = (0...12).map { |i| Time.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
+
 .row{ ng: { app: 'admin.accounts_and_billing_settings' } }
   .twelve.columns.alpha.omega
     = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
@@ -22,22 +24,21 @@
           = button t(:update), 'icon-refresh', value: "update"
 
 .row
-  .six.columns.alpha
+  .four.columns.alpha.step.text-center
     %fieldset.no-border-bottom
-      %legend Billing Information
+      %legend Step 1
 
-      %p
-        Use this button to calculate the billable total for the month to date for each enterprise in the system. Do this before generating invoices on the right.
+      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
+        = f.hidden_field :name, value: "update_billable_periods"
+        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
+        .form-buttons{"data-hook" => "buttons"}
+          = button "Calculate Bill Totals", "icon-bar-chart button fullwidth", :submit, disabled: @update_billable_periods_job.present?
 
       %br
 
-      .form-buttons{"data-hook" => "buttons"}
-        = link_to_with_icon "icon-bar-chart", "Calculate Totals Now", main_app.start_job_admin_accounts_and_billing_settings_path(job_name: "billable_periods"), { class: 'button', disabled: @billing_period_job.present?}
-
-
-      - if @billing_period_job
+      - if @update_billable_periods_job
         %p.text-center
-          - if @billing_period_job.run_at < Time.now
+          - if @update_billable_periods_job.run_at < Time.now
             %strong In Progress
             %br
             Started at:
@@ -45,23 +46,29 @@
             %strong Queued
             %br
             Scheduled for:
-          = @billing_period_job.run_at
+          = @update_billable_periods_job.run_at
+      - else
+        %a.explain What is this?
 
-  .six.columns.alpha
+      %p.explanation
+        Use this button to immediately calculate the billable total for the month to date for each enterprise in the system. Do this before generating invoices on the right. This task is run automatically every night.
+
+
+  .four.columns.step.text-center
     %fieldset.no-border-bottom
-      %legend User Invoices
+      %legend Step 2
 
-      %p
-        Use this button to update invoices for the month to date for each enterprise user in the system. Do this after calculating totals on the left.
+      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
+        = f.hidden_field :name, value: "update_user_invoices"
+        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
+        .form-buttons{"data-hook" => "buttons"}
+          = button "Update User Invoices", "icon-undo button fullwidth", :submit, disabled: @update_user_invoices_job.present?
 
       %br
 
-      .form-buttons{"data-hook" => "buttons"}
-        = link_to_with_icon "icon-undo", "Update Invoices Now", main_app.start_job_admin_accounts_and_billing_settings_path(job_name: "user_invoices"), class: 'button', disabled: @user_invoice_job.present?
-
-      - if @user_invoice_job
+      - if @update_user_invoices_job
         %p.text-center
-          - if @user_invoice_job.run_at < Time.now
+          - if @update_user_invoices_job.run_at < Time.now
             %strong In Progress
             %br
             Started at:
@@ -69,4 +76,44 @@
             %strong Queued
             %br
             Scheduled for:
-          = @user_invoice_job.run_at
+          = @update_user_invoices_job.run_at
+      - else
+        %a.explain What is this?
+
+      %p.explanation
+        Use this button to immediately update invoices for the month to date for each enterprise user in the system. Do this after calculating totals on the left. This task is run automatically every night.
+
+
+  .four.columns.omega.step.text-center
+    %fieldset.no-border-bottom
+      %legend Step 3
+
+      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
+        = f.hidden_field :name, value: "finalize_user_invoices"
+        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
+        .form-buttons{"data-hook" => "buttons"}
+          = button "Finalise User Invoices", "icon-ok-sign button fullwidth", :submit, disabled: @finalize_user_invoices_job.present?
+
+      %br
+
+      - if @finalize_user_invoices_job
+        %p.text-center
+          - if @finalize_user_invoices_job.run_at < Time.now
+            %strong In Progress
+            %br
+            Started at:
+          - else
+            %strong Queued
+            %br
+            Scheduled for:
+          = @finalize_user_invoices_job.run_at
+      - else
+        %a.explain What is this?
+
+      %p.explanation
+        Use this button to finalize all invoices in the system for the pervious calendar month. Do this after steps one and two. This task is automatically run once a month.
+
+
+:coffee
+  $('a.explain').click ->
+    $(this).siblings('.explanation').slideToggle(200)
