@@ -9,7 +9,7 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
 
     # Find all users that have owned an enterprise at some point in the current billing period (this month)
     enterprise_users = Spree::User.joins(:billable_periods)
-    .where('billable_periods.begins_at >= (?) AND billable_periods.ends_at <= (?)', start_date, end_date)
+    .where('billable_periods.begins_at >= (?) AND billable_periods.ends_at <= (?) AND deleted_at IS NULL', Time.now.beginning_of_month, Time.now.beginning_of_day)
     .select('DISTINCT spree_users.*')
 
     enterprise_users.each do |user|
