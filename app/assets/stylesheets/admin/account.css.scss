@@ -2,6 +2,16 @@
   margin-bottom: 0px;
 }
 
-.invoice_summary {
+table.invoice_summary {
   margin-bottom: 70px;
+
+  tr.total {
+    font-weight: bold;
+  }
+}
+
+.invoice_title {
+  .balance {
+    color: #9fc820;
+  }
 }

@@ -2,12 +2,11 @@
 - content_for :page_title do
   = t(:account)
 
-- invoices = spree_current_user.orders.where(distributor_id: Spree::Config[:accounts_distributor_id])
 
-- if invoices.empty?
+- if @invoices.empty?
   %h4 No invoices to display
 
-- invoices.order('created_at DESC').each do |invoice|
+- @invoices.order('created_at DESC').each do |invoice|
   - month = (invoice.created_at.localtime - 1.day)
   - range = "#{month.beginning_of_month.strftime("%d/%m/%y")}"
   - range += " - #{[month.end_of_month, Time.now].min.strftime("%d/%m/%y")}"
@@ -15,7 +14,7 @@
     .eight.columns.alpha
       %h4= "#{month.strftime("%b %Y")}#{( invoice.completed_at ? '' : '*' )}"
     .eight.columns.omega.text-right
-      %h4= invoice.display_total
+      %h4.balance= invoice.display_total
   %table.invoice_summary
     %col{ width: '20%' }
     %col{ width: '60%' }
@@ -41,23 +40,24 @@
       %td TOTAL
       %td= invoice.display_total
 
-
-
--# - @enterprises.each do |enterprise|
--#   %h2= enterprise.name
--#   %table
--#     %thead
--#       %th Begins
--#       %th Ends
--#       %th Sells
--#       %th Trial?
--#       %th Turnover
--#       %th Bill
--#     - enterprise.billable_periods.each do |billable_period|
--#       %tr
--#         %td= billable_period.begins_at.strftime("%F %T")
--#         %td= billable_period.ends_at.strftime("%F %T")
--#         %td= billable_period.sells
--#         %td= billable_period.trial?
--#         %td= billable_period.display_turnover
--#         %td= billable_period.display_bill
+-#   - if @enterprises.empty?
+-#     %h4 No enterprises to display
+-#
+-#   - @enterprises.each do |enterprise|
+-#     %h2= enterprise.name
+-#     %table
+-#       %thead
+-#         %th Begins
+-#         %th Ends
+-#         %th Sells
+-#         %th Trial?
+-#         %th Turnover
+-#         %th Bill
+-#       - enterprise.billable_periods.each do |billable_period|
+-#         %tr
+-#           %td= billable_period.begins_at.localtime.strftime("%F %T")
+-#           %td= billable_period.ends_at.localtime.strftime("%F %T")
+-#           %td= billable_period.sells
+-#           %td= billable_period.trial?
+-#           %td= billable_period.display_turnover
+-#           %td= billable_period.display_bill
