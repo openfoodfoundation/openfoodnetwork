@@ -2,21 +2,62 @@
 - content_for :page_title do
   = t(:account)
 
-- @enterprises.each do |enterprise|
-  %h2= enterprise.name
-  %table
+- invoices = spree_current_user.orders.where(distributor_id: Spree::Config[:accounts_distributor_id])
+
+- if invoices.empty?
+  %h4 No invoices to display
+
+- invoices.order('created_at DESC').each do |invoice|
+  - month = (invoice.created_at.localtime - 1.day)
+  - range = "#{month.beginning_of_month.strftime("%d/%m/%y")}"
+  - range += " - #{[month.end_of_month, Time.now].min.strftime("%d/%m/%y")}"
+  .row.invoice_title
+    .eight.columns.alpha
+      %h4= "#{month.strftime("%b %Y")}#{( invoice.completed_at ? '' : '*' )}"
+    .eight.columns.omega.text-right
+      %h4= invoice.display_total
+  %table.invoice_summary
+    %col{ width: '20%' }
+    %col{ width: '60%' }
+    %col{ width: '20%' }
     %thead
-      %th Begins
-      %th Ends
-      %th Sells
-      %th Trial?
-      %th Turnover
-      %th Bill
-    - enterprise.billable_periods.each do |billable_period|
+      %th Date
+      %th Description
+      %th Charge
+    - invoice.adjustments.where(source_type: 'BillablePeriod').each do |adjustment|
+      - date = adjustment.label.slice!(/\[[^\]]*\]$/)
+      - date = date.slice(1,date.length-2)
       %tr
-        %td= billable_period.begins_at.strftime("%F %T")
-        %td= billable_period.ends_at.strftime("%F %T")
-        %td= billable_period.sells
-        %td= billable_period.trial?
-        %td= billable_period.display_turnover
-        %td= billable_period.display_bill
+        %td= date
+        %td= adjustment.label
+        %td= adjustment.display_amount
+    - invoice.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
+      %tr
+        %td= range
+        %td= adjustment.label
+        %td= adjustment.display_amount
+    %tr.total
+      %td= range
+      %td TOTAL
+      %td= invoice.display_total
+
+
+
+-# - @enterprises.each do |enterprise|
+-#   %h2= enterprise.name
+-#   %table
+-#     %thead
+-#       %th Begins
+-#       %th Ends
+-#       %th Sells
+-#       %th Trial?
+-#       %th Turnover
+-#       %th Bill
+-#     - enterprise.billable_periods.each do |billable_period|
+-#       %tr
+-#         %td= billable_period.begins_at.strftime("%F %T")
+-#         %td= billable_period.ends_at.strftime("%F %T")
+-#         %td= billable_period.sells
+-#         %td= billable_period.trial?
+-#         %td= billable_period.display_turnover
+-#         %td= billable_period.display_bill
