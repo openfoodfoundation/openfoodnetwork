@@ -47,8 +47,8 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     enterprise = billable_period.enterprise.version_at(billable_period.begins_at)
     category = enterprise.category.to_s.titleize
     category += (billable_period.trial ? " Trial" : "")
-    begins = billable_period.begins_at.strftime("%d/%m/%y")
-    ends = billable_period.ends_at.strftime("%d/%m/%y")
+    begins = billable_period.begins_at.localtime.strftime("%d/%m/%y")
+    ends = billable_period.ends_at.localtime.strftime("%d/%m/%y")
 
     "#{enterprise.name} (#{category}) [#{begins} - #{ends}]"
   end
