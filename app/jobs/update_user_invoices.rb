@@ -1,6 +1,13 @@
-UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
+class UpdateUserInvoices
+  attr_reader :start_date, :end_date
+
+  def initialize(start_date = nil, end_date = nil)
+    @start_date = start_date || (Time.now - 1.day).beginning_of_month
+    @end_date = end_date || Time.now.beginning_of_day
+  end
+
   def before(job)
-    UpdateBillablePeriods.new.perform(start_date.year, start_date.month)
+    UpdateBillablePeriods.new(start_date, end_date).perform
   end
 
   def perform
@@ -74,28 +81,6 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
       }) if invoice.persisted?
 
       invoice.destroy
-    end
-  end
-
-  private
-
-  def start_date
-    # Start at the beginning of the specified month
-    # or at the beginning of the month (prior to midnight last night) if none specified
-    @start_date ||= if month && year
-      Time.new(year, month)
-    else
-      (Time.now - 1.day).beginning_of_month
-    end
-  end
-
-  def end_date
-    # Stop at the end of the specified month
-    # or at midnight last night if no month is specified
-    @end_date ||= if month && year
-      Time.new(year, month) + 1.month
-    else
-      Time.now.beginning_of_day
     end
   end
 end

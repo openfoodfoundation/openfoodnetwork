@@ -63,7 +63,7 @@ describe FinalizeUserInvoices do
       end
 
       context "when necessary global config setting have been set" do
-        context "and no arguments are passed to the job" do
+        context "and no date arguments are passed to the job" do
           travel_to(3.days)
 
           it "finalizes the uncompleted orders for accounts_distributor created in the previous calendar month (or on the 1st of this month)" do
@@ -76,8 +76,8 @@ describe FinalizeUserInvoices do
           end
         end
 
-        context "and a specfic year and month are passed as arguments" do
-          let!(:finalizer) { FinalizeUserInvoices.new(Time.now.year, 6) }
+        context "and specfic start and end dates are passed as arguments" do
+          let!(:finalizer) { FinalizeUserInvoices.new(start_of_july - 1.month, start_of_july) }
 
           before do
             allow(finalizer).to receive(:finalizer)

@@ -58,8 +58,8 @@ describe UpdateUserInvoices do
           end
         end
 
-        context "when a specfic year and month are passed as arguments" do
-          let!(:updater) { UpdateUserInvoices.new(Time.now.year, 7) }
+        context "when specfic start and end dates are passed as arguments" do
+          let!(:updater) { UpdateUserInvoices.new(start_of_july, start_of_july + 1.month) }
 
           before do
             allow(updater).to receive(:update_invoice_for)

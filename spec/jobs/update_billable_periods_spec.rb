@@ -17,7 +17,7 @@ describe UpdateBillablePeriods do
         allow(Enterprise).to receive(:select) { [enterprise] }
       end
 
-      context "when no arguments are passed to the job" do
+      context "when no date arguments are passed to the job" do
         before do
           expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
         end
@@ -43,8 +43,8 @@ describe UpdateBillablePeriods do
         end
       end
 
-      context "when a specfic year and month are passed as arguments" do
-        let!(:updater) { UpdateBillablePeriods.new(Time.now.year, 6) }
+      context "when specfic start and end dates are passed as arguments" do
+        let!(:updater) { UpdateBillablePeriods.new(start_of_july - 1.month, start_of_july) }
 
         before do
           allow(updater).to receive(:split_for_trial)

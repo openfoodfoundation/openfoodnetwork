@@ -1,7 +1,14 @@
-FinalizeUserInvoices = Struct.new("FinalizeUserInvoices", :year, :month) do
+class FinalizeUserInvoices
+  attr_reader :start_date, :end_date
+
+  def initialize(start_date = nil, end_date = nil)
+    @start_date = start_date || Time.now.beginning_of_month - 1.month
+    @end_date = end_date || Time.now.beginning_of_month
+  end
+
   def before(job)
-    UpdateBillablePeriods.new.perform(start_date.year, start_date.month)
-    UpdateUserInvoices.new.perform(start_date.year, start_date.month)
+    UpdateBillablePeriods.new(start_date, end_date).perform
+    UpdateUserInvoices.new(start_date, end_date).perform
   end
 
   def perform
@@ -26,28 +33,6 @@ FinalizeUserInvoices = Struct.new("FinalizeUserInvoices", :year, :month) do
 
     while invoice.state != "complete"
       invoice.next
-    end
-  end
-
-  private
-
-  def start_date
-    # Start at the beginning of the specified month
-    # or at the beginning of last month if no month is specified
-    @start_date ||= if month && year
-      Time.new(year, month)
-    else
-      Time.now.beginning_of_month - 1.month
-    end
-  end
-
-  def end_date
-    # Stop at the end of the specified month
-    # or at the beginning of this month if no month is specified
-    @end_date ||= if month && year
-      Time.new(year, month) + 1.month
-    else
-      Time.now.beginning_of_month
     end
   end
 end
