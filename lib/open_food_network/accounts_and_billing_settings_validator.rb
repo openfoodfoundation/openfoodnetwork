@@ -6,7 +6,7 @@ module OpenFoodNetwork
     include ActiveModel::Validations
 
     attr_accessor :accounts_distributor_id, :default_accounts_payment_method_id, :default_accounts_shipping_method_id
-    # attr_accessor :collect_billing_information, :create_invoices_for_enterprise_users
+    attr_accessor :auto_update_invoices, :auto_finalize_invoices
 
     validate :ensure_accounts_distributor_set
     validate :ensure_default_payment_method_set
@@ -37,11 +37,5 @@ module OpenFoodNetwork
         errors.add(:default_shipping_method, "must be set if you wish to create invoices for enterprise users.")
       end
     end
-
-    # def ensure_billing_info_collected
-    #   unless collect_billing_information == '1'
-    #     errors.add(:billing_information, "must be collected if you wish to create invoices for enterprise users.")
-    #   end
-    # end
   end
 end

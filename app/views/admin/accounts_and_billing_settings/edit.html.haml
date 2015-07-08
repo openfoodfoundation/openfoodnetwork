@@ -7,11 +7,11 @@
 
 -# - month_options = (0...12).map { |i| Time.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
 
-.row{ ng: { app: 'admin.accounts_and_billing_settings' } }
-  .twelve.columns.alpha.omega
-    = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
-      %fieldset.no-border-bottom
-        %legend Settings
+%fieldset.no-border-bottom
+  %legend Settings
+  = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
+    .row{ ng: { app: 'admin.accounts_and_billing_settings' } }
+      .twelve.columns.alpha.omega
         .field
           = f.label :accounts_distributor_id, t(:accounts_administration_distributor)
           = f.collection_select(:accounts_distributor_id, @distributors, :id, :name, { include_blank: true }, { class: "select2 fullwidth", 'watch-value-as' => "enterprise_id"})
@@ -20,19 +20,31 @@
         = f.hidden_field :default_accounts_shipping_method_id, value: ''
         %div{ 'method-settings-for' => 'enterprise_id' }
 
-        .form-buttons{"data-hook" => "buttons"}
-          = button t(:update), 'icon-refresh', value: "update"
+    .row
+      .six.columns.alpha
+        %fieldset.no-border-bottom
+          %legend Update Invoices
+          = f.check_box :auto_update_invoices
+          = f.label :auto_update_invoices, "Auto-update invoices nightly at 2am"
+
+      .six.columns.omega
+        %fieldset.no-border-bottom
+          %legend Finalise Invoices
+          = f.check_box :auto_finalize_invoices
+          = f.label :auto_finalize_invoices, "Auto-finalise invoices monthly on the 2nd"
+
+    .row
+      .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+        = button t(:update), 'icon-refresh', value: "update"
 
 %fieldset.no-border-bottom
   %legend Manually Run Tasks
   .row
     .six.columns.alpha.step.text-center
-
-      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
-        = f.hidden_field :name, value: "update_user_invoices"
-        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
-        .form-buttons{"data-hook" => "buttons"}
-          = button "Update User Invoices", "icon-undo button fullwidth", :submit, disabled: @update_user_invoices_job.present?
+      .form-buttons{"data-hook" => "buttons"}
+        =link_to_with_icon "icon-undo", "Update User Invoices",
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "update_user_invoices" }),
+          class: "button fullwidth"
 
       %br
 
@@ -53,11 +65,10 @@
 
 
     .six.columns.omega.step.text-center
-      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
-        = f.hidden_field :name, value: "finalize_user_invoices"
-        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
-        .form-buttons{"data-hook" => "buttons"}
-          = button "Finalise User Invoices", "icon-ok-sign button fullwidth", :submit, disabled: @finalize_user_invoices_job.present?
+      .form-buttons{"data-hook" => "buttons"}
+        =link_to_with_icon "icon-ok-sign", "Finalise User Invoices",
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "finalize_user_invoices" }),
+          class: "button fullwidth"
 
       %br
 

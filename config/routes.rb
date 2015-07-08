@@ -107,7 +107,7 @@ Openfoodnetwork::Application.routes.draw do
     resource :accounts_and_billing_settings, only: [:edit, :update] do
       collection do
         get :show_methods
-        post :start_job
+        get :start_job
       end
     end
 

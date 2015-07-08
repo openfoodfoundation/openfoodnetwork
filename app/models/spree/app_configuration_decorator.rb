@@ -12,6 +12,6 @@ Spree::AppConfiguration.class_eval do
   preference :accounts_distributor_id, :integer, default: nil
   preference :default_accounts_payment_method_id, :integer, default: nil
   preference :default_accounts_shipping_method_id, :integer, default: nil
-  preference :collect_billing_information, :boolean, default: false
-  preference :create_invoices_for_enterprise_users, :boolean, default: false
+  preference :auto_update_invoices, :boolean, default: false
+  preference :auto_finalize_invoices, :boolean, default: false
 end

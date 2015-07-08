@@ -57,9 +57,9 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
     @settings = OpenFoodNetwork::AccountsAndBillingSettingsValidator.new(params[:settings] || {
       accounts_distributor_id: Spree::Config[:accounts_distributor_id],
       default_accounts_payment_method_id: Spree::Config[:default_accounts_payment_method_id],
-      default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id]
-      # collect_billing_information: Spree::Config[:collect_billing_information],
-      # create_invoices_for_enterprise_users: Spree::Config[:create_invoices_for_enterprise_users]
+      default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id],
+      auto_update_invoices: Spree::Config[:auto_update_invoices],
+      auto_finalize_invoices: Spree::Config[:auto_finalize_invoices]
     })
   end
 
