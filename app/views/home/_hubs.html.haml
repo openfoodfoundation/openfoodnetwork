@@ -15,7 +15,7 @@
         = render "home/hubs_table", enterprises: "nameMatches"
 
       .distance-matches{"ng-if" => "nameMatches.length == 0 || distanceMatchesShown"}
-        %h2
+        %h2{"ng-show" => "nameMatches.length > 0 || query.length > 0"}
           Closest to
           %span{"ng-show" => "nameMatches.length > 0"} {{ nameMatches[0].name }}...
           %span{"ng-hide" => "nameMatches.length > 0"} {{ query }}...
