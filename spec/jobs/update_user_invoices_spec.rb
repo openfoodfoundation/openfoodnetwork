@@ -59,12 +59,29 @@ describe UpdateUserInvoices do
         end
 
         context "when a specfic year and month are passed as arguments" do
-          it "updates the user's invoice with billable_periods from that current month" do
-            updater = UpdateUserInvoices.new(Time.now.year, 7)
+          let!(:updater) { UpdateUserInvoices.new(Time.now.year, 7) }
+
+          before do
             allow(updater).to receive(:update_invoice_for)
-            updater.perform
-            expect(updater).to have_received(:update_invoice_for).once
-            .with(user, [billable_period1, billable_period2])
+          end
+
+          context "that ends in the past" do
+            travel_to(1.month)
+
+            it "updates the user's invoice with billable_periods from that current month" do
+              updater.perform
+              expect(updater).to have_received(:update_invoice_for).once
+              .with(user, [billable_period1, billable_period2])
+            end
+          end
+
+          context "that ends in the future" do
+            travel_to 30.days
+
+            it "does not update the user's invoice" do
+              updater.perform
+              expect(updater).to_not have_received(:update_invoice_for)
+            end
           end
         end
       end

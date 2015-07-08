@@ -1,25 +1,10 @@
 UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
-  def start_date
-    # Start at the beginning of the specified month
-    # or at the beginning of the month (prior to midnight last night) if none specified
-    @start_date ||= if month && year
-      Time.new(year, month)
-    else
-      (Time.now - 1.day).beginning_of_month
-    end
-  end
-
-  def end_date
-    # Stop at the end of the specified month
-    # or at midnight last night if no month is specified
-    @end_date ||= if month && year
-      Time.new(year, month) + 1.month
-    else
-      Time.now.beginning_of_day
-    end
+  def before(job)
+    UpdateBillablePeriods.new.perform(start_date.year, start_date.month)
   end
 
   def perform
+    return unless end_date <= Time.now
     return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
 
     # Find all users that have owned an enterprise at some point in the relevant period
@@ -89,6 +74,28 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
       }) if invoice.persisted?
 
       invoice.destroy
+    end
+  end
+
+  private
+
+  def start_date
+    # Start at the beginning of the specified month
+    # or at the beginning of the month (prior to midnight last night) if none specified
+    @start_date ||= if month && year
+      Time.new(year, month)
+    else
+      (Time.now - 1.day).beginning_of_month
+    end
+  end
+
+  def end_date
+    # Stop at the end of the specified month
+    # or at midnight last night if no month is specified
+    @end_date ||= if month && year
+      Time.new(year, month) + 1.month
+    else
+      Time.now.beginning_of_day
     end
   end
 end
