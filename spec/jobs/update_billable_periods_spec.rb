@@ -14,31 +14,67 @@ describe UpdateBillablePeriods do
       let!(:enterprise) { create(:supplier_enterprise, created_at: start_of_july - 1.month, sells: 'any') }
 
       before do
-        expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
         allow(Enterprise).to receive(:select) { [enterprise] }
       end
 
-      context "on the first of the month" do
-        travel_to(3.hours)
+      context "when no arguments are passed to the job" do
+        before do
+          expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
+        end
 
-        it "processes the previous month" do
-          expect(updater).to receive(:split_for_trial)
-          .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
-          updater.perform
+        context "on the first of the month" do
+          travel_to(3.hours)
+
+          it "processes the previous month" do
+            expect(updater).to receive(:split_for_trial)
+            .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
+            updater.perform
+          end
+        end
+
+        context "on all other days" do
+          travel_to(1.day + 3.hours)
+
+          it "processes the current month up until previous midnight" do
+            expect(updater).to receive(:split_for_trial)
+            .with(enterprise, start_of_july, start_of_july + 1.day, nil, nil)
+            updater.perform
+          end
         end
       end
 
-      context "on all other days" do
-        travel_to(1.day + 3.hours)
+      context "when a specfic year and month are passed as arguments" do
+        let!(:updater) { UpdateBillablePeriods.new(Time.now.year, 6) }
 
-        it "processes the current month up until previous midnight" do
-          expect(updater).to receive(:split_for_trial)
-          .with(enterprise, start_of_july, start_of_july + 1.day, nil, nil)
-          updater.perform
+        before do
+          allow(updater).to receive(:split_for_trial)
+        end
+
+        context "that ends in the past" do
+          travel_to(3.hours)
+
+          it "processes the previous month" do
+            expect(updater).to receive(:split_for_trial)
+            .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
+            updater.perform
+          end
+        end
+
+        context "that ends in the future" do
+          travel_to(-1.day)
+
+          it "does not run" do
+            expect(updater).to_not receive(:split_for_trial)
+            updater.perform
+          end
         end
       end
 
       context "when an enterprise is created before the beginning of the current month" do
+        before do
+          expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
+        end
+
         travel_to(28.days)
 
         context "when no alterations to sells or owner have been made during the current month" do
@@ -142,6 +178,7 @@ describe UpdateBillablePeriods do
 
       context "when an enterprise is created during the current month" do
         before do
+          expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
           enterprise.update_attribute(:created_at, start_of_july + 10.days)
         end
 
@@ -157,6 +194,7 @@ describe UpdateBillablePeriods do
 
       pending "when an enterprise is deleted during the current month" do
         before do
+          expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
           enterprise.update_attribute(:deleted_at, start_of_july + 20.days)
         end
 
@@ -409,15 +447,16 @@ describe UpdateBillablePeriods do
     end
 
     context "cleaning up untouched billable periods" do
-      let(:now) { Time.now }
+      let(:job_start_time) { Time.now }
       let(:enterprise) { create(:enterprise) }
-      let!(:bp1) { create(:billable_period, enterprise: enterprise, updated_at: now + 2.seconds, begins_at: start_of_july, ends_at: start_of_july + 5.days ) }
-      let!(:bp2) { create(:billable_period, enterprise: enterprise, updated_at: now + 2.seconds, begins_at: start_of_july + 5.days, ends_at: start_of_july + 10.days ) }
-      let!(:bp3) { create(:billable_period, enterprise: enterprise, updated_at: now - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days ) }
+      let!(:bp1) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time + 2.seconds, begins_at: start_of_july, ends_at: start_of_july + 5.days ) }
+      let!(:bp2) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time + 2.seconds, begins_at: start_of_july + 5.days, ends_at: start_of_july + 10.days ) }
+      let!(:bp3) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days ) }
 
       before do
         allow(Bugsnag).to receive(:notify)
-        updater.clean_up_untouched_billable_periods_for(enterprise, start_of_july, now)
+        allow(updater).to receive(:start_date) { start_of_july }
+        updater.clean_up_untouched_billable_periods_for(enterprise, job_start_time)
       end
 
       it "soft deletes untouched billable_periods" do

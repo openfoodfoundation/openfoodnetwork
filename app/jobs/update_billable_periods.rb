@@ -1,9 +1,7 @@
-UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
+UpdateBillablePeriods = Struct.new("UpdateBillablePeriods", :year, :month) do
   def perform
-    # If it is the first of the month, calculate turnover for the previous month up until midnight last night
-    # Otherwise, calculate turnover for the current month
-    start_date = (Time.now - 1.day).beginning_of_month
-    end_date = Time.now.beginning_of_day
+    return unless end_date <= Time.now
+
     job_start_time = Time.now
 
     enterprises = Enterprise.select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
@@ -32,7 +30,7 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
 
       split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
 
-      clean_up_untouched_billable_periods_for(enterprise, start_date, job_start_time)
+      clean_up_untouched_billable_periods_for(enterprise, job_start_time)
     end
   end
 
@@ -76,14 +74,14 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
     billable_period.touch
   end
 
-  def clean_up_untouched_billable_periods_for(enterprise, start_of_month, job_start_time)
+  def clean_up_untouched_billable_periods_for(enterprise, job_start_time)
     # Snag and then delete any BillablePeriods which overlap
-    obsolete_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at < (?)', start_of_month, job_start_time)
+    obsolete_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at < (?)', start_date, job_start_time)
 
     if obsolete_billable_periods.any?
-      current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at >= (?)', start_of_month, job_start_time)
+      current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at >= (?)', start_date, job_start_time)
 
-      Delayed::Worker.logger.info "#{enterprise.name} #{start_of_month.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
+      Delayed::Worker.logger.info "#{enterprise.name} #{start_date.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
       Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime("%F %T")}"
 
       Bugsnag.notify(RuntimeError.new("Obsolete BillablePeriods"), {
@@ -93,5 +91,27 @@ UpdateBillablePeriods = Struct.new("UpdateBillablePeriods") do
     end
 
     obsolete_billable_periods.each(&:delete)
+  end
+
+  private
+
+  def start_date
+    # Start at the beginning of the specified month
+    # or at the beginning of the month (prior to midnight last night) if none specified
+    @start_date ||= if month && year
+      Time.new(year, month)
+    else
+      (Time.now - 1.day).beginning_of_month
+    end
+  end
+
+  def end_date
+    # Stop at the end of the specified month
+    # or at midnight last night if no month is specified
+    @end_date ||= if month && year
+      Time.new(year, month) + 1.month
+    else
+      Time.now.beginning_of_day
+    end
   end
 end
