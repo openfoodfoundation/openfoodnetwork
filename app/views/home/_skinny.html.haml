@@ -1,5 +1,4 @@
 .row.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}", bindonce: true}
-
   .columns.small-12.medium-5.large-5.skinny-head
     %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub", "data-is-link" => "true"}
       %i{bo: {class: "hub.icon_font"}}
@@ -30,7 +29,7 @@
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-.row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
+.row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed", bindonce: true}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
       %i{ng: {class: "hub.icon_font"}}
