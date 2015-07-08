@@ -83,10 +83,10 @@ class UpdateBillablePeriods
 
   def clean_up_untouched_billable_periods_for(enterprise, job_start_time)
     # Snag and then delete any BillablePeriods which overlap
-    obsolete_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at < (?)', start_date, job_start_time)
+    obsolete_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND begins_at <= (?) AND updated_at < (?)', start_date, end_date, job_start_time)
 
     if obsolete_billable_periods.any?
-      current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND updated_at >= (?)', start_date, job_start_time)
+      current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND begins_at <= (?) AND updated_at < (?)', start_date, end_date, job_start_time)
 
       Delayed::Worker.logger.info "#{enterprise.name} #{start_date.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
       Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime("%F %T")}"

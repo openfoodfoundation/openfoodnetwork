@@ -449,13 +449,20 @@ describe UpdateBillablePeriods do
     context "cleaning up untouched billable periods" do
       let(:job_start_time) { Time.now }
       let(:enterprise) { create(:enterprise) }
+      # Updated after start
       let!(:bp1) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time + 2.seconds, begins_at: start_of_july, ends_at: start_of_july + 5.days ) }
       let!(:bp2) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time + 2.seconds, begins_at: start_of_july + 5.days, ends_at: start_of_july + 10.days ) }
+      # Updated before start
       let!(:bp3) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days ) }
+      # Updated before start but begins after end_date
+      let!(:bp4) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july + 10.days, ends_at: start_of_july + 15.days ) }
+      # Updated before start but ends before start_date
+      let!(:bp5) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 10.days, ends_at: start_of_july - 5.days ) }
 
       before do
         allow(Bugsnag).to receive(:notify)
         allow(updater).to receive(:start_date) { start_of_july }
+        allow(updater).to receive(:end_date) { start_of_july + 8.days }
         updater.clean_up_untouched_billable_periods_for(enterprise, job_start_time)
       end
 
@@ -463,6 +470,8 @@ describe UpdateBillablePeriods do
         expect(bp1.reload.deleted_at).to be_nil
         expect(bp2.reload.deleted_at).to be_nil
         expect(bp3.reload.deleted_at).to_not be_nil
+        expect(bp4.reload.deleted_at).to be_nil
+        expect(bp5.reload.deleted_at).to be_nil
       end
 
       it "notifies bugsnag" do
