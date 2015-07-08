@@ -1,5 +1,7 @@
 UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
   def start_date
+    # Start at the beginning of the specified month
+    # or at the beginning of the month (prior to midnight last night) if none specified
     @start_date ||= if month && year
       Time.new(year, month)
     else
@@ -8,6 +10,8 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
   end
 
   def end_date
+    # Stop at the end of the specified month
+    # or at midnight last night if no month is specified
     @end_date ||= if month && year
       Time.new(year, month) + 1.month
     else
