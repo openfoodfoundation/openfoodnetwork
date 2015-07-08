@@ -1,19 +1,30 @@
-UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
+UpdateUserInvoices = Struct.new("UpdateUserInvoices", :year, :month) do
+  def start_date
+    @start_date ||= if month && year
+      Time.new(year, month)
+    else
+      (Time.now - 1.day).beginning_of_month
+    end
+  end
+
+  def end_date
+    @end_date ||= if month && year
+      Time.new(year, month) + 1.month
+    else
+      Time.now.beginning_of_day
+    end
+  end
+
   def perform
     return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
 
-    # If it is the first of the month, update invoices for the previous month up until midnight last night
-    # Otherwise, update invoices for the current month
-    start_date = (Time.now - 1.day).beginning_of_month
-    end_date = Time.now.beginning_of_day
-
-    # Find all users that have owned an enterprise at some point in the current billing period (this month)
+    # Find all users that have owned an enterprise at some point in the relevant period
     enterprise_users = Spree::User.joins(:billable_periods)
-    .where('billable_periods.begins_at >= (?) AND billable_periods.ends_at <= (?) AND deleted_at IS NULL', Time.now.beginning_of_month, Time.now.beginning_of_day)
+    .where('billable_periods.begins_at >= (?) AND billable_periods.ends_at <= (?) AND deleted_at IS NULL', start_date, end_date)
     .select('DISTINCT spree_users.*')
 
     enterprise_users.each do |user|
-      update_invoice_for(user, user.billable_periods.where('begins_at >= (?) AND ends_at <= (?)', start_date, end_date))
+      update_invoice_for(user, user.billable_periods.where('begins_at >= (?) AND ends_at <= (?) AND deleted_at IS NULL', start_date, end_date))
     end
   end
 
@@ -21,7 +32,7 @@ UpdateUserInvoices = Struct.new("UpdateUserInvoices") do
     current_adjustments = []
     invoice = user.current_invoice
 
-    billable_periods.reject{ |bp| bp.bill == 0 }.each do |billable_period|
+    billable_periods.reject{ |bp| bp.turnover == 0 }.each do |billable_period|
       adjustment = invoice.adjustments.where(source_id: billable_period).first
       adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
       adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )

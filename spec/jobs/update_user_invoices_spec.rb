@@ -57,6 +57,16 @@ describe UpdateUserInvoices do
             .with(user, [billable_period1, billable_period2])
           end
         end
+
+        context "when a specfic year and month are passed as arguments" do
+          it "updates the user's invoice with billable_periods from that current month" do
+            updater = UpdateUserInvoices.new(Time.now.year, 7)
+            allow(updater).to receive(:update_invoice_for)
+            updater.perform
+            expect(updater).to have_received(:update_invoice_for).once
+            .with(user, [billable_period1, billable_period2])
+          end
+        end
       end
     end
 
@@ -65,7 +75,7 @@ describe UpdateUserInvoices do
 
       before do
         allow(user).to receive(:current_invoice) { invoice }
-        allow(invoice).to receive(:clean_up_and_save)
+        allow(updater).to receive(:clean_up_and_save)
         allow(updater).to receive(:finalize)
       end
 
@@ -86,7 +96,7 @@ describe UpdateUserInvoices do
         end
 
         it "cleans up and saves the invoice" do
-          expect(invoice).to have_received(:clean_up_and_save).once
+          expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
         end
       end
 
@@ -108,7 +118,7 @@ describe UpdateUserInvoices do
         end
 
         it "cleans up and saves the invoice" do
-          expect(invoice).to have_received(:clean_up_and_save).once
+          expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
         end
       end
     end
