@@ -149,35 +149,6 @@ describe Admin::AccountsAndBillingSettingsController, type: :controller do
           end
         end
 
-        context "and job_name is update_billable_periods" do
-          let!(:params) { { job: { name: "update_billable_periods" } } }
-
-          context "and no jobs are currently running" do
-            before do
-              allow(controller).to receive(:load_jobs)
-            end
-
-            it "runs the job" do
-              expect{spree_post :start_job, params}.to enqueue_job UpdateBillablePeriods
-              expect(flash[:success]).to eq "Task Queued"
-              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
-            end
-          end
-
-          context "and there are jobs currently running" do
-            before do
-              allow(controller).to receive(:load_jobs)
-              controller.instance_variable_set("@update_billing_periods_job", double(:update_billing_periods_job))
-            end
-
-            it "does not run the job" do
-              expect{spree_post :start_job, params}.to_not enqueue_job UpdateBillablePeriods
-              expect(flash[:error]).to eq "A task is already running, please wait until it has finished"
-              expect(response).to redirect_to edit_admin_accounts_and_billing_settings_path
-            end
-          end
-        end
-
         context "and job_name is update_user_invoices" do
           let!(:params) { { job: { name: "update_user_invoices" } } }
 

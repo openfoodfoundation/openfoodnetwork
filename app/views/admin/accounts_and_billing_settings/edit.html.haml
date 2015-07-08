@@ -23,40 +23,10 @@
         .form-buttons{"data-hook" => "buttons"}
           = button t(:update), 'icon-refresh', value: "update"
 
-.row
-  .four.columns.alpha.step.text-center
-    %fieldset.no-border-bottom
-      %legend Step 1
-
-      = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
-        = f.hidden_field :name, value: "update_billable_periods"
-        -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
-        .form-buttons{"data-hook" => "buttons"}
-          = button "Calculate Bill Totals", "icon-bar-chart button fullwidth", :submit, disabled: @update_billable_periods_job.present?
-
-      %br
-
-      - if @update_billable_periods_job
-        %p.text-center
-          - if @update_billable_periods_job.run_at < Time.now
-            %strong In Progress
-            %br
-            Started at:
-          - else
-            %strong Queued
-            %br
-            Scheduled for:
-          = @update_billable_periods_job.run_at
-      - else
-        %a.explain What is this?
-
-      %p.explanation
-        Use this button to immediately calculate the billable total for the month to date for each enterprise in the system. Do this before generating invoices on the right. This task is run automatically every night.
-
-
-  .four.columns.step.text-center
-    %fieldset.no-border-bottom
-      %legend Step 2
+%fieldset.no-border-bottom
+  %legend Manually Run Tasks
+  .row
+    .six.columns.alpha.step.text-center
 
       = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
         = f.hidden_field :name, value: "update_user_invoices"
@@ -78,16 +48,11 @@
             Scheduled for:
           = @update_user_invoices_job.run_at
       - else
-        %a.explain What is this?
-
-      %p.explanation
-        Use this button to immediately update invoices for the month to date for each enterprise user in the system. Do this after calculating totals on the left. This task is run automatically every night.
+        %p.explanation
+          Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night.
 
 
-  .four.columns.omega.step.text-center
-    %fieldset.no-border-bottom
-      %legend Step 3
-
+    .six.columns.omega.step.text-center
       = form_for :job, url: main_app.start_job_admin_accounts_and_billing_settings_path, method: :post do |f|
         = f.hidden_field :name, value: "finalize_user_invoices"
         -# = f.select :start, options_for_select(month_options), {}, class: "fullwidth select2"
@@ -108,12 +73,5 @@
             Scheduled for:
           = @finalize_user_invoices_job.run_at
       - else
-        %a.explain What is this?
-
-      %p.explanation
-        Use this button to finalize all invoices in the system for the pervious calendar month. Do this after steps one and two. This task is automatically run once a month.
-
-
-:coffee
-  $('a.explain').click ->
-    $(this).siblings('.explanation').slideToggle(200)
+        %p.explanation
+          Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month.
