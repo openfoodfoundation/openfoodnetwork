@@ -21,6 +21,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search
 
   $rootScope.$on "enterprisesChanged", ->
     $scope.filterEnterprises()
+    $scope.updateVisibleMatches()
 
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
@@ -35,5 +36,14 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search
     $scope.distanceMatches = distanceWithinKmFilter($scope.distanceMatches, 50)
 
 
+  $scope.updateVisibleMatches = ->
+    $scope.visibleMatches = if $scope.nameMatches.length == 0 || $scope.distanceMatchesShown
+      $scope.nameMatches.concat $scope.distanceMatches
+    else
+      $scope.nameMatches
+
+
+
   $scope.showDistanceMatches = ->
     $scope.distanceMatchesShown = true
+    $scope.updateVisibleMatches()
