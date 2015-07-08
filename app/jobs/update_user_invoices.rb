@@ -20,7 +20,8 @@ class UpdateUserInvoices
     .select('DISTINCT spree_users.*')
 
     enterprise_users.each do |user|
-      update_invoice_for(user, user.billable_periods.where('begins_at >= (?) AND ends_at <= (?) AND deleted_at IS NULL', start_date, end_date))
+      billable_periods = user.billable_periods.where('begins_at >= (?) AND ends_at <= (?) AND deleted_at IS NULL', start_date, end_date).order(:enterprise_id, :begins_at)
+      update_invoice_for(user, billable_periods)
     end
   end
 
