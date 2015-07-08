@@ -68,7 +68,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def load_jobs
-    @update_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%Struct::UpdateUserInvoices%").last
-    @finalize_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%Struct::FinalizeUserInvoices%").last
+    @update_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%UpdateUserInvoices%").last
+    @finalize_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%FinalizeUserInvoices%").last
   end
 end
