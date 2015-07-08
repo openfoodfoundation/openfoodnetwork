@@ -1,4 +1,4 @@
-Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, visibleFilter, taxonsFilter, shippingFilter, showHubProfilesFilter, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.totalActive = FilterSelectorsService.totalActive
   $scope.clearAll = FilterSelectorsService.clearAll
@@ -41,7 +41,6 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search
       $scope.nameMatches.concat $scope.distanceMatches
     else
       $scope.nameMatches
-
 
 
   $scope.showDistanceMatches = ->

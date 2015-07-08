@@ -66,6 +66,5 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         enterprise.distance = Geo.distanceBetween enterprise, locatable
       $rootScope.$broadcast 'enterprisesChanged'
 
-
     resetDistance: ->
       enterprise.distance = null for enterprise in @enterprises
