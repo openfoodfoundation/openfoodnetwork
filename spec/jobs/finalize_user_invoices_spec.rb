@@ -16,6 +16,7 @@ describe FinalizeUserInvoices do
       let!(:invoice2) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 10.days, completed_at: start_of_july - 10.days) }
       let!(:invoice3) { create(:order, distributor: accounts_distributor, created_at: start_of_july + 3.hours, completed_at: nil) }
       let!(:invoice4) { create(:order, distributor: accounts_distributor, created_at: start_of_july + 10.days, completed_at: nil) }
+      let!(:invoice5) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 30.days +  3.hours, completed_at: nil) }
 
       before do
         allow(Enterprise).to receive(:find_by_id) { accounts_distributor }
@@ -62,14 +63,47 @@ describe FinalizeUserInvoices do
       end
 
       context "when necessary global config setting have been set" do
-        travel_to(3.days)
+        context "and no arguments are passed to the job" do
+          travel_to(3.days)
 
-        it "finalizes the uncompleted orders for accounts_distributor created in the previous calendar month (or on the 1st of this month)" do
-          finalizer.perform
-          expect(finalizer).to have_received(:finalize).with(invoice1)
-          expect(finalizer).to have_received(:finalize).with(invoice3)
-          expect(finalizer).to_not have_received(:finalize).with(invoice2)
-          expect(finalizer).to_not have_received(:finalize).with(invoice4)
+          it "finalizes the uncompleted orders for accounts_distributor created in the previous calendar month (or on the 1st of this month)" do
+            finalizer.perform
+            expect(finalizer).to have_received(:finalize).with(invoice1)
+            expect(finalizer).to have_received(:finalize).with(invoice3)
+            expect(finalizer).to_not have_received(:finalize).with(invoice2)
+            expect(finalizer).to_not have_received(:finalize).with(invoice4)
+            expect(finalizer).to_not have_received(:finalize).with(invoice5)
+          end
+        end
+
+        context "and a specfic year and month are passed as arguments" do
+          let!(:finalizer) { FinalizeUserInvoices.new(Time.now.year, 6) }
+
+          before do
+            allow(finalizer).to receive(:finalizer)
+          end
+
+          context "that ends in the past" do
+            travel_to(3.hours)
+
+            it "finalizes the uncompleted orders for accounts_distributor created in the specified calendar month (or on the first of the following month)" do
+              finalizer.perform
+              expect(finalizer).to have_received(:finalize).with(invoice1)
+              expect(finalizer).to have_received(:finalize).with(invoice3)
+              expect(finalizer).to_not have_received(:finalize).with(invoice2)
+              expect(finalizer).to_not have_received(:finalize).with(invoice4)
+              expect(finalizer).to_not have_received(:finalize).with(invoice5)
+            end
+          end
+
+          context "that ends in the future" do
+            travel_to -1.day
+
+            it "does not finalize any orders" do
+              finalizer.perform
+              expect(finalizer).to_not have_received(:finalize)
+            end
+          end
         end
       end
     end
