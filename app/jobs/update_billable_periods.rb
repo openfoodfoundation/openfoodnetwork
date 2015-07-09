@@ -7,7 +7,7 @@ class UpdateBillablePeriods
   end
 
   def perform
-    return unless end_date <= Time.now
+    return unless settings_are_valid?
 
     job_start_time = Time.now
 
@@ -98,5 +98,23 @@ class UpdateBillablePeriods
     end
 
     obsolete_billable_periods.each(&:delete)
+  end
+
+  private
+
+  def settings_are_valid?
+    unless end_date <= Time.now
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "UpdateBillablePeriods",
+        error: "end_date is in the future",
+        data: {
+          end_date: end_date.localtime.strftime("%F %T"),
+          now: Time.now.strftime("%F %T")
+        }
+      })
+      return false
+    end
+
+    true
   end
 end

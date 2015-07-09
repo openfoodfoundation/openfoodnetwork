@@ -12,13 +12,10 @@ class FinalizeUserInvoices
   end
 
   def perform
-    return unless end_date <= Time.now
-    return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
-    return unless accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
-    return unless accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
+    return unless settings_are_valid?
 
     invoices = Spree::Order.where('distributor_id = (?) AND created_at >= (?) AND created_at <= (?) AND completed_at IS NULL',
-      accounts_distributor, start_date + 1.day, end_date + 1.day)
+      @accounts_distributor, start_date + 1.day, end_date + 1.day)
 
     invoices.each do |invoice|
       finalize(invoice)
@@ -34,5 +31,56 @@ class FinalizeUserInvoices
     while invoice.state != "complete"
       invoice.next
     end
+  end
+
+  private
+
+  def settings_are_valid?
+    unless end_date <= Time.now
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "FinalizeUserInvoices",
+        error: "end_date is in the future",
+        data: {
+          end_date: end_date.localtime.strftime("%F %T"),
+          now: Time.now.strftime("%F %T")
+        }
+      })
+      return false
+    end
+
+    unless @accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "FinalizeUserInvoices",
+        error: "accounts_distributor_id is invalid",
+        data: {
+          accounts_distributor_id: Spree::Config.accounts_distributor_id
+        }
+      })
+      return false
+    end
+
+    unless @accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "FinalizeUserInvoices",
+        error: "default_accounts_payment_method_id is invalid",
+        data: {
+          default_accounts_payment_method_id: Spree::Config.default_accounts_payment_method_id
+        }
+      })
+      return false
+    end
+
+    unless @accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "FinalizeUserInvoices",
+        error: "default_accounts_shipping_method_id is invalid",
+        data: {
+          default_accounts_shipping_method_id: Spree::Config.default_accounts_shipping_method_id
+        }
+      })
+      return false
+    end
+
+    true
   end
 end

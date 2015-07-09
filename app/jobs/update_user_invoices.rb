@@ -11,8 +11,7 @@ class UpdateUserInvoices
   end
 
   def perform
-    return unless end_date <= Time.now
-    return unless accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
+    return unless settings_are_valid?
 
     # Find all users that have owned an enterprise at some point in the relevant period
     enterprise_users = Spree::User.joins(:billable_periods)
@@ -83,5 +82,34 @@ class UpdateUserInvoices
 
       invoice.destroy
     end
+  end
+
+  private
+
+  def settings_are_valid?
+    unless end_date <= Time.now
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "UpdateUserInvoices",
+        error: "end_date is in the future",
+        data: {
+          end_date: end_date.localtime.strftime("%F %T"),
+          now: Time.now.strftime("%F %T")
+        }
+      })
+      return false
+    end
+
+    unless Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
+      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
+        job: "UpdateUserInvoices",
+        error: "accounts_distributor_id is invalid",
+        data: {
+          accounts_distributor_id: Spree::Config.accounts_distributor_id
+        }
+      })
+      return false
+    end
+
+    true
   end
 end

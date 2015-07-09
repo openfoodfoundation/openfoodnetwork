@@ -20,6 +20,7 @@ describe UpdateUserInvoices do
       before do
         allow(Enterprise).to receive(:find_by_id) { accounts_distributor }
         allow(updater).to receive(:update_invoice_for)
+        allow(Bugsnag).to receive(:notify)
       end
 
       context "when necessary global config setting have not been set" do
@@ -31,7 +32,8 @@ describe UpdateUserInvoices do
             updater.perform
           end
 
-          it "doesn't run" do
+          it "snags errors and doesn't run" do
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
             expect(updater).to_not have_received(:update_invoice_for)
           end
         end
@@ -78,8 +80,9 @@ describe UpdateUserInvoices do
           context "that ends in the future" do
             travel_to 30.days
 
-            it "does not update the user's invoice" do
+            it "snags an error and does not update the user's invoice" do
               updater.perform
+              expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
               expect(updater).to_not have_received(:update_invoice_for)
             end
           end

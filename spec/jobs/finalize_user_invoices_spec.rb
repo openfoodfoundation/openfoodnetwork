@@ -23,6 +23,7 @@ describe FinalizeUserInvoices do
         allow(accounts_distributor).to receive(:payment_methods) { double(:payment_methods, find_by_id: true) }
         allow(accounts_distributor).to receive(:shipping_methods) { double(:shipping_methods, find_by_id: true) }
         allow(finalizer).to receive(:finalize)
+        allow(Bugsnag).to receive(:notify)
       end
 
       context "when necessary global config setting have not been set" do
@@ -34,7 +35,8 @@ describe FinalizeUserInvoices do
             finalizer.perform
           end
 
-          it "doesn't run" do
+          it "snags errors and doesn't run" do
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
             expect(finalizer).to_not have_received(:finalize)
           end
         end
@@ -45,7 +47,8 @@ describe FinalizeUserInvoices do
             finalizer.perform
           end
 
-          it "doesn't run" do
+          it "snags errors and doesn't run" do
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
             expect(finalizer).to_not have_received(:finalize)
           end
         end
@@ -56,7 +59,8 @@ describe FinalizeUserInvoices do
             finalizer.perform
           end
 
-          it "doesn't run" do
+          it "snags errors and doesn't run" do
+            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
             expect(finalizer).to_not have_received(:finalize)
           end
         end
@@ -101,6 +105,7 @@ describe FinalizeUserInvoices do
 
             it "does not finalize any orders" do
               finalizer.perform
+              expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("InvalidJobSettings"), anything)
               expect(finalizer).to_not have_received(:finalize)
             end
           end
