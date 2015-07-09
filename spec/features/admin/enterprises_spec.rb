@@ -78,6 +78,8 @@ feature %q{
     end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
+    fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
+    page.should have_selector '.available'
     choose 'Own'
 
     within (".side_menu") { click_link "Users" }

@@ -3,7 +3,6 @@ Openfoodnetwork::Application.routes.draw do
 
   # Redirects from old URLs avoid server errors and helps search engines
   get "/enterprises", to: redirect("/")
-  get "/enterprises/:permalink", to: redirect("/")
   get "/products", to: redirect("/")
   get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
@@ -55,6 +54,7 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
+  get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
   devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
