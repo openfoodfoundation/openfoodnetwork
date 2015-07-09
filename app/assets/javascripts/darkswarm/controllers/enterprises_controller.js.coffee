@@ -19,13 +19,23 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
     $scope.distanceMatchesShown = false
 
     $timeout ->
-      Enterprises.calculateDistance query, $scope.nameMatchesFiltered[0]
+      Enterprises.calculateDistance query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'
 
 
   $rootScope.$on "enterprisesChanged", ->
     $scope.filterEnterprises()
     $scope.updateVisibleMatches()
+
+
+  # When filter settings change, this could change which name match is at the top, or even
+  # result in no matches. This affects the reference point that the distance matches are
+  # calculated from, so we need to recalculate distances.
+  $scope.$watch '[activeTaxons, shippingTypes, show_profiles]', ->
+    $timeout ->
+      Enterprises.calculateDistance $scope.query, $scope.firstNameMatch()
+      $rootScope.$broadcast 'enterprisesChanged'
+  , true
 
 
   $rootScope.$on "$locationChangeSuccess", (newRoute, oldRoute) ->
@@ -50,3 +60,10 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
   $scope.showDistanceMatches = ->
     $scope.distanceMatchesShown = true
     $scope.updateVisibleMatches()
+
+
+  $scope.firstNameMatch = ->
+    if $scope.nameMatchesFiltered?
+      $scope.nameMatchesFiltered[0]
+    else
+      undefined
