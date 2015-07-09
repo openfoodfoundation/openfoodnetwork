@@ -1,4 +1,4 @@
-Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.totalActive = FilterSelectorsService.totalActive
   $scope.clearAll = FilterSelectorsService.clearAll
@@ -13,10 +13,14 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, Enterprises, Search
 
 
   $scope.$watch "query", (query)->
-    Enterprises.evaluateQuery query
+    Enterprises.flagMatching query
     Search.search query
     $rootScope.$broadcast 'enterprisesChanged'
     $scope.distanceMatchesShown = false
+
+    $timeout ->
+      Enterprises.calculateDistance query, $scope.nameMatchesFiltered[0]
+      $rootScope.$broadcast 'enterprisesChanged'
 
 
   $rootScope.$on "enterprisesChanged", ->

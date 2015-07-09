@@ -1,5 +1,5 @@
 .active_table
-  %hub.active_table_node.row{"ng-repeat" => "hub in filteredEnterprises = (#{enterprises} | visible | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+distance', '+orders_close_at'])",
+  %hub.active_table_node.row{"ng-repeat" => "hub in #{enterprises}Filtered = (#{enterprises} | visible | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+distance', '+orders_close_at'])",
   "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
   "ng-controller" => "HubNodeCtrl",
   id: "{{hub.hash}}"}
@@ -7,4 +7,4 @@
       = render 'home/skinny'
       = render 'home/fat'
 
-  = render 'shared/components/enterprise_no_results', enterprises: enterprises
+  = render 'shared/components/enterprise_no_results', enterprises: "#{enterprises}Filtered"

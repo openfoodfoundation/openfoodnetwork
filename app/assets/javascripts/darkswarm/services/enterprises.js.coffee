@@ -28,10 +28,6 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
 
-    evaluateQuery: (query) ->
-      @flagMatching query
-      @calculateDistance query
-
     flagMatching: (query) ->
       for enterprise in @enterprises
         enterprise.matches_name_query = if query? && query.length > 0
@@ -39,15 +35,12 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         else
           false
 
-    firstMatching: ->
-      (enterprise for enterprise in @enterprises when enterprise.matches_name_query)[0]
-
-    calculateDistance: (query) ->
+    calculateDistance: (query, firstMatching) ->
       if query?.length > 0
-        if @firstMatching()?
-          @setDistanceFrom @firstMatching()
+        if firstMatching?
+          @setDistanceFrom firstMatching
         else
-          @calculateDistanceGeo(query)
+          @calculateDistanceGeo query
       else
         @resetDistance()
 

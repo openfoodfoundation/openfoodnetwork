@@ -101,27 +101,16 @@ describe "Enterprises service", ->
       Enterprises.flagMatching ''
       expect(e.matches_name_query).toBe false for e in enterprises
 
-  describe "finding the first enterprise matched by a query", ->
-    it "returns the enterprise when one exists", ->
-      enterprises[0].matches_name_query = false
-      enterprises[1].matches_name_query = true
-      expect(Enterprises.firstMatching()).toEqual enterprises[1]
-
-    it "returns undefined otherwise", ->
-      e.matches_name_query = false for e in enterprises
-      expect(Enterprises.firstMatching()).toBeUndefined()
-
   describe "calculating the distance of enterprises from a location", ->
     describe "when a query is provided", ->
       it "sets the distance from the enterprise when a name match is available", ->
-        spyOn(Enterprises, "firstMatching").andReturn('match')
         spyOn(Enterprises, "setDistanceFrom")
-        Enterprises.calculateDistance "asdf"
+        Enterprises.calculateDistance "asdf", 'match'
         expect(Enterprises.setDistanceFrom).toHaveBeenCalledWith('match')
 
       it "calculates the distance from the geocoded query otherwise", ->
         spyOn(Enterprises, "calculateDistanceGeo")
-        Enterprises.calculateDistance "asdf"
+        Enterprises.calculateDistance "asdf", undefined
         expect(Enterprises.calculateDistanceGeo).toHaveBeenCalledWith("asdf")
 
     it "resets the distance when query is null", ->
