@@ -25,13 +25,13 @@
         %fieldset.no-border-bottom
           %legend Update Invoices
           = f.check_box :auto_update_invoices
-          = f.label :auto_update_invoices, "Auto-update invoices nightly at 2am"
+          = f.label :auto_update_invoices, "Auto-update invoices nightly at 1:00am"
 
       .six.columns.omega
         %fieldset.no-border-bottom
           %legend Finalise Invoices
           = f.check_box :auto_finalize_invoices
-          = f.label :auto_finalize_invoices, "Auto-finalise invoices monthly on the 2nd"
+          = f.label :auto_finalize_invoices, "Auto-finalise invoices monthly on the 2nd at 1:30am"
 
     .row
       .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
