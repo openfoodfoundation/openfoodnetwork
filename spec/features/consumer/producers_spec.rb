@@ -10,6 +10,8 @@ feature %q{
   let!(:invisible_producer) { create(:supplier_enterprise, visible: false) }
   let(:taxon) { create(:taxon) }
   let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
+  let(:shop) { create(:distributor_enterprise) }
+  let!(:er) { create(:enterprise_relationship, parent: shop, child: producer) }
 
   before do
     visit producers_path
@@ -23,5 +25,10 @@ feature %q{
 
   it "doesn't show invisible producers" do
     page.should_not have_content invisible_producer.name
+  end
+
+  it "links to places to buy produce" do
+    expand_active_table_node producer.name
+    page.should have_link shop.name
   end
 end
