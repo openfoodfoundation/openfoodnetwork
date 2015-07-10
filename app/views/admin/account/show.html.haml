@@ -7,7 +7,7 @@
   %h4 No invoices to display
 
 - @invoices.order('created_at DESC').each do |invoice|
-  - month = (invoice.created_at.localtime - 1.day)
+  - month = (invoice.created_at.localtime)
   .row.invoice_title
     .eight.columns.alpha
       %h4= "#{month.strftime("%b %Y")}#{( invoice.completed_at ? '' : '*' )}"
