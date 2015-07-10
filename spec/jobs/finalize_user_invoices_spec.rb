@@ -14,9 +14,9 @@ describe FinalizeUserInvoices do
       let!(:accounts_distributor) { create(:distributor_enterprise) }
       let!(:invoice1) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 10.days, completed_at: nil) }
       let!(:invoice2) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 10.days, completed_at: start_of_july - 10.days) }
-      let!(:invoice3) { create(:order, distributor: accounts_distributor, created_at: start_of_july + 3.hours, completed_at: nil) }
+      let!(:invoice3) { create(:order, distributor: accounts_distributor, created_at: start_of_july, completed_at: nil) }
       let!(:invoice4) { create(:order, distributor: accounts_distributor, created_at: start_of_july + 10.days, completed_at: nil) }
-      let!(:invoice5) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 30.days +  3.hours, completed_at: nil) }
+      let!(:invoice5) { create(:order, distributor: accounts_distributor, created_at: start_of_july - 30.days, completed_at: nil) }
 
       before do
         allow(Enterprise).to receive(:find_by_id) { accounts_distributor }
@@ -70,13 +70,13 @@ describe FinalizeUserInvoices do
         context "and no date arguments are passed to the job" do
           travel_to(3.days)
 
-          it "finalizes the uncompleted orders for accounts_distributor created in the previous calendar month (or on the 1st of this month)" do
+          it "finalizes the uncompleted orders for accounts_distributor created in the previous calendar month" do
             finalizer.perform
             expect(finalizer).to have_received(:finalize).with(invoice1)
-            expect(finalizer).to have_received(:finalize).with(invoice3)
+            expect(finalizer).to_not have_received(:finalize).with(invoice3)
             expect(finalizer).to_not have_received(:finalize).with(invoice2)
             expect(finalizer).to_not have_received(:finalize).with(invoice4)
-            expect(finalizer).to_not have_received(:finalize).with(invoice5)
+            expect(finalizer).to have_received(:finalize).with(invoice5)
           end
         end
 
@@ -90,13 +90,13 @@ describe FinalizeUserInvoices do
           context "that ends in the past" do
             travel_to(3.hours)
 
-            it "finalizes the uncompleted orders for accounts_distributor created in the specified calendar month (or on the first of the following month)" do
+            it "finalizes the uncompleted orders for accounts_distributor created in the specified calendar month" do
               finalizer.perform
               expect(finalizer).to have_received(:finalize).with(invoice1)
-              expect(finalizer).to have_received(:finalize).with(invoice3)
+              expect(finalizer).to_not have_received(:finalize).with(invoice3)
               expect(finalizer).to_not have_received(:finalize).with(invoice2)
               expect(finalizer).to_not have_received(:finalize).with(invoice4)
-              expect(finalizer).to_not have_received(:finalize).with(invoice5)
+              expect(finalizer).to have_received(:finalize).with(invoice5)
             end
           end
 

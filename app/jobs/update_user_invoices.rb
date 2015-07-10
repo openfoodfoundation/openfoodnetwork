@@ -26,13 +26,25 @@ class UpdateUserInvoices
 
   def update_invoice_for(user, billable_periods)
     current_adjustments = []
-    invoice = user.current_invoice
+    invoice = user.invoice_for(start_date, end_date)
 
-    billable_periods.reject{ |bp| bp.turnover == 0 }.each do |billable_period|
-      adjustment = invoice.adjustments.where(source_id: billable_period).first
-      adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
-      adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
-      current_adjustments << adjustment
+    if invoice.persisted? && invoice.created_at != start_date
+      Bugsnag.notify(RuntimeError.new("InvoiceDateConflict"), {
+        start_date: start_date,
+        end_date: end_date,
+        existing_invoice: invoice.as_json
+      })
+    elsif invoice.complete?
+      Bugsnag.notify(RuntimeError.new("InvoiceAlreadyFinalized"), {
+        invoice: invoice.as_json
+      })
+    else
+      billable_periods.reject{ |bp| bp.turnover == 0 }.each do |billable_period|
+        adjustment = invoice.adjustments.where(source_id: billable_period).first
+        adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
+        adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
+        current_adjustments << adjustment
+      end
     end
 
     clean_up_and_save(invoice, current_adjustments)
@@ -74,6 +86,8 @@ class UpdateUserInvoices
     end
 
     if current_adjustments.any?
+      # Invoices should be "created" at the beginning of the period to which they apply
+      invoice.created_at = start_date unless invoice.persisted?
       invoice.save
     else
       Bugsnag.notify(RuntimeError.new("Empty Persisted Invoice"), {

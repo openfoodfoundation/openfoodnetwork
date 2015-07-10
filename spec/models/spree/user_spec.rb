@@ -80,7 +80,7 @@ describe Spree.user_class do
     end
   end
 
-  describe "current_invoice" do
+  describe "invoice_for" do
     let!(:user) { create(:user) }
     let!(:accounts_distributor) { create(:distributor_enterprise) }
     let!(:start_of_month) { Time.now.beginning_of_month }
@@ -89,20 +89,16 @@ describe Spree.user_class do
       Spree::Config.accounts_distributor_id = accounts_distributor.id
     end
 
-    context "where no relevant invoice exists for the current month" do
+    context "where no relevant invoice exists for the given period" do
       # Created during previous month
-      let!(:order1) { create(:order, user: user, created_at: start_of_month - 20.days, completed_at: nil, distributor: accounts_distributor) }
-      # Already Completed
-      let!(:order2) { create(:order, user: user, created_at: start_of_month + 3.hours, completed_at: start_of_month + 3.days, distributor: accounts_distributor) }
+      let!(:order1) { create(:order, user: user, created_at: start_of_month - 3.hours, completed_at: nil, distributor: accounts_distributor) }
       # Incorrect distributor
       let!(:order3) { create(:order, user: user, created_at: start_of_month + 3.hours, completed_at: nil, distributor: create(:distributor_enterprise)) }
       # Incorrect user
       let!(:order4) { create(:order, user: create(:user), created_at: start_of_month + 3.hours, completed_at: nil, distributor: accounts_distributor) }
 
-      around { |example| Timecop.travel(start_of_month + 20.days) { example.run } }
-
       it "creates a new invoice" do
-        current_invoice = user.current_invoice
+        current_invoice = user.invoice_for(start_of_month, start_of_month + 20.days)
         expect(current_invoice).to be_a_new Spree::Order
         expect(current_invoice.completed_at).to be nil
         expect(current_invoice.distributor).to eq accounts_distributor
@@ -113,10 +109,8 @@ describe Spree.user_class do
     context "where an invoice exists for the current month" do
       let!(:order) { create(:order, user: user, created_at: start_of_month + 3.hours, completed_at: nil, distributor: accounts_distributor) }
 
-      around { |example| Timecop.travel(start_of_month + 20.days) { example.run } }
-
       it "returns the existing invoice" do
-        current_invoice = user.current_invoice
+        current_invoice = user.invoice_for(start_of_month, start_of_month + 20.days)
         expect(current_invoice).to eq order
       end
     end

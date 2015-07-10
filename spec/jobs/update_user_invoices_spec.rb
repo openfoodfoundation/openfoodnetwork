@@ -94,9 +94,10 @@ describe UpdateUserInvoices do
       let(:invoice) { create(:order, user: user) }
 
       before do
-        allow(user).to receive(:current_invoice) { invoice }
+        allow(user).to receive(:invoice_for) { invoice }
         allow(updater).to receive(:clean_up_and_save)
         allow(updater).to receive(:finalize)
+        allow(Bugsnag).to receive(:notify)
       end
 
       context "on the first of the month" do
@@ -105,18 +106,52 @@ describe UpdateUserInvoices do
         before do
           allow(updater).to receive(:adjustment_label_from).exactly(1).times.and_return("Old Item")
           allow(old_billable_period).to receive(:bill) { 666.66 }
-          updater.update_invoice_for(user, [old_billable_period])
         end
 
-        it "creates adjustments for each billing item" do
-          adjustments = invoice.adjustments
-          expect(adjustments.map(&:source_id)).to eq [old_billable_period.id]
-          expect(adjustments.map(&:amount)).to eq [666.66]
-          expect(adjustments.map(&:label)).to eq ["Old Item"]
+        context "where the invoice was not created at start_date" do
+          before do
+            invoice.update_attribute(:created_at, start_of_july - 1.month + 1.day)
+            updater.update_invoice_for(user, [old_billable_period])
+          end
+
+          it "snags a bug" do
+            expect(Bugsnag).to have_received(:notify)
+          end
         end
 
-        it "cleans up and saves the invoice" do
-          expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
+        context "where the invoice was created at start_date" do
+          before do
+            invoice.update_attribute(:created_at, start_of_july - 1.month)
+          end
+
+          context "where the invoice is already complete" do
+            before do
+              allow(invoice).to receive(:complete?) { true }
+              updater.update_invoice_for(user, [old_billable_period])
+            end
+
+            it "snags a bug" do
+              expect(Bugsnag).to have_received(:notify)
+            end
+          end
+
+          context "where the invoice is not complete" do
+            before do
+              allow(invoice).to receive(:complete?) { false }
+              updater.update_invoice_for(user, [old_billable_period])
+            end
+
+            it "creates adjustments for each billing item" do
+              adjustments = invoice.adjustments
+              expect(adjustments.map(&:source_id)).to eq [old_billable_period.id]
+              expect(adjustments.map(&:amount)).to eq [666.66]
+              expect(adjustments.map(&:label)).to eq ["Old Item"]
+            end
+
+            it "cleans up and saves the invoice" do
+              expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
+            end
+          end
         end
       end
 
@@ -127,18 +162,52 @@ describe UpdateUserInvoices do
           allow(updater).to receive(:adjustment_label_from).exactly(2).times.and_return("BP1 Item", "BP2 Item")
           allow(billable_period1).to receive(:bill) { 123.45 }
           allow(billable_period2).to receive(:bill) { 543.21 }
-          updater.update_invoice_for(user, [billable_period1, billable_period2])
         end
 
-        it "creates adjustments for each billing item" do
-          adjustments = invoice.adjustments
-          expect(adjustments.map(&:source_id)).to eq [billable_period1.id, billable_period2.id]
-          expect(adjustments.map(&:amount)).to eq [123.45, 543.21]
-          expect(adjustments.map(&:label)).to eq ["BP1 Item", "BP2 Item"]
+        context "where the invoice was not created at start_date" do
+          before do
+            invoice.update_attribute(:created_at, start_of_july + 1.day)
+            updater.update_invoice_for(user, [billable_period1, billable_period2])
+          end
+
+          it "snags a bug" do
+            expect(Bugsnag).to have_received(:notify)
+          end
         end
 
-        it "cleans up and saves the invoice" do
-          expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
+        context "where the invoice was created at start_date" do
+          before do
+            invoice.update_attribute(:created_at, start_of_july)
+          end
+
+          context "where the invoice is already complete" do
+            before do
+              allow(invoice).to receive(:complete?) { true }
+              updater.update_invoice_for(user, [billable_period1, billable_period2])
+            end
+
+            it "snags a bug" do
+              expect(Bugsnag).to have_received(:notify)
+            end
+          end
+
+          context "where the invoice is not complete" do
+            before do
+              allow(invoice).to receive(:complete?) { false }
+              updater.update_invoice_for(user, [billable_period1, billable_period2])
+            end
+
+            it "creates adjustments for each billing item" do
+              adjustments = invoice.adjustments
+              expect(adjustments.map(&:source_id)).to eq [billable_period1.id, billable_period2.id]
+              expect(adjustments.map(&:amount)).to eq [123.45, 543.21]
+              expect(adjustments.map(&:label)).to eq ["BP1 Item", "BP2 Item"]
+            end
+
+            it "cleans up and saves the invoice" do
+              expect(updater).to have_received(:clean_up_and_save).with(invoice, anything).once
+            end
+          end
         end
       end
     end
@@ -282,7 +351,7 @@ describe UpdateUserInvoices do
     end
 
     context "when an invoice currently exists" do
-      let!(:invoice) { create(:order, user: user, distributor: accounts_distributor, created_at: start_of_july + 3.days) }
+      let!(:invoice) { create(:order, user: user, distributor: accounts_distributor, created_at: start_of_july) }
       let!(:billable_adjustment) { create(:adjustment, adjustable: invoice, source_type: 'BillablePeriod') }
 
       before do

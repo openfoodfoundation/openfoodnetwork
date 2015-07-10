@@ -14,8 +14,8 @@ class FinalizeUserInvoices
   def perform
     return unless settings_are_valid?
 
-    invoices = Spree::Order.where('distributor_id = (?) AND created_at >= (?) AND created_at <= (?) AND completed_at IS NULL',
-      @accounts_distributor, start_date + 1.day, end_date + 1.day)
+    invoices = Spree::Order.where('distributor_id = (?) AND created_at >= (?) AND created_at < (?) AND completed_at IS NULL',
+      @accounts_distributor, start_date, end_date)
 
     invoices.each do |invoice|
       finalize(invoice)
@@ -27,7 +27,6 @@ class FinalizeUserInvoices
     # we can update these to read from those preferences
     invoice.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice.total)
     invoice.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
-
     while invoice.state != "complete"
       invoice.next
     end

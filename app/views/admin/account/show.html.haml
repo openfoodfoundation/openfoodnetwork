@@ -8,8 +8,6 @@
 
 - @invoices.order('created_at DESC').each do |invoice|
   - month = (invoice.created_at.localtime - 1.day)
-  - range = "#{month.beginning_of_month.strftime("%d/%m/%y")}"
-  - range += " - #{[month.end_of_month, Time.now].min.strftime("%d/%m/%y")}"
   .row.invoice_title
     .eight.columns.alpha
       %h4= "#{month.strftime("%b %Y")}#{( invoice.completed_at ? '' : '*' )}"
@@ -32,11 +30,11 @@
         %td= adjustment.display_amount
     - invoice.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
       %tr
-        %td= range
+        %td &nbsp;
         %td= adjustment.label
         %td= adjustment.display_amount
     %tr.total
-      %td= range
+      %td &nbsp;
       %td TOTAL
       %td= invoice.display_total
 
