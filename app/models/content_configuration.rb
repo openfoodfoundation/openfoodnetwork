@@ -8,6 +8,11 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :producer_signup_case_studies_html, :text, default: "(TODO: Case studies)"
   preference :producer_signup_detail_html, :text, default: "(TODO: Detail)"
 
+  # Hubs sign-up page
+  preference :hub_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
+  preference :hub_signup_case_studies_html, :text, default: "(TODO: Case studies)"
+  preference :hub_signup_detail_html, :text, default: "(TODO: Detail)"
+
   # Footer
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"
   preference :footer_twitter_url, :string, default: "https://twitter.com/OpenFoodNet"
