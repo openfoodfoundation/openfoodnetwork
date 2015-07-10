@@ -1,7 +1,5 @@
 class ContentConfiguration < Spree::Preferences::Configuration
   # Home page
-  preference :home_tagline_cta, :string, default: "Browse Open Food Network Australia"
-  preference :home_whats_happening, :string, default: "Thanks for making the Open Food Network possible. Our vision is a better food system, and we're proud of what we're achieving together."
   preference :home_show_stats, :boolean, default: true
 
   # Producer sign-up page
