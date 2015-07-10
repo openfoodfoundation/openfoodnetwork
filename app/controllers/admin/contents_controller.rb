@@ -1,7 +1,7 @@
 module Admin
   class ContentsController < Spree::Admin::BaseController
     def edit
-      @preference_sections = [{name: 'Home page', preferences: [:home_tagline_cta, :home_whats_happening]},
+      @preference_sections = [{name: 'Home page', preferences: [:home_tagline_cta, :home_whats_happening, :home_show_stats]},
                               {name: 'Producer signup page', preferences: [:producer_signup_pricing_table_html, :producer_signup_case_studies_html, :producer_signup_detail_html]},
                               {name: 'Hub signup page', preferences: [:hub_signup_pricing_table_html, :hub_signup_case_studies_html, :hub_signup_detail_html]},
                               {name: 'Group signup page', preferences: [:group_signup_pricing_table_html, :group_signup_case_studies_html, :group_signup_detail_html]},

@@ -4,19 +4,20 @@
       %h2 We're creating a new food system.
 
   .row.content
-    .small-12.medium-3.columns.text-center
-      %h4
-        %strong= number_with_delimiter @num_producers
-        food producers
-    .small-12.medium-3.columns.text-center
-      %h4
-        %strong= number_with_delimiter @num_distributors
-        food shops
-    .small-12.medium-3.columns.text-center
-      %h4
-        %strong= number_with_delimiter @num_users
-        food shoppers
-    .small-12.medium-3.columns.text-center
-      %h4
-        %strong= number_with_delimiter @num_orders
-        food orders
+    - if ContentConfig.home_show_stats
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_producers
+          food producers
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_distributors
+          food shops
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_users
+          food shoppers
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_orders
+          food orders
