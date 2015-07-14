@@ -1,4 +1,14 @@
+require 'open_food_network/paperclippable'
+
 class ContentConfiguration < Spree::Preferences::Configuration
+  # Header
+  include OpenFoodNetwork::Paperclippable
+  preference :logo_file_name, :string
+  preference :logo_content_type, :string
+  preference :logo_file_size, :integer
+  preference :logo_updated_at, :string
+  has_attached_file :logo
+
   # Home page
   preference :home_show_stats, :boolean, default: true
 
