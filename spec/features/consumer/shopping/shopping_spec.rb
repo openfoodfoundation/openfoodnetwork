@@ -134,15 +134,20 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         it "should save group buy data to the cart" do
+          # -- Quantity
           fill_in "variants[#{variant.id}]", with: 6
-          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           page.should have_in_cart product.name
+          wait_until { !cart_dirty }
 
+          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          li.quantity.should == 6
+
+          # -- Max quantity
+          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           wait_until { !cart_dirty }
 
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 7
-          li.quantity.should == 6
         end
       end
     end
