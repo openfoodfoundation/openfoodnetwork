@@ -5,18 +5,22 @@
     .small-12.columns
       %h1{"scroll-after-load" => (spree_current_user ? true : nil)} Shop in your local area
 
-  = render partial: "shared/components/enterprise_search"
-  = render partial: "home/filters"
+  = render "shared/components/enterprise_search"
+  = render "home/filters"
 
-  .row{bindonce: true}
+  .row
     .small-12.columns
-      .active_table
-        %hub.active_table_node.row.animate-repeat{"ng-repeat" => "hub in filteredEnterprises = (Enterprises.hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
-        "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
-        "ng-controller" => "HubNodeCtrl",
-        id: "{{hub.hash}}"}
-          .small-12.columns
-            = render partial: 'home/skinny'
-            = render partial: 'home/fat'
+      .name-matches{"ng-show" => "nameMatchesFiltered.length > 0"}
+        %h2 Did you mean?
+        = render "home/hubs_table", enterprises: "nameMatches"
 
-        = render partial: 'shared/components/enterprise_no_results'
+      .distance-matches{"ng-if" => "nameMatchesFiltered.length == 0 || distanceMatchesShown"}
+        %h2{"ng-show" => "nameMatchesFiltered.length > 0 || query.length > 0"}
+          Closest to
+          %span{"ng-show" => "nameMatchesFiltered.length > 0"} {{ nameMatchesFiltered[0].name }}...
+          %span{"ng-hide" => "nameMatchesFiltered.length > 0"} {{ query }}...
+
+        = render "home/hubs_table", enterprises: "distanceMatches"
+
+      .show-distance-matches{"ng-show" => "nameMatchesFiltered.length > 0 && !distanceMatchesShown"}
+        %a{href: "", "ng-click" => "showDistanceMatches()"} Show me shops near {{ nameMatchesFiltered[0].name }}

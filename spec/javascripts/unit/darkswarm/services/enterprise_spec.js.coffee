@@ -1,24 +1,37 @@
 describe "Enterprises service", ->
   Enterprises = null
   CurrentHubMock = {}
+  Geo =
+    OK: 'ok'
+    succeed: true
+    geocode: (query, callback) ->
+      if @succeed
+        results = [{geometry: {location: "location"}}]
+        callback(results, @OK)
+      else
+        callback(results, 'Oops')
+    distanceBetween: (locatable, location) ->
+      123
+
   taxons = [
     {id: 1, name: "test"}
   ]
   enterprises = [
-    {id: 1, visible: true, category: "hub", producers: [{id: 5}], taxons: [{id: 1}]},
-    {id: 2, visible: true, category: "hub", producers: [{id: 6}]}
-    {id: 3, visible: true, category: "hub_profile"}
-    {id: 4, visible: false, category: "hub", producers: [{id: 7}]}
-    {id: 5, visible: true, category: "producer_hub", hubs: [{id: 1}]},
-    {id: 6, visible: true, category: "producer_shop", hubs: [{id: 2}]},
-    {id: 7, visible: true, category: "producer", hubs: [{id: 2}]}
-    {id: 8, visible: false, category: "producer", hubs: [{id: 2}]}
+    {id: 1, visible: true, name: 'a', category: "hub", producers: [{id: 5}], taxons: [{id: 1}]},
+    {id: 2, visible: true, name: 'b', category: "hub", producers: [{id: 6}]}
+    {id: 3, visible: true, name: 'c', category: "hub_profile"}
+    {id: 4, visible: false,name: 'd', category: "hub", producers: [{id: 7}]}
+    {id: 5, visible: true, name: 'e', category: "producer_hub", hubs: [{id: 1}]},
+    {id: 6, visible: true, name: 'f', category: "producer_shop", hubs: [{id: 2}]},
+    {id: 7, visible: true, name: 'g', category: "producer", hubs: [{id: 2}]}
+    {id: 8, visible: false,name: 'h', category: "producer", hubs: [{id: 2}]}
   ]
   H1: 0
   beforeEach ->
     module 'Darkswarm'
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock
+      $provide.value "Geo", Geo
       null
     angular.module('Darkswarm').value('enterprises', enterprises)
     angular.module('Darkswarm').value('taxons', taxons)
@@ -73,3 +86,70 @@ describe "Enterprises service", ->
     expect(Enterprises.producers).toContain Enterprises.enterprises[4]
     expect(Enterprises.producers).toContain Enterprises.enterprises[5]
     expect(Enterprises.producers).toContain Enterprises.enterprises[6]
+
+  describe "flagging enterprises with names matching a query", ->
+    it "flags enterprises when a query is provided", ->
+      Enterprises.flagMatching 'c'
+      expect(e.matches_name_query).toBe true for e in enterprises when e.name == 'c'
+      expect(e.matches_name_query).toBe false for e in enterprises when e.name != 'c'
+
+    it "clears flags when query is null", ->
+      Enterprises.flagMatching null
+      expect(e.matches_name_query).toBe false for e in enterprises
+
+    it "clears flags when query is blank", ->
+      Enterprises.flagMatching ''
+      expect(e.matches_name_query).toBe false for e in enterprises
+
+  describe "calculating the distance of enterprises from a location", ->
+    describe "when a query is provided", ->
+      it "sets the distance from the enterprise when a name match is available", ->
+        spyOn(Enterprises, "setDistanceFrom")
+        Enterprises.calculateDistance "asdf", 'match'
+        expect(Enterprises.setDistanceFrom).toHaveBeenCalledWith('match')
+
+      it "calculates the distance from the geocoded query otherwise", ->
+        spyOn(Enterprises, "calculateDistanceGeo")
+        Enterprises.calculateDistance "asdf", undefined
+        expect(Enterprises.calculateDistanceGeo).toHaveBeenCalledWith("asdf")
+
+    it "resets the distance when query is null", ->
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.calculateDistance null
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
+    it "resets the distance when query is blank", ->
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.calculateDistance ""
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
+  describe "calculating the distance of enterprises from a location by geocoding", ->
+    beforeEach ->
+      spyOn(Enterprises, "setDistanceFrom")
+
+    it "calculates distance for all enterprises when geocoding succeeds", ->
+      Geo.succeed = true
+      Enterprises.calculateDistanceGeo('query')
+      expect(Enterprises.setDistanceFrom).toHaveBeenCalledWith("location")
+
+    it "resets distance when geocoding fails", ->
+      Geo.succeed = false
+      spyOn(Enterprises, "resetDistance")
+      Enterprises.calculateDistanceGeo('query')
+      expect(Enterprises.setDistanceFrom).not.toHaveBeenCalled()
+      expect(Enterprises.resetDistance).toHaveBeenCalled()
+
+  describe "setting the distance of each enterprise from a central location", ->
+    it "sets the distances", ->
+      Enterprises.setDistanceFrom 'location'
+      for e in Enterprises.enterprises
+        expect(e.distance).toEqual 123
+
+  describe "resetting the distance measurement of all enterprises", ->
+    beforeEach ->
+      e.distance = 123 for e in Enterprises.enterprises
+
+    it "resets the distance", ->
+      Enterprises.resetDistance()
+      for e in Enterprises.enterprises
+        expect(e.distance).toBeNull()
