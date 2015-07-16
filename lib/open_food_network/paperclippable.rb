@@ -13,6 +13,10 @@ module OpenFoodNetwork
       base.send :define_model_callbacks, :save, only: [:after]
       base.send :define_model_callbacks, :commit, only: [:after]
       base.send :define_model_callbacks, :destroy, only: [:before, :after]
+
+      # Initialise an ID
+      base.send :attr_accessor, :id
+      base.instance_variable_set :@id, 1
     end
 
     # ActiveModel requirements
@@ -23,6 +27,12 @@ module OpenFoodNetwork
     def valid?()      true end
     def new_record?() true end
     def destroyed?()  true end
+
+    def save
+      run_callbacks :save do
+      end
+      true
+    end
 
     def errors
       obj = Object.new
