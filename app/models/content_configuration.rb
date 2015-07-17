@@ -1,8 +1,9 @@
 require 'open_food_network/paperclippable'
 
 class ContentConfiguration < Spree::Preferences::FileConfiguration
-  # Header
   include OpenFoodNetwork::Paperclippable
+
+  # Header
   preference :logo, :file
   preference :logo_mobile, :file
   preference :logo_mobile_svg, :file
@@ -31,6 +32,8 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :group_signup_detail_html, :text, default: "(TODO: Detail)"
 
   # Footer
+  preference :footer_logo, :file
+  has_attached_file :footer_logo
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"
   preference :footer_twitter_url, :string, default: "https://twitter.com/OpenFoodNet"
   preference :footer_instagram_url, :string, default: ""

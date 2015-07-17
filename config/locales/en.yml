@@ -25,6 +25,7 @@ en:
   logo_mobile_svg: "Mobile logo (SVG)"
   home_hero: "Hero image"
   home_show_stats: "Show statistics"
+  footer_logo: "Logo (220x76)"
   footer_facebook_url: "Facebook URL"
   footer_twitter_url: "Twitter URL"
   footer_instagram_url: "Instagram URL"
