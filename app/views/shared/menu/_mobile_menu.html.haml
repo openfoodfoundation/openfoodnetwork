@@ -6,7 +6,7 @@
   %section.left
     .ofn-logo
       %a{href: root_path}
-        %img{src: "/assets/logo-black.png", srcset: "/assets/logo-black.svg", width: "75", height: "26"}
+        %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
 
   %section.right{"ng-cloak" => true}
     .cart
@@ -18,7 +18,7 @@
   %ul.off-canvas-list
     %li.ofn-logo
       %a{href: root_path}
-        %img{src: "/assets/logo-black.png", srcset: "/assets/logo-black.svg", width: "75", height: "26"}
+        %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
     %li.li-menu
       - if current_page? main_app.shops_path
         %a{"ofn-scroll-to" => "hubs"}

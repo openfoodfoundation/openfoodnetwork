@@ -4,10 +4,16 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   # Header
   include OpenFoodNetwork::Paperclippable
   preference :logo, :file
+  preference :logo_mobile, :file
+  preference :logo_mobile_svg, :file
   has_attached_file :logo
+  has_attached_file :logo_mobile
+  has_attached_file :logo_mobile_svg
 
   # Home page
   preference :home_show_stats, :boolean, default: true
+  preference :home_hero, :file
+  has_attached_file :home_hero
 
   # Producer sign-up page
   preference :producer_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
