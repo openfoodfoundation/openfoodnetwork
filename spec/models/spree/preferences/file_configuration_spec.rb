@@ -6,7 +6,7 @@ module Spree
       preference :name, :string
 
       include OpenFoodNetwork::Paperclippable
-      file_preference :logo
+      preference :logo, :file
       has_attached_file :logo
     end
 

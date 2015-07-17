@@ -3,7 +3,7 @@ require 'open_food_network/paperclippable'
 class ContentConfiguration < Spree::Preferences::FileConfiguration
   # Header
   include OpenFoodNetwork::Paperclippable
-  file_preference :logo
+  preference :logo, :file
   has_attached_file :logo
 
   # Home page
