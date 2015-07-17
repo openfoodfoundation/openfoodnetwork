@@ -20,7 +20,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
-        # TODO what shall we do here?
+        @scheduleRetry()
 
     data: =>
       variants = {}
@@ -30,6 +30,12 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
           max_quantity: li.max_quantity
       {variants: variants}
 
+    scheduleRetry: =>
+      console.log "Error updating cart: #{status}. Retrying in 3 seconds..."
+      $timeout =>
+        console.log "Retrying cart update"
+        @orderChanged()
+      , 3000
 
     saved: =>
       @dirty = false

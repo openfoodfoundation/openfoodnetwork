@@ -1,21 +1,21 @@
-.row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+.row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}", bindonce: true}
   .columns.small-12.medium-6.large-5.fat
     %div{"bo-if" => "hub.taxons"}
       %label Shop for
       .trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
-          %span{"bo-text" => "taxon.name"} 
+          %span{"bo-text" => "taxon.name"}
     %div.show-for-medium-up{"bo-if" => "hub.taxons.length==0"}
       &nbsp;
   .columns.small-12.medium-3.large-2.fat
     %div{"bo-if" => "hub.pickup || hub.delivery"}
       %label Delivery options
       %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-1
-        %li.pickup{"bo-if" => "hub.pickup"} 
+        %li.pickup{"bo-if" => "hub.pickup"}
           %i.ofn-i_038-takeaway
           Pickup
-        %li.delivery{"bo-if" => "hub.delivery"} 
+        %li.delivery{"bo-if" => "hub.delivery"}
           %i.ofn-i_039-delivery
           Delivery
   .columns.small-12.medium-3.large-5.fat

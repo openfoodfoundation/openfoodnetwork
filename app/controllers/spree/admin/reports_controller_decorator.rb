@@ -6,6 +6,7 @@ require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
 require 'open_food_network/users_and_enterprises_report'
 require 'open_food_network/order_cycle_management_report'
+require 'open_food_network/packing_report'
 require 'open_food_network/sales_tax_report'
 require 'open_food_network/xero_invoices_report'
 
@@ -31,11 +32,15 @@ Spree::Admin::ReportsController.class_eval do
     order_cycle_management: [
       ["Payment Methods Report", :payment_methods],
       ["Delivery Report", :delivery]
+    ],
+    packing: [
+      ["Pack By Customer", :pack_by_customer],
+      ["Pack By Supplier", :pack_by_supplier]
     ]
   }
 
   # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management]
+  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
@@ -47,7 +52,9 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
     @reports[:order_cycle_management][:description] =
       render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
-  } } }
+    @reports[:packing][:description] =
+        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
+} } }
 
 
   # Overide spree reports list.
@@ -73,6 +80,40 @@ Spree::Admin::ReportsController.class_eval do
     @orders = @search.result
 
     render_report(@report.header, @report.table, params[:csv], "order_cycle_management_#{timestamp}.csv")
+  end
+
+  def packing
+    # -- Prepare parameters
+    params[:q] ||= {}
+    if params[:q][:completed_at_gt].blank?
+      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
+    else
+      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]) rescue Time.zone.now.beginning_of_month
+    end
+    if params[:q] && !params[:q][:completed_at_lt].blank?
+      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]) rescue ""
+    end
+    params[:q][:meta_sort] ||= "completed_at.desc"
+
+    # -- Prepare form options
+    my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
+
+    # My distributors and any distributors distributing products I supply
+    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    # My suppliers and any suppliers supplying products I distribute
+    @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+    @report_types = REPORT_TYPES[:packing]
+    @report_type = params[:report_type]
+
+    # -- Build Report with Order Grouper
+    @report = OpenFoodNetwork::PackingReport.new spree_current_user, params
+    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+    @table = order_grouper.table(@report.table_items)
+    csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+
+    render_report(@report.header, @table, params[:csv], "packing_#{timestamp}.csv")
   end
 
   def orders_and_distributors
@@ -732,9 +773,9 @@ Spree::Admin::ReportsController.class_eval do
       :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
+      :packing => {:name => "Packing Reports", :description => ''},
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
       :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' }
-
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

@@ -25,6 +25,16 @@ module OpenFoodNetwork
         @variant_override.andand.count_on_hand || super
       end
 
+      def on_demand
+        if @variant_override.andand.count_on_hand.present?
+          # If we're overriding the stock level of an on_demand variant, show it as not
+          # on_demand, so our stock control can take effect.
+          false
+        else
+          super
+        end
+      end
+
       def decrement!(attribute, by=1)
         if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
           @variant_override.decrement_stock! by
