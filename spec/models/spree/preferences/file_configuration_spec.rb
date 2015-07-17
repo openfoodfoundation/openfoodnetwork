@@ -2,18 +2,15 @@ require 'spec_helper'
 
 module Spree
   module Preferences
-    class TestConfiguration < Configuration
+    class TestConfiguration < FileConfiguration
       preference :name, :string
 
       include OpenFoodNetwork::Paperclippable
-      preference :logo_file_name, :string
-      preference :logo_content_type, :string
-      preference :logo_file_size, :integer
-      preference :logo_updated_at, :string
+      file_preference :logo
       has_attached_file :logo
     end
 
-    describe Configuration do
+    describe FileConfiguration do
       let(:c) { TestConfiguration.new }
 
       describe "getting preferences" do
