@@ -20,6 +20,10 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
 
+  logo: "Logo (640x130)"
+  logo_mobile: "Mobile logo (75x26)"
+  logo_mobile_svg: "Mobile logo (SVG)"
+  home_hero: "Hero image"
   home_show_stats: "Show statistics"
   footer_facebook_url: "Facebook URL"
   footer_twitter_url: "Twitter URL"

@@ -11,8 +11,8 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   has_attached_file :logo_mobile_svg
 
   # Home page
-  preference :home_show_stats, :boolean, default: true
   preference :home_hero, :file
+  preference :home_show_stats, :boolean, default: true
   has_attached_file :home_hero
 
   # Producer sign-up page
