@@ -32,7 +32,7 @@ module Spree::Preferences
 
     def has_attachment?(name)
       self.class.respond_to?(:attachment_definitions) &&
-        self.class.attachment_definitions.keys.include?(name)
+        self.class.attachment_definitions.keys.include?(name.to_sym)
     end
   end
 end
