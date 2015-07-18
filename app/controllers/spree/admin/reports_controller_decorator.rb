@@ -191,7 +191,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
+    @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, params
     order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
     @table = order_grouper.table(@report.table_items)
     csv_file_name = "payments_#{timestamp}.csv"
@@ -308,8 +308,8 @@ Spree::Admin::ReportsController.class_eval do
       :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
-      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' }
-      :packing => {:name => "Packing Reports", :description => ''},
+      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' },
+      :packing => { :name => "Packing Reports", :description => '' },
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
