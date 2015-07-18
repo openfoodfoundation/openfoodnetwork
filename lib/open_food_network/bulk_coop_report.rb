@@ -25,8 +25,11 @@ module OpenFoodNetwork
       Spree::Order.complete.not_state(:canceled).managed_by(@user).search(params[:q])
     end
 
+    def orders
+      search.result
+    end
+
     def table_items
-      orders = search.result
       orders.map { |o| o.line_items.managed_by(@user) }.flatten
     end
 

@@ -35,12 +35,21 @@ module OpenFoodNetwork
       Spree::Order.complete.not_state(:canceled).search(params[:q])
     end
 
-    def table_items
-      permissions = OpenFoodNetwork::Permissions.new(@user)
-      orders = permissions.visible_orders.merge(search.result)
+    def permissions
+      OpenFoodNetwork::Permissions.new(@user)
+    end
 
+    def orders
+      permissions.visible_orders.merge(search.result)
+    end
+
+    def line_items
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
       line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
+      line_items
+    end
+
+    def table_items
 
       line_items_with_hidden_details = line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|

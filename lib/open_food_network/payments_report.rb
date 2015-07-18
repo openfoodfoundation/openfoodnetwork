@@ -23,8 +23,11 @@ module OpenFoodNetwork
       Spree::Order.complete.not_state(:canceled).managed_by(@user).search(params[:q])
     end
 
+    def orders
+      search.result
+    end
+
     def table_items
-      orders = search.result
       payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
       case params[:report_type]
       when "payments_by_payment_type"
