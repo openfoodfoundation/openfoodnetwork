@@ -50,7 +50,6 @@ module OpenFoodNetwork
     end
 
     def table_items
-
       line_items_with_hidden_details = line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we

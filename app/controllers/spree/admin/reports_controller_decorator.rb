@@ -310,7 +310,6 @@ Spree::Admin::ReportsController.class_eval do
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
       :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' },
       :packing => { :name => "Packing Reports", :description => '' },
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
