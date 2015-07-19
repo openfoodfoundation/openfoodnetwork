@@ -45,6 +45,7 @@ First, check your dependencies: Ensure that you have Ruby >= 1.9.3 installed:
 
 Install the project's gem dependencies:
 
+    cd openfoodnetwork
     bundle install
 
 Configure the site:
