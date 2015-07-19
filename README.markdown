@@ -32,7 +32,7 @@ You can view the code at:
 
 You can download the source with the command:
 
-    git clone git@github.com:openfoodfoundation/openfoodnetwork
+    git clone https://github.com/openfoodfoundation/openfoodnetwork.git
 
 
 ## Get it running
