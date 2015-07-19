@@ -39,7 +39,7 @@ You can download the source with the command:
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html .
 
-First, check your dependencies: Ensure that you have Ruby 1.9.x installed:
+First, check your dependencies: Ensure that you have Ruby >= 1.9.3 installed:
 
     ruby --version
 
