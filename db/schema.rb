@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150612045544) do
+ActiveRecord::Schema.define(:version => 20150719111807) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -633,9 +633,9 @@ ActiveRecord::Schema.define(:version => 20150612045544) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
@@ -1122,6 +1122,7 @@ ActiveRecord::Schema.define(:version => 20150612045544) do
     t.integer "hub_id",                                      :null => false
     t.decimal "price",         :precision => 8, :scale => 2
     t.integer "count_on_hand"
+    t.integer "default_stock"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"

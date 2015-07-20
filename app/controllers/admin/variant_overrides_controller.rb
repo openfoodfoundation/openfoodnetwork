@@ -30,6 +30,22 @@ module Admin
       end
     end
 
+    def bulk_reset
+      collection_hash = Hash[params[:variant_overrides].each_with_index.map { |vo, i| [i, vo] }]
+      vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
+
+      # Ensure we're authorised to update all variant overrides
+      vo_set.collection.each { |vo| authorize! :update, vo }
+
+      vo.set.collection.each { |vo| vo.reset_stock! } 
+      if vo_set.errors.present?
+        render json: { errors: vo_set.errors }, status: 400
+      else
+        # Return saved VOs with IDs
+        render json: vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
+      end
+    end
+
 
     private
 

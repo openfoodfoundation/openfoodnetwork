@@ -17,7 +17,18 @@ angular.module("ofn.admin").factory "VariantOverrides", (variantOverrides, Index
               hub_id: hub.id
               price: ''
               count_on_hand: ''
+              default_stock: ''
 
     updateIds: (updatedVos) ->
       for vo in updatedVos
         @variantOverrides[vo.hub_id][vo.variant_id].id = vo.id
+
+    withDefault:
+
+
+    resetStock: ->
+      $http
+        method: "POST"
+        url: "/admin/variant_overrides/bulk_reset"
+        data:
+          variant_overrides: @all()

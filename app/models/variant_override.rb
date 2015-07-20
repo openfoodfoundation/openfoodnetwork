@@ -3,6 +3,8 @@ class VariantOverride < ActiveRecord::Base
   belongs_to :variant, class_name: 'Spree::Variant'
 
   validates_presence_of :hub_id, :variant_id
+  # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
+  validates :default_stock, numericality: { greater_than: 0 }, allow_nil: true
 
   scope :for_hubs, lambda { |hubs|
     where(hub_id: hubs)
@@ -48,7 +50,20 @@ class VariantOverride < ActiveRecord::Base
       Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
     end
   end
-
+  
+  def default_stock?
+    default_stock.present?
+  end
+  
+  def reset_stock!
+    if default_stock?
+      update_attributes :count_on_hand => default_stock  
+    else
+      # Could remove as not resetting where there is no default is intended behaviour
+      Bugsnag.notify RuntimeError.new "Attempting to reset stock for a VariantOverride where a default level is not present"
+    end
+      
+  end
 
   private
 

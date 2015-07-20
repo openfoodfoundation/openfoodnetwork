@@ -97,6 +97,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :variant_overrides do
       post :bulk_update, on: :collection
+      post :bulk_reset, on: :collection
     end
 
     resources :customers, only: [:index, :update]

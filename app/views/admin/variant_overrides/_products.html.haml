@@ -5,6 +5,7 @@
       %th Product
       %th Price
       %th On hand
+      %th Default stock
   %tbody{ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id'}}
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'

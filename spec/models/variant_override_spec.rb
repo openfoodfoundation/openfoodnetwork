@@ -81,4 +81,31 @@ describe VariantOverride do
       VariantOverride.decrement_stock! hub, variant, 2
     end
   end
+ 
+  describe "checking default stock value is present" do
+    it "returns true when a default stock level has been set"  do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20)
+      vo.default_stock?.should be_true
+    end
+
+    it "returns false when the override has no default stock level" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil)
+      vo.default_stock.should be_false
+    end
+  end
+
+  describe "resetting stock levels" do
+    it "resets the on hand level to the value in the default_stock field" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20)
+      vo.reset_stock!
+      vo.reload.count_on_hand.should == 20
+    end
+    it "silently logs an error if the variant override doesn't have a default stock level" do
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil)
+      Bugsnag.should_receive(:notify)
+      vo.reset_stock!
+      vo.reload.count_on_hand.should == 12
+      vo.reload.default_stock.should be_nil
+    end
+  end
 end

@@ -65,3 +65,6 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
 
     else
       "Oh no! I was unable to save your changes."
+
+  $scope.resetStock = ->
+    variantOverrides.resetStock()
