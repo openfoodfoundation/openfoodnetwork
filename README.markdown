@@ -15,7 +15,7 @@ We're part of global movement - get involved!
 ## Dependencies
 
 * Rails 3.2.x
-* Ruby >= 1.9.3
+* Ruby 1.9.3
 * PostgreSQL database
 * PhantomJS (for testing)
 * See Gemfile for a list of gems required
