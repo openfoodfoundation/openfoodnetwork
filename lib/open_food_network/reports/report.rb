@@ -3,20 +3,22 @@ require 'open_food_network/reports/rule'
 
 module OpenFoodNetwork::Reports
   class Report
+    class_attribute :_header, :_columns, :_rules_head
+
     # -- API
     def header
-      @@header
+      self._header
     end
 
     def columns
-      @@columns.to_a
+      self._columns.to_a
     end
 
     def rules
       # Flatten linked list and return as hashes
       rules = []
 
-      rule = @@rules_head
+      rule = self._rules_head
       while rule
         rules << rule
         rule = rule.next
@@ -28,17 +30,17 @@ module OpenFoodNetwork::Reports
 
     # -- DSL
     def self.header(*columns)
-      @@header = columns
+      self._header = columns
     end
 
     def self.columns(&block)
-      @@columns = Row.new
-      @@columns.instance_eval(&block)
+      self._columns = Row.new
+      self._columns.instance_eval(&block)
     end
 
     def self.organise(&block)
-      @@rules_head = Rule.new
-      @@rules_head.instance_eval(&block)
+      self._rules_head = Rule.new
+      self._rules_head.instance_eval(&block)
     end
   end
 end

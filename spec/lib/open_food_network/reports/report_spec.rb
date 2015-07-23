@@ -34,7 +34,7 @@ module OpenFoodNetwork::Reports
 
   describe Report do
     let(:report) { TestReport.new }
-    let(:rules_head) { TestReport.class_variable_get(:@@rules_head) }
+    let(:rules_head) { TestReport._rules_head }
     let(:data) { {one: 1, two: 2, three: 3, four: 4} }
 
     it "returns the header" do
