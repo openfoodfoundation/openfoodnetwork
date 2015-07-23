@@ -32,8 +32,23 @@ module OpenFoodNetwork::Reports
     end
   end
 
+  class HelperReport < Report
+    columns do
+      column { |o| my_helper(o) }
+    end
+
+
+    private
+
+    def self.my_helper(o)
+      o[:one]
+    end
+  end
+
+
   describe Report do
     let(:report) { TestReport.new }
+    let(:helper_report) { HelperReport.new }
     let(:rules_head) { TestReport._rules_head }
     let(:data) { {one: 1, two: 2, three: 3, four: 4} }
 
@@ -46,6 +61,10 @@ module OpenFoodNetwork::Reports
       report.columns[1].call(data).should == 2
       report.columns[2].call(data).should == 3
       report.columns[3].call(data).should == 4
+    end
+
+    it "supports helpers when outputting columns" do
+      helper_report.columns[0].call(data).should == 1
     end
 
     describe "rules" do

@@ -35,12 +35,12 @@ module OpenFoodNetwork::Reports
 
     def self.columns(&block)
       self._columns = Row.new
-      self._columns.instance_eval(&block)
+      Blockenspiel.invoke block, self._columns
     end
 
     def self.organise(&block)
       self._rules_head = Rule.new
-      self._rules_head.instance_eval(&block)
+      Blockenspiel.invoke block, self._rules_head
     end
   end
 end
