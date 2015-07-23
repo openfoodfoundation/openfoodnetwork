@@ -82,12 +82,12 @@ module OpenFoodNetwork::Reports
         if group_buy_unit_size(lis).zero?
           0
         else
-          ( max_quantity_amount(lis) / group_buy_unit_size(lis) ).floor
+          ( max_quantity_amount(lis) / group_buy_unit_size(lis) ).ceil
         end
       end
 
       def remainder(lis)
-        max_quantity_amount(lis) - (units_required(lis) * group_buy_unit_size(lis))
+        (units_required(lis) * group_buy_unit_size(lis)) - max_quantity_amount(lis)
       end
 
       def max_quantity_amount(lis)
