@@ -2,7 +2,7 @@ require 'open_food_network/reports/report'
 
 module OpenFoodNetwork::Reports
   class BulkCoopSupplierReport < Report
-    header "Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"
+    header "Supplier", "Product", "Unit Size", "Variant value", "Variant unit", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"
 
     organise do
       group { |li| li.variant.product.supplier }
@@ -16,6 +16,7 @@ module OpenFoodNetwork::Reports
           column { |lis| supplier_name(lis) }
           column { |lis| product_name(lis) }
           column { |lis| group_buy_unit_size_f(lis) }
+          column { |lis| "" }
           column { |lis| "" }
           column { |lis| "" }
           column { |lis| total_weight(lis) }
@@ -35,7 +36,8 @@ module OpenFoodNetwork::Reports
       column { |lis| supplier_name(lis) }
       column { |lis| product_name(lis) }
       column { |lis| group_buy_unit_size_f(lis) }
-      column { |lis| lis.first.variant.full_name }
+      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).value }
+      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).unit }
       column { |lis| lis.first.variant.weight || 0 }
       column { |lis| lis.sum(&:quantity) }
       column { |lis| lis.sum { |li| li.max_quantity || 0 } }
