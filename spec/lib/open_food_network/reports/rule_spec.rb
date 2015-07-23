@@ -14,5 +14,10 @@ module OpenFoodNetwork::Reports
       rule.sort &proc
       rule.to_h.should == {group_by: nil,  sort_by: proc}
     end
+
+    it "can define a nested rule" do
+      rule.organise &proc
+      rule.next.should be_a Rule
+    end
   end
 end
