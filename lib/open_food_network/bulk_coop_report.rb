@@ -1,4 +1,5 @@
 require 'open_food_network/reports/bulk_coop_supplier_report'
+require 'open_food_network/reports/bulk_coop_allocation_report'
 
 module OpenFoodNetwork
   class BulkCoopReport
@@ -8,6 +9,7 @@ module OpenFoodNetwork
       @user = user
 
       @supplier_report = OpenFoodNetwork::Reports::BulkCoopSupplierReport.new
+      @allocation_report = OpenFoodNetwork::Reports::BulkCoopAllocationReport.new
     end
 
     def header
@@ -15,7 +17,7 @@ module OpenFoodNetwork
       when "bulk_coop_supplier_report"
         @supplier_report.header
       when "bulk_coop_allocation"
-        ["Customer", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Total Allocated", "Remainder"]
+        @allocation_report.header
       when "bulk_coop_packing_sheets"
         ["Customer", "Product", "Variant", "Sum Total"]
       when "bulk_coop_customer_payments"
@@ -40,23 +42,8 @@ module OpenFoodNetwork
       case params[:report_type]
       when "bulk_coop_supplier_report"
         @supplier_report.rules
-
       when "bulk_coop_allocation"
-        [ { group_by: proc { |li| li.variant.product },
-          sort_by: proc { |product| product.name },
-          summary_columns: [ proc { |lis| "TOTAL" },
-            proc { |lis| lis.first.variant.product.name },
-            proc { |lis| lis.first.variant.product.group_buy ? (lis.first.variant.product.group_buy_unit_size || 0.0) : "" },
-            proc { |lis| "" },
-            proc { |lis| "" },
-            proc { |lis| lis.sum { |li| li.quantity * (li.variant.weight || 0) } },
-            proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.variant.weight || 0) } },
-            proc { |lis| ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor * (lis.first.variant.product.group_buy_unit_size || 0) },
-            proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } - ( ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor * (lis.first.variant.product.group_buy_unit_size || 0) ) } ] },
-          { group_by: proc { |li| li.variant },
-          sort_by: proc { |variant| variant.full_name } },
-          { group_by: proc { |li| li.order },
-          sort_by: proc { |order| order.to_s } } ]
+        @allocation_report.rules
       when "bulk_coop_packing_sheets"
         [ { group_by: proc { |li| li.variant.product },
           sort_by: proc { |product| product.name } },
@@ -91,15 +78,7 @@ module OpenFoodNetwork
       when "bulk_coop_supplier_report"
         @supplier_report.columns
       when "bulk_coop_allocation"
-        [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
-          proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.product.group_buy ? (lis.first.variant.product.group_buy_unit_size || 0.0) : "" },
-          proc { |lis| lis.first.variant.full_name },
-          proc { |lis| lis.first.variant.weight || 0 },
-          proc { |lis| lis.sum { |li| li.quantity } },
-          proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
-          proc { |lis| "" },
-          proc { |lis| "" } ]
+        @allocation_report.columns
       when "bulk_coop_packing_sheets"
         [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
           proc { |lis| lis.first.variant.product.name },

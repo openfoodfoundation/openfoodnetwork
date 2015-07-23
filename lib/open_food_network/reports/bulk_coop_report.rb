@@ -45,24 +45,12 @@ module OpenFoodNetwork::Reports
         end
       end
 
-      def total_allocated(lis)
-        # Proposed new factoring:
-        # units_required * group_buy_unit_size
-
-        num_units = if (lis.first.variant.product.group_buy_unit_size || 0).zero?
-                      0
-                    else
-                      max_weight = lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) }
-                      group_buy_unit_size = lis.first.variant.product.group_buy_unit_size
-
-                      (max_weight / group_buy_unit_size).floor
-                    end
-
-        num_units * (lis.first.variant.product.group_buy_unit_size || 0)
+      def total_available(lis)
+        units_required(lis) * group_buy_unit_size(lis)
       end
 
       def remainder(lis)
-        (units_required(lis) * group_buy_unit_size(lis)) - max_quantity_amount(lis)
+        total_available(lis) - max_quantity_amount(lis)
       end
 
       def max_quantity_amount(lis)
