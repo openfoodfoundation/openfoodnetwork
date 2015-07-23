@@ -18,6 +18,11 @@ module OpenFoodNetwork::Reports
       organise do
         group { |o| o[:three] }
         sort  { |o| o[:four] }
+
+        summary_row do
+          column { |o| o[:one] }
+          column { |o| o[:four] }
+        end
       end
     end
   end
@@ -43,6 +48,7 @@ module OpenFoodNetwork::Reports
       let(:sort_by) { rules_head.to_h[:sort_by] }
       let(:next_group_by) { rules_head.next.to_h[:group_by] }
       let(:next_sort_by) { rules_head.next.to_h[:sort_by] }
+      let(:next_summary_columns) { rules_head.next.to_h[:summary_columns] }
 
       it "constructs the head of the rules list" do
         group_by.call(data).should == 1
@@ -52,6 +58,11 @@ module OpenFoodNetwork::Reports
       it "constructs nested rules" do
         next_group_by.call(data).should == 3
         next_sort_by.call(data).should == 4
+      end
+
+      it "constructs summary columns for rules" do
+        next_summary_columns[0].call(data).should == 1
+        next_summary_columns[1].call(data).should == 4
       end
     end
   end

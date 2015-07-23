@@ -19,5 +19,18 @@ module OpenFoodNetwork::Reports
       rule.organise &proc
       rule.next.should be_a Rule
     end
+
+    it "can define a summary row and return it in a hash" do
+      rule.summary_row do
+        column {}
+        column {}
+        column {}
+      end
+
+      rule.to_h[:summary_columns].count.should == 3
+      rule.to_h[:summary_columns][0].should be_a Proc
+      rule.to_h[:summary_columns][1].should be_a Proc
+      rule.to_h[:summary_columns][2].should be_a Proc
+    end
   end
 end
