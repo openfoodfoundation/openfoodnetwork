@@ -19,8 +19,8 @@ module OpenFoodNetwork::Reports
           column { |lis| "" }
           column { |lis| "" }
           column { |lis| "" }
-          column { |lis| total_weight(lis) }
-          column { |lis| total_max_quantity_weight(lis) }
+          column { |lis| total_amount(lis) }
+          column { |lis| total_max_quantity_amount(lis) }
           column { |lis| units_required(lis) }
           column { |lis| remainder(lis) }
         end
@@ -69,30 +69,30 @@ module OpenFoodNetwork::Reports
         end
       end
 
-      def total_weight(lis)
-        lis.sum { |li| (li.quantity || 0)     * (li.variant.weight || 0) }
+      def total_amount(lis)
+        lis.sum { |li| (li.quantity || 0)     * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1) }
       end
 
-      def total_max_quantity_weight(lis)
-        lis.sum { |li| (li.max_quantity || 0) * (li.variant.weight || 0) }
+      def total_max_quantity_amount(lis)
+        lis.sum { |li| (li.max_quantity || 0) * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1) }
       end
 
       def units_required(lis)
         if group_buy_unit_size(lis).zero?
           0
         else
-          ( max_weight(lis) / group_buy_unit_size(lis) ).floor
+          ( max_quantity_amount(lis) / group_buy_unit_size(lis) ).floor
         end
       end
 
       def remainder(lis)
-        max_weight(lis) - (units_required(lis) * group_buy_unit_size(lis))
+        max_quantity_amount(lis) - (units_required(lis) * group_buy_unit_size(lis))
       end
 
-      def max_weight(lis)
-        max_weight = lis.sum do |li|
+      def max_quantity_amount(lis)
+        max_quantity_amount = lis.sum do |li|
           max_quantity = [li.max_quantity || 0, li.quantity || 0].max
-          max_quantity * (li.variant.weight || 0)
+          max_quantity * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1)
         end
       end
     end
