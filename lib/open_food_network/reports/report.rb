@@ -12,6 +12,19 @@ module OpenFoodNetwork::Reports
       @@columns.to_a
     end
 
+    def rules
+      # Flatten linked list and return as hashes
+      rules = []
+
+      rule = @@rules_head
+      while rule
+        rules << rule
+        rule = rule.next
+      end
+
+      rules.map &:to_h
+    end
+
 
     # -- DSL
     def self.header(*columns)

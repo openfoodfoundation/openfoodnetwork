@@ -1,27 +1,32 @@
 require 'open_food_network/reports/report'
 
 module OpenFoodNetwork::Reports
+  P1 = Proc.new { |o| o[:one] }
+  P2 = Proc.new { |o| o[:two] }
+  P3 = Proc.new { |o| o[:three] }
+  P4 = Proc.new { |o| o[:four] }
+
   class TestReport < Report
     header 'One', 'Two', 'Three', 'Four'
 
     columns do
-      column { |o| o[:one] }
-      column { |o| o[:two] }
-      column { |o| o[:three] }
-      column { |o| o[:four] }
+      column &P1
+      column &P2
+      column &P3
+      column &P4
     end
 
     organise do
-      group { |o| o[:one] }
-      sort  { |o| o[:two] }
+      group &P1
+      sort  &P2
 
       organise do
-        group { |o| o[:three] }
-        sort  { |o| o[:four] }
+        group &P3
+        sort  &P4
 
         summary_row do
-          column { |o| o[:one] }
-          column { |o| o[:four] }
+          column &P1
+          column &P4
         end
       end
     end
@@ -63,6 +68,13 @@ module OpenFoodNetwork::Reports
       it "constructs summary columns for rules" do
         next_summary_columns[0].call(data).should == 1
         next_summary_columns[1].call(data).should == 4
+      end
+    end
+
+    describe "outputting rules" do
+      it "outputs the rules" do
+        report.rules.should == [{group_by: P1, sort_by: P2},
+                                {group_by: P3, sort_by: P4, summary_columns: [P1, P4]}]
       end
     end
   end
