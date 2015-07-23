@@ -9,10 +9,16 @@ module OpenFoodNetwork::Reports
       column { |o| o[:two] }
       column { |o| o[:three] }
     end
+
+    organise do
+      group { |o| o[:one] }
+      sort  { |o| o[:two] }
+    end
   end
 
   describe Report do
     let(:report) { TestReport.new }
+    let(:rules_head) { TestReport.class_variable_get(:@@rules_head) }
     let(:data) { {one: 1, two: 2, three: 3} }
 
     it "returns the header" do
@@ -23,6 +29,16 @@ module OpenFoodNetwork::Reports
       report.columns[0].call(data).should == 1
       report.columns[1].call(data).should == 2
       report.columns[2].call(data).should == 3
+    end
+
+    describe "rules" do
+      let(:group_by) { rules_head.to_h[:group_by] }
+      let(:sort_by) { rules_head.to_h[:sort_by] }
+
+      it "constructs a linked list of rules" do
+        group_by.call(data).should == 1
+        sort_by.call(data).should == 2
+      end
     end
   end
 end
