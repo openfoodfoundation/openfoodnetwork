@@ -7,6 +7,7 @@ module OpenFoodNetwork::Reports
     private
 
     class << self
+
       def supplier_name(lis)
         lis.first.variant.product.supplier.name
       end
@@ -44,12 +45,28 @@ module OpenFoodNetwork::Reports
         end
       end
 
+      def total_allocated(lis)
+        # Proposed new factoring:
+        # units_required * group_buy_unit_size
+
+        num_units = if (lis.first.variant.product.group_buy_unit_size || 0).zero?
+                      0
+                    else
+                      max_weight = lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) }
+                      group_buy_unit_size = lis.first.variant.product.group_buy_unit_size
+
+                      (max_weight / group_buy_unit_size).floor
+                    end
+
+        num_units * (lis.first.variant.product.group_buy_unit_size || 0)
+      end
+
       def remainder(lis)
         (units_required(lis) * group_buy_unit_size(lis)) - max_quantity_amount(lis)
       end
 
       def max_quantity_amount(lis)
-        max_quantity_amount = lis.sum do |li|
+        lis.sum do |li|
           max_quantity = [li.max_quantity || 0, li.quantity || 0].max
           max_quantity * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1)
         end
