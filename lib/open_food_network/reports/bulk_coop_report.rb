@@ -30,11 +30,11 @@ module OpenFoodNetwork::Reports
       end
 
       def total_amount(lis)
-        lis.sum { |li| (li.quantity || 0)     * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1) }
+        lis.sum { |li| (li.quantity || 0)     * scaled_amount(li) }
       end
 
       def total_max_quantity_amount(lis)
-        lis.sum { |li| (li.max_quantity || 0) * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1) }
+        lis.sum { |li| (li.max_quantity || 0) * scaled_amount(li) }
       end
 
       def units_required(lis)
@@ -56,9 +56,14 @@ module OpenFoodNetwork::Reports
       def max_quantity_amount(lis)
         lis.sum do |li|
           max_quantity = [li.max_quantity || 0, li.quantity || 0].max
-          max_quantity * (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1)
+          max_quantity * scaled_amount(li)
         end
       end
+
+      def scaled_amount(li)
+        (li.variant.unit_value || 0) / (li.product.variant_unit_scale || 1)
+      end
+
     end
   end
 end
