@@ -58,7 +58,8 @@ module OpenFoodNetwork::Reports
       end
 
       def group_buy_unit_size(lis)
-        lis.first.variant.product.group_buy_unit_size || 0.0
+        (lis.first.variant.product.group_buy_unit_size || 0.0) /
+          (lis.first.product.variant_unit_scale || 1)
       end
 
       def group_buy_unit_size_f(lis)
