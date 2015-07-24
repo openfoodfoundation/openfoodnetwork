@@ -2,7 +2,7 @@ require 'open_food_network/reports/bulk_coop_report'
 
 module OpenFoodNetwork::Reports
   class BulkCoopSupplierReport < BulkCoopReport
-    header "Supplier", "Product", "Unit Size", "Variant value", "Variant unit", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"
+    header "Supplier", "Product", "Unit Size", "Variant value", "Variant unit", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Unallocated"
 
     organise do
       group { |li| li.variant.product.supplier }
