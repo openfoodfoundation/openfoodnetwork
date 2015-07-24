@@ -50,7 +50,8 @@ module OpenFoodNetwork::Reports
       end
 
       def remainder(lis)
-        total_available(lis) - max_quantity_amount(lis)
+        remainder = total_available(lis) - max_quantity_amount(lis)
+        remainder >= 0 ? remainder : ''
       end
 
       def max_quantity_amount(lis)
