@@ -33,9 +33,7 @@ module OpenFoodNetwork
 
     def table_items
       orders = search.result
-      orders.
-        map    { |o| o.line_items.managed_by(@user) }.flatten.
-        select { |li| li.product.group_buy? && li.product.group_buy_unit_size.andand > 0 }
+      orders.map { |o| o.line_items.managed_by(@user) }.flatten
     end
 
     def rules
