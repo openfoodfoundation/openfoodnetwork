@@ -31,11 +31,10 @@ module OpenFoodNetwork
       rows = []
       unless is_leaf_node(groups)
         groups.each do |key, group|
-          if key == :summary_row
-            rows << group[:columns].map { |cols| cols.call(group[:items]) }
-            rows << Array.new(group[:columns].count, '')
-          else
+          unless key == :summary_row
             build_table(group).each { |g| rows << g }
+          else
+            rows << group[:columns].map { |cols| cols.call(group[:items]) }
           end
         end
       else

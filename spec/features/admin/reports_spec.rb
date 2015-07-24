@@ -124,7 +124,7 @@ feature %q{
       table.sort.should == [
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
       ].sort
-      all('table#listing_orders tbody tr').count.should == 7 # Totals row per order
+      all('table#listing_orders tbody tr').count.should == 5 # Totals row per order
     end
 
     scenario "Pack By Supplier" do
@@ -139,7 +139,7 @@ feature %q{
       table.sort.should == [
         ["Hub", "Supplier", "Code", "First Name", "Last Name", "Product", "Variant", "Quantity", "TempControlled?"]
       ].sort
-      all('table#listing_orders tbody tr').count.should == 5 # Totals row per supplier
+      all('table#listing_orders tbody tr').count.should == 4 # Totals row per supplier
     end
   end
 
@@ -266,7 +266,7 @@ feature %q{
         click_button 'Search'
 
         # Then I should see the rows for the first order but not the second
-        all('table#listing_orders tbody tr').count.should == 3 # Three rows per order
+        all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
       end
     end
 
