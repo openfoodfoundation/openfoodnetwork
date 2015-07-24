@@ -33,15 +33,11 @@ module OpenFoodNetwork::Reports
         lis.sum { |li| (li.quantity || 0)     * scaled_amount(li) }
       end
 
-      def total_max_quantity_amount(lis)
-        lis.sum { |li| (li.max_quantity || 0) * scaled_amount(li) }
-      end
-
       def units_required(lis)
         if group_buy_unit_size(lis).zero?
           0
         else
-          ( max_quantity_amount(lis) / group_buy_unit_size(lis) ).ceil
+          ( total_amount(lis) / group_buy_unit_size(lis) ).ceil
         end
       end
 
@@ -50,8 +46,12 @@ module OpenFoodNetwork::Reports
       end
 
       def remainder(lis)
-        remainder = total_available(lis) - max_quantity_amount(lis)
+        remainder = total_available(lis) - total_amount(lis)
         remainder >= 0 ? remainder : ''
+      end
+
+      def max_quantity_excess(lis)
+        max_quantity_amount(lis) - total_amount(lis)
       end
 
       def max_quantity_amount(lis)
