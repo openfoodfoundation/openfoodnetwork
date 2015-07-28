@@ -71,6 +71,11 @@ describe 'Cart service', ->
     $timeout.flush()
     expect(Cart.orderChanged).toHaveBeenCalled()
 
+  it "clears the cart", ->
+    expect(Cart.line_items).not.toEqual []
+    Cart.clear()
+    expect(Cart.line_items).toEqual []
+
   describe "generating an extended variant name", ->
     it "returns the product name when it is the same as the variant name", ->
       variant = {product_name: 'product_name', name_to_display: 'product_name'}
