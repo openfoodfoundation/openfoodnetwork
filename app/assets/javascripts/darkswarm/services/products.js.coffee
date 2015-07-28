@@ -10,8 +10,14 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
 
     update: =>
       @loading = true
-      @products = $resource("/shop/products").query (products)=>
-        @extend() && @dereference()
+      @products = []
+      $resource("/shop/products").query (products)=>
+        Variants.clear()
+
+        @products = products
+
+        @extend()
+        @dereference()
         @registerVariants()
         @registerVariantsWithCart()
         @loading = false

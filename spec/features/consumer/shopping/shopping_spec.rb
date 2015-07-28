@@ -42,7 +42,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     describe "selecting an order cycle" do
-      let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
 
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
@@ -51,7 +51,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "with multiple order cycles" do
-        let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
+        let(:exchange2) { oc2.exchanges.to_enterprises(distributor).outgoing.first }
+
         before do
           exchange1.update_attribute :pickup_time, "frogs"
           exchange2.update_attribute :pickup_time, "turtles"
@@ -82,6 +83,22 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           open_product_modal product
           modal_should_be_open_for product
+        end
+
+        it "shows the correct fees after selecting and changing an order cycle" do
+          enterprise_fee = create(:enterprise_fee, amount: 1001)
+          exchange2.enterprise_fees << enterprise_fee
+          exchange2.variants << variant
+          exchange1.variants << variant
+
+          # -- Selecting an order cycle
+          visit shop_path
+          select "turtles", from: "order_cycle_id"
+          page.should have_content "$1020.99"
+
+          # -- Changing order cycle
+          select "frogs", from: "order_cycle_id"
+          page.should have_content "$19.99"
         end
       end
     end
