@@ -17,6 +17,17 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         @loading = false
       @
 
+    extend: ->
+      for product in @products
+        if product.variants?.length > 0
+          prices = (v.price for v in product.variants)
+          product.price = Math.min.apply(null, prices)
+        product.hasVariants = product.variants?.length > 0
+
+        product.primaryImage = product.images[0]?.small_url if product.images
+        product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"
+        product.largeImage = product.images[0]?.large_url if product.images
+
     dereference: ->
       for product in @products
         product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
@@ -42,14 +53,3 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
           for variant in product.variants
             Cart.register_variant variant
         Cart.register_variant product.master if product.master
-
-    extend: ->
-      for product in @products
-        if product.variants?.length > 0
-          prices = (v.price for v in product.variants)
-          product.price = Math.min.apply(null, prices)
-        product.hasVariants = product.variants?.length > 0
-
-        product.primaryImage = product.images[0]?.small_url if product.images
-        product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"
-        product.largeImage = product.images[0]?.large_url if product.images
