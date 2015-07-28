@@ -12,8 +12,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
       @loading = true
       @products = []
       $resource("/shop/products").query (products)=>
-        Variants.clear()
-
         @products = products
 
         @extend()

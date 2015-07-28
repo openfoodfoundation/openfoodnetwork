@@ -1,6 +1,6 @@
 # TODO this SUCKS. Fix it
 
-Darkswarm.controller "OrderCycleCtrl", ($scope, OrderCycle, $timeout) ->
+Darkswarm.controller "OrderCycleCtrl", ($scope, $timeout, OrderCycle) ->
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.OrderCycle = OrderCycle
 
@@ -9,11 +9,15 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, OrderCycle, $timeout) ->
   # That takes an expression instead of a trigger, and binds to that
   $timeout =>
     if !$scope.OrderCycle.selected()
-      $("#order_cycle_id").trigger("openTrigger") 
+      $("#order_cycle_id").trigger("openTrigger")
 
 
-Darkswarm.controller "OrderCycleChangeCtrl", ($scope, OrderCycle, Products, $timeout) ->
+Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants) ->
   $scope.changeOrderCycle = ->
-    OrderCycle.push_order_cycle Products.update
+    OrderCycle.push_order_cycle $scope.orderCycleChanged
     $timeout ->
-      $("#order_cycle_id").trigger("closeTrigger") 
+      $("#order_cycle_id").trigger("closeTrigger")
+
+  $scope.orderCycleChanged = ->
+    Variants.clear()
+    Products.update()
