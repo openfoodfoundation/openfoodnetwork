@@ -50,6 +50,7 @@ gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
+gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'foreigner'

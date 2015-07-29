@@ -56,6 +56,11 @@ describe Spree::Admin::ReportsController do
     order
   end
 
+  # Results
+  let(:resulting_orders_prelim) { assigns(:report).search.result }
+  let(:resulting_orders) { assigns(:report).table_items.map(&:order) }
+  let(:resulting_products) { assigns(:report).table_items.map(&:product) }
+
   # As manager of a coordinator (c1)
   context "Coordinator Enterprise User" do
     before { login_as_enterprise_user [c1] }
@@ -64,8 +69,8 @@ describe Spree::Admin::ReportsController do
       it "shows all orders in order cycles I coordinate" do
         spree_get :orders_and_fulfillment
 
-        assigns(:line_items).map(&:order).should include orderA1, orderA2
-        assigns(:line_items).map(&:order).should_not include orderB1, orderB2
+        resulting_orders.should     include orderA1, orderA2
+        resulting_orders.should_not include orderB1, orderB2
       end
     end
   end
@@ -88,9 +93,9 @@ describe Spree::Admin::ReportsController do
       it "only shows orders that I have access to" do
         spree_get :bulk_coop
 
-        assigns(:search).result.should include(orderA1, orderB1)
-        assigns(:search).result.should_not include(orderA2)
-        assigns(:search).result.should_not include(orderB2)
+        resulting_orders.should     include(orderA1, orderB1)
+        resulting_orders.should_not include(orderA2)
+        resulting_orders.should_not include(orderB2)
       end
     end
 
@@ -98,9 +103,9 @@ describe Spree::Admin::ReportsController do
       it "only shows orders that I have access to" do
         spree_get :payments
 
-        assigns(:search).result.should include(orderA1, orderB1)
-        assigns(:search).result.should_not include(orderA2)
-        assigns(:search).result.should_not include(orderB2)
+        resulting_orders_prelim.should     include(orderA1, orderB1)
+        resulting_orders_prelim.should_not include(orderA2)
+        resulting_orders_prelim.should_not include(orderB2)
       end
     end
 
@@ -108,15 +113,15 @@ describe Spree::Admin::ReportsController do
       it "only shows orders that I distribute" do
         spree_get :orders_and_fulfillment
 
-        assigns(:line_items).map(&:order).should include orderA1, orderB1
-        assigns(:line_items).map(&:order).should_not include orderA2, orderB2
+        resulting_orders.should     include orderA1, orderB1
+        resulting_orders.should_not include orderA2, orderB2
       end
 
       it "only shows the selected order cycle" do
         spree_get :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
 
-        assigns(:search).result.should include(orderA1)
-        assigns(:search).result.should_not include(orderB1)
+        resulting_orders.should     include(orderA1)
+        resulting_orders.should_not include(orderB1)
       end
     end
   end
@@ -129,8 +134,8 @@ describe Spree::Admin::ReportsController do
       it "only shows product line items that I am supplying" do
         spree_get :bulk_coop
 
-        assigns(:line_items).map(&:product).should include p1
-        assigns(:line_items).map(&:product).should_not include p2, p3
+        resulting_products.should     include p1
+        resulting_products.should_not include p2, p3
       end
     end
 
@@ -143,8 +148,8 @@ describe Spree::Admin::ReportsController do
         it "only shows product line items that I am supplying" do
           spree_get :orders_and_fulfillment
 
-          assigns(:line_items).map(&:product).should include p1
-          assigns(:line_items).map(&:product).should_not include p2, p3
+          resulting_products.should     include p1
+          resulting_products.should_not include p2, p3
         end
       end
 
@@ -152,15 +157,15 @@ describe Spree::Admin::ReportsController do
         it "does not show me line_items I supply" do
           spree_get :orders_and_fulfillment
 
-          assigns(:line_items).map(&:product).should_not include p1, p2, p3
+          resulting_products.should_not include p1, p2, p3
         end
       end
 
       it "only shows the selected order cycle" do
         spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
-        assigns(:search).result.should include(orderA1)
-        assigns(:search).result.should_not include(orderB1)
+        resulting_orders_prelim.should     include(orderA1)
+        resulting_orders_prelim.should_not include(orderB1)
       end
     end
   end
