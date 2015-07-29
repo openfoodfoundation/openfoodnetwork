@@ -96,9 +96,21 @@ feature "As a consumer I want to shop with a distributor", js: true do
           select "turtles", from: "order_cycle_id"
           page.should have_content "$1020.99"
 
+          # -- Cart shows correct price
+          fill_in "variants[#{variant.id}]", with: 1
+          show_cart
+          within("li.cart") { page.should have_content "$1020.99" }
+
           # -- Changing order cycle
           select "frogs", from: "order_cycle_id"
           page.should have_content "$19.99"
+
+          # -- Cart should be cleared
+          # ng-animate means that the old product row is likely to be present, so we explicitly
+          # fill in the quantity in the incoming row
+          page.should_not have_selector "tr.product-cart"
+          within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
+          within("li.cart") { page.should have_content "$19.99" }
         end
       end
     end

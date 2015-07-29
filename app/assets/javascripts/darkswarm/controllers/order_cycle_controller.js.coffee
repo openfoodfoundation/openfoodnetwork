@@ -1,5 +1,3 @@
-# TODO this SUCKS. Fix it
-
 Darkswarm.controller "OrderCycleCtrl", ($scope, $timeout, OrderCycle) ->
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.OrderCycle = OrderCycle
@@ -12,12 +10,15 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, $timeout, OrderCycle) ->
       $("#order_cycle_id").trigger("openTrigger")
 
 
-Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants) ->
+Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants, Cart) ->
   $scope.changeOrderCycle = ->
     OrderCycle.push_order_cycle $scope.orderCycleChanged
     $timeout ->
       $("#order_cycle_id").trigger("closeTrigger")
 
   $scope.orderCycleChanged = ->
+    # push_order_cycle clears the cart server-side. Here we call Cart.clear() to clear the
+    # client-side cart.
     Variants.clear()
+    Cart.clear()
     Products.update()

@@ -19,7 +19,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         @registerVariants()
         @registerVariantsWithCart()
         @loading = false
-      @
 
     extend: ->
       for product in @products
