@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -71,6 +71,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
 
     clear: ->
       @line_items = []
+      storage.clearAll() # One day this will have to be moar GRANULAR
 
     create_line_item: (variant)->
       variant.extended_name = @extendedVariantName(variant)
