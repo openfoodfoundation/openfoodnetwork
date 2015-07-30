@@ -14,9 +14,7 @@ We're part of global movement - get involved!
 
 ## Getting started
 
-Below are instructions for setting up a development environment for Open Food Network. If you're interested in provisioning a server, see the Ansible playbooks at:
-
-    https://github.com/openfoodfoundation/ofn_deployment
+Below are instructions for setting up a development environment for Open Food Network. If you're interested in provisioning a server, see [the project's Ansible playbooks](https://github.com/openfoodfoundation/ofn_deployment).
 
 
 ## Dependencies
