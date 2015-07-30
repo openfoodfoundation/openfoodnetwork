@@ -1,5 +1,5 @@
 .row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  
+
   .columns.small-12.medium-7.large-7.fat
     / Will add in long description available once clean up HTML formatting producer.long_description
     %div{"bo-if" => "producer.description"}
@@ -10,23 +10,23 @@
       %label &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
-    
+
     %div{"bo-if" => "producer.supplied_taxons"}
       %label Shop for
       %p.trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           %span{"bo-text" => "taxon.name"}
-    
+
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
 
     %div{"bo-if" => "producer.email || producer.website || producer.phone"}
       %label Contact
-      
+
       %p.word-wrap{"bo-if" => "producer.phone"}
-        Call 
-        %span{"bo-text" => "producer.phone"} 
+        Call
+        %span{"bo-text" => "producer.phone"}
 
       %p.word-wrap{"bo-if" => "producer.email"}
         %a{"bo-href" => "producer.email | stripUrl", target: "_blank", mailto: true}
@@ -39,20 +39,20 @@
     %div{"bo-if" => "producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
       %label Follow
       .follow-icons{bindonce: true}
-        %span{"bo-if" => "producer.twitter"} 
+        %span{"bo-if" => "producer.twitter"}
           %a{"bo-href-i" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.ofn-i_041-twitter
-        
+
         %span{"bo-if" => "producer.facebook"}
           %a{"bo-href-i" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
             %i.ofn-i_044-facebook
-        
+
         %span{"bo-if" => "producer.linkedin"}
           %a{"bo-href-i" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
             %i.ofn-i_042-linkedin
-        
+
         %span{"bo-if" => "producer.instagram"}
-          %a{"bo-href-i" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
+          %a{"bo-href-i" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}
             %i.ofn-i_043-instagram
 
 .row.active_table_row.pad-top{"ng-if" => "open()", "bo-if" => "producer.hubs"}
@@ -60,19 +60,18 @@
     .row
       .columns.small-12.fat
         %div{"bo-if" => "producer.name"}
-          %label 
+          %label
             Shop for
-            %span.turquoise{"bo-text" => "producer.name"} 
+            %span.turquoise{"bo-text" => "producer.name"}
             products at:
         %div.show-for-medium-up{"bo-if" => "!producer.name"}
           &nbsp;
     .row.cta-container
       .columns.small-12
         %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
-        "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+        "bo-href" => "hub.path", "ofn-change-hub" => "hub",
         "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
           .hub-name{"bo-text" => "hub.name"}
           .button-address{"bo-bind" => "[hub.address.city, hub.address.state_name] | printArray"}
-

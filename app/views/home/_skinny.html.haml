@@ -1,6 +1,6 @@
 .row.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}", bindonce: true}
   .columns.small-12.medium-5.large-5.skinny-head
-    %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub", "data-is-link" => "true"}
+    %a.hub{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
       %i{bo: {class: "hub.icon_font"}}
       %span.margin-top.hub-name-listing{"bo-bind" => "hub.name | truncate:40"}
 
@@ -11,7 +11,7 @@
     %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
   .columns.small-4.medium-3.large-3.text-right{"bo-if" => "hub.active"}
-    %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+    %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %i.ofn-i_033-open-sign
       %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here
@@ -19,7 +19,7 @@
         %span{"bo-bind" => "hub.orders_close_at | sensible_timeframe"}
 
   .columns.small-4.medium-3.large-3.text-right{"bo-if" => "!hub.active"}
-    %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-empties-cart" => "hub"}
+    %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %i.ofn-i_032-closed-sign
       %span.margin-top{ bo: { if: "current()" } }
         %em Shopping here

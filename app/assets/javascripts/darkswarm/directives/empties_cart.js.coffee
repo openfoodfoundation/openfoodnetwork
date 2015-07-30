@@ -1,9 +1,9 @@
-Darkswarm.directive "ofnEmptiesCart", (CurrentHub, Cart, storage) ->
+Darkswarm.directive "ofnChangeHub", (CurrentHub, Cart, storage) ->
   # Compares scope.hub with CurrentHub. Will trigger an confirmation if they are different,
   # and Cart isn't empty
   restrict: "A"
   scope:
-    hub: "=ofnEmptiesCart"
+    hub: "=ofnChangeHub"
   link: (scope, elm, attr)->
     cart_will_need_emptying = ->
       CurrentHub.hub?.id and CurrentHub.hub.id isnt scope.hub.id and !Cart.empty()
