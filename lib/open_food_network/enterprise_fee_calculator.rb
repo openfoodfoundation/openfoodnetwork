@@ -67,10 +67,8 @@ module OpenFoodNetwork
       @indexed_enterprise_fees = {}
 
       exchange_fees = per_item_enterprise_fees_with_exchange_details
-      indexed_variants = Spree::Variant.where(id: exchange_fees.pluck(:variant_id)).indexed
-
-      load_exchange_fees    indexed_variants, exchange_fees
-      load_coordinator_fees indexed_variants
+      load_exchange_fees exchange_fees
+      load_coordinator_fees
     end
 
     def per_item_enterprise_fees_with_exchange_details
@@ -82,16 +80,16 @@ module OpenFoodNetwork
         select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')
     end
 
-    def load_exchange_fees(indexed_variants, exchange_fees)
+    def load_exchange_fees(exchange_fees)
       exchange_fees.each do |enterprise_fee|
         @indexed_enterprise_fees[enterprise_fee.variant_id.to_i] ||= []
         @indexed_enterprise_fees[enterprise_fee.variant_id.to_i] << enterprise_fee
       end
     end
 
-    def load_coordinator_fees(indexed_variants)
-      @order_cycle.coordinator_fees.each do |enterprise_fee|
-        indexed_variants.keys.each do |variant_id|
+    def load_coordinator_fees
+      @order_cycle.coordinator_fees.per_item.each do |enterprise_fee|
+        @order_cycle.variants.pluck(:id).each do |variant_id|
           @indexed_enterprise_fees[variant_id] ||= []
           @indexed_enterprise_fees[variant_id] << enterprise_fee
         end
