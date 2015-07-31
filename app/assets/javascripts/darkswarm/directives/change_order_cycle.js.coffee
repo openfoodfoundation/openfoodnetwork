@@ -15,5 +15,8 @@ Darkswarm.directive "ofnChangeOrderCycle", (OrderCycle, Cart, storage) ->
         if confirm "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
           Cart.clear()
           scope.changeOrderCycle()
+        else
+          scope.$apply ->
+            scope.revertOrderCycle()
       else
         scope.changeOrderCycle()

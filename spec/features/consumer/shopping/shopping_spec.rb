@@ -85,32 +85,57 @@ feature "As a consumer I want to shop with a distributor", js: true do
           modal_should_be_open_for product
         end
 
-        it "shows the correct fees after selecting and changing an order cycle" do
-          enterprise_fee = create(:enterprise_fee, amount: 1001)
-          exchange2.enterprise_fees << enterprise_fee
-          exchange2.variants << variant
-          exchange1.variants << variant
+        describe "changing order cycle" do
+          it "shows the correct fees after selecting and changing an order cycle" do
+            enterprise_fee = create(:enterprise_fee, amount: 1001)
+            exchange2.enterprise_fees << enterprise_fee
+            exchange2.variants << variant
+            exchange1.variants << variant
 
-          # -- Selecting an order cycle
-          visit shop_path
-          select "turtles", from: "order_cycle_id"
-          page.should have_content "$1020.99"
+            # -- Selecting an order cycle
+            visit shop_path
+            select "turtles", from: "order_cycle_id"
+            page.should have_content "$1020.99"
 
-          # -- Cart shows correct price
-          fill_in "variants[#{variant.id}]", with: 1
-          show_cart
-          within("li.cart") { page.should have_content "$1020.99" }
+            # -- Cart shows correct price
+            fill_in "variants[#{variant.id}]", with: 1
+            show_cart
+            within("li.cart") { page.should have_content "$1020.99" }
 
-          # -- Changing order cycle
-          select "frogs", from: "order_cycle_id"
-          page.should have_content "$19.99"
+            # -- Changing order cycle
+            select "frogs", from: "order_cycle_id"
+            page.should have_content "$19.99"
 
-          # -- Cart should be cleared
-          # ng-animate means that the old product row is likely to be present, so we explicitly
-          # fill in the quantity in the incoming row
-          page.should_not have_selector "tr.product-cart"
-          within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
-          within("li.cart") { page.should have_content "$19.99" }
+            # -- Cart should be cleared
+            # ng-animate means that the old product row is likely to be present, so we explicitly
+            # fill in the quantity in the incoming row
+            page.should_not have_selector "tr.product-cart"
+            within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
+            within("li.cart") { page.should have_content "$19.99" }
+          end
+
+          describe "declining to clear the cart" do
+            before do
+              exchange2.variants << variant
+              exchange1.variants << variant
+
+              visit shop_path
+              select "turtles", from: "order_cycle_id"
+              fill_in "variants[#{variant.id}]", with: 1
+            end
+
+            it "leaves the cart untouched when the user declines" do
+              handle_js_confirm(false) do
+                select "frogs", from: "order_cycle_id"
+                show_cart
+                page.should have_selector "tr.product-cart"
+                page.should have_selector 'li.cart', text: '1 item'
+
+                # The order cycle choice should not have changed
+                page.should have_select 'order_cycle_id', selected: 'turtles'
+              end
+            end
+          end
         end
       end
     end
