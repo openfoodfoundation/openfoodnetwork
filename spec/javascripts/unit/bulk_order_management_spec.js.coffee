@@ -394,14 +394,14 @@ describe "Auxiliary functions", ->
     beforeEach ->
       date = new Date
       date.setYear(2010)
-      date.setMonth(5) # Zero indexed, so 5 is June
+      date.setMonth(4) # Zero indexed, so 4 is May
       date.setDate(15)
       date.setHours(5)
       date.setMinutes(10)
       date.setSeconds(30)
 
     it "returns a date formatted as yyyy-mm-dd", ->
-      expect(formatDate(date)).toEqual "2010-06-15"
+      expect(formatDate(date)).toEqual "2010-05-15"
 
     it "returns a time formatted as hh-MM:ss", ->
       expect(formatTime(date)).toEqual "05:10:30"
