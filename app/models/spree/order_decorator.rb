@@ -130,7 +130,7 @@ Spree::Order.class_eval do
     else
       current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
       current_item.variant = variant
-      current_item.unit_value = variant.unit_value
+      current_item.final_weight_volume = variant.unit_value * quantity
       if currency
         current_item.currency = currency unless currency.nil?
         current_item.price    = variant.price_in(currency).amount
