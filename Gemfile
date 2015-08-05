@@ -96,6 +96,7 @@ group :test, :development do
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
+  gem 'rspec-retry'
   gem 'json_spec'
   gem 'unicorn-rails'
 end

@@ -21,7 +21,7 @@ feature %q{
     create :check_payment, order: @order, amount: @order.total
   end
 
-  scenario "creating an order with distributor and order cycle", js: true do
+  scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
     order_cycle = create(:order_cycle)
     distributor = order_cycle.distributors.first
     product = order_cycle.products.first

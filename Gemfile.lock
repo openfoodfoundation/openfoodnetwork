@@ -462,6 +462,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rspec-retry (0.4.2)
+      rspec-core
     ruby-hmac (0.4.0)
     ruby-progressbar (1.7.1)
     safe_yaml (0.9.5)
@@ -599,6 +601,7 @@ DEPENDENCIES
   representative_view
   roadie-rails (~> 1.0.3)
   rspec-rails
+  rspec-retry
   sass (~> 3.3)
   sass-rails (~> 3.2.3)
   shoulda-matchers
