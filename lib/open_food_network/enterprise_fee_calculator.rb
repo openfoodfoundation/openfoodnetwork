@@ -89,7 +89,7 @@ module OpenFoodNetwork
 
     def load_coordinator_fees
       @order_cycle.coordinator_fees.per_item.each do |enterprise_fee|
-        @order_cycle.variants.pluck(:id).each do |variant_id|
+        @order_cycle.variants.map(&:id).each do |variant_id|
           @indexed_enterprise_fees[variant_id] ||= []
           @indexed_enterprise_fees[variant_id] << enterprise_fee
         end

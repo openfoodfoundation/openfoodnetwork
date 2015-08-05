@@ -136,7 +136,8 @@ class OrderCycle < ActiveRecord::Base
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
       not_deleted.
-      select('DISTINCT spree_variants.*')
+      select('DISTINCT spree_variants.*').
+      to_a # http://stackoverflow.com/q/15110166
   end
 
   def distributed_variants

@@ -23,7 +23,7 @@ FactoryGirl.define do
       ExchangeFee.create!(exchange: ex2,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
-      #Distributors
+      # Distributors
       distributor1 = create(:distributor_enterprise)
       distributor2 = create(:distributor_enterprise)
 
