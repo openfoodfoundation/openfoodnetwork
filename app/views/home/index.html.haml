@@ -1,3 +1,7 @@
+:css
+  #tagline:before { background-image: url("#{ContentConfig.home_hero.url}") }
+
+
 %div{"ng-controller" => "HomeCtrl"}
   = render partial: "shared/menu/alert"
 
@@ -6,8 +10,7 @@
       .small-12.text-center.columns
         %h1
           / TODO: Rohan - logo asset & width is content manageable:
-          -# TODO: SVGify
-          %img{src: "/assets/logo-white-notext.png", width: "250", title: "Open Food Network Australia"}
+          %img{src: "/assets/logo-white-notext.png", width: "250", title: Spree::Config.site_name}
           %br/
           %a.button.transparent{href: "/shops"}
             Shop Now

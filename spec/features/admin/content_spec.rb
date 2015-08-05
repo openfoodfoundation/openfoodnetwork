@@ -7,11 +7,13 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "filling in a setting shows the result on the home page" do
+  before do
     login_to_admin_section
     click_link 'Configuration'
     click_link 'Content'
+  end
 
+  scenario "filling in a setting shows the result on the home page" do
     fill_in 'footer_facebook_url', with: ''
     fill_in 'footer_twitter_url', with: 'http://twitter.com/me'
     fill_in 'footer_links_md', with: '[markdown link](/)'
@@ -26,5 +28,13 @@ feature %q{
 
     # And markdown is rendered
     page.should have_link 'markdown link'
+  end
+
+  scenario "uploading logos" do
+    attach_file 'logo', "#{Rails.root}/app/assets/images/logo-white.png"
+    click_button 'Update'
+    page.should have_content 'Your content has been successfully updated!'
+
+    ContentConfig.logo.to_s.should include "logo-white"
   end
 end

@@ -35,63 +35,14 @@
         -#   / If there is a time-sensitive offer you can write it here, e.g.
         -#   Time-sensitive offer goes here!
         %br
-        %table.signup-table.hubs-table{cellpadding: "0", cellspacing: "0"}
-          %thead
-            %tr
-              %td
-                %h5
-              %td.text-center{width: "24%"}
-                %h5 OFN Group
-          %tr
-            %td
-              %p
-                %strong Promote your members
-                %br
-                %span.text-small Promote your local and/or member businesses through a group page
-            %td.text-center
-              %i.ofn-i_003-check.text-big
-          %tr
-            %td
-              %p
-                %strong Unique URL
-                %br
-                %span.text-small Your own organisation page/url on the Open Food Network.
-            %td.text-center
-              %i.ofn-i_003-check.text-big
-          %tr
-            %td
-              %p
-                %strong Region map &amp; listings
-                %br
-                %span.text-small Easy search from your own list view and your own map - links through to profile pages for your member/local producers and/or food businesses.
-            %td.text-center
-              %i.ofn-i_003-check.text-big
-          %tr
-            %td
-              %p
-                %strong Opt-in extras
-              %p.text-small Available additional support:
-              %ul.small
-                %li Tailored workshop(s) for your stakeholders
-                %li Tailored training and support package
-            %td.text-center
-          %tfoot
-            %tr
-              %td
-              %td.text-center{valign: "top"}
-                %h2
-                  $5,500
+        = ContentConfig.group_signup_pricing_table_html.html_safe
 
   #shops-case-studies
     .row
       .small-12.medium-10.medium-offset-1.columns
         %h2.text-center Case studies
         %br
-        .row
-          .small-12.medium-6.columns
-            = render 'shared/case_study', img_src: "/assets/case-studies/South_East_Food_Hub.png", title: "South East Food Group", description: "The South East Food Hub lists all its participating producers and hubs (food clubs) on its group page on the Open Food Network.", link: "https://openfoodnetwork.org.au/groups/6"
-          .small-12.medium-6.columns
-            = render 'shared/case_study', img_src: "/assets/case-studies/mt-alexander.png", title: "Mt Alexander Local Produce Network", description: "This community organisation promotes local sustainable food production and consumption through its group page. It lists sources of local sustenance &mdash; direct from the grower or through a range local shops and markets.".html_safe, link: "https://openfoodnetwork.org.au/groups/10"
+        = ContentConfig.group_signup_case_studies_html.html_safe
 
   .pane#cta
     .row
@@ -105,26 +56,6 @@
     .row
       .small-12.medium-10.medium-offset-1.columns
         %h2.text-center Here's the detail.
-        .row
-          .small-12.medium-6.columns
-            %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
-            %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
-            %ul.text-small
-              %li A bullet point
-              %li Another point
-              %li A third point goes here
-            %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
-          .small-12.medium-6.columns
-            %h4 A sub-heading goes here
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in odio vel ex efficitur auctor. Nam rhoncus, tortor vel varius varius, magna lorem dignissim libero, at dignissim erat leo id tortor. Donec gravida quis augue sed pellentesque. Morbi laoreet efficitur mi, id tempus diam lacinia eu.
-            %h5 Smaller sub-heading goes here
-            %p.text-small Vestibulum eu quam neque. Aenean porta velit sit amet metus mattis, ut pulvinar dui semper. Nunc ornare scelerisque varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras a magna nec augue suscipit fermentum at ac urna.
-            %ul.text-small
-              %li A bullet point
-              %li Another point
-              %li A third point goes here
-            %p.text-small Quisque urna lacus, tristique sed rutrum a, volutpat eu diam. Nam placerat mi nec enim tincidunt, nec dapibus risus molestie. Praesent mattis eu dolor nec sollicitudin. Cras ut magna sem. Etiam vitae commodo augue, sit amet feugiat diam.
+        = ContentConfig.group_signup_detail_html.html_safe
 
 = render partial: "shared/footer"

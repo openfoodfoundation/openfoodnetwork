@@ -116,11 +116,11 @@
     .row
       .small-12.medium-3.medium-offset-2.columns.text-left
         %a{href: root_path}
-          %img{src: "/assets/logo-color.png", srcset: "/assets/logo-color.svg", width: "220px"}
+          %img{src: ContentConfig.footer_logo.url, width: "220"}
       .small-12.medium-5.columns.text-left
         %p.text-small
           Read our
-          %a{href: "/Terms-of-service.pdf"} Terms &amp; conditions
+          %a{href: ContentConfig.footer_tos_url} Terms &amp; conditions
           &#124;
           Find us on
           %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} Github
