@@ -30,7 +30,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
-        unit_value:   { name: "Weight/Volume", visible: false }
+        final_weight_volume:   { name: "Weight/Volume", visible: false }
         price:        { name: "Price",        visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
@@ -166,10 +166,10 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
 
     $scope.weightAdjustedPrice = (lineItem, oldValue) ->
       if oldValue <= 0
-        oldValue = lineItem.units_variant.unit_value
-      if lineItem.unit_value <= 0
-        lineItem.unit_value = lineItem.units_variant.unit_value
-      lineItem.price = lineItem.price * lineItem.unit_value / oldValue
+        oldValue = lineItem.units_variant.unit_value * line_item.quantity
+      if lineItem.final_weight_volume <= 0
+        lineItem.final_weight_volume = lineItem.units_variant.unit_value * lineItem.quantity
+      lineItem.price = lineItem.price * lineItem.final_weight_volume / oldValue
       #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
 
     $scope.unitValueLessThanZero = (lineItem) ->
@@ -177,6 +177,13 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         true
       else
         false
+
+    $scope.updateOnQuantity = (lineItem, oldQuantity) ->
+      if lineItem.quantity <= 0
+        lineItem.quantity = 1
+      # reset price to original unit value
+      lineItem.price = lineItem.price * (oldQuantity * lineItem.units_variant.unit_value) / lineItem.final_weight_volume
+      lineItem.final_weight_volume = lineItem.units_variant.unit_value * lineItem.quantity
 
     $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
       unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)
