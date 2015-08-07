@@ -65,12 +65,6 @@
           %strong #{order.order_cycle.pickup_time_for(order.distributor)}
         %p.text-small.text-skinny.pre-line
           %em= order.shipping_method.description.andand.html_safe || ""
-      .order-summary.text-small
-        %strong
-          Collection Address
-      .pad
-        %p.text-small
-          = order.ship_address.full_address
 
         - if order.order_cycle.pickup_instructions_for(order.distributor).present?
           %br
