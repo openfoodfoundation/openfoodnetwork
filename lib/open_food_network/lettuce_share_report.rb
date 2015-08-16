@@ -13,8 +13,7 @@ module OpenFoodNetwork
         "Total",
         "GST incl.",
         "Grower and growing method",
-        '',
-        ''
+        "Taxon"
       ]
     end
 
@@ -29,8 +28,7 @@ module OpenFoodNetwork
           variant.price - gst(variant),
           variant.price,
           gst(variant),
-          variant.product.supplier.name,
-          certification(variant),
+          grower_and_method(variant),
           variant.product.primary_taxon.name
         ]
       end
@@ -58,9 +56,21 @@ module OpenFoodNetwork
       line_item
     end
 
+    def grower_and_method(variant)
+      cert = certification(variant)
+
+      result  = producer_name(variant)
+      result += " (#{cert})" if cert.present?
+      result
+    end
+
+    def producer_name(variant)
+      variant.product.supplier.name
+    end
+
     def certification(variant)
       variant.product.properties_including_inherited.map do |p|
-        "#{p[:name]} (#{p[:value]})"
+        "#{p[:name]} - #{p[:value]}"
       end.join(', ')
     end
 
