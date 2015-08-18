@@ -57,12 +57,20 @@ class VariantOverride < ActiveRecord::Base
   
   def reset_stock!
     if default_stock?
-      update_attributes :count_on_hand => default_stock  
-    else
-      # Could remove as not resetting where there is no default is intended behaviour
-      Bugsnag.notify RuntimeError.new "Attempting to reset stock for a VariantOverride where a default level is not present"
+      self.attributes = { count_on_hand: default_stock }
+      self.save
     end
-      
+    self  
+  end
+
+  def self.reset_stock!(hub, variant)
+    vo = self.for(hub, variant)
+
+    if vo.nil?
+      Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant without a VariantOverride."
+    else
+      vo.reset_stock!
+    end
   end
 
   private

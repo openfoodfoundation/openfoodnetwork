@@ -55,3 +55,8 @@ describe "VariantOverridesCtrl", ->
 
       it "returns a generic message otherwise", ->
         expect(scope.updateError({}, 500)).toEqual "Oh no! I was unable to save your changes."
+  
+  describe "setting stock to defaults", ->
+    it "updates and refreshes on hand value for variant overrides with a default stock level", ->
+
+    it "doesn't change anything for a variant override with no default", ->

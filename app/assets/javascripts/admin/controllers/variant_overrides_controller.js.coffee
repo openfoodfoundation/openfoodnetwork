@@ -45,6 +45,7 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
       StatusMessage.display 'progress', 'Saving...'
       DirtyVariantOverrides.save()
       .success (updatedVos) ->
+        console.log DirtyVariantOverrides.all()
         DirtyVariantOverrides.clear()
         VariantOverrides.updateIds updatedVos
         $timeout -> StatusMessage.display 'success', 'Changes saved.'
@@ -67,4 +68,7 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
       "Oh no! I was unable to save your changes."
 
   $scope.resetStock = ->
-    variantOverrides.resetStock()
+    VariantOverrides.resetStock()
+    .success (updatedVos) ->
+      VariantOverrides.updateData updatedVos
+      $timeout -> StatusMessage.display 'success', 'Stocks reset to defaults.'
