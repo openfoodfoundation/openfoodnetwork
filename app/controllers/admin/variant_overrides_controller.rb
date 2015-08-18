@@ -37,12 +37,10 @@ module Admin
       # Ensure we're authorised to update all variant overrides
       vo_set.collection.each { |vo| authorize! :update, vo }
 
-      vo.set.collection.each { |vo| vo.reset_stock! } 
+      vo_set.collection.map! { |vo| vo = vo.reset_stock! }
+      render json: vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
       if vo_set.errors.present?
         render json: { errors: vo_set.errors }, status: 400
-      else
-        # Return saved VOs with IDs
-        render json: vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
       end
     end
 

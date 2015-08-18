@@ -1,4 +1,4 @@
-angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides) ->
+angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides, $http) ->
   new class VariantOverrides
     variantOverrides: {}
 
@@ -30,4 +30,8 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
         method: "POST"
         url: "/admin/variant_overrides/bulk_reset"
         data:
-          variant_overrides: @all()
+          variant_overrides: variantOverrides
+
+    updateData: (updatedVos) ->
+      for vo in updatedVos
+        @variantOverrides[vo.hub_id][vo.variant_id] = vo
