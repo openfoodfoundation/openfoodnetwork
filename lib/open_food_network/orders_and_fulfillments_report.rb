@@ -222,7 +222,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
           proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
           proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).andand.code },
-          proc { |line_items| "" },
+          proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).tags.join(', ') },
 
           proc { |line_items| line_items.first.order.bill_address.andand.address1 },
           proc { |line_items| line_items.first.order.bill_address.andand.address2 },
