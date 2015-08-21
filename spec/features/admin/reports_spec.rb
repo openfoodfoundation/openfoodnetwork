@@ -283,18 +283,27 @@ feature %q{
   end
 
   describe "products and inventory report" do
-    it "shows products and inventory report" do
-      product1 = create(:simple_product, name: "Product Name", price: 100)
-      variant1 = product1.variants.first
-      variant2 = create(:variant, product: product1, price: 80.0)
-      product2 = create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100')
-      variant3 = product2.variants.first
+    let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
+    let(:taxon)    { create(:taxon, name: 'Taxon Name') }
+    let(:product1) { create(:simple_product, name: "Product Name", price: 100, supplier: supplier, primary_taxon: taxon) }
+    let(:product2) { create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon) }
+    let(:variant1) { product1.variants.first }
+    let(:variant2) { create(:variant, product: product1, price: 80.0) }
+    let(:variant3) { product2.variants.first }
+
+    before do
+      product1.set_property 'Organic', 'NASAA 12345'
+      product2.set_property 'Organic', 'NASAA 12345'
+      product1.taxons = [taxon]
+      product2.taxons = [taxon]
       variant1.update_column(:count_on_hand, 10)
       variant2.update_column(:count_on_hand, 20)
       variant3.update_column(:count_on_hand, 9)
       variant1.option_values = [create(:option_value, :presentation => "Test")]
       variant2.option_values = [create(:option_value, :presentation => "Something")]
+    end
 
+    it "shows products and inventory report" do
       login_to_admin_section
       click_link 'Reports'
 
@@ -303,15 +312,19 @@ feature %q{
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
 
-      rows = find("table#listing_products").all("tr")
-      table = rows.map { |r| r.all("th,td").map { |c| c.text.strip } }
+      page.should have_table_row ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                   "Variant Value",  "Price",  "Group Buy Unit Quantity",     "Amount"]
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, ""]
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,   "Something",       "80.0",   product1.group_buy_unit_size.to_s, ""]
+      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,   "100g",           "99.0",   product1.group_buy_unit_size.to_s, ""]
+    end
 
-      table.sort.should == [
-        ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                   "Variant Value",  "Price",  "Group Buy Unit Quantity",     "Amount"],
-        [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, ""],
-        [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.join(", "), product1.primary_taxon.name,   "Something",       "80.0",   product1.group_buy_unit_size.to_s, ""],
-        [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.join(", "), product2.primary_taxon.name,   "100g",           "99.0",   product1.group_buy_unit_size.to_s, ""]
-      ].sort
+    it "shows the LettuceShare report" do
+      login_to_admin_section
+      click_link 'Reports'
+      click_link 'LettuceShare'
+
+      page.should have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon']
+      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '99.0', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
   end
 

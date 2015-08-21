@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Authentication", js: true do
+feature "Authentication", js: true, retry: 3 do
   include UIComponentHelper
 
   # Attempt to address intermittent failures in these specs
