@@ -21,5 +21,11 @@ module OpenFoodNetwork
         report.send(:grower_and_method, v).should == "Producer (Method)"
       end
     end
+
+    describe "gst" do
+      it "handles tax category without rates" do
+        report.send(:gst, v).should == 0
+      end
+    end
   end
 end
