@@ -14,7 +14,6 @@ module Admin
     def bulk_update
       collection_hash = Hash[params[:variant_overrides].each_with_index.map { |vo, i| [i, vo] }]
       vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
-
       # Ensure we're authorised to update all variant overrides
       vo_set.collection.each { |vo| authorize! :update, vo }
 
