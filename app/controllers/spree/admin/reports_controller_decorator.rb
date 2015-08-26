@@ -1,6 +1,7 @@
 require 'csv'
 require 'open_food_network/order_and_distributor_report'
 require 'open_food_network/products_and_inventory_report'
+require 'open_food_network/lettuce_share_report'
 require 'open_food_network/group_buy_report'
 require 'open_food_network/order_grouper'
 require 'open_food_network/customers_report'
@@ -26,7 +27,8 @@ Spree::Admin::ReportsController.class_eval do
     ],
     products_and_inventory: [
       ['All products', :all_products],
-      ['Inventory (on hand)', :inventory]
+      ['Inventory (on hand)', :inventory],
+      ['LettuceShare', :lettuce_share]
     ],
     customers: [
       ["Mailing List", :mailing_list],
@@ -212,7 +214,11 @@ Spree::Admin::ReportsController.class_eval do
 
   def products_and_inventory
     @report_types = REPORT_TYPES[:products_and_inventory]
-    @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
+    if params[:report_type] != 'lettuce_share'
+      @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
+    else
+      @report = OpenFoodNetwork::LettuceShareReport.new spree_current_user, params
+    end
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
   end
 

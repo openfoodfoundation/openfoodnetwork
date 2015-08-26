@@ -217,7 +217,7 @@ module Spree
         end
 
         it "should not be able to read other reports" do
-          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises], for: :report)
+          should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises, :xero_invoices], for: :report)
         end
 
         it "should not be able to access customer actions" do
@@ -404,7 +404,7 @@ module Spree
         end
 
         it "should be able to read some reports" do
-          should have_ability([:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], for: :report)
+          should have_ability([:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], for: :report)
         end
 
         it "should not be able to read other reports" do

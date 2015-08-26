@@ -4,6 +4,7 @@ Openfoodnetwork::Application.routes.draw do
   # Redirects from old URLs avoid server errors and helps search engines
   get "/enterprises", to: redirect("/")
   get "/products", to: redirect("/")
+  get "/products/:id", to: redirect("/")
   get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
