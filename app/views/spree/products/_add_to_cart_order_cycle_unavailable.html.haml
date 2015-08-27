@@ -1,4 +1,2 @@
 .error-distributor
-  Please complete your order from
-  = link_to (current_order_cycle.andand.name || 'your current order cycle'), root_path
-  before shopping in a different order cycle.
+  = t :products_oc_error, link: = link_to((current_order_cycle.andand.name || t(:products_oc_current)), root_path)

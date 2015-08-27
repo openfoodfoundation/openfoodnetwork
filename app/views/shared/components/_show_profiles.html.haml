@@ -1,7 +1,7 @@
 .small-12.medium-6.columns.text-right
   .profile-checkbox
-    %button.button.secondary.tiny.help-btn.ng-scope{:popover => "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere", "popover-placement" => "left"}><
+    %button.button.secondary.tiny.help-btn.ng-scope{:popover => t(:components_profiles_popover, sitename: Spree::Config[:site_name]), "popover-placement" => "left"}><
       %i.ofn-i_013-help
     %label
       %input{"ng-model" => "show_profiles", type: "checkbox", name: "profile"}
-      Show profiles
+      = t :components_profiles_show

@@ -1,6 +1,6 @@
 / %script = Spree.api_key = raw(try_spree_current_user.try(:spree_api_key).to_s.inspect)
 
-Current cart for:
+= t :ofn_cart_headline
 = spree_current_user.andand.email
 %div{ 'ng-app' => 'store', 'ng-controller' => 'CartCtrl', 'ng-init' => "loadCart(#{spree_current_user.andand.cart.andand.id});" }
   {{cart}} {{state}}
@@ -8,20 +8,27 @@ Current cart for:
   %br
   %ul
     %li(ng-repeat="order in cart.orders")
-      %strong Distributor:
+      %strong
+        = t :ofn_cart_distributor
       {{order.distributor}}
-      %strong Order cycle:
+      %strong
+        = t :ofn_cart_oc
       {{order.order_cycle.andand.name}}
-      %strong From:
+      %strong
+        = t :ofn_cart_from
       {{order.order_cycle.andand.orders_open_at}}
-      %strong To:
+      %strong
+        = t :ofn_cart_to
       {{order.order_cycle.andand.orders_close_at}}
       %ul
         %li(ng-repeat="line_item in order.line_items")
-          %strong Product:
+          %strong
+            = t :ofn_cart_product
           {{line_item.name}}
-          %strong Quantity:
+          %strong
+            = t :ofn_cart_quatity
           {{line_item.quantity}}
-      %button Buy me
+      %button
+        = t :ofn_cart_send
       %br
 

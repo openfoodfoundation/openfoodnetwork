@@ -1,4 +1,2 @@
 - if most_recently_closed = OrderCycle.most_recently_closed_for(@distributor)
-  The last cycle closed
-  = distance_of_time_in_words_to_now most_recently_closed.orders_close_at
-  ago
+  = t :shopping_oc_last_closed, distance_of_time: distance_of_time_in_words_to_now(most_recently_closed.orders_close_at)

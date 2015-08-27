@@ -8,7 +8,8 @@
     .row.filter-box
       .small-12.columns
         %h5.tdhead
-          .light Filter by
-          Type
+          .light
+            = t :producers_filter
+          = t :producers_filter
         %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-6{objects: "Enterprises.producers | searchEnterprises:query | taxonsOf", "active-selectors" => "activeTaxons"}
     = render partial: 'shared/components/filter_box'

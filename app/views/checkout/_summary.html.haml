@@ -1,10 +1,12 @@
 %orderdetails
   = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event, checkout)"} do |f|
     %fieldset
-      %legend Your order
+      %legend
+        = t :checkout_your_order
       %table
         %tr
-          %th Cart total
+          %th
+            = t :checkout_cart_total
           %td.cart-total.text-right= display_checkout_subtotal(@order)
 
         - checkout_adjustments_for(current_order, exclude: [:shipping, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
@@ -13,15 +15,16 @@
             %td.text-right= adjustment.display_amount.to_html
 
         %tr
-          %th Shipping
+          %th
+            = t :checkout_shipping_price
           %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
 
         %tr
-          %th Total
+          %th
+            = t :checkout_total_price
           %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
 
       //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
       %a.button.secondary{href: cart_url}
         %i.ofn-i_008-caret-left
-        Back to Cart
-
+        = t :checkout_back_to_cart

@@ -1,4 +1,2 @@
 .error-distributor
-  Please complete your order at
-  = link_to current_distributor.name, root_path
-  before shopping with another distributor.
+  = t :products_distributor_error, link: link_to(current_distributor.name, root_path)

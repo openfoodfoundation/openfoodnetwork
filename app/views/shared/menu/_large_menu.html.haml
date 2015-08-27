@@ -7,19 +7,24 @@
     %ul.center
       %li
         %a{href: main_app.shops_path}
-          %span.nav-primary Shops
+          %span.nav-primary
+            = t 'label_shops'
       %li
         %a{href: main_app.map_path}
-          %span.nav-primary Map
+          %span.nav-primary
+            = t 'label_map'
       %li
         %a{href: main_app.producers_path}
-          %span.nav-primary Producers
+          %span.nav-primary
+            = t 'label_producers'
       %li
         %a{href: main_app.groups_path}
-          %span.nav-primary Groups
+          %span.nav-primary
+            = t 'label_groups'
       %li
         %a{href: ContentConfig.footer_about_url}
-          %span.nav-primary About
+          %span.nav-primary
+            = t 'label_about'
     %ul.right
       - if spree_current_user.nil?
         = render 'shared/signed_out'
@@ -27,7 +32,9 @@
         = render 'shared/signed_in'
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
-          %em Shopping &#64;
+          %em
+            = t 'label_shopping'
+            &#64;
           %span.nav-primary.nav-branded {{ CurrentHub.hub.name | truncate:25 }}
       %li.cart{"ng-cloak" => true}
         = render partial: "shared/menu/cart"
