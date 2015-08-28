@@ -33,15 +33,15 @@ feature "As a consumer I want to check out my cart", js: true do
   it "renders the login buttons when logged out" do
     visit checkout_path 
     within "section[role='main']" do
-      page.should have_content "Log in"
-      click_button "Log in"
+      page.should have_content "Login"
+      click_button "Login"
     end
     page.should have_login_modal
   end
 
   it "populates user details once logged in" do
     visit checkout_path
-    within("section[role='main']") { click_button "Log in" }
+    within("section[role='main']") { click_button "Login" }
     page.should have_login_modal
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
