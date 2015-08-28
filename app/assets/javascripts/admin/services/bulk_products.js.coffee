@@ -19,6 +19,7 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) 
         # when a respond_overrride for the clone action is used.
         id = data.product.id
         dataFetcher("/api/products/" + id + "?template=bulk_show").then (newProduct) =>
+          @unpackProduct newProduct
           @insertProductAfter(product, newProduct)
 
     updateVariantLists: (serverProducts, productsWithUnsavedVariants) ->
