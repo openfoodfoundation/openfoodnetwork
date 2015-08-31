@@ -20,6 +20,7 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
               count_on_hand: null
               on_demand: null
               default_stock: null
+              enable_reset: false
 
     updateIds: (updatedVos) ->
       for vo in updatedVos

@@ -15,4 +15,6 @@
     %input{name: 'variant-overrides-{{ variant.id }}-count-on-hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'count_on_hand'}
 
   %td
-    %input{name: 'variant-overrides-{{ variant.id }}-default-stock', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].default_stock'}, placeholder: '{{ variant.default_stock }}', 'ofn-track-variant-override' => 'default_stock'}
+    %input{name: 'variant-overrides-{{ variant.id }}-enable_reset', type: 'checkbox', ng: {model: 'variantOverrides[hub.id][variant.id].enable_reset'}, placeholder: '{{ variant.enable_reset }}', 'ofn-track-variant-override' => 'enable_reset'}
+  %td
+    %input{name: 'variant-overrides-{{ variant.id }}-default-stock', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].default_stock'}, placeholder: '{{ variant.default_stock ? variant.default_stock : "Default stock"}}', 'ofn-track-variant-override' => 'default_stock'}

@@ -59,11 +59,11 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       StatusMessage.display 'progress', 'Saving...'
       DirtyVariantOverrides.save()
       .success (updatedVos) ->
-        console.log DirtyVariantOverrides.all()
         DirtyVariantOverrides.clear()
         VariantOverrides.updateIds updatedVos
-        StatusMessage.display 'success', 'Changes saved.'
         $scope.variant_overrides_form.$setPristine()
+        StatusMessage.display 'success', 'Changes saved.'
+        VariantOverrides.updateData updatedVos # Refresh page data
       .error (data, status) ->
         StatusMessage.display 'failure', $scope.updateError(data, status)
 
@@ -78,12 +78,18 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
         errors = errors.concat field_errors
       errors = errors.join ', '
       "I had some trouble saving: #{errors}"
-
     else
       "Oh no! I was unable to save your changes."
 
   $scope.resetStock = ->
-    VariantOverrides.resetStock()
-    .success (updatedVos) ->
-      VariantOverrides.updateData updatedVos
-      $timeout -> StatusMessage.display 'success', 'Stocks reset to defaults.'
+    if DirtyVariantOverrides.count() > 0
+      StatusMessage.display 'alert', 'Save changes first.'
+      $timeout ->
+        $scope.displayDirty()
+      , 3000 # 3 second delay
+    else
+      StatusMessage.display 'progress', 'Changing on hand stock levels...'
+      VariantOverrides.resetStock()
+      .success (updatedVos) ->
+        VariantOverrides.updateData updatedVos
+        $timeout -> StatusMessage.display 'success', 'Stocks reset to defaults.'

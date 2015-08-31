@@ -94,6 +94,8 @@ FactoryGirl.define do
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111
+    default_stock 2000
+    enable_reset  false
   end
 
   factory :enterprise, :class => Enterprise do

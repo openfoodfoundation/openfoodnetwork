@@ -33,10 +33,12 @@ module Admin
       collection_hash = Hash[params[:variant_overrides].each_with_index.map { |vo, i| [i, vo] }]
       vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
 
-      # Ensure we're authorised to update all variant overrides
+      # Ensure we're authorised to update all variant overrides.
       vo_set.collection.each { |vo| authorize! :update, vo }
 
-      vo_set.collection.map! { |vo| vo = vo.reset_stock! }
+      # Changed this to use class method instead, to ensure the value in the database is used to reset and not a dirty passed-in value
+      #vo_set.collection.map! { |vo| vo = vo.reset_stock! }
+      vo_set.collection.map! { |vo| VariantOverride.reset_stock!(vo.hub,vo.variant) }
       render json: vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
       if vo_set.errors.present?
         render json: { errors: vo_set.errors }, status: 400

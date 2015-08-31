@@ -7,18 +7,25 @@ describe "VariantOverridesCtrl", ->
   hubPermissions = {}
   VariantOverrides = null
   variantOverrides = {}
+  DirtyVariantOverrides = null
+  dirtyVariantOverrides = {}
+  StatusMessage = null
+  statusMessage = {}
 
   beforeEach ->
     module 'admin.variantOverrides'
     module ($provide) ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'variantOverrides', variantOverrides
+      $provide.value 'dirtyVariantOverrides', dirtyVariantOverrides
       null
     scope = {}
 
-    inject ($controller, _VariantOverrides_) ->
+    inject ($controller, Indexer, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->
       VariantOverrides = _VariantOverrides_
-      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_}
+      DirtyVariantOverrides = _DirtyVariantOverrides_
+      StatusMessage = _StatusMessage_
+      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_, DirtyVariantOverrides: _DirtyVariantOverrides_, StatusMessage: _StatusMessage_}
 
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }
@@ -59,3 +66,16 @@ describe "VariantOverridesCtrl", ->
 
       it "returns a generic message otherwise", ->
         expect(scope.updateError({}, 500)).toEqual "Oh no! I was unable to save your changes."
+
+  describe "setting stock to defaults", ->
+    it "prompts to save changes if there are any pending", ->
+      spyOn(VariantOverrides,"resetStock")
+      DirtyVariantOverrides.add {hub_id: 1, variant_id: 1}
+      scope.resetStock
+      #expect(scope.StatusMessage.statusMessage.text).toMatch "changes"
+      expect(VariantOverrides.resetStock).not.toHaveBeenCalled
+    it "updates and refreshes on hand value for variant overrides with a default stock level", ->
+      spyOn(VariantOverrides,"resetStock")
+      scope.resetStock
+      expect(VariantOverrides.resetStock).toHaveBeenCalled
+      #expect(scope.StatusMessage.statusMessage.text).toMatch "defaults"
