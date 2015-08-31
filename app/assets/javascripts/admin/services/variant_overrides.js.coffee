@@ -18,6 +18,7 @@ angular.module("ofn.admin").factory "VariantOverrides", (variantOverrides, Index
               price: ''
               count_on_hand: ''
               default_stock: ''
+              enable_reset: false
 
     updateIds: (updatedVos) ->
       for vo in updatedVos

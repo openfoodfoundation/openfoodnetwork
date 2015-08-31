@@ -34,16 +34,26 @@ module Admin
       end
       context "when a reset request is received" do
         it "updates stock to default values" do
+        v1 = create(:variant)
+        v2 = create(:variant)
+        vo1 = create(:variant_override, hub: hub, variant: v1, price: "6.0", count_on_hand: 5, default_stock: 7, enable_reset: true)
+        vo2 = create(:variant_override, hub: hub, variant: v2, price: "6.0", count_on_hand: 2, default_stock: 1, enable_reset: false)
+        params = {"variant_overrides" => [vo1.attributes, vo2.attributes]}
+        spree_put :bulk_reset, params
+
+        vo1.reload
+        expect(vo1.count_on_hand).to eq 7
+        end
+        it "doesn't update where reset is disabled" do
           v1 = create(:variant)
           v2 = create(:variant)
-          vo1 = create(:variant_override, hub: hub, variant: v1, price: "6.0", count_on_hand: 5, default_stock: 7)
-          vo2 = create(:variant_override, hub: hub, variant: v2, price: "6.0", count_on_hand: 2, default_stock: 1)
+          vo1 = create(:variant_override, hub: hub, variant: v1, price: "6.0", count_on_hand: 5, default_stock: 7, enable_reset: true)
+          vo2 = create(:variant_override, hub: hub, variant: v2, price: "6.0", count_on_hand: 2, default_stock: 1, enable_reset: false)
           params = {"variant_overrides" => [vo1.attributes, vo2.attributes]}
           spree_put :bulk_reset, params
-          vo1.reload
-          expect(vo1.count_on_hand).to eq 7
+          
           vo2.reload
-          expect(vo2.count_on_hand).to eq 1
+          expect(vo2.count_on_hand).to eq 2
         end
       end
     end
