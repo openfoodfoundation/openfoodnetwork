@@ -21,7 +21,7 @@
         - if current_distributor.website || current_distributor.email
           %div.center
             .header
-              = t :shopping_contact_contact
+              = t :shopping_contact_web
             %p
               - unless current_distributor.website.blank?
                 %a{href: "http://#{current_distributor.website}", target: "_blank" }
