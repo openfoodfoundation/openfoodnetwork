@@ -11,6 +11,7 @@
   .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!variant.product.group_buy"}
 
     %input{type: :number, 
+    integer: true,
     value: nil, 
     min: 0, 
     placeholder: "0",
@@ -26,6 +27,7 @@
       %span.bulk-input
         %input.bulk.first{type: :number, 
         value: nil, 
+        integer: true,
         min: 0, 
         "ng-model" => "variant.line_item.quantity",
         placeholder: "min",
@@ -34,6 +36,7 @@
         name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
       %span.bulk-input{"bo-if" => "variant.product.group_buy"}
         %input.bulk.second{type: :number,
+        integer: true,
         min: 0,
         "ng-model" => "variant.line_item.max_quantity",
         placeholder: "max",
