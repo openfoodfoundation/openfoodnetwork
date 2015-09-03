@@ -23,7 +23,7 @@ module OpenFoodNetwork
       when "bulk_coop_customer_payments"
         ["Customer", "Date of Order", "Total Cost", "Amount Owing", "Amount Paid"]
       else
-        ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
+        ["Supplier", "Product", "Bulk Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
       end
     end
 
