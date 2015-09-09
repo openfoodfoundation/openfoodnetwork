@@ -59,7 +59,7 @@ module OpenFoodNetwork
         sort_by: proc { |product| product.name },
         summary_columns: [ proc { |lis| lis.first.variant.product.supplier.name },
           proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.product.group_buy ? (lis.first.variant.product.group_buy_unit_size || 0.0) : "" },
+          proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
           proc { |lis| "" },
           proc { |lis| "" },
           proc { |lis| lis.sum { |li| li.quantity * (li.variant.weight || 0) } },
@@ -91,7 +91,7 @@ module OpenFoodNetwork
       else
         [ proc { |lis| lis.first.variant.product.supplier.name },
           proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.product.group_buy ? (lis.first.variant.product.group_buy_unit_size || 0.0) : "" },
+          proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
           proc { |lis| lis.first.variant.full_name },
           proc { |lis| lis.first.variant.weight || 0 },
           proc { |lis|  lis.sum { |li| li.quantity } },

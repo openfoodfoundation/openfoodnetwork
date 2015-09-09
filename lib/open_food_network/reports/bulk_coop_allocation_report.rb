@@ -36,7 +36,7 @@ module OpenFoodNetwork::Reports
     columns do
       column { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname }
       column { |lis| lis.first.variant.product.name }
-      column { |lis| lis.first.variant.product.group_buy ? (lis.first.variant.product.group_buy_unit_size || 0.0) : "" }
+      column { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 }
       column { |lis| lis.first.variant.full_name }
       column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).value }
       column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).unit }
