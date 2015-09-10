@@ -54,13 +54,12 @@ feature %q{
         end
 
         it "displays the list of products with variants" do
-          page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
-
-          page.should have_table_row [producer.name, product.name, '', '']
+          page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ENABLE STOCK LEVEL RESET?']
+          page.should have_table_row [producer.name, product.name, '', '', '']
           page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
           page.should have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
 
-          page.should have_table_row [producer_related.name, product_related.name, '', '']
+          page.should have_table_row [producer_related.name, product_related.name, '', '', '']
           page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
           page.should have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
 
@@ -182,8 +181,9 @@ feature %q{
       end
 
       context "with overrides" do
-        let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111) }
+        let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, enable_reset: true) }
         let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub3, price: 1, count_on_hand: 2) }
+        let!(:vo_no_) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, enable_reset: false) }
 
         before do
           visit '/admin/variant_overrides'
@@ -212,6 +212,7 @@ feature %q{
           vo.count_on_hand.should == 8888
         end
 
+        # This fails for me and can't find where this automatic deletion is implemented?
         it "deletes overrides when values are cleared" do
           fill_in "variant-overrides-#{variant.id}-price", with: ''
           fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
@@ -224,6 +225,22 @@ feature %q{
 
           VariantOverride.where(id: vo.id).should be_empty
         end
+
+        # Failing due to authentication issue
+        it "resets stock to defaults" do
+          click_button 'Reset Stock to Defaults'
+          vo.reload
+          vo.count_on_hand.should == 1000
+          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '1000', placeholder: '12'
+        end
+
+        it "prompts to save changes before reset if any are pending" do
+          fill_in "variant-overrides-#{variant.id}-price", with: '200'
+          click_button 'Reset Stock to Defaults'
+          page.should have_content "Save changes first"
+        end
+
+
       end
     end
   end
