@@ -9,11 +9,7 @@
   .joyride-tip-guide{"ng-class" => "{ in: open }", "ng-show" => "open"}
     %span.joyride-nub.top
     .joyride-content-wrapper
-      %h5.text-left Your shopping cart
-      .buttons.text-right
-        %a.button.secondary.tiny.add_to_cart{ href: cart_path, type: :submit, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
-          {{ Cart.dirty ? 'Updating cart...' : (Cart.empty() ? 'Cart empty' : 'Edit your cart' ) }}
-        %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}  Checkout now
+      %h5 Your shopping cart
       %table
         %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
         "ng-controller" => "LineItemCtrl", "id" => "cart-variant-{{ line_item.variant.id }}"}

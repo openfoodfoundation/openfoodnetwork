@@ -19,10 +19,9 @@
 %h4
   Order confirmation 
   %strong ##{@order.number}
-%h5
+%p
   %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
-  = " <#{@order.email}>" if @order.email
-  = @order.bill_address.phone if @order.bill_address.phone
+  completed the following order at your shopfront:
 
 = render 'order_summary'
 = render 'payment'

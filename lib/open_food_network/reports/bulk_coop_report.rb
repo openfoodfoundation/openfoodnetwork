@@ -22,7 +22,11 @@ module OpenFoodNetwork::Reports
       end
 
       def group_buy_unit_size_f(lis)
-        group_buy_unit_size(lis)
+        if lis.first.variant.product.group_buy
+          group_buy_unit_size(lis)
+        else
+          ""
+        end
       end
 
       def total_amount(lis)
