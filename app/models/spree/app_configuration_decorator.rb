@@ -7,6 +7,8 @@ Spree::AppConfiguration.class_eval do
   # Tax Preferences
   preference :products_require_tax_category, :boolean, default: false
   preference :shipping_tax_rate, :decimal, default: 0
+  preference :account_bill_inc_tax, :boolean, default: false
+  preference :account_bill_tax_rate, :decimal, default: 0
 
   # Accounts & Billing Preferences
   preference :accounts_distributor_id, :integer, default: nil
