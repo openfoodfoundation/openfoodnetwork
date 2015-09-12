@@ -104,7 +104,7 @@ describe UpdateUserInvoices do
         travel_to(3.hours)
 
         before do
-          allow(updater).to receive(:adjustment_label_from).exactly(1).times.and_return("Old Item")
+          allow(old_billable_period).to receive(:adjustment_label) { "Old Item" }
           allow(old_billable_period).to receive(:bill) { 666.66 }
         end
 
@@ -159,7 +159,8 @@ describe UpdateUserInvoices do
         travel_to(20.days)
 
         before do
-          allow(updater).to receive(:adjustment_label_from).exactly(2).times.and_return("BP1 Item", "BP2 Item")
+          allow(billable_period1).to receive(:adjustment_label) { "BP1 Item" }
+          allow(billable_period2).to receive(:adjustment_label) { "BP2 Item" }
           allow(billable_period1).to receive(:bill) { 123.45 }
           allow(billable_period2).to receive(:bill) { 543.21 }
         end

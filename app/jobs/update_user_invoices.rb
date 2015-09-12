@@ -40,36 +40,11 @@ class UpdateUserInvoices
       })
     else
       billable_periods.reject{ |bp| bp.turnover == 0 }.each do |billable_period|
-        adjustment = invoice.adjustments.where(source_id: billable_period).first
-        adjustment ||= invoice.adjustments.new( adjustment_attrs_from(billable_period), :without_protection => true)
-        adjustment.update_attributes( label: adjustment_label_from(billable_period), amount: billable_period.bill )
-        current_adjustments << adjustment
+        current_adjustments << billable_period.ensure_correct_adjustment_for(invoice)
       end
     end
 
     clean_up_and_save(invoice, current_adjustments)
-  end
-
-  def adjustment_attrs_from(billable_period)
-    # We should ultimately have an EnterprisePackage model, which holds all info about shop type, producer, trials, etc.
-    # It should also implement a calculator that we can use here by specifying the package as the originator of the
-    # adjustment, meaning that adjustments are created and updated using Spree's existing architecture.
-
-    { source: billable_period,
-      originator: nil,
-      mandatory: true,
-      locked: false
-    }
-  end
-
-  def adjustment_label_from(billable_period)
-    enterprise = billable_period.enterprise.version_at(billable_period.begins_at)
-    category = enterprise.category.to_s.titleize
-    category += (billable_period.trial ? " Trial" : "")
-    begins = billable_period.begins_at.localtime.strftime("%d/%m/%y")
-    ends = billable_period.ends_at.localtime.strftime("%d/%m/%y")
-
-    "#{enterprise.name} (#{category}) [#{begins} - #{ends}]"
   end
 
   def clean_up_and_save(invoice, current_adjustments)
