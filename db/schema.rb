@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150730160010) do
+ActiveRecord::Schema.define(:version => 20150916012814) do
+
+  create_table "account_invoices", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "order_id"
+    t.integer  "year",       :null => false
+    t.integer  "month",      :null => false
+    t.datetime "issued_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "account_invoices", ["order_id"], :name => "index_account_invoices_on_order_id"
+  add_index "account_invoices", ["user_id"], :name => "index_account_invoices_on_user_id"
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -1149,6 +1162,9 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
   end
 
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+
+  add_foreign_key "account_invoices", "spree_orders", name: "account_invoices_order_id_fk", column: "order_id"
+  add_foreign_key "account_invoices", "spree_users", name: "account_invoices_user_id_fk", column: "user_id"
 
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id", dependent: :delete
