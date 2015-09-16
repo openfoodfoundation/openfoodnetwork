@@ -232,7 +232,6 @@ Voir le %{link} pour en savoir plus sur les fonctionnalités de %{sitename} et c
   email_confirm_shop_greeting: "Bonjour %{name},"
   email_confirm_shop_order_html: "Bravo! Vous avez reçu une nouvelle commande pour <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Confirmation de commande <strong>#%{number}</strong>"
-  email_confirm_shop_order_detail_html: "<strong>%{firstname} %{lastname}</strong> a passé la commande suivante sur votre boutique en ligne:"
   email_order_summary_item: "Produit"
   email_order_summary_quantity: "Qté"
   email_order_summary_price: "Prix"

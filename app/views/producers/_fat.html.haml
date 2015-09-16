@@ -72,7 +72,7 @@
           &nbsp;
     .row.cta-container
       .columns.small-12
-        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
+        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | visible | orderBy:'-active'",
         "bo-href" => "hub.path", "ofn-change-hub" => "hub",
         "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}

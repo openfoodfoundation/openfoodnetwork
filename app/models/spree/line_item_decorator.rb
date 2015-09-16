@@ -1,6 +1,6 @@
 Spree::LineItem.class_eval do
-  attr_accessible :max_quantity, :unit_value
-  attr_accessible :unit_value, :price, :as => :api
+  attr_accessible :max_quantity, :final_weight_volume
+  attr_accessible :final_weight_volume, :price, :as => :api
 
   # -- Scopes
   scope :managed_by, lambda { |user|

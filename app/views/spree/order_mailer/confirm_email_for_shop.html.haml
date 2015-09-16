@@ -17,8 +17,10 @@
 %p &nbsp;
 %h4
   = t :email_confirm_shop_number_html, number: @order.number
-%p
-  = t :email_confirm_shop_order_detail_html, firstname: @order.bill_address.firstname, lastname: @order.bill_address.lastname
+%h5
+  %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
+  = " <#{@order.email}>" if @order.email
+  = @order.bill_address.phone if @order.bill_address.phone
 
 = render 'order_summary'
 = render 'payment'

@@ -232,7 +232,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_confirm_shop_greeting: "Hi %{name},"
   email_confirm_shop_order_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
-  email_confirm_shop_order_detail_html: "<strong>%{firstname} %{lastname}</strong> completed the following order at your shopfront:"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
   email_order_summary_price: "Price"

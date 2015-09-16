@@ -97,9 +97,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "shows the correct prices in the checkout" do
       fill_in "variants[#{v1.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       page.should have_selector 'form.edit_order .cart-total', text: '$122.21'
       page.should have_selector 'form.edit_order .shipping', text: '$0.00'
@@ -111,9 +109,7 @@ feature "shopping with variant overrides defined", js: true do
   describe "creating orders" do
     it "creates the order with the correct prices" do
       fill_in "variants[#{v1.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       complete_checkout
 
@@ -124,9 +120,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "subtracts stock from the override" do
       fill_in "variants[#{v4.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       expect do
         expect do
@@ -137,9 +131,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "subtracts stock from stock-overridden on_demand variants" do
       fill_in "variants[#{v6.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       expect do
         expect do
@@ -150,9 +142,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "does not subtract stock from overrides that do not override count_on_hand" do
       fill_in "variants[#{v1.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       expect do
         complete_checkout
@@ -163,9 +153,7 @@ feature "shopping with variant overrides defined", js: true do
     it "does not show out of stock flags on order confirmation page" do
       v4.update_attribute :count_on_hand, 0
       fill_in "variants[#{v4.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now'
+      click_checkout
 
       complete_checkout
 
@@ -208,4 +196,11 @@ feature "shopping with variant overrides defined", js: true do
     place_order
     page.should have_content "Your order has been processed successfully"
   end
+
+  def click_checkout
+      show_cart
+      wait_until_enabled 'li.cart a.button'
+      click_link 'Checkout now', match: :first
+  end
+
 end
