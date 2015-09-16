@@ -43,8 +43,8 @@ describe UpdateBillablePeriods do
         end
       end
 
-      context "when specfic start and end dates are passed as arguments" do
-        let!(:updater) { UpdateBillablePeriods.new(start_of_july - 1.month, start_of_july) }
+      context "when a specfic year and month are passed as arguments" do
+        let!(:updater) { UpdateBillablePeriods.new(Time.now.year, 6) }
 
         before do
           allow(updater).to receive(:split_for_trial)
@@ -53,15 +53,25 @@ describe UpdateBillablePeriods do
         context "that ends in the past" do
           travel_to(3.hours)
 
-          it "processes the previous month" do
+          it "processes the month" do
             expect(updater).to receive(:split_for_trial)
             .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
             updater.perform
           end
         end
 
-        context "that ends in the future" do
-          travel_to(-1.day)
+        context "that starts in the past and ends in the future (ie. current month)" do
+          travel_to(-3.days)
+
+          it "processes the current month up to the previous midnight" do
+            expect(updater).to receive(:split_for_trial)
+            .with(enterprise, start_of_july - 1.month, start_of_july-3.days, nil, nil)
+            updater.perform
+          end
+        end
+
+        context "that starts in the future" do
+          travel_to(-31.days)
 
           it "does not run" do
             expect(updater).to_not receive(:split_for_trial)

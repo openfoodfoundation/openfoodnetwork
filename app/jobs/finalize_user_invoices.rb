@@ -1,14 +1,17 @@
 class FinalizeUserInvoices
   attr_reader :start_date, :end_date
 
-  def initialize(start_date = nil, end_date = nil)
-    @start_date = start_date || Time.now.beginning_of_month - 1.month
-    @end_date = end_date || Time.now.beginning_of_month
+  def initialize(year = nil, month = nil)
+    ref_point = Time.now - 1.month
+    @year = year || ref_point.year
+    @month = month || ref_point.month
+    @start_date = Time.new(@year, @month)
+    @end_date = Time.new(@year, @month) + 1.month
   end
 
   def before(job)
-    UpdateBillablePeriods.new(start_date, end_date).perform
-    UpdateUserInvoices.new(start_date, end_date).perform
+    UpdateBillablePeriods.new(year, month).perform
+    UpdateUserInvoices.new(year, month).perform
   end
 
   def perform

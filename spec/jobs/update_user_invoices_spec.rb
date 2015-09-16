@@ -61,14 +61,24 @@ describe UpdateUserInvoices do
         end
 
         context "when specfic start and end dates are passed as arguments" do
-          let!(:updater) { UpdateUserInvoices.new(start_of_july, start_of_july + 1.month) }
+          let!(:updater) { UpdateUserInvoices.new(Time.now.year, 7) }
 
           before do
             allow(updater).to receive(:update_invoice_for)
           end
 
-          context "that ends in the past" do
+          context "that just ended (in the past)" do
             travel_to(1.month)
+
+            it "updates the user's invoice with billable_periods from the previous month" do
+              updater.perform
+              expect(updater).to have_received(:update_invoice_for).once
+              .with(user, [billable_period1, billable_period2])
+            end
+          end
+
+          context "that starts in the past and ends in the future (ie. current_month)" do
+            travel_to 30.days
 
             it "updates the user's invoice with billable_periods from that current month" do
               updater.perform
@@ -77,8 +87,8 @@ describe UpdateUserInvoices do
             end
           end
 
-          context "that ends in the future" do
-            travel_to 30.days
+          context "that starts in the future" do
+            travel_to -1.days
 
             it "snags an error and does not update the user's invoice" do
               updater.perform

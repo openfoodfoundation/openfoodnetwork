@@ -1,9 +1,13 @@
 class UpdateBillablePeriods
-  attr_reader :start_date, :end_date
+  attr_reader :year, :month, :start_date, :end_date
 
-  def initialize(start_date = nil, end_date = nil)
-    @start_date = start_date || (Time.now - 1.day).beginning_of_month
-    @end_date = end_date || Time.now.beginning_of_day
+  def initialize(year = nil, month = nil)
+    ref_point = Time.now - 1.day
+    @year = year || ref_point.year
+    @month = month || ref_point.month
+    @start_date = Time.new(@year, @month)
+    @end_date = Time.new(@year, @month) + 1.month
+    @end_date = Time.now.beginning_of_day if start_date == Time.now.beginning_of_month
   end
 
   def perform

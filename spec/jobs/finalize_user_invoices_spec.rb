@@ -81,7 +81,7 @@ describe FinalizeUserInvoices do
         end
 
         context "and specfic start and end dates are passed as arguments" do
-          let!(:finalizer) { FinalizeUserInvoices.new(start_of_july - 1.month, start_of_july) }
+          let!(:finalizer) { FinalizeUserInvoices.new(Time.now.year, 6) }
 
           before do
             allow(finalizer).to receive(:finalizer)
