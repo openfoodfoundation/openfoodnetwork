@@ -34,8 +34,8 @@ feature 'Account and Billing Settings' do
         select2_select accounts_distributor.name, from: "settings_accounts_distributor_id"
         expect(page).to have_select "settings_default_accounts_payment_method_id"
         expect(page).to have_select "settings_default_accounts_shipping_method_id"
-        expect(page).to have_link "Update User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'update_user_invoices'})
-        expect(page).to have_link "Finalise User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'finalize_user_invoices'})
+        expect(page).to have_link "Update User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'update_account_invoices'})
+        expect(page).to have_link "Finalise User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'finalize_account_invoices'})
       end
 
       it "attributes can be changed", js: true do

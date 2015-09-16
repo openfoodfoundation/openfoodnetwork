@@ -5,9 +5,9 @@ def travel_to(time)
 end
 
 
-describe FinalizeUserInvoices do
+describe FinalizeAccountInvoices do
   describe "unit specs" do
-    let!(:finalizer) { FinalizeUserInvoices.new }
+    let!(:finalizer) { FinalizeAccountInvoices.new }
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
     describe "perform" do
@@ -81,7 +81,7 @@ describe FinalizeUserInvoices do
         end
 
         context "and specfic start and end dates are passed as arguments" do
-          let!(:finalizer) { FinalizeUserInvoices.new(Time.now.year, 6) }
+          let!(:finalizer) { FinalizeAccountInvoices.new(Time.now.year, 6) }
 
           before do
             allow(finalizer).to receive(:finalizer)
@@ -145,8 +145,8 @@ describe FinalizeUserInvoices do
   describe "validation spec" do
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
-    let!(:updater) { UpdateUserInvoices.new }
-    let!(:finalizer) { FinalizeUserInvoices.new }
+    let!(:updater) { UpdateAccountInvoices.new }
+    let!(:finalizer) { FinalizeAccountInvoices.new }
 
     let!(:pm) { create(:payment_method, name: "Default Payment Method") }
     let!(:sm) { create(:shipping_method, name: "Default Shipping Method") }

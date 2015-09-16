@@ -1,4 +1,4 @@
-class UpdateUserInvoices
+class UpdateAccountInvoices
   attr_reader :start_date, :end_date
 
   def initialize(year = nil, month = nil)
@@ -82,7 +82,7 @@ class UpdateUserInvoices
   def settings_are_valid?
     unless end_date <= Time.now
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "UpdateUserInvoices",
+        job: "UpdateAccountInvoices",
         error: "end_date is in the future",
         data: {
           end_date: end_date.localtime.strftime("%F %T"),
@@ -94,7 +94,7 @@ class UpdateUserInvoices
 
     unless Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "UpdateUserInvoices",
+        job: "UpdateAccountInvoices",
         error: "accounts_distributor_id is invalid",
         data: {
           accounts_distributor_id: Spree::Config.accounts_distributor_id

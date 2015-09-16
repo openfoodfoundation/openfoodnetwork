@@ -1,4 +1,4 @@
-class FinalizeUserInvoices
+class FinalizeAccountInvoices
   attr_reader :start_date, :end_date
 
   def initialize(year = nil, month = nil)
@@ -11,7 +11,7 @@ class FinalizeUserInvoices
 
   def before(job)
     UpdateBillablePeriods.new(year, month).perform
-    UpdateUserInvoices.new(year, month).perform
+    UpdateAccountInvoices.new(year, month).perform
   end
 
   def perform
@@ -40,7 +40,7 @@ class FinalizeUserInvoices
   def settings_are_valid?
     unless end_date <= Time.now
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeUserInvoices",
+        job: "FinalizeAccountInvoices",
         error: "end_date is in the future",
         data: {
           end_date: end_date.localtime.strftime("%F %T"),
@@ -52,7 +52,7 @@ class FinalizeUserInvoices
 
     unless @accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeUserInvoices",
+        job: "FinalizeAccountInvoices",
         error: "accounts_distributor_id is invalid",
         data: {
           accounts_distributor_id: Spree::Config.accounts_distributor_id
@@ -63,7 +63,7 @@ class FinalizeUserInvoices
 
     unless @accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeUserInvoices",
+        job: "FinalizeAccountInvoices",
         error: "default_accounts_payment_method_id is invalid",
         data: {
           default_accounts_payment_method_id: Spree::Config.default_accounts_payment_method_id
@@ -74,7 +74,7 @@ class FinalizeUserInvoices
 
     unless @accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeUserInvoices",
+        job: "FinalizeAccountInvoices",
         error: "default_accounts_shipping_method_id is invalid",
         data: {
           default_accounts_shipping_method_id: Spree::Config.default_accounts_shipping_method_id

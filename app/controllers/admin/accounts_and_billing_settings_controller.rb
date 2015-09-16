@@ -14,7 +14,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def start_job
-    if @update_user_invoices_job || @finalize_user_invoices_job
+    if @update_account_invoices_job || @finalize_account_invoices_job
       flash[:error] = "A task is already running, please wait until it has finished"
     else
       new_job = "#{params[:job][:name]}".camelize.constantize.new
@@ -43,7 +43,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def known_jobs
-    ['update_user_invoices', 'finalize_user_invoices']
+    ['update_account_invoices', 'finalize_account_invoices']
   end
 
   def require_known_job
@@ -68,7 +68,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def load_jobs
-    @update_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%UpdateUserInvoices%").last
-    @finalize_user_invoices_job = Delayed::Job.where("handler LIKE (?)", "%FinalizeUserInvoices%").last
+    @update_account_invoices_job = Delayed::Job.where("handler LIKE (?)", "%UpdateAccountInvoices%").last
+    @finalize_account_invoices_job = Delayed::Job.where("handler LIKE (?)", "%FinalizeAccountInvoices%").last
   end
 end

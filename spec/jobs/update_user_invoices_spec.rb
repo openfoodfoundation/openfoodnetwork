@@ -4,11 +4,11 @@ def travel_to(time)
   around { |example| Timecop.travel(start_of_july + time) { example.run } }
 end
 
-describe UpdateUserInvoices do
+describe UpdateAccountInvoices do
   describe "units specs" do
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
-    let!(:updater) { UpdateUserInvoices.new }
+    let!(:updater) { UpdateAccountInvoices.new }
 
     let!(:user) { create(:user) }
     let!(:old_billable_period) { create(:billable_period, owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
@@ -61,7 +61,7 @@ describe UpdateUserInvoices do
         end
 
         context "when specfic start and end dates are passed as arguments" do
-          let!(:updater) { UpdateUserInvoices.new(Time.now.year, 7) }
+          let!(:updater) { UpdateAccountInvoices.new(Time.now.year, 7) }
 
           before do
             allow(updater).to receive(:update_invoice_for)
@@ -323,7 +323,7 @@ describe UpdateUserInvoices do
   describe "validation spec" do
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
-    let!(:updater) { UpdateUserInvoices.new }
+    let!(:updater) { UpdateAccountInvoices.new }
 
     let!(:accounts_distributor) { create(:distributor_enterprise) }
 

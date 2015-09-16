@@ -43,14 +43,14 @@
     .six.columns.alpha.step.text-center
       .form-buttons{"data-hook" => "buttons"}
         =link_to_with_icon "icon-undo", "Update User Invoices",
-          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "update_user_invoices" }),
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "update_account_invoices" }),
           class: "button fullwidth"
 
       %br
 
-      - if @update_user_invoices_job
+      - if @update_account_invoices_job
         %p.text-center
-          - if @update_user_invoices_job.run_at < Time.now
+          - if @update_account_invoices_job.run_at < Time.now
             %strong In Progress
             %br
             Started at:
@@ -58,7 +58,7 @@
             %strong Queued
             %br
             Scheduled for:
-          = @update_user_invoices_job.run_at
+          = @update_account_invoices_job.run_at
       - else
         %p.explanation
           Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night.
@@ -67,14 +67,14 @@
     .six.columns.omega.step.text-center
       .form-buttons{"data-hook" => "buttons"}
         =link_to_with_icon "icon-ok-sign", "Finalise User Invoices",
-          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "finalize_user_invoices" }),
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "finalize_account_invoices" }),
           class: "button fullwidth"
 
       %br
 
-      - if @finalize_user_invoices_job
+      - if @finalize_account_invoices_job
         %p.text-center
-          - if @finalize_user_invoices_job.run_at < Time.now
+          - if @finalize_account_invoices_job.run_at < Time.now
             %strong In Progress
             %br
             Started at:
@@ -82,7 +82,7 @@
             %strong Queued
             %br
             Scheduled for:
-          = @finalize_user_invoices_job.run_at
+          = @finalize_account_invoices_job.run_at
       - else
         %p.explanation
           Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month.
