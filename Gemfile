@@ -99,6 +99,7 @@ group :test, :development do
   gem 'rspec-retry'
   gem 'json_spec'
   gem 'unicorn-rails'
+  gem 'atomic'
 end
 
 group :test do
