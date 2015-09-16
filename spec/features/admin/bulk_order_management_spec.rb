@@ -124,7 +124,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      pending "displays an update button which submits pending changes" do
+      it "displays an update button which submits pending changes" do
         fill_in "quantity", :with => 2
         page.should have_selector "input[name='quantity'].update-pending"
         page.should_not have_selector "input[name='quantity'].update-success"
@@ -132,6 +132,8 @@ feature %q{
         click_button "Update"
         page.should_not have_selector "input[name='quantity'].update-pending"
         page.should have_selector "input[name='quantity'].update-success"
+        page.should have_selector "input[name='final_weight_volume'].update-success", visible: false
+        page.should have_selector "input[name='price'].update-success", visible: false
       end
     end
   end
@@ -288,7 +290,7 @@ feature %q{
           visit '/admin/orders/bulk_management'
         end
 
-        pending "displays a select box for order cycles, which filters line items by the selected order cycle" do
+        it "displays a select box for order cycles, which filters line items by the selected order cycle" do
           order_cycle_names = ["All"]
           OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
           find("div.select2-container#s2id_order_cycle_filter").click
@@ -440,7 +442,7 @@ feature %q{
           page.should have_button "SAVE"
         end
 
-        pending "saves pendings changes when 'SAVE' button is clicked" do
+        it "saves pendings changes when 'SAVE' button is clicked" do
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
@@ -450,6 +452,10 @@ feature %q{
           within("tr#li_#{li2.id} td.quantity") do
             page.should have_field "quantity", :with => ( li2.quantity + 1 ).to_s
           end
+          page.should_not have_selector "input[name='quantity'].update-pending"
+          page.should_not have_selector "input[name='price'].update-pending"
+          page.should_not have_selector "input[name='final_weight_volume'].update-pending"
+          page.should have_no_selector "input.update-pending"
         end
 
         it "ignores pending changes when 'IGNORE' button is clicked" do
