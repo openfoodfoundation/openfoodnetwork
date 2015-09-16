@@ -67,7 +67,7 @@ feature %q{
 
     scenario "payment method report" do
       click_link "Payment Methods Report"
-      rows = find("table#listing_order_payment_methods").all("thead tr")
+      rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
@@ -76,7 +76,7 @@ feature %q{
 
     scenario "delivery report" do
       click_link "Delivery Report"
-      rows = find("table#listing_order_payment_methods").all("thead tr")
+      rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
