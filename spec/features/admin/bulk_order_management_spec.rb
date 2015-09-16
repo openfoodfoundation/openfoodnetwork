@@ -291,8 +291,7 @@ feature %q{
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle" do
-          order_cycle_names = ["All"]
-          OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
+          order_cycle_names = OrderCycle.pluck(:name).push "All"
           find("div.select2-container#s2id_order_cycle_filter").click
           order_cycle_names.each { |ocn| page.should have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
           find("div.select2-container#s2id_order_cycle_filter").click
@@ -447,15 +446,13 @@ feature %q{
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
           fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+          page.should have_selector "input[name='quantity'].update-pending"
           click_button "SAVE"
-          page.should_not have_selector "input[name='quantity'].update-pending"
+          page.should have_no_selector "input.update-pending"
+          page.should have_selector "input[name='quantity'].update-success"
           within("tr#li_#{li2.id} td.quantity") do
             page.should have_field "quantity", :with => ( li2.quantity + 1 ).to_s
           end
-          page.should_not have_selector "input[name='quantity'].update-pending"
-          page.should_not have_selector "input[name='price'].update-pending"
-          page.should_not have_selector "input[name='final_weight_volume'].update-pending"
-          page.should have_no_selector "input.update-pending"
         end
 
         it "ignores pending changes when 'IGNORE' button is clicked" do
