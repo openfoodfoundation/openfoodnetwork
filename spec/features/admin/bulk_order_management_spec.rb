@@ -124,7 +124,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays an update button which submits pending changes" do
+      pending "displays an update button which submits pending changes" do
         fill_in "quantity", :with => 2
         page.should have_selector "input[name='quantity'].update-pending"
         page.should_not have_selector "input[name='quantity'].update-success"
@@ -288,7 +288,7 @@ feature %q{
           visit '/admin/orders/bulk_management'
         end
 
-        it "displays a select box for order cycles, which filters line items by the selected order cycle" do
+        pending "displays a select box for order cycles, which filters line items by the selected order cycle" do
           order_cycle_names = ["All"]
           OrderCycle.all.each{ |oc| order_cycle_names << oc.name }
           find("div.select2-container#s2id_order_cycle_filter").click
@@ -440,7 +440,7 @@ feature %q{
           page.should have_button "SAVE"
         end
 
-        it "saves pendings changes when 'SAVE' button is clicked" do
+        pending "saves pendings changes when 'SAVE' button is clicked" do
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
