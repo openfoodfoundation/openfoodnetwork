@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150916012814) do
+ActiveRecord::Schema.define(:version => 20150916061809) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -48,7 +48,10 @@ ActiveRecord::Schema.define(:version => 20150916012814) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_invoice_id",                    :null => false
   end
+
+  add_index "billable_periods", ["account_invoice_id"], :name => "index_billable_periods_on_account_invoice_id"
 
   create_table "carts", :force => true do |t|
     t.integer "user_id"
@@ -1169,6 +1172,7 @@ ActiveRecord::Schema.define(:version => 20150916012814) do
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id", dependent: :delete
 
+  add_foreign_key "billable_periods", "account_invoices", name: "billable_periods_account_invoice_id_fk"
   add_foreign_key "billable_periods", "enterprises", name: "bill_items_enterprise_id_fk"
   add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
