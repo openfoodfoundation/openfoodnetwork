@@ -71,9 +71,10 @@ class UpdateBillablePeriods
     owner_id = enterprise.owner_id
     sells = enterprise.sells
     orders = Spree::Order.where('distributor_id = (?) AND completed_at >= (?) AND completed_at < (?)', enterprise.id, begins_at, ends_at)
+    account_invoice = AccountInvoice.find_or_create_by_user_id_and_year_and_month(owner_id, begins_at.year, begins_at.month)
 
-    billable_period = BillablePeriod.where(begins_at: begins_at, enterprise_id: enterprise.id).first
-    billable_period ||= BillablePeriod.new(begins_at: begins_at, enterprise_id: enterprise.id)
+    billable_period = BillablePeriod.where(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id).first
+    billable_period ||= BillablePeriod.new(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id)
     billable_period.update_attributes({
       ends_at: ends_at,
       sells: sells,

@@ -1,7 +1,8 @@
 class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
+  belongs_to :owner, class_name: 'Spree::User'
+  belongs_to :account_invoice
   has_one :adjustment, :as => :source, class_name: "Spree::Adjustment" #, :dependent => :destroy
-  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id
 
   default_scope where(deleted_at: nil)
 

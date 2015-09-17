@@ -222,8 +222,18 @@ FactoryGirl.define do
     sells { 'any' }
     trial { false }
     enterprise
-    owner { FactoryGirl.create :user }
+    owner { enterprise.owner }
     turnover { rand(100000).to_f/100 }
+    account_invoice do
+      AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
+      FactoryGirl.create(user: owner, year: begins_at.year, month: begins_at.month)
+    end
+  end
+
+  factory :account_invoice do
+    user { FactoryGirl.create :user }
+    year { 2000 + rand(100) }
+    month { 1 + rand(12) }
   end
 end
 

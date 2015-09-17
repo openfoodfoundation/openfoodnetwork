@@ -7,6 +7,7 @@ end
 describe UpdateBillablePeriods do
   describe "unit specs" do
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
+    let!(:year) { Time.now.year }
 
     let!(:updater) { UpdateBillablePeriods.new }
 
@@ -44,7 +45,7 @@ describe UpdateBillablePeriods do
       end
 
       context "when a specfic year and month are passed as arguments" do
-        let!(:updater) { UpdateBillablePeriods.new(Time.now.year, 6) }
+        let!(:updater) { UpdateBillablePeriods.new(year, 6) }
 
         before do
           allow(updater).to receive(:split_for_trial)
@@ -494,11 +495,16 @@ describe UpdateBillablePeriods do
     # Chose july to test with because June has 30 days and so is easy to calculate end date for shop trial
     let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
 
+    let!(:year) { Time.now.year }
+
     let!(:enterprise) { create(:supplier_enterprise, sells: 'any') }
 
     let!(:original_owner) { enterprise.owner }
 
     let!(:new_owner) { create(:user) }
+
+    let!(:account_invoice1) { create(:account_invoice, user: original_owner, year: year, month: 7)}
+    let!(:account_invoice2) { create(:account_invoice, user: new_owner, year: year, month: 7)}
 
     # This BP was updated before the current run and so should be marked for deletion at the end of the run
     let!(:obsolete_bp) { create(:billable_period, enterprise: enterprise, updated_at: start_of_july + 10.days, begins_at: start_of_july + 6.5.days, ends_at: start_of_july + 10.days ) }
@@ -568,14 +574,19 @@ describe UpdateBillablePeriods do
         expect(obsolete_bp.reload.deleted_at).to_not be_nil
 
         bp_to_overwrite.reload
+
         expect(bp_to_overwrite.sells).to eq 'own'
         expect(bp_to_overwrite.trial).to be true
         expect(bp_to_overwrite.owner).to eq original_owner
         expect(bp_to_overwrite.begins_at).to eq start_of_july + 10.days
         expect(bp_to_overwrite.ends_at).to eq start_of_july + 12.days
         expect(bp_to_overwrite.turnover).to eq order6.total
+        expect(bp_to_overwrite.account_invoice).to eq account_invoice1
 
         expect(billable_periods.count).to eq 9
+
+        expect(account_invoice1.billable_periods.sort).to eq billable_periods.sort.select{ |bp| bp.owner == original_owner }
+        expect(account_invoice2.billable_periods.sort).to eq billable_periods.sort.select{ |bp| bp.owner == new_owner }
 
         expect(billable_periods.map(&:begins_at)).to eq [
           start_of_july + 2.days,
