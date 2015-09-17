@@ -25,14 +25,19 @@ class BillablePeriod < ActiveRecord::Base
     end
   end
 
-  def adjustment_label
+  def label
     enterprise_version = enterprise.version_at(begins_at)
     category = enterprise_version.category.to_s.titleize
     category += (trial ? " Trial" : "")
+
+    "#{enterprise_version.name} (#{category})"
+  end
+
+  def adjustment_label
     begins = begins_at.localtime.strftime("%d/%m/%y")
     ends = ends_at.localtime.strftime("%d/%m/%y")
 
-    "#{enterprise_version.name} (#{category}) [#{begins} - #{ends}]"
+    "#{label} [#{begins} - #{ends}]"
   end
 
   def delete

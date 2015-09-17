@@ -6,13 +6,13 @@
 - if @invoices.empty?
   %h4 No invoices to display
 
-- @invoices.order('created_at DESC').each do |invoice|
-  - month = (invoice.created_at.localtime)
+- @invoices.order('year DESC, month DESC').each do |invoice|
+  - order = invoice.order
   .row.invoice_title
     .eight.columns.alpha
-      %h4= "#{month.strftime("%b %Y")}#{( invoice.completed_at ? '' : '*' )}"
+      %h4= "#{Date::ABBR_MONTHNAMES[invoice.month]} #{invoice.year}"
     .eight.columns.omega.text-right
-      %h4.balance= invoice.display_total
+      %h4.balance= invoice.order.display_total
   %table.invoice_summary
     %col{ width: '20%' }
     %col{ width: '60%' }
@@ -21,22 +21,20 @@
       %th Date
       %th Description
       %th Charge
-    - invoice.adjustments.where(source_type: 'BillablePeriod').each do |adjustment|
-      - date = adjustment.label.slice!(/\[[^\]]*\]$/)
-      - date = date.slice(1,date.length-2)
+    - invoice.billable_periods.select{ |bp| bp.bill > 0}.each do |billable_period|
       %tr
-        %td= date
-        %td= adjustment.label
-        %td= adjustment.display_amount
-    - invoice.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
+        %td.text-center= "#{billable_period.begins_at.strftime("%d/%m/%Y")}"
+        %td= billable_period.label
+        %td.text-right= billable_period.display_bill
+    - order.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
       %tr
-        %td &nbsp;
+        %td.text-center &nbsp;
         %td= adjustment.label
-        %td= adjustment.display_amount
+        %td.text-right= adjustment.display_amount
     %tr.total
-      %td &nbsp;
+      %td.text-center &nbsp;
       %td TOTAL
-      %td= invoice.display_total
+      %td.text-right= order.display_total
 
 -#   - if @enterprises.empty?
 -#     %h4 No enterprises to display
