@@ -79,40 +79,4 @@ describe Spree.user_class do
       end
     end
   end
-
-  describe "invoice_for" do
-    let!(:user) { create(:user) }
-    let!(:accounts_distributor) { create(:distributor_enterprise) }
-    let!(:start_of_month) { Time.now.beginning_of_month }
-
-    before do
-      Spree::Config.accounts_distributor_id = accounts_distributor.id
-    end
-
-    context "where no relevant invoice exists for the given period" do
-      # Created during previous month
-      let!(:order1) { create(:order, user: user, created_at: start_of_month - 3.hours, completed_at: nil, distributor: accounts_distributor) }
-      # Incorrect distributor
-      let!(:order3) { create(:order, user: user, created_at: start_of_month + 3.hours, completed_at: nil, distributor: create(:distributor_enterprise)) }
-      # Incorrect user
-      let!(:order4) { create(:order, user: create(:user), created_at: start_of_month + 3.hours, completed_at: nil, distributor: accounts_distributor) }
-
-      it "creates a new invoice" do
-        current_invoice = user.invoice_for(start_of_month, start_of_month + 20.days)
-        expect(current_invoice).to be_a_new Spree::Order
-        expect(current_invoice.completed_at).to be nil
-        expect(current_invoice.distributor).to eq accounts_distributor
-        expect(current_invoice.user).to eq user
-      end
-    end
-
-    context "where an invoice exists for the current month" do
-      let!(:order) { create(:order, user: user, created_at: start_of_month + 3.hours, completed_at: nil, distributor: accounts_distributor) }
-
-      it "returns the existing invoice" do
-        current_invoice = user.invoice_for(start_of_month, start_of_month + 20.days)
-        expect(current_invoice).to eq order
-      end
-    end
-  end
 end

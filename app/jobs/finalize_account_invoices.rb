@@ -1,5 +1,5 @@
 class FinalizeAccountInvoices
-  attr_reader :start_date, :end_date
+  attr_reader :year, :month, :start_date, :end_date
 
   def initialize(year = nil, month = nil)
     ref_point = Time.now - 1.month
@@ -17,21 +17,18 @@ class FinalizeAccountInvoices
   def perform
     return unless settings_are_valid?
 
-    invoices = Spree::Order.where('distributor_id = (?) AND created_at >= (?) AND created_at < (?) AND completed_at IS NULL',
-      @accounts_distributor, start_date, end_date)
 
-    invoices.each do |invoice|
-      finalize(invoice)
-    end
+    invoice_orders = AccountInvoice.where(year: year, month: month).map(&:order)
+    invoice_orders.select{ |order| order.present? && order.completed_at.nil? }.each{ |order| finalize(order) }
   end
 
-  def finalize(invoice)
+  def finalize(invoice_order)
     # TODO: When we implement per-customer and/or per-user preferences around shipping and payment methods
     # we can update these to read from those preferences
-    invoice.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice.total)
-    invoice.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
-    while invoice.state != "complete"
-      invoice.next
+    invoice_order.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice_order.total)
+    invoice_order.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
+    while invoice_order.state != "complete"
+      invoice_order.next
     end
   end
 

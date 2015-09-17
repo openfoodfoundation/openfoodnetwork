@@ -48,12 +48,6 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
-  def invoice_for(start_date, end_date)
-    existing = orders.where('distributor_id = (?) AND created_at >= (?) AND created_at < (?)',
-      Spree::Config[:accounts_distributor_id], start_date, end_date).first
-    existing || orders.new(distributor_id: Spree::Config[:accounts_distributor_id])
-  end
-
   private
 
   def limit_owned_enterprises

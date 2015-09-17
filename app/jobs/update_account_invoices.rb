@@ -1,5 +1,5 @@
 class UpdateAccountInvoices
-  attr_reader :start_date, :end_date
+  attr_reader :year, :month, :start_date, :end_date
 
   def initialize(year = nil, month = nil)
     ref_point = Time.now - 1.day
@@ -17,43 +17,34 @@ class UpdateAccountInvoices
   def perform
     return unless settings_are_valid?
 
-    # Find all users that have owned an enterprise at some point in the relevant period
-    enterprise_users = Spree::User.joins(:billable_periods)
-    .where('billable_periods.begins_at >= (?) AND billable_periods.ends_at <= (?) AND deleted_at IS NULL', start_date, end_date)
-    .select('DISTINCT spree_users.*')
-
-    enterprise_users.each do |user|
-      billable_periods = user.billable_periods.where('begins_at >= (?) AND ends_at <= (?) AND deleted_at IS NULL', start_date, end_date).order(:enterprise_id, :begins_at)
-      update_invoice_for(user, billable_periods)
-    end
+    account_invoices = AccountInvoice.where(year: year, month: month)
+    account_invoices.each { |account_invoice| update(account_invoice) }
   end
 
-  def update_invoice_for(user, billable_periods)
+  def update(account_invoice)
     current_adjustments = []
-    invoice = user.invoice_for(start_date, end_date)
+    unless account_invoice.order
+      account_invoice.order = account_invoice.user.orders.new(distributor_id: Spree::Config[:accounts_distributor_id])
+    end
 
-    if invoice.persisted? && invoice.created_at != start_date
-      Bugsnag.notify(RuntimeError.new("InvoiceDateConflict"), {
-        start_date: start_date,
-        end_date: end_date,
-        existing_invoice: invoice.as_json
-      })
-    elsif invoice.complete?
+    if account_invoice.order.complete?
       Bugsnag.notify(RuntimeError.new("InvoiceAlreadyFinalized"), {
-        invoice: invoice.as_json
+        invoice_order: account_invoice.order.as_json
       })
     else
-      billable_periods.reject{ |bp| bp.turnover == 0 }.each do |billable_period|
-        current_adjustments << billable_period.ensure_correct_adjustment_for(invoice)
+      account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }.each do |billable_period|
+        current_adjustments << billable_period.ensure_correct_adjustment_for(account_invoice.order)
       end
     end
 
-    clean_up_and_save(invoice, current_adjustments)
+    account_invoice.save if current_adjustments.any?
+
+    clean_up(account_invoice.order, current_adjustments)
   end
 
-  def clean_up_and_save(invoice, current_adjustments)
+  def clean_up(invoice_order, current_adjustments)
     # Snag and then delete any obsolete adjustments
-    obsolete_adjustments = invoice.adjustments.where('source_type = (?) AND id NOT IN (?)', "BillablePeriod", current_adjustments)
+    obsolete_adjustments = invoice_order.adjustments.where('source_type = (?) AND id NOT IN (?)', "BillablePeriod", current_adjustments)
 
     if obsolete_adjustments.any?
       Bugsnag.notify(RuntimeError.new("Obsolete Adjustments"), {
@@ -64,16 +55,12 @@ class UpdateAccountInvoices
       obsolete_adjustments.destroy_all
     end
 
-    if current_adjustments.any?
-      # Invoices should be "created" at the beginning of the period to which they apply
-      invoice.created_at = start_date unless invoice.persisted?
-      invoice.save
-    else
+    if current_adjustments.empty?
       Bugsnag.notify(RuntimeError.new("Empty Persisted Invoice"), {
-        invoice: invoice.as_json
-      }) if invoice.persisted?
+        invoice_order: invoice_order.as_json
+      }) if invoice_order.persisted?
 
-      invoice.destroy
+      invoice_order.destroy
     end
   end
 

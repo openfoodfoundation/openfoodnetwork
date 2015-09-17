@@ -226,7 +226,7 @@ FactoryGirl.define do
     turnover { rand(100000).to_f/100 }
     account_invoice do
       AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
-      FactoryGirl.create(user: owner, year: begins_at.year, month: begins_at.month)
+      FactoryGirl.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
     end
   end
 
