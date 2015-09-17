@@ -467,8 +467,12 @@ describe UpdateBillablePeriods do
       let!(:bp3) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days ) }
       # Updated before start but begins after end_date
       let!(:bp4) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july + 10.days, ends_at: start_of_july + 15.days ) }
+      # Updated before start but begins at end_date (ie. not before end_date, so should be ignored) EDGE CASE
+      let!(:bp5) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july + 8.days, ends_at: start_of_july + 10.days ) }
       # Updated before start but ends before start_date
-      let!(:bp5) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 10.days, ends_at: start_of_july - 5.days ) }
+      let!(:bp6) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 10.days, ends_at: start_of_july - 5.days ) }
+      # Updated before start but ends at start_date (ie. not after start_date, so should be ignored) EDGE CASE
+      let!(:bp7) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 5.days, ends_at: start_of_july ) }
 
       before do
         allow(Bugsnag).to receive(:notify)
@@ -483,6 +487,8 @@ describe UpdateBillablePeriods do
         expect(bp3.reload.deleted_at).to_not be_nil
         expect(bp4.reload.deleted_at).to be_nil
         expect(bp5.reload.deleted_at).to be_nil
+        expect(bp6.reload.deleted_at).to be_nil
+        expect(bp7.reload.deleted_at).to be_nil
       end
 
       it "notifies bugsnag" do
