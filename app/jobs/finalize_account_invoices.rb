@@ -28,7 +28,18 @@ class FinalizeAccountInvoices
     invoice_order.payments.create(payment_method_id: Spree::Config.default_accounts_payment_method_id, amount: invoice_order.total)
     invoice_order.update_attribute(:shipping_method_id, Spree::Config.default_accounts_shipping_method_id)
     while invoice_order.state != "complete"
-      invoice_order.next
+      if invoice_order.errors.any?
+        Bugsnag.notify(RuntimeError.new("FinalizeInvoiceError"), {
+          job: "FinalizeAccountInvoices",
+          error: "Cannot finalize invoice due to errors",
+          data: {
+            errors: invoice_order.errors.full_messages
+          }
+        })
+        break
+      else
+        invoice_order.next
+      end
     end
   end
 

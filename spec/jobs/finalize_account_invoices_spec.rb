@@ -124,27 +124,40 @@ describe FinalizeAccountInvoices do
       let!(:pm) { create(:payment_method, name: "PM1") }
       let!(:sm) { create(:shipping_method, name: "ship1") }
       let!(:accounts_distributor) { create(:distributor_enterprise, payment_methods: [pm], shipping_methods: [sm]) }
-      let!(:invoice) { create(:order, distributor: accounts_distributor) }
+      let!(:invoice_order) { create(:order, distributor: accounts_distributor) }
 
       before do
         Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
         Spree::Config.set({ default_accounts_payment_method_id: pm.id })
         Spree::Config.set({ default_accounts_shipping_method_id: sm.id })
-        invoice.line_items.clear
+        invoice_order.line_items.clear
       end
 
       it "creates payment, assigns shipping method and finalizes the order" do
-        expect(invoice.completed_at).to be nil
-        finalizer.finalize(invoice)
-        expect(invoice.completed_at).to_not be nil
-        expect(invoice.payments.count).to eq 1
-        expect(invoice.payments.first.payment_method).to eq pm
-        expect(invoice.shipping_method).to eq sm
+        expect(invoice_order.completed_at).to be nil
+        finalizer.finalize(invoice_order)
+        expect(invoice_order.completed_at).to_not be nil
+        expect(invoice_order.payments.count).to eq 1
+        expect(invoice_order.payments.first.payment_method).to eq pm
+        expect(invoice_order.shipping_method).to eq sm
       end
 
       it "does not send a confirmation email" do
-        expect(invoice).to receive(:deliver_order_confirmation_email).and_call_original
-        expect{finalizer.finalize(invoice)}.to_not enqueue_job ConfirmOrderJob
+        expect(invoice_order).to receive(:deliver_order_confirmation_email).and_call_original
+        expect{finalizer.finalize(invoice_order)}.to_not enqueue_job ConfirmOrderJob
+      end
+
+      context "when errors exist on the order" do
+        before do
+          allow(invoice_order).to receive(:errors) { double(:errors, any?: true, full_messages: ["Error message 1", "Error message 2"]) }
+          allow(Bugsnag).to receive(:notify)
+        end
+
+        it "Snags a bug and does not finalize the order" do
+          finalizer.finalize(invoice_order)
+          expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("FinalizeInvoiceError"), anything)
+          expect(invoice_order).to_not be_completed
+        end
       end
     end
   end
