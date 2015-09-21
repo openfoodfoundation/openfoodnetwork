@@ -153,6 +153,37 @@ module Spree
       end
     end
 
+    describe "generating the product and variant name" do
+      let(:v) { Variant.new }
+      let(:p) { double(:product, name: 'product') }
+
+      before do
+        v.stub(:product) { p }
+        v.stub(:name_to_display) { p.name }
+        v.stub(:options_text) { nil }
+      end
+
+      it "returns the product name only when there's no extra info" do
+        v.product_and_variant_name.should == 'product'
+      end
+
+      it "also shows the name to display when different to the product name" do
+        v.stub(:name_to_display) { 'NTD' }
+        v.product_and_variant_name.should == 'product - NTD'
+      end
+
+      it "shows the options text when present" do
+        v.stub(:options_text) { 'OT' }
+        v.product_and_variant_name.should == 'product (OT)'
+      end
+
+      it "displays all attributes" do
+        v.stub(:name_to_display) { 'NTD' }
+        v.stub(:options_text) { 'OT' }
+        v.product_and_variant_name.should == 'product - NTD (OT)'
+      end
+    end
+
     describe "calculating the price with enterprise fees" do
       it "returns the price plus the fees" do
         distributor = double(:distributor)
