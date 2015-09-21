@@ -40,7 +40,6 @@ module OpenFoodNetwork
       end
     end
 
-
     def summary_rows_for_order(order, invoice_number, opts)
       [
         summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts),
@@ -53,6 +52,7 @@ module OpenFoodNetwork
 
     def detail_row(line_item, invoice_number, opts)
       row(line_item.order,
+          line_item.product.sku,
           line_item.variant.product_and_variant_name,
           line_item.quantity.to_s,
           line_item.price.to_s,
@@ -61,13 +61,11 @@ module OpenFoodNetwork
           opts)
     end
 
-
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
-      row order, description, '1', amount, invoice_number, tax_type, opts
+      row order, '', description, '1', amount, invoice_number, tax_type, opts
     end
 
-
-    def row(order, description, quantity, amount, invoice_number, tax_type, opts={})
+    def row(order, sku, description, quantity, amount, invoice_number, tax_type, opts={})
       return nil if amount == 0
 
       [order.bill_address.full_name,
@@ -84,7 +82,7 @@ module OpenFoodNetwork
        order.number,
        opts[:invoice_date],
        opts[:due_date],
-       '',
+       sku,
        description,
        quantity,
        amount,

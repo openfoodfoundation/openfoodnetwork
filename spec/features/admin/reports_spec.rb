@@ -388,8 +388,8 @@ feature %q{
     let(:country) { Spree::Country.find Spree::Config.default_country_id }
     let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
     let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: bill_address) }
-    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
-    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
@@ -475,19 +475,20 @@ feature %q{
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts={})
-      xero_invoice_row description, amount, '1', tax_type, opts
+      xero_invoice_row '', description, amount, '1', tax_type, opts
     end
 
     def xero_invoice_li_row(line_item, opts={})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
-      xero_invoice_row line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
+      xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
-    def xero_invoice_row(description, amount, quantity, tax_type, opts={})
+    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
       opts.reverse_merge!({invoice_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
 
-      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date], '',
+      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date],
 
+       sku,
        description,
        quantity,
        amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '', 'N']
