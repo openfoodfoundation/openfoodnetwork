@@ -1,6 +1,14 @@
+require 'open_food_network/variant_and_line_item_naming'
+
 Spree::LineItem.class_eval do
+  include OpenFoodNetwork::VariantAndLineItemNaming
+  has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
+
   attr_accessible :max_quantity, :final_weight_volume
   attr_accessible :final_weight_volume, :price, :as => :api
+  after_save :update_units
+
+  delegate :unit_description, to: :variant
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -56,5 +64,10 @@ Spree::LineItem.class_eval do
 
   def display_amount_with_adjustments
     Spree::Money.new(amount_with_adjustments, { :currency => currency })
+  end
+
+  def unit_value
+    return 0 if quantity == 0
+    final_weight_volume / quantity unless final_weight_volume.nil?
   end
 end

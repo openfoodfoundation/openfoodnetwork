@@ -115,44 +115,6 @@ module Spree
       end
     end
 
-    describe "generating the full name" do
-      let(:v) { Variant.new }
-
-      before do
-        v.stub(:display_name) { 'display_name' }
-        v.stub(:unit_to_display) { 'unit_to_display' }
-      end
-
-      it "returns unit_to_display when display_name is blank" do
-        v.stub(:display_name) { '' }
-        v.full_name.should == 'unit_to_display'
-      end
-
-      it "returns display_name when it contains unit_to_display" do
-        v.stub(:display_name) { 'DiSpLaY_name' }
-        v.stub(:unit_to_display) { 'name' }
-        v.full_name.should == 'DiSpLaY_name'
-      end
-
-      it "returns unit_to_display when it contains display_name" do
-        v.stub(:display_name) { '_to_' }
-        v.stub(:unit_to_display) { 'unit_TO_display' }
-        v.full_name.should == 'unit_TO_display'
-      end
-
-      it "returns a combination otherwise" do
-        v.stub(:display_name) { 'display_name' }
-        v.stub(:unit_to_display) { 'unit_to_display' }
-        v.full_name.should == 'display_name (unit_to_display)'
-      end
-
-      it "is resilient to regex chars" do
-        v = Variant.new display_name: ")))"
-        v.stub(:unit_to_display) { ")))" }
-        v.full_name.should == ")))"
-      end
-    end
-
     describe "generating the product and variant name" do
       let(:v) { Variant.new }
       let(:p) { double(:product, name: 'product') }
@@ -282,6 +244,44 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "generating the full name" do
+        let(:v) { Variant.new }
+
+        before do
+          v.stub(:display_name) { 'display_name' }
+          v.stub(:unit_to_display) { 'unit_to_display' }
+        end
+
+        it "returns unit_to_display when display_name is blank" do
+          v.stub(:display_name) { '' }
+          v.full_name.should == 'unit_to_display'
+        end
+
+        it "returns display_name when it contains unit_to_display" do
+          v.stub(:display_name) { 'DiSpLaY_name' }
+          v.stub(:unit_to_display) { 'name' }
+          v.full_name.should == 'DiSpLaY_name'
+        end
+
+        it "returns unit_to_display when it contains display_name" do
+          v.stub(:display_name) { '_to_' }
+          v.stub(:unit_to_display) { 'unit_TO_display' }
+          v.full_name.should == 'unit_TO_display'
+        end
+
+        it "returns a combination otherwise" do
+          v.stub(:display_name) { 'display_name' }
+          v.stub(:unit_to_display) { 'unit_to_display' }
+          v.full_name.should == 'display_name (unit_to_display)'
+        end
+
+        it "is resilient to regex chars" do
+          v = Variant.new display_name: ")))"
+          v.stub(:unit_to_display) { ")))" }
+          v.full_name.should == ")))"
+        end
+      end
+
       describe "getting name for display" do
         it "returns display_name if present" do
           v = create(:variant, display_name: "foo")
@@ -347,23 +347,18 @@ module Spree
         end
       end
 
-      context "when the variant already has a value set (and all required option values exist)" do
-        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
-
+      context "when the variant already has a value set (and all required option values do not exist)" do
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
 
         it "removes the old option value and assigns the new one" do
           ov_orig = v.option_values.last
-          ov_new  = v0.option_values.last
 
           expect {
             v.update_attributes!(unit_value: 10, unit_description: 'foo')
-          }.to change(Spree::OptionValue, :count).by(0)
+          }.to change(Spree::OptionValue, :count).by(1)
 
           v.option_values.should_not include ov_orig
-          v.option_values.should     include ov_new
         end
       end
 

@@ -78,5 +78,96 @@ module Spree
         li_no_tax.should_not have_tax
       end
     end
+
+    describe "unit value/description" do
+      describe "generating the full name" do
+        let(:li) { LineItem.new }
+
+        before do
+          li.stub(:unit_to_display) { 'unit_to_display' }
+        end
+
+        it "returns unit_to_display" do
+          li.full_name.should == 'unit_to_display'
+        end
+      end
+
+      describe "getting name for display" do
+        it "returns product name" do
+          li = create(:variant, product: create(:product))
+          li.name_to_display.should == li.product.name
+        end
+      end
+
+      describe "getting unit for display" do
+        it "returns options_text" do
+          li = create(:line_item)
+          li.stub(:options_text).and_return "ponies"
+          li.unit_to_display.should == "ponies"
+        end
+      end
+
+      context "when the line_item already has a final_weight_volume set (and all required option values do not exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
+
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }
+
+        it "removes the old option value and assigns the new one" do
+          ov_orig = li.option_values.last
+          ov_var  = v.option_values.last
+          allow(li).to receive(:unit_description) { 'foo' }
+
+          expect {
+            li.update_attributes!(final_weight_volume: 10)
+          }.to change(Spree::OptionValue, :count).by(1)
+
+          li.option_values.should_not include ov_orig
+          li.option_values.should_not include ov_var
+          ov = li.option_values.last
+          ov.name.should == "10g foo"
+        end
+      end
+
+      context "when the variant already has a value set (and all required option values exist)" do
+        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
+
+        let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }
+
+        it "removes the old option value and assigns the new one" do
+          ov_orig = li.option_values.last
+          ov_new  = v.option_values.last
+          allow(li).to receive(:unit_description) { 'bar' }
+
+          expect {
+            li.update_attributes!(final_weight_volume: 10)
+          }.to change(Spree::OptionValue, :count).by(0)
+
+          li.option_values.should_not include ov_orig
+          li.option_values.should     include ov_new
+        end
+      end
+    end
+
+    describe "deleting unit option values" do
+      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
+      let!(:ot) { Spree::OptionType.find_by_name 'unit_weight' }
+      let!(:li) { create(:line_item, product: p) }
+
+      it "removes option value associations for unit option types" do
+        expect {
+          li.delete_unit_option_values
+        }.to change(li.option_values, :count).by(-1)
+      end
+
+      it "does not delete option values" do
+        expect {
+          li.delete_unit_option_values
+        }.to change(Spree::OptionValue, :count).by(0)
+      end
+    end
   end
 end

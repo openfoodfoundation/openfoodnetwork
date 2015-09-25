@@ -130,6 +130,7 @@ Spree::Order.class_eval do
     else
       current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
       current_item.variant = variant
+      current_item.option_values = variant.option_values
       if variant.unit_value
         current_item.final_weight_volume = variant.unit_value * quantity
       else
