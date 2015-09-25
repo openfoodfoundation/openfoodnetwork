@@ -56,6 +56,10 @@ module OpenFoodNetwork
       self.option_values.destroy ovs
     end
 
+    def weight_from_unit_value
+      unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
+    end
+
     private
 
     def option_value_name

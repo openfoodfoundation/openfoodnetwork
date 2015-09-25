@@ -43,31 +43,31 @@ module OpenFoodNetwork
       when "bulk_coop_allocation"
         @allocation_report.rules
       when "bulk_coop_packing_sheets"
-        [ { group_by: proc { |li| li.variant.product },
+        [ { group_by: proc { |li| li.product },
           sort_by: proc { |product| product.name } },
-          { group_by: proc { |li| li.variant },
-          sort_by: proc { |variant| variant.full_name } },
+          { group_by: proc { |li| li.full_name },
+          sort_by: proc { |full_name| full_name } },
           { group_by: proc { |li| li.order },
           sort_by: proc { |order| order.to_s } } ]
       when "bulk_coop_customer_payments"
         [ { group_by: proc { |li| li.order },
           sort_by: proc { |order|  order.completed_at } } ]
       else
-        [ { group_by: proc { |li| li.variant.product.supplier },
+        [ { group_by: proc { |li| li.product.supplier },
         sort_by: proc { |supplier| supplier.name } },
-        { group_by: proc { |li| li.variant.product },
+        { group_by: proc { |li| li.product },
         sort_by: proc { |product| product.name },
-        summary_columns: [ proc { |lis| lis.first.variant.product.supplier.name },
-          proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
+        summary_columns: [ proc { |lis| lis.first.product.supplier.name },
+          proc { |lis| lis.first.product.name },
+          proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
           proc { |lis| "" },
           proc { |lis| "" },
-          proc { |lis| lis.sum { |li| li.quantity * (li.variant.weight || 0) } },
-          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.variant.weight || 0) } },
-          proc { |lis| ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor },
-          proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } - ( ( (lis.first.variant.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.variant.weight || 0) } / lis.first.variant.product.group_buy_unit_size ) ).floor * (lis.first.variant.product.group_buy_unit_size || 0) ) } ] },
-        { group_by: proc { |li| li.variant },
-        sort_by: proc { |variant| variant.full_name } } ]
+          proc { |lis| lis.sum { |li| li.quantity * (li.weight_from_unit_value || 0) } },
+          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.weight_from_unit_value || 0) } },
+          proc { |lis| ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor },
+          proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } - ( ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor * (lis.first.product.group_buy_unit_size || 0) ) } ] },
+        { group_by: proc { |li| li.full_name },
+        sort_by: proc { |full_name| full_name } } ]
       end
     end
 
@@ -79,8 +79,8 @@ module OpenFoodNetwork
         @allocation_report.columns
       when "bulk_coop_packing_sheets"
         [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
-          proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.full_name },
+          proc { |lis| lis.first.product.name },
+          proc { |lis| lis.first.full_name },
           proc { |lis|  lis.sum { |li| li.quantity } } ]
       when "bulk_coop_customer_payments"
         [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
@@ -89,12 +89,12 @@ module OpenFoodNetwork
           proc { |lis| lis.map { |li| li.order }.uniq.sum { |o| o.outstanding_balance } },
           proc { |lis| lis.map { |li| li.order }.uniq.sum { |o| o.payment_total } } ]
       else
-        [ proc { |lis| lis.first.variant.product.supplier.name },
-          proc { |lis| lis.first.variant.product.name },
-          proc { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 },
-          proc { |lis| lis.first.variant.full_name },
-          proc { |lis| lis.first.variant.weight || 0 },
-          proc { |lis|  lis.sum { |li| li.quantity } },
+        [ proc { |lis| lis.first.product.supplier.name },
+          proc { |lis| lis.first.product.name },
+          proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
+          proc { |lis| lis.first.full_name },
+          proc { |lis| lis.first.weight_from_unit_value || 0 },
+          proc { |lis| lis.sum { |li| li.quantity } },
           proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
           proc { |lis| "" },
           proc { |lis| "" } ]

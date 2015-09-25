@@ -5,42 +5,42 @@ module OpenFoodNetwork::Reports
     header "Customer", "Product", "Bulk Unit Size", "Variant", "Variant value", "Variant unit", "Weight", "Sum Total", "Total Available", "Unallocated", "Max quantity excess"
 
     organise do
-        group { |li| li.variant.product }
-        sort &:name
+      group { |li| li.product }
+      sort &:name
 
-        summary_row do
-          column { |lis| "TOTAL" }
-          column { |lis| product_name(lis) }
-          column { |lis| group_buy_unit_size_f(lis) }
-          column { |lis| "" }
-          column { |lis| "" }
-          column { |lis| "" }
-          column { |lis| "" }
-          column { |lis| total_amount(lis) }
-          column { |lis| total_available(lis) }
-          column { |lis| remainder(lis) }
-          column { |lis| max_quantity_excess(lis) }
-        end
+      summary_row do
+        column { |lis| "TOTAL" }
+        column { |lis| product_name(lis) }
+        column { |lis| group_buy_unit_size_f(lis) }
+        column { |lis| "" }
+        column { |lis| "" }
+        column { |lis| "" }
+        column { |lis| "" }
+        column { |lis| total_amount(lis) }
+        column { |lis| total_available(lis) }
+        column { |lis| remainder(lis) }
+        column { |lis| max_quantity_excess(lis) }
+      end
+
+      organise do
+        group { |li| li.full_name }
+        sort { |full_name| full_name }
 
         organise do
-          group { |li| li.variant }
-          sort &:full_name
-
-          organise do
-            group { |li| li.order }
-            sort { |order| order.to_s }
-          end
+          group { |li| li.order }
+          sort { |order| order.to_s }
         end
+      end
     end
 
     columns do
       column { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname }
-      column { |lis| lis.first.variant.product.name }
-      column { |lis| lis.first.variant.product.group_buy_unit_size || 0.0 }
-      column { |lis| lis.first.variant.full_name }
-      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).value }
-      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first.variant).unit }
-      column { |lis| lis.first.variant.weight || 0 }
+      column { |lis| lis.first.product.name }
+      column { |lis| lis.first.product.group_buy_unit_size || 0.0 }
+      column { |lis| lis.first.full_name }
+      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).value }
+      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).unit }
+      column { |lis| lis.first.weight_from_unit_value || 0 }
       column { |lis| total_amount(lis) }
       column { |lis| "" }
       column { |lis| "" }

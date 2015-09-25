@@ -21,7 +21,7 @@ module OpenFoodNetwork
         orders.map { |o| payment_method_row o }
       else
         orders.map { |o| delivery_row o }
-      end     
+      end
     end
 
     def orders
@@ -33,7 +33,7 @@ module OpenFoodNetwork
     end
 
 
-    private 
+    private
 
     def payment_method_row(order)
       ba = order.billing_address

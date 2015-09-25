@@ -49,17 +49,19 @@ module OpenFoodNetwork
             proc { |line_items| "" },
             proc { |line_items| line_items.sum { |li| li.quantity } },
             proc { |line_items| "" } ] },
-          { group_by: proc { |line_item| line_item.variant.product.supplier },
+          { group_by: proc { |line_item| line_item.product.supplier },
             sort_by: proc { |supplier| supplier.name } },
-          { group_by: proc { |line_item| line_item.variant },
-            sort_by: proc { |variant| variant.product.name } } ]
+          { group_by: proc { |line_item| line_item.product },
+          sort_by: proc { |product| product.name } },
+          { group_by: proc { |line_item| line_item.full_name },
+            sort_by: proc { |full_name| full_name } } ]
       else
 #        supplier_rows orders
 #        table_items = supplier_rows orders
 #
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
-          { group_by: proc { |line_item| line_item.variant.product.supplier },
+          { group_by: proc { |line_item| line_item.product.supplier },
             sort_by: proc { |supplier| supplier.name },
             summary_columns: [ proc { |line_items| "" },
               proc { |line_items| "" },
@@ -70,8 +72,10 @@ module OpenFoodNetwork
               proc { |line_items| "" },
               proc { |line_items| line_items.sum { |li| li.quantity } },
               proc { |line_items| "" } ] },
-          { group_by: proc { |line_item| line_item.variant },
-          sort_by: proc { |variant| variant.product.name } } ]
+          { group_by: proc { |line_item| line_item.product },
+          sort_by: proc { |product| product.name } },
+          { group_by: proc { |line_item| line_item.full_name },
+          sort_by: proc { |full_name| full_name } } ]
       end
     end
 
@@ -81,21 +85,21 @@ module OpenFoodNetwork
           proc { |line_items| customer_code(line_items.first.order.email) },
           proc { |line_items| line_items.first.order.bill_address.firstname },
           proc { |line_items| line_items.first.order.bill_address.lastname },
-          proc { |line_items| line_items.first.variant.product.supplier.name },
-          proc { |line_items| line_items.first.variant.product.name },
-          proc { |line_items| line_items.first.variant.full_name },
+          proc { |line_items| line_items.first.product.supplier.name },
+          proc { |line_items| line_items.first.product.name },
+          proc { |line_items| line_items.first.full_name },
           proc { |line_items| line_items.sum { |li| li.quantity } },
           proc { |line_items| is_temperature_controlled?(line_items.first) }
         ]
       else
         [
           proc { |line_items| line_items.first.order.distributor.name },
-          proc { |line_items| line_items.first.variant.product.supplier.name },
+          proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| customer_code(line_items.first.order.email) },
           proc { |line_items| line_items.first.order.bill_address.firstname },
           proc { |line_items| line_items.first.order.bill_address.lastname },
-          proc { |line_items| line_items.first.variant.product.name },
-          proc { |line_items| line_items.first.variant.full_name },
+          proc { |line_items| line_items.first.product.name },
+          proc { |line_items| line_items.first.full_name },
           proc { |line_items| line_items.sum { |li| li.quantity } },
           proc { |line_items| is_temperature_controlled?(line_items.first) }
         ]

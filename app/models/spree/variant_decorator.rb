@@ -94,6 +94,6 @@ Spree::Variant.class_eval do
   private
 
   def update_weight_from_unit_value
-    self.weight = unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
+    self.weight = weight_from_unit_value
   end
 end
