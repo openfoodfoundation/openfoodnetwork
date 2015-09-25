@@ -46,14 +46,14 @@ feature "shopping with variant overrides defined", js: true do
 
     it "looks up stock from the override" do
       # Product should appear but one of the variants is out of stock
-      page.should_not have_content v2.options_text
+      page.should_not have_content v2.unit_text
 
       # Entire product should not appear - no stock
       page.should_not have_content p2.name
-      page.should_not have_content v3.options_text
+      page.should_not have_content v3.unit_text
 
       # On-demand product with VO of no stock should NOT appear
-      page.should_not have_content v5.options_text
+      page.should_not have_content v5.unit_text
     end
 
     it "calculates fees correctly" do

@@ -26,5 +26,5 @@ $.fn.variantAutocomplete = ->
 
       formatResult: formatVariantResult
       formatSelection: (variant) ->
-        $(@element).parent().children(".options_placeholder").html variant.options_text
+        $(@element).parent().children(".options_placeholder").html variant.unit_text
         variant.name

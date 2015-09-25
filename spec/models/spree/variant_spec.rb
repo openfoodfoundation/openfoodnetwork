@@ -302,11 +302,11 @@ module Spree
           v.unit_to_display.should == "foo"
         end
 
-        it "returns options_text if display_as is blank" do
+        it "returns unit_text if display_as is blank" do
           v = create(:variant)
           v1 = create(:variant, display_as: "")
-          v.stub(:options_text).and_return "ponies"
-          v1.stub(:options_text).and_return "ponies"
+          v.stub(:unit_text).and_return "ponies"
+          v1.stub(:unit_text).and_return "ponies"
           v.unit_to_display.should == "ponies"
           v1.unit_to_display.should == "ponies"
         end

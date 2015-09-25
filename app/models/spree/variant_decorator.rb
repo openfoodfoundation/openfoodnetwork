@@ -87,6 +87,10 @@ Spree::Variant.class_eval do
     end
   end
 
+  def options_text
+    # Use unit_text instead
+  end
+
   private
 
   def update_weight_from_unit_value

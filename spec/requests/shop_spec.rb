@@ -49,9 +49,9 @@ describe "Shop API" do
 
     it "filters products based on availability" do
       # It shows on demand variants
-      response.body.should include v43.options_text
+      response.body.should include v43.unit_text
       # It does not show variants that are neither on hand or on demand
-      response.body.should_not include v42.options_text
+      response.body.should_not include v42.unit_text
       # It does not show products that have no available variants in this distribution
       response.body.should_not include p5.name
       # It does not show deleted products

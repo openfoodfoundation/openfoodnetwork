@@ -86,5 +86,5 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
         variant.product_name
       else
         name =  "#{variant.product_name} - #{variant.name_to_display}"
-        name += " (#{variant.options_text})" if variant.options_text
+        name += " (#{variant.unit_text})" if variant.unit_text
         name

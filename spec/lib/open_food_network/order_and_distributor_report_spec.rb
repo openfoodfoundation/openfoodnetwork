@@ -40,7 +40,7 @@ module OpenFoodNetwork
 
         table[0].should == [@order.created_at, @order.id,
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
-          @line_item.product.sku, @line_item.product.name, @line_item.variant.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.distribution_fee,
+          @line_item.product.sku, @line_item.product.name, @line_item.variant.unit_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.distribution_fee,
           @payment_method.name,
           @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
       end

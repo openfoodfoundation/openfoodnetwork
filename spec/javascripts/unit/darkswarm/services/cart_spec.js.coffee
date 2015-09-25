@@ -92,6 +92,6 @@ describe 'Cart service', ->
         variant =
           product_name: 'product_name'
           name_to_display: 'name_to_display'
-          options_text: 'options_text'
+          unit_text: 'unit_text'
 
-        expect(Cart.extendedVariantName(variant)).toEqual "product_name - name_to_display (options_text)"
+        expect(Cart.extendedVariantName(variant)).toEqual "product_name - name_to_display (unit_text)"

@@ -100,9 +100,9 @@ module Spree
       end
 
       describe "getting unit for display" do
-        it "returns options_text" do
+        it "returns unit_text" do
           li = create(:line_item)
-          li.stub(:options_text).and_return "ponies"
+          li.stub(:unit_text).and_return "ponies"
           li.unit_to_display.should == "ponies"
         end
       end
