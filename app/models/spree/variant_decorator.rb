@@ -69,7 +69,7 @@ Spree::Variant.class_eval do
     name = product.name
 
     name += " - #{name_to_display}" if name_to_display != product.name
-    name += " (#{options_text})" if options_text
+    name += " (#{unit_text})" if unit_text
 
     name
   end
@@ -94,6 +94,6 @@ Spree::Variant.class_eval do
   private
 
   def update_weight_from_unit_value
-    self.weight = weight_from_unit_value
+    self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
   end
 end

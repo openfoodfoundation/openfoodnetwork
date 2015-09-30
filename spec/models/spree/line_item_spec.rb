@@ -80,6 +80,32 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "inheriting units" do
+        let!(:p) { create(:product, variant_unit: "weight", variant_unit_scale: 1, master: create(:variant, unit_value: 1000 )) }
+        let!(:v) { p.variants.first }
+        let!(:o) { create(:order) }
+
+        describe "when no final_weight_volume is set" do
+          let(:li) { build(:line_item, order: o, variant: v, quantity: 3) }
+
+          it "initializes final_weight_volume from the variant's unit_value on create" do
+            expect(li.final_weight_volume).to be nil
+            li.save
+            expect(li.final_weight_volume).to eq 3000
+          end
+        end
+
+        describe "when a final_weight_volume has been set" do
+          let(:li) { build(:line_item, order: o, variant: v, quantity: 3, final_weight_volume: 2000) }
+
+          it "uses the existing value" do
+            expect(li.final_weight_volume).to eq 2000
+            li.save
+            expect(li.final_weight_volume).to eq 2000
+          end
+        end
+      end
+
       describe "generating the full name" do
         let(:li) { LineItem.new }
 
@@ -120,7 +146,7 @@ module Spree
           allow(li).to receive(:unit_description) { 'foo' }
 
           expect {
-            li.update_attributes!(final_weight_volume: 10)
+            li.update_attribute(:final_weight_volume, 10)
           }.to change(Spree::OptionValue, :count).by(1)
 
           li.option_values.should_not include ov_orig
@@ -143,7 +169,7 @@ module Spree
           allow(li).to receive(:unit_description) { 'bar' }
 
           expect {
-            li.update_attributes!(final_weight_volume: 10)
+            li.update_attribute(:final_weight_volume, 10)
           }.to change(Spree::OptionValue, :count).by(0)
 
           li.option_values.should_not include ov_orig

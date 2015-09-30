@@ -57,7 +57,7 @@ module OpenFoodNetwork
     end
 
     def weight_from_unit_value
-      unit_value / 1000 if self.product.variant_unit == 'weight' && unit_value.present?
+      (unit_value || 0) / 1000
     end
 
     private

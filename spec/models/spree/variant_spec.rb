@@ -122,7 +122,7 @@ module Spree
       before do
         v.stub(:product) { p }
         v.stub(:name_to_display) { p.name }
-        v.stub(:options_text) { nil }
+        v.stub(:unit_text) { nil }
       end
 
       it "returns the product name only when there's no extra info" do
@@ -135,13 +135,13 @@ module Spree
       end
 
       it "shows the options text when present" do
-        v.stub(:options_text) { 'OT' }
+        v.stub(:unit_text) { 'OT' }
         v.product_and_variant_name.should == 'product (OT)'
       end
 
       it "displays all attributes" do
         v.stub(:name_to_display) { 'NTD' }
-        v.stub(:options_text) { 'OT' }
+        v.stub(:unit_text) { 'OT' }
         v.product_and_variant_name.should == 'product - NTD (OT)'
       end
     end

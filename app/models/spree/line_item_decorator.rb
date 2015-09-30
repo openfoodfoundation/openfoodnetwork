@@ -4,8 +4,9 @@ Spree::LineItem.class_eval do
   include OpenFoodNetwork::VariantAndLineItemNaming
   has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
 
-  attr_accessible :max_quantity, :final_weight_volume
-  attr_accessible :final_weight_volume, :price, :as => :api
+  attr_accessible :max_quantity, :final_weight_volume, :price, :as => :api
+
+  before_create :inherit_units_from_variant
   after_save :update_units
 
   delegate :unit_description, to: :variant
@@ -68,6 +69,14 @@ Spree::LineItem.class_eval do
 
   def unit_value
     return 0 if quantity == 0
-    final_weight_volume / quantity unless final_weight_volume.nil?
+    (final_weight_volume || 0) / quantity
+  end
+
+  private
+
+  def inherit_units_from_variant
+    if final_weight_volume || variant.andand.unit_value
+      self.final_weight_volume = final_weight_volume || ((variant.andand.unit_value) * quantity)
+    end
   end
 end
