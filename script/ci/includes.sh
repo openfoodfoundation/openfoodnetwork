@@ -5,18 +5,33 @@ function load_environment {
     fi
 }
 
+function master_merged {
+    if [[ `git tag -l "$BUILDKITE_BRANCH"` != '' ]]; then
+	echo "'$BUILDKITE_BRANCH' is a tag."
+        if [[ `git tag -l --contains origin/master "$BUILDKITE_BRANCH"` != '' ]]; then
+            echo "This tag contains the current master."
+            return 0
+        else
+            echo "This tag does not contain the current master."
+            return 1
+        fi
+    fi
+    if [[ `git branch -r --merged origin/$BUILDKITE_BRANCH` == *origin/master* ]]; then
+	echo "This branch already has the current master merged."
+	return 0
+    fi
+    return 1
+}
+
 function exit_unless_master_merged {
-    if [[ `git branch -a --merged origin/$BUILDKITE_BRANCH` != *origin/master* ]]; then
+    if ! master_merged; then
 	echo "This branch does not have the current master merged. Please merge master and push again."
 	exit 1
     fi
 }
 
 function succeed_if_master_merged {
-    if [[ `git branch -a --merged origin/$BUILDKITE_BRANCH` == *origin/master* ]]; then
-	echo "This branch already has the current master merged."
-	exit 0
-    fi
+    master_merged && exit 0
 }
 
 function set_ofn_commit {
