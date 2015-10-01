@@ -1,0 +1,3 @@
+/ replace 'code[erb-loud]:contains(\'"(" + variant_options(item.variant) + ")"\')'
+
+= "(#{item.full_name})"
