@@ -1,7 +1,7 @@
 .container
   .row.modal-centered
-    %h2 Welcome to the Open Food Network!
-    %h5 Start By Signing Up (or logging in):
+    %h2 {{t('welcome_to_ofn')}}
+    %h5 {{t('signup_or_login')}}:
   %div{"ng-controller" => "AuthenticationCtrl"}
     %tabset
       %ng-include{src: "'signup.html'"}
@@ -9,9 +9,9 @@
       %ng-include{src: "'forgot.html'"}
     %div{ ng: { show: "active('/signup')"} }
       %hr
-      Already have an account?
+      {{t('have_an_account')}}
       %a{ href: "", ng: { click: "select('/login')"}}
-        Log in now.
+        {{t('action_login')}}
 
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close

@@ -1,46 +1,41 @@
 .row
   .small-12.columns
     %header
-      %h2 Hi there!
+      %h2 {{t('registration_greeting')}}
       %h4
         %small
           %i.ofn-i_040-hub
-        You can now create a profile for your Producer or Hub
+        {{t('registration_intro')}}
     .hide-for-large-up
       %hr
-      %input.button.small.primary{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } } 
+      %input.button.small.primary{ type: "button", value: "{{t('registration_action')}}", ng: { click: "select('details')" } } 
     %hr 
 
 .row{ 'data-equalizer' => true }
   .small-12.medium-12.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
-    %h5 You'll need:
+    %h5 {{t('registration_checklist')}}:
     %ul.check-list
       %li 
-        5-10 minutes
+        {{t('registration_time')}}
       %li 
-        Enterprise address
+        {{t('registration_enterprise_address')}}
       %li 
-        Primary contact details
+        {{t('registration_contact_details')}}
       %li 
-        Your logo image
+        {{t('registration_logo')}}
       %li 
-        Landscape image for your profile  
+        {{t('registration_promo_image')}}
       %li 
-        'About Us' text
+        {{t('registration_about_us')}}
 
   .small-9.medium-8.large-5.columns.pad-top.end{ 'data-equalizer-watch' => true}
     %h5
-      What do I get?
-    %p 
-      Your profile helps people
-      %strong find 
-      and 
-      %strong contact 
-      you on the Open Food Network. 
-    %p Use this space to tell the story of your enterprise, to help drive connections to your social and online presence. 
-    %p It's also the first step towards trading on the Open Food Network, or opening an online store.
+      {{t('registration_outcome_headline')}}
+    %p{ "ng-bind-html" => "t('registration_outcome1_html')" }
+    %p {{t('registration_outcome2')}}
+    %p {{t('registration_outcome3')}}
 
 .row.show-for-large-up
   .small-12.columns
     %hr
-    %input.button.primary.right{ type: "button", value: "Let's get started!", ng: { click: "select('details')" } }
+    %input.button.primary.right{ type: "button", value: "{{t('registration_action')}}", ng: { click: "select('details')" } }

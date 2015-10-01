@@ -1,11 +1,11 @@
 %tab#sign-up-content{"ng-controller" => "SignupCtrl",
-  heading: "Sign up",
+  heading: "{{t('label_signup')}}",
   active: "active(path)",
   select: "select(path)"}
   %form{"ng-submit" => "submit()"}
     .row
       .large-12.columns
-        %label{for: "email"} Your email
+        %label{for: "email"} {{t('signup_email')}}
         %input.title.input-text{name: "email",
           type: "email",
           id: "email",
@@ -15,7 +15,7 @@
           {{ errors.email.join(' ') }}
     .row
       .large-12.columns
-        %label{for: "password"} Choose a password
+        %label{for: "password"} {{t('choose_password')}}
         %input.title.input-text{name: "password",
           type: "password",
           id: "password",
@@ -26,7 +26,7 @@
           {{ errors.password.join(' ') }}
     .row
       .large-12.columns
-        %label{for: "password_confirmation"} Confirm password
+        %label{for: "password_confirmation"} {{t('confirm_password')}}
         %input.title.input-text{name: "password_confirmation",
           type: "password",
           id: "password_confirmation",
@@ -38,4 +38,4 @@
         %input.button.primary{name: "commit",
           tabindex: "3",
           type: "submit",
-          value: "Sign up now"}
+          value: "{{t('action_signup')}}"}

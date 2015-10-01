@@ -10,7 +10,7 @@ Darkswarm.directive "ofnChangeHub", (CurrentHub, Cart) ->
 
     if cart_will_need_emptying()
       elm.bind 'click', (ev)->
-        if confirm "Are you sure? This will change your selected hub and remove any items in your shopping cart."
+        if confirm t('confirm_hub_change')
           Cart.clear()
         else
           ev.preventDefault()

@@ -9,5 +9,5 @@ Darkswarm.directive "ofnRegistrationLimitModal", (Navigation, $modal, Loading) -
     scope.modalInstance.result.then scope.close, scope.close
 
     scope.close = ->
-      Loading.message = "Taking you back to the home page"
+      Loading.message = t 'going_back_to_home_page'
       Navigation.go "/"

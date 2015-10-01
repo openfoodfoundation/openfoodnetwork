@@ -1,0 +1,5 @@
+- # TODO: load json from separate file that can be cached
+%script
+  window.I18n =
+  = I18n.backend.send(:translations)[I18n.locale].with_indifferent_access.to_json.html_safe
+

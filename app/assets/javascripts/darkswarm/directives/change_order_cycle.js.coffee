@@ -12,7 +12,7 @@ Darkswarm.directive "ofnChangeOrderCycle", (OrderCycle, Cart, storage) ->
 
     elm.bind 'change', (ev)->
       if cart_needs_emptying()
-        if confirm "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
+        if confirm t('confirm_oc_change')
           Cart.clear()
           scope.changeOrderCycle()
         else

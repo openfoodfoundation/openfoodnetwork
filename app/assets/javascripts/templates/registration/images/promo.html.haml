@@ -2,42 +2,42 @@
   .row
     .small-12.columns.center
       %h4
-        Step 3. Select Promo Image
+        {{t('select_promo_image')}}
   .row
     .small-12.medium-12.large-5.columns.center
       .row
         .small-12.columns.center
           %span.small
-            Tip: Shown as a banner, preferred size is 1200&times;260px
+            {{t('promo_image_tip')}}
       .row.pad-top
         .small-12.columns
           .image-select.small-12.columns
-            %label.small-12.columns.button{ for: 'image-select' } Choose a promo image
+            %label.small-12.columns.button{ for: 'image-select' } {{t('promo_image_label')}}
             %input#image-select{ type: 'file', hidden: true, 'nv-file-select' => true, uploader: "imageUploader", options: '{ alias: imageStep }' }
     .large-2.columns
       %span#or.horizontal.large-12.columns
-        OR
+        {{t('action_or')}}
     .large-5.columns
       #image-over{ 'nv-file-over' => true, uploader: "imageUploader" }
-        Drag and drop your promo here
+        {{t('promo_image_drag')}}
 .small-12.medium-12.large-12.columns.pad-top
   .row
     .small-12.columns.center
       %h4
-        Step 4. Review Your Promo Banner
+        {{t('review_promo_image')}}
   .row
     .small-12.columns.center
       .row
         .small-12.columns.center
           %span.small
-            Tip: for best results, your promo image should fill the available space
+            {{t('review_promo_image_tip')}}
       .row.pad-top
         .small-12.columns.center
           #image-placeholder.promo
             %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
             .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
-              Your logo will appear here for review once uploaded
+              {{t('promo_image_placeholder')}}
             .loading{ ng: { hide: "!imageUploader.isUploading" } }
               %img.spinner{ src: "/assets/spinning-circles.svg" }
               %br/
-              Uploading...
+              {{t('uploading')}}

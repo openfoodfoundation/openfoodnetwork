@@ -1,5 +1,5 @@
 %tab#login-content{"ng-controller" => "LoginCtrl", 
-  heading: "Log in", 
+  heading: "{{t('label_login')}}", 
   active: "active(path)", 
   select: "select(path)"}
   %form{"ng-submit" => "submit()"}
@@ -9,7 +9,7 @@
           {{ errors }}
     .row
       .large-12.columns
-        %label{for: "email"} Email
+        %label{for: "email"} {{t('email')}}
         %input.title.input-text{name: "email", 
           type: "email",
           id: "email",
@@ -17,7 +17,7 @@
           "ng-model" => "spree_user.email"}
     .row
       .large-12.columns
-        %label{for: "password"} Password
+        %label{for: "password"} {{t('password')}}
         %input.title.input-text{name: "password", 
           type: "password",
           id: "password",
@@ -31,10 +31,10 @@
         id: "remember_me", 
         value: "1",
         "ng-model" => "spree_user.remember_me"}
-        %label{for: "remember_me"} Remember Me
+        %label{for: "remember_me"} {{t('remember_me')}}
     .row
       .large-12.columns
         %input.button.primary{name: "commit", 
           tabindex: "3", 
           type: "submit", 
-          value: "Log in"}
+          value: "{{t('label_login')}}"}

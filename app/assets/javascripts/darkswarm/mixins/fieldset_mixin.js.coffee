@@ -32,9 +32,9 @@ window.FieldsetMixin = ($scope)->
     errors = for error, invalid of $scope.error(path)
       if invalid
         switch error
-          when "required" then "can't be blank"
-          when "number"   then "must be number"
-          when "email"    then "must be email address"
+          when "required" then t('error_required')
+          when "number"   then t('error_number')
+          when "email"    then t('error_email')
 
     #server_errors = $scope.Order.errors[path.replace('order.', '')]
     #errors.push server_errors if server_errors?
