@@ -25,6 +25,7 @@ module.exports = function(config) {
       '**/.#*',
       'app/assets/javascripts/darkswarm/all.js.coffee',
       'app/assets/javascripts/darkswarm/overrides.js.coffee',
+      'app/assets/javascripts/darkswarm/i18n.js.erb',
       'app/assets/javascripts/admin/util.js.erb'
     ],
 

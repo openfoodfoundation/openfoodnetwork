@@ -1,0 +1,3 @@
+<%# Defines a global I18n object containing the language of the current locale %>
+<%- I18n.backend.send(:init_translations) unless I18n.backend.initialized? %>
+window.I18n = <%= I18n.backend.send(:translations)[I18n.locale].with_indifferent_access.to_json.html_safe %>
