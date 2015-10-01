@@ -70,7 +70,7 @@
         %span.two.columns Max Fulfilled Units
         %span.two.columns {{ fulfilled(sumMaxUnitValues()) }}
       .one.column.omega &nbsp;
-    %div{ :class => "eight columns alpha", 'ng-hide' => 'allUnitValuesPresent()' }
+    %div{ :class => "eight columns alpha", 'ng-hide' => 'allFinalWeightVolumesPresent()' }
       %span{ :class => "eight columns alpha", style: 'color:red' }
         WARNING: Some variants do not have a unit value
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }

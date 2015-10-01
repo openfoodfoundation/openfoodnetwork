@@ -261,59 +261,56 @@ describe "AdminOrderMgmtCtrl", ->
         scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
         expect(scope.fulfilled(1500)).toEqual 1.5
 
-    describe "allUnitValuesPresent()", ->
+    describe "allFinalWeightVolumesPresent()", ->
       it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1000 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_yayay: 1000 } }
+          { final_weight_volume: 1000 }
+          { final_weight_volume: 3000 }
+          { final_weight_yayaya: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
 
       it "returns false if the unit_value of any item in filteredLineItems is not a number greater than 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 0 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 0 }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 'lala' } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 'lalala' }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
 
       it "returns true if the unit_value of all items in filteredLineItems are numbers greater than 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 1000 }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual true
+        expect(scope.allFinalWeightVolumesPresent()).toEqual true
 
     describe "sumUnitValues()", ->
-      it "returns the sum of the product of unit_value and quantity for specified line_items", ->
+      it "returns the sum of the final_weight_volumes line_items", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1 }, quantity: 2 }
-          { units_variant: { unit_value: 2 }, quantity: 3 }
-          { units_variant: { unit_value: 3 }, quantity: 7 }
+          { final_weight_volume: 2 }
+          { final_weight_volume: 7 }
+          { final_weight_volume: 21 }
         ]
-        sp0 = scope.filteredLineItems[0].units_variant.unit_value * scope.filteredLineItems[0].quantity
-        sp1 = scope.filteredLineItems[1].units_variant.unit_value * scope.filteredLineItems[1].quantity
-        sp2 = scope.filteredLineItems[2].units_variant.unit_value * scope.filteredLineItems[2].quantity
-        expect(scope.sumUnitValues()).toEqual (sp0 + sp1 + sp2)
+        expect(scope.sumUnitValues()).toEqual 30
 
     describe "sumMaxUnitValues()", ->
       it "returns the sum of the product of unit_value and maxOf(max_quantity,quantity) for specified line_items", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1 }, quantity: 2, max_quantity: 5 }
-          { units_variant: { unit_value: 2 }, quantity: 3, max_quantity: 1 }
-          { units_variant: { unit_value: 3 }, quantity: 7, max_quantity: 10 }
+          { units_variant: { unit_value: 1 }, original_quantity: 2, max_quantity: 5 }
+          { units_variant: { unit_value: 2 }, original_quantity: 3, max_quantity: 1 }
+          { units_variant: { unit_value: 3 }, original_quantity: 7, max_quantity: 10 }
         ]
-        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].quantity, scope.filteredLineItems[0].max_quantity)
-        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].quantity, scope.filteredLineItems[1].max_quantity)
-        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].quantity, scope.filteredLineItems[2].max_quantity)
+        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].original_quantity, scope.filteredLineItems[0].max_quantity)
+        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].original_quantity, scope.filteredLineItems[1].max_quantity)
+        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].original_quantity, scope.filteredLineItems[2].max_quantity)
         expect(scope.sumMaxUnitValues()).toEqual (sp0 + sp1 + sp2)
 
     describe "formatting a value based upon the properties of a specified Units Variant", ->

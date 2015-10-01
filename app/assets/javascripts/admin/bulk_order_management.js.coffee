@@ -132,17 +132,17 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
 
     $scope.sumUnitValues = ->
       sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-        sum = sum + lineItem.quantity * lineItem.units_variant.unit_value
+        sum = sum + lineItem.final_weight_volume
       , 0
 
     $scope.sumMaxUnitValues = ->
       sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-        sum = sum + Math.max(lineItem.max_quantity,lineItem.quantity) * lineItem.units_variant.unit_value
+        sum = sum + Math.max(lineItem.max_quantity,lineItem.original_quantity) * lineItem.units_variant.unit_value
       , 0
 
-    $scope.allUnitValuesPresent = ->
+    $scope.allFinalWeightVolumesPresent = ->
       for i,lineItem of $scope.filteredLineItems
-        return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
+        return false if !lineItem.hasOwnProperty('final_weight_volume') || !(lineItem.final_weight_volume > 0)
       true
 
     # How is this different to OptionValueNamer#name?
