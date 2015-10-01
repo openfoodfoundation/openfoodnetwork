@@ -11,7 +11,6 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.confirmDelete = true
       $scope.startDate = formatDate start
       $scope.endDate = formatDate end
-      $scope.pendingChanges = pendingChanges
       $scope.quickSearch = ""
       $scope.bulkActions = [ { name: "Delete Selected", callback: $scope.deleteLineItems } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
@@ -110,6 +109,12 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.confirmDelete = false
       $scope.deleteLineItem lineItem for lineItem in lineItems when lineItem.checked
       $scope.confirmDelete = existingState
+
+    $scope.submit = ->
+      if $scope.bulk_order_form.$valid
+        pendingChanges.submitAll()
+      else
+        alert "Some errors must be resolved be before you can update orders.\nAny fields with red borders contain errors."
 
     $scope.allBoxesChecked = ->
       checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->

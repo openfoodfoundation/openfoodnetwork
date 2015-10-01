@@ -100,7 +100,7 @@
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && filteredLineItems.length == 0'}
     %h1#no_results No orders found.
   %div{ 'ng-hide' => 'loading || filteredLineItems.length == 0' }
-    %form{ 'ng-model' => "bulk_order_form" }
+    %form{ name: 'bulk_order_form' }
       %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
@@ -146,14 +146,14 @@
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
             %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.full_name }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-            %input{ :type => 'number', :name => 'quantity', :id => 'quantity', 'ng-model' => "line_item.quantity", 'ng-change' => "updateOnQuantity(line_item)", 'obj-for-update' => "line_item", "attr-for-update" => "quantity" }
+            %input{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true" }, min: 1, 'obj-for-update' => "line_item", "attr-for-update" => "quantity" }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
-            %input{ :type => 'text', :name => 'final_weight_volume', :id => 'final_weight_volume', 'ng-model' => "line_item.final_weight_volume", 'ng-readonly' => "unitValueLessThanZero(line_item)", 'ng-change' => "weightAdjustedPrice(line_item)", 'obj-for-update' => "line_item", "attr-for-update" => "final_weight_volume" }
+            %input{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true" }, min: 0.001, 'obj-for-update' => "line_item", "attr-for-update" => "final_weight_volume" }
           %td.price{ 'ng-show' => 'columns.price.visible' }
             %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price * line_item.quantity | currency }}', 'ng-readonly' => "true", 'obj-for-update' => "line_item", "attr-for-update" => "price" }
           %td.actions
             %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
-      %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'pendingChanges.submitAll()' }
+      %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'submit()' }
