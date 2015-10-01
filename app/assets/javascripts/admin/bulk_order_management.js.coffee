@@ -77,6 +77,10 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
           line_item.checked = false
           line_item.supplier = $scope.matchObject $scope.suppliers, line_item.supplier, null
           line_item.order = orderWithoutLineItems
+          line_item.original_final_weight_volume = line_item.final_weight_volume
+          line_item.original_quantity = line_item.quantity
+          line_item.original_price = line_item.price
+
         lineItems.concat order.line_items
       , []
 
@@ -164,13 +168,11 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.orderCycleFilter = $scope.orderCycles[0].id
       $scope.quickSearch = ""
 
-    $scope.weightAdjustedPrice = (lineItem, oldValue) ->
-      if oldValue <= 0
-        oldValue = lineItem.units_variant.unit_value * line_item.quantity
-      if lineItem.final_weight_volume <= 0
-        lineItem.final_weight_volume = lineItem.units_variant.unit_value * lineItem.quantity
-      lineItem.price = lineItem.price * lineItem.final_weight_volume / oldValue
-      #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
+    $scope.weightAdjustedPrice = (lineItem) ->
+      if lineItem.final_weight_volume > 0
+        unit_value = lineItem.final_weight_volume / lineItem.quantity
+        original_unit_value = lineItem.original_final_weight_volume / lineItem.original_quantity
+        lineItem.price = lineItem.original_price * (unit_value / original_unit_value)
 
     $scope.unitValueLessThanZero = (lineItem) ->
       if lineItem.units_variant.unit_value <= 0
@@ -178,12 +180,10 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       else
         false
 
-    $scope.updateOnQuantity = (lineItem, oldQuantity) ->
-      if lineItem.quantity <= 0
-        lineItem.quantity = 1
-      # reset price to original unit value
-      lineItem.price = lineItem.price * (oldQuantity * lineItem.units_variant.unit_value) / lineItem.final_weight_volume
-      lineItem.final_weight_volume = lineItem.units_variant.unit_value * lineItem.quantity
+    $scope.updateOnQuantity = (lineItem) ->
+      if lineItem.quantity > 0
+        lineItem.final_weight_volume = lineItem.original_final_weight_volume * lineItem.quantity / lineItem.original_quantity
+        $scope.weightAdjustedPrice(lineItem)
 
     $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
       unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)

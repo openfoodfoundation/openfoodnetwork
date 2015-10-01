@@ -351,49 +351,53 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
     describe "updating the price upon updating the weight of a line item", ->
-
-      it "resets the weight if the weight is set to zero", ->
-        scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, quantity: 1, final_weight_volume: 0 }
-        ]
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], 100)).toEqual scope.filteredLineItems[0].price
-
       it "updates the price if the weight is changed", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, final_weight_volume: 200 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: 4000  }
         ]
-        old_value = scope.filteredLineItems[0].units_variant.unit_value
-        new_value = scope.filteredLineItems[0].final_weight_volume
-        sp = scope.filteredLineItems[0].price * new_value / old_value
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 4.00
 
-      it "updates the weight if the quantity is changed", ->
+      it "doesn't update the price if the weight <= 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 150 }, price: 1, final_weight_volume: 100, quantity: 2 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: 0  }
         ]
-        old_value = 1
-        nw = scope.filteredLineItems[0].units_variant.unit_value * scope.filteredLineItems[0].quantity
-        scope.updateOnQuantity(scope.filteredLineItems[0], old_value)
-        expect(scope.filteredLineItems[0].final_weight_volume).toEqual nw
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 2.00
 
-      it "updates the price if the quantity is changed", ->
+      it "doesn't update the price if the weight is an empty string", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 150 }, price: 21, final_weight_volume: 100, quantity: 2 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: ""  }
         ]
-        old_value = 1
-        np = scope.filteredLineItems[0].price * (old_value * scope.filteredLineItems[0].units_variant.unit_value) / scope.filteredLineItems[0].final_weight_volume
-        scope.updateOnQuantity(scope.filteredLineItems[0], old_value)
-        expect(scope.filteredLineItems[0].price).toEqual np
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 2.00
 
+    describe "updating final_weight_volume upon updating the quantity for a line_item", ->
+      beforeEach ->
+        spyOn(scope, "weightAdjustedPrice")
 
-      it "doesn't update the price if the weight is not changed", ->
+      it "updates the weight if the quantity is changed, then calls weightAdjustedPrice()", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, final_weight_volume: 100 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 2, original_final_weight_volume: 2000, final_weight_volume: 0  }
         ]
-        old_value = scope.filteredLineItems[0].final_weight_volume
-        new_value = scope.filteredLineItems[0].final_weight_volume
-        sp = scope.filteredLineItems[0].price
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 4000
+        expect(scope.weightAdjustedPrice).toHaveBeenCalled()
+
+      it "doesn't update the weight if the quantity <= 0", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 0, original_final_weight_volume: 2000, final_weight_volume: 1000  }
+        ]
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
+
+      it "doesn't update the weight if the quantity is an empty string", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: "", original_final_weight_volume: 2000, final_weight_volume: 1000  }
+        ]
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
+
 
 describe "Auxiliary functions", ->
   describe "getting a zero filled two digit number", ->
