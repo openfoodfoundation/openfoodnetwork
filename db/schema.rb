@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150730160010) do
+ActiveRecord::Schema.define(:version => 20150916061809) do
+
+  create_table "account_invoices", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "order_id"
+    t.integer  "year",       :null => false
+    t.integer  "month",      :null => false
+    t.datetime "issued_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "account_invoices", ["order_id"], :name => "index_account_invoices_on_order_id"
+  add_index "account_invoices", ["user_id"], :name => "index_account_invoices_on_user_id"
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -23,6 +36,22 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
 
   add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
   add_index "adjustment_metadata", ["enterprise_id"], :name => "index_adjustment_metadata_on_enterprise_id"
+
+  create_table "billable_periods", :force => true do |t|
+    t.integer  "enterprise_id"
+    t.integer  "owner_id"
+    t.datetime "begins_at"
+    t.datetime "ends_at"
+    t.string   "sells"
+    t.boolean  "trial",         :default => false
+    t.decimal  "turnover",      :default => 0.0
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_invoice_id",                    :null => false
+  end
+
+  add_index "billable_periods", ["account_invoice_id"], :name => "index_billable_periods_on_account_invoice_id"
 
   create_table "carts", :force => true do |t|
     t.integer "user_id"
@@ -1126,8 +1155,26 @@ ActiveRecord::Schema.define(:version => 20150730160010) do
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"
 
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",  :null => false
+    t.integer  "item_id",    :null => false
+    t.string   "event",      :null => false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+
+  add_foreign_key "account_invoices", "spree_orders", name: "account_invoices_order_id_fk", column: "order_id"
+  add_foreign_key "account_invoices", "spree_users", name: "account_invoices_user_id_fk", column: "user_id"
+
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id", dependent: :delete
+
+  add_foreign_key "billable_periods", "account_invoices", name: "billable_periods_account_invoice_id_fk"
+  add_foreign_key "billable_periods", "enterprises", name: "bill_items_enterprise_id_fk"
+  add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
   add_foreign_key "carts", "spree_users", name: "carts_user_id_fk", column: "user_id"
 

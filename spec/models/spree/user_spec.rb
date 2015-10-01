@@ -56,9 +56,9 @@ describe Spree.user_class do
   end
 
   describe "known_users" do
-    let!(:u1) { create_enterprise_user }
-    let!(:u2) { create_enterprise_user }
-    let!(:u3) { create_enterprise_user }
+    let!(:u1) { create(:user) }
+    let!(:u2) { create(:user) }
+    let!(:u3) { create(:user) }
     let!(:e1) { create(:enterprise, owner: u1, users: [u1, u2]) }
 
     describe "as an enterprise user" do
@@ -73,6 +73,7 @@ describe Spree.user_class do
 
     describe "as admin" do
       let(:admin) { quick_login_as_admin }
+
       it "returns all users" do
         expect(admin.known_users).to include u1, u2, u3
       end

@@ -362,6 +362,9 @@ GEM
       mini_portile (~> 0.6.0)
     oj (2.1.2)
     orm_adapter (0.5.0)
+    paper_trail (3.0.8)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     paperclip (3.5.4)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -589,6 +592,7 @@ DEPENDENCIES
   momentjs-rails
   newrelic_rpm
   oj
+  paper_trail (~> 3.0.8)
   paperclip
   parallel_tests
   pg

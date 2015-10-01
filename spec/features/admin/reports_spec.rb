@@ -388,8 +388,8 @@ feature %q{
     let(:country) { Spree::Country.find Spree::Config.default_country_id }
     let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
     let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: bill_address) }
-    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
-    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
+    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
@@ -418,11 +418,11 @@ feature %q{
     it "shows Xero invoices report" do
       xero_invoice_table.should match_table [
         xero_invoice_header,
-        xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
-        xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
-        xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
-        xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income')
+        xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
+        xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
+        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
+        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
+        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income')
       ]
     end
 
@@ -437,11 +437,27 @@ feature %q{
 
       xero_invoice_table.should match_table [
         xero_invoice_header,
-        xero_invoice_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income', opts),
-        xero_invoice_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
-        xero_invoice_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income', opts),
-        xero_invoice_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income',   opts),
-        xero_invoice_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income', opts)
+        xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,   'GST Free Income', opts),
+        xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
+        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
+        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
+        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
+      ]
+    end
+
+    it "generates a detailed report" do
+      select 'Detailed', from: 'report_type'
+      click_button 'Search'
+
+      opts = {}
+
+      xero_invoice_table.should match_table [
+        xero_invoice_header,
+        xero_invoice_li_row(line_item1),
+        xero_invoice_li_row(line_item2),
+        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
+        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
+        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
       ]
     end
 
@@ -456,11 +472,24 @@ feature %q{
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
-    def xero_invoice_row(description, amount, tax_type, opts={})
+    def xero_invoice_summary_row(description, amount, tax_type, opts={})
+      xero_invoice_row '', description, amount, '1', tax_type, opts
+    end
+
+    def xero_invoice_li_row(line_item, opts={})
+      tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
+      xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
+    end
+
+    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
       opts.reverse_merge!({invoice_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
 
-      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date], '', description, '1', amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '', 'N']
+      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date],
 
+       sku,
+       description,
+       quantity,
+       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency, '', 'N']
     end
   end
 end

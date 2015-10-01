@@ -13,6 +13,7 @@ require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
 require 'rspec/retry'
+require 'paper_trail/frameworks/rspec'
 
 # Allow connections to phantomjs/selenium whilst raising errors
 # when connecting to external sites

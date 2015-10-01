@@ -1,0 +1,59 @@
+
+- content_for :page_title do
+  = t(:account)
+
+
+- if @invoices.empty?
+  %h4= t(:no_invoices_to_display)
+
+- @invoices.order('year DESC, month DESC').each do |invoice|
+  - order = invoice.order
+  .row.invoice_title
+    .eight.columns.alpha
+      %h4= "#{t(:abbr_month_names, :scope => :date)[invoice.month]} #{invoice.year}#{invoice.order.completed? ? "" : "*"}"
+    .eight.columns.omega.text-right
+      %h4.balance= invoice.order.display_total
+  %table.invoice_summary
+    %col{ width: '20%' }
+    %col{ width: '60%' }
+    %col{ width: '20%' }
+    %thead
+      %th Date
+      %th= t(:description)
+      %th= t(:charge)
+    - invoice.billable_periods.select{ |bp| bp.bill > 0}.each do |billable_period|
+      %tr
+        %td.text-center= "#{billable_period.begins_at.strftime("%d/%m/%Y")}"
+        %td= billable_period.label
+        %td.text-right= billable_period.display_bill
+    - order.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
+      %tr
+        %td.text-center &nbsp;
+        %td= adjustment.label
+        %td.text-right= adjustment.display_amount
+    %tr.total
+      %td.text-center &nbsp;
+      %td= t(:total).upcase
+      %td.text-right= order.display_total
+
+-#   - if @enterprises.empty?
+-#     %h4 No enterprises to display
+-#
+-#   - @enterprises.each do |enterprise|
+-#     %h2= enterprise.name
+-#     %table
+-#       %thead
+-#         %th Begins
+-#         %th Ends
+-#         %th Sells
+-#         %th Trial?
+-#         %th Turnover
+-#         %th Bill
+-#       - enterprise.billable_periods.each do |billable_period|
+-#         %tr
+-#           %td= billable_period.begins_at.localtime.strftime("%F %T")
+-#           %td= billable_period.ends_at.localtime.strftime("%F %T")
+-#           %td= billable_period.sells
+-#           %td= billable_period.trial?
+-#           %td= billable_period.display_turnover
+-#           %td= billable_period.display_bill

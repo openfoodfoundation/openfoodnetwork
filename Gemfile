@@ -52,6 +52,7 @@ gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
 gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'paper_trail', '~> 3.0.8'
 
 gem 'foreigner'
 gem 'immigrant'

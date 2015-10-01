@@ -1,0 +1,17 @@
+.row.invoice_title {
+  margin-bottom: 0px;
+}
+
+table.invoice_summary {
+  margin-bottom: 70px;
+
+  tr.total {
+    font-weight: bold;
+  }
+}
+
+.invoice_title {
+  .balance {
+    color: #9fc820;
+  }
+}

@@ -22,6 +22,7 @@
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin
+//= require ./accounts_and_billing_settings/accounts_and_billing_settings
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises

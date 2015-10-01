@@ -100,6 +100,14 @@ Spree::Variant.class_eval do
     display_as
   end
 
+  def product_and_variant_name
+    name = product.name
+
+    name += " - #{name_to_display}" if name_to_display != product.name
+    name += " (#{options_text})" if options_text
+
+    name
+  end
 
   def update_units
     delete_unit_option_values

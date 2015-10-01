@@ -33,6 +33,10 @@ Spree::LineItem.class_eval do
                       where('spree_adjustments.id IS NULL')
 
 
+  def has_tax?
+    adjustments.included_tax.any?
+  end
+
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array

@@ -477,6 +477,10 @@ module Spree
           user
         end
 
+        it 'should have the ability to view the admin account page' do
+          should have_ability([:admin, :show], for: :account)
+        end
+
         it 'should have the ability to read and edit enterprises that I manage' do
           should have_ability([:read, :edit, :update, :bulk_update], for: s1)
         end
@@ -504,6 +508,10 @@ module Spree
 
         it 'should have the ability to welcome and register enterprises that I own' do
           should have_ability([:welcome, :register], for: s1)
+        end
+
+        it 'should have the ability to view the admin account page' do
+          should have_ability([:admin, :show], for: :account)
         end
       end
     end
