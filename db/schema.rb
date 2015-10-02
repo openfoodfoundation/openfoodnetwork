@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150916061809) do
+ActiveRecord::Schema.define(:version => 20151002020537) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(:version => 20150916061809) do
     t.datetime "begins_at"
     t.datetime "ends_at"
     t.string   "sells"
-    t.boolean  "trial",         :default => false
-    t.decimal  "turnover",      :default => 0.0
+    t.boolean  "trial",              :default => false
+    t.decimal  "turnover",           :default => 0.0
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"

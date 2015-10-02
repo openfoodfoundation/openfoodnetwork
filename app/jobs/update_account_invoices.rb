@@ -32,7 +32,14 @@ class UpdateAccountInvoices
         invoice_order: account_invoice.order.as_json
       })
     else
-      account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }.each do |billable_period|
+      billable_periods = account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }
+
+      if billable_periods.any?
+        address = billable_periods.first.enterprise.address
+        account_invoice.order.update_attributes(bill_address: address, ship_address: address)
+      end
+
+      billable_periods.each do |billable_period|
         current_adjustments << billable_period.ensure_correct_adjustment_for(account_invoice.order)
       end
 

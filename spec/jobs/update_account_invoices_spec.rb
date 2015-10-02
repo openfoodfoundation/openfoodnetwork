@@ -153,6 +153,13 @@ describe UpdateAccountInvoices do
             expect(adjustments.map(&:label)).to eq [old_billable_period.adjustment_label]
           end
 
+          it "assigns a addresses to the order" do
+            expect(invoice_order.billing_address).to be_a Spree::Address
+            expect(invoice_order.shipping_address).to be_a Spree::Address
+            expect(invoice_order.billing_address).to eq old_billable_period.enterprise.address
+            expect(invoice_order.shipping_address).to eq old_billable_period.enterprise.address
+          end
+
           it "saves the order" do
             expect(june_account_invoice).to have_received(:save)
             expect(june_account_invoice.order).to be_persisted
@@ -323,6 +330,7 @@ describe UpdateAccountInvoices do
     let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 10.days) }
     let!(:billable_period3) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
     let!(:july_account_invoice) { billable_period2.account_invoice }
+    let!(:august_account_invoice) { create(:account_invoice, user: user, year: july_account_invoice.year, month: 8)}
 
     before do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
@@ -342,6 +350,10 @@ describe UpdateAccountInvoices do
           expect(invoice_order.total).to eq billable_period2.bill + billable_period3.bill
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
+          expect(invoice_order.bill_address).to be_a Spree::Address
+          expect(invoice_order.ship_address).to be_a Spree::Address
+          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
         end
       end
 
@@ -349,21 +361,22 @@ describe UpdateAccountInvoices do
         travel_to(1.month + 5.days)
 
         it "does not create an order" do
+          expect(updater).to receive(:update).with(august_account_invoice).and_call_original
           expect{updater.perform}.to_not change{Spree::Order.count}.from(0)
         end
       end
     end
 
     context "when an order already exists" do
-      let!(:invoice_order) { create(:order, user: user, distributor: accounts_distributor, created_at: start_of_july) }
-      let!(:billable_adjustment) { create(:adjustment, adjustable: invoice_order, source_type: 'BillablePeriod') }
-
-      before do
-        invoice_order.line_items.clear
-        july_account_invoice.update_attribute(:order, invoice_order)
-      end
-
       context "when relevant billable periods exist" do
+        let!(:invoice_order) { create(:order, user: user, distributor: accounts_distributor, created_at: start_of_july) }
+        let!(:billable_adjustment) { create(:adjustment, adjustable: invoice_order, source_type: 'BillablePeriod') }
+
+        before do
+          invoice_order.line_items.clear
+          july_account_invoice.update_attribute(:order, invoice_order)
+        end
+
         travel_to(20.days)
 
         it "updates the order, and clears any obsolete invoices" do
@@ -376,14 +389,27 @@ describe UpdateAccountInvoices do
           expect(invoice_order.total).to eq billable_period2.bill + billable_period3.bill
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
+          expect(invoice_order.bill_address).to be_a Spree::Address
+          expect(invoice_order.ship_address).to be_a Spree::Address
+          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
         end
       end
 
       context "when no relevant billable periods exist" do
+        let!(:invoice_order) { create(:order, user: user, distributor: accounts_distributor) }
+
+        before do
+          invoice_order.line_items.clear
+          august_account_invoice.update_attribute(:order, invoice_order)
+        end
+
         travel_to(1.month + 5.days)
 
-        it "destroys the order" do
-          expect{updater.perform}.to_not change{Spree::Order.count}.from(1).to(0)
+        it "snags a bug" do
+          expect(updater).to receive(:update).with(august_account_invoice).and_call_original
+          expect(Bugsnag).to receive(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+          expect{updater.perform}.to_not change{Spree::Order.count}
         end
       end
     end
