@@ -130,6 +130,14 @@ describe UpdateAccountInvoices do
           it "snags a bug" do
             expect(Bugsnag).to have_received(:notify)
           end
+
+          it "does not save the order" do
+            expect(june_account_invoice).to_not have_received(:save)
+          end
+
+          it "does not clean up the order" do
+            expect(updater).to_not have_received(:clean_up).with(invoice_order, anything)
+          end
         end
 
         context "where the order is not complete" do
@@ -235,17 +243,34 @@ describe UpdateAccountInvoices do
           before do
             allow(obsolete_adjustments).to receive(:destroy_all)
             allow(invoice_order).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
-            updater.clean_up(invoice_order, current_adjustments)
           end
 
           it "destroys obsolete adjustments and snags a bug" do
+            updater.clean_up(invoice_order, current_adjustments)
             expect(obsolete_adjustments).to have_received(:destroy_all)
             expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Obsolete Adjustments"), anything)
           end
 
-          it "destroys the order and snags a bug" do
-            expect(invoice_order).to have_received(:destroy)
-            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+          context "when the order is not persisted" do
+            before do
+              allow(invoice_order).to receive(:persisted?) { false }
+            end
+
+            it "destroys the order" do
+              updater.clean_up(invoice_order, current_adjustments)
+              expect(invoice_order).to have_received(:destroy)
+            end
+          end
+
+          context "when the order is persisted" do
+            before do
+              allow(invoice_order).to receive(:persisted?) { true }
+            end
+
+            it "snags a bug" do
+              updater.clean_up(invoice_order, current_adjustments)
+              expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+            end
           end
         end
 
@@ -254,16 +279,32 @@ describe UpdateAccountInvoices do
 
           before do
             allow(invoice_order).to receive(:adjustments) { double(:adjustments, where: obsolete_adjustments) }
-            updater.clean_up(invoice_order, current_adjustments)
           end
 
           it "has no bugs to snag" do
             expect(Bugsnag).to_not have_received(:notify).with(RuntimeError.new("Obsolete Adjustments"), anything)
           end
 
-          it "destroys the order and snags a bug" do
-            expect(invoice_order).to have_received(:destroy)
-            expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+          context "when the order is not persisted" do
+            before do
+              allow(invoice_order).to receive(:persisted?) { false }
+            end
+
+            it "destroys the order" do
+              updater.clean_up(invoice_order, current_adjustments)
+              expect(invoice_order).to have_received(:destroy)
+            end
+          end
+
+          context "when the order is persisted" do
+            before do
+              allow(invoice_order).to receive(:persisted?) { true }
+            end
+
+            it "snags a bug" do
+              updater.clean_up(invoice_order, current_adjustments)
+              expect(Bugsnag).to have_received(:notify).with(RuntimeError.new("Empty Persisted Invoice"), anything)
+            end
           end
         end
       end

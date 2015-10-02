@@ -35,11 +35,11 @@ class UpdateAccountInvoices
       account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }.each do |billable_period|
         current_adjustments << billable_period.ensure_correct_adjustment_for(account_invoice.order)
       end
+
+      account_invoice.save if current_adjustments.any?
+
+      clean_up(account_invoice.order, current_adjustments)
     end
-
-    account_invoice.save if current_adjustments.any?
-
-    clean_up(account_invoice.order, current_adjustments)
   end
 
   def clean_up(invoice_order, current_adjustments)
@@ -56,11 +56,13 @@ class UpdateAccountInvoices
     end
 
     if current_adjustments.empty?
-      Bugsnag.notify(RuntimeError.new("Empty Persisted Invoice"), {
-        invoice_order: invoice_order.as_json
-      }) if invoice_order.persisted?
-
-      invoice_order.destroy
+      if invoice_order.persisted?
+        Bugsnag.notify(RuntimeError.new("Empty Persisted Invoice"), {
+          invoice_order: invoice_order.as_json
+        })
+      else
+        invoice_order.destroy
+      end
     end
   end
 
