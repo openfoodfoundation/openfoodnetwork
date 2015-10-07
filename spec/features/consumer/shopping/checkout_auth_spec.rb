@@ -25,7 +25,7 @@ feature "As a consumer I want to check out my cart", js: true do
     quick_login_as user
     visit checkout_path 
     within "section[role='main']" do
-      page.should_not have_content "Log in"
+      page.should_not have_content "Login"
       page.should have_checkout_details
     end
   end
@@ -45,7 +45,7 @@ feature "As a consumer I want to check out my cart", js: true do
     page.should have_login_modal
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
-    within(".login-modal") { click_button 'Log in' }
+    within(".login-modal") { click_button 'Login' }
     toggle_details
 
     page.should have_field 'First Name', with: 'Foo'

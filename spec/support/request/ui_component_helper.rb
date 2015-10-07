@@ -9,7 +9,7 @@ module UIComponentHelper
   end
 
   def click_login_button
-    click_button "Log in"
+    click_button "Login"
   end
 
   def click_signup_button

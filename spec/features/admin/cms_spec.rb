@@ -21,7 +21,7 @@ feature %q{
   scenario "anonymous user can't access CMS admin", js: true do
     visit cms_admin_path
     page.should_not have_content "ComfortableMexicanSofa"
-    page.should have_content "Log in"
+    page.should have_content "Login"
   end
 
   scenario "non-admin user can't access CMS admin", js: true do
