@@ -47,7 +47,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         RegistrationService.select(step)
       ).error((data) ->
         Loading.clear()
-        alert(t('failed_to_create_enterprise_unknown'))
+        alert(t('failed_to_update_enterprise_unknown'))
       )
 
     prepare: =>
