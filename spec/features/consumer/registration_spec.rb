@@ -102,7 +102,7 @@ feature "Registration", js: true do
     # Link appears to be unresponsive for a while, so keep clicking it until it works
     using_wait_time 0.5 do
       10.times do
-        click_link "Login"
+        find("a", text: "Login").click()
         break if page.has_selector? "dd.active", text: "Login"
       end
     end

@@ -45,9 +45,9 @@
             .field
               %label{ for: 'enterprise_charges_sales_tax' }= t(:charges_sales_tax)
               %input{ id: 'enterprise_charges_sales_tax_true', type: 'radio', name: 'charges_sales_tax', value: 'true', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
-              %label{ for: 'enterprise_charges_sales_tax_true' } {{t('yes')}}
+              %label{ for: 'enterprise_charges_sales_tax_true' } {{t('say_yes')}}
               %input{ id: 'enterprise_charges_sales_tax_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
-              %label{ for: 'enterprise_charges_sales_tax_false' } {{t('no')}}
+              %label{ for: 'enterprise_charges_sales_tax_false' } {{t('say_no')}}
               %span.error.small-12.columns{ ng: { show: "about.charges_sales_tax.$error.required && submitted" } }
                 {{t('enterprise_tax_required')}}
 
