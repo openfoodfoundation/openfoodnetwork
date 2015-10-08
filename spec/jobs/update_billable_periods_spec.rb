@@ -15,7 +15,7 @@ describe UpdateBillablePeriods do
       let!(:enterprise) { create(:supplier_enterprise, created_at: start_of_july - 1.month, sells: 'any') }
 
       before do
-        allow(Enterprise).to receive(:select) { [enterprise] }
+        allow(Enterprise).to receive(:where) { double(:enterprises, select: [enterprise]) }
       end
 
       context "when no date arguments are passed to the job" do
@@ -185,6 +185,28 @@ describe UpdateBillablePeriods do
             .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
           end
         end
+
+        context "where sells or owner_id were altered in the future" do
+          let!(:new_owner) { create(:user) }
+
+          before do
+            Timecop.freeze(start_of_july + 17.days) do
+              enterprise.update_attribute(:sells, 'own')
+            end
+            Timecop.freeze(start_of_july + 35.days) do
+              enterprise.update_attribute(:owner, new_owner)
+            end
+          end
+
+          travel_to(15.days)
+
+          it "ignores those verions" do
+            allow(updater).to receive(:split_for_trial).once
+            updater.perform
+            expect(updater).to have_received(:split_for_trial)
+            .with(enterprise, start_of_july, start_of_july + 15.days, nil, nil)
+          end
+        end
       end
 
       context "when an enterprise is created during the current month" do
@@ -200,6 +222,21 @@ describe UpdateBillablePeriods do
           updater.perform
           expect(updater).to have_received(:split_for_trial)
           .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
+        end
+      end
+
+      context "when an enterprise is created after the previous midnight" do
+        before do
+          expect(updater).to_not receive(:clean_up_untouched_billable_periods_for)
+          enterprise.update_attribute(:created_at, start_of_july + 29.days)
+        end
+
+        travel_to(28.days)
+
+        it "ignores the enterprise" do
+          allow(updater).to receive(:split_for_trial)
+          updater.perform
+          expect(updater).to_not have_received(:split_for_trial)
         end
       end
 
@@ -544,7 +581,7 @@ describe UpdateBillablePeriods do
       order10.line_items = [ create(:line_item, price: 2.35, order: order10) ]
       [order1, order2, order3, order4, order5, order6, order7, order8, order9, order10].each(&:update!)
 
-      allow(Enterprise).to receive(:select) { [enterprise] }
+      allow(Enterprise).to receive(:where) { double(:enterprises, select: [enterprise]) }
     end
 
     context "super complex example", versioning: true do

@@ -15,15 +15,15 @@ class UpdateBillablePeriods
 
     job_start_time = Time.now
 
-    enterprises = Enterprise.select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
+    enterprises = Enterprise.where('created_at < (?)', end_date).select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
 
     # Cycle through enterprises
     enterprises.each do |enterprise|
       start_for_enterprise = [start_date, enterprise.created_at].max
-      #end_for_enterprise = [start_date, enterprise.deleted].min
+      end_for_enterprise = [end_date].min # [end_date, enterprise.deleted_at].min
 
       # Cycle through previous versions of this enterprise
-      versions = enterprise.versions.where('created_at >= (?)', start_for_enterprise).order(:created_at)
+      versions = enterprise.versions.where('created_at >= (?) AND created_at < (?)', start_for_enterprise, end_for_enterprise).order(:created_at)
 
       trial_start = enterprise.shop_trial_start_date
       trial_expiry = enterprise.shop_trial_expiry
