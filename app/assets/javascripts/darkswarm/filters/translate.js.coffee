@@ -1,7 +1,7 @@
 Darkswarm.filter "translate", ->
-  (key) ->
-    t(key)
+  (key, options) ->
+    t(key, options)
 
 Darkswarm.filter "t", ->
-  (key) ->
-    t(key)
+  (key, options) ->
+    t(key, options)

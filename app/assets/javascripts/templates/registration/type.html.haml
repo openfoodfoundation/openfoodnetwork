@@ -5,8 +5,7 @@
   .row
     .small-12.columns
       %header
-        %h2
-          {{t('registration_type_headline', {enterprise: enterprise.name})}}
+        %h2{ "ng-bind" => "'registration_type_headline' | t:{enterprise: enterprise.name}" }
         %h4
           {{'registration_type_question' | t}}
 

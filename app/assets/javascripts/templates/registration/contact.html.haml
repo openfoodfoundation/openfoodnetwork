@@ -4,8 +4,7 @@
     .small-12.columns
       %header
         %h2 {{'registration_greeting' | t}}
-        %h5
-          {{t('who_is_managing_enterprise', {enterprise: enterprise.name})}}
+        %h5{ "ng-bind" => "'who_is_managing_enterprise' | t:{enterprise: enterprise.name}" }
   
   %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
     .row.content

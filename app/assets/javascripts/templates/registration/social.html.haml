@@ -5,8 +5,7 @@
     .small-12.columns
       %header
         %h2 {{'enterprise_final_step' | t}}
-        %h5 
-          {{t('enterprise_social_text', {enterprise: enterprise.name})}}
+        %h5{ "ng-bind" => "'enterprise_social_text' | t:{enterprise: enterprise.name}" }
 
   %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
     .row.content

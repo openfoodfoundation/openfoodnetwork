@@ -4,13 +4,11 @@
       %header
         %h2 {{'registration_finished_headline' | t}}
         .panel.callout
-          %p
-            {{t('registration_finished_thanks', {enterprise: enterprise.name})}}
+          %p{ "ng-bind" => "'registration_finished_thanks' | t:{enterprise: enterprise.name}" }
           %p {{'registration_finished_login' | t}}
   .row
     .small-12.columns.text-center
-      %h4 
-        {{t('registration_finished_activate', {enterprise: enterprise.name})}}
+      %h4{ "ng-bind" => "'registration_finished_activate' | t:{enterprise: enterprise.name}" }
 
       %p{ "ng-bind-html" => "t('registration_finished_activate_instruction_html', {email: enterprise.email})"} 
 
