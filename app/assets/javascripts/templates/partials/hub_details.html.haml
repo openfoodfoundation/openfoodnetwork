@@ -2,16 +2,16 @@
   .cta-container.small-12.columns
     .row
       .small-4.columns
-        %label{"active-table-hub-link" => "enterprise", change: "{{t('change_shop')}}", shop: "{{t('shop_at')}}"}
+        %label{"active-table-hub-link" => "enterprise", change: "{{'change_shop' | t}}", shop: "{{'shop_at' | t}}"}
       .small-8.columns.right
         %label.right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
-          {{t('hubs_delivery_options')}}:
+          {{'hubs_delivery_options' | t}}:
           %span{"bo-if" => "enterprise.pickup"}
             %i.ofn-i_038-takeaway
-            {{t('hubs_pickup')}}
+            {{'hubs_pickup' | t}}
           %span{"bo-if" => "enterprise.delivery"}
             %i.ofn-i_039-delivery
-            {{t('hubs_delivery')}}
+            {{'hubs_delivery' | t}}
     .row
       .columns.small-12
         %a.cta-hub{"bo-href" => "enterprise.path",

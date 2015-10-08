@@ -2,11 +2,11 @@
   .row
     .small-12.columns.pad-top
       %header
-        %h2 {{t('registration_finished_headline')}}
+        %h2 {{'registration_finished_headline' | t}}
         .panel.callout
           %p
             {{t('registration_finished_thanks', {enterprise: enterprise.name})}}
-          %p {{t('registration_finished_login')}}
+          %p {{'registration_finished_login' | t}}
   .row
     .small-12.columns.text-center
       %h4 
@@ -14,4 +14,4 @@
 
       %p{ "ng-bind-html" => "t('registration_finished_activate_instruction_html', {email: enterprise.email})"} 
 
-      %a.button.primary{ type: "button", href: "/" } {{t('registration_finished_action')}} &gt;
+      %a.button.primary{ type: "button", href: "/" } {{'registration_finished_action' | t}} &gt;

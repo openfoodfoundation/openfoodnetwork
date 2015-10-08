@@ -1,41 +1,41 @@
 .row
   .small-12.columns
     %header
-      %h2 {{t('registration_greeting')}}
+      %h2 {{'registration_greeting' | t}}
       %h4
         %small
           %i.ofn-i_040-hub
-        {{t('registration_intro')}}
+        {{'registration_intro' | t}}
     .hide-for-large-up
       %hr
-      %input.button.small.primary{ type: "button", value: "{{t('registration_action')}}", ng: { click: "select('details')" } } 
+      %input.button.small.primary{ type: "button", value: "{{'registration_action' | t}}", ng: { click: "select('details')" } } 
     %hr 
 
 .row{ 'data-equalizer' => true }
   .small-12.medium-12.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
-    %h5 {{t('registration_checklist')}}:
+    %h5 {{'registration_checklist' | t}}:
     %ul.check-list
       %li 
-        {{t('registration_time')}}
+        {{'registration_time' | t}}
       %li 
-        {{t('registration_enterprise_address')}}
+        {{'registration_enterprise_address' | t}}
       %li 
-        {{t('registration_contact_details')}}
+        {{'registration_contact_details' | t}}
       %li 
-        {{t('registration_logo')}}
+        {{'registration_logo' | t}}
       %li 
-        {{t('registration_promo_image')}}
+        {{'registration_promo_image' | t}}
       %li 
-        {{t('registration_about_us')}}
+        {{'registration_about_us' | t}}
 
   .small-9.medium-8.large-5.columns.pad-top.end{ 'data-equalizer-watch' => true}
     %h5
-      {{t('registration_outcome_headline')}}
+      {{'registration_outcome_headline' | t}}
     %p{ "ng-bind-html" => "t('registration_outcome1_html')" }
-    %p {{t('registration_outcome2')}}
-    %p {{t('registration_outcome3')}}
+    %p {{'registration_outcome2' | t}}
+    %p {{'registration_outcome3' | t}}
 
 .row.show-for-large-up
   .small-12.columns
     %hr
-    %input.button.primary.right{ type: "button", value: "{{t('registration_action')}}", ng: { click: "select('details')" } }
+    %input.button.primary.right{ type: "button", value: "{{'registration_action' | t}}", ng: { click: "select('details')" } }

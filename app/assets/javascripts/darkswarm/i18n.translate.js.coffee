@@ -1,6 +1,6 @@
 # Declares the translation function t.
-# You can use t('login') in Javascript.
-window.t = (key, options = {}) ->
+# You can use translate('login') or t('login') in Javascript.
+window.translate = (key, options = {}) ->
   unless 'I18n' of window
     console.log 'The I18n object is undefined. Cannot translate text.'
     return key
@@ -9,8 +9,4 @@ window.t = (key, options = {}) ->
   for name, value of options
     text = text.split("%{#{name}}").join(value)
   text
-
-# Provides the translation function t on all scopes.
-# You can write {{t('login')}} in all templates.
-window.Darkswarm.run ($rootScope) ->
-  $rootScope.t = t
+window.t = window.translate

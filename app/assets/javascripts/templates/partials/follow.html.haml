@@ -1,5 +1,5 @@
 %div.modal-centered{bindonce: true, "bo-if" => "enterprise.twitter || enterprise.facebook || enterprise.linkedin || enterprise.instagram"}
-  %p.modal-header {{t('follow')}}
+  %p.modal-header {{'follow' | t}}
   .follow-icons
     %span{"bo-if" => "enterprise.twitter"} 
       %a{"bo-href-i" => "http://twitter.com/{{enterprise.twitter}}", target: "_blank"}

@@ -3,7 +3,7 @@
   .row
     .small-12.columns
       %header
-        %h2 {{t('registration_greeting')}}
+        %h2 {{'registration_greeting' | t}}
         %h5
           {{t('who_is_managing_enterprise', {enterprise: enterprise.name})}}
   
@@ -12,19 +12,19 @@
       .small-12.medium-12.large-7.columns
         .row
           .small-12.columns.field
-            %label{ for: 'enterprise_contact' } {{t('enterprise_contact')}}:
+            %label{ for: 'enterprise_contact' } {{'enterprise_contact' | t}}:
             %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact', required: true, placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
             %span.error.small-12.columns{ ng: { show: "contact.contact.$error.required && submitted" } }
-              {{t('enterprise_contact_required')}}
+              {{'enterprise_contact_required' | t}}
         .row
           .small-12.columns.field
-            %label{ for: 'enterprise_email' } {{t('enterprise_email')}}:
+            %label{ for: 'enterprise_email' } {{'enterprise_email' | t}}:
             %input.chunky.small-12.columns{ id: 'enterprise_email', name: 'email', type: 'email', required: true, placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email' } }
             %span.error.small-12.columns{ ng: { show: "(contact.email.$error.email || contact.email.$error.required) && submitted" } }
-              {{t('enterprise_email_required')}}
+              {{'enterprise_email_required' | t}}
         .row
           .small-12.columns.field
-            %label{ for: 'enterprise_phone' } {{t('enterprise_phone')}}:
+            %label{ for: 'enterprise_phone' } {{'enterprise_phone' | t}}:
             %input.chunky.small-12.columns{ id: 'enterprise_phone', name: 'phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.phone' } }
       .small-12.medium-12.large-5.hide-for-small-only
         / %h6
@@ -43,5 +43,5 @@
 
     .row.buttons
       .small-12.columns
-        %input.button.secondary{ type: "button", value: "{{t('back')}}", ng: { click: "select('details')" } }
-        %input.button.primary.right{ type: "submit", value: "{{t('continue')}}" }
+        %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('details')" } }
+        %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }
