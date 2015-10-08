@@ -8,7 +8,7 @@ module OpenFoodNetwork
   module VariantAndLineItemNaming
 
     # Copied and modified from Spree::Variant
-    def unit_text
+    def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
 
       values.map! &:presentation    # This line changed
@@ -35,7 +35,7 @@ module OpenFoodNetwork
     end
 
     def unit_to_display
-      return unit_text if !self.has_attribute?(:display_as) || display_as.blank?
+      return options_text if !self.has_attribute?(:display_as) || display_as.blank?
       display_as
     end
 

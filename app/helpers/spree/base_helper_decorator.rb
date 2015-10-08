@@ -3,7 +3,7 @@ module Spree
     # human readable list of variant options
     # Override: Do not show out of stock text
     def variant_options(v, options={})
-      v.unit_text
+      v.options_text
     end
   end
 end

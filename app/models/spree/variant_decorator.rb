@@ -2,7 +2,9 @@ require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/variant_and_line_item_naming'
 
 Spree::Variant.class_eval do
+  remove_method :options_text # Remove method From Spree, so method from the naming module is used instead
   include OpenFoodNetwork::VariantAndLineItemNaming
+
 
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
@@ -69,7 +71,7 @@ Spree::Variant.class_eval do
     name = product.name
 
     name += " - #{name_to_display}" if name_to_display != product.name
-    name += " (#{unit_text})" if unit_text
+    name += " (#{options_text})" if options_text
 
     name
   end
@@ -85,10 +87,6 @@ Spree::Variant.class_eval do
         self
       end
     end
-  end
-
-  def options_text
-    # Use unit_text instead
   end
 
   private

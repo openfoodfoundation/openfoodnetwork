@@ -62,7 +62,7 @@ module OpenFoodNetwork
       sum_quantities = line_items.map { |li| li.quantity }.sum
       sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.sum
 
-      table[0].should == [@variant1.product.supplier.name,@variant1.product.name,"UNITSIZE",@variant1.unit_text,@variant1.weight,sum_quantities,sum_max_quantities]
+      table[0].should == [@variant1.product.supplier.name,@variant1.product.name,"UNITSIZE",@variant1.options_text,@variant1.weight,sum_quantities,sum_max_quantities]
     end
 
     it "should return a table wherein each rows contains the same number of columns as the heading" do
@@ -76,7 +76,7 @@ module OpenFoodNetwork
       end
     end
 
-    it "should split and group line items from multiple suppliers and of multiple variants" do
+    it "should split and group line items from multiple suppliers and of multiple variants" do 
       subject = GroupBuyReport.new @orders
 
       table_row_objects = subject.variants_and_quantities

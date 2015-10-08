@@ -1,5 +1,5 @@
 class Api::Admin::VariantSerializer < ActiveModel::Serializer
-  attributes :id, :unit_text, :unit_value, :unit_description, :unit_to_display, :on_demand, :display_as, :display_name, :name_to_display
+  attributes :id, :options_text, :unit_value, :unit_description, :unit_to_display, :on_demand, :display_as, :display_name, :name_to_display
   attributes :on_hand, :price
   has_many :variant_overrides
 

@@ -17,8 +17,8 @@
             %strong
               %span= "#{raw(item.variant.product.name)}"
               %span= "- " + "#{raw(item.variant.name_to_display)}"
-          - if item.variant.unit_text
-            = "(" + "#{raw(item.variant.unit_text)}" + ")"
+          - if item.variant.options_text
+            = "(" + "#{raw(item.variant.options_text)}" + ")"
           %br
           %small
             %em= raw(item.variant.product.supplier.name)

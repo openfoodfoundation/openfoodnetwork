@@ -8,7 +8,7 @@ module Spree
     let!(:variant1) { FactoryGirl.create(:variant) }
     let!(:variant2) { FactoryGirl.create(:variant) }
     let!(:variant3) { FactoryGirl.create(:variant) }
-    let(:attributes) { [:id, :unit_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
+    let(:attributes) { [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
 
     before do
       stub_authentication!
