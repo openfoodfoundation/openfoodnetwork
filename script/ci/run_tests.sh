@@ -18,7 +18,7 @@ bundle exec rake db:drop db:create db:schema:load
 bundle exec rake parallel:drop parallel:create parallel:load_schema
 
 echo "--- Emptying cache"
-rm tmp/cache/ -rf
+bundle exec rake tmp:clear
 
 echo "--- Running tests"
 bundle exec rake parallel:spec
