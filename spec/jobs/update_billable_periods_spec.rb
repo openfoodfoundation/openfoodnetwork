@@ -14,10 +14,6 @@ describe UpdateBillablePeriods do
     describe "perform", versioning: true do
       let!(:enterprise) { create(:supplier_enterprise, created_at: start_of_july - 1.month, sells: 'any') }
 
-      before do
-        allow(Enterprise).to receive(:where) { double(:enterprises, select: [enterprise]) }
-      end
-
       context "when no date arguments are passed to the job" do
         before do
           expect(updater).to receive(:clean_up_untouched_billable_periods_for).once
@@ -417,6 +413,23 @@ describe UpdateBillablePeriods do
           double(:order, total: 20),
           double(:order, total: 30)
         ]}
+      end
+
+      context "when the account invoice is already_complete" do
+        before do
+          allow(BillablePeriod).to receive(:where) { [existing] }
+          allow(existing.account_invoice).to receive(:order) { double(:order, complete?: true ) }
+          allow(AccountInvoice).to receive(:find_or_create_by_user_id_and_year_and_month) { existing.account_invoice }
+        end
+
+        it "does not update the billing period, but changes updated_at by touching the billable period " do
+          expect(existing).to_not receive(:update_attributes)
+          expect(existing).to receive(:touch)
+          expect(Bugsnag).to_not receive(:notify)
+          expect{
+            updater.update_billable_period(enterprise, start_of_july, start_of_july + 20.days, false)
+          }.to_not change{ BillablePeriod.count }
+        end
       end
 
       context "when arguments match both 'begins_at' and 'enterprise_id' of an existing billable period" do

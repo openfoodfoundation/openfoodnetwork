@@ -74,14 +74,17 @@ class UpdateBillablePeriods
     account_invoice = AccountInvoice.find_or_create_by_user_id_and_year_and_month(owner_id, begins_at.year, begins_at.month)
 
     billable_period = BillablePeriod.where(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id).first
-    billable_period ||= BillablePeriod.new(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id)
-    billable_period.update_attributes({
-      ends_at: ends_at,
-      sells: sells,
-      trial: trial,
-      owner_id: owner_id,
-      turnover: orders.sum(&:total)
-    })
+
+    unless account_invoice.order.andand.complete?
+      billable_period ||= BillablePeriod.new(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id)
+      billable_period.update_attributes({
+        ends_at: ends_at,
+        sells: sells,
+        trial: trial,
+        owner_id: owner_id,
+        turnover: orders.sum(&:total)
+      })
+    end
 
     billable_period.touch
   end
