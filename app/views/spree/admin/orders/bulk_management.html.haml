@@ -149,7 +149,7 @@
             %input{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true" }, min: 1, 'obj-for-update' => "line_item", "attr-for-update" => "quantity" }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
-            %input{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true" }, min: 0.001, 'obj-for-update' => "line_item", "attr-for-update" => "final_weight_volume" }
+            %input{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true" }, min: 0, 'ng-pattern' => '/[1-9]+/', 'obj-for-update' => "line_item", "attr-for-update" => "final_weight_volume" }
           %td.price{ 'ng-show' => 'columns.price.visible' }
             %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price * line_item.quantity | currency }}', 'ng-readonly' => "true", 'obj-for-update' => "line_item", "attr-for-update" => "price" }
           %td.actions
