@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 bundler_args: --without development
 rvm:
   - "1.9.3"
@@ -6,19 +7,27 @@ rvm:
 # The test cases are roughly split according to their test times.
 # It would be better to use https://github.com/ArturT/knapsack.
 env:
- - TEST_CASES="./spec/models"
- - TEST_CASES="./spec/controllers ./spec/views"
- - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers"
- - TEST_CASES="./spec/features/admin"
- - TEST_CASES="./spec/features/consumer"
- #- TEST_CASES="./spec/routing"
+  - TEST_CASES="./spec/features/admin"
+  - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
+  - TEST_CASES="./spec/models"
+  - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
+  - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers ./spec/lib" KARMA="true" TIMEZONE="UTC"
 
 before_script:
   - cp config/database.travis.yml config/database.yml
   - cp config/application.yml.example config/application.yml
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
+  - >
+    if [ "$KARMA" = "true" ]; then
+      npm install karma@0.12.31
+      npm install karma-jasmine@0.1.5
+      npm install karma-phantomjs-launcher@0.1.4
+      npm install karma-coffee-preprocessor@0.2.1
+      npm install -g karma-cli@0.0.4
+    fi
 
 script:
+  - '[ "$KARMA" = "true" ] && bundle exec rake karma:run || echo "Skipping karma run"'
   - "bundle exec rspec $TEST_CASES"
 
 notifications:
