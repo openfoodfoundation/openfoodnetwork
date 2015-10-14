@@ -16,4 +16,9 @@ Spree::AppConfiguration.class_eval do
   preference :default_accounts_shipping_method_id, :integer, default: nil
   preference :auto_update_invoices, :boolean, default: false
   preference :auto_finalize_invoices, :boolean, default: false
+
+  # Business Model Configuration
+  preference :account_invoices_monthly_fixed, :decimal, default: 0
+  preference :account_invoices_monthly_rate, :decimal, default: 0
+  preference :account_invoices_monthly_cap, :decimal, default: 0
 end
