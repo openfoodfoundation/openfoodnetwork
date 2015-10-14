@@ -504,6 +504,24 @@ describe Spree::Order do
     end
   end
 
+  describe "checking if an order is an account invoice" do
+    let(:accounts_distributor)  { create(:distributor_enterprise) }
+    let(:order_account_invoice) { create(:order, distributor: accounts_distributor) }
+    let(:order_general)         { create(:order, distributor: create(:distributor_enterprise)) }
+
+    before do
+      Spree::Config.accounts_distributor_id = accounts_distributor.id
+    end
+
+    it "returns true when the order is distributed by the accounts distributor" do
+      order_account_invoice.should be_account_invoice
+    end
+
+    it "returns false otherwise" do
+      order_general.should_not be_account_invoice
+    end
+  end
+
   describe "sending confirmation emails" do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:order) { create(:order, distributor: distributor) }

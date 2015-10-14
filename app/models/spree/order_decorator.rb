@@ -236,10 +236,14 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum &:included_tax
   end
 
+  def account_invoice?
+    distributor_id == Spree::Config.accounts_distributor_id
+  end
+
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    unless distributor_id == Spree::Config.accounts_distributor_id
+    unless account_invoice?
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end
