@@ -6,6 +6,7 @@ module Spree
     has_one :metadata, class_name: 'AdjustmentMetadata'
 
     scope :enterprise_fee, where(originator_type: 'EnterpriseFee')
+    scope :billable_period, where(source_type: 'BillablePeriod')
     scope :included_tax, where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
     scope :with_tax,    where('spree_adjustments.included_tax > 0')
     scope :without_tax, where('spree_adjustments.included_tax = 0')
