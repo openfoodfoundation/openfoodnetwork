@@ -20,5 +20,9 @@ module Spree
     def set_absolute_included_tax!(tax)
       update_attributes! included_tax: tax.round(2)
     end
+
+    def has_tax?
+      included_tax > 0
+    end
   end
 end

@@ -5,18 +5,30 @@ module Spree
       adjustment.metadata.should be
     end
 
-    describe "finding adjustments with and without tax included" do
+    describe "querying included tax" do
       let!(:adjustment_with_tax) { create(:adjustment, included_tax: 123) }
       let!(:adjustment_without_tax) { create(:adjustment, included_tax: 0) }
 
-      it "finds adjustments with tax" do
-        Adjustment.with_tax.should     include adjustment_with_tax
-        Adjustment.with_tax.should_not include adjustment_without_tax
+      describe "finding adjustments with and without tax included" do
+        it "finds adjustments with tax" do
+          Adjustment.with_tax.should     include adjustment_with_tax
+          Adjustment.with_tax.should_not include adjustment_without_tax
+        end
+
+        it "finds adjustments without tax" do
+          Adjustment.without_tax.should     include adjustment_without_tax
+          Adjustment.without_tax.should_not include adjustment_with_tax
+        end
       end
 
-      it "finds adjustments without tax" do
-        Adjustment.without_tax.should     include adjustment_without_tax
-        Adjustment.without_tax.should_not include adjustment_with_tax
+      describe "checking if an adjustment includes tax" do
+        it "returns true when it has > 0 tax" do
+          adjustment_with_tax.should have_tax
+        end
+
+        it "returns false when it has 0 tax" do
+          adjustment_without_tax.should_not have_tax
+        end
       end
     end
 
