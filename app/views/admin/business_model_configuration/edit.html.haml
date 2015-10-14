@@ -1,0 +1,60 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(:business_model_configuration)
+
+
+%p
+  This page allows configuration of the rates at which shops will be charged for use of the Open Food Network.
+%br
+%p
+  Total monthly bill will be: Fixed Charge + (Turnover x Percentage), unless this value exceeds the Monthly Cap, in which case the Monthly Cap will be charged instead.
+
+= render 'spree/shared/error_messages', target: @settings
+
+%fieldset.no-border-bottom
+  %legend Settings
+  = form_for @settings, as: :enterprise_types, url: main_app.admin_business_model_configuration_path, :method => :put do |f|
+    .row
+      .one.column.alpha
+        .field
+          = label :nothing, ""
+          %br
+          Bill&nbsp;&nbsp;&nbsp;=
+      .two.columns
+        .field
+          = f.label :account_invoices_monthly_fixed, t(:fixed_amount)
+          %span.with-tip.icon-question-sign{'data-powertip' => "A fixed monthly charge for ALL enterprises who are set up as a shop."}
+          %br
+          = f.number_field :account_invoices_monthly_fixed, min: 0.0, class: "fullwidth"
+      .one.column.text-center
+        .field
+          = label :nothing, ""
+          %br
+          = "+"
+      .two.columns.text-center
+        .field
+          = label :nothing, ""
+          %br
+          (&nbsp;&nbsp;Turnover&nbsp;&nbsp;&nbsp;x
+      .two.columns
+        .field
+          = f.label :account_invoices_monthly_rate, t(:percentage)
+          %span.with-tip.icon-question-sign{'data-powertip' => "A rate (0.0 - 1.0) that will be applied to the total turnover of each shop."}
+          %br
+          = f.number_field :account_invoices_monthly_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth"
+      .one.column
+        .field
+          = label :nothing, ""
+          %br
+          )
+      .two.columns.omega
+        .field
+          = f.label :account_invoices_monthly_cap, t(:capped_at)
+          %span.with-tip.icon-question-sign{'data-powertip' => "A cap on the amount that shops will be charged each month."}
+          %br
+          = f.number_field :account_invoices_monthly_cap, min: 0.0, class: "fullwidth"
+
+    .row
+      .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+        = button t(:update), 'icon-refresh', value: "update"

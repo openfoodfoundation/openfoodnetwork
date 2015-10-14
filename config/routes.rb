@@ -116,7 +116,7 @@ Openfoodnetwork::Application.routes.draw do
       end
     end
 
-    resource :business_model_configuration, only: [:edit]
+    resource :business_model_configuration, only: [:edit, :update], controller: 'business_model_configuration'
 
     resource :account, only: [:show], controller: 'account'
   end
