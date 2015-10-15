@@ -30,10 +30,6 @@ module OpenFoodNetwork
 
     private
 
-    def invoice_number_for(order, i)
-      @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i+i : order.number
-    end
-
     def detail_rows_for_order(order, invoice_number, opts)
       rows = []
 
@@ -44,30 +40,6 @@ module OpenFoodNetwork
       end
 
       rows
-    end
-
-    def summary_rows_for_order(order, invoice_number, opts)
-      rows = []
-
-      rows += produce_summary_rows(order, invoice_number, opts) unless detail?
-      rows += fee_summary_rows(order, invoice_number, opts)     unless detail? && order.account_invoice?
-      rows += shipping_summary_rows(order, invoice_number, opts)
-
-      rows
-    end
-
-    def produce_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts),
-       summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',          opts)]
-    end
-
-    def fee_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts),
-       summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts)]
-    end
-
-    def shipping_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
     end
 
     def line_item_detail_rows(order, invoice_number, opts)
@@ -104,6 +76,29 @@ module OpenFoodNetwork
           opts)
     end
 
+    def summary_rows_for_order(order, invoice_number, opts)
+      rows = []
+
+      rows += produce_summary_rows(order, invoice_number, opts)  unless detail?
+      rows += fee_summary_rows(order, invoice_number, opts)      unless detail? && order.account_invoice?
+      rows += shipping_summary_rows(order, invoice_number, opts)
+
+      rows
+    end
+
+    def produce_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts),
+       summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',          opts)]
+    end
+
+    def fee_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts),
+       summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts)]
+    end
+
+    def shipping_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+    end
 
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
       row order, '', description, '1', amount, invoice_number, tax_type, opts
@@ -147,6 +142,10 @@ module OpenFoodNetwork
       order.adjustments.
         billable_period.
         select { |a| a.source.present? }
+    end
+
+    def invoice_number_for(order, i)
+      @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i+i : order.number
     end
 
     def total_untaxable_products(order)
