@@ -24,7 +24,7 @@ module OpenFoodNetwork
         rows += summary_rows_for_order(order, invoice_number, @opts)
       end
 
-      rows
+      rows.compact
     end
 
 
@@ -35,26 +35,48 @@ module OpenFoodNetwork
     end
 
     def detail_rows_for_order(order, invoice_number, opts)
-      order.line_items.map do |line_item|
-        detail_row(line_item, invoice_number, opts)
+      rows = []
+
+      rows += line_item_detail_rows(order, invoice_number, opts)
+
+      if order.account_invoice?
+        rows += adjustment_detail_rows(order, invoice_number, opts)
       end
+
+      rows
     end
 
     def summary_rows_for_order(order, invoice_number, opts)
       rows = []
 
-      unless detail?
-        rows << summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts)
-        rows << summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',          opts)
-      end
-      rows << summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts)
-      rows << summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts)
-      rows << summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)
+      rows += produce_summary_rows(order, invoice_number, opts) unless detail?
+      rows += fee_summary_rows(order, invoice_number, opts)     unless detail? && order.account_invoice?
+      rows += shipping_summary_rows(order, invoice_number, opts)
 
-      rows.compact
+      rows
     end
 
-    def detail_row(line_item, invoice_number, opts)
+    def produce_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts),
+       summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',          opts)]
+    end
+
+    def fee_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts),
+       summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts)]
+    end
+
+    def shipping_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+    end
+
+    def line_item_detail_rows(order, invoice_number, opts)
+      order.line_items.map do |line_item|
+        line_item_detail_row(line_item, invoice_number, opts)
+      end
+    end
+
+    def line_item_detail_row(line_item, invoice_number, opts)
       row(line_item.order,
           line_item.product.sku,
           line_item.variant.product_and_variant_name,
@@ -65,6 +87,24 @@ module OpenFoodNetwork
           opts)
     end
 
+    def adjustment_detail_rows(order, invoice_number, opts)
+      account_invoice_adjustments(order).map do |adjustment|
+        adjustment_detail_row(adjustment, invoice_number, opts)
+      end
+    end
+
+    def adjustment_detail_row(adjustment, invoice_number, opts)
+      row(adjustment.source.andand.account_invoice.andand.order,
+          '',
+          adjustment.label,
+          1,
+          adjustment.amount,
+          invoice_number,
+          tax_type(adjustment),
+          opts)
+    end
+
+
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
       row order, '', description, '1', amount, invoice_number, tax_type, opts
     end
@@ -72,16 +112,16 @@ module OpenFoodNetwork
     def row(order, sku, description, quantity, amount, invoice_number, tax_type, opts={})
       return nil if amount == 0
 
-      [order.bill_address.full_name,
+      [order.bill_address.andand.full_name,
        order.email,
-       order.bill_address.address1,
-       order.bill_address.address2,
+       order.bill_address.andand.address1,
+       order.bill_address.andand.address2,
        '',
        '',
-       order.bill_address.city,
-       order.bill_address.state,
-       order.bill_address.zipcode,
-       order.bill_address.country.andand.name,
+       order.bill_address.andand.city,
+       order.bill_address.andand.state,
+       order.bill_address.andand.zipcode,
+       order.bill_address.andand.country.andand.name,
        invoice_number,
        order.number,
        opts[:invoice_date],
@@ -101,6 +141,12 @@ module OpenFoodNetwork
        '',
        order.paid? ? 'Y' : 'N'
       ]
+    end
+
+    def account_invoice_adjustments(order)
+      order.adjustments.
+        billable_period.
+        select { |a| a.source.present? }
     end
 
     def total_untaxable_products(order)
@@ -132,8 +178,8 @@ module OpenFoodNetwork
       @opts[:report_type] == 'detailed'
     end
 
-    def tax_type(line_item)
-      line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
+    def tax_type(taxable)
+      taxable.has_tax? ? 'GST on Income' : 'GST Free Income'
     end
   end
 end

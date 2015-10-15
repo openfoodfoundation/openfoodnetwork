@@ -461,6 +461,36 @@ feature %q{
       ]
     end
 
+    describe "account invoices" do
+      let(:accounts_distributor)  { create(:distributor_enterprise) }
+      let(:billable_period) { create(:billable_period, account_invoice: account_invoice) }
+      let(:account_invoice) { create(:account_invoice, order: account_invoice_order) }
+      let!(:account_invoice_order) { create(:order, order_cycle: order_cycle, distributor: accounts_distributor) }
+      let!(:adjustment) { create(:adjustment, adjustable: account_invoice_order, source: billable_period, label: 'Account invoice item', amount: 12.34) } # Tax?
+
+      before do
+        Spree::Config.accounts_distributor_id = accounts_distributor.id
+
+        account_invoice_order.update_attribute :email, 'customer@email.com'
+        Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { account_invoice_order.finalize! }
+
+        visit current_path
+      end
+
+      it "generates a detailed report for account invoices" do
+        select 'Detailed', from: 'report_type'
+        select accounts_distributor.name, from: 'q_distributor_id_eq'
+        click_button 'Search'
+
+        opts = {}
+
+        xero_invoice_table.should match_table [
+          xero_invoice_header,
+          xero_invoice_account_invoice_row(adjustment)
+        ]
+      end
+    end
+
 
     private
 
@@ -481,10 +511,16 @@ feature %q{
       xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
-    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
-      opts.reverse_merge!({invoice_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
+    def xero_invoice_account_invoice_row(adjustment, opts={})
+      opts.reverse_merge!({customer_name: '', address1: '', city: '', state: '', zipcode: '', country: '', invoice_number: account_invoice_order.number, order_number: account_invoice_order.number})
+      tax_type = adjustment.has_tax? ? 'GST on Income' : 'GST Free Income'
+      xero_invoice_row('', adjustment.label, adjustment.amount, '1', tax_type, opts)
+    end
 
-      ['Customer Name', 'customer@email.com', 'customer l1', '', '', '', 'customer city', 'Victoria', '1234', country.name, opts[:invoice_number], order1.number, opts[:invoice_date], opts[:due_date],
+    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
+      opts.reverse_merge!({customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
+
+      [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
 
        sku,
        description,
