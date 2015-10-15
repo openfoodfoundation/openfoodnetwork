@@ -20,18 +20,15 @@ feature 'Business Model Configuration' do
     end
 
     context "as an admin user", js: true do
-      # it "loads the page" do
-      #   visit spree.admin_path
-      #   click_link "Configuration"
-      #   click_link "Accounts & Billing"
-      #
-      #   expect(page).to have_select2 "settings_accounts_distributor_id"
-      #   select2_select accounts_distributor.name, from: "settings_accounts_distributor_id"
-      #   expect(page).to have_select "settings_default_accounts_payment_method_id"
-      #   expect(page).to have_select "settings_default_accounts_shipping_method_id"
-      #   expect(page).to have_link "Update User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'update_account_invoices'})
-      #   expect(page).to have_link "Finalise User Invoices", href: start_job_admin_accounts_and_billing_settings_path(job: { name: 'finalize_account_invoices'})
-      # end
+      it "loads the page" do
+        visit spree.admin_path
+        click_link "Configuration"
+        click_link "Business Model"
+
+        expect(page).to have_field "settings_account_invoices_monthly_fixed", with: 5.0
+        expect(page).to have_field "settings_account_invoices_monthly_rate", with: 0.02
+        expect(page).to have_field "settings_account_invoices_monthly_cap", with: 50.0
+      end
 
       it "attributes can be changed", js: true do
         visit edit_admin_business_model_configuration_path

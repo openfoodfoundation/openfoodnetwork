@@ -1,0 +1,4 @@
+// insert_bottom "[data-hook='admin_configurations_sidebar_menu']"
+
+%li
+  = link_to 'Business Model', main_app.edit_admin_business_model_configuration_path
