@@ -201,4 +201,39 @@ describe Spree::Admin::OrdersController do
       end
     end
   end
+
+  describe "#print" do
+    let!(:user) { create(:user) }
+    let!(:enterprise_user) { create(:user) }
+    let!(:order) { create(:order_with_distributor, bill_address: create(:address), ship_address: create(:address)) }
+    let!(:distributor) { order.distributor }
+    let(:params) { { id: order.number } }
+
+    context "as a normal user" do
+      before { controller.stub spree_current_user: user }
+
+      it "should prevent me from sending order invoices" do
+        spree_get :print, params
+        expect(response).to redirect_to spree.unauthorized_path
+      end
+    end
+
+    context "as an enterprise user" do
+      context "which is not a manager of the distributor for an order" do
+        before { controller.stub spree_current_user: user }
+        it "should prevent me from sending order invoices" do
+          spree_get :print, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "which is a manager of the distributor for an order" do
+        before { controller.stub spree_current_user: distributor.owner }
+        it "should allow me to send order invoices" do
+          spree_get :print, params
+          expect(response).to render_template :print
+        end
+      end
+    end
+  end
 end

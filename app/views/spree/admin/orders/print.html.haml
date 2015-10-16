@@ -1,0 +1,19 @@
+= wicked_pdf_stylesheet_link_tag "mail/email"
+
+
+%table{:width => "100%"}
+  %tbody
+    %tr
+      %td{ :align => "left" }
+        %h4
+          Order confirmation
+          %strong ##{@order.number}
+        %h5
+          #{@order.bill_address.firstname} #{@order.bill_address.lastname}
+          %strong= " <#{@order.email}>" if @order.email
+          = @order.bill_address.phone if @order.bill_address.phone
+        %h5= "Customer Code: #{@order.customer.code}"
+
+= render 'spree/order_mailer/order_summary'
+= render 'spree/order_mailer/payment'
+= render 'spree/order_mailer/shipping'
