@@ -193,9 +193,9 @@ describe Spree::Admin::OrdersController do
       context "which is a manager of the distributor for an order" do
         before { controller.stub spree_current_user: distributor.owner }
         it "should allow me to send order invoices" do
-          # expect do
+          expect do
             spree_get :invoice, params
-          # end.to change{Spree::OrderMailer.deliveries.count}.by(1)
+          end.to change{Spree::OrderMailer.deliveries.count}.by(1)
           expect(response).to redirect_to spree.edit_admin_order_path(order)
         end
       end
