@@ -54,6 +54,9 @@ gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'paper_trail', '~> 3.0.8'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 gem 'foreigner'
 gem 'immigrant'
 
