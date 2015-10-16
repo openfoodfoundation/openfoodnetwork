@@ -1,0 +1,15 @@
+%br
+%p.callout
+  Kind regards,
+  %br
+  #{@order.distributor.contact}
+  %br
+  %br
+  = @order.distributor.name
+  %br
+  = @order.distributor.phone || ""
+  %br
+  %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
+    = @order.distributor.email
+  %br
+  = @order.distributor.website || ""
