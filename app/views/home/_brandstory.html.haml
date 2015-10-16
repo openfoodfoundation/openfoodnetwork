@@ -1,0 +1,18 @@
+#brand-story.pane
+  .row
+    .small-12.medium-8.medium-offset-2.columns.text-center
+      %h2 Food, unincorporated.
+      %p Sometimes the best way to fix the system is to start a new one&hellip;
+
+      #brand-story-text.hide-show.slideable
+        %p We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world.
+        %p Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day.
+        %p So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world.
+        %p It works everywhere. It changes everything.
+        %p
+          %strong We call it Open Food Network.
+        %p We all love food. Now we can love our food system too.
+
+      %a.text-vbig{"slide-toggle" => "#brand-story-text", "ng-click" => "toggleBrandStory()"}
+        %i.ofn-i_005-caret-down{"ng-hide" => "brandStoryExpanded"}
+        %i.ofn-i_006-caret-up{  "ng-show" => "brandStoryExpanded"}

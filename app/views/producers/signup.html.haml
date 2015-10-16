@@ -1,0 +1,46 @@
+- content_for(:title) do
+  Sign up as a producer
+
+#panes
+  #producer-signup.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2 Food producers, empowered.
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
+        %br
+        %a.button.transparent{href: "/register"}
+          Join now
+  .pane
+    .row
+      .small-12.medium-10.medium-offset-1.columns.text-center
+        %h2 Enterprise Accounts
+        -# %p.text-big
+        -#   If there is a time-sensitive offer you can write it here, e.g.
+        -#   Sign up before 30th June for an extra month free!
+        %br
+        = ContentConfig.producer_signup_pricing_table_html.html_safe
+
+  #producer-case-studies
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Stories from our producers.
+        %br
+        = ContentConfig.producer_signup_case_studies_html.html_safe
+
+  .pane#cta
+    .row
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %h2 Join now!
+        %p.text-big Start with a free profile, and expand when you're ready!
+        %a.button.transparent{href: "/register"}
+          Join now
+
+  #producer-details.pane.footer-pad
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Here's the detail.
+        = ContentConfig.producer_signup_detail_html.html_safe
+
+= render partial: "shared/footer"

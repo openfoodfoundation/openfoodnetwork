@@ -32,6 +32,7 @@ gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.3"
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -51,7 +52,9 @@ gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
+gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'paper_trail', '~> 3.0.8'
 
 gem 'foreigner'
 gem 'immigrant'
@@ -72,13 +75,14 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'foundation-icons-sass-rails'
   gem 'momentjs-rails'
-  gem 'angular-rails-templates'
+  gem 'angular-rails-templates', '~> 0.2.0'
 end
+
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
-
+gem 'css_splitter'
 
 
 group :test, :development do
@@ -95,8 +99,10 @@ group :test, :development do
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
+  gem 'rspec-retry'
   gem 'json_spec'
   gem 'unicorn-rails'
+  gem 'atomic'
 end
 
 group :test do

@@ -73,8 +73,11 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :resend_confirmation], Enterprise do |enterprise|
       OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:welcome, :register], Enterprise do |enterprise|
+      enterprise.owner == user
     end
     can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
@@ -87,6 +90,8 @@ class AbilityDecorator
     end
 
     can [:admin, :known_users], :search
+
+    can [:admin, :show], :account
   end
 
   def add_product_management_abilities(user)
@@ -120,7 +125,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
   end
 
   def add_order_cycle_management_abilities(user)
@@ -183,7 +188,7 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
     can [:admin, :index, :update], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
   end

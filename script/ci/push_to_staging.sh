@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 source ./script/ci/includes.sh
 
 # Add staging git remote if required
@@ -16,4 +16,6 @@ echo "--- Loading baseline data"
 ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/load_staging_baseline.sh"
 
 echo "--- Pushing to staging"
-[[ $(git push staging2 $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
+exec 5>&1
+OUTPUT=$(git push staging2 `get_ofn_commit`:master --force 2>&1 |tee /dev/fd/5)
+[[ $OUTPUT =~ "Done" ]]

@@ -1,0 +1,88 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(:accounts_and_billing_settings)
+
+= render 'spree/shared/error_messages', target: @settings
+
+-# - month_options = (0...12).map { |i| Time.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
+
+%fieldset.no-border-bottom
+  %legend Settings
+  = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
+    .row{ ng: { app: 'admin.accounts_and_billing_settings' } }
+      .twelve.columns.alpha.omega
+        .field
+          = f.label :accounts_distributor_id, t(:accounts_administration_distributor)
+          = f.collection_select(:accounts_distributor_id, @distributors, :id, :name, { include_blank: true }, { class: "select2 fullwidth", 'watch-value-as' => "enterprise_id"})
+
+        = f.hidden_field :default_accounts_payment_method_id, value: ''
+        = f.hidden_field :default_accounts_shipping_method_id, value: ''
+        %div{ 'method-settings-for' => 'enterprise_id' }
+
+    .row
+      .six.columns.alpha
+        %fieldset.no-border-bottom
+          %legend Update Invoices
+          = f.check_box :auto_update_invoices
+          = f.label :auto_update_invoices, "Auto-update invoices nightly at 1:00am"
+
+      .six.columns.omega
+        %fieldset.no-border-bottom
+          %legend Finalise Invoices
+          = f.check_box :auto_finalize_invoices
+          = f.label :auto_finalize_invoices, "Auto-finalise invoices monthly on the 2nd at 1:30am"
+
+    .row
+      .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+        = button t(:update), 'icon-refresh', value: "update"
+
+%fieldset.no-border-bottom
+  %legend Manually Run Tasks
+  .row
+    .six.columns.alpha.step.text-center
+      .form-buttons{"data-hook" => "buttons"}
+        =link_to_with_icon "icon-undo", "Update User Invoices",
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "update_account_invoices" }),
+          class: "button fullwidth"
+
+      %br
+
+      - if @update_account_invoices_job
+        %p.text-center
+          - if @update_account_invoices_job.run_at < Time.now
+            %strong In Progress
+            %br
+            Started at:
+          - else
+            %strong Queued
+            %br
+            Scheduled for:
+          = @update_account_invoices_job.run_at
+      - else
+        %p.explanation
+          Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night.
+
+
+    .six.columns.omega.step.text-center
+      .form-buttons{"data-hook" => "buttons"}
+        =link_to_with_icon "icon-ok-sign", "Finalise User Invoices",
+          main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "finalize_account_invoices" }),
+          class: "button fullwidth"
+
+      %br
+
+      - if @finalize_account_invoices_job
+        %p.text-center
+          - if @finalize_account_invoices_job.run_at < Time.now
+            %strong In Progress
+            %br
+            Started at:
+          - else
+            %strong Queued
+            %br
+            Scheduled for:
+          = @finalize_account_invoices_job.run_at
+      - else
+        %p.explanation
+          Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month.

@@ -1,0 +1,48 @@
+- content_for(:title) do
+  Sign up as a hub
+
+#panes
+  #shops-signup.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2 Food hubs, unlimited.
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of.
+        %br
+        %a.button.transparent{href: "/register"}
+          Join now
+  .pane
+    .row
+      .small-12.medium-10.medium-offset-1.columns.text-center
+        %h2 Enterprise Accounts
+        -# %p.text-big
+        -#   If there is a time-sensitive offer you can write it here, e.g.
+        -#   Sign up before 30th June for an extra month free!
+        %br
+        = ContentConfig.hub_signup_pricing_table_html.html_safe
+
+  #shops-case-studies
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Stories from our hubs.
+        %br
+        = ContentConfig.hub_signup_case_studies_html.html_safe
+
+  .pane#cta
+    .row
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %h2 We're ready to help.
+        %p.text-big You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
+        %br
+        %a.button.transparent{href: "/register"}
+          Join now
+
+  #hub-details.pane.footer-pad
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center Here's the detail.
+        = ContentConfig.hub_signup_detail_html.html_safe
+
+
+= render partial: "shared/footer"

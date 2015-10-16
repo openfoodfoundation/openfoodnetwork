@@ -82,7 +82,7 @@ feature %q{
       visit spree.edit_admin_product_path(product)
 
       choose 'product_group_buy_1'
-      fill_in 'Group buy unit size', :with => '10'
+      fill_in 'Bulk unit size', :with => '10'
 
       click_button 'Update'
 
@@ -117,31 +117,34 @@ feature %q{
       end
     end
 
-    scenario "creating a new product", js: true do
-      Spree::Config.products_require_tax_category = false
-      click_link 'Products'
-      click_link 'New Product'
+    context "products do not require a tax category" do
+      scenario "creating a new product", js: true do
+        with_products_require_tax_category(false) do
+          click_link 'Products'
+          click_link 'New Product'
 
-      fill_in 'product_name', :with => 'A new product !!!'
-      fill_in 'product_price', :with => '19.99'
+          fill_in 'product_name', :with => 'A new product !!!'
+          fill_in 'product_price', :with => '19.99'
 
-      page.should have_selector('#product_supplier_id')
-      select 'Another Supplier', :from => 'product_supplier_id'
-      select 'Weight (g)', from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: '500'
-      select taxon.name, from: "product_primary_taxon_id"
-      select 'None', from: "product_tax_category_id"
+          page.should have_selector('#product_supplier_id')
+          select 'Another Supplier', :from => 'product_supplier_id'
+          select 'Weight (g)', from: 'product_variant_unit_with_scale'
+          fill_in 'product_unit_value_with_description', with: '500'
+          select taxon.name, from: "product_primary_taxon_id"
+          select 'None', from: "product_tax_category_id"
 
-      # Should only have suppliers listed which the user can manage
-      page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
-      page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
+          # Should only have suppliers listed which the user can manage
+          page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
+          page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
 
-      click_button 'Create'
+          click_button 'Create'
 
-      flash_message.should == 'Product "A new product !!!" has been successfully created!'
-      product = Spree::Product.find_by_name('A new product !!!')
-      product.supplier.should == @supplier2
-      product.tax_category.should be_nil
+          flash_message.should == 'Product "A new product !!!" has been successfully created!'
+          product = Spree::Product.find_by_name('A new product !!!')
+          product.supplier.should == @supplier2
+          product.tax_category.should be_nil
+        end
+      end
     end
 
     scenario "editing a product" do
@@ -202,7 +205,7 @@ feature %q{
 
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../../app/assets/images/logo.jpg', __FILE__))
+      image = File.open(File.expand_path('../../../../app/assets/images/logo-white.png', __FILE__))
       Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
       visit spree.admin_product_images_path(product)

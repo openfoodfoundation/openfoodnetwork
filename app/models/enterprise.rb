@@ -10,11 +10,14 @@ class Enterprise < ActiveRecord::Base
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
+  has_paper_trail only: [:owner_id, :sells], on: [:update]
 
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
 
+  has_many :relationships_as_parent, class_name: 'EnterpriseRelationship', foreign_key: 'parent_id', dependent: :destroy
+  has_many :relationships_as_child, class_name: 'EnterpriseRelationship', foreign_key: 'child_id', dependent: :destroy
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
@@ -31,6 +34,7 @@ class Enterprise < ActiveRecord::Base
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers
+  has_many :billable_periods
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -56,6 +60,7 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
+  validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
   validates :email, presence: true
@@ -325,6 +330,10 @@ class Enterprise < ActiveRecord::Base
     !confirmed? || pending_reconfirmation?
   end
 
+  def shop_trial_expiry
+    shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
+  end
+
   protected
 
   def devise_mailer
@@ -332,6 +341,15 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def name_is_unique
+    dups = Enterprise.where(name: name)
+    dups = dups.where('id != ?', id) unless new_record?
+
+    if dups.any?
+      errors.add :name, "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at #{dups.first.owner.email}."
+    end
+  end
 
   def email_is_known?
     owner.enterprises.confirmed.map(&:email).include?(email)

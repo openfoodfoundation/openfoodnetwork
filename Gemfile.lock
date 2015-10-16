@@ -147,14 +147,15 @@ GEM
     acts_as_list (0.1.4)
     addressable (2.3.3)
     andand (1.3.3)
-    angular-rails-templates (0.1.1)
+    angular-rails-templates (0.2.0)
       railties (>= 3.1)
-      sprockets
+      sprockets (~> 2)
       tilt
     angularjs-file-upload-rails (1.1.0)
     angularjs-rails (1.2.13)
     ansi (1.4.2)
     arel (3.0.3)
+    atomic (1.1.99)
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
     awesome_print (1.0.2)
@@ -165,6 +166,7 @@ GEM
     bcrypt (3.1.7)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
+    blockenspiel (0.4.5)
     bugsnag (1.5.2)
       httparty (>= 0.6, < 1.0)
       multi_json (~> 1.0)
@@ -219,6 +221,8 @@ GEM
       safe_yaml (~> 0.9.0)
     css_parser (1.3.5)
       addressable
+    css_splitter (0.4.1)
+      sprockets (>= 2.0.0)
     daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
@@ -320,7 +324,7 @@ GEM
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.2)
+    json (1.8.3)
     json_spec (1.1.1)
       multi_json (~> 1.0)
       rspec (~> 2.0)
@@ -353,11 +357,14 @@ GEM
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
-    newrelic_rpm (3.6.7.152)
+    newrelic_rpm (3.12.0.288)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oj (2.1.2)
     orm_adapter (0.5.0)
+    paper_trail (3.0.8)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     paperclip (3.5.4)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -428,6 +435,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.2.3)
     ref (1.0.5)
     representative (1.0.5)
       activesupport (>= 2.2.2)
@@ -458,6 +466,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rspec-retry (0.4.2)
+      rspec-core
     ruby-hmac (0.4.0)
     ruby-progressbar (1.7.1)
     safe_yaml (0.9.5)
@@ -538,16 +548,19 @@ DEPENDENCIES
   active_model_serializers
   acts-as-taggable-on (~> 3.4)
   andand
-  angular-rails-templates
+  angular-rails-templates (~> 0.2.0)
   angularjs-file-upload-rails (~> 1.1.0)
   angularjs-rails (= 1.2.13)
+  atomic
   awesome_print
   aws-sdk
+  blockenspiel
   bugsnag
   capybara
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
+  css_splitter
   custom_error_message!
   daemons
   dalli
@@ -580,6 +593,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   oj
+  paper_trail (~> 3.0.8)
   paperclip
   parallel_tests
   pg
@@ -590,9 +604,11 @@ DEPENDENCIES
   rack-ssl
   rails (= 3.2.21)
   rails-i18n (~> 3.0.0)
+  redcarpet
   representative_view
   roadie-rails (~> 1.0.3)
   rspec-rails
+  rspec-retry
   sass (~> 3.3)
   sass-rails (~> 3.2.3)
   shoulda-matchers

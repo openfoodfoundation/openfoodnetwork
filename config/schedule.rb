@@ -18,3 +18,12 @@ end
 every 4.hours do
   rake 'db2fog:backup'
 end
+
+every 1.day, at: '1:00am' do
+  rake 'openfoodnetwork:billing:update_account_invoices'
+end
+
+# On the 2nd of every month at 1:30am
+every '30 1 2 * *' do
+  rake 'openfoodnetwork:billing:finalize_account_invoices'
+end

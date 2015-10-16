@@ -1,6 +1,6 @@
 Spree::LineItem.class_eval do
-  attr_accessible :max_quantity, :unit_value
-  attr_accessible :unit_value, :price, :as => :api
+  attr_accessible :max_quantity, :final_weight_volume
+  attr_accessible :final_weight_volume, :price, :as => :api
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -32,6 +32,10 @@ Spree::LineItem.class_eval do
   scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
                       where('spree_adjustments.id IS NULL')
 
+
+  def has_tax?
+    adjustments.included_tax.any?
+  end
 
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,

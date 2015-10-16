@@ -22,7 +22,12 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
   attributes :price
 
   def price
-    object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
+    if options[:enterprise_fee_calculator]
+      object.master.price + options[:enterprise_fee_calculator].indexed_fees_for(object.master)
+    else
+      object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
+    end
+
   end
 end
 
@@ -35,12 +40,13 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
-  has_many :taxons, serializer: Api::IdSerializer
-  has_many :images, serializer: Api::ImageSerializer
-
-  has_one :supplier, serializer: Api::IdSerializer
-  has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_one :master, serializer: Api::VariantSerializer
+
+  has_one :primary_taxon, serializer: Api::TaxonSerializer
+  has_many :taxons, serializer: Api::IdSerializer
+
+  has_many :images, serializer: Api::ImageSerializer
+  has_one :supplier, serializer: Api::IdSerializer
 
   def properties_with_values
     object.properties_including_inherited

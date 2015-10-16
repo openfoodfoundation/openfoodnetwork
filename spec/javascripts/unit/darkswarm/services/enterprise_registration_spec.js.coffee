@@ -56,6 +56,20 @@ describe "EnterpriseRegistrationService", ->
       it "does not move the user to the about page", ->
         expect(RegistrationServiceMock.select).not.toHaveBeenCalled
 
+    describe "failure due to duplicate name", ->
+      beforeEach ->
+        spyOn(RegistrationServiceMock, "select")
+        spyOn(window, "alert")
+        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 400, {"error": "Invalid resource. Please fix errors and try again.", "errors": {"name": ["has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."], "permalink": [] }}
+        EnterpriseRegistrationService.create()
+        $httpBackend.flush()
+
+      it "alerts the user to failure", ->
+        expect(window.alert).toHaveBeenCalledWith 'Failed to create your enterprise.\nName has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com.'
+
+      it "does not move the user to the about page", ->
+        expect(RegistrationServiceMock.select).not.toHaveBeenCalled
+
 
   describe "updating an enterprise", ->
     beforeEach ->

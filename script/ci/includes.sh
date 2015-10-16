@@ -5,18 +5,58 @@ function load_environment {
     fi
 }
 
+function master_merged {
+    if [[ `git tag -l "$BUILDKITE_BRANCH"` != '' ]]; then
+	echo "'$BUILDKITE_BRANCH' is a tag."
+        if [[ `git tag -l --contains origin/master "$BUILDKITE_BRANCH"` != '' ]]; then
+            echo "This tag contains the current master."
+            return 0
+        else
+            echo "This tag does not contain the current master."
+            return 1
+        fi
+    fi
+    if [[ `git branch -r --merged origin/$BUILDKITE_BRANCH` == *origin/master* ]]; then
+	echo "This branch already has the current master merged."
+	return 0
+    fi
+    return 1
+}
+
 function exit_unless_master_merged {
-    if [[ `git branch -a --merged origin/$BUILDKITE_BRANCH` != *origin/master* ]]; then
+    if ! master_merged; then
 	echo "This branch does not have the current master merged. Please merge master and push again."
 	exit 1
     fi
 }
 
 function succeed_if_master_merged {
-    if [[ `git branch -a --merged origin/$BUILDKITE_BRANCH` == *origin/master* ]]; then
-	echo "This branch already has the current master merged."
-	exit 0
+    master_merged && exit 0
+}
+
+function set_ofn_commit {
+    echo "Setting commit to $1"
+    buildkite-agent meta-data set "openfoodnetwork:git:commit" $1
+}
+
+function get_ofn_commit {
+    OFN_COMMIT=`buildkite-agent meta-data get "openfoodnetwork:git:commit"`
+
+    # If we don't catch this failure case, push will execute:
+    # git push remote :master --force
+    # Which will delete the master branch on the server
+
+    if [[ `expr length "$OFN_COMMIT"` == 0 ]]; then
+        echo 'OFN_COMMIT_NOT_FOUND'
+    else
+        echo $OFN_COMMIT
     fi
+}
+
+function checkout_ofn_commit {
+    OFN_COMMIT=`buildkite-agent meta-data get "openfoodnetwork:git:commit"`
+    echo "Checking out stored commit $OFN_COMMIT"
+    git checkout -qf "$OFN_COMMIT"
 }
 
 function drop_and_recreate_database {

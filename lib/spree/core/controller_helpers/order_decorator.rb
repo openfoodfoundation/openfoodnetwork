@@ -3,8 +3,9 @@ Spree::Core::ControllerHelpers::Order.class_eval do
     order = current_order_without_scoped_variants(create_order_if_necessary)
 
     if order
+      scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
       order.line_items.each do |li|
-        li.variant.scope_to_hub order.distributor
+        scoper.scope(li.variant)
       end
     end
 

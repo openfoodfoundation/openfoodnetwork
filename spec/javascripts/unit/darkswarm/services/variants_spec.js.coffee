@@ -23,3 +23,9 @@ describe 'Variants service', ->
 
   it "initialises base price percentage", ->
     expect(Variants.register(variant).basePricePercentage).toEqual 81
+
+  it "clears registered variants", ->
+    Variants.register(variant)
+    expect(Variants.variants[variant.id]).toBe variant
+    Variants.clear()
+    expect(Variants.variants[variant.id]).toBeUndefined()

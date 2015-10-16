@@ -1,6 +1,12 @@
 Openfoodnetwork::Application.routes.draw do
   root :to => 'home#index'
 
+  # Redirects from old URLs avoid server errors and helps search engines
+  get "/enterprises", to: redirect("/")
+  get "/products", to: redirect("/")
+  get "/products/:id", to: redirect("/")
+  get "/t/products/:id", to: redirect("/")
+  get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
@@ -16,8 +22,23 @@ Openfoodnetwork::Application.routes.draw do
     get :order_cycle
   end
 
-  resources :groups
-  resources :producers
+  resources :producers, only: [:index] do
+    collection do
+      get :signup
+    end
+  end
+
+  resources :shops, only: [:index] do
+    collection do
+      get :signup
+    end
+  end
+
+  resources :groups, only: [:index, :show] do
+    collection do
+      get :signup
+    end
+  end
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
@@ -25,18 +46,16 @@ Openfoodnetwork::Application.routes.draw do
 
   resources :enterprises do
     collection do
-      get :suppliers
-      get :distributors
       post :search
       get :check_permalink
     end
 
     member do
-      get :shop_front # new world
-      get :shop # old world
+      get :shop
     end
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
+  get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
   devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
 
@@ -57,7 +76,8 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       member do
-        put :set_sells
+        get :welcome
+        put :register
       end
 
       resources :producer_properties do
@@ -85,6 +105,17 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resources :customers, only: [:index, :update]
+
+    resource :content
+
+    resource :accounts_and_billing_settings, only: [:edit, :update] do
+      collection do
+        get :show_methods
+        get :start_job
+      end
+    end
+
+    resource :account, only: [:show], controller: 'account'
   end
 
   namespace :api do
@@ -98,8 +129,6 @@ Openfoodnetwork::Application.routes.draw do
       get :accessible, on: :collection
     end
   end
-
-  get "about_us", :controller => 'home', :action => "about_us"
 
   namespace :open_food_network do
     resources :cart do
@@ -130,6 +159,7 @@ end
 Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
+  match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/group_buys' => 'admin/reports#group_buys', :as => "group_buys_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]

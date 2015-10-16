@@ -104,6 +104,17 @@ module Spree
       end
     end
 
+    describe "indexing variants by id" do
+      let!(:v1) { create(:variant) }
+      let!(:v2) { create(:variant) }
+      let!(:v3) { create(:variant) }
+
+      it "indexes variants by id" do
+        Variant.where(id: [v1, v2, v3]).indexed.should ==
+          {v1.id => v1, v2.id => v2, v3.id => v3}
+      end
+    end
+
     describe "generating the full name" do
       let(:v) { Variant.new }
 
@@ -139,6 +150,37 @@ module Spree
         v = Variant.new display_name: ")))"
         v.stub(:unit_to_display) { ")))" }
         v.full_name.should == ")))"
+      end
+    end
+
+    describe "generating the product and variant name" do
+      let(:v) { Variant.new }
+      let(:p) { double(:product, name: 'product') }
+
+      before do
+        v.stub(:product) { p }
+        v.stub(:name_to_display) { p.name }
+        v.stub(:options_text) { nil }
+      end
+
+      it "returns the product name only when there's no extra info" do
+        v.product_and_variant_name.should == 'product'
+      end
+
+      it "also shows the name to display when different to the product name" do
+        v.stub(:name_to_display) { 'NTD' }
+        v.product_and_variant_name.should == 'product - NTD'
+      end
+
+      it "shows the options text when present" do
+        v.stub(:options_text) { 'OT' }
+        v.product_and_variant_name.should == 'product (OT)'
+      end
+
+      it "displays all attributes" do
+        v.stub(:name_to_display) { 'NTD' }
+        v.stub(:options_text) { 'OT' }
+        v.product_and_variant_name.should == 'product - NTD (OT)'
       end
     end
 

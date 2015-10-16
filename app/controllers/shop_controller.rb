@@ -12,13 +12,17 @@ class ShopController < BaseController
   def products
     if @products = products_for_shop
 
+      enterprise_fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new current_distributor, current_order_cycle
+
       render status: 200,
              json: ActiveModel::ArraySerializer.new(@products,
                                                     each_serializer: Api::ProductSerializer,
                                                     current_order_cycle: current_order_cycle,
                                                     current_distributor: current_distributor,
                                                     variants: variants_for_shop_by_id,
-                                                    master_variants: master_variants_for_shop_by_id).to_json
+                                                    master_variants: master_variants_for_shop_by_id,
+                                                    enterprise_fee_calculator: enterprise_fee_calculator,
+                                                   ).to_json
 
     else
       render json: "", status: 404
@@ -42,10 +46,12 @@ class ShopController < BaseController
 
   def products_for_shop
     if current_order_cycle
+      scoper = OpenFoodNetwork::ScopeProductToHub.new(current_distributor)
+
       current_order_cycle.
         valid_products_distributed_by(current_distributor).
         order(taxon_order).
-        each { |p| p.scope_to_hub current_distributor }.
+        each { |p| scoper.scope(p) }.
         select { |p| !p.deleted? && p.has_stock_for_distribution?(current_order_cycle, current_distributor) }
     end
   end
@@ -65,9 +71,10 @@ class ShopController < BaseController
     # We use the in_stock? method here instead of the in_stock scope because we need to
     # look up the stock as overridden by VariantOverrides, and the scope method is not affected
     # by them.
+    scoper = OpenFoodNetwork::ScopeVariantToHub.new(current_distributor)
     Spree::Variant.
       for_distribution(current_order_cycle, current_distributor).
-      each { |v| v.scope_to_hub current_distributor }.
+      each { |v| scoper.scope(v) }.
       select(&:in_stock?)
   end
 

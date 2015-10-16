@@ -93,17 +93,9 @@ module WebHelper
     errors.map(&:text)
   end
 
-  def handle_js_confirm(accept=true, debug=false)
+  def handle_js_confirm(accept=true)
     page.evaluate_script "window.confirm = function(msg) { return #{!!accept }; }"
     yield
-  end
-
-  def handle_webdriver_random_failure(retry_times = 3)
-    begin
-      yield
-    rescue Selenium::WebDriver::Error::InvalidSelectorError => e
-      e.message =~ /nsIDOMXPathEvaluator.createNSResolver/ ? (retry if (retry_times -= 1 ) > 0) : raise
-    end
   end
 
   def click_dialog_button(button_content)
@@ -158,4 +150,3 @@ module WebHelper
     wait_until { page.evaluate_script("$.active") == 0 }
   end
 end
-

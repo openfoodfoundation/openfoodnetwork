@@ -1,6 +1,8 @@
 require 'open_food_network/locking'
+require 'open_food_network/permalink_generator'
 
 class EnterpriseGroup < ActiveRecord::Base
+  include PermalinkGenerator
   acts_as_list
 
   has_and_belongs_to_many :enterprises
@@ -81,25 +83,10 @@ class EnterpriseGroup < ActiveRecord::Base
 
   private
 
-  def self.find_available_value(existing, requested)
-    return requested unless existing.include?(requested)
-    used_indices = existing.map do |p|
-      p.slice!(/^#{requested}/)
-      p.match(/^\d+$/).to_s.to_i
-    end
-    options = (1..used_indices.length + 1).to_a - used_indices
-    requested + options.first.to_s
-  end
-
-  def find_available_permalink(requested)
-    existing = self.class.where(id: !id).where("permalink LIKE ?", "#{requested}%").pluck(:permalink)
-    self.class.find_available_value(existing, requested)
-  end
-
   def sanitize_permalink
     if permalink.blank? || permalink_changed?
       requested = permalink.presence || permalink_was.presence || name.presence || 'group'
-      self.permalink = find_available_permalink(requested.parameterize)
+      self.permalink = create_unique_permalink(requested.parameterize)
     end
   end
 end

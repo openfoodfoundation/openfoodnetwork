@@ -21,7 +21,7 @@ module Spree
         op.populate(params).should be_false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
       end
-      
+
       it "empties the order if override is true" do
         op.stub(:distribution_can_supply_products_in_cart).and_return true
         order.stub(:with_lock).and_yield
@@ -38,7 +38,7 @@ module Spree
       it "attempts cart add with max_quantity" do
         op.stub(:distribution_can_supply_products_in_cart).and_return true
         order.should_receive(:empty!)
-        params = {variants: {"1" => {quantity: 1, max_quantity: 2}}} 
+        params = {variants: {"1" => {quantity: 1, max_quantity: 2}}}
         order.stub(:with_lock).and_yield
         op.should_receive(:attempt_cart_add).with("1", 1, 2).and_return true
         op.populate(params, true)
@@ -48,9 +48,9 @@ module Spree
     describe "attempt_cart_add" do
       it "performs additional validations" do
         variant = double(:variant)
-        variant.stub(:scope_to_hub)
         quantity = 123
         Spree::Variant.stub(:find).and_return(variant)
+        VariantOverride.stub(:for).and_return(nil)
 
         op.should_receive(:check_stock_levels).with(variant, quantity).and_return(true)
         op.should_receive(:check_order_cycle_provided_for).with(variant).and_return(true)

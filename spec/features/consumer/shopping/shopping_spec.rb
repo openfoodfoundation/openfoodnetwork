@@ -22,7 +22,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     it "shows a distributor with images" do
       # Given the distributor has a logo
-      distributor.logo = File.new(Rails.root + 'app/assets/images/logo.jpg')
+      distributor.logo = File.new(Rails.root + 'app/assets/images/logo-white.png')
       distributor.save!
 
       # Then we should see the distributor and its logo
@@ -42,7 +42,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     end
 
     describe "selecting an order cycle" do
-      let(:exchange1) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
 
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
@@ -51,7 +51,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "with multiple order cycles" do
-        let(:exchange2) { Exchange.find(oc2.exchanges.to_enterprises(distributor).outgoing.first.id) }
+        let(:exchange2) { oc2.exchanges.to_enterprises(distributor).outgoing.first }
+
         before do
           exchange1.update_attribute :pickup_time, "frogs"
           exchange2.update_attribute :pickup_time, "turtles"
@@ -82,6 +83,59 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           open_product_modal product
           modal_should_be_open_for product
+        end
+
+        describe "changing order cycle" do
+          it "shows the correct fees after selecting and changing an order cycle" do
+            enterprise_fee = create(:enterprise_fee, amount: 1001)
+            exchange2.enterprise_fees << enterprise_fee
+            exchange2.variants << variant
+            exchange1.variants << variant
+
+            # -- Selecting an order cycle
+            visit shop_path
+            select "turtles", from: "order_cycle_id"
+            page.should have_content "$1020.99"
+
+            # -- Cart shows correct price
+            fill_in "variants[#{variant.id}]", with: 1
+            show_cart
+            within("li.cart") { page.should have_content "$1020.99" }
+
+            # -- Changing order cycle
+            select "frogs", from: "order_cycle_id"
+            page.should have_content "$19.99"
+
+            # -- Cart should be cleared
+            # ng-animate means that the old product row is likely to be present, so we explicitly
+            # fill in the quantity in the incoming row
+            page.should_not have_selector "tr.product-cart"
+            within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
+            within("li.cart") { page.should have_content "$19.99" }
+          end
+
+          describe "declining to clear the cart" do
+            before do
+              exchange2.variants << variant
+              exchange1.variants << variant
+
+              visit shop_path
+              select "turtles", from: "order_cycle_id"
+              fill_in "variants[#{variant.id}]", with: 1
+            end
+
+            it "leaves the cart untouched when the user declines" do
+              handle_js_confirm(false) do
+                select "frogs", from: "order_cycle_id"
+                show_cart
+                page.should have_selector "tr.product-cart"
+                page.should have_selector 'li.cart', text: '1 item'
+
+                # The order cycle choice should not have changed
+                page.should have_select 'order_cycle_id', selected: 'turtles'
+              end
+            end
+          end
         end
       end
     end
@@ -134,15 +188,20 @@ feature "As a consumer I want to shop with a distributor", js: true do
         end
 
         it "should save group buy data to the cart" do
+          # -- Quantity
           fill_in "variants[#{variant.id}]", with: 6
-          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           page.should have_in_cart product.name
+          wait_until { !cart_dirty }
 
+          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+          li.quantity.should == 6
+
+          # -- Max quantity
+          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
           wait_until { !cart_dirty }
 
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 7
-          li.quantity.should == 6
         end
       end
     end

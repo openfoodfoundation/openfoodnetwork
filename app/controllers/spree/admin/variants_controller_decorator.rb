@@ -14,9 +14,10 @@ Spree::Admin::VariantsController.class_eval do
     if params[:distributor_id].present?
       distributor = Enterprise.find params[:distributor_id]
       @variants = @variants.in_distributor(distributor)
+      scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
       # Perform scoping after all filtering is done.
       # Filtering could be a problem on scoped variants.
-      @variants.each { |v| v.scope_to_hub(distributor) }
+      @variants.each { |v| scoper.scope(v) }
     end
   end
 

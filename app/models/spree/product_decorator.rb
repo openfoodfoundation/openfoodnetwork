@@ -1,8 +1,7 @@
-require 'open_food_network/scope_product_to_hub'
+require 'open_food_network/permalink_generator'
 
 Spree::Product.class_eval do
-  include OpenFoodNetwork::ProductScopableToHub
-
+  include PermalinkGenerator
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
@@ -22,6 +21,8 @@ Spree::Product.class_eval do
   attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
   attr_accessible :inherits_properties, :sku
+
+  before_validation :sanitize_permalink
 
   # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
@@ -241,6 +242,13 @@ Spree::Product.class_eval do
         self.errors.add(att, error)
       end
       raise
+    end
+  end
+
+  def sanitize_permalink
+    if permalink.blank? || permalink_changed?
+      requested = permalink.presence || permalink_was.presence || name.presence || 'product'
+      self.permalink = create_unique_permalink(requested.parameterize)
     end
   end
 end

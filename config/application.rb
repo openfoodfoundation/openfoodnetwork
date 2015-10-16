@@ -82,7 +82,7 @@ module Openfoodnetwork
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.1'
+    config.assets.version = '1.2'
 
     config.sass.load_paths += [
       "#{Gem.loaded_specs['foundation-rails'].full_gem_path}/vendor/assets/stylesheets/foundation/components",
@@ -95,7 +95,7 @@ module Openfoodnetwork
     config.assets.initialize_on_precompile = true
     config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js', 'iehack.js']
     config.assets.precompile += ['admin/all.css', 'admin/restore_spree_from_cms.css', 'admin/*.js', 'admin/**/*.js']
-    config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all.js']
+    config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all_split2.css', 'darkswarm/all.js']
     config.assets.precompile += ['mail/all.css']
     config.assets.precompile += ['comfortable_mexican_sofa/*']
     config.assets.precompile += ['search/all.css', 'search/*.js']

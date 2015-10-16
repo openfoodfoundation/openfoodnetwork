@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -20,7 +20,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
       .error (response, status)=>
-        # TODO what shall we do here?
+        @scheduleRetry()
 
     data: =>
       variants = {}
@@ -30,6 +30,12 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
           max_quantity: li.max_quantity
       {variants: variants}
 
+    scheduleRetry: =>
+      console.log "Error updating cart: #{status}. Retrying in 3 seconds..."
+      $timeout =>
+        console.log "Retrying cart update"
+        @orderChanged()
+      , 3000
 
     saved: =>
       @dirty = false
@@ -62,6 +68,10 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http)->
     register_variant: (variant)=>
       exists = @line_items.some (li)-> li.variant == variant
       @create_line_item(variant) unless exists
+
+    clear: ->
+      @line_items = []
+      storage.clearAll() # One day this will have to be moar GRANULAR
 
     create_line_item: (variant)->
       variant.extended_name = @extendedVariantName(variant)

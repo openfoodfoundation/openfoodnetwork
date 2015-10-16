@@ -32,6 +32,15 @@ class EnterpriseRelationship < ActiveRecord::Base
     relationships = EnterpriseRelationship.includes(:child, :parent)
     relatives = {}
 
+    Enterprise.is_primary_producer.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:producers] << enterprise_id
+    end
+    Enterprise.is_distributor.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:distributors] << enterprise_id
+    end
+
     relationships.each do |r|
       relatives[r.parent_id] ||= {distributors: Set.new, producers: Set.new}
       relatives[r.child_id]  ||= {distributors: Set.new, producers: Set.new}

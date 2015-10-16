@@ -40,18 +40,18 @@ module Spree
 
       describe "tax category" do
         context "when a tax category is required" do
-          before { Spree::Config.products_require_tax_category = true }
-
           it "is invalid when a tax category is not provided" do
-            build(:product, tax_category_id: nil).should_not be_valid
+            with_products_require_tax_category(true) do
+              build(:product, tax_category_id: nil).should_not be_valid
+            end
           end
         end
 
         context "when a tax category is not required" do
-          before { Spree::Config.products_require_tax_category = false }
-
           it "is valid when a tax category is not provided" do
-            build(:product, tax_category_id: nil).should be_valid
+            with_products_require_tax_category(false) do
+              build(:product, tax_category_id: nil).should be_valid
+            end
           end
         end
       end
@@ -205,7 +205,7 @@ module Spree
           Product.in_distributor(d1).should == [p1]
         end
 
-        it "doesn't show products listed in the incoming exchange only", :future => true do
+        it "doesn't show products listed in the incoming exchange only" do
           s = create(:supplier_enterprise)
           c = create(:distributor_enterprise)
           d = create(:distributor_enterprise)

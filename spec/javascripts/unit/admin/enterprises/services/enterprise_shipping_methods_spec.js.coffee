@@ -1,19 +1,18 @@
 describe "EnterpriseShippingMethods service", ->
-  Enterprise = null
+  enterprise = null
   ShippingMethods = null
   EnterpriseShippingMethods = null
 
   beforeEach ->
-    Enterprise =
-      enterprise:
-        shipping_method_ids: [ 1, 3 ]
+    enterprise =
+      shipping_method_ids: [ 1, 3 ]
     ShippingMethods =
         shippingMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
 
     module 'admin.enterprises'
     module ($provide) ->
       $provide.value 'ShippingMethods', ShippingMethods
-      $provide.value 'Enterprise', Enterprise
+      $provide.value 'enterprise', enterprise
       null
 
     inject (_EnterpriseShippingMethods_) ->

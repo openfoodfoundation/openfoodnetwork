@@ -1,0 +1,60 @@
+%div{ ng: { app: 'admin.enterprises', controller: 'enterprisesCtrl' } }
+  .row{ 'ng-hide' => '!loaded()' }
+    .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
+      .four.columns.alpha
+        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Search By Name' }
+      .six.columns &nbsp;
+      -#   %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
+      -#     %span{ :class => 'icon-check' } &nbsp; Actions
+      -#     %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+      -#     %div.menu{ 'ng-show' => "expanded" }
+      -#       %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredEnterprises)", 'ofn-close-on-click' => true }
+      -#         %span{ :class => 'three columns omega' } {{action.name }}
+      .three.columns &nbsp;
+      .three.columns.omega
+        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
+          %span{ :class => 'icon-reorder' } &nbsp; Columns
+          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+          %div.menu{ 'ng-show' => "expanded" }
+            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
+              %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
+              %span{ :class => 'two columns omega' } {{column.name }}
+  .row{ 'ng-if' => '!loaded()' }
+    .sixteen.columns.alpha#loading
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %h1 LOADING ENTERPRISES
+  .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredEnterprises.length == 0'}
+    %h1#no_results No enterprises found.
+
+
+  .row{ ng: { show: "loaded() && filteredEnterprises.length > 0" }, bindonce: true }
+    %table.index#enterprises
+      %col.name{ width: "28%", ng: { show: 'columns.name.visible' } }
+      %col.producer{ width: "18%", ng: { show: 'columns.producer.visible' }}
+      %col.package{ width: "18%", ng: { show: 'columns.package.visible' }}
+      %col.status{ width: "18%", ng: { show: 'columns.status.visible' }}
+      %col.manage{ width: "18%", ng: { show: 'columns.manage.visible' }}
+      %thead
+        %tr{ ng: { controller: "ColumnsCtrl" } }
+          %th.name{ ng: { show: 'columns.name.visible' } }
+            Name
+          %th.producer{ ng: { show: 'columns.producer.visible' } } Producer?
+          %th.package{ ng: { show: 'columns.package.visible' } } Package
+          %th.status{ ng: { show: 'columns.status.visible' } } Status
+          %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
+      %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", controller: 'EnterpriseIndexRowCtrl' } }
+        %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
+          %td.name{ ng: { show: 'columns.name.visible' } }
+            %span{ bo: { bind: "enterprise.name" } }
+          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: producerError}" }, name: "producer" }
+            %h5{ ng: { bind: "producer" } }
+          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: packageError}" }, name: "package" }
+            %h5{ ng: { bind: "package" } }
+          %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
+            %i.icon-status{ bo: { class: "status" } }
+          %td.manage{ ng: { show: 'columns.manage.visible' } }
+            %a.button.fullwidth{ bo: { href: 'enterprise.edit_path' } }
+              Manage
+              %i.icon-arrow-right
+
+        %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', package: 'enterprise_package', status: 'enterprise_status'}" }

@@ -1,11 +1,11 @@
 angular.module("admin.enterprises")
-  .factory "EnterprisePaymentMethods", (Enterprise, PaymentMethods) ->
+  .factory "EnterprisePaymentMethods", (enterprise, PaymentMethods) ->
     new class EnterprisePaymentMethods
       paymentMethods: PaymentMethods.paymentMethods
 
       constructor: ->
         for payment_method in @paymentMethods
-          payment_method.selected = payment_method.id in Enterprise.enterprise.payment_method_ids
+          payment_method.selected = payment_method.id in enterprise.payment_method_ids
 
       displayColor: ->
         if @paymentMethods.length > 0 && @selectedCount() > 0

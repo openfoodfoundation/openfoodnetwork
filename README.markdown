@@ -12,10 +12,15 @@ We're part of global movement - get involved!
 * Find out more and join in the conversation - http://openfoodnetwork.org
 
 
+## Getting started
+
+Below are instructions for setting up a development environment for Open Food Network. If you're interested in provisioning a server, see [the project's Ansible playbooks](https://github.com/openfoodfoundation/ofn_deployment).
+
+
 ## Dependencies
 
 * Rails 3.2.x
-* Ruby >= 1.9.3
+* Ruby 1.9.3
 * PostgreSQL database
 * PhantomJS (for testing)
 * See Gemfile for a list of gems required
@@ -32,19 +37,20 @@ You can view the code at:
 
 You can download the source with the command:
 
-    git clone git@github.com:openfoodfoundation/openfoodnetwork
+    git clone https://github.com/openfoodfoundation/openfoodnetwork.git
 
 
 ## Get it running
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html .
 
-First, check your dependencies: Ensure that you have Ruby 1.9.x installed:
+First, check your dependencies: Ensure that you have Ruby >= 1.9.3 installed:
 
     ruby --version
 
 Install the project's gem dependencies:
 
+    cd openfoodnetwork
     bundle install
 
 Configure the site:

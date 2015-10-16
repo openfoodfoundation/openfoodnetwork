@@ -3,16 +3,16 @@
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
-    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
+    %title= content_for?(:title) ? "#{yield(:title)} - Open Food Network".html_safe : 'Welcome to Open Food Network'
     - if Rails.env.production?
       = favicon_link_tag
     - else
       = favicon_link_tag "/favicon-staging.ico"
-    %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
+    %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
 
     = yield :scripts
-    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places&sensor=false"}
-    = stylesheet_link_tag "darkswarm/all"
+    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry&sensor=false"}
+    = split_stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
 
 
@@ -34,7 +34,7 @@
 
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render partial: "shared/menu/menu"
+        = render "shared/menu/menu"
 
         %section{ role: "main" }
           = yield

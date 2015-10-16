@@ -7,6 +7,8 @@ Spree.user_class.class_eval do
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
+  has_many :account_invoices
+  has_many :billable_periods, foreign_key: :owner_id, inverse_of: :owner
   has_one :cart
   has_many :customers
 
@@ -16,7 +18,6 @@ Spree.user_class.class_eval do
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
-
 
   def known_users
     if admin?
@@ -47,7 +48,6 @@ Spree.user_class.class_eval do
   def can_own_more_enterprises?
     owned_enterprises(:reload).size < enterprise_limit
   end
-
 
   private
 

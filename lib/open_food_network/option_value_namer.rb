@@ -15,6 +15,17 @@ module OpenFoodNetwork
       name_fields.join ' '
     end
 
+    def value
+      value, _ = option_value_value_unit
+      value
+    end
+
+    def unit
+      _, unit = option_value_value_unit
+      unit
+    end
+
+
     private
 
     def value_scaled?

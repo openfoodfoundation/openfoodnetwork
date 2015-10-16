@@ -7,17 +7,35 @@ module OpenFoodNetwork
       @order_cycle = order_cycle
     end
 
+    def indexed_fees_for(variant)
+      load_enterprise_fees unless @indexed_enterprise_fees
+
+      indexed_enterprise_fees_for(variant).sum do |enterprise_fee|
+        calculate_fee_for variant, enterprise_fee
+      end
+    end
+
+    def indexed_fees_by_type_for(variant)
+      load_enterprise_fees unless @indexed_enterprise_fees
+
+      indexed_enterprise_fees_for(variant).inject({}) do |fees, enterprise_fee|
+        fees[enterprise_fee.fee_type.to_sym] ||= 0
+        fees[enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, enterprise_fee
+        fees
+      end.select { |fee_type, amount| amount > 0 }
+    end
+
 
     def fees_for(variant)
       per_item_enterprise_fee_applicators_for(variant).sum do |applicator|
-        calculate_fee_for variant, applicator
+        calculate_fee_for variant, applicator.enterprise_fee
       end
     end
 
     def fees_by_type_for(variant)
       per_item_enterprise_fee_applicators_for(variant).inject({}) do |fees, applicator|
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
-        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator
+        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator.enterprise_fee
         fees
       end.select { |fee_type, amount| amount > 0 }
     end
@@ -45,12 +63,50 @@ module OpenFoodNetwork
 
     private
 
-    def calculate_fee_for(variant, applicator)
+    def load_enterprise_fees
+      @indexed_enterprise_fees = {}
+
+      exchange_fees = per_item_enterprise_fees_with_exchange_details
+      load_exchange_fees exchange_fees
+      load_coordinator_fees
+    end
+
+    def per_item_enterprise_fees_with_exchange_details
+      EnterpriseFee.
+        per_item.
+        joins(:exchanges => :exchange_variants).
+        where('exchanges.order_cycle_id = ?', @order_cycle.id).
+        merge(Exchange.supplying_to(@distributor)).
+        select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')
+    end
+
+    def load_exchange_fees(exchange_fees)
+      exchange_fees.each do |enterprise_fee|
+        @indexed_enterprise_fees[enterprise_fee.variant_id.to_i] ||= []
+        @indexed_enterprise_fees[enterprise_fee.variant_id.to_i] << enterprise_fee
+      end
+    end
+
+    def load_coordinator_fees
+      @order_cycle.coordinator_fees.per_item.each do |enterprise_fee|
+        @order_cycle.variants.map(&:id).each do |variant_id|
+          @indexed_enterprise_fees[variant_id] ||= []
+          @indexed_enterprise_fees[variant_id] << enterprise_fee
+        end
+      end
+    end
+
+    def indexed_enterprise_fees_for(variant)
+      @indexed_enterprise_fees[variant.id] || []
+    end
+
+
+    def calculate_fee_for(variant, enterprise_fee)
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
       # Amount is faked, this is a method on LineItem
       line_item = OpenStruct.new variant: variant, quantity: 1, amount: variant.price
-      applicator.enterprise_fee.compute_amount(line_item)
+      enterprise_fee.compute_amount(line_item)
     end
 
     def per_item_enterprise_fee_applicators_for(variant)

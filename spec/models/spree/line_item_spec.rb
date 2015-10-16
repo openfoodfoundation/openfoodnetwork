@@ -63,5 +63,20 @@ module Spree
         li.amount_with_adjustments.should == 122.22
       end
     end
+
+    describe "checking if a line item has tax included" do
+      let(:li_no_tax)   { create(:line_item) }
+      let(:li_tax)      { create(:line_item) }
+      let(:tax_rate)    { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new) }
+      let!(:adjustment) { create(:adjustment, adjustable: li_tax, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
+
+      it "returns true when it does" do
+        li_tax.should have_tax
+      end
+
+      it "returns false otherwise" do
+        li_no_tax.should_not have_tax
+      end
+    end
   end
 end

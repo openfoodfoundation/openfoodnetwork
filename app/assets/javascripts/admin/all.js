@@ -12,13 +12,17 @@
 //= require angular
 //= require angular-resource
 //= require angular-animate
+//= require angular-sanitize
 //= require admin/spree_core
 //= require admin/spree_auth
 //= require admin/spree_promo
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
+//= require angular-rails-templates
+//= require_tree ../templates/admin
 //= require ./admin
+//= require ./accounts_and_billing_settings/accounts_and_billing_settings
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises
@@ -33,5 +37,6 @@
 //= require ./users/users
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
+//= require ../shared/bindonce.min.js
 
 //= require_tree .

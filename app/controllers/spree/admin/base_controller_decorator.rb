@@ -62,4 +62,8 @@ Spree::Admin::BaseController.class_eval do
   def html_request?
     request.format.html?
   end
+
+  def json_request?
+    request.format.json?
+  end
 end

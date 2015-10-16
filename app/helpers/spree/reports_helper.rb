@@ -18,6 +18,11 @@ module Spree
       orders.map { |o| o.shipping_method.andand.name  }.uniq
     end
 
+    def xero_report_types
+      [['Summary', 'summary'],
+       ['Detailed', 'detailed']]
+    end
+
     def currency_symbol
       Spree::Money.currency_symbol
     end

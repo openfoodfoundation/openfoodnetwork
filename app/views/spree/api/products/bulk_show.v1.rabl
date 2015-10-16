@@ -1,5 +1,11 @@
 object @product
-attributes :id, :name, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand
+
+# TODO: This is used by bulk product edit when a product is cloned.
+# But the list of products is serialized by Api::Admin::ProductSerializer.
+# This should probably be unified.
+
+attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand, :inherits_properties
+attributes :on_hand, :price, :available_on, :permalink_live, :tax_category_id
 
 # Infinity is not a valid JSON object, but Rails encodes it anyway
 node( :taxon_ids ) { |p| p.taxons.map{ |t| t.id }.join(",") }
@@ -8,6 +14,8 @@ node( :price ) { |p| p.price.nil? ? '0.0' : p.price }
 
 node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }
 node( :permalink_live ) { |p| p.permalink }
+node( :producer_id ) { |p| p.supplier_id }
+node( :category_id ) { |p| p.primary_taxon_id }
 node( :supplier ) do |p|
   partial 'api/enterprises/bulk_show', :object => p.supplier
 end

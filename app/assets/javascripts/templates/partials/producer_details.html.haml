@@ -1,0 +1,23 @@
+-# Show places to buy products from this producer, when there are any
+-# Do not show this for producer shops selling only their own produce,
+-# Since a shopping link will already have been displayed in hub_details.html.haml
+.row.active_table_row.pad-top{bindonce: true, "ng-if" => "enterprise.is_primary_producer && enterprise.hubs.length > 0 && !(enterprise.hubs.length == 1 && enterprise.hubs[0] == enterprise)"}
+  .columns.small-12
+    .row
+      .columns.small-12.fat
+        %div{"bo-if" => "enterprise.name"}
+          %label
+            Shop for
+            %span.turquoise{"bo-text" => "enterprise.name"}
+            products at:
+        %div.show-for-medium-up{"bo-if" => "!enterprise.name"}
+          &nbsp;
+    .row.cta-container
+      .columns.small-12
+        %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs | filter:{id: '!'+enterprise.id} | orderBy:'-active'",
+        "bo-href" => "hub.path", "ofn-empties-cart" => "hub",
+        "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
+          %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
+          %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
+          .hub-name{"bo-text" => "hub.name"}
+          .button-address{"bo-bind" => "[hub.address.city, hub.address.state_name] | printArray"}

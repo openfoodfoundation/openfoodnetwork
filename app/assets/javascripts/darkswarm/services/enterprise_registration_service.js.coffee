@@ -26,7 +26,11 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         RegistrationService.select('about')
       ).error((data) =>
         Loading.clear()
-        alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+        if data?.errors?
+          errors = ("#{k.capitalize()} #{v[0]}" for k, v of data.errors when v.length > 0)
+          alert "Failed to create your enterprise.\n" + errors.join('\n')
+        else
+          alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
       )
       # RegistrationService.select('about')
 

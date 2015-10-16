@@ -21,7 +21,7 @@ feature %q{
     create :check_payment, order: @order, amount: @order.total
   end
 
-  scenario "creating an order with distributor and order cycle", js: true do
+  scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
     order_cycle = create(:order_cycle)
     distributor = order_cycle.distributors.first
     product = order_cycle.products.first
@@ -50,11 +50,12 @@ feature %q{
   scenario "can add a product to an existing order", js: true do
     login_to_admin_section
     visit '/admin/orders'
-    page.find('td.actions a.icon-edit').click
 
-    targetted_select2_search @product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
+    click_edit
 
-    click_icon :plus
+    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+
+    click_link 'Add'
 
     page.should have_selector 'td', text: @product.name
     @order.line_items(true).map(&:product).should include @product
@@ -152,5 +153,22 @@ feature %q{
       expect(o.order_cycle).to eq order_cycle1
     end
 
+  end
+
+  # Working around intermittent click failing
+  # Possible causes of failure:
+  #  - the link moves
+  #  - the missing content (font icon only)
+  #  - the screen is not big enough
+  # However, some operations before the click or a second click on failure work.
+  #
+  # A lot of people had similar problems:
+  # https://github.com/teampoltergeist/poltergeist/issues/520
+  # https://github.com/thoughtbot/capybara-webkit/issues/494
+  def click_edit
+    click_result = click_icon :edit
+    unless click_result['status'] == 'success'
+      click_icon :edit
+    end
   end
 end

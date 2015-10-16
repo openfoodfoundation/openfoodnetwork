@@ -2,6 +2,9 @@
   = render 'date_range_form', f: f
 
   .row
+    .four.columns.alpha= label_tag :report_type, "Report Type: "
+    .four.columns.omega= select_tag :report_type, options_for_select(xero_report_types, params[:report_type]), {include_blank: false, class: "select2 fullwidth"}
+  .row
     .four.columns.alpha= label_tag nil, "Hub: "
     .four.columns.omega= f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
   .row

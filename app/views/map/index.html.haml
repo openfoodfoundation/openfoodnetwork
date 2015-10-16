@@ -1,8 +1,11 @@
-= inject_enterprises 
+- content_for(:title) do
+  Map
+
+= inject_enterprises
 
 .map-container{"fill-vertical" => true}
   %map{"ng-controller" => "MapCtrl"}
     %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
       %map-search
-      %markers{models: "OfnMap.enterprises", fit: "true", 
-      coords: "'self'", icon: "'icon'", click: "'reveal'"} 
+      %markers{models: "OfnMap.enterprises", fit: "true",
+      coords: "'self'", icon: "'icon'", click: "'reveal'"}
