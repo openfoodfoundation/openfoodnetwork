@@ -1,0 +1,10 @@
+%table.social.white-bg{:width => "100%"}
+  %tr
+    %td
+      %h3
+        Hi #{@order.bill_address.firstname},
+      %h4
+        Please find attached an invoice for your recent order from
+        %strong= "#{@order.distributor.name}"
+
+= render 'signoff'

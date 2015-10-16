@@ -204,6 +204,7 @@ Spree::Core::Engine.routes.prepend do
     end
 
     resources :orders do
+      put :invoice, on: :member
       get :managed, on: :collection
     end
   end
