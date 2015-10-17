@@ -1,4 +1,3 @@
-
 class ProducerMailer < Spree::BaseMailer
 
   def order_cycle_report(producer, order_cycle)
@@ -9,17 +8,23 @@ class ProducerMailer < Spree::BaseMailer
     @receival_time = @order_cycle.receival_time_for @producer
     @receival_instructions = @order_cycle.receival_instructions_for @producer
 
-    subject = "[#{Spree::Config.site_name}] Order cycle report"
+    subject = "[#{Spree::Config.site_name}] Order cycle report for #{producer.name}"
 
-    mail(to: @producer.email,
-         from: from_address,
-         subject: subject,
-         reply_to: @coordinator.email,
-         cc: @coordinator.email)
+    if has_orders? order_cycle, producer
+      mail(to: @producer.email,
+           from: from_address,
+           subject: subject,
+           reply_to: @coordinator.email,
+           cc: @coordinator.email)
+    end
   end
 
 
   private
+
+  def has_orders?(order_cycle, producer)
+    line_items_from(order_cycle, producer).any?
+  end
 
   def aggregated_line_items_from(order_cycle, producer)
     aggregate_line_items line_items_from(order_cycle, producer)

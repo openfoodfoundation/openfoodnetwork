@@ -2,10 +2,11 @@ require 'spec_helper'
 require 'yaml'
 
 describe ProducerMailer do
-  let(:s1) { create(:supplier_enterprise, address: create(:address)) }
-  let(:s2) { create(:supplier_enterprise, address: create(:address)) }
-  let(:d1) { create(:distributor_enterprise, address: create(:address)) }
-  let(:d2) { create(:distributor_enterprise, address: create(:address)) }
+  let(:s1) { create(:supplier_enterprise) }
+  let(:s2) { create(:supplier_enterprise) }
+  let(:s3) { create(:supplier_enterprise) }
+  let(:d1) { create(:distributor_enterprise) }
+  let(:d2) { create(:distributor_enterprise) }
   let(:p1) { create(:product, price: 12.34, supplier: s1) }
   let(:p2) { create(:product, price: 23.45, supplier: s2) }
   let(:p3) { create(:product, price: 34.56, supplier: s1) }
@@ -64,5 +65,11 @@ describe ProducerMailer do
 
   it "does not include incomplete orders" do
     mail.body.should_not include p3.name
+  end
+
+  it "sends no mail when the producer has no orders" do
+    expect do
+      ProducerMailer.order_cycle_report(s3, order_cycle).deliver
+    end.to change(ActionMailer::Base.deliveries, :count).by(0)
   end
 end
