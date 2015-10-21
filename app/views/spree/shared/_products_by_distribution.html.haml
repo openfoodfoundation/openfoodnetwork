@@ -6,10 +6,11 @@
   - else
     #products-local
       %h2
-        Products
-        = "in #{current_order_cycle.name}" if current_order_cycle
-        = "at #{current_distributor.name}" if current_distributor
+        = t :products
+        = t :products_in, oc: current_order_cycle.name if current_order_cycle
+        = t :products_at, distributor: current_distributor.name if current_distributor
       = render 'spree/shared/products', :products => @products_local, :taxon => @taxon
     #products-remote
-      %h2 Products found elsewhere
+      %h2
+        = t :products_elsewhere
       = render 'spree/shared/products', :products => @products_remote, :taxon => @taxon

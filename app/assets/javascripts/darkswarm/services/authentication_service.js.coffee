@@ -28,6 +28,6 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       if location.pathname in ["/", "/checkout"]
         Navigation.navigate "/"
       else
-        Loading.message = "Taking you back to the home page"
+        Loading.message = t 'going_back_to_home_page'
         location.hash = ""
         location.pathname = "/"

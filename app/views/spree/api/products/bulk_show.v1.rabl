@@ -9,7 +9,7 @@ attributes :on_hand, :price, :available_on, :permalink_live, :tax_category_id
 
 # Infinity is not a valid JSON object, but Rails encodes it anyway
 node( :taxon_ids ) { |p| p.taxons.map{ |t| t.id }.join(",") }
-node( :on_hand ) { |p| p.on_hand.nil? ? 0 : p.on_hand.to_f.finite? ? p.on_hand : "On demand" }
+node( :on_hand ) { |p| p.on_hand.nil? ? 0 : p.on_hand.to_f.finite? ? p.on_hand : t(:on_demand) }
 node( :price ) { |p| p.price.nil? ? '0.0' : p.price }
 
 node( :available_on ) { |p| p.available_on.blank? ? "" : p.available_on.strftime("%F %T") }

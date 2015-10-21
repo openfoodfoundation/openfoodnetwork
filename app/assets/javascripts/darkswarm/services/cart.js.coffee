@@ -44,7 +44,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
     unsaved: =>
       @dirty = true
       $(window).bind "beforeunload", ->
-        "Your order hasn't been saved yet. Give us a few seconds to finish!"
+        t 'order_not_saved_yet'
 
     line_items_present: =>
       @line_items.filter (li)->

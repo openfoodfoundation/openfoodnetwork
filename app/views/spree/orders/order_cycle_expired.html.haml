@@ -1,17 +1,17 @@
-%h2 Orders have closed for this order cycle
+%h2
+  = t :orders_oc_expired_headline
 
 %p
-  = succeed "." do
-    Sorry, orders for this order cycle closed
-    = distance_of_time_in_words_to_now @order_cycle.orders_close_at
-    ago! Please contact your hub directly to see if they can accept late orders
-
-    - if active_order_cycle_for_distributor? current_distributor
-      %strong= link_to 'or see the other order cycles available at this hub', spree.clear_orders_path
+  - if active_order_cycle_for_distributor? current_distributor
+    = t :orders_oc_expired_text_others_html, time: distance_of_time_in_words_to_now(@order_cycle.orders_close_at), link: link_to t(:orders_oc_expired_text_link), spree.clear_orders_path
+  - else
+    = t :orders_oc_expired_text, time: distance_of_time_in_words_to_now(@order_cycle.orders_close_at)
 
 %p
-  %strong Email:
+  %strong
+    = t :orders_oc_expired_email
   = current_distributor.email
   %br/
-  %strong Phone:
+  %strong
+    = t :orders_oc_expired_phone
   = current_distributor.phone

@@ -7,7 +7,7 @@
           %i.ofn-i_009-close
         %label.label.round.success.right
           %i.ofn-i_051-check-big
-      Your details
+      = t :checkout_details
 
     %accordion-group{"is-open" => "accordion.details",
       "ng-class" => "{valid: details.$valid, open: accordion.details}"}
@@ -15,17 +15,18 @@
 
       .row
         .small-6.columns
-          = validated_input "First Name", "order.bill_address.firstname"
+          = validated_input t(:first_name), "order.bill_address.firstname"
         .small-6.columns
-          = validated_input "Last Name", "order.bill_address.lastname"
+          = validated_input t(:last_name), "order.bill_address.lastname"
 
       .row
         .small-6.columns
-          = validated_input 'Email', 'order.email', type: :email, "ofn-focus" => "accordion['details']"
+          = validated_input t(:email), 'order.email', type: :email, "ofn-focus" => "accordion['details']"
 
         .small-6.columns
-          = validated_input 'Phone', 'order.bill_address.phone'
+          = validated_input t(:phone), 'order.bill_address.phone'
 
       .row
         .small-12.columns.text-right
-          %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"} Next
+          %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "next($event)"}
+            = t :next

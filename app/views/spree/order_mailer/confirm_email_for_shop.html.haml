@@ -5,10 +5,9 @@
         %tr
           %td
             %h3 
-              Hi #{@order.distributor.contact},
+              = t :email_confirm_shop_greeting, name: @order.distributor.contact
             %h4
-              Well done! You have a new order for 
-              %strong= "#{@order.distributor.name}!"
+              = t :email_confirm_shop_order_html, distributor: @order.distributor.name
       %table.column{:align => "left"}
         %tr
           %td{:align => "right"}
@@ -17,8 +16,7 @@
 
 %p &nbsp;
 %h4
-  Order confirmation 
-  %strong ##{@order.number}
+  = t :email_confirm_shop_number_html, number: @order.number
 %h5
   %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
   = " <#{@order.email}>" if @order.email

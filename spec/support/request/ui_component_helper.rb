@@ -9,7 +9,7 @@ module UIComponentHelper
   end
 
   def click_login_button
-    click_button "Log in"
+    click_button "Login"
   end
 
   def click_signup_button
@@ -28,7 +28,7 @@ module UIComponentHelper
   end
 
   def open_login_modal
-    find("a", text: "Log in").click
+    find("a", text: "Login").click
   end
 
   def open_off_canvas

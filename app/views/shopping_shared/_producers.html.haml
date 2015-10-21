@@ -2,7 +2,8 @@
   .panel
     .row
       .small-12.columns
-        %h5 {{CurrentHub.hub.name}}'s producers:
+        %h5
+          = t :shopping_producers_of_hub, hub: '{{CurrentHub.hub.name}}'
         %ul.small-block-grid-2.large-block-grid-4
           %li{"ng-repeat" => "enterprise in CurrentHub.hub.producers"}
             %enterprise-modal 

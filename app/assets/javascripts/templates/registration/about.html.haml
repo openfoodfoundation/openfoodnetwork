@@ -3,9 +3,9 @@
   .row
     .small-12.columns
       %header
-        %h2 Nice one!
+        %h2 {{'enterprise_about_headline' | t}}
         %h5
-          Now let's flesh out the details about
+          {{'enterprise_about_message' | t}}
           %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
             {{ enterprise.name }}
 
@@ -13,45 +13,45 @@
     .row
       .small-12.columns
         .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }
-          %h6 Success! {{ enterprise.name }} added to the Open Food Network 
-          %span If you exit this wizard at any stage, you need to click the confirmation link in the email you have received. This will take you to your admin interface where you can continue setting up your profile.
+          %h6{ "ng-bind" => "'enterprise_success' | t:{enterprise: enterprise.name}" }
+          %span {{'enterprise_registration_exit_message' | t}}
           %a.close{ ng: { click: "close()" } } &times;
 
       .small-12.large-8.columns
         .row
           .small-12.columns
             .field
-              %label{ for: 'enterprise_description' } Short Description:
-              %input.chunky{ id: 'enterprise_description', placeholder: "A short sentence describing your enterprise", ng: { model: 'enterprise.description' } }
+              %label{ for: 'enterprise_description' } {{'enterprise_description' | t}}:
+              %input.chunky{ id: 'enterprise_description', placeholder: "{{'enterprise_description_placeholder' | t}}", ng: { model: 'enterprise.description' } }
         .row
           .small-12.columns
             .field
-              %label{ for: 'enterprise_long_desc' } Long Description:
-              %textarea.chunky{ id: 'enterprise_long_desc',  rows: 6, placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words.", ng: { model: 'enterprise.long_description' } }
-              %small {{ enterprise.long_description.length }} characters / up to 600 recommended
+              %label{ for: 'enterprise_long_desc' } {{'enterprise_long_desc' | t}}:
+              %textarea.chunky{ id: 'enterprise_long_desc',  rows: 6, placeholder: "{{'enterprise_long_desc_placeholder' | t}}", ng: { model: 'enterprise.long_description' } }
+                %small{ "ng-bind" => "'enterprise_long_desc_length' | t:{num: enterprise.long_description.length}" }
       .small-12.large-4.columns
         .row
           .small-12.columns
             .field
-              %label{ for: 'enterprise_abn' } ABN:
-              %input.chunky{ id: 'enterprise_abn', placeholder: "eg. 99 123 456 789", ng: { model: 'enterprise.abn' } }
+              %label{ for: 'enterprise_abn' } {{'enterprise_abn' | t}}:
+              %input.chunky{ id: 'enterprise_abn', placeholder: "{{'enterprise_abn_placeholder' | t}}", ng: { model: 'enterprise.abn' } }
         .row
           .small-12.columns
             .field
-              %label{ for: 'enterprise_acn' } ACN:
-              %input.chunky{ id: 'enterprise_acn', placeholder: "eg. 123 456 789", ng: { model: 'enterprise.acn' } }
+              %label{ for: 'enterprise_acn' } {{'enterprise_acn' | t}}:
+              %input.chunky{ id: 'enterprise_acn', placeholder: "{{'enterprise_acn_placeholder' | t}}", ng: { model: 'enterprise.acn' } }
         .row
           .small-12.columns
             .field
               %label{ for: 'enterprise_charges_sales_tax' }= t(:charges_sales_tax)
               %input{ id: 'enterprise_charges_sales_tax_true', type: 'radio', name: 'charges_sales_tax', value: 'true', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
-              %label{ for: 'enterprise_charges_sales_tax_true' } Yes
+              %label{ for: 'enterprise_charges_sales_tax_true' } {{'say_yes' | t}}
               %input{ id: 'enterprise_charges_sales_tax_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, ng: { model: 'enterprise.charges_sales_tax' } }
-              %label{ for: 'enterprise_charges_sales_tax_false' } No
+              %label{ for: 'enterprise_charges_sales_tax_false' } {{'say_no' | t}}
               %span.error.small-12.columns{ ng: { show: "about.charges_sales_tax.$error.required && submitted" } }
-                You need to make a selection.
+                {{'enterprise_tax_required' | t}}
 
     .row.buttons.pad-top
       .small-12.columns
-        %input.button.primary.right{ type: "submit", value: "Continue" }
+        %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }
         

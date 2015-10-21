@@ -7,7 +7,7 @@
           %i.ofn-i_009-close
         %label.label.round.success.right
           %i.ofn-i_051-check-big
-      Billing info
+      = t :checkout_billing
 
     %accordion-group{"is-open" => "accordion.billing",
       "ng-class" => "{valid: billing.$valid, open: accordion.billing}"}
@@ -16,23 +16,24 @@
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .small-12.columns
-            = validated_input "Address", "order.bill_address.address1", "ofn-focus" => "accordion['billing']"
+            = validated_input t(:address), "order.bill_address.address1", "ofn-focus" => "accordion['billing']"
         .row
           .small-12.columns
-            = validated_input "Address (contd.)", "order.bill_address.address2", required: false
+            = validated_input t(:address2), "order.bill_address.address2", required: false
         .row
           .small-6.columns
-            = validated_input "City", "order.bill_address.city"
+            = validated_input t(:city), "order.bill_address.city"
 
           .small-6.columns
-            = validated_select "State", "order.bill_address.state_id", checkout_state_options(:billing)
+            = validated_select t(:state), "order.bill_address.state_id", checkout_state_options(:billing)
         .row
           .small-6.columns
-            = validated_input "Postcode", "order.bill_address.zipcode"
+            = validated_input t(:postcode), "order.bill_address.zipcode"
 
           .small-6.columns.right
-            = validated_select "Country", "order.bill_address.country_id", checkout_country_options
+            = validated_select t(:country), "order.bill_address.country_id", checkout_country_options
 
       .row
         .small-12.columns.text-right
-          %button.primary{"ng-disabled" => "billing.$invalid", "ng-click" => "next($event)"} Next
+          %button.primary{"ng-disabled" => "billing.$invalid", "ng-click" => "next($event)"}
+            = t :next

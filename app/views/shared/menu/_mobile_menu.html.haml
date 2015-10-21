@@ -24,32 +24,32 @@
         %a{"ofn-scroll-to" => "hubs"}
           %span.nav-primary
             %i.ofn-i_019-map-pin
-            Shops
+            = t 'label_shops'
       - else
         %a{href: main_app.shops_path}
           %span.nav-primary
             %i.ofn-i_019-map-pin
-            Shops
+            = t 'label_shops'
     %li.li-menu
       %a{href: main_app.map_path}
         %span.nav-primary
           %i.ofn-i_037-map
-          Map
+          = t 'label_map'
     %li.li-menu
       %a{href: main_app.producers_path}
         %span.nav-primary
           %i.ofn-i_036-producers
-          Producers
+          = t 'label_producers'
     %li.li-menu
       %a{href: main_app.groups_path}
         %span.nav-primary
           %i.ofn-i_035-groups
-          Groups
+          = t 'label_groups'
     %li.li-menu
       %a{href: ContentConfig.footer_about_url}
         %span.nav-primary
           %i.ofn-i_013-help
-          About
+          = t 'label_about'
 
     %li
     - if spree_current_user.nil?

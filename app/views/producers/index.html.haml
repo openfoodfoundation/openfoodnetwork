@@ -1,12 +1,13 @@
 - content_for(:title) do
-  Producers
+  = t :producers_title
 
 = inject_enterprises
 
 .producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
   .row
     .small-12.columns.pad-top
-      %h1 Find local producers
+      %h1
+        = t :producers_headline
 
   = render partial: "shared/components/enterprise_search"
   = render partial: "producers/filters"
