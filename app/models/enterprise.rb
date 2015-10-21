@@ -334,6 +334,10 @@ class Enterprise < ActiveRecord::Base
     shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
   end
 
+  def can_invoice?
+    abn.present?
+  end
+
   protected
 
   def devise_mailer

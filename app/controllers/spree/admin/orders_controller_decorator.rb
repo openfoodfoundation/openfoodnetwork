@@ -17,6 +17,8 @@ Spree::Admin::OrdersController.class_eval do
   # instead of the update_distribution_charge method.
   after_filter :update_distribution_charge, :only => :update
 
+  before_filter :require_distributor_abn, only: :invoice
+
   respond_override :index => { :html =>
     { :success => lambda {
       # Filter orders to only show those distributed by current user (or all for admin user)
@@ -62,5 +64,14 @@ Spree::Admin::OrdersController.class_eval do
     permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     @orders = permissions.editable_orders.order(:id).ransack(params[:q]).result.page(params[:page]).per(params[:per_page])
     render json: @orders, each_serializer: Api::Admin::OrderSerializer
+  end
+
+  private
+
+  def require_distributor_abn
+    unless @order.distributor.abn.present?
+      flash[:error] = t(:must_have_valid_business_number, enterprise_name: @order.distributor.name)
+      respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+    end
   end
 end
