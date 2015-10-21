@@ -2,6 +2,7 @@ require 'open_food_network/spree_api_key_loader'
 
 Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
+  helper CheckoutHelper
   before_filter :load_spree_api_key, :only => :bulk_management
 
   # We need to add expections for collection actions other than :index here

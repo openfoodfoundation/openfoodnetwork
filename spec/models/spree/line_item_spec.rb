@@ -64,18 +64,30 @@ module Spree
       end
     end
 
-    describe "checking if a line item has tax included" do
+    describe "tax" do
       let(:li_no_tax)   { create(:line_item) }
       let(:li_tax)      { create(:line_item) }
       let(:tax_rate)    { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new) }
       let!(:adjustment) { create(:adjustment, adjustable: li_tax, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
-      it "returns true when it does" do
-        li_tax.should have_tax
+      context "checking if a line item has tax included" do
+        it "returns true when it does" do
+          expect(li_tax).to have_tax
+        end
+
+        it "returns false otherwise" do
+          expect(li_no_tax).to_not have_tax
+        end
       end
 
-      it "returns false otherwise" do
-        li_no_tax.should_not have_tax
+      context "calculating the amount of included tax" do
+        it "returns the included tax when present" do
+          expect(li_tax.included_tax).to eq 10.00
+        end
+
+        it "returns 0.00 otherwise" do
+          expect(li_no_tax.included_tax).to eq 0.00
+        end
       end
     end
   end

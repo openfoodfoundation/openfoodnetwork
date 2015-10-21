@@ -3,13 +3,39 @@
 
 %table{:width => "100%"}
   %tbody
-    %tr
+    %tr{ valign: "top" }
       %td{ :align => "left" }
-        = "Order ##{@order.number}"
+        %h4
+          - if @order.total_tax > 0
+            = "TAX"
+          = "INVOICE: "
+          = "#{@order.number}"
+      %td{width: "10%" }
+        &nbsp;
       %td{ :align => "right" }
-        - if @order.total_tax > 0
-          = "TAX"
-        = "INVOICE"
+        %h4= Time.zone.now.strftime("%F")
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %strong= "From: #{@order.distributor.name}"
+        - if @order.distributor.abn.present?
+          %br
+          = "ABN: #{@order.distributor.abn}"
+        %br
+        = @order.distributor.address.full_address
+        %br
+        = @order.distributor.email
+      %td{width: "10%" }
+        &nbsp;
+      %td{ :align => "right" }
+        %strong= "To: #{@order.ship_address.full_name}"
+        - if @order.customer.code.present?
+          %br
+          = "Code: #{@order.customer.code}"
+        %br
+        = @order.ship_address.full_address
+        %br
+        = "#{@order.customer.email},"
+        = "#{@order.bill_address.phone}"
 
-= render 'spree/order_mailer/order_summary'
+= render 'spree/admin/orders/invoice_table'
 = render 'spree/order_mailer/payment'
