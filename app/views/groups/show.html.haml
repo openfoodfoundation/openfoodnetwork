@@ -30,7 +30,7 @@
       .small-12.medium-12.large-9.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
-            %tab{heading: 'Map',
+            %tab{heading: t(:label_map),
                 active: "active(\'\')",
                 select: "select(\'\')"}
               .map-container
@@ -39,7 +39,7 @@
                     %markers{models: "mapMarkers", fit: "true",
                     coords: "'self'", icon: "'icon'", click: "'reveal'"}
 
-            %tab{heading: 'About us',
+            %tab{heading: t(:groups_about),
                 active: "active(\'about\')",
                 select: "select(\'about\')"}
               %h1
