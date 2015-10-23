@@ -2,18 +2,18 @@ class UpdateBillablePeriods
   attr_reader :year, :month, :start_date, :end_date
 
   def initialize(year = nil, month = nil)
-    ref_point = Time.now - 1.day
+    ref_point = Time.zone.now - 1.day
     @year = year || ref_point.year
     @month = month || ref_point.month
-    @start_date = Time.new(@year, @month)
-    @end_date = Time.new(@year, @month) + 1.month
-    @end_date = Time.now.beginning_of_day if start_date == Time.now.beginning_of_month
+    @start_date = Time.zone.local(@year, @month)
+    @end_date = Time.zone.local(@year, @month) + 1.month
+    @end_date = Time.zone.now.beginning_of_day if start_date == Time.zone.now.beginning_of_month
   end
 
   def perform
     return unless settings_are_valid?
 
-    job_start_time = Time.now
+    job_start_time = Time.zone.now
 
     enterprises = Enterprise.where('created_at < (?)', end_date).select([:id, :name, :owner_id, :sells, :shop_trial_start_date, :created_at])
 
@@ -111,13 +111,13 @@ class UpdateBillablePeriods
   private
 
   def settings_are_valid?
-    unless end_date <= Time.now
+    unless end_date <= Time.zone.now
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
         job: "UpdateBillablePeriods",
         error: "end_date is in the future",
         data: {
           end_date: end_date.localtime.strftime("%F %T"),
-          now: Time.now.strftime("%F %T")
+          now: Time.zone.now.strftime("%F %T")
         }
       })
       return false

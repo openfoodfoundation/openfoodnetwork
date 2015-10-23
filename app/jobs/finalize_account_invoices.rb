@@ -2,11 +2,11 @@ class FinalizeAccountInvoices
   attr_reader :year, :month, :start_date, :end_date
 
   def initialize(year = nil, month = nil)
-    ref_point = Time.now - 1.month
+    ref_point = Time.zone.now - 1.month
     @year = year || ref_point.year
     @month = month || ref_point.month
-    @start_date = Time.new(@year, @month)
-    @end_date = Time.new(@year, @month) + 1.month
+    @start_date = Time.zone.local(@year, @month)
+    @end_date = Time.zone.local(@year, @month) + 1.month
   end
 
   def before(job)
@@ -46,13 +46,13 @@ class FinalizeAccountInvoices
   private
 
   def settings_are_valid?
-    unless end_date <= Time.now
+    unless end_date <= Time.zone.now
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
         job: "FinalizeAccountInvoices",
         error: "end_date is in the future",
         data: {
           end_date: end_date.localtime.strftime("%F %T"),
-          now: Time.now.strftime("%F %T")
+          now: Time.zone.now.strftime("%F %T")
         }
       })
       return false

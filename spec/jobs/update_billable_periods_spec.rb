@@ -5,9 +5,10 @@ def travel_to(time)
 end
 
 describe UpdateBillablePeriods do
+  let!(:year) { Time.zone.now.year }
+
   describe "unit specs" do
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
-    let!(:year) { Time.now.year }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     let!(:updater) { UpdateBillablePeriods.new }
 
@@ -508,7 +509,7 @@ describe UpdateBillablePeriods do
     end
 
     context "cleaning up untouched billable periods" do
-      let(:job_start_time) { Time.now }
+      let(:job_start_time) { Time.zone.now }
       let(:enterprise) { create(:enterprise) }
       # Updated after start
       let!(:bp1) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time + 2.seconds, begins_at: start_of_july, ends_at: start_of_july + 5.days ) }
@@ -549,9 +550,8 @@ describe UpdateBillablePeriods do
 
   describe "validation spec" do
     # Chose july to test with because June has 30 days and so is easy to calculate end date for shop trial
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
-
-    let!(:year) { Time.now.year }
+    let!(:year) { Time.zone.now.year }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     let!(:enterprise) { create(:supplier_enterprise, sells: 'any') }
 

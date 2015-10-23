@@ -6,10 +6,11 @@ end
 
 
 describe FinalizeAccountInvoices do
+  let!(:year) { Time.zone.now.year }
+
   describe "unit specs" do
     let!(:finalizer) { FinalizeAccountInvoices.new }
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
-    let!(:year) { Time.now.year }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     describe "perform" do
       let!(:accounts_distributor) { create(:distributor_enterprise) }
@@ -87,8 +88,8 @@ describe FinalizeAccountInvoices do
           end
         end
 
-        context "an a specific year and month are passed as arguments" do
-          let!(:finalizer) { FinalizeAccountInvoices.new(Time.now.year, 7) }
+        context "and a specific year and month are passed as arguments" do
+          let!(:finalizer) { FinalizeAccountInvoices.new(year, 7) }
 
           before do
             allow(finalizer).to receive(:finalizer)
@@ -163,7 +164,7 @@ describe FinalizeAccountInvoices do
   end
 
   describe "validation spec" do
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
     let!(:finalizer) { FinalizeAccountInvoices.new }
