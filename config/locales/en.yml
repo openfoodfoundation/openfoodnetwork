@@ -30,6 +30,12 @@ en:
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  invoice: "Invoice"
+  percentage_of_sales: "%{percentage} of sales"
+  capped_at: "capped at"
+  capped_at_cap: "capped at %{cap}"
+  per_month: "per month"
+  free: "free"
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
@@ -55,7 +61,6 @@ en:
   footer_links_md: "Links"
   footer_about_url: "About URL"
   footer_tos_url: "Terms of Service URL"
-  invoice: "Invoice"
 
   name: Name
   first_name: First Name
