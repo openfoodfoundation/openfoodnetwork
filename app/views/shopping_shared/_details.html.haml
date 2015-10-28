@@ -2,7 +2,7 @@
   %distributor.details.row
     .small-12.medium-6.large-6.columns
       #distributor_title
-        - if current_distributor.logo.exists?
+        - if current_distributor.logo?
           %img.left{src: current_distributor.logo.url(:thumb)}
         %h3
           = current_distributor.name

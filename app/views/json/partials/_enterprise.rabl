@@ -13,11 +13,11 @@ node :hash do |enterprise|
 end
 
 node :logo do |enterprise|
-  enterprise.logo(:medium) if enterprise.logo.exists?
+  enterprise.logo(:medium) if enterprise.logo?
 end
 
 node :promo_image do |enterprise|
-  enterprise.promo_image(:large) if enterprise.promo_image.exists?
+  enterprise.promo_image(:large) if enterprise.promo_image?
 end
 
 node :icon do |e|

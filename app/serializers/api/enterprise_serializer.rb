@@ -76,11 +76,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def logo
-    object.logo(:medium) if object.logo.exists?
+    object.logo(:medium) if object.logo?
   end
 
   def promo_image
-    object.promo_image(:large) if object.promo_image.exists?
+    object.promo_image(:large) if object.promo_image?
   end
 
   def path
