@@ -10,7 +10,7 @@ describe FinalizeAccountInvoices do
 
   describe "unit specs" do
     let!(:finalizer) { FinalizeAccountInvoices.new }
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     describe "perform" do
       let!(:accounts_distributor) { create(:distributor_enterprise) }
@@ -164,7 +164,7 @@ describe FinalizeAccountInvoices do
   end
 
   describe "validation spec" do
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
     let!(:finalizer) { FinalizeAccountInvoices.new }

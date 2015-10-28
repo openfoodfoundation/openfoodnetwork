@@ -8,7 +8,7 @@ describe UpdateBillablePeriods do
   let!(:year) { Time.zone.now.year }
 
   describe "unit specs" do
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:updater) { UpdateBillablePeriods.new }
 
@@ -551,7 +551,7 @@ describe UpdateBillablePeriods do
   describe "validation spec" do
     # Chose july to test with because June has 30 days and so is easy to calculate end date for shop trial
     let!(:year) { Time.zone.now.year }
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:enterprise) { create(:supplier_enterprise, sells: 'any') }
 

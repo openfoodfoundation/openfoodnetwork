@@ -8,7 +8,7 @@ describe UpdateAccountInvoices do
   let(:year) { Time.zone.now.year }
 
   describe "units specs" do
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
 
@@ -321,7 +321,7 @@ describe UpdateAccountInvoices do
   end
 
   describe "validation spec" do
-    let!(:start_of_july) { Time.local(year, 7) }
+    let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
 
