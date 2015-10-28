@@ -15,7 +15,8 @@
         %h3 Hub Shop
 
         %p
-          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
 
         %p Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
 
@@ -53,7 +54,8 @@
         %h3 Producer Shop
 
         %p
-          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
 
         %p Sell your products directly to customers through your very own Open Food Network shopfront.
 
@@ -63,7 +65,8 @@
         %h3 Producer Hub
 
         %p
-          %strong COST: 2% OF SALES, CAPPED AT $50 PER MONTH
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
 
         %p Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
 
@@ -94,9 +97,7 @@
           %h3 Hub Shop
           %p Sell produce from others
         .bottom
-          \2% OF SALES
-          %br
-          CAPPED AT $50 PER MONTH
+          %monthly-pricing-description{ joiner: "newline" }
 
     %div{ ng: { switch: { when: "true" } } }
       %a.button.selector.producer-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
@@ -109,17 +110,14 @@
           %h3 Producer Shop
           %p Sell your own produce
         .bottom
-          \2% OF SALES
-          %br
-          CAPPED AT $50 PER MONTH
+          %monthly-pricing-description{ joiner: "newline" }
+
       %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
           %h3 Producer Hub
           %p Sell produce from self and others
         .bottom
-          \2% OF SALES
-          %br
-          CAPPED AT $50 PER MONTH
+          %monthly-pricing-description{ joiner: "newline" }
 
     %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
       %span{ ng: {hide: "saved() || saving" } }
