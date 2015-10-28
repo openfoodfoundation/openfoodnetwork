@@ -108,15 +108,7 @@
                   = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
 
 
-              - if item.variant.product.name == item.variant.name_to_display
-                %h5
-                  %span= item.variant.product.name
-                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
-              - else
-                %h5
-                  %span= item.variant.product.name
-                  %span= "- " + item.variant.name_to_display
-                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+              = render 'spree/shared/line_item_name', line_item: item
 
             %td.text-right.price{"data-hook" => "order_item_price"}
               %span= item.single_display_amount_with_adjustments.to_html

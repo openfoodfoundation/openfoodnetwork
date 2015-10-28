@@ -10,8 +10,8 @@ $headingFont: 'Oswald'
 $bodyFont: 'Roboto'
 
 body
-  @include bodyFont 
-  font-weight: 400  
+  @include bodyFont
+  font-weight: 400
 a
   color: $clr-brick
   &:hover, &:focus, &:active
@@ -52,7 +52,7 @@ small, .small
 
 .pre-line
   white-space: pre-line
-  
+
 .light
   color: #999
   display: inline
@@ -66,12 +66,16 @@ small, .small
 .brick
   color: $clr-brick
 
-.hr-light  
+.hr-light
   border-color: rgba(#ddd, 0.25)
 
 h1, h2, h3, h4, h5, h6
   @include headingFont
   padding: 0px
+
+.inline-header
+  display: inline-block
+  margin: 0px
 
 ul.bullet-list, ul.check-list
   margin: 0 0 0 1.25em !important
@@ -108,12 +112,12 @@ ul.check-list
 .footer-pad
   padding-bottom: 100px
 
-  
+
 // These selectors match the default Foundation selectors
 // For clean overriden magic
 table tr th, table tr td
   color: #333333
-table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td 
+table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td
   color: #333333
 
 span.email

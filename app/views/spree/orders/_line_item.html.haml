@@ -15,15 +15,7 @@
       - else
         = link_to image_tag(variant.images.first.attachment.url(:mini)), variant.product
 
-    - if variant.product.name == variant.name_to_display
-      %h5
-        %span= variant.product.name
-        %span.text-small.text-skinny= " (" + variant.options_text + ")" unless variant.options_text.empty?
-    - else
-      %h5
-        %span= variant.product.name
-        %span= "- " + variant.name_to_display
-        %span.text-small.text-skinny= " (" + variant.options_text + ")" unless variant.options_text.empty?
+    = render 'spree/shared/line_item_name', line_item: line_item
 
     - if @order.insufficient_stock_lines.include? line_item
       %span.out-of-stock

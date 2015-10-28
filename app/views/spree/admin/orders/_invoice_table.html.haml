@@ -13,14 +13,7 @@
     - @order.line_items.each do |item|
       %tr
         %td
-          - if item.variant.product.name == item.variant.name_to_display
-            %strong= "#{raw(item.variant.product.name)}"
-          - else
-            %strong
-              %span= "#{raw(item.variant.product.name)}"
-              %span= "- " + "#{raw(item.variant.name_to_display)}"
-          - if item.variant.options_text
-            = "(" + "#{raw(item.variant.options_text)}" + ")"
+          = render 'spree/shared/line_item_name', line_item: item
         %td{:align => "right"}
           = item.quantity
         %td{:align => "right"}
