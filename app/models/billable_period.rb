@@ -15,14 +15,16 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def bill
-    # Will make this more sophisicated in the future in that it will use global config variables to calculate
+    fixed = Spree::Config[:account_invoices_monthly_fixed]
+    rate = Spree::Config[:account_invoices_monthly_rate]
+    cap = Spree::Config[:account_invoices_monthly_cap]
+
     return 0 if trial?
-    if ['own', 'any'].include? sells
-      bill = (turnover * 0.02).round(2)
-      bill > 50 ? 50 : bill
-    else
-      0
-    end
+    return 0 unless ['own', 'any'].include?(sells)
+
+    bill = fixed + (turnover * rate).round(2)
+    return bill unless cap > 0
+    [bill, cap].min
   end
 
   def label
