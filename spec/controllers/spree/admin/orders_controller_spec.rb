@@ -192,11 +192,25 @@ describe Spree::Admin::OrdersController do
 
       context "which is a manager of the distributor for an order" do
         before { controller.stub spree_current_user: distributor.owner }
-        it "should allow me to send order invoices" do
-          expect do
-            spree_get :invoice, params
-          end.to change{Spree::OrderMailer.deliveries.count}.by(1)
-          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        context "when the distributor's ABN has not been set" do
+          before { distributor.update_attribute(:abn, "") }
+          it "should allow me to send order invoices" do
+            expect do
+              spree_get :invoice, params
+            end.to_not change{Spree::OrderMailer.deliveries.count}
+            expect(response).to redirect_to spree.edit_admin_order_path(order)
+            expect(flash[:error]).to eq "#{distributor.name} must have a valid ABN before invoices can be sent."
+          end
+        end
+
+        context "when the distributor's ABN has been set" do
+          before { distributor.update_attribute(:abn, "123") }
+          it "should allow me to send order invoices" do
+            expect do
+              spree_get :invoice, params
+            end.to change{Spree::OrderMailer.deliveries.count}.by(1)
+            expect(response).to redirect_to spree.edit_admin_order_path(order)
+          end
         end
       end
     end

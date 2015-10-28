@@ -38,6 +38,10 @@ module CheckoutHelper
     Spree::Money.new order.total_tax, currency: order.currency
   end
 
+  def display_checkout_total_less_tax(order)
+    Spree::Money.new order.total - order.total_tax, currency: order.currency
+  end
+
   def checkout_state_options(source_address)
     if source_address == :billing
       address = @order.billing_address

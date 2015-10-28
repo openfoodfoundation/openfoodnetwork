@@ -25,5 +25,9 @@ module Spree
     def has_tax?
       included_tax > 0
     end
+
+    def display_included_tax
+      Spree::Money.new(included_tax, { :currency => currency })
+    end
   end
 end

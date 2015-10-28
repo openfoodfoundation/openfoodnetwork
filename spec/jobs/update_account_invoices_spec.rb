@@ -5,8 +5,10 @@ def travel_to(time)
 end
 
 describe UpdateAccountInvoices do
+  let(:year) { Time.zone.now.year }
+
   describe "units specs" do
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
 
@@ -65,7 +67,7 @@ describe UpdateAccountInvoices do
         end
 
         context "when specfic a specific month (and year) are passed as arguments" do
-          let!(:updater) { UpdateAccountInvoices.new(Time.now.year, 7) }
+          let!(:updater) { UpdateAccountInvoices.new(year, 7) }
 
           before do
             allow(updater).to receive(:update)
@@ -319,7 +321,7 @@ describe UpdateAccountInvoices do
   end
 
   describe "validation spec" do
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
+    let!(:start_of_july) { Time.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
 

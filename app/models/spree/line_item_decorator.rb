@@ -47,6 +47,10 @@ Spree::LineItem.class_eval do
     adjustments.included_tax.any?
   end
 
+  def included_tax
+    adjustments.included_tax.sum(&:included_tax)
+  end
+
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
@@ -66,6 +70,10 @@ Spree::LineItem.class_eval do
 
   def display_amount_with_adjustments
     Spree::Money.new(amount_with_adjustments, { :currency => currency })
+  end
+
+  def display_included_tax
+    Spree::Money.new(included_tax, { :currency => currency })
   end
 
   def unit_value
