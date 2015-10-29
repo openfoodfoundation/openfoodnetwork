@@ -8,7 +8,7 @@
       %button.primary.expand{"ng-click" => "open()"}
         = t :label_login
     .small-2.columns.text-center
-      %p.pad-top -OR-
+      %p.pad-top= "-#{t :action_or}-"
     .small-5.columns.text-center
       %button.neutral-btn.dark.expand{"ng-click" => "enabled = true"}
         = t :checkout_as_guest

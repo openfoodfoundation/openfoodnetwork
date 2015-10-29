@@ -17,6 +17,7 @@ fr:
   producers: Producteurs & hubs
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
   charges_sales_tax: Soumis à la TVA?
+  print: "Imprimer"
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -33,6 +34,7 @@ fr:
   footer_links_md: "Liens"
   footer_about_url: "A propos URL"
   footer_tos_url: "Conditions d'utilisation URL"
+  invoice: "Facture"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -49,7 +51,7 @@ fr:
   terms_of_service: "Conditions d'utilisation"
   on_demand: A volonté
   none: Aucun
-  alert_selling_on_ofn: "Vous souhaitez proposer votre produits sur Open Food France?"
+  alert_selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
   alert_start_here: "Démarrez ici"
   label_shops: "Boutiques"
   label_map: "Carte"
@@ -108,31 +110,28 @@ fr:
   footer_join_hubs: "Inscription hubs"
   footer_join_groups: "Inscription groupes"
   footer_join_partners: "Partenaires"
-  footer_legal_call: "Lire notre/nos"
+  footer_legal_call: "Lire nos"
   footer_legal_tos: "Termes & conditions"
   footer_legal_visit: "Nous trouver sur"
-  footer_legal_text: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence"
-  footer_legal_text2: "et notre code sous"
-  footer_legal_license_content: "CC BY-SA 3.0"
-  footer_legal_license_code: "AGPL 3"
+  footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
   home_shop: Faire mes courses
-  brandstory_headline: "Des aliments, non centralisés."
+  brandstory_headline: "Des aliments porteurs de sens."
   brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
-  brandstory_part1: "Nous commençons à partir du sol. Avec des paysans, agriculteurs, producteurs prêts à raconter leurs histoires avec fierté et en toute transparence. Avec des distributeurs prêts à connecter les gens aux produits de manière équitable et honnête. Avec des acheteurs qui croient que de meilleures décisions d'achats peuvent véritablement changer le monde."
-  brandstory_part2: "Ensuite, nous avons besoin d'un moyen pour rendre tout ça réel. Un moyen de redonner le pouvoir à ceux qui cultivent, vendent et achètent la nourriture. Un moyen de raconter les histoires, de gérer la logistique. Un moyen de transformer chaque jour les transactions en transformation."
-  brandstory_part3: "Alors, nous construisons un marché en ligne pour niveller le terrain de jeu. Il est transparent, de sorte qu'il crée de vraies relations. Il est open source, donc possédé par tout le monde. Il se déploie aux échelles régionales et nationales, et des gens lancent de multiples versions à travers le monde."
-  brandstory_part4: "Il fonctionne partout. Il change tout."
-  brandstory_part5_strong: "Il s'appelle Open Food Network."
+  brandstory_part1: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent véritablement changer le monde."
+  brandstory_part2: "Nous avons besoin d'un outil pour rendre tout ça réel. Un moyen de redonner le pouvoir à ceux qui cultivent, vendent et achètent la nourriture. Un moyen de raconter les histoires, de gérer la logistique. Un moyen de transformer chaque jour les transactions en actions porteuses de changement."
+  brandstory_part3: "C'est pour cela que nous construisons cette plateforme, ce \"marché en ligne\", afin de rééquilibrer les échanges et redistribuer le pouvoir. Elle est transparente, pour assurer des relations équitables et favoriser les prises de conscience. Elle est open source, donc possédée par tout le monde. Elle se déploie aux échelles régionales et nationales, et des gens lancent de multiples versions à travers le monde."
+  brandstory_part4: "Elle fonctionne partout. Elle change tout."
+  brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
   brandstory_part6: "Nous aimons notre nourriture. Maintenant nous pouvons aussi aimer notre système alimentaire."
   system_headline: "Comment ça marche?"
   system_step1: "1. Recherche"
-  system_step1_text: "Recherchez parmi nos multiples boutiques indépendantes pour des produits locaux et de saison. Filtrez pas quartier ou catégorie de produits, ou si vous préférez une option livraison ou retrait."
+  system_step1_text: "Recherchez des produits locaux, de saison, parmi nos multiples boutiques indépendantes. Filtrez par localisation ou catégorie de produits, livraison en point retrait ou à domicile."
   system_step2: "2. Achat"
   system_step2_text: "Transformez vos achats en choisissant des produits locaux et abordables, proposés par les divers producteurs et hubs. Découvrez les histoires et les personnes qui se cachent derrière les produits!"
   system_step3: "3. Retrait / Livraison"
-  system_step3_text: "Réceptionnez vos produits à domicile, ou rendez vous chez votre producteur ou hub pour un lien plus personnel avec votre nourriture. Des expériences d'achat de nourriture aussi diverses que la nature l'a souhaitée."
+  system_step3_text: "Réceptionnez vos produits à domicile, ou rendez vous chez votre producteur ou hub pour rencontrer les gens qui se cachent derrière les produits. Au delà de la bio-diversité, nous cultivons l'éco-diversité: vivez des expériences d'achat de nourriture uniques et humaines."
   cta_headline: "Des achats qui rendent le monde un peu meilleur."
-  cta_label: "Je suis prêt"
+  cta_label: "Je vote avec mes achats"
   stats_headline: "Nous créons un nouveau système alimentaire."
   stats_producers: "agriculteurs et producteurs"
   stats_shops: "boutiques"
@@ -146,7 +145,7 @@ fr:
   checkout_headline: "Ok, prêt pour le paiement?"
   checkout_as_guest: "Régler en mode invité"
   checkout_details: "Vos informations"
-  checkout_billing: "Informations de paiement"
+  checkout_billing: "Informations de facturation"
   checkout_shipping: Informations de livraison
   checkout_method_free: Gratuit
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
@@ -239,13 +238,13 @@ fr:
   enterprises_next_closing: "Prochaine commande à passer avant"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre date de commande:"
-  hubs_buy: "Acheter pour:"
+  hubs_buy: "Acheter:"
   hubs_delivery_options: "Options de livraison"
   hubs_pickup: "Retrait"
   hubs_delivery: "Livraison"
   hubs_producers: "Nos producteurs"
   hubs_filter_by: "Filtrer par"
-  hubs_filter_type: "Type"
+  hubs_filter_type: "Catégorie"
   hubs_filter_delivery: "Livraison"
   hubs_matches: "Vous voulez dire?"
   hubs_intro: Passez commande près de chez vous
@@ -261,13 +260,13 @@ fr:
   products_edit_cart: "Modifier votre panier"
   products_from: de
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
-  components_profiles_popover: "Cette entreprise n'a pas de boutique en ligne sur Open Food France, mais peut-être a-t-elle une boutique physique ou en ligne quelque part"
-  components_profiles_show: "Afficher les résultats"
+  components_profiles_popover: "Certaines entreprises ont juste créer leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
+  components_profiles_show: "Afficher aussi les profils"
   components_filters_nofilters: "Pas de filtre"
   components_filters_clearfilters: "Vider les filtres"
   groups_title: Groupes
   groups_headline: Groupes / territoires
-  groups_search: "Techerche par nom ou mot-clé"
+  groups_search: "Recherche par nom ou mot-clé"
   groups_no_groups: "Aucun groupe trouvé"
   groups_about: "A propos"
   groups_producers: "Nos producteurs"
@@ -301,7 +300,7 @@ fr:
   modal_hubs_abstract: Nos food hubs sont les points de contact entre vous et les personnes qui produisent votre nourriture!
   modal_hubs_content1: Vous pouvez chercher le hub qui vous convient par localisation ou par nom. Certains hubs ont de multiples points de retrait de vos achats, et certains proposent également la livraison à domicile. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
   modal_hubs_content2: Vous pouvez uniquement faire vos courses dans un hub à la fois.
-  modal_groups: "Groupes / Territoires"
+  modal_groups: "Groupes / réseaux territoriaux"
   modal_groups_content1: Voilà les organisations et les relations inter-hubs qui constituent l'Open Food Network.
   modal_groups_content2: Certains groupes sont regroupés pas localisation ou région, d'autres sur des smilitudes non géographiques.
   modal_how: "Comment ça marche"
@@ -332,15 +331,15 @@ fr:
   ocs_when_choose: "Choisir le cycle de vente"
   ocs_list: "Afficher la liste"
   producers_about: A propos
-  producers_buy: Faire ses courses pour
+  producers_buy: Acheter
   producers_contact: Contact
   producers_contact_phone: Appeler
   producers_contact_social: Suivre
-  producers_at: "produits à:"
+  producers_buy_at_html: "Acheter les produits de %{enterprise} à:"
   producers_filter: Filtrer par
-  producers_filter_type: Type
+  producers_filter_type: Catégorie
   producers_title: Producteurs
-  producers_headline: Trouver un producteur local
+  producers_headline: Trouvez un producteur local
   producers_signup_title: S'inscrire en tant que producteur
   producers_signup_headline: Des producteurs, indépendants
   producers_signup_motivation: Vendez vos produits et racontez vos histoires pour toucher de nouveaux marchés. Gagnez du temps et de l'argent sur la gestion des opérations courantes. Vous pouvez innover sans prendre de risque. Nous nivellons le terrain de jeu pour des échanges plus équitables.
@@ -357,8 +356,8 @@ fr:
   products_price: Prix
   register_title: S'inscrire
   shops_title: Boutiques
-  shops_headline: Des achats, transformés.
-  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles, et ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub.
+  shops_headline: Des achats qui transforment.
+  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
   shops_signup_title: S'inscrire en tant que hub
   shops_signup_headline: Food hubs, une infinité de possibilités.
   shops_signup_motivation: Quel que soit votre modèle, nous vous apportons notre support. Si vous voulez changez, nous sommes à vos côtés. Nous sommes une organisation à but non lucratif, independante, et open-source. Nous sommes le partenaire système dont vous avez rêvé.
@@ -374,9 +373,10 @@ fr:
   orders_edit_time: Commande prête pour
   orders_edit_continue: Poursuivre mes achats
   orders_edit_checkout: Régler ma commande
-  orders_form_empty_cart: "Panier vide"
+  orders_form_empty_cart: "Vider le panier"
+  orders_form_subtotal: Sous-total
   orders_form_admin: Admin & opérations
-  orders_form_subtotal: Total
+  orders_form_total: Total
   orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives."
   orders_oc_expired_text_others_html: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives <strong>%{link}</strong>."
@@ -406,7 +406,7 @@ fr:
   closing: "Fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
-  updating: Mise à jour
+  updating: Mettre à jour
   failed_to_create_enterprise: "Impossible de créer votre entreprise"
   failed_to_create_enterprise_unknown: "Impossible de créer votre entreprise.\nVérifiez que tous les champs sont remplis."
   failed_to_update_enterprise_unknown: "Impossible de mettre à jour votre entreprise.\nVérifiez que tous les champs sont remplis."
@@ -440,7 +440,7 @@ fr:
   logging_in: "Veuillez patienter, connexion en cours"
   signup_email: "Votre email"
   choose_password: "Choisissez un mot de passe"
-  confirm_password: "Confirmer mot de passe"
+  confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
   welcome_to_ofn: "Bienvenue sur Open Food France"
   signup_or_login: "Commencez par vous inscrire (ou connexion)"
@@ -554,14 +554,14 @@ fr:
   registration_detail_state_error: "Veuillez saisir une Région"
   registration_detail_country: "Pays:"
   registration_detail_country_error: "Veuillez saisir une Pays"
-  fees: "Frais/commission"
+  fees: "Frais"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
   contact: "Contact"
   follow: "Suivre"
-  shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> à:"
+  shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
   change_shop: "Changer de boutique pour:"
   shop_at: "Acheter maintenant à:"
   price_breakdown: "Détail du prix:"
@@ -570,4 +570,4 @@ fr:
   packing_fee: "Frais de packaging"
   transport_fee: "Frais logistiques"
   fundraising_fee: "Frais recherche de financement"
-  price_graph: "Graph détail du prix"
+  price_graph: "Légende détail du prix"

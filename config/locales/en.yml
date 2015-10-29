@@ -129,10 +129,7 @@ en:
   footer_legal_call: "Read our"
   footer_legal_tos: "Terms & conditions"
   footer_legal_visit: "Find us on"
-  footer_legal_text: "Open Food Network is a free and open source software platform. Our content is licensed with"
-  footer_legal_text2: "and our code with"
-  footer_legal_license_content: "CC BY-SA 3.0"
-  footer_legal_license_code: "AGPL 3"
+  footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
 
   home_shop: Shop Now
 
@@ -278,6 +275,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprises_choose: "Choose when you want your order:"
 
   hubs_buy: "Shop for:"
+  hubs_shopping_here: "Shopping here"
+  hubs_orders_closed: "Orders closed"
+  hubs_profile_only: "Profile only"
   hubs_delivery_options: "Delivery options"
   hubs_pickup: "Pickup"
   hubs_delivery: "Delivery"
@@ -385,7 +385,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producers_contact: Contact
   producers_contact_phone: Call
   producers_contact_social: Follow
-  producers_at: "products at:"
+  producers_buy_at_html: "Shop for %{enterprise} products at:"
   producers_filter: Filter by
   producers_filter_type: Type
   producers_title: Producers
@@ -431,7 +431,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_form_empty_cart: "Empty cart"
   orders_form_subtotal: Produce subtotal
   orders_form_admin: Admin & handling
-  orders_form_subtotal: Total
+  orders_form_total: Total
   orders_oc_expired_headline: Orders have closed for this order cycle
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
   orders_oc_expired_text_others_html: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders <strong>%{link}</strong>."

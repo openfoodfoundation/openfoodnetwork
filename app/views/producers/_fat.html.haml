@@ -65,9 +65,7 @@
       .columns.small-12.fat
         %div{"bo-if" => "producer.name"}
           %label
-            = t :producers_buy
-            %span.turquoise{"bo-text" => "producer.name"}
-            = t :producers_at
+            = t :producers_buy_at_html, {enterprise: '<span class="turquoise" bo-text="producer.name"></span>'.html_safe}
         %div.show-for-medium-up{"bo-if" => "!producer.name"}
           &nbsp;
     .row.cta-container
