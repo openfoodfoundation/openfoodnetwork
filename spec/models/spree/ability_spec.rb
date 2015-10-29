@@ -323,7 +323,7 @@ module Spree
           let!(:er1) { create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:create_variant_overrides]) }
 
           it "should be able to access variant overrides page" do
-            should have_ability([:admin, :index, :bulk_update], for: VariantOverride)
+            should have_ability([:admin, :index, :bulk_update, :bulk_reset], for: VariantOverride)
           end
 
           it "should be able to read/write their own variant overrides" do

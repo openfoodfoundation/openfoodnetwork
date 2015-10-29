@@ -34,7 +34,7 @@ module Admin
       vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
 
       # Ensure we're authorised to update all variant overrides.
-      vo_set.collection.each { |vo| authorize! :update, vo }
+      vo_set.collection.each { |vo| authorize! :bulk_reset, vo }
 
       # Changed this to use class method instead, to ensure the value in the database is used to reset and not a dirty passed-in value
       #vo_set.collection.map! { |vo| vo = vo.reset_stock! }
@@ -65,7 +65,7 @@ module Admin
     end
 
     def collection_actions
-      [:index, :bulk_update]
+      [:index, :bulk_update, :bulk_reset]
     end
   end
 end
