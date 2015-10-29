@@ -111,7 +111,7 @@ class AbilityDecorator
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
 
-    can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+    can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
       next false unless vo.hub.present? && vo.variant.andand.product.andand.supplier.present?
 
       hub_auth = OpenFoodNetwork::Permissions.new(user).
