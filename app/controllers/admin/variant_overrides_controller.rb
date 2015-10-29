@@ -63,5 +63,9 @@ module Admin
 
     def collection
     end
+
+    def collection_actions
+      [:index, :bulk_update]
+    end
   end
 end

@@ -66,7 +66,7 @@ class AbilityDecorator
   def add_enterprise_management_abilities(user)
     # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
     # when searching for variants to add to the order
-    can [:create, :search, :bulk_update], nil
+    can [:create, :search], nil
 
     can [:admin, :index], :overview
 

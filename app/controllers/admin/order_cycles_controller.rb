@@ -141,5 +141,9 @@ module Admin
         end
       end
     end
+
+    def collection_actions
+      [:index, :bulk_update]
+    end
   end
 end
