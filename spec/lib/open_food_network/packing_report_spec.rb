@@ -4,76 +4,92 @@ include AuthenticationWorkflow
 
 module OpenFoodNetwork
   describe PackingReport do
-    context "as a site admin" do
-      let(:user) do
-        user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
-        user
-      end
-      subject { PackingReport.new user }
+    describe "fetching orders" do
+      let(:d1) { create(:distributor_enterprise) }
+      let(:oc1) { create(:simple_order_cycle) }
+      let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+      let(:li1) { build(:line_item) }
 
-      describe "fetching orders" do
+      before { o1.line_items << li1 }
+
+      context "as a site admin" do
+        let(:user) { create(:admin_user) }
+        subject { PackingReport.new user }
+
         it "fetches completed orders" do
-          o1 = create(:order)
-          o2 = create(:order, completed_at: 1.day.ago)
-          subject.orders.should == [o2]
+          o2 = create(:order)
+          o2.line_items << build(:line_item)
+          subject.table_items.should == [li1]
         end
 
         it "does not show cancelled orders" do
-          o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
-          o2 = create(:order, completed_at: 1.day.ago)
-          subject.orders.should == [o2]
+          o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
+          o2.line_items << build(:line_item)
+          subject.table_items.should == [li1]
         end
       end
-    end
 
-    context "as an enterprise user" do
-      let!(:user) { create_enterprise_user }
+      context "as a manager of a supplier" do
+        let!(:user) { create(:user) }
+        subject { PackingReport.new user }
 
-      subject { PackingReport.new user }
+        let(:s1) { create(:supplier_enterprise) }
 
-      describe "fetching orders" do
-        let(:supplier) { create(:supplier_enterprise) }
-        let(:product) { create(:simple_product, supplier: supplier) }
-        let(:d1) { create(:distributor_enterprise) }
-        let(:oc1) { create(:simple_order_cycle) }
-        let(:order) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+        before do
+          s1.enterprise_roles.create!(user: user)
+        end
+
+        context "that has granted P-OC to the distributor" do
+          let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
+          let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
+
+          before do
+            o2.line_items << li2
+            create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+          end
+
+          it "shows line items supplied by my producers, with names hidden" do
+            subject.table_items.should == [li2]
+            subject.table_items.first.order.bill_address.firstname.should == "HIDDEN"
+          end
+        end
+
+        context "that has not granted P-OC to the distributor" do
+          let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
+          let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
+
+          before do
+            o2.line_items << li2
+          end
+
+          it "shows line items supplied by my producers, with names hidden" do
+            subject.table_items.should == []
+          end
+        end
+      end
+
+      context "as a manager of a distributor" do
+        let!(:user) { create(:user) }
+        subject { PackingReport.new user }
 
         before do
           d1.enterprise_roles.create!(user: user)
         end
 
-        it "only shows orders managed by the current user" do
+        it "only shows line items distributed by enterprises managed by the current user" do
           d2 = create(:distributor_enterprise)
           d2.enterprise_roles.create!(user: create(:user))
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
-
-          subject.orders.should == [order]
+          o2.line_items << build(:line_item)
+          subject.table_items.should == [li1]
         end
 
         it "only shows the selected order cycle" do
           oc2 = create(:simple_order_cycle)
-          order2 = create(:order, order_cycle: oc2)
+          o2 = create(:order, distributor: d1, order_cycle: oc2)
+          o2.line_items << build(:line_item)
           subject.stub(:params).and_return(order_cycle_id_in: oc1.id)
-          subject.orders.should == [order]
-        end
-
-        it "only shows product line items that I am supplying" do
-          d2 = create(:distributor_enterprise)
-          create(:enterprise_relationship, parent: supplier, child: d1, permissions_list: [:add_to_order_cycle])
-          d2.enterprise_roles.create!(user: create(:user))
-
-          s2 = create(:supplier_enterprise)
-          p2 = create(:simple_product, supplier: s2)
-
-          li1 = create(:line_item, product: product)
-          li2 = create(:line_item, product: p2)
-          o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
-          o1.line_items << li1
-          o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
-          o2.line_items << li2
-          subject.orders.map{ |o| o.line_items}.flatten.should include li1
-          subject.orders.map{ |o| o.line_items}.flatten.should_not include li2
+          subject.table_items.should == [li1]
         end
       end
     end
