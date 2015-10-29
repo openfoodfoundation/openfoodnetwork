@@ -4,10 +4,10 @@
       %table.column{:align => "left"}
         %tr
           %td
-            %h3 
+            %h3
               Hi #{@order.bill_address.firstname},
             %h4
-              Thanks for shopping at 
+              Thanks for shopping at
               %strong= "#{@order.distributor.name}!"
       %table.column{:align => "left"}
         %tr
@@ -17,31 +17,14 @@
 
 %p &nbsp;
 %h4
-  Order confirmation 
+  Order confirmation
   %strong ##{@order.number}
 %p
   Here are your order details from
-  %strong= "#{@order.distributor.name}:"  
+  %strong= "#{@order.distributor.name}:"
 
 = render 'order_summary'
 = render 'payment'
 = render 'shipping'
 = render 'special_instructions'
-
-%br
-%p.callout
-  Kind regards,
-  %br
-  #{@order.distributor.contact}
-  %br
-  %br
-  = @order.distributor.name
-  %br
-  = @order.distributor.phone || ""
-  %br
-  %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
-    = @order.distributor.email
-  %br
-  = @order.distributor.website || ""
-
-
+= render 'signoff'

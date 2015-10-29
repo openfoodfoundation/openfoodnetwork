@@ -5,6 +5,17 @@ function load_environment {
     fi
 }
 
+function require_env_vars {
+    for var in "$@"; do
+      eval value=\$$var
+      echo "$var=$value"
+      if [ -z "$value" ]; then
+          echo "Environment variable $var missing."
+          exit 1
+      fi
+    done
+}
+
 function master_merged {
     if [[ `git tag -l "$BUILDKITE_BRANCH"` != '' ]]; then
 	echo "'$BUILDKITE_BRANCH' is a tag."
@@ -61,14 +72,16 @@ function checkout_ofn_commit {
 
 function drop_and_recreate_database {
     # Adapted from: http://stackoverflow.com/questions/12924466/capistrano-with-postgresql-error-database-is-being-accessed-by-other-users
-    psql -U openfoodweb postgres <<EOF
-REVOKE CONNECT ON DATABASE $1 FROM public;
-ALTER DATABASE $1 CONNECTION LIMIT 0;
+    DB=$1
+    shift
+    psql postgres $@ <<EOF
+REVOKE CONNECT ON DATABASE $DB FROM public;
+ALTER DATABASE $DB CONNECTION LIMIT 0;
 SELECT pg_terminate_backend(procpid)
 FROM pg_stat_activity
 WHERE procpid <> pg_backend_pid()
-AND datname='$1';
-DROP DATABASE $1;
-CREATE DATABASE $1;
+AND datname='$DB';
+DROP DATABASE $DB;
+CREATE DATABASE $DB;
 EOF
 }

@@ -21,4 +21,14 @@ Spree::OrderMailer.class_eval do
          :from => from_address,
          :subject => subject)
   end
+
+  def invoice_email(order, pdf)
+    find_order(order) # Finds an order instance from an id
+    attachments["invoice-#{@order.number}.pdf"] = pdf if pdf.present?
+    subject = "#{Spree::Config[:site_name]} #{t(:invoice)} ##{@order.number}"
+    mail(:to => @order.email,
+         :from => from_address,
+         :subject => subject,
+         :reply_to => @order.distributor.email)
+  end
 end

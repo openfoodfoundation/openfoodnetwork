@@ -41,6 +41,18 @@ Spree::Admin::OrdersController.class_eval do
     respond_with(@order) { |format| format.html { redirect_to :back } }
   end
 
+  def invoice
+    pdf = render_to_string pdf: "invoice-#{@order.number}.pdf", template: "spree/admin/orders/invoice", formats: [:html], encoding: "UTF-8"
+    Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
+    flash[:success] = t(:invoice_email_sent)
+
+    respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+  end
+
+  def print
+    render pdf: "invoice-#{@order.number}", encoding: "UTF-8"
+  end
+
   def update_distribution_charge
     @order.update_distribution_charge!
   end

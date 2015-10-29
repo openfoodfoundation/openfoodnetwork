@@ -1,0 +1,3 @@
+/ insert_after "code[erb-loud]:contains('button_link_to t(:resend)')"
+- if @order.complete?
+  %li= button_link_to t(:invoice), invoice_admin_order_url(@order), :method => :put, :icon => 'icon-email', :data => { :confirm => t(:are_you_sure) }
