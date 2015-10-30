@@ -28,12 +28,11 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.not_state(:canceled).search(params[:q])
+      permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
     end
 
     def table_items
-      permissions = OpenFoodNetwork::Permissions.new(@user)
-      orders = permissions.visible_orders.merge(search.result)
+      orders = search.result
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
 
@@ -43,8 +42,8 @@ module OpenFoodNetwork
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        line_item.order.bill_address.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.ship_address.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
         line_item.order.assign_attributes(email: "HIDDEN")
       end
       line_items
@@ -113,6 +112,13 @@ module OpenFoodNetwork
           proc { |lis| "" },
           proc { |lis| "" } ]
       end
+    end
+
+    private
+
+    def permissions
+      return @permissions unless @permissions.nil?
+      @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
   end
 end
