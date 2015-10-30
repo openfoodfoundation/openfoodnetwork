@@ -34,10 +34,7 @@ module OpenFoodNetwork
       rows = []
 
       rows += line_item_detail_rows(order, invoice_number, opts)
-
-      if order.account_invoice?
-        rows += adjustment_detail_rows(order, invoice_number, opts)
-      end
+      rows += adjustment_detail_rows(order, invoice_number, opts)
 
       rows
     end
@@ -60,13 +57,13 @@ module OpenFoodNetwork
     end
 
     def adjustment_detail_rows(order, invoice_number, opts)
-      account_invoice_adjustments(order).map do |adjustment|
+      adjustments(order).map do |adjustment|
         adjustment_detail_row(adjustment, invoice_number, opts)
       end
     end
 
     def adjustment_detail_row(adjustment, invoice_number, opts)
-      row(adjustment.source.andand.account_invoice.andand.order,
+      row(adjustment_order(adjustment),
           '',
           adjustment.label,
           1,
@@ -144,10 +141,19 @@ module OpenFoodNetwork
       ]
     end
 
+    def adjustments(order)
+      account_invoice_adjustments(order) + order.adjustments.admin
+    end
+
     def account_invoice_adjustments(order)
       order.adjustments.
         billable_period.
         select { |a| a.source.present? }
+    end
+
+    def adjustment_order(adjustment)
+      adjustment.source.andand.account_invoice.andand.order ||
+        (adjustment.adjustable.is_a?(Spree::Order) ? adjustment.adjustable : nil)
     end
 
     def invoice_number_for(order, i)
