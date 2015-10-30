@@ -239,6 +239,9 @@ fr:
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre date de commande:"
   hubs_buy: "Acheter:"
+  hubs_shopping_here: "Achats en cours"
+  hubs_orders_closed: "Boutique fermée"
+  hubs_profile_only: "Fiche profil"
   hubs_delivery_options: "Options de livraison"
   hubs_pickup: "Retrait"
   hubs_delivery: "Livraison"
@@ -290,7 +293,7 @@ fr:
   groups_signup_motivation7: Nous contribuons à remettre du sens dans les systèmes alimentaires.
   groups_signup_motivation8: Vous avez besoin de connecter et d'outiller vos réseaux, nous offrons une plate-forme pour la coopération et l'action. Vous souhaitez de l'engagement. Nous vous aidons à atteindre les acteurs, les parties-prenantes, les secteurs.
   groups_signup_motivation9: Vous avez besoin de ressources. Nous mettons à votre service notre expérience. Vous avez besoin de coopération. Nous vous connectons à un large réseau d'acteurs et d'organisations soeurs partout dans le monde.
-  groups_signup_pricing: Compte Groupe
+  groups_signup_pricing: Compte groupe
   groups_signup_studies: Etudes de cas
   groups_signup_contact: Vous voulez discuter?
   groups_signup_contact_text: "Prenez contact et découvrez ce qu'Open Food France peut faire pour vous:"
@@ -344,11 +347,11 @@ fr:
   producers_signup_headline: Des producteurs, indépendants
   producers_signup_motivation: Vendez vos produits et racontez vos histoires pour toucher de nouveaux marchés. Gagnez du temps et de l'argent sur la gestion des opérations courantes. Vous pouvez innover sans prendre de risque. Nous nivellons le terrain de jeu pour des échanges plus équitables.
   producers_signup_send: Rejoindre le réseau
-  producers_signup_enterprise: Comptes organisation
+  producers_signup_enterprise: Comptes entreprises
   producers_signup_studies: Les histoires de nos producteurs.
   producers_signup_cta_headline: Rejoindre le réseau!
   producers_signup_cta_action: Rejoindre le réseau
-  producers_signup_detail: Voilà comment.
+  producers_signup_detail: Comment ça marche.
   products_item: Produit
   products_description: Description
   products_variant: Variante
@@ -359,14 +362,14 @@ fr:
   shops_headline: Des achats qui transforment.
   shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
   shops_signup_title: S'inscrire en tant que hub
-  shops_signup_headline: Food hubs, une infinité de possibilités.
-  shops_signup_motivation: Quel que soit votre modèle, nous vous apportons notre support. Si vous voulez changez, nous sommes à vos côtés. Nous sommes une organisation à but non lucratif, independante, et open-source. Nous sommes le partenaire système dont vous avez rêvé.
+  shops_signup_headline: Des hubs divers et variés
+  shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en tout circonstance.
   shops_signup_action: Rejoindre le réseau
-  shops_signup_pricing: Comptes organisations
+  shops_signup_pricing: Comptes entreprises
   shops_signup_stories: Histoires de hubs.
-  shops_signup_help: Nous sommes prêts à vous aider.
-  shops_signup_help_text: Vous avez besoin d'efficacité. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit de distribution, jusqu'à la table à  manger.
-  shops_signup_detail: Voilà comment.
+  shops_signup_help: Nous sommes là pour vous aider.
+  shops_signup_help_text: Vous avez besoin de pouvoir travailler de manière efficace. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit, que l'acheteur final sache qui se trouve derrière les produits.
+  shops_signup_detail: Comment ça marche.
   orders_fees: Frais...
   orders_edit_title: Panier
   orders_edit_headline: Votre panier
