@@ -65,7 +65,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding enterprises that can be added to an order cycle" do
+    describe "finding visible enterprises" do
       let(:e) { double(:enterprise) }
 
       it "returns managed and related enterprises with add_to_order_cycle permission" do
@@ -73,7 +73,7 @@ module OpenFoodNetwork
           with(:add_to_order_cycle).
           and_return([e])
 
-        expect(permissions.order_cycle_enterprises).to eq [e]
+        expect(permissions.visible_enterprises).to eq [e]
       end
     end
 

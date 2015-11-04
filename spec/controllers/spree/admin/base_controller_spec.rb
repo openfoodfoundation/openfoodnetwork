@@ -90,7 +90,7 @@ describe Spree::Admin::BaseController do
     before do
       class Api::Admin::AllowedPrefixAnonymouSerializer;end;
       class Api::Admin::AnonymouSerializer;end;
-      allow(controller).to receive(:ams_prefix_whitelist) { ['allowed_prefix'] }
+      allow(controller).to receive(:ams_prefix_whitelist) { [:allowed_prefix] }
     end
 
     context "when a prefix is passed in" do

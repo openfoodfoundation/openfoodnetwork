@@ -25,16 +25,13 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json do
-          render json: @collection, each_serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user
-        end
+        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix], spree_current_user: spree_current_user }
       end
     end
 
     def welcome
       render layout: "spree/layouts/bare_admin"
     end
-
 
     def update
       invoke_callbacks(:update, :before)
@@ -44,7 +41,7 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render :layout => false }
-          format.json { render json: @object, serializer: Api::Admin::IndexEnterpriseSerializer, spree_current_user: spree_current_user }
+          format.json { render json: @object, ams_prefix: 'index', spree_current_user: spree_current_user }
         end
       else
         invoke_callbacks(:update, :fails)
@@ -99,9 +96,15 @@ module Admin
     def for_order_cycle
       respond_to do |format|
         format.json do
-          render json: ActiveModel::ArraySerializer.new( @collection,
-            each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user
-          ).to_json
+          render json: @collection, each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user
+        end
+      end
+    end
+
+    def for_line_items
+      respond_to do |format|
+        format.json do
+          render_as_json @collection, ams_prefix: 'basic', spree_current_user: spree_current_user
         end
       end
     end
@@ -145,10 +148,12 @@ module Admin
             editable_enterprises.
             order('is_primary_producer ASC, name')
         elsif json_request?
-          OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises
+          OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises.ransack(params[:q]).result
         else
-          Enterprise.where("1=0") unless json_request?
+          Enterprise.where("1=0")
         end
+      when :for_line_items
+        OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises.ransack(params[:q]).result
       else
         # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
         OpenFoodNetwork::Permissions.new(spree_current_user).
@@ -158,7 +163,7 @@ module Admin
     end
 
     def collection_actions
-      [:index, :for_order_cycle, :bulk_update]
+      [:index, :for_order_cycle, :for_line_items, :bulk_update]
     end
 
     def load_methods_and_fees
@@ -247,6 +252,10 @@ module Admin
       else
         main_app.edit_admin_enterprise_path(@enterprise)
       end
+    end
+
+    def ams_prefix_whitelist
+      [:index, :basic]
     end
   end
 end

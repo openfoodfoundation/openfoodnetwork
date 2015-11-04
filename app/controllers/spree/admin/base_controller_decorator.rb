@@ -77,7 +77,7 @@ Spree::Admin::BaseController.class_eval do
   end
 
   def serializer(ams_prefix)
-    if ams_prefix_whitelist.include?(ams_prefix) || ams_prefix.nil?
+    if ams_prefix.nil? || ams_prefix_whitelist.include?(ams_prefix.to_sym)
       prefix = ams_prefix.andand.classify || ""
       name = controller_name.classify
       "Api::Admin::#{prefix}#{name}Serializer".constantize

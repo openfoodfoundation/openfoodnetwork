@@ -15,7 +15,7 @@ module OpenFoodNetwork
       managed_and_related_enterprises_with :add_to_order_cycle
     end
 
-    def order_cycle_enterprises
+    def visible_enterprises
       # Return enterprises that the user manages and those that have granted P-OC to managed enterprises
       managed_and_related_enterprises_granting :add_to_order_cycle
     end

@@ -1,9 +1,9 @@
-angular.module("admin.enterprises").controller 'enterprisesCtrl', ($scope, Enterprises, Columns) ->
-    Enterprises.loaded = false
-    $scope.allEnterprises = Enterprises.index()
+angular.module("admin.enterprises").controller 'enterprisesCtrl', ($scope, $q, Enterprises, Columns) ->
+    requests = []
+    requests.push ($scope.allEnterprises = Enterprises.index(ams_suffix: "index")).$promise
 
-    $scope.loaded = ->
-      Enterprises.loaded
+    $q.all(requests).then ->
+      $scope.loaded = true
 
     $scope.columns = Columns.setColumns
       name:     { name: "Name",     visible: true }

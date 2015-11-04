@@ -68,6 +68,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprises do
       collection do
         get :for_order_cycle
+        get :for_line_items
         post :bulk_update, as: :bulk_update
       end
 

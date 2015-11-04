@@ -515,6 +515,21 @@ module Admin
       end
     end
 
+    describe "for_line_items" do
+      let!(:user) { create(:user) }
+      let!(:enterprise) { create(:enterprise, sells: 'any', owner: user) }
+
+      before do
+        # As a user with permission
+        controller.stub spree_current_user: user
+      end
+
+      it "initializes permissions with the existing OrderCycle" do
+        # expect(controller).to receive(:render_as_json).with([enterprise], {ams_prefix: 'basic', spree_current_user: user})
+        spree_get :for_line_items, format: :json
+      end
+    end
+
     describe "index" do
       context "as super admin" do
         let(:super_admin) { create(:admin_user) }
