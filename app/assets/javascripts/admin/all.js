@@ -28,6 +28,7 @@
 //= require ./enterprises/enterprises
 //= require ./enterprise_groups/enterprise_groups
 //= require ./index_utils/index_utils
+//= require ./orders/orders
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods

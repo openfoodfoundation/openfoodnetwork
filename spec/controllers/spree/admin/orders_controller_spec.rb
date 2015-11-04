@@ -29,10 +29,10 @@ describe Spree::Admin::OrdersController do
     end
   end
 
-  describe "#managed" do
+  describe "#index" do
     render_views
 
-    let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :line_items, :distributor, :order_cycle, :number] }
+    let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :distributor, :order_cycle, :number] }
 
     def self.make_simple_data!
       let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
@@ -51,8 +51,8 @@ describe Spree::Admin::OrdersController do
 
       make_simple_data!
 
-      it "should deny me access to managed orders" do
-        spree_get :managed, { :template => 'bulk_index', :format => :json }
+      it "should deny me access to the index action" do
+        spree_get :index, :format => :json
         expect(response).to redirect_to spree.unauthorized_path
       end
     end
@@ -62,17 +62,12 @@ describe Spree::Admin::OrdersController do
 
       before do
         controller.stub spree_current_user: quick_login_as_admin
-        spree_get :managed, { :template => 'bulk_index', :format => :json }
+        spree_get :index, :format => :json
       end
 
       it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do
         keys = json_response.first.keys.map{ |key| key.to_sym }
         order_attributes.all?{ |attr| keys.include? attr }.should == true
-      end
-
-      it "retrieves a list of line items with appropriate attributes" do
-        li_keys = json_response.first['line_items'].first.keys.map{ |key| key.to_sym }
-        line_item_attributes.all?{ |attr| li_keys.include? attr }.should == true
       end
 
       it "sorts orders in ascending id order" do
@@ -85,21 +80,8 @@ describe Spree::Admin::OrdersController do
         json_response.map{ |order| order['completed_at'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }.should == true
       end
 
-      it "returns an array for line_items" do
-        json_response.map{ |order| order['line_items'] }.all?{ |a| a.is_a? Array }.should == true
-      end
-
-      it "returns quantity and max quantity at integers" do
-        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['quantity'] }.all?{ |q| q.is_a? Fixnum }.should == true
-        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['max_quantity'] }.all?{ |mq| mq.nil? || mq.is_a?( Fixnum ) }.should == true
-      end
-
-      it "returns supplier object with id and name keys" do
-        json_response.map{ |order| order['line_items'] }.flatten.map{ |li| li['supplier'] }.all?{ |s| s.has_key?('id') && s.has_key?('name') }.should == true
-      end
-
-      it "returns distributor object with id and name keys" do
-        json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') && d.has_key?('name') }.should == true
+      it "returns distributor object with id key" do
+        json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }.should == true
       end
 
       it "retrieves the order number" do
@@ -123,7 +105,7 @@ describe Spree::Admin::OrdersController do
 
         before do
           controller.stub spree_current_user: supplier.owner
-          spree_get :managed, { :format => :json }
+          spree_get :index, :format => :json
         end
 
         it "does not display line items for which my enterprise is a supplier" do
@@ -134,32 +116,24 @@ describe Spree::Admin::OrdersController do
       context "coordinator enterprise" do
         before do
           controller.stub spree_current_user: coordinator.owner
-          spree_get :managed, { :format => :json }
+          spree_get :index, :format => :json
         end
 
         it "retrieves a list of orders" do
           keys = json_response.first.keys.map{ |key| key.to_sym }
           order_attributes.all?{ |attr| keys.include? attr }.should == true
-        end
-
-        it "only displays line items from orders for which my enterprise is the order_cycle coorinator" do
-          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.should match_array [line_item1.id, line_item2.id, line_item3.id]
         end
       end
 
       context "hub enterprise" do
         before do
           controller.stub spree_current_user: distributor1.owner
-          spree_get :managed, { :format => :json }
+          spree_get :index, :format => :json
         end
 
         it "retrieves a list of orders" do
           keys = json_response.first.keys.map{ |key| key.to_sym }
           order_attributes.all?{ |attr| keys.include? attr }.should == true
-        end
-
-        it "only displays line items from orders for which my enterprise is a distributor" do
-          json_response.map{ |order| order['line_items'] }.flatten.map{ |line_item| line_item["id"] }.should match_array [line_item1.id, line_item2.id]
         end
       end
     end
