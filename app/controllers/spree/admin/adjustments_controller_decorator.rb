@@ -2,8 +2,16 @@ module Spree
   module Admin
     AdjustmentsController.class_eval do
       before_filter :set_included_tax, only: :create
+      before_filter :set_default_tax_rate, only: :edit
 
       private
+
+      def set_default_tax_rate
+        if @adjustment.included_tax > 0 && TaxRate.count == 1
+          @tax_rate_id = TaxRate.first.id
+        end
+      end
+
 
       def set_included_tax
         if params[:tax_rate_id].present?

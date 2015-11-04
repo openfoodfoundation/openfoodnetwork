@@ -129,6 +129,39 @@ feature %q{
     page.should have_selector 'td.included-tax', text: '10'
   end
 
+  scenario "modifying taxed adjustments on an order" do
+    # Given a tax rate and a taxed adjustment
+    tax_rate = create(:tax_rate, name: 'GST', calculator: build(:calculator, preferred_amount: 10))
+    adjustment = create(:adjustment, adjustable: @order, amount: 110, included_tax: 10)
+
+    # When I go to the adjustments page for the order
+    login_to_admin_section
+    visit spree.admin_orders_path
+    page.find('td.actions a.icon-edit').click
+    click_link 'Adjustments'
+    page.find('td.actions a.icon-edit').click
+
+    # Then I should see the uneditable included tax and our tax rate as the default
+    page.should have_field :adjustment_included_tax, with: '10.00', disabled: true
+    page.should have_select :tax_rate_id, selected: 'GST'
+
+    # When I edit the adjustment, removing the tax
+    select 'Remove tax', from: :tax_rate_id
+    click_button 'Continue'
+
+    # Then the adjustment tax should be cleared
+    page.should have_selector 'td.amount', text: '110'
+    page.should have_selector 'td.included-tax', text: '0'
+  end
+
+  scenario "modifying an untaxed adjustment on an order" do
+    # Given a tax rate and an untaxed adjustment
+    # When I go to the adjustments page for the order
+    # Then I should see 'Remove tax' as the default tax rate
+    # When I edit the adjustment, setting a tax rate
+    # Then the adjustment tax should be recalculated
+  end
+
 
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
