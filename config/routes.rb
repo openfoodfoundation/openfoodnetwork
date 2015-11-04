@@ -209,6 +209,10 @@ Spree::Core::Engine.routes.prepend do
       get :print, on: :member
       get :managed, on: :collection
     end
+
+    resources :line_items do
+      get :index, on: :collection, format: :json
+    end
   end
 
   resources :orders do
