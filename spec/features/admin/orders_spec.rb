@@ -10,7 +10,7 @@ feature %q{
   background do
     @user = create(:user)
     @product = create(:simple_product)
-    @distributor = create(:distributor_enterprise)
+    @distributor = create(:distributor_enterprise, charges_sales_tax: true)
     @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
@@ -131,7 +131,7 @@ feature %q{
 
   scenario "modifying taxed adjustments on an order" do
     # Given a tax rate and a taxed adjustment
-    tax_rate = create(:tax_rate, name: 'GST', calculator: build(:calculator, preferred_amount: 10))
+    tax_rate = create(:tax_rate, name: 'GST', calculator: build(:calculator, preferred_amount: 10), zone: create(:zone_with_member))
     adjustment = create(:adjustment, adjustable: @order, amount: 110, included_tax: 10)
 
     # When I go to the adjustments page for the order
