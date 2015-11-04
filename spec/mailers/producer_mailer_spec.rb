@@ -56,10 +56,9 @@ describe ProducerMailer do
   end
 
   it "contains an aggregated list of produce" do
-    mail.body.to_s.each_line do |line|
-      if line.include? p1.name
-        line.should include 'QTY: 2'
-      end
+    body_lines_including(mail, p1.name).each do |line|
+      line.should include 'QTY: 2'
+      line.should include '@ $10.00 = $20.00'
     end
   end
 
@@ -71,5 +70,12 @@ describe ProducerMailer do
     expect do
       ProducerMailer.order_cycle_report(s3, order_cycle).deliver
     end.to change(ActionMailer::Base.deliveries, :count).by(0)
+  end
+
+
+  private
+
+  def body_lines_including(mail, s)
+    mail.body.to_s.lines.select { |line| line.include? s }
   end
 end

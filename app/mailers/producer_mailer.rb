@@ -41,8 +41,12 @@ class ProducerMailer < Spree::BaseMailer
   def aggregate_line_items(line_items)
     # Arrange the items in a hash to group quantities
     line_items.inject({}) do |lis, li|
-      lis[li.variant] ||= {line_item: li, quantity: 0}
-      lis[li.variant][:quantity] += li.quantity
+      if lis.key? li.variant
+        lis[li.variant].quantity += li.quantity
+      else
+        lis[li.variant] = li
+      end
+
       lis
     end
   end
