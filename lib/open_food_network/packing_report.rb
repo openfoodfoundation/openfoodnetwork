@@ -71,7 +71,9 @@ module OpenFoodNetwork
               proc { |line_items| line_items.sum { |li| li.quantity } },
               proc { |line_items| "" } ] },
           { group_by: proc { |line_item| line_item.variant },
-          sort_by: proc { |variant| variant.product.name } } ]
+          sort_by: proc { |variant| variant.product.name } },
+          { group_by: proc { |line_item| line_item.order.bill_address.lastname },
+          sort_by: proc { |lastname| lastname } } ]
       end
     end
 

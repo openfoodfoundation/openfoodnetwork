@@ -26,6 +26,7 @@ module OpenFoodNetwork
         report.stub(:produce_summary_rows)  { ['produce'] }
         report.stub(:fee_summary_rows)      { ['fee'] }
         report.stub(:shipping_summary_rows) { ['shipping'] }
+        report.stub(:admin_adjustment_summary_rows) { ['admin'] }
         order.stub(:account_invoice?)       { false }
       end
 
@@ -59,6 +60,15 @@ module OpenFoodNetwork
 
       it "always displays shipping summary rows" do
         summary_rows.should include 'shipping'
+      end
+
+      it "displays admin adjustment summary rows when summary report" do
+        summary_rows.should include 'admin'
+      end
+
+      it "does not display admin adjustment summary rows when detail report" do
+        report.stub(:detail?)         { true }
+        summary_rows.should_not include 'admin'
       end
     end
 

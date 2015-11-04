@@ -34,10 +34,7 @@ module OpenFoodNetwork
       rows = []
 
       rows += line_item_detail_rows(order, invoice_number, opts)
-
-      if order.account_invoice?
-        rows += adjustment_detail_rows(order, invoice_number, opts)
-      end
+      rows += adjustment_detail_rows(order, invoice_number, opts)
 
       rows
     end
@@ -60,13 +57,13 @@ module OpenFoodNetwork
     end
 
     def adjustment_detail_rows(order, invoice_number, opts)
-      account_invoice_adjustments(order).map do |adjustment|
+      adjustments(order).map do |adjustment|
         adjustment_detail_row(adjustment, invoice_number, opts)
       end
     end
 
     def adjustment_detail_row(adjustment, invoice_number, opts)
-      row(adjustment.source.andand.account_invoice.andand.order,
+      row(adjustment_order(adjustment),
           '',
           adjustment.label,
           1,
@@ -82,6 +79,7 @@ module OpenFoodNetwork
       rows += produce_summary_rows(order, invoice_number, opts)  unless detail?
       rows += fee_summary_rows(order, invoice_number, opts)      unless detail? && order.account_invoice?
       rows += shipping_summary_rows(order, invoice_number, opts)
+      rows += admin_adjustment_summary_rows(order, invoice_number, opts) unless detail?
 
       rows
     end
@@ -98,6 +96,11 @@ module OpenFoodNetwork
 
     def shipping_summary_rows(order, invoice_number, opts)
       [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+    end
+
+    def admin_adjustment_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Total untaxable admin adjustments (no tax)',      total_untaxable_admin_adjustments(order), invoice_number, 'GST Free Income', opts),
+       summary_row(order, 'Total taxable admin adjustments (tax inclusive)', total_taxable_admin_adjustments(order),   invoice_number, 'GST on Income',   opts)]
     end
 
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
@@ -138,10 +141,19 @@ module OpenFoodNetwork
       ]
     end
 
+    def adjustments(order)
+      account_invoice_adjustments(order) + order.adjustments.admin
+    end
+
     def account_invoice_adjustments(order)
       order.adjustments.
         billable_period.
         select { |a| a.source.present? }
+    end
+
+    def adjustment_order(adjustment)
+      adjustment.source.andand.account_invoice.andand.order ||
+        (adjustment.adjustable.is_a?(Spree::Order) ? adjustment.adjustable : nil)
     end
 
     def invoice_number_for(order, i)
@@ -171,6 +183,14 @@ module OpenFoodNetwork
     def tax_on_shipping_s(order)
       tax_on_shipping = order.adjustments.shipping.sum(&:included_tax) > 0
       tax_on_shipping ? 'GST on Income' : 'GST Free Income'
+    end
+
+    def total_untaxable_admin_adjustments(order)
+      order.adjustments.admin.without_tax.sum &:amount
+    end
+
+    def total_taxable_admin_adjustments(order)
+      order.adjustments.admin.with_tax.sum &:amount
     end
 
     def detail?
