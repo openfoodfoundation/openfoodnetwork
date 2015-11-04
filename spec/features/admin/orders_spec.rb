@@ -106,6 +106,30 @@ feature %q{
     current_path.should == spree.admin_orders_path
   end
 
+  scenario "adding taxed adjustments to an order" do
+    # Given a tax rate
+    create(:tax_rate, name: 'GST', calculator: build(:calculator, preferred_amount: 10))
+
+    # When I go to the adjustments page for the order
+    login_to_admin_section
+    visit spree.admin_orders_path
+    page.find('td.actions a.icon-edit').click
+    click_link 'Adjustments'
+
+    # And I create a new adjustment with tax
+    click_link 'New Adjustment'
+    fill_in 'adjustment_amount', with: 110
+    fill_in 'adjustment_label', with: 'Late fee'
+    select 'GST', from: 'tax_rate_id'
+    click_button 'Continue'
+
+    # Then I should see the adjustment, with the correct tax
+    page.should have_selector 'td.label', text: 'Late fee'
+    page.should have_selector 'td.amount', text: '110'
+    page.should have_selector 'td.included-tax', text: '10'
+  end
+
+
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
     let(:coordinator2) { create(:distributor_enterprise) }
