@@ -56,6 +56,15 @@ module Spree
         tax_rate.included_in_price.should be_false
         tax_rate.calculator.calculable.included_in_price.should be_false
       end
+
+      it "restores both values when an exception is raised" do
+        expect do
+          tax_rate.send(:with_tax_included_in_price) { raise Exception.new 'oops' }
+        end.to raise_error 'oops'
+
+        tax_rate.included_in_price.should be_false
+        tax_rate.calculator.calculable.included_in_price.should be_false
+      end
     end
   end
 end

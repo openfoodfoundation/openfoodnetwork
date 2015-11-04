@@ -51,7 +51,7 @@ module Spree
 
       result = yield
 
-      # TODO: ensure
+    ensure
       self.included_in_price = old_included_in_price
       calculator.calculable.included_in_price = old_included_in_price
 
