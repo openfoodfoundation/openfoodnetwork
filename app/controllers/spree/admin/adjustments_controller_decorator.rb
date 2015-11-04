@@ -1,7 +1,7 @@
 module Spree
   module Admin
     AdjustmentsController.class_eval do
-      before_filter :set_included_tax, only: :create
+      before_filter :set_included_tax, only: [:create, :update]
       before_filter :set_default_tax_rate, only: :edit
 
       private
@@ -18,6 +18,9 @@ module Spree
           tax_rate = TaxRate.find params[:tax_rate_id]
           amount = params[:adjustment][:amount].to_f
           params[:adjustment][:included_tax] = tax_rate.compute_tax amount
+
+        else
+          params[:adjustment][:included_tax] = 0
         end
       end
     end
