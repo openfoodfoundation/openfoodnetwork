@@ -13,7 +13,7 @@
 
   .omega.three.columns
     = f.field_container :tax_rate_id do
-      = f.label :tax_rate_id, t(:tax)
+      = f.label :tax_rate_id, t(:tax_rate)
       = select_tag :tax_rate_id, options_from_collection_for_select(Spree::TaxRate.all, :id, :name, @tax_rate_id), prompt: t(:remove_tax), class: 'select2 fullwidth'
       = f.error_message_on :tax_rate_id
 
