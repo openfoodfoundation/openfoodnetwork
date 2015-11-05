@@ -263,12 +263,12 @@ fr:
   products_edit_cart: "Modifier votre panier"
   products_from: de
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
-  components_profiles_popover: "Certaines entreprises ont juste créer leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
+  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
   components_filters_nofilters: "Pas de filtre"
   components_filters_clearfilters: "Vider les filtres"
   groups_title: Groupes
-  groups_headline: Groupes / territoires
+  groups_headline: Groupes  / réseaux territoriaux
   groups_search: "Recherche par nom ou mot-clé"
   groups_no_groups: "Aucun groupe trouvé"
   groups_about: "A propos"
@@ -338,7 +338,7 @@ fr:
   producers_contact: Contact
   producers_contact_phone: Appeler
   producers_contact_social: Suivre
-  producers_buy_at_html: "Acheter les produits de %{enterprise} à:"
+  producers_buy_at_html: "Acheter les produits de %{enterprise} dans les boutiques suivantes:"
   producers_filter: Filtrer par
   producers_filter_type: Catégorie
   producers_title: Producteurs
@@ -363,7 +363,7 @@ fr:
   shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
   shops_signup_title: S'inscrire en tant que hub
   shops_signup_headline: Des hubs divers et variés
-  shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en tout circonstance.
+  shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en toute circonstance.
   shops_signup_action: Rejoindre le réseau
   shops_signup_pricing: Comptes entreprises
   shops_signup_stories: Histoires de hubs.
@@ -566,7 +566,7 @@ fr:
   follow: "Suivre"
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
   change_shop: "Changer de boutique pour:"
-  shop_at: "Acheter maintenant à:"
+  shop_at: "Acheter maintenant :"
   price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
   sales_fee: "Frais de ventes/marketing"
