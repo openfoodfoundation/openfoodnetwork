@@ -46,3 +46,15 @@ angular.module("admin.lineItems").factory 'LineItems', ($q, LineItemResource) ->
 
     resetAttribute: (lineItem, attribute) ->
       lineItem[attribute] = @pristineByID[lineItem.id][attribute]
+
+    delete: (lineItem, callback=null) ->
+      deferred = $q.defer()
+      lineItem.$delete({id: lineItem.id, orders: "orders", order_number: lineItem.order.number})
+      .then( (data) =>
+        delete @lineItemsByID[lineItem.id]
+        delete @pristineByID[lineItem.id]
+        (callback || angular.noop)(data)
+        deferred.resolve(data)
+      ).catch (response) ->
+        deferred.reject(response)
+      deferred.promise

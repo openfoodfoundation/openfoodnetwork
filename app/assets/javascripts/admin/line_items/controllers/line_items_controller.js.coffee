@@ -30,11 +30,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
 
   $scope.refreshData = ->
     $scope.loading = true
-    $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
-    $scope.distributors = Enterprises.index(action: "for_line_items", serializer: "basic", "q[sells_in][]": ["own", "any"] )
-    $scope.orderCycles = OrderCycles.index(serializer: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
-    $scope.lineItems = LineItems.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
-    $scope.suppliers = Enterprises.index(action: "for_line_items", serializer: "basic", "q[is_primary_producer_eq]": "true" )
+    $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[created_at_gt]": "#{$scope.startDate}", "q[created_at_lt]": "#{$scope.endDate}")
+    $scope.distributors = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"] )
+    $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
+    $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][created_at_gt]": "#{$scope.startDate}", "q[order][created_at_lt]": "#{$scope.endDate}")
+    $scope.suppliers = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[is_primary_producer_eq]": "true" )
 
     $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.enterprisesByID
@@ -62,12 +62,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
 
   $scope.deleteLineItem = (lineItem) ->
     if ($scope.confirmDelete && confirm("Are you sure?")) || !$scope.confirmDelete
-      $http(
-        method: "DELETE"
-        url: "/api/orders/" + lineItem.order.number + "/line_items/" + lineItem.id
-      ).success (data) ->
+      LineItems.delete(lineItem).then ->
         $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
-        delete LineItems.lineItemsByID[lineItem.id]
 
   $scope.deleteLineItems = (lineItems) ->
     existingState = $scope.confirmDelete

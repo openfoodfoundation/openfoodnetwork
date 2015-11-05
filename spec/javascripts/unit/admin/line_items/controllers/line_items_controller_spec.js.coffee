@@ -1,4 +1,4 @@
-describe "AdminOrderMgmtCtrl", ->
+describe "LineItemsCtrl", ->
   ctrl = scope = httpBackend = VariantUnitManager = Enterprises = Orders = LineItems = OrderCycles = null
   supplier = distributor = orderCycle = null
 
@@ -26,11 +26,11 @@ describe "AdminOrderMgmtCtrl", ->
     order = { id: 9, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
-    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
-    httpBackend.expectGET("/admin/enterprises/for_line_items.json?q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any&serializer=basic").respond [distributor]
-    httpBackend.expectGET("/admin/order_cycles.json?as=distributor&q%5Borders_close_at_gt%5D=SomeDate&serializer=basic").respond [orderCycle]
-    httpBackend.expectGET("/admin/line_items.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [lineItem]
-    httpBackend.expectGET("/admin/enterprises/for_line_items.json?q%5Bis_primary_producer_eq%5D=true&serializer=basic").respond [supplier]
+    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_not_null%5D=true&q%5Bcreated_at_gt%5D=SomeDate&q%5Bcreated_at_lt%5D=SomeDate&q%5Bstate_not_eq%5D=canceled").respond [order]
+    httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
+    httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
+    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bcreated_at_gt%5D=SomeDate&q%5Border%5D%5Bcreated_at_lt%5D=SomeDate&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
+    httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
 
     ctrl "LineItemsCtrl", {$scope: scope, Enterprises: Enterprises, Orders: Orders, LineItems: LineItems, OrderCycles: OrderCycles}
     httpBackend.flush()
@@ -67,23 +67,31 @@ describe "AdminOrderMgmtCtrl", ->
   describe "deleting a line item", ->
     order = line_item1 = line_item2 = null
 
-    beforeEach ->
+    beforeEach inject((LineItemResource) ->
       spyOn(window,"confirm").andReturn true
-      order = { number: "R12345678", line_items: [] }
-      line_item1 = { id: 1, order: order }
-      line_item2 = { id: 2, order: order }
-      order.line_items = [ line_item1, line_item2 ]
+      order = { number: "R12345678" }
+      line_item1 = new LineItemResource({ id: 1, order: order })
+      line_item2 = new LineItemResource({ id: 2, order: order })
+      scope.lineItems= [ line_item1, line_item2 ]
+    )
 
-    it "sends a delete request via the API", ->
-      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond "nothing"
-      scope.deleteLineItem line_item1
-      httpBackend.flush()
+    describe "where the request is successful", ->
+      beforeEach ->
+        httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond "nothing"
+        scope.deleteLineItem line_item1
+        httpBackend.flush()
 
-    it "does not remove line_item from the line_items array when request is not successful", ->
-      httpBackend.expectDELETE("/api/orders/#{line_item1.order.number}/line_items/#{line_item1.id}").respond 404, "NO CONTENT"
-      scope.deleteLineItem line_item1
-      httpBackend.flush()
-      expect(order.line_items).toEqual [line_item1, line_item2]
+      it "removes the deleted item from the line_items array", ->
+        expect(scope.lineItems).toEqual [line_item2]
+
+    describe "where the request is unsuccessful", ->
+      beforeEach ->
+        httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond 404, "NO CONTENT"
+        scope.deleteLineItem line_item1
+        httpBackend.flush()
+
+      it "does not remove line_item from the line_items array", ->
+        expect(scope.lineItems).toEqual [line_item1, line_item2]
 
   describe "deleting 'checked' line items", ->
     line_item1 = line_item2 = line_item3 = line_item4 = null

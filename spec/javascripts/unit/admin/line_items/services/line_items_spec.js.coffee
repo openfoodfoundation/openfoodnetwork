@@ -34,8 +34,6 @@ describe "LineItems service", ->
 
 
   describe "#save", ->
-    result = null
-
     describe "success", ->
       lineItem = null
       resolved = false
@@ -105,3 +103,53 @@ describe "LineItems service", ->
     it "resets the specified value according to the pristine record", ->
       LineItems.resetAttribute(lineItem, "price")
       expect(lineItem.price).toEqual 12
+
+  describe "#delete", ->
+    describe "success", ->
+      callback = jasmine.createSpy("callback")
+      lineItem = null
+      resolved = rejected = false
+
+      beforeEach ->
+        lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
+        LineItems.pristineByID[15] = lineItem
+        LineItems.lineItemsByID[15] = lineItem
+        $httpBackend.expectDELETE('/admin/orders/12345678/line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
+        LineItems.delete(lineItem, callback).then( -> resolved = true).catch( -> rejected = true)
+        $httpBackend.flush()
+
+      it "updates the pristine copy of the lineItem", ->
+        expect(LineItems.pristineByID[15]).toBeUndefined()
+        expect(LineItems.lineItemsByID[15]).toBeUndefined()
+
+      it "runs the callback", ->
+        expect(callback).toHaveBeenCalled()
+
+      it "resolves the promise", ->
+        expect(resolved).toBe(true)
+        expect(rejected).toBe(false)
+
+
+    describe "failure", ->
+      callback = jasmine.createSpy("callback")
+      lineItem = null
+      resolved = rejected = false
+
+      beforeEach ->
+        lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
+        LineItems.pristineByID[15] = lineItem
+        LineItems.lineItemsByID[15] = lineItem
+        $httpBackend.expectDELETE('/admin/orders/12345678/line_items/15.json').respond 422, { error: 'obj' }
+        LineItems.delete(lineItem, callback).then( -> resolved = true).catch( -> rejected = true)
+        $httpBackend.flush()
+
+      it "does not update the pristine copy of the lineItem", ->
+        expect(LineItems.pristineByID[15]).toBeDefined()
+        expect(LineItems.lineItemsByID[15]).toBeDefined()
+
+      it "does not run the callback", ->
+        expect(callback).not.toHaveBeenCalled()
+
+      it "rejects the promise", ->
+        expect(resolved).toBe(false)
+        expect(rejected).toBe(true)
