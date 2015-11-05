@@ -13,21 +13,32 @@ Spree::OrderPopulator.class_eval do
       @order.with_lock do
         @order.empty! if overwrite
 
-        from_hash[:products].each do |product_id, variant_id|
-          attempt_cart_add(variant_id, from_hash[:quantity])
-        end if from_hash[:products]
+        variants = read_products_hash(from_hash) +
+                   read_variants_hash(from_hash)
 
-        from_hash[:variants].each do |variant_id, quantity|
-          if quantity.is_a?(Hash)
-            attempt_cart_add(variant_id, quantity[:quantity], quantity[:max_quantity])
-          else
-            attempt_cart_add(variant_id, quantity)
-          end
-        end if from_hash[:variants]
+        variants.each do |v|
+          attempt_cart_add(v[:variant_id], v[:quantity], v[:max_quantity])
+        end
       end
     end
 
     valid?
+  end
+
+  def read_products_hash(data)
+    (data[:products] || []).map do |product_id, variant_id|
+      {variant_id: variant_id, quantity: data[:quantity]}
+    end
+  end
+
+  def read_variants_hash(data)
+    (data[:variants] || []).map do |variant_id, quantity|
+      if quantity.is_a?(Hash)
+        {variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity]}
+      else
+        {variant_id: variant_id, quantity: quantity}
+      end
+    end
   end
 
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
