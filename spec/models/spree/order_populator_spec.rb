@@ -46,7 +46,6 @@ module Spree
     end
 
     describe "varies_from_cart" do
-      #let(:order) { create(:order) }
       let(:variant) { double(:variant, id: 123) }
 
       it "returns true when item is not in cart and a quantity is specified" do
@@ -90,6 +89,28 @@ module Spree
         op.stub(:line_item_for_variant_id) { li }
 
         op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'}).should be_false
+      end
+    end
+
+    describe "variants_removed" do
+      it "returns the variant ids when one is in the cart but not in those given" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, []).should == [123]
+      end
+
+      it "returns nothing when all items in the cart are provided" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, [{variant_id: 123}]).should == []
+      end
+
+      it "returns nothing when items are added to cart" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, [{variant_id: 123}, {variant_id: 456}]).should == []
+      end
+
+      it "does not return duplicates" do
+        op.stub(:variant_ids_in_cart) { [123, 123] }
+        op.send(:variants_removed, []).should == [123]
       end
     end
 

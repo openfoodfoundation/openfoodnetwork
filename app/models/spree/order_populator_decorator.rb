@@ -75,6 +75,12 @@ Spree::OrderPopulator.class_eval do
     li_added || li_quantity_changed || li_max_quantity_changed
   end
 
+  def variants_removed(variants_data)
+    variant_ids_given = variants_data.map { |data| data[:variant_id] }
+
+    (variant_ids_in_cart - variant_ids_given).uniq
+  end
+
   def check_order_cycle_provided_for(variant)
     order_cycle_provided = (!order_cycle_required_for(variant) || @order_cycle.present?)
     errors.add(:base, "Please choose an order cycle for this order.") unless order_cycle_provided
@@ -96,5 +102,9 @@ Spree::OrderPopulator.class_eval do
 
   def line_item_for_variant_id(variant_id)
     order.find_line_item_by_variant Spree::Variant.find(variant_id)
+  end
+
+  def variant_ids_in_cart
+    @order.line_items.map &:variant_id
   end
 end
