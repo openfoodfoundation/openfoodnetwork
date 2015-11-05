@@ -1,1 +1,1 @@
-angular.module("admin.lineItems", ["admin.indexUtils", "admin.lineItems", "admin.enterprises", "admin.order_cycles"])
+angular.module("admin.lineItems", ["admin.indexUtils", "admin.products", "admin.orders", "admin.enterprises", "admin.order_cycles"])
