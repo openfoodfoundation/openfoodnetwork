@@ -32,7 +32,7 @@ Spree::Admin::OrdersController.class_eval do
 
   respond_override index: { :json => { :success => lambda {
     search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
-    render_as_json search.result.sort_by(&:id)
+    render_as_json search.result.reorder('id ASC')
   } } }
 
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
