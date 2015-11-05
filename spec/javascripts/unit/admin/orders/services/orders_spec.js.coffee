@@ -41,8 +41,8 @@ describe "Orders service", ->
       resolved = false
 
       beforeEach ->
-        order = new OrderResource({ id: 15, permalink: 'order1', name: 'Order 1' })
-        $httpBackend.expectPUT('/admin/orders/order1.json').respond 200, { id: 15, name: 'Order 1'}
+        order = new OrderResource({ id: 15, number: "R12345", name: 'Order 1' })
+        $httpBackend.expectPUT('/admin/orders/R12345.json').respond 200, { id: 15, name: 'Order 1'}
         Orders.save(order).then( -> resolved = true)
         $httpBackend.flush()
 
@@ -60,8 +60,8 @@ describe "Orders service", ->
       rejected = false
 
       beforeEach ->
-        order = new OrderResource( { id: 15, permalink: 'permalink', name: 'Order 1' } )
-        $httpBackend.expectPUT('/admin/orders/permalink.json').respond 422, { error: 'obj' }
+        order = new OrderResource( { id: 15, number: 'R12345', name: 'Order 1' } )
+        $httpBackend.expectPUT('/admin/orders/R12345.json').respond 422, { error: 'obj' }
         Orders.save(order).catch( -> rejected = true)
         $httpBackend.flush()
 

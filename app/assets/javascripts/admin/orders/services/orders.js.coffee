@@ -13,7 +13,7 @@ angular.module("admin.orders").factory 'Orders', ($q, OrderResource) ->
 
     save: (order) ->
       deferred = $q.defer()
-      order.$update({id: order.permalink})
+      order.$update({id: order.number})
       .then( (data) =>
         @pristineByID[order.id] = angular.copy(order)
         deferred.resolve(data)
