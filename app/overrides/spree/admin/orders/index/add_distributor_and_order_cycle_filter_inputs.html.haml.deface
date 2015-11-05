@@ -2,12 +2,12 @@
 
 .field-block.alpha.eight.columns
   = label_tag nil, t(:distributors)
-  = select_tag(:distributor_ids,
+  = select_tag("q[distributor_id_in]",
     options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
     {class: "select2 fullwidth", multiple: true})
 
 .field-block.alpha.eight.columns
   = label_tag nil, t(:order_cycles)
-  = select_tag(:order_cycle_ids,
+  = select_tag("q[order_cycle_id_in]",
     options_for_select(OrderCycle.managed_by(spree_current_user).map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
     {class: "select2 fullwidth", multiple: true})
