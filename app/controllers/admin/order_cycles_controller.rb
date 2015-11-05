@@ -15,7 +15,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_suffix], current_user: spree_current_user
+          render_as_json @collection, ams_prefix: params[:ams_prefix], current_user: spree_current_user
         end
       end
     end
@@ -162,6 +162,10 @@ module Admin
           end
         end
       end
+    end
+
+    def ams_prefix_whitelist
+      [:basic]
     end
   end
 end
