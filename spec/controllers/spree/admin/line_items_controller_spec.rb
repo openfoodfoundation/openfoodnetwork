@@ -8,7 +8,7 @@ describe Spree::Admin::LineItemsController do
 
     let(:line_item_attributes) { [:id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume, :units_product, :units_variant, :order] }
     let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
-    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
+    let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: 1.day.ago, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
     let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
     let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
     let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
@@ -29,26 +29,51 @@ describe Spree::Admin::LineItemsController do
 
       before do
         controller.stub spree_current_user: quick_login_as_admin
-        spree_get :index, :format => :json
       end
 
-      it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
-        keys = json_response.first.keys.map{ |key| key.to_sym }
-        line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+      context "when no ransack params are passed in" do
+        before do
+          spree_get :index, :format => :json
+        end
+
+        it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
+          keys = json_response.first.keys.map{ |key| key.to_sym }
+          line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+        end
+
+        it "sorts line_items in ascending id line_item" do
+          ids = json_response.map{ |line_item| line_item['id'] }
+          ids[0].should < ids[1]
+          ids[1].should < ids[2]
+        end
+
+        it "formats final_weight_volume as a float" do
+          json_response.map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }.should == true
+        end
+
+        it "returns distributor object with id key" do
+          json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.has_key?('id') }.should == true
+        end
       end
 
-      it "sorts line_items in ascending id line_item" do
-        ids = json_response.map{ |line_item| line_item['id'] }
-        ids[0].should < ids[1]
-        ids[1].should < ids[2]
+      context "when ransack params are passed in for line items" do
+        before do
+          spree_get :index, :format => :json, q: { order_id_eq: order2.id }
+        end
+
+        it "retrives a list of line items which match the criteria" do
+          expect(json_response.map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id]
+        end
       end
 
-      it "formats final_weight_volume as a float" do
-        json_response.map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }.should == true
-      end
+      context "when ransack params are passed in for orders" do
+        before do
+          spree_get :index, :format => :json, q: { order: { completed_at_gt: 2.hours.ago } }
+        end
 
-      it "returns distributor object with id key" do
-        json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.has_key?('id') }.should == true
+        it "retrives a list of line items whose orders match the criteria" do
+          expect(json_response.map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id, line_item4.id]
+        end
       end
     end
 

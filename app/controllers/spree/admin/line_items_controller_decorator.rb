@@ -6,8 +6,10 @@ Spree::Admin::LineItemsController.class_eval do
   def index
     respond_to do |format|
       format.json do
-        search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_line_items.ransack(params[:q])
-        render_as_json search.result.sort_by(&:order_id)
+        order_params = params[:q].andand.delete :order
+        orders = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(order_params).result
+        line_items = OpenFoodNetwork::Permissions.new(spree_current_user).editable_line_items.where(order_id: orders).ransack(params[:q])
+        render_as_json line_items.result.reorder('order_id ASC, id ASC')
       end
     end
   end
