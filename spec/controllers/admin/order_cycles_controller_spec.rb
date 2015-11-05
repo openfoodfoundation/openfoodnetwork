@@ -9,6 +9,40 @@ module Admin
       controller.stub spree_current_user: distributor_owner
     end
 
+    describe "#index" do
+      describe "when the user manages a coordinator" do
+        let!(:coordinator) { create(:distributor_enterprise, owner: distributor_owner) }
+        let!(:oc1) { create(:simple_order_cycle, orders_close_at: 60.days.ago ) }
+        let!(:oc2) { create(:simple_order_cycle, orders_close_at: 40.days.ago ) }
+        let!(:oc3) { create(:simple_order_cycle, orders_close_at: 20.days.ago ) }
+
+        context "where show_more is set to true" do
+          it "loads all order cycles" do
+            spree_get :index, show_more: true
+            expect(assigns(:collection)).to include oc1, oc2, oc3
+          end
+        end
+
+        context "where show_more is not set" do
+          context "and q[orders_close_at_gt] is set" do
+            it "loads order cycles that closed within the past month" do
+              spree_get :index, q: { orders_close_at_gt: 45.days.ago }
+              expect(assigns(:collection)).to_not include oc1
+              expect(assigns(:collection)).to include oc2, oc3
+            end
+          end
+
+          context "and q[orders_close_at_gt] is not set" do
+            it "loads order cycles that closed within the past month" do
+              spree_get :index
+              expect(assigns(:collection)).to_not include oc1, oc2
+              expect(assigns(:collection)).to include oc3
+            end
+          end
+        end
+      end
+    end
+
     describe "new" do
       describe "when the user manages no distributor enterprises suitable for coordinator" do
         let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner, confirmed_at: nil) }
