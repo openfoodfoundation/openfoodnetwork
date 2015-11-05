@@ -65,6 +65,16 @@ Spree::OrderPopulator.class_eval do
     DistributionChangeValidator.new(@order).can_change_to_distribution?(distributor, order_cycle)
   end
 
+  def varies_from_cart(variant_data)
+    li = line_item_for_variant_id variant_data[:variant_id]
+
+    li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
+    li_quantity_changed     = li.present? && li.quantity.to_i     != variant_data[:quantity].to_i
+    li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
+
+    li_added || li_quantity_changed || li_max_quantity_changed
+  end
+
   def check_order_cycle_provided_for(variant)
     order_cycle_provided = (!order_cycle_required_for(variant) || @order_cycle.present?)
     errors.add(:base, "Please choose an order cycle for this order.") unless order_cycle_provided
@@ -82,5 +92,9 @@ Spree::OrderPopulator.class_eval do
 
   def order_cycle_required_for(variant)
     variant.product.product_distributions.empty?
+  end
+
+  def line_item_for_variant_id(variant_id)
+    order.find_line_item_by_variant Spree::Variant.find(variant_id)
   end
 end

@@ -45,6 +45,54 @@ module Spree
       end
     end
 
+    describe "varies_from_cart" do
+      #let(:order) { create(:order) }
+      let(:variant) { double(:variant, id: 123) }
+
+      it "returns true when item is not in cart and a quantity is specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+      end
+
+      it "returns true when item is not in cart and a max_quantity is specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0', max_quantity: '2'}).should be_true
+      end
+
+      it "returns false when item is not in cart and no quantity or max_quantity are specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0'}).should be_false
+      end
+
+      it "returns true when quantity varies" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+      end
+
+      it "returns true when max_quantity varies" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '3'}).should be_true
+      end
+
+      it "returns false when max_quantity varies only in nil vs 0" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1'}).should be_false
+      end
+
+      it "returns false when both are specified and neither varies" do
+        li = double(:line_item, quantity: 1, max_quantity: 2)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'}).should be_false
+      end
+    end
+
     describe "attempt_cart_add" do
       it "performs additional validations" do
         variant = double(:variant)
