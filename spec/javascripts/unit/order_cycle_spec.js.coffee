@@ -39,7 +39,7 @@ describe 'OrderCycle controllers', ->
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
       ocInstance = {}
 
-      module('admin.order_cycles')
+      module('admin.orderCycles')
       inject ($controller) ->
         ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
@@ -202,7 +202,7 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
-      module('admin.order_cycles')
+      module('admin.orderCycles')
       inject ($controller) ->
         ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
@@ -330,7 +330,7 @@ describe 'OrderCycle services', ->
     Enterprise = null
 
     beforeEach ->
-      module 'admin.order_cycles'
+      module 'admin.orderCycles'
       inject ($injector, _$httpBackend_)->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
@@ -396,7 +396,7 @@ describe 'OrderCycle services', ->
     EnterpriseFee = null
 
     beforeEach ->
-      module 'admin.order_cycles'
+      module 'admin.orderCycles'
       inject ($injector, _$httpBackend_)->
         EnterpriseFee = $injector.get('EnterpriseFee')
         $httpBackend = _$httpBackend_
@@ -438,7 +438,7 @@ describe 'OrderCycle services', ->
     beforeEach ->
       $window = {navigator: {userAgent: 'foo'}}
 
-      module 'admin.order_cycles', ($provide)->
+      module 'admin.orderCycles', ($provide)->
         $provide.value('$window', $window)
         null
 

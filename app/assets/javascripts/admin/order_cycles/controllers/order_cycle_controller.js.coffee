@@ -1,4 +1,4 @@
-angular.module('admin.order_cycles', ['ngResource'])
+angular.module('admin.orderCycles')
   .controller('AdminCreateOrderCycleCtrl', ['$scope', '$filter', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplied_products = Enterprise.supplied_products

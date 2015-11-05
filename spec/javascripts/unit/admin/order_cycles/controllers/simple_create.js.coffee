@@ -27,7 +27,7 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
       index: jasmine.createSpy()
     ocInstance = {}
 
-    module('admin.order_cycles')
+    module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminSimpleCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 

@@ -71,7 +71,7 @@ module Admin
     end
 
     def admin_inject_order_cycle_instance
-      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.order_cycles', name: 'ocInstance', json: "{coordinator_id: '#{@order_cycle.coordinator.id}'}"}
+      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.orderCycles', name: 'ocInstance', json: "{coordinator_id: '#{@order_cycle.coordinator.id}'}"}
     end
 
     def admin_inject_spree_api_key

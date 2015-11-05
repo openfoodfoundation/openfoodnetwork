@@ -23,7 +23,7 @@ describe "AdminSimpleEditOrderCycleCtrl", ->
     EnterpriseFee =
       index: jasmine.createSpy()
 
-    module('admin.order_cycles')
+    module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminSimpleEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 

@@ -1,4 +1,4 @@
-angular.module('admin.order_cycles').factory('OrderCycle', ($resource, $window) ->
+angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) ->
   OrderCycle = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }

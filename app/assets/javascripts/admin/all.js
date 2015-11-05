@@ -30,6 +30,7 @@
 //= require ./index_utils/index_utils
 //= require ./line_items/line_items
 //= require ./orders/orders
+//= require ./order_cycles/order_cycles
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
