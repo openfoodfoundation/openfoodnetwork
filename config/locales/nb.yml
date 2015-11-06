@@ -6,7 +6,7 @@ nb:
         Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
     enterprise_confirmations:
       enterprise:
-        confirmed: Takk, din epostadressen er bekreftet.
+        confirmed: Takk, din epostadresse er bekreftet.
         not_confirmed: Din epostadresse kan ikke bekreftes. Kanskje du allerede har fullført dette steget?
         confirmation_sent: "Bekreftelse på epost er sendt!"
         confirmation_not_sent: "Kunne ikke sende bekreftelse på epost."
@@ -17,6 +17,7 @@ nb:
   producers: Norske Produsenter
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
+  print: "Print"
   logo: "Logo (640x130)"
   logo_mobile: "Mobil logo (75x26)"
   logo_mobile_svg: "Mobil logo (SVG)"
@@ -33,6 +34,7 @@ nb:
   footer_links_md: "Linker"
   footer_about_url: "Om URL"
   footer_tos_url: "Vilkår URL"
+  invoice: "Faktura"
   name: Navn
   first_name: Fornavn
   last_name: Etternavn
@@ -111,16 +113,12 @@ nb:
   footer_legal_call: "Les våre"
   footer_legal_tos: "Vilkår & betingelser"
   footer_legal_visit: "Finn oss på"
-  footer_legal_text: "Open Food Network er en programvareplattform med fri og åpen kilde. Innholdet er lisensiert under"
-  footer_legal_text2: "og vår kode under"
-  footer_legal_license_content: "CC BY-SA 3.0"
-  footer_legal_license_code: "AGPL 3"
   home_shop: Handle nå
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Noen ganger er det best å fikse systemet ved å starte et nytt..."
   brandstory_part1: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kjøpere som tror på at ukentlige innkjøpsrutiner kan bidra til å forandre verden."
-  brandstory_part2: "Da trenger vi en ordentlig måte å gjøre det på. En måte som styrker alle som dyrker, selger og kjøper mat. En måte å fortelle alle historiene på, håndtere all logistikk. En måte å forvandle transaksjon til transformasjon hver dag."
-  brandstory_part3: "Derfor bygger vi en online markedsplass som endrer spillereglene. Det er transparent, slik at det skaper ekte relasjoner. Det er open-source, slik at det er eid av alle. Metoden er skalérbar for regioner og nasjoner, så folk kan starte versjoner over hele verden."
+  brandstory_part2: "Da trenger vi en ordentlig måte å gjøre det på. En måte som styrker alle som dyrker, selger og kjøper mat. En måte å fortelle alle historiene på, håndtere all logistikk på. En måte å forvandle transaksjon til transformasjon hver dag."
+  brandstory_part3: "Derfor bygger vi et online marked som endrer spillereglene. Det er transparent, slik at det skaper ekte relasjoner. Det er open-source, slik at det er eid av alle. Metoden er skalérbar for regioner og land, så folk kan starte versjoner over hele verden."
   brandstory_part4: "Det fungerer overalt. Det forandrer alt."
   brandstory_part5_strong: "Vi kaller det Open Food Network."
   brandstory_part6: "Alle er vi glad i mat. Nå kan vi elske vårt matsystem også."
@@ -128,9 +126,9 @@ nb:
   system_step1: "1. Søk"
   system_step1_text: "Søk blant våre mangfoldige, uavhengige butikker for lokal mat i sesong. Søk i nabolag og matkategori, eller om du foretrekker levering eller å hente selv."
   system_step2: "2. Handle"
-  system_step2_text: "Omform dine transakjsoner med rimelig lokal mat fra mangfoldige produsenter og hubs. Oppdag historiene bak maten din og de som lager den!"
+  system_step2_text: "Endre dine kjøpevaner med rimelig lokal mat fra mangfoldige produsenter og hubs. Oppdag historiene bak maten din og de som lager den!"
   system_step3: "3. Hent / Få det levert"
-  system_step3_text: "Vent på din leveranse, eller besøk produsenten eller hub'en for en mer personlig kobling til maten din. Mathandling så mangfoldig som meningen var fra naturens side."
+  system_step3_text: "Vent på din levering, eller besøk produsenten eller hub'en for en mer personlig kobling til maten din. Mathandling så mangfoldig slik det var ment fra naturens side."
   cta_headline: "Handling som gjør verden til et bedre sted."
   cta_label: "Jeg er klar"
   stats_headline: "Vi skaper et nytt matsystem."
@@ -143,7 +141,7 @@ nb:
   checkout_order_ready: Bestilling klar for
   checkout_hide: Skjul
   checkout_expand: Utvid
-  checkout_headline: "Ok, klar for betaling?"
+  checkout_headline: "Ok, gå til kassen?"
   checkout_as_guest: "Betal som gjest"
   checkout_details: "Dine detaljer"
   checkout_billing: "Betalingsinformasjon"
@@ -178,17 +176,17 @@ nb:
   products_at: "hos %{distributor}"
   products_elsewhere: "Produkter funnet andre steder"
   email_welcome: "Velkommen"
-  email_confirmed: "Takk for at du bekrefter din e-postadresse"
+  email_confirmed: "Takk for at du bekrefter din epostadresse"
   email_registered: "er nå en del av"
-  email_userguide_html: "Brukerhåndboken med detaljert støtte om hvordan man setter opp som Produsent eller Hub finnes her: %{link}"
-  email_admin_html: "Du kan administrere din konto ved å logge inn på %{link} eller ved klikke på tannhjulet øverst til høyre på hjemmesiden og velge Aministrasjon."
-  email_community_html: "Vi har også et online forum for diskusjon relatert til OFN programvaren og de forskjellige utfordringene med å drive matfirma. Vi oppfordrer deg til å bli med. Vi utvikler oss hele tiden og dine innspill til dette forumet vil forme det som skjer videre. %{link}"
+  email_userguide_html: "Brukerhåndboken med detaljert støtte om hvordan man kommer i gang som Produsent eller Hub finnes her: %{link}"
+  email_admin_html: "Du kan administrere din konto ved å logge inn på %{link} eller ved klikke på tannhjulet øverst til høyre på hjemmesiden og velge Administrasjon."
+  email_community_html: "Vi har også et online forum for diskusjon relatert til OFN programvaren og de forskjellige utfordringene med å drive et matfirma. Vi oppfordrer deg til å bli med. Vi utvikler oss hele tiden og dine innspill til dette forumet vil forme det som skjer videre. %{link}"
   email_help: "Hvis du har problemer, sjekk vår FAQ, utforsk forumet eller skriv et 'Support'-emne og noen vil hjelpe deg!"
   email_confirmation_greeting: "Hei, %{contact}!"
-  email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din Profil må du bekrefte denne epostadressen."
-  email_confirmation_click_link: "Trykk på linken under for å bekrefte din e-post og for å fortsette oppsettet av din profil."
+  email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
+  email_confirmation_click_link: "Trykk på linken under for å bekrefte din epost og for å fortsette oppsettet av din profil."
   email_confirmation_link_label: "Bekreft denne epostadressen »"
-  email_confirmation_help: "Etter du har bekreftet e-postadressen får du tilgang til din administrasjonskonto for dette selskapet. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
+  email_confirmation_help: "Etter du har bekreftet epostadressen får du tilgang til din administrasjonskonto for dette selskapet. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
   email_confirmation_userguide: "Brukerhåndbok"
   email_social: "Her finner du oss:"
   email_contact: "Send oss en epost:"
@@ -220,10 +218,10 @@ nb:
   email_special_instructions: "Dine kommentarer:"
   email_signup_greeting: Hei!
   email_signup_welcome: "Velkommen til %{sitename}!"
-  email_signup_login: Din login
-  email_signup_email: Din login e-post er
+  email_signup_login: Din innlogging
+  email_signup_email: Din innloggingsepost er
   email_signup_shop_html: "Du kan begynne å handle på nett nå på %{link}."
-  email_signup_text: "Takk for at du ble med i nettverket. Hvis du er kunde ser vi frem til å vise deg mange fantastiske bønder, flotte mat-hubs og deilig mat! Hvis du er produsent eller selskap er vi glade for å ha deg som en del av nettverket."
+  email_signup_text: "Takk for at du ble med i nettverket. Hvis du er kunde ser vi frem til å vise deg mange fantastiske bønder, flotte mathubs og deilig mat! Hvis du er produsent eller selskap er vi glade for å ha deg som en del av nettverket."
   email_signup_help_html: "Vi tar i mot alle dine spørsmål og tilbakemeldinger; du kan bruke <em>Send tilbakemelding</em>-knappen på nettsiden eller sende oss en epost på"
   shopping_oc_closed: Stengt for bestilling
   shopping_oc_closed_description: "Vent til neste runde åpner (eller kontakt oss direkte for å se om vi tar i mot sene bestillinger)"
@@ -286,29 +284,29 @@ nb:
   groups_signup_motivation2: Det er grunnen til at vi står opp om morgenen. Vi er en global non-profit, basert på åpen kildekode. We opptrer rettferdig. Du kan alltid stole på oss.
   groups_signup_motivation3: Vi vet du har gode ideer og vi ønsker å hjelpe. Vi deler vår kunnskap, våre nettverk og ressurser. Vi vet at isolasjon ikke skaper endring så vi vil samarbeide med deg.
   groups_signup_motivation4: Vi møter deg der du er.
-  groups_signup_motivation5: Du kan være en allianse av mat-hubs, produsenter eller distributører, i industri eller lokale myndigheter.
+  groups_signup_motivation5: Du kan være en allianse av mathubs, produsenter eller distributører, i industri eller lokale myndigheter.
   groups_signup_motivation6: Uansett din rolle i den lokale matkjeden, vi ønsker å hjelpe. Hvis du lurer på hvordan Open Food Network vil se ut eller hva de gjør i din del av verden, la oss snakke sammen.
   groups_signup_motivation7: Vi gir matkjeden mer mening.
   groups_signup_motivation8: Du trenger å aktivere og tilrettelegge for dine nettverk, vi tilbyr en plattform for samtale og handling. Du trenger ekte engasjement. Vi hjelper til med å nå alle aktører, alle interessenter, alle sektorer.
   groups_signup_motivation9: Du trenger flere ressurser. We kommer med all erfaring vi kan bære. Du trenger samarbeid. Vi kobler deg med et globalt nettverk med likesinnede.
   groups_signup_pricing: Gruppekonto
-  groups_signup_studies: Bruksundersøkelser
+  groups_signup_studies: Brukerundersøkelser
   groups_signup_contact: Klar for å snakke sammen?
   groups_signup_contact_text: "Ta kontakt for å oppdage hva OFN kan gjøre for deg:"
   groups_signup_detail: "Her er detaljene."
   login_invalid: "Ugyldig epost eller passord"
-  modal_hubs: "Mat-hubs"
+  modal_hubs: "Mathubs"
   modal_hubs_abstract: Våre hubs er kontaktpunkt mellom deg og menneskene som lager maten din!
-  modal_hubs_content1: Du kan søke etter en passende hub på lokasjon eller navn. Noen hubs har flere hentepunkt hvor du kan plukke opp det du har kjøpt, og noen tilbyr også levering. Hver mat-hub er en butikk med uavhengige drift og logistikk - så det vil være forskjeller mellom huber.
+  modal_hubs_content1: Du kan søke etter en passende hub på lokasjon eller navn. Noen hubs har flere hentepunkt hvor du kan plukke opp det du har kjøpt, og noen tilbyr også levering. Hver mathub er en butikk med uavhengig drift og logistikk - så det vil være forskjeller mellom huber.
   modal_hubs_content2: Du kan kun handle hos en hub om gangen.
   modal_groups: "Grupper / Regioner"
   modal_groups_content1: Dette er organisasjonene og hub-koblingene som utgjør Open Food Network.
-  modal_groups_content2: Noen grupper er klynger basert på lokalnivå eller kommunenivå, andre har ingen geografiske likheter.
+  modal_groups_content2: Noen grupper er klynger basert på lokalnivå eller regionnivå, andre har ingen geografiske likheter.
   modal_how: "Slik fungerer det"
   modal_how_shop: Handle på Open Food Network
-  modal_how_shop_explained: Søk etter en mat-hub nær deg for å begynne å handle! Du kan utse detaljer for hver mat-hub for å se hvilke godbiter som er finnes, og klikk deg videre for å handle. (Du kan kun handle hos en mat-hub om gangen).
+  modal_how_shop_explained: Søk etter en mathub nær deg for å begynne å handle! Du kan se detaljer for hver mathub for å se hvilke godbiter som finnes, og klikk deg videre for å handle. (Du kan kun handle hos en mathub om gangen).
   modal_how_pickup: Henting, levering og transportkostnader
-  modal_how_pickup_explained: Noen mat-hubs leverer på døren, mens andre krever at du henter varene du har kjøpt. Du kan se hvilke alternativ som er tilgjengelige på hjemmesiden, og velge hvilket du ønsker på handle- og betalingssidene. Levering koster mer, og prisene varierer fra hub til hub. Hver mat-hub er en forretning med uavhengig drift og logistikk - så variasjoner mellom hubs er naturlig.
+  modal_how_pickup_explained: Noen mathubs leverer på døren, mens andre krever at du henter varene du har kjøpt. Du kan se hvilke alternativ som er tilgjengelige på hjemmesiden, og velge hvilket du ønsker på handle- og betalingssidene. Levering koster mer, og prisene varierer fra hub til hub. Hver mathub er en forretning med uavhengig drift og logistikk - så variasjoner mellom hubs er naturlig.
   modal_how_more: Finn ut mer
   modal_how_more_explained: "Hvis du ønsker å lære mer om Open Food Network, hvordan det fungerer og ta del, sjekk ut:"
   modal_producers: "Produsenter"
@@ -336,14 +334,13 @@ nb:
   producers_contact: Kontakt
   producers_contact_phone: Ring
   producers_contact_social: Følg
-  producers_at: "varer hos:"
   producers_filter: Filtrer på
   producers_filter_type: Type
   producers_title: Produsenter
   producers_headline: Finn lokale produsenter
   producers_signup_title: Bli med som produsent
   producers_signup_headline: Matprodusenter, styrket.
-  producers_signup_motivation: Selg dine produkter og fortell dine historier til mangfoldige ny markeder. Spar tid og penger på alt du ikke ønsker å gjøre selv. Vi støtter nyskaping uten risiko. Vi jevner ut spillet.
+  producers_signup_motivation: Selg dine produkter og fortell dine historier til mangfoldige nye markeder. Spar tid og penger på alt du ikke ønsker å gjøre selv. Vi støtter nyskaping uten risiko. Vi jevner ut spillet.
   producers_signup_send: Bli med nå
   producers_signup_enterprise: Bedriftskonto
   producers_signup_studies: Historier fra våre produsenter.
@@ -360,8 +357,8 @@ nb:
   shops_headline: Handling på en ny måte.
   shops_text: Mat gror i syklus, bønder høster i syklus, og vi bestiller mat i syklus. Hvis du møter en stengt besillingsrunde, sjekk igjen snart.
   shops_signup_title: Bli med som hub
-  shops_signup_headline: Mat-hubs, ubegrenset.
-  shops_signup_motivation: Uansett modell støtter vi deg. Uansett hvordan du forandrer deg er vi med deg. Vi er non-profitt, uavhengig, og transparent. Vi er løsningspartneren du har drømt om.
+  shops_signup_headline: Mathubs, ubegrenset.
+  shops_signup_motivation: Uansett modell støtter vi deg. Uansett hvordan du forandrer deg er vi med deg. Vi er non-profit, uavhengig, og transparent. Vi er partneren du har drømt om.
   shops_signup_action: Bli med nå
   shops_signup_pricing: Bedriftskonto
   shops_signup_stories: Historier fra våre hubs.
@@ -376,7 +373,6 @@ nb:
   orders_edit_checkout: Kassen
   orders_form_empty_cart: "Tøm handlekurv"
   orders_form_admin: Admin og håndtering
-  orders_form_subtotal: Sum
   orders_oc_expired_headline: Bestillinger stengt for denne runden
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
   orders_oc_expired_text_others_html: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger <strong>%{link}</strong>."
@@ -409,20 +405,20 @@ nb:
   updating: oppdatering
   failed_to_create_enterprise: "Klarte ikke å opprette virksomheten."
   failed_to_create_enterprise_unknown: "Klarte ikke å opprette virksomheten.\nKontroller at alle feltene er fylt ut."
-  failed_to_update_enterprise_unknown: "Klarte ikke å opprette virksomheten.\nKontroller at alle feltene er fylt ut."
+  failed_to_update_enterprise_unknown: "Klarte ikke å oppdatere virksomheten.\nKontroller at alle feltene er fylt ut."
   order_not_saved_yet: "Bestillingen er ikke lagret ennå. Gi oss noen få sekunder for å fullføre!"
   filter_by: "Filtrer på"
   hide_filters: "Skjul filtre"
   one_filter_applied: "1 filter påført"
   x_filters_applied: "filter påført"
   submitting_order: "Bestilling sendes: vennligst vent"
-  confirm_hub_change: "Er du sikker? Dette vil endre din valgte hub og fjern eventuelle varer i handlekurven."
-  confirm_oc_change: "Er du sikker? Dette vil endre din valgte bestilingsrund og fjern eventuelle varer i handlekurven."
-  location_placeholder: "velg sted..."
+  confirm_hub_change: "Er du sikker? Dette vil endre din valgte hub og fjerne eventuelle varer i handlekurven."
+  confirm_oc_change: "Er du sikker? Dette vil endre din valgte bestilingsrunde og fjerne eventuelle varer i handlekurven."
+  location_placeholder: "Fyll inn sted..."
   error_required: "kan ikke være tomt"
   error_number: "må være tall"
-  error_email: "må være e-postadresse"
-  item_handling_fees: "Håndtering avgifter (inkludert i totaler)"
+  error_email: "må være epostadresse"
+  item_handling_fees: "Håndteringsavgifter for varen (inkludert i varens totaler)"
   january: "januar"
   february: "februar"
   march: "mars"
@@ -435,102 +431,102 @@ nb:
   october: "oktober"
   november: "november"
   december: "desember"
-  email_not_found: "e-post adresse ikke funnet"
-  email_required: "Du må oppgi en e-postadresse"
+  email_not_found: "epostadresse ikke funnet"
+  email_required: "Du må oppgi en epostadresse"
   logging_in: "Et øyeblikk, vi logger deg inn"
   signup_email: "Din epost"
   choose_password: "Velg et passord"
-  confirm_password: "bekreft passord"
+  confirm_password: "Bekreft passord"
   action_signup: "Registrer deg nå"
   welcome_to_ofn: "Velkommen til Open Food Network!"
-  signup_or_login: "Begynn ved å registrere deg (eller logge inn)"
+  signup_or_login: "Kom i gang ved å registrere deg (eller logge inn)"
   have_an_account: "Har du allerede en konto?"
-  action_login: "logge inn nå."
+  action_login: "Logg inn nå."
   forgot_password: "Glemt passord?"
-  password_reset_sent: "En e-post med instruksjoner om å nullstille passordet ditt har blitt sendt!"
-  reset_password: "Tilbakestille passordet"
+  password_reset_sent: "En epost med instruksjoner om å nullstille passordet har blitt sendt!"
+  reset_password: "Tilbakestill passord"
   who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
   enterprise_contact: "Primærkontakt"
   enterprise_contact_required: "Du må oppgi en primærkontakt."
-  enterprise_email: "E-post-adresse"
-  enterprise_email_required: "Du må oppgi en valid e-postadresse"
+  enterprise_email: "Epostadresse"
+  enterprise_email_required: "Du må oppgi en gyldig epostadresse"
   enterprise_phone: "Telefonnummer"
-  back: "tilbake"
-  continue: "Fortsette"
+  back: "Tilbake"
+  continue: "Fortsett"
   limit_reached_headline: "Å nei!"
   limit_reached_message: "Du har nådd grensen!"
   limit_reached_text: "Du har nådd grensen for antall foretak du har lov til å eie på"
   limit_reached_action: "Gå tilbake til hjemmesiden"
-  select_promo_image: "Trinn 3. Velg Promo bilde"
-  promo_image_tip: "Tips: Vises som en banner, er foretrukket størrelse 1200 × 260px"
-  promo_image_label: "Velg en promo bilde"
+  select_promo_image: "Steg 3. Velg Promo-bilde"
+  promo_image_tip: "Tips: Vises som en banner, foretrukket størrelse er 1200 × 260px"
+  promo_image_label: "Velg et promo-bilde"
   action_or: "ELLER"
   promo_image_drag: "Dra og slipp promo her"
-  review_promo_image: "Trinn 4. Sjekk din Promo Banner"
-  review_promo_image_tip: "Tips: For best resultat, bør promo bilde fylle det tilgjengelige området"
-  promo_image_placeholder: "Logoen din vil vises her til vurdering når lastet opp"
-  uploading: "opplasting..."
-  select_logo: "Trinn 1. Velg Logo bilde"
-  logo_tip: "Tips: firkant bilder vil fungere best, helst minst 300 × 300px"
-  logo_label: "Velg en logo bilde"
+  review_promo_image: "Steg 4. Sjekk din Promo-banner"
+  review_promo_image_tip: "Tips: For best resultat bør promo-bildet fylle det tilgjengelige området"
+  promo_image_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
+  uploading: "Laster opp..."
+  select_logo: "Steg 1. Velg Logo-bilde"
+  logo_tip: "Tips: Firkantede bilder vil fungere best, helst minst 300 × 300px"
+  logo_label: "Velg et logo-bilde"
   logo_drag: "Dra og slipp logoen her"
-  review_logo: "Trinn 2. Sjekk din Logo"
-  review_logo_tip: "Tips: For best resultat, bør logoen fylle det tilgjengelige området"
-  logo_placeholder: "Logoen din vil vises her til vurdering når lastet opp"
+  review_logo: "Steg 2. Sjekk din Logo"
+  review_logo_tip: "Tips: For best resultat bør logoen fylle det tilgjengelige området"
+  logo_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
   enterprise_about_headline: "Bra!"
   enterprise_about_message: "Nå la oss finne ut detaljene om"
-  enterprise_success: "Suksess! %{enterprise} lagt inn til Open Food Network"
-  enterprise_registration_exit_message: "Hvis du avslutter denne veiviseren på noe tidspunkt, må du klikke på linken i e-posten du har mottatt. Dette vil ta deg til admin side der du kan fortsette å sette opp din profil."
+  enterprise_success: "Suksess! %{enterprise} lagt til Open Food Network"
+  enterprise_registration_exit_message: "Hvis du avslutter denne veiviseren uansett steg må du klikke på bekreftelseslinken i eposten du har mottatt. Dette vil ta deg til din admin-side der du kan fortsette å sette opp din profil."
   enterprise_description: "Kort beskrivelse"
   enterprise_description_placeholder: "En kort setning som beskriver virksomheten din"
   enterprise_long_desc: "Lang beskrivelse"
   enterprise_long_desc_placeholder: "Dette er muligheten din til å fortelle historien om din virksomhet - hva gjør deg annerledes og flott? Vi vil foreslå å holde din beskrivelse til under 600 tegn eller 150 ord."
   enterprise_long_desc_length: "%{num} tegn / opptil 600 anbefales"
   enterprise_abn: "ORG#"
-  enterprise_abn_placeholder: "ex. 999 000 123"
+  enterprise_abn_placeholder: "f.eks. 999 000 123"
   enterprise_acn: "MVA#"
   enterprise_acn_placeholder: "f.eks. 999 000 123"
-  enterprise_tax_required: "du trenger for å gjøre et valg."
-  enterprise_final_step: "Siste trinnet!"
+  enterprise_tax_required: "Du må gjøre et valg."
+  enterprise_final_step: "Siste steg!"
   enterprise_social_text: "Hvordan kan folk finne %{enterprise} på nettet?"
-  website: "Webside"
-  website_placeholder: "eg. openfoodnetwork.no"
+  website: "Hjemmeside"
+  website_placeholder: "f.eks. openfoodnetwork.no"
   facebook: "Facebook"
-  facebook_placeholder: "eg. www.facebook.com/firmanavnher"
+  facebook_placeholder: "f.eks. www.facebook.com/FirmaNavnHer"
   linkedin: "LinkedIn"
-  linkedin_placeholder: "eg. www.linkedin.com/navnher"
+  linkedin_placeholder: "f.eks. www.linkedin.com/DittNavnHer"
   twitter: "Twitter"
-  twitter_placeholder: "eg. @twitter_handle"
+  twitter_placeholder: "f.eks. @twitter_handle"
   instagram: "Instagram"
-  instagram_placeholder: "eg. @instagram_handle"
-  registration_greeting: "Hei!"
+  instagram_placeholder: "f.eks. @instagram_handle"
+  registration_greeting: "Hei der!"
   registration_intro: "Du kan nå opprette en profil for din Produsent eller Hub"
   registration_action: "La oss komme i gang!"
   registration_checklist: "Du trenger"
-  registration_time: "5-10 minuter"
+  registration_time: "5-10 minutter"
   registration_enterprise_address: "Bedriftsadresse"
-  registration_contact_details: "Primærkontakt detaljer"
-  registration_logo: "Din logo bilde"
-  registration_promo_image: "Profilbilde i landskapformat"
+  registration_contact_details: "Kontaktdetaljer"
+  registration_logo: "Ditt logo-bilde"
+  registration_promo_image: "Profilbilde i landskapsformat"
   registration_about_us: "'Om oss' tekst"
   registration_outcome_headline: "Hva får jeg?"
-  registration_outcome1_html: "Profilen din hjelper folk <strong>finne</ strong> og <strong> kontakte </ strong> deg på Open Food Network"
-  registration_outcome2: "Bruk denne plassen til å fortelle historien om din bedrift, for å koble til sosial og online media."
-  registration_outcome3: "Det er også det første skrittet mot trading på Open Food Network, eller å åpne en nettbutikk."
+  registration_outcome1_html: "Profilen din hjelper folk å <strong>finne</ strong> og <strong>kontakte</ strong> deg på Open Food Network"
+  registration_outcome2: "Bruk denne plassen til å fortelle historien om din bedrift for å øke antall koblinger til dine sosiale og online media."
+  registration_outcome3: "Det er også det første skrittet mot handel på Open Food Network eller å åpne en nettbutikk."
   registration_finished_headline: "Ferdig!"
   registration_finished_thanks: "Takk for at du fyller ut detaljene for %{enterprise}."
-  registration_finished_login: "Du kan endre eller oppdatere din virksomhet på ethvert stadium ved å logge inn på Open Food Network og gå til Admin."
+  registration_finished_login: "Du kan endre eller oppdatere din virksomhet når som helst ved å logge inn på Open Food Network og gå til Admin."
   registration_finished_activate: "Aktivere %{enterprise}."
-  registration_finished_activate_instruction_html: "Vi har sendt en e-postbekreftelse til <strong>%{email}</strong> hvis det ikke har blitt aktivert før. <br/> Følg instruksjonene der for å gjøre bedriften synlig på Open Food Network."
-  registration_finished_action: "Open Food Network hovedside"
-  registration_type_headline: "Siste trinnet for å legge til %{enterprise}!"
+  registration_finished_activate_instruction_html: "Vi har sendt en epostbekreftelse til <strong>%{email}</strong> hvis den ikke har blitt aktivert før.<br/> Følg instruksjonene der for å gjøre bedriften synlig på Open Food Network."
+  registration_finished_action: "Open Food Network hjem"
+  registration_type_headline: "Siste stegfor å legge til %{enterprise}!"
   registration_type_question: "Er du en produsent?"
   registration_type_producer: "Ja, jeg er en produsent"
   registration_type_no_producer: "Nei, jeg er ikke en produsent"
   registration_type_error: "Vennligst velg en. Er du produsent?"
   registration_type_producer_help: "Produsenter lager masse god mat og drikke. Du er en produsent hvis du dyrker, driver med hysdyrhold, brygger, baker, fermenterer, melker eller former."
-  registration_type_no_producer_help: "Hvis du ikke er en produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, coop, kjøpe gruppe, forhandler, grossist eller andre."
-  create_profile: "Opprette profil"
+  registration_type_no_producer_help: "Hvis du ikke er en produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, samvirke, kjøpegruppe, forhandler, grossist eller annet."
+  create_profile: "Opprett profil"
   registration_images_headline: "Takk!"
   registration_images_description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
   registration_detail_headline: "La oss komme i gang"
@@ -538,17 +534,17 @@ nb:
   registration_detail_producer: "Kult! Først må vi vite litt om gården din:"
   registration_detail_name_enterprise: "Bedriftsnavn:"
   registration_detail_name_producer: "Gårdsnavn:"
-  registration_detail_name_placeholder: "ex. Hønemor Gård"
+  registration_detail_name_placeholder: "f.eks. Hønemor Gård"
   registration_detail_name_error: "Vennligst velg et unikt navn for din bedrift"
-  registration_detail_address1: "Adress ligne 1:"
-  registration_detail_address1_placeholder: "ex. Kongleveien 2"
+  registration_detail_address1: "Adresselinje 1:"
+  registration_detail_address1_placeholder: "f.eks. Kongleveien 2"
   registration_detail_address1_error: "Vennligst oppgi en adresse"
-  registration_detail_address2: "Adress ligne 2:"
-  registration_detail_suburb: "Kommune:"
-  registration_detail_suburb_placeholder: "ex. Nesodden"
-  registration_detail_suburb_error: "Vennligst skriv inn kommunen"
+  registration_detail_address2: "Adresselinje 2:"
+  registration_detail_suburb: "Område:"
+  registration_detail_suburb_placeholder: "f.eks. Nesodden"
+  registration_detail_suburb_error: "Vennligst fyll inn område"
   registration_detail_postcode: "Postnummer:"
-  registration_detail_postcode_placeholder: "ex. 1450"
+  registration_detail_postcode_placeholder: "f.eks. 1450"
   registration_detail_postcode_error: "Postnummer kreves"
   registration_detail_state: "Fylke:"
   registration_detail_state_error: "Fylke kreves"
@@ -556,18 +552,18 @@ nb:
   registration_detail_country_error: "Vennligst velg et land"
   fees: "Gebyrer"
   item_cost: "Varepris"
-  bulk: "En gros"
+  bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
   contact: "Kontakt"
   follow: "Følg"
-  shop_for_products_html: "handle for <span class=\"turquoise\">%{enterprise}</span> produkter på:"
+  shop_for_products_html: "Handle produkter fra <span class=\"turquoise\">%{enterprise}</span> på:"
   change_shop: "Endre butikk til:"
   shop_at: "Handle nå på:"
-  price_breakdown: "pris fordeling"
-  admin_fee: "administrasjonsgebyr"
-  sales_fee: "salgsgebyr"
-  packing_fee: "pakking gebyr"
-  transport_fee: "transport gebyr"
-  fundraising_fee: "Pengeinnsamling gebyr"
-  price_graph: "pris graf"
+  price_breakdown: "Prisfordeling"
+  admin_fee: "Administrasjonsgebyr"
+  sales_fee: "Salgsgebyr"
+  packing_fee: "Pakkegebyr"
+  transport_fee: "Transportgebyr"
+  fundraising_fee: "Pengeinnsamlingsgebyr"
+  price_graph: "Prisgraf"
