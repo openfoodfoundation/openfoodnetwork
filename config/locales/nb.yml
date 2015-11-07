@@ -113,6 +113,7 @@ nb:
   footer_legal_call: "Les våre"
   footer_legal_tos: "Vilkår & betingelser"
   footer_legal_visit: "Finn oss på"
+  footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
   home_shop: Handle nå
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Noen ganger er det best å fikse systemet ved å starte et nytt..."
@@ -238,6 +239,9 @@ nb:
   enterprises_ready_for: "Klar til"
   enterprises_choose: "Velg når du ønsker din bestilling:"
   hubs_buy: "Handle:"
+  hubs_shopping_here: "Handler her"
+  hubs_orders_closed: "Stengt for bestilling"
+  hubs_profile_only: "Kun profil"
   hubs_delivery_options: "Leveringsvalg"
   hubs_pickup: "Henting"
   hubs_delivery: "Levering"
@@ -334,6 +338,7 @@ nb:
   producers_contact: Kontakt
   producers_contact_phone: Ring
   producers_contact_social: Følg
+  producers_buy_at_html: "Handle produkter fra %{enterprise} hos:"
   producers_filter: Filtrer på
   producers_filter_type: Type
   producers_title: Produsenter
@@ -355,7 +360,7 @@ nb:
   register_title: Registrer
   shops_title: Butikker
   shops_headline: Handling på en ny måte.
-  shops_text: Mat gror i syklus, bønder høster i syklus, og vi bestiller mat i syklus. Hvis du møter en stengt besillingsrunde, sjekk igjen snart.
+  shops_text: Mat gror i syklus, bønder høster i syklus, og vi bestiller mat i syklus. Hvis du møter en stengt bestillingsrunde, sjekk igjen snart.
   shops_signup_title: Bli med som hub
   shops_signup_headline: Mathubs, ubegrenset.
   shops_signup_motivation: Uansett modell støtter vi deg. Uansett hvordan du forandrer deg er vi med deg. Vi er non-profit, uavhengig, og transparent. Vi er partneren du har drømt om.
@@ -372,7 +377,9 @@ nb:
   orders_edit_continue: Fortsett å handle
   orders_edit_checkout: Kassen
   orders_form_empty_cart: "Tøm handlekurv"
+  orders_form_subtotal: Delsum varer
   orders_form_admin: Admin og håndtering
+  orders_form_total: Total
   orders_oc_expired_headline: Bestillinger stengt for denne runden
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
   orders_oc_expired_text_others_html: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger <strong>%{link}</strong>."
