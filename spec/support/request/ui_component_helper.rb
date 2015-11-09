@@ -36,7 +36,7 @@ module UIComponentHelper
   end
 
   def have_login_modal
-    have_selector ".login-modal" 
+    have_selector ".login-modal"
   end
 
   def open_product_modal(product)
@@ -69,7 +69,7 @@ module UIComponentHelper
   end
 
   def cart_dirty
-    page.find("span.cart-span")[:class].include? 'dirty'
+    page.find("span.cart-span")[:class].include? 'pure-dirty'
   end
 
   def wait_for_ajax
@@ -100,7 +100,7 @@ module UIComponentHelper
   def expand_active_table_node(name)
     find(".active_table_node", text: name).click
   end
-  
+
   def follow_active_table_node(name)
     expand_active_table_node(name)
     find(".active_table_node a", text: "#{name}").click
