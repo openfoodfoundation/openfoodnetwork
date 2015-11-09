@@ -102,6 +102,13 @@ Spree::Order.class_eval do
     end
   end
 
+  def remove_variant(variant)
+    line_items(:reload)
+    current_item = find_line_item_by_variant(variant)
+    current_item.destroy
+  end
+
+
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     line_items(:reload)
