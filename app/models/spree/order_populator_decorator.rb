@@ -116,6 +116,6 @@ Spree::OrderPopulator.class_eval do
   end
 
   def variant_ids_in_cart
-    @order.line_items.map &:variant_id
+    @order.line_items.pluck :variant_id
   end
 end
