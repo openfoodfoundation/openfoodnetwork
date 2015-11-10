@@ -100,12 +100,12 @@ module Spree
 
       it "returns nothing when all items in the cart are provided" do
         op.stub(:variant_ids_in_cart) { [123] }
-        op.send(:variants_removed, [{variant_id: 123}]).should == []
+        op.send(:variants_removed, [{variant_id: '123'}]).should == []
       end
 
       it "returns nothing when items are added to cart" do
         op.stub(:variant_ids_in_cart) { [123] }
-        op.send(:variants_removed, [{variant_id: 123}, {variant_id: 456}]).should == []
+        op.send(:variants_removed, [{variant_id: '123'}, {variant_id: '456'}]).should == []
       end
 
       it "does not return duplicates" do

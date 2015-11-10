@@ -76,7 +76,7 @@ Spree::OrderPopulator.class_eval do
   end
 
   def variants_removed(variants_data)
-    variant_ids_given = variants_data.map { |data| data[:variant_id] }
+    variant_ids_given = variants_data.map { |data| data[:variant_id].to_i }
 
     (variant_ids_in_cart - variant_ids_given).uniq
   end
