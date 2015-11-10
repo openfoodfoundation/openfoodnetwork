@@ -11,13 +11,19 @@ Spree::OrderPopulator.class_eval do
 
     if valid?
       @order.with_lock do
-        @order.empty! if overwrite
-
         variants = read_products_hash(from_hash) +
                    read_variants_hash(from_hash)
 
         variants.each do |v|
-          attempt_cart_add(v[:variant_id], v[:quantity], v[:max_quantity])
+          if varies_from_cart(v)
+            attempt_cart_add(v[:variant_id], v[:quantity], v[:max_quantity])
+          end
+        end
+
+        if overwrite
+          variants_removed(variants).each do |id|
+            cart_remove(id)
+          end
         end
       end
     end
@@ -52,6 +58,11 @@ Spree::OrderPopulator.class_eval do
         @order.add_variant(variant, quantity, max_quantity, currency)
       end
     end
+  end
+
+  def cart_remove(variant_id)
+    variant = Spree::Variant.find(variant_id)
+    @order.remove_variant(variant)
   end
 
 

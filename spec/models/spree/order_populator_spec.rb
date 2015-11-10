@@ -9,24 +9,55 @@ module Spree
     let(:order_cycle) { double(:order_cycle) }
     let(:op) { OrderPopulator.new(order, currency) }
 
+    context "end-to-end" do
+      let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v]) }
+      let(:op) { OrderPopulator.new(order, nil) }
+      let(:v) { create(:variant) }
+
+      describe "populate" do
+        it "adds a variant" do
+          op.populate({variants: {v.id.to_s => {quantity: '1', max_quantity: '2'}}}, true)
+          li = order.find_line_item_by_variant(v)
+          li.should be
+          li.quantity.should == 1
+          li.max_quantity.should == 2
+        end
+
+        it "updates a variant's quantity and max quantity" do
+          order.add_variant v, 1, 2
+
+          op.populate({variants: {v.id.to_s => {quantity: '2', max_quantity: '3'}}}, true)
+          li = order.find_line_item_by_variant(v)
+          li.should be
+          li.quantity.should == 2
+          li.max_quantity.should == 3
+        end
+
+        it "removes a variant" do
+          order.add_variant v, 1, 2
+
+          op.populate({variants: {}}, true)
+          order.line_items(:reload)
+          li = order.find_line_item_by_variant(v)
+          li.should_not be
+        end
+      end
+    end
+
     describe "populate" do
       before do
         op.should_receive(:distributor_and_order_cycle).
           and_return([distributor, order_cycle])
       end
+
       it "checks that distribution can supply all products in the cart" do
         op.should_receive(:distribution_can_supply_products_in_cart).
           with(distributor, order_cycle).and_return(false)
 
         op.populate(params).should be_false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
-      end
-
-      it "empties the order if override is true" do
-        op.stub(:distribution_can_supply_products_in_cart).and_return true
-        order.stub(:with_lock).and_yield
-        order.should_receive(:empty!)
-        op.populate(params, true)
       end
 
       it "locks the order" do
@@ -37,9 +68,9 @@ module Spree
 
       it "attempts cart add with max_quantity" do
         op.stub(:distribution_can_supply_products_in_cart).and_return true
-        order.should_receive(:empty!)
         params = {variants: {"1" => {quantity: 1, max_quantity: 2}}}
         order.stub(:with_lock).and_yield
+        op.stub(:varies_from_cart) { true }
         op.should_receive(:attempt_cart_add).with("1", 1, 2).and_return true
         op.populate(params, true)
       end
