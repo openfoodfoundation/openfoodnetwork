@@ -71,6 +71,7 @@ module Spree
         params = {variants: {"1" => {quantity: 1, max_quantity: 2}}}
         order.stub(:with_lock).and_yield
         op.stub(:varies_from_cart) { true }
+        op.stub(:variants_removed) { [] }
         op.should_receive(:attempt_cart_add).with("1", 1, 2).and_return true
         op.populate(params, true)
       end
