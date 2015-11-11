@@ -8,5 +8,4 @@ angular.module("admin.indexUtils").factory 'Dereferencer', ->
     dereferenceAttr: (array, attr, data)->
       if array
         for object in array
-          console.log attr, object[attr].id if data[object[attr].id] == undefined
-          object[attr] = data[object[attr].id]
+          object[attr] = data[object[attr].id] unless object[attr] == null
