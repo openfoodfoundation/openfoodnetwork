@@ -14,24 +14,24 @@
     .date_filter{ :class => "two columns alpha" }
       %label{ :for => 'start_date_filter' }Start Date
       %br
-      %input{ :class => "two columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'ofn-confirm-model-change' => "startDate" }
+      %input{ :class => "two columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()' }
     .date_filter{ :class => "two columns" }
       %label{ :for => 'end_date_filter' }End Date
       %br
-      %input{ :class => "two columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'ofn-confirm-model-change' => "endDate" }
+      %input{ :class => "two columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()' }
     .one.column &nbsp;
     .filter_select{ :class => "three columns" }
       %label{ :for => 'supplier_filter' }Producer
       %br
-      %select{ :class => "three columns alpha", :id => 'supplier_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.id as s.name for s in suppliers' }
+      %select{ :class => "three columns alpha", :id => 'supplier_filter', 'select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.id as s.name for s in suppliers' }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'distributor_filter' }Hub
       %br
-      %select{ :class => "three columns alpha", :id => 'distributor_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.id as d.name for d in distributors'}
+      %select{ :class => "three columns alpha", :id => 'distributor_filter', 'select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.id as d.name for d in distributors'}
     .filter_select{ :class => "three columns" }
       %label{ :for => 'order_cycle_filter' }Order Cycle
       %br
-      %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.id as oc.name for oc in orderCycles'}
+      %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.id as oc.name for oc in orderCycles', 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()'}
     .filter_clear{ :class => "two columns omega" }
       %label{ :for => 'clear_all_filters' }
       %br
