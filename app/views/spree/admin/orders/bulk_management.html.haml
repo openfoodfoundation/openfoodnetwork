@@ -153,7 +153,7 @@
           %td.price{ 'ng-show' => 'columns.price.visible' }
             %input{ :type => 'text', :name => 'price', :id => 'price', :value => '{{ line_item.price * line_item.quantity | currency }}', 'ng-readonly' => "true", 'obj-for-update' => "line_item", "attr-for-update" => "price" }
           %td.actions
-            %a{ :class => "edit-order icon-edit no-text", 'ofn-confirm-link-path' => "/admin/orders/{{line_item.order.number}}/edit" }
+            %a{ href: "/admin/orders/{{line_item.order.number}}/edit", :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
       %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'submit()' }
