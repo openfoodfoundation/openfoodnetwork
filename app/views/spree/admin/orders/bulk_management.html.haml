@@ -9,6 +9,7 @@
 %div{ ng: { app: 'ofn.admin', controller: 'AdminOrderMgmtCtrl', init: 'initialise()' } }
   %div{ 'ng-show' => '!spree_api_key_ok' }
     {{ api_error_msg }}
+  %save-bar{ save: "submit()", saving: 'saving', dirty: "bulk_order_form.$dirty" }
   .filters{ :class => "sixteen columns alpha" }
     .date_filter{ :class => "two columns alpha" }
       %label{ :for => 'start_date_filter' }Start Date
