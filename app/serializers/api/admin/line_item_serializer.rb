@@ -18,4 +18,9 @@ class Api::Admin::LineItemSerializer < ActiveModel::Serializer
   def final_weight_volume
     object.final_weight_volume.to_f
   end
+
+  def max_quantity
+    return object.quantity unless object.max_quantity.present? && object.max_quantity > object.quantity
+    object.max_quantity
+  end
 end

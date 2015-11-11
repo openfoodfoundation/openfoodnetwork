@@ -87,12 +87,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
 
   $scope.sumUnitValues = ->
     sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-      sum = sum + lineItem.final_weight_volume
+      sum + lineItem.final_weight_volume
     , 0
 
   $scope.sumMaxUnitValues = ->
     sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-      sum = sum + Math.max(lineItem.max_quantity,LineItems.pristineByID[lineItem.id].quantity) * lineItem.units_variant.unit_value
+        sum + lineItem.max_quantity * lineItem.units_variant.unit_value
     , 0
 
   $scope.allFinalWeightVolumesPresent = ->
