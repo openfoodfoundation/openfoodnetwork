@@ -8,6 +8,12 @@ input, div {
   }
 }
 
+input.show-dirty {
+	&.ng-dirty {
+	  border: solid 1px orange;
+  }
+}
+
 input, div {
 	&.update-error {
 		border: solid 1px red;

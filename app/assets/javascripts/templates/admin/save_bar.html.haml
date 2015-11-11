@@ -1,7 +1,7 @@
 #save-bar.animate-show{ ng: { show: 'dirty()' } }
   .twelve.columns.alpha
     %h5{ ng: { show: "dirty() && !saving()" } }
-      You have made unsaved changes
+      You have unsaved changes
     %h5{ ng: { hide: "dirty() || saving()" } }
       All changes saved
     %h5{ ng: { show: "saving()" } }
