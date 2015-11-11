@@ -29,8 +29,8 @@
   %em
     Send Feedback
   button on the site or email us at
-  %a{:href => "mailto:hello@openfoodnetwork.org", :target => "_blank"}
-    hello@openfoodnetwork.org
+  %a{:href => "mailto:#{Spree::MailMethod.current.preferred_mails_from}", :target => "_blank"}
+    #{Spree::MailMethod.current.preferred_mails_from}
 
 = render 'shared/mailers/signoff'
 
