@@ -97,18 +97,10 @@ feature %q{
         visit '/admin/orders/bulk_management'
       end
 
-      it "adds the class 'update-pending' to input elements when value is altered" do
-        expect(page).to_not have_css "input[name='quantity'].update-pending"
+      it "adds the class 'ng-dirty' to input elements when value is altered" do
+        expect(page).to_not have_css "input[name='quantity'].ng-dirty"
         fill_in "quantity", :with => 2
-        expect(page).to have_css "input[name='quantity'].update-pending"
-      end
-
-      it "removes the class 'update-pending' from input elements when initial (DB) value is entered" do
-        expect(page).to_not have_css "input[name='quantity'].update-pending"
-        fill_in "quantity", :with => 2
-        expect(page).to have_css "input[name='quantity'].update-pending"
-        fill_in "quantity", :with => 5
-        expect(page).to_not have_css "input[name='quantity'].update-pending"
+        expect(page).to have_css "input[name='quantity'].ng-dirty"
       end
     end
 
@@ -121,15 +113,14 @@ feature %q{
       end
 
       it "displays an update button which submits pending changes" do
+        expect(page).to_not have_selector "#save-bar"
         fill_in "quantity", :with => 2
-        expect(page).to have_selector "input[name='quantity'].update-pending"
-        expect(page).to_not have_selector "input[name='quantity'].update-success"
-        expect(page).to have_button "Update"
-        click_button "Update"
-        expect(page).to_not have_selector "input[name='quantity'].update-pending"
-        expect(page).to have_selector "input[name='quantity'].update-success"
-        expect(page).to have_selector "input[name='final_weight_volume'].update-success", visible: false
-        expect(page).to have_selector "input[name='price'].update-success", visible: false
+        expect(page).to have_selector "input[name='quantity'].ng-dirty"
+        expect(page).to have_selector "#save-bar"
+        expect(page).to have_button "Save Changes"
+        click_button "Save Changes"
+        expect(page).to_not have_selector "#save-bar"
+        expect(page).to_not have_selector "input[name='quantity'].ng-dirty"
       end
     end
   end
@@ -145,38 +136,42 @@ feature %q{
     let!(:li1) { FactoryGirl.create(:line_item, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000 ) }
 
     context "modifying the weight/volume of a line item" do
-      it "update-pending is added to variable 'price'" do
+      it "price is altered" do
         visit '/admin/orders/bulk_management'
         first("div#columns_dropdown", :text => "COLUMNS").click
         first("div#columns_dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        expect(page).to_not have_css "input[name='price'].update-pending"
-        li1_final_weight_volume_column = find("tr#li_#{li1.id} td.final_weight_volume")
-        li1_final_weight_volume_column.fill_in "final_weight_volume", :with => 1200
-        expect(page).to have_css "input[name='price'].update-pending", :visible => false
+        first("div#columns_dropdown div.menu div.menu_item", text: "Price").click
+        within "tr#li_#{li1.id}" do
+          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * li1.quantity)}"
+          fill_in "final_weight_volume", :with => li1.final_weight_volume * 2
+          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * li1.quantity * 2)}"
+        end
       end
     end
 
     context "modifying the quantity of a line item" do
-      it "update-pending is added to variable 'price'" do
+      it "price is altered" do
         visit '/admin/orders/bulk_management'
-        #first("div#columns_dropdown", :text => "COLUMNS").click
-        #first("div#columns_dropdown div.menu div.menu_item", text: "Quantity").click
-        expect(page).to_not have_css "input[name='price'].update-pending"
-        li1_quantity_column = find("tr#li_#{li1.id} td.quantity")
-        li1_quantity_column.fill_in "quantity", :with => 6
-        expect(page).to have_css "input[name='price'].update-pending", :visible => false
+        first("div#columns_dropdown", :text => "COLUMNS").click
+        first("div#columns_dropdown div.menu div.menu_item", text: "Price").click
+        within "tr#li_#{li1.id}" do
+          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 5)}"
+          fill_in "quantity", :with => 6
+          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 6)}"
+        end
       end
     end
 
     context "modifying the quantity of a line item" do
-      it "update-pending is added to variable 'weight/volume'" do
+      it "weight/volume is altered" do
         visit '/admin/orders/bulk_management'
         first("div#columns_dropdown", :text => "COLUMNS").click
         first("div#columns_dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        expect(page).to_not have_css "input[name='price'].update-pending"
-        li1_quantity_column = find("tr#li_#{li1.id} td.quantity")
-        li1_quantity_column.fill_in "quantity", :with => 6
-        expect(page).to have_css "input[name='final_weight_volume'].update-pending", :visible => false
+        within "tr#li_#{li1.id}" do
+          expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
+          fill_in "quantity", :with => 6
+          expect(page).to have_field "final_weight_volume", with: "#{((li1.final_weight_volume*6)/5).round}"
+        end
       end
     end
 
@@ -207,7 +202,7 @@ feature %q{
       context "supplier filter" do
         let!(:s1) { create(:supplier_enterprise) }
         let!(:s2) { create(:supplier_enterprise) }
-        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, order_cycle: create(:simple_order_cycle) ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
 
@@ -241,8 +236,8 @@ feature %q{
       context "distributor filter" do
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
-        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d1 ) }
-        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d2 ) }
+        let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d1, order_cycle: create(:simple_order_cycle) ) }
+        let!(:o2) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now, distributor: d2, order_cycle: create(:simple_order_cycle) ) }
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
@@ -426,40 +421,30 @@ feature %q{
         expect(page).to have_selector "tr#li_#{li3.id}", visible: true
       end
 
-      context "when pending changes exist" do
-        it "alerts the user when dates are altered" do
-          li2_quantity_column = find("tr#li_#{li2.id} td.quantity")
-          li2_quantity_column.fill_in "quantity", :with => li2.quantity + 1
-          expect(page).to_not have_button "IGNORE"
-          expect(page).to_not have_button "SAVE"
-          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
-          expect(page).to have_button "IGNORE"
-          expect(page).to have_button "SAVE"
-        end
-
-        it "saves pendings changes when 'SAVE' button is clicked" do
+      context "when the form is dirty" do
+        before do
           within("tr#li_#{li2.id} td.quantity") do
             page.fill_in "quantity", :with => (li2.quantity + 1).to_s
           end
-          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
-          expect(page).to have_selector "input[name='quantity'].update-pending"
-          click_button "SAVE"
-          expect(page).to have_no_selector "input.update-pending"
-          expect(page).to have_selector "input[name='quantity'].update-success"
+        end
+
+        it "shows a dialog and ignores changes when confirm dialog is accepted" do
+          page.driver.accept_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
+            fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
+          end
+          expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
-            expect(page).to have_field "quantity", :with => ( li2.quantity + 1 ).to_s
+            expect(page).to have_no_selector "input[name=quantity].ng-dirty"
           end
         end
 
-        it "ignores pending changes when 'IGNORE' button is clicked" do
-          within("tr#li_#{li2.id} td.quantity") do
-            page.fill_in "quantity", :with => (li2.quantity + 1).to_s
+        it "shows a dialog and keeps changes when confirm dialog is rejected" do
+          page.driver.dismiss_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
+            fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
           end
-          fill_in "start_date_filter", :with => (Date.today - 9).strftime("%F %T")
-          click_button "IGNORE"
-          expect(page).to_not have_selector "input[name='quantity'].update-pending"
+          expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
-            expect(page).to have_field "quantity", :with => ( li2.quantity ).to_s
+            expect(page).to have_selector "input[name=quantity].ng-dirty"
           end
         end
       end
@@ -545,8 +530,22 @@ feature %q{
         it "shows an edit button for line_items, which takes the user to the standard edit page for the order" do
           expect(page).to have_selector "a.edit-order", :count => 2
 
-          first("a.edit-order").click
+          # Shows a confirm dialog when unsaved changes exist
+          page.driver.dismiss_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
+            within "tr#li_#{li1.id}" do
+              fill_in "quantity", with: (li1.quantity + 1)
+              first("a.edit-order").click
+            end
+          end
 
+          # So we save the changes
+          expect(URI.parse(current_url).path).to eq "/admin/orders/bulk_management"
+          click_button "Save Changes"
+
+          # And try again
+          within "tr#li_#{li1.id}" do
+            first("a.edit-order").click
+          end
           expect(URI.parse(current_url).path).to eq "/admin/orders/#{o1.number}/edit"
         end
       end
@@ -561,11 +560,8 @@ feature %q{
           visit '/admin/orders/bulk_management'
         end
 
-        it "shows a delete button for each line item" do
-          expect(page).to have_selector "a.delete-line-item", :count => 2
-        end
-
         it "removes a line item when the relevant delete button is clicked" do
+          expect(page).to have_selector "a.delete-line-item", :count => 2
           first("a.delete-line-item").click
           expect(page).to_not have_selector "a.delete-line-item", :count => 2
           expect(page).to have_selector "a.delete-line-item", :count => 1
