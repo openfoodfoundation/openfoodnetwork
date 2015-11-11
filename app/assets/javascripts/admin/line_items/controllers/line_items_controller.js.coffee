@@ -28,6 +28,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm("Unsaved changes exist and will be lost if you continue.")
 
+  $scope.resetSelectFilters = ->
+    $scope.distributorFilter = '0'
+    $scope.supplierFilter = '0'
+    $scope.orderCycleFilter = '0'
+    $scope.quickSearch = ""
+
   $scope.refreshData = ->
     RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
     RequestMonitor.load $scope.distributors = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"] )
@@ -45,9 +51,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
       $scope.orderCycles.unshift blankOption()
       $scope.suppliers.unshift blankOption()
       $scope.distributors.unshift blankOption()
-      $scope.resetSelectFilters()
-      $scope.loading = false
-
+      unless $scope.initialized
+        $scope.initialized = true
+        $scope.resetSelectFilters()
 
   $scope.refreshData()
 
@@ -143,11 +149,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
-
-  $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
-    unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)
-      $scope.startDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].first_order
-      $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
 
 daysFromToday = (days) ->
   now = new Date
