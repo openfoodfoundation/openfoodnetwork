@@ -1,0 +1,8 @@
+/ replace_contents "[data-hook='adjustmment_head']"
+
+%tr
+  %th= "#{t('spree.date')}/#{t('spree.time')}"
+  %th= t(:description)
+  %th= t(:amount)
+  %th= t(:included_tax)
+  %th.actions
