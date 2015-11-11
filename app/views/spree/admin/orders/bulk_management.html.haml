@@ -74,7 +74,7 @@
       %span{ :class => "eight columns alpha", style: 'color:red' }
         WARNING: Some variants do not have a unit value
   %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
-  %div{ 'ng-hide' => 'loading || lineItems.length == 0' }
+  %div{ 'ng-hide' => 'RequestMonitor.loading || lineItems.length == 0' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
       %div{ :class => "three columns alpha" }
         %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
@@ -94,12 +94,12 @@
             %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
               %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
               %span{ :class => 'two columns omega' } {{column.name }}
-  %div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
+  %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
     %h1 LOADING ORDERS
-  %div{ :class => "sixteen columns alpha", 'ng-show' => '!loading && filteredLineItems.length == 0'}
+  %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
     %h1#no_results No orders found.
-  %div{ 'ng-hide' => 'loading || filteredLineItems.length == 0' }
+  %div{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
       %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
         %thead
