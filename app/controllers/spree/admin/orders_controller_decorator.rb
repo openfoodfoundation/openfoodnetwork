@@ -21,19 +21,48 @@ Spree::Admin::OrdersController.class_eval do
 
   respond_to :html, :json
 
-  respond_override :index => { :html =>
-    { :success => lambda {
-      # Filter orders to only show those distributed by current user (or all for admin user)
-      @search.result.includes([:user, :shipments, :payments]).
-        distributed_by_user(spree_current_user).
-        page(params[:page]).
-        per(params[:per_page] || Spree::Config[:orders_per_page])
-    } } }
+  # Mostly the original Spree method, tweaked to allow us to ransack with completed_at in a sane way
+  def index
+    params[:q] ||= {}
+    params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
+    @show_only_completed = params[:q][:completed_at_not_null].present?
+    params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
 
-  respond_override index: { :json => { :success => lambda {
-    search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
-    render_as_json search.result.reorder('id ASC')
-  } } }
+    # As date params are deleted if @show_only_completed, store
+    # the original date so we can restore them into the params
+    # after the search
+    created_at_gt = params[:q][:created_at_gt]
+    created_at_lt = params[:q][:created_at_lt]
+
+    params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
+
+    if !params[:q][:created_at_gt].blank?
+      params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
+    end
+
+    if !params[:q][:created_at_lt].blank?
+      params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
+    end
+
+    # Changed this to stop completed_at being overriden when present
+    if @show_only_completed
+      params[:q][:completed_at_gt] = params[:q].delete(:created_at_gt) unless params[:q][:completed_at_gt]
+      params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt) unless params[:q][:completed_at_gt]
+    end
+
+    @orders = orders
+
+    # Restore dates
+    params[:q][:created_at_gt] = created_at_gt
+    params[:q][:created_at_lt] = created_at_lt
+
+    respond_with(@orders) do |format|
+      format.html
+      format.json do
+        render_as_json @orders
+      end
+    end
+  end
 
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
   # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
@@ -61,6 +90,21 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   private
+
+  def orders
+    if json_request?
+      @search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
+      @search.result.reorder('id ASC')
+    else
+      @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
+
+      # Replaced this search to filter orders to only show those distributed by current user (or all for admin user)
+      @search.result.includes([:user, :shipments, :payments]).
+          distributed_by_user(spree_current_user).
+          page(params[:page]).
+          per(params[:per_page] || Spree::Config[:orders_per_page])
+    end
+  end
 
   def require_distributor_abn
     unless @order.distributor.abn.present?
