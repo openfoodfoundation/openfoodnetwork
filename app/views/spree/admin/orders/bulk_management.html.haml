@@ -4,11 +4,7 @@
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
-=admin_inject_spree_api_key
-
-%div{ ng: { app: 'ofn.admin', controller: 'AdminOrderMgmtCtrl', init: 'initialise()' } }
-  %div{ 'ng-show' => '!spree_api_key_ok' }
-    {{ api_error_msg }}
+%div{ ng: { app: 'admin.lineItems', controller: 'LineItemsCtrl' } }
   %save-bar{ save: "submit()", saving: 'saving', dirty: "bulk_order_form.$dirty" }
   .filters{ :class => "sixteen columns alpha" }
     .date_filter{ :class => "two columns alpha" }
@@ -35,7 +31,7 @@
     .filter_clear{ :class => "two columns omega" }
       %label{ :for => 'clear_all_filters' }
       %br
-      %input.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
+      %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
   %hr{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
   %div#group_buy_calculation{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
     %div.shared_resource{ :class => "four columns alpha" }
@@ -84,7 +80,7 @@
           %span{ :class => 'icon-check' } &nbsp; Actions
           %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
           %div.menu{ 'ng-show' => "expanded" }
-            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "selectedBulkAction.callback(filteredLineItems)", 'ofn-close-on-click' => true }
+            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
               %span{ :class => 'three columns omega' } {{action.name }}
       %div{ :class => "seven columns" } &nbsp;
       %div{ :class => "three columns omega" }
@@ -135,7 +131,7 @@
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
-            %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked' }
+            %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked', 'ignore-dirty' => true }
           %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
           %td.full_name{ 'ng-show' => 'columns.full_name.visible' } {{ line_item.order.full_name }}
           %td.email{ 'ng-show' => 'columns.email.visible' } {{ line_item.order.email }}

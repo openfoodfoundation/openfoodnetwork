@@ -1,12 +1,12 @@
 angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
+  $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
   $scope.saving = false
   $scope.filteredLineItems = []
   $scope.confirmDelete = true
   $scope.startDate = formatDate daysFromToday -7
   $scope.endDate = formatDate daysFromToday 1
-  $scope.bulkActions = [ { name: "Delete Selected", callback: $scope.deleteLineItems } ]
-  $scope.selectedBulkAction = $scope.bulkActions[0]
+  $scope.bulkActions = [ { name: "Delete Selected", callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {};
   $scope.selectedUnitsVariant = {};
   $scope.sharedResource = false
@@ -35,6 +35,10 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
     $scope.quickSearch = ""
 
   $scope.refreshData = ->
+    unless $scope.orderCycleFilter == "0" || angular.equals(OrderCycles.orderCyclesByID, {})
+      $scope.startDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].first_order
+      $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
+
     RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
     RequestMonitor.load $scope.distributors = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"] )
     RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
@@ -51,23 +55,25 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
       $scope.orderCycles.unshift blankOption()
       $scope.suppliers.unshift blankOption()
       $scope.distributors.unshift blankOption()
+      $scope.bulk_order_form.$setPristine()
       unless $scope.initialized
         $scope.initialized = true
         $scope.resetSelectFilters()
 
   $scope.refreshData()
 
-  $scope.submit = ->
+  $scope.submit = =>
     if $scope.bulk_order_form.$valid
       $scope.saving = true
       $q.all(LineItems.saveAll()).then ->
+        $scope.bulk_order_form.$setPristine()
         $scope.saving = false
     else
       alert "Some errors must be resolved be before you can update orders.\nAny fields with red borders contain errors."
 
   $scope.deleteLineItem = (lineItem) ->
     if ($scope.confirmDelete && confirm("Are you sure?")) || !$scope.confirmDelete
-      LineItems.delete(lineItem).then ->
+      LineItems.delete lineItem, =>
         $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
 
   $scope.deleteLineItems = (lineItems) ->
