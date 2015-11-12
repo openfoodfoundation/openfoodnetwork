@@ -282,10 +282,7 @@ feature %q{
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle" do
-          order_cycle_names = OrderCycle.pluck(:name).push "All"
-          find("div.select2-container#s2id_order_cycle_filter").click
-          order_cycle_names.each { |ocn| expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: ocn }
-          find("div.select2-container#s2id_order_cycle_filter").click
+          expect(page).to have_select2 'order_cycle_filter', options: OrderCycle.order('orders_close_at DESC').pluck(:name).unshift("All")
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"

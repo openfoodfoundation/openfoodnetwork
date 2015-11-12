@@ -35,7 +35,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
     $scope.quickSearch = ""
 
   $scope.refreshData = ->
-    unless $scope.orderCycleFilter == "0" || angular.equals(OrderCycles.orderCyclesByID, {})
+    unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == "0"
       $scope.startDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].first_order
       $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
 
@@ -132,12 +132,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
 
   $scope.unitsVariantSelected = ->
     !angular.equals($scope.selectedUnitsVariant,{})
-
-  $scope.resetSelectFilters = ->
-    $scope.distributorFilter = $scope.distributors[0].id
-    $scope.supplierFilter = $scope.suppliers[0].id
-    $scope.orderCycleFilter = $scope.orderCycles[0].id
-    $scope.quickSearch = ""
 
   $scope.weightAdjustedPrice = (lineItem) ->
     if lineItem.final_weight_volume > 0
