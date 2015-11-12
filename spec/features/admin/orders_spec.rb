@@ -47,7 +47,7 @@ feature %q{
     o.order_cycle.should == order_cycle
   end
 
-  scenario "can add a product to an existing order", js: true do
+  scenario "can add a product to an existing order", js: true, retry: 3 do
     login_to_admin_section
     visit '/admin/orders'
 

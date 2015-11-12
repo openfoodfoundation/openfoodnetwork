@@ -62,7 +62,11 @@ Openfoodnetwork::Application.routes.draw do
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
-      get :clone, on: :member
+
+      member do
+        get :clone
+        post :notify_producers
+      end
     end
 
     resources :enterprises do

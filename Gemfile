@@ -5,6 +5,8 @@ gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
 
+gem 'nokogiri'
+
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
 gem 'spree_i18n', :github => 'spree/spree_i18n', :branch => '1-3-stable'

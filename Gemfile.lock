@@ -594,6 +594,7 @@ DEPENDENCIES
   letter_opener
   momentjs-rails
   newrelic_rpm
+  nokogiri
   oj
   paper_trail (~> 3.0.8)
   paperclip
