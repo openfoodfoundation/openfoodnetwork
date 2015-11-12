@@ -26,287 +26,304 @@ describe "LineItemsCtrl", ->
     order = { id: 9, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
-    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_not_null%5D=true&q%5Bcreated_at_gt%5D=SomeDate&q%5Bcreated_at_lt%5D=SomeDate&q%5Bstate_not_eq%5D=canceled").respond [order]
+    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
-    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bcreated_at_gt%5D=SomeDate&q%5Border%5D%5Bcreated_at_lt%5D=SomeDate&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
+    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
 
+    scope.bulk_order_form = jasmine.createSpyObj('bulk_order_form', ['$setPristine'])
+
     ctrl "LineItemsCtrl", {$scope: scope, Enterprises: Enterprises, Orders: Orders, LineItems: LineItems, OrderCycles: OrderCycles}
-    httpBackend.flush()
   )
 
-  describe "initialisation", ->
-    it "gets suppliers, adds a blank option as the first in the list", ->
-      expect(scope.suppliers).toDeepEqual [ { id : '0', name : 'All' }, supplier ]
+  describe "before data is returned", ->
+    it "the RequestMonitor will have a state of loading", ->
+      expect(scope.RequestMonitor.loading).toBe true
 
-    it "gets distributors, adds a blank option as the first in the list", ->
-      expect(scope.distributors).toDeepEqual [ { id : '0', name : 'All' }, distributor ]
+    it "will not have reset the select filters", ->
+      expect(scope.distributorFilter).toBeUndefined()
+      expect(scope.supplierFilter).toBeUndefined()
+      expect(scope.orderCycleFilter).toBeUndefined()
+      expect(scope.quickSearch).toBeUndefined()
 
-    it "stores enterprises in an list that is accessible by id", ->
-      expect(Enterprises.enterprisesByID[1]).toDeepEqual supplier
+    it "will not have reset the form state to pristine", ->
+      expect(scope.bulk_order_form.$setPristine.calls.length).toEqual 0
 
-    it "gets order cycles, adds a blank option as the first in the list", ->
-      expect(scope.orderCycles).toDeepEqual [ { id : '0', name : 'All' }, orderCycle ]
-
-    it "gets orders, with dereferenced order cycles and distributors", ->
-      expect(scope.orders).toDeepEqual [ { id: 9, order_cycle: orderCycle, distributor: distributor, number: "R123456" } ]
-
-    it "gets line_items, with dereferenced orders and suppliers", ->
-      expect(scope.lineItems).toDeepEqual [ { id: 7, quantity: 3, order: scope.orders[0], supplier: supplier } ]
-
-    it "resets the select filters", ->
-      expect(scope.distributorFilter).toBe '0'
-      expect(scope.supplierFilter).toBe '0'
-      expect(scope.orderCycleFilter).toBe '0'
-      expect(scope.quickSearch).toBe = ""
-
-    it "sets loading to false", ->
-      expect(scope.loading).toBe false
-
-  describe "deleting a line item", ->
-    order = line_item1 = line_item2 = null
-
-    beforeEach inject((LineItemResource) ->
-      spyOn(window,"confirm").andReturn true
-      order = { number: "R12345678" }
-      line_item1 = new LineItemResource({ id: 1, order: order })
-      line_item2 = new LineItemResource({ id: 2, order: order })
-      scope.lineItems= [ line_item1, line_item2 ]
-    )
-
-    describe "where the request is successful", ->
-      beforeEach ->
-        httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond "nothing"
-        scope.deleteLineItem line_item1
-        httpBackend.flush()
-
-      it "removes the deleted item from the line_items array", ->
-        expect(scope.lineItems).toEqual [line_item2]
-
-    describe "where the request is unsuccessful", ->
-      beforeEach ->
-        httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond 404, "NO CONTENT"
-        scope.deleteLineItem line_item1
-        httpBackend.flush()
-
-      it "does not remove line_item from the line_items array", ->
-        expect(scope.lineItems).toEqual [line_item1, line_item2]
-
-  describe "deleting 'checked' line items", ->
-    line_item1 = line_item2 = line_item3 = line_item4 = null
-
+  describe "after data is returned", ->
     beforeEach ->
-      line_item1 = { name: "line item 1", checked: false }
-      line_item2 = { name: "line item 2", checked: true }
-      line_item3 = { name: "line item 3", checked: false }
-      line_item4 = { name: "line item 4", checked: true }
-      scope.lineItems = [ line_item1, line_item2, line_item3, line_item4 ]
+      httpBackend.flush()
 
-    it "calls deletedLineItem for each 'checked' line item", ->
-      spyOn(scope, "deleteLineItem")
-      scope.deleteLineItems(scope.lineItems)
-      expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
-      expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
-      expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)
-      expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item3)
+    describe "initialisation", ->
+      it "gets suppliers, adds a blank option as the first in the list", ->
+        expect(scope.suppliers).toDeepEqual [ { id : '0', name : 'All' }, supplier ]
 
-  describe "check boxes for line items", ->
-    line_item1 = line_item2 = null
+      it "gets distributors, adds a blank option as the first in the list", ->
+        expect(scope.distributors).toDeepEqual [ { id : '0', name : 'All' }, distributor ]
 
-    beforeEach ->
-      line_item1 = { name: "line item 1", checked: false }
-      line_item2 = { name: "line item 2", checked: false }
-      scope.filteredLineItems = [ line_item1, line_item2 ]
+      it "stores enterprises in an list that is accessible by id", ->
+        expect(Enterprises.enterprisesByID[1]).toDeepEqual supplier
 
-    it "keeps track of whether all filtered lines items are 'checked' or not", ->
-      expect(scope.allBoxesChecked()).toEqual false
-      line_item1.checked = true
-      expect(scope.allBoxesChecked()).toEqual false
-      line_item2.checked = true
-      expect(scope.allBoxesChecked()).toEqual true
-      line_item1.checked = false
-      expect(scope.allBoxesChecked()).toEqual false
+      it "gets order cycles, adds a blank option as the first in the list", ->
+        expect(scope.orderCycles).toDeepEqual [ { id : '0', name : 'All' }, orderCycle ]
 
-    it "toggles the 'checked' attribute of all line items based to the value of allBoxesChecked", ->
-      scope.toggleAllCheckboxes()
-      expect(scope.allBoxesChecked()).toEqual true
-      line_item1.checked = false
-      expect(scope.allBoxesChecked()).toEqual false
-      scope.toggleAllCheckboxes()
-      expect(scope.allBoxesChecked()).toEqual true
-      scope.toggleAllCheckboxes()
-      expect(scope.allBoxesChecked()).toEqual false
+      it "gets orders, with dereferenced order cycles and distributors", ->
+        expect(scope.orders).toDeepEqual [ { id: 9, order_cycle: orderCycle, distributor: distributor, number: "R123456" } ]
 
-  describe "unit calculations", ->
-    describe "fulfilled()", ->
-      it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
-        expect(scope.fulfilled()).toEqual ''
+      it "gets line_items, with dereferenced orders and suppliers", ->
+        expect(scope.lineItems).toDeepEqual [ { id: 7, quantity: 3, order: scope.orders[0], supplier: supplier } ]
 
-      it "returns '' if selectedUnitsVariant has no property 'group_buy_unit_size' or group_buy_unit_size is 0", ->
-        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 0 }
-        expect(scope.fulfilled()).toEqual ''
-        scope.selectedUnitsProduct = { variant_unit: "weight" }
-        expect(scope.fulfilled()).toEqual ''
+      it "the RequestMonitor will have a state of loaded", ->
+        expect(scope.RequestMonitor.loading).toBe false
 
-      it "returns '', and does not call Math.round if variant_unit is 'items'", ->
-        spyOn(Math,"round")
-        scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
-        expect(scope.fulfilled()).toEqual ''
-        expect(Math.round).not.toHaveBeenCalled()
+      it "resets the select filters", ->
+        expect(scope.distributorFilter).toBe '0'
+        expect(scope.supplierFilter).toBe '0'
+        expect(scope.orderCycleFilter).toBe '0'
+        expect(scope.quickSearch).toBe = ""
 
-      it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-        spyOn(Math,"round")
-        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 10 }
-        scope.fulfilled()
-        expect(Math.round).toHaveBeenCalled()
-        scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 10 }
-        scope.fulfilled()
-        expect(Math.round).toHaveBeenCalled()
+      it "resets the form state to pristine", ->
+        expect(scope.bulk_order_form.$setPristine.calls.length).toEqual 1
 
-      it "returns the quantity of fulfilled group buy units", ->
-        scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
-        expect(scope.fulfilled(1500)).toEqual 1.5
+    describe "deleting a line item", ->
+      order = line_item1 = line_item2 = null
 
-    describe "allFinalWeightVolumesPresent()", ->
-      it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
-        scope.filteredLineItems = [
-          { final_weight_volume: 1000 }
-          { final_weight_volume: 3000 }
-          { final_weight_yayaya: 2000 }
-        ]
-        expect(scope.allFinalWeightVolumesPresent()).toEqual false
+      beforeEach inject((LineItemResource) ->
+        spyOn(window,"confirm").andReturn true
+        order = { number: "R12345678" }
+        line_item1 = new LineItemResource({ id: 1, order: order })
+        line_item2 = new LineItemResource({ id: 2, order: order })
+        scope.lineItems= [ line_item1, line_item2 ]
+      )
 
-      it "returns false if the unit_value of any item in filteredLineItems is not a number greater than 0", ->
-        scope.filteredLineItems = [
-          { final_weight_volume: 0 }
-          { final_weight_volume: 3000 }
-          { final_weight_volume: 2000 }
-        ]
-        expect(scope.allFinalWeightVolumesPresent()).toEqual false
-        scope.filteredLineItems = [
-          { final_weight_volume: 'lalala' }
-          { final_weight_volume: 3000 }
-          { final_weight_volume: 2000 }
-        ]
-        expect(scope.allFinalWeightVolumesPresent()).toEqual false
+      describe "where the request is successful", ->
+        beforeEach ->
+          httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond "nothing"
+          scope.deleteLineItem line_item1
+          httpBackend.flush()
 
-      it "returns true if the unit_value of all items in filteredLineItems are numbers greater than 0", ->
-        scope.filteredLineItems = [
-          { final_weight_volume: 1000 }
-          { final_weight_volume: 3000 }
-          { final_weight_volume: 2000 }
-        ]
-        expect(scope.allFinalWeightVolumesPresent()).toEqual true
+        it "removes the deleted item from the line_items array", ->
+          expect(scope.lineItems).toEqual [line_item2]
 
-    describe "sumUnitValues()", ->
-      it "returns the sum of the final_weight_volumes line_items", ->
-        scope.filteredLineItems = [
-          { final_weight_volume: 2 }
-          { final_weight_volume: 7 }
-          { final_weight_volume: 21 }
-        ]
-        expect(scope.sumUnitValues()).toEqual 30
+      describe "where the request is unsuccessful", ->
+        beforeEach ->
+          httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond 404, "NO CONTENT"
+          scope.deleteLineItem line_item1
+          httpBackend.flush()
 
-    describe "sumMaxUnitValues()", ->
-      it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
-        LineItems.pristineByID = { 1: { quantity: 2 }, 2: { quantity: 3 }, 3: { quantity: 7 } }
-        scope.filteredLineItems = [
-          { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5 }
-          { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1 }
-          { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10 }
-        ]
-        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(LineItems.pristineByID[scope.filteredLineItems[0].id].quantity, scope.filteredLineItems[0].max_quantity)
-        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(LineItems.pristineByID[scope.filteredLineItems[1].id].quantity, scope.filteredLineItems[1].max_quantity)
-        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(LineItems.pristineByID[scope.filteredLineItems[2].id].quantity, scope.filteredLineItems[2].max_quantity)
+        it "does not remove line_item from the line_items array", ->
+          expect(scope.lineItems).toEqual [line_item1, line_item2]
 
-        expect(scope.sumMaxUnitValues()).toEqual (sp0 + sp1 + sp2)
-
-    describe "formatting a value based upon the properties of a specified Units Variant", ->
-      # A Units Variant is an API object which holds unit properies of a variant
+    describe "deleting 'checked' line items", ->
+      line_item1 = line_item2 = line_item3 = line_item4 = null
 
       beforeEach ->
-        spyOn(Math,"round").andCallThrough()
+        line_item1 = { name: "line item 1", checked: false }
+        line_item2 = { name: "line item 2", checked: true }
+        line_item3 = { name: "line item 3", checked: false }
+        line_item4 = { name: "line item 4", checked: true }
+        scope.lineItems = [ line_item1, line_item2, line_item3, line_item4 ]
 
-      it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
-        expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
+      it "calls deletedLineItem for each 'checked' line item", ->
+        spyOn(scope, "deleteLineItem")
+        scope.deleteLineItems(scope.lineItems)
+        expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
+        expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
+        expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)
+        expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item3)
 
-      it "returns '', and does not call Math.round if variant_unit is 'items'", ->
-        unitsVariant = { variant_unit: "items" }
-        expect(scope.formattedValueWithUnitName(1,unitsVariant)).toEqual ''
-        expect(Math.round).not.toHaveBeenCalled()
+    describe "check boxes for line items", ->
+      line_item1 = line_item2 = null
 
-      it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-        unitsVariant = { variant_unit: "weight" }
-        scope.formattedValueWithUnitName(1,unitsVariant)
-        expect(Math.round).toHaveBeenCalled()
-        scope.selectedUnitsVariant = { variant_unit: "volume" }
-        scope.formattedValueWithUnitName(1,unitsVariant)
-        expect(Math.round).toHaveBeenCalled()
-
-      it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
-        unitsVariant = { variant_unit: "weight" }
-        spyOn(VariantUnitManager, "getScale").andReturn 5
-        scope.formattedValueWithUnitName(10, unitsVariant)
-        expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
-
-      it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
-        unitsVariant = { variant_unit: "weight" }
-        spyOn(VariantUnitManager, "getScale").andReturn 1000
-        spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
-        expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
-
-    describe "updating the price upon updating the weight of a line item", ->
       beforeEach ->
-        LineItems.pristineByID = { 1: { price: 2.00, quantity: 1, final_weight_volume: 2000 } }
+        line_item1 = { name: "line item 1", checked: false }
+        line_item2 = { name: "line item 2", checked: false }
+        scope.filteredLineItems = [ line_item1, line_item2 ]
 
-      it "updates the price if the weight is changed", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: 1, final_weight_volume: 4000  }
-        ]
-        scope.weightAdjustedPrice(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].price).toEqual 4.00
+      it "keeps track of whether all filtered lines items are 'checked' or not", ->
+        expect(scope.allBoxesChecked()).toEqual false
+        line_item1.checked = true
+        expect(scope.allBoxesChecked()).toEqual false
+        line_item2.checked = true
+        expect(scope.allBoxesChecked()).toEqual true
+        line_item1.checked = false
+        expect(scope.allBoxesChecked()).toEqual false
 
-      it "doesn't update the price if the weight <= 0", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: 1, final_weight_volume: 0  }
-        ]
-        scope.weightAdjustedPrice(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].price).toEqual 2.00
+      it "toggles the 'checked' attribute of all line items based to the value of allBoxesChecked", ->
+        scope.toggleAllCheckboxes()
+        expect(scope.allBoxesChecked()).toEqual true
+        line_item1.checked = false
+        expect(scope.allBoxesChecked()).toEqual false
+        scope.toggleAllCheckboxes()
+        expect(scope.allBoxesChecked()).toEqual true
+        scope.toggleAllCheckboxes()
+        expect(scope.allBoxesChecked()).toEqual false
 
-      it "doesn't update the price if the weight is an empty string", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: 1, final_weight_volume: ""  }
-        ]
-        scope.weightAdjustedPrice(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].price).toEqual 2.00
+    describe "unit calculations", ->
+      describe "fulfilled()", ->
+        it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
+          expect(scope.fulfilled()).toEqual ''
 
-    describe "updating final_weight_volume upon updating the quantity for a line_item", ->
-      beforeEach ->
-        LineItems.pristineByID = { 1: { price: 2.00, quantity: 1, final_weight_volume: 2000 } }
-        spyOn(scope, "weightAdjustedPrice")
+        it "returns '' if selectedUnitsVariant has no property 'group_buy_unit_size' or group_buy_unit_size is 0", ->
+          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 0 }
+          expect(scope.fulfilled()).toEqual ''
+          scope.selectedUnitsProduct = { variant_unit: "weight" }
+          expect(scope.fulfilled()).toEqual ''
 
-      it "updates the weight if the quantity is changed, then calls weightAdjustedPrice()", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: 2, final_weight_volume: 0  }
-        ]
-        scope.updateOnQuantity(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 4000
-        expect(scope.weightAdjustedPrice).toHaveBeenCalled()
+        it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+          spyOn(Math,"round")
+          scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
+          expect(scope.fulfilled()).toEqual ''
+          expect(Math.round).not.toHaveBeenCalled()
 
-      it "doesn't update the weight if the quantity <= 0", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: 0, final_weight_volume: 1000  }
-        ]
-        scope.updateOnQuantity(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
+        it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
+          spyOn(Math,"round")
+          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 10 }
+          scope.fulfilled()
+          expect(Math.round).toHaveBeenCalled()
+          scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 10 }
+          scope.fulfilled()
+          expect(Math.round).toHaveBeenCalled()
 
-      it "doesn't update the weight if the quantity is an empty string", ->
-        scope.filteredLineItems = [
-          { id: 1, price: 2.00, quantity: "", final_weight_volume: 1000  }
-        ]
-        scope.updateOnQuantity(scope.filteredLineItems[0])
-        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
+        it "returns the quantity of fulfilled group buy units", ->
+          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
+          expect(scope.fulfilled(1500)).toEqual 1.5
+
+      describe "allFinalWeightVolumesPresent()", ->
+        it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 1000 }
+            { final_weight_volume: 3000 }
+            { final_weight_yayaya: 2000 }
+          ]
+          expect(scope.allFinalWeightVolumesPresent()).toEqual false
+
+        it "returns false if the unit_value of any item in filteredLineItems is not a number greater than 0", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 0 }
+            { final_weight_volume: 3000 }
+            { final_weight_volume: 2000 }
+          ]
+          expect(scope.allFinalWeightVolumesPresent()).toEqual false
+          scope.filteredLineItems = [
+            { final_weight_volume: 'lalala' }
+            { final_weight_volume: 3000 }
+            { final_weight_volume: 2000 }
+          ]
+          expect(scope.allFinalWeightVolumesPresent()).toEqual false
+
+        it "returns true if the unit_value of all items in filteredLineItems are numbers greater than 0", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 1000 }
+            { final_weight_volume: 3000 }
+            { final_weight_volume: 2000 }
+          ]
+          expect(scope.allFinalWeightVolumesPresent()).toEqual true
+
+      describe "sumUnitValues()", ->
+        it "returns the sum of the final_weight_volumes line_items", ->
+          scope.filteredLineItems = [
+            { final_weight_volume: 2 }
+            { final_weight_volume: 7 }
+            { final_weight_volume: 21 }
+          ]
+          expect(scope.sumUnitValues()).toEqual 30
+
+      describe "sumMaxUnitValues()", ->
+        it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
+          scope.filteredLineItems = [
+            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5 }
+            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1 }
+            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10 }
+          ]
+
+          expect(scope.sumMaxUnitValues()).toEqual 37
+
+      describe "formatting a value based upon the properties of a specified Units Variant", ->
+        # A Units Variant is an API object which holds unit properies of a variant
+
+        beforeEach ->
+          spyOn(Math,"round").andCallThrough()
+
+        it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
+          expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
+
+        it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+          unitsVariant = { variant_unit: "items" }
+          expect(scope.formattedValueWithUnitName(1,unitsVariant)).toEqual ''
+          expect(Math.round).not.toHaveBeenCalled()
+
+        it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
+          unitsVariant = { variant_unit: "weight" }
+          scope.formattedValueWithUnitName(1,unitsVariant)
+          expect(Math.round).toHaveBeenCalled()
+          scope.selectedUnitsVariant = { variant_unit: "volume" }
+          scope.formattedValueWithUnitName(1,unitsVariant)
+          expect(Math.round).toHaveBeenCalled()
+
+        it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
+          unitsVariant = { variant_unit: "weight" }
+          spyOn(VariantUnitManager, "getScale").andReturn 5
+          scope.formattedValueWithUnitName(10, unitsVariant)
+          expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
+
+        it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
+          unitsVariant = { variant_unit: "weight" }
+          spyOn(VariantUnitManager, "getScale").andReturn 1000
+          spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
+          expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
+
+      describe "updating the price upon updating the weight of a line item", ->
+        beforeEach ->
+          LineItems.pristineByID = { 1: { price: 2.00, quantity: 1, final_weight_volume: 2000 } }
+
+        it "updates the price if the weight is changed", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: 1, final_weight_volume: 4000  }
+          ]
+          scope.weightAdjustedPrice(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].price).toEqual 4.00
+
+        it "doesn't update the price if the weight <= 0", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: 1, final_weight_volume: 0  }
+          ]
+          scope.weightAdjustedPrice(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].price).toEqual 2.00
+
+        it "doesn't update the price if the weight is an empty string", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: 1, final_weight_volume: ""  }
+          ]
+          scope.weightAdjustedPrice(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].price).toEqual 2.00
+
+      describe "updating final_weight_volume upon updating the quantity for a line_item", ->
+        beforeEach ->
+          LineItems.pristineByID = { 1: { price: 2.00, quantity: 1, final_weight_volume: 2000 } }
+          spyOn(scope, "weightAdjustedPrice")
+
+        it "updates the weight if the quantity is changed, then calls weightAdjustedPrice()", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: 2, final_weight_volume: 0  }
+          ]
+          scope.updateOnQuantity(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].final_weight_volume).toEqual 4000
+          expect(scope.weightAdjustedPrice).toHaveBeenCalled()
+
+        it "doesn't update the weight if the quantity <= 0", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: 0, final_weight_volume: 1000  }
+          ]
+          scope.updateOnQuantity(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
+
+        it "doesn't update the weight if the quantity is an empty string", ->
+          scope.filteredLineItems = [
+            { id: 1, price: 2.00, quantity: "", final_weight_volume: 1000  }
+          ]
+          scope.updateOnQuantity(scope.filteredLineItems[0])
+          expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
 
 
 describe "Auxiliary functions", ->
