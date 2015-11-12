@@ -87,8 +87,14 @@ feature %q{
 
     click_link "About"
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
-    long_description = find :css, "text-angular#enterprise_long_description div.ta-scroll-window div.ta-bind"
-    long_description.set 'This is an interesting long description'
+
+    # TODO: Directly altering the text in the contenteditable div like this started breaking with the upgrade
+    # of Poltergeist from 1.5 to 1.7. Probably requires an upgrade of AngularJS and/or TextAngular
+    # long_description = find :css, "text-angular#enterprise_long_description div.ta-scroll-window div.ta-bind"
+    # long_description.set 'This is an interesting long description'
+    # long_description.native.send_keys(:Enter) # Sets the value
+
+    page.first("input[name='enterprise\[long_description\]']", visible: false).set('This is an interesting long description')
 
     # Check Angularjs switching of sidebar elements
     click_link "Primary Details"
@@ -143,8 +149,10 @@ feature %q{
     select2_search 'Victoria', :from => 'State'
 
     click_link "Shop Preferences"
-    shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
-    shopfront_message.set 'This is my shopfront message.'
+    # TODO: Same as above
+    # shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
+    # shopfront_message.set 'This is my shopfront message.'
+    page.first("input[name='enterprise\[preferred_shopfront_message\]']", visible: false).set('This is my shopfront message.')
 
     click_button 'Update'
 
