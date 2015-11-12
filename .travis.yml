@@ -3,7 +3,7 @@ sudo: false
 cache: bundler
 bundler_args: --without development
 rvm:
-  - "1.9.3"
+  - "2.1.5"
 
 # The test cases are roughly split according to their test times.
 # It would be better to use https://github.com/ArturT/knapsack.

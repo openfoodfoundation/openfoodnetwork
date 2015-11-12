@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature %q{
-    As a payment administrator
-    I want to capture multiple payments quickly from the one page
+    As an administrator
+    I want to manage orders
 } do
   include AuthenticationWorkflow
   include WebHelper
@@ -10,7 +10,7 @@ feature %q{
   background do
     @user = create(:user)
     @product = create(:simple_product)
-    @distributor = create(:distributor_enterprise)
+    @distributor = create(:distributor_enterprise, charges_sales_tax: true)
     @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
@@ -47,7 +47,7 @@ feature %q{
     o.order_cycle.should == order_cycle
   end
 
-  scenario "can add a product to an existing order", js: true do
+  scenario "can add a product to an existing order", js: true, retry: 3 do
     login_to_admin_section
     visit '/admin/orders'
 
@@ -105,6 +105,7 @@ feature %q{
     # we should still be on the same page
     current_path.should == spree.admin_orders_path
   end
+
 
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
