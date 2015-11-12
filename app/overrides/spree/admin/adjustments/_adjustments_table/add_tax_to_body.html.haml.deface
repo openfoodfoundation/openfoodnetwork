@@ -1,0 +1,9 @@
+/ replace_contents "[data-hook='adjustment_row']"
+
+%td.align-center.created_at= pretty_time(adjustment.created_at)
+%td.align-center.label= adjustment.label
+%td.align-center.amount= adjustment.display_amount.to_html
+%td.align-center.included-tax= adjustment.display_included_tax.to_html
+%td.actions
+  = link_to_edit adjustment, no_text: true
+  = link_to_delete adjustment, no_text: true

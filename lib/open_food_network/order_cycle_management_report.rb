@@ -16,7 +16,15 @@ module OpenFoodNetwork
       end
     end
 
-    def table
+    def search
+      Spree::Order.complete.where("spree_orders.state != ?", :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
+    end
+
+    def orders
+      filter search.result
+    end
+
+    def table_items
       if is_payment_methods?
         orders.map { |o| payment_method_row o }
       else
@@ -24,14 +32,9 @@ module OpenFoodNetwork
       end
     end
 
-    def orders
-      filter Spree::Order.managed_by(@user).distributed_by_user(@user).complete.where("spree_orders.state != ?", :canceled)
+    def filter(search_result)
+      filter_to_payment_method filter_to_shipping_method filter_to_order_cycle search_result
     end
-
-    def filter(orders)
-      filter_to_order_cycle filter_to_payment_method filter_to_shipping_method orders
-    end
-
 
     private
 

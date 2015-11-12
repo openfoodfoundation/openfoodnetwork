@@ -1,5 +1,5 @@
 function load_environment {
-    source /var/lib/jenkins/.rvm/environments/ruby-1.9.3-p392
+    source /var/lib/jenkins/.rvm/environments/ruby-2.1.5
     if [ ! -f config/application.yml ]; then
         ln -s application.yml.example config/application.yml
     fi

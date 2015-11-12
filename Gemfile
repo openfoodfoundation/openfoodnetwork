@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
+ruby "2.1.5"
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
@@ -114,7 +114,7 @@ group :test do
 end
 
 group :development do
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'debugger-linecache'
   gem 'guard'
   gem 'guard-livereload'

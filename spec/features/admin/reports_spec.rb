@@ -67,7 +67,7 @@ feature %q{
 
     scenario "payment method report" do
       click_link "Payment Methods Report"
-      rows = find("table#listing_order_payment_methods").all("thead tr")
+      rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
@@ -76,7 +76,7 @@ feature %q{
 
     scenario "delivery report" do
       click_link "Delivery Report"
-      rows = find("table#listing_order_payment_methods").all("thead tr")
+      rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       table.sort.should == [
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
@@ -397,6 +397,8 @@ feature %q{
     let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
     let!(:adj_fee1) { create(:adjustment, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
     let!(:adj_fee2) { create(:adjustment, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
+    let!(:adj_manual1) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
+    let!(:adj_manual2) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
 
     before do
@@ -422,7 +424,9 @@ feature %q{
         xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
         xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
         xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
-        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income')
+        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income'),
+        xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income'),
+        xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income')
       ]
     end
 
@@ -441,7 +445,9 @@ feature %q{
         xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
         xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
         xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
-        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
+        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts),
+        xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income', opts),
+        xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income',   opts)
       ]
     end
 
@@ -455,6 +461,8 @@ feature %q{
         xero_invoice_header,
         xero_invoice_li_row(line_item1),
         xero_invoice_li_row(line_item2),
+        xero_invoice_adjustment_row(adj_manual1),
+        xero_invoice_adjustment_row(adj_manual2),
         xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
         xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
         xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
@@ -511,10 +519,14 @@ feature %q{
       xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
-    def xero_invoice_account_invoice_row(adjustment, opts={})
-      opts.reverse_merge!({customer_name: '', address1: '', city: '', state: '', zipcode: '', country: '', invoice_number: account_invoice_order.number, order_number: account_invoice_order.number})
+    def xero_invoice_adjustment_row(adjustment, opts={})
       tax_type = adjustment.has_tax? ? 'GST on Income' : 'GST Free Income'
       xero_invoice_row('', adjustment.label, adjustment.amount, '1', tax_type, opts)
+    end
+
+    def xero_invoice_account_invoice_row(adjustment, opts={})
+      opts.reverse_merge!({customer_name: '', address1: '', city: '', state: '', zipcode: '', country: '', invoice_number: account_invoice_order.number, order_number: account_invoice_order.number})
+      xero_invoice_adjustment_row(adjustment, opts)
     end
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
