@@ -41,7 +41,7 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render :layout => false }
-          format.json { render json: @object, ams_prefix: 'index', spree_current_user: spree_current_user }
+          format.json { render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user }
         end
       else
         invoke_callbacks(:update, :fails)
