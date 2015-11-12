@@ -113,8 +113,12 @@ module Admin
     private
     def load_data_for_index
       @show_more = !!params[:show_more]
-      params[:q] ||= {}
-      params[:q][:orders_close_at_null_or_orders_close_at_gt] = 31.days.ago unless @show_more || params[:q][:orders_close_at_gt].present?
+      unless @show_more || params[:q].andand[:orders_close_at_gt].present?
+        # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated
+        params[:q] = {
+          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: 31.days.ago, orders_close_at_null: true } ]
+        }
+      end
       @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
     end
 
