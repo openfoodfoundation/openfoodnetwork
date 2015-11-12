@@ -29,9 +29,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
     LineItems.allSaved() || confirm("Unsaved changes exist and will be lost if you continue.")
 
   $scope.resetSelectFilters = ->
-    $scope.distributorFilter = $scope.distributors[0].id
-    $scope.supplierFilter = $scope.suppliers[0].id
-    $scope.orderCycleFilter = $scope.orderCycles[0].id
+    $scope.distributorFilter = blankOption().id
+    $scope.supplierFilter = blankOption().id
+    $scope.orderCycleFilter = blankOption().id
     $scope.quickSearch = ""
 
   $scope.refreshData = ->
