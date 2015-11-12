@@ -245,7 +245,7 @@ feature %q{
           visit '/admin/orders/bulk_management'
         end
 
-        it "displays a select box for distributors, which filters line items by the selected distributor" do
+        it "displays a select box for distributors, which filters line items by the selected distributor", retry: 3 do
           distributor_names = ["All"]
           Enterprise.is_distributor.each{ |e| distributor_names << e.name }
           find("div.select2-container#s2id_distributor_filter").click
@@ -258,7 +258,7 @@ feature %q{
           expect(page).to_not have_selector "tr#li_#{li2.id}", visible: true
         end
 
-        it "displays all line items when 'All' is selected from distributor filter" do
+        it "displays all line items when 'All' is selected from distributor filter", retry: 3 do
           select2_select d1.name, from: "distributor_filter"
           expect(page).to have_selector "tr#li_#{li1.id}", visible: true
           expect(page).to_not have_selector "tr#li_#{li2.id}", visible: true
@@ -277,11 +277,12 @@ feature %q{
         let!(:li1) { FactoryGirl.create(:line_item, order: o1 ) }
         let!(:li2) { FactoryGirl.create(:line_item, order: o2 ) }
 
-        before :each do
+        before do
           visit '/admin/orders/bulk_management'
         end
 
-        it "displays a select box for order cycles, which filters line items by the selected order cycle" do
+        it "displays a select box for order cycles, which filters line items by the selected order cycle", retry: 3 do
+          expect(page).to have_selector '#s2id_order_cycle_filter a.select2-choice', text: 'All'
           expect(page).to have_select2 'order_cycle_filter', options: OrderCycle.order('orders_close_at DESC').pluck(:name).unshift("All")
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
@@ -291,7 +292,7 @@ feature %q{
           expect(page).to_not have_selector "tr#li_#{li2.id}"
         end
 
-        it "displays all line items when 'All' is selected from order_cycle filter" do
+        it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
           select2_select oc1.name, from: "order_cycle_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to_not have_selector "tr#li_#{li2.id}"
@@ -336,19 +337,19 @@ feature %q{
           expect(page).to have_selector "tr#li_#{li2.id}", visible: true
         end
 
-        it "displays a 'Clear All' button which sets all select filters to 'All'" do
+        it "displays a 'Clear All' button which sets all select filters to 'All'", retry: 3 do
           select2_select oc1.name, from: "order_cycle_filter"
           select2_select d1.name, from: "distributor_filter"
           select2_select s1.name, from: "supplier_filter"
-          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
-          expect(page).to_not have_selector "tr#li_#{li2.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to_not have_selector "tr#li_#{li2.id}"
           expect(page).to have_button "Clear All"
           click_button "Clear All"
           expect(page).to have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
           expect(page).to have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
           expect(page).to have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
-          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
-          expect(page).to have_selector "tr#li_#{li2.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
         end
       end
     end
