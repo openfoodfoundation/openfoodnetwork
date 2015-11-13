@@ -4,6 +4,5 @@ angular.module("admin.indexUtils").directive "select2MinSearch", ($timeout) ->
     element.select2
       minimumResultsForSearch: attrs.select2MinSearch
 
-    ngModel.$formatters.push (value) ->
+    scope.$watch attrs.ngModel, (newVal, oldVal) ->
       $timeout -> element.trigger('change')
-      value

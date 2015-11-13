@@ -1,5 +1,5 @@
 describe "LineItemsCtrl", ->
-  ctrl = scope = httpBackend = VariantUnitManager = Enterprises = Orders = LineItems = OrderCycles = null
+  ctrl = scope = httpBackend = $timeout = VariantUnitManager = Enterprises = Orders = LineItems = OrderCycles = null
   supplier = distributor = orderCycle = null
 
   beforeEach ->
@@ -9,9 +9,10 @@ describe "LineItemsCtrl", ->
       toDeepEqual: (expected) ->
         return angular.equals(this.actual, expected)
 
-  beforeEach inject(($controller, $rootScope, $httpBackend, _VariantUnitManager_, _Enterprises_, _Orders_, _LineItems_, _OrderCycles_) ->
+  beforeEach inject(($controller, $rootScope, $httpBackend, _$timeout_, _VariantUnitManager_, _Enterprises_, _Orders_, _LineItems_, _OrderCycles_) ->
     scope = $rootScope.$new()
     ctrl = $controller
+    $timeout = _$timeout_
     httpBackend = $httpBackend
     Enterprises = _Enterprises_
     Orders = _Orders_
@@ -27,14 +28,14 @@ describe "LineItemsCtrl", ->
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
     httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
+    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
-    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
 
     scope.bulk_order_form = jasmine.createSpyObj('bulk_order_form', ['$setPristine'])
 
-    ctrl "LineItemsCtrl", {$scope: scope, Enterprises: Enterprises, Orders: Orders, LineItems: LineItems, OrderCycles: OrderCycles}
+    ctrl "LineItemsCtrl", {$scope: scope, $timeout: $timeout, Enterprises: Enterprises, Orders: Orders, LineItems: LineItems, OrderCycles: OrderCycles}
   )
 
   describe "before data is returned", ->
@@ -53,6 +54,7 @@ describe "LineItemsCtrl", ->
   describe "after data is returned", ->
     beforeEach ->
       httpBackend.flush()
+      $timeout.flush()
 
     describe "initialisation", ->
       it "gets suppliers, adds a blank option as the first in the list", ->

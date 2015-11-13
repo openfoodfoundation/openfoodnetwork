@@ -1,4 +1,4 @@
-angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
+angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
   $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
   $scope.saving = false
@@ -40,10 +40,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
       $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
 
     RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
-    RequestMonitor.load $scope.distributors = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"] )
-    RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
     RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gt]": "#{$scope.startDate}", "q[order][completed_at_lt]": "#{$scope.endDate}")
-    RequestMonitor.load $scope.suppliers = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[is_primary_producer_eq]": "true" )
+
+    unless $scope.initialized
+      RequestMonitor.load $scope.distributors = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"] )
+      RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
+      RequestMonitor.load $scope.suppliers = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[is_primary_producer_eq]": "true" )
 
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.enterprisesByID
@@ -52,13 +54,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $http, $q
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.enterprisesByID
       Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.ordersByID
-      $scope.orderCycles.unshift blankOption()
-      $scope.suppliers.unshift blankOption()
-      $scope.distributors.unshift blankOption()
       $scope.bulk_order_form.$setPristine()
       unless $scope.initialized
         $scope.initialized = true
-        $scope.resetSelectFilters()
+        $timeout ->
+          $scope.orderCycles.unshift blankOption()
+          $scope.suppliers.unshift blankOption()
+          $scope.distributors.unshift blankOption()
+          $scope.resetSelectFilters()
 
   $scope.refreshData()
 
