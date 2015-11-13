@@ -48,7 +48,7 @@
         .row.summary
           .small-12.columns
             %p.no-results
-              = t :search_no_results_html, query: "<strong>{{query}}</strong>"
+              = t :search_no_results_html, query: "<strong>{{query}}</strong>".html_safe
     .row
       .small-12.columns
         %form{action: cart_path}

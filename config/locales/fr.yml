@@ -187,7 +187,7 @@ fr:
   email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
-  email_confirmation_help: "Après avoir confirmé votre adresse email vous pouvez accéder au compte d'administration de cette entreprise. Voir le %{link} pour en savoir plus sur les fonctionnalités de %{sitename} et commencer à utiliser votre profil ou votre boutique en ligne."
+  email_confirmation_help_html: "Après avoir confirmé votre adresse email vous pouvez accéder au compte d'administration de cette entreprise. Voir le %{link} pour en savoir plus sur les fonctionnalités de %{sitename} et commencer à utiliser votre profil ou votre boutique en ligne."
   email_confirmation_userguide: "Guide Utilisateur"
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
