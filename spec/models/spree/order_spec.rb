@@ -329,6 +329,22 @@ describe Spree::Order do
     end
   end
 
+  describe "removing an item from the order" do
+    let(:order) { create(:order) }
+    let(:v1)    { create(:variant) }
+    let(:v2)    { create(:variant) }
+
+    before do
+      order.add_variant v1
+      order.add_variant v2
+    end
+
+    it "removes the variant's line item" do
+      order.remove_variant v1
+      order.line_items(:reload).map(&:variant).should == [v2]
+    end
+  end
+
   describe "emptying the order" do
     it "removes shipping method" do
       subject.shipping_method = create(:shipping_method)
