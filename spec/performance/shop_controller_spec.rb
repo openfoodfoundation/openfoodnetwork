@@ -28,20 +28,10 @@ describe ShopController, type: :controller, performance: true do
     end
 
     it "returns products via json" do
-      results = []
-      4.times do |i|
-        ActiveRecord::Base.connection.query_cache.clear
-        Rails.cache.clear
-        result = Benchmark.measure do
-          xhr :get, :products
-          response.should be_success
-        end
-
-        results << result.total if i > 0
-        puts result
+      results = multi_benchmark(3) do
+        xhr :get, :products
+        response.should be_success
       end
-
-      puts (results.sum / results.count * 1000).round 0
     end
   end
 end

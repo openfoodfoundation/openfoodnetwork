@@ -206,18 +206,29 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
     end
 
-    describe "adding products to cart" do
+    describe "adding and removing products from cart" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
       let(:variant) { create(:variant, product: product) }
+
       before do
         add_product_and_variant_to_order_cycle(exchange, product, variant)
         set_order_cycle(order, oc1)
         visit shop_path
       end
-      it "should let us add products to our cart" do
-        fill_in "variants[#{variant.id}]", with: "1"
+
+      it "lets us add and remove products from our cart" do
+        fill_in "variants[#{variant.id}]", with: '1'
         page.should have_in_cart product.name
+        wait_until { !cart_dirty }
+        li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
+        li.quantity.should == 1
+
+        fill_in "variants[#{variant.id}]", with: '0'
+        within('li.cart') { page.should_not have_content product.name }
+        wait_until { !cart_dirty }
+
+        Spree::LineItem.where(id: li).should be_empty
       end
     end
 

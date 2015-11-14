@@ -386,6 +386,8 @@ ActiveRecord::Schema.define(:version => 20151002020537) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.boolean  "incoming",              :default => false, :null => false
+    t.string   "receival_time"
+    t.string   "receival_instructions"
   end
 
   add_index "exchanges", ["order_cycle_id"], :name => "index_exchanges_on_order_cycle_id"

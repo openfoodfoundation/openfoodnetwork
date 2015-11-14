@@ -215,7 +215,7 @@ en:
 To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
-  email_confirmation_help: "After confirming your email you can access your administration account for this enterprise.
+  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
 See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_confirmation_userguide: "User Guide"
   email_social: "Connect with Us:"
@@ -631,3 +631,5 @@ Please follow the instructions there to make your enterprise visible on the Open
   transport_fee: "Transport fee"
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
+  included_tax: "Included tax"
+  remove_tax: "Remove tax"

@@ -294,7 +294,6 @@ feature %q{
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
-          expect(page).to have_selector "#loading img.spinner"
           expect(page).to_not have_selector "#loading img.spinner"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to_not have_selector "tr#li_#{li2.id}"
