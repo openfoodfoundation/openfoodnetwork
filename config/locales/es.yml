@@ -40,65 +40,65 @@ es:
   name: Nombre
   first_name: Nombre
   last_name: Apellido
-  email: Correo electr
+  email: Correo electrónico
 
-  phone: Phone
-  next: Next
-  address: Address
-  address2: Address (contd.)
-  city: City
-  state: State
-  postcode: Postcode
-  country: Country
-  unauthorized: Unauthorized
-  terms_of_service: "Terms of service"
-  on_demand: On demand
-  none: None
+  phone: Teléfono
+  next: Siguiente
+  address: Dirección
+  address2: Dirección (cont.)
+  city: Ciudad
+  state: Estado
+  postcode: Código postal
+  country: País
+  unauthorized: No autorizado
+  terms_of_service: "Términos de servicio"
+  on_demand: Bajo demanda
+  none: Ninguno
 
-  alert_selling_on_ofn: "Interested in selling food on the Open Food Network?"
-  alert_start_here: "Start here"
-  label_shops: "Shops"
-  label_map: "Map"
-  label_producers: "Producers"
-  label_groups: "Groups"
-  label_about: "About"
-  label_shopping: "Shopping"
-  label_login: "Login"
-  label_logout: "Logout"
-  label_signup: "Sign up"
-  label_administration: "Administration"
+  alert_selling_on_ofn: "¿Interesado en vender comida en Open Food Network?"
+  alert_start_here: "Empiece aquí"
+  label_shops: "Tiendas"
+  label_map: "Mapa"
+  label_producers: "Productores"
+  label_groups: "Grupos"
+  label_about: "Acerca de"
+  label_shopping: "Tienda"
+  label_login: "Iniciar de sesión"
+  label_logout: "Cerrar sesión"
+  label_signup: "Registrarse"
+  label_administration: "Administración"
   label_admin: "Admin"
-  label_account: "Account"
-  label_more: "More"
-  label_less: "Show less"
+  label_account: "Cuenta"
+  label_more: "Más"
+  label_less: "Mostrar menos"
 
-  items: "items"
-  cart_headline: "Your shopping cart"
+  items: "artículos"
+  cart_headline: "Su carrito de compras"
   total: "Total"
-  checkout: "Checkout now"
-  cart_updating: "Updating cart..."
-  cart_empty: "Cart empty"
-  cart_edit: "Edit your cart"
+  checkout: "Revisar el carrito de compras"
+  cart_updating: "Actualizando el carrito..."
+  cart_empty: "Carrito vacío"
+  cart_edit: "Editar carrito"
 
-  card_number: Card Number
-  card_securitycode: "Security Code"
-  card_expiry_date: Expiry Date
+  card_number: Número de tarjeta
+  card_securitycode: "Código de seguridad"
+  card_expiry_date: Fecha de expiración
 
-  ofn_cart_headline: "Current cart for:"
-  ofn_cart_distributor: "Distributor:"
-  ofn_cart_oc: "Order cycle:"
-  ofn_cart_from: "From:"
-  ofn_cart_to: "To:"
-  ofn_cart_product: "Product:"
-  ofn_cart_quantitiy: "Quantity:"
-  ofn_cart_send: "Buy me"
+  ofn_cart_headline: "Tarjeta actual para:"
+  ofn_cart_distributor: "Distribuidor:"
+  ofn_cart_oc: "Ciclo de orden:"
+  ofn_cart_from: "De:"
+  ofn_cart_to: "Para:"
+  ofn_cart_product: "Producto:"
+  ofn_cart_quantitiy: "Cantidad:"
+  ofn_cart_send: "Comprar me"
 
-  ie_warning_headline: "Your browser is out of date :-("
-  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
+  ie_warning_headline: "Su navegador está desactualizado :-("
+  ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
+  ie_warning_chrome: Descargar Chrome
+  ie_warning_firefox: Descargar Firefox
+  ie_warning_ie: Actualizar Internet Explorer
+  ie_warning_other: "¿No puede actualizar su navegador? Pruebe Open Food Network en su teléfono :-)"
 
   footer_global_headline: "OFN Global"
   footer_global_home: "Home"
