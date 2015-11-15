@@ -3,7 +3,8 @@
   .columns.small-12.medium-7.large-7.fat
     / Will add in long description available once clean up HTML formatting producer.long_description
     %div{"bo-if" => "producer.description"}
-      %label About us
+      %label
+        = t :producers_about
       %img.right.show-for-medium-up{"bo-src" => "producer.logo" }
       %p.text-small{ "bo-text" => "producer.description"}
     %div.show-for-medium-up{"bo-if" => "producer.description.length==0"}
@@ -12,7 +13,8 @@
   .columns.small-12.medium-5.large-5.fat
 
     %div{"bo-if" => "producer.supplied_taxons"}
-      %label Shop for
+      %label
+        = t :producers_buy
       %p.trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
@@ -22,10 +24,11 @@
       &nbsp;
 
     %div{"bo-if" => "producer.email || producer.website || producer.phone"}
-      %label Contact
+      %label
+        = t :producers_contact
 
       %p.word-wrap{"bo-if" => "producer.phone"}
-        Call
+        = t :producers_contact_phone
         %span{"bo-text" => "producer.phone"}
 
       %p.word-wrap{"bo-if" => "producer.email"}
@@ -37,7 +40,8 @@
           %span{"bo-bind" => "producer.website | stripUrl"}
 
     %div{"bo-if" => "producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
-      %label Follow
+      %label
+        = t :producers_social
       .follow-icons{bindonce: true}
         %span{"bo-if" => "producer.twitter"}
           %a{"bo-href-i" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
@@ -61,9 +65,7 @@
       .columns.small-12.fat
         %div{"bo-if" => "producer.name"}
           %label
-            Shop for
-            %span.turquoise{"bo-text" => "producer.name"}
-            products at:
+            = t :producers_buy_at_html, {enterprise: '<span class="turquoise" bo-text="producer.name"></span>'.html_safe}
         %div.show-for-medium-up{"bo-if" => "!producer.name"}
           &nbsp;
     .row.cta-container

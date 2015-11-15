@@ -15,5 +15,5 @@ $(document).ready ->
 
   $('td.cart-adjustments a').click ->
     $('.cart_adjustment').toggle()
-    $(this).html('Item Handling Fees (included in item totals)')
+    $(this).html(t('item_handling_fees'))
     false

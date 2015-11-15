@@ -3,7 +3,7 @@
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
 
-    %title= content_for?(:title) ? "#{yield(:title)} - Open Food Network" : 'Welcome to Open Food Network'
+    %title= content_for?(:title) ? "#{yield(:title)} - #{Spree::Config[:site_name]}" : "#{t(:welcome_to)} #{Spree::Config[:site_name]}"
     - if Rails.env.production?
       = favicon_link_tag
     - else

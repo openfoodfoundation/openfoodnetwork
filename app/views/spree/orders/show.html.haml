@@ -1,12 +1,12 @@
 - content_for(:title) do
-  Order Confirmation
+  = t :orders_show_title
 
 = inject_enterprises
 
 .darkswarm
   - content_for :order_cycle_form do
     %strong.avenir
-      Order ready on
+      = t :orders_show_time
       - if @order.order_cycle
         = @order.order_cycle.pickup_time_for(@order.distributor)
       - else
@@ -18,7 +18,7 @@
     .row
       .columns.large-12.text-center
         %h2
-          Order confirmation
+          = t :orders_show_number
           = " #" + @order.number
 
     #order{"data-hook" => ""}

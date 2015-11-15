@@ -3,8 +3,8 @@
   .row
     .small-12.columns
       %header
-        %h2 Thanks!
-        %h5 Let's upload some pretty pictures so your profile looks great! :)
+        %h2 {{'registration_images_headline' | t}}
+        %h5 {{'registration_images_description' | t}}
         
   %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
     .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
@@ -18,5 +18,5 @@
 
     .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
       .small-12.columns
-        %input.button.secondary{ type: "button", value: "Back", ng: { click: "imageSelect('logo')" } }
-        %input.button.primary.right{ type: "submit", value: "Continue" }
+        %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "imageSelect('logo')" } }
+          %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

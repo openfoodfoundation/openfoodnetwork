@@ -1,6 +1,4 @@
 - enterprises ||= 'filteredEnterprises'
 %producer.row{"ng-show" => "#{enterprises}.length == 0"}
   %p.no-results
-    Sorry, no results found for
-    %strong {{query}}.
-    Try another search?
+    = t :search_no_results_html, query: "<strong>{{query}}</strong>".html_safe

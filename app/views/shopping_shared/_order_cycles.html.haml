@@ -5,8 +5,9 @@
   - if @order_cycles and @order_cycles.empty?
     %h4.text-right 
       %i.ofn-i_032-closed-sign
-      Orders are closed
-    %p.text-right Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)
+      = t :shopping_oc_closed
+    %p.text-right
+      = t :shopping_oc_closed_description
     .text-right
       %small
         %em

@@ -1,7 +1,8 @@
 %div.contact-container{bindonce: true}  
   - if @group.email.present? || @group.website.present? || @group.phone.present?
     %div.modal-centered
-      %p.modal-header Contact
+      %p.modal-header
+        = t :groups_contact_web
       - if @group.phone.present?
         %p
           %a{tel: @group.phone}
@@ -9,16 +10,17 @@
       - if @group.email.present?
         %p
           =link_to_service "", @group.email.reverse, mailto: true do
-            Email us
+            = t :groups_contact_email
       - if @group.website.present?
         %p
           =link_to_service "http://", @group.website do
-            Visit our website
+            = t :groups_contact_website
 
 %div{bindonce: true}  
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
     %div.modal-centered.pad-top
-      %p.modal-header Follow
+      %p.modal-header
+        = t :groups_contact_web
       .follow-icons{bindonce: true} 
         =link_to_service "http://twitter.com/", @group.twitter do
           %i.ofn-i_041-twitter
@@ -32,7 +34,8 @@
 %div{bindonce: true}  
   - if @group.address1.present? || @group.city.present?
     %div.modal-centered.pad-top
-      %p.modal-header Address
+      %p.modal-header
+        = t :groups_contact_web
       %p
         = @group.address1
         - if @group.address2.present?

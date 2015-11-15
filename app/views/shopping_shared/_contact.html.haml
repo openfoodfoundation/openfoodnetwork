@@ -4,7 +4,8 @@
       .small-12.large-4.columns
         - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode
           %div.center
-            .header Address
+            .header
+              = t :shopping_contact_address
             %strong=current_distributor.name
             %p
               = current_distributor.address.address1
@@ -19,7 +20,8 @@
       .small-12.large-4.columns
         - if current_distributor.website || current_distributor.email
           %div.center
-            .header Contact
+            .header
+              = t :shopping_contact_web
             %p
               - unless current_distributor.website.blank?
                 %a{href: "http://#{current_distributor.website}", target: "_blank" }
@@ -33,7 +35,8 @@
       .small-12.large-4.columns
         - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
           %div.center
-            .header Follow
+            .header
+              = t :shopping_contact_social
             %div.follow-icons
               - unless current_distributor.twitter.blank?
                 %span

@@ -5,7 +5,7 @@
         - if current_distributor.groups.length > 0
           %h5
             =current_distributor.name 
-            is part of: 
+            = t :shopping_groups_part_of
           %ul.bullet-list
             - for group in current_distributor.groups
               %li

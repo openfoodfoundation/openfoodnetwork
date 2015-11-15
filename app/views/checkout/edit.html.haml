@@ -1,14 +1,15 @@
 - content_for(:title) do
-  Checkout
+  = t :checkout_title
 
 = inject_enterprises
 
 .darkswarm.footer-pad
   - content_for :order_cycle_form do
 
-    %closing Checkout now
+    %closing
+      = t :checkout_now
     %p
-      Order ready for
+      = t :checkout_order_ready
       %strong
         = pickup_time current_order_cycle
 

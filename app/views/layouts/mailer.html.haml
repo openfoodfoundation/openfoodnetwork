@@ -4,7 +4,7 @@
     %meta{:content => "width=device-width", :name => "viewport" }/
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title
-      Open Food Network
+      = Spree::Config[:site_name]
     = stylesheet_link_tag 'mail/all'
   %body{:bgcolor => "#FFFFFF" }
     %table.head-wrap{:bgcolor => "#f2f2f2"}
@@ -18,7 +18,7 @@
                   %img{:src => "#{ asset_path 'logo-color.png' }", :width => "144", :height => "50"}/
                 %td{:align => "right"}
                   %h6.collapse
-                    Open Food Network
+                    = Spree::Config[:site_name]
         %td
 
     %table.body-wrap
@@ -43,9 +43,9 @@
                 %td{:align => "center"}
                   %p
                     %a{:href => "#{ URI.join(spree.root_url, "Terms-of-service.pdf").to_s }", :target => "_blank"}
-                      Terms of service
+                      = t :terms_of_service
                     |
                     %a{:href => "#{ spree.root_url }"}
-                      Open Food Network
+                      = Spree::Config[:site_name]
                     / | <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>
         %td

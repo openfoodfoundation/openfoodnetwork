@@ -1,11 +1,17 @@
 %table#product-list
   %thead
-    %th Item
-    %th Description
-    %th Variant
-    %th Quantity
-    %th Available?
-    %th Price
+    %th
+      = t :products_item
+    %th
+      = t :products_description
+    %th
+      = t :products_variant
+    %th
+      = t :products_quantity
+    %th
+      = t :products_available
+    %th
+      = t :products_price
 
   - list.each do |product|
     %tr

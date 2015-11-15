@@ -1,34 +1,27 @@
 %h3
-  Hello!
+  = t :email_signup_greeting
 %p.lead
-  = "Welcome to #{ Spree::Config[:site_name] }!"
+  = t :email_signup_welcome, sitename: Spree::Config[:site_name]
 
 / Heading Panel
 %p &nbsp;
 %p.callout
   %strong
-    Your login
+    = t :email_signup_login
 %p
-  Your login email is
+  = t :email_signup_email
   %strong
     = @user.email
 %p
-  You can start shopping online now at
-  %a{:href => "#{ spree.root_url }", :target => "_blank"}
-    -# Remove http:// and trailing slashes from root url if they exist
-    = spree.root_url.sub(/http:\/\//,"").sub(/\/$/,"")
+  -# Remove http:// and trailing slashes from root url if they exist
+  = t :email_signup_shop_html, link: link_to(spree.root_url.sub(/http:\/\//,"").sub(/\/$/,""), spree.root_url, target: '_blank')
 %p &nbsp;
 %hr/
 %p &nbsp;
 %p.lead
-  Thanks for joining the network.
-  If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
-  If you are a producer or food enterprise, we are excited to have you as a part of the network.
+  = t :email_signup_text
 %p
-  We welcome all your questions and feedback; you can use the
-  %em
-    Send Feedback
-  button on the site or email us at
+  = t :email_signup_help_html
   %a{:href => "mailto:hello@openfoodnetwork.org", :target => "_blank"}
     hello@openfoodnetwork.org
 

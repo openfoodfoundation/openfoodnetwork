@@ -2,15 +2,14 @@
   %li
     %a{href: spree.admin_path, target:'_blank'} 
       %i.ofn-i_021-tools
-      Admin
+      = t 'label_admin'
 
 %li
   %a{href: spree.account_path}
     %i.ofn-i_015-user
-    Account
-    / = spree_current_user.email
+    = t 'label_account'
 
 %li
-  %a{title: 'Log Out', href:'/logout' } 
+  %a{title: t('label_logout'), href:'/logout' } 
     %i.ofn-i_018-unlocked
-    Log out
+    = t 'label_logout'

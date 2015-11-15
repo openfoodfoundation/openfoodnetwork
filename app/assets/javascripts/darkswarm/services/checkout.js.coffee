@@ -6,7 +6,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     ship_address_same_as_billing: true
 
     submit: ->
-      Loading.message = "Submitting your order: please wait"
+      Loading.message = t 'submitting_order'
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>

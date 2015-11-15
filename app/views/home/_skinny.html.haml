@@ -14,7 +14,7 @@
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %i.ofn-i_033-open-sign
       %span.margin-top{ bo: { if: "current()" } }
-        %em Shopping here
+        %em= t :hubs_shopping_here
       %span.margin-top{ bo: { if: "!current()" } }
         %span{"bo-bind" => "hub.orders_close_at | sensible_timeframe"}
 
@@ -22,8 +22,9 @@
     %a.hub.open_closed{"bo-href" => "hub.path", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %i.ofn-i_032-closed-sign
       %span.margin-top{ bo: { if: "current()" } }
-        %em Shopping here
-      %span.margin-top{ bo: { if: "!current()" } } Orders closed
+        %em= t :hubs_shopping_here
+      %span.margin-top{ bo: { if: "!current()" } }
+        = t :hubs_orders_closed
 
   .columns.small-2.medium-1.large-1.text-right
     %span.margin-top
@@ -42,4 +43,4 @@
 
   .columns.small-6.medium-3.large-4.text-right
     %span.margin-top{ bo: { if: "!current()" } }
-      %em Profile only
+      %em= t :hubs_profile_only

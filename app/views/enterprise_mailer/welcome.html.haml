@@ -1,26 +1,22 @@
 %h3
-  = "Welcome, #{@enterprise.contact}!"
+  = "#{t(:email_welcome)}, #{@enterprise.contact}!"
 %p.lead
-  Thank you for confirming your email address.
+  = t :email_confirmed
   %strong
     = @enterprise.name
-  = "is now part of #{ Spree::Config.site_name }!"
+  = "#{t(:email_registered)} #{ Spree::Config.site_name }!"
 
 %p
-  The User Guide with detailed support for setting up your Producer or Hub is here:
-  = link_to 'Open Food Network User Guide', 'http://www.openfoodnetwork.org/platform/user-guide/'
+  = t :email_userguide_html, link: link_to('Open Food Network User Guide', 'http://www.openfoodnetwork.org/platform/user-guide/')
 
 %p
-  You can manage your account by logging into the
-  = link_to 'Admin Panel', spree.admin_url
-  or by clicking on the cog in the top right hand side of the homepage, and selecting Administration.
+  = t :email_admin_html, link: link_to('Admin Panel', spree.admin_url)
 
 %p
-  We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
-  = link_to 'Join the community.', 'http://community.openfoodnetwork.org/'
+  = t :email_community_html, link: link_to('Join the community.', 'http://community.openfoodnetwork.org/')
 
 %p
-  If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!
+  = t :email_help
 
 = render 'shared/mailers/signoff'
 

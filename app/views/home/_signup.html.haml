@@ -1,6 +1,7 @@
 .row
   .large-12.large-centered.columns
-    %h2 Sign Up
+    %h2
+      = t :label_signup
 = form_for Spree::User.new, :as => :spree_user, :url => spree.spree_user_registration_path(@spree_user) do |f|
   %p
     = f.label :email, t(:email)
