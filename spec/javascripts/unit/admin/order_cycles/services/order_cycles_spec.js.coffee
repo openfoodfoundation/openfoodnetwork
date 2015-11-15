@@ -18,19 +18,43 @@ describe "OrderCycles service", ->
 
     beforeEach ->
       response = [{ id: 5, name: 'OrderCycle 1'}]
-      $httpBackend.expectGET('/admin/order_cycles.json').respond 200, response
-      result = OrderCycles.index()
-      $httpBackend.flush()
 
-    it "stores returned data in @orderCyclesByID, with ids as keys", ->
-      # OrderCycleResource returns instances of Resource rather than raw objects
-      expect(OrderCycles.orderCyclesByID).toDeepEqual { 5: response[0] }
+    describe "when no params are passed", ->
+      beforeEach ->
+        $httpBackend.expectGET('/admin/order_cycles.json').respond 200, response
+        result = OrderCycles.index()
+        $httpBackend.flush()
 
-    it "stores returned data in @pristineByID, with ids as keys", ->
-      expect(OrderCycles.pristineByID).toDeepEqual { 5: response[0] }
+      it "stores returned data in @orderCyclesByID, with ids as keys", ->
+        # OrderCycleResource returns instances of Resource rather than raw objects
+        expect(OrderCycles.orderCyclesByID).toDeepEqual { 5: response[0] }
 
-    it "returns an array of orderCycles", ->
-      expect(result).toDeepEqual response
+      it "stores returned data in @pristineByID, with ids as keys", ->
+        expect(OrderCycles.pristineByID).toDeepEqual { 5: response[0] }
+
+      it "returns an array of orderCycles", ->
+        expect(result).toDeepEqual response
+
+    describe "when no params are passed", ->
+      describe "where includeBlank param is truthy", ->
+        beforeEach ->
+          params = {includeBlank: true, someParam: 'someVal'}
+          $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response
+          result = OrderCycles.index(params)
+          $httpBackend.flush()
+
+        it "returns an array of orderCycles", ->
+          expect(result).toDeepEqual [{id: '0', name: 'All'} ,{ id: 5, name: 'OrderCycle 1'}]
+
+      describe "where includeBlank param is falsey", ->
+        beforeEach ->
+          params = {includeBlank: false, someParam: 'someVal'}
+          $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response
+          result = OrderCycles.index(params)
+          $httpBackend.flush()
+
+        it "returns an array of orderCycles", ->
+          expect(result).toDeepEqual response
 
 
   describe "#save", ->

@@ -18,19 +18,43 @@ describe "Enterprises service", ->
 
     beforeEach ->
       response = [{ id: 5, name: 'Enterprise 1'}]
-      $httpBackend.expectGET('/admin/enterprises.json').respond 200, response
-      result = Enterprises.index()
-      $httpBackend.flush()
 
-    it "stores returned data in @enterprisesByID, with ids as keys", ->
-      # EnterpriseResource returns instances of Resource rather than raw objects
-      expect(Enterprises.enterprisesByID).toDeepEqual { 5: response[0] }
+    describe "when no params are passed", ->
+      beforeEach ->
+        $httpBackend.expectGET('/admin/enterprises.json').respond 200, response
+        result = Enterprises.index()
+        $httpBackend.flush()
 
-    it "stores returned data in @pristineByID, with ids as keys", ->
-      expect(Enterprises.pristineByID).toDeepEqual { 5: response[0] }
+      it "stores returned data in @enterprisesByID, with ids as keys", ->
+        # EnterpriseResource returns instances of Resource rather than raw objects
+        expect(Enterprises.enterprisesByID).toDeepEqual { 5: response[0] }
 
-    it "returns an array of enterprises", ->
-      expect(result).toDeepEqual response
+      it "stores returned data in @pristineByID, with ids as keys", ->
+        expect(Enterprises.pristineByID).toDeepEqual { 5: response[0] }
+
+      it "returns an array of enterprises", ->
+        expect(result).toDeepEqual response
+
+    describe "when params are passed", ->
+      describe "where includeBlank param is truthy", ->
+        beforeEach ->
+          params = {includeBlank: true, someParam: 'someVal'}
+          $httpBackend.expectGET('/admin/enterprises.json?someParam=someVal').respond 200, response
+          result = Enterprises.index(params)
+          $httpBackend.flush()
+
+        it "returns an array of enterprises, with a blank option appended to the beginning", ->
+          expect(result).toDeepEqual [{id: '0', name: 'All'} ,{ id: 5, name: 'Enterprise 1'}]
+
+      describe "where includeBlank param is falsey", ->
+        beforeEach ->
+          params = {includeBlank: false, someParam: 'someVal'}
+          $httpBackend.expectGET('/admin/enterprises.json?someParam=someVal').respond 200, response
+          result = Enterprises.index(params)
+          $httpBackend.flush()
+
+        it "returns an array of enterprises, with a blank option appended to the beginning", ->
+          expect(result).toDeepEqual response
 
 
   describe "#save", ->
