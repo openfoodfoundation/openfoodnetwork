@@ -259,12 +259,14 @@ feature %q{
         end
 
         it "displays all line items when 'All' is selected from distributor filter" do
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select d1.name, from: "distributor_filter"
-          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
-          expect(page).to_not have_selector "tr#li_#{li2.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to_not have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "distributor_filter"
-          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
-          expect(page).to have_selector "tr#li_#{li2.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
         end
       end
 
@@ -293,6 +295,8 @@ feature %q{
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter" do
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to_not have_selector "tr#li_#{li2.id}"
