@@ -74,9 +74,8 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (event) ->
-      event.preventDefault()
-      OrderCycle.create()
+    $scope.submit = (destination) ->
+      OrderCycle.create(destination)
   ])
 
   .controller('AdminEditOrderCycleCtrl', ['$scope', '$filter', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee) ->
@@ -155,9 +154,8 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (event) ->
-      event.preventDefault()
-      OrderCycle.update()
+    $scope.submit = (destination) ->
+      OrderCycle.update(destination)
   ])
 
   .config(['$httpProvider', ($httpProvider) ->

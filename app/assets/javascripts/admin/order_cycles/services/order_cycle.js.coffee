@@ -123,19 +123,19 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
 
       this.order_cycle
 
-    create: ->
+    create: (destination) ->
     	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
     	oc.$create (data) ->
     	  if data['success']
-    	    $window.location = '/admin/order_cycles'
+    	    $window.location = destination
     	  else
           console.log('Failed to create order cycle')
 
-    update: ->
+    update: (destination) ->
     	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
     	oc.$update {order_cycle_id: this.order_cycle.id}, (data) ->
     	  if data['success']
-    	    $window.location = '/admin/order_cycles'
+    	    $window.location = destination
     	  else
           console.log('Failed to update order cycle')
 

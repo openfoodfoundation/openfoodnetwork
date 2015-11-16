@@ -156,9 +156,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle create', ->
-      eventMock = { preventDefault: -> }
-      scope.submit(eventMock)
-      expect(OrderCycle.create).toHaveBeenCalled()
+      scope.submit('/admin/order_cycles')
+      expect(OrderCycle.create).toHaveBeenCalledWith('/admin/order_cycles')
 
   describe 'AdminEditOrderCycleCtrl', ->
     ctrl = null
@@ -319,9 +318,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
-      eventMock = { preventDefault: -> }
-      scope.submit(eventMock)
-      expect(OrderCycle.update).toHaveBeenCalled()
+      scope.submit('/admin/order_cycles')
+      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
 
 
 describe 'OrderCycle services', ->
@@ -760,16 +758,16 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.exchanges).toBeUndefined()
 
     describe 'creating an order cycle', ->
-      it 'redirects to the order cycles page on success', ->
+      it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.create()
+        OrderCycle.create('/destination/page')
         $httpBackend.flush()
-        expect($window.location).toEqual('/admin/order_cycles')
+        expect($window.location).toEqual('/destination/page')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
@@ -778,21 +776,21 @@ describe 'OrderCycle services', ->
           order_cycle: 'this is the submit data'
           }).respond {success: false}
 
-        OrderCycle.create()
+        OrderCycle.create('/destination/page')
         $httpBackend.flush()
         expect($window.location).toEqual(undefined)
 
     describe 'updating an order cycle', ->
-      it 'redirects to the order cycles page on success', ->
+      it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPUT('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.update()
+        OrderCycle.update('/destination/page')
         $httpBackend.flush()
-        expect($window.location).toEqual('/admin/order_cycles')
+        expect($window.location).toEqual('/destination/page')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
@@ -801,7 +799,7 @@ describe 'OrderCycle services', ->
           order_cycle: 'this is the submit data'
           }).respond {success: false}
 
-        OrderCycle.update()
+        OrderCycle.update('/destination/page')
         $httpBackend.flush()
         expect($window.location).toEqual(undefined)
 

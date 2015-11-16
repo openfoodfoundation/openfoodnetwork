@@ -339,7 +339,7 @@ feature %q{
     select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Update
-    click_button 'Update'
+    click_button 'Update and Close'
 
     # Then my order cycle should have been updated
     page.should have_content 'Your order cycle has been updated.'
@@ -879,7 +879,7 @@ feature %q{
       click_button 'Add coordinator fee'
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
-      click_button 'Update'
+      click_button 'Update and Close'
 
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'

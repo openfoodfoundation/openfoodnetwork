@@ -62,10 +62,8 @@ module Admin
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
           flash[:notice] = 'Your order cycle has been updated.'
-          format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
         else
-          format.html
           format.json { render :json => {:success => false} }
         end
       end

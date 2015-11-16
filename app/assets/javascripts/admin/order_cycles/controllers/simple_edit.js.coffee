@@ -32,7 +32,6 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     $event.preventDefault()
     OrderCycle.removeCoordinatorFee(index)
 
-  $scope.submit = (event) ->
-    event.preventDefault()
+  $scope.submit = (destination) ->
     OrderCycle.mirrorIncomingToOutgoingProducts()
-    OrderCycle.update()
+    OrderCycle.update(destination)
