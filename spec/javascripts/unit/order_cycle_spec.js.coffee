@@ -784,7 +784,7 @@ describe 'OrderCycle services', ->
       it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
-        $httpBackend.expectPUT('/admin/order_cycles.json', {
+        $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
@@ -795,7 +795,7 @@ describe 'OrderCycle services', ->
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
-        $httpBackend.expectPUT('/admin/order_cycles.json', {
+        $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: false}
 

@@ -133,7 +133,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 
     update: (destination) ->
     	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
-    	oc.$update {order_cycle_id: this.order_cycle.id}, (data) =>
+    	oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
     	  if data['success']
           if destination?
     	      $window.location = destination

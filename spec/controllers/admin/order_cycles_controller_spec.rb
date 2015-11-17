@@ -92,6 +92,22 @@ module Admin
       end
     end
 
+    describe "update" do
+      let(:order_cycle) { create(:simple_order_cycle) }
+
+      before { login_as_admin }
+
+      it "sets flash message when page is reloading" do
+        spree_put :update, id: order_cycle.id, reloading: '1', order_cycle: {}
+        flash[:notice].should == 'Your order cycle has been updated.'
+      end
+
+      it "does not set flash message otherwise" do
+        spree_put :update, id: order_cycle.id, reloading: '0', order_cycle: {}
+        flash[:notice].should be_nil
+      end
+    end
+
     describe "bulk_update" do
       let(:oc) { create(:simple_order_cycle) }
       let!(:coordinator) { oc.coordinator }

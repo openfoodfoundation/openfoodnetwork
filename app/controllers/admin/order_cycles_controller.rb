@@ -61,8 +61,8 @@ module Admin
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-          flash[:notice] = 'Your order cycle has been updated.'
-          format.json { render :json => {:success => true} }
+          flash[:notice] = 'Your order cycle has been updated.' if params[:reloading] == '1'
+          format.json { render :json => {:success => true}  }
         else
           format.json { render :json => {:success => false} }
         end
