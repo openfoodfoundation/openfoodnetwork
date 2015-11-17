@@ -75,8 +75,13 @@ form.order_cycle {
       margin: 5px;
     }
 
+    .exchange-products {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: row wrap;
+      flex-flow: row wrap;
+    }
     .exchange-product {
-      float: left;
       overflow: auto;
       width: 18%;
       min-height: 7.5em;
@@ -87,6 +92,7 @@ form.order_cycle {
       .exchange-product-details {
         clear: both;
         margin-bottom: 1em;
+        min-height: 6em;
 
         .supplier {
           font-weight: bold;
