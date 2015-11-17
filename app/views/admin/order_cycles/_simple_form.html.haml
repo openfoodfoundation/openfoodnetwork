@@ -24,10 +24,11 @@
   - if @order_cycle.new_record?
     = f.submit 'Create', 'ng-click' => "submit('#{main_app.admin_order_cycles_path}')", 'ng-disabled' => '!loaded()'
   - else
-    = f.submit 'Update', 'ng-click' => "submit('#{main_app.edit_admin_order_cycle_path(@order_cycle)}')", 'ng-disabled' => '!loaded()'
+    = f.submit 'Update', 'ng-click' => "submit(null)", 'ng-disabled' => '!loaded()'
     = f.submit 'Update and Close', 'ng-click' => "submit('#{main_app.admin_order_cycles_path}')", 'ng-disabled' => '!loaded()'
 
   %span{'ng-show' => 'loaded()'}
     or
     = link_to 'Cancel', main_app.admin_order_cycles_path
   %span{'ng-hide' => 'loaded()'} Loading...
+  %h6.message {{ OrderCycle.message }}

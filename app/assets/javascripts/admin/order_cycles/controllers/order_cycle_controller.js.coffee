@@ -84,6 +84,7 @@ angular.module('admin.orderCycles')
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
 
+    $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
 
     $scope.loaded = ->

@@ -879,6 +879,9 @@ feature %q{
       click_button 'Add coordinator fee'
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
+      # When I update, or update and close, both work
+      click_button 'Update'
+      page.should have_content 'Your order cycle has been updated.'
       click_button 'Update and Close'
 
       # Then my order cycle should have been updated
