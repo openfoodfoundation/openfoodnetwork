@@ -5,7 +5,7 @@
       Select all
 
   -# Scope product list based on permissions the current user has to view variants in this exchange
-  .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle | visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
+  .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle | visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges | orderBy:"name"' }
     .exchange-product-details
       .supplier {{ product.supplier_name }}
       %label
