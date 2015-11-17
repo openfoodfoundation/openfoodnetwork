@@ -7,6 +7,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 
   {
     order_cycle: {}
+    showProducts: {incoming: false, outgoing: false}
 
     loaded: false
 
@@ -20,6 +21,10 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 
     toggleProducts: (exchange) ->
     	exchange.showProducts = !exchange.showProducts
+
+    toggleAllProducts: (direction) ->
+      this.showProducts[direction] = !this.showProducts[direction]
+      exchange.showProducts = this.showProducts[direction] for exchange in this.exchangesByDirection(direction)
 
     setExchangeVariants: (exchange, variants, selected) ->
       direction = if exchange.incoming then "incoming" else "outgoing"
@@ -79,6 +84,12 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
       suppliers = (exchange.enterprise_id for exchange in this.order_cycle.incoming_exchanges)
       distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
       jQuery.unique(suppliers.concat(distributors)).sort()
+
+    exchangesByDirection: (direction) ->
+      if direction == 'incoming'
+        this.order_cycle.incoming_exchanges
+      else
+        this.order_cycle.outgoing_exchanges
 
     removeDistributionOfVariant: (variant_id) ->
       for exchange in this.order_cycle.outgoing_exchanges

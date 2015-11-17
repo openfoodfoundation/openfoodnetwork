@@ -8,7 +8,12 @@
   %thead
     %tr
       %th Supplier
-      %th Products
+      %th
+        Products
+        = surround '(', ')' do
+          %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('incoming')"}
+            %span{'ng-show' => "OrderCycle.showProducts['incoming']"} Collapse all
+            %span{'ng-hide' => "OrderCycle.showProducts['incoming']"} Expand all
       %th Receival details
       %th Fees
       %th.actions
@@ -28,7 +33,12 @@
   %thead
     %tr
       %th Distributor
-      %th Products
+      %th
+        Products
+        = surround '(', ')' do
+          %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('outgoing')"}
+            %span{'ng-show' => "OrderCycle.showProducts['outgoing']"} Collapse all
+            %span{'ng-hide' => "OrderCycle.showProducts['outgoing']"} Expand all
       %th Pickup / Delivery details
       %th Fees
       %th.actions
