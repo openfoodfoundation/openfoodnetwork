@@ -219,7 +219,7 @@ describe Spree::Admin::OrdersController do
         before { controller.stub spree_current_user: distributor.owner }
         it "should allow me to send order invoices" do
           spree_get :print, params
-          expect(response).to render_template :print
+          expect(response).to render_template :invoice
         end
       end
     end
