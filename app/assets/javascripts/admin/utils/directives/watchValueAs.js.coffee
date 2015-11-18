@@ -1,4 +1,4 @@
-angular.module("admin.accounts_and_billing_settings").directive "watchValueAs", ->
+angular.module("admin.utils").directive "watchValueAs", ->
   restrict: 'A'
   scope: {
     value: "=watchValueAs"

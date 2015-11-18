@@ -56,3 +56,21 @@ div#group_buy_calculation {
 		text-align: center;
 	}
 }
+
+.input-symbol {
+  position: relative;
+  &.before {
+
+	  span {
+			position: absolute;
+		  transform: translate(0,-50%);
+		  top:50%;
+		  pointer-events:none;
+		  margin-left: 1em;
+		}
+
+		input {
+			text-indent:1em;
+		}
+	}
+}
