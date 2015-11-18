@@ -27,6 +27,18 @@ module OpenFoodNetwork
       issues
     end
 
+    def issues_summary(opts={})
+      if    !opts[:confirmation_only] && !shipping_methods_ok? && !payment_methods_ok?
+        'no shipping or payment methods'
+      elsif !opts[:confirmation_only] && !shipping_methods_ok?
+        'no shipping methods'
+      elsif !opts[:confirmation_only] && !payment_methods_ok?
+        'no payment methods'
+      elsif !confirmed?
+        'unconfirmed'
+      end
+    end
+
     def warnings
       warnings = []
 
