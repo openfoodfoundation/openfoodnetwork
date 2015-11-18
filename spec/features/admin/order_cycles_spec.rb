@@ -95,6 +95,10 @@ feature %q{
     click_button 'Add coordinator fee'
     select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
 
+    # I should not be able to add a blank supplier
+    page.should have_select 'new_supplier_id', selected: ''
+    page.should have_button 'Add supplier', disabled: true
+
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
