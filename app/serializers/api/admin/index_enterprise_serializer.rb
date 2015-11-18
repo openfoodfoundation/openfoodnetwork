@@ -1,3 +1,5 @@
+require 'open_food_network/enterprise_issue_validator'
+
 class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :permalink, :is_primary_producer, :sells, :producer_profile_only, :owned, :edit_path
 
@@ -12,45 +14,12 @@ class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
     edit_admin_enterprise_path(object)
   end
 
-  def shipping_methods_ok?
-    return true unless object.is_distributor
-    object.shipping_methods.any?
-  end
-
-  def payment_methods_ok?
-    return true unless object.is_distributor
-    object.payment_methods.any?
-  end
-
   def issues
-    issues = []
-
-    issues << {
-      description: "#{object.name} currently has no shipping methods.",
-      link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>Create New</a>"
-    } unless shipping_methods_ok?
-
-    issues << {
-      description: "#{object.name} currently has no payment methods.",
-      link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
-    } unless payment_methods_ok?
-
-    issues << {
-      description: "Email confirmation is pending. We've sent a confirmation email to #{object.email}.",
-      link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: object.id, email: object.email } )}' method='post'>Resend Email</a>"
-    } unless object.confirmed?
-
-    issues
+    OpenFoodNetwork::EnterpriseIssueValidator.new(object).issues
   end
 
   def warnings
-    warnings = []
-
-    warnings << {
-      description: "#{object.name} is not visible and so cannot be found on the map or in searches",
-      link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(object)}'>Edit</a>"
-    } unless object.visible
-
-    warnings
+    OpenFoodNetwork::EnterpriseIssueValidator.new(object).warnings
   end
+
 end
