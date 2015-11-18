@@ -109,18 +109,36 @@ feature %q{
       let!(:li1) { FactoryGirl.create(:line_item, order: o1, :quantity => 5 ) }
 
       before :each do
+        Spree::Config.set(allow_backorders: false)
+        li1.variant.update_attributes(on_hand: 1, on_demand: false)
         visit '/admin/orders/bulk_management'
       end
 
-      it "displays an update button which submits pending changes" do
-        expect(page).to_not have_selector "#save-bar"
-        fill_in "quantity", :with => 2
-        expect(page).to have_selector "input[name='quantity'].ng-dirty"
-        expect(page).to have_selector "#save-bar"
-        expect(page).to have_button "Save Changes"
-        click_button "Save Changes"
-        expect(page).to_not have_selector "#save-bar"
-        expect(page).to_not have_selector "input[name='quantity'].ng-dirty"
+      context "when acceptable data is sent to the server" do
+        it "displays an update button which submits pending changes" do
+          expect(page).to_not have_selector "#save-bar"
+          fill_in "quantity", :with => 2
+          expect(page).to have_selector "input[name='quantity'].ng-dirty"
+          expect(page).to have_selector "#save-bar"
+          expect(page).to have_button "Save Changes"
+          click_button "Save Changes"
+          expect(page).to_not have_selector "#save-bar"
+          expect(page).to_not have_selector "input[name='quantity'].ng-dirty"
+        end
+      end
+
+      context "when unacceptable data is sent to the server" do
+        it "displays an update button which submits pending changes" do
+          expect(page).to_not have_selector "#save-bar"
+          fill_in "quantity", :with => li1.variant.on_hand + li1.quantity + 10
+          expect(page).to have_selector "input[name='quantity'].ng-dirty"
+          expect(page).to have_selector "#save-bar"
+          expect(page).to have_button "Save Changes"
+          click_button "Save Changes"
+          expect(page).to have_selector "#save-bar"
+          expect(page).to have_selector "input[name='quantity'].ng-dirty.update-error"
+          expect(page).to have_content "exceeds available stock. Please ensure line items have a valid quantity."
+        end
       end
     end
   end
@@ -284,7 +302,6 @@ feature %q{
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle" do
-          expect(page).to have_selector '#s2id_order_cycle_filter a.select2-choice', text: 'All'
           expect(page).to have_select2 'order_cycle_filter', with_options: OrderCycle.pluck(:name).unshift("All")
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"

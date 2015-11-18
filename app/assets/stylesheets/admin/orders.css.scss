@@ -11,12 +11,19 @@ input, div {
 input.show-dirty {
 	&.ng-dirty {
 	  border: solid 1px orange;
+		&.update-error {
+			border: solid 1px #DA5354;
+		}
   }
+}
+
+span.error {
+	color: #DA5354;
 }
 
 input, div {
 	&.update-error {
-		border: solid 1px red;
+		border: solid 1px #DA5354;
 	}
 }
 

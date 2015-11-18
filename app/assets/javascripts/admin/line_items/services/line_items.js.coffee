@@ -17,16 +17,19 @@ angular.module("admin.lineItems").factory 'LineItems', ($q, LineItemResource) ->
       @pristineByID = {}
 
     saveAll: ->
-      for id, lineItem of @lineItemsByID when !@isSaved(lineItem)
-        @save(lineItem)
+      for id, lineItem of @lineItemsByID
+        lineItem.errors = {} # removes errors when line_item has been returned to original state
+        @save(lineItem) if !@isSaved(lineItem)
 
     save: (lineItem) ->
       deferred = $q.defer()
+      lineItem.errors = {}
       lineItem.$update({id: lineItem.id, orders: "orders", order_number: lineItem.order.number})
       .then( (data) =>
         @pristineByID[lineItem.id] = angular.copy(lineItem)
         deferred.resolve(data)
       ).catch (response) ->
+        lineItem.errors = response.data.errors if response.data.errors?
         deferred.reject(response)
       deferred.promise
 

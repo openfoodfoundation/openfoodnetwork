@@ -143,12 +143,15 @@
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
             %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.full_name }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-            %input.show-dirty{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true" }, min: 1, step: 1 }
+            %input.show-dirty{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true", class: '{"update-error": line_item.errors.quantity}' }, min: 1, step: 1 }
+            %span.error{ ng: { bind: 'line_item.errors.quantity' } }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
-            %input.show-dirty{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true" }, min: 0, 'ng-pattern' => '/[1-9]+/' }
+            %input.show-dirty{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true", class: '{"update-error": line_item.errors.final_weight_volume}' }, min: 0, 'ng-pattern' => '/[1-9]+/' }
+            %span.error{ ng: { bind: 'line_item.errors.final_weight_volume' } }
           %td.price{ 'ng-show' => 'columns.price.visible' }
-            %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { model: 'line_item.price', readonly: "true" }, 'scale-as-currency' => 'line_item.quantity' }
+            %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
+            %span.error{ ng: { bind: 'line_item.errors.price' } }
           %td.actions
             %a{ href: "/admin/orders/{{line_item.order.number}}/edit", :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
           %td.actions

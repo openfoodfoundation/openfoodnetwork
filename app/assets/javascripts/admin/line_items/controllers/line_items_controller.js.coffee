@@ -65,9 +65,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.submit = =>
     if $scope.bulk_order_form.$valid
       $scope.saving = true
-      $q.all(LineItems.saveAll()).then ->
+      $q.all(LineItems.saveAll()).then(->
         $scope.bulk_order_form.$setPristine()
         $scope.saving = false
+      ).catch ->
+        alert "Some errors must be resolved be before you can update orders.\nAny fields with red borders contain errors."
     else
       alert "Some errors must be resolved be before you can update orders.\nAny fields with red borders contain errors."
 
